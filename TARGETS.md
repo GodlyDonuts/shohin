@@ -1,51 +1,52 @@
-# Targets & eval — what "beat SmolLM2" means, in numbers
+# Targets & eval — what "best sub-200M reasoner" means, in numbers
 
-**The bar:** SmolLM2-135M base (arXiv 2502.02737), trained on 2T tokens — the strongest fully-open ~135M
-base model. Grade on a **fixed commonsense suite re-run on our own harness** against SmolLM2-135M. (Quoted
-aggregate means from different papers use different task sets and are **not comparable** — always re-run.)
+> ⤴ **Superseded by [MASTER_PLAN.md](MASTER_PLAN.md) §0 (tiered win conditions) + §8 (eval protocol).** Kept as
+> background; the master plan's T1 floor (GSM8K ≥15%) comfortably clears the ~22–30 range framed here, and
+> T2/T3 add the verifier + synthetic-data levers.
 
-## Pre-registered targets
+**The bar:** **MobileLLM-R1-140M** (Meta, arXiv 2509.24945, Sept 2025) — the current, essentially *only*,
+documented ≤200M reasoning model. Nothing verified has beaten it since. Grade on a **fixed verifiable-reasoning
+suite re-run on our own harness** against MobileLLM-R1-140M. (Quoted aggregates across papers use different
+protocols and are **not comparable** — always re-run.)
 
-| benchmark | SmolLM2-135M | our target | Δ | verdict |
+## Pre-registered targets — verifiable reasoning is the scoreboard
+
+| benchmark | MobileLLM-R1-140M | our target | Δ | verdict |
 |---|---:|---:|---:|---|
-| **HellaSwag** | 42.1 | **48–52** | +6–10 | **win (headline)** |
-| ARC (avg e/c) | 43.9 | ≥50 | +6 | win |
-| PIQA | 68.4 | 71–73 | +3–5 | win |
-| WinoGrande | 51.3 | ≥55 | +4 | win |
-| OpenBookQA | 34.6 | ≥38 | +3 | win |
-| CommonsenseQA | 33.9 | ≥37 | +3 | win |
-| commonsense-suite mean | ~49 | **≥53–55** | +4–6 | win |
-| — | | | | |
-| MMLU (cloze) | 31.5 | ~30–35 | no regress | **capacity-capped** |
-| TriviaQA | 4.1 | ~4 | no regress | **capacity-capped** |
-| GSM8K (5-shot) | 1.4 | low single digits | no regress | **capacity-capped*** |
-| IFEval (after SFT) | ~29.9 (Instruct) | 30s–40s | — | instruction-following |
+| **GSM8K** (8-shot / 0-shot CoT) | 16.3 | **22–30** | +6–14 | **win (headline)** |
+| **MATH-500** | 4.6 | **10–15** | +5–10 | **win** (lowest base → most room) |
+| **HumanEval** (pass@1) | 15.9 | **18–22** | +2–6 | win |
+| **MBPP** (pass@1) | 5.4 | **10–15** | +5–10 | win |
+| **logic / deduction** (BBH, ProntoQA, or Reasoning-Gym subset) | *not reported* | **establish & lead** | — | **cleanest uncontested SoTA** |
+| commonsense-suite mean (HellaSwag/PIQA/ARC/WinoGrande/OBQA/CSQA) | — | **no catastrophic regression** | — | report only |
+| MMLU (cloze) / TriviaQA | — | don't chase | — | **capacity-capped** |
 
 ## Winnable vs capacity-capped
 
-**Winnable (better data + distillation move these):** HellaSwag, PIQA, ARC-e/c, WinoGrande, OpenBookQA,
-CommonsenseQA, instruction-following (IFEval), per-token data efficiency.
+**Winnable (reasoning distillation + data quality move these):** GSM8K, MATH, HumanEval/MBPP, logic/deduction.
 
-**Capacity-capped (report, don't chase):** MMLU (factual recall), TriviaQA (closed-book knowledge),
-GSM8K/MATH (multi-step math), long-chain reasoning.
+**Capacity-capped (physics, ~2 bits/param — report, never chase):** MMLU, TriviaQA, closed-book knowledge,
+anything knowledge-bound.
 
-**Why:** LMs store ~2 bits/param (Allen-Zhu, arXiv 2404.05405) → ~130M ≈ 30 MB of facts. Even Qwen3-0.6B
-(5× the params, 36T tokens) only reaches MMLU 52.8 — so knowledge is unreachable at 130M by any recipe.
+**No-regression (spend nothing chasing, but don't torch):** the commonsense suite. Specializing for reasoning
+costs commonsense breadth (MobileLLM-R1's commonsense *trailed* SmolLM2) — that trade is accepted, but a
+*catastrophic* collapse would signal we over-cooked the mix.
 
 ## The honest asterisks
 
-- **\* Math is technically movable — but we decline the trade.** Meta's MobileLLM-R1-140M (arXiv 2509.24945)
-  hits GSM8K 16.3 at 140M via narrow math/code mid-train + long-CoT SFT — but its commonsense average (44.3)
-  *trails* SmolLM2 (50.7 on that suite). Buying math costs the commonsense axes we want. So GSM8K stays a
-  no-regression report, not a target.
-- **The headline win is unproven at 135M.** No public sub-200M base model has cleanly beaten SmolLM2-135M on
-  commonsense *purely by method* — the demonstrated 2025–26 wins (Qwen3-0.6B, LFM2.5-350M, Gemma-3-270M) are
-  2.5–4.5× larger. Treat the +6–10 HellaSwag target as **ambitious-but-unproven at 135M**, not a solved
-  recipe.
+- **The capacity wall is real.** 140M→600M = 16→60 GSM8K. At 130M, GSM8K in the 20s is a *good* outcome; >40
+  would be paper-worthy and is a **stretch, not plan-of-record.** MATH-500 (base 4.6) and the *unreported*
+  logic axis have the most headroom — the bar is lowest or absent.
+- **Beating MobileLLM-R1 is achievable, not guaranteed.** Meta used long-CoT SFT and a 128k vocab; we bet on
+  **short-CoT + a compact vocab** (more reasoning params). Real, *bounded* headroom — not a solved recipe.
+- **No tool-use in graded runs.** A calculator/Python interpreter raises end-task accuracy but makes a
+  "reasoning" claim ambiguous. Tool-use is a product feature, reported separately, never in the SoTA number.
+- **Contamination discipline.** Decontaminate train against GSM8K/MATH/HumanEval/MBPP test sets and **report
+  the check.** A contaminated "win" is worthless — and math/code test leakage is common.
 
 ## Eval harness (milestone 0)
 
-Stand up a fixed harness (lm-evaluation-harness or equivalent) with: HellaSwag, ARC-easy, ARC-challenge,
-PIQA, WinoGrande, OpenBookQA, CommonsenseQA — plus MMLU/TriviaQA/GSM8K/IFEval for no-regression tracking.
-**Re-run SmolLM2-135M on it ourselves** and record the numbers; that is the scoreboard for every subsequent
-run. Same few-shot settings, same scoring, every time.
+Stand up a fixed harness (lm-evaluation-harness + a sandboxed code executor for HumanEval/MBPP) with: GSM8K,
+MATH-500, HumanEval, MBPP, a logic/deduction set — plus MMLU + the commonsense suite for no-regression
+tracking. **Re-run MobileLLM-R1-140M on it ourselves** and record the numbers; that is the scoreboard for
+every subsequent run. Same few-shot settings, same scoring, same decode config, every time.

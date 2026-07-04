@@ -1,105 +1,91 @@
-# The 100M build plan (stage by stage)
+# The Shohin build plan (stage by stage)
 
-Concrete recipe for a ~130M dense model that beats SmolLM2-135M on the winnable axes. Sources are listed at
-the bottom; confidence is HIGH for the data + logit-KD-at-fixed-tokens claims, LOW / against-trend for
-KD-at-130M and reasoning-at-100M (flagged inline).
+> ⤴ **Superseded by [MASTER_PLAN.md](MASTER_PLAN.md)** (the plan of record). Kept as background; where numbers
+> differ (token budget ~100–200B here vs ~580B there, targets, optimizer), **the master plan wins.**
+
+Recipe for a ~130M dense **reasoning specialist** that beats MobileLLM-R1-140M on verifiable reasoning
+(math/code/logic). Confidence is HIGH for short-CoT-distillation + rejection-sampling; LOW / against-trend for
+RL-at-130M and looped-reasoning-at-130M (flagged inline).
 
 ---
 
-## 0. Framework decision — PyTorch, not the custom stack
+## 0. Framework — PyTorch (unchanged)
 
-The entire 2026 edge comes from three things the Psi C++ stack cannot deliver quickly: **pretraining-time
-logit distillation** (no KD infra), **bf16 tensor-core throughput** (custom stack is fp32 → ~5–15× slower),
-and **8-GPU data parallelism** (custom stack is single-GPU). Rebuilding that infra (~8–14 person-weeks)
-forfeits the very levers that produce the win. → **Use a TorchTitan / nanoGPT-class trainer + FSDP2**
-(bf16, flash-attention, mature multi-GPU DP). Iterate on **data + distillation**, where the real science
-risk is. Keep the custom stack as a parallel craft track; ternary-QAT the winner there afterward.
+The 2026 edge is data + distillation infra — short-CoT trace generation, rejection sampling, bf16 tensor-core
+throughput, 8-GPU data parallelism — none deliverable quickly on the custom stack. → **nanoGPT / TorchTitan-class
+trainer + FSDP2.** Keep the Psi C++ stack as the parallel craft track; ternary-QAT the winner there afterward.
 
-## 1. Architecture — ~130M dense
+## 1. Architecture — ~130M dense, reasoning-tuned
 
 | component | choice | why |
 |---|---|---|
-| shape | **~30 layers × 576 dim** (deep-and-thin) | MobileLLM: deep-thin adds +2.7% commonsense at 125M |
-| attention | **GQA**, ~9 heads / 3 KV groups | cheap KV, near-MHA quality |
-| block | **SwiGLU** MLP · **RMSNorm** · **RoPE** | Qwen3 / LFM2-class standard block |
-| embeddings | **tied** input/output | at 130M, tying saves ~12% of params for the layers |
-| vocab / tokenizer | **~49k, reuse the teacher's BPE** (SmolLM2 / Llama-3) | teacher-compatible logits → full soft-label KD, no vocab-projection hack |
-| context | 2k pretrain → extend late | long context is not where the win is |
+| shape | **~30 layers × ~576 dim** (deep-and-thin) | depth helps reasoning; MobileLLM's deep-thin edge |
+| attention | **GQA** (~9 heads / 3 KV groups) | cheap KV, near-MHA quality |
+| block | **SwiGLU** · **RMSNorm** · **RoPE** | standard modern block |
+| **tokenizer** | **compact ~32k, English+code+math, single-digit numbers** | frees ~60M params from the embedding table into reasoning depth (see [DATA.md](DATA.md)) |
+| embeddings | **tied** | with a 32k vocab, tying is cheap and clean |
+| context | 2k pretrain → **extend to 8–16k for CoT** | reasoning traces need room; MobileLLM-R1 runs 32k |
 
-**Pick the teacher's tokenizer FIRST, then build the student around it** — a shared vocab is what lets you
-do full soft-label KD without a lossy projection.
+Param check: 30×576 with SwiGLU/GQA ≈ **~107M** transformer + **~18M** (32k tied embedding) ≈ **~125M**. A 151k
+vocab would instead be ~87M of embeddings, forcing ~12 layers — gutting the very depth reasoning needs.
 
-## 2. Training pipeline — ~200B tokens, WSD (stable → decay)
+**Novelty bet (optional, high-risk/high-reward): looped / latent reasoning.** Ouro / LoopLM (2502.17416,
+2510.25741) buy reasoning *depth by recurrently reusing a small parameter set* instead of adding params —
+explicitly pitched for param-constrained models. Unproven at ≤200M (no verified GSM8K numbers there), so it's a
+**separate prototype track, not plan-of-record.** If it fires, it's the difference between "MobileLLM-R1 done
+better" and a genuinely novel result — the "groundbreaking" upside.
 
-**Stage A — pretrain (stable), ~160B tok (80%).** Anchor on **Nemotron-CC-HQ** (empirically the #1 dataset
-at 130M scale, +5.6 MMLU vs DCLM) blended with **DCLM-baseline** (commonsense) + **FineWeb-Edu** (knowledge).
-Mix ≈ **78% web / 15% code (Stack-Edu) / 7% math (FineMath4+, MegaMath)**. **Run logit-KD throughout.**
-→ *expected: the foundation + most of the KD lift.*
+## 2. Pretrain — reasoning-tilted base (~100–200B tok, WSD)
 
-**Stage B — mid-train (decay), ~40B tok (20%).** Linear LR decay to ~0. Shift the mix toward quality:
-≈ **60% web / 22% code / 15% math (+OpenMathReasoning) / 3% Cosmopedia-v2 synthetic**, plus a slice of
-instruction data. This is the SmolLM3 decay-phase move that reliably lifts benchmarks.
-→ *expected: +2–4 pts across the commonsense suite.*
+Web language floor + **heavy math/code from the start** (~45–55% web / 25–30% code / 20–25% math). Goal: not a
+generalist, a **reasoning substrate.** WSD (stable → decay). See [DATA.md](DATA.md).
+→ *expected: the foundation the reasoning phases build on.*
 
-**Stage C — SFT (short).** Instruction-tune on **SmolTalk-style** data with complex/long-CoT tasks filtered
-out (capacity). Cap reasoning data at **25–50%** of the mix.
-→ *expected: IFEval into the 30s–40s (SmolLM2-Instruct ≈ 29.9).*
+## 3. Reasoning mid-training — the decisive phase
 
-**Stage D — DPO (optional, short).** Light preference optimization on distilled preference pairs.
-→ *expected: small IFEval / helpfulness bump.*
+Short-CoT, rejection-sampled, **correct-only** traces from the ~1–2B teacher; curriculum easy→hard with
+gradually growing trace length; short:long ≈ 4:1. This is where the win is made.
+→ *expected: the bulk of the lift over MobileLLM-R1.*
 
-**Reasoning phase — SKIP (or minimal).** Do **not** build a long-CoT thinking-mode. If used at all, a tiny
-(~5–15B tok) short-rationale phase as a *data ingredient*, never as the model's identity.
-→ *expected: neutral-to-negative on the graded (multiple-choice) axes.*
+## 4. SFT — instruction + verifiable reasoning
 
-## 3. Distillation — the decisive lever
+Instruction-tune on short-CoT reasoning + verifiable tasks; filter out long/agentic traces (capacity).
+Establish the **logic/deduction axis MobileLLM-R1 never reported** — our cleanest uncontested SoTA lane.
 
-- **Method:** **offline soft-label (logit) KD.** Precompute a converged teacher's **top-k truncated logits**
-  (top-0.95, k≈50) over the corpus; train the student with **KL loss at α≈0.9 KD weight** under the WSD
-  schedule. *(MSE loss hurts −7.6%; online KD is worse than offline converged-teacher logits.)*
-- **Teacher:** a strong but **CLOSE** model — **Qwen3-1.7B or Llama-3.2-1B**, not a 30B frontier model. A
-  130M student is ~7–13% of a 1–2B teacher — right at the empirical effectiveness floor (student ≥ ~10% of
-  teacher). A larger teacher widens the capacity gap and helps less.
-- **Honest asterisk:** KD is unproven below 330M and *larger students benefit more*; at 130M the marginal
-  gain of logit-KD over simply training on the teacher's generated text may be small. So **DATA quality is
-  a co-equal lever, not an afterthought.**
+## 5. RL (RLVR / GRPO) — optional A/B only
 
-## 4. Compute / time
+On verifiable rewards, on top of the SFT'd base. Honest A/B; **expect ≈0 gain at 130M**; drop if flat. Not the
+headline. *(Reverses our initial RL-first instinct — see [STRATEGY.md](STRATEGY.md).)*
 
-Core math: 6·N·D with N=1.3e8, D=2e11 ≈ **1.6e20 FLOPs** — inside a 2–3e20 budget. On 8×H100 in bf16 the
-~200B-token pretrain is roughly **one overnight run**. The real cost sinks are one-time **teacher-logit
-precompute** (~30%) and **data-mix ablations** (~24%), not the flagship train. Full campaign (precompute →
-baseline → 2–3 ablations → final run → post-train) ≈ **3–6 × 24h sessions on 8×H100.** See
-[COMPUTE.md](COMPUTE.md) for the hardware options (we don't have 8×H100 on Newton yet).
+## 6. Compute / time
 
-## 5. First milestone (de-risk before the full spend)
+6·N·D with N ≈ 1.3e8, D ≈ 1–2e11 ≈ **~1e20 FLOPs** — well inside budget. The new dominant cost is **teacher
+trace generation + rejection sampling** (running Qwen3-1.7B / R1-Distill-1.5B over problem banks, keeping only
+correct + short traces) — this *replaces* the old logit-precompute line. Overnight-ish pretrain on 8×H100; the
+campaign cost is trace generation + ablations. See [COMPUTE.md](COMPUTE.md).
 
-1. **Pin the eval harness** — fixed commonsense suite (HellaSwag, ARC-e/c, PIQA, WinoGrande, OBQA, CSQA);
-   re-run SmolLM2-135M on it ourselves. Never compare to quoted aggregates (different task sets).
-2. **Baseline pretrain — no KD** — ~130M arch, ~100–150B tokens of the Nemotron-CC-HQ / DCLM / FineWeb-Edu
-   mix, WSD. Goal: land within a couple points of SmolLM2-135M. Proves data + arch + infra.
-3. **Add KD on top — attribute the lift** — identical config + offline logit-KD from the ~1–2B teacher. If
-   the commonsense mean moves meaningfully → distillation thesis validated at our scale. If not → we spent
-   little and learned the real answer.
+## 7. Milestones (de-risk before the full spend)
 
-This ordering isolates the one unproven variable (KD below 330M) as a cheap A/B, and never conflates a
-data-mix win with a distillation win. **If the baseline can't reach SmolLM2, no KD will** — better to learn
-that on a half-budget run.
+1. **Pin the reasoning eval harness**; re-run MobileLLM-R1-140M ourselves ([TARGETS.md](TARGETS.md)).
+2. **Reasoning-tilted base** (~130M, compact vocab, ~100–150B tok). Prove the substrate + infra.
+3. **The one A/B that matters — short-CoT vs long-CoT distillation** on identical bases. Answers "does short-CoT
+   clear MobileLLM-R1 at 140M?" cheaply. *(The de-risk question is short-vs-long CoT — **not** does-RL-help; RL
+   is demoted.)*
+4. *(Stretch, parallel)* looped-reasoning prototype.
 
-## 6. Risks
+## 8. Risks
 
 | severity | risk | mitigation |
 |---|---|---|
-| **High** | **Chasing the wrong axes** (MMLU/GSM8K/long-CoT) — the most expensive failure | keep them off the scoreboard; report only for no-regression |
-| High | **Does logit-KD help at 130M?** (the biggest uncertainty — tested only ≥330M) | milestone-3 A/B answers it cheaply; fallback = data + post-train win |
-| Medium | **Data-quality edge shrinks at 130M** — our 200B-vs-2T token deficit may be hard to erase with quality alone | raises the burden on KD; lean on Nemotron-CC-HQ + decay-phase quality |
-| Medium | **Teacher/student vocab mismatch** breaks full soft-label KD | lock the student to the teacher's BPE early |
-| Low | **Throughput / infra on PyTorch** | FSDP2 + flash-attn + bf16 on 8×H100 is standard, not a research risk |
+| **High** | **capacity wall** — GSM8K may cap in the 20s no matter the recipe | pick low-base/high-headroom axes (MATH-500, unreported logic); short-CoT + compact vocab for max reasoning params |
+| High→Med | **RL doesn't help at 130M** (likely) | don't stake the headline on it; distillation is the engine |
+| Medium | **long-CoT traces don't fit 130M** | compress + rejection-sample; measure trace lengths locally |
+| Medium | **looped-reasoning unproven ≤200M** | keep as optional prototype, not plan-of-record |
+| Medium | **contamination inflates a "win"** | decontaminate vs test sets; report the check |
+| Low | throughput / infra on PyTorch | FSDP2 + flash-attn + bf16 is standard, not a research risk |
 
 ---
 
-**Primary sources:** SmolLM2 (arXiv 2502.02737) · MobileLLM (2402.14905) / MobileLLM-R1 (2509.24945) ·
-Nemotron-CC (2412.02595) · open-sci-ref-0.01 (2509.09009) · Pretraining Distillation design space
-(2410.16215) · Scale or Reason? (2509.22193) · Small Model Learnability Gap (2502.12143) · Physics of LMs
-3.3 / knowledge capacity (2404.05405) · LFM2 (2511.23404) · Qwen3 (2505.09388) · Gemma 3 (2503.19786) ·
-SmolLM3 blog.
+**Primary sources:** MobileLLM-R1 (2509.24945) · small-model learnability gap (2502.12143) · Qwen3 (2505.09388)
+· DeepSeek-R1 (2501.12948) · Phi-4-mini-reasoning (2504.21233) · OpenR1 / OpenThoughts (2506.04178) · looped
+reasoning (2502.17416, 2510.25741) · knowledge capacity (2404.05405) · GRPO-at-0.5B (simpleRL-reason, HKUST).

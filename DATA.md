@@ -1,71 +1,81 @@
-# Data, teacher, and the distillation-dataset vetting
+# Data, teacher, and the reasoning-distillation recipe
 
-## Pretraining data mix (~200B tokens, WSD)
+> ⤴ **Superseded by [MASTER_PLAN.md](MASTER_PLAN.md) §4 (tokenizer) + §6 (data plan)** (the plan of record).
+> Kept as background; the master plan adds the Reasoning-Gym procedural corpus, concrete token counts, and the
+> verifier.
 
-**Stable phase (~160B tok):** anchor on **Nemotron-CC-HQ** (empirically #1 dataset at 130M scale, +5.6 MMLU
-vs DCLM) + **DCLM-baseline** (commonsense) + **FineWeb-Edu** (knowledge). Mix ≈ **78% web / 15% code
-(Stack-Edu) / 7% math (FineMath4+, MegaMath)**.
+## Pretrain mix — reasoning-tilted (~100–200B tok, WSD)
 
-**Decay phase (~40B tok):** shift to quality — ≈ **60% web / 22% code / 15% math (+OpenMathReasoning) / 3%
-Cosmopedia-v2** + a slice of instruction data.
+A 130M model has no tokens to waste on trivia. The pretrain buys a **language floor + a reasoning substrate**,
+tilted far harder toward math/code than a generalist would.
 
-| dataset | role | license notes |
-|---|---|---|
-| **Nemotron-CC / -CC-HQ** | primary web anchor | NVIDIA Open Data License (not CC-BY); fine to train on, track for weight release |
-| **DCLM-baseline** | commonsense web | permissive |
-| **FineWeb-Edu** | educational/knowledge web | ODC-BY |
-| **Stack-Edu** | code | permissive (check subsets) |
-| **FineMath / MegaMath / OpenMathReasoning** | math | permissive; verify per-set |
-| **Cosmopedia-v2** | synthetic textbooks (decay) | permissive |
-| **SmolTalk** (+ filtered) | SFT | permissive |
+**Stable phase:** language floor from filtered web (DCLM-baseline / FineWeb-Edu / Nemotron-CC-HQ) blended with
+a **heavy math+code diet from the start** (OpenMathReasoning problems, FineMath4+ / MegaMath, Stack-Edu). Target
+mix ≈ **~45–55% web / ~25–30% code / ~20–25% math** — math and code weighted far above a generalist's ~15/7.
 
-## The teacher — CLOSE, not frontier (the key decision)
+**Decay phase:** shift almost entirely to quality reasoning — math/code/logic + short-CoT traces + a slice of
+instruction data. Linear LR decay to ~0.
 
-For **offline top-k logit KD**, the optimal teacher is **Qwen3-1.7B or Llama-3.2-1B** — a strong but *close*
-model, **not** a 30B+ frontier model.
+## Tokenizer — compact, reasoning-tuned (a decisive early call)
 
-- A 130M student is ~7–13% of a 1–2B teacher — right at the empirical effectiveness floor (**student should
-  be ≥ ~10% of the teacher**). A frontier teacher widens the capacity gap and **helps less**.
-- The teacher must share the student's **tokenizer** (pick the teacher's 49k BPE first) so full soft-label
-  KD works without a lossy vocab-projection hack.
-- Method: precompute the converged teacher's **top-k logits** (top-0.95, k≈50) over the corpus once; train
-  the student with **KL loss, α≈0.9**, under WSD.
+**Decision: a compact ~32k BPE — English + code + math, with single-digit number tokenization — NOT the
+teacher's 128–151k vocab.** *(Judgment call; veto if you disagree — it changes the arch.)*
 
-**This directly refutes the "use the best models" instinct** — for a 100M student, GPT-5.5/Claude-scale
-teachers are the *wrong* choice.
+- **Why:** our decisive lever is *trace* distillation (SFT on the teacher's generated **text**), which does
+  **not** require a shared tokenizer — so we're free to drop the giant vocab. At d_model ≈ 576, a 151k tied
+  embedding ≈ **87M params (~2/3 of a 130M budget)**; a 32k embedding ≈ **18M**. Every param not spent on an
+  embedding table is spent on **reasoning depth**. This is a concrete edge over MobileLLM-R1, which carried the
+  128k Llama vocab and paid for it in layers.
+- **Single-digit numbers** materially help arithmetic (a known math-reasoning trick).
+- **Trade-offs we accept:** (a) no vocab-level logit-KD — fine, logit-KD is demoted; (b) no same-tokenizer
+  reference model; (c) slightly longer sequences on number-heavy text — worth it for arithmetic.
 
-## Distillation-dataset vetting (why the "frontier trace" datasets are mostly wrong)
+## The teacher — CLOSE and reasoning-strong (Apache/MIT)
 
-We surveyed ~14 HuggingFace "frontier distillation" datasets (GPT-5.5 / Fable-5 / GLM / Claude traces). Two
-problems recur, and both matter more than the model name in the title:
+| teacher | params | why | license | vocab |
+|---|---|---|---|---|
+| **Qwen3-1.7B** | 1.7B | strong math/code + thinking mode; GSM8K 75.4 / MATH 43.5 base | Apache 2.0 | 151,669 |
+| **DeepSeek-R1-Distill-Qwen-1.5B** | 1.5B | best long-CoT math traces (MATH ~84) — **compress before use** | MIT | ~151,936 |
+| Qwen3-0.6B | 0.6B | optional cheaper trace source | Apache 2.0 | 151,669 |
 
-1. **Trace length backfires at 100M.** Even the *legit* reasoning sets have enormous traces — e.g.
-   `Jackrong/GLM-5.1-Reasoning-1M` averages 4.5k tokens (math subset **28k**, P95 64k). A 130M model
-   physically can't represent these; feeding them *degrades* it (capacity-gap backfire). Usable only if
-   heavily filtered to short, clean traces.
-2. **Provenance / fit.** Most are (a) **agentic tool-use** traces (`Fable-5-traces`: 81% Bash/Edit calls;
-   `GLM-5.2-Agent`) — off-target, a 130M model can't do agentic tool-use; or (b) **fake/synthetic**
-   (`claude_mythos_distilled_25k` self-admits "Not real Claude outputs"; `GPT-5.5-Thinking-Max` frames
-   itself as "god-level recursive seed AI") — unusable; or (c) **unverified scraped mixes** (the
-   `Sonnet-Opus-...-mega` aggregate — "raw API scraping," unverifiable).
+A 130M student is ~7–13% of a 1–2B teacher — right at the empirical effectiveness floor (**student ≥ ~10% of
+teacher**). A frontier (30B+) teacher *widens the capacity gap and helps less* — distillation scaling laws show
+an over-capable teacher can *degrade* a tiny student (U-shaped regime). Because we **trace-distill**, the
+tokenizer mismatch between our compact vocab and the teacher's is a non-issue.
 
-**The one worth filtering:** `clzoro/Claude-Distills` (real Claude Sonnet/Opus 4.6, reasoning+instruction,
-deduped, MIT) — usable *as a SFT-stage ingredient after filtering to short traces*, with an Anthropic-ToS
-caveat since we ship weights.
+## The decisive lever — short-CoT reasoning distillation + rejection sampling
 
-### The 10-second rubric for any distillation dataset
+1. **Generate** verifiable reasoning traces with the teacher over math/code/logic problem banks (NuminaMath,
+   GSM8K/MATH train, code tasks, logic templates).
+2. **Rejection-sample: keep only correct traces** (answer-checked / unit-tested). Cheap, huge quality lever;
+   universal in MobileLLM-R1 / Phi-4-mini / OpenMathReasoning.
+3. **Keep them SHORT:** enforce a tight token budget and **compress** long R1-style traces (Compress-Distill
+   style) so a 130M model can actually represent them. **Measure trace token lengths locally — don't assume.**
+4. **Mix short:long ≈ 4:1** ("Mix Distillation", 2502.12143) — short-heavy beats either alone.
+5. **Curriculum:** easy→hard, with gradually growing trace length (MobileLLM-R1's proven move).
+6. **SFT** the student on this corpus with standard next-token loss (no logit matching needed).
 
-1. **Real?** verifiable teacher + reputable uploader (not "god-level seed" / "mythos" / synthetic).
-2. **Fit?** reasoning/instruction — **not** agentic tool-use.
-3. **Short enough?** traces a 130M can represent (the make-or-break filter).
-4. **Clean license?** Apache/MIT/CC-BY and ToS-compatible (we ship weights).
-5. **Relevant domain?** general / math reasoning, not DevOps / roleplay.
+## RL (RLVR / GRPO) — optional polish, not the engine
 
-Most community "frontier distill" datasets fail #1, #2, or #3.
+Run *only* as an honest A/B on top of a strong SFT'd base, on verifiable rewards (answer-checkable math/code).
+**Expect little or no gain at 130M** — Meta: SFT 74.0 vs RL 57.0 at 950M; verified RLVR floor ~0.5B; reward
+sparsity worsens as params shrink (a 130M base rarely samples a correct trace to reward). If flat, drop it —
+the story is distillation, not RL.
+
+## Distillation-dataset vetting — the 10-second rubric
+
+1. **Real?** verifiable teacher, reputable uploader (not "god-level seed" / "mythos" / synthetic).
+2. **Verifiable domain?** math/code/logic with checkable answers — **not** agentic tool-use or roleplay.
+3. **Short enough / compressible?** the make-or-break filter at 130M.
+4. **Correct?** rejection-sample; never train on unverified traces.
+5. **Clean license?** Apache/MIT/CC-BY and ToS-compatible (we ship weights).
+
+Ready-made trace sets (OpenR1-Math-220k, OpenThoughts-114k, OpenMathReasoning, OpenCodeReasoning-2) are all
+**long-CoT** — usable only **compressed + rejection-filtered**. Expect to **generate our own short-CoT traces**
+as the primary source; published avg-trace-lengths are unreliable, so measure before feeding.
 
 ## Bottom line
 
-The decisive distillation lever is **offline logit-KD from a close ~1–2B teacher during pretraining**, not
-SFT on frontier traces. Frontier-trace SFT is at best a **secondary, heavily-filtered** post-train ingredient
-(`Claude-Distills`, short-filtered). **Data quality (Nemotron-CC-HQ + the decay-phase mix) is a co-equal
-lever** — possibly the dominant one at 130M, where KD's marginal benefit is unproven.
+The win is **short, correct, verifiable reasoning traces from a close ~1–2B teacher**, on a reasoning-tilted
+base with a compact vocab. Data quality (short-CoT + rejection sampling) is the **dominant** lever; RL is a
+maybe; logit-KD and long-CoT are out.
