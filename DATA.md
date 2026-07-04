@@ -30,18 +30,32 @@ teacher's 128–151k vocab.** *(Judgment call; veto if you disagree — it chang
 - **Trade-offs we accept:** (a) no vocab-level logit-KD — fine, logit-KD is demoted; (b) no same-tokenizer
   reference model; (c) slightly longer sequences on number-heavy text — worth it for arithmetic.
 
-## The teacher — CLOSE and reasoning-strong (Apache/MIT)
+## The teacher — current-best AND close (2026 refresh)
 
-| teacher | params | why | license | vocab |
-|---|---|---|---|---|
-| **Qwen3-1.7B** | 1.7B | strong math/code + thinking mode; GSM8K 75.4 / MATH 43.5 base | Apache 2.0 | 151,669 |
-| **DeepSeek-R1-Distill-Qwen-1.5B** | 1.5B | best long-CoT math traces (MATH ~84) — **compress before use** | MIT | ~151,936 |
-| Qwen3-0.6B | 0.6B | optional cheaper trace source | Apache 2.0 | 151,669 |
+Llama-405B (via OpenMathInstruct-2, 2024) is retired as our ceiling — it's dated *and* a 0.03% far-teacher.
+The 2026 sweet spot is a **current strong ~3–9B reasoner generating SHORT, verified traces**: newer *and*
+~50–200× closer to the student than 405B. Because we **trace-distill** (SFT on the teacher's text, re-tokenized
+with our own 32k vocab), the **teacher's vocabulary is irrelevant** — the giant Gemma-4 (262k) / Qwen3.5 (248k)
+vocabs are a non-issue for us.
 
-A 130M student is ~7–13% of a 1–2B teacher — right at the empirical effectiveness floor (**student ≥ ~10% of
-teacher**). A frontier (30B+) teacher *widens the capacity gap and helps less* — distillation scaling laws show
-an over-capable teacher can *degrade* a tiny student (U-shaped regime). Because we **trace-distill**, the
-tokenizer mismatch between our compact vocab and the teacher's is a non-issue.
+| teacher | params | license | short-trace fit |
+|---|---|---|---|
+| **Nemotron Nano 2 9B** | 9B | NVIDIA Open (permits distillation) | **natively short** via a hard *thinking-budget* cap → correct short traces without discarding 95% of a long-CoT set |
+| **Ministral 3 8B Reasoning** | ~8B | Apache 2.0 | top small-model reasoning scores, fully permissive |
+| **Gemma 4 E4B (thinking)** | 4.5B | **Apache 2.0** | current, close to student scale, native `<think>` toggle |
+| **Qwen3.5-4B (thinking)** | 4B | Apache 2.0 | current best <5B; long-by-default → cap generation |
+| **SmolLM3-3B** | 3B | Apache 2.0 | closest scale to a tiny student; fully open |
+
+**Retire Llama; don't pick blind — run a cheap 3-way bake-off** (it *is* cheap at 135M): (A) small/close
+(Qwen3.5-4B or SmolLM3-3B), (B) strong/short (Nemotron Nano 2 9B or Ministral 3), (C) Mix A+B ≈1:4
+(Mix-Distillation, 2502.12143). The teacher-size question is genuinely **open at 135M** — the two most relevant
+2026 papers disagree (2502.12143: smaller for tiny students; 2604.08880: stronger is fine) — but our
+**≤256-token filter neutralizes the main gap mechanism** (long-CoT stylistic drift), so a strong 4–9B
+short-filtered teacher is a real contender. The A/B decides it, not argument. *(Teacher inference is GPU-gated.)*
+
+**Regenerate short traces — do NOT filter long ones down.** Evidence (2606.21704): natively-short training beats
+compressing long traces, and it sidesteps most teacher-license traps. **Math is the riskiest domain to shorten**
+(it needs precise intermediate values) — keep math traces on the long side of the budget and verify hard.
 
 ## The decisive lever — short-CoT reasoning distillation + rejection sampling
 
