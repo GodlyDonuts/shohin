@@ -1,18 +1,31 @@
 #!/usr/bin/env python
-"""Stream an HF dataset, tokenize with the Shohin tokenizer, write zstd-compressed
-uint16 shards. Storage-lean: raw text never lands; only compressed token shards.
+"""Stream an HF dataset, QUALITY-FILTER + DECONTAMINATE, tokenize with the Shohin
+tokenizer, and write zstd-compressed uint16 shards. Storage-lean: raw never lands.
 
-vocab 32768 fits in uint16 (< 65535). Shards are `shard_NNNNN.u16.zst`.
+Quality controls (master plan §6.5 — "highest quality possible"):
+  --decontam-grams evalgrams.pkl  drop any doc containing an eval 13-gram
+  --min-chars N                   drop trivially short docs
+  --lang en --lang-field language keep only that language (where the field exists)
 
-    python tokenize_shards.py --tokenizer artifacts/shohin-tok-32k.json \\
-        --dataset HuggingFaceTB/finemath --config finemath-4plus --text-col text \\
-        --out-dir shards/finemath --shard-tokens 100000000 --max-tokens 2000000000
+Writes a manifest.json with token counts and per-filter drop counts (audit trail).
+vocab 32768 fits uint16. Shards: shard_NNNNN.u16.zst.
+
+    python tokenize_shards.py --tokenizer tok.json --dataset HuggingFaceTB/finemath \\
+        --config finemath-4plus --text-col text --lang en \\
+        --decontam-grams evals/evalgrams.pkl --out-dir shards/finemath4 \\
+        --shard-tokens 100000000 --max-tokens 4000000000
 """
-import argparse, os
+import argparse, os, json, re, pickle
 import numpy as np
 import zstandard as zstd
 from tokenizers import Tokenizer
 from datasets import load_dataset
+
+
+def _grams(text, n):
+    w = re.findall(r"\w+", text.lower())
+    for i in range(len(w) - n + 1):
+        yield " ".join(w[i:i + n])
 
 
 def main():
@@ -26,6 +39,10 @@ def main():
     ap.add_argument("--shard-tokens", type=int, default=100_000_000)
     ap.add_argument("--max-tokens", type=int, default=0, help="0 = unlimited")
     ap.add_argument("--eos", default="<|endoftext|>")
+    ap.add_argument("--decontam-grams", default=None)
+    ap.add_argument("--min-chars", type=int, default=200)
+    ap.add_argument("--lang", default=None)
+    ap.add_argument("--lang-field", default="language")
     a = ap.parse_args()
 
     os.makedirs(a.out_dir, exist_ok=True)
@@ -33,44 +50,64 @@ def main():
     assert tok.get_vocab_size() <= 65535, "vocab exceeds uint16"
     eos_id = tok.token_to_id(a.eos)
 
+    S = gram_n = None
+    if a.decontam_grams:
+        d = pickle.load(open(a.decontam_grams, "rb"))
+        S, gram_n = d["grams"], d["n"]
+
     kw = dict(split=a.split, streaming=True)
     if a.config:
         kw["name"] = a.config
     ds = load_dataset(a.dataset, **kw)
 
     cctx = zstd.ZstdCompressor(level=3)
-    buf, shard_idx, total = [], 0, 0
+    buf, shard, tok_total = [], 0, 0
+    seen = kept = n_short = n_lang = n_contam = 0
 
     def flush():
-        nonlocal buf, shard_idx
+        nonlocal buf, shard
         if not buf:
             return
         arr = np.asarray(buf, dtype=np.uint16)
-        path = os.path.join(a.out_dir, f"shard_{shard_idx:05d}.u16.zst")
-        with open(path, "wb") as f:
+        p = os.path.join(a.out_dir, f"shard_{shard:05d}.u16.zst")
+        with open(p, "wb") as f:
             f.write(cctx.compress(arr.tobytes()))
-        raw = arr.nbytes
-        comp = os.path.getsize(path)
-        print(f"[shard] {path}  {len(arr):,} tok  {comp/1e6:.1f}MB "
-              f"({raw/comp:.2f}x zstd)")
-        shard_idx += 1
+        print(f"[shard] {p} {len(arr):,} tok {os.path.getsize(p)/1e6:.1f}MB", flush=True)
+        shard += 1
         buf = []
 
     for ex in ds:
+        seen += 1
         txt = ex.get(a.text_col) or ""
-        if not txt:
+        if len(txt) < a.min_chars:
+            n_short += 1
+            continue
+        if a.lang:
+            lv = ex.get(a.lang_field)
+            if lv is not None and str(lv).lower() != a.lang.lower():
+                n_lang += 1
+                continue
+        if S is not None and any(g in S for g in _grams(txt, gram_n)):
+            n_contam += 1
             continue
         ids = tok.encode(txt).ids
         buf.extend(ids)
         if eos_id is not None:
             buf.append(eos_id)
-        total += len(ids) + (1 if eos_id is not None else 0)
+        tok_total += len(ids) + (1 if eos_id is not None else 0)
+        kept += 1
         if len(buf) >= a.shard_tokens:
             flush()
-        if a.max_tokens and total >= a.max_tokens:
+        if a.max_tokens and tok_total >= a.max_tokens:
             break
     flush()
-    print(f"[done] {total:,} tokens -> {shard_idx} shards in {a.out_dir}")
+
+    manifest = dict(dataset=a.dataset, config=a.config, tokens=tok_total, shards=shard,
+                    seen=seen, kept=kept, dropped_short=n_short,
+                    dropped_lang=n_lang, dropped_contam=n_contam)
+    with open(os.path.join(a.out_dir, "manifest.json"), "w") as f:
+        json.dump(manifest, f, indent=2)
+    print("[done]", json.dumps(manifest))
 
 
 if __name__ == "__main__":
