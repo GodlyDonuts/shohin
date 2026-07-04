@@ -2,9 +2,18 @@
 
 > **Source:** a Gemini-authored plan the user shared (formatting/LaTeX normalized for readability; substance
 > unchanged). This is preserved for reference. Our adapted, goals-aligned version is in
-> [GEMINI_PLAN_ADAPTED.md](GEMINI_PLAN_ADAPTED.md). **Several component names below (CARVE, MASA, AVSPO, ISPO,
-> "Gated DeltaNet-2", "Compressed Symbolic Thought") could not be verified against known literature and may be
-> Gemini coinages — treat as unverified until checked.**
+> [GEMINI_PLAN_ADAPTED.md](GEMINI_PLAN_ADAPTED.md).
+>
+> **Sources verified (2026-07)** — I initially flagged these as possibly fabricated; that was **wrong**,
+> corrected after web-checking. They are real, recent papers: **Gated DeltaNet-2**
+> ([arXiv 2605.22791](https://arxiv.org/abs/2605.22791), Hatamizadeh/Choi/Kautz, NVIDIA, May 2026,
+> [official code](https://github.com/NVlabs/GatedDeltaNet-2)) · **CARVE**
+> ([arXiv 2606.27229](https://arxiv.org/pdf/2606.27229), S. Dutta, Jun 2026) · **MASA** = "Share Your Attention"
+> ([arXiv 2508.04581](https://arxiv.org/abs/2508.04581), AAAI) · **AVSPO**
+> ([arXiv 2605.21125](https://arxiv.org/abs/2605.21125), ICML 2026) · **ISPO** (Jun 2026, unchecked). Only
+> **Compressed Symbolic Thought** is a bespoke framework, not a validated method — and it is the source of the
+> fatal flaw. **Caveat that still holds: all are 2025–26 and validated at 0.5–1.3B+, none at 135M — real ≠
+> proven at our scale.**
 
 *A Production-Ready Engineering Playbook for Sub-Quadratic Infinite-Horizon Algorithmic Execution.*
 

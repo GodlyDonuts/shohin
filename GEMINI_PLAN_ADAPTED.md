@@ -25,7 +25,7 @@ a prompt.
 
 | Gemini idea | why it's good | how we adopt it | status |
 |---|---|---|---|
-| **Linear-attention + local-attention hybrid** (CARVE/KDA/Gated-DeltaNet + MLA) | a *real* 2025–26 SoTA direction — **Qwen3.5 itself is a Gated-DeltaNet hybrid**; cheap long context | ablation-gated architecture option; if adopted use **proven** primitives (Gated DeltaNet / Mamba-2 hybrid), not the unverified "CARVE". Default stays our proven GQA transformer. We don't need 1M context (tasks are short) → this is efficiency/depth, not a requirement | **bet** |
+| **Linear-attention + local-attention hybrid** (CARVE/KDA/Gated-DeltaNet + MLA) | a *real* 2025–26 SoTA direction — **Qwen3.5 itself is a Gated-DeltaNet hybrid**; cheap long context | ablation-gated option; if adopted prefer **[Gated DeltaNet-2](https://arxiv.org/abs/2605.22791)** (official NVlabs code, validated 1.3B) over the newer single-author **CARVE** ([2606.27229](https://arxiv.org/pdf/2606.27229)). Default stays our proven GQA transformer. We don't need 1M context (tasks are short) → efficiency/depth, not a requirement | **bet** |
 | **Weight-shared depth** (MASA / layer folding) | "depth without params" — *exactly* our looped-reasoning thesis | **elevate** — adaptive atom-sharing is a stronger version of our depth-via-recurrence bet | **bet (upgraded)** |
 | **Verifier-guided test-time search** (verifier + best-of-N; optional MCTS/SMC) | the single biggest small-model multiplier (TinyGSM: 125M + verifier → 63% GSM8K) | **keep — already our verifier@16 plan.** Default = best-of-N + same-size verifier; MCTS/SMC = advanced option for verifiable tasks | **core** |
 | **Critic-free GRPO + AVSPO** (advantage-collapse fix) | clean VRAM-light RL; AVSPO is a genuinely useful stabilizer | keep as our **(demoted) RL polish** stage; fold in AVSPO/ISPO *if* we run GRPO. Evidence still says RL is polish, not engine | **core (as polish)** |
@@ -63,9 +63,12 @@ is. Synthesis: **proven base by default; Gemini's best ideas as ablation-gated b
 
 ## Concrete changes to the master plan
 
-1. **Architecture:** add "weight-shared depth (MASA/looped)" and "linear-attention hybrid" as named
-   ablation-gated bets — *verify the unverified primitives (CARVE/MASA) against real literature first.*
-2. **Post-training:** fold **AVSPO** advantage-collapse mitigation into the optional GRPO stage.
+1. **Architecture:** add "weight-shared depth (MASA, [2508.04581](https://arxiv.org/abs/2508.04581))" and
+   "linear-attention hybrid ([Gated DeltaNet-2](https://arxiv.org/abs/2605.22791))" as named ablation-gated
+   bets. *The primitives are verified real — but all are 2025–26, validated at ≥0.5–1.3B, none at 135M; gate
+   them at the 30M "Mame" proxy, and prefer GDN-2 (official code) over the newer CARVE.*
+2. **Post-training:** fold **AVSPO** ([2605.21125](https://arxiv.org/abs/2605.21125), ICML 2026,
+   advantage-collapse mitigation, tested 0.5–14B) into the optional GRPO stage.
 3. **Data:** add a **self-correction / bug-injection** trace slice (Gemini's curriculum stage 2), generated +
    verified.
 4. **Non-negotiable:** keep the 32k tokenizer, NL short-CoT, and **NL logic / riddles as first-class** —
