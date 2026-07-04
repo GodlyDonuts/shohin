@@ -125,8 +125,17 @@ Deep-thin, because depth carries reasoning at small scale (MobileLLM finding; Sm
 | Params | **≈132M** (18.9M embed + 113.3M blocks) | Headline: "fewer params than SmolLM2-135M" |
 
 **Ablation-gated extras** (default OFF; each earns entry only by winning at 30M proxy scale by a clear margin,
-§9): value embeddings (speedrun trick), multi-token-prediction aux head, Ouro-style looped middle block
-(weight-shared ×2 — recurrence-buys-reasoning is exactly the thesis, but it's research risk).
+§9): value embeddings (speedrun trick), multi-token-prediction aux head, plus two verified from the Gemini-plan
+review ([GEMINI_PLAN_ADAPTED.md](GEMINI_PLAN_ADAPTED.md)):
+
+- **Weight-shared depth** — Ouro-style looped block, or the richer **MASA** dictionary-atom sharing
+  ([arXiv 2508.04581](https://arxiv.org/abs/2508.04581)). ***The* reasoning bet:** reasoning is depth-bound, so
+  this buys effective depth (~30 logical from ~10 physical blocks) without spending params. Highest reasoning
+  upside; unproven at 135M and can destabilize training → gated.
+- **Linear-attention hybrid** — Gated DeltaNet-2 ([2605.22791](https://arxiv.org/abs/2605.22791), official
+  code) ± CARVE, with sparse full-attention layers. Buys **context length we don't need** (our tasks are short)
+  and its fixed-state compression **risks precise-math fidelity** → kept only as a throughput/efficiency
+  ablation, **not** a reasoning play. Low priority for a short-context reasoner.
 
 **Explicitly rejected:** MoE (routing overhead + MFU loss at 100M-total scale, and per-active-param framing
 invites goalpost accusations vs. dense SmolLM2); from-scratch framework (fork modded-nanogpt, port GQA/RoPE/SWA
@@ -248,7 +257,10 @@ model.** Report pass@1 and verifier@16 as separate, clearly labeled numbers.
 
 **RLVR / GRPO (H61–H67).** verl (or TRL+vLLM) with rewards from RG verifiers + exact-match GSM checking + our
 own verifiers. Curriculum: start at easy configs (arithmetic, propositional logic), ramp difficulty on a fixed
-schedule. Strict correctness reward; format bonus capped low to prevent reward hacking. Precedent at exactly
+schedule. Strict correctness reward; format bonus capped low to prevent reward hacking. **AVSPO**
+([2605.21125](https://arxiv.org/abs/2605.21125), ICML 2026) is folded in to fix GRPO *advantage collapse* —
+all-correct or all-wrong groups give zero gradient under binary verifiable rewards; it injects virtual reward
+samples to restore the signal (−58–63% collapse, +4–6pp across 0.5–14B). Precedent at exactly
 this scale: L20-Edu-135M ran RLVR on GSM8K at 134.5M params. **Expectation discipline: RLVR is polish
 (single-digit to low-teens relative gains + robustness), not the engine — the engine is §6.** RG verifiers are
 what make RLVR well-posed here (clean rewards + curriculum), which is why it earns a scheduled slot despite
@@ -304,7 +316,8 @@ The run is won here. Budget: ~$150–400 in rentals; everything else is CPU/free
 3. Squared-ReLU vs SwiGLU; z-loss vs softcap
 4. Depth check: 32×576 vs 28×640 at matched params
 5. Two anneal-fork mix ratios (math/procedural share)
-6. Extras gate: value embeddings, MTP, looped block — in only on a clear proxy win
+6. Extras gate: value embeddings, MTP, **weight-shared depth (looped / MASA)**, and — efficiency only —
+   **GDN-2 linear-attn hybrid** — in only on a clear proxy win; **prioritize depth-sharing** (the reasoning lever)
 7. SFT format pilot: NL-CoT vs PoT vs dual on a 30M student — sets the H57 priors
 
 **T-1w — Systems rehearsal**
