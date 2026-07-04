@@ -23,15 +23,15 @@ TRAIN_FAMILIES = [
     "gcd", "lcm", "prime_factorization", "fraction_simplification", "count_primes",
     "count_bits", "number_sorting", "number_filtering", "base_conversion",
     "power_function", "products", "simple_equations", "polynomial_equations",
-    # logic / deduction
-    "propositional_logic", "syllogism", "aiw", "family_relationships", "self_reference",
+    # logic / deduction  (propositional_logic dropped: RG returns answer=None for it)
+    "syllogism", "aiw", "family_relationships", "self_reference",
     # short algorithmic / string
     "letter_counting", "spell_backward", "word_sorting", "caesar_cipher",
     "group_anagrams", "isomorphic_strings", "string_insertion",
 ]
 # Reserved for generalization eval — NEVER emitted into train.
 HELDOUT_FAMILIES = [
-    "knights_knaves", "countdown", "zebra_puzzles", "graph_color", "advanced_geometry",
+    "knights_knaves", "countdown", "zebra_puzzles", "advanced_geometry",
 ]
 
 
