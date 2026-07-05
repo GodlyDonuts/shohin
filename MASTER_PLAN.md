@@ -128,10 +128,18 @@ Deep-thin, because depth carries reasoning at small scale (MobileLLM finding; Sm
 §9): value embeddings (speedrun trick), multi-token-prediction aux head, plus two verified from the Gemini-plan
 review ([GEMINI_PLAN_ADAPTED.md](GEMINI_PLAN_ADAPTED.md)):
 
-- **Weight-shared depth** — Ouro-style looped block, or the richer **MASA** dictionary-atom sharing
-  ([arXiv 2508.04581](https://arxiv.org/abs/2508.04581)). ***The* reasoning bet:** reasoning is depth-bound, so
-  this buys effective depth (~30 logical from ~10 physical blocks) without spending params. Highest reasoning
-  upside; unproven at 135M and can destabilize training → gated.
+- **Weight-shared / recurrent depth — *the* reasoning bet (flagship).** Reasoning is depth-bound, so recurring
+  a shared block buys effective depth (~30 logical from ~10 physical) without spending params. Two flavors:
+  - *Fixed depth:* Ouro-style looped block / **MASA** dictionary-atom sharing ([2508.04581](https://arxiv.org/abs/2508.04581)).
+  - *Adaptive "extended thinking":* **latent-space recurrent depth** — recur a *variable* number of iterations
+    per token (harder → more), the Huginn/recurrent-depth ([2502.05171](https://arxiv.org/abs/2502.05171)) /
+    Coconut ([2412.06769](https://arxiv.org/abs/2412.06769)) / Ouro lineage. **This is a test-time-compute knob
+    that gives extended thinking WITHOUT emitting long token chains — sidestepping the small-model long-CoT
+    learnability wall (our biggest reasoning constraint).** A second multiplier, orthogonal to verifier+best-of-N.
+  Keep it **additive** to the visible token-CoT — latent recursion adds *internal* compute, it does not replace
+  the `<think>` trace, so we keep auditable / verifiable / decontaminatable reasoning + the SFT data. Highest
+  reasoning upside of anything here; **unproven at 135M** and recurrent-depth training is unstable
+  (truncated-BPTT / curriculum) → gated, prove at 30M "Mame" proxy first.
 - **Linear-attention hybrid** — Gated DeltaNet-2 ([2605.22791](https://arxiv.org/abs/2605.22791), official
   code) ± CARVE, with sparse full-attention layers. Buys **context length we don't need** (our tasks are short)
   and its fixed-state compression **risks precise-math fidelity** → kept only as a throughput/efficiency
