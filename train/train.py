@@ -130,7 +130,7 @@ def main():
 
         if master and step % a.log_every == 0:
             dt = time.time() - t0
-            tps = tok_per_step * (step + 1) / dt
+            tps = tok_per_step * (step - start_step + 1) / dt
             rec = dict(step=step, loss=round(loss_acc, 4), lr=round(a.lr_muon * lr_scale, 5),
                        tok_per_s=int(tps), elapsed=round(dt, 1))
             print(f"step {step:>6} loss {loss_acc:.4f} lr {a.lr_muon*lr_scale:.4f} "
