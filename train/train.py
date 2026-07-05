@@ -58,6 +58,12 @@ def main():
     ap.add_argument("--fresh-opt", action="store_true",
                     help="resume model weights but RESET optimizer momentum (diagnostic: "
                          "isolates loaded-optimizer-state corruption from data-trajectory issues)")
+    ap.add_argument("--no-muon", action="store_true",
+                    help="disable Muon; put ALL params in AdamW (bisection: tests whether Muon's "
+                         "orthogonalized update is the divergence trigger)")
+    ap.add_argument("--gnorm-mult", type=float, default=8.0,
+                    help="pre-update guard: skip a step whose grad norm exceeds this multiple of "
+                         "its running EMA (catches a destabilizing batch before it lands; <=0 disables)")
     ap.add_argument("--data-seed", type=int, default=1337)
     a = ap.parse_args()
 
@@ -85,9 +91,14 @@ def main():
     if ddp:
         model = DDP(model, device_ids=[local])
 
-    muon_p, adam_p = split_params(raw)
-    opt_muon = Muon(muon_p, lr=a.lr_muon)
+    if a.no_muon:                    # pure-AdamW bisection: is Muon's orthogonalized update the trigger?
+        muon_p, adam_p = [], [p for p in raw.parameters() if p.requires_grad]
+    else:
+        muon_p, adam_p = split_params(raw)
+    opt_muon = Muon(muon_p, lr=a.lr_muon) if muon_p else None
     opt_adam = torch.optim.AdamW(adam_p, lr=a.lr_adam, betas=(0.9, 0.95), weight_decay=0.0)
+    if master and a.no_muon:
+        print("[opt] Muon DISABLED — all params on AdamW (bisection run)", flush=True)
 
     loader = ShardLoader(a.shard_dirs, cfg.seq_len, a.batch_size, rank, world, seed=a.data_seed)
 
@@ -99,7 +110,7 @@ def main():
         ck = torch.load(_cks[-1], map_location=device)
         raw.load_state_dict(ck["model"])
         if not a.fresh_opt:
-            if "opt_muon" in ck:
+            if "opt_muon" in ck and opt_muon is not None:
                 opt_muon.load_state_dict(ck["opt_muon"])
             if "opt_adam" in ck:
                 opt_adam.load_state_dict(ck["opt_adam"])
@@ -111,19 +122,21 @@ def main():
     logf = open(os.path.join(a.out, f"log_r{rank}.jsonl"), "a") if master else None
     t0 = time.time()
     tok_per_step = world * a.batch_size * a.grad_accum * cfg.seq_len
-    loss_ema, skips = None, 0
+    loss_ema, gnorm_ema, skips = None, None, 0
 
     for step in range(start_step, a.steps):
         if a.fresh_opt and step - warm0 < a.warmup:
             lr_scale = (step - warm0) / max(1, a.warmup)   # rewarmup the reset optimizer
         else:
             lr_scale = wsd_lr(step, a.steps, a.warmup)
-        for g in opt_muon.param_groups:
-            g["lr"] = a.lr_muon * lr_scale
+        if opt_muon is not None:
+            for g in opt_muon.param_groups:
+                g["lr"] = a.lr_muon * lr_scale
         for g in opt_adam.param_groups:
             g["lr"] = a.lr_adam * lr_scale
 
-        opt_muon.zero_grad(set_to_none=True)
+        if opt_muon is not None:
+            opt_muon.zero_grad(set_to_none=True)
         opt_adam.zero_grad(set_to_none=True)
         loss_acc = 0.0
         for micro in range(a.grad_accum):
@@ -146,13 +159,18 @@ def main():
         # Clipping on a skipped step is harmless (grads are zeroed next iter, no opt.step applied).
         gnorm = float(torch.nn.utils.clip_grad_norm_(raw.parameters(), a.clip))
         finite = (loss_acc == loss_acc) and loss_acc not in (float("inf"), float("-inf"))
-        spike = loss_ema is not None and loss_acc > 2.0 * loss_ema
-        if not finite or spike:
+        lspike = loss_ema is not None and loss_acc > 2.0 * loss_ema
+        # pre-update grad-norm guard: skip a step whose gradient is a large outlier vs its EMA,
+        # BEFORE it is applied. The loss-spike check only fires one step late (after the damage);
+        # this catches a single destabilizing batch at the right moment.
+        gspike = (a.gnorm_mult > 0 and gnorm_ema is not None and gnorm > a.gnorm_mult * gnorm_ema)
+        if not finite or lspike or gspike:
             skips += 1
             if master and (skips <= 5 or skips % 25 == 0):
-                ref = f"{loss_ema:.3f}" if loss_ema is not None else "n/a"
-                print(f"[skip] step {step} loss {loss_acc:.3f} gnorm {gnorm:.2f} (>2x ema {ref}) "
-                      f"skips={skips}", flush=True)
+                why = "nan" if not finite else ("gnorm" if gspike else "loss")
+                gref = gnorm_ema if gnorm_ema is not None else 0.0
+                print(f"[skip:{why}] step {step} loss {loss_acc:.3f} gnorm {gnorm:.2f} "
+                      f"(ema gnorm {gref:.2f}) skips={skips}", flush=True)
             if skips >= 300:
                 if master:
                     print(f"[guard] {skips} consecutive skips at step {step} -> ending run "
@@ -160,9 +178,11 @@ def main():
                 break
         else:
             skips = 0
-            opt_muon.step()
+            if opt_muon is not None:
+                opt_muon.step()
             opt_adam.step()
             loss_ema = loss_acc if loss_ema is None else 0.98 * loss_ema + 0.02 * loss_acc
+            gnorm_ema = gnorm if gnorm_ema is None else 0.98 * gnorm_ema + 0.02 * gnorm
 
         if master and step % a.log_every == 0:
             dt = time.time() - t0
@@ -174,9 +194,11 @@ def main():
             logf.write(json.dumps(rec) + "\n")
             logf.flush()
         if master and a.ckpt_every and step > 0 and step % a.ckpt_every == 0:
-            torch.save(dict(model=raw.state_dict(), opt_muon=opt_muon.state_dict(),
-                            opt_adam=opt_adam.state_dict(), cfg=cfg.__dict__, step=step),
-                       os.path.join(a.out, f"ckpt_{step:07d}.pt"))
+            _sd = dict(model=raw.state_dict(), opt_adam=opt_adam.state_dict(),
+                       cfg=cfg.__dict__, step=step)
+            if opt_muon is not None:
+                _sd["opt_muon"] = opt_muon.state_dict()
+            torch.save(_sd, os.path.join(a.out, f"ckpt_{step:07d}.pt"))
             for _o in sorted(_glob.glob(os.path.join(a.out, "ckpt_[0-9]*.pt")))[:-3]:
                 try:
                     os.remove(_o)
