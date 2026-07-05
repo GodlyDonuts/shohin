@@ -63,7 +63,9 @@ def main():
     ap.add_argument("--n", type=int, default=100)
     a = ap.parse_args()
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = ("cuda" if torch.cuda.is_available()
+              else "mps" if torch.backends.mps.is_available() else "cpu")
+    print(f"[eval] device={device}", file=sys.stderr)
     ck = torch.load(a.ckpt, map_location=device)
     cfg = GPTConfig(**ck["cfg"])
     model = GPT(cfg).to(device)

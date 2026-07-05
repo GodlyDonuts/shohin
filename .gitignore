@@ -35,3 +35,6 @@ hf_cache/
 
 # ── OS ─────────────────────────────────────────────────────────────
 .DS_Store
+
+# downloaded/derived data (tokenizer, evals, shards)
+artifacts/
