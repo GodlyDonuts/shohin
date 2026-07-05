@@ -55,13 +55,39 @@ any grad-norm threshold. A normal-magnitude gradient producing a catastrophic up
 benign gradient in a bad/ill-conditioned direction lands at full force) — or, less likely, a
 forward/backward numerical issue on that specific batch.
 
-## Current test — Muon bisection
-Job **678367**: `--no-muon` (all params on AdamW, Muon disabled), fresh-opt + rewarmup, seed 777
-from ckpt_6000. The data loader is optimizer-independent, so the batch at step ~6382 is identical.
-- If pure-AdamW **trains through 6382** with no cliff → **Muon is the trigger** → implement a Muon
-  trust-ratio update clamp (bound each update so ||update|| ≤ c·||weight||, c≈0.1–0.3) and re-enable.
-- If pure-AdamW **also cliffs at 6382** → not Muon → forward/backward numerics → cast lm_head
-  logits + softmax/cross-entropy to fp32 and strengthen z-loss.
+## Muon bisection — ALSO ruled out Muon
+Job 678367 (`--no-muon`, pure AdamW) cliffed at the **same** step 6382 with the same pattern. So the
+divergence is fully **optimizer-independent** (Muon AND AdamW). The trainer's loss-guard then froze
+the model, which did not recover — and the frozen, essentially-healthy model scored loss ~3.0 on
+every subsequent batch. fp32 loss was already in place (`model.py`: `logits.float()` before
+cross-entropy), so numerics were not it either.
+
+## ROOT CAUSE (confirmed) — 200M-token monodomain blocks + domain-shift shock
+Decoding the exact divergence batch (`pipeline/peek_batch.py`, token 199.8M in the seed-777 order)
+put it at the **end of `code_python/shard_00063`** — and shard 0 in that order is a **200M-token shard
+of pure Python code**. The loader shuffled *shard order* but read each shard's 200M tokens
+**contiguously**, so from the resume point the model trained on **200M consecutive tokens of pure
+code** (steps 6001–6381), over-specialized to code, then hit the finemath boundary at step 6382 and
+took a loss shock (2.67) it couldn't absorb. This explains everything:
+- optimizer/LR/momentum-independent → it's the data schedule, not the optimizer;
+- the frozen model scores ~3.0 on *math* → it's code-specialized, not damaged;
+- timing tracks the seed → the seed places the domain boundary at different steps (1337→~7500,
+  777→~6400);
+- decoded data is "clean" → because it *is* clean; the problem is the ordering, not the content.
+
+## FIX — domain-interleaved dataloader
+`train/data.py` rewritten to keep one continuous read stream **per domain** and assemble every batch
+round-robin across domains, so each batch is a code+math+web blend and the model never sees a
+200M-token monodomain block. This removes the domain-shift cliff and is standard good practice
+(mixed-domain batches train better — also a quality win for the final model). Verified locally: every
+batch blends all domains, correct shapes and x/y shift. Deployed as job **678379** (resume ckpt_6000,
+normal Muon config). Verification: stable loss with NO cliff well past the old danger zone.
+
+## Hardening retained (good regardless)
+- Grad-norm pre-update guard (`--gnorm-mult`, default 8×EMA) — skips genuine gradient outliers.
+- Loss-spike guard with no capitulation cap + non-finite skip + 300-skip circuit breaker.
+- Per-step grad-norm logging.
+- `--fresh-opt`, `--no-muon` diagnostic switches.
 
 ## Hardening retained regardless (not the fix, but keep)
 **Grad-norm pre-update guard** (`train/train.py`, `--gnorm-mult`, default 8.0): skips a step whose
