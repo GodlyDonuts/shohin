@@ -20,5 +20,5 @@ $BASE/miniforge3/bin/torchrun --standalone --nproc_per_node=$NG train.py \
   --size shohin --shard-dirs $SHARDS \
   --steps ${STEPS:-60000} --batch-size ${BS:-16} --grad-accum ${ACC:-16} \
   --warmup 2000 --lr-muon 0.02 --lr-adam 3e-3 \
-  --log-every 25 --ckpt-every ${CKPT:-1000} --out $BASE/train/flagship_out --resume
+  --log-every 10 --ckpt-every ${CKPT:-1000} --out $BASE/train/flagship_out --resume
 echo "[job] flagship block done (resubmit with --resume to continue)."
