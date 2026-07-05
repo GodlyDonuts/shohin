@@ -54,6 +54,7 @@ def main():
     ap.add_argument("--ckpt-every", type=int, default=2000)
     ap.add_argument("--out", default="ckpt")
     ap.add_argument("--compile", action="store_true")
+    ap.add_argument("--resume", action="store_true")
     a = ap.parse_args()
 
     ddp = "RANK" in os.environ
@@ -87,11 +88,24 @@ def main():
     loader = ShardLoader(a.shard_dirs, cfg.seq_len, a.batch_size, rank, world, seed=1337)
 
     os.makedirs(a.out, exist_ok=True)
+    import glob as _glob
+    start_step = 0
+    _cks = sorted(_glob.glob(os.path.join(a.out, "ckpt_[0-9]*.pt")))
+    if a.resume and _cks:
+        ck = torch.load(_cks[-1], map_location=device)
+        raw.load_state_dict(ck["model"])
+        if "opt_muon" in ck:
+            opt_muon.load_state_dict(ck["opt_muon"])
+        if "opt_adam" in ck:
+            opt_adam.load_state_dict(ck["opt_adam"])
+        start_step = ck["step"] + 1
+        if master:
+            print(f"[resume] {_cks[-1]} -> start step {start_step}", flush=True)
     logf = open(os.path.join(a.out, f"log_r{rank}.jsonl"), "a") if master else None
     t0 = time.time()
     tok_per_step = world * a.batch_size * a.grad_accum * cfg.seq_len
 
-    for step in range(a.steps):
+    for step in range(start_step, a.steps):
         lr_scale = wsd_lr(step, a.steps, a.warmup)
         for g in opt_muon.param_groups:
             g["lr"] = a.lr_muon * lr_scale
@@ -124,8 +138,14 @@ def main():
             logf.write(json.dumps(rec) + "\n")
             logf.flush()
         if master and a.ckpt_every and step > 0 and step % a.ckpt_every == 0:
-            torch.save(dict(model=raw.state_dict(), cfg=cfg.__dict__, step=step),
+            torch.save(dict(model=raw.state_dict(), opt_muon=opt_muon.state_dict(),
+                            opt_adam=opt_adam.state_dict(), cfg=cfg.__dict__, step=step),
                        os.path.join(a.out, f"ckpt_{step:07d}.pt"))
+            for _o in sorted(_glob.glob(os.path.join(a.out, "ckpt_[0-9]*.pt")))[:-3]:
+                try:
+                    os.remove(_o)
+                except OSError:
+                    pass
 
     if master:
         torch.save(dict(model=raw.state_dict(), cfg=cfg.__dict__, step=a.steps),
