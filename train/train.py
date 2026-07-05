@@ -55,6 +55,9 @@ def main():
     ap.add_argument("--out", default="ckpt")
     ap.add_argument("--compile", action="store_true")
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--fresh-opt", action="store_true",
+                    help="resume model weights but RESET optimizer momentum (diagnostic: "
+                         "isolates loaded-optimizer-state corruption from data-trajectory issues)")
     ap.add_argument("--data-seed", type=int, default=1337)
     a = ap.parse_args()
 
@@ -95,20 +98,26 @@ def main():
     if a.resume and _cks:
         ck = torch.load(_cks[-1], map_location=device)
         raw.load_state_dict(ck["model"])
-        if "opt_muon" in ck:
-            opt_muon.load_state_dict(ck["opt_muon"])
-        if "opt_adam" in ck:
-            opt_adam.load_state_dict(ck["opt_adam"])
+        if not a.fresh_opt:
+            if "opt_muon" in ck:
+                opt_muon.load_state_dict(ck["opt_muon"])
+            if "opt_adam" in ck:
+                opt_adam.load_state_dict(ck["opt_adam"])
         start_step = ck["step"] + 1
         if master:
-            print(f"[resume] {_cks[-1]} -> start step {start_step}", flush=True)
+            tag = "  (FRESH optimizer: momentum reset + rewarmup)" if a.fresh_opt else ""
+            print(f"[resume] {_cks[-1]} -> start step {start_step}{tag}", flush=True)
+    warm0 = start_step if a.fresh_opt else 0
     logf = open(os.path.join(a.out, f"log_r{rank}.jsonl"), "a") if master else None
     t0 = time.time()
     tok_per_step = world * a.batch_size * a.grad_accum * cfg.seq_len
     loss_ema, skips = None, 0
 
     for step in range(start_step, a.steps):
-        lr_scale = wsd_lr(step, a.steps, a.warmup)
+        if a.fresh_opt and step - warm0 < a.warmup:
+            lr_scale = (step - warm0) / max(1, a.warmup)   # rewarmup the reset optimizer
+        else:
+            lr_scale = wsd_lr(step, a.steps, a.warmup)
         for g in opt_muon.param_groups:
             g["lr"] = a.lr_muon * lr_scale
         for g in opt_adam.param_groups:
@@ -126,11 +135,24 @@ def main():
                 loss = loss / a.grad_accum
             loss.backward()
             loss_acc += loss.item()
-        # loss-spike guard: drop a destabilizing update when this step's loss spikes vs the EMA
-        if loss_ema is not None and loss_acc > 2.0 * loss_ema and skips < 5:
+        # loss-spike guard: NEVER apply a destabilizing or non-finite update. A single bad batch
+        # (garbage/OOD tokens) must not be able to wreck the model, so we skip such steps ENTIRELY
+        # with no capitulation cap — the old `skips < 5` cap forced a bad update every 6th step,
+        # which is exactly what destroyed the model at the data cliff. A long run of skips means a
+        # genuinely bad data region or real divergence -> break cleanly (best ckpt already saved)
+        # so it surfaces in monitoring instead of silently burning GPU.
+        finite = (loss_acc == loss_acc) and loss_acc not in (float("inf"), float("-inf"))
+        spike = loss_ema is not None and loss_acc > 2.0 * loss_ema
+        if not finite or spike:
             skips += 1
-            if master:
-                print(f"[skip] step {step} loss {loss_acc:.3f} > 2x ema {loss_ema:.3f}", flush=True)
+            if master and (skips <= 3 or skips % 25 == 0):
+                ref = f"{loss_ema:.3f}" if loss_ema is not None else "n/a"
+                print(f"[skip] step {step} loss {loss_acc:.3f} (>2x ema {ref}) skips={skips}", flush=True)
+            if skips >= 300:
+                if master:
+                    print(f"[guard] {skips} consecutive skips at step {step} -> ending run "
+                          f"(bad data region or divergence; best ckpt preserved).", flush=True)
+                break
         else:
             skips = 0
             torch.nn.utils.clip_grad_norm_(raw.parameters(), a.clip)
