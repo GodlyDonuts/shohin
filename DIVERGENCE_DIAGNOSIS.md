@@ -43,13 +43,31 @@ Muon amplifies the damage: its Newton–Schulz orthogonalization makes the updat
 roughly constant regardless of gradient size, so an anomalous-direction gradient is applied at
 full strength.
 
-## The fix
-**Grad-norm pre-update guard** (`train/train.py`, `--gnorm-mult`, default 8.0): skip the
-optimizer step when the current gradient norm exceeds 8× its running EMA — evaluated *before*
-the update is applied, so a spike batch is dropped at the right moment (the loss-spike guard
-only fires one step late, after the damage). With baseline ≈ 0.08 the threshold sits near 0.64,
-far above normal variation (occasional 0.28) and well below the fatal spikes (1.0–1.77), so it
-drops only the ~2–3% of steps that are genuine outliers and leaves normal training untouched.
+## UPDATE — the grad-norm spike was a correlate, NOT the cause
+Deploying the grad-norm pre-update guard (job 678361) DID skip the spike — the log shows
+`[skip:gnorm] step 6380 gnorm 0.97` — **and the model diverged anyway at the same step 6382**,
+with near-identical loss (2.59) to the unguarded run. The guard fired correctly on every spike
+(6296/6338/6349/6357/6380) yet the cliff persisted. Therefore the ~15× gradient spike is a
+*symptom that co-occurs near the cliff*, not the trigger. The actual damaging update is step
+**6381**, which has a completely normal gradient norm — so the destabilizing step is invisible to
+any grad-norm threshold. A normal-magnitude gradient producing a catastrophic update points at
+**Muon's orthogonalization** (Newton–Schulz turns any gradient into a full-magnitude update, so a
+benign gradient in a bad/ill-conditioned direction lands at full force) — or, less likely, a
+forward/backward numerical issue on that specific batch.
+
+## Current test — Muon bisection
+Job **678367**: `--no-muon` (all params on AdamW, Muon disabled), fresh-opt + rewarmup, seed 777
+from ckpt_6000. The data loader is optimizer-independent, so the batch at step ~6382 is identical.
+- If pure-AdamW **trains through 6382** with no cliff → **Muon is the trigger** → implement a Muon
+  trust-ratio update clamp (bound each update so ||update|| ≤ c·||weight||, c≈0.1–0.3) and re-enable.
+- If pure-AdamW **also cliffs at 6382** → not Muon → forward/backward numerics → cast lm_head
+  logits + softmax/cross-entropy to fp32 and strengthen z-loss.
+
+## Hardening retained regardless (not the fix, but keep)
+**Grad-norm pre-update guard** (`train/train.py`, `--gnorm-mult`, default 8.0): skips a step whose
+gradient norm exceeds 8× its running EMA, *before* applying it. Baseline ≈ 0.08 → threshold ≈ 0.64,
+so it drops only the ~2–3% genuine outliers and leaves normal training untouched. Good robustness
+to keep, even though it does not by itself resolve this divergence.
 
 Supporting hardening already in place:
 - Loss-spike guard refuses any update with loss > 2× EMA (no capitulation cap — the old
