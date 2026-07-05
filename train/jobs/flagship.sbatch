@@ -33,4 +33,21 @@ if [ "$NG" = "1" ]; then
 else
   $BASE/miniforge3/bin/torchrun --standalone --nproc_per_node=$NG train.py $ARGS
 fi
-echo "[job] flagship block done (resubmit with --resume to continue)."
+
+# Self-heal: if this run logged no training step, it failed at CUDA init on this node -> record the
+# node and auto-resubmit excluding all known-bad nodes (bounded), so it hops to a clean GPU on its own.
+MYLOG=$BASE/logs/flagship_${SLURM_JOB_ID}.out
+BAD=$BASE/train/bad_nodes.txt
+if grep -qE "^step " "$MYLOG" 2>/dev/null; then
+  : > "$BAD"   # trained fine -> clear the bad-node list
+else
+  echo "${SLURMD_NODENAME:-unknown}" >> "$BAD"
+  EXCL=$(sort -u "$BAD" | paste -sd, -)
+  if [ "$(sort -u "$BAD" | wc -l)" -lt 12 ]; then
+    echo "[job] no training progress on ${SLURMD_NODENAME}; auto-requeue excluding: $EXCL"
+    sbatch --exclude="$EXCL" "$BASE/train/jobs/flagship.sbatch"
+  else
+    echo "[job] too many bad nodes; stopping auto-requeue."
+  fi
+fi
+echo "[job] flagship block done."
