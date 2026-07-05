@@ -17,7 +17,7 @@ cd $BASE/train
 SHARDS="$BASE/artifacts/shards/finemath4 $BASE/artifacts/shards/openwebmath $BASE/artifacts/shards/code_python"
 NG=${NG:-1}
 ARGS="--size shohin --shard-dirs $SHARDS --steps ${STEPS:-60000} --batch-size ${BS:-16} \
-  --grad-accum ${ACC:-16} --warmup 2000 --lr-muon ${LRMUON:-0.01} --lr-adam 3e-3 \
+  --grad-accum ${ACC:-16} --warmup 2000 --lr-muon ${LRMUON:-0.01} --lr-adam ${LRADAM:-3e-3} \
   --log-every 10 --ckpt-every ${CKPT:-1000} --out $BASE/train/flagship_out --resume --compile"
 # Wait for the allocated GPU to be free (avoid 'device busy' race after a just-cancelled job).
 for i in $(seq 1 24); do
