@@ -18,7 +18,7 @@ SHARDS="$BASE/artifacts/shards/finemath4 $BASE/artifacts/shards/openwebmath $BAS
 NG=${NG:-1}
 ARGS="--size shohin --shard-dirs $SHARDS --steps ${STEPS:-60000} --batch-size ${BS:-16} \
   --grad-accum ${ACC:-16} --warmup ${WARMUP:-2000} --lr-muon ${LRMUON:-0.01} --lr-adam ${LRADAM:-3e-3} \
-  --log-every 10 --ckpt-every ${CKPT:-1000} --data-seed ${DSEED:-1337} ${FRESH_OPT:+--fresh-opt} --out $BASE/train/flagship_out --resume --compile"
+  --log-every ${LOGEVERY:-10} --ckpt-every ${CKPT:-1000} --data-seed ${DSEED:-1337} ${FRESH_OPT:+--fresh-opt} --out $BASE/train/flagship_out --resume --compile"
 # Wait for the allocated GPU to be free (avoid 'device busy' race after a just-cancelled job).
 for i in $(seq 1 24); do
   U=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | head -1 | tr -dc '0-9')

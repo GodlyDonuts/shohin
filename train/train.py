@@ -141,13 +141,18 @@ def main():
         # which is exactly what destroyed the model at the data cliff. A long run of skips means a
         # genuinely bad data region or real divergence -> break cleanly (best ckpt already saved)
         # so it surfaces in monitoring instead of silently burning GPU.
+        # Measure the gradient EVERY step (pre-clip norm) — this is the diagnostic signal that
+        # distinguishes a bad-batch grad spike from a normal-norm-but-bad-direction Muon update.
+        # Clipping on a skipped step is harmless (grads are zeroed next iter, no opt.step applied).
+        gnorm = float(torch.nn.utils.clip_grad_norm_(raw.parameters(), a.clip))
         finite = (loss_acc == loss_acc) and loss_acc not in (float("inf"), float("-inf"))
         spike = loss_ema is not None and loss_acc > 2.0 * loss_ema
         if not finite or spike:
             skips += 1
-            if master and (skips <= 3 or skips % 25 == 0):
+            if master and (skips <= 5 or skips % 25 == 0):
                 ref = f"{loss_ema:.3f}" if loss_ema is not None else "n/a"
-                print(f"[skip] step {step} loss {loss_acc:.3f} (>2x ema {ref}) skips={skips}", flush=True)
+                print(f"[skip] step {step} loss {loss_acc:.3f} gnorm {gnorm:.2f} (>2x ema {ref}) "
+                      f"skips={skips}", flush=True)
             if skips >= 300:
                 if master:
                     print(f"[guard] {skips} consecutive skips at step {step} -> ending run "
@@ -155,7 +160,6 @@ def main():
                 break
         else:
             skips = 0
-            torch.nn.utils.clip_grad_norm_(raw.parameters(), a.clip)
             opt_muon.step()
             opt_adam.step()
             loss_ema = loss_acc if loss_ema is None else 0.98 * loss_ema + 0.02 * loss_acc
@@ -163,9 +167,9 @@ def main():
         if master and step % a.log_every == 0:
             dt = time.time() - t0
             tps = tok_per_step * (step - start_step + 1) / dt
-            rec = dict(step=step, loss=round(loss_acc, 4), lr=round(a.lr_muon * lr_scale, 5),
-                       tok_per_s=int(tps), elapsed=round(dt, 1))
-            print(f"step {step:>6} loss {loss_acc:.4f} lr {a.lr_muon*lr_scale:.4f} "
+            rec = dict(step=step, loss=round(loss_acc, 4), gnorm=round(gnorm, 3),
+                       lr=round(a.lr_muon * lr_scale, 5), tok_per_s=int(tps), elapsed=round(dt, 1))
+            print(f"step {step:>6} loss {loss_acc:.4f} gnorm {gnorm:.2f} lr {a.lr_muon*lr_scale:.4f} "
                   f"{int(tps):,} tok/s", flush=True)
             logf.write(json.dumps(rec) + "\n")
             logf.flush()
