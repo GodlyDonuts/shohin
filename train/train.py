@@ -104,6 +104,7 @@ def main():
     logf = open(os.path.join(a.out, f"log_r{rank}.jsonl"), "a") if master else None
     t0 = time.time()
     tok_per_step = world * a.batch_size * a.grad_accum * cfg.seq_len
+    loss_ema, skips = None, 0
 
     for step in range(start_step, a.steps):
         lr_scale = wsd_lr(step, a.steps, a.warmup)
@@ -124,9 +125,17 @@ def main():
                 loss = loss / a.grad_accum
             loss.backward()
             loss_acc += loss.item()
-        torch.nn.utils.clip_grad_norm_(raw.parameters(), a.clip)
-        opt_muon.step()
-        opt_adam.step()
+        # loss-spike guard: drop a destabilizing update when this step's loss spikes vs the EMA
+        if loss_ema is not None and loss_acc > 2.0 * loss_ema and skips < 5:
+            skips += 1
+            if master:
+                print(f"[skip] step {step} loss {loss_acc:.3f} > 2x ema {loss_ema:.3f}", flush=True)
+        else:
+            skips = 0
+            torch.nn.utils.clip_grad_norm_(raw.parameters(), a.clip)
+            opt_muon.step()
+            opt_adam.step()
+            loss_ema = loss_acc if loss_ema is None else 0.98 * loss_ema + 0.02 * loss_acc
 
         if master and step % a.log_every == 0:
             dt = time.time() - t0
