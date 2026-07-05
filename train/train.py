@@ -55,6 +55,7 @@ def main():
     ap.add_argument("--out", default="ckpt")
     ap.add_argument("--compile", action="store_true")
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--data-seed", type=int, default=1337)
     a = ap.parse_args()
 
     ddp = "RANK" in os.environ
@@ -85,7 +86,7 @@ def main():
     opt_muon = Muon(muon_p, lr=a.lr_muon)
     opt_adam = torch.optim.AdamW(adam_p, lr=a.lr_adam, betas=(0.9, 0.95), weight_decay=0.0)
 
-    loader = ShardLoader(a.shard_dirs, cfg.seq_len, a.batch_size, rank, world, seed=1337)
+    loader = ShardLoader(a.shard_dirs, cfg.seq_len, a.batch_size, rank, world, seed=a.data_seed)
 
     os.makedirs(a.out, exist_ok=True)
     import glob as _glob
