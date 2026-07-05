@@ -19,8 +19,17 @@ NG=${NG:-1}
 ARGS="--size shohin --shard-dirs $SHARDS --steps ${STEPS:-60000} --batch-size ${BS:-16} \
   --grad-accum ${ACC:-16} --warmup 2000 --lr-muon 0.02 --lr-adam 3e-3 \
   --log-every 10 --ckpt-every ${CKPT:-1000} --out $BASE/train/flagship_out --resume --compile"
+# Wait for the allocated GPU to be free (avoid 'device busy' race after a just-cancelled job).
+for i in $(seq 1 24); do
+  U=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | head -1 | tr -dc '0-9')
+  [ "${U:-9999}" -lt 3000 ] 2>/dev/null && break
+  echo "[job] GPU busy (${U:-?} MiB used), waiting..."; sleep 10
+done
 if [ "$NG" = "1" ]; then
-  $BASE/miniforge3/bin/python train.py $ARGS          # plain python: clean torch.compile on 1 GPU
+  for att in 1 2 3; do   # retry belt-and-suspenders for transient CUDA-busy
+    $BASE/miniforge3/bin/python train.py $ARGS && break
+    echo "[job] attempt $att failed; retry in 30s"; sleep 30
+  done
 else
   $BASE/miniforge3/bin/torchrun --standalone --nproc_per_node=$NG train.py $ARGS
 fi
