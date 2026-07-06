@@ -16,7 +16,9 @@ export OMP_NUM_THREADS=4
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 cd $BASE/train
 INIT=${INIT:-$(ls -t $BASE/train/flagship_out/ckpt_[0-9]*.pt 2>/dev/null | head -1)}
-DATA=${DATA:-$BASE/artifacts/sft/openmath2.jsonl}
+# Verified + eval-aligned math (openmath2.jsonl) + procedural-CoT diversity (rgym.jsonl). NOT the
+# older *_concise_2M sets (not verified / not eval-aligned) — quality over quantity for a 135M first SFT.
+DATA=${DATA:-$BASE/artifacts/sft/openmath2.jsonl $BASE/artifacts/sft/rgym.jsonl}
 echo "[sft-job] init=$INIT data=$DATA"
 [ -z "$INIT" ] && { echo "[sft-job] no init checkpoint found"; exit 1; }
 
