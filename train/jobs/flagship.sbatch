@@ -25,6 +25,8 @@ for i in $(seq 1 30); do
   [ "${U:-9999}" -lt 3000 ] 2>/dev/null && break
   echo "[job] GPU busy (max ${U:-?} MiB used), waiting..."; sleep 10
 done
+echo "[job] node=${SLURMD_NODENAME:-?} SLURM_JOB_GPUS=${SLURM_JOB_GPUS:-?} SLURM_GPUS_ON_NODE=${SLURM_GPUS_ON_NODE:-?} CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-unset}"
+nvidia-smi -L 2>&1 | head
 # Launch (retry loop covers the transient CUDA-busy race for BOTH single- and multi-GPU/torchrun).
 RUN="$BASE/miniforge3/bin/python train.py"
 [ "$NG" != "1" ] && RUN="$BASE/miniforge3/bin/torchrun --standalone --nproc_per_node=$NG train.py"

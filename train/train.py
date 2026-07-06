@@ -69,11 +69,11 @@ def main():
 
     ddp = "RANK" in os.environ
     if ddp:
-        dist.init_process_group("nccl")
-        rank, world = dist.get_rank(), dist.get_world_size()
         local = int(os.environ["LOCAL_RANK"])
+        torch.cuda.set_device(local)   # MUST precede NCCL init, else every rank inits on cuda:0
+        dist.init_process_group("nccl")     # -> "device busy" on rank>0 (this was breaking 2xH100)
+        rank, world = dist.get_rank(), dist.get_world_size()
         device = f"cuda:{local}"
-        torch.cuda.set_device(device)
     else:
         rank, world, device = 0, 1, ("cuda" if torch.cuda.is_available() else "cpu")
     master = rank == 0
