@@ -19,20 +19,19 @@ NG=${NG:-1}
 ARGS="--size shohin --shard-dirs $SHARDS --steps ${STEPS:-60000} --batch-size ${BS:-16} \
   --grad-accum ${ACC:-16} --warmup ${WARMUP:-2000} --lr-muon ${LRMUON:-0.01} --lr-adam ${LRADAM:-3e-3} \
   --log-every ${LOGEVERY:-10} --ckpt-every ${CKPT:-1000} --data-seed ${DSEED:-1337} --gnorm-mult ${GNORMMULT:-8} ${FRESH_OPT:+--fresh-opt} ${NOMUON:+--no-muon} --out $BASE/train/flagship_out --resume --compile"
-# Wait for the allocated GPU to be free (avoid 'device busy' race after a just-cancelled job).
-for i in $(seq 1 24); do
-  U=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | head -1 | tr -dc '0-9')
+# Wait for ALL allocated GPUs to be free (avoid 'device busy' race after a just-cancelled job).
+for i in $(seq 1 30); do
+  U=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | tr -dc '0-9\n' | sort -n | tail -1)
   [ "${U:-9999}" -lt 3000 ] 2>/dev/null && break
-  echo "[job] GPU busy (${U:-?} MiB used), waiting..."; sleep 10
+  echo "[job] GPU busy (max ${U:-?} MiB used), waiting..."; sleep 10
 done
-if [ "$NG" = "1" ]; then
-  for att in 1 2 3; do   # retry belt-and-suspenders for transient CUDA-busy
-    $BASE/miniforge3/bin/python train.py $ARGS && break
-    echo "[job] attempt $att failed; retry in 30s"; sleep 30
-  done
-else
-  $BASE/miniforge3/bin/torchrun --standalone --nproc_per_node=$NG train.py $ARGS
-fi
+# Launch (retry loop covers the transient CUDA-busy race for BOTH single- and multi-GPU/torchrun).
+RUN="$BASE/miniforge3/bin/python train.py"
+[ "$NG" != "1" ] && RUN="$BASE/miniforge3/bin/torchrun --standalone --nproc_per_node=$NG train.py"
+for att in 1 2 3 4; do
+  $RUN $ARGS && break
+  echo "[job] attempt $att failed (CUDA-busy race?); retry in 30s"; sleep 30
+done
 
 # Self-heal: if this run logged no training step, it failed at CUDA init on this node -> record the
 # node and auto-resubmit excluding all known-bad nodes (bounded), so it hops to a clean GPU on its own.

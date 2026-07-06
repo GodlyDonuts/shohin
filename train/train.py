@@ -148,6 +148,13 @@ def main():
                 loss = loss / a.grad_accum
             loss.backward()
             loss_acc += loss.item()
+        if ddp:
+            # DDP safety: the skip-vs-step decision below reads loss_acc, which is per-rank local.
+            # All-reduce it so every rank makes the SAME decision (else ranks desync -> hang).
+            # (gnorm is already identical across ranks — gradients are all-reduced in backward.)
+            _la = torch.tensor(loss_acc, device=device)
+            dist.all_reduce(_la, op=dist.ReduceOp.SUM)
+            loss_acc = float(_la) / world
         # loss-spike guard: NEVER apply a destabilizing or non-finite update. A single bad batch
         # (garbage/OOD tokens) must not be able to wreck the model, so we skip such steps ENTIRELY
         # with no capitulation cap — the old `skips < 5` cap forced a bad update every 6th step,
