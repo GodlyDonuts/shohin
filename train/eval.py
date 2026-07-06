@@ -40,18 +40,23 @@ def extract(text):
 
 @torch.no_grad()
 def generate(model, tok, prompt, device, max_new=220, stop="Question:"):
-    ids = tok.encode(prompt).ids
+    cap = model.cfg.seq_len
+    ids = tok.encode(prompt).ids[-cap:]
+    ac = torch.autocast("cuda", dtype=torch.bfloat16, enabled=("cuda" in str(device)))
+    with ac:                                             # prefill the prompt once
+        logits, cache = model(torch.tensor([ids], device=device), return_cache=True, pos=0)
+    pos = len(ids)
     gen = []
     for _ in range(max_new):
-        x = torch.tensor([ids[-2048:]], device=device)
-        with torch.autocast("cuda", dtype=torch.bfloat16, enabled=("cuda" in str(device))):
-            logits, _ = model(x)
         nxt = int(logits[0, -1].argmax())
-        ids.append(nxt)
         gen.append(nxt)
         txt = tok.decode(gen)
-        if stop in txt or "\n\n" in txt:
+        if stop in txt or "\n\n" in txt or pos >= cap:
             break
+        with ac:                                         # decode one token against the cache: O(1)
+            logits, cache = model(torch.tensor([[nxt]], device=device),
+                                  cache=cache, pos=pos, return_cache=True)
+        pos += 1
     return tok.decode(gen)
 
 

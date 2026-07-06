@@ -68,7 +68,7 @@ class Attention(nn.Module):
         if cfg.qk_norm:
             self.qn, self.kn = RMSNorm(self.hd), RMSNorm(self.hd)
 
-    def forward(self, x, cos, sin):
+    def forward(self, x, cos, sin, past=None):
         B, T, _ = x.shape
         q = self.q(x).view(B, T, self.nh, self.hd).transpose(1, 2)
         k = self.k(x).view(B, T, self.nkv, self.hd).transpose(1, 2)
@@ -76,12 +76,18 @@ class Attention(nn.Module):
         if self.qk_norm:
             q, k = self.qn(q), self.kn(k)
         q, k = apply_rope(q, cos, sin), apply_rope(k, cos, sin)
+        if past is not None:                        # inference: prepend cached (already-RoPE'd) K/V
+            pk, pv = past
+            k = torch.cat([pk, k], dim=2)
+            v = torch.cat([pv, v], dim=2)
+        new_past = (k, v)
         rep = self.nh // self.nkv
-        k = k.repeat_interleave(rep, dim=1)
-        v = v.repeat_interleave(rep, dim=1)
-        y = F.scaled_dot_product_attention(q, k, v, is_causal=True)
+        kk = k.repeat_interleave(rep, dim=1)
+        vv = v.repeat_interleave(rep, dim=1)
+        # prefill (no cache) uses the causal mask; a single-token decode step attends to all cached keys
+        y = F.scaled_dot_product_attention(q, kk, vv, is_causal=(past is None))
         y = y.transpose(1, 2).reshape(B, T, self.nh * self.hd)
-        return self.o(y)
+        return self.o(y), new_past
 
 
 class MLP(nn.Module):
@@ -101,10 +107,11 @@ class Block(nn.Module):
         self.n1, self.attn = RMSNorm(cfg.d_model), Attention(cfg)
         self.n2, self.mlp = RMSNorm(cfg.d_model), MLP(cfg)
 
-    def forward(self, x, cos, sin):
-        x = x + self.attn(self.n1(x), cos, sin)
+    def forward(self, x, cos, sin, past=None):
+        a, new_past = self.attn(self.n1(x), cos, sin, past)
+        x = x + a
         x = x + self.mlp(self.n2(x))
-        return x
+        return x, new_past
 
 
 class GPT(nn.Module):
@@ -126,13 +133,23 @@ class GPT(nn.Module):
         if isinstance(m, (nn.Linear, nn.Embedding)):
             nn.init.normal_(m.weight, mean=0.0, std=0.02)
 
-    def forward(self, idx, targets=None):
+    def forward(self, idx, targets=None, cache=None, pos=0, return_cache=False):
+        # Training path is unchanged: cache=None, pos=0, return_cache=False -> identical to before.
+        # Inference path: pass return_cache=True to get per-layer (K,V); feed it back with pos=len so
+        # decoding is O(1) per token instead of re-encoding the whole prompt (KV cache).
         B, T = idx.shape
         x = self.tok(idx)
-        cos, sin = self.cos[:T].to(x.device), self.sin[:T].to(x.device)
-        for b in self.blocks:
-            x = b(x, cos, sin)
+        cos = self.cos[pos:pos + T].to(x.device)
+        sin = self.sin[pos:pos + T].to(x.device)
+        new_cache = []
+        for i, b in enumerate(self.blocks):
+            past = cache[i] if cache is not None else None
+            x, np_ = b(x, cos, sin, past)
+            if return_cache:
+                new_cache.append(np_)
         logits = self.head(self.norm(x))
+        if return_cache:
+            return logits, new_cache
         loss = None
         if targets is not None:
             lf = logits.float()
