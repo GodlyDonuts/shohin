@@ -65,6 +65,9 @@ def main():
                     help="pre-update guard: skip a step whose grad norm exceeds this multiple of "
                          "its running EMA (catches a destabilizing batch before it lands; <=0 disables)")
     ap.add_argument("--data-seed", type=int, default=1337)
+    ap.add_argument("--n-loop", type=int, default=1,
+                    help="latent recursion: re-run the block stack N times (weight-shared depth). "
+                         "1 = off. Ablation-gated reasoning bet.")
     a = ap.parse_args()
 
     ddp = "RANK" in os.environ
@@ -80,7 +83,7 @@ def main():
     torch.manual_seed(1337 + rank)
     torch.set_float32_matmul_precision("high")
 
-    cfg = GPTConfig(vocab_size=a.vocab_size, **CONFIGS[a.size])
+    cfg = GPTConfig(vocab_size=a.vocab_size, n_loop=a.n_loop, **CONFIGS[a.size])
     model = GPT(cfg).to(device)
     if master:
         print(f"[model] size={a.size} params={model.num_params()/1e6:.1f}M "

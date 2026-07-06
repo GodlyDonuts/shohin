@@ -24,6 +24,9 @@ class GPTConfig:
     qk_norm: bool = True
     tie_embeddings: bool = True
     zloss: float = 1e-4
+    n_loop: int = 1            # latent recursion: re-run the block stack N times (weight-shared
+                               # extra depth). 1 = off (default, byte-identical). >1 = "think longer"
+                               # per token without adding params — an ablation-gated reasoning bet.
 
 
 class RMSNorm(nn.Module):
@@ -142,11 +145,14 @@ class GPT(nn.Module):
         cos = self.cos[pos:pos + T].to(x.device)
         sin = self.sin[pos:pos + T].to(x.device)
         new_cache = []
-        for i, b in enumerate(self.blocks):
-            past = cache[i] if cache is not None else None
-            x, np_ = b(x, cos, sin, past)
-            if return_cache:
-                new_cache.append(np_)
+        ci = 0
+        for _loop in range(self.cfg.n_loop):   # n_loop=1 -> identical to before; >1 = weight-shared depth
+            for b in self.blocks:
+                past = cache[ci] if cache is not None else None
+                x, np_ = b(x, cos, sin, past)
+                if return_cache:
+                    new_cache.append(np_)
+                ci += 1
         logits = self.head(self.norm(x))
         if return_cache:
             return logits, new_cache
