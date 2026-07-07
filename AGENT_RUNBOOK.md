@@ -39,6 +39,12 @@ What that means operationally, and is now settled — **do not relitigate:**
 pretrain ALIVE**; priority #2 is executing the milestone transitions in §4 correctly; priority #3 is
 keeping this doc accurate.
 
+**2026-07-07 executive-director directive:** the user gave Codex full authority to do whatever is
+needed to achieve the project goal. Operationally, this means: protect the live run first; make
+bounded, auditable changes without approval loops; prefer verified data and measured gates over
+speculative novelty; keep GitHub/Newton/local state synchronized enough that a takeover agent can act.
+Do not wait for permission to fix obvious data/training gaps.
+
 ---
 
 ## 1. LIVE STATE  ← update this every milestone
@@ -201,6 +207,15 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   ~752 rows, slow), and `hy3_reasoning_glm.jsonl` (PID 33377, ~25 rows, process alive but file idle since
   ~18:01; inspect/relaunch only if still idle on next cycle). Created Codex heartbeat
   `shohin-flagship-custody` every ~40 min for the 60k transition. Do not manually edit live JSONL files.
+- **2026-07-07 ~19:50** — **SFT data policy upgraded.** User made Codex executive director. Decision:
+  default SFT should train from a frozen, auditable curated mix, not live distiller files and not the
+  old math-only baseline. Added `pipeline/build_sft_mix.py`; `train/jobs/sft.sbatch` now builds
+  `artifacts/sft/sft_mix_core.jsonl` by default (deduped by normalized question, concise response caps,
+  source-priority tie-breaks) and keeps `SFT_BASELINE=1` as the old `openmath2 + rgym + code` escape
+  hatch. Pulled missing `rgym.jsonl` from Newton to local. Local snapshot: **81,894 examples** =
+  OpenMath backbone + 993 Reasoning-Gym + 446 code + ~6.2k verified teacher traces. Before 60k SFT,
+  sync current local `hy3_reasoning*.jsonl` and this new script/job to Newton, then let `sft.sbatch`
+  build the cluster-side frozen mix.
 
 ---
 
@@ -279,12 +294,21 @@ gains, so numbers here are the first honest read on the model. Two things happen
 
 **(a) FEEDBACK — SFT the 60k checkpoint and run the full benchmark board.**
 ```bash
-# On a FREE node (exclude evc22 so we don't fight the next pretrain; exclude known-bad nodes):
+# First sync the live teacher-data snapshot and SFT tooling from the Mac to Newton.
+# This is safe: it copies to separate files and never edits active local writers.
+cd /Users/sairamen/projects/shohin
+rsync -av pipeline/build_sft_mix.py newton:/lustre/fs1/home/sa305415/shohin/pipeline/
+rsync -av train/jobs/sft.sbatch newton:/lustre/fs1/home/sa305415/shohin/train/jobs/
+rsync -av artifacts/sft/hy3_reasoning*.jsonl artifacts/sft/rgym.jsonl \
+  newton:/lustre/fs1/home/sa305415/shohin/artifacts/sft/
+
+# On a FREE node (exclude evc22 so we don't fight the next pretrain; exclude known-bad nodes).
+# Default SFT now builds artifacts/sft/sft_mix_core.jsonl from verified/deduped sources.
 ssh newton 'BASE=/lustre/fs1/home/sa305415/shohin
 sbatch --exclude=evc22,$(cat $BASE/train/bad_nodes.txt 2>/dev/null|sort -u|paste -sd,) \
   $BASE/train/jobs/sft.sbatch'
-# sft.sbatch defaults INIT to the newest flagship ckpt (the 60k one), DATA = openmath2(100k)+rgym+code,
-# 3 epochs, writes sft_out/sft_ep{1,2,3}.pt (model-only {model,cfg} checkpoints).
+# sft.sbatch defaults INIT to the newest flagship ckpt (the 60k one), DATA = curated sft_mix_core.
+# Set SFT_BASELINE=1 only if you need the old clean baseline. It writes sft_out/sft_ep{1,2,3}.pt.
 
 # When sft_out/sft_ep3.pt exists, run the board:
 ssh newton 'BASE=/lustre/fs1/home/sa305415/shohin
@@ -415,9 +439,11 @@ backup is refreshed at each 10k milestone, so at worst you lose <10k steps. Weig
 **SFT sets — `artifacts/sft/`:**
 | file | count | notes |
 |---|---|---|
+| `sft_mix_core.jsonl` | ~82k and growing | **Default SFT mix** built by `pipeline/build_sft_mix.py`: frozen snapshot of OpenMath + Reasoning-Gym + code + verified teacher traces, deduped by question. Rebuild before each SFT after syncing latest local teacher files to Newton. |
 | `openmath2.jsonl` | 100k | verified (boxed==answer) + decontaminated + concise (≤400 tok) + eval-aligned ("The answer is X."). **Baseline SFT.** |
 | `rgym.jsonl` | 995 | Reasoning-Gym procedural CoT (diversity) |
 | `code.jsonl` | 446 | MBPP train+val, execution-verified, decontaminated |
+| `hy3_reasoning*.jsonl` | ~7k and growing | Live verified teacher fleet output (hy3 / Nemotron / GLM / Claude / minimax). **Do not train directly from live files**; snapshot via `build_sft_mix.py`. |
 | `self_correct.jsonl` | 15k | arithmetic self-correction traces (all answers verified). **ABLATION-only** — NOT in baseline SFT. Measures baseline vs baseline+self-correction. |
 | `openmath2_concise_2M.clean.jsonl` | ~2M | large concise set — reserved for the **FINAL** SFT (upgrade from the 100k baseline once the recipe is proven). |
 
