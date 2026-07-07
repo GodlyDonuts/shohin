@@ -43,15 +43,15 @@ keeping this doc accurate.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-07 ~12:57) |
+| Item | Value (as of 2026-07-07 ~19:15) |
 |---|---|
-| **Pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, RUNNING ~22h |
-| Pretrain step | ~50,380 / **60,000** target (`--steps 60000`) |
-| Pretrain loss | ~1.6 avg (in-band ~1.5–1.85), gnorm ~0.1 |
+| **Pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, RUNNING ~28h |
+| Pretrain step | ~56,880 / **60,000** target (`--steps 60000`) |
+| Pretrain loss | ~1.6 avg (latest 1.58-1.78), gnorm ~0.08-0.16 |
 | Throughput | ~149k tok/s (~1,026 steps/hr; ~12.9B tok/day) |
-| Skips | **34 total** in ~21h, stable (very healthy — see §5) |
-| LR phase | **DECAY UNDERWAY** — lr 0.0043 and dropping (stable was 0.005). Decay window 48k–60k → **60k = first decayed checkpoint** |
-| 60k ETA | **~2026-07-07 evening (~10h out)** — real rate ~1,026 steps/hr |
+| Skips | **45 total** in ~28h, stable (healthy — see §5) |
+| LR phase | **DECAY UNDERWAY** — lr ~0.0017 and dropping. Decay window 48k–60k → **60k = first decayed checkpoint** |
+| 60k ETA | **~2026-07-07 22:15 EDT (~3h out)** at real rate ~1,026 steps/hr |
 | **Corpus-expansion job** | `680324` — **✅ DONE** (finished ~12:10) |
 | finemath3 output | `artifacts/shards/finemath3/` — **✅ COMPLETE: 125 shards, exactly 25.0B tokens** (`manifest.json` present, 22 GB; 8,575 contaminated docs dropped vs evalgrams). **Folds into SHARDS at the 60k→300k relaunch** (§4A b) — NOT into the current running job. |
 | Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k), all 1.1 GB full/resumable |
@@ -194,6 +194,13 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   workflow scriptPath; verify via `scratchpad/verify_claude.py`. Grand total ~6,225 traces (5 domains,
   4 teachers). WF gotcha: `args` didn't reach the script — hardcode values in the script instead.
 - *(next: 60k FEEDBACK+EXTEND (~3.5h) — see §4A; fleet = hy3+nemotron+GLM+Claude-subagents; §11; git push)*
+- **2026-07-07 ~19:15** — **Codex takeover.** Verified Newton auth + read-only health: job `680149`
+  alive on evc22 at step ~56.9k, lr ~0.0017, 45 skips, latest numbered ckpt `ckpt_0056000.pt`, preserved
+  through `best_step50000.pt`; ETA to 60k ~3h. Local teacher fleet still has three open writers:
+  `hy3_reasoning.jsonl` (active, PID 33375, ~5.4k rows), `hy3_reasoning_nemotron.jsonl` (PID 33376,
+  ~752 rows, slow), and `hy3_reasoning_glm.jsonl` (PID 33377, ~25 rows, process alive but file idle since
+  ~18:01; inspect/relaunch only if still idle on next cycle). Created Codex heartbeat
+  `shohin-flagship-custody` every ~40 min for the 60k transition. Do not manually edit live JSONL files.
 
 ---
 
