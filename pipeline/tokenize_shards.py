@@ -35,6 +35,10 @@ def main():
     ap.add_argument("--config", default=None)
     ap.add_argument("--split", default="train")
     ap.add_argument("--text-col", default="text")
+    ap.add_argument("--text-cols", nargs="+", default=None,
+                    help="concat multiple fields (joined by a blank line) instead of --text-col; "
+                         "e.g. --text-cols problem generated_solution for OpenMathInstruct-2. "
+                         "Decontam/min-chars run on the concatenated text.")
     ap.add_argument("--out-dir", required=True)
     ap.add_argument("--shard-tokens", type=int, default=100_000_000)
     ap.add_argument("--max-tokens", type=int, default=0, help="0 = unlimited")
@@ -78,7 +82,11 @@ def main():
 
     for ex in ds:
         seen += 1
-        txt = ex.get(a.text_col) or ""
+        if a.text_cols:
+            parts = [str(ex.get(c) or "") for c in a.text_cols]
+            txt = "\n\n".join(p for p in parts if p)
+        else:
+            txt = ex.get(a.text_col) or ""
         if len(txt) < a.min_chars:
             n_short += 1
             continue

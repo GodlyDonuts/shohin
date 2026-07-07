@@ -5,6 +5,11 @@ grade-school & competition **math, code, and logic** — decisively beating **Mo
 ≤200M reasoning SoTA), using 2026 methods: **short-CoT reasoning distillation + rejection sampling** from a
 close ~1–2B reasoning teacher, on a reasoning-tilted data diet. **English-only.** Trained in **PyTorch**.
 
+> **🟢 LIVE RUN — operators start at [AGENT_RUNBOOK.md](AGENT_RUNBOOK.md).** Pretraining is currently
+> running on a single GPU (UCF Newton) under an autonomous custody loop. The runbook is the operational
+> plan of record: live job state, the custody loop, the 60k feedback+extend transition, cluster access,
+> and the failure/recovery playbook. Read it before touching the run.
+
 This repo is the "raw capability" track. Its sibling — the **Psi** custom C++/CUDA stack — is the
 "capability-per-bit craft" track (from-scratch, no-PyTorch, eventually-ternary; the TinyStories record is its
 crown jewel). **Deliberately separate:** PyTorch here for capability, the custom stack there for novelty. The
