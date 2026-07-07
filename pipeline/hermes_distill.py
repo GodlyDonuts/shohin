@@ -71,6 +71,33 @@ def _norm_txt(s):
     return re.sub(r"[^a-z0-9]", "", str(s).lower())
 
 
+def _norm_math(s):
+    """Normalize a math answer for comparison: \\frac{a}{b}->(a)/(b), strip LaTeX cruft/units."""
+    s = str(s)
+    s = re.sub(r"\\[dt]?frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}", r"(\1)/(\2)", s)   # \frac{a}{b}
+    s = re.sub(r"\\text\s*\{[^{}]*\}", "", s)
+    s = re.sub(r"\\mbox\s*\{[^{}]*\}", "", s)
+    s = re.sub(r"\\(left|right|displaystyle|mathrm|,|;|:|!|\s)", "", s)
+    s = s.replace("^\\circ", "").replace("\\%", "").replace("\\$", "")
+    s = s.replace("\\", "").replace("$", "").replace(" ", "").rstrip(".").strip().lower()
+    return s
+
+
+def _eval_math(s):
+    """Best-effort numeric value of a (possibly LaTeX) math answer; None if not numeric."""
+    n = _norm_math(s)
+    v = _to_float(n)
+    if v is not None:
+        return v
+    m = re.fullmatch(r"\(?(-?\d+(?:\.\d+)?)\)?/\(?(-?\d+(?:\.\d+)?)\)?", n)   # a/b or (a)/(b)
+    if m:
+        try:
+            return float(m.group(1)) / float(m.group(2))
+        except Exception:
+            return None
+    return None
+
+
 def verify(gen_text, gold, answer_type):
     """Return (is_correct, extracted_answer). Types: gsm8k (numeric), boxed (math),
     mc (multiple-choice letter A-E), exact (normalized text, e.g. yes/no)."""
@@ -87,20 +114,11 @@ def verify(gen_text, gold, answer_type):
         if pred is None:
             return False, None
         gb = extract_boxed(str(gold)) or str(gold)
-        norm = lambda s: str(s).replace(" ", "").replace("$", "").replace("\\!", "").rstrip(".").strip()
-        if norm(pred) == norm(gb):
+        if _norm_math(pred) == _norm_math(gb):                 # LaTeX-aware string match
             return True, pred
-        pf, gf = _to_float(norm(pred)), _to_float(norm(gb))   # numeric equivalence fallback
-        if pf is not None and gf is not None:
-            return abs(pf - gf) < 1e-4, pred
-        # last-number numeric match: gold often carries units/latex (e.g. "0.4\mbox{ miles}") that
-        # never string-match the model's clean "0.4" — compare the final numbers instead.
-        def lastnum(s):
-            m = re.findall(r"-?\d+(?:/\d+)?(?:\.\d+)?", str(s).replace(",", ""))
-            return _to_float(m[-1]) if m else None
-        pn, gn = lastnum(pred), lastnum(gb)
-        if pn is not None and gn is not None and abs(pn - gn) < 1e-4:
-            return True, pred
+        pv, gv = _eval_math(pred), _eval_math(gb)              # numeric equivalence (handles fractions)
+        if pv is not None and gv is not None:
+            return abs(pv - gv) < 1e-4, pred
         return False, pred
     if answer_type == "mc":
         m = re.findall(r"answer is\s*[:\-]?\s*\(?([A-Ea-e])\b", gen_text)

@@ -181,7 +181,19 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   **ONGOING BACKUP HABIT:** periodically (each cycle or two) `git add -f artifacts/sft/hy3_reasoning*.jsonl
   && git add -A && git commit -m "backup: distilled traces + docs" && git push origin main` so the
   growing fleet output + doc updates stay mirrored to GitHub.
-- *(next: 60k FEEDBACK+EXTEND (~4h) — see §4A; fleet = hy3+nemotron+GLM; §11; push to GitHub periodically)*
+- **2026-07-07 ~18:50** — **Claude subagents = 4th teacher channel (user: "make traces with subagents,
+  maximize").** Workflow `claude-teacher-distill` (repeatable): I pick fresh UNSOLVED problems, split into
+  batches, spawn 20 subagents that each solve their batch (**gold withheld** → genuine reasoning), return
+  {id,response}; I verify vs the withheld gold + rejection-sample → `hy3_reasoning_claude.jsonl` (source
+  `claude`). First run: 20 agents, 525k tok, 300 problems → 152 kept. **Found + fixed a MATH VERIFIER BUG**
+  along the way: competition-MATH gold is LaTeX (`\frac{3}{2}`) which never matched the model's clean
+  `3/2` — was silently tanking EVERY teacher's math yield. Fixed `verify()` (LaTeX-aware `_norm_math` +
+  `_eval_math` fraction eval); re-verify recovered +87. **Restarted the whole fleet** to pick up the fix
+  (they re-attempt previously-rejected problems → recover false-rejected math). Repeatable: to run another
+  Claude round, regen `claude_batches.json`+`claude_goldmap.json` (fresh unsolved) then re-invoke the
+  workflow scriptPath; verify via `scratchpad/verify_claude.py`. Grand total ~6,225 traces (5 domains,
+  4 teachers). WF gotcha: `args` didn't reach the script — hardcode values in the script instead.
+- *(next: 60k FEEDBACK+EXTEND (~3.5h) — see §4A; fleet = hy3+nemotron+GLM+Claude-subagents; §11; git push)*
 
 ---
 
