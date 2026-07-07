@@ -172,7 +172,16 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   barely contributing). **Fleet now: Nous-hy3 (bulk) + NVIDIA nemotron-ultra (80%) + NVIDIA GLM-5.2
   (88%, SoTA).** ~4,000 traces total. (minimax file `hy3_reasoning_minimax.jsonl` kept — 49 valid
   traces.) OpenRouter still daily-capped (re-add as burst when reset).
-- *(next: 60k FEEDBACK+EXTEND (~4h) — see §4A; fleet = hy3+nemotron+GLM; §11)*
+- **2026-07-07 ~18:15** — **GitHub backup (user: "put everything on github as well as locally").**
+  Remote = `github.com/GodlyDonuts/shohin`. **Redacted the Newton password** out of this runbook (moved
+  to git-ignored `.env` as `NEWTON_PW`); full secret scan clean before pushing. Pushed: all code + docs
+  (commit 0aa12b6) + distilled traces + tokenizer + eval sets (commit e487677, ~11M). Deliberately kept
+  OUT of git (regenerable, avoid bloat): `openmath2.jsonl` (89M → `sft_curate.py`), problem banks (→
+  `fetch_problems.py`). `.env` + `artifacts/` stay git-ignored; specific data files force-added.
+  **ONGOING BACKUP HABIT:** periodically (each cycle or two) `git add -f artifacts/sft/hy3_reasoning*.jsonl
+  && git add -A && git commit -m "backup: distilled traces + docs" && git push origin main` so the
+  growing fleet output + doc updates stay mirrored to GitHub.
+- *(next: 60k FEEDBACK+EXTEND (~4h) — see §4A; fleet = hy3+nemotron+GLM; §11; push to GitHub periodically)*
 
 ---
 
