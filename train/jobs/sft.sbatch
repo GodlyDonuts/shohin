@@ -23,8 +23,8 @@ if [ -z "${DATA:-}" ]; then
     DATA="$BASE/artifacts/sft/openmath2.jsonl $BASE/artifacts/sft/rgym.jsonl $BASE/artifacts/sft/code.jsonl"
   else
     MIX="$BASE/artifacts/sft/sft_mix_core.jsonl"
-    $BASE/miniforge3/bin/python $BASE/pipeline/build_sft_mix.py \
-      --out "$MIX" --report "$BASE/artifacts/sft/sft_mix_core.report.json"
+    (cd $BASE && $BASE/miniforge3/bin/python pipeline/build_sft_mix.py \
+      --out "$MIX" --report "$BASE/artifacts/sft/sft_mix_core.report.json")
     DATA="$MIX"
   fi
 fi

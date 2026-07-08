@@ -49,25 +49,27 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-07 ~19:15) |
+| Item | Value (as of 2026-07-07 ~22:35) |
 |---|---|
-| **Pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, RUNNING ~28h |
-| Pretrain step | ~56,880 / **60,000** target (`--steps 60000`) |
-| Pretrain loss | ~1.6 avg (latest 1.58-1.78), gnorm ~0.08-0.16 |
-| Throughput | ~149k tok/s (~1,026 steps/hr; ~12.9B tok/day) |
-| Skips | **45 total** in ~28h, stable (healthy — see §5) |
-| LR phase | **DECAY UNDERWAY** — lr ~0.0017 and dropping. Decay window 48k–60k → **60k = first decayed checkpoint** |
-| 60k ETA | **~2026-07-07 22:15 EDT (~3h out)** at real rate ~1,026 steps/hr |
+| **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
+| **Extended pretrain job** | `680992`, name `shohin-flagship`, node **evc22**, RUNNING from `ckpt_0060000.pt`, target **300,000** |
+| Extended pretrain status | Resumed at step **60001** with `FRESH_OPT=1` rewarmup, `LRMUON=0.005`, `LRADAM=1e-3`, `DSEED=777` |
+| **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, RUNNING from `ckpt_0060000.pt` on curated `sft_mix_core.jsonl` |
+| 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
+| 60k skips | **45 total**, stable/healthy |
 | **Corpus-expansion job** | `680324` — **✅ DONE** (finished ~12:10) |
-| finemath3 output | `artifacts/shards/finemath3/` — **✅ COMPLETE: 125 shards, exactly 25.0B tokens** (`manifest.json` present, 22 GB; 8,575 contaminated docs dropped vs evalgrams). **Folds into SHARDS at the 60k→300k relaunch** (§4A b) — NOT into the current running job. |
-| Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k), all 1.1 GB full/resumable |
+| finemath3 output | `artifacts/shards/finemath3/` — **✅ COMPLETE: 125 shards, exactly 25.0B tokens** (`manifest.json` present, 22 GB; 8,575 contaminated docs dropped vs evalgrams). **Included in the 300k relaunch SHARDS.** |
+| SFT mix (Newton) | `artifacts/sft/sft_mix_core.jsonl` — **85,593 examples** at launch (OpenMath + rgym + code + latest verified teacher traces) |
+| Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k) plus **`best_step60000.model.pt`** and numbered **`ckpt_0060000.pt`** model-only resume marker |
 | **Local DR backup (Mac)** | `train/flagship_out/ckpt_0050000.pt` (1.0 GB, **step 50k, full+optimizer, md5 53bc952edc0b**) — bit-identical to cluster, fully resumable. Refresh at each 10k milestone (overwrite older). |
 
-**Checkpoints preserved so far:** every 10k. Next to preserve: **50000** (imminent), then **60000**.
+**Checkpoints preserved so far:** every 10k through 50k; 60k is model-only because the trainer writes
+`ckpt_final.pt` without optimizer state. The 300k extension resumes from `ckpt_0060000.pt` with fresh
+optimizer rewarmup, so no stale 59k momentum is used.
 
-**Next actions in order:** (1) preserve 50k ckpt when it lands; (2) log corpus-done when finemath3
-finishes (§4B) and fold it into the extend's SHARDS; (3) at 60k, run the FEEDBACK+EXTEND transition
-(§4A) — this is the big one.
+**Next actions in order:** (1) confirm first extension training step logs after compile/startup; (2)
+watch SFT through `sft_ep3.pt`; (3) run `eval_all.sbatch`; (4) refresh local DR backup at next useful
+numbered checkpoint (70k or earlier if desired).
 
 ---
 
@@ -216,6 +218,16 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   OpenMath backbone + 993 Reasoning-Gym + 446 code + ~6.2k verified teacher traces. Before 60k SFT,
   sync current local `hy3_reasoning*.jsonl` and this new script/job to Newton, then let `sft.sbatch`
   build the cluster-side frozen mix.
+- **2026-07-07 ~22:15-22:35** — **60k FEEDBACK+EXTEND transition executed.** Job `680149` finished cleanly:
+  `[done] 60000 steps in 112203s`, 45 skips total, final logged loss band still healthy. Trainer only
+  wrote model-only `ckpt_final.pt`, so created `best_step60000.model.pt` and numbered
+  `ckpt_0060000.pt` from final weights; extension uses `FRESH_OPT=1` to rewarm optimizer instead of
+  carrying stale 59k momentum. Synced latest teacher traces to Newton and rebuilt cluster
+  `sft_mix_core.jsonl` (**85,593 examples**). First SFT submission `680991` exposed a cwd bug: `sft.sbatch`
+  rebuilt the mix from `$BASE/train` and produced 0 rows. Canceled it immediately, fixed script to build
+  from repo root, rebuilt mix, and relaunched SFT as **`681000`** on evc43. Launched 300k extension as
+  **`680992`** on evc22 with SHARDS including `finemath3`; verified resume line:
+  `ckpt_0060000.pt -> start step 60001 (FRESH optimizer: momentum reset + rewarmup)`.
 
 ---
 

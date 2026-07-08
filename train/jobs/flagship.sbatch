@@ -14,7 +14,7 @@ BASE=/lustre/fs1/home/sa305415/shohin
 export OMP_NUM_THREADS=4
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 cd $BASE/train
-SHARDS="$BASE/artifacts/shards/finemath4 $BASE/artifacts/shards/openwebmath $BASE/artifacts/shards/code_python"
+SHARDS="$BASE/artifacts/shards/finemath4 $BASE/artifacts/shards/openwebmath $BASE/artifacts/shards/code_python $BASE/artifacts/shards/finemath3"
 NG=${NG:-1}
 ARGS="--size shohin --shard-dirs $SHARDS --steps ${STEPS:-60000} --batch-size ${BS:-16} \
   --grad-accum ${ACC:-16} --warmup ${WARMUP:-2000} --lr-muon ${LRMUON:-0.01} --lr-adam ${LRADAM:-3e-3} \
