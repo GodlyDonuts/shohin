@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-08 ~01:59 EDT (1-GPU continuation running; 2-GPU chunk queued next). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-08 ~02:23 EDT (overnight 2-H100 attempt plus 1-H100 fallback queued). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -54,11 +54,11 @@ Do not wait for permission to fix obvious data/training gaps.
 | Item | Value (as of 2026-07-08 ~00:55 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
-| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. Current active continuation is **`681080`**, name `shohin-flagship`, node **evc29**, RUNNING until ~03:55 EDT; queue after it: **`681078`** 2-GPU 2h chunk. |
-| Extended pretrain status | `681087` resumed from **`ckpt_0062400.pt` -> step 62401**, reached **step 62900**, and last saved **`ckpt_0062900.pt`**; loss stayed in band. `681080` resumed from **`ckpt_0062900.pt` -> step 62901** and has printed healthy steps through **62940** (loss 1.60-1.66, lr 0.0050). `681078` remains dependency-held as `afterany:681080` to prevent overlapping writes. |
+| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. Current active continuation is **`681080`**, name `shohin-flagship`, node **evc29**, RUNNING until ~03:55 EDT; queue after it: **`681091`** lean 2-H100 attempt, then **`681092`** 1-H100 fallback. |
+| Extended pretrain status | `681087` resumed from **`ckpt_0062400.pt` -> step 62401**, reached **step 62900**, and last saved **`ckpt_0062900.pt`**. `681080` resumed from **`ckpt_0062900.pt` -> step 62901** and has printed healthy steps through **63290** (loss in band, lr 0.0050), with `ckpt_0063000.pt` saved. Old 2-GPU jobs `681078`/`681090` were replaced by lean job **`681091`** (`afterany:681080`, deadline `2026-07-08T06:20:00`, `gres/gpu=2`, `cpu=4`, `mem=96G`, `NG=2 BS=16 ACC=8`, `CKPT=500`, `AUTO_REQUEUE=0`). Fallback **`681092`** is `afterany:681091` on 1 H100. This gives 2-H100 a bounded start window but prevents idle time and overlapping writes. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
 | **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. |
-| **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. |
+| **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
 | 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
 | 60k skips | **45 total**, stable/healthy |
 | **Corpus-expansion job** | `680324` — **✅ DONE** (finished ~12:10) |
@@ -75,14 +75,14 @@ extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no st
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
 **Next actions in order:** (1) monitor `681080` through its 2-hour window; it should keep stepping
-from `ckpt_0062900.pt` and save every 500 steps. (2) Confirm `681078` starts after `681080`; it is the
-2-H100 2h chunk using
-`train/jobs/flagship2.sbatch`, `NG=2 BS=16 ACC=8`, and should show `world=2` plus ~260k tok/s. (3) If
-2-GPU chunks keep scheduling cleanly, continue with short checkpointed 2-GPU chunks or promote to longer
-2-GPU walltimes when priority allows. (4) Refresh local DR backup at the next useful numbered checkpoint
-(70k or after a stable promoted 2-GPU checkpoint). (5) Do not rerun the same SFT recipe blindly -- the
-60k SFT board is weak, so the next SFT should be a measured data/prompt/format variant after inspecting
-generations.
+from `ckpt_0062900.pt` and save every 500 steps. (2) Confirm `681091` either starts after `681080` and
+shows `world=2` plus ~260k tok/s, or cancels by its deadline if Slurm cannot fit 2 H100s. (3) If
+`681091` does not run, confirm fallback `681092` starts from the newest checkpoint and keeps tokens
+moving on 1 H100. (4) If 2-GPU chunks keep scheduling cleanly, continue with short checkpointed 2-GPU
+chunks or promote to longer 2-GPU walltimes when priority allows. (5) Refresh local DR backup at the
+next useful numbered checkpoint (70k or after a stable promoted 2-GPU checkpoint). (6) Run a measured
+eval/benchmark gate at the next meaningful checkpoint rather than blindly SFTing; the 60k SFT board was
+weak, so the next SFT should be a data/prompt/format variant after inspecting generations.
 
 ---
 
@@ -303,6 +303,23 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   **`681080`** started immediately on evc29, resumed from `ckpt_0062900.pt -> start step 62901`, and
   printed healthy steps through **62940** (loss 1.60-1.66, lr 0.0050). Next queued job remains
   **`681078`**, the 2-H100 chunk, dependency-held behind `681080` to avoid concurrent writes.
+- **2026-07-08 ~02:20** — **2-GPU promotion tightened after user sleep handoff.** User pointed at idle
+  `ev6`/`ev16` and `evc105`. Verified `evc6`/`evc16` are idle but are V100 nodes
+  (`tesla_v100-pcie-16gb:2` and `tesla_v100-pcie-32gb:2`), unsafe/likely slower for this bf16 H100
+  trainer. Verified `evc105` is idle 4x H200 NVL but only in `short,ucfit`; `sbatch --test-only` on
+  both partitions returns `Invalid account or account/partition combination`, so this account cannot use
+  it. No normal-partition node currently has 2 free H100s; `681080` is still healthy on one H100 (latest
+  seen **step 63190**, `ckpt_0063000.pt` saved), so do not kill it. Updated `flagship2.sbatch` to the
+  lean request (`-c 4`, `--mem=96G`, `OMP_NUM_THREADS=2`) and replaced old queued `681078` with
+  **`681090`**, a dependency-held 2-H100 job after `681080` with `NG=2 BS=16 ACC=8`, `CKPT=500`, and
+  only down/drain H100 nodes excluded.
+- **2026-07-08 ~02:23** — **Overnight no-idle chain installed.** User is asleep and asked Codex to act
+  as executive director, try hard for 2 GPUs, and benchmark/verify as needed. Patched `flagship2.sbatch`
+  with `AUTO_REQUEUE` control to avoid a fallback overlap if a 2-GPU zero-step failure self-requeues.
+  Replaced `681090` with **`681091`**, a lean 2-H100 job after `681080` with `AUTO_REQUEUE=0` and
+  deadline `2026-07-08T06:20:00` (2h job must start by ~04:20, shortly after `681080` ends). Queued
+  **`681092`** as the 1-H100 fallback `afterany:681091`. Outcome: if Slurm can place 2 H100s, 681091
+  runs; if not, deadline cancellation releases 681092 so training keeps moving with a single writer.
 
 ---
 

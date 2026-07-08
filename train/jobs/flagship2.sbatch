@@ -2,17 +2,18 @@
 #SBATCH -J shohin-flagship2
 #SBATCH -p normal
 #SBATCH --gres=gpu:nvidia_h100_pcie:2
-#SBATCH -c 8
-#SBATCH --mem=128G
+#SBATCH -c 4
+#SBATCH --mem=96G
 #SBATCH -t 3-00:00:00
 #SBATCH -o /lustre/fs1/home/sa305415/shohin/logs/flagship2_%j.out
 #SBATCH --open-mode=append
 # Two-H100 flagship continuation. This preserves the 1-GPU global batch by default:
 # 1*BS16*ACC16 == 2*BS16*ACC8 sequences/update. Use after a clean DDP canary only.
+# Keep CPU modest so the GPU request, not CPU hoarding, controls scheduling.
 set -uo pipefail
 
 BASE=/lustre/fs1/home/sa305415/shohin
-export OMP_NUM_THREADS=4
+export OMP_NUM_THREADS=${OMP_NUM_THREADS:-2}
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 cd $BASE/train
 
@@ -59,7 +60,9 @@ if grep -qE "^step " "$MYLOG" 2>/dev/null; then
 else
   echo "${SLURMD_NODENAME:-unknown}" >> "$BAD"
   EXCL=$(sort -u "$BAD" | paste -sd, -)
-  if [ "$(sort -u "$BAD" | wc -l)" -lt 12 ]; then
+  if [ "${AUTO_REQUEUE:-1}" != "1" ]; then
+    echo "[job2] no training progress on ${SLURMD_NODENAME}; AUTO_REQUEUE disabled."
+  elif [ "$(sort -u "$BAD" | wc -l)" -lt 12 ]; then
     echo "[job2] no training progress on ${SLURMD_NODENAME}; auto-requeue excluding: $EXCL"
     sbatch --exclude="$EXCL" "$BASE/train/jobs/flagship2.sbatch"
   else
