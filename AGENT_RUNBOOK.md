@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-07 ~23:27 EDT (2-H100 canary submitted; live flagship untouched). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-08 ~00:00 EDT (SFT eval complete; 61k full checkpoint downloaded). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -49,22 +49,22 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-07 ~23:27 EDT) |
+| Item | Value (as of 2026-07-08 ~00:00 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | `680992`, name `shohin-flagship`, node **evc22**, RUNNING from `ckpt_0060000.pt`, target **300,000** |
-| Extended pretrain status | Resumed at step **60001** with `FRESH_OPT=1` rewarmup, `LRMUON=0.005`, `LRADAM=1e-3`, `DSEED=777`; latest seen **step 60920**, loss 1.7179, lr 0.0023, ~147.6k tok/s |
+| Extended pretrain status | Resumed at step **60001** with `FRESH_OPT=1` rewarmup, `LRMUON=0.005`, `LRADAM=1e-3`, `DSEED=777`; latest seen **step 61620**, loss 1.5953, lr 0.0040, ~148.7k tok/s |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
-| **Eval board job** | `681030`, name `shohin-eval`, node **evc32**, RUNNING on `sft_ep3.pt` (`N=100`, `K=1`) |
-| **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **PENDING**. Separate branch from `ckpt_0060000.pt` into `train/ddp2_canary_60000_20260707_232737`; `NG=2 BS=16 ACC=8` preserves current global batch (`1*16*16 == 2*16*8`). Live job not touched. |
+| **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. |
+| **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **PENDING** on priority, scheduled node `evc42` / predicted start 2026-07-08 01:01. Separate branch from `ckpt_0060000.pt` into `train/ddp2_canary_60000_20260707_232737`; `NG=2 BS=16 ACC=8` preserves current global batch (`1*16*16 == 2*16*8`). Live job not touched. |
 | 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
 | 60k skips | **45 total**, stable/healthy |
 | **Corpus-expansion job** | `680324` — **✅ DONE** (finished ~12:10) |
 | finemath3 output | `artifacts/shards/finemath3/` — **✅ COMPLETE: 125 shards, exactly 25.0B tokens** (`manifest.json` present, 22 GB; 8,575 contaminated docs dropped vs evalgrams). **Included in the 300k relaunch SHARDS.** |
 | SFT mix (Newton) | `artifacts/sft/sft_mix_core.jsonl` — **85,593 examples** at launch (OpenMath + rgym + code + latest verified teacher traces) |
-| Local teacher distillers | HY3 and nemotron processes still alive (`hy3_reasoning.jsonl` 12,236 rows; `hy3_reasoning_nemotron.jsonl` 981 rows). GLM process was stalled; raw NVIDIA probe returned HTTP 429, so GLM is paused until provider limit clears. |
+| Local teacher distillers | HY3 and nemotron processes still alive and writing (`hy3_reasoning.jsonl` 13.8k+ rows; `hy3_reasoning_nemotron.jsonl` 1.0k+ rows). GLM remains paused after raw NVIDIA HTTP 429. |
 | Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k) plus **`best_step60000.model.pt`** and numbered **`ckpt_0060000.pt`** model-only resume marker |
-| **Local DR backup (Mac)** | **60k downloaded/verified:** `train/flagship_out/ckpt_0060000.pt` and hardlink `best_step60000.model.pt` (model-only 60k, md5 `d2fdf867bd49cf517b62364e152bffde`); `ckpt_0059000.pt` (1.0 GB, full+optimizer fallback, md5 `0038df81be145cf4a4b0644e2dce284a`); `train/sft_out/sft_ep3.pt` (md5 `dda39ab36aa73bd6284b94d9fbf252e5`). Older full checkpoint `ckpt_0050000.pt` also remains local. Refresh again at 70k. |
+| **Local DR backup (Mac)** | **Post-60k downloaded/verified:** `train/flagship_out/ckpt_0061000.pt` (1.0 GB, full+optimizer extension checkpoint, md5 `28a18ebd7efc67cbbb72db6505493248`); `ckpt_0060000.pt` and hardlink `best_step60000.model.pt` (model-only 60k, md5 `d2fdf867bd49cf517b62364e152bffde`); `ckpt_0059000.pt` (full+optimizer fallback, md5 `0038df81be145cf4a4b0644e2dce284a`); `train/sft_out/sft_ep3.pt` (md5 `dda39ab36aa73bd6284b94d9fbf252e5`). Older full checkpoint `ckpt_0050000.pt` also remains local. Refresh again at 70k or after a promoted 2-GPU checkpoint. |
 
 **Checkpoints preserved so far:** every 10k through 50k; 60k is model-only because the trainer writes
 `ckpt_final.pt` without optimizer state. `ckpt_0060000.pt` is local and cluster hash-matched. The 300k
@@ -72,11 +72,12 @@ extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no st
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
 **Next actions in order:** (1) let eval job `681030` finish and parse/post the board; (2) keep watching
-extension `680992` loss/skips/checkpoint cadence; (3) monitor 2-H100 canary `681040` when it starts: it
+**Next actions in order:** (1) keep watching
+extension `680992` loss/skips/checkpoint cadence; (2) monitor 2-H100 canary `681040` when it starts: it
 must resume from 60k with `world=2`, no DDP hang, loss in the same 1.5-1.9 band, sane skips, and at least
-~1.6x useful tok/s before promotion; (4) refresh local DR backup at the next useful numbered checkpoint
-(70k or earlier if desired); (5) only rebuild SFT mix for new SFT variants, not for the already completed
-`sft_ep3.pt` eval.
+~1.6x useful tok/s before promotion; (3) refresh local DR backup at the next useful numbered checkpoint
+(70k or earlier if desired); (4) do not rerun the same SFT recipe blindly -- the 60k SFT board is weak,
+so the next SFT should be a measured data/prompt/format variant after inspecting generations.
 
 ---
 
@@ -258,6 +259,15 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   migrate `680992` yet.** Promotion rule: only switch the flagship to two GPUs after `681040` shows clean
   DDP startup, no rank hang, loss/skip behavior matching the 60k replay, and materially better throughput
   (target at least ~1.6x useful tok/s).
+- **2026-07-08 ~00:00** — Heartbeat milestone: `sft_ep3.pt` eval job `681030` completed cleanly in
+  48m41s but the recipe underperformed badly on the small board: GSM8K **6/100**, MATH500 **0/100**,
+  HumanEval **4/164**, MBPP **0/100**. Treat this as evidence that the first curated SFT format/mixture
+  is not yet useful, not as a pretrain failure; live pretrain remains healthy at step **61,620** (loss
+  1.5953, lr 0.0040, ~148.7k tok/s). Downloaded and hash-verified `ckpt_0061000.pt` to the Mac
+  (full+optimizer, md5 `28a18ebd7efc67cbbb72db6505493248`) as the latest post-60k DR point. Canary
+  `681040` is still pending on priority with scheduled node `evc42` and predicted start around
+  2026-07-08 01:01. HY3/nemotron teacher writers are still producing valid JSONL; GLM remains paused
+  on NVIDIA 429.
 
 ---
 
