@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-08 ~01:27 EDT (deadline-bounded filler running cleanly). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-08 ~01:59 EDT (1-GPU continuation running; 2-GPU chunk queued next). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -54,8 +54,8 @@ Do not wait for permission to fix obvious data/training gaps.
 | Item | Value (as of 2026-07-08 ~00:55 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
-| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfill **`681083`** ran on evc32 and ended by wall-time. Current active continuation is deadline-bounded filler **`681087`**, name `shohin-flagship`, node **evc32**, RUNNING; queue after it: `681080` 1-GPU 2h chunk, then `681078` 2-GPU 2h chunk. |
-| Extended pretrain status | `681083` resumed at **step 62001** from full optimizer checkpoint `ckpt_0062000.pt`, reached **step 62490**, and last saved **`ckpt_0062400.pt`**; loss stayed in band. Filler `681087` resumed from **`ckpt_0062400.pt` -> step 62401** and has printed healthy steps through **62430** (loss 1.65-1.69, lr 0.0050). `681080` is chained as `afterany:681087` to prevent overlapping writes. |
+| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. Current active continuation is **`681080`**, name `shohin-flagship`, node **evc29**, RUNNING until ~03:55 EDT; queue after it: **`681078`** 2-GPU 2h chunk. |
+| Extended pretrain status | `681087` resumed from **`ckpt_0062400.pt` -> step 62401**, reached **step 62900**, and last saved **`ckpt_0062900.pt`**; loss stayed in band. `681080` resumed from **`ckpt_0062900.pt` -> step 62901** and has printed healthy steps through **62940** (loss 1.60-1.66, lr 0.0050). `681078` remains dependency-held as `afterany:681080` to prevent overlapping writes. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
 | **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. |
@@ -64,7 +64,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | **Corpus-expansion job** | `680324` — **✅ DONE** (finished ~12:10) |
 | finemath3 output | `artifacts/shards/finemath3/` — **✅ COMPLETE: 125 shards, exactly 25.0B tokens** (`manifest.json` present, 22 GB; 8,575 contaminated docs dropped vs evalgrams). **Included in the 300k relaunch SHARDS.** |
 | SFT mix (Newton) | `artifacts/sft/sft_mix_core.jsonl` — **85,593 examples** at launch (OpenMath + rgym + code + latest verified teacher traces) |
-| Local teacher distillers | HY3 and nemotron processes still alive and writing (`hy3_reasoning.jsonl` 15.9k+ rows; `hy3_reasoning_nemotron.jsonl` 1.10k+ rows). GLM remains paused after raw NVIDIA HTTP 429. |
+| Local teacher distillers | HY3 and nemotron processes still alive and writing (`hy3_reasoning.jsonl` 17.5k+ rows; `hy3_reasoning_nemotron.jsonl` 1.13k+ rows). GLM remains paused after raw NVIDIA HTTP 429. |
 | Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k) plus **`best_step60000.model.pt`**, numbered **`ckpt_0060000.pt`**, and **`best_step62000_pre2gpu.pt`** (`md5 e4f3de659effac5c6875c6ae17d6b544`) |
 | **Local DR backup (Mac)** | **Post-60k downloaded/verified:** `train/flagship_out/ckpt_0061000.pt` (1.0 GB, full+optimizer extension checkpoint, md5 `28a18ebd7efc67cbbb72db6505493248`); `ckpt_0060000.pt` and hardlink `best_step60000.model.pt` (model-only 60k, md5 `d2fdf867bd49cf517b62364e152bffde`); `ckpt_0059000.pt` (full+optimizer fallback, md5 `0038df81be145cf4a4b0644e2dce284a`); `train/sft_out/sft_ep3.pt` (md5 `dda39ab36aa73bd6284b94d9fbf252e5`). Older full checkpoint `ckpt_0050000.pt` also remains local. Refresh again at 70k or after a promoted 2-GPU checkpoint. |
 | **Large artifact transfer policy** | For big checkpoints/shards/uploads, prefer VPS-to-VPS or Newton-to-VPS staging when credentials/hosts are available; the VPS links have ~20 Gbit internet and should beat Mac↔Newton transfers. Still use `.part` files and md5/sha256 on both ends before trusting or deleting anything. |
@@ -74,14 +74,13 @@ Do not wait for permission to fix obvious data/training gaps.
 extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no stale 59k momentum is used.
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
-**Next actions in order:** (1) monitor `681087` through its 30-minute window; it should keep stepping
-from `ckpt_0062400.pt` and save every 100 steps. (2) Confirm `681080` releases after `681087` and
-resumes from the newest checkpoint; it is a 1-GPU 2h chunk. (3) Confirm `681078` starts after `681080`;
-it is the 2-H100 2h chunk using
-`train/jobs/flagship2.sbatch`, `NG=2 BS=16 ACC=8`, and should show `world=2` plus ~260k tok/s. (4) If
+**Next actions in order:** (1) monitor `681080` through its 2-hour window; it should keep stepping
+from `ckpt_0062900.pt` and save every 500 steps. (2) Confirm `681078` starts after `681080`; it is the
+2-H100 2h chunk using
+`train/jobs/flagship2.sbatch`, `NG=2 BS=16 ACC=8`, and should show `world=2` plus ~260k tok/s. (3) If
 2-GPU chunks keep scheduling cleanly, continue with short checkpointed 2-GPU chunks or promote to longer
-2-GPU walltimes when priority allows. (5) Refresh local DR backup at the next useful numbered checkpoint
-(70k or after a stable promoted 2-GPU checkpoint). (6) Do not rerun the same SFT recipe blindly -- the
+2-GPU walltimes when priority allows. (4) Refresh local DR backup at the next useful numbered checkpoint
+(70k or after a stable promoted 2-GPU checkpoint). (5) Do not rerun the same SFT recipe blindly -- the
 60k SFT board is weak, so the next SFT should be a measured data/prompt/format variant after inspecting
 generations.
 
@@ -299,6 +298,11 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   `ckpt_0062400.pt -> start step 62401`, and printed healthy early steps through **62430** (loss
   1.65-1.69, lr 0.0050). `681080` remains held on `afterany:681087`; next check must ensure it releases
   after the filler ends and resumes from the newest checkpoint.
+- **2026-07-08 ~01:59** — **Handoff to scheduled continuation succeeded.** Filler `681087` timed out
+  cleanly at 30m after reaching **step 62900** and saving `ckpt_0062900.pt`. Scheduled 1-GPU job
+  **`681080`** started immediately on evc29, resumed from `ckpt_0062900.pt -> start step 62901`, and
+  printed healthy steps through **62940** (loss 1.60-1.66, lr 0.0050). Next queued job remains
+  **`681078`**, the 2-H100 chunk, dependency-held behind `681080` to avoid concurrent writes.
 
 ---
 
