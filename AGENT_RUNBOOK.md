@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-08 ~00:06 EDT (VPS transfer policy added). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-08 ~00:55 EDT (2-H100 canary succeeded; resumable job chain active). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -25,8 +25,10 @@ verified, concise-CoT.
 > is SoTA."
 
 What that means operationally, and is now settled — **do not relitigate:**
-- **Single GPU only.** The 8×H100 (`highgpu`, evc101–105) is permanently OFF the table (other users,
-  no access). Do **not** try DDP/torchrun multi-GPU on the flagship run. `NG` stays 1.
+- **No 8×H100.** The 8×H100 (`highgpu`, evc101–105) is permanently OFF the table (other users,
+  no access). A measured **2×H100 single-node DDP path is now allowed** after the successful canary
+  `681040`, but only with preserved global batch semantics (`NG=2 BS=16 ACC=8`) and checkpointed
+  handoffs. Do not attempt broader multi-node/multi-GPU changes.
 - **Time is unlimited.** Weeks are fine. Optimize for final quality, not speed.
 - **The two levers that matter at 135M:** (1) more tokens through the model, (2) more/better data.
   Everything we do serves those two. (Architecture is frozen; see §7.)
@@ -49,21 +51,21 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-08 ~00:00 EDT) |
+| Item | Value (as of 2026-07-08 ~00:55 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
-| **Extended pretrain job** | `680992`, name `shohin-flagship`, node **evc22**, RUNNING from `ckpt_0060000.pt`, target **300,000** |
-| Extended pretrain status | Resumed at step **60001** with `FRESH_OPT=1` rewarmup, `LRMUON=0.005`, `LRADAM=1e-3`, `DSEED=777`; latest seen **step 61620**, loss 1.5953, lr 0.0040, ~148.7k tok/s |
+| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; current active continuation is short backfill job **`681083`**, name `shohin-flagship`, node **evc32**, RUNNING from `ckpt_0062000.pt` |
+| Extended pretrain status | `681083` resumed at **step 62001** from full optimizer checkpoint `ckpt_0062000.pt`; latest seen **step 62030**, loss 1.7218, lr 0.0050. Follow-on queue is dependency-ordered: `681080` 1-GPU 2h chunk after `681083`, then `681078` 2-GPU 2h chunk after `681080`. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
 | **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. |
-| **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **PENDING** on priority, scheduled node `evc42` / predicted start 2026-07-08 01:01. Separate branch from `ckpt_0060000.pt` into `train/ddp2_canary_60000_20260707_232737`; `NG=2 BS=16 ACC=8` preserves current global batch (`1*16*16 == 2*16*8`). Live job not touched. |
+| **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. |
 | 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
 | 60k skips | **45 total**, stable/healthy |
 | **Corpus-expansion job** | `680324` — **✅ DONE** (finished ~12:10) |
 | finemath3 output | `artifacts/shards/finemath3/` — **✅ COMPLETE: 125 shards, exactly 25.0B tokens** (`manifest.json` present, 22 GB; 8,575 contaminated docs dropped vs evalgrams). **Included in the 300k relaunch SHARDS.** |
 | SFT mix (Newton) | `artifacts/sft/sft_mix_core.jsonl` — **85,593 examples** at launch (OpenMath + rgym + code + latest verified teacher traces) |
-| Local teacher distillers | HY3 and nemotron processes still alive and writing (`hy3_reasoning.jsonl` 13.8k+ rows; `hy3_reasoning_nemotron.jsonl` 1.0k+ rows). GLM remains paused after raw NVIDIA HTTP 429. |
-| Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k) plus **`best_step60000.model.pt`** and numbered **`ckpt_0060000.pt`** model-only resume marker |
+| Local teacher distillers | HY3 and nemotron processes still alive and writing (`hy3_reasoning.jsonl` 15.6k+ rows; `hy3_reasoning_nemotron.jsonl` 1.07k+ rows). GLM remains paused after raw NVIDIA HTTP 429. |
+| Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k) plus **`best_step60000.model.pt`**, numbered **`ckpt_0060000.pt`**, and **`best_step62000_pre2gpu.pt`** (`md5 e4f3de659effac5c6875c6ae17d6b544`) |
 | **Local DR backup (Mac)** | **Post-60k downloaded/verified:** `train/flagship_out/ckpt_0061000.pt` (1.0 GB, full+optimizer extension checkpoint, md5 `28a18ebd7efc67cbbb72db6505493248`); `ckpt_0060000.pt` and hardlink `best_step60000.model.pt` (model-only 60k, md5 `d2fdf867bd49cf517b62364e152bffde`); `ckpt_0059000.pt` (full+optimizer fallback, md5 `0038df81be145cf4a4b0644e2dce284a`); `train/sft_out/sft_ep3.pt` (md5 `dda39ab36aa73bd6284b94d9fbf252e5`). Older full checkpoint `ckpt_0050000.pt` also remains local. Refresh again at 70k or after a promoted 2-GPU checkpoint. |
 | **Large artifact transfer policy** | For big checkpoints/shards/uploads, prefer VPS-to-VPS or Newton-to-VPS staging when credentials/hosts are available; the VPS links have ~20 Gbit internet and should beat Mac↔Newton transfers. Still use `.part` files and md5/sha256 on both ends before trusting or deleting anything. |
 
@@ -72,12 +74,15 @@ Do not wait for permission to fix obvious data/training gaps.
 extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no stale 59k momentum is used.
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
-**Next actions in order:** (1) keep watching
-extension `680992` loss/skips/checkpoint cadence; (2) monitor 2-H100 canary `681040` when it starts: it
-must resume from 60k with `world=2`, no DDP hang, loss in the same 1.5-1.9 band, sane skips, and at least
-~1.6x useful tok/s before promotion; (3) refresh local DR backup at the next useful numbered checkpoint
-(70k or earlier if desired); (4) do not rerun the same SFT recipe blindly -- the 60k SFT board is weak,
-so the next SFT should be a measured data/prompt/format variant after inspecting generations.
+**Next actions in order:** (1) monitor `681083` through its 30-minute backfill window; it should keep
+stepping from `ckpt_0062000.pt` and save every 100 steps. (2) Confirm `681080` starts after `681083`
+and resumes from the newest checkpoint; it is a 1-GPU 2h chunk. (3) Confirm `681078` starts after
+`681080`; it is the 2-H100 2h chunk using `train/jobs/flagship2.sbatch`, `NG=2 BS=16 ACC=8`, and should
+show `world=2` plus ~260k tok/s. (4) If 2-GPU chunks keep scheduling cleanly, continue with short
+checkpointed 2-GPU chunks or promote to longer 2-GPU walltimes when priority allows. (5) Refresh local
+DR backup at the next useful numbered checkpoint (70k or after a stable promoted 2-GPU checkpoint).
+(6) Do not rerun the same SFT recipe blindly -- the 60k SFT board is weak, so the next SFT should be a
+measured data/prompt/format variant after inspecting generations.
 
 ---
 
@@ -273,6 +278,15 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   transfer policy accordingly. Mac local DR copies are still useful, but for bulk checkpoint/corpus
   movement the preferred path is via VPS staging with `.part` files plus md5/sha256 verification on both
   ends.
+- **2026-07-08 ~00:55** — **2-H100 canary succeeded; promotion attempted with safe fallback.** Canary
+  job `681040` completed cleanly on evc42: `world=2`, resumed from `ckpt_0060000.pt`, no DDP hang, loss
+  stayed in band, and throughput reached ~262k tok/s vs the live 1-GPU ~149k tok/s (~1.76x). Preserved
+  the live full checkpoint `ckpt_0062000.pt` to `best_step62000_pre2gpu.pt` (md5
+  `e4f3de659effac5c6875c6ae17d6b544`) and stopped old 1-GPU job `680992`. A direct long 2-GPU promotion
+  did not start promptly due Slurm priority, so switched to short backfill chunks: current job `681083`
+  is RUNNING on evc32 for 30m, resumed from `ckpt_0062000.pt`, and has printed steps through 62030.
+  Queue is dependency-ordered to avoid overlapping writes to `flagship_out`: `681080` 1-GPU 2h starts
+  after `681083`; `681078` 2-GPU 2h starts after `681080` using new `train/jobs/flagship2.sbatch`.
 
 ---
 
