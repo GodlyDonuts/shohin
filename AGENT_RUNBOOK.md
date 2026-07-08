@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-08 ~14:45 EDT (`681308` running; 80k progress benchmark queued). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-08 ~15:35 EDT (80k preserved; `681309` running from 80.25k). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -51,11 +51,11 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-08 ~14:45 EDT) |
+| Item | Value (as of 2026-07-08 ~15:35 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
-| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, and `681123` completed 2-H100 windows by wall-time. Current active continuation is **`681308`**, name `shohin-flagship2`, running on **evc32** as a 1-hour 2-H100 chunk (`NG=2 BS=16 ACC=8 CKPT=250`). Queue behind it: **`681309` -> `681310`** (2-H100) then **`681311`** 1-H100 fallback. |
-| Extended pretrain status | `681123` resumed from **`ckpt_0075000.pt -> step 75001`**, ran cleanly with `world=2`, reached **step 78700**, saved **`ckpt_0078500.pt`**, and timed out at wall-time. `681308` resumed from **`ckpt_0078500.pt -> step 78501`** with `world=2`; latest live check showed **step 78870**, 0 concerning skips, loss/gnorm in band, throughput warming through **~239k tok/s**, and **`ckpt_0078750.pt`** saved. `ckpt_0078500.pt` remains the latest local DR checkpoint and is md5-verified; next local DR target is 80k if it appears. `short`, `ucfit`, and `highgpu` still reject this account. |
+| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, `681123`, and `681308` completed 2-H100 windows by wall-time. Current active continuation is **`681309`**, name `shohin-flagship2`, running on **evc32** as a 1-hour 2-H100 chunk (`NG=2 BS=16 ACC=8 CKPT=250`). Queue behind it: **`681310`** (2-H100), **`681311`** 1-H100 fallback, and low-priority eval **`681373`**. |
+| Extended pretrain status | `681308` resumed from **`ckpt_0078500.pt -> step 78501`**, ran cleanly with `world=2`, reached **step 80280**, saved **`ckpt_0080250.pt`**, and timed out at wall-time. `ckpt_0080000.pt` was preserved as `best_step80000.pt` and downloaded locally with matching md5 **`ebe28d10d26f78bf3e3395ff64f9ce92`**. `681309` resumed from **`ckpt_0080250.pt -> step 80251`**, confirmed `world=2`, and printed first healthy step **80260**. `short`, `ucfit`, and `highgpu` still reject this account. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
 | **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. New progress benchmark job **`681373`** is queued low-priority (`--nice=10000`) after `681310`, targets **`ckpt_0080000.pt`** with `RUN_TAG=pretrain_080000_progress`, `N=100`, `K=4`, and will append structured rows to `artifacts/eval_history/metrics.jsonl`. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
@@ -66,7 +66,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | SFT mix (Newton) | `artifacts/sft/sft_mix_core.jsonl` — **97,439 examples**, rebuilt 2026-07-08 with hard eval filtering. Audit: 0 malformed rows, 0 duplicate questions, 0 exact eval-prompt hits; builder dropped **206 exact eval-prompt overlaps** and **741 eval 13-gram overlaps** before writing. md5 `53ed91368b4c238dc18a1ab1699e4158`; report md5 `21459b382767801e205f3f625ce106cd`. |
 | Local teacher distillers | Nemotron screen run completed at **1,781 rows** but provider health was poor (`kept=19`, `err=52506` in the screen run). Bounded probes after that were also unhealthy: Nemotron `limit=5` kept 0 with 3 provider errors; GLM `limit=3` kept 0 with 3 provider errors. **Leave Nemotron and GLM paused until provider health clears; do not blindly respawn.** HY3 bulk process died/stalled after ~25.2k rows; `conc=2` and `conc=1` restarts exited without appending, even though a tiny direct Hermes/probe call completed cleanly. Claude/minimax snapshots are present. GLM remains the preferred strongest open-weight teacher when available. |
 | Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k) plus **`best_step60000.model.pt`**, numbered **`ckpt_0060000.pt`**, **`best_step62000_pre2gpu.pt`** (`md5 e4f3de659effac5c6875c6ae17d6b544`), and **`best_step70000.pt`** (`md5 87f28ff961c579c7263136892b340d6f`) |
-| **Local DR backup (Mac)** | **Post-60k downloaded/verified:** `train/flagship_out/ckpt_0078500.pt` (1.0 GB, full+optimizer 78.5k checkpoint, md5 `72b5531043e16e7c1cc1697577036e69`); `ckpt_0070000.pt` (full+optimizer 70k checkpoint, md5 `87f28ff961c579c7263136892b340d6f`); `ckpt_0065500.pt` (full+optimizer 2-H100 checkpoint, md5 `670ae99c278cf26706ebb1b5ee8d7b72`); `ckpt_0061000.pt` (full+optimizer extension checkpoint, md5 `28a18ebd7efc67cbbb72db6505493248`); `ckpt_0060000.pt` and hardlink `best_step60000.model.pt` (model-only 60k, md5 `d2fdf867bd49cf517b62364e152bffde`); `ckpt_0059000.pt` (full+optimizer fallback, md5 `0038df81be145cf4a4b0644e2dce284a`); `train/sft_out/sft_ep3.pt` (md5 `dda39ab36aa73bd6284b94d9fbf252e5`). Next DR target: 80k if it appears, otherwise the first clean post-resume checkpoint from `681308`/`681309`/`681310`. |
+| **Local DR backup (Mac)** | **Post-60k downloaded/verified:** `train/flagship_out/ckpt_0080000.pt` (1.0 GB, full+optimizer 80k checkpoint, md5 `ebe28d10d26f78bf3e3395ff64f9ce92`); `ckpt_0078500.pt` (full+optimizer 78.5k checkpoint, md5 `72b5531043e16e7c1cc1697577036e69`); `ckpt_0070000.pt` (full+optimizer 70k checkpoint, md5 `87f28ff961c579c7263136892b340d6f`); `ckpt_0065500.pt` (full+optimizer 2-H100 checkpoint, md5 `670ae99c278cf26706ebb1b5ee8d7b72`); `ckpt_0061000.pt` (full+optimizer extension checkpoint, md5 `28a18ebd7efc67cbbb72db6505493248`); `ckpt_0060000.pt` and hardlink `best_step60000.model.pt` (model-only 60k, md5 `d2fdf867bd49cf517b62364e152bffde`); `ckpt_0059000.pt` (full+optimizer fallback, md5 `0038df81be145cf4a4b0644e2dce284a`); `train/sft_out/sft_ep3.pt` (md5 `dda39ab36aa73bd6284b94d9fbf252e5`). Next DR target: 90k or the first clean post-`681310` checkpoint if scheduling stalls. |
 | **Large artifact transfer policy** | For big checkpoints/shards/uploads, prefer VPS-to-VPS or Newton-to-VPS staging when credentials/hosts are available; the VPS links have ~20 Gbit internet and should beat Mac↔Newton transfers. Still use `.part` files and md5/sha256 on both ends before trusting or deleting anything. |
 
 **Checkpoints preserved so far:** every 10k through 50k; 60k is model-only because the trainer writes
@@ -74,13 +74,13 @@ Do not wait for permission to fix obvious data/training gaps.
 extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no stale 59k momentum is used.
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
-**Next actions in order:** (1) Watch `681308`: verify it keeps warming toward the normal 2-H100
-~260-275k tok/s band, saves `ckpt_0080000.pt`, and times out cleanly. (2) Preserve/download 80k if it
-appears. (3) Confirm `681309` and `681310` hand off from the newest checkpoint with `world=2`; if the
-2-H100 chain fails or misses deadlines, confirm fallback `681311` starts from the newest checkpoint and
-keeps tokens moving on 1 H100. (4) Let low-priority benchmark `681373` run only when scheduling permits;
-it must not displace active pretraining. (5) Continue milestone benchmarks every ~20k-50k steps or after
-meaningful SFT variants, recording all results in `artifacts/eval_history/metrics.jsonl`.
+**Next actions in order:** (1) Watch `681309`: verify it warms toward the normal 2-H100 ~260-275k tok/s
+band, saves at `ckpt_0080500.pt` / `ckpt_0080750.pt` cadence, and times out cleanly. (2) Confirm
+`681310` hands off from the newest checkpoint with `world=2`; if the 2-H100 chain fails or misses
+deadlines, confirm fallback `681311` starts from the newest checkpoint and keeps tokens moving on
+1 H100. (3) Let low-priority benchmark `681373` run only when scheduling permits; it must not displace
+active pretraining. (4) Continue milestone benchmarks every ~20k-50k steps or after meaningful SFT
+variants, recording all results in `artifacts/eval_history/metrics.jsonl`.
 
 ---
 
@@ -467,6 +467,13 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   `artifacts/eval_history/metrics.jsonl`. Queued low-priority progress benchmark **`681373`** after
   `681310`, targeting `ckpt_0080000.pt` (`RUN_TAG=pretrain_080000_progress`, `N=100`, `K=4`). Benchmark
   doctrine: use a separate H100 when capacity allows, but never let eval displace live pretraining.
+- **2026-07-08 ~15:35** — **80k gate preserved and handoff verified.** `681308` reached step **80280**
+  before wall-time and saved `ckpt_0080250.pt`; `ckpt_0080000.pt` was copied to `best_step80000.pt` on
+  Newton and downloaded to the Mac with matching md5 **`ebe28d10d26f78bf3e3395ff64f9ce92`**. Successor
+  **`681309`** started immediately on **evc32**, resumed from `ckpt_0080250.pt -> step 80251`, confirmed
+  `world=2`, and printed first healthy step 80260. Local teacher snapshots unchanged since provider
+  pause: HY3 25,243; Claude 152; GLM 29; minimax 51; Nemotron 1,781; all valid JSONL, no active local
+  distiller processes.
 
 ---
 
