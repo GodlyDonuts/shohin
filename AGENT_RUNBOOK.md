@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-08 ~12:05 EDT (681123 timed out; SFT mix decontaminated; replacement chain queued). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-08 ~12:16 EDT (681131 cancelled; 681241 pending resources). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -51,11 +51,11 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-08 ~12:05 EDT) |
+| Item | Value (as of 2026-07-08 ~12:16 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
-| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, and `681123` completed 2-H100 windows by wall-time. **No job is currently training at this instant** after `681123` timed out cleanly; next attempt **`681131`** is pending resources on evc32 with a scheduled start around 14:27 EDT. Replacement chain after it is **`681241` -> `681242` -> `681243`**, then **`681106`** 1-H100 fallback. |
-| Extended pretrain status | `681123` resumed from **`ckpt_0075000.pt -> step 75001`**, ran cleanly with `world=2`, reached **step 78700**, saved **`ckpt_0078500.pt`**, and timed out at wall-time. It held loss/gnorm in band with one isolated gnorm skip at step 76508 and warmed to **~274.6k tok/s**. Because the old downstream deadlines were too tight and Slurm would not permit deadline edits, stale follow-ons `681136`/`681188`/`681193` were canceled and replaced with **`681241`** after `681131` (deadline `2026-07-08T17:00:00`), **`681242`** after `681241` (deadline `2026-07-08T19:30:00`), and **`681243`** after `681242` (deadline `2026-07-08T22:00:00`), all 2-H100 with `AUTO_REQUEUE=0`, `NG=2 BS=16 ACC=8`, `CKPT=500`, explicit bad/down-node exclude. **`681106`** is behind `681243` as the 1-H100 fallback. |
+| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, and `681123` completed 2-H100 windows by wall-time. **No job is currently training at this instant** after `681123` timed out cleanly. Stale blocker `681131` was cancelled at 12:15 EDT. Current next attempt is **`681241`**, pending resources with `squeue --start` estimating **2026-07-08T14:27:41**. Chain after it is **`681242` -> `681243`**, then **`681106`** 1-H100 fallback. |
+| Extended pretrain status | `681123` resumed from **`ckpt_0075000.pt -> step 75001`**, ran cleanly with `world=2`, reached **step 78700**, saved **`ckpt_0078500.pt`**, and timed out at wall-time. It held loss/gnorm in band with one isolated gnorm skip at step 76508 and warmed to **~274.6k tok/s**. Because the old downstream deadlines were too tight and Slurm would not permit deadline edits, stale follow-ons `681136`/`681188`/`681193` were canceled and replaced with `681241`/`681242`/`681243`. `681131` still had an impossible start-after-deadline estimate and was cancelled to release the replacement chain. Current queue: **`681241`** (deadline `2026-07-08T17:00:00`), **`681242`** after `681241` (deadline `2026-07-08T19:30:00`), and **`681243`** after `681242` (deadline `2026-07-08T22:00:00`), all 2-H100 with `AUTO_REQUEUE=0`, `NG=2 BS=16 ACC=8`, `CKPT=500`, explicit bad/down-node exclude. **`681106`** is behind `681243` as the 1-H100 fallback. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
 | **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
@@ -64,7 +64,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | **Corpus-expansion job** | `680324` — **✅ DONE** (finished ~12:10) |
 | finemath3 output | `artifacts/shards/finemath3/` — **✅ COMPLETE: 125 shards, exactly 25.0B tokens** (`manifest.json` present, 22 GB; 8,575 contaminated docs dropped vs evalgrams). **Included in the 300k relaunch SHARDS.** |
 | SFT mix (Newton) | `artifacts/sft/sft_mix_core.jsonl` — **97,439 examples**, rebuilt 2026-07-08 with hard eval filtering. Audit: 0 malformed rows, 0 duplicate questions, 0 exact eval-prompt hits; builder dropped **206 exact eval-prompt overlaps** and **741 eval 13-gram overlaps** before writing. md5 `53ed91368b4c238dc18a1ab1699e4158`; report md5 `21459b382767801e205f3f625ce106cd`. |
-| Local teacher distillers | Nemotron process alive and writing (`hy3_reasoning_nemotron.jsonl` **1.73k+** rows). HY3 bulk process died/stalled after ~25.2k rows; `conc=2` and `conc=1` restarts exited without appending, even though a tiny direct Hermes/probe call completed cleanly. **Leave HY3 paused until the harness is inspected; do not blindly respawn.** Claude/minimax/GLM snapshots are present. **GLM remains the preferred strongest open-weight teacher, but is currently blocked:** NVIDIA endpoint still returns HTTP 429, and OpenRouter GLM-5.2 returns a key total-limit 403. Relaunch GLM first when either provider clears. |
+| Local teacher distillers | Nemotron process alive and writing (`hy3_reasoning_nemotron.jsonl` **1.75k+** rows). HY3 bulk process died/stalled after ~25.2k rows; `conc=2` and `conc=1` restarts exited without appending, even though a tiny direct Hermes/probe call completed cleanly. **Leave HY3 paused until the harness is inspected; do not blindly respawn.** Claude/minimax/GLM snapshots are present. **GLM remains the preferred strongest open-weight teacher, but is currently blocked:** NVIDIA endpoint still returns HTTP 429, and OpenRouter GLM-5.2 returns a key total-limit 403. Relaunch GLM first when either provider clears. |
 | Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k) plus **`best_step60000.model.pt`**, numbered **`ckpt_0060000.pt`**, **`best_step62000_pre2gpu.pt`** (`md5 e4f3de659effac5c6875c6ae17d6b544`), and **`best_step70000.pt`** (`md5 87f28ff961c579c7263136892b340d6f`) |
 | **Local DR backup (Mac)** | **Post-60k downloaded/verified:** `train/flagship_out/ckpt_0070000.pt` (1.0 GB, full+optimizer 70k checkpoint, md5 `87f28ff961c579c7263136892b340d6f`); `ckpt_0065500.pt` (full+optimizer 2-H100 checkpoint, md5 `670ae99c278cf26706ebb1b5ee8d7b72`); `ckpt_0061000.pt` (full+optimizer extension checkpoint, md5 `28a18ebd7efc67cbbb72db6505493248`); `ckpt_0060000.pt` and hardlink `best_step60000.model.pt` (model-only 60k, md5 `d2fdf867bd49cf517b62364e152bffde`); `ckpt_0059000.pt` (full+optimizer fallback, md5 `0038df81be145cf4a4b0644e2dce284a`); `train/sft_out/sft_ep3.pt` (md5 `dda39ab36aa73bd6284b94d9fbf252e5`). Older full checkpoint `ckpt_0050000.pt` also remains local. Next DR target: 80k if it appears, otherwise `ckpt_0078500.pt` or a clean post-handoff checkpoint from `681131`/`681241`/`681242`/`681243`. |
 | **Large artifact transfer policy** | For big checkpoints/shards/uploads, prefer VPS-to-VPS or Newton-to-VPS staging when credentials/hosts are available; the VPS links have ~20 Gbit internet and should beat Mac↔Newton transfers. Still use `.part` files and md5/sha256 on both ends before trusting or deleting anything. |
@@ -74,11 +74,10 @@ Do not wait for permission to fix obvious data/training gaps.
 extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no stale 59k momentum is used.
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
-**Next actions in order:** (1) Watch `681131`: it is pending resources with a start estimate around
-14:27 EDT but still has the old 14:20 deadline, so it may either start despite the estimate or cancel.
-Either outcome is acceptable because **`681241`** is chained `afterany:681131` with a realistic deadline.
-(2) Confirm the first job that actually starts resumes from **`ckpt_0078500.pt`** and prints `world=2`,
-loss in band, and checkpoint cadence. (3) Confirm `681242` and `681243` hand off similarly; if the
+**Next actions in order:** (1) Watch `681241`: it is pending resources with `squeue --start` estimating
+2026-07-08T14:27:41. Fresh test-only checks showed 1-H100 and 2-H100 both no earlier than 14:39, so keep
+the faster 2-H100 path. (2) Confirm the first job that actually starts resumes from **`ckpt_0078500.pt`**
+and prints `world=2`, loss in band, and checkpoint cadence. (3) Confirm `681242` and `681243` hand off similarly; if the
 2-H100 chain fails or misses deadlines, confirm fallback `681106` starts from the newest checkpoint and keeps tokens
 moving on 1 H100. (4) If 2-GPU chunks keep scheduling
 cleanly, continue with short checkpointed 2-GPU chunks or promote to longer 2-GPU walltimes when
@@ -439,6 +438,13 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   realistic deadlines. Moved `681106` behind `681243` as the 1-H100 fallback. Next custody check must
   verify whether `681131` starts or cancels, then confirm the first running successor resumes from
   `ckpt_0078500.pt`.
+- **2026-07-08 ~12:16** — **Canceled stale `681131` blocker.** `681131` was still pending resources with
+  a scheduled start after its deadline, so it could only delay the replacement chain. Fresh `sbatch
+  --test-only` probes showed both 1-H100 and 2-H100 no earlier than ~14:39, so there was no reason to
+  abandon the faster 2-H100 path. Canceled `681131`; **`681241`** is now the next active candidate,
+  pending resources with `squeue --start` estimating **2026-07-08T14:27:41**. `681242`/`681243`/`681106`
+  remain correctly chained behind it. Nemotron remains alive and writing (`hy3_reasoning_nemotron.jsonl`
+  1,755 rows).
 
 ---
 
