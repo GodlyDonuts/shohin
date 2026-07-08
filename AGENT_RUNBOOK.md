@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-08 ~00:00 EDT (SFT eval complete; 61k full checkpoint downloaded). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-08 ~00:06 EDT (VPS transfer policy added). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -65,13 +65,13 @@ Do not wait for permission to fix obvious data/training gaps.
 | Local teacher distillers | HY3 and nemotron processes still alive and writing (`hy3_reasoning.jsonl` 13.8k+ rows; `hy3_reasoning_nemotron.jsonl` 1.0k+ rows). GLM remains paused after raw NVIDIA HTTP 429. |
 | Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k) plus **`best_step60000.model.pt`** and numbered **`ckpt_0060000.pt`** model-only resume marker |
 | **Local DR backup (Mac)** | **Post-60k downloaded/verified:** `train/flagship_out/ckpt_0061000.pt` (1.0 GB, full+optimizer extension checkpoint, md5 `28a18ebd7efc67cbbb72db6505493248`); `ckpt_0060000.pt` and hardlink `best_step60000.model.pt` (model-only 60k, md5 `d2fdf867bd49cf517b62364e152bffde`); `ckpt_0059000.pt` (full+optimizer fallback, md5 `0038df81be145cf4a4b0644e2dce284a`); `train/sft_out/sft_ep3.pt` (md5 `dda39ab36aa73bd6284b94d9fbf252e5`). Older full checkpoint `ckpt_0050000.pt` also remains local. Refresh again at 70k or after a promoted 2-GPU checkpoint. |
+| **Large artifact transfer policy** | For big checkpoints/shards/uploads, prefer VPS-to-VPS or Newton-to-VPS staging when credentials/hosts are available; the VPS links have ~20 Gbit internet and should beat Mac↔Newton transfers. Still use `.part` files and md5/sha256 on both ends before trusting or deleting anything. |
 
 **Checkpoints preserved so far:** every 10k through 50k; 60k is model-only because the trainer writes
 `ckpt_final.pt` without optimizer state. `ckpt_0060000.pt` is local and cluster hash-matched. The 300k
 extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no stale 59k momentum is used.
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
-**Next actions in order:** (1) let eval job `681030` finish and parse/post the board; (2) keep watching
 **Next actions in order:** (1) keep watching
 extension `680992` loss/skips/checkpoint cadence; (2) monitor 2-H100 canary `681040` when it starts: it
 must resume from 60k with `world=2`, no DDP hang, loss in the same 1.5-1.9 band, sane skips, and at least
@@ -268,6 +268,11 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   `681040` is still pending on priority with scheduled node `evc42` and predicted start around
   2026-07-08 01:01. HY3/nemotron teacher writers are still producing valid JSONL; GLM remains paused
   on NVIDIA 429.
+- **2026-07-08 ~00:06** — User clarified transfer ops: large uploads/downloads should use VPS-to-VPS
+  or Newton-to-VPS staging when possible because those links have ~20 Gbit internet. Updated the live
+  transfer policy accordingly. Mac local DR copies are still useful, but for bulk checkpoint/corpus
+  movement the preferred path is via VPS staging with `.part` files plus md5/sha256 verification on both
+  ends.
 
 ---
 
