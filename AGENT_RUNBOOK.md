@@ -64,7 +64,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | **Corpus-expansion job** | `680324` — **✅ DONE** (finished ~12:10) |
 | finemath3 output | `artifacts/shards/finemath3/` — **✅ COMPLETE: 125 shards, exactly 25.0B tokens** (`manifest.json` present, 22 GB; 8,575 contaminated docs dropped vs evalgrams). **Included in the 300k relaunch SHARDS.** |
 | SFT mix (Newton) | `artifacts/sft/sft_mix_core.jsonl` — **85,593 examples** at launch (OpenMath + rgym + code + latest verified teacher traces) |
-| Local teacher distillers | Nemotron process alive and writing (`hy3_reasoning_nemotron.jsonl` **1.59k+** rows). HY3 bulk process died/stalled after ~25.2k rows; `conc=2` and `conc=1` restarts exited without appending, even though a tiny direct Hermes/probe call completed cleanly. **Leave HY3 paused until the harness is inspected; do not blindly respawn.** Claude/minimax/GLM snapshots are present; GLM remains paused after raw NVIDIA HTTP 429. |
+| Local teacher distillers | Nemotron process alive and writing (`hy3_reasoning_nemotron.jsonl` **1.62k+** rows). HY3 bulk process died/stalled after ~25.2k rows; `conc=2` and `conc=1` restarts exited without appending, even though a tiny direct Hermes/probe call completed cleanly. **Leave HY3 paused until the harness is inspected; do not blindly respawn.** Claude/minimax/GLM snapshots are present. **GLM remains the preferred strongest open-weight teacher, but is currently blocked:** NVIDIA endpoint still returns HTTP 429, and OpenRouter GLM-5.2 returns a key total-limit 403. Relaunch GLM first when either provider clears. |
 | Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k) plus **`best_step60000.model.pt`**, numbered **`ckpt_0060000.pt`**, **`best_step62000_pre2gpu.pt`** (`md5 e4f3de659effac5c6875c6ae17d6b544`), and **`best_step70000.pt`** (`md5 87f28ff961c579c7263136892b340d6f`) |
 | **Local DR backup (Mac)** | **Post-60k downloaded/verified:** `train/flagship_out/ckpt_0070000.pt` (1.0 GB, full+optimizer 70k checkpoint, md5 `87f28ff961c579c7263136892b340d6f`); `ckpt_0065500.pt` (full+optimizer 2-H100 checkpoint, md5 `670ae99c278cf26706ebb1b5ee8d7b72`); `ckpt_0061000.pt` (full+optimizer extension checkpoint, md5 `28a18ebd7efc67cbbb72db6505493248`); `ckpt_0060000.pt` and hardlink `best_step60000.model.pt` (model-only 60k, md5 `d2fdf867bd49cf517b62364e152bffde`); `ckpt_0059000.pt` (full+optimizer fallback, md5 `0038df81be145cf4a4b0644e2dce284a`); `train/sft_out/sft_ep3.pt` (md5 `dda39ab36aa73bd6284b94d9fbf252e5`). Older full checkpoint `ckpt_0050000.pt` also remains local. Next DR target: a clean post-handoff checkpoint from `681115` or 80k, whichever comes first. |
 | **Large artifact transfer policy** | For big checkpoints/shards/uploads, prefer VPS-to-VPS or Newton-to-VPS staging when credentials/hosts are available; the VPS links have ~20 Gbit internet and should beat Mac↔Newton transfers. Still use `.part` files and md5/sha256 on both ends before trusting or deleting anything. |
@@ -390,6 +390,12 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   `2026-07-08T14:20:00`, same `NG=2 BS=16 ACC=8`, `CKPT=500`, `AUTO_REQUEUE=0`, bad/down-node exclude)
   and moved **`681106`** behind `681131` as the 1-H100 fallback. Nemotron remains alive and writing
   (`hy3_reasoning_nemotron.jsonl` 1,596 rows).
+- **2026-07-08 ~09:50** — **GLM teacher status clarified.** GLM was not dropped for quality; it is
+  paused because both available paths are currently blocked. Raw NVIDIA `z-ai/glm-5.2` still returns
+  HTTP 429. A bounded OpenRouter GLM-5.2 attempt (`limit=300`, `concurrency=2`) was tested, but
+  OpenRouter returned a key total-limit HTTP 403 and appended no rows. Keep GLM as the top-priority
+  teacher to relaunch when quota/credits/provider access clears; do not treat Nemotron as a stronger
+  replacement, only as the currently available strong channel.
 
 ---
 
