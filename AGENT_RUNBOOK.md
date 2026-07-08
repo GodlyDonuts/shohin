@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-08 ~02:23 EDT (overnight 2-H100 attempt plus 1-H100 fallback queued). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-08 ~02:36 EDT (681080 healthy; 2-H100 attempt still dependency-held). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -55,7 +55,7 @@ Do not wait for permission to fix obvious data/training gaps.
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. Current active continuation is **`681080`**, name `shohin-flagship`, node **evc29**, RUNNING until ~03:55 EDT; queue after it: **`681091`** lean 2-H100 attempt, then **`681092`** 1-H100 fallback. |
-| Extended pretrain status | `681087` resumed from **`ckpt_0062400.pt` -> step 62401**, reached **step 62900**, and last saved **`ckpt_0062900.pt`**. `681080` resumed from **`ckpt_0062900.pt` -> step 62901** and has printed healthy steps through **63290** (loss in band, lr 0.0050), with `ckpt_0063000.pt` saved. Old 2-GPU jobs `681078`/`681090` were replaced by lean job **`681091`** (`afterany:681080`, deadline `2026-07-08T06:20:00`, `gres/gpu=2`, `cpu=4`, `mem=96G`, `NG=2 BS=16 ACC=8`, `CKPT=500`, `AUTO_REQUEUE=0`). Fallback **`681092`** is `afterany:681091` on 1 H100. This gives 2-H100 a bounded start window but prevents idle time and overlapping writes. |
+| Extended pretrain status | `681087` resumed from **`ckpt_0062400.pt` -> step 62401**, reached **step 62900**, and last saved **`ckpt_0062900.pt`**. `681080` resumed from **`ckpt_0062900.pt` -> step 62901** and has printed healthy steps through **63570** (loss in band, lr 0.0050), with `ckpt_0063500.pt` saved. Two gnorm skips occurred around step 63340 and recovered immediately. Old 2-GPU jobs `681078`/`681090` were replaced by lean job **`681091`** (`afterany:681080`, deadline `2026-07-08T06:20:00`, `gres/gpu=2`, `cpu=4`, `mem=96G`, `NG=2 BS=16 ACC=8`, `CKPT=500`, `AUTO_REQUEUE=0`). Fallback **`681092`** is `afterany:681091` on 1 H100. This gives 2-H100 a bounded start window but prevents idle time and overlapping writes. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
 | **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
@@ -64,7 +64,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | **Corpus-expansion job** | `680324` — **✅ DONE** (finished ~12:10) |
 | finemath3 output | `artifacts/shards/finemath3/` — **✅ COMPLETE: 125 shards, exactly 25.0B tokens** (`manifest.json` present, 22 GB; 8,575 contaminated docs dropped vs evalgrams). **Included in the 300k relaunch SHARDS.** |
 | SFT mix (Newton) | `artifacts/sft/sft_mix_core.jsonl` — **85,593 examples** at launch (OpenMath + rgym + code + latest verified teacher traces) |
-| Local teacher distillers | HY3 and nemotron processes still alive and writing (`hy3_reasoning.jsonl` 17.5k+ rows; `hy3_reasoning_nemotron.jsonl` 1.13k+ rows). GLM remains paused after raw NVIDIA HTTP 429. |
+| Local teacher distillers | HY3 and nemotron processes still alive and writing (`hy3_reasoning.jsonl` 18.5k+ rows; `hy3_reasoning_nemotron.jsonl` 1.17k+ rows). GLM remains paused after raw NVIDIA HTTP 429. |
 | Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k) plus **`best_step60000.model.pt`**, numbered **`ckpt_0060000.pt`**, and **`best_step62000_pre2gpu.pt`** (`md5 e4f3de659effac5c6875c6ae17d6b544`) |
 | **Local DR backup (Mac)** | **Post-60k downloaded/verified:** `train/flagship_out/ckpt_0061000.pt` (1.0 GB, full+optimizer extension checkpoint, md5 `28a18ebd7efc67cbbb72db6505493248`); `ckpt_0060000.pt` and hardlink `best_step60000.model.pt` (model-only 60k, md5 `d2fdf867bd49cf517b62364e152bffde`); `ckpt_0059000.pt` (full+optimizer fallback, md5 `0038df81be145cf4a4b0644e2dce284a`); `train/sft_out/sft_ep3.pt` (md5 `dda39ab36aa73bd6284b94d9fbf252e5`). Older full checkpoint `ckpt_0050000.pt` also remains local. Refresh again at 70k or after a promoted 2-GPU checkpoint. |
 | **Large artifact transfer policy** | For big checkpoints/shards/uploads, prefer VPS-to-VPS or Newton-to-VPS staging when credentials/hosts are available; the VPS links have ~20 Gbit internet and should beat Mac↔Newton transfers. Still use `.part` files and md5/sha256 on both ends before trusting or deleting anything. |
@@ -320,6 +320,11 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   deadline `2026-07-08T06:20:00` (2h job must start by ~04:20, shortly after `681080` ends). Queued
   **`681092`** as the 1-H100 fallback `afterany:681091`. Outcome: if Slurm can place 2 H100s, 681091
   runs; if not, deadline cancellation releases 681092 so training keeps moving with a single writer.
+- **2026-07-08 ~02:36** — Heartbeat: `681080` remains RUNNING on evc29, healthy through **step 63570**,
+  with `ckpt_0063500.pt` saved and throughput ~142k tok/s. Saw two isolated `[skip:gnorm]` events around
+  step 63340, then immediate recovery to normal gnorm/loss; no intervention. `681091` (2-H100) and
+  `681092` (1-H100 fallback) remain dependency-held. Local HY3/Nemotron teacher writers are alive and
+  valid JSONL (`hy3_reasoning` ~18.5k rows, `nemotron` ~1.18k rows).
 
 ---
 
