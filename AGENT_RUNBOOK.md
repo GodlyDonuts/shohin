@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-08 ~04:05 EDT (2-H100 continuation running on evc42). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-08 ~04:42 EDT (2-H100 continuation steady on evc42). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -51,11 +51,11 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-08 ~00:55 EDT) |
+| Item | Value (as of 2026-07-08 ~04:42 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. Current active continuation is **`681091`**, name `shohin-flagship2`, node **evc42**, RUNNING on **2 H100s** until ~05:55 EDT. Queue after it: **`681105`** next lean 2-H100 attempt, then **`681106`** 1-H100 fallback. |
-| Extended pretrain status | `681080` ran on evc29 until wall-time, reached **step 64890**, and last saved **`ckpt_0064500.pt`**. `681091` started immediately on evc42 with `world=2`, resumed from **`ckpt_0064500.pt -> step 64501`**, and is healthy through **step 64680** (loss in band, throughput warming past **238k tok/s**). Old fallback `681092` was canceled and replaced with `681105` (2-H100, deadline `2026-07-08T08:20:00`, `AUTO_REQUEUE=0`) plus `681106` fallback, so the next handoff also tries 2 H100s before falling back. |
+| Extended pretrain status | `681080` ran on evc29 until wall-time, reached **step 64890**, and last saved **`ckpt_0064500.pt`**. `681091` started immediately on evc42 with `world=2`, resumed from **`ckpt_0064500.pt -> step 64501`**, and is healthy through **step 65860** (loss in band, gnorm normal, throughput **~269.6k tok/s**). `ckpt_0065000.pt` and `ckpt_0065500.pt` are saved. Old fallback `681092` was canceled and replaced with `681105` (2-H100, deadline `2026-07-08T08:20:00`, `AUTO_REQUEUE=0`) plus `681106` fallback, so the next handoff also tries 2 H100s before falling back. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
 | **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
@@ -64,9 +64,9 @@ Do not wait for permission to fix obvious data/training gaps.
 | **Corpus-expansion job** | `680324` — **✅ DONE** (finished ~12:10) |
 | finemath3 output | `artifacts/shards/finemath3/` — **✅ COMPLETE: 125 shards, exactly 25.0B tokens** (`manifest.json` present, 22 GB; 8,575 contaminated docs dropped vs evalgrams). **Included in the 300k relaunch SHARDS.** |
 | SFT mix (Newton) | `artifacts/sft/sft_mix_core.jsonl` — **85,593 examples** at launch (OpenMath + rgym + code + latest verified teacher traces) |
-| Local teacher distillers | HY3 and nemotron processes still alive and writing (`hy3_reasoning.jsonl` 19.6k+ rows; `hy3_reasoning_nemotron.jsonl` 1.22k+ rows). GLM remains paused after raw NVIDIA HTTP 429. |
+| Local teacher distillers | HY3 and nemotron processes still alive and writing (`hy3_reasoning.jsonl` **22.4k+** rows; `hy3_reasoning_nemotron.jsonl` **1.31k+** rows). Claude/minimax/GLM snapshots are present; GLM remains paused after raw NVIDIA HTTP 429. |
 | Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k) plus **`best_step60000.model.pt`**, numbered **`ckpt_0060000.pt`**, and **`best_step62000_pre2gpu.pt`** (`md5 e4f3de659effac5c6875c6ae17d6b544`) |
-| **Local DR backup (Mac)** | **Post-60k downloaded/verified:** `train/flagship_out/ckpt_0061000.pt` (1.0 GB, full+optimizer extension checkpoint, md5 `28a18ebd7efc67cbbb72db6505493248`); `ckpt_0060000.pt` and hardlink `best_step60000.model.pt` (model-only 60k, md5 `d2fdf867bd49cf517b62364e152bffde`); `ckpt_0059000.pt` (full+optimizer fallback, md5 `0038df81be145cf4a4b0644e2dce284a`); `train/sft_out/sft_ep3.pt` (md5 `dda39ab36aa73bd6284b94d9fbf252e5`). Older full checkpoint `ckpt_0050000.pt` also remains local. Refresh again at 70k or after a promoted 2-GPU checkpoint. |
+| **Local DR backup (Mac)** | **Post-60k downloaded/verified:** `train/flagship_out/ckpt_0065500.pt` (1.0 GB, full+optimizer 2-H100 continuation checkpoint, md5 `670ae99c278cf26706ebb1b5ee8d7b72`); `ckpt_0061000.pt` (full+optimizer extension checkpoint, md5 `28a18ebd7efc67cbbb72db6505493248`); `ckpt_0060000.pt` and hardlink `best_step60000.model.pt` (model-only 60k, md5 `d2fdf867bd49cf517b62364e152bffde`); `ckpt_0059000.pt` (full+optimizer fallback, md5 `0038df81be145cf4a4b0644e2dce284a`); `train/sft_out/sft_ep3.pt` (md5 `dda39ab36aa73bd6284b94d9fbf252e5`). Older full checkpoint `ckpt_0050000.pt` also remains local. Next DR target: 70k or the next promoted 2-GPU checkpoint if the queue stalls before 70k. |
 | **Large artifact transfer policy** | For big checkpoints/shards/uploads, prefer VPS-to-VPS or Newton-to-VPS staging when credentials/hosts are available; the VPS links have ~20 Gbit internet and should beat Mac↔Newton transfers. Still use `.part` files and md5/sha256 on both ends before trusting or deleting anything. |
 
 **Checkpoints preserved so far:** every 10k through 50k; 60k is model-only because the trainer writes
@@ -74,14 +74,14 @@ Do not wait for permission to fix obvious data/training gaps.
 extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no stale 59k momentum is used.
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
-**Next actions in order:** (1) monitor `681091` until it reaches steady throughput and saves the next
-checkpoint; it should remain `world=2`, loss in band, and trend toward the canary's ~260k tok/s. (2)
-Confirm `681105` starts after `681091`; it is the next 2-H100 chunk and should resume from the newest
-checkpoint. (3) If `681105` does not run by its deadline, confirm fallback `681106` starts from the
-newest checkpoint and keeps tokens moving on 1 H100. (4) If 2-GPU chunks keep scheduling cleanly,
-continue with short checkpointed 2-GPU chunks or promote to longer 2-GPU walltimes when priority allows.
-(5) Refresh local DR backup at the next useful numbered checkpoint (70k or after a stable promoted
-2-GPU checkpoint). (6) Run a measured eval/benchmark gate at the next meaningful checkpoint rather than
+**Next actions in order:** (1) monitor `681091` until wall-time; it is already at steady 2-H100
+throughput and should keep `world=2`, loss in band, and no DDP hangs. (2) Confirm `681105` starts after
+`681091`; it is the next 2-H100 chunk and should resume from the newest checkpoint. (3) If `681105`
+does not run by its deadline, confirm fallback `681106` starts from the newest checkpoint and keeps
+tokens moving on 1 H100. (4) If 2-GPU chunks keep scheduling cleanly, continue with short checkpointed
+2-GPU chunks or promote to longer 2-GPU walltimes when priority allows. (5) Refresh local DR backup at
+70k or the next stable promoted 2-GPU checkpoint. (6) Run a measured eval/benchmark gate at the next
+meaningful checkpoint rather than
 blindly SFTing; the 60k SFT board was weak, so the next SFT should be a data/prompt/format variant after
 inspecting generations.
 
@@ -339,6 +339,14 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   Canceled old 1-H100 fallback `681092` and queued **`681105`** as the next 2-H100 chunk after `681091`
   (deadline `2026-07-08T08:20:00`, `AUTO_REQUEUE=0`), with **`681106`** as the 1-H100 fallback after
   `681105`. This keeps the run on the fastest validated path while preserving single-writer safety.
+- **2026-07-08 ~04:42** — **2-H100 continuation steady-state verified.** `681091` is still RUNNING on
+  evc42 with `world=2`, healthy through **step 65860**, loss/gnorm in band, and throughput now
+  **~269.6k tok/s**, slightly above the canary target. Checkpoints **`ckpt_0065000.pt`** and
+  **`ckpt_0065500.pt`** are saved; pulled `ckpt_0065500.pt` to the Mac and md5-verified it
+  (`670ae99c278cf26706ebb1b5ee8d7b72`) as the first stable promoted 2-H100 DR point. Queue remains
+  single-writer safe: `681105` is dependency-held after `681091`; `681106` is the 1-H100 fallback after
+  `681105`. HY3/Nemotron local teacher writers remain alive and valid JSONL (~22.4k HY3, ~1.31k
+  Nemotron).
 
 ---
 
@@ -364,7 +372,8 @@ ssh -o BatchMode=yes -o ConnectTimeout=20 newton '<remote command>'
   busy or unavailable"` at job start. The job scripts self-heal (GPU-free wait + retry + bad-node
   exclusion). Do not panic on a single CUDA-busy line.
 - **`preemptable` is INACCESSIBLE** ("Invalid qos specification" / time-limit rejects). Do not use it.
-- **`highgpu` / 8×H100 = no access.** Single GPU only.
+- **`highgpu` / 8×H100 = no access.** Measured single-node 2×H100 DDP is allowed after canary `681040`;
+  do not attempt broader multi-node or 8×H100 changes without verified account access and a fresh canary.
 
 ---
 
@@ -566,7 +575,7 @@ backup is refreshed at each 10k milestone, so at worst you lose <10k steps. Weig
 | `openmath2.jsonl` | 100k | verified (boxed==answer) + decontaminated + concise (≤400 tok) + eval-aligned ("The answer is X."). **Baseline SFT.** |
 | `rgym.jsonl` | 995 | Reasoning-Gym procedural CoT (diversity) |
 | `code.jsonl` | 446 | MBPP train+val, execution-verified, decontaminated |
-| `hy3_reasoning*.jsonl` | ~7k and growing | Live verified teacher fleet output (hy3 / Nemotron / GLM / Claude / minimax). **Do not train directly from live files**; snapshot via `build_sft_mix.py`. |
+| `hy3_reasoning*.jsonl` | ~24k and growing | Live verified teacher fleet output (hy3 / Nemotron / GLM / Claude / minimax). **Do not train directly from live files**; snapshot via `build_sft_mix.py`. |
 | `self_correct.jsonl` | 15k | arithmetic self-correction traces (all answers verified). **ABLATION-only** — NOT in baseline SFT. Measures baseline vs baseline+self-correction. |
 | `openmath2_concise_2M.clean.jsonl` | ~2M | large concise set — reserved for the **FINAL** SFT (upgrade from the 100k baseline once the recipe is proven). |
 
@@ -593,7 +602,7 @@ every shard and checkpoint.
   extra depth). An ablation-gated reasoning bet; `n_loop=1` is byte-identical to a normal forward.
 
 **Trainer (`train/train.py`)** — Muon(+AdamW), WSD LR, bf16 autocast, torch.compile, DDP-capable
-(but we run single-GPU):
+(we now run either single-GPU or measured single-node 2-GPU chunks):
 - Muon (Newton-Schulz orthogonalized, `train/muon.py`) on matmul params, AdamW on the rest. `--no-muon`
   bisection flag exists.
 - WSD schedule (`wsd_lr`): warmup → stable (LR=1.0) → linear decay over last `decay_frac=0.2` to
