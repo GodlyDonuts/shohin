@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-07 ~04:05 (pretrain step ~41.3k). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-07 ~23:15 EDT (post-60k backups verified; extension step ~60.8k). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -49,27 +49,30 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-07 ~22:35) |
+| Item | Value (as of 2026-07-07 ~23:15 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | `680992`, name `shohin-flagship`, node **evc22**, RUNNING from `ckpt_0060000.pt`, target **300,000** |
-| Extended pretrain status | Resumed at step **60001** with `FRESH_OPT=1` rewarmup, `LRMUON=0.005`, `LRADAM=1e-3`, `DSEED=777` |
-| **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, RUNNING from `ckpt_0060000.pt` on curated `sft_mix_core.jsonl` |
+| Extended pretrain status | Resumed at step **60001** with `FRESH_OPT=1` rewarmup, `LRMUON=0.005`, `LRADAM=1e-3`, `DSEED=777`; latest seen **step 60820**, loss 1.6378, lr 0.0020, ~147k tok/s |
+| **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
+| **Eval board job** | `681030`, name `shohin-eval`, node **evc32**, RUNNING on `sft_ep3.pt` (`N=100`, `K=1`) |
 | 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
 | 60k skips | **45 total**, stable/healthy |
 | **Corpus-expansion job** | `680324` — **✅ DONE** (finished ~12:10) |
 | finemath3 output | `artifacts/shards/finemath3/` — **✅ COMPLETE: 125 shards, exactly 25.0B tokens** (`manifest.json` present, 22 GB; 8,575 contaminated docs dropped vs evalgrams). **Included in the 300k relaunch SHARDS.** |
 | SFT mix (Newton) | `artifacts/sft/sft_mix_core.jsonl` — **85,593 examples** at launch (OpenMath + rgym + code + latest verified teacher traces) |
 | Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k) plus **`best_step60000.model.pt`** and numbered **`ckpt_0060000.pt`** model-only resume marker |
-| **Local DR backup (Mac)** | `train/flagship_out/ckpt_0050000.pt` (1.0 GB, **step 50k, full+optimizer, md5 53bc952edc0b**) — bit-identical to cluster, fully resumable. Refresh at each 10k milestone (overwrite older). |
+| **Local DR backup (Mac)** | **60k downloaded/verified:** `train/flagship_out/ckpt_0060000.pt` and hardlink `best_step60000.model.pt` (model-only 60k, md5 `d2fdf867bd49cf517b62364e152bffde`); `ckpt_0059000.pt` (1.0 GB, full+optimizer fallback, md5 `0038df81be145cf4a4b0644e2dce284a`); `train/sft_out/sft_ep3.pt` (md5 `dda39ab36aa73bd6284b94d9fbf252e5`). Older full checkpoint `ckpt_0050000.pt` also remains local. Refresh again at 70k. |
 
 **Checkpoints preserved so far:** every 10k through 50k; 60k is model-only because the trainer writes
-`ckpt_final.pt` without optimizer state. The 300k extension resumes from `ckpt_0060000.pt` with fresh
-optimizer rewarmup, so no stale 59k momentum is used.
+`ckpt_final.pt` without optimizer state. `ckpt_0060000.pt` is local and cluster hash-matched. The 300k
+extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no stale 59k momentum is used.
+`ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
-**Next actions in order:** (1) confirm first extension training step logs after compile/startup; (2)
-watch SFT through `sft_ep3.pt`; (3) run `eval_all.sbatch`; (4) refresh local DR backup at next useful
-numbered checkpoint (70k or earlier if desired).
+**Next actions in order:** (1) let eval job `681030` finish and parse/post the board; (2) keep watching
+extension `680992` loss/skips/checkpoint cadence; (3) refresh local DR backup at the next useful numbered
+checkpoint (70k or earlier if desired); (4) only rebuild SFT mix for new SFT variants, not for the already
+completed `sft_ep3.pt` eval.
 
 ---
 
@@ -228,6 +231,13 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   from repo root, rebuilt mix, and relaunched SFT as **`681000`** on evc43. Launched 300k extension as
   **`680992`** on evc22 with SHARDS including `finemath3`; verified resume line:
   `ckpt_0060000.pt -> start step 60001 (FRESH optimizer: momentum reset + rewarmup)`.
+- **2026-07-07 ~23:15** — **Local checkpoint custody verified.** Downloaded and hash-matched Newton to
+  Mac: `ckpt_0060000.pt` / `best_step60000.model.pt` (model-only 60k, md5
+  `d2fdf867bd49cf517b62364e152bffde`), `ckpt_0059000.pt` (full+optimizer fallback, md5
+  `0038df81be145cf4a4b0644e2dce284a`), and `sft_ep3.pt` (md5
+  `dda39ab36aa73bd6284b94d9fbf252e5`). SFT job `681000` completed; eval job **`681030`** is running on
+  evc32 against `sft_ep3.pt`. Extension job `680992` healthy at step ~60.8k, loss in band, rewarmup lr
+  ~0.002, throughput ~147k tok/s. Next DR target: download 70k checkpoint when it appears.
 
 ---
 
