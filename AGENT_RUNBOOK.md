@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-08 ~14:25 EDT (681308 same-day estimate; teacher providers unhealthy). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-08 ~14:45 EDT (`681308` running; 80k progress benchmark queued). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -51,13 +51,13 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-08 ~14:25 EDT) |
+| Item | Value (as of 2026-07-08 ~14:45 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
-| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, and `681123` completed 2-H100 windows by wall-time. **No job is currently training** after `681123` timed out cleanly. Several replacement attempts were reshaped as Slurm backfill moved; current queued chain is **`681308` -> `681309` -> `681310`** (1-hour 2-H100 chunks, `CKPT=250`), then **`681311`** 1-H100 fallback. `681308` is pending priority with `squeue --start` now estimating **2026-07-08T22:28:00** on evc32. |
-| Extended pretrain status | `681123` resumed from **`ckpt_0075000.pt -> step 75001`**, ran cleanly with `world=2`, reached **step 78700**, saved **`ckpt_0078500.pt`**, and timed out at wall-time. It held loss/gnorm in band with one isolated gnorm skip at step 76508 and warmed to **~274.6k tok/s**. `ckpt_0078500.pt` is now the latest durable checkpoint and is locally md5-verified. Normal partition fairshare/priority is the blocker now; `short`, `ucfit`, and `highgpu` still reject this account. Current queue: **`681308`** (2-H100, 1h, `CKPT=250`, pending priority, estimated `2026-07-08T22:28:00`), **`681309`** after `681308`, **`681310`** after `681309`, and **`681311`** 1-H100 fallback after `681310`. A fresh same-shape candidate `681360` did not receive an earlier reservation and was canceled to preserve single-writer safety. |
+| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, and `681123` completed 2-H100 windows by wall-time. Current active continuation is **`681308`**, name `shohin-flagship2`, running on **evc32** as a 1-hour 2-H100 chunk (`NG=2 BS=16 ACC=8 CKPT=250`). Queue behind it: **`681309` -> `681310`** (2-H100) then **`681311`** 1-H100 fallback. |
+| Extended pretrain status | `681123` resumed from **`ckpt_0075000.pt -> step 75001`**, ran cleanly with `world=2`, reached **step 78700**, saved **`ckpt_0078500.pt`**, and timed out at wall-time. `681308` resumed from **`ckpt_0078500.pt -> step 78501`** with `world=2`; latest live check showed **step 78870**, 0 concerning skips, loss/gnorm in band, throughput warming through **~239k tok/s**, and **`ckpt_0078750.pt`** saved. `ckpt_0078500.pt` remains the latest local DR checkpoint and is md5-verified; next local DR target is 80k if it appears. `short`, `ucfit`, and `highgpu` still reject this account. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
-| **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. |
+| **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. New progress benchmark job **`681373`** is queued low-priority (`--nice=10000`) after `681310`, targets **`ckpt_0080000.pt`** with `RUN_TAG=pretrain_080000_progress`, `N=100`, `K=4`, and will append structured rows to `artifacts/eval_history/metrics.jsonl`. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
 | 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
 | 60k skips | **45 total**, stable/healthy |
@@ -74,17 +74,13 @@ Do not wait for permission to fix obvious data/training gaps.
 extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no stale 59k momentum is used.
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
-**Next actions in order:** (1) Watch `681308`: it is pending priority with `squeue --start` estimating
-2026-07-08T22:28:00 after normal-partition fairshare shifted. If an earlier 1-H100 or 2-H100 slot becomes
-available, prefer tokens moving, but keep single-writer safety. (2) Confirm the first job that actually
-starts resumes from **`ckpt_0078500.pt`** and prints `world=2` for 2-H100 jobs, loss in band, and
-checkpoint cadence. (3) Confirm `681309` and `681310` hand off similarly; if the
-2-H100 chain fails or misses deadlines, confirm fallback `681311` starts from the newest checkpoint and keeps tokens
-moving on 1 H100. (4) If 2-GPU chunks keep scheduling
-cleanly, continue with short checkpointed 2-GPU chunks or promote to longer 2-GPU walltimes when
-priority allows. (5) Run a measured eval/benchmark gate at the next meaningful checkpoint rather than
-blindly SFTing; the 60k SFT board was weak, so the next SFT should be a data/prompt/format variant after
-inspecting generations.
+**Next actions in order:** (1) Watch `681308`: verify it keeps warming toward the normal 2-H100
+~260-275k tok/s band, saves `ckpt_0080000.pt`, and times out cleanly. (2) Preserve/download 80k if it
+appears. (3) Confirm `681309` and `681310` hand off from the newest checkpoint with `world=2`; if the
+2-H100 chain fails or misses deadlines, confirm fallback `681311` starts from the newest checkpoint and
+keeps tokens moving on 1 H100. (4) Let low-priority benchmark `681373` run only when scheduling permits;
+it must not displace active pretraining. (5) Continue milestone benchmarks every ~20k-50k steps or after
+meaningful SFT variants, recording all results in `artifacts/eval_history/metrics.jsonl`.
 
 ---
 
@@ -464,6 +460,13 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   **1,781**; bounded follow-up probes showed Nemotron `limit=5` kept 0 with 3 errors, and GLM `limit=3`
   kept 0 with 3 errors. Leave Nemotron/GLM paused until provider health clears; do not burn requests in
   error loops.
+- **2026-07-08 ~14:45** — **Training resumed + recurring benchmark track installed.** `681308` started
+  on **evc32**, resumed from `ckpt_0078500.pt` at step 78501 with `world=2`, saved `ckpt_0078750.pt`,
+  and was healthy through step **78870** with throughput warming through ~239k tok/s. Patched and synced
+  `train/jobs/eval_all.sbatch` so every board writes a normal log plus structured metric rows to
+  `artifacts/eval_history/metrics.jsonl`. Queued low-priority progress benchmark **`681373`** after
+  `681310`, targeting `ckpt_0080000.pt` (`RUN_TAG=pretrain_080000_progress`, `N=100`, `K=4`). Benchmark
+  doctrine: use a separate H100 when capacity allows, but never let eval displace live pretraining.
 
 ---
 
@@ -753,9 +756,10 @@ prompt+answer+eos to seq_len. Prompt format: `"Question: {q}\nAnswer:"`. Saves m
 `decontam*.py` + `fetch_evals.py` (eval-set decontamination).
 
 **Job scripts (`train/jobs/`):** `flagship.sbatch` (pretrain, self-healing), `sft.sbatch` (feedback
-SFT), `eval_all.sbatch` (full board). All have GPU-free-wait + retry; flagship also does bad-node
-exclusion + auto-requeue. `eval_all.sbatch` still lacks a CUDA-busy retry loop — **TODO: harden it**
-(low priority; rerun manually if it hits the race).
+SFT), `eval_all.sbatch` (full board + progress board). All have GPU-free-wait + retry; flagship also
+does bad-node exclusion + auto-requeue. `eval_all.sbatch` supports `TARGET_STEP`, `RUN_TAG`, `N`, and
+`K`, writes per-run logs under `artifacts/eval_history/`, and appends parsed task metrics to
+`artifacts/eval_history/metrics.jsonl` for checkpoint-over-time tracking.
 
 ---
 
