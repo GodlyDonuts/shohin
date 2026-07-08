@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-08 ~17:35 EDT (`681311` running from 83.75k; successor queued). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-08 ~18:58 EDT (`681311` healthy past 85.2k; 1-H100 successor still best queue path). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -51,13 +51,13 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-08 ~17:35 EDT) |
+| Item | Value (as of 2026-07-08 ~18:58 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
-| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, `681123`, `681308`, `681309`, and `681310` completed 2-H100 windows by wall-time. Current active continuation is **`681311`**, name `shohin-flagship`, running on **evc32** as a 2-hour 1-H100 fallback (`NG=1 BS=16 ACC=16 CKPT=250`). Queue behind it: **`683715`** 1-H100 successor afterany:`681311`; low-priority eval **`681373`** is pending priority for 2026-07-09T11:43 and is not competing with training. |
-| Extended pretrain status | `681310` resumed from **`ckpt_0082000.pt -> step 82001`**, ran cleanly with `world=2`, reached **step 83850**, saved **`ckpt_0083750.pt`**, and timed out at wall-time. Throughput held ~274-275k tok/s; one gnorm skip at step 83508 recovered immediately. `681311` resumed from **`ckpt_0083750.pt -> step 83751`**, confirmed `world=1`, `bs=16`, `accum=16`, and printed healthy startup steps through **83780** while warming. A wrongly submitted successor `683714` was canceled and replaced by **`683715`** with explicit `STEPS=300000, LRMUON=0.005, LRADAM=1e-3, DSEED=777, CKPT=250`. `short`, `ucfit`, and `highgpu` still reject this account. |
+| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, `681123`, `681308`, `681309`, and `681310` completed 2-H100 windows by wall-time. Current active continuation is **`681311`**, name `shohin-flagship`, running on **evc32** as a 2-hour 1-H100 fallback (`NG=1 BS=16 ACC=16 CKPT=250`). Queue behind it: **`683715`** 1-H100 successor afterany:`681311`; low-priority eval **`681373`** is pending priority for 2026-07-09T10:39 and is not competing with training. |
+| Extended pretrain status | `681310` resumed from **`ckpt_0082000.pt -> step 82001`**, ran cleanly with `world=2`, reached **step 83850**, saved **`ckpt_0083750.pt`**, and timed out at wall-time. Throughput held ~274-275k tok/s; one gnorm skip at step 83508 recovered immediately. `681311` resumed from **`ckpt_0083750.pt -> step 83751`**, confirmed `world=1`, `bs=16`, `accum=16`, saved **`ckpt_0084000.pt`**, **`ckpt_0084500.pt`**, and **`ckpt_0085000.pt`**, and is healthy through **step 85200** with throughput ~148k tok/s, loss/gnorm in band, and no skips observed in the current tail. A wrongly submitted successor `683714` was canceled and replaced by **`683715`** with explicit `STEPS=300000, LRMUON=0.005, LRADAM=1e-3, DSEED=777, CKPT=250`. Fresh scheduler probes after `681311` estimate 1-H100 around 2026-07-09T02:56 and 2-H100 around 2026-07-09T05:56, so keep the 1-H100 successor unless the queue improves. `short`, `ucfit`, and `highgpu` still reject this account. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
-| **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. Progress benchmark job **`681373`** is low-priority (`--nice=10000`), targets **`ckpt_0080000.pt`** with `RUN_TAG=pretrain_080000_progress`, `N=100`, `K=4`, and is pending priority with estimate 2026-07-09T11:43; it must not displace training. |
+| **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. Progress benchmark job **`681373`** is low-priority (`--nice=10000`), targets **`ckpt_0080000.pt`** with `RUN_TAG=pretrain_080000_progress`, `N=100`, `K=4`, and is pending priority with estimate 2026-07-09T10:39; it must not displace training. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
 | 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
 | 60k skips | **45 total**, stable/healthy |
@@ -74,12 +74,10 @@ Do not wait for permission to fix obvious data/training gaps.
 extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no stale 59k momentum is used.
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
-**Next actions in order:** (1) Watch `681311`: verify it warms toward the normal 1-H100 ~145-150k tok/s
-band, saves at `ckpt_0084000.pt` / `ckpt_0084250.pt` cadence, and keeps loss/gnorm in band. (2) Before
-`681311` ends, re-probe 2-H100 availability; only replace the 1-H100 successor if a better 2-H100 slot
-is real and single-writer safety is preserved. (3) Confirm successor `683715` starts from the newest
-checkpoint if no better 2-H100 successor is queued. (4) Let low-priority benchmark `681373` run only
-when scheduling permits; it must not displace active pretraining. (5) Continue milestone benchmarks
+**Next actions in order:** (1) Watch `681311` through its wall-time end: verify it saves the newest
+checkpoint cleanly and keeps loss/gnorm in band. (2) Confirm successor `683715` starts from the newest
+checkpoint unless a freshly probed 2-H100 slot becomes both earlier and safe before handoff. (3) Let low-priority benchmark `681373` run only
+when scheduling permits; it must not displace active pretraining. (4) Continue milestone benchmarks
 every ~20k-50k steps or after meaningful SFT variants, recording all results in
 `artifacts/eval_history/metrics.jsonl`.
 
@@ -490,6 +488,14 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   exports was canceled and replaced by **`683715`** afterany:`681311` with `STEPS=300000`,
   `LRMUON=0.005`, `LRADAM=1e-3`, `DSEED=777`, `CKPT=250`, `AUTO_REQUEUE=0`. Eval `681373` is still
   low-priority and estimated 2026-07-09T11:43.
+- **2026-07-08 ~18:58** — **85k checkpoint healthy on fallback.** `681311` is still running on **evc32**
+  and has progressed cleanly through **step 85200** with throughput ~148k tok/s, loss/gnorm in band, and
+  no skips in the current tail. Saved `ckpt_0084000.pt`, `ckpt_0084500.pt`, and **`ckpt_0085000.pt`**.
+  Fresh after-`681311` scheduler probes estimate 1-H100 around **2026-07-09T02:56** and 2-H100 around
+  **2026-07-09T05:56**, so keep the existing 1-H100 successor **`683715`** unless a later probe shows an
+  earlier safe 2-H100 slot. Eval `681373` remains low-priority with estimate 2026-07-09T10:39; teacher
+  distillers remain paused, with HY3 25,243 / Claude 152 / GLM 29 / minimax 51 / Nemotron 1,781 valid
+  local rows.
 
 ---
 
