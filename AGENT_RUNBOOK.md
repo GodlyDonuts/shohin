@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-07 ~23:20 EDT (extension step ~60.9k; GLM teacher paused on provider 429). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-07 ~23:27 EDT (2-H100 canary submitted; live flagship untouched). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -49,13 +49,14 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-07 ~23:20 EDT) |
+| Item | Value (as of 2026-07-07 ~23:27 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | `680992`, name `shohin-flagship`, node **evc22**, RUNNING from `ckpt_0060000.pt`, target **300,000** |
 | Extended pretrain status | Resumed at step **60001** with `FRESH_OPT=1` rewarmup, `LRMUON=0.005`, `LRADAM=1e-3`, `DSEED=777`; latest seen **step 60920**, loss 1.7179, lr 0.0023, ~147.6k tok/s |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
 | **Eval board job** | `681030`, name `shohin-eval`, node **evc32**, RUNNING on `sft_ep3.pt` (`N=100`, `K=1`) |
+| **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **PENDING**. Separate branch from `ckpt_0060000.pt` into `train/ddp2_canary_60000_20260707_232737`; `NG=2 BS=16 ACC=8` preserves current global batch (`1*16*16 == 2*16*8`). Live job not touched. |
 | 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
 | 60k skips | **45 total**, stable/healthy |
 | **Corpus-expansion job** | `680324` — **✅ DONE** (finished ~12:10) |
@@ -71,9 +72,11 @@ extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no st
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
 **Next actions in order:** (1) let eval job `681030` finish and parse/post the board; (2) keep watching
-extension `680992` loss/skips/checkpoint cadence; (3) refresh local DR backup at the next useful numbered
-checkpoint (70k or earlier if desired); (4) only rebuild SFT mix for new SFT variants, not for the already
-completed `sft_ep3.pt` eval.
+extension `680992` loss/skips/checkpoint cadence; (3) monitor 2-H100 canary `681040` when it starts: it
+must resume from 60k with `world=2`, no DDP hang, loss in the same 1.5-1.9 band, sane skips, and at least
+~1.6x useful tok/s before promotion; (4) refresh local DR backup at the next useful numbered checkpoint
+(70k or earlier if desired); (5) only rebuild SFT mix for new SFT variants, not for the already completed
+`sft_ep3.pt` eval.
 
 ---
 
@@ -246,6 +249,15 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   data movement since 22:41 and no log movement since 18:58. Terminated the stalled GLM PID and probed
   NVIDIA directly; `z-ai/glm-5.2` returned HTTP 429, so do **not** relaunch GLM until a later heartbeat
   shows the provider limit cleared. HY3 and nemotron were left untouched.
+- **2026-07-07 ~23:27** — User challenged whether 2 GPUs are worth the speedup. Decision: yes, likely
+  worth pursuing, but only through a measured canary that preserves training semantics. Added
+  `train/jobs/ddp2_canary.sbatch` and submitted **job `681040`** as a separate 2-H100 branch, excluding
+  the live/eval/down nodes. It copies `flagship_out/ckpt_0060000.pt` into its own output directory
+  (`train/ddp2_canary_60000_20260707_232737`) and runs `NG=2 BS=16 ACC=8 STEPS=61050 FRESH_OPT=1`
+  with the same 62.4B shard mix and same effective batch as the single-GPU extension. **Do not kill or
+  migrate `680992` yet.** Promotion rule: only switch the flagship to two GPUs after `681040` shows clean
+  DDP startup, no rank hang, loss/skip behavior matching the 60k replay, and materially better throughput
+  (target at least ~1.6x useful tok/s).
 
 ---
 
