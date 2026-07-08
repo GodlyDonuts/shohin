@@ -1,7 +1,9 @@
 {
   "drops": {
-    "dedup_lower_priority": 16537,
-    "dedup_replaced": 11407
+    "dedup_lower_priority": 17088,
+    "dedup_replaced": 13651,
+    "eval_exact_prompt": 206,
+    "eval_ngram": 741
   },
   "inputs": [
     "artifacts/sft/openmath2.jsonl",
@@ -16,52 +18,57 @@
     "artifacts/sft/hy3_arc_challenge.jsonl"
   ],
   "kept_by_domain": {
-    "unmapped": 85593
+    "unmapped": 97439
   },
   "kept_by_file": {
-    "artifacts/sft/code.jsonl": 446,
-    "artifacts/sft/hy3_reasoning.jsonl": 9448,
-    "artifacts/sft/hy3_reasoning_claude.jsonl": 152,
-    "artifacts/sft/hy3_reasoning_glm.jsonl": 25,
+    "artifacts/sft/code.jsonl": 444,
+    "artifacts/sft/hy3_reasoning.jsonl": 23199,
+    "artifacts/sft/hy3_reasoning_claude.jsonl": 148,
+    "artifacts/sft/hy3_reasoning_glm.jsonl": 29,
     "artifacts/sft/hy3_reasoning_minimax.jsonl": 2,
-    "artifacts/sft/hy3_reasoning_nemotron.jsonl": 893,
-    "artifacts/sft/openmath2.jsonl": 73634,
+    "artifacts/sft/hy3_reasoning_nemotron.jsonl": 1695,
+    "artifacts/sft/openmath2.jsonl": 70929,
     "artifacts/sft/rgym.jsonl": 993
   },
   "kept_by_source": {
     "augmented_gsm8k": 18177,
-    "augmented_math": 48527,
-    "claude": 152,
-    "glm": 25,
-    "gsm8k": 2523,
-    "hy3": 8979,
+    "augmented_math": 48141,
+    "claude": 148,
+    "glm": 29,
+    "gsm8k": 1580,
+    "hy3": 22739,
     "hy3_arc": 12,
-    "hy3_gsm8k": 457,
-    "math": 4407,
-    "mbpp_train": 359,
+    "hy3_gsm8k": 448,
+    "math": 3031,
+    "mbpp_train": 357,
     "mbpp_validation": 87,
     "minimax": 2,
-    "nemotron": 893,
+    "nemotron": 1695,
     "reasoning_gym": 993
   },
-  "kept_total": 85593,
+  "kept_total": 97439,
   "limits": {
+    "decontam_grams": "artifacts/evals/evalgrams.pkl",
+    "eval_glob": [
+      "artifacts/evals/*.jsonl"
+    ],
+    "eval_hash_count": 2481,
     "include_self_correct": false,
     "max_openmath": 100000,
     "max_response_chars": 4000,
     "max_response_words": 750
   },
   "missing": [],
-  "out": "/lustre/fs1/home/sa305415/shohin/artifacts/sft/sft_mix_core.jsonl",
+  "out": "artifacts/sft/sft_mix_core.jsonl",
   "seen_by_file": {
     "artifacts/sft/code.jsonl": 446,
     "artifacts/sft/hy3_arc_challenge.jsonl": 12,
     "artifacts/sft/hy3_gsm8k.jsonl": 462,
-    "artifacts/sft/hy3_reasoning.jsonl": 10473,
+    "artifacts/sft/hy3_reasoning.jsonl": 25243,
     "artifacts/sft/hy3_reasoning_claude.jsonl": 152,
-    "artifacts/sft/hy3_reasoning_glm.jsonl": 25,
+    "artifacts/sft/hy3_reasoning_glm.jsonl": 29,
     "artifacts/sft/hy3_reasoning_minimax.jsonl": 51,
-    "artifacts/sft/hy3_reasoning_nemotron.jsonl": 921,
+    "artifacts/sft/hy3_reasoning_nemotron.jsonl": 1735,
     "artifacts/sft/openmath2.jsonl": 100000,
     "artifacts/sft/rgym.jsonl": 995
   }

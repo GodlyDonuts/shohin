@@ -20,6 +20,7 @@ import glob
 import hashlib
 import json
 import os
+import pickle
 import random
 import re
 from pathlib import Path
@@ -95,6 +96,44 @@ def read_problem_domains(path: str) -> dict[str, str]:
     return domains
 
 
+def read_eval_hashes(patterns: list[str]) -> set[str]:
+    hashes = set()
+    fields = ("question", "problem", "prompt", "task", "text")
+    for pat in patterns:
+        for path in sorted(glob.glob(pat)):
+            with open(path, errors="replace") as f:
+                for line in f:
+                    if not line.strip():
+                        continue
+                    try:
+                        row = json.loads(line)
+                    except Exception:
+                        continue
+                    q = ""
+                    for field in fields:
+                        if row.get(field):
+                            q = str(row[field])
+                            break
+                    if q:
+                        hashes.add(qhash(q))
+    return hashes
+
+
+def load_gram_set(path: str):
+    if not path or not os.path.exists(path):
+        return None, None
+    with open(path, "rb") as f:
+        d = pickle.load(f)
+    return d["grams"], d["n"]
+
+
+def has_eval_gram(text: str, gram_set, n: int) -> bool:
+    if gram_set is None:
+        return False
+    words = WORD.findall(str(text).lower())
+    return any(" ".join(words[i:i + n]) in gram_set for i in range(len(words) - n + 1))
+
+
 def iter_rows(paths: list[str]):
     for pat in paths:
         for path in sorted(glob.glob(pat)) or [pat]:
@@ -124,6 +163,12 @@ def main():
     ap.add_argument("--max-response-chars", type=int, default=4000)
     ap.add_argument("--max-response-words", type=int, default=750)
     ap.add_argument("--max-openmath", type=int, default=100000)
+    ap.add_argument("--eval-glob", nargs="*", default=["artifacts/evals/*.jsonl"],
+                    help="eval JSONLs whose exact prompt hashes must never enter the SFT mix")
+    ap.add_argument("--decontam-grams", default="artifacts/evals/evalgrams.pkl",
+                    help="optional eval n-gram pickle; if present, question+response hits are dropped")
+    ap.add_argument("--no-eval-decontam", action="store_true",
+                    help="disable eval exact/n-gram filtering; only use for debugging")
     ap.add_argument("--seed", type=int, default=1337)
     args = ap.parse_args()
 
@@ -132,6 +177,11 @@ def main():
         inputs.append("artifacts/sft/self_correct.jsonl")
 
     domains = read_problem_domains(args.problem_bank)
+    eval_hashes = set()
+    gram_set, gram_n = None, None
+    if not args.no_eval_decontam:
+        eval_hashes = read_eval_hashes(args.eval_glob)
+        gram_set, gram_n = load_gram_set(args.decontam_grams)
     kept_by_hash = {}
     report = {
         "inputs": inputs,
@@ -141,6 +191,9 @@ def main():
             "max_response_words": args.max_response_words,
             "max_openmath": args.max_openmath,
             "include_self_correct": args.include_self_correct,
+            "eval_glob": args.eval_glob,
+            "decontam_grams": args.decontam_grams if gram_set is not None else None,
+            "eval_hash_count": len(eval_hashes),
         },
         "seen_by_file": collections.Counter(),
         "kept_by_file": collections.Counter(),
@@ -175,6 +228,12 @@ def main():
                 report["drops"]["openmath_cap"] += 1
                 continue
         h = qhash(q)
+        if h in eval_hashes:
+            report["drops"]["eval_exact_prompt"] += 1
+            continue
+        if has_eval_gram(q + "\n" + resp, gram_set, gram_n):
+            report["drops"]["eval_ngram"] += 1
+            continue
         clean = {
             "question": q,
             "response": resp,
