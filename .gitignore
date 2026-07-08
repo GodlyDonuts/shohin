@@ -32,6 +32,7 @@ checkpoints/
 wandb/
 hf_cache/
 .cache/
+logs/
 
 # ── OS ─────────────────────────────────────────────────────────────
 .DS_Store
