@@ -33,6 +33,7 @@ wandb/
 hf_cache/
 .cache/
 logs/
+scratchpad/
 
 # ── OS ─────────────────────────────────────────────────────────────
 .DS_Store
