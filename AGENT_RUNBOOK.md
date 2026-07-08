@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-08 ~03:16 EDT (681080 healthy through 64.2k; 2-H100 attempt still dependency-held). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-08 ~04:05 EDT (2-H100 continuation running on evc42). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -54,8 +54,8 @@ Do not wait for permission to fix obvious data/training gaps.
 | Item | Value (as of 2026-07-08 ~00:55 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
-| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. Current active continuation is **`681080`**, name `shohin-flagship`, node **evc29**, RUNNING until ~03:55 EDT; queue after it: **`681091`** lean 2-H100 attempt, then **`681092`** 1-H100 fallback. |
-| Extended pretrain status | `681087` resumed from **`ckpt_0062400.pt` -> step 62401**, reached **step 62900**, and last saved **`ckpt_0062900.pt`**. `681080` resumed from **`ckpt_0062900.pt` -> step 62901** and has printed healthy steps through **64240** (loss in band, lr 0.0050), with `ckpt_0064000.pt` saved. A few isolated gnorm skips occurred around steps 63340 and 63699 and recovered immediately. Old 2-GPU jobs `681078`/`681090` were replaced by lean job **`681091`** (`afterany:681080`, deadline `2026-07-08T06:20:00`, `gres/gpu=2`, `cpu=4`, `mem=96G`, `NG=2 BS=16 ACC=8`, `CKPT=500`, `AUTO_REQUEUE=0`). Fallback **`681092`** is `afterany:681091` on 1 H100. This gives 2-H100 a bounded start window but prevents idle time and overlapping writes. |
+| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. Current active continuation is **`681091`**, name `shohin-flagship2`, node **evc42**, RUNNING on **2 H100s** until ~05:55 EDT. Queue after it: **`681105`** next lean 2-H100 attempt, then **`681106`** 1-H100 fallback. |
+| Extended pretrain status | `681080` ran on evc29 until wall-time, reached **step 64890**, and last saved **`ckpt_0064500.pt`**. `681091` started immediately on evc42 with `world=2`, resumed from **`ckpt_0064500.pt -> step 64501`**, and is healthy through **step 64680** (loss in band, throughput warming past **238k tok/s**). Old fallback `681092` was canceled and replaced with `681105` (2-H100, deadline `2026-07-08T08:20:00`, `AUTO_REQUEUE=0`) plus `681106` fallback, so the next handoff also tries 2 H100s before falling back. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
 | **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
@@ -74,15 +74,16 @@ Do not wait for permission to fix obvious data/training gaps.
 extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no stale 59k momentum is used.
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
-**Next actions in order:** (1) monitor `681080` through its 2-hour window; it should keep stepping
-from `ckpt_0062900.pt` and save every 500 steps. (2) Confirm `681091` either starts after `681080` and
-shows `world=2` plus ~260k tok/s, or cancels by its deadline if Slurm cannot fit 2 H100s. (3) If
-`681091` does not run, confirm fallback `681092` starts from the newest checkpoint and keeps tokens
-moving on 1 H100. (4) If 2-GPU chunks keep scheduling cleanly, continue with short checkpointed 2-GPU
-chunks or promote to longer 2-GPU walltimes when priority allows. (5) Refresh local DR backup at the
-next useful numbered checkpoint (70k or after a stable promoted 2-GPU checkpoint). (6) Run a measured
-eval/benchmark gate at the next meaningful checkpoint rather than blindly SFTing; the 60k SFT board was
-weak, so the next SFT should be a data/prompt/format variant after inspecting generations.
+**Next actions in order:** (1) monitor `681091` until it reaches steady throughput and saves the next
+checkpoint; it should remain `world=2`, loss in band, and trend toward the canary's ~260k tok/s. (2)
+Confirm `681105` starts after `681091`; it is the next 2-H100 chunk and should resume from the newest
+checkpoint. (3) If `681105` does not run by its deadline, confirm fallback `681106` starts from the
+newest checkpoint and keeps tokens moving on 1 H100. (4) If 2-GPU chunks keep scheduling cleanly,
+continue with short checkpointed 2-GPU chunks or promote to longer 2-GPU walltimes when priority allows.
+(5) Refresh local DR backup at the next useful numbered checkpoint (70k or after a stable promoted
+2-GPU checkpoint). (6) Run a measured eval/benchmark gate at the next meaningful checkpoint rather than
+blindly SFTing; the 60k SFT board was weak, so the next SFT should be a data/prompt/format variant after
+inspecting generations.
 
 ---
 
@@ -330,6 +331,14 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   occurred around step 63699 and recovered immediately. `681091` (lean 2-H100 attempt) and `681092`
   (1-H100 fallback) are still dependency-held behind `681080`. Local HY3/Nemotron teacher writers are
   alive and valid JSONL (`hy3_reasoning` ~19.7k rows, `nemotron` ~1.22k rows).
+- **2026-07-08 ~04:05** — **2-H100 continuation live.** `681080` timed out cleanly on evc29 after
+  reaching **step 64890**; last saved checkpoint was `ckpt_0064500.pt`, so expected unsaved tail was
+  discarded. `681091` started immediately on evc42 with two H100s visible, `world=2`, `NG=2 BS=16
+  ACC=8`, and resumed from `ckpt_0064500.pt -> start step 64501`. Healthy early steps through
+  **64680**; throughput is warming past **238k tok/s** and should continue toward the canary's ~260k.
+  Canceled old 1-H100 fallback `681092` and queued **`681105`** as the next 2-H100 chunk after `681091`
+  (deadline `2026-07-08T08:20:00`, `AUTO_REQUEUE=0`), with **`681106`** as the 1-H100 fallback after
+  `681105`. This keeps the run on the fastest validated path while preserving single-writer safety.
 
 ---
 
