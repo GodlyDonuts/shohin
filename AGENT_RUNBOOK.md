@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-07 ~23:15 EDT (post-60k backups verified; extension step ~60.8k). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-07 ~23:20 EDT (extension step ~60.9k; GLM teacher paused on provider 429). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -49,11 +49,11 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-07 ~23:15 EDT) |
+| Item | Value (as of 2026-07-07 ~23:20 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | `680992`, name `shohin-flagship`, node **evc22**, RUNNING from `ckpt_0060000.pt`, target **300,000** |
-| Extended pretrain status | Resumed at step **60001** with `FRESH_OPT=1` rewarmup, `LRMUON=0.005`, `LRADAM=1e-3`, `DSEED=777`; latest seen **step 60820**, loss 1.6378, lr 0.0020, ~147k tok/s |
+| Extended pretrain status | Resumed at step **60001** with `FRESH_OPT=1` rewarmup, `LRMUON=0.005`, `LRADAM=1e-3`, `DSEED=777`; latest seen **step 60920**, loss 1.7179, lr 0.0023, ~147.6k tok/s |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
 | **Eval board job** | `681030`, name `shohin-eval`, node **evc32**, RUNNING on `sft_ep3.pt` (`N=100`, `K=1`) |
 | 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
@@ -61,6 +61,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | **Corpus-expansion job** | `680324` — **✅ DONE** (finished ~12:10) |
 | finemath3 output | `artifacts/shards/finemath3/` — **✅ COMPLETE: 125 shards, exactly 25.0B tokens** (`manifest.json` present, 22 GB; 8,575 contaminated docs dropped vs evalgrams). **Included in the 300k relaunch SHARDS.** |
 | SFT mix (Newton) | `artifacts/sft/sft_mix_core.jsonl` — **85,593 examples** at launch (OpenMath + rgym + code + latest verified teacher traces) |
+| Local teacher distillers | HY3 and nemotron processes still alive (`hy3_reasoning.jsonl` 12,236 rows; `hy3_reasoning_nemotron.jsonl` 981 rows). GLM process was stalled; raw NVIDIA probe returned HTTP 429, so GLM is paused until provider limit clears. |
 | Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k) plus **`best_step60000.model.pt`** and numbered **`ckpt_0060000.pt`** model-only resume marker |
 | **Local DR backup (Mac)** | **60k downloaded/verified:** `train/flagship_out/ckpt_0060000.pt` and hardlink `best_step60000.model.pt` (model-only 60k, md5 `d2fdf867bd49cf517b62364e152bffde`); `ckpt_0059000.pt` (1.0 GB, full+optimizer fallback, md5 `0038df81be145cf4a4b0644e2dce284a`); `train/sft_out/sft_ep3.pt` (md5 `dda39ab36aa73bd6284b94d9fbf252e5`). Older full checkpoint `ckpt_0050000.pt` also remains local. Refresh again at 70k. |
 
@@ -238,6 +239,13 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   `dda39ab36aa73bd6284b94d9fbf252e5`). SFT job `681000` completed; eval job **`681030`** is running on
   evc32 against `sft_ep3.pt`. Extension job `680992` healthy at step ~60.8k, loss in band, rewarmup lr
   ~0.002, throughput ~147k tok/s. Next DR target: download 70k checkpoint when it appears.
+- **2026-07-07 ~23:20** — Heartbeat check: extension job `680992` healthy at step **60,920** (loss
+  1.7179, lr 0.0023, ~147.6k tok/s); eval job `681030` still running, partial board currently shows
+  `sft_ep3.pt` weak on early math metrics (GSM8K 6/100, MATH500 0/100; code still in progress). Local
+  distillers: HY3 process alive but not recently writing, nemotron still slowly adding rows, GLM had no
+  data movement since 22:41 and no log movement since 18:58. Terminated the stalled GLM PID and probed
+  NVIDIA directly; `z-ai/glm-5.2` returned HTTP 429, so do **not** relaunch GLM until a later heartbeat
+  shows the provider limit cleared. HY3 and nemotron were left untouched.
 
 ---
 
