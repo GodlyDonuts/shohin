@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-09 ~01:05 EDT (`683715` healthy past 90k; 90k checkpoint preserved/downloaded; 80k eval completed). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-09 ~11:40 EDT (`683715` healthy past 100k; 100k checkpoint preserved/downloaded; BS32/ACC8 canary completed). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -51,11 +51,11 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-09 ~01:05 EDT) |
+| Item | Value (as of 2026-07-09 ~11:40 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, `681123`, `681308`, `681309`, and `681310` completed 2-H100 windows by wall-time. `681311` completed its 1-H100 fallback window by wall-time on evc32. Current active continuation is **`683715`**, running on **evc43** as a 3-day 1-H100 job (`NG=1 BS=16 ACC=16 CKPT=250`). |
-| Extended pretrain status | `681311` resumed from **`ckpt_0083750.pt -> step 83751`**, saved **`ckpt_0085500.pt`**, reached **step 85780**, then hit the expected wall-time limit at 19:30 EDT. **`683715` started early at 20:28 EDT**, resumed from **`ckpt_0085500.pt -> start step 85501`** (expected replay of unsaved 85501-85780 work), confirmed `world=1`, `bs=16`, `accum=16`, saved through **`ckpt_0090000.pt`**, and is healthy through **step 90060** with throughput ~147.4k tok/s. Isolated gnorm skips at **87819**, **89047**, and **89409-89410** recovered immediately; loss/gnorm otherwise remain in band. Whitelist verification of `683715` showed `STEPS=300000, LRMUON=0.005, LRADAM=1e-3, DSEED=777, CKPT=250, AUTO_REQUEUE=0`, with `NG/BS/ACC` falling back to correct 1-H100 defaults (`1/16/16`). `short`, `ucfit`, and `highgpu` still reject this account. |
+| Extended pretrain status | `681311` resumed from **`ckpt_0083750.pt -> step 83751`**, saved **`ckpt_0085500.pt`**, reached **step 85780**, then hit the expected wall-time limit at 19:30 EDT. **`683715` started early at 20:28 EDT**, resumed from **`ckpt_0085500.pt -> start step 85501`** (expected replay of unsaved 85501-85780 work), confirmed `world=1`, `bs=16`, `accum=16`, saved through **`ckpt_0100750.pt`**, and is healthy past **step 100850** with throughput ~148.05k tok/s and live H100 utilization ~99-100%. Isolated gnorm skips at **87819**, **89047**, **89409-89410**, **92355**, **94799**, **94968**, **97072**, **97838**, short recovered burst **98206-98210**, isolated **99286**, and isolated **100305** recovered; loss/gnorm otherwise remain in band. Whitelist verification of `683715` showed `STEPS=300000, LRMUON=0.005, LRADAM=1e-3, DSEED=777, CKPT=250, AUTO_REQUEUE=0`, with `NG/BS/ACC` falling back to correct 1-H100 defaults (`1/16/16`). `short`, `ucfit`, and `highgpu` still reject this account. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
 | **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. Progress benchmark `681373` failed immediately because `TARGET_STEP=80000` resolved only to missing `ckpt_0080000.pt`; patched `train/jobs/eval_all.sbatch` to fall back to `best_step80000.pt`. Replacement job **`683820`** completed on `best_step80000.pt` (`RUN_TAG=pretrain_080000_progress`, `N=100`, `K=4`): GSM8K maj@4 **0/100**, GSM8K pass@1 **3/100**, MATH500 **2/100**, HumanEval **5/164**, MBPP **0/100**. Metrics were appended to `artifacts/eval_history/metrics.jsonl`. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
@@ -65,8 +65,8 @@ Do not wait for permission to fix obvious data/training gaps.
 | finemath3 output | `artifacts/shards/finemath3/` — **✅ COMPLETE: 125 shards, exactly 25.0B tokens** (`manifest.json` present, 22 GB; 8,575 contaminated docs dropped vs evalgrams). **Included in the 300k relaunch SHARDS.** |
 | SFT mix (Newton) | `artifacts/sft/sft_mix_core.jsonl` — **97,439 examples**, rebuilt 2026-07-08 with hard eval filtering. Audit: 0 malformed rows, 0 duplicate questions, 0 exact eval-prompt hits; builder dropped **206 exact eval-prompt overlaps** and **741 eval 13-gram overlaps** before writing. md5 `53ed91368b4c238dc18a1ab1699e4158`; report md5 `21459b382767801e205f3f625ce106cd`. |
 | Local teacher distillers | Nemotron screen run completed at **1,781 rows** but provider health was poor (`kept=19`, `err=52506` in the screen run). Bounded probes after that were also unhealthy: Nemotron `limit=5` kept 0 with 3 provider errors; GLM `limit=3` kept 0 with 3 provider errors. **Leave Nemotron and GLM paused until provider health clears; do not blindly respawn.** HY3 bulk process died/stalled after ~25.2k rows; `conc=2` and `conc=1` restarts exited without appending, even though a tiny direct Hermes/probe call completed cleanly. Claude/minimax snapshots are present. GLM remains the preferred strongest open-weight teacher when available. |
-| Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k) plus **`best_step60000.model.pt`**, numbered **`ckpt_0060000.pt`**, **`best_step62000_pre2gpu.pt`** (`md5 e4f3de659effac5c6875c6ae17d6b544`), **`best_step70000.pt`** (`md5 87f28ff961c579c7263136892b340d6f`), and **`best_step90000.pt`** (`md5 6080e105dc0bacfd607efeeefa1253dd`) |
-| **Local DR backup (Mac)** | **Post-60k downloaded/verified:** `train/flagship_out/ckpt_0090000.pt` (1.1 GB, full+optimizer 90k checkpoint, md5 `6080e105dc0bacfd607efeeefa1253dd`); `ckpt_0080000.pt` (1.0 GB, full+optimizer 80k checkpoint, md5 `ebe28d10d26f78bf3e3395ff64f9ce92`); `ckpt_0078500.pt` (full+optimizer 78.5k checkpoint, md5 `72b5531043e16e7c1cc1697577036e69`); `ckpt_0070000.pt` (full+optimizer 70k checkpoint, md5 `87f28ff961c579c7263136892b340d6f`); `ckpt_0065500.pt` (full+optimizer 2-H100 checkpoint, md5 `670ae99c278cf26706ebb1b5ee8d7b72`); `ckpt_0061000.pt` (full+optimizer extension checkpoint, md5 `28a18ebd7efc67cbbb72db6505493248`); `ckpt_0060000.pt` and hardlink `best_step60000.model.pt` (model-only 60k, md5 `d2fdf867bd49cf517b62364e152bffde`); `ckpt_0059000.pt` (full+optimizer fallback, md5 `0038df81be145cf4a4b0644e2dce284a`); `train/sft_out/sft_ep3.pt` (md5 `dda39ab36aa73bd6284b94d9fbf252e5`). Next DR target: 100k or the first checkpoint after any restart/handoff. |
+| Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k) plus **`best_step60000.model.pt`**, numbered **`ckpt_0060000.pt`**, **`best_step62000_pre2gpu.pt`** (`md5 e4f3de659effac5c6875c6ae17d6b544`), **`best_step70000.pt`** (`md5 87f28ff961c579c7263136892b340d6f`), **`best_step90000.pt`** (`md5 6080e105dc0bacfd607efeeefa1253dd`), and **`best_step100000.pt`** (`md5 d8ebd43d0c13c32aa221832bfc09202b`) |
+| **Local DR backup (Mac)** | **Post-60k downloaded/verified:** `train/flagship_out/ckpt_0100000.pt` (1.0 GB, full+optimizer 100k checkpoint, md5 `d8ebd43d0c13c32aa221832bfc09202b`); `ckpt_0090000.pt` (1.1 GB, full+optimizer 90k checkpoint, md5 `6080e105dc0bacfd607efeeefa1253dd`); `ckpt_0080000.pt` (1.0 GB, full+optimizer 80k checkpoint, md5 `ebe28d10d26f78bf3e3395ff64f9ce92`); `ckpt_0078500.pt` (full+optimizer 78.5k checkpoint, md5 `72b5531043e16e7c1cc1697577036e69`); `ckpt_0070000.pt` (full+optimizer 70k checkpoint, md5 `87f28ff961c579c7263136892b340d6f`); `ckpt_0065500.pt` (full+optimizer 2-H100 checkpoint, md5 `670ae99c278cf26706ebb1b5ee8d7b72`); `ckpt_0061000.pt` (full+optimizer extension checkpoint, md5 `28a18ebd7efc67cbbb72db6505493248`); `ckpt_0060000.pt` and hardlink `best_step60000.model.pt` (model-only 60k, md5 `d2fdf867bd49cf517b62364e152bffde`); `ckpt_0059000.pt` (full+optimizer fallback, md5 `0038df81be145cf4a4b0644e2dce284a`); `train/sft_out/sft_ep3.pt` (md5 `dda39ab36aa73bd6284b94d9fbf252e5`). Next DR target: 110k or the first checkpoint after any restart/handoff. |
 | **Large artifact transfer policy** | For big checkpoints/shards/uploads, prefer VPS-to-VPS or Newton-to-VPS staging when credentials/hosts are available; the VPS links have ~20 Gbit internet and should beat Mac↔Newton transfers. Still use `.part` files and md5/sha256 on both ends before trusting or deleting anything. |
 
 **Checkpoints preserved so far:** every 10k through 50k; 60k is model-only because the trainer writes
@@ -75,8 +75,11 @@ extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no st
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
 **Next actions in order:** (1) Watch `683715`: verify it stays in the normal 1-H100 ~145-150k tok/s
-band, keeps loss/gnorm in band, and saves at the expected 250-step cadence. (2) Preserve/download the
-next DR milestone at 100k, or sooner if a restart/handoff occurs. (3) Continue milestone benchmarks
+band, keeps loss/gnorm in band, and saves at the expected 250-step cadence. (2) Do **not** cancel the
+healthy live run solely for the `BS=32 ACC=8` gain: canary `683939` showed the larger microbatch fits
+and gives only a modest steady-throughput lift (~154.5k recent tok/s vs live ~148.0k, about +4%); use
+the corrected canary path at the next natural restart/handoff if needed. (3) Preserve/download the next DR
+milestone at 110k, or sooner if a restart/handoff occurs. (4) Continue milestone benchmarks
 every ~20k-50k steps or after meaningful SFT variants, recording all results in
 `artifacts/eval_history/metrics.jsonl`.
 
@@ -534,6 +537,22 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   The local git index is still being touched by an external `git add`/`hash-object` process over large
   artifacts, so this runbook update is synced to Newton but GitHub push should wait until the index is
   safe.
+- **2026-07-09 ~11:00** — **100k checkpoint preserved and locally verified.** `683715` remains RUNNING
+  on **evc43**, saved **`ckpt_0100000.pt`**, and continued healthy past **step 100170** at ~148.0k
+  tok/s with live H100 utilization ~99-100%. Copied the Newton checkpoint to **`best_step100000.pt`**
+  and verified matching md5 `d8ebd43d0c13c32aa221832bfc09202b`; downloaded
+  `train/flagship_out/ckpt_0100000.pt` to the Mac via `.part` and verified the same md5 locally. Added
+  `train/jobs/microbatch_canary.sbatch`, an isolated side branch from `ckpt_0100000.pt` with
+  `BS=32 ACC=8` (same 524,288 tokens/update as live `BS=16 ACC=16`) to test whether larger per-GPU
+  microbatches improve single-H100 throughput before touching the live run. Slurm dry-run placed it on
+  a separate node and real submission **`683939`** ran on **evc22** with `--exclude=evc43`, so it did not
+  contend with the live trainer node. Result: completed cleanly in **20m28s**, `BS=32` fit at ~64 GB
+  VRAM, and recent-window throughput was **~154.5k tok/s** versus live **~148.0k tok/s** (~+4%). Because
+  the initial bounded canary used its short `STEPS=100300` as the LR schedule length, treat it as a
+  throughput/memory measurement only; patched `train.py` with `--lr-total-steps` and updated
+  `microbatch_canary.sbatch` so future short canaries can keep the 300k LR schedule. Decision: keep the
+  current healthy live run; consider `BS=32 ACC=8` at the next natural restart/handoff, not by killing a
+  stable allocation mid-window.
 
 ---
 

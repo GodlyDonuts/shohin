@@ -48,6 +48,8 @@ def main():
     ap.add_argument("--vocab-size", type=int, default=32768)
     ap.add_argument("--lr-muon", type=float, default=0.02)
     ap.add_argument("--lr-adam", type=float, default=3e-3)
+    ap.add_argument("--lr-total-steps", type=int, default=0,
+                    help="total steps to use for WSD LR schedule; defaults to --steps")
     ap.add_argument("--warmup", type=int, default=200)
     ap.add_argument("--clip", type=float, default=1.0)
     ap.add_argument("--log-every", type=int, default=10)
@@ -126,12 +128,13 @@ def main():
     t0 = time.time()
     tok_per_step = world * a.batch_size * a.grad_accum * cfg.seq_len
     loss_ema, gnorm_ema, skips = None, None, 0
+    lr_total_steps = a.lr_total_steps or a.steps
 
     for step in range(start_step, a.steps):
         if a.fresh_opt and step - warm0 < a.warmup:
             lr_scale = (step - warm0) / max(1, a.warmup)   # rewarmup the reset optimizer
         else:
-            lr_scale = wsd_lr(step, a.steps, a.warmup)
+            lr_scale = wsd_lr(step, lr_total_steps, a.warmup)
         if opt_muon is not None:
             for g in opt_muon.param_groups:
                 g["lr"] = a.lr_muon * lr_scale
