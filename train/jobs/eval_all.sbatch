@@ -15,6 +15,9 @@ export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 cd $BASE/train
 if [ -n "${TARGET_STEP:-}" ] && [ -z "${CKPT:-}" ]; then
   CKPT=$(printf "$BASE/train/flagship_out/ckpt_%07d.pt" "$TARGET_STEP")
+  if [ ! -f "$CKPT" ]; then
+    CKPT="$BASE/train/flagship_out/best_step${TARGET_STEP}.pt"
+  fi
 fi
 CKPT=${CKPT:-$(ls -t $BASE/train/sft_out/sft_ep*.pt 2>/dev/null | head -1)}
 [ -z "$CKPT" ] && CKPT=$(ls -t $BASE/train/flagship_out/ckpt_[0-9]*.pt 2>/dev/null | head -1)

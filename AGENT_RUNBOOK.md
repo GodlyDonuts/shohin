@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-08 ~20:58 EDT (`683715` restarted from 85.5k and is healthy). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-08 ~22:20 EDT (`683715` healthy past 87.2k; 80k eval rerun active). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -51,13 +51,13 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-08 ~20:58 EDT) |
+| Item | Value (as of 2026-07-08 ~22:20 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
-| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, `681123`, `681308`, `681309`, and `681310` completed 2-H100 windows by wall-time. `681311` completed its 1-H100 fallback window by wall-time on evc32. Current active continuation is **`683715`**, running on **evc43** as a 3-day 1-H100 job (`NG=1 BS=16 ACC=16 CKPT=250`). Low-priority eval **`681373`** is pending priority for 2026-07-09T07:30 and is not competing with training. |
-| Extended pretrain status | `681311` resumed from **`ckpt_0083750.pt -> step 83751`**, saved **`ckpt_0085500.pt`**, reached **step 85780**, then hit the expected wall-time limit at 19:30 EDT. **`683715` started early at 20:28 EDT**, resumed from **`ckpt_0085500.pt -> start step 85501`** (expected replay of unsaved 85501-85780 work), confirmed `world=1`, `bs=16`, `accum=16`, saved **`ckpt_0085750.pt`**, and is healthy through **step 85920** with loss/gnorm in band while throughput warms through ~141k tok/s. Whitelist verification of `683715` showed `STEPS=300000, LRMUON=0.005, LRADAM=1e-3, DSEED=777, CKPT=250, AUTO_REQUEUE=0`, with `NG/BS/ACC` falling back to correct 1-H100 defaults (`1/16/16`). `short`, `ucfit`, and `highgpu` still reject this account. |
+| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, `681123`, `681308`, `681309`, and `681310` completed 2-H100 windows by wall-time. `681311` completed its 1-H100 fallback window by wall-time on evc32. Current active continuation is **`683715`**, running on **evc43** as a 3-day 1-H100 job (`NG=1 BS=16 ACC=16 CKPT=250`). Replacement low-priority eval **`683820`** is running on **evc35** against `best_step80000.pt`; it is not competing with training. |
+| Extended pretrain status | `681311` resumed from **`ckpt_0083750.pt -> step 83751`**, saved **`ckpt_0085500.pt`**, reached **step 85780**, then hit the expected wall-time limit at 19:30 EDT. **`683715` started early at 20:28 EDT**, resumed from **`ckpt_0085500.pt -> start step 85501`** (expected replay of unsaved 85501-85780 work), confirmed `world=1`, `bs=16`, `accum=16`, saved through **`ckpt_0087250.pt`**, and is healthy through **step 87270** with loss/gnorm in band and throughput ~146k tok/s. Whitelist verification of `683715` showed `STEPS=300000, LRMUON=0.005, LRADAM=1e-3, DSEED=777, CKPT=250, AUTO_REQUEUE=0`, with `NG/BS/ACC` falling back to correct 1-H100 defaults (`1/16/16`). `short`, `ucfit`, and `highgpu` still reject this account. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
-| **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. Progress benchmark job **`681373`** is low-priority (`--nice=10000`), targets **`ckpt_0080000.pt`** with `RUN_TAG=pretrain_080000_progress`, `N=100`, `K=4`, and is pending priority with estimate 2026-07-09T07:30; it must not displace training. |
+| **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. Progress benchmark `681373` failed immediately because `TARGET_STEP=80000` resolved only to missing `ckpt_0080000.pt`; patched `train/jobs/eval_all.sbatch` to fall back to `best_step80000.pt`. Replacement job **`683820`** is running with `RUN_TAG=pretrain_080000_progress`, `N=100`, `K=4`, log `artifacts/eval_history/pretrain_080000_progress_683820.log`. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
 | 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
 | 60k skips | **45 total**, stable/healthy |
@@ -509,6 +509,15 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   which is expected because `ckpt_0085500.pt` was the latest durable checkpoint. `683715` has already
   saved **`ckpt_0085750.pt`** and is healthy through **step 85920** with loss/gnorm in band and throughput
   warming through ~141k tok/s. Eval `681373` is still low-priority, now estimated 2026-07-09T07:30.
+- **2026-07-08 ~22:20** — **Training steady; 80k benchmark repaired and rerun.** `683715` is healthy
+  through **step 87270**, throughput ~146k tok/s, loss/gnorm in band, with checkpoints through
+  **`ckpt_0087250.pt`** saved. Low-priority eval `681373` ran on evc35 but failed immediately because
+  `TARGET_STEP=80000` resolved to missing `ckpt_0080000.pt`; the preserved file is
+  **`best_step80000.pt`**. Patched `train/jobs/eval_all.sbatch` so `TARGET_STEP` falls back to
+  `best_step${TARGET_STEP}.pt` when the numbered checkpoint is absent, synced the script to Newton, and
+  submitted replacement low-priority eval **`683820`**. Verified it started on **evc35** against
+  `best_step80000.pt` with `RUN_TAG=pretrain_080000_progress`, `N=100`, `K=4`; training continues on
+  evc43, so eval is not displacing the trainer.
 
 ---
 
