@@ -24,6 +24,7 @@ NG=${NG:-2}
 BS=${BS:-16}
 ACC=${ACC:-8}
 STEPS=${STEPS:-61050}
+LRTOTAL=${LRTOTAL:-300000}
 WARMUP=${WARMUP:-2000}
 LRMUON=${LRMUON:-0.005}
 LRADAM=${LRADAM:-1e-3}
@@ -51,13 +52,13 @@ if [ -n "${NOMUON:-}" ]; then
 fi
 
 echo "[canary] node=${SLURMD_NODENAME:-?} SLURM_JOB_GPUS=${SLURM_JOB_GPUS:-?} CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-unset}"
-echo "[canary] src=$SRC_CKPT out=$OUT_DIR ng=$NG bs=$BS acc=$ACC steps=$STEPS warmup=$WARMUP fresh_opt=${FRESH_OPT:-1} compile=${COMPILE:-1}"
+echo "[canary] src=$SRC_CKPT out=$OUT_DIR ng=$NG bs=$BS acc=$ACC steps=$STEPS lr_total=$LRTOTAL warmup=$WARMUP fresh_opt=${FRESH_OPT:-1} compile=${COMPILE:-1}"
 echo "[canary] effective batch sequences/update = $((NG * BS * ACC))"
 nvidia-smi -L 2>&1 | head
 
 RUN="$BASE/miniforge3/bin/torchrun --standalone --nproc_per_node=$NG train.py"
 ARGS="--size shohin --shard-dirs $SHARDS --steps $STEPS --batch-size $BS --grad-accum $ACC \
-  --warmup $WARMUP --lr-muon $LRMUON --lr-adam $LRADAM --log-every $LOGEVERY --ckpt-every $CKPT \
+  --lr-total-steps $LRTOTAL --warmup $WARMUP --lr-muon $LRMUON --lr-adam $LRADAM --log-every $LOGEVERY --ckpt-every $CKPT \
   --data-seed $DSEED --gnorm-mult $GNORMMULT --out $OUT_DIR --resume $EXTRA"
 
 for att in $(seq 1 "$MAX_RETRIES"); do
