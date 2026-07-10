@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-10 ~13:54 EDT (`683715` healthy past 127.6k; verified-data expansion chain active). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-10 ~14:55 EDT (`683715` healthy past 128.7k; verified SFT-v2 pilot complete and under evaluation). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -51,7 +51,7 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-10 ~14:50 EDT) |
+| Item | Value (as of 2026-07-10 ~14:55 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | 1-GPU job `680992` was stopped at the earlier 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, `681123`, `681308`, `681309`, and `681310` completed 2-H100 windows by wall-time. Current active continuation is **`683715`**, running on **evc43** as a 3-day 1-H100 job (`NG=1 BS=16 ACC=16 CKPT=250`). Per current directive, dual-GPU successor `684030` was canceled. **`685084`** is the dependency-held one-H100 successor after `683715`, configured `BS=32 ACC=8 CKPT=250` (same 524,288 tokens/update, ~64 GB microbatch). |
@@ -677,6 +677,14 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   exit rather than abort, excluded evc26 and evc43, and resubmitted baseline **`685704`** from
   `best_step120000.pt` over 400 held-out questions. Use the identical protocol after an SFT-v2 pilot;
   no data recipe is accepted on public-board movement alone.
+- **2026-07-10 ~14:55** — **Balanced baseline and isolated v2 SFT pilot completed.** The balanced
+  120k procedural baseline `685706` scored **29/800 = 3.625%** over 32 held-out families; this is the
+  valid raw-base reference (the prior 3/400 was knights-only). Pilot `685708` completed one v2 epoch:
+  349,317 examples / 85.34M packed tokens / 2,605 updates, terminal loss ~0.46-0.54. It correctly
+  initialized from `best_step120000.pt` and wrote only `train/sft_v2_120k/sft_ep1.pt`; a stale final
+  echo mentioned default `sft_out`, so dependent evaluations were canceled while header+filesystem
+  isolation was verified. Replacement public board `685757` now runs on that exact checkpoint; balanced
+  RG `685759` is serially dependency-held after it. Flagship is healthy past 128.7k at ~148.12k tok/s.
 - **2026-07-10 ~14:45** — **RG measurement bias fixed before using it for a decision.** `685704` completed
   and confirmed the raw 120k model is poor on held-out knights-and-knaves (**3/400 = 0.75%**), but the
   generator file is family-ordered, so the first 400 rows were all one family. Patched evaluator to

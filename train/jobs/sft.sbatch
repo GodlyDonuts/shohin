@@ -46,4 +46,4 @@ for att in 1 2 3; do
   $BASE/miniforge3/bin/python sft.py $ARGS && break
   echo "[sft-job] attempt $att failed (CUDA-busy race?); retry in 30s"; sleep 30
 done
-echo "[sft-job] done. checkpoints in $BASE/train/sft_out/"
+echo "[sft-job] done. checkpoints in $OUT"
