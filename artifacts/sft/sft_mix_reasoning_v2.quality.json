@@ -1,0 +1,36 @@
+{
+  "data": "/lustre/fs1/home/sa305415/shohin/artifacts/sft/sft_mix_reasoning_v2.jsonl",
+  "duplicate_normalized_questions": 0,
+  "format_markers": {
+    "<think>": 83611,
+    "The answer is": 349004,
+    "Therefore": 60505,
+    "\\boxed": 240297,
+    "```": 50
+  },
+  "malformed_rows": 0,
+  "missing_question_or_response": 0,
+  "response_words": {
+    "max": 622,
+    "mean": 89.76,
+    "p50": 83,
+    "p90": 169,
+    "p99": 236
+  },
+  "source_counts": {
+    "augmented_gsm8k": 59132,
+    "augmented_math": 174076,
+    "claude": 148,
+    "glm": 29,
+    "gsm8k": 3377,
+    "hy3": 22728,
+    "hy3_arc": 12,
+    "hy3_gsm8k": 448,
+    "math": 3712,
+    "mbpp_train": 357,
+    "mbpp_validation": 87,
+    "nemotron": 1732,
+    "reasoning_gym_trace": 83611
+  },
+  "valid_rows": 349449
+}
