@@ -152,6 +152,10 @@ def main():
             x, y = loader.next_batch(device)
             sync = (not ddp) or (micro == a.grad_accum - 1)
             ctx = model.no_sync() if (ddp and not sync) else _null()
+            # reduce-overhead enables CUDA graphs. Every accumulation microstep starts a new graph
+            # tree so autograd never reads a forward output after its static graph buffer is reused.
+            if a.compile_mode == "reduce-overhead":
+                torch.compiler.cudagraph_mark_step_begin()
             with ctx, torch.autocast("cuda", dtype=torch.bfloat16, enabled=("cuda" in str(device))):
                 _, loss = model(x, y)
                 loss = loss / a.grad_accum
