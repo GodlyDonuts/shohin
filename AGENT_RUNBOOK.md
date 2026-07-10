@@ -55,7 +55,7 @@ Do not wait for permission to fix obvious data/training gaps.
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | 1-GPU job `680992` was stopped at the earlier 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, `681123`, `681308`, `681309`, and `681310` completed 2-H100 windows by wall-time. Current active continuation is **`683715`**, running on **evc43** as a 3-day 1-H100 job (`NG=1 BS=16 ACC=16 CKPT=250`). Per current directive, dual-GPU successor `684030` was canceled. **`685084`** is the dependency-held one-H100 successor after `683715`, configured `BS=32 ACC=8 CKPT=250` (same 524,288 tokens/update, ~64 GB microbatch). |
-| Extended pretrain status | `681311` resumed from **`ckpt_0083750.pt -> step 83751`**, saved **`ckpt_0085500.pt`**, reached **step 85780**, then hit the expected wall-time limit at 19:30 EDT. **`683715` started early at 20:28 EDT**, resumed from **`ckpt_0085500.pt -> start step 85501`** (expected replay of unsaved 85501-85780 work), confirmed `world=1`, `bs=16`, `accum=16`, and is healthy through **step 121220** at ~148.10k tok/s with 99-100% H100 utilization. Isolated BS32/ACC8 profiler `685088` measured 155.35k tok/s and ~54k CUDA launches across four updates. `torch.compile(reduce-overhead)` canaries `685105`/`685106` failed safely before a training step because individual graph captures conflict with the accumulated-gradient graph lifetime; do not adopt that mode. Whole-update CUDA-graph canary `685125` reached capture and failed safely because its canary-only AdamW was not `capturable`; fixed canary **`685209`** is pending normal-partition priority with `capturable=True`, isolated from the live job. Whitelist verification of `683715` showed `STEPS=300000, LRMUON=0.005, LRADAM=1e-3, DSEED=777, CKPT=250, AUTO_REQUEUE=0`, with `NG/BS/ACC` falling back to correct 1-H100 defaults (`1/16/16`). `short`, `ucfit`, and `highgpu` still reject this account. |
+| Extended pretrain status | `681311` resumed from **`ckpt_0083750.pt -> step 83751`**, saved **`ckpt_0085500.pt`**, reached **step 85780**, then hit the expected wall-time limit at 19:30 EDT. **`683715` started early at 20:28 EDT**, resumed from **`ckpt_0085500.pt -> start step 85501`** (expected replay of unsaved 85501-85780 work), confirmed `world=1`, `bs=16`, `accum=16`, and is healthy through **step 122580** at ~148.10k tok/s with 99-100% H100 utilization. Isolated BS32/ACC8 profiler `685088` measured 155.35k tok/s and ~54k CUDA launches across four updates. `torch.compile(reduce-overhead)` canaries `685105`/`685106` failed safely before a training step because individual graph captures conflict with the accumulated-gradient graph lifetime; do not adopt that mode. Whole-update CUDA-graph canary `685125` reached capture and failed safely because its canary-only AdamW was not `capturable`; fixed canary **`685209`** is pending normal-partition priority with `capturable=True`, isolated from the live job. Capability board **`685262`** is queued on preserved `best_step120000.pt` (`RUN_TAG=pretrain_120000_progress`, fixed `N=100`, `K=4`). Whitelist verification of `683715` showed `STEPS=300000, LRMUON=0.005, LRADAM=1e-3, DSEED=777, CKPT=250, AUTO_REQUEUE=0`, with `NG/BS/ACC` falling back to correct 1-H100 defaults (`1/16/16`). `short`, `ucfit`, and `highgpu` still reject this account. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
 | **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. Progress benchmark `681373` failed immediately because `TARGET_STEP=80000` resolved only to missing `ckpt_0080000.pt`; patched `train/jobs/eval_all.sbatch` to fall back to `best_step80000.pt`. Replacement job **`683820`** completed on `best_step80000.pt` (`RUN_TAG=pretrain_080000_progress`, `N=100`, `K=4`): GSM8K maj@4 **0/100**, GSM8K pass@1 **3/100**, MATH500 **2/100**, HumanEval **5/164**, MBPP **0/100**. Metrics were appended to `artifacts/eval_history/metrics.jsonl`. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
@@ -83,9 +83,10 @@ isolated **`BS=64 ACC=4`** canary `684000` used the corrected 300k LR schedule b
 single-GPU microbatch that exactly preserves the 524,288-token update. Initial two-H100 canary
 `684029` verified the BS32 hardware path but missed its aged-out source checkpoint; corrected
 canary `684058` validated the equivalent `NG=2 BS=32 ACC=4` from preserved 100k weights. `684030`
-is safely dependency-held after the live run. (3) Preserve/download the next DR
-milestone at 110k, or sooner if a restart/handoff occurs. (4) Continue milestone benchmarks
-every ~20k-50k steps or after meaningful SFT variants, recording all results in
+  is safely dependency-held after the live run. (3) Preserve/download the next DR
+  milestone at 130k, or sooner if a restart/handoff occurs. (4) Monitor queued 120k capability board
+  `685262` and whole-update graph canary `685209`; record their measured results before any integration.
+  Continue milestone benchmarks every ~20k-50k steps or after meaningful SFT variants, recording all results in
 `artifacts/eval_history/metrics.jsonl`.
 
 ---
@@ -633,6 +634,11 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   matches Newton exactly: `d5c73034b635025ba997b25b622f77f5`. Synced `cudagraph_canary.py` with
   canary-only `AdamW(capturable=True)` and submitted **`685209`** excluding evc43; it is pending
   priority and cannot affect the flagship. `683715` remains healthy past 121.2k at ~148.1k tok/s.
+- **2026-07-10 ~09:00** — **120k capability board queued.** `683715` is healthy past 122.5k. Submitted
+  isolated eval `685262` against preserved `best_step120000.pt` with the same fixed progress-board
+  protocol (`N=100`, GSM8K `K=4`) as the 80k baseline; it is pending normal priority and estimated just
+  after the whole-update CUDA-graph canary `685209`. Neither job shares live outputs or can displace
+  the flagship.
 
 ---
 
