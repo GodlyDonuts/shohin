@@ -8,6 +8,7 @@ a replacement for the public GSM8K/MATH/code board.
 import argparse
 import collections
 import json
+import random
 import re
 import sys
 from pathlib import Path
@@ -38,12 +39,36 @@ def extract(text):
     return normalized(text.split("\n", 1)[0])
 
 
+def balanced_sample(rows, n, seed):
+    """Round-robin families so generator-file ordering cannot skew a small eval."""
+    groups = collections.defaultdict(list)
+    for row in rows:
+        groups[str(row.get("family") or "unknown")].append(row)
+    rng = random.Random(seed)
+    for group in groups.values():
+        rng.shuffle(group)
+    selected, index = [], 0
+    families = sorted(groups)
+    while len(selected) < n:
+        emitted = False
+        for family in families:
+            group = groups[family]
+            if index < len(group) and len(selected) < n:
+                selected.append(group[index])
+                emitted = True
+        if not emitted:
+            break
+        index += 1
+    return selected
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--ckpt", required=True)
     ap.add_argument("--tokenizer", required=True)
     ap.add_argument("--data", required=True)
     ap.add_argument("--n", type=int, default=400)
+    ap.add_argument("--seed", type=int, default=1337)
     ap.add_argument("--max-new", type=int, default=128)
     ap.add_argument("--out-json", default=None)
     args = ap.parse_args()
@@ -53,7 +78,8 @@ def main():
     model = GPT(GPTConfig(**ckpt["cfg"])).to(device).eval()
     model.load_state_dict(ckpt["model"])
     tok = Tokenizer.from_file(args.tokenizer)
-    rows = [json.loads(line) for line in open(args.data) if line.strip()][:args.n]
+    all_rows = [json.loads(line) for line in open(args.data) if line.strip()]
+    rows = balanced_sample(all_rows, args.n, args.seed)
 
     by_family = collections.Counter()
     correct_by_family = collections.Counter()
@@ -82,6 +108,7 @@ def main():
         "step": ckpt.get("step"),
         "data": args.data,
         "n": len(rows),
+        "sample_seed": args.seed,
         "correct": correct,
         "accuracy": correct / max(len(rows), 1),
         "families": families,
