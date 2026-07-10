@@ -56,6 +56,9 @@ def main():
     ap.add_argument("--ckpt-every", type=int, default=2000)
     ap.add_argument("--out", default="ckpt")
     ap.add_argument("--compile", action="store_true")
+    ap.add_argument("--compile-mode", default="default",
+                    choices=("default", "reduce-overhead", "max-autotune"),
+                    help="torch.compile mode; default preserves the existing flagship behavior")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--fresh-opt", action="store_true",
                     help="resume model weights but RESET optimizer momentum (diagnostic: "
@@ -92,7 +95,7 @@ def main():
               f"world={world} bs={a.batch_size} accum={a.grad_accum} seq={cfg.seq_len}", flush=True)
     raw = model
     if a.compile:
-        model = torch.compile(model)
+        model = torch.compile(model, mode=a.compile_mode)
     if ddp:
         model = DDP(model, device_ids=[local])
 

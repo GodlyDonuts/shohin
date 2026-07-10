@@ -46,7 +46,7 @@ nvidia-smi -L 2>&1 | head
 
 EXTRA=""
 if [ "${COMPILE:-1}" = "1" ]; then
-  EXTRA="$EXTRA --compile"
+  EXTRA="$EXTRA --compile --compile-mode ${COMPILE_MODE:-default}"
 fi
 if [ -n "${NOMUON:-}" ]; then
   EXTRA="$EXTRA --no-muon"
