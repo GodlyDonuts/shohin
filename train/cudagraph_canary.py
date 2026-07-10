@@ -60,6 +60,13 @@ def main():
         # replaces constructor settings, so restore this canary-only requirement afterward.
         for group in opt_adam.param_groups:
             group["capturable"] = True
+    # `torch.load(..., map_location="cpu")` leaves scalar optimizer state such as AdamW's step
+    # counter on CPU. Capturable optimizers require every state tensor on the parameter device.
+    for opt in (opt_muon, opt_adam):
+        for state in opt.state.values():
+            for name, value in list(state.items()):
+                if torch.is_tensor(value) and value.device.type != "cuda":
+                    state[name] = value.cuda()
     del ckpt
 
     # Compile gives the baseline's fused elementwise kernels; the explicit graph below removes
