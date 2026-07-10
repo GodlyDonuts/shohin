@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-10 ~07:40 EDT (`683715` healthy past 121k; 120k fully hash-verified on Newton and Mac). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-10 ~12:23 EDT (`683715` healthy past 126k; 120k evaluation and CUDA-graph gates complete). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -51,13 +51,13 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-10 ~07:40 EDT) |
+| Item | Value (as of 2026-07-10 ~12:23 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | 1-GPU job `680992` was stopped at the earlier 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, `681123`, `681308`, `681309`, and `681310` completed 2-H100 windows by wall-time. Current active continuation is **`683715`**, running on **evc43** as a 3-day 1-H100 job (`NG=1 BS=16 ACC=16 CKPT=250`). Per current directive, dual-GPU successor `684030` was canceled. **`685084`** is the dependency-held one-H100 successor after `683715`, configured `BS=32 ACC=8 CKPT=250` (same 524,288 tokens/update, ~64 GB microbatch). |
-| Extended pretrain status | `681311` resumed from **`ckpt_0083750.pt -> step 83751`**, saved **`ckpt_0085500.pt`**, reached **step 85780**, then hit the expected wall-time limit at 19:30 EDT. **`683715` started early at 20:28 EDT**, resumed from **`ckpt_0085500.pt -> start step 85501`** (expected replay of unsaved 85501-85780 work), confirmed `world=1`, `bs=16`, `accum=16`, and is healthy through **step 122580** at ~148.10k tok/s with 99-100% H100 utilization. Isolated BS32/ACC8 profiler `685088` measured 155.35k tok/s and ~54k CUDA launches across four updates. `torch.compile(reduce-overhead)` canaries `685105`/`685106` failed safely before a training step because individual graph captures conflict with the accumulated-gradient graph lifetime; do not adopt that mode. Whole-update CUDA-graph canary `685125` reached capture and failed safely because its canary-only AdamW was not `capturable`; fixed canary **`685209`** is pending normal-partition priority with `capturable=True`, isolated from the live job. Capability board **`685262`** is queued on preserved `best_step120000.pt` (`RUN_TAG=pretrain_120000_progress`, fixed `N=100`, `K=4`). Whitelist verification of `683715` showed `STEPS=300000, LRMUON=0.005, LRADAM=1e-3, DSEED=777, CKPT=250, AUTO_REQUEUE=0`, with `NG/BS/ACC` falling back to correct 1-H100 defaults (`1/16/16`). `short`, `ucfit`, and `highgpu` still reject this account. |
+| Extended pretrain status | `681311` resumed from **`ckpt_0083750.pt -> step 83751`**, saved **`ckpt_0085500.pt`**, reached **step 85780**, then hit the expected wall-time limit at 19:30 EDT. **`683715` started early at 20:28 EDT**, resumed from **`ckpt_0085500.pt -> start step 85501`** (expected replay of unsaved 85501-85780 work), confirmed `world=1`, `bs=16`, `accum=16`, and is healthy through **step 126050** at ~148.11k tok/s with 99-100% H100 utilization. Isolated BS32/ACC8 profiler `685088` measured 155.35k tok/s and ~54k CUDA launches across four updates. `torch.compile(reduce-overhead)` canaries `685105`/`685106` failed safely before a training step because individual graph captures conflict with the accumulated-gradient graph lifetime; do not adopt that mode. Whole-update CUDA-graph canary `685520` completed 80 stable updates at **158.20k tok/s**, but that ~1.8% lift over the profiled BS32 path does not justify removing the flagship's guard/observability path; **do not integrate CUDA graphs**. Capability board `685262` completed against `best_step120000.pt`; see its row below. Whitelist verification of `683715` showed `STEPS=300000, LRMUON=0.005, LRADAM=1e-3, DSEED=777, CKPT=250, AUTO_REQUEUE=0`, with `NG/BS/ACC` falling back to correct 1-H100 defaults (`1/16/16`). `short`, `ucfit`, and `highgpu` still reject this account. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
-| **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. Progress benchmark `681373` failed immediately because `TARGET_STEP=80000` resolved only to missing `ckpt_0080000.pt`; patched `train/jobs/eval_all.sbatch` to fall back to `best_step80000.pt`. Replacement job **`683820`** completed on `best_step80000.pt` (`RUN_TAG=pretrain_080000_progress`, `N=100`, `K=4`): GSM8K maj@4 **0/100**, GSM8K pass@1 **3/100**, MATH500 **2/100**, HumanEval **5/164**, MBPP **0/100**. Metrics were appended to `artifacts/eval_history/metrics.jsonl`. |
+| **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. Progress benchmark `681373` failed immediately because `TARGET_STEP=80000` resolved only to missing `ckpt_0080000.pt`; patched `train/jobs/eval_all.sbatch` to fall back to `best_step80000.pt`. Replacement `683820` at 80k (`N=100`, `K=4`): GSM8K maj@4 **0/100**, pass@1 **3/100**, MATH500 **2/100**, HumanEval **5/164**, MBPP **0/100**. **120k replacement `685262`** completed on `best_step120000.pt` with the same protocol: GSM8K maj@4 **2/100**, pass@1 **1/100**, MATH500 **3/100**, HumanEval **7/164**, MBPP **0/100**. This is a mixed, small-sample raw-pretrain signal, not a broad reasoning gain: GSMK pass@1 fell, while MATH/HumanEval moved slightly up. Metrics are appended to `artifacts/eval_history/metrics.jsonl`. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
 | 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
 | 60k skips | **45 total**, stable/healthy |
@@ -84,8 +84,9 @@ single-GPU microbatch that exactly preserves the 524,288-token update. Initial t
 `684029` verified the BS32 hardware path but missed its aged-out source checkpoint; corrected
 canary `684058` validated the equivalent `NG=2 BS=32 ACC=4` from preserved 100k weights. `684030`
   is safely dependency-held after the live run. (3) Preserve/download the next DR
-  milestone at 130k, or sooner if a restart/handoff occurs. (4) Monitor queued 120k capability board
-  `685262` and whole-update graph canary `685209`; record their measured results before any integration.
+  milestone at 130k, or sooner if a restart/handoff occurs. (4) Do not integrate CUDA graphs: the clean
+  whole-update canary was only ~1.8% faster and lacks the live spike guard. Run the next fixed capability
+  board around 160k (or after a meaningful SFT variant) and require a repeated trend before changing recipe.
   Continue milestone benchmarks every ~20k-50k steps or after meaningful SFT variants, recording all results in
 `artifacts/eval_history/metrics.jsonl`.
 
@@ -639,6 +640,15 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   protocol (`N=100`, GSM8K `K=4`) as the 80k baseline; it is pending normal priority and estimated just
   after the whole-update CUDA-graph canary `685209`. Neither job shares live outputs or can displace
   the flagship.
+- **2026-07-10 ~12:23** — **CUDA-graph and 120k measurement gates completed.** First graph runs
+  `685209`/`685508` exposed a bad-node CUDA allocation and capturable-optimizer resume setup only;
+  clean retry **`685520`** completed 80 updates from 110k with stable loss/gnorm at **158.20k tok/s**,
+  57.07 GiB. That is only ~1.8% over the 155.35k BS32 compiled profile and the canary omits the
+  flagship skip guard, so **CUDA graphs are rejected for integration**. Board **`685262`** on 120k
+  completed: GSM8K maj@4 2/100 (80k 0/100), pass@1 1/100 (80k 3/100), MATH500 3/100 (80k 2/100),
+  HumanEval 7/164 (80k 5/164), MBPP 0/100 unchanged. Treat this as noisy/mixed raw-pretrain movement,
+  not evidence of meaningful reasoning yet; preserve the live run, evaluate again near 160k, and use
+  an SFT variant as the next capability intervention rather than chasing marginal throughput.
 
 ---
 
