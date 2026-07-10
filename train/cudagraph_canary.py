@@ -56,6 +56,10 @@ def main():
         opt_muon.load_state_dict(ckpt["opt_muon"])
     if "opt_adam" in ckpt:
         opt_adam.load_state_dict(ckpt["opt_adam"])
+        # The live checkpoint's param groups were created without graph capture. Loading them
+        # replaces constructor settings, so restore this canary-only requirement afterward.
+        for group in opt_adam.param_groups:
+            group["capturable"] = True
     del ckpt
 
     # Compile gives the baseline's fused elementwise kernels; the explicit graph below removes
