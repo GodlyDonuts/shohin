@@ -47,7 +47,11 @@ def main():
     raw.load_state_dict(ckpt["model"])
     muon_p, adam_p = split_params(raw)
     opt_muon = Muon(muon_p, lr=a.lr_muon)
-    opt_adam = torch.optim.AdamW(adam_p, lr=a.lr_adam, betas=(0.9, 0.95), weight_decay=0.0)
+    # Whole-update CUDA graph capture requires AdamW's state updates to be capturable. This is
+    # canary-only; the live trainer keeps its established optimizer construction unchanged.
+    opt_adam = torch.optim.AdamW(
+        adam_p, lr=a.lr_adam, betas=(0.9, 0.95), weight_decay=0.0, capturable=True
+    )
     if "opt_muon" in ckpt:
         opt_muon.load_state_dict(ckpt["opt_muon"])
     if "opt_adam" in ckpt:
