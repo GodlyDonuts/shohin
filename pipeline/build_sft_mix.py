@@ -40,7 +40,8 @@ DEFAULT_INPUTS = [
 ]
 
 SOURCE_PRIORITY = {
-    # Execution/code first where applicable; then strongest/most deliberate teachers.
+    # Execution-verified/code first where applicable; then strongest teachers.
+    "reasoning_gym_trace": 98,
     "mbpp_train": 100,
     "mbpp_validation": 100,
     "code": 100,
