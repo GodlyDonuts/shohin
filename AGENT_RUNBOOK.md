@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-09 ~21:38 EDT (`683715` healthy past 111k; 110k preserved and locally verified). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-10 ~02:58 EDT (`683715` healthy past 116k; single-H100 BS32 successor staged). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -51,10 +51,10 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-09 ~21:38 EDT) |
+| Item | Value (as of 2026-07-10 ~02:58 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
-| **Extended pretrain job** | 1-GPU job `680992` was stopped at the 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, `681123`, `681308`, `681309`, and `681310` completed 2-H100 windows by wall-time. `681311` completed its 1-H100 fallback window by wall-time on evc32. Current active continuation is **`683715`**, running on **evc43** as a 3-day 1-H100 job (`NG=1 BS=16 ACC=16 CKPT=250`). **`684030`** is a validated, dependency-held two-H100 successor after `683715`, configured `NG=2 BS=32 ACC=4 CKPT=250` (same 524,288 tokens/update). |
+| **Extended pretrain job** | 1-GPU job `680992` was stopped at the earlier 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, `681123`, `681308`, `681309`, and `681310` completed 2-H100 windows by wall-time. Current active continuation is **`683715`**, running on **evc43** as a 3-day 1-H100 job (`NG=1 BS=16 ACC=16 CKPT=250`). Per current directive, dual-GPU successor `684030` was canceled. **`685084`** is the dependency-held one-H100 successor after `683715`, configured `BS=32 ACC=8 CKPT=250` (same 524,288 tokens/update, ~64 GB microbatch). |
 | Extended pretrain status | `681311` resumed from **`ckpt_0083750.pt -> step 83751`**, saved **`ckpt_0085500.pt`**, reached **step 85780**, then hit the expected wall-time limit at 19:30 EDT. **`683715` started early at 20:28 EDT**, resumed from **`ckpt_0085500.pt -> start step 85501`** (expected replay of unsaved 85501-85780 work), confirmed `world=1`, `bs=16`, `accum=16`, saved through **`ckpt_0111000.pt`**, and is healthy past **step 111050** with throughput ~148.10k tok/s and live H100 utilization ~99-100%. One isolated gnorm skip at 110259 recovered immediately; loss/gnorm otherwise remain in band. Canary `684029` proved the two-H100 BS32 hardware path and reached ~278k tok/s, but its requested numbered 100k source had aged out of retention and was not loaded; do not use its loss curve as a quality signal. Corrected replacement **`684058`** seeded preserved `best_step100000.pt` as `ckpt_0100000.pt`, confirmed `[resume] ... -> start step 100001`, `world=2 bs=32 accum=4`, and completed through step 100239 with no skips, OOM, or NCCL/DDP error. Its final reported ~264.9k tok/s includes compile warmup; together with `684029`'s steady ~278k hardware reading, this validates `684030`'s BS32/ACC4 shape. Whitelist verification of `683715` showed `STEPS=300000, LRMUON=0.005, LRADAM=1e-3, DSEED=777, CKPT=250, AUTO_REQUEUE=0`, with `NG/BS/ACC` falling back to correct 1-H100 defaults (`1/16/16`). `short`, `ucfit`, and `highgpu` still reject this account. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt` |
 | **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. Progress benchmark `681373` failed immediately because `TARGET_STEP=80000` resolved only to missing `ckpt_0080000.pt`; patched `train/jobs/eval_all.sbatch` to fall back to `best_step80000.pt`. Replacement job **`683820`** completed on `best_step80000.pt` (`RUN_TAG=pretrain_080000_progress`, `N=100`, `K=4`): GSM8K maj@4 **0/100**, GSM8K pass@1 **3/100**, MATH500 **2/100**, HumanEval **5/164**, MBPP **0/100**. Metrics were appended to `artifacts/eval_history/metrics.jsonl`. |
@@ -608,6 +608,14 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   `train/flagship_out/ckpt_0110000.pt` now matches the same md5. The numbered remote source rotated
   out during the long transfer, confirming the preserved `best_step` copy is required for custody.
   Next DR target: **120k**.
+- **2026-07-10 ~02:58** — **Single-H100 throughput directive applied.** User withdrew the pending
+  dual-GPU continuation in favor of maximizing the single H100. Canceled dependency-held two-H100
+  `684030` without touching healthy live job `683715`. Submitted **`685084`** as a dependency-held
+  single-H100 successor with `BS=32 ACC=8 CKPT=250`, preserving the exact 524,288-token update while
+  using the validated ~64 GB microbatch (single-H100 canary measured ~154.5k tok/s vs ~148k live).
+  Do not interrupt `683715` for this modest gain; it activates only at the natural handoff. At the
+  current 148k tok/s one H100 processes ~12.8B tokens/day, so any claim of 30T tokens in 10 days
+  necessarily assumes roughly 35M tok/s, i.e. a large multi-GPU fleet rather than this allocation.
 
 ---
 
