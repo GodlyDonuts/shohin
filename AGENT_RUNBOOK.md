@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-12 ~05:58 EDT (`685084` healthy past 169.1k; v4 mix/packing gates passed and replay-balanced pilot weights are frozen; raw-base board and adaptive direct probe remain queued). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-12 ~06:50 EDT (`685084` healthy past 170k; 170k is preserved and locally hash-verified; raw-base board remains running and adaptive probe is dependency-held). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -50,11 +50,11 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-12 ~05:58 EDT) |
+| Item | Value (as of 2026-07-12 ~06:50 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | `683715` completed cleanly. Current active continuation is **`685084`** on **evc22**: one H100, `BS=32 ACC=8 CKPT=250`, exact 524,288-token updates, and the proven default compile path. It resumed `ckpt_0141500.pt -> step 141501`; the prior dual-GPU successor remains canceled per user instruction. |
-| Extended pretrain status | **`685084` is healthy through step 169,140** at ~**154.2k tok/s**. Loss remains in the normal ~1.2-2.2 band and gnorm is normally 0.07-0.22; isolated spikes recover. Latest confirmed numbered checkpoint is `ckpt_0168750.pt`; a remote non-rotating `best_step168750.pt` was preserved (md5 `e58b6b07802782517c7709c1844cb4d1`) for analysis. Preserve/download 170k at the next milestone. Do not integrate CUDA graphs: the clean whole-update canary gained only ~1.8% while removing the flagship's established guard/observability path. |
+| Extended pretrain status | **`685084` is healthy through step 170,030** at ~**154.2k tok/s**. Loss remains in the normal ~1.2-2.4 band and gnorm is normally 0.07-0.31; isolated spikes recover. `ckpt_0170000.pt` is preserved on Newton as `best_step170000.pt`, and the full local DR copy `train/flagship_out/ckpt_0170000.pt` matches both at md5 **`7ad139b6b9b537a5a3e65978f8296419`**. Next local DR target is 180k. Do not integrate CUDA graphs: the clean whole-update canary gained only ~1.8% while removing the flagship's established guard/observability path. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, **DONE**; wrote baseline `train/sft_out/sft_ep3.pt`. Isolated v2 pilot `685708` completed one epoch from `best_step120000.pt` to `train/sft_v2_120k/sft_ep1.pt`. It is a narrow arithmetic-format ablation, not a promoted broad-reasoning recipe. |
 | **Eval board job** | Corrected CUDA-only v2 board **`686277` completed**: GSM8K maj@4 **6/100**, pass@1 **14/100**, MATH-500 **6/100**, HumanEval **6/164**, MBPP **0/100**. The v2 pilot is **rejected for promotion**. RG held-out `686278` is **90/800 = 11.25%** and in-training `686279` is **98/800 = 12.25%**: it learned a few routines that transfer but remains zero on most logic/transformation/cipher/geometry families. Raw-base `686314` is **invalid** after its first GSM8K metric because rotating `ckpt_0168000.pt` disappeared mid-board; `686315` is requeued from preserved `best_step168750.pt` with checkpoint pinning, and `686316` then runs a read-only adaptive interaction probe. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
@@ -68,8 +68,8 @@ Do not wait for permission to fix obvious data/training gaps.
 | **Direct capability audit** | `interactive_v1_686293.json` plus isolated **`686306`** directly tested raw 168k and v2 SFT. On 48 fresh generated tasks, raw scored **4/48 Q/A**, **4/48 plain instruction**, **0/48 CoT**, **5/48 one-shot**; v2 scored **7/48 Q/A**, then **4/48**, **5/48**, **4/48** respectively. This is a data/algorithm gap, not a prompt unlock. Read-only `686316` is queued after the corrected raw board to test whether raw 168.75k can self-correct or use supplied intermediate facts. Full evidence: `CAPABILITY_DIAGNOSIS.md` and `artifacts/eval_history/capability_matrix_v1_686306.json`. |
 | **Recurrence ablation** | Mame `n_loop=1` job `686301` and `n_loop=2` job `686302` both completed cleanly for 800 matched updates. `n_loop=2` is mechanically stable but not promoted: final logged loss was essentially tied (**2.4890 vs 2.4899**) while time rose **886s -> 1466s** and steady throughput fell **472.7k -> 286.0k tok/s**. No capability gate was run, so recurrence stays off the flagship. |
 | **Future handoff data stream** | **Fixed forward-only, never applied to active `685084`.** Prior checkpoints did not serialize `ShardLoader` state; every resumed job could recreate its stream from the same `DSEED=777`. `train.py` now records `data_stream_generation`/seed and resumes with a deterministic distinct stream generation. Tiny-train smoke verified generation **0 -> 1** and checkpoint metadata. This prevents repeated prefixes at the next natural handoff but does not claim exact cursor restoration for old chunks. |
-| Preserved checkpoints (cluster) | Includes prior milestones plus **`best_step166250.pt`** copied from numbered `ckpt_0166250.pt`; both md5 **`1b57c99aca966546d4d9aea7827d6ebd`**. |
-| **Local DR backup (Mac)** | Includes prior milestones plus **`train/flagship_out/ckpt_0166250.pt`**, full+optimizer, locally and remotely md5 **`1b57c99aca966546d4d9aea7827d6ebd`**. Next DR target: 170k. |
+| Preserved checkpoints (cluster) | Includes prior milestones plus **`best_step170000.pt`** copied from numbered `ckpt_0170000.pt`; both md5 **`7ad139b6b9b537a5a3e65978f8296419`**. |
+| **Local DR backup (Mac)** | Includes prior milestones plus **`train/flagship_out/ckpt_0170000.pt`**, full+optimizer, locally and remotely md5 **`7ad139b6b9b537a5a3e65978f8296419`**. Next DR target: 180k. |
 | **Large artifact transfer policy** | For big checkpoints/shards/uploads, prefer VPS-to-VPS or Newton-to-VPS staging when credentials/hosts are available; the VPS links have ~20 Gbit internet and should beat Mac↔Newton transfers. Still use `.part` files and md5/sha256 on both ends before trusting or deleting anything. |
 
 **Checkpoints preserved so far:** every 10k through 50k; 60k is model-only because the trainer writes
@@ -78,7 +78,7 @@ extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no st
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
 **Next actions in order:** (1) Watch `685084`: retain the normal ~154k tok/s band and expected 250-step
-checkpoints, preserve/download 170k, and never interrupt a recovered isolated gnorm skip. (2) Let
+checkpoints, preserve/download 180k, and never interrupt a recovered isolated gnorm skip. (2) Let
 `686279` finish; then read corrected raw board `686315` and adaptive direct transcript `686316`, but do
 not promote v2. (3) Keep frozen v4 immutable and do not start its one-epoch, source-balanced pilot until
 those baseline reads are recorded. (4) Continue CodeContests v2 and FineWeb-Edu; audit each final artifact
@@ -818,6 +818,12 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   confirms a few procedural routines transferred beyond exact examples, but the family distribution
   remains narrowly concentrated and corrected public math/code scores remain too low. Keep v2 rejected;
   use this result only as evidence that v4 needs broader verified coverage, not just more epochs.
+- **2026-07-12 ~06:50** — **170k DR milestone complete.** `685084` reached step 170,000 on evc22 at
+  ~154.2k tok/s with stable loss/gnorm, then continued cleanly. Copied numbered `ckpt_0170000.pt` to
+  Newton `best_step170000.pt`; both md5 **`7ad139b6b9b537a5a3e65978f8296419`**. Resumable SFTP local
+  transfer completed at 1,076,598,762 bytes; local `train/flagship_out/ckpt_0170000.pt` matches the same
+  md5 before its `.part` rename. The raw 168.75k board is still completing code execution and adaptive
+  probe `686316` remains dependency-held; no SFT candidate has started.
 
 ---
 
