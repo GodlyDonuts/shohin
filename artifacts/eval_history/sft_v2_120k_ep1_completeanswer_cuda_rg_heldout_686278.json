@@ -1,0 +1,203 @@
+{
+  "accuracy": 0.1125,
+  "checkpoint": "/lustre/fs1/home/sa305415/shohin/train/sft_v2_120k/sft_ep1.pt",
+  "correct": 90,
+  "data": "/lustre/fs1/home/sa305415/shohin/artifacts/rg_v2/rg_eval.jsonl",
+  "examples": [
+    {
+      "family": "advanced_geometry",
+      "gold": "34.64\u00b0",
+      "ok": false,
+      "pred": "to find the angle at b we need to find the angle between the line segment ab and the x-axis"
+    },
+    {
+      "family": "aiw",
+      "gold": "5",
+      "ok": false,
+      "pred": "3"
+    },
+    {
+      "family": "base_conversion",
+      "gold": "3250",
+      "ok": false,
+      "pred": "to convert the base-4 number 23232 to base-6 we need to divide the number by 6 and keep track of the remainders"
+    },
+    {
+      "family": "basic_arithmetic",
+      "gold": "164",
+      "ok": false,
+      "pred": "14498"
+    },
+    {
+      "family": "caesar_cipher",
+      "gold": "fritz napoleon smith awoke in very bad humor",
+      "ok": false,
+      "pred": "to decrypt the text we need to apply the caesar cipher algorithm"
+    }
+  ],
+  "families": {
+    "advanced_geometry": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "aiw": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "base_conversion": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "basic_arithmetic": {
+      "accuracy": 0.52,
+      "correct": 13,
+      "total": 25
+    },
+    "caesar_cipher": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "chain_sum": {
+      "accuracy": 0.8,
+      "correct": 20,
+      "total": 25
+    },
+    "count_bits": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "count_primes": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "countdown": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "decimal_arithmetic": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "decimal_chain_sum": {
+      "accuracy": 0.52,
+      "correct": 13,
+      "total": 25
+    },
+    "family_relationships": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "fraction_simplification": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "gcd": {
+      "accuracy": 0.28,
+      "correct": 7,
+      "total": 25
+    },
+    "group_anagrams": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "isomorphic_strings": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "knights_knaves": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "lcm": {
+      "accuracy": 0.28,
+      "correct": 7,
+      "total": 25
+    },
+    "letter_counting": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "number_filtering": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "number_sorting": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "polynomial_equations": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "power_function": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "prime_factorization": {
+      "accuracy": 0.04,
+      "correct": 1,
+      "total": 25
+    },
+    "products": {
+      "accuracy": 0.36,
+      "correct": 9,
+      "total": 25
+    },
+    "self_reference": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "simple_equations": {
+      "accuracy": 0.04,
+      "correct": 1,
+      "total": 25
+    },
+    "spell_backward": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "string_insertion": {
+      "accuracy": 0.76,
+      "correct": 19,
+      "total": 25
+    },
+    "syllogism": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "word_sorting": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    },
+    "zebra_puzzles": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 25
+    }
+  },
+  "n": 800,
+  "sample_seed": 1337,
+  "step": "sft_ep1"
+}

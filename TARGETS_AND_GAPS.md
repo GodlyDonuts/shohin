@@ -37,7 +37,11 @@ data.
 - V2 SFT: GSM8K majority@4 6/100, greedy GSM8K 14/100, MATH-500 6/100,
   HumanEval 6/164, MBPP 0/100; held-out procedural reasoning 90/800 = 11.25%.
 - V4 r3: GSM8K majority@4 5/100, greedy GSM8K 14/100, MATH-500 1/100,
-  HumanEval 2/164, MBPP 0/100. It is rejected for broad promotion.
+  HumanEval 2/164, MBPP 0/100. It is rejected for broad promotion, despite a
+  useful 209/800 (26.125%) procedural held-out result. That score is above V2's
+  90/800 on the same evaluator, but the two pilots start from different raw
+  checkpoints, so it is evidence to investigate rather than a clean data-only
+  attribution.
 
 External scores require matching prompts, decoding, samples, and scorer. A custom
 100-example board cannot support a claim to beat another model.

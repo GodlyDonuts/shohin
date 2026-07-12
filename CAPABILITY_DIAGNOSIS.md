@@ -84,6 +84,25 @@ The SFT model therefore has isolated wins (state tracking and a minimal code
 predicate) and partial correct intermediates, but no robust rule execution. This
 is direct evidence, not an inference from a loss curve.
 
+### V4 has procedural signal, but is not a broad promotion
+
+The corrected V4 r3 held-out procedural evaluator (`686337`) scored **209/800 =
+26.125%**, compared with the corrected V2 held-out evaluator's **90/800 =
+11.25%** on the same `rg_v2/rg_eval.jsonl` sample seed and complete-answer
+decoder. Its strongest gains are simple equations (1 -> 17 / 25), number sorting
+(0 -> 16), isomorphic strings (0 -> 16), AIW word problems (0 -> 14), and
+decimal-chain sums (13 -> 20). Basic arithmetic and LCM each changed by only one
+item downward.
+
+This is a real reason to retain V4 as a diagnostic/generator candidate, but not
+proof that the V4 data alone caused the gain: its base checkpoint is raw 168.75k,
+whereas V2 used raw 120k. More importantly, V4's public board is still weak
+(GSM8K majority@4 5/100, MATH-500 1/100, HumanEval 2/164, MBPP 0/100), so it is
+not a broad promotion candidate. Its adaptive direct interaction (`686338`) is
+also only 1/6 initial, 1/6 review, and 0/6 scaffolded. The remaining matched
+capability matrix will separate prompt-format effects from this local procedural
+transfer signal.
+
 ### Controlled prompt matrix at 168k
 
 The first twelve hand-authored prompts established the failure qualitatively. A

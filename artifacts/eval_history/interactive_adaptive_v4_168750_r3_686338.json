@@ -1,0 +1,112 @@
+{
+  "audit": "interactive_adaptive_v1",
+  "device": "cuda",
+  "cases": 6,
+  "model": {
+    "checkpoint": "/lustre/fs1/home/sa305415/shohin/train/sft_v4_168750_r3/sft_ep1.pt",
+    "step": "sft_ep1",
+    "summary": {
+      "initial": 1,
+      "review": 1,
+      "scaffold": 0
+    },
+    "rows": [
+      {
+        "id": "arithmetic_correction",
+        "kind": "number",
+        "question": "Compute 27 times 14, then add 9. Return only the final integer.",
+        "answer": "387",
+        "hint": "The product 27 times 14 is 378.",
+        "initial_prompt": "Question: Compute 27 times 14, then add 9. Return only the final integer.\nAnswer:",
+        "initial_response": " 27 * 14 = 368\nThe answer is 368.",
+        "initial_correct": false,
+        "review_prompt": "Question: Compute 27 times 14, then add 9. Return only the final integer.\nAnswer:  27 * 14 = 368\nThe answer is 368.\n\nQuestion: Check the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "review_response": "  27 / 14 = 2 with a remainder of 3.\n27 / 14 = 2 with a remainder of 3.\n\nThe answer is 2.",
+        "review_correct": false,
+        "scaffold_prompt": "Question: Compute 27 times 14, then add 9. Return only the final integer.\nVerified intermediate fact: The product 27 times 14 is 378.\nUse that fact and return only the final answer.\nAnswer:",
+        "scaffold_response": " 27 times 14 = 368 ; 368 + 9 = 377\nThe answer is 377.",
+        "scaffold_correct": false
+      },
+      {
+        "id": "base_conversion_correction",
+        "kind": "number",
+        "question": "What is the base-10 value of the base-7 number 356? Return only the integer.",
+        "answer": "188",
+        "hint": "Use place values 7 squared, 7, and 1.",
+        "initial_prompt": "Question: What is the base-10 value of the base-7 number 356? Return only the integer.\nAnswer:",
+        "initial_response": " 356_7 = 227_10 ; 227_10 = 227_10\nThe answer is 227.",
+        "initial_correct": false,
+        "review_prompt": "Question: What is the base-10 value of the base-7 number 356? Return only the integer.\nAnswer:  356_7 = 227_10 ; 227_10 = 227_10\nThe answer is 227.\n\nQuestion: Check the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "review_response": "  1. Start with the base-10 number 356.\n2. Convert it to base-7: 356_7 = 194_10.\n3. Check: 194_10 = 227_10 \u2713\n\nThe answer is 227.",
+        "review_correct": false,
+        "scaffold_prompt": "Question: What is the base-10 value of the base-7 number 356? Return only the integer.\nVerified intermediate fact: Use place values 7 squared, 7, and 1.\nUse that fact and return only the final answer.\nAnswer:",
+        "scaffold_response": " 356_7 = 296_10 ; 296_10 = 2(356)_10\nThe answer is 2(356)_10.",
+        "scaffold_correct": false
+      },
+      {
+        "id": "state_update_correction",
+        "kind": "number",
+        "question": "Start with n = 11. Add 8, multiply by 3, then subtract 7. What is n? Return only the integer.",
+        "answer": "50",
+        "hint": "After the addition, n is 19.",
+        "initial_prompt": "Question: Start with n = 11. Add 8, multiply by 3, then subtract 7. What is n? Return only the integer.\nAnswer:",
+        "initial_response": " Start with n = 11.\n\nAdd 8: 11 + 8 = 19\nMultiply by 3: 19 \u00d7 3 = 57\nSubtract 7: 57 \u2212 7 = 50\n\nThe answer is 11.",
+        "initial_correct": false,
+        "review_prompt": "Question: Start with n = 11. Add 8, multiply by 3, then subtract 7. What is n? Return only the integer.\nAnswer:  Start with n = 11.\n\nAdd 8: 11 + 8 = 19\nMultiply by 3: 19 \u00d7 3 = 57\nSubtract 7: 57 \u2212 7 = 50\n\nThe answer is 11.\n\nQuestion: Check the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "review_response": " 1. Start with n = 11.\n\nAdd 8: 11 + 8 = 19\nMultiply by 3: 19 \u00d7 3 = 57\nSubtract 7: 57 \u2212 7 = 50\n\n2. Correct: 50 is the final answer.\n\nThe answer is 11.",
+        "review_correct": false,
+        "scaffold_prompt": "Question: Start with n = 11. Add 8, multiply by 3, then subtract 7. What is n? Return only the integer.\nVerified intermediate fact: After the addition, n is 19.\nUse that fact and return only the final answer.\nAnswer:",
+        "scaffold_response": " Start with n = 11. Add 8, multiply by 3, and then subtract 7:\n\n11 + 8 \u00d7 3 = 11 + 24 = 35\n35 \u00d7 3 = 105\n\nSo n = 11.\n\nThe answer is 11.",
+        "scaffold_correct": false
+      },
+      {
+        "id": "set_transform_correction",
+        "kind": "list",
+        "question": "Sort [8, 3, 8, 1, 6, 3] ascending and remove duplicates. Return only the list.",
+        "answer": "[1,3,6,8]",
+        "hint": "The unique values are 8, 3, 1, and 6.",
+        "initial_prompt": "Question: Sort [8, 3, 8, 1, 6, 3] ascending and remove duplicates. Return only the list.\nAnswer:",
+        "initial_response": " Apply sort: [8, 3, 1, 3, 6, 8]\nThe answer is [8, 3, 1, 3, 6, 8].",
+        "initial_correct": false,
+        "review_prompt": "Question: Sort [8, 3, 8, 1, 6, 3] ascending and remove duplicates. Return only the list.\nAnswer:  Apply sort: [8, 3, 1, 3, 6, 8]\nThe answer is [8, 3, 1, 3, 6, 8].\n\nQuestion: Check the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "review_response": " 1. Start with the smallest number: 8.\n2. Check if 8 is smaller than 3: 3 < 8, so 3 is smaller than 8.\n3. Check if 3 is smaller than 1: 1 < 3, so 1 is smaller than 3.\n4. Check if 1 is smaller than 6: 6 < 1, so 1 is smaller than 6.",
+        "review_correct": false,
+        "scaffold_prompt": "Question: Sort [8, 3, 8, 1, 6, 3] ascending and remove duplicates. Return only the list.\nVerified intermediate fact: The unique values are 8, 3, 1, and 6.\nUse that fact and return only the final answer.\nAnswer:",
+        "scaffold_response": " Apply the insertion automaton left-to-right: [8, 3, 1, 6, 3]\nThe answer is [8, 3, 1, 6, 3].",
+        "scaffold_correct": false
+      },
+      {
+        "id": "string_transform_correction",
+        "kind": "string",
+        "question": "Insert 'pq' after the first 4 characters of 'lantern'. Return only the resulting string.",
+        "answer": "lantpqern",
+        "hint": "The first four characters are 'lant'.",
+        "initial_prompt": "Question: Insert 'pq' after the first 4 characters of 'lantern'. Return only the resulting string.\nAnswer:",
+        "initial_response": " Apply insert after the first 4 characters of 'lantern': 'pqnirp'\nThe answer is 'pqnirp'.",
+        "initial_correct": false,
+        "review_prompt": "Question: Insert 'pq' after the first 4 characters of 'lantern'. Return only the resulting string.\nAnswer:  Apply insert after the first 4 characters of 'lantern': 'pqnirp'\nThe answer is 'pqnirp'.\n\nQuestion: Check the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "review_response": " 1. Start with the initial answer:\n\\[ 1 \\]\n\n2. Add 1 to the result:\n\\[ 1 + 1 = 2 \\]\n\n3. Add 1 to the result:\n\\[ 2 + 1 = 3 \\]\n\n4. Add 1 to the result:\n\\[ 3 + 1 = 4 \\]\n\n5. Add 1 to",
+        "review_correct": false,
+        "scaffold_prompt": "Question: Insert 'pq' after the first 4 characters of 'lantern'. Return only the resulting string.\nVerified intermediate fact: The first four characters are 'lant'.\nUse that fact and return only the final answer.\nAnswer:",
+        "scaffold_response": " Apply the insertion automaton left-to-right: 'pq' becomes 'lant'. Then, the strings are ['lant', 'lantern'].\nThe answer is ['lant', 'lantern'].",
+        "scaffold_correct": false
+      },
+      {
+        "id": "logic_correction",
+        "kind": "yesno",
+        "question": "Every mip is a zor. No zor is a tal. Can any mip be a tal? Answer yes or no only.",
+        "answer": "no",
+        "hint": "Any mip must be a zor, and no zor is a tal.",
+        "initial_prompt": "Question: Every mip is a zor. No zor is a tal. Can any mip be a tal? Answer yes or no only.\nAnswer:",
+        "initial_response": " No mip is a zor. A zor is a noun phrase meaning \"a person with a trait.\" Therefore, every mip is a zor.\n\nThe answer is B.",
+        "initial_correct": true,
+        "review_prompt": "Question: Every mip is a zor. No zor is a tal. Can any mip be a tal? Answer yes or no only.\nAnswer:  No mip is a zor. A zor is a noun phrase meaning \"a person with a trait.\" Therefore, every mip is a zor.\n\nThe answer is B.\n\nQuestion: Check the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "review_response": " Step-by-step:\n- The question asks for a single answer that is independent of the others.\n- A) \"No mip is a zor\" \u2014 not a single-answer answer.\n- B) \"No zor is a tal\" \u2014 not a single-answer answer.\n- C) \"No mip is a zor\" \u2014 not a single-answer answer.\n- D) \"No zor is a tal\"",
+        "review_correct": true,
+        "scaffold_prompt": "Question: Every mip is a zor. No zor is a tal. Can any mip be a tal? Answer yes or no only.\nVerified intermediate fact: Any mip must be a zor, and no zor is a tal.\nUse that fact and return only the final answer.\nAnswer:",
+        "scaffold_response": " The problem asks for the number of mip-zor pairs that are true of every mip.\n\nA zor is a zor-tale, meaning it is not a true mip.\n\nA tal is a true mip.\n\nSo, the answer is:\n",
+        "scaffold_correct": false
+      }
+    ]
+  }
+}
