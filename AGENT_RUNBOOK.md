@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-12 ~07:20 EDT (`685084` remains healthy past 170k; corrected pinned raw board and adaptive interaction baseline completed; isolated v4 SFT pilot `686324` is running on evc23 with audited source weights). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-12 ~07:35 EDT (`685084` remains healthy past 170k; v4 code-completion mask boundary was repaired and the clean r3 pilot `686326` is training on evc23). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -55,7 +55,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | `683715` completed cleanly. Current active continuation is **`685084`** on **evc22**: one H100, `BS=32 ACC=8 CKPT=250`, exact 524,288-token updates, and the proven default compile path. It resumed `ckpt_0141500.pt -> step 141501`; the prior dual-GPU successor remains canceled per user instruction. |
 | Extended pretrain status | **`685084` is healthy through step 170,030** at ~**154.2k tok/s**. Loss remains in the normal ~1.2-2.4 band and gnorm is normally 0.07-0.31; isolated spikes recover. `ckpt_0170000.pt` is preserved on Newton as `best_step170000.pt`, and the full local DR copy `train/flagship_out/ckpt_0170000.pt` matches both at md5 **`7ad139b6b9b537a5a3e65978f8296419`**. Next local DR target is 180k. Do not integrate CUDA graphs: the clean whole-update canary gained only ~1.8% while removing the flagship's established guard/observability path. |
-| **SFT feedback job** | `681000`, name `shohin-sft`, **DONE**; wrote baseline `train/sft_out/sft_ep3.pt`. Isolated v2 pilot `685708` completed one epoch from `best_step120000.pt` to `train/sft_v2_120k/sft_ep1.pt`. It is a narrow arithmetic-format ablation, not a promoted broad-reasoning recipe. The first v4 submission `686323` was canceled before its first step after its log exposed stale 40/35/15/10 weights; it is retained only as an invalid attempt. Corrected v4 pilot **`686324`** runs on evc23 from `best_step168750.pt` to fresh `train/sft_v4_168750_r2/` with audited 40/47/8/5 weights. |
+| **SFT feedback job** | `681000`, name `shohin-sft`, **DONE**; wrote baseline `train/sft_out/sft_ep3.pt`. Isolated v2 pilot `685708` completed one epoch from `best_step120000.pt` to `train/sft_v2_120k/sft_ep1.pt`. It is a narrow arithmetic-format ablation, not a promoted broad-reasoning recipe. V4 `686323` was canceled before its first step after stale 40/35/15/10 weights; v4 `686324` was canceled before any artifact after a code-boundary audit found 461/3,542 legacy BPE prompt-prefix mismatches. Both are invalid and preserved. Corrected v4 pilot **`686326`** now trains on evc23 from `best_step168750.pt` to fresh `train/sft_v4_168750_r3/` with audited 40/47/8/5 weights and inference-aligned prompt/completion token construction. |
 | **Eval board job** | Corrected CUDA-only v2 board **`686277` completed**: GSM8K maj@4 **6/100**, pass@1 **14/100**, MATH-500 **6/100**, HumanEval **6/164**, MBPP **0/100**. The v2 pilot is **rejected for promotion**. RG held-out `686278` is **90/800 = 11.25%** and in-training `686279` is **98/800 = 12.25%**: it learned a few routines that transfer but remains zero on most logic/transformation/cipher/geometry families. The corrected raw-base board **`686315`** pinned `best_step168750.pt` and completed: GSM8K maj@4 **5/100**, pass@1 **2/100**, MATH-500 **2/100**, HumanEval **7/164**, MBPP **0/100**. `686316` direct adaptive interaction was **1/6 initial, 1/6 after explicit self-review, 1/6 with a verified intermediate fact**; only the simple syllogism was correct. Both artifacts are hash-verified locally. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
 | 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
@@ -79,7 +79,7 @@ extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no st
 
 **Next actions in order:** (1) Watch `685084`: retain the normal ~154k tok/s band and expected 250-step
 checkpoints, preserve/download 180k, and never interrupt a recovered isolated gnorm skip. (2) Monitor
-isolated v4 pilot `686324` on evc23; it must load `best_step168750.pt`, use frozen 40/47/8/5 source
+isolated v4 pilot `686326` on evc23; it must load `best_step168750.pt`, use frozen 40/47/8/5 source
 weights, and write only to `train/sft_v4_168750/`. (3) When it succeeds, queue its corrected public board,
 balanced held-out RG, and the same adaptive interaction suite serially. Promote it only if it improves the
 relevant axes without a material regression. (4) Keep frozen v4 immutable; the separately audited
@@ -842,6 +842,16 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   Synced the local audited job script to Newton, hash-verified it, confirmed remote
   `WEIGHTS="math=0.40 procedural=0.47 code=0.08 teacher=0.05"`, and launched replacement **`686324`**
   on evc23 to a fresh `train/sft_v4_168750_r2/` directory. `685084` on evc22 was never touched.
+- **2026-07-12 ~07:35** — **V4 code-completion boundary audit found and repaired a real label-contract bug.**
+  Before accepting `686324`, an exact tokenizer audit found **461/3,542** raw-completion code rows where
+  separately tokenized prompt IDs were not a prefix of `tokenize(prompt + completion)` due BPE merges at
+  CRLF/indent boundaries. That misplaces completion-only labels relative to inference. Canceled `686324`
+  before it wrote an artifact and preserved its directory as
+  `sft_v4_168750_r2.invalid_686324_maskboundary`. `train/sft.py` now independently tokenizes the prompt
+  and completion then concatenates IDs; `test_sft_prompt_boundaries.py` covers both normal Q/A and CRLF
+  Python headers. Local and Newton tests passed under a one-thread BLAS login-node setting. Clean r3
+  **`686326`** is running on evc23 to `train/sft_v4_168750_r3/`, initial packing/weighted sampling is
+  correct (math 25,275 / procedural 29,435 / code 5,010 / teacher 3,192). `685084` remains untouched.
 
 ---
 

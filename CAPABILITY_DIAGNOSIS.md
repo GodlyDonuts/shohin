@@ -202,6 +202,18 @@ but it is additionally penalized by training and evaluation on different formats
 Future code SFT must include a verified raw-completion form matching the evaluation
 contract, alongside instruction-form code examples.
 
+The first v4 code-completion pilot uncovered a second, more subtle contract bug
+before any candidate artifact was accepted. For **461 of 3,542** completion-form
+code rows, the tokenizer's IDs for the separately encoded prompt were not a
+prefix of IDs for `prompt + completion`, most often at CRLF plus indentation.
+The old packer computed a prompt-length mask from the former but trained the
+latter, shifting labels at exactly the code boundary that matters. The pilot was
+canceled and preserved as invalid. `train/sft.py` now independently encodes the
+prompt and continuation and concatenates those IDs, which matches autoregressive
+inference exactly; `test_sft_prompt_boundaries.py` covers a normal Q/A boundary
+and the CRLF Python case. The clean v4 rerun starts from the same raw checkpoint
+only after that regression test passes locally and on Newton.
+
 ## Latent reasoning / context compaction status
 
 There is no trained latent-reasoning or self-compaction capability in the current

@@ -17,6 +17,22 @@ from model import GPT, GPTConfig
 from muon import Muon, split_params
 
 
+def encode_supervised_example(tok, prompt, continuation, eos_id):
+    """Return an inference-aligned token sequence and completion-only mask.
+
+    Tokenizing ``prompt + continuation`` as one string can merge BPE pieces
+    across the boundary. That makes the separately tokenized inference prompt
+    differ from the supervised prefix, especially for CRLF-terminated Python
+    function headers. Encode each side independently so the first generated
+    token is exactly the first supervised completion token.
+    """
+    prompt_ids = tok.encode(prompt).ids
+    completion_ids = tok.encode(continuation).ids
+    token_ids = prompt_ids + completion_ids + [eos_id]
+    completion_mask = [0] * len(prompt_ids) + [1] * (len(completion_ids) + 1)
+    return prompt_ids, token_ids, completion_mask
+
+
 def build_packed(data_paths, tok, seq_len, q_fields, r_fields, eos_id, max_examples=0,
                  group_field=None, prompt_override_field=None):
     """Tokenize (question, response) rows -> packed sequences with a completion-only loss mask.
@@ -42,13 +58,9 @@ def build_packed(data_paths, tok, seq_len, q_fields, r_fields, eos_id, max_examp
             # trimmed response behavior.
             answer = str(a).rstrip() if prompt_override else str(a).strip()
             sep = "" if prompt_override or prompt.endswith((" ", "\n", "\t")) else " "
-            full = prompt + sep + answer
-            pids = tok.encode(prompt).ids
-            fids = tok.encode(full).ids
-            if len(fids) >= seq_len:            # skip pathologically long examples
+            pids, fids, mask = encode_supervised_example(tok, prompt, sep + answer, eos_id)
+            if len(fids) > seq_len:             # skip pathologically long examples
                 continue
-            fids = fids + [eos_id]
-            mask = [0] * len(pids) + [1] * (len(fids) - len(pids))  # train only on the answer + eos
             buf_x.extend(fids)
             buf_m.extend(mask)
             n_ex += 1
