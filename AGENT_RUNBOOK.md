@@ -1622,6 +1622,12 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   `kept=0`, `wrong=0`, and `err=1`; its scratch output is empty. It did not touch a live writer or any
   frozen mix. Keep GLM, Nemotron, and HY3 bulk paused rather than spending requests in an error loop; GLM
   remains the first teacher to re-enable only after a later bounded probe has a real verified keep.
+- **2026-07-12** — **Tokenizer coverage audit found no fallback defect.** Read-only held-out encodes with
+  `shohin-tok-32k.json` found **0** `<unk>` or byte-fallback pieces: WikiText-103 test is 4.12 characters
+  per token / 1.30 tokens per word, CodeContests test prompt+Python is 2.87 / 2.08, MATH-500 prompts are
+  2.67 / 2.33, and GSM8K prompts are 3.78 / 1.37. The denser math/code segmentation is expected from
+  notation and punctuation; this rules out a gross coverage failure but does **not** prove the frozen 32k
+  tokenizer is never a capability constraint. No tokenizer change is justified mid-pretrain.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
