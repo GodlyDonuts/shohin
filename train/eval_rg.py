@@ -97,6 +97,8 @@ def main():
         correct_by_family[family] += ok
         if i < 5:
             examples.append({"family": family, "gold": gold, "pred": pred, "ok": ok})
+        if (i + 1) % 50 == 0 or i + 1 == len(rows):
+            print(f"[rg-eval] {i + 1}/{len(rows)} correct={correct}", flush=True)
 
     families = {
         family: {"correct": correct_by_family[family], "total": total,
