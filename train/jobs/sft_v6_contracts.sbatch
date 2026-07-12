@@ -12,10 +12,8 @@ set -euo pipefail
 
 BASE=/lustre/fs1/home/sa305415/shohin
 PY=$BASE/miniforge3/bin/python
-DATA=(
-  "$BASE/artifacts/sft/sft_mix_reasoning_v4.jsonl"
-  "$BASE/artifacts/sft/primitives_v2_contract_train.jsonl"
-)
+CONTRACT_DATA=${CONTRACT_DATA:-$BASE/artifacts/sft/primitives_v2_contract_train.jsonl}
+DATA=("$BASE/artifacts/sft/sft_mix_reasoning_v4.jsonl" "$CONTRACT_DATA")
 INIT=${INIT:?set INIT to a preserved raw flagship checkpoint}
 OUT=${OUT:?set OUT to a fresh isolated directory}
 EPOCHS=${EPOCHS:-1}

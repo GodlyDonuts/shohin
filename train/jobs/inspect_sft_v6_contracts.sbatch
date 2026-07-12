@@ -11,10 +11,8 @@ set -euo pipefail
 
 BASE=/lustre/fs1/home/sa305415/shohin
 PY=$BASE/miniforge3/bin/python
-DATA=(
-  "$BASE/artifacts/sft/sft_mix_reasoning_v4.jsonl"
-  "$BASE/artifacts/sft/primitives_v2_contract_train.jsonl"
-)
+CONTRACT_DATA=${CONTRACT_DATA:-$BASE/artifacts/sft/primitives_v2_contract_train.jsonl}
+DATA=("$BASE/artifacts/sft/sft_mix_reasoning_v4.jsonl" "$CONTRACT_DATA")
 OUT=${OUT:-$BASE/artifacts/sft/sft_mix_reasoning_v6_contracts.packing.json}
 WEIGHTS="math=0.45 procedural=0.15 code=0.05 teacher=0.05 contracts=0.30"
 

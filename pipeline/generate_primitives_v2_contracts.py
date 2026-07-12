@@ -77,13 +77,13 @@ def render(source, contract):
             f"Question: {base}\nPrevious answer: {wrong_answer(answer, source['family'])}\n\n"
             "Independently check the previous answer. If it is wrong, correct it. "
             "Return only the final answer.\nAnswer:",
-            completion(answer),
+            answer,
         )
     if contract == "scaffold":
         return (
             f"Question: {base}\nVerified intermediate fact: {state}\n"
             "Use that fact. Return only the final answer.\nAnswer:",
-            completion(answer),
+            answer,
         )
     if contract == "compact":
         return (
@@ -95,7 +95,7 @@ def render(source, contract):
         return (
             f"Question: {base}\nThe previous compact state was:\nstate={state}\n\n"
             "Use that state to solve the original question. Return only the final answer.\nAnswer:",
-            completion(answer),
+            answer,
         )
     raise ValueError(f"unknown contract {contract}")
 

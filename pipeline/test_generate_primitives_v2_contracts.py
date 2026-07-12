@@ -49,6 +49,8 @@ with tempfile.TemporaryDirectory() as tmp:
         assert row["response"].strip()
         if row["contract"] == "compact":
             assert row["response"].startswith("state=")
+        if row["contract"] in {"direct", "review", "scaffold", "reuse"}:
+            assert row["response"] == row["answer"]
         if row["contract"] == "reuse":
             assert "previous compact state" in row["completion_prompt"].lower()
 print("primitive v2 contract generator checks: passed")
