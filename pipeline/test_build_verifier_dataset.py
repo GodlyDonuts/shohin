@@ -33,6 +33,20 @@ def main():
         assert len(built) == 4
         assert all("q" not in row["response"] for row in built)
 
+        extra = root / "tail.jsonl"
+        extra.write_text("".join(json.dumps(row) + "\n" for row in [
+            {"question": "q3", "candidate": "8", "correct": True},
+            {"question": "q3", "candidate": "9", "correct": False},
+        ]))
+        combined = root / "combined.jsonl"
+        subprocess.run([
+            sys.executable, str(ROOT / "build_verifier_dataset.py"), "--input", str(source), str(extra),
+            "--out", str(combined), "--negative-ratio", "1",
+        ], check=True)
+        combined_rows = [json.loads(line) for line in combined.read_text().splitlines()]
+        assert len(combined_rows) == 6
+        assert sum(row["response"] == "<|correct|>" for row in combined_rows) == 3
+
         skewed = root / "skewed.jsonl"
         skewed.write_text("".join(
             json.dumps({"question": "q", "candidate": f"yes-{index}", "correct": True}) + "\n"

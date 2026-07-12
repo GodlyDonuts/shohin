@@ -17,6 +17,7 @@ CKPT=${CKPT:?set CKPT}
 DATA=${DATA:?set DATA}
 OUT=${OUT:?set OUT}
 N=${N:-2000}
+SKIP=${SKIP:-0}
 K=${K:-8}
 TAG=${TAG:-verifier-rollouts}
 ANSWER_MODE=${ANSWER_MODE:-gsm8k}
@@ -44,7 +45,8 @@ PY
     continue
   fi
   if "$PY" generate_verifier_rollouts.py --ckpt "$CKPT" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
-      --data "$DATA" --out "$OUT" --n "$N" --k "$K" --answer-mode "$ANSWER_MODE"; then
+      --data "$DATA" --out "$OUT" --n "$N" --skip "$SKIP" --k "$K" \
+      --answer-mode "$ANSWER_MODE"; then
     break
   fi
   echo "[verifier-rollouts] generation attempt $attempt failed; retrying" >&2

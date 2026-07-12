@@ -36,7 +36,7 @@ def normalized_prompt_key(question, candidate):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--input", required=True)
+    ap.add_argument("--input", nargs="+", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--negative-ratio", type=float, default=4.0)
     ap.add_argument("--balance-classes", action="store_true",
@@ -48,38 +48,39 @@ def main():
 
     positives, negatives, seen, normalized_seen = [], [], set(), set()
     malformed = missing = duplicates = 0
-    with open(args.input, errors="replace") as src:
-        for line in src:
-            if not line.strip():
-                continue
-            try:
-                row = json.loads(line)
-            except json.JSONDecodeError:
-                malformed += 1
-                continue
-            question = str(row.get("question") or "").strip()
-            candidate = str(row.get("candidate") or "").strip()
-            if not question or not candidate or not isinstance(row.get("correct"), bool):
-                missing += 1
-                continue
-            row_key = key(question, candidate)
-            if row_key in seen:
-                duplicates += 1
-                continue
-            seen.add(row_key)
-            normalized_key = normalized_prompt_key(question, candidate)
-            if normalized_key in normalized_seen:
-                duplicates += 1
-                continue
-            normalized_seen.add(normalized_key)
-            target = CORRECT if row["correct"] else INCORRECT
-            clean = {
-                "question": verifier_question(question, candidate),
-                "response": target,
-                "source": "student_rollout_verifier",
-                "training_group": "verifier_correct" if row["correct"] else "verifier_incorrect",
-            }
-            (positives if row["correct"] else negatives).append(clean)
+    for input_path in args.input:
+        with open(input_path, errors="replace") as src:
+            for line in src:
+                if not line.strip():
+                    continue
+                try:
+                    row = json.loads(line)
+                except json.JSONDecodeError:
+                    malformed += 1
+                    continue
+                question = str(row.get("question") or "").strip()
+                candidate = str(row.get("candidate") or "").strip()
+                if not question or not candidate or not isinstance(row.get("correct"), bool):
+                    missing += 1
+                    continue
+                row_key = key(question, candidate)
+                if row_key in seen:
+                    duplicates += 1
+                    continue
+                seen.add(row_key)
+                normalized_key = normalized_prompt_key(question, candidate)
+                if normalized_key in normalized_seen:
+                    duplicates += 1
+                    continue
+                normalized_seen.add(normalized_key)
+                target = CORRECT if row["correct"] else INCORRECT
+                clean = {
+                    "question": verifier_question(question, candidate),
+                    "response": target,
+                    "source": "student_rollout_verifier",
+                    "training_group": "verifier_correct" if row["correct"] else "verifier_incorrect",
+                }
+                (positives if row["correct"] else negatives).append(clean)
 
     rng = random.Random(args.seed)
     rng.shuffle(positives)

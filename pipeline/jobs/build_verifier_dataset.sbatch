@@ -10,11 +10,16 @@ set -euo pipefail
 
 BASE=/lustre/fs1/home/sa305415/shohin
 PY=$BASE/miniforge3/bin/python
-IN=${IN:?set IN to train-only rollout JSONL}
+IN=${IN:?set IN to one or more space-separated train-only rollout JSONLs}
 OUT=${OUT:?set OUT to a fresh verifier JSONL}
 BALANCE_CLASSES=${BALANCE_CLASSES:-0}
 cd "$BASE"
-ARGS=(--input "$IN" --out "$OUT")
+read -r -a IN_PATHS <<< "$IN"
+[ "${#IN_PATHS[@]}" -gt 0 ] || { echo "[verifier-data] no input paths" >&2; exit 2; }
+for path in "${IN_PATHS[@]}"; do
+  [ -s "$path" ] || { echo "[verifier-data] input missing: $path" >&2; exit 2; }
+done
+ARGS=(--input "${IN_PATHS[@]}" --out "$OUT")
 [ "$BALANCE_CLASSES" = 1 ] && ARGS+=(--balance-classes)
 "$PY" pipeline/build_verifier_dataset.py "${ARGS[@]}"
 REPORT="${OUT%.jsonl}.quality.json"

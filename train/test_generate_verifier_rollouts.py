@@ -16,9 +16,11 @@ def main():
         )
         gsm = read_rows(path, 0, "gsm8k")
         rg = read_rows(path, 0, "rg")
+        tail = read_rows(path, 1, "rg", skip=1)
         assert gsm == [{"question": "What is 2 plus 2?", "gold": "4", "family": None}]
         assert rg[0]["gold"] == "work #### 4"
         assert rg[1] == {"question": "State the value", "gold": "blue", "family": "string"}
+        assert tail == [{"question": "State the value", "gold": "blue", "family": "string"}]
     print("verifier rollout answer-mode checks: passed")
 
 

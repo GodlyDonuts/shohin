@@ -19,8 +19,9 @@ from eval_suite import extract_gsm8k, generate_batch, gold_gsm8k
 from model import GPT, GPTConfig
 
 
-def read_rows(path, limit, answer_mode):
+def read_rows(path, limit, answer_mode, skip=0):
     rows = []
+    skipped = 0
     with open(path, errors="replace") as src:
         for line in src:
             if not line.strip():
@@ -32,6 +33,9 @@ def read_rows(path, limit, answer_mode):
             else:
                 gold = normalized_rg(row.get("answer"))
             if question and gold is not None:
+                if skipped < skip:
+                    skipped += 1
+                    continue
                 rows.append({"question": question, "gold": gold, "family": row.get("family")})
             if limit and len(rows) >= limit:
                 break
@@ -52,6 +56,8 @@ def main():
     ap.add_argument("--data", required=True, help="GSM8K-style labeled JSONL")
     ap.add_argument("--out", required=True)
     ap.add_argument("--n", type=int, default=0, help="0 means every valid row")
+    ap.add_argument("--skip", type=int, default=0,
+                    help="skip this many valid source rows before taking --n")
     ap.add_argument("--k", type=int, default=8)
     ap.add_argument("--temp", type=float, default=0.8)
     ap.add_argument("--max-new", type=int, default=256)
@@ -69,7 +75,9 @@ def main():
     torch.manual_seed(args.seed)
     if device == "cuda":
         torch.cuda.manual_seed_all(args.seed)
-    rows = read_rows(args.data, args.n, args.answer_mode)
+    if args.skip < 0:
+        raise SystemExit("skip must be non-negative")
+    rows = read_rows(args.data, args.n, args.answer_mode, args.skip)
     if not rows:
         raise SystemExit("no valid GSM8K-style rows found")
     tokenizer = Tokenizer.from_file(args.tokenizer)
@@ -105,7 +113,7 @@ def main():
                 print(f"[verifier-rollout] {index + 1}/{len(rows)} candidates={total} correct={correct}", flush=True)
     os.replace(tmp, out)
     print(json.dumps({
-        "out": str(out), "checkpoint": args.ckpt, "rows": len(rows),
+        "out": str(out), "checkpoint": args.ckpt, "rows": len(rows), "skip": args.skip,
         "k": args.k, "candidates": total, "correct": correct,
         "accuracy": correct / max(total, 1), "step": ckpt.get("step"),
     }, sort_keys=True))
