@@ -163,11 +163,16 @@ def main():
     ap.add_argument("--k", type=int, default=1, help="self-consistency samples (1 = greedy pass@1)")
     ap.add_argument("--temp", type=float, default=0.8)
     ap.add_argument("--max-new", type=int, default=256)
+    ap.add_argument("--seed", type=int, default=20260712,
+                    help="RNG seed for reproducible sampled self-consistency runs")
     a = ap.parse_args()
 
     device = ("cuda" if torch.cuda.is_available()
               else "mps" if torch.backends.mps.is_available() else "cpu")
-    print(f"[eval] device={device} task={a.task} k={a.k} temp={a.temp}", file=sys.stderr)
+    torch.manual_seed(a.seed)
+    if device == "cuda":
+        torch.cuda.manual_seed_all(a.seed)
+    print(f"[eval] device={device} task={a.task} k={a.k} temp={a.temp} seed={a.seed}", file=sys.stderr)
     ck = torch.load(a.ckpt, map_location="cpu")
     model = GPT(GPTConfig(**ck["cfg"])).to(device).eval()
     model.load_state_dict(ck["model"])

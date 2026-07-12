@@ -34,6 +34,7 @@ CKPT_BASE=$(basename "$CKPT" .pt)
 RUN_TAG=${RUN_TAG:-$CKPT_BASE}
 RUN_LOG=$HIST/${RUN_TAG}_${SLURM_JOB_ID:-local}.log
 SUMMARY=$HIST/metrics.jsonl
+EVAL_SEED=${EVAL_SEED:-20260712}
 PIN_DIR=$BASE/train/eval_pins
 PINNED=$PIN_DIR/${RUN_TAG}_${SLURM_JOB_ID:-local}.pt
 mkdir -p "$PIN_DIR"
@@ -63,11 +64,11 @@ then
   exit 75
 fi
 echo "===== SHOHIN BENCHMARK BOARD  ckpt=$(basename $CKPT) ====="
-$PY eval_suite.py --ckpt $CKPT --tokenizer $TOK --task gsm8k    --data $E/gsm8k.jsonl    --n ${N:-200} --k ${K:-8} --temp 0.8 --max-new ${MAX_NEW:-256}
-$PY eval_suite.py --ckpt $CKPT --tokenizer $TOK --task gsm8k    --data $E/gsm8k.jsonl    --n ${N:-200} --k 1 --max-new ${MAX_NEW:-256}
-$PY eval_suite.py --ckpt $CKPT --tokenizer $TOK --task math500  --data $E/math500.jsonl  --n ${N:-200} --k 1 --max-new ${MAX_NEW:-256}
-$PY eval_code.py  --ckpt $CKPT --tokenizer $TOK --task humaneval --data $E/humaneval_full.jsonl --n 164 --k 1
-$PY eval_code.py  --ckpt $CKPT --tokenizer $TOK --task mbpp      --data $E/mbpp_full.jsonl      --n ${N:-200} --k 1
+$PY eval_suite.py --ckpt $CKPT --tokenizer $TOK --task gsm8k    --data $E/gsm8k.jsonl    --n ${N:-200} --k ${K:-8} --temp 0.8 --max-new ${MAX_NEW:-256} --seed $EVAL_SEED
+$PY eval_suite.py --ckpt $CKPT --tokenizer $TOK --task gsm8k    --data $E/gsm8k.jsonl    --n ${N:-200} --k 1 --max-new ${MAX_NEW:-256} --seed $EVAL_SEED
+$PY eval_suite.py --ckpt $CKPT --tokenizer $TOK --task math500  --data $E/math500.jsonl  --n ${N:-200} --k 1 --max-new ${MAX_NEW:-256} --seed $EVAL_SEED
+$PY eval_code.py  --ckpt $CKPT --tokenizer $TOK --task humaneval --data $E/humaneval_full.jsonl --n 164 --k 1 --seed $EVAL_SEED
+$PY eval_code.py  --ckpt $CKPT --tokenizer $TOK --task mbpp      --data $E/mbpp_full.jsonl      --n ${N:-200} --k 1 --seed $EVAL_SEED
 $PY - "$RUN_LOG" "$SUMMARY" <<'PY'
 import datetime as dt
 import json

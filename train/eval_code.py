@@ -124,13 +124,18 @@ def main():
     ap.add_argument("--n", type=int, default=20)
     ap.add_argument("--k", type=int, default=1)
     ap.add_argument("--temp", type=float, default=0.8)
+    ap.add_argument("--seed", type=int, default=20260712,
+                    help="RNG seed for reproducible sampled pass@k runs")
     ap.add_argument("--prompt-style", choices=["completion", "instruction"], default="completion",
                     help="completion is the official default; instruction is an SFT-contract diagnostic")
     a = ap.parse_args()
 
     device = ("cuda" if torch.cuda.is_available()
               else "mps" if torch.backends.mps.is_available() else "cpu")
-    print(f"[eval] device={device} task={a.task} k={a.k} prompt_style={a.prompt_style}", file=sys.stderr)
+    torch.manual_seed(a.seed)
+    if device == "cuda":
+        torch.cuda.manual_seed_all(a.seed)
+    print(f"[eval] device={device} task={a.task} k={a.k} prompt_style={a.prompt_style} seed={a.seed}", file=sys.stderr)
     ck = torch.load(a.ckpt, map_location="cpu")
     model = GPT(GPTConfig(**ck["cfg"])).to(device).eval()
     model.load_state_dict(ck["model"])
