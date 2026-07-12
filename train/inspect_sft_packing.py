@@ -2,6 +2,7 @@
 """Audit packed SFT group capacity before choosing oversampling weights."""
 import argparse
 import collections
+import hashlib
 import json
 from pathlib import Path
 
@@ -20,6 +21,14 @@ def parse_weights(items):
     if result and sum(result.values()) <= 0:
         raise ValueError("weights must sum to a positive value")
     return result
+
+
+def sha256(path):
+    digest = hashlib.sha256()
+    with open(path, "rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def main():
@@ -51,6 +60,7 @@ def main():
     weight_sum = sum(weights.values())
     report = {
         "data": args.data,
+        "data_sha256": {str(Path(path).resolve()): sha256(path) for path in args.data},
         "pack_len": args.pack_len,
         "packed_sequences": total,
         "group_counts": dict(sorted(counts.items())),

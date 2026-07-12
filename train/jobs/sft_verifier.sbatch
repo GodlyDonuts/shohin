@@ -18,10 +18,37 @@ DATA=${DATA:?set DATA to a frozen balanced verifier JSONL}
 OUT=${OUT:?set OUT to a fresh isolated verifier output directory}
 EPOCHS=${EPOCHS:-2}
 PACKLEN=${PACKLEN:-512}
+PACK_REPORT=${PACK_REPORT:-${DATA%.jsonl}.packing${PACKLEN}.json}
+MIN_PACKED_SEQUENCES=${MIN_PACKED_SEQUENCES:-3000}
 
 [ -f "$INIT" ] || { echo "[sft-verifier] init missing: $INIT" >&2; exit 2; }
 [ -s "$DATA" ] || { echo "[sft-verifier] data missing: $DATA" >&2; exit 3; }
 [ ! -e "$OUT" ] || { echo "[sft-verifier] output exists: $OUT" >&2; exit 4; }
+[ -s "$PACK_REPORT" ] || { echo "[sft-verifier] packing report missing: $PACK_REPORT" >&2; exit 5; }
+"$PY" - "$DATA" "$PACK_REPORT" "$PACKLEN" "$MIN_PACKED_SEQUENCES" <<'PY'
+import hashlib
+import json
+from pathlib import Path
+import sys
+
+data, report_path, pack_len, minimum = sys.argv[1:]
+data = str(Path(data).resolve())
+report = json.load(open(report_path))
+if report.get("pack_len") != int(pack_len):
+    raise SystemExit(f"[sft-verifier] packing length mismatch: {report.get('pack_len')} != {pack_len}")
+if int(report.get("packed_sequences", 0)) < int(minimum):
+    raise SystemExit(
+        f"[sft-verifier] insufficient packed sequences: {report.get('packed_sequences')} < {minimum}"
+    )
+digest = hashlib.sha256(Path(data).read_bytes()).hexdigest()
+if report.get("data_sha256", {}).get(data) != digest:
+    raise SystemExit("[sft-verifier] packing report does not match current data bytes")
+groups = report.get("group_counts", {})
+for group in ("verifier_correct", "verifier_incorrect"):
+    if int(groups.get(group, 0)) <= 0:
+        raise SystemExit(f"[sft-verifier] missing packed class: {group}; groups={groups}")
+print(f"[sft-verifier] packing gate passed: {report['packed_sequences']} sequences")
+PY
 cd "$BASE/train"
 for attempt in 1 2 3; do
   if "$PY" - <<'PY'
