@@ -25,12 +25,14 @@ def parse_cases(raw, max_tests, max_case_chars):
     if item.get("fn_name") or not isinstance(item.get("inputs"), list) or not isinstance(item.get("outputs"), list):
         return None
     pairs = []
+    if max_tests < 0:
+        raise ValueError("max_tests must be non-negative")
     for stdin, expected in zip(item["inputs"], item["outputs"]):
         stdin, expected = str(stdin), str(expected)
         if len(stdin) > max_case_chars or len(expected) > max_case_chars:
             continue
         pairs.append((stdin, expected))
-        if len(pairs) >= max_tests:
+        if max_tests and len(pairs) >= max_tests:
             break
     return pairs or None
 
