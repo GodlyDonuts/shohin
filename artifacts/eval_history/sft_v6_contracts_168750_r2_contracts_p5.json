@@ -1,0 +1,340 @@
+{
+  "accuracy": 0.5795918367346938,
+  "by_contract": {
+    "compact": {
+      "accuracy": 0.3142857142857143,
+      "correct": 11,
+      "families": {
+        "arithmetic": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 5
+        },
+        "base_conversion": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 5
+        },
+        "correction": {
+          "accuracy": 0.2,
+          "correct": 1,
+          "total": 5
+        },
+        "sort_unique": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 5
+        },
+        "state_update": {
+          "accuracy": 0.4,
+          "correct": 2,
+          "total": 5
+        },
+        "string_insert": {
+          "accuracy": 0.6,
+          "correct": 3,
+          "total": 5
+        },
+        "syllogism": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        }
+      },
+      "total": 35
+    },
+    "cot": {
+      "accuracy": 0.42857142857142855,
+      "correct": 15,
+      "families": {
+        "arithmetic": {
+          "accuracy": 0.2,
+          "correct": 1,
+          "total": 5
+        },
+        "base_conversion": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 5
+        },
+        "correction": {
+          "accuracy": 0.4,
+          "correct": 2,
+          "total": 5
+        },
+        "sort_unique": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 5
+        },
+        "state_update": {
+          "accuracy": 0.6,
+          "correct": 3,
+          "total": 5
+        },
+        "string_insert": {
+          "accuracy": 0.8,
+          "correct": 4,
+          "total": 5
+        },
+        "syllogism": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        }
+      },
+      "total": 35
+    },
+    "direct": {
+      "accuracy": 0.2857142857142857,
+      "correct": 10,
+      "families": {
+        "arithmetic": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 5
+        },
+        "base_conversion": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 5
+        },
+        "correction": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 5
+        },
+        "sort_unique": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 5
+        },
+        "state_update": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 5
+        },
+        "string_insert": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        },
+        "syllogism": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        }
+      },
+      "total": 35
+    },
+    "qa": {
+      "accuracy": 0.2857142857142857,
+      "correct": 10,
+      "families": {
+        "arithmetic": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 5
+        },
+        "base_conversion": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 5
+        },
+        "correction": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 5
+        },
+        "sort_unique": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 5
+        },
+        "state_update": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 5
+        },
+        "string_insert": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        },
+        "syllogism": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        }
+      },
+      "total": 35
+    },
+    "reuse": {
+      "accuracy": 0.9714285714285714,
+      "correct": 34,
+      "families": {
+        "arithmetic": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        },
+        "base_conversion": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        },
+        "correction": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        },
+        "sort_unique": {
+          "accuracy": 0.8,
+          "correct": 4,
+          "total": 5
+        },
+        "state_update": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        },
+        "string_insert": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        },
+        "syllogism": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        }
+      },
+      "total": 35
+    },
+    "review": {
+      "accuracy": 0.8,
+      "correct": 28,
+      "families": {
+        "arithmetic": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        },
+        "base_conversion": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        },
+        "correction": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        },
+        "sort_unique": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 5
+        },
+        "state_update": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        },
+        "string_insert": {
+          "accuracy": 0.6,
+          "correct": 3,
+          "total": 5
+        },
+        "syllogism": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        }
+      },
+      "total": 35
+    },
+    "scaffold": {
+      "accuracy": 0.9714285714285714,
+      "correct": 34,
+      "families": {
+        "arithmetic": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        },
+        "base_conversion": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        },
+        "correction": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        },
+        "sort_unique": {
+          "accuracy": 0.8,
+          "correct": 4,
+          "total": 5
+        },
+        "state_update": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        },
+        "string_insert": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        },
+        "syllogism": {
+          "accuracy": 1.0,
+          "correct": 5,
+          "total": 5
+        }
+      },
+      "total": 35
+    }
+  },
+  "checkpoint": "/lustre/fs1/home/sa305415/shohin/train/sft_v6_contracts_168750_r2/sft_ep1.pt",
+  "data": "/lustre/fs1/home/sa305415/shohin/artifacts/evals/primitives_v2_contract_heldout_r2.jsonl",
+  "examples": [
+    {
+      "contract": "direct",
+      "correct": true,
+      "family": "string_insert",
+      "gold": "vermilrsionguhu",
+      "prediction": "vermilrsionguhu"
+    },
+    {
+      "contract": "scaffold",
+      "correct": true,
+      "family": "arithmetic",
+      "gold": "6864",
+      "prediction": "6864"
+    },
+    {
+      "contract": "review",
+      "correct": false,
+      "family": "string_insert",
+      "gold": "maQRrigoldkero",
+      "prediction": "mariqrgoldkero"
+    },
+    {
+      "contract": "scaffold",
+      "correct": true,
+      "family": "state_update",
+      "gold": "1207",
+      "prediction": "1207"
+    },
+    {
+      "contract": "qa",
+      "correct": false,
+      "family": "arithmetic",
+      "gold": "7903",
+      "prediction": "7403"
+    }
+  ],
+  "n": 245,
+  "step": "sft_ep1"
+}

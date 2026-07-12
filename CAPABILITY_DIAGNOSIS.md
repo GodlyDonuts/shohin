@@ -159,6 +159,27 @@ state. The hash-matched transcript is
 `artifacts/eval_history/manual_capability_raw168750_vs_sft_v5_20260712_JOBID.json`
 (md5 `28dd0b15de2af16a10a2012f630072a1`).
 
+### V6 learns the constructed contracts, not independent compaction
+
+V6 was designed to remove V5's response-format ambiguity. It uses the same raw
+168.75k base and a frozen r2 contract curriculum with explicit Q/A, direct,
+chain-of-thought, review, scaffold, compact, and reuse targets. The result is
+substantial on the disjoint generator-held-out set: raw is **20/245 = 8.16%** and
+V6 is **142/245 = 57.96%**. The largest apparent gains are review **28/35**,
+scaffold **34/35**, and reuse **34/35**.
+
+Those numbers do not generalize to the independently phrased deep interview.
+There V6 is **4/8 initial, 1/8 review, 1/8 scaffold, and 0/8 compact reuse**.
+It can initially solve the arithmetic and state cases, then changes a correct
+answer to `701` or `62` when asked to review; it turns correct compact prompts
+into invalid values such as `43 * 17 = 761` and faithfully repeats that wrong
+state. This is exactly why the project treats generated-contract performance as
+an atomic gate, not evidence of latent reasoning. The hash-matched artifacts are
+`sft_v6_contracts_168750_r2_contracts_p5.json` (md5
+`5ba5ad4ad6b7562e0daa35e2639cfcf1`) and
+`sft_v6_contracts_168750_r2_deep_interaction_686415.json` (md5
+`879403fe4f46cd889ffd618ed037cc2d`).
+
 ### Controlled prompt matrix at 168k
 
 The first twelve hand-authored prompts established the failure qualitatively. A

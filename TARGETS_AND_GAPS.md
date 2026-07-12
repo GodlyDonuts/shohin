@@ -57,6 +57,11 @@ data.
   logic; it fails base conversion, sequential state, string, and Python. The
   model does not actually emit its requested `state=` protocol, so a later correct
   answer is not sufficient evidence of latent-state compaction.
+- V6 contract SFT makes the same distinction sharper: raw is 20/245 and V6 is
+  142/245 on its disjoint contract generator, but the independent deep interview
+  is only 4/8 initial, 1/8 review, 1/8 scaffold, and 0/8 compact reuse. It has
+  learned the generated response contracts, not robust self-correction or state
+  compression. Its matched raw-versus-V6 prompt matrix remains an isolated gate.
 
 External scores require matching prompts, decoding, samples, and scorer. A custom
 100-example board cannot support a claim to beat another model.

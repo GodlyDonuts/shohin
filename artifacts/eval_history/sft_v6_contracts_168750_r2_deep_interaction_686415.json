@@ -1,0 +1,277 @@
+{
+  "audit": "deep_interaction_v1",
+  "device": "cuda",
+  "cases": 8,
+  "model": {
+    "checkpoint": "/lustre/fs1/home/sa305415/shohin/train/sft_v6_contracts_168750_r2/sft_ep1.pt",
+    "step": "sft_ep1",
+    "summary": {
+      "initial": 4,
+      "review": 1,
+      "scaffold": 1,
+      "compact_reuse": 0
+    },
+    "rows": [
+      {
+        "id": "arithmetic_invariant",
+        "kind": "number",
+        "question": "Compute 43 times 17, then subtract 29. Return only the final integer.",
+        "answer": "702",
+        "hint": "43 times 17 is 731.",
+        "compact_request": "Write the product as a compact state, then subtract 29.",
+        "initial": {
+          "prompt": "Question: Compute 43 times 17, then subtract 29. Return only the final integer.\nAnswer:",
+          "response": "43 times 17 is 731; 731 minus 29 is 702\nThe answer is 702.",
+          "correct": true
+        },
+        "review": {
+          "prompt": "Question: Compute 43 times 17, then subtract 29. Return only the final integer.\nPrevious answer: 43 times 17 is 731; 731 minus 29 is 702\nThe answer is 702.\n\nIndependently check the previous answer. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+          "response": "701",
+          "correct": false
+        },
+        "scaffold": {
+          "prompt": "Question: Compute 43 times 17, then subtract 29. Return only the final integer.\nVerified intermediate fact: 43 times 17 is 731.\nUse that fact. Return only the final answer.\nAnswer:",
+          "response": "731",
+          "correct": false
+        },
+        "compact": {
+          "prompt": "Question: Compute 43 times 17, then subtract 29. Return only the final integer.\nWrite the product as a compact state, then subtract 29. First write one short state line beginning with 'state=', then give the final answer.\nAnswer:",
+          "response": "state43 times 17 is 761; 761 minus 29 is 732\nThe answer is 732."
+        },
+        "compact_reuse": {
+          "prompt": "Question: Compute 43 times 17, then subtract 29. Return only the final integer.\nThe previous compact state was:\nstate43 times 17 is 761; 761 minus 29 is 732\nThe answer is 732.\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+          "response": "732",
+          "correct": false
+        }
+      },
+      {
+        "id": "base8_conversion",
+        "kind": "number",
+        "question": "What is the base-10 value of the base-8 number 725? Return only the integer.",
+        "answer": "469",
+        "hint": "Use 7 times 8 squared, plus 2 times 8, plus 5.",
+        "compact_request": "Write the three place-value terms as a compact state, then sum them.",
+        "initial": {
+          "prompt": "Question: What is the base-10 value of the base-8 number 725? Return only the integer.\nAnswer:",
+          "response": "Use place values: 7 times 8^4 + 2 times 8^3 + 5 times 8^2 + 5 times 8^1 + 0 times 8^0 = 30132\nThe answer is 30132.",
+          "correct": false
+        },
+        "review": {
+          "prompt": "Question: What is the base-10 value of the base-8 number 725? Return only the integer.\nPrevious answer: Use place values: 7 times 8^4 + 2 times 8^3 + 5 times 8^2 + 5 times 8^1 + 0 times 8^0 = 30132\nThe answer is 30132.\n\nIndependently check the previous answer. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+          "response": "30130",
+          "correct": false
+        },
+        "scaffold": {
+          "prompt": "Question: What is the base-10 value of the base-8 number 725? Return only the integer.\nVerified intermediate fact: Use 7 times 8 squared, plus 2 times 8, plus 5.\nUse that fact. Return only the final answer.\nAnswer:",
+          "response": "725",
+          "correct": false
+        },
+        "compact": {
+          "prompt": "Question: What is the base-10 value of the base-8 number 725? Return only the integer.\nWrite the three place-value terms as a compact state, then sum them. First write one short state line beginning with 'state=', then give the final answer.\nAnswer:",
+          "response": "stateUse place values: 7 times 8^4 + 2 times 8^3 + 5 times 8^2 + 5 times 8^1 + 5 times 8^0 = 30757\nThe answer is 30757."
+        },
+        "compact_reuse": {
+          "prompt": "Question: What is the base-10 value of the base-8 number 725? Return only the integer.\nThe previous compact state was:\nstateUse place values: 7 times 8^4 + 2 times 8^3 + 5 times 8^2 + 5 times 8^1 + 5 times 8^0 = 30757\nThe answer is 30757.\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+          "response": "30757",
+          "correct": false
+        }
+      },
+      {
+        "id": "state_transition",
+        "kind": "number",
+        "question": "Start with n = 12. Add 7, multiply by 4, then subtract 13. What is n? Return only the integer.",
+        "answer": "63",
+        "hint": "After the addition, n is 19.",
+        "compact_request": "Write the current value after each operation as a compact state, then give the final value.",
+        "initial": {
+          "prompt": "Question: Start with n = 12. Add 7, multiply by 4, then subtract 13. What is n? Return only the integer.\nAnswer:",
+          "response": "After adding, n is 19; after multiplying, n is 76; subtracting gives 63\nThe answer is 63.",
+          "correct": true
+        },
+        "review": {
+          "prompt": "Question: Start with n = 12. Add 7, multiply by 4, then subtract 13. What is n? Return only the integer.\nPrevious answer: After adding, n is 19; after multiplying, n is 76; subtracting gives 63\nThe answer is 63.\n\nIndependently check the previous answer. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+          "response": "62",
+          "correct": false
+        },
+        "scaffold": {
+          "prompt": "Question: Start with n = 12. Add 7, multiply by 4, then subtract 13. What is n? Return only the integer.\nVerified intermediate fact: After the addition, n is 19.\nUse that fact. Return only the final answer.\nAnswer:",
+          "response": "19",
+          "correct": false
+        },
+        "compact": {
+          "prompt": "Question: Start with n = 12. Add 7, multiply by 4, then subtract 13. What is n? Return only the integer.\nWrite the current value after each operation as a compact state, then give the final value. First write one short state line beginning with 'state=', then give the final answer.\nAnswer:",
+          "response": "Afterstate=12, addition=12, subtraction=8, multiplication=32, division=18, last digit=3\nThe answer is 123."
+        },
+        "compact_reuse": {
+          "prompt": "Question: Start with n = 12. Add 7, multiply by 4, then subtract 13. What is n? Return only the integer.\nThe previous compact state was:\nAfterstate=12, addition=12, subtraction=8, multiplication=32, division=18, last digit=3\nThe answer is 123.\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+          "response": "123",
+          "correct": false
+        }
+      },
+      {
+        "id": "sort_deduplicate",
+        "kind": "list",
+        "question": "Sort [11, 4, 11, 2, 7, 4] ascending and remove duplicates. Return only the list.",
+        "answer": "[2,4,7,11]",
+        "hint": "The distinct values are 11, 4, 2, and 7.",
+        "compact_request": "Write the distinct values as a compact state, then sort them.",
+        "initial": {
+          "prompt": "Question: Sort [11, 4, 11, 2, 7, 4] ascending and remove duplicates. Return only the list.\nAnswer:",
+          "response": "The distinct values in ascending order are [2, 4, 11, 4, 7]\nThe answer is [2, 4, 11, 4, 7].",
+          "correct": false
+        },
+        "review": {
+          "prompt": "Question: Sort [11, 4, 11, 2, 7, 4] ascending and remove duplicates. Return only the list.\nPrevious answer: The distinct values in ascending order are [2, 4, 11, 4, 7]\nThe answer is [2, 4, 11, 4, 7].\n\nIndependently check the previous answer. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+          "response": "[2, 4, 11, 4, 7]",
+          "correct": false
+        },
+        "scaffold": {
+          "prompt": "Question: Sort [11, 4, 11, 2, 7, 4] ascending and remove duplicates. Return only the list.\nVerified intermediate fact: The distinct values are 11, 4, 2, and 7.\nUse that fact. Return only the final answer.\nAnswer:",
+          "response": "[11, 4, 2, 7, 4]",
+          "correct": false
+        },
+        "compact": {
+          "prompt": "Question: Sort [11, 4, 11, 2, 7, 4] ascending and remove duplicates. Return only the list.\nWrite the distinct values as a compact state, then sort them. First write one short state line beginning with 'state=', then give the final answer.\nAnswer:",
+          "response": "stateThe distinct values in ascending order are [2, 4, 11, 4, 7]\nThe answer is [2, 4, 11, 4, 7]."
+        },
+        "compact_reuse": {
+          "prompt": "Question: Sort [11, 4, 11, 2, 7, 4] ascending and remove duplicates. Return only the list.\nThe previous compact state was:\nstateThe distinct values in ascending order are [2, 4, 11, 4, 7]\nThe answer is [2, 4, 11, 4, 7].\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+          "response": "[2, 4, 11, 4, 7]",
+          "correct": false
+        }
+      },
+      {
+        "id": "string_splice",
+        "kind": "string",
+        "question": "Insert 'PQ' after the first 2 characters of 'mosaic'. Return only the resulting string.",
+        "answer": "moPQsaic",
+        "hint": "The first two characters are 'mo' and the remaining suffix is 'saic'.",
+        "compact_request": "Write prefix, insert, and suffix as a compact state, then concatenate them.",
+        "initial": {
+          "prompt": "Question: Insert 'PQ' after the first 2 characters of 'mosaic'. Return only the resulting string.\nAnswer:",
+          "response": "The prefix is 'ma' and the suffix is 'QRilion', so joining them gives maQRilion\nThe answer is maQRilion.",
+          "correct": false
+        },
+        "review": {
+          "prompt": "Question: Insert 'PQ' after the first 2 characters of 'mosaic'. Return only the resulting string.\nPrevious answer: The prefix is 'ma' and the suffix is 'QRilion', so joining them gives maQRilion\nThe answer is maQRilion.\n\nIndependently check the previous answer. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+          "response": "maQRilion",
+          "correct": false
+        },
+        "scaffold": {
+          "prompt": "Question: Insert 'PQ' after the first 2 characters of 'mosaic'. Return only the resulting string.\nVerified intermediate fact: The first two characters are 'mo' and the remaining suffix is 'saic'.\nUse that fact. Return only the final answer.\nAnswer:",
+          "response": "m excite meQRnaic",
+          "correct": false
+        },
+        "compact": {
+          "prompt": "Question: Insert 'PQ' after the first 2 characters of 'mosaic'. Return only the resulting string.\nWrite prefix, insert, and suffix as a compact state, then concatenate them. First write one short state line beginning with 'state=', then give the final answer.\nAnswer:",
+          "response": "The prefix is 'm asthma' and the suffix is 'mosaic', so joining them gives m asthmaPQmosaic\nThe answer is m asthmaPQmosaic."
+        },
+        "compact_reuse": {
+          "prompt": "Question: Insert 'PQ' after the first 2 characters of 'mosaic'. Return only the resulting string.\nThe previous compact state was:\nThe prefix is 'm asthma' and the suffix is 'mosaic', so joining them gives m asthmaPQmosaic\nThe answer is m asthmaPQmosaic.\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+          "response": "m asthmaPQmosaic",
+          "correct": false
+        }
+      },
+      {
+        "id": "logical_constraint",
+        "kind": "yesno",
+        "question": "Every vek is a nop. No nop is a rim. Can any vek be a rim? Answer yes or no only.",
+        "answer": "no",
+        "hint": "A vek must be a nop, and no nop can be a rim.",
+        "compact_request": "Write the two set constraints as a compact state, then answer the question.",
+        "initial": {
+          "prompt": "Question: Every vek is a nop. No nop is a rim. Can any vek be a rim? Answer yes or no only.\nAnswer:",
+          "response": "Any vek is a nop, while no nop is a rim; the answer is no\n",
+          "correct": true
+        },
+        "review": {
+          "prompt": "Question: Every vek is a nop. No nop is a rim. Can any vek be a rim? Answer yes or no only.\nPrevious answer: Any vek is a nop, while no nop is a rim; the answer is no\n\n\nIndependently check the previous answer. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+          "response": "yes",
+          "correct": false
+        },
+        "scaffold": {
+          "prompt": "Question: Every vek is a nop. No nop is a rim. Can any vek be a rim? Answer yes or no only.\nVerified intermediate fact: A vek must be a nop, and no nop can be a rim.\nUse that fact. Return only the final answer.\nAnswer:",
+          "response": "no",
+          "correct": true
+        },
+        "compact": {
+          "prompt": "Question: Every vek is a nop. No nop is a rim. Can any vek be a rim? Answer yes or no only.\nWrite the two set constraints as a compact state, then answer the question. First write one short state line beginning with 'state=', then give the final answer.\nAnswer:",
+          "response": "state=Any vek is a nop, while no nop is a rim.\n\nThe answer is yes."
+        },
+        "compact_reuse": {
+          "prompt": "Question: Every vek is a nop. No nop is a rim. Can any vek be a rim? Answer yes or no only.\nThe previous compact state was:\nstate=Any vek is a nop, while no nop is a rim.\n\nThe answer is yes.\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+          "response": "yes",
+          "correct": false
+        }
+      },
+      {
+        "id": "correction_with_counterexample",
+        "kind": "number",
+        "question": "A student says 18 divided by 3 plus 2 equals 3. Correct the student. Return only the correct integer.",
+        "answer": "8",
+        "hint": "Division is done before addition: 18 divided by 3 is 6.",
+        "compact_request": "Write the precedence result as a compact state, then add 2.",
+        "initial": {
+          "prompt": "Question: A student says 18 divided by 3 plus 2 equals 3. Correct the student. Return only the correct integer.\nAnswer:",
+          "response": "18 divided by 3 is 6 with a remainder of 1 ; 6 plus 2 is 8\nThe answer is 8.",
+          "correct": true
+        },
+        "review": {
+          "prompt": "Question: A student says 18 divided by 3 plus 2 equals 3. Correct the student. Return only the correct integer.\nPrevious answer: 18 divided by 3 is 6 with a remainder of 1 ; 6 plus 2 is 8\nThe answer is 8.\n\nIndependently check the previous answer. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+          "response": "8",
+          "correct": true
+        },
+        "scaffold": {
+          "prompt": "Question: A student says 18 divided by 3 plus 2 equals 3. Correct the student. Return only the correct integer.\nVerified intermediate fact: Division is done before addition: 18 divided by 3 is 6.\nUse that fact. Return only the final answer.\nAnswer:",
+          "response": "6",
+          "correct": false
+        },
+        "compact": {
+          "prompt": "Question: A student says 18 divided by 3 plus 2 equals 3. Correct the student. Return only the correct integer.\nWrite the precedence result as a compact state, then add 2. First write one short state line beginning with 'state=', then give the final answer.\nAnswer:",
+          "response": "state18 divided by 3 plus 2 equals 3\nThe answer is 3."
+        },
+        "compact_reuse": {
+          "prompt": "Question: A student says 18 divided by 3 plus 2 equals 3. Correct the student. Return only the correct integer.\nThe previous compact state was:\nstate18 divided by 3 plus 2 equals 3\nThe answer is 3.\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+          "response": "3",
+          "correct": false
+        }
+      },
+      {
+        "id": "minimal_python_contract",
+        "kind": "code",
+        "question": "Write only Python code for is_even(n), returning True exactly for even integers.",
+        "answer": [
+          "def is_even",
+          "% 2",
+          "== 0"
+        ],
+        "hint": "The required predicate is n modulo 2 equals 0.",
+        "compact_request": "State the predicate compactly, then write the Python function only.",
+        "initial": {
+          "prompt": "Question: Write only Python code for is_even(n), returning True exactly for even integers.\nAnswer:",
+          "response": "Test if n is even: 0 / 2 = 0; 1 / 2 = 0; 2 / 2 = 1; 3 / 2 = 1 remainder 1; 4 / 2 = 2; 5 / 2 = 2 remainder 0; 6 / 2 = 3; 7 / 2 = 1 remainder 1; 8 / 2 = 4",
+          "correct": false
+        },
+        "review": {
+          "prompt": "Question: Write only Python code for is_even(n), returning True exactly for even integers.\nPrevious answer: Test if n is even: 0 / 2 = 0; 1 / 2 = 0; 2 / 2 = 1; 3 / 2 = 1 remainder 1; 4 / 2 = 2; 5 / 2 = 2 remainder 0; 6 / 2 = 3; 7 / 2 = 1 remainder 1; 8 / 2 = 4\n\nIndependently check the previous answer. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+          "response": "0",
+          "correct": false
+        },
+        "scaffold": {
+          "prompt": "Question: Write only Python code for is_even(n), returning True exactly for even integers.\nVerified intermediate fact: The required predicate is n modulo 2 equals 0.\nUse that fact. Return only the final answer.\nAnswer:",
+          "response": "True",
+          "correct": false
+        },
+        "compact": {
+          "prompt": "Question: Write only Python code for is_even(n), returning True exactly for even integers.\nState the predicate compactly, then write the Python function only. First write one short state line beginning with 'state=', then give the final answer.\nAnswer:",
+          "response": "stateis_even(n):return n % 2 == 0\nThe answer is False."
+        },
+        "compact_reuse": {
+          "prompt": "Question: Write only Python code for is_even(n), returning True exactly for even integers.\nThe previous compact state was:\nstateis_even(n):return n % 2 == 0\nThe answer is False.\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+          "response": "stateis_even(n):return n % 2 == 0",
+          "correct": false
+        }
+      }
+    ]
+  }
+}
