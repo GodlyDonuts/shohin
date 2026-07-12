@@ -85,9 +85,8 @@ extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no st
 **Next actions in order:** (1) Watch `685084`: retain the normal ~154k tok/s band and expected 250-step
 checkpoints, preserve/download 180k, and never interrupt a recovered isolated gnorm skip. (2) Retain V7
 `686467` only as rejected constructed-contract evidence; its 73.10% generator holdout does not survive the
-independent deep interview, so no V7 public board is justified. Complete the separately queued fresh
-raw-versus-V7 operator transcript before closing that diagnostic. (3) Complete and independently scan the
-25B DCLM replacement before it can enter any future relaunch. (4) Retain raw `686370`, V5 `686388`, V6
+two independent transfer interviews, so no V7 public board is justified. (3) Complete and independently scan
+the 25B DCLM replacement before it can enter any future relaunch. (4) Retain raw `686370`, V5 `686388`, V6
 `686415`, and V7 `686484` as negative compact-state evidence; do not mistake generated-contract performance
 for autonomous latent reasoning. (5) Improve the verifier separately: `686437` showed first-pass 7/100,
 oracle@16 36/100, verifier@16 9/100; the new cross-family rollout must pass a held-out selection gate before
@@ -1407,11 +1406,12 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
 4. **Recipe upgrades for the 300k relaunch (§4A b):**
    - **Decay-phase annealing** — shift the data mix toward premium reasoning data over the 240k–300k
      decay window (mid-training "anneal on the good stuff"), instead of just lowering LR on the same mix.
-   - **Overlap:** FineMath-4+ ⊆ FineMath-3+ (score≥4 ⊂ score≥3) — including both dirs double-weights the
-     best math. Decide: deliberate upweight vs dedup.
-   - **Mix ratio:** interleaved loader round-robins across shard *dirs*; adding finemath3 → 3 math : 1
-     code = 75/25. Set intentionally (half the eval board is code). Could split code into more dirs or
-     weight by duplicating dir entries.
+   - **Overlap:** **settled for the next handoff:** FineMath-4+ is contained in FineMath-3+, so exclude
+     FineMath-4 as a separate directory. Its inclusion creates narrow replay rather than new coverage.
+   - **Mix ratio:** the future-only `flagship_reasoning_relaunch.sbatch` uses OpenWebMath, FineMath-3,
+     OpenMath, code, FineWeb-Edu, and the scanned 25B DCLM replacement. Its floor-aware BS32 weights
+     produce an effective **24.8% math / 25.1% code / 50.1% educational English** mix. Never add the
+     unscanned DCLM partial directory or the 5B DCLM pilot to the active SHARDS.
 
 **Time-box note:** the hy3 teacher is free **this week** — prioritize distillation volume while it lasts.
 
