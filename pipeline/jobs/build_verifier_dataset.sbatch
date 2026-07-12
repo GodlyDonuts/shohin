@@ -12,6 +12,23 @@ BASE=/lustre/fs1/home/sa305415/shohin
 PY=$BASE/miniforge3/bin/python
 IN=${IN:?set IN to train-only rollout JSONL}
 OUT=${OUT:?set OUT to a fresh verifier JSONL}
+BALANCE_CLASSES=${BALANCE_CLASSES:-0}
 cd "$BASE"
-"$PY" pipeline/build_verifier_dataset.py --input "$IN" --out "$OUT"
-"$PY" pipeline/audit_sft_quality.py --data "$OUT" --out "${OUT%.jsonl}.quality.json"
+ARGS=(--input "$IN" --out "$OUT")
+[ "$BALANCE_CLASSES" = 1 ] && ARGS+=(--balance-classes)
+"$PY" pipeline/build_verifier_dataset.py "${ARGS[@]}"
+REPORT="${OUT%.jsonl}.quality.json"
+"$PY" pipeline/audit_sft_quality.py --data "$OUT" --out "$REPORT" --evals "$BASE/artifacts/evals"
+"$PY" - "$REPORT" "$BALANCE_CLASSES" <<'PY'
+import json
+import sys
+
+report = json.load(open(sys.argv[1]))
+bad = [key for key in (
+    "malformed_rows", "missing_question_or_response", "duplicate_normalized_questions",
+) if report.get(key)]
+overlap = report.get("eval_overlap", {})
+if report.get("valid_rows", 0) == 0 or bad or overlap.get("exact_prompt_hits") or overlap.get("ngram_prompt_hits"):
+    raise SystemExit(f"[verifier-data] quality gate failed: rows={report.get('valid_rows')} bad={bad} overlap={overlap}")
+print(f"[verifier-data] quality gate passed: {report['valid_rows']} rows")
+PY
