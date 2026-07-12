@@ -1628,6 +1628,14 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   2.67 / 2.33, and GSM8K prompts are 3.78 / 1.37. The denser math/code segmentation is expected from
   notation and punctuation; this rules out a gross coverage failure but does **not** prove the frozen 32k
   tokenizer is never a capability constraint. No tokenizer change is justified mid-pretrain.
+- **2026-07-12** — **V8 promotion rule is precommitted and machine-checked.** CPU decision job **`686643`**
+  follows the raw/V8 transcript chain and writes only a verdict report. `accept_followup` requires all five
+  deterministic public metrics, improvements on at least two, no HumanEval/MBPP regression, an eight-case
+  direct interview with initial-answer gain, and no verified-fact regression; constructed holdout scores,
+  formatting, and state-marker emission alone are explicitly insufficient. Any missing evaluator artifact or
+  failed condition rejects V8. `evaluate_v8_promotion.py` passed both an accept fixture and a code-regression
+  rejection fixture locally and on Newton. Even acceptance is only a follow-up decision, never a flagship
+  promotion.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
