@@ -9,7 +9,7 @@
 # Full reasoning-benchmark board on one checkpoint. CKPT defaults to the newest SFT epoch (or set
 # CKPT=<path> to eval a base/pretrain ckpt). GSM8K uses self-consistency (maj@k) for the headline
 # number; the rest are pass@1. sft_ep*.pt / ckpt_*.pt both carry {model,cfg} so eval loads directly.
-set -uo pipefail
+set -euo pipefail
 BASE=/lustre/fs1/home/sa305415/shohin
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 cd $BASE/train
@@ -34,8 +34,17 @@ CKPT_BASE=$(basename "$CKPT" .pt)
 RUN_TAG=${RUN_TAG:-$CKPT_BASE}
 RUN_LOG=$HIST/${RUN_TAG}_${SLURM_JOB_ID:-local}.log
 SUMMARY=$HIST/metrics.jsonl
+PIN_DIR=$BASE/train/eval_pins
+PINNED=$PIN_DIR/${RUN_TAG}_${SLURM_JOB_ID:-local}.pt
+mkdir -p "$PIN_DIR"
+# Flagship checkpoints are rotated while long benchmark boards run. Pin the
+# source before the first subprocess so all five metrics see identical weights.
+cp --reflink=auto "$CKPT" "$PINNED"
+trap 'rm -f "$PINNED"' EXIT
+CKPT=$PINNED
+CKPT_BASE=$(basename "$CKPT" .pt)
 export CKPT_BASE RUN_TAG SUMMARY RUN_LOG
-echo "[eval-job] ckpt=$CKPT run_tag=$RUN_TAG log=$RUN_LOG"
+echo "[eval-job] pinned_ckpt=$CKPT run_tag=$RUN_TAG log=$RUN_LOG"
 exec > >(tee -a "$RUN_LOG") 2>&1
 for i in $(seq 1 30); do
   U=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | tr -dc '0-9\n' | sort -n | tail -1)
