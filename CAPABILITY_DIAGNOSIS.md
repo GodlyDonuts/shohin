@@ -507,6 +507,11 @@ about 1.8%, which is why they are not the central remediation path.
   verified intermediate facts nor model-produced compact states unlock reliable
   arithmetic, transformations, or code. More state-template SFT is prohibited
   until an independent transfer gate changes that conclusion.
+- A fresh local-MPS seven-case, five-turn replay against the preserved raw 170k
+  checkpoint independently reproduced this result: 1/7 initial, 0/7 review,
+  1/7 verified-fact use, and 0/7 compact-state reuse. The hash-matched local and
+  Newton transcript is `manual_capability_raw170k_refresh_20260712_mps.json`
+  (md5 `9cd3216365b5292851e298bee4a1aeef`).
 - The first clean cross-family verifier derivative contains 1,201 positive and
   1,201 negative examples but packs to only 737 sequences. That is about 92
   updates across two epochs, so it is rejected as underpowered. A 10,000-question
