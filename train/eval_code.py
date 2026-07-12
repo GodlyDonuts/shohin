@@ -149,6 +149,8 @@ def main():
         passed += ok
         if i < 5:
             print(f"[{i}] {r.get('task_id','?')} pass={ok}", file=sys.stderr)
+        elif (i + 1) % 25 == 0:
+            print(f"[progress] {i + 1}/{len(rows)} passed={passed}", file=sys.stderr)
     acc = passed / max(len(rows), 1)
     tag = f"pass@{a.k}" if a.k > 1 else "pass@1"
     print(f"{a.task}  {tag}  ckpt={a.ckpt}  step={ck.get('step')}  {passed}/{len(rows)} = {acc:.1%}")

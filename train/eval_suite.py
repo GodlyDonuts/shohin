@@ -187,6 +187,8 @@ def main():
         if i < 4:
             extra = f" votes={allans}" if allans is not None else ""
             print(f"[{i}] gold={g} pred={pred} ok={ok}{extra}", file=sys.stderr)
+        elif (i + 1) % 25 == 0:
+            print(f"[progress] {i + 1}/{len(rows)} correct={correct}", file=sys.stderr)
     acc = correct / max(len(rows), 1)
     tag = f"maj@{a.k}" if a.k > 1 else "pass@1"
     print(f"{a.task}  {tag}  ckpt={a.ckpt}  step={ck.get('step')}  {correct}/{len(rows)} = {acc:.1%}")
