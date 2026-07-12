@@ -706,6 +706,15 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   the preserved 166.25k checkpoint, with balanced held-out RG **`686247`** serially after success;
   both exclude the live evc22 node. Next DR target is 170k. Do not train another broad v2 SFT variant
   until the raw-base 166k measurements and a revised procedural-curriculum design are reviewed.
+- **2026-07-12 ~03:32** — **Deep capability diagnosis found an evaluation truncation defect.** Direct
+  H100 transcripts of raw 166k (`686255`) show template completion, task mutation, list/string failure,
+  and invalid code. Direct SFT-v2 transcripts (`686263`) show a real capability change: correct fresh
+  discount/tax and fraction derivations, but failed algebra continuation, base conversion, logic,
+  string/list processing, and parity code. Critically, `eval_suite.generate()` stopped at any blank
+  line while SFT completions commonly put `The answer is ...` after one; old SFT benchmark results are
+  undercounted. Removed that stop condition, preserved old metrics only as diagnostics, canceled their
+  mixed-protocol reruns, and queued fixed-decoder public/held-out/in-training gates (`686265`,
+  `686267`, `686269`). See `CAPABILITY_DIAGNOSIS.md` for ranked causes and pre-relaunch requirements.
 - **2026-07-10 ~14:45** — **RG measurement bias fixed before using it for a decision.** `685704` completed
   and confirmed the raw 120k model is poor on held-out knights-and-knaves (**3/400 = 0.75%**), but the
   generator file is family-ordered, so the first 400 rows were all one family. Patched evaluator to

@@ -14,6 +14,7 @@ PY=$BASE/miniforge3/bin/python
 CKPT=${CKPT:?set CKPT to a model checkpoint}
 N=${N:-400}
 TAG=${TAG:-$(basename "$CKPT" .pt)}
+DATA=${DATA:-$BASE/artifacts/rg_v2/rg_eval.jsonl}
 OUT=$BASE/artifacts/eval_history/${TAG}_rg_heldout_${SLURM_JOB_ID}.json
 
 cd "$BASE/train"
@@ -28,7 +29,7 @@ done
 "$PY" eval_rg.py \
   --ckpt "$CKPT" \
   --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
-  --data "$BASE/artifacts/rg_v2/rg_eval.jsonl" \
+  --data "$DATA" \
   --n "$N" \
   --out-json "$OUT"
 echo "[rg-eval] wrote $OUT"

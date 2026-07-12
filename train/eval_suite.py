@@ -87,9 +87,10 @@ TASKS = {
 
 # --------------------------------------------------------------------------- generation (KV cache)
 @torch.no_grad()
-def generate(model, tok, prompt, device, max_new=256, temp=0.0, top_k=40, stop="Question:"):
+def generate(model, tok, prompt, device, max_new=256, temp=0.0, top_k=40, stop="\nQuestion:"):
     cap = model.cfg.seq_len
     ids = tok.encode(prompt).ids[-cap:]
+    eos_id = tok.token_to_id("<|endoftext|>")
     ac = torch.autocast("cuda", dtype=torch.bfloat16, enabled=("cuda" in str(device)))
     with ac:
         logits, cache = model(torch.tensor([ids], device=device), return_cache=True, pos=0)
@@ -106,7 +107,11 @@ def generate(model, tok, prompt, device, max_new=256, temp=0.0, top_k=40, stop="
             nxt = int(lg.argmax())
         gen.append(nxt)
         txt = tok.decode(gen)
-        if stop in txt or "\n\n" in txt or pos >= cap:
+        # SFT targets intentionally contain paragraph breaks before their final
+        # answer. Stopping on any blank line truncates that answer and turns a
+        # correct completion into an apparent benchmark miss. Only stop at a
+        # new prompt, EOS, the sequence cap, or max_new.
+        if (stop and stop in txt) or nxt == eos_id or pos >= cap:
             break
         with ac:
             logits, cache = model(torch.tensor([[nxt]], device=device), cache=cache, pos=pos, return_cache=True)
