@@ -43,4 +43,24 @@ for config in configs[:3]:
         else:
             summary[key] = {"type": type(value).__name__}
     print(f"[taco-probe] config={config} fields={json.dumps(summary, sort_keys=True)}")
+    try:
+        io = json.loads(row.get("input_output") or "")
+    except (TypeError, ValueError, json.JSONDecodeError) as exc:
+        print(f"[taco-probe] config={config} input_output_parse_error={type(exc).__name__}")
+        continue
+    inputs = io.get("inputs")
+    outputs = io.get("outputs")
+    pair_count = min(len(inputs or []), len(outputs or []))
+    print(json.dumps({
+        "taco_input_output": {
+            "config": config,
+            "keys": sorted(io),
+            "fn_name": io.get("fn_name"),
+            "inputs_type": type(inputs).__name__,
+            "outputs_type": type(outputs).__name__,
+            "paired_cases": pair_count,
+            "first_input_chars": len(str(inputs[0])) if pair_count else 0,
+            "first_output_chars": len(str(outputs[0])) if pair_count else 0,
+        },
+    }, sort_keys=True))
 PY

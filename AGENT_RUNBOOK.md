@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-12 ~11:58 EDT (`685084` remains healthy past 175.5k; V7 typed-state SFT is isolated and running). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-12 ~12:41 EDT (`685084` remains healthy past 176k; V7 typed-state SFT was evaluated and rejected as a general-reasoning candidate). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -50,16 +50,16 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-12 ~11:58 EDT) |
+| Item | Value (as of 2026-07-12 ~12:41 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | `683715` completed cleanly. Current active continuation is **`685084`** on **evc22**: one H100, `BS=32 ACC=8 CKPT=250`, exact 524,288-token updates, and the proven default compile path. It resumed `ckpt_0141500.pt -> step 141501`; the prior dual-GPU successor remains canceled per user instruction. |
-| Extended pretrain status | **`685084` is healthy through step 175,500** at ~**154.28k tok/s**. Loss remains in the normal ~1.2-2.4 band and gnorm is normally 0.07-0.31; isolated outlier guards recover on their next steps. `ckpt_0170000.pt` is preserved on Newton as `best_step170000.pt`, and the full local DR copy `train/flagship_out/ckpt_0170000.pt` matches both at md5 **`7ad139b6b9b537a5a3e65978f8296419`**. Next local DR target is 180k. Do not integrate CUDA graphs into live training: the clean whole-update canary gained only ~1.8% while removing the flagship's established guard/observability path. |
+| Extended pretrain status | **`685084` is healthy through step 176,260** at ~**154.29k tok/s**. Loss remains in the normal ~1.2-2.4 band and gnorm is normally 0.07-0.32; isolated outlier guards recover on their next steps. `ckpt_0170000.pt` is preserved on Newton as `best_step170000.pt`, and the full local DR copy `train/flagship_out/ckpt_0170000.pt` matches both at md5 **`7ad139b6b9b537a5a3e65978f8296419`**. Next local DR target is 180k. Do not integrate CUDA graphs into live training: the clean whole-update canary gained only ~1.8% while removing the flagship's established guard/observability path. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, **DONE**; wrote baseline `train/sft_out/sft_ep3.pt`. Isolated v2 pilot `685708` completed one epoch from `best_step120000.pt` to `train/sft_v2_120k/sft_ep1.pt`. It is a narrow arithmetic-format ablation, not a promoted broad-reasoning recipe. V4 `686323` was canceled before its first step after stale 40/35/15/10 weights; v4 `686324` was canceled before any artifact after a code-boundary audit found 461/3,542 legacy BPE prompt-prefix mismatches. Both are invalid and preserved. Corrected v4 pilot **`686326`** completed one epoch in 1,218s to `train/sft_v4_168750_r3/sft_ep1.pt`, with audited 40/47/8/5 weights and inference-aligned prompt/completion token construction. It is an unevaluated candidate, not promoted. |
 | **Eval board job** | Corrected CUDA-only v2 board **`686277` completed**: GSM8K maj@4 **6/100**, pass@1 **14/100**, MATH-500 **6/100**, HumanEval **6/164**, MBPP **0/100**. The v2 pilot is **rejected for promotion**. RG held-out `686278` is **90/800 = 11.25%** and in-training `686279` is **98/800 = 12.25%**: it learned a few routines that transfer but remains zero on most logic/transformation/cipher/geometry families. The corrected raw-base board **`686315`** pinned `best_step168750.pt` and completed: GSM8K maj@4 **5/100**, pass@1 **2/100**, MATH-500 **2/100**, HumanEval **7/164**, MBPP **0/100**. `686316` direct adaptive interaction was **1/6 initial, 1/6 after explicit self-review, 1/6 with a verified intermediate fact**; only the simple syllogism was correct. V4 r3 public board **`686336` completed and is rejected**: GSM8K maj@4 **5/100**, pass@1 **14/100**, MATH-500 **1/100**, HumanEval **2/164**, MBPP **0/100**. Its corrected held-out procedural result `686337` is **209/800 = 26.125%**, above V2's 90/800 on the same evaluator, but the later raw base means this is a useful diagnostic signal rather than clean data-only attribution. V4 remains a generator/verifier candidate, not a broad promotion. |
 | **V5 primitive board** | **`686401` completed; V5 is rejected for broad promotion.** From the raw-168.75k base it scored GSM8K maj@4 **10/100**, greedy **9/100**, MATH-500 **3/100**, HumanEval **2/164**, and MBPP **0/100**. It shows narrow arithmetic-format transfer but regresses code from raw's 7/164 HumanEval and does not establish broad math, code, or instruction-following transfer. |
 | **V6 contract SFT** | **`686413` completed cleanly** to `train/sft_v6_contracts_168750_r2/sft_ep1.pt` (4,535 updates, 1,388s). Its fresh 245-case contract holdout `686414` rises from raw **20/245 = 8.16%** to **142/245 = 57.96%**, especially review 28/35, scaffold 34/35, and reuse 34/35. This is deliberately not a latent-reasoning claim: independent deep audit `686415` is only **4/8 initial, 1/8 review, 1/8 scaffold, 0/8 compact reuse** and shows invalid compact calculations. Matched matrix `686438` completed at Q/A **4/48 -> 17/48**, direct **5/48 -> 10/48**, CoT **0/48 -> 21/48**, one-shot **7/48 -> 7/48**; it establishes contract transfer but not compact-state reasoning. No public board is justified. |
-| **V7 typed-state SFT** | The fresh solver-verified state corpus has **315,000 train / 10,500 held-out** rows across write, repair, and reuse contracts; independent audit reports 0 malformed rows, duplicate questions, exact held-out prompts, or 13-gram held-out overlap. Raw pinned baseline `686456` completed its 420 rows before a duplicate-output exit: **21/420 = 5.0% answer accuracy and 0/280 valid typed states**. The artifact is valid; the terminal duplicate-output error is not a model result. Isolated one-epoch V7 job **`686467`** is now running on evc28 from `best_step168750.pt`, with exact audited source weights `0.432/0.18/0.028/0.04/0.32` (math/procedural/code/teacher/state). It never shares the flagship output. Gate it on both held-out answer accuracy and exact emitted state accuracy, then a fresh deep interview; do not call it latent reasoning on a generated-contract score alone. |
+| **V7 typed-state SFT** | The fresh solver-verified state corpus has **315,000 train / 10,500 held-out** rows across write, repair, and reuse contracts; independent audit reports 0 malformed rows, duplicate questions, exact held-out prompts, or 13-gram held-out overlap. Raw pinned baseline `686456` completed its 420 rows before a duplicate-output exit: **21/420 = 5.0% answer accuracy and 0/280 valid typed states**. V7 `686467` completed cleanly from `best_step168750.pt`. Its exact 420-prompt holdout `686471` reaches **307/420 = 73.10% answers** and **169/280 = 60.36% exact states**: repair 128/140 answers and 132/140 states, reuse 140/140 answers, but write only 39/140 answers and 37/140 states. The independent eight-case interview `686484` is **1/8 initial, 1/8 review, 1/8 scaffold, and 0/8 compact reuse**, with wrong arithmetic even after a verified fact and malformed/unrelated state text. **Reject V7 as a general-reasoning or latent-compaction candidate.** Keep it isolated as a constructed-contract diagnostic; its hash-matched state/deep artifacts are `1f9fe0b2993d1a9dafc98cd2d7943887` and `c4963fae52d5ac9c38614e77f93f98c8`. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
 | 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
 | 60k skips | **45 total**, stable/healthy |
@@ -83,15 +83,16 @@ extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no st
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
 **Next actions in order:** (1) Watch `685084`: retain the normal ~154k tok/s band and expected 250-step
-checkpoints, preserve/download 180k, and never interrupt a recovered isolated gnorm skip. (2) Complete V7
-`686467`, then evaluate its disjoint 420-case typed-state holdout with exact state validation. Run the fresh
-deep interaction only if answer and state accuracy materially beat raw; no public board without robust compact
-reuse. (3) Audit DCLM `686342` manifest, token distribution, and decoded windows via `686360` before it can
-enter any future relaunch. (4) Retain raw `686370`, V5 `686388`, and V6 `686415` as negative compact-state
-evidence; do not mistake generated-contract performance for autonomous latent reasoning. (5) Improve the
-verifier separately: `686437` showed first-pass 7/100, oracle@16 36/100, verifier@16 9/100. (6) At the next
-controlled/natural pretrain handoff only, use manifest-gated `openmath_pt` plus approved educational-English
-data with explicit, per-batch-safe domain weights; do not alter live SHARDS.
+checkpoints, preserve/download 180k, and never interrupt a recovered isolated gnorm skip. (2) Retain V7
+`686467` only as rejected constructed-contract evidence; its 73.10% generator holdout does not survive the
+independent deep interview, so no V7 public board is justified. Complete the separately queued fresh
+raw-versus-V7 operator transcript before closing that diagnostic. (3) Complete and independently scan the
+25B DCLM replacement before it can enter any future relaunch. (4) Retain raw `686370`, V5 `686388`, V6
+`686415`, and V7 `686484` as negative compact-state evidence; do not mistake generated-contract performance
+for autonomous latent reasoning. (5) Improve the verifier separately: `686437` showed first-pass 7/100,
+oracle@16 36/100, verifier@16 9/100; the new cross-family rollout must pass a held-out selection gate before
+any promotion. (6) At the next controlled/natural pretrain handoff only, use manifest-gated language,
+math/reasoning, and code sources with explicit, per-batch-safe domain weights; do not alter live SHARDS.
 
 ---
 
@@ -1415,6 +1416,17 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
 **Time-box note:** the hy3 teacher is free **this week** — prioritize distillation volume while it lasts.
 
 ---
+
+* **2026-07-12 ~12:41** — **V7 typed-state gate closed: format transfer without general reasoning.**
+  `686467` completed in 1,587s and its exact held-out state evaluation `686471` reached **307/420 answers
+  (73.10%)** and **169/280 exact typed states (60.36%)**, with repair 128/140 answers + 132/140 states and
+  reuse 140/140 answers. Fresh independent deep interview `686484` was instead **1/8 initial, 1/8 review,
+  1/8 with a verified fact, and 0/8 compact reuse**. It fails basic arithmetic after the correct product is
+  supplied, base conversion, state updates, sorting, string manipulation, and valid Python. V7 is rejected
+  for general reasoning/latent compaction; local/Newton artifacts were copied and md5 verified:
+  state `1f9fe0b2993d1a9dafc98cd2d7943887`, deep `c4963fae52d5ac9c38614e77f93f98c8`. A separate raw-vs-V7
+  human-authored transcript job was submitted; two generic CUDA allocations failed before inference and are
+  explicitly not model evidence. The current evc28-targeted request is pending. Flagship remains untouched.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*

@@ -180,6 +180,36 @@ an atomic gate, not evidence of latent reasoning. The hash-matched artifacts are
 `sft_v6_contracts_168750_r2_deep_interaction_686415.json` (md5
 `879403fe4f46cd889ffd618ed037cc2d`).
 
+### V7 passes a typed-state generator but fails independent interaction
+
+V7 made the state representation explicit and solver-checkable. Its corpus has
+315,000 train rows and 10,500 held-out rows across write, repair, and reuse
+contracts; source-prompt overlap, normalized duplicates, malformed rows, and
+13-gram held-out overlap were all zero. On the 420 held-out rendered prompts it
+achieved **307/420 = 73.10% answer accuracy** and **169/280 = 60.36% exact
+typed-state accuracy**. Repair is strong (**128/140 answers, 132/140 states**)
+and reuse is 140/140 answers, while write is only **39/140 answers and 37/140
+states**. Those are meaningful diagnostics of the representation task, not a
+claim that the model can create or use a general scratch state.
+
+The independent eight-case interview confirms that limitation. V7 scored
+**1/8 initial, 1/8 after review, 1/8 with a verified intermediate fact, and
+0/8 after compact-state reuse**. It states `43 * 17 = 751`, repeats the error
+after review, and when explicitly supplied the correct product returns 731
+without performing the requested subtraction. It treats base-8 `725` as decimal
+725, emits unrelated or malformed state fragments for state tracking, sorting,
+and string insertion, and produces syntactically invalid Python. The only
+initial/review success is the precedence-correction case; the only scaffolded
+success is the simple negative syllogism. Therefore V7 is **rejected as a
+general-reasoning or latent-compaction candidate**. Preserve it solely as
+evidence that a small model can learn a generated typed-state contract.
+
+The full local/Newton hash-matched artifacts are
+`sft_v7_state_protocol_168750_p20.json` (md5
+`1f9fe0b2993d1a9dafc98cd2d7943887`) and
+`sft_v7_state_protocol_168750_deep_interaction_686484.json` (md5
+`c4963fae52d5ac9c38614e77f93f98c8`).
+
 ### Controlled prompt matrix at 168k
 
 The first twelve hand-authored prompts established the failure qualitatively. A

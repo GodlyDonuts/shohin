@@ -19,13 +19,44 @@ for path in "$RAW_CKPT" "$SFT_CKPT"; do
   [ -f "$path" ] || { echo "[manual-probe] checkpoint missing: $path" >&2; exit 2; }
 done
 cd "$BASE/train"
-"$PY" - <<'PY'
+for preflight in 1 2 3; do
+  if "$PY" - <<'PY'
 import sys
 import torch
-sys.exit(0 if torch.cuda.is_available() else 75)
+try:
+    if not torch.cuda.is_available():
+        raise RuntimeError("CUDA unavailable")
+    torch.empty(1, device="cuda")
+except Exception as exc:
+    print(f"[manual-probe] CUDA preflight failed: {exc}", file=sys.stderr)
+    sys.exit(75)
 PY
+  then
+    break
+  fi
+  if [ "$preflight" = 3 ]; then
+    exit 75
+  fi
+  echo "[manual-probe] CUDA preflight $preflight failed; waiting before retry" >&2
+  sleep 30
+done
 echo "[manual-probe] raw=$RAW_CKPT sft=$SFT_CKPT out=$OUT"
-"$PY" manual_capability_probe.py \
-  --ckpt "$RAW_CKPT" "$SFT_CKPT" \
-  --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
-  --out "$OUT"
+for attempt in 1 2 3; do
+  if "$PY" manual_capability_probe.py \
+    --ckpt "$RAW_CKPT" "$SFT_CKPT" \
+    --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
+    --out "$OUT"; then
+    exit 0
+  fi
+  status=$?
+  # The probe writes its artifact only after both models finish, so retrying an
+  # empty attempt cannot replace a valid transcript. Stop if that invariant
+  # ever changes instead of deleting an existing result.
+  if [ -e "$OUT" ]; then
+    echo "[manual-probe] failed after creating $OUT; refusing to retry" >&2
+    exit "$status"
+  fi
+  echo "[manual-probe] attempt $attempt failed before output; retrying CUDA allocation" >&2
+  sleep 30
+done
+exit "$status"
