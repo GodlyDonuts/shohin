@@ -1,0 +1,57 @@
+===== SHOHIN BENCHMARK BOARD  ckpt=sft_v4_168750_r3_protocol2_686336.pt =====
+[eval] device=cuda task=gsm8k k=4 temp=0.8
+[0] gold=18 pred=3 ok=False votes=['3', '31', '4.55', '36']
+[1] gold=3 pred=4.25 ok=False votes=['4.25', '5', '2.5', '3.00']
+[2] gold=70000 pred=45000 ok=False votes=['45000', '50000', '76000', '68000']
+[3] gold=540 pred=2885 ok=False votes=['2885', '540', '720', '1620']
+[progress] 25/100 correct=0
+[progress] 50/100 correct=0
+[progress] 75/100 correct=3
+[progress] 100/100 correct=5
+gsm8k  maj@4  ckpt=/lustre/fs1/home/sa305415/shohin/train/eval_pins/sft_v4_168750_r3_protocol2_686336.pt  step=sft_ep1  5/100 = 5.0%
+[eval] device=cuda task=gsm8k k=1 temp=0.8
+[0] gold=18 pred=14 ok=False
+[1] gold=3 pred=5 ok=False
+[2] gold=70000 pred=195000 ok=False
+[3] gold=540 pred=39453 ok=False
+[progress] 25/100 correct=2
+[progress] 50/100 correct=5
+[progress] 75/100 correct=11
+[progress] 100/100 correct=14
+gsm8k  pass@1  ckpt=/lustre/fs1/home/sa305415/shohin/train/eval_pins/sft_v4_168750_r3_protocol2_686336.pt  step=sft_ep1  14/100 = 14.0%
+[eval] device=cuda task=math500 k=1 temp=0.8
+[0] gold=\left(3,\frac{\pi}{2}\right) pred=(3, 0) ok=False
+[1] gold=p-q pred=None ok=False
+[2] gold=\frac{14}{3} pred=0 ok=False
+[3] gold=9 pred=12 ok=False
+[progress] 25/100 correct=1
+[progress] 50/100 correct=1
+[progress] 75/100 correct=1
+[progress] 100/100 correct=1
+math500  pass@1  ckpt=/lustre/fs1/home/sa305415/shohin/train/eval_pins/sft_v4_168750_r3_protocol2_686336.pt  step=sft_ep1  1/100 = 1.0%
+[eval] device=cuda task=humaneval k=1 prompt_style=completion seed=20260712
+[0] HumanEval/0 pass=False
+[1] HumanEval/1 pass=False
+[2] HumanEval/2 pass=False
+[3] HumanEval/3 pass=False
+[4] HumanEval/4 pass=False
+[progress] 25/164 passed=0
+[progress] 50/164 passed=1
+[progress] 75/164 passed=2
+[progress] 100/164 passed=2
+[progress] 125/164 passed=2
+[progress] 150/164 passed=2
+humaneval  pass@1  ckpt=/lustre/fs1/home/sa305415/shohin/train/eval_pins/sft_v4_168750_r3_protocol2_686336.pt  step=sft_ep1  2/164 = 1.2%
+[eval] device=cuda task=mbpp k=1 prompt_style=completion seed=20260712
+[0] 11 pass=False
+[1] 12 pass=False
+[2] 13 pass=False
+[3] 14 pass=False
+[4] 15 pass=False
+[progress] 25/100 passed=0
+[progress] 50/100 passed=0
+[progress] 75/100 passed=0
+[progress] 100/100 passed=0
+mbpp  pass@1  ckpt=/lustre/fs1/home/sa305415/shohin/train/eval_pins/sft_v4_168750_r3_protocol2_686336.pt  step=sft_ep1  0/100 = 0.0%
+[eval-job] appended 5 metric rows to /lustre/fs1/home/sa305415/shohin/artifacts/eval_history/metrics.jsonl
+===== board done =====
