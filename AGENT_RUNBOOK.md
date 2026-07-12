@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-12 ~05:42 EDT (`685084` healthy past 168.8k; v2 narrow held-out RG result recorded; raw-base board and adaptive direct probe queued from a preserved 168.75k checkpoint). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-12 ~05:55 EDT (`685084` healthy past 168.9k; future restart data-stream replay defect repaired and smoke-tested; raw-base board and adaptive direct probe remain queued). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -50,11 +50,11 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-12 ~05:42 EDT) |
+| Item | Value (as of 2026-07-12 ~05:55 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | `683715` completed cleanly. Current active continuation is **`685084`** on **evc22**: one H100, `BS=32 ACC=8 CKPT=250`, exact 524,288-token updates, and the proven default compile path. It resumed `ckpt_0141500.pt -> step 141501`; the prior dual-GPU successor remains canceled per user instruction. |
-| Extended pretrain status | **`685084` is healthy through step 168,840** at ~**154.2k tok/s**. Loss remains in the normal ~1.2-2.1 band and gnorm is normally 0.07-0.22; isolated spikes recover. Latest confirmed numbered checkpoint is `ckpt_0168750.pt`; a remote non-rotating `best_step168750.pt` was preserved (md5 `e58b6b07802782517c7709c1844cb4d1`) for analysis. Preserve/download 170k at the next milestone. Do not integrate CUDA graphs: the clean whole-update canary gained only ~1.8% while removing the flagship's established guard/observability path. |
+| Extended pretrain status | **`685084` is healthy through step 168,950** at ~**154.2k tok/s**. Loss remains in the normal ~1.2-2.2 band and gnorm is normally 0.07-0.22; isolated spikes recover. Latest confirmed numbered checkpoint is `ckpt_0168750.pt`; a remote non-rotating `best_step168750.pt` was preserved (md5 `e58b6b07802782517c7709c1844cb4d1`) for analysis. Preserve/download 170k at the next milestone. Do not integrate CUDA graphs: the clean whole-update canary gained only ~1.8% while removing the flagship's established guard/observability path. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, **DONE**; wrote baseline `train/sft_out/sft_ep3.pt`. Isolated v2 pilot `685708` completed one epoch from `best_step120000.pt` to `train/sft_v2_120k/sft_ep1.pt`. It is a narrow arithmetic-format ablation, not a promoted broad-reasoning recipe. |
 | **Eval board job** | Corrected CUDA-only v2 board **`686277` completed**: GSM8K maj@4 **6/100**, pass@1 **14/100**, MATH-500 **6/100**, HumanEval **6/164**, MBPP **0/100**. The v2 pilot is **rejected for promotion**. Held-out RG `686278` is **90/800 = 11.25%**, concentrated in chain sums/string insertion/basic arithmetic rather than broad transfer; in-training `686279` is running to measure overfit. Raw-base `686314` is **invalid** after its first GSM8K metric because rotating `ckpt_0168000.pt` disappeared mid-board; `686315` is requeued from preserved `best_step168750.pt` with checkpoint pinning, and `686316` then runs a read-only adaptive interaction probe. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
@@ -67,6 +67,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | **Verified-data expansion** | **Active, CPU-only, isolated from pretrain.** `openmath_pt` is complete at **5,000,000,144 tokens / 50 shards** and remains a future-relaunch-only source. `rg_v3` dedup derivative has **252,298 valid rows**; expanded **`rg_v4` has 374,659 valid traces, 0 malformed rows, and 0 normalized-question duplicates**. It spans 25 answer-checked numerical, algorithmic, Caesar, social, and self-reference families. The frozen v2 mix has only **444 code rows**. APPS retry `686288` finished cleanly but kept only **234/5,000** candidates after execution verification; its quality report has 0 malformed/duplicate/missing rows. CodeContests Python 3 scale **`686291`** is writing an atomic partial (1,478 valid rows at last check) toward a separate 3,000-row train-only artifact. After `686291` succeeds, dependency chain **`686308 -> 686310 -> 686312`** will respectively build completion-form code, freeze `sft_mix_reasoning_v4`, and audit packed-sequence group capacity/replay before any v4 pilot chooses weights. FineWeb-Edu schema probes `686295/686297` verified English, score, and stream fields in `sample-10BT`; future-only 5B quality-thresholded/decontaminated tokenization **`686298`** is running on evc2. No new output may enter a frozen SFT mix before its final audit. |
 | **Direct capability audit** | `interactive_v1_686293.json` plus isolated **`686306`** directly tested raw 168k and v2 SFT. On 48 fresh generated tasks, raw scored **4/48 Q/A**, **4/48 plain instruction**, **0/48 CoT**, **5/48 one-shot**; v2 scored **7/48 Q/A**, then **4/48**, **5/48**, **4/48** respectively. This is a data/algorithm gap, not a prompt unlock. Read-only `686316` is queued after the corrected raw board to test whether raw 168.75k can self-correct or use supplied intermediate facts. Full evidence: `CAPABILITY_DIAGNOSIS.md` and `artifacts/eval_history/capability_matrix_v1_686306.json`. |
 | **Recurrence ablation** | Mame `n_loop=1` job `686301` and `n_loop=2` job `686302` both completed cleanly for 800 matched updates. `n_loop=2` is mechanically stable but not promoted: final logged loss was essentially tied (**2.4890 vs 2.4899**) while time rose **886s -> 1466s** and steady throughput fell **472.7k -> 286.0k tok/s**. No capability gate was run, so recurrence stays off the flagship. |
+| **Future handoff data stream** | **Fixed forward-only, never applied to active `685084`.** Prior checkpoints did not serialize `ShardLoader` state; every resumed job could recreate its stream from the same `DSEED=777`. `train.py` now records `data_stream_generation`/seed and resumes with a deterministic distinct stream generation. Tiny-train smoke verified generation **0 -> 1** and checkpoint metadata. This prevents repeated prefixes at the next natural handoff but does not claim exact cursor restoration for old chunks. |
 | Preserved checkpoints (cluster) | Includes prior milestones plus **`best_step166250.pt`** copied from numbered `ckpt_0166250.pt`; both md5 **`1b57c99aca966546d4d9aea7827d6ebd`**. |
 | **Local DR backup (Mac)** | Includes prior milestones plus **`train/flagship_out/ckpt_0166250.pt`**, full+optimizer, locally and remotely md5 **`1b57c99aca966546d4d9aea7827d6ebd`**. Next DR target: 170k. |
 | **Large artifact transfer policy** | For big checkpoints/shards/uploads, prefer VPS-to-VPS or Newton-to-VPS staging when credentials/hosts are available; the VPS links have ~20 Gbit internet and should beat Mac↔Newton transfers. Still use `.part` files and md5/sha256 on both ends before trusting or deleting anything. |
@@ -797,6 +798,13 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   preserved `best_step168750.pt` (md5 `e58b6b07802782517c7709c1844cb4d1`), and queued corrected raw board
   `686315` followed by isolated multi-turn adaptive interaction probe `686316`. No live model or SHARDS
   were modified.
+- **2026-07-12 ~05:55** — **Restart data replay defect found and repaired forward-only.** Inspection of
+  `ShardLoader` and trainer checkpoints showed that optimizer/model state resumed but the async data
+  stream did not: every Slurm handoff rebuilt it from the same `DSEED=777`, allowing a repeated shuffled
+  prefix. Added generation-scoped deterministic data seeds, checkpoint metadata, and `test_data_stream_resume.py`.
+  A real two-stage tiny-train smoke saved generation 0 then resumed at step 2 with generation 1 and a
+  distinct seed. Active `685084` is untouched; its next natural successor receives the repair. This
+  reduces an unmeasured but serious replay risk, not a retroactive claim that past tokens were unique.
 
 ---
 

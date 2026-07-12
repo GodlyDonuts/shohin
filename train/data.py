@@ -21,6 +21,23 @@ import torch
 import zstandard as zstd
 
 
+STREAM_SEED_STRIDE = 1_000_003
+
+
+def stream_seed(base_seed, generation):
+    """Return a deterministic, distinct data-stream seed for each handoff.
+
+    Model/optimizer checkpoints do not contain the async loader cursor. Reusing
+    the same seed after a Slurm restart silently begins the shuffled shard stream
+    again. A generation-scoped seed is cheaper and safer than attempting to
+    serialize a prefetched worker queue, and avoids repeating the same prefix.
+    """
+    generation = int(generation)
+    if generation < 0:
+        raise ValueError("data stream generation must be non-negative")
+    return int(base_seed) + STREAM_SEED_STRIDE * generation
+
+
 class ShardLoader:
     def __init__(self, shard_dirs, seq_len, batch_size, rank=0, world=1, seed=1337, prefetch=6,
                  domain_weights=None):

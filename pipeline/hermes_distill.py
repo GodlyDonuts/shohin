@@ -19,7 +19,7 @@ and it logs kept/wrong/error counts + yield so quality is auditable.
 Teacher output is re-tokenized with our own 32k vocab at train time, so the teacher's vocab is
 irrelevant (trace distillation, not logit-KD).
 """
-import argparse, hashlib, json, os, re, subprocess, sys, threading, time
+import argparse, hashlib, json, multiprocessing, os, re, subprocess, sys, threading, time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # ---- answer extraction (mirrors train/eval_suite.py so verification == eval scoring) --------------
@@ -166,30 +166,73 @@ BACKENDS = {
 }
 
 
+def run_hard_timeout(target, args, timeout, grace=3.0):
+    """Run one blocking callable in a killable child process.
+
+    Python threads cannot terminate a DNS/TLS/socket call that ignores the
+    library timeout. Distillation uses a thread pool for throughput, so enforce
+    the outer deadline in a process and return a small status rather than
+    allowing a single provider request to stall an entire corpus run.
+    """
+    ctx = multiprocessing.get_context("spawn")
+    recv, send = ctx.Pipe(duplex=False)
+    proc = ctx.Process(target=target, args=(send, *args))
+    proc.start()
+    send.close()
+    try:
+        proc.join(max(0.1, float(timeout)) + max(0.1, float(grace)))
+        if proc.is_alive():
+            proc.terminate()
+            proc.join(1)
+            if proc.is_alive():
+                proc.kill()
+                proc.join(1)
+            return "timeout", None
+        if recv.poll():
+            return recv.recv()
+        return "error", None
+    finally:
+        recv.close()
+
+
+def _openai_request_worker(send, url, body, api_key, timeout):
+    """Child target for one provider call; never serializes a secret to stdout."""
+    try:
+        req = urllib.request.Request(url, data=body, headers={
+            "Authorization": f"Bearer {api_key}", "Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=timeout) as response:
+            data = json.loads(response.read())
+        out = (data["choices"][0]["message"].get("content") or "").strip()
+        send.send(("ok", out))
+    except urllib.error.HTTPError as exc:
+        send.send(("http", int(exc.code)))
+    except Exception:
+        send.send(("error", None))
+    finally:
+        send.close()
+
+
 def call_openai_compat(prompt, model, timeout, base_url, api_key,
                        temperature=0.4, retries=4, max_tokens=1200):
-    """OpenAI-compatible HTTP call (no per-call process spawn -> high concurrency on a small box).
-    Uses the `content` field (we want a CONCISE trace, not a long <think>; max_tokens bounds it, and
-    reasoning models keep their long CoT in `reasoning_content`, which we deliberately ignore).
-    Backs off on 429/503; returns None on hard failure, "__RATELIMIT__" if 429 retries exhaust."""
+    """OpenAI-compatible call with a hard outer deadline per provider request.
+
+    Concise content is retained while hidden reasoning fields are intentionally
+    ignored. Retries only cover rate-limit/transient HTTP states. The child
+    process overhead is intentional: a verified row is worth more than a batch
+    that becomes permanently stuck in an uninterruptible network call.
+    """
     url = base_url.rstrip("/") + "/chat/completions"
     body = json.dumps({"model": model, "temperature": temperature, "max_tokens": max_tokens,
                        "messages": [{"role": "user", "content": prompt}]}).encode()
     for att in range(retries):
-        req = urllib.request.Request(url, data=body, headers={
-            "Authorization": f"Bearer {api_key}", "Content-Type": "application/json"})
-        try:
-            with urllib.request.urlopen(req, timeout=timeout) as r:
-                d = json.loads(r.read())
-            out = (d["choices"][0]["message"].get("content") or "").strip()
-            return out if out else None
-        except urllib.error.HTTPError as e:
-            if e.code in (429, 503):                  # rate-limited / temporarily unavailable
-                time.sleep(2 * (att + 1) + (att * att))
-                continue
-            return None
-        except Exception:
-            return None
+        status, value = run_hard_timeout(
+            _openai_request_worker, (url, body, api_key, timeout), timeout)
+        if status == "ok":
+            return value or None
+        if status == "http" and value in (429, 503):
+            time.sleep(2 * (att + 1) + (att * att))
+            continue
+        return None
     return "__RATELIMIT__"
 
 

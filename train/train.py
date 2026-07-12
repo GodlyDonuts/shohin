@@ -16,7 +16,7 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 
 from model import GPT, GPTConfig
 from muon import Muon, split_params
-from data import ShardLoader
+from data import ShardLoader, stream_seed
 
 CONFIGS = {
     # smoke: tiny, trains in seconds
@@ -110,12 +110,10 @@ def main():
     if master and a.no_muon:
         print("[opt] Muon DISABLED — all params on AdamW (bisection run)", flush=True)
 
-    loader = ShardLoader(a.shard_dirs, cfg.seq_len, a.batch_size, rank, world, seed=a.data_seed,
-                         domain_weights=a.domain_weights)
-
     os.makedirs(a.out, exist_ok=True)
     import glob as _glob
     start_step = 0
+    data_stream_generation = 0
     _cks = sorted(_glob.glob(os.path.join(a.out, "ckpt_[0-9]*.pt")))
     if a.resume and _cks:
         ck = torch.load(_cks[-1], map_location=device)
@@ -126,9 +124,18 @@ def main():
             if "opt_adam" in ck:
                 opt_adam.load_state_dict(ck["opt_adam"])
         start_step = ck["step"] + 1
+        # Older checkpoints lack this metadata, so their first resumed process
+        # becomes generation 1 rather than replaying the original seed-0 stream.
+        data_stream_generation = int(ck.get("data_stream_generation", 0)) + 1
         if master:
             tag = "  (FRESH optimizer: momentum reset + rewarmup)" if a.fresh_opt else ""
             print(f"[resume] {_cks[-1]} -> start step {start_step}{tag}", flush=True)
+    data_stream_seed = stream_seed(a.data_seed, data_stream_generation)
+    loader = ShardLoader(a.shard_dirs, cfg.seq_len, a.batch_size, rank, world,
+                         seed=data_stream_seed, domain_weights=a.domain_weights)
+    if master:
+        print(f"[data] base_seed={a.data_seed} stream_generation={data_stream_generation} "
+              f"stream_seed={data_stream_seed}", flush=True)
     warm0 = start_step if a.fresh_opt else 0
     logf = open(os.path.join(a.out, f"log_r{rank}.jsonl"), "a") if master else None
     t0 = time.time()
@@ -218,7 +225,9 @@ def main():
             logf.flush()
         if master and a.ckpt_every and step > 0 and step % a.ckpt_every == 0:
             _sd = dict(model=raw.state_dict(), opt_adam=opt_adam.state_dict(),
-                       cfg=cfg.__dict__, step=step)
+                       cfg=cfg.__dict__, step=step, data_seed=a.data_seed,
+                       data_stream_generation=data_stream_generation,
+                       data_stream_seed=data_stream_seed)
             if opt_muon is not None:
                 _sd["opt_muon"] = opt_muon.state_dict()
             torch.save(_sd, os.path.join(a.out, f"ckpt_{step:07d}.pt"))
@@ -229,7 +238,9 @@ def main():
                     pass
 
     if master:
-        torch.save(dict(model=raw.state_dict(), cfg=cfg.__dict__, step=a.steps),
+        torch.save(dict(model=raw.state_dict(), cfg=cfg.__dict__, step=a.steps,
+                        data_seed=a.data_seed, data_stream_generation=data_stream_generation,
+                        data_stream_seed=data_stream_seed),
                    os.path.join(a.out, "ckpt_final.pt"))
         print(f"[done] {a.steps} steps in {time.time()-t0:.0f}s", flush=True)
     if ddp:

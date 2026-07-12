@@ -129,6 +129,18 @@ strategy of a language floor plus a reasoning-tilted mix. At 168,300, the equal
 four-way loader has supplied about 22.06B tokens to each source: FineMath4 has
 been replayed 11.03 times while FineMath3 has received only 0.88 pass.
 
+There was an additional handoff defect. Checkpoints stored model and optimizer
+state but not the asynchronous loader cursor. Every resumed Slurm job constructed
+`ShardLoader` with the same `DSEED=777`, so it could restart the shuffled stream
+from its beginning. The exact replay fraction cannot be recovered after the fact,
+but the logs confirm multiple completed handoffs with that fixed seed; treating
+their nominal token count as fully new data would be unjustified. This is now
+fixed forward-only: checkpoints record a data-stream generation and every resume
+uses a deterministic new stream seed. It prevents repeated stream prefixes but
+does not pretend to serialize an exact prefetched byte cursor. The active job is
+not modified; the first next handoff from an older checkpoint becomes generation
+1 and therefore cannot reuse its seed-0 ordering.
+
 ## Why the first SFT did not repair it
 
 The v2 pilot was cleanly isolated and trained as intended: 349,317 examples,
@@ -191,8 +203,9 @@ evaluation earns that cost.
 ## Root causes, ranked
 
 1. **Missing reasoning substrate and uneven replay in pretraining.** The active
-   equal-domain mix is math/raw-code only, with severe replay imbalance. Stable
-   loss here is not evidence of broad skill acquisition.
+   equal-domain mix is math/raw-code only, with severe replay imbalance and,
+   before the forward-only handoff fix, potentially repeated stream prefixes.
+   Stable loss here is not evidence of broad skill acquisition.
 2. **SFT coverage is narrow and format-heavy.** It teaches concise derivation
    style more strongly than reusable algorithms. The direct transcript shows
    plausible prose without reliable state transitions or invariants.
