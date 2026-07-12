@@ -47,7 +47,10 @@ export CKPT_BASE RUN_TAG SUMMARY RUN_LOG
 echo "[eval-job] pinned_ckpt=$CKPT run_tag=$RUN_TAG log=$RUN_LOG"
 exec > >(tee -a "$RUN_LOG") 2>&1
 for i in $(seq 1 30); do
-  U=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | tr -dc '0-9\n' | sort -n | tail -1)
+  # A freshly allocated shared node can transiently return NVML exit 6.
+  # With pipefail enabled, preserve the retry behavior instead of exiting from
+  # this assignment before the explicit CUDA availability check below.
+  U=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | tr -dc '0-9\n' | sort -n | tail -1 || true)
   [ "${U:-9999}" -lt 3000 ] 2>/dev/null && break; sleep 10
 done
 if ! "$PY" - <<'PY'
