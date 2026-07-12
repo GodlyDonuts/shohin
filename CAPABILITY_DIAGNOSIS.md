@@ -536,6 +536,14 @@ about 1.8%, which is why they are not the central remediation path.
 
 ### Current execution gates
 
+- `train/eval_nll.py` now provides a fixed-input, token-weighted NLL/perplexity
+  monitor with independent named domains. It excludes training-only auxiliary
+  loss and writes immutable per-checkpoint reports. This is intentionally not a
+  reasoning score: use it to detect broad-language/math/code likelihood changes
+  around the future curriculum handoff, while direct transcripts and public
+  boards remain the promotion evidence. Monitor text must be frozen outside
+  `artifacts/evals` and outside training shard paths; it must never be silently
+  added to the live decontamination glob or to a training corpus.
 - The independent raw/V7 interactions rule out a hidden general solver: neither
   verified intermediate facts nor model-produced compact states unlock reliable
   arithmetic, transformations, or code. More state-template SFT is prohibited
