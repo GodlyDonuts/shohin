@@ -41,7 +41,9 @@ data.
   useful 209/800 (26.125%) procedural held-out result. That score is above V2's
   90/800 on the same evaluator, but the two pilots start from different raw
   checkpoints, so it is evidence to investigate rather than a clean data-only
-  attribution.
+  attribution. Its matched direct matrix is still only 4/48 Q/A, 4/48 direct,
+  4/48 CoT, and 10/48 one-shot; structured-looking derivations remain wrong on
+  basic arithmetic and state tracking.
 
 External scores require matching prompts, decoding, samples, and scorer. A custom
 100-example board cannot support a claim to beat another model.
@@ -97,6 +99,9 @@ External scores require matching prompts, decoding, samples, and scorer. A custo
 - Measure raw primitives, then run frozen V5. It must win the disjoint primitive
   gate before consuming a broader public board.
 - Admit DCLM only after its manifest and full decoded-token scan both pass.
+- After the 5B DCLM pilot passes, build and scan a 25B replacement before the
+  long language-balanced phase. The replacement must be used instead of the
+  pilot so the streamed prefix is not double-counted.
 
 ### Correct the next natural pretraining handoff
 
@@ -109,6 +114,10 @@ After every source passes its manifest gate, use the future-only curriculum:
 Start only from the newest numbered checkpoint with the distinct data stream,
 the established BS32/ACC8 single-H100 configuration, and 524,288 tokens/update.
 Never mutate the active job's shard list.
+
+The loader reserves one sequence per active domain before applying weights. The
+future script uses floor-aware weights verified by `test_domain_mix.py`; weights
+that merely sum to 25/25/50 would silently produce the wrong batch mixture.
 
 ### Scale verified post-training by missing skill
 

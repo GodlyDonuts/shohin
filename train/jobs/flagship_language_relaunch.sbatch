@@ -27,6 +27,7 @@ DSEED=${DSEED:-20260714}
 CKPT=${CKPT:-250}
 BS=${BS:-32}
 ACC=${ACC:-8}
+DCLM_DIR=${DCLM_DIR:-$BASE/artifacts/shards/dclm_baseline_5b}
 
 SHARDS=(
   "$BASE/artifacts/shards/finemath4"
@@ -35,13 +36,15 @@ SHARDS=(
   "$BASE/artifacts/shards/finemath3"
   "$BASE/artifacts/shards/openmath_pt"
   "$BASE/artifacts/shards/fineweb_edu_5b"
-  "$BASE/artifacts/shards/dclm_baseline_5b"
+  "$DCLM_DIR"
 )
-# math: 2 + 4 + 8 + 11 = 25%; code: 25%; educational English: 30 + 20 = 50%.
 # FineMath4 is retained for diversity but deliberately no longer replayed at the
-# old equal-domain rate.  All sources still appear in every batch before the
-# weighted remainder (ShardLoader contract).
-WEIGHTS=(2 4 25 8 11 30 20)
+# old equal-domain rate. DCLM_DIR can point to a scanned larger replacement such
+# as dclm_baseline_25b; never include both the pilot and its replacement.
+WEIGHTS=(2 4 28 4 6 32 24)
+# ShardLoader reserves one of BS=32 sequences for each of these seven domains,
+# then fills the remaining 25 by WEIGHTS. These values therefore yield the
+# intended effective mix: math 25%, code 25%, English 50%.
 
 [ -f "$RESUME" ] || { echo "[language-relaunch] resume checkpoint missing: $RESUME" >&2; exit 2; }
 LATEST=$(ls "$OUT"/ckpt_[0-9]*.pt 2>/dev/null | sort | tail -1 || true)

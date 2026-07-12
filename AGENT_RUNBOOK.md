@@ -928,6 +928,20 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   because V4 starts from the later 168.75k base. V4's direct adaptive test `686338` remained **1/6
   initial, 1/6 review, 0/6 scaffold**, and the public board has math/code regressions, so V4 stays
   rejected for broad promotion. Its remaining matrix/verifier chain is diagnosis only.
+- **2026-07-12 ~09:30** — **V4 format-versus-execution diagnosis completed.** Matched matrix `686339`
+  scored raw/V4 as **4/48 -> 4/48 Q/A**, **5/48 -> 4/48 direct**, **0/48 -> 4/48 CoT**, and
+  **7/48 -> 10/48 one-shot**. V4 gains some prompted arithmetic and syllogism behavior but not native
+  direct execution. Verbatim audit `686343` shows plausible prose with wrong facts (`19*17=303`,
+  base-6 `254` copied to decimal, `r=14 -> 3r=14`), so its traces cannot be promoted as general
+  reasoning. Retain V4 only for verifier/generator comparison; V5's primitives gate must prove actual
+  atomic execution rather than output style.
+- **2026-07-12 ~09:35** — **Future language curriculum weights corrected before any handoff.**
+  `ShardLoader` reserves one sequence for every enabled domain before drawing its weighted remainder;
+  the old nominal 25/25/50 weights would have supplied roughly **32/23/45** math/code/English at BS32.
+  `flagship_language_relaunch.sbatch` now uses floor-aware weights `2 4 28 4 6 32 24`, verified by
+  `test_domain_mix.py` to yield exact **25/25/50**. Added a 25B DCLM replacement builder; it requires
+  the 5B pilot manifest and must receive a fresh full-shard scan before admission, never coexist with
+  the pilot in one curriculum. No active training or live SHARDS changed.
 
 ---
 

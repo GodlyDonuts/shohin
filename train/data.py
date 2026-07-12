@@ -38,6 +38,31 @@ def stream_seed(base_seed, generation):
     return int(base_seed) + STREAM_SEED_STRIDE * generation
 
 
+def effective_domain_fractions(domain_weights, batch_size):
+    """Return long-run per-domain batch fractions under the loader's floor rule.
+
+    Weighted batches first reserve one sequence for every positive-weight domain,
+    then fill the remaining positions from the weighted cycle.  This helper
+    makes that non-obvious floor visible when designing a curriculum.
+    """
+    if batch_size <= 0:
+        raise ValueError("batch_size must be positive")
+    weights = [float(weight) for weight in domain_weights]
+    if any(weight < 0 for weight in weights):
+        raise ValueError("domain_weights must be non-negative")
+    active = [index for index, weight in enumerate(weights) if weight > 0]
+    if not active:
+        raise ValueError("domain_weights must include a positive weight")
+    if batch_size < len(active):
+        raise ValueError("batch_size must cover every positive-weight domain")
+    total = sum(weights)
+    remainder = batch_size - len(active)
+    return [
+        ((1 if index in active else 0) + remainder * weight / total) / batch_size
+        for index, weight in enumerate(weights)
+    ]
+
+
 class ShardLoader:
     def __init__(self, shard_dirs, seq_len, batch_size, rank=0, world=1, seed=1337, prefetch=6,
                  domain_weights=None):

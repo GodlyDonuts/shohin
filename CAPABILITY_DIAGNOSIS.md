@@ -103,6 +103,17 @@ also only 1/6 initial, 1/6 review, and 0/6 scaffolded. The remaining matched
 capability matrix will separate prompt-format effects from this local procedural
 transfer signal.
 
+That matched matrix and the raw-versus-V4 transcript are now complete. On the
+same 48 cases and seed, raw 168.75k scored Q/A 4/48, direct 5/48, CoT 0/48, and
+one-shot 7/48; V4 scored 4/48, 4/48, 4/48, and 10/48. The V4 CoT gain is four
+arithmetic cases, while the one-shot gain is mainly syllogisms; native Q/A and
+direct instruction remain at or below the raw checkpoint. The complete
+transcript (`interactive_raw_vs_v4_168750_686343.json`) shows why the aggregate
+is not enough: it turns `saffron` into `nroffas`, emits `19 * 17 = 303`, copies
+base-6 `254` as decimal 254, counts one `a` in `bananas`, and fails to carry
+`r = 14` into `3r`. V4's extra structure is sometimes useful for sampled
+procedural tasks, but it is not a dependable execution trace.
+
 ### Controlled prompt matrix at 168k
 
 The first twelve hand-authored prompts established the failure qualitatively. A
