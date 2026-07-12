@@ -112,6 +112,8 @@ def main():
     parser.add_argument("--max-problem-tokens", type=int, default=512)
     parser.add_argument("--max-trace-tokens", type=int, default=512)
     parser.add_argument("--min-pass-rate", type=float)
+    parser.add_argument("--exclude-used-in-kaggle", action="store_true",
+                        help="exclude the source's AIMO-2-training subset; off by default because project eval decontamination is the relevant leakage control")
     parser.add_argument("--ngram", type=int, default=13)
     args = parser.parse_args()
     if args.max_seen < 0 or args.max_keep < 0 or args.max_problem_tokens <= 0 or args.max_trace_tokens <= 0:
@@ -135,7 +137,8 @@ def main():
         "seen": 0,
         "kept": 0,
         "missing": 0,
-        "used_in_kaggle": 0,
+        "used_in_kaggle_seen": 0,
+        "used_in_kaggle_excluded": 0,
         "duplicate_problem": 0,
         "long_problem": 0,
         "long_trace": 0,
@@ -166,9 +169,12 @@ def main():
             if not problem or not trace or not answer:
                 stats["missing"] += 1
                 continue
-            if truthy(row.get("used_in_kaggle")):
-                stats["used_in_kaggle"] += 1
-                continue
+            used_in_kaggle = truthy(row.get("used_in_kaggle"))
+            if used_in_kaggle:
+                stats["used_in_kaggle_seen"] += 1
+                if args.exclude_used_in_kaggle:
+                    stats["used_in_kaggle_excluded"] += 1
+                    continue
             if args.min_pass_rate is not None:
                 rate = parsed_rate(row.get("pass_rate_72b_tir"))
                 if rate is None or rate < args.min_pass_rate:
@@ -214,6 +220,7 @@ def main():
                     "verification": "expected_answer_trace_final",
                     "problem_source": row.get("problem_source"),
                     "generation_model": row.get("generation_model"),
+                    "used_in_kaggle": used_in_kaggle,
                 }, ensure_ascii=False) + "\n")
             if args.max_keep and stats["kept"] >= args.max_keep:
                 break
@@ -235,6 +242,7 @@ def main():
         "max_problem_tokens": args.max_problem_tokens,
         "max_trace_tokens": args.max_trace_tokens,
         "min_pass_rate": args.min_pass_rate,
+        "exclude_used_in_kaggle": args.exclude_used_in_kaggle,
         "ngram": args.ngram,
         "eval_files": eval_files,
         "eval_exact_prompts": len(exact),

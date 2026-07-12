@@ -17,6 +17,7 @@ MAX_SEEN=${MAX_SEEN:-50000}
 MAX_PROBLEM_TOKENS=${MAX_PROBLEM_TOKENS:-512}
 MAX_TRACE_TOKENS=${MAX_TRACE_TOKENS:-512}
 MIN_PASS_RATE=${MIN_PASS_RATE:-}
+EXCLUDE_USED_IN_KAGGLE=${EXCLUDE_USED_IN_KAGGLE:-0}
 OUT=${OUT:?set OUT to a fresh selection-report JSON}
 
 [ ! -e "$OUT" ] || { echo "[openmath-select] refusing existing report $OUT" >&2; exit 2; }
@@ -26,5 +27,8 @@ ARGS=(--tokenizer "$BASE/artifacts/shohin-tok-32k.json" --evals "$BASE/artifacts
       --max-problem-tokens "$MAX_PROBLEM_TOKENS" --max-trace-tokens "$MAX_TRACE_TOKENS")
 if [ -n "$MIN_PASS_RATE" ]; then
   ARGS+=(--min-pass-rate "$MIN_PASS_RATE")
+fi
+if [ "$EXCLUDE_USED_IN_KAGGLE" = 1 ]; then
+  ARGS+=(--exclude-used-in-kaggle)
 fi
 "$PY" pipeline/curate_openmath_reasoning.py "${ARGS[@]}"

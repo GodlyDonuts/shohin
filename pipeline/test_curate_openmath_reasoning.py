@@ -18,6 +18,7 @@ class OpenMathReasoningSelectionTests(unittest.TestCase):
         self.assertTrue(truthy(True))
         self.assertTrue(truthy("yes"))
         self.assertFalse(truthy("false"))
+        self.assertFalse(truthy("0"))
 
 
 if __name__ == "__main__":
