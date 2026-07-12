@@ -19,6 +19,8 @@ from pathlib import Path
 WORDS = ["sequoia", "marigold", "cobalt", "pioneer", "safflower", "vermilion"]
 INSERTS = ["QR", "uv", "JK", "rs", "LM", "wx"]
 NOUNS = ["norp", "zelk", "favin", "quor", "bex", "tul", "mep", "sarn"]
+CONSONANTS = "bcdfghjklmnprstvwxz"
+VOWELS = "aeiou"
 
 
 def answer_response(reasoning, answer):
@@ -40,6 +42,11 @@ def digits_for_base(rng, base, length):
     return digits
 
 
+def made_up_word(rng, syllables=4):
+    """Generate many short ASCII strings without relying on a fixed word list."""
+    return "".join(rng.choice(CONSONANTS) + rng.choice(VOWELS) for _ in range(syllables))
+
+
 def numeral_value(digits, base):
     value = 0
     for digit in digits:
@@ -53,12 +60,12 @@ def make_case(family, rng, heldout):
         lo, hi = 211, 499
         state_lo, state_hi = 121, 399
         list_hi = 199
-        base_length = 4
+        base_length = 5
     else:
         lo, hi = 41, 199
         state_lo, state_hi = 23, 119
         list_hi = 99
-        base_length = 4
+        base_length = 5
 
     if family == "arithmetic":
         a, b, c = rng.randint(lo, hi), rng.randint(19, 47), rng.randint(11, 97)
@@ -112,7 +119,7 @@ def make_case(family, rng, heldout):
         return verified_row(question, f"The distinct values in ascending order are {answer}", answer)
 
     if family == "string_insert":
-        word = rng.choice(WORDS)
+        word = rng.choice(WORDS) + made_up_word(rng, syllables=2)
         insert = rng.choice(INSERTS)
         position = rng.randint(2, len(word) - 2)
         answer = word[:position] + insert + word[position:]
@@ -127,7 +134,10 @@ def make_case(family, rng, heldout):
         )
 
     if family == "syllogism":
-        subject, middle, target = rng.sample(NOUNS, 3)
+        names = set()
+        while len(names) < 3:
+            names.add(rng.choice(NOUNS) + made_up_word(rng, syllables=2))
+        subject, middle, target = sorted(names)
         if rng.randrange(2):
             question = (
                 f"Every {subject} is a {middle}. Every {middle} is a {target}. "
@@ -165,18 +175,20 @@ def make_case(family, rng, heldout):
     raise ValueError(f"unknown family: {family}")
 
 
-def build_split(n_per_family, seed, heldout):
+def build_split(n_per_family, seed, heldout, excluded_questions=None):
     families = ["arithmetic", "base_conversion", "state_update", "sort_unique", "string_insert", "syllogism", "correction"]
     rng = random.Random(seed)
     rows, questions = [], set()
+    excluded_questions = excluded_questions or set()
+    counts = Counter()
     for family in families:
         attempts = 0
-        while sum(row["family"] == family for row in rows) < n_per_family:
+        while counts[family] < n_per_family:
             attempts += 1
             if attempts > n_per_family * 30:
                 raise RuntimeError(f"could not generate enough unique {family} rows")
             row = make_case(family, rng, heldout)
-            if row["question"] in questions:
+            if row["question"] in questions or row["question"] in excluded_questions:
                 continue
             questions.add(row["question"])
             rows.append({
@@ -185,6 +197,7 @@ def build_split(n_per_family, seed, heldout):
                 "training_group": "primitives",
                 "family": family,
             })
+            counts[family] += 1
     rng.shuffle(rows)
     return rows
 
@@ -213,7 +226,10 @@ def main():
         raise ValueError("split sizes must be positive")
 
     train = build_split(args.train_per_family, args.seed, heldout=False)
-    heldout = build_split(args.eval_per_family, args.seed + 1, heldout=True)
+    heldout = build_split(
+        args.eval_per_family, args.seed + 1, heldout=True,
+        excluded_questions={row["question"] for row in train},
+    )
     train_questions = {row["question"] for row in train}
     eval_questions = {row["question"] for row in heldout}
     if train_questions & eval_questions:
