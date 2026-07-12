@@ -948,6 +948,14 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   per normalized problem, Math Verify preferred, Llama fallback only, 512-token trace cap, and project
   evalgram rejection. CPU pilot `686381` targets only 10k rows plus a quality report; it is isolated and
   cannot enter a frozen SFT mix without reviewing its yield, overlap, length, and provenance.
+- **2026-07-12 ~10:00** — **OpenR1 short-trace route rejected; filtered source-solution route passed.**
+  Length profile `686382/686383` found 0/255 verified R1 traces <=1024 tokens (p50 4,988), so do not
+  train their verbose CoT into the 125M student. The concise `solution` field was viable (203/255 <=512),
+  but its first pilot exposed 97 table artifacts, 2 parameter placeholders, and 492 near-answer-only rows.
+  Added deterministic answer-explicit, table/placeholder, and >=10-novel-word filters. Corrected pilot
+  `686386` produced **10,000** clean rows from 17,360 seen: 0 malformed/duplicates/exact eval overlaps/
+  13-gram eval overlaps, p50 120 response words, and 0 source mutation. Submitted larger CPU-only
+  candidate `686387`; it is future-SFT-only pending its final audit and source-balance decision.
 
 ---
 

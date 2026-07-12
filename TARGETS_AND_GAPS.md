@@ -131,7 +131,11 @@ that merely sum to 25/25/50 would silently produce the wrong batch mixture.
 - The official Apache-2.0 OpenR1-Math default subset is a promising verified
   math candidate. Its intake remains gated: retain only completed per-trace Math
   Verify results (with LLM-judge fallback), one trace per problem, concise output,
-  and no evaluation-prompt overlap. A 10k pilot must pass before a full curation.
+  and no evaluation-prompt overlap. Its raw R1 traces are too long for this
+  125M-model stage, so the acceptable path is a concise source solution only if
+  a verified R1 generation exists, the answer appears in that solution, and
+  table/placeholder/near-answer-only artifacts are filtered. The 10k filtered
+  pilot passed those gates; a larger candidate remains future-SFT-only.
 
 ### Treat extended reasoning as separate research
 

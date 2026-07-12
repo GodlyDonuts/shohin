@@ -1,0 +1,34 @@
+{
+  "data": "/lustre/fs1/home/sa305415/shohin/artifacts/sft/openr1_math_default_solution_filtered_10k_r2.jsonl",
+  "duplicate_normalized_questions": 0,
+  "eval_overlap": {
+    "enabled": true,
+    "eval_exact_questions": 1982,
+    "eval_ngrams": 68997,
+    "exact_prompt_hits": 0,
+    "ngram_prompt_hits": 0
+  },
+  "format_markers": {
+    "<think>": 10000,
+    "The answer is": 10000,
+    "Therefore": 4512,
+    "\\boxed": 595,
+    "```": 2
+  },
+  "malformed_rows": 0,
+  "missing_question_or_response": 0,
+  "response_words": {
+    "max": 397,
+    "mean": 129.33,
+    "p50": 120,
+    "p90": 220,
+    "p99": 295
+  },
+  "source_counts": {
+    "openr1_math_default_solution": 10000
+  },
+  "training_group_counts": {
+    "math": 10000
+  },
+  "valid_rows": 10000
+}

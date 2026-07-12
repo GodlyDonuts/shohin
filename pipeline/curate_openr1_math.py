@@ -82,6 +82,21 @@ def clean_trace(trace):
     return trace.strip()
 
 
+def answer_in_text(answer, text):
+    answer = re.sub(r"\s+", "", str(answer)).replace("$", "")
+    text = re.sub(r"\s+", "", str(text)).replace("$", "")
+    return bool(answer) and answer in text
+
+
+def novel_word_count(problem, solution):
+    problem_words = set(WORD.findall(str(problem).lower()))
+    return sum(word not in problem_words for word in WORD.findall(str(solution).lower()))
+
+
+def verification_stat_key(verification):
+    return "source_solution_selected" if verification == "source_solution" else verification
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--tokenizer", required=True)
@@ -94,7 +109,11 @@ def main():
     parser.add_argument("--max-keep", type=int, default=90_000)
     parser.add_argument("--max-problem-tokens", type=int, default=512)
     parser.add_argument("--max-trace-tokens", type=int, default=512)
+    parser.add_argument("--min-novel-words", type=int, default=10,
+                        help="reject answer-only source solutions with too little reasoning beyond the prompt")
     parser.add_argument("--ngram", type=int, default=13)
+    parser.add_argument("--source-solution", action="store_true",
+                        help="use concise source solution only when its answer is explicit and a verified R1 generation exists")
     args = parser.parse_args()
 
     out = Path(args.out)
@@ -110,7 +129,9 @@ def main():
     tokenizer = Tokenizer.from_file(args.tokenizer)
     eval_grams = load_eval_grams(args.evals, args.ngram)
     stats = dict(seen=0, kept=0, duplicate=0, no_verified_trace=0, long_problem=0,
-                 long_trace=0, contaminated=0, missing=0, math_verify=0, llama_judge=0)
+                 long_trace=0, answer_not_in_solution=0, contaminated=0, missing=0,
+                 markdown_table=0, param_placeholder=0, low_novelty=0,
+                 math_verify=0, llama_judge=0, source_solution_selected=0)
     seen_questions = set()
     stream = load_dataset(args.dataset, name=args.config, split=args.split, streaming=True)
     with temporary.open("w") as destination:
@@ -135,7 +156,23 @@ def main():
             if selected is None:
                 stats["no_verified_trace"] += 1
                 continue
-            trace, verification = selected
+            if args.source_solution:
+                trace = clean_trace(row.get("solution") or "")
+                if "| :---" in trace or "|:---" in trace:
+                    stats["markdown_table"] += 1
+                    continue
+                if re.search(r"\bparam\d+\b", trace, flags=re.I):
+                    stats["param_placeholder"] += 1
+                    continue
+                if not answer_in_text(answer, trace):
+                    stats["answer_not_in_solution"] += 1
+                    continue
+                if novel_word_count(problem, trace) < args.min_novel_words:
+                    stats["low_novelty"] += 1
+                    continue
+                verification = "source_solution"
+            else:
+                trace, verification = selected
             trace = clean_trace(trace)
             if len(tokenizer.encode(trace).ids) > args.max_trace_tokens:
                 stats["long_trace"] += 1
@@ -146,21 +183,23 @@ def main():
                 "question": problem,
                 "response": response,
                 "answer": answer,
-                "source": "openr1_math_default",
+                "source": "openr1_math_default_solution" if args.source_solution else "openr1_math_default",
                 "training_group": "math",
                 "verification": verification,
                 "uuid": row.get("uuid"),
             }, ensure_ascii=False) + "\n")
             stats["kept"] += 1
-            stats[verification] += 1
+            stats[verification_stat_key(verification)] += 1
             if stats["kept"] % 10_000 == 0:
                 print(f"[openr1] kept={stats['kept']:,} seen={stats['seen']:,}", flush=True)
             if stats["kept"] >= args.max_keep:
                 break
     os.replace(temporary, out)
     report = dict(dataset=args.dataset, config=args.config, split=args.split,
+                  source_solution_mode=args.source_solution,
                   max_problem_tokens=args.max_problem_tokens,
-                  max_trace_tokens=args.max_trace_tokens, ngram=args.ngram,
+                  max_trace_tokens=args.max_trace_tokens, min_novel_words=args.min_novel_words,
+                  ngram=args.ngram,
                   eval_grams=len(eval_grams), **stats)
     report_path = Path(args.report) if args.report else out.with_suffix(out.suffix + ".report.json")
     report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
