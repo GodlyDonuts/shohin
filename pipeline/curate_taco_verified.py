@@ -62,9 +62,14 @@ def main():
     parser.add_argument("--max-code-chars", type=int, default=20_000)
     parser.add_argument("--max-case-chars", type=int, default=20_000)
     parser.add_argument("--ngram", type=int, default=13)
+    parser.add_argument("--seed", type=int, default=20260712)
+    parser.add_argument("--shuffle-buffer", type=int, default=10_000,
+                        help="streaming shuffle buffer; 0 preserves source order")
     args = parser.parse_args()
     if args.max_seen <= 0 or args.max_kept <= 0 or args.max_tests <= 0:
         raise ValueError("max-seen, max-kept, and max-tests must be positive")
+    if args.shuffle_buffer < 0:
+        raise ValueError("shuffle-buffer must be non-negative")
 
     from datasets import load_dataset
 
@@ -75,6 +80,12 @@ def main():
     out_path.parent.mkdir(parents=True, exist_ok=True)
     test_grams = build_test_grams(args.evals, args.ngram)
     stream = load_dataset(args.dataset, split="train", streaming=True)
+    # A prefix of a streaming competitive-programming dataset can be ordered by
+    # source, difficulty, or upload time. Sample a deterministic reservoir-like
+    # window instead, while the later full audit always replays selected IDs
+    # against the canonical unshuffled source.
+    if args.shuffle_buffer:
+        stream = stream.shuffle(seed=args.seed, buffer_size=args.shuffle_buffer)
     seen = kept = 0
     drops = {key: 0 for key in ("eval_overlap", "missing_cases", "missing_python", "execution")}
     with partial.open("w") as out:
@@ -111,6 +122,8 @@ def main():
     print(json.dumps({
         "dataset": args.dataset,
         "split": "train",
+        "seed": args.seed,
+        "shuffle_buffer": args.shuffle_buffer,
         "seen": seen,
         "kept": kept,
         "dropped": drops,

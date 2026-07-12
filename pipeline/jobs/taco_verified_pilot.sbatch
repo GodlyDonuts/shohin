@@ -14,12 +14,15 @@ BASE=/lustre/fs1/home/sa305415/shohin
 PY=$BASE/miniforge3/bin/python
 OUT=${OUT:-$BASE/artifacts/sft/taco_verified_pilot.jsonl}
 REPORT=${REPORT:-$BASE/artifacts/sft/taco_verified_pilot.quality.json}
+SEED=${SEED:-20260712}
+SHUFFLE_BUFFER=${SHUFFLE_BUFFER:-10000}
 
 [ ! -e "$OUT" ] || { echo "[taco-pilot] output exists: $OUT" >&2; exit 2; }
 [ ! -e "$OUT.partial" ] || { echo "[taco-pilot] stale partial: $OUT.partial" >&2; exit 3; }
 cd "$BASE"
 "$PY" pipeline/curate_taco_verified.py --out "$OUT" --evals "$BASE/artifacts/evals" \
-  --max-seen "${MAX_SEEN:-1000}" --max-kept "${MAX_KEPT:-250}" --max-tests "${MAX_TESTS:-3}"
+  --max-seen "${MAX_SEEN:-1000}" --max-kept "${MAX_KEPT:-250}" --max-tests "${MAX_TESTS:-3}" \
+  --seed "$SEED" --shuffle-buffer "$SHUFFLE_BUFFER"
 "$PY" pipeline/audit_sft_quality.py --data "$OUT" --evals "$BASE/artifacts/evals" --out "$REPORT"
 "$PY" - "$REPORT" <<'PY'
 import json
