@@ -84,6 +84,39 @@ The SFT model therefore has isolated wins (state tracking and a minimal code
 predicate) and partial correct intermediates, but no robust rule execution. This
 is direct evidence, not an inference from a loss curve.
 
+### Fresh compositional interview: raw 170k still fails every nontrivial task
+
+The seven-case replay could have been dismissed as too close to the earlier
+diagnostic families, so a second eight-case composition-focused interview was
+run locally against the preserved raw 170k checkpoint. It uses distinct wording,
+numbers, and two executable Python contracts: a word problem, base-7 conversion,
+three-operation counter update, negative sort/deduplicate, string splice, set
+constraint, `count_evens`, and `sum_positive`. Every case receives five turns:
+initial answer, independent review, a true supplied intermediate, requested
+`state=` representation, and reuse of that state. The full unabridged transcript
+is `artifacts/eval_history/generalization_interview_raw170k_20260712_mps.json`
+(md5 `d9ad30fad6c00958ad9d6908ca14c38a`).
+
+| Condition | Result |
+|---|---:|
+| Initial answer | **1 / 8** |
+| Independent review | **0 / 8** |
+| Supplied verified fact | **1 / 8** |
+| Valid emitted `state=` line | **0 / 8** |
+| Correct answer after state reuse | **0 / 8** |
+| Valid state and correct reuse | **0 / 8** |
+
+The sole success was the elementary set constraint. The failure traces identify
+missing execution rather than a stopping-only issue: `17 * 23` becomes `351`,
+then the model does not subtract even when given the correct product `391`; the
+base-7 task uses decimal-style powers; and the counter task jumps from `12` into
+unrelated competitive-programming boilerplate. It emits no requested state line.
+For code, it substitutes `count_even` for `count_evens` and adds a print-driven
+template, while `sum_positive` is malformed/recursive rather than a function
+with the requested predicate. This independently reproduces the prior direct
+audit: raw Shohin has no demonstrated general algorithm execution, self-repair,
+or compact-context continuation at this stage.
+
 ### V4 has procedural signal, but is not a broad promotion
 
 The corrected V4 r3 held-out procedural evaluator (`686337`) scored **209/800 =
