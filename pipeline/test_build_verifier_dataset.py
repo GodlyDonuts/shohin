@@ -51,6 +51,7 @@ def main():
         duplicate.write_text("".join(json.dumps(row) + "\n" for row in [
             {"question": "q3", "candidate": "same", "correct": True},
             {"question": "q3", "candidate": "same", "correct": True},
+            {"question": "q3", "candidate": "same!", "correct": True},
             {"question": "q3", "candidate": "different", "correct": False},
         ]))
         deduped = root / "deduped.jsonl"

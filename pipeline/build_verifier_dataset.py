@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 import random
+import re
 from pathlib import Path
 
 
@@ -27,6 +28,12 @@ def key(question, candidate):
     return hashlib.sha1(text.encode("utf-8", "ignore")).hexdigest()
 
 
+def normalized_prompt_key(question, candidate):
+    """Match the downstream audit's punctuation-insensitive prompt identity."""
+    prompt = verifier_question(question, candidate)
+    return " ".join(re.findall(r"\w+", prompt.lower()))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--input", required=True)
@@ -39,7 +46,7 @@ def main():
     if args.negative_ratio <= 0:
         raise SystemExit("negative-ratio must be positive")
 
-    positives, negatives, seen = [], [], set()
+    positives, negatives, seen, normalized_seen = [], [], set(), set()
     malformed = missing = duplicates = 0
     with open(args.input, errors="replace") as src:
         for line in src:
@@ -60,6 +67,11 @@ def main():
                 duplicates += 1
                 continue
             seen.add(row_key)
+            normalized_key = normalized_prompt_key(question, candidate)
+            if normalized_key in normalized_seen:
+                duplicates += 1
+                continue
+            normalized_seen.add(normalized_key)
             target = CORRECT if row["correct"] else INCORRECT
             clean = {
                 "question": verifier_question(question, candidate),
