@@ -1510,6 +1510,11 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   the generator plus multi-file global dedup to verifier construction. Active `686536` continues as the
   25-family prefix control; only `686564` tail (skip 10k/take 1.2k) + `686565` merged data + `686566`
   packing can feed verifier SFT. The old pending `686540`/`686541` were canceled before any work began.
+- **2026-07-12 ~14:42** — **Verifier-bank prefix bias eliminated for future refreshes.** The root cause
+  was `sample_verifier_bank.py` emitting balanced per-family reservoirs in sorted-family order. It now
+  applies the existing seeded RNG to the completed bank, with a deterministic regression test. Existing
+  11.2k data remains immutable, so the active tail repair stays required; every future bounded rollout
+  from a new bank will be representative instead of a family prefix.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
