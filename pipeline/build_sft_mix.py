@@ -75,6 +75,14 @@ def qhash(q: str) -> str:
     return hashlib.sha1(norm_question(q).encode("utf-8", "ignore")).hexdigest()[:16]
 
 
+def file_sha256(path: str) -> str:
+    digest = hashlib.sha256()
+    with open(path, "rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def response_stats(resp: str) -> tuple[int, int]:
     return len(resp), len(WORD.findall(resp))
 
@@ -316,6 +324,7 @@ def main():
         report["kept_by_training_group"][row.get("training_group", "math")] += 1
         report["kept_by_domain"][domains.get(qhash(row["question"]), "unmapped")] += 1
     report["kept_total"] = len(rows)
+    report["out_sha256"] = file_sha256(args.out)
 
     # Convert Counters for JSON.
     for k in ("seen_by_file", "kept_by_file", "kept_by_source", "kept_by_training_group",

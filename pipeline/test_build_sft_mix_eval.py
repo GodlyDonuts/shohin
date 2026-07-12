@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Regression: live eval prompt n-grams must gate SFT mixing without a pickle."""
 import json
+import hashlib
 import subprocess
 import sys
 import tempfile
@@ -34,6 +35,7 @@ def main():
         rows = [json.loads(line) for line in out.read_text().splitlines()]
         result = json.loads(report.read_text())
         assert [row["question"] for row in rows] == ["safe fresh question"]
+        assert result["out_sha256"] == hashlib.sha256(out.read_bytes()).hexdigest()
         assert result["drops"]["eval_ngram"] == 1
         assert result["limits"]["direct_eval_gram_count"] == 2
     print("sft live-eval ngram mix gate: passed")
