@@ -1610,6 +1610,13 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   deterministic source order, the same 2s sandbox timeout, every supplied case, partial-row integrity, and
   fsynced progress batches. Local and Newton real-execution tests passed. Use this only if `686584` ends
   non-successfully; override a resubmission to `WORKERS=2` and a sufficient wall-time, never relax tests.
+- **2026-07-12** — **Raw-to-V8 transfer chain is queued, serial, and isolated.** On the known-good H100
+  node `evc25`, after the verifier-tail job `686564` succeeds and after `best_step180000.pt` should exist,
+  queued jobs are: **`686638`** raw-180k public board -> **`686639`** raw-180k composition interview ->
+  **`686640`** one-epoch hash/overlap-gated V8 SFT -> **`686641`** V8 public board -> **`686642`** V8
+  composition interview. The direct interviews preserve full transcripts; V8 cannot start unless the raw
+  interview succeeds, and V8 cannot be promoted from a constructed/held-out generator score alone. This
+  chain has no flagship output path and cannot run before the current verifier H100 work ends.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
