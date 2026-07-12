@@ -28,6 +28,18 @@ def _grams(text, n):
         yield " ".join(w[i:i + n])
 
 
+def field_value(row, field):
+    """Read a top-level or dotted nested dataset field without raising on drift."""
+    if field in row:
+        return row[field]
+    value = row
+    for part in field.split("."):
+        if not isinstance(value, dict):
+            return None
+        value = value.get(part)
+    return value
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tokenizer", required=True)
@@ -48,7 +60,7 @@ def main():
     ap.add_argument("--lang", default=None)
     ap.add_argument("--lang-field", default="language")
     ap.add_argument("--min-number-field", default=None,
-                    help="optional numeric quality field; drop a row when missing or below --min-number")
+                    help="optional numeric quality field (supports dotted paths); drop a row when missing or below --min-number")
     ap.add_argument("--min-number", type=float, default=None,
                     help="minimum accepted value for --min-number-field")
     a = ap.parse_args()
@@ -97,13 +109,13 @@ def main():
             n_short += 1
             continue
         if a.lang:
-            lv = ex.get(a.lang_field)
+            lv = field_value(ex, a.lang_field)
             if lv is not None and str(lv).lower() != a.lang.lower():
                 n_lang += 1
                 continue
         if a.min_number_field is not None:
             try:
-                score = float(ex.get(a.min_number_field))
+                score = float(field_value(ex, a.min_number_field))
             except (TypeError, ValueError):
                 n_quality += 1
                 continue
