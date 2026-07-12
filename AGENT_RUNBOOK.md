@@ -1572,6 +1572,15 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   rows, >=70k packed sequences, >=2,500 code sequences, all four groups, zero eval overlap, and <=3x replay
   before it can train from a preserved checkpoint. After success it still needs public-board and direct
   composition-transfer gates; it is not a flagship promotion.
+- **2026-07-12** — **V8 input gate is now ready for a measured 180k experiment.** CPU quality `686602`
+  and packing `686603` completed read-only against the immutable 699,928-row JSONL. Their refreshed
+  `quality.r3.json` and `packing.r3.json` both bind the same SHA-256
+  `da94f9f6aae1d69a12633241b3971f6cfc68f7a7edbc788b956063ec5a70fc72`; V8 has 73,273 packed
+  2,048-token sequences, 2,660 code sequences, zero recorded direct eval overlap, and max replay 2.755x.
+  The V8 launcher passed every data gate in a no-GPU dry run and stopped only at CUDA allocation. It is held
+  until `best_step180000.pt` is preserved and the known-good `evc25` verifier allocation is free, then must
+  run one isolated epoch followed by public-board and direct-composition evaluations. It remains an experiment,
+  never a live-pretrain change or promotion by construction.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
