@@ -141,7 +141,14 @@ def generate_batch(model, tok, prompt, device, n, max_new=256, temp=0.0, top_k=4
             if finished[row]:
                 continue
             generated[row].append(token)
-            txt = tok.decode(generated[row])
+        # Rust-backed decode_batch removes the Python per-sample/token loop
+        # from self-consistency and verifier rollouts. The fallback keeps the
+        # helper testable with a minimal tokenizer stub.
+        texts = (tok.decode_batch(generated) if hasattr(tok, "decode_batch")
+                 else [tok.decode(tokens) for tokens in generated])
+        for row, txt in enumerate(texts):
+            if finished[row]:
+                continue
             # SFT targets intentionally contain paragraph breaks before their final
             # answer. Stopping on any blank line truncates that answer and turns a
             # correct completion into an apparent benchmark miss. Once an explicit

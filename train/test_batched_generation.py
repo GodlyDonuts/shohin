@@ -14,6 +14,9 @@ class FakeTokenizer:
     def decode(self, ids):
         return " ".join(map(str, ids))
 
+    def decode_batch(self, batch):
+        return [self.decode(ids) for ids in batch]
+
     def token_to_id(self, token):
         assert token == "<|endoftext|>"
         return 4
