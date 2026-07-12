@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-12 ~05:15 EDT (`685084` healthy past 168.3k; corrected v2 board and direct prompt matrix both reject v2 as a promotion candidate). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-12 ~05:42 EDT (`685084` healthy past 168.8k; v2 narrow held-out RG result recorded; raw-base board and adaptive direct probe queued from a preserved 168.75k checkpoint). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -50,13 +50,13 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-12 ~05:15 EDT) |
+| Item | Value (as of 2026-07-12 ~05:42 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | `683715` completed cleanly. Current active continuation is **`685084`** on **evc22**: one H100, `BS=32 ACC=8 CKPT=250`, exact 524,288-token updates, and the proven default compile path. It resumed `ckpt_0141500.pt -> step 141501`; the prior dual-GPU successor remains canceled per user instruction. |
-| Extended pretrain status | **`685084` is healthy through step 168,360** at ~**154.2k tok/s**. Loss remains in the normal ~1.2-2.1 band and gnorm is normally 0.07-0.17; the isolated gnorm skip at 166758 recovered immediately. Latest confirmed numbered checkpoint is `ckpt_0168000.pt`; preserve/download 170k at the next milestone. Do not integrate CUDA graphs: the clean whole-update canary gained only ~1.8% while removing the flagship's established guard/observability path. |
+| Extended pretrain status | **`685084` is healthy through step 168,840** at ~**154.2k tok/s**. Loss remains in the normal ~1.2-2.1 band and gnorm is normally 0.07-0.22; isolated spikes recover. Latest confirmed numbered checkpoint is `ckpt_0168750.pt`; a remote non-rotating `best_step168750.pt` was preserved (md5 `e58b6b07802782517c7709c1844cb4d1`) for analysis. Preserve/download 170k at the next milestone. Do not integrate CUDA graphs: the clean whole-update canary gained only ~1.8% while removing the flagship's established guard/observability path. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, **DONE**; wrote baseline `train/sft_out/sft_ep3.pt`. Isolated v2 pilot `685708` completed one epoch from `best_step120000.pt` to `train/sft_v2_120k/sft_ep1.pt`. It is a narrow arithmetic-format ablation, not a promoted broad-reasoning recipe. |
-| **Eval board job** | Corrected CUDA-only board **`686277` completed**: GSM8K maj@4 **6/100**, pass@1 **14/100**, MATH-500 **6/100**, HumanEval **6/164**, MBPP **0/100**. The v2 pilot is **rejected for promotion**. `686278` held-out RG is running and `686279` in-training RG follows; use them to characterize its overfit, not to reverse this decision. |
+| **Eval board job** | Corrected CUDA-only v2 board **`686277` completed**: GSM8K maj@4 **6/100**, pass@1 **14/100**, MATH-500 **6/100**, HumanEval **6/164**, MBPP **0/100**. The v2 pilot is **rejected for promotion**. Held-out RG `686278` is **90/800 = 11.25%**, concentrated in chain sums/string insertion/basic arithmetic rather than broad transfer; in-training `686279` is running to measure overfit. Raw-base `686314` is **invalid** after its first GSM8K metric because rotating `ckpt_0168000.pt` disappeared mid-board; `686315` is requeued from preserved `best_step168750.pt` with checkpoint pinning, and `686316` then runs a read-only adaptive interaction probe. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
 | 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
 | 60k skips | **45 total**, stable/healthy |
@@ -65,7 +65,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | SFT mix (Newton) | `artifacts/sft/sft_mix_core.jsonl` — **97,439 examples**, rebuilt 2026-07-08 with hard eval filtering. Audit: 0 malformed rows, 0 duplicate questions, 0 exact eval-prompt hits; builder dropped **206 exact eval-prompt overlaps** and **741 eval 13-gram overlaps** before writing. md5 `53ed91368b4c238dc18a1ab1699e4158`; report md5 `21459b382767801e205f3f625ce106cd`. |
 | Local teacher distillers | Nemotron screen run completed at **1,781 rows** but provider health was poor (`kept=19`, `err=52506` in the screen run). Bounded probes after that were also unhealthy: Nemotron `limit=5` kept 0 with 3 provider errors; GLM `limit=3` kept 0 with 3 provider errors. **Leave Nemotron and GLM paused until provider health clears; do not blindly respawn.** HY3 bulk process died/stalled after ~25.2k rows; `conc=2` and `conc=1` restarts exited without appending, even though a tiny direct Hermes/probe call completed cleanly. Claude/minimax snapshots are present. GLM remains the preferred strongest open-weight teacher when available. |
 | **Verified-data expansion** | **Active, CPU-only, isolated from pretrain.** `openmath_pt` is complete at **5,000,000,144 tokens / 50 shards** and remains a future-relaunch-only source. `rg_v3` dedup derivative has **252,298 valid rows**; expanded **`rg_v4` has 374,659 valid traces, 0 malformed rows, and 0 normalized-question duplicates**. It spans 25 answer-checked numerical, algorithmic, Caesar, social, and self-reference families. The frozen v2 mix has only **444 code rows**. APPS retry `686288` finished cleanly but kept only **234/5,000** candidates after execution verification; its quality report has 0 malformed/duplicate/missing rows. CodeContests Python 3 scale **`686291`** is writing an atomic partial (1,478 valid rows at last check) toward a separate 3,000-row train-only artifact. After `686291` succeeds, dependency chain **`686308 -> 686310 -> 686312`** will respectively build completion-form code, freeze `sft_mix_reasoning_v4`, and audit packed-sequence group capacity/replay before any v4 pilot chooses weights. FineWeb-Edu schema probes `686295/686297` verified English, score, and stream fields in `sample-10BT`; future-only 5B quality-thresholded/decontaminated tokenization **`686298`** is running on evc2. No new output may enter a frozen SFT mix before its final audit. |
-| **Direct capability audit** | `interactive_v1_686293.json` plus the new isolated **`686306`** prompt matrix directly tested raw 168k and v2 SFT. On 48 fresh generated tasks, raw scored **4/48 Q/A**, **4/48 plain instruction**, **0/48 CoT**, **5/48 one-shot**; v2 scored **7/48 Q/A**, then **4/48**, **5/48**, **4/48** respectively. This is a data/algorithm gap, not a prompt unlock. Full evidence: `CAPABILITY_DIAGNOSIS.md` and `artifacts/eval_history/capability_matrix_v1_686306.json`. |
+| **Direct capability audit** | `interactive_v1_686293.json` plus isolated **`686306`** directly tested raw 168k and v2 SFT. On 48 fresh generated tasks, raw scored **4/48 Q/A**, **4/48 plain instruction**, **0/48 CoT**, **5/48 one-shot**; v2 scored **7/48 Q/A**, then **4/48**, **5/48**, **4/48** respectively. This is a data/algorithm gap, not a prompt unlock. Read-only `686316` is queued after the corrected raw board to test whether raw 168.75k can self-correct or use supplied intermediate facts. Full evidence: `CAPABILITY_DIAGNOSIS.md` and `artifacts/eval_history/capability_matrix_v1_686306.json`. |
 | **Recurrence ablation** | Mame `n_loop=1` job `686301` and `n_loop=2` job `686302` both completed cleanly for 800 matched updates. `n_loop=2` is mechanically stable but not promoted: final logged loss was essentially tied (**2.4890 vs 2.4899**) while time rose **886s -> 1466s** and steady throughput fell **472.7k -> 286.0k tok/s**. No capability gate was run, so recurrence stays off the flagship. |
 | Preserved checkpoints (cluster) | Includes prior milestones plus **`best_step166250.pt`** copied from numbered `ckpt_0166250.pt`; both md5 **`1b57c99aca966546d4d9aea7827d6ebd`**. |
 | **Local DR backup (Mac)** | Includes prior milestones plus **`train/flagship_out/ckpt_0166250.pt`**, full+optimizer, locally and remotely md5 **`1b57c99aca966546d4d9aea7827d6ebd`**. Next DR target: 170k. |
@@ -78,8 +78,8 @@ extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no st
 
 **Next actions in order:** (1) Watch `685084`: retain the normal ~154k tok/s band and expected 250-step
 checkpoints, preserve/download 170k, and never interrupt a recovered isolated gnorm skip. (2) Let
-`686278`/`686279` record the v2 held-out versus in-training RG characterization, but do not promote v2.
-(3) Audit final CodeContests output and the FineWeb-Edu manifest, then build the immutable source-balanced
+`686279` finish; then read corrected raw board `686315` and adaptive direct transcript `686316`, but do
+not promote v2. (3) Audit final CodeContests output and the FineWeb-Edu manifest, then build the immutable source-balanced
 v4 mix with raw completion-form code. (4) Read `sft_mix_reasoning_v4.packing.json` before choosing any
 v4 sampling weights; a small group may not be blindly replayed many times. (5) Gate any v4 pilot from a preserved raw pretrain checkpoint on
 the corrected public board, balanced RG, this direct capability matrix, and code execution. (6) At the next
@@ -788,6 +788,15 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   cost 1.65x wall time (886s -> 1466s) and reduced throughput 472.7k -> 286.0k tok/s. This is a
   mechanical-validity result only; keep `n_loop=1` for the flagship until a longer paired capability
   gate shows a real benefit.
+- **2026-07-12 ~05:42** — **The first broad capability audit was strengthened, not hand-waved.** Held-out
+  v2 RG `686278` completed at **90/800 = 11.25%**: it learned a few narrow procedural routines
+  (chain sums 20/25, string insertion 19/25, basic arithmetic 13/25) but remained zero on most
+  transformation, logic, cipher, and geometry families. The raw-base board `686314` loaded rotating
+  `ckpt_0168000.pt`, scored only its first GSM8K maj@4 metric (1/100), then lost the source checkpoint;
+  it is invalid rather than evidence. Hardened `eval_all.sbatch` to pin a checkpoint for the entire board,
+  preserved `best_step168750.pt` (md5 `e58b6b07802782517c7709c1844cb4d1`), and queued corrected raw board
+  `686315` followed by isolated multi-turn adaptive interaction probe `686316`. No live model or SHARDS
+  were modified.
 
 ---
 

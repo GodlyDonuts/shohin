@@ -37,8 +37,20 @@ The CUDA-only corrected public board (`686277`) completed for
 | MBPP pass@1 | 0 / 100 | no usable simple-program synthesis yet |
 
 Earlier results must not be compared directly to corrected-decoder results. The
-corrected board is enough to reject v2 as a promotion candidate; its held-out and
-in-training RG gates remain useful for characterizing overfit, not for rescuing it.
+corrected board is enough to reject v2 as a promotion candidate. Its corrected
+held-out RG result is **90/800 = 11.25%**, which is above the raw 120k baseline
+(29/800 = 3.625%) but remains highly concentrated: chain sums 20/25, string
+insertion 19/25, basic arithmetic and decimal-chain sums 13/25 each, and products
+9/25. It is zero on most transformation, logic, cipher, geometry, and search-like
+families. The in-training RG control remains useful for quantifying overfit, not
+for rescuing the recipe.
+
+The first raw-base board attempt (`686314`) is invalid as a board: it loaded the
+rotating `ckpt_0168000.pt`, completed only GSM8K maj@4 at 1/100, then the source
+checkpoint was deleted by normal rotation before the other four metrics loaded.
+This is an evaluation lifecycle defect, not a model result. The evaluator now
+pins its source before decoding; a corrected board and a separate multi-turn
+direct-interaction probe are queued from preserved `best_step168750.pt`.
 
 ### Direct interaction, not only benchmarks
 
