@@ -46,6 +46,7 @@ SOURCE_PRIORITY = {
     "mbpp_validation": 100,
     "apps_train": 100,
     "code_contests_train": 100,
+    "taco_verified_train": 100,
     "code": 100,
     "claude": 92,
     "glm": 90,
@@ -57,7 +58,7 @@ SOURCE_PRIORITY = {
     "self_correct": 45,
 }
 
-CODE_SOURCES = {"mbpp_train", "mbpp_validation", "apps_train", "code_contests_train", "code"}
+CODE_SOURCES = {"mbpp_train", "mbpp_validation", "apps_train", "code_contests_train", "taco_verified_train", "code"}
 PROCEDURAL_SOURCES = {"reasoning_gym_trace"}
 TEACHER_SOURCES = {"claude", "glm", "nemotron", "hy3", "hy3_gsm8k", "hy3_arc", "minimax"}
 

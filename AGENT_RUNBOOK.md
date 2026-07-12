@@ -1426,7 +1426,16 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   for general reasoning/latent compaction; local/Newton artifacts were copied and md5 verified:
   state `1f9fe0b2993d1a9dafc98cd2d7943887`, deep `c4963fae52d5ac9c38614e77f93f98c8`. A separate raw-vs-V7
   human-authored transcript job was submitted; two generic CUDA allocations failed before inference and are
-  explicitly not model evidence. The current evc28-targeted request is pending. Flagship remains untouched.
+  explicitly not model evidence. Later generic allocations showed the same CUDA fault and were canceled;
+  the completed local-MPS transcript is recorded below. Flagship remains untouched.
+- **2026-07-12 ~12:50** — **Second direct V7 interview and future corpus correction.** Generic Slurm
+  H100 allocations repeatedly failed CUDA preflight before loading a checkpoint, so no score was inferred
+  from them. The same seven-case raw-vs-V7 transcript completed locally on MPS and was copied back to
+  Newton: raw **1/7 initial, 0/7 review, 1/7 verified fact, 0/7 reuse**; V7 **2/7, 2/7, 0/7, 1/7**.
+  V7's only wins are arithmetic/state templates and it remains zero on base conversion, logic, sort,
+  string, and valid Python; hash `a6d8c25cb3482cd37026bbc85306008f`. Future-only relaunch now excludes
+  FineMath-4 because it is contained in FineMath-3, requires the scanned 25B DCLM replacement, and
+  uses a tested effective **24.8% math / 25.1% code / 50.1% educational-English** BS32 curriculum.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*

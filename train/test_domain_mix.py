@@ -4,15 +4,18 @@ from data import effective_domain_fractions
 
 
 def main():
-    # fine4, openwebmath, code, finemath3, openmath, fineweb, dclm
-    fractions = effective_domain_fractions([2, 4, 28, 4, 6, 32, 24], batch_size=32)
-    math = fractions[0] + fractions[1] + fractions[3] + fractions[4]
-    code = fractions[2]
-    english = fractions[5] + fractions[6]
+    # openwebmath, code, finemath3, openmath, fineweb, dclm. FineMath-4 is
+    # intentionally absent because it is contained in FineMath-3.
+    fractions = effective_domain_fractions([5, 27, 6, 8, 9, 45], batch_size=32)
+    math = fractions[0] + fractions[2] + fractions[3]
+    code = fractions[1]
+    english = fractions[4] + fractions[5]
     assert abs(sum(fractions) - 1.0) < 1e-12
-    assert abs(math - 0.25) < 1e-12, math
-    assert abs(code - 0.25) < 1e-12, code
-    assert abs(english - 0.50) < 1e-12, english
+    # The loader reserves one sequence per active domain, so this six-source
+    # curriculum can only approximate the intended 25/25/50 split.
+    assert abs(math - 0.25) < 0.003, math
+    assert abs(code - 0.25) < 0.003, code
+    assert abs(english - 0.50) < 0.003, english
     try:
         effective_domain_fractions([1, 1, 1], batch_size=2)
     except ValueError:

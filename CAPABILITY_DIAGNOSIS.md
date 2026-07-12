@@ -210,6 +210,20 @@ The full local/Newton hash-matched artifacts are
 `sft_v7_state_protocol_168750_deep_interaction_686484.json` (md5
 `c4963fae52d5ac9c38614e77f93f98c8`).
 
+A second, differently phrased seven-case operator interview was run locally on
+MPS against raw 170k and V7, preserving all five turns per case. Raw is **1/7
+initial, 0/7 review, 1/7 verified fact, 0/7 state reuse**. V7 is **2/7 initial,
+2/7 review, 0/7 verified fact, 1/7 state reuse**. Its only initial/review wins
+are the product-and-subtract and sequential-state templates; the reuse win is
+the same arithmetic calculation, not a valid emitted compact state. V7 still
+fails base conversion, sorting/deduplication, string insertion, the negative
+syllogism, and syntax-valid Python, and it loses both arithmetic/state cases
+when a correct intermediate fact is supplied. This independent result rules out
+the interpretation that the earlier 73.10% score reflects a general solver.
+The hash-matched artifact is
+`manual_capability_raw170k_vs_sft_v7_20260712_local_mps.json` (md5
+`a6d8c25cb3482cd37026bbc85306008f`).
+
 ### Controlled prompt matrix at 168k
 
 The first twelve hand-authored prompts established the failure qualitatively. A
@@ -301,6 +315,14 @@ At step 166,250 it has drawn about 21.79B tokens from each enabled directory:
 | `openwebmath` | 14.06B | 1.55 | math web, not general educational language |
 | `code_python` | 16.76B | 1.30 | raw code, not code instruction/completion pairs |
 | `finemath3` | 25.00B | 0.87 | the largest math source has not completed one pass |
+
+The next pretraining handoff must not retain FineMath-4 as another directory:
+it is a subset of FineMath-3 and therefore adds replay, not coverage. The
+future-only relaunch script now uses OpenWebMath, FineMath-3, OpenMath, code,
+FineWeb-Edu, and the scanned 25B DCLM replacement. Its effective BS32 mix is
+approximately **24.8% math, 25.1% code, and 50.1% educational English**. This
+is a forward correction only; it does not alter the active run or claim that
+historic narrow-math replay was undone.
 
 The active source mix is therefore exactly 75% math-oriented text and 25% raw
 code. It has no substantial general educational English, logic/deduction, or
