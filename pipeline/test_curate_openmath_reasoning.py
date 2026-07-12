@@ -2,7 +2,7 @@
 """Non-network selection checks for OpenMathReasoning curation."""
 import unittest
 
-from curate_openmath_reasoning import answer_matches, clean_trace, parsed_rate, truthy
+from curate_openmath_reasoning import answer_matches, clean_trace, extract_final, parsed_rate, truthy
 
 
 class OpenMathReasoningSelectionTests(unittest.TestCase):
@@ -10,6 +10,7 @@ class OpenMathReasoningSelectionTests(unittest.TestCase):
         trace = clean_trace("<think>Compute carefully. The answer is \\frac{1}{2}.</think>")
         self.assertEqual(trace, "Compute carefully. The answer is \\frac{1}{2}.")
         self.assertTrue(answer_matches(trace, "1/2"))
+        self.assertEqual(extract_final("work \\boxed{a_{n}+1}"), "a_{n}+1")
 
     def test_parses_quality_and_kaggle_flags_conservatively(self):
         self.assertEqual(parsed_rate("0.875"), 0.875)

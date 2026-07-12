@@ -15,7 +15,6 @@ import re
 from pathlib import Path
 
 from audit_training_text_overlap import first_overlap, load_eval_index
-from hermes_distill import verify
 
 
 WORD = re.compile(r"\w+")
@@ -32,9 +31,57 @@ def clean_trace(trace):
     return trace.strip()
 
 
+def extract_final(text):
+    """Extract the last boxed answer, or the explicit answer line as fallback."""
+    text = str(text)
+    index = text.rfind(r"\boxed")
+    if index >= 0:
+        start = text.find("{", index)
+        if start >= 0:
+            depth = 0
+            for end in range(start, len(text)):
+                if text[end] == "{":
+                    depth += 1
+                elif text[end] == "}":
+                    depth -= 1
+                    if depth == 0:
+                        return text[start + 1:end].strip()
+    matches = re.findall(r"answer is\s*[:\-]?\s*([^\n.$]+)", text, flags=re.I)
+    return matches[-1].strip() if matches else None
+
+
+def normalize_answer(value):
+    value = str(value)
+    value = re.sub(r"\\[dt]?frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}", r"(\1)/(\2)", value)
+    value = re.sub(r"\\(?:text|mbox)\s*\{[^{}]*\}", "", value)
+    value = re.sub(r"\\(?:left|right|displaystyle|mathrm|,|;|:|!|\s)", "", value)
+    return value.replace("$", "").replace("\\", "").replace(" ", "").rstrip(".").strip().lower()
+
+
+def numeric_answer(value):
+    value = normalize_answer(value)
+    try:
+        return float(value)
+    except ValueError:
+        pass
+    match = re.fullmatch(r"\(?(-?\d+(?:\.\d+)?)\)?/\(?(-?\d+(?:\.\d+)?)\)?", value)
+    if match:
+        try:
+            return float(match.group(1)) / float(match.group(2))
+        except ZeroDivisionError:
+            return None
+    return None
+
+
 def answer_matches(trace, answer):
-    correct, _ = verify(trace, answer, "boxed")
-    return correct
+    predicted = extract_final(trace)
+    expected = extract_final(answer) or str(answer)
+    if predicted is None:
+        return False
+    if normalize_answer(predicted) == normalize_answer(expected):
+        return True
+    p_value, e_value = numeric_answer(predicted), numeric_answer(expected)
+    return p_value is not None and e_value is not None and abs(p_value - e_value) < 1e-4
 
 
 def parsed_rate(value):
