@@ -105,49 +105,77 @@ def has_complete_final_answer(text):
 
 
 @torch.no_grad()
-def generate(model, tok, prompt, device, max_new=256, temp=0.0, top_k=40, stop="\nQuestion:"):
+def generate_batch(model, tok, prompt, device, n, max_new=256, temp=0.0, top_k=40,
+                   stop="\nQuestion:"):
+    """Generate ``n`` independent samples for one prompt in a single decode batch.
+
+    Self-consistency and verifier-data collection need multiple samples of the
+    same prompt.  Decoding those samples one at a time leaves a small model
+    launch-bound and makes the verifier pipeline miss its wall-time budget.
+    Finished rows keep taking no-op decode steps until the batch is done so the
+    shared KV-cache shape remains valid; their returned text is frozen at the
+    first stop condition.
+    """
+    if n <= 0:
+        return []
     cap = model.cfg.seq_len
     ids = tok.encode(prompt).ids[-cap:]
     eos_id = tok.token_to_id("<|endoftext|>")
     ac = torch.autocast("cuda", dtype=torch.bfloat16, enabled=("cuda" in str(device)))
     with ac:
-        logits, cache = model(torch.tensor([ids], device=device), return_cache=True, pos=0)
-    pos, gen = len(ids), []
+        logits, cache = model(torch.tensor([ids] * n, device=device), return_cache=True, pos=0)
+    pos = len(ids)
+    generated = [[] for _ in range(n)]
+    finished = [False] * n
     for _ in range(max_new):
-        lg = logits[0, -1]
+        lg = logits[:, -1]
         if temp and temp > 0:
             lg = lg / temp
             if top_k:
-                v, _ = torch.topk(lg, min(top_k, lg.size(-1)))
-                lg = lg.masked_fill(lg < v[-1], float("-inf"))
-            nxt = int(torch.multinomial(torch.softmax(lg.float(), -1), 1))
+                v, _ = torch.topk(lg, min(top_k, lg.size(-1)), dim=-1)
+                lg = lg.masked_fill(lg < v[:, [-1]], float("-inf"))
+            nxt = torch.multinomial(torch.softmax(lg.float(), -1), 1).squeeze(-1)
         else:
-            nxt = int(lg.argmax())
-        gen.append(nxt)
-        txt = tok.decode(gen)
-        # SFT targets intentionally contain paragraph breaks before their final
-        # answer. Stopping on any blank line truncates that answer and turns a
-        # correct completion into an apparent benchmark miss. Once an explicit
-        # final-answer line is complete, however, further decoding cannot help
-        # the score and makes self-consistency prohibitively expensive.
-        if ((stop and stop in txt) or has_complete_final_answer(txt)
-                or nxt == eos_id or pos >= cap):
+            nxt = lg.argmax(dim=-1)
+        for row, token in enumerate(nxt.tolist()):
+            if finished[row]:
+                continue
+            generated[row].append(token)
+            txt = tok.decode(generated[row])
+            # SFT targets intentionally contain paragraph breaks before their final
+            # answer. Stopping on any blank line truncates that answer and turns a
+            # correct completion into an apparent benchmark miss. Once an explicit
+            # final-answer line is complete, however, further decoding cannot help
+            # the score and makes self-consistency prohibitively expensive.
+            if ((stop and stop in txt) or has_complete_final_answer(txt)
+                    or token == eos_id or pos >= cap):
+                finished[row] = True
+        if all(finished) or pos >= cap:
             break
         with ac:
-            logits, cache = model(torch.tensor([[nxt]], device=device), cache=cache, pos=pos, return_cache=True)
+            logits, cache = model(nxt[:, None], cache=cache, pos=pos, return_cache=True)
         pos += 1
-    return tok.decode(gen)
+    return [tok.decode(tokens) for tokens in generated]
+
+
+@torch.no_grad()
+def generate(model, tok, prompt, device, max_new=256, temp=0.0, top_k=40, stop="\nQuestion:"):
+    """Generate one completion; retained as the stable public evaluator API."""
+    return generate_batch(
+        model, tok, prompt, device, n=1, max_new=max_new, temp=temp,
+        top_k=top_k, stop=stop,
+    )[0]
 
 def solve(model, tok, prompt, device, task, k, temp, max_new):
     """Return (final_answer, all_extracted) using greedy (k=1) or self-consistency maj@k."""
     ex = task["extract"]
     if k <= 1:
         return ex(generate(model, tok, prompt, device, max_new=max_new, temp=0.0)), None
-    answers = []
-    for _ in range(k):
-        a = ex(generate(model, tok, prompt, device, max_new=max_new, temp=temp))
-        if a is not None:
-            answers.append(str(a))
+    answers = [
+        str(answer)
+        for sample in generate_batch(model, tok, prompt, device, n=k, max_new=max_new, temp=temp)
+        if (answer := ex(sample)) is not None
+    ]
     if not answers:
         return None, answers
     return Counter(answers).most_common(1)[0][0], answers

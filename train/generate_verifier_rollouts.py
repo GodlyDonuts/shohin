@@ -14,7 +14,7 @@ from pathlib import Path
 import torch
 from tokenizers import Tokenizer
 
-from eval_suite import extract_gsm8k, generate, gold_gsm8k
+from eval_suite import extract_gsm8k, generate_batch, gold_gsm8k
 from model import GPT, GPTConfig
 
 
@@ -74,11 +74,11 @@ def main():
     with open(tmp, "w") as dst:
         for index, (question, gold) in enumerate(rows):
             prompt = f"Question: {question}\nAnswer:"
-            for sample_index in range(args.k):
-                candidate = generate(
-                    model, tokenizer, prompt, device,
-                    max_new=args.max_new, temp=args.temp,
-                )
+            candidates = generate_batch(
+                model, tokenizer, prompt, device, n=args.k,
+                max_new=args.max_new, temp=args.temp,
+            )
+            for sample_index, candidate in enumerate(candidates):
                 prediction = extract_gsm8k(candidate)
                 ok = prediction == gold
                 dst.write(json.dumps({
