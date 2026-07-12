@@ -30,12 +30,18 @@ def load_model(path, device):
     return ckpt, model
 
 
+def forward_logits(model, token_ids):
+    """Return logits from the GPT inference contract: ``(logits, auxiliary)``."""
+    logits, _ = model(token_ids)
+    return logits
+
+
 @torch.no_grad()
 def score_candidate(model, tokenizer, question, candidate, device, correct_id, incorrect_id):
     prompt = f"Question: {verifier_question(question, candidate)}\nAnswer:"
     ids = tokenizer.encode(prompt).ids[-model.cfg.seq_len:]
     with torch.autocast("cuda", dtype=torch.bfloat16, enabled=(device == "cuda")):
-        logits = model(torch.tensor([ids], device=device))[0, -1].float()
+        logits = forward_logits(model, torch.tensor([ids], device=device))[0, -1].float()
     logp = torch.log_softmax(logits, dim=-1)
     return float(logp[correct_id] - logp[incorrect_id])
 
