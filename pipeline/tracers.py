@@ -13,6 +13,7 @@ only traces that reproduce the answer.
 """
 import ast
 import json
+import math
 import re
 from fractions import Fraction
 from math import gcd as _gcd
@@ -122,6 +123,209 @@ def trace_lcm(question, answer, md):
     if str(lcm) != str(answer).strip():
         return None
     return f"gcd({a}, {b}) = {g} ; lcm = {a}*{b} / {g} = {lcm}"
+
+
+def _is_prime(value):
+    if value < 2:
+        return False
+    if value % 2 == 0:
+        return value == 2
+    for factor in range(3, math.isqrt(value) + 1, 2):
+        if value % factor == 0:
+            return False
+    return True
+
+
+def trace_prime_factorization(question, answer, md):
+    m = re.search(r"prime factorization of\s+(\d+)", question, flags=re.I)
+    if not m:
+        return None
+    value, remaining, factors = int(m.group(1)), int(m.group(1)), []
+    divisor = 2
+    while divisor * divisor <= remaining:
+        while remaining % divisor == 0:
+            factors.append(divisor)
+            remaining //= divisor
+        divisor += 1 if divisor == 2 else 2
+    if remaining > 1:
+        factors.append(remaining)
+    result = " × ".join(str(factor) for factor in factors)
+    normalized = lambda text: re.sub(r"\s+", "", str(text)).replace("*", "×")
+    if normalized(answer) != normalized(result):
+        return None
+    return f"Divide {value} by its prime factors: {result}"
+
+
+def trace_count_primes(question, answer, md):
+    m = re.search(r"between\s+(\d+)\s+and\s+(\d+)\s+\(inclusive\)", question, flags=re.I)
+    if not m:
+        return None
+    lo, hi = int(m.group(1)), int(m.group(2))
+    if hi < lo or hi - lo > 100_000:
+        return None
+    count = sum(_is_prime(value) for value in range(lo, hi + 1))
+    if str(count) != str(answer).strip():
+        return None
+    return f"Test each integer from {lo} through {hi} for divisibility; prime count = {count}"
+
+
+def trace_count_bits(question, answer, md):
+    m = re.search(r"number\s+(\d+)", question, flags=re.I)
+    if not m:
+        return None
+    value = int(m.group(1))
+    binary = bin(value)[2:]
+    count = binary.count("1")
+    if str(count) != str(answer).strip():
+        return None
+    return f"{value} in binary is {binary}; it contains {count} one-bits"
+
+
+def trace_number_sorting(question, answer, md):
+    m = re.search(r"Sort these numbers in (ascending|descending) order:\s*(.+?)(?:\n|$)", question, flags=re.I)
+    if not m:
+        return None
+    direction = m.group(1).lower()
+    values = [value.strip() for value in m.group(2).split(",") if value.strip()]
+    try:
+        result = sorted(values, key=float, reverse=(direction == "descending"))
+    except ValueError:
+        return None
+    if str(result) != str(answer).strip():
+        return None
+    return f"Numeric {direction} sort gives {result}"
+
+
+def trace_number_filtering(question, answer, md):
+    m = re.search(
+        r"(Keep|Remove) all numbers (smaller|larger) than\s+(-?\d+(?:\.\d+)?)\s+in this list:\s*(\[[^\n]+\])",
+        question,
+        flags=re.I,
+    )
+    if not m:
+        return None
+    action, relation, threshold_text, raw_values = m.groups()
+    try:
+        values = ast.literal_eval(raw_values)
+        threshold = float(threshold_text)
+        if not isinstance(values, list):
+            return None
+        if action.lower() == "keep" and relation.lower() == "smaller":
+            result = [value for value in values if float(value) < threshold]
+        elif action.lower() == "remove" and relation.lower() == "larger":
+            result = [value for value in values if float(value) <= threshold]
+        else:
+            return None
+    except (ValueError, SyntaxError, TypeError):
+        return None
+    if str(result) != str(answer).strip():
+        return None
+    return f"Apply {action.lower()}-{relation.lower()} threshold {threshold_text}: {result}"
+
+
+def trace_power_function(question, answer, md):
+    m = re.search(r"Compute\s+(-?\d+(?:\.\d+)?)\^(-?\d+)", question, flags=re.I)
+    if not m:
+        return None
+    base, exponent = float(m.group(1)), int(m.group(2))
+    try:
+        result = base ** exponent
+        gold = float(str(answer).strip())
+    except (OverflowError, ValueError):
+        return None
+    if not math.isclose(result, gold, rel_tol=1e-9, abs_tol=1e-6):
+        return None
+    return f"Repeated exponentiation: ({m.group(1)})^{exponent} = {answer}"
+
+
+def trace_products(question, answer, md):
+    m = re.search(r"multiplication:\s*(-?\d+)\s*\*\s*(-?\d+)", question, flags=re.I)
+    if not m:
+        return None
+    left, right = int(m.group(1)), int(m.group(2))
+    result = left * right
+    if str(result) != str(answer).strip():
+        return None
+    return f"{left} * {right} = {result}"
+
+
+def trace_caesar_cipher(question, answer, md):
+    m = re.search(r"cipher text:\s*([A-Z ]+?)(?:\.\s*Provide|$)", question, flags=re.S)
+    if not m:
+        return None
+    cipher = " ".join(m.group(1).split())
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    for shift in range(26):
+        decoded = "".join(
+            alphabet[(alphabet.index(char) - shift) % 26] if char in alphabet else char
+            for char in cipher
+        )
+        if decoded == str(answer).strip():
+            return f"Shift each letter backward by {shift}: {decoded}"
+    return None
+
+
+def trace_aiw(question, answer, md):
+    sisters = re.search(r"has\s+(\d+)\s+sisters?\s+and.*?(\d+)\s+brothers?", question, flags=re.I)
+    if sisters and re.search(r"How many sisters does .*?brother have", question, flags=re.I):
+        result = int(sisters.group(1)) + 1
+        if str(result) == str(answer).strip():
+            return f"The named brother shares the {sisters.group(1)} sisters plus the named person: {result}"
+    friends = re.search(r"has\s+(\d+)\s+male friends.*?(\d+)\s+female friends", question, flags=re.I | re.S)
+    if friends and re.search(r"How many female friends does .*?male friend", question, flags=re.I | re.S):
+        result = int(friends.group(2)) + 1
+        if str(result) == str(answer).strip():
+            return f"A male friend knows the {friends.group(2)} female friends plus the named person: {result}"
+    return None
+
+
+def trace_self_reference(question, answer, md):
+    statements = re.findall(r"Statement\s+\d+:\s*'([^']+)'", question, flags=re.I)
+    if not statements:
+        return None
+    total = len(statements)
+
+    def truth_for(statement, truths, true_count):
+        text = statement.lower()
+        m = re.search(r"at least\s+(\d+)\s+of these\s+\d+\s+statements are true", text)
+        if m:
+            return true_count >= int(m.group(1))
+        m = re.search(r"at most\s+(\d+)\s+of these\s+\d+\s+statements are false", text)
+        if m:
+            return total - true_count <= int(m.group(1))
+        m = re.search(r"exactly\s+(\d+)\s+of these\s+\d+\s+statements are true", text)
+        if m:
+            return true_count == int(m.group(1))
+        m = re.search(r"exactly\s+(\d+)\s+of these\s+\d+\s+statements are false", text)
+        if m:
+            return total - true_count == int(m.group(1))
+        m = re.search(r"either statement\s+(\d+)\s+or statement\s+(\d+)\s+is true, but not both", text)
+        if m:
+            left, right = int(m.group(1)) - 1, int(m.group(2)) - 1
+            if left >= len(truths) or right >= len(truths):
+                raise ValueError("forward reference")
+            return bool(truths[left]) != bool(truths[right])
+        if "number of true statements is a prime number" in text:
+            return _is_prime(true_count)
+        if "number of false statements is a composite number" in text:
+            false_count = total - true_count
+            return false_count > 1 and not _is_prime(false_count)
+        raise ValueError("unsupported statement")
+
+    solutions = []
+    for candidate in range(total + 1):
+        try:
+            truths = []
+            for statement in statements:
+                truths.append(truth_for(statement, truths, candidate))
+        except ValueError:
+            return None
+        if sum(truths) == candidate:
+            solutions.append(candidate)
+    result = len(solutions)
+    if str(result) != str(answer).strip():
+        return None
+    return f"Test true-statement counts 0 through {total}; self-consistent counts are {solutions}, so there are {result} solutions"
 
 
 def _plain_answer(value):
@@ -352,6 +556,16 @@ TRACERS = {
     "decimal_arithmetic": trace_arithmetic,
     "gcd": trace_gcd,
     "lcm": trace_lcm,
+    "prime_factorization": trace_prime_factorization,
+    "count_primes": trace_count_primes,
+    "count_bits": trace_count_bits,
+    "number_sorting": trace_number_sorting,
+    "number_filtering": trace_number_filtering,
+    "power_function": trace_power_function,
+    "products": trace_products,
+    "caesar_cipher": trace_caesar_cipher,
+    "aiw": trace_aiw,
+    "self_reference": trace_self_reference,
     "fraction_simplification": trace_fraction_simplification,
     "simple_equations": trace_simple_equations,
     "base_conversion": trace_base_conversion,
