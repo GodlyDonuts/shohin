@@ -45,6 +45,7 @@ SOURCE_PRIORITY = {
     "mbpp_train": 100,
     "mbpp_validation": 100,
     "apps_train": 100,
+    "code_contests_train": 100,
     "code": 100,
     "claude": 92,
     "glm": 90,
