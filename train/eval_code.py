@@ -76,6 +76,19 @@ def he_program(row, completion):
     return row["prompt"] + truncate(completion, HE_STOPS) + "\n\n" + row["test"] + f"\ncheck({row['entry_point']})\n"
 
 
+def he_instruction_prompt(row):
+    return (f"Question: {row['prompt']}\n"
+            "Write only the complete Python function that solves this task.\nAnswer:")
+
+
+def he_instruction_program(row, completion):
+    code = truncate(completion, HE_STOPS).strip()
+    # Instruction-tuned models commonly emit the full function; retain the
+    # standard continuation behavior only when they emit a body fragment.
+    program = code if re.search(r"(?m)^\s*def\s+", code) else row["prompt"] + code
+    return program + "\n\n" + row["test"] + f"\ncheck({row['entry_point']})\n"
+
+
 def mbpp_prompt(row):
     tests = "\n".join(row["test_list"])
     return (f"You are an expert Python programmer. Write a function for this task:\n{row['text']}\n"
@@ -87,6 +100,10 @@ def mbpp_program(row, completion):
     setup = row.get("test_setup_code", "") or ""
     tests = "\n".join(row["test_list"])
     return code + "\n" + setup + "\n" + tests + "\n"
+
+
+def mbpp_instruction_prompt(row):
+    return f"Question: {row['text']}\nWrite only Python code.\nAnswer:"
 
 
 def solve_pass(model, tok, row, device, task, k, temp, mkprompt, mkprog):
@@ -107,18 +124,24 @@ def main():
     ap.add_argument("--n", type=int, default=20)
     ap.add_argument("--k", type=int, default=1)
     ap.add_argument("--temp", type=float, default=0.8)
+    ap.add_argument("--prompt-style", choices=["completion", "instruction"], default="completion",
+                    help="completion is the official default; instruction is an SFT-contract diagnostic")
     a = ap.parse_args()
 
     device = ("cuda" if torch.cuda.is_available()
               else "mps" if torch.backends.mps.is_available() else "cpu")
-    print(f"[eval] device={device} task={a.task} k={a.k}", file=sys.stderr)
+    print(f"[eval] device={device} task={a.task} k={a.k} prompt_style={a.prompt_style}", file=sys.stderr)
     ck = torch.load(a.ckpt, map_location="cpu")
     model = GPT(GPTConfig(**ck["cfg"])).to(device).eval()
     model.load_state_dict(ck["model"])
     tok = Tokenizer.from_file(a.tokenizer)
 
-    mkprompt = {"humaneval": lambda r: r["prompt"], "mbpp": mbpp_prompt}[a.task]
-    mkprog = {"humaneval": he_program, "mbpp": mbpp_program}[a.task]
+    if a.task == "humaneval":
+        mkprompt, mkprog = ((lambda r: r["prompt"]), he_program) if a.prompt_style == "completion" \
+            else (he_instruction_prompt, he_instruction_program)
+    else:
+        mkprompt, mkprog = (mbpp_prompt, mbpp_program) if a.prompt_style == "completion" \
+            else (mbpp_instruction_prompt, mbpp_program)
     rows = [json.loads(l) for l in open(a.data)][:a.n]
     passed = 0
     for i, r in enumerate(rows):

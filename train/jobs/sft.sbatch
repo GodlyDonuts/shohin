@@ -42,6 +42,12 @@ done
 ARGS="--init $INIT --data $DATA --tokenizer $BASE/artifacts/shohin-tok-32k.json \
   --epochs ${EPOCHS:-3} --batch-size ${BS:-16} --lr-muon ${LRMUON:-2e-3} --lr-adam ${LRADAM:-5e-4} \
   --compile --out $OUT"
+if [ -n "${GROUPFIELD:-}" ]; then
+  ARGS="$ARGS --group-field $GROUPFIELD"
+fi
+if [ -n "${SAMPLEWEIGHTS:-}" ]; then
+  ARGS="$ARGS --sample-weights $SAMPLEWEIGHTS"
+fi
 for att in 1 2 3; do
   $BASE/miniforge3/bin/python sft.py $ARGS && break
   echo "[sft-job] attempt $att failed (CUDA-busy race?); retry in 30s"; sleep 30

@@ -57,6 +57,10 @@ SOURCE_PRIORITY = {
     "self_correct": 45,
 }
 
+CODE_SOURCES = {"mbpp_train", "mbpp_validation", "apps_train", "code_contests_train", "code"}
+PROCEDURAL_SOURCES = {"reasoning_gym_trace"}
+TEACHER_SOURCES = {"claude", "glm", "nemotron", "hy3", "hy3_gsm8k", "hy3_arc", "minimax"}
+
 
 WORD = re.compile(r"\w+")
 
@@ -79,6 +83,17 @@ def priority(row: dict, path: str) -> tuple[int, int]:
     # Shorter correct traces are better for this student, but only as a tie-break.
     _, words = response_stats(str(row.get("response") or ""))
     return base, -words
+
+
+def training_group(source: str) -> str:
+    """Stable high-level groups for source-balanced SFT sampling."""
+    if source in CODE_SOURCES:
+        return "code"
+    if source in PROCEDURAL_SOURCES:
+        return "procedural"
+    if source in TEACHER_SOURCES:
+        return "teacher"
+    return "math"
 
 
 def read_problem_domains(path: str) -> dict[str, str]:
@@ -201,6 +216,7 @@ def main():
         "seen_by_file": collections.Counter(),
         "kept_by_file": collections.Counter(),
         "kept_by_source": collections.Counter(),
+        "kept_by_training_group": collections.Counter(),
         "kept_by_domain": collections.Counter(),
         "drops": collections.Counter(),
         "missing": [],
@@ -242,6 +258,7 @@ def main():
             "response": resp,
             "source": src or Path(path).stem,
         }
+        clean["training_group"] = training_group(clean["source"])
         if row.get("answer") is not None:
             clean["answer"] = str(row.get("answer"))
         prev = kept_by_hash.get(h)
@@ -265,11 +282,13 @@ def main():
     for _, path, row in kept_by_hash.values():
         report["kept_by_file"][path] += 1
         report["kept_by_source"][row.get("source", "?")] += 1
+        report["kept_by_training_group"][row.get("training_group", "math")] += 1
         report["kept_by_domain"][domains.get(qhash(row["question"]), "unmapped")] += 1
     report["kept_total"] = len(rows)
 
     # Convert Counters for JSON.
-    for k in ("seen_by_file", "kept_by_file", "kept_by_source", "kept_by_domain", "drops"):
+    for k in ("seen_by_file", "kept_by_file", "kept_by_source", "kept_by_training_group",
+              "kept_by_domain", "drops"):
         report[k] = dict(report[k])
     report_path = args.report or args.out.replace(".jsonl", ".report.json")
     with open(report_path, "w") as f:

@@ -17,10 +17,11 @@ from model import GPT, GPTConfig
 from muon import Muon, split_params
 
 
-def build_packed(data_paths, tok, seq_len, q_fields, r_fields, eos_id, max_examples=0):
+def build_packed(data_paths, tok, seq_len, q_fields, r_fields, eos_id, max_examples=0,
+                 group_field=None):
     """Tokenize (question, response) rows -> packed sequences with a completion-only loss mask.
     Returns (X[int64 N,seq_len], Y[int64 N,seq_len]) where Y is -1 on prompt/pad (ignored)."""
-    buf_x, buf_m = [], []          # token ids, loss-mask (1 = train on this token)
+    grouped_buffers = {}            # group -> (token ids, loss-mask)
     n_ex = n_tok = n_ans = 0
     for p in data_paths:
         for line in open(p):
@@ -32,6 +33,8 @@ def build_packed(data_paths, tok, seq_len, q_fields, r_fields, eos_id, max_examp
             a = next((r[f] for f in r_fields if r.get(f)), None)
             if not q or not a:
                 continue
+            group = str(r.get(group_field) or "default") if group_field else "default"
+            buf_x, buf_m = grouped_buffers.setdefault(group, ([], []))
             prompt = f"Question: {q}\nAnswer:"
             full = prompt + " " + str(a).strip()
             pids = tok.encode(prompt).ids
@@ -48,15 +51,55 @@ def build_packed(data_paths, tok, seq_len, q_fields, r_fields, eos_id, max_examp
             if max_examples and n_ex >= max_examples:
                 break
     # slice into seq_len+1 windows; target = next token, -1 where the next token is masked
-    X, Y = [], []
+    X, Y, groups = [], [], []
     step = seq_len
-    for i in range(0, len(buf_x) - seq_len - 1, step):
-        xi = buf_x[i:i + seq_len]
-        yi = [buf_x[j + 1] if buf_m[j + 1] else -1 for j in range(i, i + seq_len)]
-        X.append(xi); Y.append(yi)
+    for group, (buf_x, buf_m) in grouped_buffers.items():
+        for i in range(0, len(buf_x) - seq_len - 1, step):
+            xi = buf_x[i:i + seq_len]
+            yi = [buf_x[j + 1] if buf_m[j + 1] else -1 for j in range(i, i + seq_len)]
+            X.append(xi); Y.append(yi); groups.append(group)
     print(f"[sft-data] {n_ex:,} examples, {n_tok:,} tokens ({n_ans:,} answer tokens = "
           f"{100*n_ans/max(n_tok,1):.0f}% trained), {len(X):,} packed seqs of {seq_len}", flush=True)
-    return np.array(X, dtype=np.int64), np.array(Y, dtype=np.int64)
+    if group_field:
+        counts = {group: groups.count(group) for group in sorted(set(groups))}
+        print(f"[sft-data] packed groups={counts}", flush=True)
+    return np.array(X, dtype=np.int64), np.array(Y, dtype=np.int64), np.array(groups, dtype=object)
+
+
+def parse_sample_weights(items):
+    weights = {}
+    for item in items:
+        key, sep, value = item.partition("=")
+        if not sep or not key:
+            raise ValueError(f"invalid --sample-weights item {item!r}; expected group=weight")
+        weight = float(value)
+        if weight <= 0:
+            raise ValueError(f"sample weight must be positive: {item!r}")
+        if key in weights:
+            raise ValueError(f"duplicate sample-weight group: {key}")
+        weights[key] = weight
+    return weights
+
+
+def weighted_epoch_order(rng, groups, batch_size, weights):
+    """Sample packed sequences by immutable group labels without duplicating data files."""
+    group_to_indices = {group: np.flatnonzero(groups == group) for group in sorted(set(groups))}
+    missing = sorted(set(weights) - set(group_to_indices))
+    if missing:
+        raise ValueError(f"sample weights name absent groups: {', '.join(missing)}")
+    names = list(weights)
+    probs = np.array([weights[name] for name in names], dtype=np.float64)
+    probs /= probs.sum()
+    count = (len(groups) // batch_size) * batch_size
+    chosen = rng.choice(len(names), size=count, p=probs)
+    order = np.empty(count, dtype=np.int64)
+    requested = {}
+    for i, name in enumerate(names):
+        slots = np.flatnonzero(chosen == i)
+        requested[name] = int(len(slots))
+        if len(slots):
+            order[slots] = rng.choice(group_to_indices[name], size=len(slots), replace=True)
+    return order, requested
 
 
 def main():
@@ -74,6 +117,10 @@ def main():
     ap.add_argument("--clip", type=float, default=1.0)
     ap.add_argument("--max-examples", type=int, default=0)
     ap.add_argument("--pack-len", type=int, default=0, help="pack sequence length (0 = model seq_len); shorter = less memory")
+    ap.add_argument("--group-field", default=None,
+                    help="optional immutable row field used to keep packed sequences by group")
+    ap.add_argument("--sample-weights", nargs="*", default=[], metavar="GROUP=WEIGHT",
+                    help="weighted per-epoch sampling over --group-field values; examples are sampled with replacement")
     ap.add_argument("--eos", default="<|endoftext|>")
     ap.add_argument("--out", default="sft_out")
     ap.add_argument("--compile", action="store_true")
@@ -97,11 +144,15 @@ def main():
     for d in a.data:
         paths += sorted(glob.glob(d)) if any(c in d for c in "*?[") else [d]
     pack_len = a.pack_len or cfg.seq_len
-    X, Y = build_packed(paths, tok, pack_len, a.q_fields, a.r_fields, eos_id, a.max_examples)
+    X, Y, groups = build_packed(paths, tok, pack_len, a.q_fields, a.r_fields, eos_id,
+                                a.max_examples, group_field=a.group_field)
     N = len(X)
     if N == 0:
         print("[sft] no packed sequences — check data/fields"); return
 
+    weights = parse_sample_weights(a.sample_weights)
+    if weights and not a.group_field:
+        raise ValueError("--sample-weights requires --group-field")
     raw = model
     if a.compile:
         model = torch.compile(model)
@@ -119,8 +170,12 @@ def main():
     rng = np.random.default_rng(1337)
     t0, step = time.time(), 0
     for ep in range(a.epochs):
-        order = rng.permutation(N)
-        for bi in range(0, N - a.batch_size + 1, a.batch_size):
+        if weights:
+            order, requested = weighted_epoch_order(rng, groups, a.batch_size, weights)
+            print(f"[sft-data] epoch {ep} weighted samples={requested}", flush=True)
+        else:
+            order = rng.permutation(N)
+        for bi in range(0, len(order) - a.batch_size + 1, a.batch_size):
             idx = order[bi:bi + a.batch_size]
             x = torch.from_numpy(X[idx]).to(device)
             y = torch.from_numpy(Y[idx]).to(device)
