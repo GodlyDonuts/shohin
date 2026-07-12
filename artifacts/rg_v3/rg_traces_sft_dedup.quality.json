@@ -1,0 +1,21 @@
+{
+  "data": "/lustre/fs1/home/sa305415/shohin/artifacts/rg_v3/rg_traces_sft_dedup.jsonl",
+  "duplicate_normalized_questions": 0,
+  "format_markers": {
+    "<think>": 252298,
+    "The answer is": 252298
+  },
+  "malformed_rows": 0,
+  "missing_question_or_response": 0,
+  "response_words": {
+    "max": 99,
+    "mean": 22.18,
+    "p50": 19,
+    "p90": 37,
+    "p99": 64
+  },
+  "source_counts": {
+    "reasoning_gym_trace": 252298
+  },
+  "valid_rows": 252298
+}
