@@ -551,6 +551,14 @@ about 1.8%, which is why they are not the central remediation path.
   `fa9f0ea310287d710d9300c8cb0781ab`). This does not prove web-disjointness and
   cannot be substituted for the reasoning board; it gives the future
   language-balanced handoff a reproducible English-likelihood trend line.
+- A second fixed CodeContests **test-split** monitor separates code continuation
+  from executable problem solving. Raw 170k reaches **NLL 1.3537146 / PPL
+  3.8718** over 145,408 code tokens, yet still scores 7/164 HumanEval and 0/100
+  MBPP. This is strong evidence that raw code likelihood is not the limiting
+  factor by itself: the model lacks robust task parsing, solution selection, and
+  instruction-aligned executable emission. Scale execution-verified code and
+  preserve the represented completion format, but require transfer to code
+  execution benchmarks before claiming progress.
 - The independent raw/V7 interactions rule out a hidden general solver: neither
   verified intermediate facts nor model-produced compact states unlock reliable
   arithmetic, transformations, or code. More state-template SFT is prohibited
