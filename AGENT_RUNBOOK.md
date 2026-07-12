@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-10 ~14:55 EDT (`683715` healthy past 128.7k; verified SFT-v2 pilot complete and under evaluation). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-12 ~03:20 EDT (`685084` healthy past 166k; v2 SFT evaluated and rejected as a broad recipe). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -51,7 +51,7 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-10 ~14:55 EDT) |
+| Item | Value (as of 2026-07-12 ~03:20 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | 1-GPU job `680992` was stopped at the earlier 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, `681123`, `681308`, `681309`, and `681310` completed 2-H100 windows by wall-time. Current active continuation is **`683715`**, running on **evc43** as a 3-day 1-H100 job (`NG=1 BS=16 ACC=16 CKPT=250`). Per current directive, dual-GPU successor `684030` was canceled. **`685084`** is the dependency-held one-H100 successor after `683715`, configured `BS=32 ACC=8 CKPT=250` (same 524,288 tokens/update, ~64 GB microbatch). |
@@ -685,6 +685,21 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   echo mentioned default `sft_out`, so dependent evaluations were canceled while header+filesystem
   isolation was verified. Replacement public board `685757` now runs on that exact checkpoint; balanced
   RG `685759` is serially dependency-held after it. Flagship is healthy past 128.7k at ~148.12k tok/s.
+- **2026-07-12 ~03:20** — **Network-outage reconciliation and data gate decision.** Original
+  flagship `683715` completed cleanly after 2d 7h on evc43. Dependency successor **`685084`** started
+  automatically on evc22, correctly resumed `ckpt_0141500.pt -> step 141501` with the planned
+  one-H100 `BS=32/ACC=8` configuration, and is healthy through **166.26k** at **154.2k tok/s**.
+  The missed 130k/160k rotating checkpoints cannot be recovered; immediately preserved current
+  `ckpt_0166250.pt` as `best_step166250.pt` (remote md5
+  `1b57c99aca966546d4d9aea7827d6ebd`) and began a resumable local `.part` DR transfer. CPU job
+  `685700` completed `openmath_pt`: **5,000,000,144 tokens / 50 shards / 12,662,236 docs kept /
+  165,773 eval-contaminated docs dropped**. It is approved only as a future natural-relaunch input,
+  never a live-mix mutation. SFT-v2 `sft_ep1` improved GSM8K pass@1 **1/100 -> 12/100** and maj@4
+  **2/100 -> 5/100**, but MATH500 fell **3/100 -> 0/100**, HumanEval **7/164 -> 6/164**, MBPP stayed
+  0, and balanced held-out RG regressed **29/800 (3.625%) -> 19/800 (2.375%)**. Decision: retain it
+  as a narrow GSM-style ablation result, **do not promote v2 as the final broad-reasoning recipe**;
+  continue raw pretraining and re-design post-training around stronger procedural coverage before the
+  next SFT pilot.
 - **2026-07-10 ~14:45** — **RG measurement bias fixed before using it for a decision.** `685704` completed
   and confirmed the raw 120k model is poor on held-out knights-and-knaves (**3/400 = 0.75%**), but the
   generator file is family-ordered, so the first 400 rows were all one family. Patched evaluator to

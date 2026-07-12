@@ -1,0 +1,35 @@
+===== SHOHIN BENCHMARK BOARD  ckpt=sft_ep1.pt =====
+[eval] device=cuda task=gsm8k k=4 temp=0.8
+[0] gold=18 pred=7 ok=False votes=['7', '46', '14', '384']
+[1] gold=3 pred=6 ok=False votes=['6', '6', '30.4', '36']
+[2] gold=70000 pred=0 ok=False votes=['0', '50000', '7500', '80000']
+[3] gold=540 pred=3 ok=False votes=['3', '27', '180', '540']
+gsm8k  maj@4  ckpt=/lustre/fs1/home/sa305415/shohin/train/sft_v2_120k/sft_ep1.pt  step=sft_ep1  5/100 = 5.0%
+[eval] device=cuda task=gsm8k k=1 temp=0.8
+[0] gold=18 pred=24 ok=False
+[1] gold=3 pred=12 ok=False
+[2] gold=70000 pred=65000 ok=False
+[3] gold=540 pred=60 ok=False
+gsm8k  pass@1  ckpt=/lustre/fs1/home/sa305415/shohin/train/sft_v2_120k/sft_ep1.pt  step=sft_ep1  12/100 = 12.0%
+[eval] device=cuda task=math500 k=1 temp=0.8
+[0] gold=\left(3,\frac{\pi}{2}\right) pred=None ok=False
+[1] gold=p-q pred=None ok=False
+[2] gold=\frac{14}{3} pred=None ok=False
+[3] gold=9 pred=12 ok=False
+math500  pass@1  ckpt=/lustre/fs1/home/sa305415/shohin/train/sft_v2_120k/sft_ep1.pt  step=sft_ep1  0/100 = 0.0%
+[eval] device=cuda task=humaneval k=1
+[0] HumanEval/0 pass=False
+[1] HumanEval/1 pass=False
+[2] HumanEval/2 pass=False
+[3] HumanEval/3 pass=False
+[4] HumanEval/4 pass=False
+humaneval  pass@1  ckpt=/lustre/fs1/home/sa305415/shohin/train/sft_v2_120k/sft_ep1.pt  step=sft_ep1  6/164 = 3.7%
+[eval] device=cuda task=mbpp k=1
+[0] 11 pass=False
+[1] 12 pass=False
+[2] 13 pass=False
+[3] 14 pass=False
+[4] 15 pass=False
+mbpp  pass@1  ckpt=/lustre/fs1/home/sa305415/shohin/train/sft_v2_120k/sft_ep1.pt  step=sft_ep1  0/100 = 0.0%
+[eval-job] appended 5 metric rows to /lustre/fs1/home/sa305415/shohin/artifacts/eval_history/metrics.jsonl
+===== board done =====
