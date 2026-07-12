@@ -53,9 +53,12 @@ def main():
     parser.add_argument("--timeout", type=float, default=2.0)
     parser.add_argument("--max-source-rows", type=int, default=0,
                         help="0 scans until every input problem is found")
+    parser.add_argument("--progress-every", type=int, default=100)
     args = parser.parse_args()
-    if args.timeout <= 0 or args.max_case_chars <= 0 or args.max_source_rows < 0:
-        raise ValueError("timeout and max-case-chars must be positive; max-source-rows non-negative")
+    if (args.timeout <= 0 or args.max_case_chars <= 0 or args.max_source_rows < 0
+            or args.progress_every <= 0):
+        raise ValueError("timeout, max-case-chars, and progress-every must be positive; "
+                         "max-source-rows non-negative")
 
     from datasets import load_dataset
 
@@ -91,6 +94,12 @@ def main():
             clean["full_verified_cases"] = len(cases)
             out.write(json.dumps(clean, ensure_ascii=False) + "\n")
             kept += 1
+            if found % args.progress_every == 0 or not candidates:
+                print(
+                    f"[taco-full-audit] matched={found} kept={kept} "
+                    f"source_rows_scanned={source_rows} remaining={len(candidates)}",
+                    flush=True,
+                )
             if not candidates:
                 break
     drops["source_unmatched"] = len(candidates)

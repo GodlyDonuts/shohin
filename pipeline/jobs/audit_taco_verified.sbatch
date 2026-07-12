@@ -15,12 +15,14 @@ PY=$BASE/miniforge3/bin/python
 IN=${IN:?set IN to the initial TACO pilot JSONL}
 OUT=${OUT:?set OUT to a fresh full-verified JSONL}
 REPORT=${REPORT:-${OUT%.jsonl}.quality.json}
+PROGRESS_EVERY=${PROGRESS_EVERY:-100}
 
 [ -s "$IN" ] || { echo "[taco-full-audit] input missing: $IN" >&2; exit 2; }
 [ ! -e "$OUT" ] || { echo "[taco-full-audit] output exists: $OUT" >&2; exit 3; }
 [ ! -e "$OUT.partial" ] || { echo "[taco-full-audit] stale partial: $OUT.partial" >&2; exit 4; }
 cd "$BASE"
-"$PY" pipeline/audit_taco_verified.py --input "$IN" --out "$OUT"
+"$PY" pipeline/audit_taco_verified.py --input "$IN" --out "$OUT" \
+  --progress-every "$PROGRESS_EVERY"
 "$PY" pipeline/audit_sft_quality.py --data "$OUT" --evals "$BASE/artifacts/evals" --out "$REPORT"
 "$PY" - "$REPORT" <<'PY'
 import json
