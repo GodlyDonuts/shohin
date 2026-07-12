@@ -25,17 +25,20 @@ The original shared decoder stopped at any blank line. Many SFT targets place a
 blank line before `The answer is ...`, so those old scores are diagnostic only.
 `train/eval_suite.py` now stops only after a complete explicit final-answer line.
 
-The CUDA-only corrected public board (`686277`) has already completed its first
-two GSM8K measurements for `sft_v2_120k/sft_ep1.pt`:
+The CUDA-only corrected public board (`686277`) completed for
+`sft_v2_120k/sft_ep1.pt`:
 
 | Metric | Result | Interpretation |
 |---|---:|---|
-| GSM8K maj@4 | 6 / 100 | no useful self-consistency gain |
-| GSM8K pass@1 | 14 / 100 | slightly above the old 12 / 100 diagnostic result, but still far below the target |
+| GSM8K maj@4 | 6 / 100 | sampling does not create a useful self-consistency gain |
+| GSM8K pass@1 | 14 / 100 | format-sensitive improvement, still far below the target |
+| MATH-500 pass@1 | 6 / 100 | narrow arithmetic style does not transfer to contest math |
+| HumanEval pass@1 | 6 / 164 | code remains weak |
+| MBPP pass@1 | 0 / 100 | no usable simple-program synthesis yet |
 
-The remainder of that board plus fresh held-out/in-training RG gates must finish
-before any numerical SFT promotion decision. Earlier results must not be compared
-directly to corrected-decoder results.
+Earlier results must not be compared directly to corrected-decoder results. The
+corrected board is enough to reject v2 as a promotion candidate; its held-out and
+in-training RG gates remain useful for characterizing overfit, not for rescuing it.
 
 ### Direct interaction, not only benchmarks
 
@@ -63,13 +66,39 @@ The SFT model therefore has isolated wins (state tracking and a minimal code
 predicate) and partial correct intermediates, but no robust rule execution. This
 is direct evidence, not an inference from a loss curve.
 
+### Controlled prompt matrix at 168k
+
+The first twelve hand-authored prompts established the failure qualitatively. A
+second reproducible audit (`train/capability_matrix.py`, job `686306`) then used
+48 fresh generated tasks across arithmetic, base conversion, state updates,
+sorting/deduplication, string insertion, and syllogisms. It tested the raw 168k
+checkpoint and v2 SFT under four prompt contracts. The complete transcripts and
+per-family scores are in `artifacts/eval_history/capability_matrix_v1_686306.json`.
+
+| Checkpoint | Q/A contract | Plain instruction | Ask for chain of thought | One worked example |
+|---|---:|---:|---:|---:|
+| raw 168k | 4 / 48 (8.3%) | 4 / 48 (8.3%) | 0 / 48 (0.0%) | 5 / 48 (10.4%) |
+| v2 SFT | 7 / 48 (14.6%) | 4 / 48 (8.3%) | 5 / 48 (10.4%) | 4 / 48 (8.3%) |
+
+The raw model only solved four negative syllogisms under its native Q/A format.
+The v2 model gained three arithmetic cases only in that exact format; it scored
+zero on all eight base-conversion, state-update, sorting, and string tasks in the
+same condition. A request to think step by step did not unlock latent computation.
+For example, raw 168k correctly wrote `18 + 9 = 27`, `27 * 5 = 135`, and
+`135 - 14 = 121`, then continued into a different question and emitted a final
+`1`. V2 instead applied the wrong precedence (`18 + 9*5 = 63`). This separates a
+weak output/stopping contract from the deeper missing algorithmic competence.
+
 ### Training state and corpus replay
 
-The raw checkpoint at step 166,250 has seen 87.16B tokens: 645.7 tokens per
-nominal 135M parameters, or 696.7 per the 125.1M parameter count printed by the
-actual SFT loader. The codebase/runbook headline should use **125.1M trained
-parameters** unless a new checkpoint proves otherwise; calling it 135M does not
-make the model stronger, and hides a roughly 10% target mismatch.
+At step 168,300 the run has processed 88.24B nominal tokens, or 705.4 tokens per
+the 125.1M parameter count printed by the actual SFT loader. The codebase/runbook
+headline should use **125.1M trained parameters** unless a new checkpoint proves
+otherwise; calling it 135M does not make the model stronger, and hides a roughly
+10% target mismatch. Mean training loss has been essentially flat across the
+extension: 1.659 (60k-80k), 1.655 (80k-100k), 1.663 (100k-120k), 1.645
+(120k-140k), 1.635 (140k-160k), and 1.640 so far after 160k. This is a healthy
+optimization trace, but it is not evidence of capability growth.
 
 The live loader uses equal directory round-robin, not corpus-proportional sampling.
 At step 166,250 it has drawn about 21.79B tokens from each enabled directory:
@@ -84,9 +113,9 @@ At step 166,250 it has drawn about 21.79B tokens from each enabled directory:
 The active source mix is therefore exactly 75% math-oriented text and 25% raw
 code. It has no substantial general educational English, logic/deduction, or
 instruction-following pretraining source. That differs materially from the stated
-strategy of a language floor plus a reasoning-tilted mix. It also makes the
-smallest source replay almost eleven times while the best large math source has
-not completed one pass.
+strategy of a language floor plus a reasoning-tilted mix. At 168,300, the equal
+four-way loader has supplied about 22.06B tokens to each source: FineMath4 has
+been replayed 11.03 times while FineMath3 has received only 0.88 pass.
 
 ## Why the first SFT did not repair it
 
@@ -101,10 +130,19 @@ The actual content makes the result unsurprising:
   overwhelmingly represented.
 - 83,611 procedural traces came from only six earlier hand-built families.
 - The mix has only 444 code rows, and just 50 examples contain a code fence.
+- This older frozen mix predates source-balanced sampling: all 349,449 rows have
+  no `training_group`, so its 2,605 packed sequences were shuffled in their
+  natural source proportions rather than deliberately sampling code, procedural,
+  math, and teacher supervision.
 - Logic, strings, stateful algorithms, and error correction are too sparse to
   support the 32-family held-out RG battery.
 - The answer-only loss is correct for SFT, but one epoch cannot install missing
   algorithms that neither the base nor the data has represented broadly.
+
+The completion-mask implementation itself was checked on 1,360 deterministic
+samples from the v2 mix: every tokenized prompt was an exact prefix of its full
+prompt-plus-answer tokenization. The poor result is not caused by a shifted label
+boundary or accidental prompt-token supervision.
 
 There is also a code-specific contract error. `train/sft.py` teaches every example
 as `Question: {problem}\nAnswer: {code}`, while `train/eval_code.py` asks HumanEval
@@ -160,6 +198,22 @@ an equally trained `n_loop=1` control. It must not be injected into the live run
   intended 120k checkpoint and wrote only to `train/sft_v2_120k/`.
 - **A single bad prompt or parser:** rejected. The raw and SFT failures recur
   across fresh direct prompts, corrected GSM8K, and the broad procedural gate.
+- **A broken SFT label mask:** rejected. The prompt-prefix/token-mask audit found
+  no sampled boundary mismatch.
+- **A magical prompt or hidden latent mode:** rejected. One-shot prompts gave the
+  raw model only 5/48 and asking for chain of thought gave it 0/48; v2 remained
+  tied to its Q/A template.
+
+## Throughput reality check
+
+The H100 is not idling: the live BS32/ACC8 run is holding about 154.2k tokens/s
+with 99-100% reported GPU utilization. At that rate it processes about 13.32B
+tokens/day. A claim of 30T tokens in ten days would require 34.72M tokens/s,
+225x this run's already-saturated rate, and would take about 6.17 years here.
+That claim is therefore not a comparable single-GPU pretraining result; it is not
+evidence that a missing graph-fusion flag explains the capability gap. The
+measured BS32 change gained about 4%, and the whole-update CUDA graph canary only
+about 1.8%, which is why they are not the central remediation path.
 
 ## Remediation plan and promotion gates
 
