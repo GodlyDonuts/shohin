@@ -16,6 +16,7 @@ SPLIT=${SPLIT:-cot}
 MAX_SEEN=${MAX_SEEN:-50000}
 MAX_PROBLEM_TOKENS=${MAX_PROBLEM_TOKENS:-512}
 MAX_TRACE_TOKENS=${MAX_TRACE_TOKENS:-512}
+MAX_EXAMPLE_TOKENS=${MAX_EXAMPLE_TOKENS:-2048}
 MIN_PASS_RATE=${MIN_PASS_RATE:-}
 EXCLUDE_USED_IN_KAGGLE=${EXCLUDE_USED_IN_KAGGLE:-0}
 OUT=${OUT:?set OUT to a fresh selection-report JSON}
@@ -24,7 +25,8 @@ OUT=${OUT:?set OUT to a fresh selection-report JSON}
 cd "$BASE"
 ARGS=(--tokenizer "$BASE/artifacts/shohin-tok-32k.json" --evals "$BASE/artifacts/evals"
       --report "$OUT" --dry-run --split "$SPLIT" --max-seen "$MAX_SEEN"
-      --max-problem-tokens "$MAX_PROBLEM_TOKENS" --max-trace-tokens "$MAX_TRACE_TOKENS")
+      --max-problem-tokens "$MAX_PROBLEM_TOKENS" --max-trace-tokens "$MAX_TRACE_TOKENS"
+      --max-example-tokens "$MAX_EXAMPLE_TOKENS")
 if [ -n "$MIN_PASS_RATE" ]; then
   ARGS+=(--min-pass-rate "$MIN_PASS_RATE")
 fi

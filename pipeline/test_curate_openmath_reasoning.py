@@ -2,7 +2,8 @@
 """Non-network selection checks for OpenMathReasoning curation."""
 import unittest
 
-from curate_openmath_reasoning import answer_matches, clean_trace, extract_final, parsed_rate, truthy
+from curate_openmath_reasoning import (answer_matches, clean_trace, extract_final, parsed_rate,
+                                       supervised_token_count, truthy)
 
 
 class OpenMathReasoningSelectionTests(unittest.TestCase):
@@ -19,6 +20,18 @@ class OpenMathReasoningSelectionTests(unittest.TestCase):
         self.assertTrue(truthy("yes"))
         self.assertFalse(truthy("false"))
         self.assertFalse(truthy("0"))
+
+    def test_combined_limit_matches_separate_prompt_completion_encoding(self):
+        class StubTokenizer:
+            class Encoded:
+                def __init__(self, count):
+                    self.ids = list(range(count))
+
+            def encode(self, text):
+                return self.Encoded(len(text.split()))
+
+        count = supervised_token_count(StubTokenizer(), "one two", "three four five", eos_id=0)
+        self.assertEqual(count, 8)  # prompt=4, completion=3, EOS=1
 
 
 if __name__ == "__main__":

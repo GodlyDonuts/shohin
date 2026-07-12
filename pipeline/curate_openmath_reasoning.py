@@ -97,6 +97,13 @@ def truthy(value):
     return str(value).strip().lower() in {"1", "true", "yes"}
 
 
+def supervised_token_count(tokenizer, problem, response, eos_id):
+    """Mirror sft.py's separately encoded prompt/completion boundary exactly."""
+    prompt = f"Question: {problem}\nAnswer:"
+    return (len(tokenizer.encode(prompt).ids)
+            + len(tokenizer.encode(" " + response).ids) + 1)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--tokenizer", required=True)
@@ -111,12 +118,15 @@ def main():
     parser.add_argument("--max-keep", type=int, default=0, help="0 means do not cap accepted rows")
     parser.add_argument("--max-problem-tokens", type=int, default=512)
     parser.add_argument("--max-trace-tokens", type=int, default=512)
+    parser.add_argument("--max-example-tokens", type=int, default=2048,
+                        help="exact combined prompt+completion+EOS limit consumed by train/sft.py")
     parser.add_argument("--min-pass-rate", type=float)
     parser.add_argument("--exclude-used-in-kaggle", action="store_true",
                         help="exclude the source's AIMO-2-training subset; off by default because project eval decontamination is the relevant leakage control")
     parser.add_argument("--ngram", type=int, default=13)
     args = parser.parse_args()
-    if args.max_seen < 0 or args.max_keep < 0 or args.max_problem_tokens <= 0 or args.max_trace_tokens <= 0:
+    if (args.max_seen < 0 or args.max_keep < 0 or args.max_problem_tokens <= 0
+            or args.max_trace_tokens <= 0 or args.max_example_tokens <= 0):
         raise ValueError("limits must be positive, or zero only for max-seen/max-keep")
     if args.dry_run == bool(args.out):
         raise SystemExit("use exactly one of --dry-run or --out")
@@ -132,6 +142,9 @@ def main():
     from tokenizers import Tokenizer
 
     tokenizer = Tokenizer.from_file(args.tokenizer)
+    eos_id = tokenizer.token_to_id("<|endoftext|>")
+    if eos_id is None:
+        raise SystemExit("tokenizer has no <|endoftext|> token")
     exact, eval_ngrams, eval_files = load_eval_index(args.evals, args.ngram)
     stats = {
         "seen": 0,
@@ -142,6 +155,7 @@ def main():
         "duplicate_problem": 0,
         "long_problem": 0,
         "long_trace": 0,
+        "long_example": 0,
         "answer_mismatch": 0,
         "low_pass_rate": 0,
         "contam_exact_problem": 0,
@@ -207,10 +221,13 @@ def main():
             if not answer_matches(trace, answer):
                 stats["answer_mismatch"] += 1
                 continue
+            response = f"<think>{trace}</think>\nThe answer is {answer}."
+            if supervised_token_count(tokenizer, problem, response, eos_id) > args.max_example_tokens:
+                stats["long_example"] += 1
+                continue
             seen_problems.add(key)
             stats["kept"] += 1
             if destination:
-                response = f"<think>{trace}</think>\nThe answer is {answer}."
                 destination.write(json.dumps({
                     "question": problem,
                     "response": response,
@@ -241,6 +258,7 @@ def main():
         "max_keep": args.max_keep,
         "max_problem_tokens": args.max_problem_tokens,
         "max_trace_tokens": args.max_trace_tokens,
+        "max_example_tokens": args.max_example_tokens,
         "min_pass_rate": args.min_pass_rate,
         "exclude_used_in_kaggle": args.exclude_used_in_kaggle,
         "ngram": args.ngram,

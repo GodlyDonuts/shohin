@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-12 ~15:45 EDT (`685084` remains healthy through 178.24k; raw 170k English/code NLL baselines are fixed and hash-bound; duplicate-safe shuffled TACO replay is active). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-12 ~16:17 EDT (`685084` remains healthy past 180k; 180k is hash-verified locally and on Newton; the new [training metrics ledger](TRAINING_METRICS.md) distinguishes nominal update tokens, active corpus capacity, data admission, and capability evidence). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -50,11 +50,11 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-12 ~15:45 EDT) |
+| Item | Value (as of 2026-07-12 ~16:17 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | `683715` completed cleanly. Current active continuation is **`685084`** on **evc22**: one H100, `BS=32 ACC=8 CKPT=250`, exact 524,288-token updates, and the proven default compile path. It resumed `ckpt_0141500.pt -> step 141501`; the prior dual-GPU successor remains canceled per user instruction. |
-| Extended pretrain status | **`685084` is healthy through step 178,240** at ~**154.30k tok/s**. Loss remains in the normal ~1.2-2.4 band and gnorm is normally 0.07-0.32; isolated outlier guards recover on their next steps. `ckpt_0170000.pt` is preserved on Newton as `best_step170000.pt`, and the full local DR copy `train/flagship_out/ckpt_0170000.pt` matches both at md5 **`7ad139b6b9b537a5a3e65978f8296419`**. Next local DR target is 180k. Do not integrate CUDA graphs into live training: the clean whole-update canary gained only ~1.8% while removing the flagship's established guard/observability path. |
+| Extended pretrain status | **`685084` reached 180,000 cleanly** at loss **1.6526**, gnorm **0.103**, and **154.30k tok/s**, then remained healthy through observed step 180,090. One guard skip at 180,030 (gnorm 1.04 vs EMA 0.12) recovered immediately on the next logged step. `ckpt_0180000.pt` and Newton `best_step180000.pt` match the full local DR copy `train/flagship_out/ckpt_0180000.pt` at md5 **`a592a8bd46163eb1427fe64460be0c6a`**. The exact 180k milestone is **94,371,840,000 nominal update tokens**, while current mounted corpus capacity is **57,826,022,271 manifest tokens**; these are intentionally separate metrics in `TRAINING_METRICS.md`. Next local DR target is 190k. Do not integrate CUDA graphs into live training: the clean whole-update canary gained only ~1.8% while removing the flagship's established guard/observability path. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, **DONE**; wrote baseline `train/sft_out/sft_ep3.pt`. Isolated v2 pilot `685708` completed one epoch from `best_step120000.pt` to `train/sft_v2_120k/sft_ep1.pt`. It is a narrow arithmetic-format ablation, not a promoted broad-reasoning recipe. V4 `686323` was canceled before its first step after stale 40/35/15/10 weights; v4 `686324` was canceled before any artifact after a code-boundary audit found 461/3,542 legacy BPE prompt-prefix mismatches. Both are invalid and preserved. Corrected v4 pilot **`686326`** completed one epoch in 1,218s to `train/sft_v4_168750_r3/sft_ep1.pt`, with audited 40/47/8/5 weights and inference-aligned prompt/completion token construction. It is an unevaluated candidate, not promoted. |
 | **Eval board job** | Corrected CUDA-only v2 board **`686277` completed**: GSM8K maj@4 **6/100**, pass@1 **14/100**, MATH-500 **6/100**, HumanEval **6/164**, MBPP **0/100**. The v2 pilot is **rejected for promotion**. RG held-out `686278` is **90/800 = 11.25%** and in-training `686279` is **98/800 = 12.25%**: it learned a few routines that transfer but remains zero on most logic/transformation/cipher/geometry families. The corrected raw-base board **`686315`** pinned `best_step168750.pt` and completed: GSM8K maj@4 **5/100**, pass@1 **2/100**, MATH-500 **2/100**, HumanEval **7/164**, MBPP **0/100**. `686316` direct adaptive interaction was **1/6 initial, 1/6 after explicit self-review, 1/6 with a verified intermediate fact**; only the simple syllogism was correct. V4 r3 public board **`686336` completed and is rejected**: GSM8K maj@4 **5/100**, pass@1 **14/100**, MATH-500 **1/100**, HumanEval **2/164**, MBPP **0/100**. Its corrected held-out procedural result `686337` is **209/800 = 26.125%**, above V2's 90/800 on the same evaluator, but the later raw base means this is a useful diagnostic signal rather than clean data-only attribution. V4 remains a generator/verifier candidate, not a broad promotion. |
 | **V5 primitive board** | **`686401` completed; V5 is rejected for broad promotion.** From the raw-168.75k base it scored GSM8K maj@4 **10/100**, greedy **9/100**, MATH-500 **3/100**, HumanEval **2/164**, and MBPP **0/100**. It shows narrow arithmetic-format transfer but regresses code from raw's 7/164 HumanEval and does not establish broad math, code, or instruction-following transfer. |
@@ -77,8 +77,8 @@ Do not wait for permission to fix obvious data/training gaps.
 | **Pretraining monitor gate** | `train/eval_nll.py` and isolated `train/jobs/eval_nll.sbatch` report pure token-weighted NLL/perplexity for named frozen monitor JSONLs, excluding any training-only `zloss` and binding every result to an input SHA-256. Fixed English monitor is WikiText-103 test: 1,723 docs / 301,241 source tokens / SHA-256 `fbe8687d618550d2251b397d436abb30a990d5f0b4e7c25cfe85c7265aa251d8`; raw 170k local-MPS baseline is **NLL 3.9648849, PPL 52.7142** over 301,056 tokens (result md5 `fa9f0ea310287d710d9300c8cb0781ab`). Fixed code monitor is CodeContests **test** split: 122 unique Python-3 prompt+code rows / 146,896 source tokens / SHA-256 `62668905552c89650c0dcd79227a6fe606e107c39a126f7c1b5d9364ee8fc687`; raw 170k is **NLL 1.3537146, PPL 3.8718** over 145,408 tokens (result md5 `8b52525e46958ac20a1d6973b6de0cc0`). The gap is useful directional telemetry, but **not a proof of source-disjointness or causality**: the raw code corpus is CodeParrot-Clean and tokenized shards cannot yet prove absence of CodeContests-derived code. Therefore HumanEval/MBPP, held-out execution, and direct code transcripts remain decisive. These are regression monitors, **not** reasoning claims or web-disjointness proofs. H100 attempts `686587`, `686589`, `686590`, and `686592` encountered CUDA-unavailable/busy preflight on evc26/31/36/43 and wrote no result; evaluator now requires a real CUDA tensor allocation before loading a model. Do not burn more H100 slots without a known-good node smoke. Never place monitor inputs in `artifacts/evals` (live decontamination glob) or any training shard path. |
 | **Recurrence ablation** | Mame `n_loop=1` job `686301` and `n_loop=2` job `686302` both completed cleanly for 800 matched updates. `n_loop=2` is mechanically stable but not promoted: final logged loss was essentially tied (**2.4890 vs 2.4899**) while time rose **886s -> 1466s** and steady throughput fell **472.7k -> 286.0k tok/s**. No capability gate was run, so recurrence stays off the flagship. |
 | **Future handoff data stream** | **Fixed forward-only, never applied to active `685084`.** Prior checkpoints did not serialize `ShardLoader` state; every resumed job could recreate its stream from the same `DSEED=777`. `train.py` now records `data_stream_generation`/seed and resumes with a deterministic distinct stream generation. Tiny-train smoke verified generation **0 -> 1** and checkpoint metadata. This prevents repeated prefixes at the next natural handoff but does not claim exact cursor restoration for old chunks. |
-| Preserved checkpoints (cluster) | Includes prior milestones plus **`best_step170000.pt`** copied from numbered `ckpt_0170000.pt`; both md5 **`7ad139b6b9b537a5a3e65978f8296419`**. |
-| **Local DR backup (Mac)** | Includes prior milestones plus **`train/flagship_out/ckpt_0170000.pt`**, full+optimizer, locally and remotely md5 **`7ad139b6b9b537a5a3e65978f8296419`**. Next DR target: 180k. |
+| Preserved checkpoints (cluster) | Includes prior milestones plus **`best_step180000.pt`** copied from numbered `ckpt_0180000.pt`; both md5 **`a592a8bd46163eb1427fe64460be0c6a`**. |
+| **Local DR backup (Mac)** | Includes prior milestones plus **`train/flagship_out/ckpt_0180000.pt`**, full+optimizer, locally and remotely md5 **`a592a8bd46163eb1427fe64460be0c6a`**. Next DR target: 190k. |
 | **Large artifact transfer policy** | For big checkpoints/shards/uploads, prefer VPS-to-VPS or Newton-to-VPS staging when credentials/hosts are available; the VPS links have ~20 Gbit internet and should beat Mac↔Newton transfers. Still use `.part` files and md5/sha256 on both ends before trusting or deleting anything. |
 
 **Checkpoints preserved so far:** every 10k through 50k; 60k is model-only because the trainer writes
@@ -1684,6 +1684,21 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   512-token probe was stopped; corrected all-provenance 10k probe `686671` retains strict answer and
   full-text decontamination and must determine whether enough concise verified rows exist before a candidate
   build is considered.
+- **2026-07-12 ~16:17** — **180k is preserved and the metrics ledger is now a required custody artifact.**
+  `685084` reached step **180,000** at loss **1.6526**, gnorm **0.103**, and **154.30k tok/s**; the sole
+  180,030 gnorm guard skip recovered immediately. Numbered `ckpt_0180000.pt`, Newton
+  `best_step180000.pt`, and local `train/flagship_out/ckpt_0180000.pt` are full optimizer checkpoints with
+  matching md5 **`a592a8bd46163eb1427fe64460be0c6a`**. New `TRAINING_METRICS.md` records the exact distinction
+  between **94,371,840,000 nominal update tokens** at 180k and the current **57,826,022,271-token** active
+  corpus capacity, plus checkpoint inventory, data-admission status, benchmark baselines, and the update
+  protocol. It must be refreshed at every 10k milestone from manifests/reports/logs only; partial data is
+  never counted as admitted.
+- **2026-07-12 ~16:17** — **The OpenMath COT exact-context selection result is inspection evidence, not
+  admission.** New combined prompt+completion+EOS accounting matches `sft.py`'s separate encodes. Under the
+  exact 2,048-token limit, all-provenance `686672` kept **326/10,000** rows after final-answer verification
+  and full problem+trace evaluation decontamination; 9,398 traces were individually long and 17 additional
+  examples exceeded the true combined limit. The apparent source scale is therefore not usable training
+  volume without an explicit candidate, packing, balance, and quality review.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
