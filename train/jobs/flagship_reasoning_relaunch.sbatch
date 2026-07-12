@@ -32,15 +32,16 @@ SHARDS=(
   "$BASE/artifacts/shards/code_python"
   "$BASE/artifacts/shards/finemath3"
   "$BASE/artifacts/shards/openmath_pt"
-  "$BASE/artifacts/shards/fineweb_edu_5b"
+  "$BASE/artifacts/shards/fineweb_edu_25b"
   "$BASE/artifacts/shards/dclm_baseline_25b"
 )
 # FineMath-4 is a subset of FineMath-3, so it is deliberately excluded rather
 # than replayed as a separate narrow-math domain. With the loader's per-domain
 # floor at BS=32, these weights yield about 24.8% math, 25.1% code, and 50.1%
-# educational English. DCLM is the scanned 25B replacement, never its 5B pilot.
+# educational English. Both language sources are scanned 25B replacements,
+# never their 5B pilots.
 # Order: openwebmath, code, finemath3, openmath, fineweb-edu, dclm.
-WEIGHTS=(5 27 6 8 9 45)
+WEIGHTS=(5 27 6 8 27 27)
 
 for shard in "${SHARDS[@]}"; do
   [ -s "$shard/manifest.json" ] || { echo "[relaunch] missing manifest: $shard" >&2; exit 2; }

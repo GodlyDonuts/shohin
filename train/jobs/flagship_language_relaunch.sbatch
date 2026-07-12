@@ -19,7 +19,9 @@ BASE=/lustre/fs1/home/sa305415/shohin
 PY=$BASE/miniforge3/bin/python
 OUT=$BASE/train/flagship_out
 RESUME=${RESUME:?set RESUME to an explicitly preserved numbered checkpoint}
-STEPS=${STEPS:-300000}
+# ``train.py --steps`` is an absolute global target. The narrow phase ends at
+# 300k, so this language-balanced continuation must target 600k.
+STEPS=${STEPS:-600000}
 WARMUP=${WARMUP:-2000}
 LRMUON=${LRMUON:-0.005}
 LRADAM=${LRADAM:-0.001}
@@ -27,24 +29,23 @@ DSEED=${DSEED:-20260714}
 CKPT=${CKPT:-250}
 BS=${BS:-32}
 ACC=${ACC:-8}
-DCLM_DIR=${DCLM_DIR:-$BASE/artifacts/shards/dclm_baseline_5b}
+FINEWEB_DIR=${FINEWEB_DIR:-$BASE/artifacts/shards/fineweb_edu_25b}
+DCLM_DIR=${DCLM_DIR:-$BASE/artifacts/shards/dclm_baseline_25b}
 
 SHARDS=(
-  "$BASE/artifacts/shards/finemath4"
   "$BASE/artifacts/shards/openwebmath"
   "$BASE/artifacts/shards/code_python"
   "$BASE/artifacts/shards/finemath3"
   "$BASE/artifacts/shards/openmath_pt"
-  "$BASE/artifacts/shards/fineweb_edu_5b"
+  "$FINEWEB_DIR"
   "$DCLM_DIR"
 )
-# FineMath4 is retained for diversity but deliberately no longer replayed at the
-# old equal-domain rate. DCLM_DIR can point to a scanned larger replacement such
-# as dclm_baseline_25b; never include both the pilot and its replacement.
-WEIGHTS=(2 4 28 4 6 32 24)
-# ShardLoader reserves one of BS=32 sequences for each of these seven domains,
-# then fills the remaining 25 by WEIGHTS. These values therefore yield the
-# intended effective mix: math 25%, code 25%, English 50%.
+# FineMath-4 is contained in FineMath-3, so it is excluded instead of replayed.
+# Both language sources are scanned 25B replacements, never their 5B pilots.
+# Order: openwebmath, code, finemath3, openmath, fineweb, dclm.
+WEIGHTS=(5 27 6 8 27 27)
+# With the six-domain BS=32 floor, this yields about 24.8% math, 25.1% code,
+# and 50.1% educational English.
 
 [ -f "$RESUME" ] || { echo "[language-relaunch] resume checkpoint missing: $RESUME" >&2; exit 2; }
 LATEST=$(ls "$OUT"/ckpt_[0-9]*.pt 2>/dev/null | sort | tail -1 || true)

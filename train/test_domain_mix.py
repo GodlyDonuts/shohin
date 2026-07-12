@@ -6,7 +6,7 @@ from data import effective_domain_fractions
 def main():
     # openwebmath, code, finemath3, openmath, fineweb, dclm. FineMath-4 is
     # intentionally absent because it is contained in FineMath-3.
-    fractions = effective_domain_fractions([5, 27, 6, 8, 9, 45], batch_size=32)
+    fractions = effective_domain_fractions([5, 27, 6, 8, 27, 27], batch_size=32)
     math = fractions[0] + fractions[2] + fractions[3]
     code = fractions[1]
     english = fractions[4] + fractions[5]
