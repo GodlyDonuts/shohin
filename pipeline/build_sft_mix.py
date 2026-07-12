@@ -58,7 +58,8 @@ SOURCE_PRIORITY = {
     "self_correct": 45,
 }
 
-CODE_SOURCES = {"mbpp_train", "mbpp_validation", "apps_train", "code_contests_train", "taco_verified_train", "code"}
+CODE_SOURCES = {"mbpp_train", "mbpp_validation", "apps_train", "code_contests_train", "code"}
+ALGORITHMIC_CODE_SOURCES = {"taco_verified_train"}
 PROCEDURAL_SOURCES = {"reasoning_gym_trace"}
 TEACHER_SOURCES = {"claude", "glm", "nemotron", "hy3", "hy3_gsm8k", "hy3_arc", "minimax"}
 
@@ -88,6 +89,12 @@ def priority(row: dict, path: str) -> tuple[int, int]:
 
 def training_group(source: str) -> str:
     """Stable high-level groups for source-balanced SFT sampling."""
+    # Competitive-programming stdin/stdout programs teach useful algorithmic
+    # reasoning, but their Q/A contract is not HumanEval/MBPP function
+    # completion. Keep them separately gated instead of letting them silently
+    # consume the completion-aligned code budget.
+    if source in ALGORITHMIC_CODE_SOURCES:
+        return "algorithmic_code"
     if source in CODE_SOURCES or source.endswith("_completion"):
         return "code"
     if source in PROCEDURAL_SOURCES:

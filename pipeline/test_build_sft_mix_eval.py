@@ -6,8 +6,12 @@ import sys
 import tempfile
 from pathlib import Path
 
+from build_sft_mix import training_group
+
 
 def main():
+    assert training_group("taco_verified_train") == "algorithmic_code"
+    assert training_group("code_contests_train") == "code"
     root = Path(__file__).resolve().parent
     with tempfile.TemporaryDirectory() as temporary:
         temporary = Path(temporary)
