@@ -13,8 +13,10 @@ BASE=/lustre/fs1/home/sa305415/shohin
 PY=$BASE/miniforge3/bin/python
 STATE_DATA=${STATE_DATA:-$BASE/artifacts/sft/primitives_v3_state_train.jsonl}
 DATA=("$BASE/artifacts/sft/sft_mix_reasoning_v4.jsonl" "$STATE_DATA")
-OUT=${OUT:-$BASE/artifacts/sft/sft_mix_reasoning_v7_state_protocol.packing.json}
-WEIGHTS="math=0.40 procedural=0.15 code=0.05 teacher=0.05 state_protocol=0.35"
+OUT=${OUT:-$BASE/artifacts/sft/sft_mix_reasoning_v7_state_protocol_revised.packing.json}
+# Keep scarce code and teacher groups under two replays per epoch while the
+# state protocol remains large enough to test its semantic gate.
+WEIGHTS="math=0.432 procedural=0.18 code=0.028 teacher=0.04 state_protocol=0.32"
 
 for data in "${DATA[@]}"; do
   [ -s "$data" ] || { echo "[sft-v7-audit] data missing: $data" >&2; exit 2; }
