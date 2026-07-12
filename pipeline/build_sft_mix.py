@@ -79,7 +79,7 @@ def response_stats(resp: str) -> tuple[int, int]:
 
 def priority(row: dict, path: str) -> tuple[int, int]:
     src = str(row.get("source") or "").strip()
-    base = SOURCE_PRIORITY.get(src, 60)
+    base = 100 if src.endswith("_completion") else SOURCE_PRIORITY.get(src, 60)
     # Shorter correct traces are better for this student, but only as a tie-break.
     _, words = response_stats(str(row.get("response") or ""))
     return base, -words
@@ -87,7 +87,7 @@ def priority(row: dict, path: str) -> tuple[int, int]:
 
 def training_group(source: str) -> str:
     """Stable high-level groups for source-balanced SFT sampling."""
-    if source in CODE_SOURCES:
+    if source in CODE_SOURCES or source.endswith("_completion"):
         return "code"
     if source in PROCEDURAL_SOURCES:
         return "procedural"
@@ -259,6 +259,9 @@ def main():
             "source": src or Path(path).stem,
         }
         clean["training_group"] = training_group(clean["source"])
+        completion_prompt = str(row.get("completion_prompt") or "")
+        if completion_prompt:
+            clean["completion_prompt"] = completion_prompt
         if row.get("answer") is not None:
             clean["answer"] = str(row.get("answer"))
         prev = kept_by_hash.get(h)

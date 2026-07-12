@@ -20,9 +20,7 @@ MIN_CODE_ROWS=${MIN_CODE_ROWS:-1000}
 INPUTS=(
   "$BASE/artifacts/sft/openmath2_600k.jsonl"
   "$BASE/artifacts/rg_v4/rg_traces_sft.jsonl"
-  "$BASE/artifacts/sft/code.jsonl"
-  "$BASE/artifacts/sft/apps_train_v3.jsonl"
-  "$BASE/artifacts/sft/code_contests_train_v1.jsonl"
+  "$BASE/artifacts/sft/code_completion_v1.jsonl"
   "$BASE/artifacts/sft/hy3_reasoning_claude.jsonl"
   "$BASE/artifacts/sft/hy3_reasoning_glm.jsonl"
   "$BASE/artifacts/sft/hy3_reasoning_nemotron.jsonl"

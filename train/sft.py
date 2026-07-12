@@ -18,7 +18,7 @@ from muon import Muon, split_params
 
 
 def build_packed(data_paths, tok, seq_len, q_fields, r_fields, eos_id, max_examples=0,
-                 group_field=None):
+                 group_field=None, prompt_override_field=None):
     """Tokenize (question, response) rows -> packed sequences with a completion-only loss mask.
     Returns (X[int64 N,seq_len], Y[int64 N,seq_len]) where Y is -1 on prompt/pad (ignored)."""
     grouped_buffers = {}            # group -> (token ids, loss-mask)
@@ -35,8 +35,14 @@ def build_packed(data_paths, tok, seq_len, q_fields, r_fields, eos_id, max_examp
                 continue
             group = str(r.get(group_field) or "default") if group_field else "default"
             buf_x, buf_m = grouped_buffers.setdefault(group, ([], []))
-            prompt = f"Question: {q}\nAnswer:"
-            full = prompt + " " + str(a).strip()
+            prompt_override = str(r.get(prompt_override_field) or "") if prompt_override_field else ""
+            prompt = prompt_override or f"Question: {q}\nAnswer:"
+            # Completion-form code must retain the indentation beginning its
+            # function body. Standard answer-form SFT keeps its established
+            # trimmed response behavior.
+            answer = str(a).rstrip() if prompt_override else str(a).strip()
+            sep = "" if prompt_override or prompt.endswith((" ", "\n", "\t")) else " "
+            full = prompt + sep + answer
             pids = tok.encode(prompt).ids
             fids = tok.encode(full).ids
             if len(fids) >= seq_len:            # skip pathologically long examples
@@ -119,6 +125,8 @@ def main():
     ap.add_argument("--pack-len", type=int, default=0, help="pack sequence length (0 = model seq_len); shorter = less memory")
     ap.add_argument("--group-field", default=None,
                     help="optional immutable row field used to keep packed sequences by group")
+    ap.add_argument("--prompt-override-field", default=None,
+                    help="optional row field containing an exact completion prompt (for code completion SFT)")
     ap.add_argument("--sample-weights", nargs="*", default=[], metavar="GROUP=WEIGHT",
                     help="weighted per-epoch sampling over --group-field values; examples are sampled with replacement")
     ap.add_argument("--eos", default="<|endoftext|>")
@@ -145,7 +153,8 @@ def main():
         paths += sorted(glob.glob(d)) if any(c in d for c in "*?[") else [d]
     pack_len = a.pack_len or cfg.seq_len
     X, Y, groups = build_packed(paths, tok, pack_len, a.q_fields, a.r_fields, eos_id,
-                                a.max_examples, group_field=a.group_field)
+                                a.max_examples, group_field=a.group_field,
+                                prompt_override_field=a.prompt_override_field)
     N = len(X)
     if N == 0:
         print("[sft] no packed sequences — check data/fields"); return
