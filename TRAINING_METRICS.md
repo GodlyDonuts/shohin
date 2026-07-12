@@ -5,11 +5,12 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-12 16:17 EDT  
+**Last refreshed:** 2026-07-12 17:14 EDT
 **Flagship source of truth:** Newton Slurm job `685084`,
 `/lustre/fs1/home/sa305415/shohin/train/flagship_out/log_r0.jsonl`  
-**Checkpoint source of truth:** numbered checkpoint plus `best_step<step>.pt`, each
-MD5-verified on Newton and locally before a local row is marked verified.
+**Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
+`best_step<step>.pt`, and verify the local full checkpoint. The trainer may subsequently reap
+the numbered file under its retention policy; the ledger records which copies remain durable.
 
 ## Definitions
 
@@ -44,10 +45,10 @@ new shards, alter weights, or apply an experimental runtime optimization to `685
 
 ## Checkpoint and Disaster-Recovery Inventory
 
-| Milestone | Newton numbered checkpoint | Newton promoted copy | Local full checkpoint | MD5 | State |
+| Milestone | Numbered checkpoint at milestone | Newton durable copy | Local full checkpoint | MD5 | State |
 |---|---|---|---|---|---|
 | 170k | `ckpt_0170000.pt` | `best_step170000.pt` | `train/flagship_out/ckpt_0170000.pt` | `7ad139b6b9b537a5a3e65978f8296419` | Verified Newton + local |
-| 180k | `ckpt_0180000.pt` | `best_step180000.pt` | `train/flagship_out/ckpt_0180000.pt` | `a592a8bd46163eb1427fe64460be0c6a` | Verified Newton + local |
+| 180k | Observed and hashed, then reaped by trainer retention | `best_step180000.pt` | `train/flagship_out/ckpt_0180000.pt` | `a592a8bd46163eb1427fe64460be0c6a` | Two durable verified copies |
 
 All rows above are full optimizer checkpoints, not model-only exports. The next local DR
 target is 190k, or the newest clean checkpoint before any natural handoff.
@@ -98,6 +99,12 @@ Additional independent evidence:
 - Raw 120k balanced held-out Reasoning-Gym baseline: **29/800 = 3.625%**.
 - V4 r3 matched held-out procedural score: **209/800 = 26.125%**. This is diagnostic
   transfer, not a clean data-only attribution and not broad-reasoning evidence.
+- Fresh manual raw-180k interaction probe, 7 hand-authored cases with greedy 32-token
+  completions: **1/7 initial, 0/7 review, 1/7 supplied-fact, 0/7 state reuse**. The sole
+  correct answer was the simple syllogism. It is a transcript-level directional check rather
+  than a formal comparison to the prior 128-token probe, but shows no visible reasoning jump.
+  Artifact: `artifacts/eval_history/manual_capability_raw180k_20260712_mps32.json`, MD5
+  `cc6332a5c99d6cbf6ba2f8987ae58cc0`.
 - Fixed raw-170k monitor results: WikiText-103 test NLL **3.9648849**, PPL **52.7142** over
   301,056 targets; CodeContests test NLL **1.3537146**, PPL **3.8718** over 145,408 targets.
   They are trend monitors only. The code monitor is not source-disjointness proof, so
@@ -111,8 +118,9 @@ benchmark movement alone.
 
 At each 10k checkpoint milestone:
 
-1. Confirm the exact numbered checkpoint exists on Newton, copy it to the corresponding
-   `best_step<step>.pt`, and record the remote MD5.
+1. Confirm the exact numbered checkpoint exists at the milestone, copy it to the corresponding
+   `best_step<step>.pt`, and record the remote MD5. Expect the trainer to reclaim old numbered
+   files; `best_step` and the verified local copy are the required durable artifacts.
 2. Transfer to `train/flagship_out/ckpt_<step>.pt.part` (or a resumable equivalent). Verify
    the local MD5 against Newton before atomically renaming it without `.part`.
 3. Update the pretraining table with the exact step, nominal update-token count, latest
