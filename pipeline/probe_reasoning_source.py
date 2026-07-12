@@ -9,6 +9,7 @@ report is reviewed; this command never writes model or training-data outputs.
 import argparse
 import hashlib
 import json
+import os
 import re
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -236,7 +237,11 @@ def main():
         "license": report["builder"]["license"],
         "card_license": report["dataset_card"].get("frontmatter", {}).get("license"),
         "out": str(out),
-    }, sort_keys=True))
+    }, sort_keys=True), flush=True)
+    # HF streaming can leave fsspec worker threads alive after the report is
+    # atomically durable. This probe has no cleanup-sensitive output, so exit
+    # explicitly instead of pinning a CPU allocation after completion.
+    os._exit(0)
 
 
 if __name__ == "__main__":

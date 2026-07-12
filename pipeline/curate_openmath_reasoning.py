@@ -246,6 +246,9 @@ def main():
     partial_report.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     partial_report.replace(report_path)
     print(json.dumps(report, sort_keys=True), flush=True)
+    # See probe_reasoning_source.py: streaming datasets can retain worker
+    # threads after all artifacts are closed and atomically committed.
+    os._exit(0)
 
 
 if __name__ == "__main__":
