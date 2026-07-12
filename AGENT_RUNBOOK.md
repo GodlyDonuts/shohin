@@ -1617,6 +1617,11 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   composition interview. The direct interviews preserve full transcripts; V8 cannot start unless the raw
   interview succeeds, and V8 cannot be promoted from a constructed/held-out generator score alone. This
   chain has no flagship output path and cannot run before the current verifier H100 work ends.
+- **2026-07-12** — **Fresh bounded GLM health probe remains negative.** One isolated train-only ARC
+  request to NVIDIA `z-ai/glm-5.2` with 20s timeout/one worker completed in 35s with `attempted=1`,
+  `kept=0`, `wrong=0`, and `err=1`; its scratch output is empty. It did not touch a live writer or any
+  frozen mix. Keep GLM, Nemotron, and HY3 bulk paused rather than spending requests in an error loop; GLM
+  remains the first teacher to re-enable only after a later bounded probe has a real verified keep.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
