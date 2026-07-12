@@ -68,6 +68,14 @@ def percentile(values, p):
     return values[min(len(values) - 1, round((len(values) - 1) * p))]
 
 
+def sha256(path):
+    digest = hashlib.sha256()
+    with open(path, "rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", required=True)
@@ -118,6 +126,7 @@ def main():
     lengths.sort()
     report = {
         "data": str(Path(args.data)),
+        "data_sha256": sha256(args.data),
         "valid_rows": len(lengths),
         "malformed_rows": malformed,
         "missing_question_or_response": missing,

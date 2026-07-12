@@ -1563,6 +1563,15 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   and positive `full_verified_cases`; malformed, duplicate, altered, or foreign rows abort the retry.
   Focused local/Newton tests passed. This is a recovery path only: `686584` continues unchanged and no
   partial output can enter a candidate or SFT mix.
+- **2026-07-12** — **V8 broad-transfer SFT is blocked on fresh hash-bound reports, not trusted by name.**
+  The 699,928-row V8 candidate has zero recorded prompt overlap and a moderate 2.75x code replay factor,
+  but its earlier quality/packing reports predated input-hash binding. A dry launcher correctly refused it
+  before CUDA allocation. `audit_sft_quality.py` now records `data_sha256`; CPU jobs **`686602`** and
+  **`686603`** respectively rebuild V8's quality and 2,048-token packing reports without touching its JSONL.
+  The new isolated `sft_v8_pilot.sbatch` requires both report hashes to match the exact JSONL, >=600k clean
+  rows, >=70k packed sequences, >=2,500 code sequences, all four groups, zero eval overlap, and <=3x replay
+  before it can train from a preserved checkpoint. After success it still needs public-board and direct
+  composition-transfer gates; it is not a flagship promotion.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*

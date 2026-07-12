@@ -13,7 +13,7 @@ set -euo pipefail
 BASE=/lustre/fs1/home/sa305415/shohin
 PY=$BASE/miniforge3/bin/python
 DATA=${DATA:-$BASE/artifacts/sft/sft_mix_reasoning_v8_candidate_r2.jsonl}
-OUT=${OUT:-$BASE/artifacts/sft/sft_mix_reasoning_v8_candidate_r2.packing.json}
+OUT=${OUT:-$BASE/artifacts/sft/sft_mix_reasoning_v8_candidate_r2.packing.r3.json}
 WEIGHTS=${WEIGHTS:-math=0.40 procedural=0.45 code=0.10 teacher=0.05}
 
 [ -s "$DATA" ] || { echo "[sft-v8-audit] data missing: $DATA" >&2; exit 2; }
