@@ -267,11 +267,14 @@ about 1.8%, which is why they are not the central remediation path.
    running rather than pretending the pilot met its 3,000-row goal. CodeContests
    is a separate train-only, execution-verified source. Neither enters a mix
    until its final quality report is clean.
-5. **Use explicit source balancing for v4 SFT.** Do not let code remain a
-   sub-1% residue merely because the math corpus is larger. Support source-level
-   sampling or controlled duplication, and include a raw-code-completion template
-   that matches code evaluation. Freeze the resulting mix with hashes and a
-   contamination report before training.
+5. **Use measured source balancing for v4 SFT.** Do not let code remain a
+   sub-1% residue merely because the math corpus is larger, but do not turn a
+   small verified set into a memorization loop. The frozen v4 mix has 62,926
+   packed sequences: math 34,848, procedural 24,847, code 1,225, teacher 2,006.
+   Its pilot uses 40/47/8/5 math/procedural/code/teacher, which gives code about
+   4.1 replays and teacher 1.6 per epoch rather than the unearned 7.7/3.1 of the
+   prior 40/35/15/10 proposal. It includes raw-code-completion templates that
+   better match code evaluation and is frozen with quality/contamination reports.
 6. **Gate every candidate on four comparisons.** Require: corrected public board,
    balanced held-out RG, a fixed direct-interaction transcript, and code execution
    under a prompt format represented in training. Promote only if it improves the

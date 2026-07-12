@@ -21,9 +21,10 @@ EPOCHS=${EPOCHS:-1}
 BS=${BS:-16}
 LRMUON=${LRMUON:-0.002}
 LRADAM=${LRADAM:-0.0005}
-# Sequence-level sampling keeps these high-level groups visible without
-# duplicating JSONL rows: math 40%, procedural 35%, code 15%, teacher 10%.
-WEIGHTS="math=0.40 procedural=0.35 code=0.15 teacher=0.10"
+# Packed-capacity audit 686312 measured only 1,225 code and 2,006 teacher
+# sequences. The earlier 40/35/15/10 proposal would replay those 7.7x/3.1x in
+# one epoch. This keeps code visible while capping replay near 4.1x/1.6x.
+WEIGHTS="math=0.40 procedural=0.47 code=0.08 teacher=0.05"
 
 [ -s "$DATA" ] || { echo "[sft-v4] frozen mix missing: $DATA" >&2; exit 2; }
 [ -f "$INIT" ] || { echo "[sft-v4] init missing: $INIT" >&2; exit 3; }

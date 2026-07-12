@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-12 ~05:55 EDT (`685084` healthy past 168.9k; future restart data-stream replay defect repaired and smoke-tested; raw-base board and adaptive direct probe remain queued). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-12 ~05:58 EDT (`685084` healthy past 169.1k; v4 mix/packing gates passed and replay-balanced pilot weights are frozen; raw-base board and adaptive direct probe remain queued). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -50,11 +50,11 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-12 ~05:55 EDT) |
+| Item | Value (as of 2026-07-12 ~05:58 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | `683715` completed cleanly. Current active continuation is **`685084`** on **evc22**: one H100, `BS=32 ACC=8 CKPT=250`, exact 524,288-token updates, and the proven default compile path. It resumed `ckpt_0141500.pt -> step 141501`; the prior dual-GPU successor remains canceled per user instruction. |
-| Extended pretrain status | **`685084` is healthy through step 168,950** at ~**154.2k tok/s**. Loss remains in the normal ~1.2-2.2 band and gnorm is normally 0.07-0.22; isolated spikes recover. Latest confirmed numbered checkpoint is `ckpt_0168750.pt`; a remote non-rotating `best_step168750.pt` was preserved (md5 `e58b6b07802782517c7709c1844cb4d1`) for analysis. Preserve/download 170k at the next milestone. Do not integrate CUDA graphs: the clean whole-update canary gained only ~1.8% while removing the flagship's established guard/observability path. |
+| Extended pretrain status | **`685084` is healthy through step 169,140** at ~**154.2k tok/s**. Loss remains in the normal ~1.2-2.2 band and gnorm is normally 0.07-0.22; isolated spikes recover. Latest confirmed numbered checkpoint is `ckpt_0168750.pt`; a remote non-rotating `best_step168750.pt` was preserved (md5 `e58b6b07802782517c7709c1844cb4d1`) for analysis. Preserve/download 170k at the next milestone. Do not integrate CUDA graphs: the clean whole-update canary gained only ~1.8% while removing the flagship's established guard/observability path. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, **DONE**; wrote baseline `train/sft_out/sft_ep3.pt`. Isolated v2 pilot `685708` completed one epoch from `best_step120000.pt` to `train/sft_v2_120k/sft_ep1.pt`. It is a narrow arithmetic-format ablation, not a promoted broad-reasoning recipe. |
 | **Eval board job** | Corrected CUDA-only v2 board **`686277` completed**: GSM8K maj@4 **6/100**, pass@1 **14/100**, MATH-500 **6/100**, HumanEval **6/164**, MBPP **0/100**. The v2 pilot is **rejected for promotion**. Held-out RG `686278` is **90/800 = 11.25%**, concentrated in chain sums/string insertion/basic arithmetic rather than broad transfer; in-training `686279` is running to measure overfit. Raw-base `686314` is **invalid** after its first GSM8K metric because rotating `ckpt_0168000.pt` disappeared mid-board; `686315` is requeued from preserved `best_step168750.pt` with checkpoint pinning, and `686316` then runs a read-only adaptive interaction probe. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
@@ -64,7 +64,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | finemath3 output | `artifacts/shards/finemath3/` — **✅ COMPLETE: 125 shards, exactly 25.0B tokens** (`manifest.json` present, 22 GB; 8,575 contaminated docs dropped vs evalgrams). **Included in the 300k relaunch SHARDS.** |
 | SFT mix (Newton) | `artifacts/sft/sft_mix_core.jsonl` — **97,439 examples**, rebuilt 2026-07-08 with hard eval filtering. Audit: 0 malformed rows, 0 duplicate questions, 0 exact eval-prompt hits; builder dropped **206 exact eval-prompt overlaps** and **741 eval 13-gram overlaps** before writing. md5 `53ed91368b4c238dc18a1ab1699e4158`; report md5 `21459b382767801e205f3f625ce106cd`. |
 | Local teacher distillers | Nemotron screen run completed at **1,781 rows** but provider health was poor (`kept=19`, `err=52506` in the screen run). Bounded probes after that were also unhealthy: Nemotron `limit=5` kept 0 with 3 provider errors; GLM `limit=3` kept 0 with 3 provider errors. **Leave Nemotron and GLM paused until provider health clears; do not blindly respawn.** HY3 bulk process died/stalled after ~25.2k rows; `conc=2` and `conc=1` restarts exited without appending, even though a tiny direct Hermes/probe call completed cleanly. Claude/minimax snapshots are present. GLM remains the preferred strongest open-weight teacher when available. |
-| **Verified-data expansion** | **Active, CPU-only, isolated from pretrain.** `openmath_pt` is complete at **5,000,000,144 tokens / 50 shards** and remains a future-relaunch-only source. `rg_v3` dedup derivative has **252,298 valid rows**; expanded **`rg_v4` has 374,659 valid traces, 0 malformed rows, and 0 normalized-question duplicates**. It spans 25 answer-checked numerical, algorithmic, Caesar, social, and self-reference families. The frozen v2 mix has only **444 code rows**. APPS retry `686288` finished cleanly but kept only **234/5,000** candidates after execution verification; its quality report has 0 malformed/duplicate/missing rows. CodeContests Python 3 scale **`686291`** is writing an atomic partial (1,478 valid rows at last check) toward a separate 3,000-row train-only artifact. After `686291` succeeds, dependency chain **`686308 -> 686310 -> 686312`** will respectively build completion-form code, freeze `sft_mix_reasoning_v4`, and audit packed-sequence group capacity/replay before any v4 pilot chooses weights. FineWeb-Edu schema probes `686295/686297` verified English, score, and stream fields in `sample-10BT`; future-only 5B quality-thresholded/decontaminated tokenization **`686298`** is running on evc2. No new output may enter a frozen SFT mix before its final audit. |
+| **Verified-data expansion** | **Active, CPU-only, isolated from pretrain.** `openmath_pt` is complete at **5,000,000,144 tokens / 50 shards** and remains a future-relaunch-only source. `rg_v4` has **374,659 valid traces**, 0 malformed rows, and 0 normalized-question duplicates across 25 answer-checked families. CodeContests `686291` completed **3,000** train-only Python examples; its completion-form derivative has **3,593** deduplicated examples. Frozen **v4** has **643,595 clean rows**: math 240,297 / procedural 374,659 / code 3,542 / teacher 25,097. Exact SFT packing `686312` passed at **62,926** sequences. The original 15% code target would replay code 7.7x and teacher 3.1x, so v4 pilot weights are revised to **40/47/8/5** (math/procedural/code/teacher; code ~4.1x, teacher ~1.6x). `686317` is independently scaling more verified CodeContests data for a later mix; it does not alter v4. FineWeb-Edu **`686298`** is building the future-only 5B quality-thresholded/decontaminated source. No new output may enter a frozen SFT mix before its final audit. |
 | **Direct capability audit** | `interactive_v1_686293.json` plus isolated **`686306`** directly tested raw 168k and v2 SFT. On 48 fresh generated tasks, raw scored **4/48 Q/A**, **4/48 plain instruction**, **0/48 CoT**, **5/48 one-shot**; v2 scored **7/48 Q/A**, then **4/48**, **5/48**, **4/48** respectively. This is a data/algorithm gap, not a prompt unlock. Read-only `686316` is queued after the corrected raw board to test whether raw 168.75k can self-correct or use supplied intermediate facts. Full evidence: `CAPABILITY_DIAGNOSIS.md` and `artifacts/eval_history/capability_matrix_v1_686306.json`. |
 | **Recurrence ablation** | Mame `n_loop=1` job `686301` and `n_loop=2` job `686302` both completed cleanly for 800 matched updates. `n_loop=2` is mechanically stable but not promoted: final logged loss was essentially tied (**2.4890 vs 2.4899**) while time rose **886s -> 1466s** and steady throughput fell **472.7k -> 286.0k tok/s**. No capability gate was run, so recurrence stays off the flagship. |
 | **Future handoff data stream** | **Fixed forward-only, never applied to active `685084`.** Prior checkpoints did not serialize `ShardLoader` state; every resumed job could recreate its stream from the same `DSEED=777`. `train.py` now records `data_stream_generation`/seed and resumes with a deterministic distinct stream generation. Tiny-train smoke verified generation **0 -> 1** and checkpoint metadata. This prevents repeated prefixes at the next natural handoff but does not claim exact cursor restoration for old chunks. |
@@ -80,9 +80,9 @@ extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no st
 **Next actions in order:** (1) Watch `685084`: retain the normal ~154k tok/s band and expected 250-step
 checkpoints, preserve/download 170k, and never interrupt a recovered isolated gnorm skip. (2) Let
 `686279` finish; then read corrected raw board `686315` and adaptive direct transcript `686316`, but do
-not promote v2. (3) Audit final CodeContests output and the FineWeb-Edu manifest, then build the immutable source-balanced
-v4 mix with raw completion-form code. (4) Read `sft_mix_reasoning_v4.packing.json` before choosing any
-v4 sampling weights; a small group may not be blindly replayed many times. (5) Gate any v4 pilot from a preserved raw pretrain checkpoint on
+not promote v2. (3) Keep frozen v4 immutable and do not start its one-epoch, source-balanced pilot until
+those baseline reads are recorded. (4) Continue CodeContests v2 and FineWeb-Edu; audit each final artifact
+before considering a later mix. (5) Gate any v4 pilot from a preserved raw pretrain checkpoint on
 the corrected public board, balanced RG, this direct capability matrix, and code execution. (6) At the next
 natural pretrain relaunch only, use manifest-gated `openmath_pt` plus approved educational-English data
 with explicit, per-batch-safe domain weights; do not alter live SHARDS.
@@ -805,6 +805,14 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   A real two-stage tiny-train smoke saved generation 0 then resumed at step 2 with generation 1 and a
   distinct seed. Active `685084` is untouched; its next natural successor receives the repair. This
   reduces an unmeasured but serious replay risk, not a retroactive claim that past tokens were unique.
+- **2026-07-12 ~05:58** — **v4 SFT data is frozen, but its replay budget was corrected before GPU use.**
+  CodeContests `686291` committed 3,000 execution-verified train-only Python problems; `686308` converted
+  3,593 deduplicated examples to completion form. `686310` froze v4 at **643,595** clean, deduplicated,
+  decontaminated rows, and `686312` tokenized it exactly as SFT will: math 34,848 / procedural 24,847 /
+  code 1,225 / teacher 2,006 packed sequences. The 40/35/15/10 proposal would have replayed code 7.7x
+  and teacher 3.1x per epoch, so `sft_v4_pilot.sbatch` is revised to **40/47/8/5** (code 4.1x, teacher
+  1.6x). Do not submit its pilot until the pinned raw-base board and adaptive direct baseline finish.
+  Separate CPU-only `686317` is expanding CodeContests further for a later candidate.
 
 ---
 
