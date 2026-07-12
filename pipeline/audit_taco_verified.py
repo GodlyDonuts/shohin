@@ -44,6 +44,51 @@ def read_candidates(path):
     return by_id
 
 
+def read_completed_partial(path, candidates):
+    """Load already full-verified rows for an explicit interrupted-job resume.
+
+    The partial output is authoritative only for rows that are still present in
+    the immutable curation input and whose response bytes have not changed.
+    This prevents a retry from silently mixing another source or a hand-edited
+    solution into the eventual frozen artifact.
+    """
+    completed = {}
+    malformed = missing = duplicate_ids = unexpected_ids = changed_responses = 0
+    with open(path, errors="replace") as source:
+        for line in source:
+            if not line.strip():
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                malformed += 1
+                continue
+            problem_id = row.get("problem_id")
+            response = str(row.get("response") or "").strip()
+            if problem_id is None or not response or int(row.get("full_verified_cases") or 0) <= 0:
+                missing += 1
+                continue
+            key = str(problem_id)
+            if key in completed:
+                duplicate_ids += 1
+                continue
+            original = candidates.get(key)
+            if original is None:
+                unexpected_ids += 1
+                continue
+            if response != str(original.get("response") or "").strip():
+                changed_responses += 1
+                continue
+            completed[key] = row
+    if malformed or missing or duplicate_ids or unexpected_ids or changed_responses:
+        raise SystemExit(
+            "invalid partial: "
+            f"malformed={malformed} missing={missing} duplicate_ids={duplicate_ids} "
+            f"unexpected_ids={unexpected_ids} changed_responses={changed_responses}"
+        )
+    return completed
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", required=True)
@@ -54,6 +99,8 @@ def main():
     parser.add_argument("--max-source-rows", type=int, default=0,
                         help="0 scans until every input problem is found")
     parser.add_argument("--progress-every", type=int, default=100)
+    parser.add_argument("--resume-partial", action="store_true",
+                        help="append to a checked interrupted .partial output instead of refusing it")
     args = parser.parse_args()
     if (args.timeout <= 0 or args.max_case_chars <= 0 or args.max_source_rows < 0
             or args.progress_every <= 0):
@@ -65,14 +112,20 @@ def main():
     candidates = read_candidates(args.input)
     out_path = Path(args.out)
     partial = out_path.with_suffix(out_path.suffix + ".partial")
-    if out_path.exists() or partial.exists():
+    if out_path.exists():
         raise SystemExit(f"refusing to overwrite existing output: {out_path}")
+    if partial.exists() and not args.resume_partial:
+        raise SystemExit(f"refusing stale partial without --resume-partial: {partial}")
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    found = kept = source_rows = 0
+    completed = read_completed_partial(partial, candidates) if partial.exists() else {}
+    candidates = {key: row for key, row in candidates.items() if key not in completed}
+    resumed = len(completed)
+    found = kept = resumed
+    source_rows = 0
     drops = {key: 0 for key in ("missing_cases", "execution", "source_unmatched")}
     stream = load_dataset(args.dataset, split="train", streaming=True)
-    with partial.open("w") as out:
+    with partial.open("a" if resumed else "w") as out:
         for source in stream:
             source_rows += 1
             if args.max_source_rows and source_rows > args.max_source_rows:
@@ -97,7 +150,8 @@ def main():
             if found % args.progress_every == 0 or not candidates:
                 print(
                     f"[taco-full-audit] matched={found} kept={kept} "
-                    f"source_rows_scanned={source_rows} remaining={len(candidates)}",
+                    f"source_rows_scanned={source_rows} remaining={len(candidates)} "
+                    f"resumed={resumed}",
                     flush=True,
                 )
             if not candidates:
@@ -113,6 +167,7 @@ def main():
         "source_rows_scanned": source_rows,
         "matched_source_rows": found,
         "kept": kept,
+        "resumed_preverified_rows": resumed,
         "dropped": drops,
         "out": str(out_path),
     }, sort_keys=True))

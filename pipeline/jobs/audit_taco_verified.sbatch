@@ -16,13 +16,20 @@ IN=${IN:?set IN to the initial TACO pilot JSONL}
 OUT=${OUT:?set OUT to a fresh full-verified JSONL}
 REPORT=${REPORT:-${OUT%.jsonl}.quality.json}
 PROGRESS_EVERY=${PROGRESS_EVERY:-100}
+RESUME_PARTIAL=${RESUME_PARTIAL:-0}
 
 [ -s "$IN" ] || { echo "[taco-full-audit] input missing: $IN" >&2; exit 2; }
 [ ! -e "$OUT" ] || { echo "[taco-full-audit] output exists: $OUT" >&2; exit 3; }
-[ ! -e "$OUT.partial" ] || { echo "[taco-full-audit] stale partial: $OUT.partial" >&2; exit 4; }
+if [ -e "$OUT.partial" ] && [ "$RESUME_PARTIAL" != 1 ]; then
+  echo "[taco-full-audit] stale partial without RESUME_PARTIAL=1: $OUT.partial" >&2
+  exit 4
+fi
 cd "$BASE"
-"$PY" pipeline/audit_taco_verified.py --input "$IN" --out "$OUT" \
-  --progress-every "$PROGRESS_EVERY"
+ARGS=(--input "$IN" --out "$OUT" --progress-every "$PROGRESS_EVERY")
+if [ "$RESUME_PARTIAL" = 1 ]; then
+  ARGS+=(--resume-partial)
+fi
+"$PY" pipeline/audit_taco_verified.py "${ARGS[@]}"
 "$PY" pipeline/audit_sft_quality.py --data "$OUT" --evals "$BASE/artifacts/evals" --out "$REPORT"
 "$PY" - "$REPORT" <<'PY'
 import json

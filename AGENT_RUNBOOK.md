@@ -1556,6 +1556,13 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   directional because raw `code_python` is CodeParrot-Clean and no source-level overlap audit has yet
   ruled out CodeContests-derived code. Future code work must still be execution-verified
   continuation/instruction training and transfer-gated; NLL alone cannot explain HumanEval/MBPP failure.
+- **2026-07-12** — **Long all-test TACO audits are now explicitly recoverable without weakening admission.**
+  The 250-row full replay took 33 minutes, making a 3,000-row audit vulnerable to an ordinary wall-time
+  cutoff. `audit_taco_verified.py --resume-partial` and its wrapper's `RESUME_PARTIAL=1` now resume only
+  a prior partial whose every retained row has a matching immutable candidate ID, byte-identical response,
+  and positive `full_verified_cases`; malformed, duplicate, altered, or foreign rows abort the retry.
+  Focused local/Newton tests passed. This is a recovery path only: `686584` continues unchanged and no
+  partial output can enter a candidate or SFT mix.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
