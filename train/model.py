@@ -159,7 +159,10 @@ class GPT(nn.Module):
         loss = None
         if targets is not None:
             lf = logits.float()
-            loss = F.cross_entropy(lf.view(-1, lf.size(-1)), targets.view(-1), ignore_index=-1)
+            # Callers may pass a valid non-contiguous target slice during
+            # diagnostics or future auxiliary objectives; reshape preserves the
+            # established contiguous fast path and avoids a view-only crash.
+            loss = F.cross_entropy(lf.reshape(-1, lf.size(-1)), targets.reshape(-1), ignore_index=-1)
             if self.cfg.zloss > 0:
                 loss = loss + self.cfg.zloss * torch.logsumexp(lf, dim=-1).pow(2).mean()
         return logits, loss
