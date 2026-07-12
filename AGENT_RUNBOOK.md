@@ -700,6 +700,12 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   as a narrow GSM-style ablation result, **do not promote v2 as the final broad-reasoning recipe**;
   continue raw pretraining and re-design post-training around stronger procedural coverage before the
   next SFT pilot.
+- **2026-07-12 ~03:22** — **166.25k DR custody complete; raw-base eval chain queued.** Resumable SFTP
+  transfer completed locally as `train/flagship_out/ckpt_0166250.pt`; local and Newton both md5
+  **`1b57c99aca966546d4d9aea7827d6ebd`**. Submitted isolated raw-base public board **`686245`** against
+  the preserved 166.25k checkpoint, with balanced held-out RG **`686247`** serially after success;
+  both exclude the live evc22 node. Next DR target is 170k. Do not train another broad v2 SFT variant
+  until the raw-base 166k measurements and a revised procedural-curriculum design are reviewed.
 - **2026-07-10 ~14:45** — **RG measurement bias fixed before using it for a decision.** `685704` completed
   and confirmed the raw 120k model is poor on held-out knights-and-knaves (**3/400 = 0.75%**), but the
   generator file is family-ordered, so the first 400 rows were all one family. Patched evaluator to
