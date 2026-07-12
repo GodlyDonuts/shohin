@@ -942,6 +942,12 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   `test_domain_mix.py` to yield exact **25/25/50**. Added a 25B DCLM replacement builder; it requires
   the 5B pilot manifest and must receive a fresh full-shard scan before admission, never coexist with
   the pilot in one curriculum. No active training or live SHARDS changed.
+- **2026-07-12 ~09:45** — **OpenR1-Math intake is now a bounded data-quality gate.** CPU schema probe
+  `686380` confirmed the official `default` config exposes problem, answer, per-generation Math Verify
+  / Llama-judge flags, completion flags, and UUID. Added `curate_openr1_math.py`: one completed trace
+  per normalized problem, Math Verify preferred, Llama fallback only, 512-token trace cap, and project
+  evalgram rejection. CPU pilot `686381` targets only 10k rows plus a quality report; it is isolated and
+  cannot enter a frozen SFT mix without reviewing its yield, overlap, length, and provenance.
 
 ---
 

@@ -128,6 +128,10 @@ that merely sum to 25/25/50 would silently produce the wrong batch mixture.
   with source caps so small groups are not replayed into memorization.
 - Admit teacher outputs only after answer checking, decontamination, source
   labeling, and packing analysis.
+- The official Apache-2.0 OpenR1-Math default subset is a promising verified
+  math candidate. Its intake remains gated: retain only completed per-trace Math
+  Verify results (with LLM-judge fallback), one trace per problem, concise output,
+  and no evaluation-prompt overlap. A 10k pilot must pass before a full curation.
 
 ### Treat extended reasoning as separate research
 
