@@ -40,6 +40,7 @@ def main():
     args = ap.parse_args()
 
     source_counts = collections.Counter()
+    training_group_counts = collections.Counter()
     lengths = []
     exact_questions = set()
     malformed = missing = duplicates = 0
@@ -64,6 +65,7 @@ def main():
                 duplicates += 1
             exact_questions.add(key)
             source_counts[str(row.get("source") or "unknown")] += 1
+            training_group_counts[str(row.get("training_group") or "unclassified")] += 1
             lengths.append(len(WORD.findall(response)))
             for marker in ("The answer is", "\\boxed", "<think>", "<code>", "```", "Therefore"):
                 if marker in response:
@@ -84,6 +86,7 @@ def main():
             "mean": round(sum(lengths) / len(lengths), 2) if lengths else 0,
         },
         "source_counts": dict(source_counts.most_common()),
+        "training_group_counts": dict(training_group_counts.most_common()),
         "format_markers": dict(markers),
     }
     out = args.out or str(Path(args.data).with_suffix(".quality.json"))
