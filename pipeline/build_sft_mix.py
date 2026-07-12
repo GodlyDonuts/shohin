@@ -114,8 +114,14 @@ def read_problem_domains(path: str) -> dict[str, str]:
     return domains
 
 
-def read_eval_hashes(patterns: list[str]) -> set[str]:
-    hashes = set()
+def read_eval_hashes_and_grams(patterns: list[str], n: int) -> tuple[set[str], set[str]]:
+    """Read exact prompt hashes plus direct prompt n-grams from every eval JSONL.
+
+    The historical ``evalgrams.pkl`` is a valuable broad contamination filter,
+    but it can predate newly rendered diagram or code prompts. Building the
+    prompt grams directly from the live eval files closes that coverage gap.
+    """
+    hashes, grams = set(), set()
     fields = ("question", "problem", "prompt", "task", "text")
     for pat in patterns:
         for path in sorted(glob.glob(pat)):
@@ -134,7 +140,12 @@ def read_eval_hashes(patterns: list[str]) -> set[str]:
                             break
                     if q:
                         hashes.add(qhash(q))
-    return hashes
+                        words = WORD.findall(q.lower())
+                        if words and len(words) < n:
+                            grams.add(" ".join(words))
+                        else:
+                            grams.update(" ".join(words[i:i + n]) for i in range(len(words) - n + 1))
+    return hashes, grams
 
 
 def load_gram_set(path: str):
@@ -196,10 +207,18 @@ def main():
 
     domains = read_problem_domains(args.problem_bank)
     eval_hashes = set()
+    direct_eval_grams = set()
     gram_set, gram_n = None, None
+    has_pickle_grams = False
     if not args.no_eval_decontam:
-        eval_hashes = read_eval_hashes(args.eval_glob)
         gram_set, gram_n = load_gram_set(args.decontam_grams)
+        has_pickle_grams = gram_set is not None
+        gram_n = gram_n or 13
+        eval_hashes, direct_eval_grams = read_eval_hashes_and_grams(args.eval_glob, gram_n)
+        # Always use current eval prompts as a second source of truth. Copy so
+        # an unpickled set is never mutated in place by a future caller.
+        gram_set = set(gram_set or ())
+        gram_set.update(direct_eval_grams)
     kept_by_hash = {}
     report = {
         "inputs": inputs,
@@ -210,8 +229,9 @@ def main():
             "max_openmath": args.max_openmath,
             "include_self_correct": args.include_self_correct,
             "eval_glob": args.eval_glob,
-            "decontam_grams": args.decontam_grams if gram_set is not None else None,
+            "decontam_grams": args.decontam_grams if has_pickle_grams else None,
             "eval_hash_count": len(eval_hashes),
+            "direct_eval_gram_count": len(direct_eval_grams),
         },
         "seen_by_file": collections.Counter(),
         "kept_by_file": collections.Counter(),

@@ -14,11 +14,12 @@ from pathlib import Path
 import torch
 from tokenizers import Tokenizer
 
+from eval_rg import extract as extract_rg, normalized as normalized_rg
 from eval_suite import extract_gsm8k, generate_batch, gold_gsm8k
 from model import GPT, GPTConfig
 
 
-def read_rows(path, limit):
+def read_rows(path, limit, answer_mode):
     rows = []
     with open(path, errors="replace") as src:
         for line in src:
@@ -26,9 +27,12 @@ def read_rows(path, limit):
                 continue
             row = json.loads(line)
             question = str(row.get("question") or row.get("problem") or "").strip()
-            gold = gold_gsm8k(row)
+            if answer_mode == "gsm8k":
+                gold = gold_gsm8k(row)
+            else:
+                gold = normalized_rg(row.get("answer"))
             if question and gold is not None:
-                rows.append((question, gold))
+                rows.append({"question": question, "gold": gold, "family": row.get("family")})
             if limit and len(rows) >= limit:
                 break
     return rows
@@ -52,6 +56,8 @@ def main():
     ap.add_argument("--temp", type=float, default=0.8)
     ap.add_argument("--max-new", type=int, default=256)
     ap.add_argument("--seed", type=int, default=20260712)
+    ap.add_argument("--answer-mode", choices=("gsm8k", "rg"), default="gsm8k",
+                    help="strict answer extractor for the labeled rollout source")
     args = ap.parse_args()
 
     out = Path(args.out)
@@ -63,7 +69,7 @@ def main():
     torch.manual_seed(args.seed)
     if device == "cuda":
         torch.cuda.manual_seed_all(args.seed)
-    rows = read_rows(args.data, args.n)
+    rows = read_rows(args.data, args.n, args.answer_mode)
     if not rows:
         raise SystemExit("no valid GSM8K-style rows found")
     tokenizer = Tokenizer.from_file(args.tokenizer)
@@ -72,15 +78,16 @@ def main():
 
     total = correct = 0
     with open(tmp, "w") as dst:
-        for index, (question, gold) in enumerate(rows):
+        for index, row in enumerate(rows):
+            question, gold = row["question"], row["gold"]
             prompt = f"Question: {question}\nAnswer:"
             candidates = generate_batch(
                 model, tokenizer, prompt, device, n=args.k,
                 max_new=args.max_new, temp=args.temp,
             )
             for sample_index, candidate in enumerate(candidates):
-                prediction = extract_gsm8k(candidate)
-                ok = prediction == gold
+                prediction = extract_gsm8k(candidate) if args.answer_mode == "gsm8k" else extract_rg(candidate)
+                ok = prediction == gold if args.answer_mode == "gsm8k" else normalized_rg(prediction) == gold
                 dst.write(json.dumps({
                     "question": question,
                     "gold": gold,
@@ -88,6 +95,8 @@ def main():
                     "prediction": prediction,
                     "correct": ok,
                     "sample_index": sample_index,
+                    "family": row.get("family"),
+                    "answer_mode": args.answer_mode,
                     "source_checkpoint": args.ckpt,
                 }, ensure_ascii=False) + "\n")
                 total += 1

@@ -19,6 +19,7 @@ OUT=${OUT:?set OUT}
 N=${N:-2000}
 K=${K:-8}
 TAG=${TAG:-verifier-rollouts}
+ANSWER_MODE=${ANSWER_MODE:-gsm8k}
 
 [ -f "$CKPT" ] || { echo "[verifier-rollouts] missing checkpoint: $CKPT" >&2; exit 2; }
 [ -f "$DATA" ] || { echo "[verifier-rollouts] missing data: $DATA" >&2; exit 3; }
@@ -30,5 +31,5 @@ import torch
 sys.exit(0 if torch.cuda.is_available() else 75)
 PY
 "$PY" generate_verifier_rollouts.py --ckpt "$CKPT" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
-  --data "$DATA" --out "$OUT" --n "$N" --k "$K"
+  --data "$DATA" --out "$OUT" --n "$N" --k "$K" --answer-mode "$ANSWER_MODE"
 echo "[verifier-rollouts] tag=$TAG wrote $OUT"
