@@ -1674,6 +1674,16 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   `686664` is measuring the actual 50k-row OpenMath COT yield after concise-token limits, final-answer
   verification, and full problem+trace decontamination. It writes only a report; no candidate is authorized
   unless this measured yield and source-specific semantics justify one.
+- **2026-07-12 ~16:10** — **OpenMath COT selection is a real data-quality constraint, not a source-scale
+  shortcut.** The source card says `used_in_kaggle` means a row trained NVIDIA's AIMO-2-winning model, not
+  that it is an evaluation sample. Our own full problem+trace eval filtering is therefore the relevant
+  leakage control; the selector now records this flag as provenance instead of dropping it by default. The
+  initially over-conservative 10k / 2,048-token COT dry run kept only **30** rows: 6,765 were unnecessarily
+  excluded by that provenance flag, 3,151 exceeded the context cap, 35 failed final-answer verification, and
+  11 had direct eval 13-gram hits. It proves raw long-CoT replay is inadmissible. The obsolete zero-yield
+  512-token probe was stopped; corrected all-provenance 10k probe `686671` retains strict answer and
+  full-text decontamination and must determine whether enough concise verified rows exist before a candidate
+  build is considered.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
