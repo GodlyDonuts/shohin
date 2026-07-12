@@ -554,11 +554,13 @@ about 1.8%, which is why they are not the central remediation path.
 - A second fixed CodeContests **test-split** monitor separates code continuation
   from executable problem solving. Raw 170k reaches **NLL 1.3537146 / PPL
   3.8718** over 145,408 code tokens, yet still scores 7/164 HumanEval and 0/100
-  MBPP. This is strong evidence that raw code likelihood is not the limiting
-  factor by itself: the model lacks robust task parsing, solution selection, and
-  instruction-aligned executable emission. Scale execution-verified code and
-  preserve the represented completion format, but require transfer to code
-  execution benchmarks before claiming progress.
+  MBPP. Treat this as directional rather than causal: raw `code_python` uses
+  CodeParrot-Clean, and source-level overlap with CodeContests has not been
+  ruled out from the tokenized shards. It is still insufficient to claim code
+  capability because likelihood does not measure task parsing, solution
+  selection, or instruction-aligned executable emission. Scale
+  execution-verified code and preserve the represented completion format, but
+  require transfer to code-execution benchmarks before claiming progress.
 - The independent raw/V7 interactions rule out a hidden general solver: neither
   verified intermediate facts nor model-produced compact states unlock reliable
   arithmetic, transformations, or code. More state-template SFT is prohibited
