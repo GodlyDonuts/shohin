@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from audit_taco_verified import read_completed_partial
+from audit_taco_verified import read_completed_partial, verify_source_row
 
 
 class TacoAuditResumeTests(unittest.TestCase):
@@ -57,6 +57,15 @@ class TacoAuditResumeTests(unittest.TestCase):
             output.flush()
             os.fsync(output.fileno())
             self.assertGreater(path.stat().st_size, 0)
+
+    def test_full_source_verification_runs_all_cases(self):
+        row = {"problem_id": 17, "response": "import sys\nn = int(sys.stdin.read())\nprint(n * 2)"}
+        source = {"input_output": json.dumps({
+            "inputs": ["2\n", "7\n"], "outputs": ["4\n", "14\n"],
+        })}
+        clean, drop = verify_source_row(row, source, max_case_chars=64, timeout=2.0)
+        self.assertIsNone(drop)
+        self.assertEqual(clean["full_verified_cases"], 2)
 
 
 if __name__ == "__main__":

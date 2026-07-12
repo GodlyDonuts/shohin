@@ -17,6 +17,7 @@ OUT=${OUT:?set OUT to a fresh full-verified JSONL}
 REPORT=${REPORT:-${OUT%.jsonl}.quality.json}
 PROGRESS_EVERY=${PROGRESS_EVERY:-100}
 RESUME_PARTIAL=${RESUME_PARTIAL:-0}
+WORKERS=${WORKERS:-1}
 
 [ -s "$IN" ] || { echo "[taco-full-audit] input missing: $IN" >&2; exit 2; }
 [ ! -e "$OUT" ] || { echo "[taco-full-audit] output exists: $OUT" >&2; exit 3; }
@@ -25,7 +26,7 @@ if [ -e "$OUT.partial" ] && [ "$RESUME_PARTIAL" != 1 ]; then
   exit 4
 fi
 cd "$BASE"
-ARGS=(--input "$IN" --out "$OUT" --progress-every "$PROGRESS_EVERY")
+ARGS=(--input "$IN" --out "$OUT" --progress-every "$PROGRESS_EVERY" --workers "$WORKERS")
 if [ "$RESUME_PARTIAL" = 1 ]; then
   ARGS+=(--resume-partial)
 fi

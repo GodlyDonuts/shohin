@@ -1602,6 +1602,14 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   `6820a1d77e206ffd92dff837fb38c5c0633d06788aabbab3ade9ef0bafc2c3be`. V8 is now admissible solely as
   an isolated 180k pre/post transfer experiment after the raw baseline, public board, and transcript gates
   are serialized on a known-good H100.
+- **2026-07-12** — **Full TACO replay retry can now use the allocated CPUs without weakening tests.** The
+  active `686584` process is healthy but runs full supplied cases through one subprocess worker despite its
+  two-core allocation, so it remains untouched as the baseline outcome. The retry-only audit now first maps
+  every selected immutable source ID, then executes each complete test suite through a bounded
+  `ThreadPoolExecutor`; `WORKERS=2` uses no more than the existing two-core Slurm request and preserves
+  deterministic source order, the same 2s sandbox timeout, every supplied case, partial-row integrity, and
+  fsynced progress batches. Local and Newton real-execution tests passed. Use this only if `686584` ends
+  non-successfully; override a resubmission to `WORKERS=2` and a sufficient wall-time, never relax tests.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*

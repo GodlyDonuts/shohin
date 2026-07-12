@@ -10,6 +10,7 @@ import argparse
 import json
 import os
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
 
 from curate_apps import run_solution
 from curate_taco_verified import parse_cases
@@ -89,6 +90,19 @@ def read_completed_partial(path, candidates):
     return completed
 
 
+def verify_source_row(row, source, max_case_chars, timeout):
+    """Return a full-test-verified immutable derivative or its rejection key."""
+    cases = parse_cases(source.get("input_output"), max_tests=0,
+                        max_case_chars=max_case_chars)
+    if not cases:
+        return None, "missing_cases"
+    if not run_solution(str(row["response"]), cases, timeout):
+        return None, "execution"
+    clean = dict(row)
+    clean["full_verified_cases"] = len(cases)
+    return clean, None
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", required=True)
@@ -99,11 +113,13 @@ def main():
     parser.add_argument("--max-source-rows", type=int, default=0,
                         help="0 scans until every input problem is found")
     parser.add_argument("--progress-every", type=int, default=100)
+    parser.add_argument("--workers", type=int, default=1,
+                        help="parallel full-test workers; keep at or below allocated CPUs")
     parser.add_argument("--resume-partial", action="store_true",
                         help="append to a checked interrupted .partial output instead of refusing it")
     args = parser.parse_args()
     if (args.timeout <= 0 or args.max_case_chars <= 0 or args.max_source_rows < 0
-            or args.progress_every <= 0):
+            or args.progress_every <= 0 or args.workers <= 0):
         raise ValueError("timeout, max-case-chars, and progress-every must be positive; "
                          "max-source-rows non-negative")
 
@@ -125,47 +141,50 @@ def main():
     source_rows = 0
     drops = {key: 0 for key in ("missing_cases", "execution", "source_unmatched")}
     stream = load_dataset(args.dataset, split="train", streaming=True)
-    with partial.open("a" if resumed else "w") as out:
-        for source in stream:
-            source_rows += 1
-            if args.max_source_rows and source_rows > args.max_source_rows:
-                break
-            key = str(source.get("id"))
-            row = candidates.pop(key, None)
-            if row is None:
-                continue
-            found += 1
-            cases = parse_cases(source.get("input_output"), max_tests=0,
-                                max_case_chars=args.max_case_chars)
-            if not cases:
-                drops["missing_cases"] += 1
-                continue
-            if not run_solution(str(row["response"]), cases, args.timeout):
-                drops["execution"] += 1
-                continue
-            clean = dict(row)
-            clean["full_verified_cases"] = len(cases)
-            out.write(json.dumps(clean, ensure_ascii=False) + "\n")
-            kept += 1
-            if found % args.progress_every == 0 or not candidates:
-                # A time-limited Slurm job can be terminated between progress
-                # lines. Make every reported retained batch durable before the
-                # caller is told it exists, so --resume-partial has a real
-                # checkpoint rather than only a buffered TextIOWriter.
-                out.flush()
-                os.fsync(out.fileno())
-                print(
-                    f"[taco-full-audit] matched={found} kept={kept} "
-                    f"source_rows_scanned={source_rows} remaining={len(candidates)} "
-                    f"resumed={resumed}",
-                    flush=True,
-                )
-            if not candidates:
-                break
+    matches = []
+    for source in stream:
+        source_rows += 1
+        if args.max_source_rows and source_rows > args.max_source_rows:
+            break
+        key = str(source.get("id"))
+        row = candidates.pop(key, None)
+        if row is None:
+            continue
+        matches.append((row, source))
+        if not candidates:
+            break
     drops["source_unmatched"] = len(candidates)
     if candidates:
         partial.unlink(missing_ok=True)
         raise SystemExit(f"[taco-full-audit] source records missing for {len(candidates)} input rows")
+
+    found += len(matches)
+    with partial.open("a" if resumed else "w") as out:
+        def verify(match):
+            row, source = match
+            return verify_source_row(row, source, args.max_case_chars, args.timeout)
+
+        with ThreadPoolExecutor(max_workers=args.workers) as executor:
+            for index, (clean, drop) in enumerate(executor.map(verify, matches), 1):
+                if drop:
+                    drops[drop] += 1
+                else:
+                    out.write(json.dumps(clean, ensure_ascii=False) + "\n")
+                    kept += 1
+                checked = resumed + index
+                if checked % args.progress_every == 0 or index == len(matches):
+                # A time-limited Slurm job can be terminated between progress
+                # lines. Make every reported retained batch durable before the
+                # caller is told it exists, so --resume-partial has a real
+                # checkpoint rather than only a buffered TextIOWriter.
+                    out.flush()
+                    os.fsync(out.fileno())
+                    print(
+                        f"[taco-full-audit] matched={checked} kept={kept} "
+                        f"source_rows_scanned={source_rows} remaining={len(matches) - index} "
+                        f"resumed={resumed} workers={args.workers}",
+                        flush=True,
+                    )
     os.replace(partial, out_path)
     print(json.dumps({
         "dataset": args.dataset,
