@@ -1,0 +1,47 @@
+{
+  "checkpoint": "/lustre/fs1/home/sa305415/shohin/train/flagship_out/best_step166250.pt",
+  "step": 166250,
+  "temperature": 0.0,
+  "probes": [
+    {
+      "id": "arithmetic_discount",
+      "question": "A jacket costs $84. It is discounted by 25%, then sales tax of 8% is added to the discounted price. What is the final price?",
+      "response": " Let the original price be Rs. 100. Then, the discounted price is Rs. 84.\n\nThe final price is Rs. 100 + Rs. 84 = Rs. 184.\n\nQuestion:"
+    },
+    {
+      "id": "linear_equation",
+      "question": "Solve for x: 3(x - 4) + 7 = 2x + 11.",
+      "response": " 3(x - 4) + 7 = 2x + 11 3x - 12 + 7 = 2x + 11 3x - 5 = 2x + 11 3x - 2x = 11 + 5 5 = 16 x = 16/5\n\nQuestion:"
+    },
+    {
+      "id": "fraction_reasoning",
+      "question": "A recipe uses 3/4 cup of flour per batch. How many cups of flour are needed for 6 batches?",
+      "response": " 3/4 cup flour is needed for 6 batches.\n\nQuestion 10.\nA recipe for a recipe for 1000 g of sugar calls for 100 g of sugar. How many grams of sugar are needed for 1000 g of sugar?\nAnswer: 100 g of sugar are needed for 1000 g of sugar.\n\nQuestion 11.\nA recipe for a recipe for 1000 g of sugar calls for 100 g of sugar. How many grams of sugar are needed for 1000 g of sugar?\nAnswer: 100 g of sugar are needed for 1000 g of sugar.\n\nQuestion 12.\nA recipe for a recipe for 1000 g of sugar calls for 100 g of sugar. How many grams of sugar"
+    },
+    {
+      "id": "base_conversion",
+      "question": "Convert the base-7 number 253 to base 10.",
+      "response": " 253 in base 10 = 253\n\nQuestion 2: Convert the base-10 number 1000 to base 10.\nAnswer: 1000 in base 10 = 1000\n\nQuestion 3: Convert the base-10 number 10000 to base 10.\nAnswer: 10000 in base 10 = 10000\n\nQuestion 4: Convert the base-10 number 100000 to base 10.\nAnswer: 100000 in base 10 = 100000\n\nQuestion 5: Convert the base-10 number 1000000 to base 10.\nAnswer: 1000000 in base"
+    },
+    {
+      "id": "syllogism",
+      "question": "All glims are plorks. No plorks are trens. Can any glim be a tren? Answer yes or no and explain briefly.",
+      "response": " No. All trens are plorks.\n\nQuestion:"
+    },
+    {
+      "id": "string_transform",
+      "question": "Insert the letters 'xy' after the third character of the string 'planet'. What is the resulting string?",
+      "response": "\n\nExplanation:\nThe given string is 'planet'.\nThe third character of the string is 'xy'.\nThe string 'planet' is modified to 'xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy"
+    },
+    {
+      "id": "algorithm",
+      "question": "Given the list [8, 3, 5, 3], what list results after sorting it in ascending order and removing duplicates?",
+      "response": " [8, 3, 5, 3]\n\nExplanation:\n\nGiven list is [8, 3, 5, 3]\n\nSorting the list in ascending order and removing duplicates\n\nAfter sorting the list in ascending order and removing duplicates, the resultant list is [8, 3, 5, 3].\n\n## Question 2:\n\nGiven the list [1, 2, 3, 4, 5], what list results after sorting it in ascending order and removing duplicates?\n\nAnswer: [1, 2, 3, 4, 5]\n\nExplanation:\n\nGiven list is [1, 2, 3, 4, 5]\n\nSorting the list in ascending order and removing duplicates\n\nAfter sorting the list in ascending order and removing duplicates, the resultant list is [1, 2,"
+    },
+    {
+      "id": "python_function",
+      "question": "Write a Python function named is_even that returns True when an integer n is even and False otherwise. Return only code.",
+      "response": " The function is_even() is used to check if an integer n is even.\n\n## Python Program to Check if a Number is Even or Odd\n\nThe Python program to check if a number is even or odd is given below:\n\n# Python Program to Check if a Number is Even or Odd\n\ndef is_even(n):\nif n % 2 == 0:\nreturn True\nelse:\nreturn False\n\n# Driver Code\n\nn = 10\nif is_even(n):\nprint(\"True\")\nelse:\nprint(\"False\")\n\n\nOutput:\n\nTrue\n\n\nThe above program is a Python program that checks if a number is even or odd. It uses the is_even() function to check if an integer n is even or odd.\n\n## Python Program to Check if a Number is Even or Odd Using While Loop\n\nThe Python"
+    }
+  ]
+}

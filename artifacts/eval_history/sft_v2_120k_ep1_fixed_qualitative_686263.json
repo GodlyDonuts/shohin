@@ -1,0 +1,47 @@
+{
+  "checkpoint": "/lustre/fs1/home/sa305415/shohin/train/sft_v2_120k/sft_ep1.pt",
+  "step": "sft_ep1",
+  "temperature": 0.0,
+  "probes": [
+    {
+      "id": "arithmetic_discount",
+      "question": "A jacket costs $84. It is discounted by 25%, then sales tax of 8% is added to the discounted price. What is the final price?",
+      "response": " First, calculate the discounted price:\n\\[ \\text{Discounted price} = \\text{Original price} - \\text{Discount} = 84 - 84 \\times 0.25 = 84 - 21.00 = 63.00 \\]\n\nNext, calculate the sales tax:\n\\[ \\text{Sales tax} = 8\\% \\times 63.00 = 0.08 \\times 63.00 = 5.04 \\]\n\nFinally, add the discounted price and the sales tax to find the final price:\n\\[ \\text{Final price} = 63.00 + 5.04 = \\boxed{68.04} \\]\nThe answer is 68.04."
+    },
+    {
+      "id": "linear_equation",
+      "question": "Solve for x: 3(x - 4) + 7 = 2x + 11.",
+      "response": " To solve for x, we need to isolate the variable x on one side of the equation.\n\nFirst, distribute 3 to the terms inside the parentheses:\n\\[ 3(x - 4) = 2x + 11 \\]\n\nNext, combine like terms:\n\\[ 3x - 12 = 2x + 11 \\]\n\nNow, add 12 to both sides:\n\\[ 3x - 12 + 12 = 2x + 11 + 12 \\]\n\nCombine like terms:\n\\[ 3x = 2x + 23 \\]\n\nSubtract 2x from both sides:\n\\[ 3x - 2x = 23 - 2x \\]\n\n\\[ x = 23 - 2x \\]\n\n"
+    },
+    {
+      "id": "fraction_reasoning",
+      "question": "A recipe uses 3/4 cup of flour per batch. How many cups of flour are needed for 6 batches?",
+      "response": " To find the total amount of flour needed for 6 batches, we need to calculate the amount of flour needed for one batch and then multiply it by 6.\n\nThe recipe uses 3/4 cup of flour per batch.\n\nFor 6 batches, the amount of flour needed is:\n\\[ \\frac{3}{4} \\times 6 = \\frac{18}{4} = 4.5 \\text{ cups} \\]\n\nSo, the answer is:\n\\[ \\boxed{4.5} \\]\nThe answer is 4.5."
+    },
+    {
+      "id": "base_conversion",
+      "question": "Convert the base-7 number 253 to base 10.",
+      "response": " To convert the base-7 number 253 to base 10, we need to divide 253 by 7 and keep track of the remainders.\n\n\\[ 253 \\div 7 = 33 \\text{ remainder } 1 \\]\n\\[ 33 \\div 7 = 4 \\text{ remainder } 4 \\]\n\\[ 4 \\div 7 = 0 \\text{ remainder } 4 \\]\n\nReading the remainders from bottom to top, we get:\n\\[ 253_{10} = 441_7 \\]\n\nTherefore, the base-7 number 253 in base 10 is:\n\\[ \\boxed{441_7} \\]\nThe answer is 441_7."
+    },
+    {
+      "id": "syllogism",
+      "question": "All glims are plorks. No plorks are trens. Can any glim be a tren? Answer yes or no and explain briefly.",
+      "response": " Let's break down the options:\n\nA) No trens are plorks.\nB) No trens are plorks.\nC) No trens are plorks.\nD) No trens are plorks.\n\nThe answer is C."
+    },
+    {
+      "id": "string_transform",
+      "question": "Insert the letters 'xy' after the third character of the string 'planet'. What is the resulting string?",
+      "response": " The first character of the string is 'xy' and the second character is 'xy' (since the third character is 'xy').\n\nThe third character is 'xy' and the fourth character is 'xy' (since the fifth character is 'xy').\n\nSo, the resulting string is 'xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy"
+    },
+    {
+      "id": "algorithm",
+      "question": "Given the list [8, 3, 5, 3], what list results after sorting it in ascending order and removing duplicates?",
+      "response": " To sort the list in ascending order and remove duplicates, we need to consider the following steps:\n\n1. sort the list in ascending order:\n   - First, we need to find the smallest and largest numbers in the list.\n   - The smallest number is 8, and the largest number is 3.\n   - The second smallest number is 3, and the second largest number is 5.\n   - The third smallest number is 5, and the third largest number is 3.\n   - The fourth smallest number is 3, and the fourth largest number is 5.\n   - The fifth smallest number is 5, and the fifth largest number is 3.\n\n2. sort the list in descending order:\n   - The list is already in ascending order, so we don't need to remove duplicates.\n\n3. remove duplicates:\n   - The list is already in"
+    },
+    {
+      "id": "python_function",
+      "question": "Write a Python function named is_even that returns True when an integer n is even and False otherwise. Return only code.",
+      "response": " def is_even(n):\r\n    if (n % 2 == 0):\r\n        return False\r\n    else:\r\n        return True"
+    }
+  ]
+}
