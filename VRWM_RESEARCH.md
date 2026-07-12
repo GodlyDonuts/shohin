@@ -4,6 +4,15 @@
 
 **Research prototype. Not trained, not promoted, and not evidence of general reasoning.**
 
+The raw control is complete on the hash-verified 180k checkpoint. Across five
+prompt-disjoint regimes (five episodes each), it scored **0/25** exact first
+transitions and **0/25** closed-loop programs. The raw model commonly copies
+the literal `wm:a=<integer>;b=<integer>` template or emits an untyped arithmetic
+fragment. This establishes that any later exact state behavior is learned by
+the isolated experiment rather than already latent in the checkpoint. Canonical
+artifact: `artifacts/eval_history/vrwm_raw180k_local_mps_r1.json`, MD5
+`e135513d67eee427cb7089df0dd231ff`.
+
 VRWM is a constrained context-scaling experiment for Shohin. It keeps the
 125.1M model's native 2,048-token context and avoids changing the protected
 pretraining architecture. A controller gives the model one instruction and a
@@ -79,3 +88,17 @@ is deliberately restricted to memory transport.
 5. Only after a real gain, extend the protocol to learned program segmentation
    and broader symbolic/code tasks. Do not claim general or latent reasoning
    from the arithmetic-state experiment.
+
+## Current Inputs
+
+- Candidate r1 is rejected: its small prompt space produced 166,766 normalized
+  duplicate prompts.
+- Candidate r2 passes quality but has only 2,263 packed sequences, below the
+  5,000-sequence minimum for an SFT transition-policy ablation.
+- Candidate r3 is the current admissible input: **497,274** unique rows,
+  **0** malformed rows, duplicate prompts, exact evaluation rows, or 13-gram
+  evaluation rows, and **18,013** packed 2,048-token sequences. Data SHA-256:
+  `b2a688e1f7aa6c79dd65ed1944fa5dc00cd022acfc793896ecf4696c94d4089f`;
+  local/Newton MD5: `36a747cfdb31bebcf96fd06bb0fd3950`. The 400 held-out
+  episodes reserve input values outside the train range and test 4, 8, 16, and
+  32 transitions. It is staged but not yet trained.

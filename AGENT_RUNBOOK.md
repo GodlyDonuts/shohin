@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-12 ~17:14 EDT (`685084` remains healthy past 181k; 180k durable copies are hash-verified locally and on Newton; fresh direct interaction remains weak; [training metrics ledger](TRAINING_METRICS.md) distinguishes nominal update tokens, active corpus capacity, data admission, and capability evidence). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-12 ~18:02 EDT (`685084` remains healthy past 181k; 180k durable copies are hash-verified locally and on Newton; fresh direct interaction and VRWM raw controls remain weak; [training metrics ledger](TRAINING_METRICS.md) distinguishes nominal update tokens, active corpus capacity, data admission, and capability evidence). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -1712,6 +1712,18 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   retention policy. Durable copies are Newton `best_step180000.pt` and local full
   `train/flagship_out/ckpt_0180000.pt`, both md5 **`a592a8bd46163eb1427fe64460be0c6a`**. The metrics ledger
   now records this distinction explicitly rather than claiming a numbered file remains indefinitely.
+- **2026-07-12 ~18:02** — **VRWM context-scaling research has a hard raw baseline and an admissible,
+  isolated data candidate.** The new Verified Recursive Working Memory controller forwards a model-emitted
+  canonical `wm:a=<int>;b=<int>` state to one later instruction without correction, answer injection, or
+  best-of-N selection; it therefore tests an actual closed-loop transition policy rather than V7-style
+  state-format imitation. Raw `best_step180000.pt` scored **0/25** exact first transitions and **0/25**
+  closed-loop rollouts across five prompt-disjoint value/length OOD regimes (five episodes each). Candidate
+  r1 was rejected for 166,766 duplicate normalized prompts; r2 passed quality but was too small at 2,263
+  packs; r3 has **497,274** unique rows, zero malformed/duplicate/full-text-eval overlaps, and **18,013**
+  packed 2,048-token sequences (SHA-256 `b2a688e1f7aa6c79dd65ed1944fa5dc00cd022acfc793896ecf4696c94d4089f`).
+  It is hash-matched locally/Newton and staged only. Do not submit its SFT until a known-good CUDA node is
+  available; opportunistic `evc26`, `evc43`, and `evc50` allocations all failed CUDA preflight before model
+  loading and wrote no misleading score. Full research contract: `VRWM_RESEARCH.md`.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*

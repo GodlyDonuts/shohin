@@ -1,0 +1,454 @@
+{
+  "by_split": {
+    "value_and_length_ood_len16": {
+      "closed_loop_accuracy": 0.0,
+      "closed_loop_correct": 0,
+      "episodes": 5,
+      "one_step_accuracy": 0.0,
+      "one_step_correct": 0,
+      "readout_accuracy_given_closed_loop": 0.0,
+      "readout_correct_given_closed_loop": 0
+    },
+    "value_and_length_ood_len32": {
+      "closed_loop_accuracy": 0.0,
+      "closed_loop_correct": 0,
+      "episodes": 5,
+      "one_step_accuracy": 0.0,
+      "one_step_correct": 0,
+      "readout_accuracy_given_closed_loop": 0.0,
+      "readout_correct_given_closed_loop": 0
+    },
+    "value_and_length_ood_len8": {
+      "closed_loop_accuracy": 0.0,
+      "closed_loop_correct": 0,
+      "episodes": 5,
+      "one_step_accuracy": 0.0,
+      "one_step_correct": 0,
+      "readout_accuracy_given_closed_loop": 0.0,
+      "readout_correct_given_closed_loop": 0
+    },
+    "value_ood_len4": {
+      "closed_loop_accuracy": 0.0,
+      "closed_loop_correct": 0,
+      "episodes": 5,
+      "one_step_accuracy": 0.0,
+      "one_step_correct": 0,
+      "readout_accuracy_given_closed_loop": 0.0,
+      "readout_correct_given_closed_loop": 0
+    },
+    "wide_range_and_length_ood_len8": {
+      "closed_loop_accuracy": 0.0,
+      "closed_loop_correct": 0,
+      "episodes": 5,
+      "one_step_accuracy": 0.0,
+      "one_step_correct": 0,
+      "readout_accuracy_given_closed_loop": 0.0,
+      "readout_correct_given_closed_loop": 0
+    }
+  },
+  "checkpoint": "train/flagship_out/ckpt_0180000.pt",
+  "claim_boundary": "Closed-loop success means model-produced canonical states survived every transition; it is an algorithmic working-memory result, not general long-context reasoning.",
+  "device": "mps",
+  "episodes": "artifacts/vrwm/vrwm_v1_eval_episodes_r3.jsonl",
+  "examples": [
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_ood_len4-0000",
+      "program_length": 4,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": -1374,
+          "b": -1867
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": -1374,
+              "b": -2108
+            },
+            "index": 0,
+            "input_memory": {
+              "a": -1374,
+              "b": -1867
+            },
+            "predicted_memory": null,
+            "prompt": "Question: Apply exactly one instruction to the working memory.\nWorking memory: wm:a=-1374;b=-1867\nInstruction: decrease b by 241.\nReturn only the next canonical working-memory line in the form wm:a=<integer>;b=<integer>.\nAnswer:",
+            "response": " wm:a=<integer>;b=<integer>\n\n## 1.1.1.1.1.1.1."
+          }
+        ],
+        "success": false
+      },
+      "split": "value_ood_len4"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_ood_len4-0001",
+      "program_length": 4,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": -1834,
+          "b": 1538
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": -1834,
+              "b": 1745
+            },
+            "index": 0,
+            "input_memory": {
+              "a": -1834,
+              "b": 1538
+            },
+            "predicted_memory": null,
+            "prompt": "Question: Apply exactly one instruction to the working memory.\nWorking memory: wm:a=-1834;b=1538\nInstruction: increase b by 207.\nReturn only the next canonical working-memory line in the form wm:a=<integer>;b=<integer>.\nAnswer:",
+            "response": " 1538\n\n## 1.10.2.1.1.1.1.1.1.1.1."
+          }
+        ],
+        "success": false
+      },
+      "split": "value_ood_len4"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_ood_len4-0002",
+      "program_length": 4,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": 1527,
+          "b": 1284
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": 1284,
+              "b": 1527
+            },
+            "index": 0,
+            "input_memory": {
+              "a": 1527,
+              "b": 1284
+            },
+            "predicted_memory": null,
+            "prompt": "Question: Apply exactly one instruction to the working memory.\nWorking memory: wm:a=1527;b=1284\nInstruction: swap the values of a and b.\nReturn only the next canonical working-memory line in the form wm:a=<integer>;b=<integer>.\nAnswer:",
+            "response": " 1527, 1284\n\n## 1.1.1.1.1.1.1.1.1"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_ood_len4"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_ood_len4-0003",
+      "program_length": 4,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": -1327,
+          "b": -1236
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": -1547,
+              "b": -1236
+            },
+            "index": 0,
+            "input_memory": {
+              "a": -1327,
+              "b": -1236
+            },
+            "predicted_memory": null,
+            "prompt": "Question: Apply exactly one instruction to the working memory.\nWorking memory: wm:a=-1327;b=-1236\nInstruction: decrease a by 220.\nReturn only the next canonical working-memory line in the form wm:a=<integer>;b=<integer>.\nAnswer:",
+            "response": " wm:a=<integer>;b=<integer>\n\n## 1.1.1.1.1.1.1."
+          }
+        ],
+        "success": false
+      },
+      "split": "value_ood_len4"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_ood_len4-0004",
+      "program_length": 4,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": 1780,
+          "b": -1030
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": 1780,
+              "b": -2810
+            },
+            "index": 0,
+            "input_memory": {
+              "a": 1780,
+              "b": -1030
+            },
+            "predicted_memory": null,
+            "prompt": "Question: Apply exactly one instruction to the working memory.\nWorking memory: wm:a=1780;b=-1030\nInstruction: subtract the current value of a from b.\nReturn only the next canonical working-memory line in the form wm:a=<integer>;b=<integer>.\nAnswer:",
+            "response": " 1780-1030=750\n\n## 1.1.1.1.1.1.1."
+          }
+        ],
+        "success": false
+      },
+      "split": "value_ood_len4"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_and_length_ood_len8-0000",
+      "program_length": 8,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": 1923,
+          "b": 1217
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": 1923,
+              "b": 1451
+            },
+            "index": 0,
+            "input_memory": {
+              "a": 1923,
+              "b": 1217
+            },
+            "predicted_memory": null,
+            "prompt": "Question: Apply exactly one instruction to the working memory.\nWorking memory: wm:a=1923;b=1217\nInstruction: increase b by 234.\nReturn only the next canonical working-memory line in the form wm:a=<integer>;b=<integer>.\nAnswer:",
+            "response": " 1923;1217\n\n## 1.1.1.1.1.1.1.1.1."
+          }
+        ],
+        "success": false
+      },
+      "split": "value_and_length_ood_len8"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_and_length_ood_len8-0001",
+      "program_length": 8,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": -1706,
+          "b": 1091
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": -1706,
+              "b": 922
+            },
+            "index": 0,
+            "input_memory": {
+              "a": -1706,
+              "b": 1091
+            },
+            "predicted_memory": null,
+            "prompt": "Question: Apply exactly one instruction to the working memory.\nWorking memory: wm:a=-1706;b=1091\nInstruction: decrease b by 169.\nReturn only the next canonical working-memory line in the form wm:a=<integer>;b=<integer>.\nAnswer:",
+            "response": " 1091\n\n## 10.10.10.10.10.10.10.10"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_and_length_ood_len8"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_and_length_ood_len8-0002",
+      "program_length": 8,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": 1301,
+          "b": -1605
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": 1538,
+              "b": -1605
+            },
+            "index": 0,
+            "input_memory": {
+              "a": 1301,
+              "b": -1605
+            },
+            "predicted_memory": null,
+            "prompt": "Question: Apply exactly one instruction to the working memory.\nWorking memory: wm:a=1301;b=-1605\nInstruction: increase a by 237.\nReturn only the next canonical working-memory line in the form wm:a=<integer>;b=<integer>.\nAnswer:",
+            "response": " 1301, -1605\n\n## 1.1.1.1.1.1.1.1.1"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_and_length_ood_len8"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_and_length_ood_len8-0003",
+      "program_length": 8,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": 1249,
+          "b": -1695
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": -446,
+              "b": -1695
+            },
+            "index": 0,
+            "input_memory": {
+              "a": 1249,
+              "b": -1695
+            },
+            "predicted_memory": null,
+            "prompt": "Question: Apply exactly one instruction to the working memory.\nWorking memory: wm:a=1249;b=-1695\nInstruction: add the current value of b to a.\nReturn only the next canonical working-memory line in the form wm:a=<integer>;b=<integer>.\nAnswer:",
+            "response": " 1249+(-1695)=1249-1695=554\n\n## 1.2"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_and_length_ood_len8"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_and_length_ood_len8-0004",
+      "program_length": 8,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": 1230,
+          "b": 1953
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": 3183,
+              "b": 1953
+            },
+            "index": 0,
+            "input_memory": {
+              "a": 1230,
+              "b": 1953
+            },
+            "predicted_memory": null,
+            "prompt": "Question: Apply exactly one instruction to the working memory.\nWorking memory: wm:a=1230;b=1953\nInstruction: add the current value of b to a.\nReturn only the next canonical working-memory line in the form wm:a=<integer>;b=<integer>.\nAnswer:",
+            "response": " 1953\n\n## 1.1.1.1.1.1.1.1.1.1.1.1"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_and_length_ood_len8"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_and_length_ood_len16-0000",
+      "program_length": 16,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": -1745,
+          "b": -1582
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": -163,
+              "b": -1582
+            },
+            "index": 0,
+            "input_memory": {
+              "a": -1745,
+              "b": -1582
+            },
+            "predicted_memory": null,
+            "prompt": "Question: Apply exactly one instruction to the working memory.\nWorking memory: wm:a=-1745;b=-1582\nInstruction: subtract the current value of b from a.\nReturn only the next canonical working-memory line in the form wm:a=<integer>;b=<integer>.\nAnswer:",
+            "response": " 1745-1582=16\n\n## 1745-1582=16\n\n###"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_and_length_ood_len16"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_and_length_ood_len16-0001",
+      "program_length": 16,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": -1117,
+          "b": 1961
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": -1117,
+              "b": 1750
+            },
+            "index": 0,
+            "input_memory": {
+              "a": -1117,
+              "b": 1961
+            },
+            "predicted_memory": null,
+            "prompt": "Question: Apply exactly one instruction to the working memory.\nWorking memory: wm:a=-1117;b=1961\nInstruction: decrease b by 211.\nReturn only the next canonical working-memory line in the form wm:a=<integer>;b=<integer>.\nAnswer:",
+            "response": " 1961-1117=85\n\n## 1.2.1.2.1.1.1.1"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_and_length_ood_len16"
+    }
+  ],
+  "max_new": 32,
+  "schema": "shohin-vrwm-eval-v1",
+  "step": 180000
+}
