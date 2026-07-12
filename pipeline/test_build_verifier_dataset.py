@@ -29,6 +29,19 @@ def main():
         assert labels == {"<|correct|>", "<|incorrect|>"}
         assert len(built) == 4
         assert all("q" not in row["response"] for row in built)
+        skewed = root / "skewed.jsonl"
+        skewed.write_text("".join(
+            json.dumps({"question": "q", "candidate": f"yes-{index}", "correct": True}) + "\n"
+            for index in range(3)
+        ) + json.dumps({"question": "q", "candidate": "no", "correct": False}) + "\n")
+        balanced = root / "balanced.jsonl"
+        subprocess.run([
+            sys.executable, "pipeline/build_verifier_dataset.py",
+            "--input", str(skewed), "--out", str(balanced), "--balance-classes",
+        ], check=True)
+        balanced_rows = [json.loads(line) for line in balanced.read_text().splitlines()]
+        assert len(balanced_rows) == 2
+        assert sum(row["response"] == "<|correct|>" for row in balanced_rows) == 1
     print("verifier dataset checks: passed")
 
 

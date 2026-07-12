@@ -32,6 +32,8 @@ def main():
     ap.add_argument("--input", required=True)
     ap.add_argument("--out", required=True)
     ap.add_argument("--negative-ratio", type=float, default=4.0)
+    ap.add_argument("--balance-classes", action="store_true",
+                    help="retain equal positive/negative counts instead of all positives plus negatives")
     ap.add_argument("--seed", type=int, default=20260712)
     args = ap.parse_args()
     if args.negative_ratio <= 0:
@@ -70,8 +72,13 @@ def main():
     rng = random.Random(args.seed)
     rng.shuffle(positives)
     rng.shuffle(negatives)
-    keep_negatives = min(len(negatives), max(1, round(len(positives) * args.negative_ratio)))
-    kept = positives + negatives[:keep_negatives]
+    if args.balance_classes:
+        keep_positives = keep_negatives = min(len(positives), len(negatives))
+        kept = positives[:keep_positives] + negatives[:keep_negatives]
+    else:
+        keep_positives = len(positives)
+        keep_negatives = min(len(negatives), max(1, round(len(positives) * args.negative_ratio)))
+        kept = positives + negatives[:keep_negatives]
     rng.shuffle(kept)
     if not positives or not negatives:
         raise SystemExit(f"need both positive and negative student rollouts, got +{len(positives)} -{len(negatives)}")
@@ -86,8 +93,9 @@ def main():
             dst.write(json.dumps(row, ensure_ascii=False) + "\n")
     os.replace(tmp, out)
     print(json.dumps({
-        "out": str(out), "valid_rows": len(kept), "positive_rows": len(positives),
+        "out": str(out), "valid_rows": len(kept), "positive_rows": keep_positives,
         "negative_rows": keep_negatives, "available_negative_rows": len(negatives),
+        "available_positive_rows": len(positives), "balance_classes": args.balance_classes,
         "malformed_rows": malformed, "missing_rows": missing, "duplicate_rows": duplicates,
     }, sort_keys=True))
 

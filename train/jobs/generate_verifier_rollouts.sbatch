@@ -25,11 +25,31 @@ ANSWER_MODE=${ANSWER_MODE:-gsm8k}
 [ -f "$DATA" ] || { echo "[verifier-rollouts] missing data: $DATA" >&2; exit 3; }
 [ ! -e "$OUT" ] || { echo "[verifier-rollouts] refusing existing output: $OUT" >&2; exit 4; }
 cd "$BASE/train"
-"$PY" - <<'PY'
+for attempt in 1 2 3; do
+  rm -f "${OUT}.partial"
+  if ! "$PY" - <<'PY'
 import sys
 import torch
-sys.exit(0 if torch.cuda.is_available() else 75)
+try:
+    if not torch.cuda.is_available():
+        raise RuntimeError("CUDA unavailable")
+    torch.empty(1, device="cuda")
+except Exception as exc:
+    print(f"[verifier-rollouts] CUDA not ready: {exc}", file=sys.stderr)
+    sys.exit(75)
 PY
-"$PY" generate_verifier_rollouts.py --ckpt "$CKPT" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
-  --data "$DATA" --out "$OUT" --n "$N" --k "$K" --answer-mode "$ANSWER_MODE"
+  then
+    echo "[verifier-rollouts] CUDA readiness attempt $attempt failed; retrying" >&2
+    sleep 30
+    continue
+  fi
+  if "$PY" generate_verifier_rollouts.py --ckpt "$CKPT" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
+      --data "$DATA" --out "$OUT" --n "$N" --k "$K" --answer-mode "$ANSWER_MODE"; then
+    break
+  fi
+  echo "[verifier-rollouts] generation attempt $attempt failed; retrying" >&2
+  rm -f "${OUT}.partial"
+  sleep 30
+done
+[ -e "$OUT" ] || { echo "[verifier-rollouts] exhausted retries without output" >&2; exit 75; }
 echo "[verifier-rollouts] tag=$TAG wrote $OUT"
