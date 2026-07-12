@@ -28,7 +28,7 @@ LRMUON=${LRMUON:-0.0015}
 LRADAM=${LRADAM:-0.00035}
 # Retain broad contest-math pressure, add the missing compact operations, and
 # cap small code/teacher groups below memorization-heavy replay rates.
-WEIGHTS="math=0.40 procedural=0.15 code=0.05 teacher=0.05 primitives=0.35"
+WEIGHTS="math=0.45 procedural=0.15 code=0.05 teacher=0.05 primitives=0.30"
 
 for data in "${DATA[@]}"; do
   [ -s "$data" ] || { echo "[sft-v5] data missing: $data" >&2; exit 2; }

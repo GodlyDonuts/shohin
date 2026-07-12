@@ -17,7 +17,7 @@ DATA=(
   "$BASE/artifacts/sft/primitives_v1_train.jsonl"
 )
 OUT=${OUT:-$BASE/artifacts/sft/sft_mix_reasoning_v5_primitives.packing.json}
-WEIGHTS="math=0.40 procedural=0.15 code=0.05 teacher=0.05 primitives=0.35"
+WEIGHTS="math=0.45 procedural=0.15 code=0.05 teacher=0.05 primitives=0.30"
 
 for data in "${DATA[@]}"; do
   [ -s "$data" ] || { echo "[sft-v5-audit] data missing: $data" >&2; exit 2; }
