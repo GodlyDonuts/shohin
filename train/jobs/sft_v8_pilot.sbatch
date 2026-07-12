@@ -18,6 +18,7 @@ PY=$BASE/miniforge3/bin/python
 DATA=${DATA:-$BASE/artifacts/sft/sft_mix_reasoning_v8_candidate_r2.jsonl}
 QUALITY=${QUALITY:-$BASE/artifacts/sft/sft_mix_reasoning_v8_candidate_r2.quality.r3.json}
 PACKING=${PACKING:-$BASE/artifacts/sft/sft_mix_reasoning_v8_candidate_r2.packing.r3.json}
+GENERALIZATION_AUDIT=${GENERALIZATION_AUDIT:-$BASE/artifacts/sft/sft_mix_reasoning_v8_candidate_r2.generalization_overlap.r1.json}
 INIT=${INIT:?set INIT to an explicitly preserved flagship checkpoint}
 OUT=${OUT:?set OUT to a fresh isolated SFT output directory}
 EPOCHS=${EPOCHS:-1}
@@ -29,18 +30,19 @@ WEIGHTS=(math=0.40 procedural=0.45 code=0.10 teacher=0.05)
 [ -s "$DATA" ] || { echo "[sft-v8] data missing: $DATA" >&2; exit 2; }
 [ -s "$QUALITY" ] || { echo "[sft-v8] quality report missing: $QUALITY" >&2; exit 2; }
 [ -s "$PACKING" ] || { echo "[sft-v8] packing report missing: $PACKING" >&2; exit 2; }
+[ -s "$GENERALIZATION_AUDIT" ] || { echo "[sft-v8] generalization-overlap report missing: $GENERALIZATION_AUDIT" >&2; exit 2; }
 [ -f "$INIT" ] || { echo "[sft-v8] init missing: $INIT" >&2; exit 3; }
 [ ! -e "$OUT" ] || { echo "[sft-v8] refusing to overwrite $OUT" >&2; exit 4; }
 
 # Bind the training input to both immutable reports. This prevents a convenient
 # but different JSONL from being passed under the V8 name after the audit.
-"$PY" - "$DATA" "$QUALITY" "$PACKING" <<'PY'
+"$PY" - "$DATA" "$QUALITY" "$PACKING" "$GENERALIZATION_AUDIT" "$BASE/train/generalization_interview.py" <<'PY'
 import hashlib
 import json
 import os
 import sys
 
-data, quality_path, packing_path = map(os.path.realpath, sys.argv[1:])
+data, quality_path, packing_path, generalization_path, case_source = map(os.path.realpath, sys.argv[1:])
 
 def sha256(path):
     digest = hashlib.sha256()
@@ -51,6 +53,7 @@ def sha256(path):
 
 quality = json.load(open(quality_path))
 packing = json.load(open(packing_path))
+generalization = json.load(open(generalization_path))
 if os.path.realpath(quality.get("data", "")) != data:
     raise SystemExit("[sft-v8] quality report data mismatch")
 if quality.get("data_sha256") != sha256(data):
@@ -78,6 +81,14 @@ if any(float(value) > 3.0 for value in packing.get("repeat_factor_per_epoch", {}
 hashes = packing.get("data_sha256", {})
 if hashes.get(data) != sha256(data):
     raise SystemExit("[sft-v8] packing report does not match current data bytes")
+if (os.path.realpath(generalization.get("data", "")) != data
+        or generalization.get("data_sha256") != sha256(data)
+        or os.path.realpath(generalization.get("case_source", "")) != case_source
+        or generalization.get("case_source_sha256") != sha256(case_source)
+        or int(generalization.get("cases", 0)) != 8):
+    raise SystemExit("[sft-v8] generalization-overlap report does not bind this data and interview")
+if generalization.get("exact_prompt_hits") or generalization.get("ngram_prompt_hits"):
+    raise SystemExit(f"[sft-v8] direct-interview overlap gate failed: {generalization.get('examples')}")
 print(f"[sft-v8] frozen input gate passed: {quality['valid_rows']} rows, "
       f"{packing['packed_sequences']} packed sequences")
 PY

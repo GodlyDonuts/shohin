@@ -1587,6 +1587,14 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   output and the job was not disturbed. Future audit code now flushes and `fsync`s every logged progress
   batch before printing it, so an explicit resume can retain verified rows after a wall-time interruption.
   Focused local tests pass and the fix is mirrored to Newton for a retry only.
+- **2026-07-12** — **V8 direct-transfer interview now has its own data-leakage gate.** Public benchmark
+  filtering does not establish that the custom eight-case composition interview is held out. New tested
+  `audit_generalization_overlap.py` parses the evaluator's literal `CASES` through AST, then records exact
+  and 13-gram prompt overlap plus SHA-256s for both the candidate JSONL and interview source. CPU job
+  **`686625`** is read-only, excludes the active TACO node `evc21`, and must report zero overlap before
+  V8's launcher can proceed. The launcher now requires that report to bind the exact frozen data and current
+  interview source before CUDA allocation; lexical disjointness is necessary evidence for transfer, not a
+  sufficient general-reasoning claim.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
