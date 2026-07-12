@@ -20,13 +20,33 @@ OUT=${OUT:-$BASE/artifacts/eval_history/capability_matrix_v1_${SLURM_JOB_ID}.jso
 [ -f "$SFT" ] || { echo "[capability-matrix] SFT checkpoint missing: $SFT" >&2; exit 3; }
 
 cd "$BASE/train"
+for i in $(seq 1 30); do
+  if "$PY" - <<'PY'
+import sys
+import torch
+try:
+    if not torch.cuda.is_available():
+        raise RuntimeError("CUDA unavailable")
+    torch.empty(1, device="cuda")
+except Exception as exc:
+    print(f"[capability-matrix] CUDA not ready: {exc}", file=sys.stderr)
+    sys.exit(75)
+PY
+  then
+    break
+  fi
+  sleep 10
+done
 if ! "$PY" - <<'PY'
 import sys
 import torch
-sys.exit(0 if torch.cuda.is_available() else 75)
+try:
+    torch.empty(1, device="cuda")
+except Exception as exc:
+    print(f"[capability-matrix] CUDA unavailable after retry: {exc}", file=sys.stderr)
+    sys.exit(75)
 PY
 then
-  echo "[capability-matrix] CUDA unavailable after allocation" >&2
   exit 75
 fi
 
