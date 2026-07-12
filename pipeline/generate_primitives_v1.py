@@ -25,6 +25,15 @@ def answer_response(reasoning, answer):
     return f"<think>{reasoning}</think>\nThe answer is {answer}."
 
 
+def verified_row(question, reasoning, answer):
+    """Keep the SFT completion and held-out exact-answer fields in one place."""
+    return {
+        "question": question,
+        "response": answer_response(reasoning, answer),
+        "answer": str(answer),
+    }
+
+
 def digits_for_base(rng, base, length):
     digits = [rng.randrange(base) for _ in range(length)]
     digits[0] = rng.randrange(1, base)
@@ -58,10 +67,7 @@ def make_case(family, rng, heldout):
             f"Compute {a} times {b}, then add {c}. Return only the final integer.",
             f"First multiply {a} by {b}. Then add {c}. What is the result? Give only the integer.",
         ])
-        return {
-            "question": question,
-            "response": answer_response(f"{a} times {b} is {a * b}; {a * b} plus {c} is {value}", value),
-        }
+        return verified_row(f"{question}", f"{a} times {b} is {a * b}; {a * b} plus {c} is {value}", value)
 
     if family == "base_conversion":
         base = rng.randint(5, 9)
@@ -76,10 +82,7 @@ def make_case(family, rng, heldout):
             f"Convert the base-{base} numeral {numeral} to base 10. Return only the integer.",
             f"What decimal number is represented by {numeral} in base {base}? Give only the integer.",
         ])
-        return {
-            "question": question,
-            "response": answer_response(f"Use place values: {expanded} = {value}", value),
-        }
+        return verified_row(question, f"Use place values: {expanded} = {value}", value)
 
     if family == "state_update":
         start = rng.randint(state_lo, state_hi)
@@ -93,13 +96,11 @@ def make_case(family, rng, heldout):
             f"Start with n = {start}. Add {add}, multiply by {mult}, then subtract {sub}. What is n? Return only the integer.",
             f"Let n begin at {start}. Increase it by {add}, multiply the result by {mult}, and decrease it by {sub}. Give only final n.",
         ])
-        return {
-            "question": question,
-            "response": answer_response(
-                f"After adding, n is {after_add}; after multiplying, n is {after_mult}; subtracting gives {value}",
-                value,
-            ),
-        }
+        return verified_row(
+            question,
+            f"After adding, n is {after_add}; after multiplying, n is {after_mult}; subtracting gives {value}",
+            value,
+        )
 
     if family == "sort_unique":
         values = [rng.randint(0, list_hi) for _ in range(8)]
@@ -108,10 +109,7 @@ def make_case(family, rng, heldout):
             f"Sort {values} in ascending order and remove duplicates. Return only the resulting list.",
             f"Remove repeated values from {values}, then order the remaining values from low to high. Give only a list.",
         ])
-        return {
-            "question": question,
-            "response": answer_response(f"The distinct values in ascending order are {answer}", answer),
-        }
+        return verified_row(question, f"The distinct values in ascending order are {answer}", answer)
 
     if family == "string_insert":
         word = rng.choice(WORDS)
@@ -122,13 +120,11 @@ def make_case(family, rng, heldout):
             f"Put '{insert}' immediately after character {position} of '{word}'. Return only the resulting string.",
             f"Split '{word}' after its first {position} characters, insert '{insert}' there, and give only the new string.",
         ])
-        return {
-            "question": question,
-            "response": answer_response(
-                f"The prefix is '{word[:position]}' and the suffix is '{word[position:]}', so joining them gives {answer}",
-                answer,
-            ),
-        }
+        return verified_row(
+            question,
+            f"The prefix is '{word[:position]}' and the suffix is '{word[position:]}', so joining them gives {answer}",
+            answer,
+        )
 
     if family == "syllogism":
         subject, middle, target = rng.sample(NOUNS, 3)
@@ -146,7 +142,7 @@ def make_case(family, rng, heldout):
             )
             answer = "no"
             reasoning = f"Any {subject} is a {middle}, while no {middle} is a {target}; the answer is no"
-        return {"question": question, "response": answer_response(reasoning, answer)}
+        return verified_row(question, reasoning, answer)
 
     if family == "correction":
         start = rng.randint(state_lo, state_hi)
@@ -161,13 +157,11 @@ def make_case(family, rng, heldout):
             f"A prior answer says this is {wrong}: start with n = {start}, add {add}, multiply by {mult}, "
             f"then subtract {sub}. Recompute independently and return only the corrected final integer."
         )
-        return {
-            "question": question,
-            "response": answer_response(
-                f"The prior value is wrong. {start} plus {add} is {after_add}; times {mult} is {after_mult}; minus {sub} is {value}",
-                value,
-            ),
-        }
+        return verified_row(
+            question,
+            f"The prior value is wrong. {start} plus {add} is {after_add}; times {mult} is {after_mult}; minus {sub} is {value}",
+            value,
+        )
     raise ValueError(f"unknown family: {family}")
 
 

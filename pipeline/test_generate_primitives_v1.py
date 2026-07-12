@@ -30,4 +30,5 @@ with tempfile.TemporaryDirectory() as root:
         assert row["training_group"] == "primitives"
         assert row["response"].startswith("<think>")
         assert "The answer is" in row["response"]
+        assert str(row["answer"]).strip()
 print("primitive generator checks: passed")
