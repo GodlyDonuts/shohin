@@ -1595,6 +1595,13 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   V8's launcher can proceed. The launcher now requires that report to bind the exact frozen data and current
   interview source before CUDA allocation; lexical disjointness is necessary evidence for transfer, not a
   sufficient general-reasoning claim.
+- **2026-07-12** — **V8 passes the direct-interview lexical holdout gate.** CPU job `686625` completed
+  off the active TACO node with **699,928 valid rows**, no malformed/missing prompts, and **0 exact / 0
+  13-gram** hits against all eight current composition-interview prompts. The report binds V8 data SHA-256
+  `da94f9f6aae1d69a12633241b3971f6cfc68f7a7edbc788b956063ec5a70fc72` and case-source SHA-256
+  `6820a1d77e206ffd92dff837fb38c5c0633d06788aabbab3ade9ef0bafc2c3be`. V8 is now admissible solely as
+  an isolated 180k pre/post transfer experiment after the raw baseline, public board, and transcript gates
+  are serialized on a known-good H100.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
