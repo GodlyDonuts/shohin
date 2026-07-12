@@ -44,6 +44,13 @@ data.
   attribution. Its matched direct matrix is still only 4/48 Q/A, 4/48 direct,
   4/48 CoT, and 10/48 one-shot; structured-looking derivations remain wrong on
   basic arithmetic and state tracking.
+- V5 primitive ablation: **272/700 = 38.86%** on a disjoint seven-family
+  primitive holdout, versus raw **0/700**. It proves useful transfer on a few
+  explicit operations but is highly uneven: 100% syllogism, 88% string
+  insertion, 47% correction, and only 2-19% on sort, base conversion, state
+  updates, and arithmetic. Its direct audit is 2/8 initial, 2/8 review, 1/8
+  scaffold, and 3/8 compact-state reuse. This opens broader testing; it is not
+  a promotion result.
 
 External scores require matching prompts, decoding, samples, and scorer. A custom
 100-example board cannot support a claim to beat another model.
@@ -96,8 +103,9 @@ External scores require matching prompts, decoding, samples, and scorer. A custo
 
 - Complete V4's remaining held-out/direct/verifier work only as diagnosis; V4 is
   already rejected for broad promotion.
-- Measure raw primitives, then run frozen V5. It must win the disjoint primitive
-  gate before consuming a broader public board.
+- V5 has won the disjoint primitive gate, so its fixed public board, matched
+  prompt matrix, and transcript audit are running. Require all three to show
+  transfer before it affects a future SFT recipe.
 - Admit DCLM only after its manifest and full decoded-token scan both pass.
 - After the 5B DCLM pilot passes, build and scan a 25B replacement before the
   long language-balanced phase. The replacement must be used instead of the

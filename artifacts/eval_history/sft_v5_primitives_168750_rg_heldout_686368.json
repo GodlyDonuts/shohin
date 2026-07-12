@@ -1,0 +1,78 @@
+{
+  "accuracy": 0.38857142857142857,
+  "checkpoint": "/lustre/fs1/home/sa305415/shohin/train/sft_v5_primitives_168750/sft_ep1.pt",
+  "correct": 272,
+  "data": "/lustre/fs1/home/sa305415/shohin/artifacts/evals/primitives_v1_heldout.jsonl",
+  "examples": [
+    {
+      "family": "arithmetic",
+      "gold": "11893",
+      "ok": false,
+      "pred": "12553"
+    },
+    {
+      "family": "base_conversion",
+      "gold": "10936",
+      "ok": false,
+      "pred": "10992"
+    },
+    {
+      "family": "correction",
+      "gold": "2457",
+      "ok": false,
+      "pred": "2347"
+    },
+    {
+      "family": "sort_unique",
+      "gold": "[32 34 78 93 124 174 176 184]",
+      "ok": false,
+      "pred": "[124 174 176 32 34 78 93]"
+    },
+    {
+      "family": "state_update",
+      "gold": "661",
+      "ok": true,
+      "pred": "661"
+    }
+  ],
+  "families": {
+    "arithmetic": {
+      "accuracy": 0.12,
+      "correct": 12,
+      "total": 100
+    },
+    "base_conversion": {
+      "accuracy": 0.04,
+      "correct": 4,
+      "total": 100
+    },
+    "correction": {
+      "accuracy": 0.47,
+      "correct": 47,
+      "total": 100
+    },
+    "sort_unique": {
+      "accuracy": 0.02,
+      "correct": 2,
+      "total": 100
+    },
+    "state_update": {
+      "accuracy": 0.19,
+      "correct": 19,
+      "total": 100
+    },
+    "string_insert": {
+      "accuracy": 0.88,
+      "correct": 88,
+      "total": 100
+    },
+    "syllogism": {
+      "accuracy": 1.0,
+      "correct": 100,
+      "total": 100
+    }
+  },
+  "n": 700,
+  "sample_seed": 1337,
+  "step": "sft_ep1"
+}

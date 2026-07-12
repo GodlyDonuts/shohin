@@ -114,6 +114,26 @@ base-6 `254` as decimal 254, counts one `a` in `bananas`, and fails to carry
 `r = 14` into `3r`. V4's extra structure is sometimes useful for sampled
 procedural tasks, but it is not a dependable execution trace.
 
+### V5 proves missing primitives are trainable, not that reasoning is solved
+
+The source-balanced V5 ablation retained broad V4 sources and added a 30% share
+of 210,000 solver-verified primitive examples. Its 3,500-row held-out bank uses
+separate prompts, random seeds, and numeric ranges. On the fixed 700-case
+sample, raw scored **0/700** and V5 scored **272/700 = 38.86%**. The family
+breakdown is decisive: syllogism **100/100**, string insertion **88/100**,
+correction **47/100**, state update **19/100**, arithmetic **12/100**, base
+conversion **4/100**, and sort/deduplicate **2/100**.
+
+Its direct interview reached **2/8 initial, 2/8 review, 1/8 scaffold, and 3/8
+compact-state reuse**, against raw 170k's 1/8, 0/8, 1/8, and 0/8. The three
+reuse successes are state update, sort/deduplication, and precedence correction:
+all close to explicit V5 curriculum families. It still emits `43 * 17 = 701`,
+fails base-8 conversion and string splice, and cannot write a valid minimal
+Python predicate. V5 therefore establishes that explicit compact-state
+supervision can install a few execution moves; it does not establish autonomous
+compaction, broad self-correction, or general reasoning. Its prompt matrix and
+public board remain the promotion gates.
+
 ### Controlled prompt matrix at 168k
 
 The first twelve hand-authored prompts established the failure qualitatively. A
