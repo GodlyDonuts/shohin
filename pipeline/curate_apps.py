@@ -17,6 +17,7 @@ import resource
 import subprocess
 import sys
 import tempfile
+from pathlib import Path
 
 
 WORD = re.compile(r"\w+")
@@ -104,7 +105,7 @@ def run_solution(code, cases, timeout):
 def parse_cases(raw, max_tests, max_case_chars):
     try:
         io = json.loads(raw)
-    except (TypeError, json.JSONDecodeError):
+    except (TypeError, ValueError, json.JSONDecodeError):
         return None
     if io.get("fn_name") or not isinstance(io.get("inputs"), list) or not isinstance(io.get("outputs"), list):
         return None
@@ -146,8 +147,12 @@ def main():
     dataset = load_dataset("json", data_files=train_url, split="train", streaming=True)
     seen = kept = 0
     drops = {key: 0 for key in ("difficulty", "eval_overlap", "missing_cases", "syntax", "solution", "execution")}
-    os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
-    with open(args.out, "w") as out:
+    out_path = Path(args.out)
+    tmp_path = out_path.with_suffix(out_path.suffix + ".partial")
+    if tmp_path.exists():
+        raise SystemExit(f"refusing stale partial output: {tmp_path}")
+    os.makedirs(out_path.parent or Path("."), exist_ok=True)
+    with open(tmp_path, "w") as out:
         for row in dataset:
             if seen >= args.max_seen or kept >= args.max_kept:
                 break
@@ -166,7 +171,7 @@ def main():
                 continue
             try:
                 solutions = json.loads(row.get("solutions") or "[]")
-            except (TypeError, json.JSONDecodeError):
+            except (TypeError, ValueError, json.JSONDecodeError):
                 drops["solution"] += 1
                 continue
             selected = None
@@ -194,6 +199,7 @@ def main():
                 "verified_cases": len(cases),
             }, ensure_ascii=False) + "\n")
             kept += 1
+    os.replace(tmp_path, out_path)
     print(json.dumps({
         "dataset": "codeparrot/apps",
         "revision": args.revision,
