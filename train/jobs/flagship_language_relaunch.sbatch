@@ -31,6 +31,8 @@ BS=${BS:-32}
 ACC=${ACC:-8}
 FINEWEB_DIR=${FINEWEB_DIR:-$BASE/artifacts/shards/fineweb_edu_25b}
 DCLM_DIR=${DCLM_DIR:-$BASE/artifacts/shards/dclm_baseline_25b}
+FINEWEB_APPROVAL=${FINEWEB_APPROVAL:-$BASE/artifacts/shard_scans/fineweb_edu_25b.approved.json}
+DCLM_APPROVAL=${DCLM_APPROVAL:-$BASE/artifacts/shard_scans/dclm_baseline_25b.approved.json}
 
 SHARDS=(
   "$BASE/artifacts/shards/openwebmath"
@@ -60,6 +62,41 @@ for shard in "${SHARDS[@]}"; do
     exit 3
   }
 done
+for approval in "$FINEWEB_APPROVAL" "$DCLM_APPROVAL"; do
+  [ -s "$approval" ] || { echo "[language-relaunch] missing scan approval: $approval" >&2; exit 4; }
+done
+"$PY" - "$FINEWEB_DIR" "$FINEWEB_APPROVAL" "$DCLM_DIR" "$DCLM_APPROVAL" <<'PY'
+import hashlib
+import json
+import os
+import sys
+
+def sha256(path):
+    digest = hashlib.sha256()
+    with open(path, "rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+for shard, approval_path in zip(sys.argv[1::2], sys.argv[2::2]):
+    shard = os.path.realpath(shard)
+    approval = json.load(open(approval_path))
+    manifest = os.path.join(shard, "manifest.json")
+    if approval.get("schema") != "shohin-shard-scan-approval-v1":
+        raise SystemExit(f"invalid scan approval schema: {approval_path}")
+    if os.path.realpath(approval.get("shard_dir", "")) != shard:
+        raise SystemExit(f"approval source mismatch: {approval_path}")
+    if approval.get("manifest_sha256") != sha256(manifest):
+        raise SystemExit(f"manifest changed after approval: {manifest}")
+    report = approval.get("scan_report")
+    if not report or not os.path.isfile(report) or approval.get("scan_report_sha256") != sha256(report):
+        raise SystemExit(f"scan report changed or missing: {approval_path}")
+    if int(approval.get("total_tokens", 0)) < 24_500_000_000:
+        raise SystemExit(f"language source too small for relaunch: {approval_path}")
+    if float(approval.get("max_bytef", 1.0)) > 0.01:
+        raise SystemExit(f"byte fallback above admission bound: {approval_path}")
+print("[language-relaunch] scan approvals verified")
+PY
 
 export OMP_NUM_THREADS=4
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
