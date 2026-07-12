@@ -1,0 +1,240 @@
+{
+  "answer_accuracy": 0.05,
+  "by_contract": {
+    "repair": {
+      "answer_accuracy": 0.04285714285714286,
+      "answer_correct": 6,
+      "families": {
+        "arithmetic": {
+          "answer_correct": 0,
+          "state_correct": 0,
+          "state_total": 20,
+          "total": 20
+        },
+        "base_conversion": {
+          "answer_correct": 0,
+          "state_correct": 0,
+          "state_total": 20,
+          "total": 20
+        },
+        "correction": {
+          "answer_correct": 0,
+          "state_correct": 0,
+          "state_total": 20,
+          "total": 20
+        },
+        "sort_unique": {
+          "answer_correct": 0,
+          "state_correct": 0,
+          "state_total": 20,
+          "total": 20
+        },
+        "state_update": {
+          "answer_correct": 0,
+          "state_correct": 0,
+          "state_total": 20,
+          "total": 20
+        },
+        "string_insert": {
+          "answer_correct": 0,
+          "state_correct": 0,
+          "state_total": 20,
+          "total": 20
+        },
+        "syllogism": {
+          "answer_correct": 6,
+          "state_correct": 0,
+          "state_total": 20,
+          "total": 20
+        }
+      },
+      "state_accuracy": 0.0,
+      "state_correct": 0,
+      "state_total": 140,
+      "total": 140
+    },
+    "reuse": {
+      "answer_accuracy": 0.10714285714285714,
+      "answer_correct": 15,
+      "families": {
+        "arithmetic": {
+          "answer_correct": 8,
+          "state_correct": 0,
+          "state_total": 0,
+          "total": 20
+        },
+        "base_conversion": {
+          "answer_correct": 1,
+          "state_correct": 0,
+          "state_total": 0,
+          "total": 20
+        },
+        "correction": {
+          "answer_correct": 0,
+          "state_correct": 0,
+          "state_total": 0,
+          "total": 20
+        },
+        "sort_unique": {
+          "answer_correct": 0,
+          "state_correct": 0,
+          "state_total": 0,
+          "total": 20
+        },
+        "state_update": {
+          "answer_correct": 1,
+          "state_correct": 0,
+          "state_total": 0,
+          "total": 20
+        },
+        "string_insert": {
+          "answer_correct": 0,
+          "state_correct": 0,
+          "state_total": 0,
+          "total": 20
+        },
+        "syllogism": {
+          "answer_correct": 5,
+          "state_correct": 0,
+          "state_total": 0,
+          "total": 20
+        }
+      },
+      "state_accuracy": null,
+      "state_correct": 0,
+      "state_total": 0,
+      "total": 140
+    },
+    "write": {
+      "answer_accuracy": 0.0,
+      "answer_correct": 0,
+      "families": {
+        "arithmetic": {
+          "answer_correct": 0,
+          "state_correct": 0,
+          "state_total": 20,
+          "total": 20
+        },
+        "base_conversion": {
+          "answer_correct": 0,
+          "state_correct": 0,
+          "state_total": 20,
+          "total": 20
+        },
+        "correction": {
+          "answer_correct": 0,
+          "state_correct": 0,
+          "state_total": 20,
+          "total": 20
+        },
+        "sort_unique": {
+          "answer_correct": 0,
+          "state_correct": 0,
+          "state_total": 20,
+          "total": 20
+        },
+        "state_update": {
+          "answer_correct": 0,
+          "state_correct": 0,
+          "state_total": 20,
+          "total": 20
+        },
+        "string_insert": {
+          "answer_correct": 0,
+          "state_correct": 0,
+          "state_total": 20,
+          "total": 20
+        },
+        "syllogism": {
+          "answer_correct": 0,
+          "state_correct": 0,
+          "state_total": 20,
+          "total": 20
+        }
+      },
+      "state_accuracy": 0.0,
+      "state_correct": 0,
+      "state_total": 140,
+      "total": 140
+    }
+  },
+  "checkpoint": "/lustre/fs1/home/sa305415/shohin/train/flagship_out/best_step168750.pt",
+  "data": "/lustre/fs1/home/sa305415/shohin/artifacts/evals/primitives_v3_state_heldout.jsonl",
+  "examples": [
+    {
+      "actual_state": "",
+      "answer_ok": false,
+      "contract": "write",
+      "expected_state": "state=base:9;digits:75768;value:50201",
+      "family": "base_conversion",
+      "response": " The answer is <final answer>.\n",
+      "state_ok": false
+    },
+    {
+      "actual_state": "",
+      "answer_ok": false,
+      "contract": "reuse",
+      "expected_state": "state=bexnimo>favinpexe;favinpexe>mepzasi;answer:yes",
+      "family": "syllogism",
+      "response": "\n\n## 1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.",
+      "state_ok": null
+    },
+    {
+      "actual_state": "",
+      "answer_ok": false,
+      "contract": "repair",
+      "expected_state": "state=n:357>375>2625>2562",
+      "family": "correction",
+      "response": "\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```",
+      "state_ok": false
+    },
+    {
+      "actual_state": "state=mul:350*35=12250;sub:12250-71=12180",
+      "answer_ok": false,
+      "contract": "repair",
+      "expected_state": "state=mul:350*35=12250;sub:12250-71=12179",
+      "family": "arithmetic",
+      "response": "\n\n```state=mul:350*35=12250;sub:12250-71=12180\nstate=mul:350*35=12250;sub:12250-71=12180\nstate=mul:350*35=12250;sub:12250-",
+      "state_ok": false
+    },
+    {
+      "actual_state": "",
+      "answer_ok": false,
+      "contract": "reuse",
+      "expected_state": "state=bexpode>tulcefa;tulcefa>zelkmulu;answer:yes",
+      "family": "syllogism",
+      "response": "\n\n## 1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.",
+      "state_ok": null
+    },
+    {
+      "actual_state": "",
+      "answer_ok": false,
+      "contract": "repair",
+      "expected_state": "state=n:356>411>2877>2829",
+      "family": "correction",
+      "response": "\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```\n\n```",
+      "state_ok": false
+    },
+    {
+      "actual_state": "",
+      "answer_ok": false,
+      "contract": "write",
+      "expected_state": "state=split:verm|ilionwito;insert:QR;result:vermQRilionwito",
+      "family": "string_insert",
+      "response": " The answer is <final answer>.\n",
+      "state_ok": false
+    },
+    {
+      "actual_state": "",
+      "answer_ok": false,
+      "contract": "write",
+      "expected_state": "state=n:293>342>684>655",
+      "family": "correction",
+      "response": " The answer is 636.\n",
+      "state_ok": false
+    }
+  ],
+  "n": 420,
+  "state_accuracy": 0.0,
+  "step": 168750
+}
