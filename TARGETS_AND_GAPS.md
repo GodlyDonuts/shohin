@@ -51,6 +51,12 @@ data.
   updates, and arithmetic. Its direct audit is 2/8 initial, 2/8 review, 1/8
   scaffold, and 3/8 compact-state reuse. This opens broader testing; it is not
   a promotion result.
+- V5 broad board **rejects promotion**: 10/100 GSM8K majority@4, 9/100 greedy,
+  3/100 MATH-500, 2/164 HumanEval, and 0/100 MBPP. Its fresh seven-case operator
+  transcript reaches 3/7 initial/review/reuse only on arithmetic, sorting, and
+  logic; it fails base conversion, sequential state, string, and Python. The
+  model does not actually emit its requested `state=` protocol, so a later correct
+  answer is not sufficient evidence of latent-state compaction.
 
 External scores require matching prompts, decoding, samples, and scorer. A custom
 100-example board cannot support a claim to beat another model.
@@ -103,10 +109,9 @@ External scores require matching prompts, decoding, samples, and scorer. A custo
 
 - Complete V4's remaining held-out/direct/verifier work only as diagnosis; V4 is
   already rejected for broad promotion.
-- V5 has won the disjoint primitive gate. Its matched matrix and transcript
-  already show transfer under its supervised Q/A and CoT contracts, but weak
-  direct/one-shot behavior; the fixed public board remains the next gate.
-  Require all three to show broad transfer before it affects a future SFT recipe.
+- V5 has won the disjoint primitive gate but failed the public board and the
+  contract-valid compact-state requirement. Retain it only as an atomic-transfer
+  diagnostic; it must not affect the next broad SFT recipe.
 - Admit DCLM only after its manifest and full decoded-token scan both pass.
 - After the 5B DCLM pilot passes, build and scan a 25B replacement before the
   long language-balanced phase. The replacement must be used instead of the
@@ -171,6 +176,6 @@ and the [official MobileLLM-R1 repository](https://github.com/facebookresearch/M
 
 Continue the protected 1-H100 pretrain because it is stable and remains useful
 for the forthcoming language-balanced curriculum. Do not call it intelligent yet
-and do not promote V2 or V4. The next claim of progress must be supported by the
-pinned interaction transcript, primitive transfer, and protocol-correct benchmark
-movement together.
+and do not promote V2, V4, or V5. The next claim of progress must be supported by
+the pinned interaction transcript, primitive transfer, valid compact-state behavior,
+and protocol-correct benchmark movement together.

@@ -141,6 +141,24 @@ The result is a useful warning against reporting only the best prompt: V5 has
 learned some execution under the supervised Q/A or CoT contract, but has not
 become a reliable instruction-following solver.
 
+The completed public board makes the promotion decision unambiguous. V5 (`686401`)
+scored GSM8K majority@4 **10/100**, greedy GSM8K **9/100**, MATH-500 **3/100**,
+HumanEval **2/164**, and MBPP **0/100**. Relative to the pinned raw 168.75k board
+(5/100, 2/100, 2/100, 7/164, and 0/100), that is a narrow arithmetic-format gain
+alongside a severe code regression. V5 is rejected as a broad SFT recipe.
+
+A separate fresh seven-case transcript probe (`686425`) was run after the board
+rather than inferred from aggregate metrics. Raw 168.75k scored **1/7 initial,
+0/7 review, 1/7 after a verified fact, and 0/7 state reuse**. V5 scored **3/7,
+3/7, 2/7, and 3/7**. Its exact wins are the trained arithmetic, sorting, and
+logic patterns; it still fails base conversion, sequential state updates, string
+insertion, and syntax-valid Python. V5 normally does not emit the requested
+`state=` representation. Its reuse wins are final-answer matches after a new
+prompt, not evidence that it produced or faithfully continued from a compact
+state. The hash-matched transcript is
+`artifacts/eval_history/manual_capability_raw168750_vs_sft_v5_20260712_JOBID.json`
+(md5 `28dd0b15de2af16a10a2012f630072a1`).
+
 ### Controlled prompt matrix at 168k
 
 The first twelve hand-authored prompts established the failure qualitatively. A
@@ -344,6 +362,10 @@ evaluation earns that cost.
    frontier model. The viable route is a focused math/code/logic specialist with
    exceptional data and calibrated decoding, not an unsupported claim of broad
    general intelligence at this stage.
+7. **The model has not learned a usable compact-state protocol.** A later turn
+   can be correct without using the earlier model text; the transcript must
+   validate both the emitted state contract and faithful continuation before any
+   score is described as latent reasoning.
 
 ## Rejected explanations
 
