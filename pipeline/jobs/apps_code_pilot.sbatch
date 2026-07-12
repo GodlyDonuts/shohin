@@ -16,6 +16,7 @@ OUT=${OUT:-$BASE/artifacts/sft/apps_train_pilot.jsonl}
 MAX_SEEN=${MAX_SEEN:-500}
 MAX_KEPT=${MAX_KEPT:-250}
 [ -e "$OUT" ] && { echo "[apps] refusing to overwrite $OUT" >&2; exit 2; }
+echo "[apps] out=$OUT max_seen=$MAX_SEEN max_kept=$MAX_KEPT"
 cd "$BASE/pipeline"
 "$PY" curate_apps.py \
   --out "$OUT" \
