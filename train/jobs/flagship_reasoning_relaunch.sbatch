@@ -16,7 +16,10 @@ set -euo pipefail
 BASE=/lustre/fs1/home/sa305415/shohin
 PY=$BASE/miniforge3/bin/python
 OUT=$BASE/train/flagship_out
-STEPS=${STEPS:-300000}
+# ``train.py --steps`` is an absolute global target. The active narrow-data
+# phase ends at 300k, so the first language-balanced continuation must target
+# 600k or it would immediately exit without taking an update.
+STEPS=${STEPS:-600000}
 WARMUP=${WARMUP:-2000}
 LRMUON=${LRMUON:-0.005}
 LRADAM=${LRADAM:-1e-3}

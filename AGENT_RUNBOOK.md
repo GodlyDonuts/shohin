@@ -92,6 +92,8 @@ for autonomous latent reasoning. (5) Improve the verifier separately: `686437` s
 oracle@16 36/100, verifier@16 9/100; the new cross-family rollout must pass a held-out selection gate before
 any promotion. (6) At the next controlled/natural pretrain handoff only, use manifest-gated language,
 math/reasoning, and code sources with explicit, per-batch-safe domain weights; do not alter live SHARDS.
+The future relaunch target is **600k absolute steps**, not 300k: `train.py --steps` is absolute and the
+current phase already targets 300k, so a 300k relaunch would take zero updates.
 
 ---
 
@@ -1436,6 +1438,12 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   string, and valid Python; hash `a6d8c25cb3482cd37026bbc85306008f`. Future-only relaunch now excludes
   FineMath-4 because it is contained in FineMath-3, requires the scanned 25B DCLM replacement, and
   uses a tested effective **24.8% math / 25.1% code / 50.1% educational-English** BS32 curriculum.
+- **2026-07-12 ~13:05** — **Future handoff target corrected before it could silently no-op.**
+  `train.py --steps` is an absolute global bound and the active narrow-data phase already ends at 300k.
+  The future `flagship_reasoning_relaunch.sbatch` had inherited `STEPS=300000`, which would resume the
+  newest 300k checkpoint and immediately write no updates. Its default is now **600,000** with an
+  explicit comment; the language-balanced data transition remains future-only and still requires the
+  scanned DCLM 25B manifest.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
