@@ -86,6 +86,24 @@ TASKS = {
 }
 
 # --------------------------------------------------------------------------- generation (KV cache)
+_COMPLETE_FINAL_ANSWER = re.compile(
+    r"\b(?:the\s+)?answer\s+is\b[^\n]{1,192}?(?:\.(?=\s)|\n)",
+    flags=re.IGNORECASE,
+)
+
+
+def has_complete_final_answer(text):
+    """Return true only after an explicit final-answer line is complete.
+
+    SFT examples deliberately use ``The answer is X.`` after potentially blank
+    paragraphs of reasoning. Stopping on a paragraph break loses the answer;
+    generating to ``max_new`` after it wastes evaluation time. A period must be
+    followed by whitespace so decimal answers such as ``68.04`` are not cut at
+    the decimal point.
+    """
+    return bool(_COMPLETE_FINAL_ANSWER.search(text))
+
+
 @torch.no_grad()
 def generate(model, tok, prompt, device, max_new=256, temp=0.0, top_k=40, stop="\nQuestion:"):
     cap = model.cfg.seq_len
@@ -109,9 +127,11 @@ def generate(model, tok, prompt, device, max_new=256, temp=0.0, top_k=40, stop="
         txt = tok.decode(gen)
         # SFT targets intentionally contain paragraph breaks before their final
         # answer. Stopping on any blank line truncates that answer and turns a
-        # correct completion into an apparent benchmark miss. Only stop at a
-        # new prompt, EOS, the sequence cap, or max_new.
-        if (stop and stop in txt) or nxt == eos_id or pos >= cap:
+        # correct completion into an apparent benchmark miss. Once an explicit
+        # final-answer line is complete, however, further decoding cannot help
+        # the score and makes self-consistency prohibitively expensive.
+        if ((stop and stop in txt) or has_complete_final_answer(txt)
+                or nxt == eos_id or pos >= cap):
             break
         with ac:
             logits, cache = model(torch.tensor([[nxt]], device=device), cache=cache, pos=pos, return_cache=True)

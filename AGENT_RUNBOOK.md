@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-12 ~03:20 EDT (`685084` healthy past 166k; v2 SFT evaluated and rejected as a broad recipe). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-12 ~04:10 EDT (`685084` healthy past 166.9k; corrected CUDA-only SFT gates and isolated data expansion are running). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -51,13 +51,13 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-12 ~03:20 EDT) |
+| Item | Value (as of 2026-07-12 ~04:10 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
-| **Extended pretrain job** | 1-GPU job `680992` was stopped at the earlier 2-GPU transition after preserving `ckpt_0062000.pt`; short backfills `681083` and `681087` ran cleanly. `681091`, `681105`, `681115`, `681123`, `681308`, `681309`, and `681310` completed 2-H100 windows by wall-time. Current active continuation is **`683715`**, running on **evc43** as a 3-day 1-H100 job (`NG=1 BS=16 ACC=16 CKPT=250`). Per current directive, dual-GPU successor `684030` was canceled. **`685084`** is the dependency-held one-H100 successor after `683715`, configured `BS=32 ACC=8 CKPT=250` (same 524,288 tokens/update, ~64 GB microbatch). |
-| Extended pretrain status | `681311` resumed from **`ckpt_0083750.pt -> step 83751`**, saved **`ckpt_0085500.pt`**, reached **step 85780**, then hit the expected wall-time limit at 19:30 EDT. **`683715` started early at 20:28 EDT**, resumed from **`ckpt_0085500.pt -> start step 85501`** (expected replay of unsaved 85501-85780 work), confirmed `world=1`, `bs=16`, `accum=16`, and is healthy through **step 127600** at ~148.12k tok/s with 99-100% H100 utilization. Two extreme gnorms at 126648-126649 were skipped, then the next and subsequent updates returned immediately to the normal 0.07-0.17 band; this is a recovered transient, not a reason to interrupt. Isolated BS32/ACC8 profiler `685088` measured 155.35k tok/s and ~54k CUDA launches across four updates. `torch.compile(reduce-overhead)` canaries `685105`/`685106` failed safely before a training step because individual graph captures conflict with the accumulated-gradient graph lifetime; do not adopt that mode. Whole-update CUDA-graph canary `685520` completed 80 stable updates at **158.20k tok/s**, but that ~1.8% lift over the profiled BS32 path does not justify removing the flagship's guard/observability path; **do not integrate CUDA graphs**. Capability board `685262` completed against `best_step120000.pt`; see its row below. Whitelist verification of `683715` showed `STEPS=300000, LRMUON=0.005, LRADAM=1e-3, DSEED=777, CKPT=250, AUTO_REQUEUE=0`, with `NG/BS/ACC` falling back to correct 1-H100 defaults (`1/16/16`). `short`, `ucfit`, and `highgpu` still reject this account. |
-| **SFT feedback job** | `681000`, name `shohin-sft`, node **evc43**, **DONE**; wrote `train/sft_out/sft_ep3.pt`. `train/jobs/sft.sbatch` now accepts `OUT=...` so experiments cannot overwrite that baseline. **`685708`** is dependency-held after balanced RG baseline `685706`: one epoch of frozen `sft_mix_reasoning_v2.jsonl`, initialized from `best_step120000.pt`, output isolated at `train/sft_v2_120k/`. If and only if it completes, `685710` runs the public board and serial `685714` runs balanced held-out RG; do not replace the old/default SFT recipe or modify flagship based on an unverified pilot. |
-| **Eval board job** | `681030`, name `shohin-eval`, **COMPLETED** on `sft_ep3.pt` (`N=100`, `K=1`): GSM8K 6/100, MATH500 0/100, HumanEval 4/164, MBPP 0/100. Treat as diagnostic/weak SFT, not a recipe win. Progress benchmark `681373` failed immediately because `TARGET_STEP=80000` resolved only to missing `ckpt_0080000.pt`; patched `train/jobs/eval_all.sbatch` to fall back to `best_step80000.pt`. Replacement `683820` at 80k (`N=100`, `K=4`): GSM8K maj@4 **0/100**, pass@1 **3/100**, MATH500 **2/100**, HumanEval **5/164**, MBPP **0/100**. **120k replacement `685262`** completed on `best_step120000.pt` with the same protocol: GSM8K maj@4 **2/100**, pass@1 **1/100**, MATH500 **3/100**, HumanEval **7/164**, MBPP **0/100**. This is a mixed, small-sample raw-pretrain signal, not a broad reasoning gain: GSMK pass@1 fell, while MATH/HumanEval moved slightly up. New `train/eval_rg.py` adds the missing held-out procedural gate (generator-held-out families/seeds). First model run `685704` was a single-family knights-and-knaves baseline at **3/400 = 0.75%**; fixed the file-order bias by deterministic round-robin family sampling. Balanced baseline **`685706`** is queued from `best_step120000.pt` (`N=800`). Metrics are appended to `artifacts/eval_history/metrics.jsonl`; RG results are standalone JSON artifacts. |
+| **Extended pretrain job** | `683715` completed cleanly. Current active continuation is **`685084`** on **evc22**: one H100, `BS=32 ACC=8 CKPT=250`, exact 524,288-token updates, and the proven default compile path. It resumed `ckpt_0141500.pt -> step 141501`; the prior dual-GPU successor remains canceled per user instruction. |
+| Extended pretrain status | **`685084` is healthy through step 166,980** at ~**154.2k tok/s**. Loss is in the normal ~1.2-2.1 band, gnorm is normally 0.07-0.15, and one gnorm skip at 166758 recovered on the next update. Latest numbered checkpoint is `ckpt_0166750.pt`; preserve/download 170k at the next milestone. Do not integrate CUDA graphs: the clean whole-update canary gained only ~1.8% while removing the flagship's established guard/observability path. |
+| **SFT feedback job** | `681000`, name `shohin-sft`, **DONE**; wrote baseline `train/sft_out/sft_ep3.pt`. Isolated v2 pilot `685708` completed one epoch from `best_step120000.pt` to `train/sft_v2_120k/sft_ep1.pt`. It is a narrow arithmetic-format ablation, not a promoted broad-reasoning recipe. |
+| **Eval board job** | Older v2 scores are diagnostic only because the decoder stopped at blank lines before final answers. First fixed attempt `686272` detected a bad CUDA allocation and ran on CPU; it was canceled immediately. `eval_all.sbatch` now exits rather than falling back to CPU. **`686277` is running on a verified CUDA H100 (evc31)** with the complete-final-answer stop rule; `686278` held-out RG and `686279` in-training RG follow only after success. |
 | **2-H100 speed canary** | `681040`, name `shohin-ddp2-canary`, **COMPLETED cleanly** on evc42: resumed from `ckpt_0060000.pt`, `world=2`, loss in band, no DDP hang, ended at `61050` in 2093s with ~262k tok/s (~1.76x the 1-GPU ~149k tok/s). This validates the 2-H100 path. Do not confuse idle `evc6`/`evc16` with H100 capacity: they are V100 nodes and the trainer is bf16/H100-oriented. `evc105` is idle 4x H200 NVL, but Slurm rejects this account on `short`/`ucfit`, so it is not usable unless the user's allocation changes. |
 | 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
 | 60k skips | **45 total**, stable/healthy |
@@ -65,9 +65,9 @@ Do not wait for permission to fix obvious data/training gaps.
 | finemath3 output | `artifacts/shards/finemath3/` — **✅ COMPLETE: 125 shards, exactly 25.0B tokens** (`manifest.json` present, 22 GB; 8,575 contaminated docs dropped vs evalgrams). **Included in the 300k relaunch SHARDS.** |
 | SFT mix (Newton) | `artifacts/sft/sft_mix_core.jsonl` — **97,439 examples**, rebuilt 2026-07-08 with hard eval filtering. Audit: 0 malformed rows, 0 duplicate questions, 0 exact eval-prompt hits; builder dropped **206 exact eval-prompt overlaps** and **741 eval 13-gram overlaps** before writing. md5 `53ed91368b4c238dc18a1ab1699e4158`; report md5 `21459b382767801e205f3f625ce106cd`. |
 | Local teacher distillers | Nemotron screen run completed at **1,781 rows** but provider health was poor (`kept=19`, `err=52506` in the screen run). Bounded probes after that were also unhealthy: Nemotron `limit=5` kept 0 with 3 provider errors; GLM `limit=3` kept 0 with 3 provider errors. **Leave Nemotron and GLM paused until provider health clears; do not blindly respawn.** HY3 bulk process died/stalled after ~25.2k rows; `conc=2` and `conc=1` restarts exited without appending, even though a tiny direct Hermes/probe call completed cleanly. Claude/minimax snapshots are present. GLM remains the preferred strongest open-weight teacher when available. |
-| **Verified-data expansion** | **Active, CPU-only, isolated from pretrain.** `685691` completed `openmath2_600k.jsonl`: **600,000** solution-answer-verified, 400-token-ceiling, eval-decontaminated examples (median 96 response words, p90 182). `685694` completed `artifacts/rg_v2`: **99,808** execution-verified trace SFT examples at 20,000 train instances/family with disjoint held-out seeds/families. `685696` is now freezing (never overwrites core) `sft_mix_reasoning_v2.jsonl` from those sources plus code and verified teacher data. `685700` is independently tokenizing the same OpenMath problem+solution documents into a future `shards/openmath_pt` pretraining source (5B-token cap, manifest required); do not add it to live SHARDS before a natural restart and manifest review. **Do not launch SFT until v2 report passes review and a held-out dev protocol is configured.** |
-| Preserved checkpoints (cluster) | `flagship_out/best_step{10000,12000,14000,16000,20000,30000,40000,50000}.pt` (+ early 4k/5k/6k) plus **`best_step60000.model.pt`**, numbered **`ckpt_0060000.pt`**, **`best_step62000_pre2gpu.pt`** (`md5 e4f3de659effac5c6875c6ae17d6b544`), **`best_step70000.pt`** (`md5 87f28ff961c579c7263136892b340d6f`), **`best_step90000.pt`** (`md5 6080e105dc0bacfd607efeeefa1253dd`), **`best_step100000.pt`** (`md5 d8ebd43d0c13c32aa221832bfc09202b`), **`best_step110000.pt`** (`md5 9810b7081f78dc6bb1e5fa9765b64d4b`), and **`best_step120000.pt`** (`md5 d5c73034b635025ba997b25b622f77f5`; copied from the numbered 120k checkpoint and hash-matched on Newton). |
-| **Local DR backup (Mac)** | **Post-60k downloaded/verified:** `train/flagship_out/ckpt_0120000.pt` (1.1 GB, full+optimizer 120k checkpoint, md5 `d5c73034b635025ba997b25b622f77f5`); `ckpt_0110000.pt` (1.0 GB, full+optimizer 110k checkpoint, md5 `9810b7081f78dc6bb1e5fa9765b64d4b`); `ckpt_0100000.pt` (1.0 GB, full+optimizer 100k checkpoint, md5 `d8ebd43d0c13c32aa221832bfc09202b`); `ckpt_0090000.pt` (1.1 GB, full+optimizer 90k checkpoint, md5 `6080e105dc0bacfd607efeeefa1253dd`); `ckpt_0080000.pt` (1.0 GB, full+optimizer 80k checkpoint, md5 `ebe28d10d26f78bf3e3395ff64f9ce92`); `ckpt_0078500.pt` (full+optimizer 78.5k checkpoint, md5 `72b5531043e16e7c1cc1697577036e69`); `ckpt_0070000.pt` (full+optimizer 70k checkpoint, md5 `87f28ff961c579c7263136892b340d6f`); `ckpt_0065500.pt` (full+optimizer 2-H100 checkpoint, md5 `670ae99c278cf26706ebb1b5ee8d7b72`); `ckpt_0061000.pt` (full+optimizer extension checkpoint, md5 `28a18ebd7efc67cbbb72db6505493248`); `ckpt_0060000.pt` and hardlink `best_step60000.model.pt` (model-only 60k, md5 `d2fdf867bd49cf517b62364e152bffde`); `ckpt_0059000.pt` (full+optimizer fallback, md5 `0038df81be145cf4a4b0644e2dce284a`); `train/sft_out/sft_ep3.pt` (md5 `dda39ab36aa73bd6284b94d9fbf252e5`). Next DR target: 130k. |
+| **Verified-data expansion** | **Active, CPU-only, isolated from pretrain.** `openmath_pt` is complete at **5,000,000,144 tokens / 50 shards** and remains a future-relaunch-only source. Tracer smoke `686280` validated all 15 registered families against fresh RG samples; `686281` is generating a separate `artifacts/rg_v3` at 20,000 examples/family, never overwriting `rg_v2`. The current frozen v2 mix has only **444 code rows**. APPS code pilot `686276` exposed a `datasets` client rejection of Hub scripts; corrected `686282` reads the official train JSONL directly, uses train only, filters eval overlap, and execution-verifies supplied cases into a separate pilot file. |
+| Preserved checkpoints (cluster) | Includes prior milestones plus **`best_step166250.pt`** copied from numbered `ckpt_0166250.pt`; both md5 **`1b57c99aca966546d4d9aea7827d6ebd`**. |
+| **Local DR backup (Mac)** | Includes prior milestones plus **`train/flagship_out/ckpt_0166250.pt`**, full+optimizer, locally and remotely md5 **`1b57c99aca966546d4d9aea7827d6ebd`**. Next DR target: 170k. |
 | **Large artifact transfer policy** | For big checkpoints/shards/uploads, prefer VPS-to-VPS or Newton-to-VPS staging when credentials/hosts are available; the VPS links have ~20 Gbit internet and should beat Mac↔Newton transfers. Still use `.part` files and md5/sha256 on both ends before trusting or deleting anything. |
 
 **Checkpoints preserved so far:** every 10k through 50k; 60k is model-only because the trainer writes
@@ -75,21 +75,12 @@ Do not wait for permission to fix obvious data/training gaps.
 extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no stale 59k momentum is used.
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
-**Next actions in order:** (1) Watch `683715`: verify it stays in the normal 1-H100 ~145-150k tok/s
-band, keeps loss/gnorm in band, and saves at the expected 250-step cadence. (2) Do **not** cancel the
-healthy live run solely for the `BS=32 ACC=8` gain: canary `683939` showed the larger microbatch fits
-and gives only a modest steady-throughput lift (~154.5k recent tok/s vs live ~148.0k, about +4%). The
-isolated **`BS=64 ACC=4`** canary `684000` used the corrected 300k LR schedule but OOMed cleanly at
-~78.9 GB allocated while seeking a further 288 MiB. Thus `BS=32 ACC=8` is the largest verified
-single-GPU microbatch that exactly preserves the 524,288-token update. Initial two-H100 canary
-`684029` verified the BS32 hardware path but missed its aged-out source checkpoint; corrected
-canary `684058` validated the equivalent `NG=2 BS=32 ACC=4` from preserved 100k weights. `684030`
-  is safely dependency-held after the live run. (3) Preserve/download the next DR
-  milestone at 130k, or sooner if a restart/handoff occurs. (4) Do not integrate CUDA graphs: the clean
-  whole-update canary was only ~1.8% faster and lacks the live spike guard. Run the next fixed capability
-  board around 160k (or after a meaningful SFT variant) and require a repeated trend before changing recipe.
-  Continue milestone benchmarks every ~20k-50k steps or after meaningful SFT variants, recording all results in
-`artifacts/eval_history/metrics.jsonl`.
+**Next actions in order:** (1) Watch `685084`: retain the normal ~154k tok/s band and expected 250-step
+checkpoints, preserve/download 170k, and never interrupt a recovered isolated gnorm skip. (2) Let the
+CUDA-only fixed v2 board `686277` finish, then read held-out `686278` and in-training `686279` together;
+do not use old blank-line-truncated scores for a recipe decision. (3) Audit `rg_v3` and the APPS pilot
+before building another frozen SFT candidate. (4) At the next natural pretrain relaunch only, use the
+manifest-gated `openmath_pt` source with explicit, per-batch-safe domain weights; do not alter live SHARDS.
 
 ---
 
@@ -728,6 +719,16 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   `afterok:685710`, so the experimental GPU work is serial and consumes no flagship resources. The
   only decision rule: retain the v2 recipe only if it improves the held-out RG gate and does not cause
   a material public-board regression; otherwise diagnose source balance/format before another run.
+- **2026-07-12 ~04:10** — **Capability measurement and data-coverage repairs.** Fixed the evaluator a
+  second time: it now stops only after a complete explicit final-answer line, avoiding both blank-line
+  truncation and wasteful post-answer decoding; `eval_all.sbatch` now fails fast if a Slurm allocation
+  has no usable CUDA device. Bad-node CPU fallback `686272` was canceled; replacement **`686277`** is
+  confirmed CUDA on evc31, with `686278 -> 686279` serial RG gates. Direct smoke `686280` validated all
+  15 deterministic RG tracers against fresh samples (decimal parser corrected from real prompts), so
+  **`686281`** now builds isolated `rg_v3`. Audit found only 444 code examples in v2; APPS train-only
+  execution-verified code pilot was added. The first loader attempt hit a current `datasets` loading-
+  script restriction; corrected **`686282`** uses the official APPS train JSONL directly. Flagship
+  `685084` remains healthy through 166.98k at ~154.2k tok/s; no live trainer data or model state changed.
 
 ---
 

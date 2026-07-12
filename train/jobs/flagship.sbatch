@@ -19,6 +19,9 @@ NG=${NG:-1}
 ARGS="--size shohin --shard-dirs $SHARDS --steps ${STEPS:-60000} --batch-size ${BS:-16} \
   --grad-accum ${ACC:-16} --warmup ${WARMUP:-2000} --lr-muon ${LRMUON:-0.01} --lr-adam ${LRADAM:-3e-3} \
   --log-every ${LOGEVERY:-10} --ckpt-every ${CKPT:-1000} --data-seed ${DSEED:-1337} --gnorm-mult ${GNORMMULT:-8} ${FRESH_OPT:+--fresh-opt} ${NOMUON:+--no-muon} --out $BASE/train/flagship_out --resume --compile"
+if [ -n "${DOMAINWEIGHTS:-}" ]; then
+  ARGS="$ARGS --domain-weights $DOMAINWEIGHTS"
+fi
 # Wait for ALL allocated GPUs to be free (avoid 'device busy' race after a just-cancelled job).
 for i in $(seq 1 30); do
   U=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | tr -dc '0-9\n' | sort -n | tail -1)

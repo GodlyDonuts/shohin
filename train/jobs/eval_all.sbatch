@@ -41,10 +41,19 @@ for i in $(seq 1 30); do
   U=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits 2>/dev/null | tr -dc '0-9\n' | sort -n | tail -1)
   [ "${U:-9999}" -lt 3000 ] 2>/dev/null && break; sleep 10
 done
+if ! "$PY" - <<'PY'
+import sys
+import torch
+sys.exit(0 if torch.cuda.is_available() else 75)
+PY
+then
+  echo "[eval-job] CUDA unavailable after allocation; failing before CPU fallback" >&2
+  exit 75
+fi
 echo "===== SHOHIN BENCHMARK BOARD  ckpt=$(basename $CKPT) ====="
-$PY eval_suite.py --ckpt $CKPT --tokenizer $TOK --task gsm8k    --data $E/gsm8k.jsonl    --n ${N:-200} --k ${K:-8} --temp 0.8
-$PY eval_suite.py --ckpt $CKPT --tokenizer $TOK --task gsm8k    --data $E/gsm8k.jsonl    --n ${N:-200} --k 1
-$PY eval_suite.py --ckpt $CKPT --tokenizer $TOK --task math500  --data $E/math500.jsonl  --n ${N:-200} --k 1
+$PY eval_suite.py --ckpt $CKPT --tokenizer $TOK --task gsm8k    --data $E/gsm8k.jsonl    --n ${N:-200} --k ${K:-8} --temp 0.8 --max-new ${MAX_NEW:-256}
+$PY eval_suite.py --ckpt $CKPT --tokenizer $TOK --task gsm8k    --data $E/gsm8k.jsonl    --n ${N:-200} --k 1 --max-new ${MAX_NEW:-256}
+$PY eval_suite.py --ckpt $CKPT --tokenizer $TOK --task math500  --data $E/math500.jsonl  --n ${N:-200} --k 1 --max-new ${MAX_NEW:-256}
 $PY eval_code.py  --ckpt $CKPT --tokenizer $TOK --task humaneval --data $E/humaneval_full.jsonl --n 164 --k 1
 $PY eval_code.py  --ckpt $CKPT --tokenizer $TOK --task mbpp      --data $E/mbpp_full.jsonl      --n ${N:-200} --k 1
 $PY - "$RUN_LOG" "$SUMMARY" <<'PY'

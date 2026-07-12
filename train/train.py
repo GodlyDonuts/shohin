@@ -42,6 +42,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--size", default="tiny", choices=list(CONFIGS))
     ap.add_argument("--shard-dirs", nargs="+", required=True)
+    ap.add_argument("--domain-weights", nargs="+", type=float, default=None,
+                    help="optional source weights matching --shard-dirs; default is equal domains")
     ap.add_argument("--steps", type=int, default=100)
     ap.add_argument("--batch-size", type=int, default=16)     # per-rank micro-batch (sequences)
     ap.add_argument("--grad-accum", type=int, default=1)
@@ -108,7 +110,8 @@ def main():
     if master and a.no_muon:
         print("[opt] Muon DISABLED — all params on AdamW (bisection run)", flush=True)
 
-    loader = ShardLoader(a.shard_dirs, cfg.seq_len, a.batch_size, rank, world, seed=a.data_seed)
+    loader = ShardLoader(a.shard_dirs, cfg.seq_len, a.batch_size, rank, world, seed=a.data_seed,
+                         domain_weights=a.domain_weights)
 
     os.makedirs(a.out, exist_ok=True)
     import glob as _glob

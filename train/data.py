@@ -22,19 +22,54 @@ import zstandard as zstd
 
 
 class ShardLoader:
-    def __init__(self, shard_dirs, seq_len, batch_size, rank=0, world=1, seed=1337, prefetch=6):
+    def __init__(self, shard_dirs, seq_len, batch_size, rank=0, world=1, seed=1337, prefetch=6,
+                 domain_weights=None):
         self.domains = []                       # one list-of-shard-paths per domain dir
-        for d in shard_dirs:
+        if domain_weights is not None and len(domain_weights) != len(shard_dirs):
+            raise ValueError("domain_weights must match shard_dirs")
+        kept_weights = []
+        for i, d in enumerate(shard_dirs):
             ps = sorted(glob.glob(os.path.join(d, "*.u16.zst")))
             if ps:
                 self.domains.append(ps)
+                if domain_weights is not None:
+                    kept_weights.append(float(domain_weights[i]))
         assert self.domains, f"no shards found in {shard_dirs}"
         self.T, self.bs, self.rank, self.world = seq_len, batch_size, rank, world
         self.dctx = zstd.ZstdDecompressor()
         self.rng = random.Random(seed + 991 * rank)   # per-rank offset so DDP ranks draw different data
+        if domain_weights is None:
+            self.domain_cycle = None  # preserve the established equal-domain default
+        else:
+            if any(w < 0 for w in kept_weights) or sum(kept_weights) <= 0:
+                raise ValueError("domain_weights must be non-negative with a positive total")
+            self.active_domains = [i for i, weight in enumerate(kept_weights) if weight > 0]
+            if not self.active_domains:
+                raise ValueError("domain_weights must include at least one positive weight")
+            total = sum(kept_weights)
+            counts = [round(100 * w / total) for w in kept_weights]
+            counts[max(range(len(counts)), key=lambda i: kept_weights[i])] += 100 - sum(counts)
+            self.domain_cycle = [i for i, count in enumerate(counts) for _ in range(count)]
+            if not self.domain_cycle:
+                raise ValueError("domain_weights produced an empty sampling cycle")
+            self.rng.shuffle(self.domain_cycle)
+            self.domain_pos = 0
         self.q = queue.Queue(maxsize=prefetch)
         self._stop = False
         threading.Thread(target=self._worker, daemon=True).start()
+
+    def _next_domain(self, item_index, nd):
+        if self.domain_cycle is None:
+            return item_index % nd             # established equal-domain default
+        # Keep the old divergence fix: every weighted batch still includes
+        # each enabled domain before its weighted remainder.
+        if item_index < len(self.active_domains):
+            return self.active_domains[item_index]
+        di = self.domain_cycle[self.domain_pos]
+        self.domain_pos = (self.domain_pos + 1) % len(self.domain_cycle)
+        if self.domain_pos == 0:
+            self.rng.shuffle(self.domain_cycle)
+        return di
 
     def _domain_stream(self, paths):
         """Yield successive decompressed shard token arrays for one domain, in a shuffled order
@@ -59,7 +94,7 @@ class ShardLoader:
         while not self._stop:
             seqs = []
             for i in range(self.bs):
-                di = i % nd                     # round-robin: every batch blends all domains
+                di = self._next_domain(i, nd)
                 while len(bufs[di]) - offs[di] < need:
                     bufs[di] = np.concatenate([bufs[di][offs[di]:], next(streams[di])])
                     offs[di] = 0
