@@ -501,6 +501,25 @@ about 1.8%, which is why they are not the central remediation path.
    `n_loop=1` versus `n_loop=2` at Mame scale first. No live architecture change
    is justified until that measured proxy wins.
 
+### Current execution gates
+
+- The independent raw/V7 interactions rule out a hidden general solver: neither
+  verified intermediate facts nor model-produced compact states unlock reliable
+  arithmetic, transformations, or code. More state-template SFT is prohibited
+  until an independent transfer gate changes that conclusion.
+- The first clean cross-family verifier derivative contains 1,201 positive and
+  1,201 negative examples but packs to only 737 sequences. That is about 92
+  updates across two epochs, so it is rejected as underpowered. A 10,000-question
+  train-only expansion is generating 16 student candidates per question; only a
+  clean, materially larger packed derivative may proceed to isolated verifier SFT.
+- DCLM and FineWeb-Edu are being rebuilt with direct current-eval n-gram
+  decontamination. Their 25B replacements are future-only and require a full
+  decoded-shard scan after successful manifests. Neither pilot nor a partial
+  directory can enter the flagship.
+- Competitive-programming TACO examples remain a separate algorithmic-code
+  source. Every supplied test case must pass before an isolated transfer ablation;
+  it must not be counted as HumanEval-style completion supervision.
+
 The immediate success criterion is not a prettier loss or longer derivation. It is
 repeatable improvement on fresh answer-checked tasks with direct transcripts that
 show correct state updates, transformations, and final answers.
