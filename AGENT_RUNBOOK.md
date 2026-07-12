@@ -1636,6 +1636,24 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   failed condition rejects V8. `evaluate_v8_promotion.py` passed both an accept fixture and a code-regression
   rejection fixture locally and on Newton. Even acceptance is only a follow-up decision, never a flagship
   promotion.
+- **2026-07-12 ~15:42** — **Three external NVIDIA reasoning sources are in read-only intake, not data
+  admission.** New tested `probe_reasoning_source.py` records dataset config/split, builder license metadata,
+  field shapes and lengths, plus sampled exact and 13-gram overlap against every live eval JSONL without
+  retaining source rows or executing code. CPU-only jobs **`686647`** (`nvidia/OpenMathReasoning`),
+  **`686648`** (`nvidia/OpenScienceReasoning-2`), and **`686649`** (`nvidia/OpenCodeReasoning-2`) write only
+  immutable reports under `artifacts/source_probes/`. A source remains inspection-only until its report,
+  license/provenance, field mapping, split policy, and a source-specific decontamination/quality plan are
+  reviewed; no bulk download, frozen-mix change, or flagship change is authorized by these probes.
+- **2026-07-12 ~15:45** — **Initial source inspection found real admission constraints.** The first
+  `train`-split requests for OpenMath and OpenCode stopped safely after discovering their actual split layouts;
+  explicit read-only probes now cover OpenMath `cot` / `tir` / `genselect` and OpenCode `python` / `cpp`.
+  The 64-row results find one OpenMath `cot` **generated-solution** 13-gram hit against live eval prompts
+  (no exact hit), so that split is contamination-sensitive and cannot be used without full-stream filtering.
+  OpenMath `cot`/`tir` generated solutions have roughly 16k/19k median characters, OpenScience outputs
+  roughly 14k, and OpenCode `r1_generation` roughly 19k (Python) / 46k (C++): raw traces are materially too
+  long for the 2,048-token SFT context and must not be replayed naively. All r1 reports are local/Newton
+  hash-matched; card-hashing r2 probes `686655`/`686656`/`686657` are inspection-only and must establish
+  license provenance before a source-specific field mapping or curator is proposed.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
