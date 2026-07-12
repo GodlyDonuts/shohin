@@ -126,6 +126,35 @@ provided state do not activate an unexpressed solver. The model needs training
 on state transitions, transformations, answer contracts, and correction moves;
 prompt engineering alone is not a credible remedy.
 
+### Compact-state interview at 170k
+
+To test the specific latent-reasoning/compaction claim rather than infer it from
+the earlier six cases, job `686370` ran a second pinned raw checkpoint interview
+against `best_step170000.pt`. It used eight fresh cases across arithmetic,
+base-8 conversion, state transitions, sort/deduplication, string splice, logic,
+counterexample correction, and a minimal Python contract. Each case was tested
+as an initial answer, after independent review, with a verified intermediate
+fact, and after the model had been asked to create then reuse a compact `state=`
+representation.
+
+The canonical, syntax-checked result is **1/8 initial, 0/8 review, 1/8
+scaffolded, and 0/8 compact-state reuse**. The sole success is the simple logic
+constraint. The model repeats `43 x 17 = 651`, treats base-8 `725` as 8 or 1000,
+uses wrong operator order for the state transition, and emits generic code/search
+templates for list and string tasks. Its apparent initial code success in the
+first instrumentation pass was rejected: the generated `is_even` body was not
+syntactically valid Python. The scorer was tightened to parse the function AST
+without executing model-produced code, then the interview was rerun from the
+same pinned checkpoint. The transcript is
+`artifacts/eval_history/deep_interaction_raw170k_r2_686370.json` (md5
+`1979bcc79cb18830cb3080a7cab85e82`).
+
+This is direct negative evidence for the desired feature: the current model does
+not create a usable internal summary, cannot continue faithfully from one it
+generated, and does not repair simple errors when prompted. It does not rule out
+training an explicit compact-state curriculum later; it rules out claiming that
+the capability already exists.
+
 ### Training state and corpus replay
 
 At step 168,300 the run has processed 88.24B nominal tokens, or 705.4 tokens per

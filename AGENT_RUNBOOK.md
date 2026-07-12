@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-12 ~09:03 EDT (`685084` remains healthy past 172.4k; v4 r3 is rejected by its completed public board, while held-out/direct/verifier gates remain queued for diagnosis). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-12 ~09:20 EDT (`685084` remains healthy past 172.6k; pinned 170k compact-state interview confirmed no latent correction or self-compaction). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -65,7 +65,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | SFT mix (Newton) | `artifacts/sft/sft_mix_core.jsonl` — **97,439 examples**, rebuilt 2026-07-08 with hard eval filtering. Audit: 0 malformed rows, 0 duplicate questions, 0 exact eval-prompt hits; builder dropped **206 exact eval-prompt overlaps** and **741 eval 13-gram overlaps** before writing. md5 `53ed91368b4c238dc18a1ab1699e4158`; report md5 `21459b382767801e205f3f625ce106cd`. |
 | Local teacher distillers | Nemotron screen run completed at **1,781 rows** but provider health was poor (`kept=19`, `err=52506` in the screen run). Bounded probes after that were also unhealthy: Nemotron `limit=5` kept 0 with 3 provider errors; GLM `limit=3` kept 0 with 3 provider errors. **Leave Nemotron and GLM paused until provider health clears; do not blindly respawn.** HY3 bulk process died/stalled after ~25.2k rows; `conc=2` and `conc=1` restarts exited without appending, even though a tiny direct Hermes/probe call completed cleanly. Claude/minimax snapshots are present. GLM remains the preferred strongest open-weight teacher when available. |
 | **Verified-data expansion** | **Active, CPU-only, isolated from pretrain.** `openmath_pt` is complete at **5,000,000,144 tokens / 50 shards** and remains future-relaunch-only. FineWeb-Edu `686298` is **complete and admitted only for a future natural relaunch**: **4,599,762,693 tokens / 46 shards**, 4,139,127 docs kept from 9,672,101 seen; 5,531,139 below-quality docs and 1,816 eval-contaminated docs were rejected. Manifest md5 `05739fa1cb31a45e1c496909f9461fa1`; full-shard entropy/top-token scan `686340` found no outlier or byte-fallback shard. DCLM-Baseline `686342` is building a separate 5B-token English source with fastText-English probability >=0.90, minimum 200 characters, and evalgram rejection; scan `686360` is dependency-held and it is **not admitted until manifest and full scan pass**. The solver-verified **primitives v1** ablation data is complete: **210,000 train / 3,500 held-out** rows across arithmetic, base conversion, state updates, sort/dedup, string insertion, syllogism, and correction; 0 malformed rows, 0 duplicate normalized questions, and no train/held-out prompt overlap. `rg_v4` has **374,659 valid traces**, 0 malformed rows, and 0 normalized-question duplicates across 25 answer-checked families. CodeContests `686291` completed **3,000** train-only Python examples; its completion-form derivative has **3,593** deduplicated examples. Frozen **v4** has **643,595 clean rows**: math 240,297 / procedural 374,659 / code 3,542 / teacher 25,097. Exact SFT packing `686312` passed at **62,926** sequences. The original 15% code target would replay code 7.7x and teacher 3.1x, so v4 pilot weights are revised to **40/47/8/5** (math/procedural/code/teacher; code ~4.1x, teacher ~1.6x). `686317` is independently scaling more verified CodeContests data for a later mix; it does not alter v4. No new output may enter a frozen SFT mix before its final audit. |
-| **Direct capability audit** | `interactive_v1_686293.json` plus isolated **`686306`** directly tested raw 168k and v2 SFT. On 48 fresh generated tasks, raw scored **4/48 Q/A**, **4/48 plain instruction**, **0/48 CoT**, **5/48 one-shot**; v2 scored **7/48 Q/A**, then **4/48**, **5/48**, **4/48** respectively. The follow-up raw-168.75k multi-turn audit **`686316`** confirms no latent correction/scaffold ability: **1/6** in each initial/review/scaffold condition. This is a data/algorithm gap, not a prompt unlock. V4 is running the same adaptive/matrix contracts as `686338`/`686339`, followed by a separate raw-v4 verbatim audit `686343`. Full evidence: `CAPABILITY_DIAGNOSIS.md`, `artifacts/eval_history/capability_matrix_v1_686306.json`, and `artifacts/eval_history/interactive_adaptive_168750_686316.json`. |
+| **Direct capability audit** | `interactive_v1_686293.json` plus isolated **`686306`** directly tested raw 168k and v2 SFT. On 48 fresh generated tasks, raw scored **4/48 Q/A**, **4/48 plain instruction**, **0/48 CoT**, **5/48 one-shot**; v2 scored **7/48 Q/A**, then **4/48**, **5/48**, **4/48** respectively. The follow-up raw-168.75k multi-turn audit **`686316`** confirms no latent correction/scaffold ability: **1/6** in each initial/review/scaffold condition. This is a data/algorithm gap, not a prompt unlock. Canonical read-only 170k interview **`686370`** adds compact-state creation/reuse, counterexample correction, and syntax-checked code; it scored **1/8 initial, 0/8 review, 1/8 scaffold, 0/8 compact-state reuse**. V4 is running the same adaptive/matrix contracts as `686338`/`686339`, followed by a separate raw-v4 verbatim audit `686343`. Full evidence: `CAPABILITY_DIAGNOSIS.md`, `TARGETS_AND_GAPS.md`, `artifacts/eval_history/capability_matrix_v1_686306.json`, `artifacts/eval_history/interactive_adaptive_168750_686316.json`, and `artifacts/eval_history/deep_interaction_raw170k_r2_686370.json` (md5 `1979bcc79cb18830cb3080a7cab85e82`). |
 | **Recurrence ablation** | Mame `n_loop=1` job `686301` and `n_loop=2` job `686302` both completed cleanly for 800 matched updates. `n_loop=2` is mechanically stable but not promoted: final logged loss was essentially tied (**2.4890 vs 2.4899**) while time rose **886s -> 1466s** and steady throughput fell **472.7k -> 286.0k tok/s**. No capability gate was run, so recurrence stays off the flagship. |
 | **Future handoff data stream** | **Fixed forward-only, never applied to active `685084`.** Prior checkpoints did not serialize `ShardLoader` state; every resumed job could recreate its stream from the same `DSEED=777`. `train.py` now records `data_stream_generation`/seed and resumes with a deterministic distinct stream generation. Tiny-train smoke verified generation **0 -> 1** and checkpoint metadata. This prevents repeated prefixes at the next natural handoff but does not claim exact cursor restoration for old chunks. |
 | Preserved checkpoints (cluster) | Includes prior milestones plus **`best_step170000.pt`** copied from numbered `ckpt_0170000.pt`; both md5 **`7ad139b6b9b537a5a3e65978f8296419`**. |
@@ -81,13 +81,14 @@ extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no st
 checkpoints, preserve/download 180k, and never interrupt a recovered isolated gnorm skip. (2) Monitor
 held-out RG `686337`, adaptive interaction `686338`, contract matrix `686339`, and raw-v4 transcript
 audit `686343`; all exclude evc22/evc26. V4 is already rejected for promotion; retain the rest only as
-diagnostic/verifier evidence. (3) The verifier chain `686345 -> 686349` begins
+diagnostic/verifier evidence. (3) Read-only direct interview `686370` establishes the pinned raw 170k
+compact-state baseline; retain it as negative evidence rather than repeating it. (4) The verifier chain `686345 -> 686349` begins
 only after the transcript gate: sample 2,000 train-only GSM8K questions at k=8, build binary correct/incorrect
-data, SFT an isolated verifier, then report held-out first-pass, oracle@16, and verifier@16. (4) Audit DCLM
+data, SFT an isolated verifier, then report held-out first-pass, oracle@16, and verifier@16. (5) Audit DCLM
 `686342` manifest, token distribution, and decoded windows via `686360` before it can enter any future relaunch.
-(5) `686357` first measures raw performance on the new primitive held-out split; only then can source-balanced
-v5 SFT `686361` and its primitive gate `686362` proceed. (6) Keep frozen v4 immutable; the separately audited
-15,000-row self-correction source is an ablation asset, not an unmeasured mix mutation. (7) At the next
+(6) Raw primitive baseline `686363` gates source-balanced v5 `686367`, then primitive holdout `686368`; spend
+no broader promotion board unless that disjoint skill gate wins. (7) Keep frozen v4 immutable; the separately audited
+15,000-row self-correction source is an ablation asset, not an unmeasured mix mutation. (8) At the next
 controlled/natural pretrain handoff only, use manifest-gated
 `openmath_pt` plus approved educational-English data with explicit, per-batch-safe domain weights; do not alter
 live SHARDS.
@@ -912,6 +913,14 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   **0.932x**, primitives **2.344x**, code **2.948x**, teacher **1.799x**, and procedural **0.436x**.
   Replacement v5 `686367` and held-out primitive evaluator `686368` remain dependency-held after the
   running raw primitive baseline `686363`. This is a controlled data comparison, not a new flagship path.
+- **2026-07-12 ~09:20** — **Direct compact-state claim tested and rejected at the pinned 170k checkpoint.**
+  The first instrumentation run `686369` exposed an over-permissive code scorer, so it was not used as
+  evidence. The scorer now requires a syntax-valid `is_even` AST without executing model text. Corrected
+  isolated interview `686370` scored **1/8 initial, 0/8 review, 1/8 scaffold, 0/8 compact-state reuse**;
+  only the simple logic constraint passed. This confirms that no prompt, verified intermediate, or
+  self-produced summary currently unlocks a general solver. Canonical transcript is
+  `artifacts/eval_history/deep_interaction_raw170k_r2_686370.json`, md5
+  `1979bcc79cb18830cb3080a7cab85e82`. Flagship `685084` remained untouched and healthy past 172.6k.
 
 ---
 
