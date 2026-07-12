@@ -47,12 +47,18 @@ def main():
     ap.add_argument("--min-chars", type=int, default=200)
     ap.add_argument("--lang", default=None)
     ap.add_argument("--lang-field", default="language")
+    ap.add_argument("--min-number-field", default=None,
+                    help="optional numeric quality field; drop a row when missing or below --min-number")
+    ap.add_argument("--min-number", type=float, default=None,
+                    help="minimum accepted value for --min-number-field")
     a = ap.parse_args()
 
     os.makedirs(a.out_dir, exist_ok=True)
     tok = Tokenizer.from_file(a.tokenizer)
     assert tok.get_vocab_size() <= 65535, "vocab exceeds uint16"
     eos_id = tok.token_to_id(a.eos)
+    if (a.min_number_field is None) != (a.min_number is None):
+        raise ValueError("--min-number-field and --min-number must be provided together")
 
     S = gram_n = None
     if a.decontam_grams:
@@ -66,7 +72,7 @@ def main():
 
     cctx = zstd.ZstdCompressor(level=3)
     buf, shard, tok_total = [], 0, 0
-    seen = kept = n_short = n_lang = n_contam = 0
+    seen = kept = n_short = n_lang = n_quality = n_contam = 0
 
     def flush():
         nonlocal buf, shard
@@ -95,6 +101,15 @@ def main():
             if lv is not None and str(lv).lower() != a.lang.lower():
                 n_lang += 1
                 continue
+        if a.min_number_field is not None:
+            try:
+                score = float(ex.get(a.min_number_field))
+            except (TypeError, ValueError):
+                n_quality += 1
+                continue
+            if score < a.min_number:
+                n_quality += 1
+                continue
         if S is not None and any(g in S for g in _grams(txt, gram_n)):
             n_contam += 1
             continue
@@ -112,7 +127,7 @@ def main():
 
     manifest = dict(dataset=a.dataset, config=a.config, tokens=tok_total, shards=shard,
                     seen=seen, kept=kept, dropped_short=n_short,
-                    dropped_lang=n_lang, dropped_contam=n_contam)
+                    dropped_lang=n_lang, dropped_quality=n_quality, dropped_contam=n_contam)
     with open(os.path.join(a.out_dir, "manifest.json"), "w") as f:
         json.dump(manifest, f, indent=2)
     print("[done]", json.dumps(manifest))
