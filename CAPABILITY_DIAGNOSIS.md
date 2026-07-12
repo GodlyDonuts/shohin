@@ -544,6 +544,13 @@ about 1.8%, which is why they are not the central remediation path.
   boards remain the promotion evidence. Monitor text must be frozen outside
   `artifacts/evals` and outside training shard paths; it must never be silently
   added to the live decontamination glob or to a training corpus.
+- The first language-trend baseline is raw 170k on a frozen WikiText-103 test
+  monitor: **NLL 3.9648849 / PPL 52.7142** across 301,056 scored tokens. The
+  monitor input is SHA-256-bound in the result, and the local/Newton artifact
+  is `artifacts/monitor_history/raw170_wikitext_mps_hashbound.json` (md5
+  `fa9f0ea310287d710d9300c8cb0781ab`). This does not prove web-disjointness and
+  cannot be substituted for the reasoning board; it gives the future
+  language-balanced handoff a reproducible English-likelihood trend line.
 - The independent raw/V7 interactions rule out a hidden general solver: neither
   verified intermediate facts nor model-produced compact states unlock reliable
   arithmetic, transformations, or code. More state-template SFT is prohibited

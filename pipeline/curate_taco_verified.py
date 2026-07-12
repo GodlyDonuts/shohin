@@ -11,9 +11,18 @@ import argparse
 import ast
 import json
 import os
+import re
 from pathlib import Path
 
 from curate_apps import build_test_grams, has_eval_overlap, run_solution
+
+
+WORD = re.compile(r"\w+")
+
+
+def normalized_question(question):
+    """Match the punctuation-insensitive identity used by the SFT quality gate."""
+    return " ".join(WORD.findall(str(question).lower()))
 
 
 def parse_cases(raw, max_tests, max_case_chars):
@@ -87,7 +96,10 @@ def main():
     if args.shuffle_buffer:
         stream = stream.shuffle(seed=args.seed, buffer_size=args.shuffle_buffer)
     seen = kept = 0
-    drops = {key: 0 for key in ("eval_overlap", "missing_cases", "missing_python", "execution")}
+    drops = {key: 0 for key in (
+        "eval_overlap", "missing_cases", "missing_python", "execution", "duplicate_question",
+    )}
+    kept_questions = set()
     with partial.open("w") as out:
         for row in stream:
             if seen >= args.max_seen or kept >= args.max_kept:
@@ -109,6 +121,11 @@ def main():
             if selected is None:
                 drops["execution"] += 1
                 continue
+            question_key = normalized_question(question)
+            if question_key in kept_questions:
+                drops["duplicate_question"] += 1
+                continue
+            kept_questions.add(question_key)
             out.write(json.dumps({
                 "question": question,
                 "response": selected,

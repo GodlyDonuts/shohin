@@ -21,15 +21,28 @@ export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
 
 [ -f "$CKPT" ] || { echo "[pretrain-nll] checkpoint missing: $CKPT" >&2; exit 2; }
 cd "$BASE/train"
-if ! "$PY" - <<'PY'
+for preflight in 1 2 3; do
+  if "$PY" - <<'PY'
 import sys
 import torch
-sys.exit(0 if torch.cuda.is_available() else 75)
+try:
+    if not torch.cuda.is_available():
+        raise RuntimeError("CUDA unavailable")
+    torch.empty(1, device="cuda")
+except Exception as exc:
+    print(f"[pretrain-nll] CUDA allocation preflight failed: {exc}", file=sys.stderr)
+    sys.exit(75)
 PY
-then
-  echo "[pretrain-nll] CUDA unavailable after allocation" >&2
-  exit 75
-fi
+  then
+    break
+  fi
+  if [ "$preflight" = 3 ]; then
+    echo "[pretrain-nll] CUDA unavailable after allocation" >&2
+    exit 75
+  fi
+  echo "[pretrain-nll] CUDA preflight $preflight failed; retrying" >&2
+  sleep 30
+done
 
 ARGS=()
 for spec in $INPUTS; do

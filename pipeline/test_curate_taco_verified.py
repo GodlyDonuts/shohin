@@ -3,7 +3,7 @@
 import json
 import unittest
 
-from curate_taco_verified import parse_cases, python_solutions
+from curate_taco_verified import normalized_question, parse_cases, python_solutions
 
 
 class TacoCuratorTests(unittest.TestCase):
@@ -22,6 +22,12 @@ class TacoCuratorTests(unittest.TestCase):
     def test_keep_only_syntax_valid_python(self):
         row = {"solutions": ["def bad(:\n", "print('ok')"]}
         self.assertEqual(list(python_solutions(row, 100)), ["print('ok')"])
+
+    def test_normalized_question_matches_quality_gate_identity(self):
+        self.assertEqual(
+            normalized_question("Sort [3, 1]!"),
+            normalized_question("sort 3 1"),
+        )
 
 
 if __name__ == "__main__":

@@ -9,6 +9,7 @@ input JSONL must already be frozen and held outside the training shard paths.
 
 import argparse
 import contextlib
+import hashlib
 import json
 import math
 import re
@@ -19,6 +20,14 @@ import torch.nn.functional as F
 from tokenizers import Tokenizer
 
 from model import GPT, GPTConfig
+
+
+def sha256(path):
+    digest = hashlib.sha256()
+    with open(path, "rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def parse_input_spec(spec):
@@ -152,13 +161,14 @@ def main():
     if eos_id is None:
         raise SystemExit("tokenizer has no <|endoftext|> token")
     checkpoint, model = load_model(args.ckpt, device)
-    domains = {
-        label: evaluate(
+    domains = {}
+    for label, path in specs:
+        result = evaluate(
             model, tokenizer, path, args.text_field, eos_id, device,
             args.batch_size, args.max_sequences_per_input,
         )
-        for label, path in specs
-    }
+        result["input_sha256"] = sha256(path)
+        domains[label] = result
     total_tokens = sum(row["tokens"] for row in domains.values())
     weighted_nll = sum(row["nll"] * row["tokens"] for row in domains.values()) / total_tokens
     result = {

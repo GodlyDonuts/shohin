@@ -7,7 +7,7 @@ from pathlib import Path
 import torch
 
 sys.path.insert(0, str(Path(__file__).parent))
-from eval_nll import batch_nll, parse_input_spec, text_rows, token_blocks
+from eval_nll import batch_nll, parse_input_spec, sha256, text_rows, token_blocks
 
 
 class EvalNllTest(unittest.TestCase):
@@ -40,6 +40,12 @@ class EvalNllTest(unittest.TestCase):
             path.write_text(json.dumps({"wrong": "field"}) + "\n")
             with self.assertRaises(ValueError):
                 list(text_rows(path, "text"))
+
+    def test_sha256_is_stable_for_monitor_input(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "monitor.jsonl"
+            path.write_text('{"text": "hello"}\n')
+            self.assertEqual(sha256(path), sha256(path))
 
     def test_batch_nll_excludes_auxiliary_training_loss(self):
         class Model:
