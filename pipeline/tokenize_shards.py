@@ -15,7 +15,7 @@ vocab 32768 fits uint16. Shards: shard_NNNNN.u16.zst.
         --decontam-grams evals/evalgrams.pkl --out-dir shards/finemath4 \\
         --shard-tokens 100000000 --max-tokens 4000000000
 """
-import argparse, os, json, re, pickle
+import argparse, glob, os, json, re, pickle
 import numpy as np
 import zstandard as zstd
 from tokenizers import Tokenizer
@@ -24,8 +24,35 @@ from datasets import load_dataset
 
 def _grams(text, n):
     w = re.findall(r"\w+", text.lower())
+    if w and len(w) < n:
+        yield " ".join(w)
+        return
     for i in range(len(w) - n + 1):
         yield " ".join(w[i:i + n])
+
+
+def direct_eval_grams(patterns, n):
+    """Collect current eval-prompt grams, including prompts added after a pickle.
+
+    Pretraining decontamination must not rely on a stale serialized evalgram
+    set. This mirrors the SFT mix's direct prompt scan and covers short prompts
+    by retaining their complete normalized word sequence.
+    """
+    result = set()
+    fields = ("question", "problem", "prompt", "task", "text")
+    for pattern in patterns or ():
+        for path in sorted(glob.glob(pattern)):
+            with open(path, errors="replace") as source:
+                for line in source:
+                    if not line.strip():
+                        continue
+                    try:
+                        row = json.loads(line)
+                    except json.JSONDecodeError:
+                        continue
+                    prompt = next((str(row[field]) for field in fields if row.get(field)), "")
+                    result.update(_grams(prompt, n))
+    return result
 
 
 def field_value(row, field):
@@ -56,6 +83,8 @@ def main():
     ap.add_argument("--max-tokens", type=int, default=0, help="0 = unlimited")
     ap.add_argument("--eos", default="<|endoftext|>")
     ap.add_argument("--decontam-grams", default=None)
+    ap.add_argument("--eval-glob", nargs="*", default=[],
+                    help="live eval JSONL globs whose prompt n-grams augment --decontam-grams")
     ap.add_argument("--min-chars", type=int, default=200)
     ap.add_argument("--lang", default=None)
     ap.add_argument("--lang-field", default="language")
@@ -73,9 +102,17 @@ def main():
         raise ValueError("--min-number-field and --min-number must be provided together")
 
     S = gram_n = None
+    pickle_gram_count = direct_gram_count = 0
     if a.decontam_grams:
         d = pickle.load(open(a.decontam_grams, "rb"))
-        S, gram_n = d["grams"], d["n"]
+        S, gram_n = set(d["grams"]), d["n"]
+        pickle_gram_count = len(S)
+    if a.eval_glob:
+        gram_n = gram_n or 13
+        direct = direct_eval_grams(a.eval_glob, gram_n)
+        direct_gram_count = len(direct)
+        S = set(S or ())
+        S.update(direct)
 
     kw = dict(split=a.split, streaming=True)
     if a.config:
@@ -139,7 +176,9 @@ def main():
 
     manifest = dict(dataset=a.dataset, config=a.config, tokens=tok_total, shards=shard,
                     seen=seen, kept=kept, dropped_short=n_short,
-                    dropped_lang=n_lang, dropped_quality=n_quality, dropped_contam=n_contam)
+                    dropped_lang=n_lang, dropped_quality=n_quality, dropped_contam=n_contam,
+                    decontam_gram_n=gram_n, decontam_pickle_grams=pickle_gram_count,
+                    decontam_direct_eval_grams=direct_gram_count, eval_glob=a.eval_glob)
     with open(os.path.join(a.out_dir, "manifest.json"), "w") as f:
         json.dump(manifest, f, indent=2)
     print("[done]", json.dumps(manifest))

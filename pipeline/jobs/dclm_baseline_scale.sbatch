@@ -34,6 +34,7 @@ cd "$BASE"
   --min-number-field language_id_whole_page_fasttext.en \
   --min-number "$MIN_EN_PROB" \
   --decontam-grams "$BASE/artifacts/evals/evalgrams.pkl" \
+  --eval-glob "$BASE"/artifacts/evals/*.jsonl \
   --min-chars 200 \
   --out-dir "$TMP" \
   --shard-tokens 100000000 \

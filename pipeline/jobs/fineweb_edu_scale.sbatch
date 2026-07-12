@@ -34,6 +34,7 @@ cd "$BASE"
   --min-number-field score \
   --min-number "$MIN_SCORE" \
   --decontam-grams "$BASE/artifacts/evals/evalgrams.pkl" \
+  --eval-glob "$BASE"/artifacts/evals/*.jsonl \
   --min-chars 200 \
   --out-dir "$TMP" \
   --shard-tokens 100000000 \
