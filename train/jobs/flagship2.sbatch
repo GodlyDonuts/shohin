@@ -7,8 +7,9 @@
 #SBATCH -t 3-00:00:00
 #SBATCH -o /lustre/fs1/home/sa305415/shohin/logs/flagship2_%j.out
 #SBATCH --open-mode=append
-# Two-H100 flagship continuation. This preserves the 1-GPU global batch by default:
-# 1*BS16*ACC16 == 2*BS16*ACC8 sequences/update. Use after a clean DDP canary only.
+# Two-H100 flagship continuation. This preserves the live one-H100 global batch:
+# 1*BS32*ACC8 == 2*BS32*ACC4 sequences/update. The BS32 DDP canary was stable;
+# use this only at a natural handoff, never to interrupt an active flagship.
 # Keep CPU modest so the GPU request, not CPU hoarding, controls scheduling.
 set -uo pipefail
 
@@ -19,8 +20,8 @@ cd $BASE/train
 
 SHARDS="$BASE/artifacts/shards/finemath4 $BASE/artifacts/shards/openwebmath $BASE/artifacts/shards/code_python $BASE/artifacts/shards/finemath3"
 NG=${NG:-2}
-BS=${BS:-16}
-ACC=${ACC:-8}
+BS=${BS:-32}
+ACC=${ACC:-4}
 STEPS=${STEPS:-300000}
 WARMUP=${WARMUP:-2000}
 LRMUON=${LRMUON:-0.005}
@@ -28,7 +29,10 @@ LRADAM=${LRADAM:-1e-3}
 DSEED=${DSEED:-777}
 GNORMMULT=${GNORMMULT:-8}
 LOGEVERY=${LOGEVERY:-10}
-CKPT=${CKPT:-1000}
+CKPT=${CKPT:-250}
+# Nodes that failed a real CUDA preflight can be supplied by the submitter. Keep
+# that list across self-healing resubmissions as well as the current failure.
+STATIC_EXCLUDE=${STATIC_EXCLUDE:-}
 
 ARGS="--size shohin --shard-dirs $SHARDS --steps $STEPS --batch-size $BS \
   --grad-accum $ACC --warmup $WARMUP --lr-muon $LRMUON --lr-adam $LRADAM \
@@ -63,8 +67,14 @@ else
   if [ "${AUTO_REQUEUE:-1}" != "1" ]; then
     echo "[job2] no training progress on ${SLURMD_NODENAME}; AUTO_REQUEUE disabled."
   elif [ "$(sort -u "$BAD" | wc -l)" -lt 12 ]; then
-    echo "[job2] no training progress on ${SLURMD_NODENAME}; auto-requeue excluding: $EXCL"
-    sbatch --exclude="$EXCL" "$BASE/train/jobs/flagship2.sbatch"
+    ALL_EXCL=$(printf '%s\n%s\n' "$STATIC_EXCLUDE" "$EXCL" | tr ',' '\n' | sed '/^$/d' | sort -u | paste -sd, -)
+    echo "[job2] no training progress on ${SLURMD_NODENAME}; auto-requeue excluding: $ALL_EXCL"
+    # Preserve the exact validated handoff shape. A bare resubmission would
+    # silently return to historical BS16/ACC8 defaults after a bad node.
+    REQUEUE_EXPORT="ALL,NG=$NG,BS=$BS,ACC=$ACC,STEPS=$STEPS,WARMUP=$WARMUP,LRMUON=$LRMUON,LRADAM=$LRADAM,DSEED=$DSEED,GNORMMULT=$GNORMMULT,LOGEVERY=$LOGEVERY,CKPT=$CKPT,AUTO_REQUEUE=${AUTO_REQUEUE:-1}"
+    [ -n "${FRESH_OPT:-}" ] && REQUEUE_EXPORT+=",FRESH_OPT=$FRESH_OPT"
+    [ -n "${NOMUON:-}" ] && REQUEUE_EXPORT+=",NOMUON=$NOMUON"
+    sbatch --export="$REQUEUE_EXPORT" --exclude="$ALL_EXCL" "$BASE/train/jobs/flagship2.sbatch"
   else
     echo "[job2] too many bad nodes; stopping auto-requeue."
   fi

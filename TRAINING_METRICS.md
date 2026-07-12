@@ -5,7 +5,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-12 18:02 EDT
+**Last refreshed:** 2026-07-12 18:31 EDT
 **Flagship source of truth:** Newton Slurm job `685084`,
 `/lustre/fs1/home/sa305415/shohin/train/flagship_out/log_r0.jsonl`  
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -28,20 +28,27 @@ the numbered file under its retention policy; the ledger records which copies re
 | Field | Confirmed value |
 |---|---|
 | Model | 125.1M trained parameters; frozen 32k tokenizer; 2,048-token sequence length |
-| Active job / node | `685084` on `evc22`, one H100, 4 CPU cores |
+| Active job / node | `685084` on `evc22`, one H100, 4 CPU cores. Dependency-held natural successor `686732` requests two H100s/four CPUs only after `685084` exits; it does not share the live writer. |
 | Start / scheduled end | 2026-07-11 03:51:47 / 2026-07-14 03:51:47 EDT (Slurm allocation; not a completion guarantee) |
 | Microbatch / accumulation | `BS=32`, `ACC=8` |
 | Global tokens per update | `32 * 8 * 2,048 = 524,288` |
 | Absolute training target | 300,000 steps |
 | Resume point | `ckpt_0141500.pt` to step 141,501 |
 | Latest checkpoint milestone | **180,000** steps = **94,371,840,000 nominal update tokens** |
-| Last observed live step | 180,090 = 94,419,025,920 nominal update tokens |
+| Last observed live step | 182,440 = 95,651,102,720 nominal update tokens |
 | Last observed throughput | 154,302 tokens/s, approximately 13.33B nominal tokens/day at that sustained rate |
 | 180k loss / gradient norm | loss 1.6526; gnorm 0.103; LR 0.0050 |
 | Post-180k health | One gnorm guard skip at step 180,030 (1.04 versus EMA 0.12), followed immediately by normal 0.09-0.13 gnorm steps. This is a recovered guard event, not a divergence. |
+| Two-H100 handoff revalidation | `686734` on evc37, 320 bounded updates from `best_step180000.pt`, `world=2`, `BS=32`, `ACC=4`, fresh optimizer, stream generation 1. Exit 0 with no CUDA/NCCL/DDP error; compile-free late windows 291.7-293.9k tok/s (about 1.90x the live one-H100 rate). One terminal gnorm guard skip at step 180,319 was not followed by an in-canary recovery step, so this is throughput/transport evidence only. |
 
 The current live flagship's data stream is frozen for the life of this job. Do not add
 new shards, alter weights, or apply an experimental runtime optimization to `685084`.
+
+At the natural handoff only, `686732` will use `NG=2, BS=32, ACC=4`: the same
+`2 * 32 * 4 * 2,048 = 524,288` global tokens/update, fresh optimizer rewarmup,
+250-step checkpoints, and the audited distinct data-stream generation. It excludes
+the CUDA-preflight failures `evc26,31,36,43,50`; it must log `world=2` and pass a
+real CUDA/NCCL health check before its throughput is counted.
 
 ## Checkpoint and Disaster-Recovery Inventory
 
