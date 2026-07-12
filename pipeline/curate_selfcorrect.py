@@ -14,11 +14,13 @@ ablation (baseline vs baseline+self-correction), not assumed.
 
   python curate_selfcorrect.py --out artifacts/sft/self_correct.jsonl --n 15000 --seed 7
 """
-import argparse, json, random
+import argparse, json, os, random, re
+from pathlib import Path
 
 CATCH = ["Wait, that's not right.", "Hmm, let me double-check that.", "Let me recompute that step.",
          "Actually, I made an error there.", "That doesn't look right — let me redo it.",
          "Hold on, let me verify that."]
+WORD = re.compile(r"\w+")
 
 
 def apply(op, x, y):
@@ -64,6 +66,11 @@ def make(rng):
             "source": "self_correct", "corrected": err_step >= 0}
 
 
+def normalized_question(question):
+    """Match the SFT audit's duplicate key without importing its CLI module."""
+    return " ".join(WORD.findall(question.lower()))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
@@ -71,16 +78,31 @@ def main():
     ap.add_argument("--seed", type=int, default=7)
     a = ap.parse_args()
     rng = random.Random(a.seed)
-    import os
     os.makedirs(os.path.dirname(a.out) or ".", exist_ok=True)
+    out = Path(a.out)
+    partial = Path(f"{a.out}.partial")
+    seen = set()
     ncorr = 0
-    with open(a.out, "w") as f:
-        for _ in range(a.n):
-            ex = make(rng)
-            ncorr += ex["corrected"]
-            f.write(json.dumps(ex, ensure_ascii=False) + "\n")
+    attempts = 0
+    try:
+        with open(partial, "w") as f:
+            while len(seen) < a.n:
+                attempts += 1
+                if attempts > a.n * 100:
+                    raise RuntimeError("could not generate enough unique self-correction questions")
+                ex = make(rng)
+                key = normalized_question(ex["question"])
+                if key in seen:
+                    continue
+                seen.add(key)
+                ncorr += ex["corrected"]
+                f.write(json.dumps(ex, ensure_ascii=False) + "\n")
+        os.replace(partial, out)
+    except Exception:
+        partial.unlink(missing_ok=True)
+        raise
     print(f"[self-correct] wrote {a.n} examples ({ncorr} with a caught-and-fixed slip, "
-          f"{a.n - ncorr} clean) -> {a.out}")
+          f"{a.n - ncorr} clean, {attempts - a.n} duplicate draws rejected) -> {a.out}")
 
 
 if __name__ == "__main__":

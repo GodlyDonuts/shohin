@@ -52,8 +52,11 @@ The first raw-base board attempt (`686314`) is invalid as a board: it loaded the
 rotating `ckpt_0168000.pt`, completed only GSM8K maj@4 at 1/100, then the source
 checkpoint was deleted by normal rotation before the other four metrics loaded.
 This is an evaluation lifecycle defect, not a model result. The evaluator now
-pins its source before decoding; a corrected board and a separate multi-turn
-direct-interaction probe are queued from preserved `best_step168750.pt`.
+pins its source before decoding. The corrected raw board (`686315`) ran from a
+reflink-pinned `best_step168750.pt` and completed cleanly: GSM8K maj@4 **5/100**,
+GSM8K pass@1 **2/100**, MATH-500 **2/100**, HumanEval **7/164**, and MBPP
+**0/100**. This is the valid raw baseline for the v4 SFT experiment, not the
+rotated-checkpoint partial result.
 
 ### Direct interaction, not only benchmarks
 
@@ -103,6 +106,25 @@ For example, raw 168k correctly wrote `18 + 9 = 27`, `27 * 5 = 135`, and
 `135 - 14 = 121`, then continued into a different question and emitted a final
 `1`. V2 instead applied the wrong precedence (`18 + 9*5 = 63`). This separates a
 weak output/stopping contract from the deeper missing algorithmic competence.
+
+### Multi-turn correction and scaffold test at 168.75k
+
+I also interacted directly with the same preserved raw checkpoint through a
+six-case, three-turn audit (`interactive_adaptive_168750_686316.json`). Each
+case received an initial question, an explicit independent-review request using
+its prior answer, and a fresh version with one verified intermediate fact. The
+scores were **1/6 initial**, **1/6 review**, and **1/6 scaffold**. The only exact
+success in all three conditions was the simple negative syllogism.
+
+The failures identify the missing operation rather than merely a bad stopping
+token. For `27 * 14 + 9`, it asserted `27 * 14 = 398`; on review it repeated the
+same result; with the verified product `378` it repeated the fact but did not add
+9. It maps base-7 `356` to `1000`, turns a state update into repeated additions,
+returns a generic `[1,2,3,4,5,6]` for an unrelated sort/deduplicate task, and
+collapses a string insertion into empty code fences or `pq`. Thus review and
+provided state do not activate an unexpressed solver. The model needs training
+on state transitions, transformations, answer contracts, and correction moves;
+prompt engineering alone is not a credible remedy.
 
 ### Training state and corpus replay
 

@@ -1,0 +1,23 @@
+{
+  "data": "artifacts/sft/self_correct_v1.jsonl",
+  "duplicate_normalized_questions": 0,
+  "format_markers": {
+    "The answer is": 15000
+  },
+  "malformed_rows": 0,
+  "missing_question_or_response": 0,
+  "response_words": {
+    "max": 37,
+    "mean": 21.96,
+    "p50": 22,
+    "p90": 31,
+    "p99": 35
+  },
+  "source_counts": {
+    "self_correct": 15000
+  },
+  "training_group_counts": {
+    "unclassified": 15000
+  },
+  "valid_rows": 15000
+}

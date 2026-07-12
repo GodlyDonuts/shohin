@@ -1,0 +1,39 @@
+===== SHOHIN BENCHMARK BOARD  ckpt=pretrain_168750_corrected_686315.pt =====
+[eval] device=cuda task=gsm8k k=4 temp=0.8
+[0] gold=18 pred=256 ok=False votes=['256', '96', '384', '3452']
+[1] gold=3 pred=56 ok=False votes=['56', '144', '104', '16']
+[2] gold=70000 pred=4500 ok=False votes=['4500', '80000', '2250', '12000']
+[3] gold=540 pred=540 ok=True votes=['540', '540', '1480', '240']
+gsm8k  maj@4  ckpt=/lustre/fs1/home/sa305415/shohin/train/eval_pins/pretrain_168750_corrected_686315.pt  step=168750  5/100 = 5.0%
+[eval] device=cuda task=gsm8k k=1 temp=0.8
+[0] gold=18 pred=384 ok=False
+[1] gold=3 pred=0.5 ok=False
+[2] gold=70000 pred=195000 ok=False
+[3] gold=540 pred=1620 ok=False
+gsm8k  pass@1  ckpt=/lustre/fs1/home/sa305415/shohin/train/eval_pins/pretrain_168750_corrected_686315.pt  step=168750  2/100 = 2.0%
+[eval] device=cuda task=math500 k=1 temp=0.8
+[0] gold=\left(3,\frac{\pi}{2}\right) pred=None ok=False
+[1] gold=p-q pred=None ok=False
+[2] gold=\frac{14}{3} pred=\frac{1}{2} ok=False
+[3] gold=9 pred=128 ok=False
+math500  pass@1  ckpt=/lustre/fs1/home/sa305415/shohin/train/eval_pins/pretrain_168750_corrected_686315.pt  step=168750  2/100 = 2.0%
+[eval] device=cuda task=humaneval k=1 prompt_style=completion
+[0] HumanEval/0 pass=False
+[1] HumanEval/1 pass=False
+[2] HumanEval/2 pass=False
+[3] HumanEval/3 pass=False
+[4] HumanEval/4 pass=False
+humaneval  pass@1  ckpt=/lustre/fs1/home/sa305415/shohin/train/eval_pins/pretrain_168750_corrected_686315.pt  step=168750  7/164 = 4.3%
+[eval] device=cuda task=mbpp k=1 prompt_style=completion
+[0] 11 pass=False
+[1] 12 pass=False
+[2] 13 pass=False
+[3] 14 pass=False
+[4] 15 pass=False
+[progress] 25/100 passed=0
+[progress] 50/100 passed=0
+[progress] 75/100 passed=0
+[progress] 100/100 passed=0
+mbpp  pass@1  ckpt=/lustre/fs1/home/sa305415/shohin/train/eval_pins/pretrain_168750_corrected_686315.pt  step=168750  0/100 = 0.0%
+[eval-job] appended 5 metric rows to /lustre/fs1/home/sa305415/shohin/artifacts/eval_history/metrics.jsonl
+===== board done =====
