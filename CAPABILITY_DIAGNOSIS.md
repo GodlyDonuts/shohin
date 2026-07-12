@@ -134,6 +134,13 @@ supervision can install a few execution moves; it does not establish autonomous
 compaction, broad self-correction, or general reasoning. Its prompt matrix and
 public board remain the promotion gates.
 
+On the fixed 48-case matrix, V5 moves native Q/A **4/48 -> 17/48** and explicit
+CoT **0/48 -> 11/48**, driven by arithmetic, sorting, and state updates. Plain
+direct instruction is only **5/48 -> 6/48** and one-shot falls **7/48 -> 5/48**.
+The result is a useful warning against reporting only the best prompt: V5 has
+learned some execution under the supervised Q/A or CoT contract, but has not
+become a reliable instruction-following solver.
+
 ### Controlled prompt matrix at 168k
 
 The first twelve hand-authored prompts established the failure qualitatively. A

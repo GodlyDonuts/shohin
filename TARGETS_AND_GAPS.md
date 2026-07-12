@@ -103,9 +103,10 @@ External scores require matching prompts, decoding, samples, and scorer. A custo
 
 - Complete V4's remaining held-out/direct/verifier work only as diagnosis; V4 is
   already rejected for broad promotion.
-- V5 has won the disjoint primitive gate, so its fixed public board, matched
-  prompt matrix, and transcript audit are running. Require all three to show
-  transfer before it affects a future SFT recipe.
+- V5 has won the disjoint primitive gate. Its matched matrix and transcript
+  already show transfer under its supervised Q/A and CoT contracts, but weak
+  direct/one-shot behavior; the fixed public board remains the next gate.
+  Require all three to show broad transfer before it affects a future SFT recipe.
 - Admit DCLM only after its manifest and full decoded-token scan both pass.
 - After the 5B DCLM pilot passes, build and scan a 25B replacement before the
   long language-balanced phase. The replacement must be used instead of the
