@@ -1654,6 +1654,26 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   long for the 2,048-token SFT context and must not be replayed naively. All r1 reports are local/Newton
   hash-matched; card-hashing r2 probes `686655`/`686656`/`686657` are inspection-only and must establish
   license provenance before a source-specific field mapping or curator is proposed.
+- **2026-07-12 ~15:55** — **V8 now has a full training-text decontamination proof, not only a
+  prompt-only audit.** CPU job **`686662`** scanned every `question`, `response`, and `completion_prompt`
+  string in all **699,928** frozen V8 rows against every current eval JSONL: **0 exact rows, 0 13-gram rows,
+  0 malformed JSON rows**. Its data SHA-256 is the same frozen V8 value
+  `da94f9f6aae1d69a12633241b3971f6cfc68f7a7edbc788b956063ec5a70fc72`. The held V8 SFT job now depends
+  on this successful audit and its launcher independently requires the hash-bound zero-overlap report.
+  This establishes decontamination, not quality transfer or a promotion claim.
+- **2026-07-12 ~15:55** — **TACO now has an automatic non-success failover without duplicating a
+  successful path.** The original all-test audit and its `686585 -> 686586` candidate/packing chain remain
+  unchanged. Only if `686584` ends non-successfully, `686659` runs a fresh-output retry from the immutable
+  shuffled input with `RESUME_PARTIAL=1`, 2 workers, every supplied test, and a 3-day wall-time; then
+  `686660 -> 686661` builds and packs a separately named candidate. This prevents a wall-time loss from
+  becoming a silent data-quality relaxation or a manual recovery gap.
+- **2026-07-12 ~15:55** — **NVIDIA source cards are license-confirmed but remain unadmitted.** Hash-bound
+  r2 card probes identify **CC-BY-4.0** for OpenMathReasoning, OpenScienceReasoning-2, and
+  OpenCodeReasoning-2. OpenMath COT still has one sampled response 13-gram collision, every source has
+  long raw traces, and OpenCode's apparent `question` field is not yet a usable prompt mapping. CPU-only
+  `686664` is measuring the actual 50k-row OpenMath COT yield after concise-token limits, final-answer
+  verification, and full problem+trace decontamination. It writes only a report; no candidate is authorized
+  unless this measured yield and source-specific semantics justify one.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
