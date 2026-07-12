@@ -42,8 +42,11 @@ held-out RG result is **90/800 = 11.25%**, which is above the raw 120k baseline
 (29/800 = 3.625%) but remains highly concentrated: chain sums 20/25, string
 insertion 19/25, basic arithmetic and decimal-chain sums 13/25 each, and products
 9/25. It is zero on most transformation, logic, cipher, geometry, and search-like
-families. The in-training RG control remains useful for quantifying overfit, not
-for rescuing the recipe.
+families. The in-training control is only **98/800 = 12.25%**, so the roughly
+one-point gap does not support an exact-trace-memorization explanation. The pilot
+did learn a few routines that transfer within its limited family coverage; it did
+not learn a general algorithmic substrate, which is why the public board still
+rejects the recipe.
 
 The first raw-base board attempt (`686314`) is invalid as a board: it loaded the
 rotating `ckpt_0168000.pt`, completed only GSM8K maj@4 at 1/100, then the source
