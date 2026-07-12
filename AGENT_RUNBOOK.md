@@ -874,6 +874,12 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   outliers. The protocol-matched v4 board has completed GSM8K: maj@4 5/100 (tie with raw) and pass@1
   14/100 (raw 2/100); this is deliberately not treated as promotion before MATH/code, held-out RG, and
   direct interaction finish.
+- **2026-07-12 ~08:35** — **Evaluation reproducibility repair committed before any rerun.** The public
+  board's greedy pass@1, code pass@1, held-out RG, and direct probes are deterministic. Its sampled
+  GSM8K maj@4 result was not explicitly seeded, so `eval_suite.py` and `eval_code.py` now accept and
+  report a fixed seed; `eval_all.sbatch` defaults `EVAL_SEED=20260712`. This cannot explain the current
+  14/100 greedy GSM8K v4 result, but it prevents future sampled comparisons from being ambiguous. The
+  active `686336` board is intentionally left untouched; only future submissions use the repair.
 
 ---
 
