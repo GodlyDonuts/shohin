@@ -148,6 +148,12 @@ def main():
             out.write(json.dumps(clean, ensure_ascii=False) + "\n")
             kept += 1
             if found % args.progress_every == 0 or not candidates:
+                # A time-limited Slurm job can be terminated between progress
+                # lines. Make every reported retained batch durable before the
+                # caller is told it exists, so --resume-partial has a real
+                # checkpoint rather than only a buffered TextIOWriter.
+                out.flush()
+                os.fsync(out.fileno())
                 print(
                     f"[taco-full-audit] matched={found} kept={kept} "
                     f"source_rows_scanned={source_rows} remaining={len(candidates)} "

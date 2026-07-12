@@ -1581,6 +1581,12 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   until `best_step180000.pt` is preserved and the known-good `evc25` verifier allocation is free, then must
   run one isolated epoch followed by public-board and direct-composition evaluations. It remains an experiment,
   never a live-pretrain change or promotion by construction.
+- **2026-07-12** — **TACO durability observation and fix.** The active pre-fix audit `686584` reached
+  100/3,000 all-test-verified matches after its streaming source initialization, but its open `.partial`
+  file was still at byte zero because Python had not flushed its text buffer; this is not counted as durable
+  output and the job was not disturbed. Future audit code now flushes and `fsync`s every logged progress
+  batch before printing it, so an explicit resume can retain verified rows after a wall-time interruption.
+  Focused local tests pass and the fix is mirrored to Newton for a retry only.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
