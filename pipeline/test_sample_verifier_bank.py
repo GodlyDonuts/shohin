@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+import random
 import subprocess
 import sys
 import tempfile
@@ -20,12 +21,15 @@ def main():
         out = temporary / "bank.jsonl"
         subprocess.run([
             sys.executable, str(root / "sample_verifier_bank.py"), "--input", str(source),
-            "--out", str(out), "--per-family", "2",
+            "--out", str(out), "--per-family", "2", "--seed", "7",
         ], check=True, capture_output=True, text=True)
         rows = [json.loads(line) for line in out.read_text().splitlines()]
         questions = [row["question"].lower().replace("!", "") for row in rows]
         assert len(questions) == len(set(questions))
         assert len(rows) == 3
+        expected = ["Repeated prompt!", "Fresh A", "Fresh B"]
+        random.Random(7).shuffle(expected)
+        assert [row["question"] for row in rows] == expected
     print("balanced verifier-bank dedup checks: passed")
 
 

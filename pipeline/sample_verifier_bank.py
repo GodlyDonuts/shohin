@@ -61,6 +61,9 @@ def main():
                 selected[replacement] = clean
 
     rows = [row for family in sorted(reservoirs) for row in reservoirs[family]]
+    # Keep the bank family-balanced, but do not emit a lexicographic family
+    # prefix. Bounded rollouts should remain representative of every family.
+    rng.shuffle(rows)
     output = Path(args.out)
     temporary = output.with_suffix(output.suffix + ".partial")
     if output.exists() or temporary.exists():
