@@ -65,7 +65,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | finemath3 output | `artifacts/shards/finemath3/` — **✅ COMPLETE: 125 shards, exactly 25.0B tokens** (`manifest.json` present, 22 GB; 8,575 contaminated docs dropped vs evalgrams). **Included in the 300k relaunch SHARDS.** |
 | SFT mix (Newton) | `artifacts/sft/sft_mix_core.jsonl` — **97,439 examples**, rebuilt 2026-07-08 with hard eval filtering. Audit: 0 malformed rows, 0 duplicate questions, 0 exact eval-prompt hits; builder dropped **206 exact eval-prompt overlaps** and **741 eval 13-gram overlaps** before writing. md5 `53ed91368b4c238dc18a1ab1699e4158`; report md5 `21459b382767801e205f3f625ce106cd`. |
 | Local teacher distillers | Nemotron screen run completed at **1,781 rows** but provider health was poor (`kept=19`, `err=52506` in the screen run). Bounded probes after that were also unhealthy: Nemotron `limit=5` kept 0 with 3 provider errors; GLM `limit=3` kept 0 with 3 provider errors. **Leave Nemotron and GLM paused until provider health clears; do not blindly respawn.** HY3 bulk process died/stalled after ~25.2k rows; `conc=2` and `conc=1` restarts exited without appending, even though a tiny direct Hermes/probe call completed cleanly. Claude/minimax snapshots are present. GLM remains the preferred strongest open-weight teacher when available. |
-| **Verified-data expansion** | **Active, CPU-only, isolated from pretrain.** `openmath_pt` is complete at **5,000,000,144 tokens / 50 shards** and remains a future-relaunch-only source. Tracer smoke `686280` validated all 15 registered families against fresh RG samples; `686281` is generating a separate `artifacts/rg_v3` at 20,000 examples/family, never overwriting `rg_v2`. The current frozen v2 mix has only **444 code rows**. APPS code pilot `686276` exposed a `datasets` client rejection of Hub scripts; corrected `686282` reads the official train JSONL directly, uses train only, filters eval overlap, and execution-verifies supplied cases into a separate pilot file. |
+| **Verified-data expansion** | **Active, CPU-only, isolated from pretrain.** `openmath_pt` is complete at **5,000,000,144 tokens / 50 shards** and remains a future-relaunch-only source. Tracer smoke `686280` validated all 15 registered families; `686281` has generated **271,452** verified traces across those families and is completing isolated `rg_v3` audit/commit. The current frozen v2 mix has only **444 code rows**. APPS pilot `686282` kept **100/108** train examples after three-case execution checks, with 0 malformed/duplicate/eval-overlap rows; scale job **`686283`** targets a separate 3,000-example `apps_train_v1.jsonl`. Neither output may enter a frozen SFT mix before its final audit. |
 | Preserved checkpoints (cluster) | Includes prior milestones plus **`best_step166250.pt`** copied from numbered `ckpt_0166250.pt`; both md5 **`1b57c99aca966546d4d9aea7827d6ebd`**. |
 | **Local DR backup (Mac)** | Includes prior milestones plus **`train/flagship_out/ckpt_0166250.pt`**, full+optimizer, locally and remotely md5 **`1b57c99aca966546d4d9aea7827d6ebd`**. Next DR target: 170k. |
 | **Large artifact transfer policy** | For big checkpoints/shards/uploads, prefer VPS-to-VPS or Newton-to-VPS staging when credentials/hosts are available; the VPS links have ~20 Gbit internet and should beat Mac↔Newton transfers. Still use `.part` files and md5/sha256 on both ends before trusting or deleting anything. |
@@ -729,6 +729,13 @@ line at each milestone / intervention / decision.** Don't rewrite history; appen
   execution-verified code pilot was added. The first loader attempt hit a current `datasets` loading-
   script restriction; corrected **`686282`** uses the official APPS train JSONL directly. Flagship
   `685084` remains healthy through 166.98k at ~154.2k tok/s; no live trainer data or model state changed.
+- **2026-07-12 ~04:20** — **Data pilots cleared their first gates.** `rg_v3` generated 559,977 train
+  problems and **271,452** verifier-backed traces across 15 covered families, retaining disjoint RG
+  evaluation seeds/families; the job is finishing conversion/audit before commit. The corrected APPS
+  train-only JSONL route (`686282`) kept **100/108** examples after three supplied I/O checks each,
+  with 0 malformed, duplicate, or evaluation-overlap rows and p90 response length 182 words. Submitted
+  `686283` to build a separate 3,000-example scale artifact. The CUDA-only v2 board `686277` remains
+  in progress; do not interpret its first four printed samples as a score.
 
 ---
 
