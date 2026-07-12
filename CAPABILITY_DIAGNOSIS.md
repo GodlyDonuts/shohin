@@ -167,6 +167,15 @@ extended thinking. The correct path is a separate Mame-scale proxy ablation with
 recurrence enabled during training, a fixed test-time loop budget, and gates against
 an equally trained `n_loop=1` control. It must not be injected into the live run.
 
+That first mechanical ablation is now complete. Identical 31.5M Mame runs over
+800 steps with the same data seed were both stable and each had one recovered
+grad-norm skip. `n_loop=1` finished in 886 seconds at 472.7k tok/s with final
+logged loss 2.4899; `n_loop=2` finished in 1,466 seconds at 286.0k tok/s with
+final logged loss 2.4890. This proves the implementation can train recurrently,
+but not a capability benefit: the 1.65x wall-time cost has no measurable short-run
+loss advantage. Keep recurrence off the flagship until a longer paired capability
+evaluation earns that cost.
+
 ## Root causes, ranked
 
 1. **Missing reasoning substrate and uneven replay in pretraining.** The active
