@@ -5,7 +5,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-13 04:46 EDT
+**Last refreshed:** 2026-07-13 05:07 EDT
 **Flagship source of truth:** Newton Slurm job `685084`,
 `/lustre/fs1/home/sa305415/shohin/train/flagship_out/log_r0.jsonl`  
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -35,10 +35,11 @@ the numbered file under its retention policy; the ledger records which copies re
 | Absolute training target | 300,000 steps |
 | Resume point | `ckpt_0141500.pt` to step 141,501 |
 | Latest checkpoint milestone | **190,000** steps = **99,614,720,000 nominal update tokens** |
-| Last observed live step | 193,290 = 101,339,627,520 nominal update tokens |
+| Last observed live step | 193,680 = 101,544,099,840 nominal update tokens |
 | Last observed throughput | 154,295 tokens/s, approximately 13.33B nominal tokens/day at that sustained rate |
-| Latest loss / gradient norm | step 193,290: loss 1.4727; gnorm 0.10; LR 0.0050 |
-| Post-190k health | One isolated guard skip at step 193,173 (gnorm 16.99 versus 0.13 EMA) recovered at the next logged step. Surrounding recent steps remain in the 0.06-0.30 gnorm band; no divergence or persistent skip exists. |
+| Latest loss / gradient norm | step 193,680: loss 1.5811; gnorm 0.09; LR 0.0050 |
+| Direct H100 telemetry | 05:07 EDT: 100% compute utilization, 59% memory-controller utilization, 63,767 / 81,559 MiB VRAM, 280.12 / 310 W, 63 C. Low unused VRAM is deliberate: BS64 was OOM; BS32 is the largest verified single-GPU microbatch. |
+| Post-190k health | One isolated guard skip at step 193,437 (gnorm 2.21 versus 0.13 EMA) recovered at the next logged step. Surrounding recent steps remain in the normal range; no divergence or persistent skip exists. |
 | Two-H100 handoff revalidation | `686734` on evc37, 320 bounded updates from `best_step180000.pt`, `world=2`, `BS=32`, `ACC=4`, fresh optimizer, stream generation 1. Exit 0 with no CUDA/NCCL/DDP error; compile-free late windows 291.7-293.9k tok/s (about 1.90x the live one-H100 rate). One terminal gnorm guard skip at step 180,319 was not followed by an in-canary recovery step, so this is throughput/transport evidence only. |
 
 The current live flagship's data stream is frozen for the life of this job. Do not add
@@ -89,7 +90,7 @@ the running `SHARDS` list.
 | TACO shuffled all-test audit `686584` | Last durable log: 400/3,000 selected candidates passed all supplied bounded stdin/stdout tests; 1,605 source rows scanned. The active pre-fix partial file is not treated as durable. | In progress. Success path is `686585 -> 686586`; non-success retry is `686659 -> 686660 -> 686661` with immutable input and all tests retained. |
 | Verifier rollout `686536` | 78,654 emitted rollout rows at ledger refresh; generator log had reached 5,100/10,000 prompts and 81,600 sampled candidates. | In progress. It is not training data until the tail, global dedup, exact packing, and >=3,000 packed-512-sequence gate succeed. |
 | OpenMathReasoning COT selector `686672` | Under full problem+trace decontamination, final-answer verification, individual limits, and an exact combined 2,048-token SFT limit: 326/10,000 rows retained. Rejections: 9,398 long traces, 17 long combined examples, 198 answer mismatches, 1 exact-problem hit, 45 13-gram hits, 8 duplicate problems. | Inspection-only. No bulk candidate is authorized until yield, data balance, and source-specific quality review are recorded. |
-| 25B DCLM / FineWeb replacements | FineWeb job `686530` completed only 4,599,748,648 tokens because it used `sample-10BT`; it is explicitly rejected as a 25B replacement. Corrected Stokes CPU job `738030` uses `sample-100BT`, writes only `fineweb_edu_25b_r2.partial`, enforces a >=24.5B manifest-token floor, and has emitted 1 shard / 100,001,543 tokens. Newton DCLM `686529` remains live at 183 partial 100M-token shards (about 18.3B tokens), with transient Hugging Face 503 retries. | Not admitted; no partial or pilot output may enter a future relaunch. |
+| 25B DCLM / FineWeb replacements | FineWeb job `686530` completed only 4,599,748,648 tokens because it used `sample-10BT`; it is explicitly rejected as a 25B replacement. Corrected Stokes CPU job `738030` uses `sample-100BT`, writes only `fineweb_edu_25b_r2.partial`, enforces a >=24.5B manifest-token floor, and last verified 1 shard / 100,001,543 tokens. Newton DCLM `686529` remains live at 188 partial 100M-token shards (about 18.8B tokens), with transient Hugging Face 503 retries. | Not admitted; no partial or pilot output may enter a future relaunch. |
 | VRWM r3 transition SFT | 497,274 unique solver-checked rows, 0 malformed rows, duplicate prompts, or full-text evaluation overlaps; 18,013 packed 2,048-token sequences. SHA-256 `b2a688e1f7aa6c79dd65ed1944fa5dc00cd022acfc793896ecf4696c94d4089f`. One epoch `686742` wrote `sft_ep1.pt` (MD5 `90607e7307187c2ad4839d48dfa3a0c6`). Full default p80 closed-loop result: 43/400. | Rejected as template-bound: held-out paraphrase p10 is 0/50. |
 | VRWM r4 controlled ablation | Both state-only and deterministic-scratch branches: 513,902 audited rows, 0 malformed/duplicate/public-overlap rows; state SHA-256 `cfab3c0c06cd5eba419d42cd52937ab7159e8f30acc2bc1202375ea38c162e58`, scratch SHA-256 `0df3d86471ccc675ad2dea07bb19cd7ffd97adde5c78b3e92b7fb1581c7d7b10`. | State: 32/400 default, 2/400 semantic. Scratch: 120/400 default, 21/400 semantic. Narrow executable-state evidence only; not general reasoning or promotion. |
 | VRWM r5 repair curriculum | 1,409,072 audited rows / 68,347 packed sequences, 139,976,150 total SFT tokens and 38,629,088 answer tokens. SHA-256 `011282f032963a40b8b39ab9572808de1d3473ef2b57ef727526fb9d00985c76`; zero malformed, duplicate, exact-eval, or 13-gram-eval rows. SFT `686820` completed on evc37 in 1,303s; its locally and remotely preserved checkpoint md5 is `ef99f8c2ab5835c8229bcd4f36fb8789`. | Rejected for broad promotion. Semantic p80 first-pass is 17/400, below r4 scratch's 21/400; remaining default/self-repair jobs are diagnostic-only. |
