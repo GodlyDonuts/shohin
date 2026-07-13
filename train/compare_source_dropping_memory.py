@@ -17,6 +17,7 @@ from pathlib import Path
 MODES = ("normal", "zero", "shuffled")
 FIT_MARGIN = 0.15
 OOD_MARGIN = 0.05
+COUNTERFACTUAL_MARGIN = 0.10
 
 
 def load_report(path):
@@ -53,6 +54,34 @@ def matching_normal_rows(report):
     return references
 
 
+def counterfactual_metric(rows, mode):
+    pairs = defaultdict(list)
+    for row in rows:
+        if row["mode"] == mode and row.get("counterfactual_id"):
+            pairs[row["counterfactual_id"]].append(row)
+    complete = {
+        pair_id: pair for pair_id, pair in pairs.items()
+        if len(pair) == 2 and {row.get("counterfactual_variant") for row in pair} == {"a", "b"}
+    }
+    correct = sum(
+        all(bool(row["correct"]) for row in pair) and len({row.get("prediction") for row in pair}) == 2
+        for pair in complete.values()
+    )
+    return {"pairs": len(complete), "correct": correct, "accuracy": correct / len(complete) if complete else None}, set(complete)
+
+
+def matching_counterfactual_pairs(m0_report, m1_report):
+    expected = None
+    for report in (m0_report, m1_report):
+        for mode in MODES:
+            _, pair_ids = counterfactual_metric(report["rows"], mode)
+            if expected is None:
+                expected = pair_ids
+            elif pair_ids != expected:
+                raise ValueError("counterfactual modes/models do not cover the same complete pairs")
+    return expected or set()
+
+
 def compare(m0_report, m1_report):
     if m0_report.get("data_sha256") != m1_report.get("data_sha256"):
         raise ValueError("M0 and M1 evaluated different held-out data")
@@ -60,6 +89,7 @@ def compare(m0_report, m1_report):
         raise ValueError("M0 and M1 used different selection seeds")
     if matching_normal_rows(m0_report) != matching_normal_rows(m1_report):
         raise ValueError("M0 and M1 evaluated different source references")
+    counterfactual_ids = matching_counterfactual_pairs(m0_report, m1_report)
 
     m0_rows, m1_rows = m0_report["rows"], m1_report["rows"]
     regimes = sorted({row["eval_regime"] for row in m1_rows})
@@ -98,6 +128,22 @@ def compare(m0_report, m1_report):
         "at_least_three_chunk_counts_beat_controls": chunk_wins >= 3,
         "at_least_two_query_kinds_beat_controls": query_wins >= 2,
     }
+    counterfactual = None
+    if counterfactual_ids:
+        m1_normal, _ = counterfactual_metric(m1_rows, "normal")
+        controls = {
+            "m0_no_slot": counterfactual_metric(m0_rows, "normal")[0],
+            "m1_zero_packet": counterfactual_metric(m1_rows, "zero")[0],
+            "m1_shuffled_source": counterfactual_metric(m1_rows, "shuffled")[0],
+        }
+        control_max = max(item["accuracy"] for item in controls.values())
+        counterfactual = {
+            "m1_normal": m1_normal,
+            "controls": controls,
+            "control_max_accuracy": control_max,
+            "normal_margin": m1_normal["accuracy"] - control_max,
+        }
+        gates["counterfactual_pair_margin_at_least_10pp"] = counterfactual["normal_margin"] >= COUNTERFACTUAL_MARGIN
     return {
         "audit": "source_dropping_memory_matched_comparison_v1",
         "m0_checkpoint": m0_report.get("checkpoint"),
@@ -105,10 +151,12 @@ def compare(m0_report, m1_report):
         "data_sha256": m1_report.get("data_sha256"),
         "fit_margin_threshold": FIT_MARGIN,
         "ood_margin_threshold": OOD_MARGIN,
+        "counterfactual_margin_threshold": COUNTERFACTUAL_MARGIN,
         "by_regime": by_regime,
         "length_language_combined": ood,
         "by_chunk": by_chunk,
         "by_query_kind": by_query,
+        "counterfactual_pairs": counterfactual,
         "chunk_count_wins": chunk_wins,
         "query_kind_wins": query_wins,
         "gates": gates,

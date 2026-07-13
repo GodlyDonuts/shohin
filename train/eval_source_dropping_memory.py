@@ -108,6 +108,22 @@ def summarize(rows):
         correct = sum(bool(row["correct"]) for row in items)
         return {"cases": len(items), "correct": correct, "accuracy": correct / len(items)}
 
+    def counterfactual_metric(items):
+        pairs = collections.defaultdict(list)
+        for item in items:
+            if item.get("counterfactual_id"):
+                pairs[item["counterfactual_id"]].append(item)
+        complete = [
+            pair for pair in pairs.values()
+            if len(pair) == 2 and {item.get("counterfactual_variant") for item in pair} == {"a", "b"}
+        ]
+        correct = sum(
+            all(bool(item["correct"]) for item in pair)
+            and len({item.get("prediction") for item in pair}) == 2
+            for pair in complete
+        )
+        return {"pairs": len(complete), "correct": correct, "accuracy": correct / len(complete) if complete else None}
+
     summary = {}
     for mode in sorted({row["mode"] for row in rows}):
         mode_rows = [row for row in rows if row["mode"] == mode]
@@ -120,6 +136,21 @@ def summarize(rows):
             str(count): metric([row for row in mode_rows if int(row["chunk_count"]) == count])
             for count in sorted({int(row["chunk_count"]) for row in mode_rows})
         }
+        query_kinds = sorted({row.get("query_kind") for row in mode_rows if row.get("query_kind")})
+        if query_kinds:
+            summary[mode]["by_query_kind"] = {
+                kind: metric([row for row in mode_rows if row.get("query_kind") == kind])
+                for kind in query_kinds
+            }
+        ledger_stages = sorted({int(row["ledger_stage"]) for row in mode_rows if row.get("ledger_stage") is not None})
+        if ledger_stages:
+            summary[mode]["by_ledger_stage"] = {
+                str(stage): metric([row for row in mode_rows if int(row.get("ledger_stage", -1)) == stage])
+                for stage in ledger_stages
+            }
+        counterfactual = counterfactual_metric(mode_rows)
+        if counterfactual["pairs"]:
+            summary[mode]["counterfactual_pairs"] = counterfactual
     return summary
 
 
@@ -130,6 +161,7 @@ def main():
     parser.add_argument("--data", required=True)
     parser.add_argument("--out", required=True)
     parser.add_argument("--per-chunk-regime", type=int, default=128)
+    parser.add_argument("--all-heldout", action="store_true", help="score every held-out row, preserving all counterfactual pairs")
     parser.add_argument("--modes", nargs="+", choices=MODES, default=list(MODES))
     parser.add_argument("--max-new", type=int, default=24)
     parser.add_argument("--seed", type=int, default=20260714)
@@ -142,7 +174,8 @@ def main():
     if out.exists():
         raise SystemExit("refusing existing output: {}".format(out))
 
-    cases = select_rows(load_rows(args.data), args.per_chunk_regime, args.seed)
+    loaded_cases = load_rows(args.data)
+    cases = loaded_cases if args.all_heldout else select_rows(loaded_cases, args.per_chunk_regime, args.seed)
     if not torch.cuda.is_available():
         raise SystemExit("source-memory evaluation requires a CUDA allocation")
     tokenizer = Tokenizer.from_file(args.tokenizer)
@@ -182,7 +215,10 @@ def main():
                 "mode": mode,
                 "eval_regime": case["eval_regime"],
                 "chunk_count": int(case["chunk_count"]),
-                "query_kind": case.get("query_spec", {}).get("kind"),
+                "query_kind": case.get("ledger_probe_kind") or case.get("query_spec", {}).get("kind"),
+                "ledger_stage": case.get("ledger_stage"),
+                "counterfactual_id": case.get("counterfactual_id"),
+                "counterfactual_variant": case.get("counterfactual_variant"),
                 "reference": case["reference"],
                 "expected": int(case["answer"]),
                 "prediction": prediction,
@@ -201,6 +237,7 @@ def main():
         "data": args.data,
         "data_sha256": sha256_file(args.data),
         "per_chunk_regime": args.per_chunk_regime,
+        "all_heldout": bool(args.all_heldout),
         "modes": modes,
         "seed": args.seed,
         "summary": summarize(rows),

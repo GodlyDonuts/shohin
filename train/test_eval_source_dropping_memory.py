@@ -32,8 +32,11 @@ def main():
         {"mode": "normal", "eval_regime": "fit_iid", "chunk_count": 2, "correct": True},
         {"mode": "normal", "eval_regime": "full_ood", "chunk_count": 5, "correct": False},
         {"mode": "zero", "eval_regime": "fit_iid", "chunk_count": 2, "correct": False},
+        {"mode": "normal", "eval_regime": "fit_iid", "chunk_count": 2, "query_kind": "read_left", "ledger_stage": 2, "counterfactual_id": "pair", "counterfactual_variant": "a", "prediction": 3, "correct": True},
+        {"mode": "normal", "eval_regime": "fit_iid", "chunk_count": 2, "query_kind": "read_left", "ledger_stage": 2, "counterfactual_id": "pair", "counterfactual_variant": "b", "prediction": 5, "correct": True},
     ])
-    assert summary["normal"]["correct"] == 1 and summary["zero"]["correct"] == 0
+    assert summary["normal"]["correct"] == 3 and summary["zero"]["correct"] == 0
+    assert summary["normal"]["counterfactual_pairs"] == {"pairs": 1, "correct": 1, "accuracy": 1.0}
     print("source-memory evaluator tests passed")
 
 
