@@ -120,6 +120,50 @@ the capsule protocol measures persistence across resets, while CBC's paired
 counterfactual compiler measures whether a resulting state is causally
 interchangeable across worlds. Neither result alone establishes broad reasoning.
 
+### Conditional Engineering Substrate: Causal KV Anchors
+
+The normal cache is a useful engineering mechanism but **not** a context
+compression result. Once a model has authored a discrete semantic anchor, its
+exact tokens can be prefetched once and their KV cache retained while later
+events and model-authored state updates are appended. This eliminates repeated
+prompt transmission and repeated prefix projection, but it still has a linear
+attention-cache footprint and does not by itself extend the model's context
+window or create reasoning ability.
+
+`train/causal_kv_anchor.py` is intentionally a small, no-training substrate
+for this future experiment. It transports only exact tokens; no controller
+parses, summarizes, selects, computes, or repairs their meaning. Because this
+model's cached-attention fast path is causally exact only for a single new token
+at a time, all updates are serially appended and mechanically compared against
+full replays of the same token history. The original root cache remains
+immutable so a matched anchor swap or zero-cache control cannot be hidden by
+in-place state mutation.
+
+This may be tested only after V10A and the semantic-capsule route establish
+nonzero, source-deleted semantic transport. A valid experiment must compare:
+
+1. **Exactness:** cached serial decoding and full replay have matching logits
+   for every appended token; otherwise it is an invalid inference path.
+2. **Semantics:** a model-authored anchor improves held-out source-deleted
+   readout over a no-anchor control, while replacing it with a matched
+   counterfactual anchor changes the answer in the solver-predicted direction.
+3. **No controller shortcut:** token histories are forwarded verbatim; the
+   controller is prohibited from converting facts to states or selecting among
+   anchor candidates.
+4. **Net resource accounting:** report original prompt tokens, model-authored
+   anchor tokens, mutable tokens, cache bytes, prefill work, and full-replay
+   work. KV reuse is useful only if it saves end-to-end session work without
+   concealing a longer context or another model call.
+5. **Periodic re-anchoring:** any attempt to exceed a fixed context budget must
+   ask the model to author a new compact anchor and rerun the same swap/zero
+   controls. Copying an external summary into a fresh cache is disallowed.
+
+This separates a real potential systems gain (persistent exact attention to a
+model-authored state) from the rejected continuous-packet branches and from a
+false claim of unlimited context. It becomes a context-scaling mechanism only
+if model-authored re-anchoring preserves counterfactually useful state across
+resets.
+
 ### Raw Workspace-Patching Baseline: No Simple Broadcast Register
 
 `train/probe_digitwise_workspace.py` is the first diagnostic built from this
