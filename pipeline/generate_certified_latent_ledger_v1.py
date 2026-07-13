@@ -31,6 +31,8 @@ from generate_source_memory_packet_v1 import (
 
 PROBE_KINDS = ("read_left", "read_right", "sum", "difference")
 WORD = re.compile(r"\w+")
+TAG_SCHEMES = ("wide_v1", "compact_v2")
+COMPACT_TAG_WORDS = tuple("abcdefghijklmnopqrstuvwxyz")
 
 
 def sha256(path):
@@ -54,7 +56,27 @@ def prompt_ngram_hashes(payload, width=13):
     }
 
 
-def render_chunks(domain, initial, operations, style, marker):
+def render_tag(marker, step, tag_scheme):
+    if tag_scheme == "wide_v1":
+        # Preserve the original v1 representation exactly for reproducibility.
+        compact_marker = re.sub(r"\\W+", "", marker)
+        return "Reference " + " ".join(
+            "seal{}{}{:02x}".format(compact_marker, step, part)
+            for part in range(16)
+        ) + "."
+    if tag_scheme == "compact_v2":
+        # ``Reference`` plus twelve single-character words yields a unique
+        # 13-token n-gram with the project tokenizer. The tag stays inert but
+        # avoids making a tiny recurrent encoder model 100+ seal tokens per
+        # source boundary.
+        digest = hashlib.blake2b("{}:{}".format(marker, step).encode(), digest_size=16).digest()
+        return "Reference " + " ".join(
+            COMPACT_TAG_WORDS[value % len(COMPACT_TAG_WORDS)] for value in digest[:12]
+        ) + "."
+    raise ValueError("unknown tag scheme: {}".format(tag_scheme))
+
+
+def render_chunks(domain, initial, operations, style, marker, tag_scheme="wide_v1"):
     _, _, item = domain
     chunks = []
     for step, operation in enumerate(operations):
@@ -63,11 +85,7 @@ def render_chunks(domain, initial, operations, style, marker):
         # Every chunk receives an inert, record-unique tag. This makes the
         # source portion of every 13-gram split-safe without exposing a tag to
         # the source-free query decoder or correlating it with the answer.
-        compact_marker = re.sub(r"\\W+", "", marker)
-        tag = "Reference " + " ".join(
-            "seal{}{}{:02x}".format(compact_marker, step, part)
-            for part in range(16)
-        ) + "."
+        tag = render_tag(marker, step, tag_scheme)
         chunks.append((opening + "\n" + event + "\n" + tag) if step == 0 else (event + "\n" + tag))
     return chunks
 
@@ -91,13 +109,17 @@ def query_for(values, keys, item, style, kind):
     return text, int(answer)
 
 
-def row(chunks, query, answer, initial, keys, operations, domain, style, heldout, reference, stage, kind, **extra):
+def row(chunks, query, answer, initial, keys, operations, domain, style, heldout, reference, stage, kind,
+        tag_scheme="wide_v1", **extra):
+    compact = tag_scheme == "compact_v2"
     payload = {
         "chunks": chunks,
         "query": query,
         "response": "The answer is {}.".format(answer),
         "answer": str(answer),
-        "source": "certified_latent_ledger_v1_{}".format("heldout" if heldout else "train"),
+        "source": "certified_latent_ledger_{}_{}".format(
+            "v2_compact" if compact else "v1", "heldout" if heldout else "train",
+        ),
         "training_group": "certified_latent_ledger",
         "family": domain[0],
         "item": domain[2],
@@ -110,13 +132,15 @@ def row(chunks, query, answer, initial, keys, operations, domain, style, heldout
         "reference": reference,
         "ledger_stage": int(stage),
         "ledger_probe_kind": kind,
-        "protocol": "source_removed_readback_v1",
+        "protocol": "source_removed_readback_v2_compact_tags" if compact else "source_removed_readback_v1",
     }
+    if compact:
+        payload["tag_scheme"] = tag_scheme
     payload.update(extra)
     return payload
 
 
-def episode_rows(index, rng, domain, chunk_count, style, initial_range, heldout):
+def episode_rows(index, rng, domain, chunk_count, style, initial_range, heldout, tag_scheme="wide_v1"):
     _, keys, item = domain
     low, high = initial_range
     initial = {keys[0]: rng.randint(low, high), keys[1]: rng.randint(low, high)}
@@ -128,7 +152,7 @@ def episode_rows(index, rng, domain, chunk_count, style, initial_range, heldout)
         states.append(dict(values))
     record_id = "L-{}-{:08d}".format(domain[0], index)
     marker = "{}-{:x}".format("h" if heldout else "t", index)
-    chunks = render_chunks(domain, initial, operations, style, marker)
+    chunks = render_chunks(domain, initial, operations, style, marker, tag_scheme)
     rows = []
     for stage, state in enumerate(states, 1):
         for kind in PROBE_KINDS:
@@ -136,6 +160,7 @@ def episode_rows(index, rng, domain, chunk_count, style, initial_range, heldout)
             rows.append(row(
                 chunks[:stage], query, answer, initial, keys, operations[:stage], domain, style, heldout,
                 "{}-s{}-{}".format(record_id, stage, kind), stage, kind,
+                tag_scheme=tag_scheme,
                 ledger_record_id=record_id,
                 counterfactual_id=None,
             ))
@@ -157,12 +182,13 @@ def episode_rows(index, rng, domain, chunk_count, style, initial_range, heldout)
     for variant, final_operation in variants:
         variant_operations = prefix_operations + [final_operation]
         variant_values = apply_operation(dict(prefix_values), final_operation)
-        variant_chunks = render_chunks(domain, initial, variant_operations, style, marker)
+        variant_chunks = render_chunks(domain, initial, variant_operations, style, marker, tag_scheme)
         kind = "read_left" if target == keys[0] else "read_right"
         query, answer = query_for(variant_values, keys, item, style, kind)
         rows.append(row(
             variant_chunks, query, answer, initial, keys, variant_operations, domain, style, heldout,
             "{}-{}".format(counterfactual_id, variant), chunk_count, kind,
+            tag_scheme=tag_scheme,
             ledger_record_id=record_id,
             counterfactual_id=counterfactual_id,
             counterfactual_variant=variant,
@@ -170,7 +196,10 @@ def episode_rows(index, rng, domain, chunk_count, style, initial_range, heldout)
     return rows
 
 
-def build_rows(episodes, chunk_counts, domains, styles, initial_range, heldout, seed, forbidden=(), forbidden_ngrams=()):
+def build_rows(episodes, chunk_counts, domains, styles, initial_range, heldout, seed, forbidden=(), forbidden_ngrams=(),
+               tag_scheme="wide_v1"):
+    if tag_scheme not in TAG_SCHEMES:
+        raise ValueError("unknown tag scheme: {}".format(tag_scheme))
     rng = random.Random(seed)
     rows, seen = [], set(forbidden)
     forbidden_ngrams = set(forbidden_ngrams)
@@ -179,7 +208,9 @@ def build_rows(episodes, chunk_counts, domains, styles, initial_range, heldout, 
             domain = domains[episode % len(domains)]
             chunk_count = chunk_counts[episode % len(chunk_counts)]
             style = styles[(episode // len(domains)) % len(styles)]
-            block = episode_rows(episode * 10_000 + attempt, rng, domain, chunk_count, style, initial_range, heldout)
+            block = episode_rows(
+                episode * 10_000 + attempt, rng, domain, chunk_count, style, initial_range, heldout, tag_scheme,
+            )
             keys = [source_key(item) for item in block]
             block_ngrams = set().union(*(prompt_ngram_hashes(item) for item in block))
             if len(keys) == len(set(keys)) and not (set(keys) & seen) and not (block_ngrams & forbidden_ngrams):
@@ -206,10 +237,14 @@ def main():
     parser.add_argument("--train-episodes", type=int, default=16_000)
     parser.add_argument("--eval-episodes-per-chunk", type=int, default=128)
     parser.add_argument("--seed", type=int, default=20260715)
+    parser.add_argument("--tag-scheme", choices=TAG_SCHEMES, default="wide_v1")
     args = parser.parse_args()
     if args.train_episodes <= 0 or args.eval_episodes_per_chunk <= 0:
         raise SystemExit("episode counts must be positive")
-    train = build_rows(args.train_episodes, (2, 3, 4), TRAIN_DOMAINS, TRAIN_STYLES, (3, 55), False, args.seed)
+    train = build_rows(
+        args.train_episodes, (2, 3, 4), TRAIN_DOMAINS, TRAIN_STYLES, (3, 55), False, args.seed,
+        tag_scheme=args.tag_scheme,
+    )
     train_keys = {source_key(item) for item in train}
     train_ngrams = set().union(*(prompt_ngram_hashes(item) for item in train))
     specs = (
@@ -224,6 +259,7 @@ def main():
             args.eval_episodes_per_chunk * len(counts), counts, domains, styles, value_range, True,
             args.seed + 100 + offset, train_keys | {source_key(item) for item in evaluation},
             train_ngrams,
+            tag_scheme=args.tag_scheme,
         )
         for item in rows:
             item["eval_regime"] = regime
@@ -235,7 +271,8 @@ def main():
     write_jsonl(args.train_out, train)
     write_jsonl(args.eval_out, evaluation)
     print(json.dumps({
-        "schema": "certified_latent_ledger_v1",
+        "schema": "certified_latent_ledger_v2_compact" if args.tag_scheme == "compact_v2" else "certified_latent_ledger_v1",
+        "tag_scheme": args.tag_scheme,
         "train_rows": len(train),
         "eval_rows": len(evaluation),
         "train_sha256": sha256(args.train_out),

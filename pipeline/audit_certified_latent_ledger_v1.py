@@ -17,6 +17,7 @@ from generate_source_memory_packet_v1 import source_key
 WORD = re.compile(r"\w+")
 PROBE_KINDS = {"read_left", "read_right", "sum", "difference"}
 EXPECTED_REGIMES = {"fit_iid", "length_ood", "language_ood", "full_ood"}
+PROTOCOLS = {"source_removed_readback_v1", "source_removed_readback_v2_compact_tags"}
 
 
 def sha256(path):
@@ -55,7 +56,7 @@ def ledger_valid(row, heldout):
         return False
     if not isinstance(row["chunks"], list) or len(row["chunks"]) != len(row["operations"]) != int(row["chunk_count"]):
         return False
-    if row.get("protocol") != "source_removed_readback_v1":
+    if row.get("protocol") not in PROTOCOLS:
         return False
     if int(row.get("ledger_stage", 0)) != int(row["chunk_count"]):
         return False
@@ -153,6 +154,7 @@ def main():
         "invalid_counterfactual_train_pairs": invalid_train_pairs,
         "invalid_counterfactual_eval_pairs": invalid_eval_pairs,
         "eval_regimes": dict(sorted(regimes.items())),
+        "protocols": sorted({row.get("protocol") for row in train + evaluation}),
     }
     output = Path(args.out)
     output.parent.mkdir(parents=True, exist_ok=True)

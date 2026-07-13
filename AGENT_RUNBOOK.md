@@ -54,7 +54,7 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-13 ~01:50 EDT) |
+| Item | Value (as of 2026-07-13 current custody check) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | `683715` completed cleanly. Current active continuation is **`685084`** on **evc22**: one H100, `BS=32 ACC=8 CKPT=250`, exact 524,288-token updates, and the proven default compile path. It resumed `ckpt_0141500.pt -> step 141501`. User-authorized successor **`686732`** is held `afterany:685084`: two H100s, `NG=2 BS=32 ACC=4 CKPT=250`, four CPUs, fresh optimizer, and the same 524,288-token update; it excludes CUDA-preflight failures `evc26,31,36,43,50`. |
@@ -76,7 +76,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | **Continuous latent-rollout pilot** | Commit `318c6b9` adds a soft-token continuous hidden-state rollout path that leaves normal token-id/KV-cache forward unchanged. It trains answer-only operator problems with a progressive 0→1→2→4 latent schedule and an exactly paired L=0 control, then evaluates held-out longer 5/6/8-step chains at rollout depths 0/1/2/4/8. The first CPU build `687038` was solver-rejected for **2,608 duplicate normalized train prompts** before admission or model load; all three files were moved intact to `artifacts/rejected/`. Commit `98ee9a2` enforces generation-time uniqueness and a full 96k-row uniqueness stress test. Clean CPU rebuild `687041` and admission `687042` are queued; no latent GPU training is submitted until those reports pass. |
 | **Current latent-pilot correction** | Corrected generation `687041` and admission `687042` **passed**: **96,000** unique solver-verified answer-only train rows and **1,800** held-out depth-5/6/8 rows, zero malformed/duplicate/exact/13-gram overlaps, training SHA-256 `aa65eefd1dbee25c3c7cec956059a970ea53e079bbc4f4695dd160cacd980fd9`. H100 mechanics canary `687046` completed 32 exact-shape batches across progressive L=0/1/2/4 with finite loss/gradients. Matched 24k pilots `687048` (**L=0 control**) and `687049` (**L=4 progressive latent**) are active from `best_step180000.pt` with same data, seed, batch size, and optimizer schedule; held-out read-only evaluators `687050`/`687051` wait after each. No result is promotable without transfer evidence. |
 | **Source-dropping packet memory** | **Rejected for promotion.** Admitted data has **192,000** train rows and **1,536** held-out rows across IID, length, language, and full OOD regimes; audit reports zero invalid/duplicate/exact train-eval prompt collisions, train SHA-256 `419199a756679e61601c05481ffc59221fba75b601608990539781013a51da64`, eval SHA-256 `6a10a6b27be8dc6b0a36954296d9f33abd099d87bbdff46c251a1357f1c894c3`. Matched M0 (`687082`, slots=0) completed 6,000 updates in 1,153s; M1 (`687083`, slots=8) completed the same 6,000 updates in 2,694s from the same raw-180k/data/seed/schedule. Held-out M1 normal/zero/shuffled was **6/384 / 6/384 / 9/384**. Locked comparator `687088` returned `advance=false`: M1 normal lost to shuffled on IID (**4/96 vs 5/96**) and had no positive margin in length+language (**2/192 vs 3/192 controls**), zero chunk wins, and zero query-kind wins. No source token is present at decode time, but no causal retained-information claim survived. |
-| **Certified latent ledger (CLL)** | **Admitted, matched H100 chain pending capacity.** CPU-only `687132` completed in **153s**: **223,996** train rows (327MB), **7,936** held-out rows (15MB), **16,000** train pairs, and **384** held-out pairs. Independent audit had zero invalid/duplicate/exact/13-gram/pair failures; train SHA-256 `1fd39b2ece45c47dd48015489221c1998adb463302097cf21b3dd5345ef3a515`, eval SHA-256 `1bef01c34bf034aaf00a8f976b4463cc28af87ca460c8187873543a7e05ad6a9`. Matched raw-190k M0 no-slot `687134` and M1 eight-slot `687135` each use `BS=4`, 24,000 selected examples, one epoch / 6,000 updates, seed `20260715`, and no flagship paths. Held-out pair-safe evaluators `687136/687137` retain balanced readbacks plus 32 complete pairs/regime; comparator `687138` requires M1 normal to beat M0, zero, shuffled, and the 10-point pairwise counterfactual gate. |
+| **Certified latent ledger (CLL)** | **V1 is correctness-admitted but efficiency-rejected before H100 start.** CPU-only `687132` completed in **153s**: **223,996** train rows (327MB), **7,936** held-out rows (15MB), **16,000** train pairs, and **384** held-out pairs. Its independent audit has zero invalid/duplicate/exact/13-gram/pair failures; train SHA-256 `1fd39b2ece45c47dd48015489221c1998adb463302097cf21b3dd5345ef3a515`, eval SHA-256 `1bef01c34bf034aaf00a8f976b4463cc28af87ca460c8187873543a7e05ad6a9`. Read-only tokenizer audit found v1's discarded tags made train chunks mean **213.36** tokens (20k rows; p50 208, p95 241) and held-out chunks mean **194.93** (all 7,936 rows; p50 192, p95 227), wasting capacity in the memory encoder. Pending M0/M1/eval/comparator `687134`-`687138` were canceled before any GPU allocation. Fresh v2 keeps the same source-removal, solver, counterfactual, and split-audit protocol but replaces each tag with a verified 14-token inert `Reference + 12 letters` marker; it must independently audit and pass a fresh token-cost report before any H100 gate is submitted. |
 | 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
 | 60k skips | **45 total**, stable/healthy |
 | **Corpus-expansion job** | `680324` — **✅ DONE** (finished ~12:10) |
@@ -104,7 +104,7 @@ extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no st
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
 **Next actions in order:** (1) Watch `685084`: retain the normal ~154k tok/s band and expected 250-step
-checkpoints, preserve/download 190k, and never interrupt a recovered isolated gnorm skip. (2) When `685084`
+checkpoints, preserve/download 200k, and never interrupt a recovered isolated gnorm skip. (2) When `685084`
 exits, verify `686732` resumes the newest numbered checkpoint with `world=2`, `BS=32`, `ACC=4`, a new
 data-stream generation, no NCCL/CUDA failure, and steady throughput near the prior two-H100 range before
 counting a single training step. (3) Retain V7
@@ -2013,6 +2013,18 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   slots=8 `687135` use the same 24,000 selected examples / 6,000 updates / seed / optimizer, followed
   by pair-safe evaluators `687136/687137` and locked comparator `687138`. Every GPU job excludes
   live-node `evc22`; no job can modify the flagship.
+
+- **2026-07-13 current custody check** — **CLL v1 is preserved as a correctness pass, but H100
+  trials were stopped before start by an efficiency preflight.** Read-only tokenization of 20,000 v1
+  train rows found mean/p50/p95 chunk lengths **213.36/208/241** tokens and mean/p95 per-row source
+  lengths **477.45/859**; all 7,936 held-out rows measured **194.93/192/227** tokens per chunk and
+  **660.24/1,390** per-row source. The 16 opaque seal words consume most of a tiny encoder's
+  context while contributing no task information. Pending M0/M1/evaluator/comparator
+  `687134`-`687138` were canceled while pending, before GPU allocation or any output write. The
+  new isolated `compact_v2` tag scheme keeps a record-unique 13-token contamination guard as
+  `Reference` plus 12 tokenizer-single-character words (14 tokens including punctuation, verified
+  against `shohin-tok-32k.json`) and changes no v1 artifact. It must receive a fresh CPU build,
+  independent audit, and token-cost report before matched H100 M0/M1 jobs are recreated.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*

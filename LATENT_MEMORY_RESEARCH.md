@@ -206,6 +206,21 @@ different predicted values. When pairs exist,
 advantage over M0, zeroed, and shuffled controls. This is still a narrow
 retained-information gate, not a general-reasoning result.
 
+### CLL v1 efficiency correction
+
+The initial v1 corpus is a valid correctness artifact, but it is not an efficient tiny-model
+experiment. Read-only tokenization measured mean train chunk length **213.36** tokens (20k-row
+sample; p50 208, p95 241) and mean held-out chunk length **194.93** tokens (all rows; p50 192,
+p95 227), largely because each discarded boundary carried sixteen opaque seal words. The pending
+M0/M1/evaluator/comparator chain `687134`-`687138` was canceled before it allocated a GPU.
+
+`compact_v2` preserves the solver-recomputed readbacks, source-removal boundary, counterfactual
+pairs, and exact/13-gram split audit, but represents each inert tag as `Reference` plus twelve
+single-character words. With `shohin-tok-32k.json` this is exactly 14 tokens including punctuation
+and supplies a record-unique first 13-token ngram. The v1 artifacts are retained unchanged. V2
+must independently pass its audit and a full token-cost report before matched H100 training is
+resubmitted; a correct but unnecessarily long synthetic protocol is not a useful reasoning result.
+
 ## If CLL Fails: Latent State Algebra
 
 CLL may still fail because answer losses reward the right token without making
