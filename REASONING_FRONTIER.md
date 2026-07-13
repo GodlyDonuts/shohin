@@ -314,6 +314,34 @@ or structural counter, and proves the exact inference/SFT prompt boundary
 before using CUDA. This makes a later causal test reproducible; it does not
 promote the hypothesis, create a durable corpus, or reserve a GPU.
 
+### Static-Tape Recurrent Register (STRR): 2026-07-13 16:04 EDT
+
+DRS exposes a second representation confound besides its missing local
+contexts. The previous `dws:` state makes every self-authored transition copy
+the immutable `a` and `b` operand tapes, even though only the control register
+and result tape change. That can reward long-string reproduction more than
+local execution. **STRR** factorizes these roles: the original problem is a
+fixed `dwt:` tape containing opcode, width, and the two operand tapes; the
+model emits only the evolving `dwr:` register with `p`, `c`, `r`, and `z`.
+
+The transport-only controller is deliberately constrained. It re-sends the
+unchanged tape from the episode and forwards only a parsed model-emitted
+register. It never applies the arithmetic transition, replaces a malformed
+register, or chooses among outputs. Thus the test asks whether preserving
+immutable evidence in context lets a small model carry a compact dynamic state
+more reliably, rather than delegating arithmetic to the controller.
+
+Its independently checked medium preflight uses the same **6,800** complete
+episodes / **77,946** rows / **3,400** reachable local contexts and **120**
+paired held-out counterfactual episodes as the matched basis smoke. The
+generator and auditor report 0 malformed rows or episodes, duplicate prompts,
+counterfactual mismatches, exact split hits, or literal 13-gram hits; deleting
+all examples of one valid local context makes admission fail. The matched
+closed-loop evaluator is static-tested. STRR is an unsubmitted candidate: it
+has no durable corpus, SFT checkpoint, or GPU allocation. It becomes
+admissible only after the running v2 core, held-out wording, and transcript
+chain distinguish coverage failure from a deeper execution failure.
+
 ## Conditional Hypothesis: Dual-Code Reversible Deliberation
 
 The missing ingredient may be neither a longer trace nor a larger hidden

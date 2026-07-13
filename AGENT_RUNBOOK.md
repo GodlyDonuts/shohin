@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 15:53 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; both DRS v2 raw controls are zero; isolated uncompiled DRS SFT `687459` completed cleanly on verified evc49, and source-free core evaluator `687460` is running before held-out/direct/NLL successors; its coverage audit found an exact leading-digit support gap and a v3 complete-transition-basis candidate now passes local admission; its isolated hash-bound launch contract is staged but no v3 corpus/data/job exists; DCRD and CBC each have local preflighted generator/auditors, while CBC now also has a transport-only evaluator controller; all remain conditional; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 16:04 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; the DRS v2 core has completed only its width-4/6 regimes so far: 100/100 and 98/100 fit versus 34/100 and 43/100 unseen-value final answers; width-8, held-out wording, direct transcripts, and NLL remain pending; v3 complete-transition-basis and the new static-tape/recurrent-register candidates are CPU-preflighted only, with no durable corpus/data/job; DCRD and CBC remain conditional; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2528,3 +2528,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   three recombination/width-held-out regimes. It also proves that SFT uses the exact inference prompt
   boundary before taking CUDA. The static contract test passes. This creates no corpus and submits no job;
   it only makes a later positive-evidence test reproducible without weakening the admission gate.
+
+- **2026-07-13 16:04** — **Static-Tape Recurrent Register (STRR) is a new CPU-preflighted causal
+  representation candidate, not a training result.** The diagnosis is that original DRS makes every
+  recurrent output regenerate immutable `a` and `b` operand tapes as well as the evolving `p/c/r/z`
+  fields. STRR sends the immutable canonical `dwt:` tape again as fixed problem evidence each turn, but
+  requires the model to emit only the `dwr:` register. Its transport-only controller never executes,
+  repairs, or chooses a register; it merely reuses the original tape and forwards the exact model output.
+  Generator/auditor preflight with two tape variants has 6,800 complete episodes / 77,946 rows, all 3,400
+  reachable local contexts, 120 paired held-out counterfactual episodes, and 0 malformed, duplicate,
+  counterfactual, exact-overlap, or literal 13-gram-overlap findings. Its matched closed-loop evaluator is
+  static-tested. This factorization is a direct test of the repeated-immutable-copy burden, not external
+  arithmetic assistance. It creates no durable corpus, SFT, or GPU allocation until the active DRS chain
+  has yielded its core, held-out, and transcript evidence.

@@ -352,6 +352,19 @@ any structural or contamination counter, and prove the exact inference/SFT
 prompt boundary before CUDA. This is reproducibility infrastructure, not a
 training or capability result.
 
+### STRR Factorized-Register Preflight: 2026-07-13 16:04 EDT
+
+The Static-Tape Recurrent Register control holds immutable operand evidence in
+a fixed `dwt:` prompt field and asks the model to emit only the evolving
+`dwr:` register. Its medium CPU preflight has **6,800** complete episodes,
+**77,946** deduplicated rows, **3,400 / 3,400** independently required and
+covered local contexts, and **120** paired held-out counterfactual episodes
+(40 each of `recombine_w4`, `recombine_w6`, and `width_ood_w8`). The
+independent admission audit reports 0 invalid rows/episodes, normalized
+duplicates, counterfactual mismatches, missing contexts, exact split hits, and
+13-gram split hits. It is not a model score and has no durable data, SFT, or
+GPU job. The static-tested evaluator forwards model-emitted registers only.
+
 ## Checkpoint and Disaster-Recovery Inventory
 
 | Milestone | Numbered checkpoint at milestone | Newton durable copy | Local full checkpoint | MD5 | State |
