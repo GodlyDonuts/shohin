@@ -14,11 +14,22 @@ BASE=/lustre/fs1/home/sa305415/shohin
 PY=$BASE/miniforge3/bin/python
 INIT=${INIT:?set INIT to an immutable pretraining checkpoint}
 DATA=${DATA:?set DATA to admitted LSA pair JSONL}
-AUDIT=${AUDIT:?set AUDIT to matching LSA audit JSON}
+AUDIT=${AUDIT:?set AUDIT to the generic hash-bound latent-state-algebra admission audit, not the CPR protocol audit}
 OUT=${OUT:?set OUT to a fresh isolated output directory}
 
 for path in "$INIT" "$DATA" "$AUDIT"; do [ -s "$path" ] || { echo "[causal-prefix] missing input: $path" >&2; exit 2; }; done
 [ ! -e "$OUT" ] || { echo "[causal-prefix] refusing existing output: $OUT" >&2; exit 3; }
+"$PY" - "$AUDIT" <<'PY'
+import json
+import sys
+
+audit = json.load(open(sys.argv[1]))
+if audit.get("audit") != "latent_state_algebra_v1":
+    raise SystemExit(
+        "[causal-prefix] AUDIT must be the generic latent_state_algebra_v1 admission report; "
+        "pass the causal-prefix protocol audit separately as retained evidence"
+    )
+PY
 cd "$BASE/train"
 "$PY" - <<'PY'
 import sys

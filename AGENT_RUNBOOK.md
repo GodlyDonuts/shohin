@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 06:47 EDT (`685084` remains healthy through 195.31k; the locked source-free latent-state-algebra r2 comparator rejected the candidate on every causal gate, and the corrected independently audited causal-prefix-readback three-arm replacement is now running finite updates from immutable 190k with its held-out evaluators dependency-held; the prior 4.6B FineWeb output is rejected and Stokes `738030` is building the guarded `sample-100BT` replacement). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 06:43 EDT (`685084` remains healthy through 195.31k; the locked source-free latent-state-algebra r2 comparator rejected the candidate on every causal gate, and the corrected independently audited causal-prefix-readback three-arm replacement is now running finite updates from immutable 190k with its held-out evaluators dependency-held; the prior 4.6B FineWeb output is rejected and Stokes `738030` is building the guarded `sample-100BT` replacement). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2265,7 +2265,7 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   `6810722f720c1ad8d2874de4e4ff5329`. The next experiment is causal prefix readback, a source-free
   decoder-readback control designed to distinguish language-decoder use of an intermediate packet from
   an auxiliary-probe fit; its corrected submission is recorded in the next entry.
-- **2026-07-13 06:47** — **CPR launch corrected and reaches healthy finite updates.** The first
+- **2026-07-13 06:43** — **CPR launch corrected and reaches healthy finite updates.** The first
   `687216/687217/687218` CPR submission correctly refused the CPR-specific audit before model loading:
   the trainer requires the generic hash-bound LSA admission audit, while the CPR audit remains a
   separately preserved protocol validation. Canceled their never-satisfiable `687219/687220/687221`
@@ -2276,7 +2276,8 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   and have finite, descending step-80 losses on the exact matched 32,000-pair / 7,163-update surface.
   Clean separate evaluators `687226/687227/687228` are `afterok`-held. This tests whether the language
   decoder, rather than an auxiliary probe, can read intermediate source-free packets; none can write to
-  or otherwise affect `685084`.
+  or otherwise affect `685084`. The job wrapper now also rejects a CPR protocol audit in the `AUDIT`
+  slot before CUDA initialization, so this input-class mistake cannot consume another H100 allocation.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
