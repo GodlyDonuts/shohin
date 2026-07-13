@@ -264,6 +264,26 @@ state terminates the run; it is not canonicalized into a solver answer or
 repaired.  This makes CBC's later state-necessity measurement executable
 rather than an informal data claim.
 
+### DRS v2 Coverage Diagnosis: 2026-07-13 15:38 EDT
+
+The new read-only position-coverage audit resolves a material ambiguity in the
+ongoing DRS core evaluation.  The immutable v2 train corpus has **zero**
+transition inputs containing digits **3–9** at the most-significant position
+of either operand tape for width 4 or width 6; those positions were limited
+to values below `3000` and `300000`.  In contrast, each `value_ood` regime
+uses `7000–9999` or `700000–999999`.  All **600** paired value-OOD local
+transition contexts per width therefore have an unseen exact local arithmetic
+context, and the audit records **1,200** unseen digit-position events per
+value-OOD regime.  Width-8 is a true compositional extrapolation with **4,800**
+unseen local contexts.
+
+This does not excuse a poor result; it prevents a false conclusion.  DRS v2
+can only establish in-distribution fixed-register execution.  Any next DRS
+curriculum must stratify digit support by width, position, operand tape,
+operation, and carry/borrow context before its value-OOD result can be used as
+evidence about algorithmic generalization.  No revised corpus or GPU job is
+created before the current serialized DRS chain finishes.
+
 ## Conditional Hypothesis: Dual-Code Reversible Deliberation
 
 The missing ingredient may be neither a longer trace nor a larger hidden

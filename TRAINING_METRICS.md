@@ -323,6 +323,18 @@ The companion transport-only controller test passes source-free rollout,
 inverse-delta, same-world interchange, and counterfactual mismatch checks;
 an incorrect first model state halts rather than being repaired.
 
+### DRS v2 Position Coverage Audit: 2026-07-13 15:38 EDT
+
+`pipeline/audit_digitwise_position_coverage.py` ran read-only against the
+immutable v2 corpus.  It found four missing train marginal cells: digits
+**3–9** never occur in the most-significant `a` or `b` position at width 4 or
+width 6.  Consequently each value-OOD regime contains **1,200** unseen
+digit-position events and **600** unseen exact local transition contexts
+across its 300 paired held-out episodes; width-8 contains **9,600** and
+**4,800**, respectively.  The fit regimes have zero unseen digit-position and
+zero unseen local-context events.  These counts define the defect a later
+position-balanced DRS curriculum must repair; they are not a model score.
+
 ## Checkpoint and Disaster-Recovery Inventory
 
 | Milestone | Numbered checkpoint at milestone | Newton durable copy | Local full checkpoint | MD5 | State |

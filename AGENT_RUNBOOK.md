@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 15:33 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; both DRS v2 raw controls are zero; isolated uncompiled DRS SFT `687459` completed cleanly on verified evc49, and source-free core evaluator `687460` is running before held-out/direct/NLL successors; DCRD and CBC each have local preflighted generator/auditors, while CBC now also has a transport-only evaluator controller; all remain conditional with no submitted corpus/data/job; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 15:38 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; both DRS v2 raw controls are zero; isolated uncompiled DRS SFT `687459` completed cleanly on verified evc49, and source-free core evaluator `687460` is running before held-out/direct/NLL successors; its coverage audit found an exact leading-digit support gap; DCRD and CBC each have local preflighted generator/auditors, while CBC now also has a transport-only evaluator controller; all remain conditional with no submitted corpus/data/job; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2501,3 +2501,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   query mismatch; corrupting the first predicted state halts the rollout with no final-answer repair. This
   is evaluator infrastructure only. No CBC corpus, SFT checkpoint, or GPU job is authorized ahead of the
   DRS causal decision.
+
+- **2026-07-13 15:38** — **DRS v2 coverage audit identified a precise OOD confound before interpreting its
+  core curve.** `pipeline/audit_digitwise_position_coverage.py` is a read-only transition-context report.
+  On immutable v2 it found no train transitions with operand digits 3–9 at width-4 position 3 or width-6
+  position 5, for either tape. The fit regimes have 0 unseen digit-position/local contexts; each value-OOD
+  regime has **1,200 / 600** and width-8 has **9,600 / 4,800**, respectively, across its complete paired
+  held-out set. Any revised DRS data must stratify coverage by width, position, tape, operation, and
+  carry/borrow before value-OOD performance can answer an algorithmic-generalization question. This
+  diagnostic alters no existing data, checkpoint, or job and does not pre-judge the running causal chain.
