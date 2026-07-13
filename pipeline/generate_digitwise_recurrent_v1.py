@@ -100,9 +100,9 @@ def counterfactual_episode(episode):
 
 
 def episode_signature(episode):
-    # The initial state fully determines every state prompt in this deterministic
-    # protocol, so reusing it across splits would invalidate the heldout surface.
-    return episode["initial_state"]
+    # The operation token can fall outside a 13-token state window. Reserve the
+    # operand tapes across operations, not just the exact initial-state line.
+    return int(episode["width"]), int(episode["left"]), int(episode["right"])
 
 
 def _episode_prompts(episode):
@@ -243,7 +243,7 @@ def main():
     if not train_rows or any(row["question"] != row["completion_prompt"] or not row["response"] for row in train_rows):
         raise RuntimeError("malformed digitwise training row")
 
-    train_signatures = {episode_signature(episode) for episode in train_episodes}
+    reserved_signatures = {episode_signature(episode) for episode in train_episodes}
     heldout_specs = (
         ("fit_w4", 4, 0, 2999),
         ("fit_w6", 6, 0, 299999),
@@ -262,9 +262,11 @@ def main():
             episode = make_episode(
                 rng, "{}-{:05d}".format(split, index), split, width, minimum, maximum, "heldout"
             )
-            if episode_signature(episode) in train_signatures:
-                continue
             episode["counterfactual"] = counterfactual_episode(episode)
+            signatures = {episode_signature(episode), episode_signature(episode["counterfactual"])}
+            if signatures & reserved_signatures:
+                continue
+            reserved_signatures.update(signatures)
             heldout.append(episode)
     train_prompts = {normalized(row["completion_prompt"]) for row in train_rows}
     heldout_prompts = set().union(*(set(map(normalized, episode_prompts(episode))) for episode in heldout))

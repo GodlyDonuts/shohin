@@ -5,7 +5,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-13 11:27 EDT
+**Last refreshed:** 2026-07-13 12:04 EDT
 **Flagship source of truth:** Newton Slurm job `685084`,
 `/lustre/fs1/home/sa305415/shohin/train/flagship_out/log_r0.jsonl`  
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -35,10 +35,10 @@ the numbered file under its retention policy; the ledger records which copies re
 | Absolute training target | 300,000 steps |
 | Resume point | `ckpt_0141500.pt` to step 141,501 |
 | Latest checkpoint milestone | **200,000** steps = **104,857,600,000 nominal update tokens** |
-| Last observed live step | 200,560 = 105,151,201,280 nominal update tokens |
-| Last observed throughput | 154,294 tokens/s, approximately 13.33B nominal tokens/day at that sustained rate |
-| Latest loss / gradient norm | step 200,560: loss 1.4530; gnorm 0.08; LR 0.0050 |
-| Direct H100 telemetry | 11:33 EDT: 100% compute utilization, 63,767 / 81,559 MiB VRAM, 301.42 / 310 W. Low unused VRAM is deliberate: BS64 was OOM; BS32 is the largest verified single-GPU microbatch. |
+| Last observed live step | 200,920 = 105,339,944,960 nominal update tokens |
+| Last observed throughput | 154,291 tokens/s, approximately 13.33B nominal tokens/day at that sustained rate |
+| Latest loss / gradient norm | step 200,920: loss 1.5956; gnorm 0.10; LR 0.0050 |
+| Direct H100 telemetry | 12:01 EDT: 94% compute utilization, 63,767 / 81,559 MiB VRAM, 297.21 / 310 W. Low unused VRAM is deliberate: BS64 was OOM; BS32 is the largest verified single-GPU microbatch. |
 | Post-190k health | Isolated guard skips at 193,437 (gnorm 2.21 versus 0.13 EMA) and 200,387 (2.02 versus 0.11 EMA) each recovered at the next logged step. Surrounding recent steps remain in the normal range; no divergence or persistent skip exists. |
 | Two-H100 handoff revalidation | `686734` on evc37, 320 bounded updates from `best_step180000.pt`, `world=2`, `BS=32`, `ACC=4`, fresh optimizer, stream generation 1. Exit 0 with no CUDA/NCCL/DDP error; compile-free late windows 291.7-293.9k tok/s (about 1.90x the live one-H100 rate). One terminal gnorm guard skip at step 180,319 was not followed by an in-canary recovery step, so this is throughput/transport evidence only. |
 
@@ -103,6 +103,28 @@ losses were likewise nearly indistinguishable across verified and shuffled-label
 failure to establish a decoder-readable, label-dependent packet channel, not merely an OOD miss.
 Reports are preserved locally under `artifacts/evals/causal_prefix_readback_*_190k.json`; no CPR stage
 2 or flagship integration is authorized.
+
+### DRS and Direct-Interaction Update: 2026-07-13 12:04 EDT
+
+The fixed seven-case transcript-first probe was run directly against the verified local full
+`ckpt_0200000.pt`, with greedy 32-token decoding. It is **1/7 initial, 0/7 self-review,
+1/7 verified intermediate fact, and 0/7 compact-state reuse**, the same directional result as the
+190k probe. The only correct initial/fact case is the simple syllogism. This is interaction-level
+evidence that ordinary reasoning has not visibly improved over the last 10k steps; it is not a
+public benchmark result. Artifact md5: `eb3e06aa2039ceb77adf17dbc3301fd3`.
+
+The first Digitwise Recurrent Scratchpad CPU build `738117` wrote **439,865** immutable train rows
+and **1,500** held-out paired counterfactual episodes. Its independent read-only audit `738120`
+recomputed every row/episode and found zero invalid rows, duplicate normalized prompts, or exact
+prompt hits, but **27 13-gram hits**. Inspection showed a genuine split leak: train and held-out
+episodes could reuse the same `(width,left,right)` operand tape under different operations, leaving
+the operation token outside a 13-gram window. The candidate is rejected before GPU use. Its data
+SHA-256 is `de6e4f798357484fb8496c396ecd930effb9b969e7dd9a16861ac5ced121102a` and held-out SHA-256
+is `b831e43d87a7594464d3721212cbcb049bdfe7e5b7657680e0147b1020c3a72f`; those rejected artifacts
+remain immutable. The corrected split reserves operand tapes across operations and counterfactuals,
+and local 1,000-episode smoke audit is 0 invalid, 0 duplicate, 0 exact, and 0 13-gram overlap.
+Stokes `738122` constructs a separately named v2 candidate and `738123` independently audits it;
+no H100 training is authorized until the v2 report passes.
 
 ## Checkpoint and Disaster-Recovery Inventory
 

@@ -140,8 +140,15 @@ def main():
 
     train_prompts = {normalized(row.get("question", "")) for row in train_rows if row.get("question")}
     heldout_normalized = {normalized(prompt) for prompt in heldout_prompts}
-    train_grams = set().union(*(ngrams(row["question"]) for row in train_rows if row.get("question")))
-    heldout_grams = set().union(*(ngrams(prompt) for prompt in heldout_prompts))
+    train_gram_rows = {}
+    for index, row in enumerate(train_rows, 1):
+        for gram in ngrams(row.get("question", "")):
+            train_gram_rows.setdefault(gram, {"line": index, "kind": row.get("kind")})
+    heldout_gram_rows = {}
+    for index, prompt in enumerate(heldout_prompts, 1):
+        for gram in ngrams(prompt):
+            heldout_gram_rows.setdefault(gram, {"prompt_index": index})
+    shared_grams = sorted(set(train_gram_rows) & set(heldout_gram_rows))
     result = {
         "audit": "digitwise_recurrent_v1_protocol_audit",
         "data": str(data.resolve()),
@@ -159,7 +166,11 @@ def main():
         "regimes": dict(sorted(regimes.items())),
         "overlap": {
             "exact_prompt_hits": len(train_prompts & heldout_normalized),
-            "ngram13_hits": len(train_grams & heldout_grams),
+            "ngram13_hits": len(shared_grams),
+            "ngram13_examples": [
+                {"ngram": gram, "train": train_gram_rows[gram], "heldout": heldout_gram_rows[gram]}
+                for gram in shared_grams[:8]
+            ],
         },
     }
     out.parent.mkdir(parents=True, exist_ok=True)

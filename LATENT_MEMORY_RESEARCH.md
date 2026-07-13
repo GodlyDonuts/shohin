@@ -378,3 +378,27 @@ finite local transition, preserve a strict bounded context, and make every
 state transition verifier-checkable. A passing result would still be narrow
 algorithmic-execution evidence, not general reasoning. Only after the discrete
 skeleton passes should learned compression or a language bridge be considered.
+
+### DRS v1 split decision and v2 rebuild
+
+The first full CPU-only candidate was generated on Stokes before any model
+allocation. It contains 439,865 train rows and 1,500 held-out paired
+counterfactual episodes over fit width 4/6, value OOD width 4/6, and width OOD
+8. The independent audit recomputed every transition and counterfactual. It
+found zero invalid rows, duplicate normalized train prompts, or exact prompt
+hits, but it found **27 held-out 13-gram hits**, so the candidate is rejected.
+
+The overlap was real rather than fixed instructional wording: an `add` training
+episode and a `sub` held-out episode could carry the same width and operand
+tapes. The operation field can occur outside an arbitrary 13-token state
+window, so an exact initial-state signature was insufficient. The rejected v1
+JSONL files and audit remain immutable. The correction reserves the
+`(width,left,right)` operand-tape signature across operations and across both
+members of each counterfactual pair. The audit now emits bounded overlap
+examples for future diagnosis. Unit tests and a 1,000-episode smoke build pass
+with zero exact and 13-gram overlap.
+
+Stokes `738122` builds a separately named v2 candidate and `738123` audits it
+after success. No DRS GPU training may be submitted unless that audit reports
+zero invalid/duplicate/exact/13-gram overlap and all five regimes plus all
+counterfactual pairs. This is a data-admission correction, not a model result.

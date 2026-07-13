@@ -8,6 +8,13 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "pipeline"))
+from generate_digitwise_recurrent_v1 import episode_from_operands, episode_signature
+
+
+same_tapes_add = episode_from_operands("add", "train", 4, "add", 1234, 567, "core")
+same_tapes_sub = episode_from_operands("sub", "heldout", 4, "sub", 1234, 567, "heldout")
+assert episode_signature(same_tapes_add) == episode_signature(same_tapes_sub)
 
 
 with tempfile.TemporaryDirectory() as directory:

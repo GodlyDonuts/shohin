@@ -27,5 +27,5 @@ with tempfile.TemporaryDirectory() as directory:
     assert payload["invalid_rows_or_episodes"] == 0
     assert payload["duplicate_normalized_train_questions"] == 0
     assert payload["counterfactual_pairs"] == 20
-    assert payload["overlap"] == {"exact_prompt_hits": 0, "ngram13_hits": 0}
+    assert payload["overlap"] == {"exact_prompt_hits": 0, "ngram13_hits": 0, "ngram13_examples": []}
 print("digitwise recurrent audit checks: passed")
