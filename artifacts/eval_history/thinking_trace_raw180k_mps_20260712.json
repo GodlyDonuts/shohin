@@ -1,0 +1,312 @@
+{
+  "audit": "thinking_trace_audit_v1",
+  "case_source_sha256": "427a5ae2523d7e9ea3f275f77bc41aa7463f807e24e0f75124a0777774e467af",
+  "cases": 12,
+  "checkpoint": "train/flagship_out/ckpt_0180000.pt",
+  "device": "mps",
+  "n_loop": 1,
+  "rows": [
+    {
+      "answer": 369,
+      "answer_correct": false,
+      "correct_trace_and_final": false,
+      "family": "product_then_adjust",
+      "final": 7768,
+      "id": "product_rejects_27x14",
+      "markers": [
+        [
+          "product",
+          378
+        ]
+      ],
+      "prompt": "Question: A warehouse loads 27 crates with 14 lamps each, then 9 lamps are rejected. Inside <think> tags, calculate the product and write product=<value>. Then end with 'The answer is <integer>.'.\nAnswer:",
+      "question": "A warehouse loads 27 crates with 14 lamps each, then 9 lamps are rejected. Inside <think> tags, calculate the product and write product=<value>. Then end with 'The answer is <integer>.'.",
+      "response": " 27 crates = 27 x 14 = 498 crates.\n\n27 crates = 498 x 14 = 7768 crates.\n\nThe product = 7768.\n\nThe answer is 7768.\n",
+      "trace": null,
+      "trace_correct": false,
+      "trace_present": false
+    },
+    {
+      "answer": 551,
+      "answer_correct": false,
+      "correct_trace_and_final": false,
+      "family": "product_then_adjust",
+      "final": null,
+      "id": "product_bonus_34x16",
+      "markers": [
+        [
+          "product",
+          544
+        ]
+      ],
+      "prompt": "Question: A machine makes 34 trays of 16 parts and receives 7 extra parts. Inside <think> tags, calculate the product and write product=<value>. Then end with 'The answer is <integer>.'.\nAnswer:",
+      "question": "A machine makes 34 trays of 16 parts and receives 7 extra parts. Inside <think> tags, calculate the product and write product=<value>. Then end with 'The answer is <integer>.'.",
+      "response": " 16x34=576\n\nQuestion:",
+      "trace": null,
+      "trace_correct": false,
+      "trace_present": false
+    },
+    {
+      "answer": 407,
+      "answer_correct": false,
+      "correct_trace_and_final": false,
+      "family": "product_then_adjust",
+      "final": null,
+      "id": "product_rejects_19x22",
+      "markers": [
+        [
+          "product",
+          418
+        ]
+      ],
+      "prompt": "Question: A studio prints 19 sheets with 22 labels each, then discards 11 labels. Inside <think> tags, calculate the product and write product=<value>. Then end with 'The answer is <integer>.'.\nAnswer:",
+      "question": "A studio prints 19 sheets with 22 labels each, then discards 11 labels. Inside <think> tags, calculate the product and write product=<value>. Then end with 'The answer is <integer>.'.",
+      "response": " 19*22= 438\n\nQuestion:",
+      "trace": null,
+      "trace_correct": false,
+      "trace_present": false
+    },
+    {
+      "answer": 541,
+      "answer_correct": false,
+      "correct_trace_and_final": false,
+      "family": "product_then_adjust",
+      "final": null,
+      "id": "product_bonus_41x13",
+      "markers": [
+        [
+          "product",
+          533
+        ]
+      ],
+      "prompt": "Question: A workshop fills 41 boxes with 13 bolts each and adds 8 spare bolts. Inside <think> tags, calculate the product and write product=<value>. Then end with 'The answer is <integer>.'.\nAnswer:",
+      "question": "A workshop fills 41 boxes with 13 bolts each and adds 8 spare bolts. Inside <think> tags, calculate the product and write product=<value>. Then end with 'The answer is <integer>.'.",
+      "response": " 41 boxes = 41 x 13 = 509 boxes.\n\nThe product of 41 boxes and 8 spare bolts is 509 boxes.\n\nThe product of 509 boxes and 8 spare bolts is 4147 boxes.\n\nThe product of 509 boxes and 8 spare bolts is 4147 boxes.\n\nThe product of 509 boxes",
+      "trace": null,
+      "trace_correct": false,
+      "trace_present": false
+    },
+    {
+      "answer": 61,
+      "answer_correct": false,
+      "correct_trace_and_final": false,
+      "family": "state_transition",
+      "final": 41,
+      "id": "state_add_multiply_subtract_17",
+      "markers": [
+        [
+          "after_add",
+          25
+        ],
+        [
+          "after_multiply",
+          75
+        ]
+      ],
+      "prompt": "Question: Start with n=17. Add 8, multiply the result by 3, then subtract 14. Inside <think> tags, write after_add=<value> and after_multiply=<value>. Then end with 'The answer is <integer>.'.\nAnswer:",
+      "question": "Start with n=17. Add 8, multiply the result by 3, then subtract 14. Inside <think> tags, write after_add=<value> and after_multiply=<value>. Then end with 'The answer is <integer>.'.",
+      "response": " 17 + 8*3 = 17 + 24 = 41\n\n## 17 + 8*3 = 17 + 24 = 41\n\nThe answer is 41.\n",
+      "trace": null,
+      "trace_correct": false,
+      "trace_present": false
+    },
+    {
+      "answer": 121,
+      "answer_correct": false,
+      "correct_trace_and_final": false,
+      "family": "state_transition",
+      "final": null,
+      "id": "state_add_multiply_subtract_23",
+      "markers": [
+        [
+          "after_add",
+          32
+        ],
+        [
+          "after_multiply",
+          128
+        ]
+      ],
+      "prompt": "Question: Start with n=23. Add 9, multiply the result by 4, then subtract 7. Inside <think> tags, write after_add=<value> and after_multiply=<value>. Then end with 'The answer is <integer>.'.\nAnswer:",
+      "question": "Start with n=23. Add 9, multiply the result by 4, then subtract 7. Inside <think> tags, write after_add=<value> and after_multiply=<value>. Then end with 'The answer is <integer>.'.",
+      "response": " 23 + 9 * 4 = 23 + 36 = 59\nAnswer: 59 - 7 = 52\nAnswer: 52 * 4 = 208\nAnswer: 208 - 7 = 201\nAnswer: 201 * 4 = 804\nAnswer: 804 - 7 = 797\nAnswer:",
+      "trace": null,
+      "trace_correct": false,
+      "trace_present": false
+    },
+    {
+      "answer": 101,
+      "answer_correct": false,
+      "correct_trace_and_final": false,
+      "family": "state_transition",
+      "final": null,
+      "id": "state_subtract_multiply_add_31",
+      "markers": [
+        [
+          "after_subtract",
+          19
+        ],
+        [
+          "after_multiply",
+          95
+        ]
+      ],
+      "prompt": "Question: Start with n=31. Subtract 12, multiply the result by 5, then add 6. Inside <think> tags, write after_subtract=<value> and after_multiply=<value>. Then end with 'The answer is <integer>.'.\nAnswer:",
+      "question": "Start with n=31. Subtract 12, multiply the result by 5, then add 6. Inside <think> tags, write after_subtract=<value> and after_multiply=<value>. Then end with 'The answer is <integer>.'.",
+      "response": " 12 + 6 = 18\n\n## 1.2.2.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.",
+      "trace": null,
+      "trace_correct": false,
+      "trace_present": false
+    },
+    {
+      "answer": 12,
+      "answer_correct": false,
+      "correct_trace_and_final": false,
+      "family": "state_transition",
+      "final": 20,
+      "id": "state_double_add_divide_18",
+      "markers": [
+        [
+          "after_double",
+          36
+        ],
+        [
+          "after_add",
+          48
+        ]
+      ],
+      "prompt": "Question: Start with n=18. Double it, add 12, then divide the result by 4. Inside <think> tags, write after_double=<value> and after_add=<value>. Then end with 'The answer is <integer>.'.\nAnswer:",
+      "question": "Start with n=18. Double it, add 12, then divide the result by 4. Inside <think> tags, write after_double=<value> and after_add=<value>. Then end with 'The answer is <integer>.'.",
+      "response": " 18+12=20\n\n## 18+12=20\n\nThe answer is 20.\n",
+      "trace": null,
+      "trace_correct": false,
+      "trace_present": false
+    },
+    {
+      "answer": 188,
+      "answer_correct": false,
+      "correct_trace_and_final": false,
+      "family": "base_place_value",
+      "final": null,
+      "id": "base7_356",
+      "markers": [
+        [
+          "hundreds",
+          147
+        ],
+        [
+          "tens",
+          35
+        ]
+      ],
+      "prompt": "Question: Convert the base-7 numeral 356 to base 10. Inside <think> tags, write hundreds=<value> and tens=<value> for the first two place-value contributions. Then end with 'The answer is <integer>.'.\nAnswer:",
+      "question": "Convert the base-7 numeral 356 to base 10. Inside <think> tags, write hundreds=<value> and tens=<value> for the first two place-value contributions. Then end with 'The answer is <integer>.'.",
+      "response": " 356 = 300 + 50 + 6\n\nQuestion:",
+      "trace": null,
+      "trace_correct": false,
+      "trace_present": false
+    },
+    {
+      "answer": 343,
+      "answer_correct": false,
+      "correct_trace_and_final": false,
+      "family": "base_place_value",
+      "final": null,
+      "id": "base8_527",
+      "markers": [
+        [
+          "hundreds",
+          320
+        ],
+        [
+          "tens",
+          16
+        ]
+      ],
+      "prompt": "Question: Convert the base-8 numeral 527 to base 10. Inside <think> tags, write hundreds=<value> and tens=<value> for the first two place-value contributions. Then end with 'The answer is <integer>.'.\nAnswer:",
+      "question": "Convert the base-8 numeral 527 to base 10. Inside <think> tags, write hundreds=<value> and tens=<value> for the first two place-value contributions. Then end with 'The answer is <integer>.'.",
+      "response": " 527 = 500 + 20 + 7\n\nQuestion:",
+      "trace": null,
+      "trace_correct": false,
+      "trace_present": false
+    },
+    {
+      "answer": 500,
+      "answer_correct": false,
+      "correct_trace_and_final": false,
+      "family": "trace_repair",
+      "final": null,
+      "id": "repair_product_37x14",
+      "markers": [
+        [
+          "product",
+          518
+        ]
+      ],
+      "prompt": "Question: A draft incorrectly says that 37 times 14 gives product=512. Check it independently, then subtract 18. Inside <think> tags, write the corrected product=<value>. Then end with 'The answer is <integer>.'.\nAnswer:",
+      "question": "A draft incorrectly says that 37 times 14 gives product=512. Check it independently, then subtract 18. Inside <think> tags, write the corrected product=<value>. Then end with 'The answer is <integer>.'.",
+      "response": " 512-18=494\n\nQuestion:",
+      "trace": null,
+      "trace_correct": false,
+      "trace_present": false
+    },
+    {
+      "answer": 105,
+      "answer_correct": false,
+      "correct_trace_and_final": false,
+      "family": "trace_repair",
+      "final": null,
+      "id": "repair_state_24",
+      "markers": [
+        [
+          "after_add",
+          35
+        ]
+      ],
+      "prompt": "Question: A draft says that after adding 11 to n=24, after_add=31. Check the draft, then multiply the corrected result by 3. Inside <think> tags, write the corrected after_add=<value>. Then end with 'The answer is <integer>.'.\nAnswer:",
+      "question": "A draft says that after adding 11 to n=24, after_add=31. Check the draft, then multiply the corrected result by 3. Inside <think> tags, write the corrected after_add=<value>. Then end with 'The answer is <integer>.'.",
+      "response": " 31*3=93\n\nQuestion:",
+      "trace": null,
+      "trace_correct": false,
+      "trace_present": false
+    }
+  ],
+  "step": 180000,
+  "summary": {
+    "answer_correct": 0,
+    "by_family": {
+      "base_place_value": {
+        "answer_correct": 0,
+        "cases": 2,
+        "correct_trace_and_final": 0,
+        "trace_correct": 0,
+        "trace_present": 0
+      },
+      "product_then_adjust": {
+        "answer_correct": 0,
+        "cases": 4,
+        "correct_trace_and_final": 0,
+        "trace_correct": 0,
+        "trace_present": 0
+      },
+      "state_transition": {
+        "answer_correct": 0,
+        "cases": 4,
+        "correct_trace_and_final": 0,
+        "trace_correct": 0,
+        "trace_present": 0
+      },
+      "trace_repair": {
+        "answer_correct": 0,
+        "cases": 2,
+        "correct_trace_and_final": 0,
+        "trace_correct": 0,
+        "trace_present": 0
+      }
+    },
+    "cases": 12,
+    "correct_trace_and_final": 0,
+    "trace_correct": 0,
+    "trace_present": 0
+  }
+}
