@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 05:52 EDT (`685084` remains healthy through 194.27k; corrected source-free latent-state-algebra r2 control/candidate completed their 7,163 matched updates and full held-out evaluator jobs are running under a preregistered comparator gate; a new causal prefix-readback fallback is independently audited and CPU-preflighted but remains unsubmitted; the prior 4.6B FineWeb output is rejected and Stokes `738030` is building the guarded `sample-100BT` replacement). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 06:22 EDT (`685084` remains healthy through 194.99k; corrected source-free latent-state-algebra r2 control/candidate completed their 7,163 matched updates and full held-out evaluator jobs are running under a preregistered comparator gate; a new causal prefix-readback fallback is independently audited and CPU-preflighted but remains unsubmitted; the prior 4.6B FineWeb output is rejected and Stokes `738030` is building the guarded `sample-100BT` replacement). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2245,6 +2245,14 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   state-update response emitted the correct intermediate sequence and `49` before looping, but the matrix
   confirms that this is rare and prompt changes do not unlock general computation. Treat this as evidence
   for stronger state/decoder supervision, not an output-format-only explanation or a thinking claim.
+- **2026-07-13 06:22** — **Explicit overnight comparison snapshot.** Flagship `685084` is RUNNING on
+  evc22 through **194,990** at **154,297 tok/s**, with recent step loss **1.4823**, gnorm **0.10**, and
+  **102,230,917,120 nominal update tokens**. No new guard skip followed the isolated recovered 193,437
+  event. The 190k local/Newton DR pair remains md5 `3e195aaf44a14259797c49d7f80d9c7f`; 200k is the next
+  mandatory preservation. LSA evaluators `687170/687171` are still running their locked held-out
+  normal/zero/shuffled source-free protocol; `687172` remains dependency-held, so no causal result or
+  next-stage launch is yet warranted. DCLM `686529` reached 204 partial ~100M-token shards (about 20.4B)
+  and remains unadmitted. This snapshot is the user-facing comparison baseline for the next morning.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*

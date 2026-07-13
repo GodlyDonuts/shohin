@@ -5,7 +5,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-13 05:39 EDT
+**Last refreshed:** 2026-07-13 06:22 EDT
 **Flagship source of truth:** Newton Slurm job `685084`,
 `/lustre/fs1/home/sa305415/shohin/train/flagship_out/log_r0.jsonl`  
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -35,9 +35,9 @@ the numbered file under its retention policy; the ledger records which copies re
 | Absolute training target | 300,000 steps |
 | Resume point | `ckpt_0141500.pt` to step 141,501 |
 | Latest checkpoint milestone | **190,000** steps = **99,614,720,000 nominal update tokens** |
-| Last observed live step | 194,220 = 101,827,215,360 nominal update tokens |
+| Last observed live step | 194,990 = 102,230,917,120 nominal update tokens |
 | Last observed throughput | 154,298 tokens/s, approximately 13.33B nominal tokens/day at that sustained rate |
-| Latest loss / gradient norm | step 194,220: loss 1.4431; gnorm 0.11; LR 0.0050 |
+| Latest loss / gradient norm | step 194,990: loss 1.4823; gnorm 0.10; LR 0.0050 |
 | Direct H100 telemetry | 05:07 EDT: 100% compute utilization, 59% memory-controller utilization, 63,767 / 81,559 MiB VRAM, 280.12 / 310 W, 63 C. Low unused VRAM is deliberate: BS64 was OOM; BS32 is the largest verified single-GPU microbatch. |
 | Post-190k health | One isolated guard skip at step 193,437 (gnorm 2.21 versus 0.13 EMA) recovered at the next logged step. Surrounding recent steps remain in the normal range; no divergence or persistent skip exists. |
 | Two-H100 handoff revalidation | `686734` on evc37, 320 bounded updates from `best_step180000.pt`, `world=2`, `BS=32`, `ACC=4`, fresh optimizer, stream generation 1. Exit 0 with no CUDA/NCCL/DDP error; compile-free late windows 291.7-293.9k tok/s (about 1.90x the live one-H100 rate). One terminal gnorm guard skip at step 180,319 was not followed by an in-canary recovery step, so this is throughput/transport evidence only. |
@@ -50,6 +50,20 @@ At the natural handoff only, `686732` will use `NG=2, BS=32, ACC=4`: the same
 250-step checkpoints, and the audited distinct data-stream generation. It excludes
 the CUDA-preflight failures `evc26,31,36,43,50`; it must log `world=2` and pass a
 real CUDA/NCCL health check before its throughput is counted.
+
+## Overnight Comparison Snapshot: 2026-07-13 06:22 EDT
+
+This is the explicit before-sleep reference point for the next custody check.
+
+| Surface | Verified state |
+|---|---|
+| Flagship | `685084` is `RUNNING` on `evc22`, 2d 02h elapsed, one H100, `BS=32 ACC=8`, 4 CPUs. |
+| Training progress | Step **194,990**; **102,230,917,120** nominal update tokens; **154,297 tok/s**. Recent loss/gnorm remains finite and in band. |
+| Stability | No new guard skip after the recovered step-193,437 outlier. No divergence, data-loader, CUDA, or checkpoint error observed. |
+| Durable recovery | Hash-matched 190k full checkpoint on Newton/local: md5 `3e195aaf44a14259797c49d7f80d9c7f`. 200k has not appeared; it remains the next mandatory promotion and local DR transfer. |
+| LSA primary gate | Both matched 7,163-update training arms completed. Held-out source-free evaluators `687170` (answer-only) and `687171` (verified geometry) are running on all 2,304 examples in normal, zero-packet, and shuffled-source modes; comparator `687172` is held on their completion. Normal/zero partial evidence is not a conclusion. |
+| Corpus expansion | DCLM `686529` is running on CPU with 204 partial 100M-token shards, about 20.4B tokens. The guarded FineWeb replacement runs separately on Stokes. Neither is admitted to the live stream. |
+| Next protected transition | `686732` is dependency-held after the flagship: two H100s, `BS=32 ACC=4`, same 524,288-token update. It must not affect the live writer. |
 
 ## Checkpoint and Disaster-Recovery Inventory
 
