@@ -118,6 +118,58 @@ def full_replay_last_logits(model, ids: torch.Tensor) -> torch.Tensor:
     return logits[:, -1:, :]
 
 
+def cache_nbytes(anchor: CausalKVAnchor) -> int:
+    """Return the exact resident bytes represented by this cache snapshot.
+
+    This is deliberately an accounting quantity, not a claim about allocator
+    fragmentation or peak GPU memory.  It is sufficient to compare the cache
+    payload of matched anchor and counterfactual branches.
+    """
+
+    total = 0
+    for key, value in anchor.cache:
+        total += key.numel() * key.element_size()
+        total += value.numel() * value.element_size()
+    return int(total)
+
+
+def _triangular_attention_pairs(length: int) -> int:
+    """Causal query-key pairs for a full prefill of ``length`` tokens."""
+
+    return length * (length + 1) // 2
+
+
+def resource_accounting(anchor_tokens: int, appended_tokens: int, cache_bytes: int) -> dict[str, int]:
+    """Count exact token/pair work for cached serial append versus full replay.
+
+    The count assumes a session begins by pre-filling an immutable anchor and
+    then processes each later token.  Full replay recomputes all history after
+    every append, while the cache path computes the anchor once and a single
+    query token thereafter.  ``attention_pairs`` counts causal QK pairs per
+    attention layer, excluding model-width constants shared by both paths.
+    """
+
+    if anchor_tokens <= 0 or appended_tokens < 0 or cache_bytes < 0:
+        raise ValueError("anchor tokens must be positive; appended tokens and cache bytes non-negative")
+    cached_token_positions = anchor_tokens + appended_tokens
+    replay_token_positions = sum(anchor_tokens + offset for offset in range(appended_tokens + 1))
+    cached_attention_pairs = _triangular_attention_pairs(anchor_tokens) + sum(
+        anchor_tokens + offset for offset in range(1, appended_tokens + 1)
+    )
+    replay_attention_pairs = sum(
+        _triangular_attention_pairs(anchor_tokens + offset) for offset in range(appended_tokens + 1)
+    )
+    return {
+        "anchor_tokens": int(anchor_tokens),
+        "appended_tokens": int(appended_tokens),
+        "cache_bytes": int(cache_bytes),
+        "cached_token_positions": int(cached_token_positions),
+        "full_replay_token_positions": int(replay_token_positions),
+        "cached_attention_pairs_per_layer": int(cached_attention_pairs),
+        "full_replay_attention_pairs_per_layer": int(replay_attention_pairs),
+    }
+
+
 @torch.inference_mode()
 def assert_exact_replay(
     model,

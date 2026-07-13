@@ -152,8 +152,11 @@ nonzero, source-deleted semantic transport. A valid experiment must compare:
    anchor candidates.
 4. **Net resource accounting:** report original prompt tokens, model-authored
    anchor tokens, mutable tokens, cache bytes, prefill work, and full-replay
-   work. KV reuse is useful only if it saves end-to-end session work without
-   concealing a longer context or another model call.
+   work. `resource_accounting` reports exact token-position and per-layer
+   causal-attention-pair counts for cached serial append versus full replay;
+   GPU wall time remains a separate measured quantity. KV reuse is useful only
+   if it saves end-to-end session work without concealing a longer context or
+   another model call.
 5. **Periodic re-anchoring:** any attempt to exceed a fixed context budget must
    ask the model to author a new compact anchor and rerun the same swap/zero
    controls. Copying an external summary into a fresh cache is disallowed.

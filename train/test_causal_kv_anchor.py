@@ -3,7 +3,14 @@
 
 import torch
 
-from causal_kv_anchor import append_exact_tokens, assert_exact_replay, full_replay_last_logits, prefill_anchor
+from causal_kv_anchor import (
+    append_exact_tokens,
+    assert_exact_replay,
+    cache_nbytes,
+    full_replay_last_logits,
+    prefill_anchor,
+    resource_accounting,
+)
 from model import GPT, GPTConfig
 
 
@@ -38,6 +45,12 @@ def main():
     assert left.pos == right.pos == root.pos + 1
     torch.testing.assert_close(left_logits, full_replay_last_logits(model, left.tokens))
     torch.testing.assert_close(right_logits, full_replay_last_logits(model, right.tokens))
+    assert cache_nbytes(root) > 0
+    accounting = resource_accounting(root.pos, updates.shape[1], cache_nbytes(root))
+    assert accounting["cached_token_positions"] == 6
+    assert accounting["full_replay_token_positions"] == 18
+    assert accounting["cached_attention_pairs_per_layer"] == 21
+    assert accounting["full_replay_attention_pairs_per_layer"] == 52
 
     try:
         append_exact_tokens(model, root, torch.ones((1, 1), dtype=torch.long))
@@ -45,6 +58,12 @@ def main():
         assert "batch size" in str(exc)
     else:
         raise AssertionError("mismatched batches must be rejected")
+    try:
+        resource_accounting(0, 1, 0)
+    except ValueError as exc:
+        assert "anchor tokens" in str(exc)
+    else:
+        raise AssertionError("empty anchors must be rejected")
     print("causal KV-anchor contracts passed")
 
 

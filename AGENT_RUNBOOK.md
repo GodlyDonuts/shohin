@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 19:18 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, and the independent held-out wording result falls further to 125/500 with 0/100 width-8, so it is a template-conditioned recurrent executor rather than a transferable workspace; raw residual patching is negative; a first direct-interaction attempt was canceled without an artifact after the allocated evc49 H100 became unresponsive, and the DRS direct-interaction, NLL, and post-DRS patch sequence is being restarted only with bounded startup gates on a non-blacklisted node; both full v3 transition-basis and static-tape/recurrent-register corpora are hash-admitted but untrained; token-native delta-ledger data is independently admitted as a separate three-token transport control with no capability score; counterfactual-workspace induction, DCRD, and CBC remain conditional; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 19:23 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, and the independent held-out wording result falls further to 125/500 with 0/100 width-8, so it is a template-conditioned recurrent executor rather than a transferable workspace; raw residual patching is negative; a first direct-interaction attempt was canceled without an artifact after the allocated evc49 H100 became unresponsive, and the DRS direct-interaction, NLL, and post-DRS patch sequence is being restarted only with bounded startup gates on a non-blacklisted node; both full v3 transition-basis and static-tape/recurrent-register corpora are hash-admitted but untrained; token-native delta-ledger data is independently admitted as a separate three-token transport control with no capability score; counterfactual-workspace induction, DCRD, and CBC remain conditional; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2774,13 +2774,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   corpus. This is a primitive learnability experiment. V11A capsule continuation remains unsubmitted and
   may start only after reviewing the complete checkpoint-bound bridge/composition evidence.
 
-- **2026-07-13 19:18** — **Added a cache-native anchor substrate without creating a new memory claim.**
+- **2026-07-13 19:23** — **Added a cache-native anchor substrate without creating a new memory claim.**
   `train/causal_kv_anchor.py` transports only an exact model-authored token sequence as an immutable KV
   prefix and serially appends later tokens. This model's cache path is only causally exact for a
   one-token append against a past cache, so the module deliberately forbids batched post-anchor appends
   and checks every cached logit against a full replay of identical token history. Its CPU contracts pass
   both full-replay equality and independent reuse of the same immutable root cache for two divergent
-  continuations. It has no corpus, checkpoint, H100 allocation, semantic score, or context-window claim.
-  It becomes eligible only after V10A plus source-deleted semantic-capsule transport are nonzero, and
-  then must pass model-authored anchor swap/zero controls and net token/cache/work accounting; external
-  summarization or controller state construction is explicitly disallowed.
+  continuations. Deterministic resource accounting now reports exact cache payload bytes, token positions,
+  and causal attention query-key pairs per layer: a 3-token anchor plus 3 appends is 6 positions / 21
+  pairs cached versus 18 / 52 for full replay, before separately measuring GPU wall time. It has no corpus,
+  checkpoint, H100 allocation, semantic score, or context-window claim. It becomes eligible only after
+  V10A plus source-deleted semantic-capsule transport are nonzero, and then must pass model-authored
+  anchor swap/zero controls and net token/cache/work accounting; external summarization or controller
+  state construction is explicitly disallowed.
