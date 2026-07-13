@@ -290,6 +290,14 @@ geometry defect that LSA targets. A CLL pair pass followed by weak direct
 reasoning means retained context is necessary but not sufficient and moves the
 research program toward learned latent deliberation rather than more memory.
 
+`train/latent_state_algebra.py` now contains the local, focused training-only
+loss primitive and `train/test_latent_state_algebra.py` verifies its alignment,
+state, delta, anti-collapse, and shape invariants. No LSA paired-data
+generator, trainer, checkpoint, or cluster job exists yet. That boundary is
+intentional: the compact CLL comparator determines whether the next work
+should repair packet geometry or abandon the channel before any new GPU time
+is consumed.
+
 ## Original Directions After LSA
 
 If LSA proves a stable semantic packet, the next architectural experiment is
