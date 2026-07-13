@@ -46,6 +46,15 @@ def main():
     with torch.no_grad():
         assert not torch.allclose(packet, memory.encode(changed))
 
+    # Real source records have a stable chunk-count but variable chunk widths.
+    ragged_chunks = (chunks[:, 0, :], chunks[:, 1, :-1])
+    ragged_logits, ragged_loss, ragged_packet, _ = memory.supervised_loss(
+        ragged_chunks, query, answer, eos_id=1,
+    )
+    assert ragged_logits.shape[0] == query.shape[0]
+    assert ragged_packet.shape == packet.shape
+    assert torch.isfinite(ragged_loss)
+
     empty = SourceDroppingMemory(tiny_model(), slots=0, max_chunks=3)
     empty_packet = empty.encode(chunks)
     assert empty_packet.shape == (2, 0, 48)

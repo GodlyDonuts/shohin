@@ -47,25 +47,45 @@ class SourceDroppingMemory(nn.Module):
         return scale.to(dtype=dtype, device=device)
 
     def _validate_chunks(self, chunks):
-        if chunks.ndim != 3 or chunks.dtype != torch.long:
-            raise ValueError("chunks must have shape [batch, chunks, tokens] and dtype torch.long")
-        _, chunk_count, chunk_tokens = chunks.shape
-        if not chunk_count or not chunk_tokens:
+        if isinstance(chunks, torch.Tensor):
+            if chunks.ndim != 3:
+                raise ValueError("dense chunks must have shape [batch, chunks, tokens]")
+            chunks = tuple(chunks[:, index, :] for index in range(chunks.shape[1]))
+        elif isinstance(chunks, (list, tuple)):
+            chunks = tuple(chunks)
+        else:
+            raise ValueError("chunks must be a dense tensor or a sequence of [batch, tokens] tensors")
+        if not chunks:
             raise ValueError("chunks must include at least one non-empty chunk")
+        batch = None
+        for chunk in chunks:
+            if not isinstance(chunk, torch.Tensor) or chunk.ndim != 2 or chunk.dtype != torch.long:
+                raise ValueError("each chunk must have shape [batch, tokens] and dtype torch.long")
+            if not chunk.shape[1]:
+                raise ValueError("chunks must include at least one non-empty chunk")
+            if batch is None:
+                batch = chunk.shape[0]
+            elif chunk.shape[0] != batch:
+                raise ValueError("all chunks must have the same batch size")
+            if self.slots * 2 + chunk.shape[1] > self.model.cfg.seq_len:
+                raise ValueError("source chunk plus slots exceeds model sequence length")
+        chunk_count = len(chunks)
         if chunk_count > self.max_chunks:
             raise ValueError("chunk count exceeds configured max_chunks")
-        if self.slots * 2 + chunk_tokens > self.model.cfg.seq_len:
-            raise ValueError("source chunk plus slots exceeds model sequence length")
+        return chunks
 
     def encode(self, chunks):
         """Recursively write chunks into a fixed continuous memory packet."""
-        self._validate_chunks(chunks)
-        batch, chunk_count, _ = chunks.shape
+        chunks = self._validate_chunks(chunks)
+        batch, chunk_count = chunks[0].shape[0], len(chunks)
         if not self.slots:
             return self.model.tok.weight.new_empty((batch, 0, self.model.cfg.d_model))
-        state = self.initial_slots.to(dtype=self.model.tok.weight.dtype, device=chunks.device).expand(batch, -1, -1)
+        state = self.initial_slots.to(
+            dtype=self.model.tok.weight.dtype,
+            device=chunks[0].device,
+        ).expand(batch, -1, -1)
         for chunk_index in range(chunk_count):
-            source = self.model.tok(chunks[:, chunk_index, :])
+            source = self.model.tok(chunks[chunk_index])
             write = self.write_slots.to(dtype=source.dtype, device=source.device).expand(batch, -1, -1)
             write = write + self.chunk_bias[chunk_index].to(dtype=source.dtype, device=source.device).unsqueeze(0)
             _, _, hidden = self.model.forward_embeds(torch.cat((state, source, write), dim=1), return_hidden=True)

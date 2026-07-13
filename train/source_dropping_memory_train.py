@@ -98,8 +98,25 @@ def bucketed_batches(examples, batch_size, seed):
     return batches, {"buckets": len(buckets), "full_batches": len(batches), "dropped_examples": dropped}
 
 
+def limit_complete_batches(batches, max_examples, batch_size):
+    if max_examples <= 0:
+        return batches
+    count = max_examples // batch_size
+    if count <= 0:
+        raise ValueError("max-examples must cover at least one complete batch")
+    return batches[:count]
+
+
 def make_batch(examples, indices, device):
-    chunks = torch.tensor([examples[index]["chunks"] for index in indices], dtype=torch.long, device=device)
+    chunk_count = len(examples[indices[0]]["chunks"])
+    chunks = tuple(
+        torch.tensor(
+            [examples[index]["chunks"][chunk_index] for index in indices],
+            dtype=torch.long,
+            device=device,
+        )
+        for chunk_index in range(chunk_count)
+    )
     query = torch.tensor([examples[index]["query"] for index in indices], dtype=torch.long, device=device)
     answer = torch.tensor([examples[index]["answer"] for index in indices], dtype=torch.long, device=device)
     return chunks, query, answer
@@ -124,12 +141,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--init", required=True)
     parser.add_argument("--data", required=True)
+    parser.add_argument("--audit", required=True)
     parser.add_argument("--tokenizer", required=True)
     parser.add_argument("--out", required=True)
     parser.add_argument("--slots", type=int, default=8)
     parser.add_argument("--max-chunks", type=int, default=8)
     parser.add_argument("--epochs", type=int, default=1)
     parser.add_argument("--batch-size", type=int, default=8)
+    parser.add_argument("--max-examples", type=int, default=0)
     parser.add_argument("--lr-muon", type=float, default=2e-3)
     parser.add_argument("--lr-adam", type=float, default=5e-4)
     parser.add_argument("--warmup", type=int, default=50)
@@ -144,6 +163,12 @@ def main():
         raise SystemExit("source-dropping memory training requires a CUDA allocation")
     if os.path.exists(args.out) and os.listdir(args.out):
         raise SystemExit("refusing non-empty output directory: {}".format(args.out))
+
+    audit = json.load(open(args.audit))
+    data_sha256 = sha256_file(args.data)
+    audit_failures = ("invalid_train_rows", "invalid_eval_rows", "duplicate_train_prompts", "duplicate_eval_prompts", "train_eval_exact_prompt_hits")
+    if audit.get("train_sha256") != data_sha256 or any(audit.get(key) for key in audit_failures):
+        raise SystemExit("source-memory audit does not admit the requested training data")
     os.makedirs(args.out, exist_ok=True)
 
     torch.manual_seed(args.seed)
@@ -156,6 +181,9 @@ def main():
     cfg = GPTConfig(**init["cfg"])
     examples, skipped = load_examples(args.data, tokenizer, args.slots, args.max_chunks, cfg.seq_len)
     batches, batch_report = bucketed_batches(examples, args.batch_size, args.seed)
+    batches = limit_complete_batches(batches, args.max_examples, args.batch_size)
+    batch_report["selected_batches"] = len(batches)
+    batch_report["selected_examples"] = len(batches) * args.batch_size
     total_steps = args.epochs * len(batches)
     print(json.dumps({
         "source_dropping_memory": "fixed_slots_v1",
@@ -165,7 +193,7 @@ def main():
         "total_steps": total_steps,
         "slots": args.slots,
         "max_chunks": args.max_chunks,
-        "data_sha256": sha256_file(args.data),
+        "data_sha256": data_sha256,
     }, sort_keys=True), flush=True)
 
     model = GPT(cfg).to("cuda")
@@ -177,6 +205,7 @@ def main():
     started, step = time.time(), 0
     for epoch in range(args.epochs):
         epoch_batches, _ = bucketed_batches(examples, args.batch_size, args.seed + epoch)
+        epoch_batches = limit_complete_batches(epoch_batches, args.max_examples, args.batch_size)
         for indices in epoch_batches:
             chunks, query, answer = make_batch(examples, indices, "cuda")
             scale = lr_scale(step, total_steps, args.warmup)
@@ -215,7 +244,7 @@ def main():
             "protocol": "fixed_slots_source_removed_v1",
             "init": args.init,
             "data": args.data,
-            "data_sha256": sha256_file(args.data),
+            "data_sha256": data_sha256,
             "slots": args.slots,
             "max_chunks": args.max_chunks,
             "seed": args.seed,
