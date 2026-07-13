@@ -126,3 +126,51 @@ No source-dropping packet may be called useful unless all of these are met:
   on any regime, so it is rejected as a useful latent-computation path.
 - Only the source-dropping packet can test the constrained-context objective;
   its source-removal and memory-ablation gates are mandatory before training.
+
+## Source-Packet Pilot Rule
+
+The current source-packet run is deliberately a `24,000`-example, `6,000`
+update M0/M1 screen, not a result claim. M0 has zero memory slots and M1 has
+eight; both start from the same raw-180k checkpoint and use the same examples,
+seed, optimizer schedule, and exact answer target. A packet receives more
+training only if its held-out normal condition satisfies all of the following:
+
+1. It beats **each** of M0, zeroed packet, and shuffled packet by at least 15
+   percentage points on the fit-IID regime.
+2. It beats those same controls by at least 5 percentage points on the combined
+   length-OOD and language-OOD regimes; a fit-only result is not context scale.
+3. Its correct answers are not confined to one chunk count or one query form.
+4. Read-only transcript inspection shows the source-free decoder uses the
+   actual retained value rather than a fixed answer prior.
+
+The screen is intentionally permitted to reject the answer-only packet. Its
+short mechanics canary already demonstrates that low loss and formatted answers
+are insufficient evidence.
+
+## If Answer-Only Memory Fails: Certified Latent Ledger
+
+The next bounded mechanism is a **Certified Latent Ledger (CLL)**, not a hidden
+external program. The writer still receives source chunks only once and the
+decoder still receives only continuous slots plus a fresh natural-language
+query. The change is the training signal:
+
+1. After each written chunk, sample several solver-verified readback queries
+   about the current record (both individual values and a relation such as a
+   sum or difference). The model must answer from the packet alone.
+2. Reuse the *same* final packet for multiple fresh queries. This makes a
+   packet useful only if it retains information rather than associating one
+   query template with one answer distribution.
+3. Train counterfactual source pairs that share a prefix and query but differ
+   by one final event. A correct packet must separate the two consequences;
+   the evaluator checks this exact pairwise distinction.
+4. Keep all supervision token-level and verifier-backed. There is no controller
+   that executes, repairs, selects, injects, or serializes the ledger at
+   inference time.
+5. Evaluate normal, zero, shuffled, slot-drop, longer-length, paraphrased, and
+   counterfactual conditions separately. CLL is rejected if normal packets do
+   not cause the measured advantage.
+
+This is a stronger route to constrained-context scaling because it trains the
+continuous state as an information-bearing interface throughout a sequence,
+while preserving the hard source-removal boundary. It still would establish
+narrow retained-information reasoning first, not broad intelligence.
