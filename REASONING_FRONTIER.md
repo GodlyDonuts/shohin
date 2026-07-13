@@ -125,6 +125,47 @@ change in the residual-patching diagnostic. A reflection that only improves its
 own prompted explanation is rejected. This would make CWI a test of
 workspace-shaped computation, not a new narration style.
 
+## Conditional Representation Control: Token-Native Delta Ledger
+
+The static-tape register removes immutable input copying, but its next state
+is still a **21-token** BPE continuation (`dwr:p=...;c=...;r=...;z=...`). The
+existing textual append-ledger delta is shorter but still costs **14 tokens**.
+At the observed state-error rates, those serial output decisions are a
+plausible exposure-error bottleneck independent of arithmetic. The proposed
+**Token-Native Delta Ledger (TNDL)** therefore encodes one model-authored
+transition as exactly three *existing* atomic special tokens, in fixed field
+order: next position, carry/borrow, and result digit. It does not add a
+tokenizer entry, alter the model architecture, or let a controller calculate
+anything. The controller only validates that exactly three code tokens were
+emitted, retains their exact sequence, and supplies the last emitted triple on
+the next update; the model must still derive the carry and digit from the
+unchanged operand tape. The full emitted ledger is supplied only for final
+readout. Because this carrier has intentionally tiny finite entropy, final
+prompts repeat an opaque hash of the immutable tape between triples. This
+prevents a train and held-out prompt from sharing a long carrier substring;
+the controller never decodes, predicts, or computes with the hash, and the
+same rendering is required in all matched controls.
+
+This deliberately differs from DCRD. DCRD asks the small model to bind random
+natural-language codebooks and perform reversible translations, which tests a
+much harder semantic-binding hypothesis. TNDL instead holds the mapping fixed
+and isolates whether the previous negative results are dominated by state
+serialization length. It is also a more atomic version of ADL: no textual
+field labels, result-tape rewrites, or controller-generated arithmetic are
+introduced. Its initial scope is width 4/6 train and width-8 held-out; any
+claim about longer context must wait for a successful first-level ledger.
+
+TNDL is useful only if it is compared against a text ADL and static-tape
+register from the same raw checkpoint, update budget, operands, held-out
+counterfactuals, and controller wording. A positive result requires materially
+higher complete closed-loop and paired-intervention accuracy, not merely more
+well-formed three-token responses. A second fixed permutation of the ten code
+tokens is required before claiming that the result is not an accidental
+association with the tokenizer's pre-existing special-token semantics. A
+passing first-level carrier would be a primitive transport result, not proof
+of language reasoning or context scaling; only then can it be combined with
+the CWI and semantic compiler gates.
+
 ## Hypothesis: Proof-Carrying Deliberation
 
 The next distinctive mechanism is **proof-carrying deliberation (PCD)**. A

@@ -2619,3 +2619,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   zero invalid, duplicate, counterfactual, missing-context, exact-overlap, or 13-gram findings. This is
   materialized solely to make the transport-representation ablation reproducible after the transcript
   gate; it has no SFT checkpoint, GPU allocation, or capability score.
+
+- **2026-07-13 18:05** — **TNDL passed full local admission rehearsal; it remains a CPU-only candidate.**
+  The token-native delta-ledger control produces 27,200 train episodes / **169,115** deduplicated rows,
+  covers all **3,400/3,400** local contexts, and has 900 held-out episodes (300 each recombine-w4,
+  recombine-w6, and width-8). The independent full audit found zero invalid rows/episodes, duplicate
+  normalized train prompts, counterfactual mismatches, missing contexts, exact prompt hits, or 13-gram
+  train/held-out hits. Repeating an opaque immutable tape hash between the three-token ledger triples is
+  an anti-contamination delimiter only: the controller never decodes or predicts it. The candidate has
+  no Stokes artifact, SFT checkpoint, GPU allocation, or capability result yet; it is not evidence of
+  reasoning or context scaling.
