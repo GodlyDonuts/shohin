@@ -306,6 +306,14 @@ learnability control, not a model result, and it has no durable corpus, SFT,
 or GPU allocation before the current DRS core/held-out/direct evidence chain
 has finished.
 
+The future one-epoch launch path is now static-tested but deliberately
+unsubmitted. `sft_digitwise_basis_v3.sbatch` independently binds the candidate
+data and held-out SHA-256 values to its admission audit, requires all 3,400
+contexts and the three prescribed held-out regimes, rejects any contamination
+or structural counter, and proves the exact inference/SFT prompt boundary
+before using CUDA. This makes a later causal test reproducible; it does not
+promote the hypothesis, create a durable corpus, or reserve a GPU.
+
 ## Conditional Hypothesis: Dual-Code Reversible Deliberation
 
 The missing ingredient may be neither a longer trace nor a larger hidden

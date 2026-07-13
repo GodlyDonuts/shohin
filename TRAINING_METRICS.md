@@ -345,7 +345,12 @@ rows/episodes, normalized duplicate prompts after deduplication, exact split
 hits, or 13-gram split hits. Its held-out set has 40 episodes each for
 `recombine_w4`, `recombine_w6`, and `width_ood_w8`. Removing all training
 instances of one still-semantic local context makes the admission audit fail.
-No durable v3 artifact or training job has been created.
+No durable v3 artifact or training job has been created. The isolated launch
+contract is static-tested: it will hash-bind the corpus and held-out set to the
+v3 audit, require all 3,400 contexts and all three held-out regimes, reject
+any structural or contamination counter, and prove the exact inference/SFT
+prompt boundary before CUDA. This is reproducibility infrastructure, not a
+training or capability result.
 
 ## Checkpoint and Disaster-Recovery Inventory
 

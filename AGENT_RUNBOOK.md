@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 15:45 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; both DRS v2 raw controls are zero; isolated uncompiled DRS SFT `687459` completed cleanly on verified evc49, and source-free core evaluator `687460` is running before held-out/direct/NLL successors; its coverage audit found an exact leading-digit support gap and a v3 complete-transition-basis candidate now passes local admission; DCRD and CBC each have local preflighted generator/auditors, while CBC now also has a transport-only evaluator controller; all remain conditional with no submitted corpus/data/job; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 15:53 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; both DRS v2 raw controls are zero; isolated uncompiled DRS SFT `687459` completed cleanly on verified evc49, and source-free core evaluator `687460` is running before held-out/direct/NLL successors; its coverage audit found an exact leading-digit support gap and a v3 complete-transition-basis candidate now passes local admission; its isolated hash-bound launch contract is staged but no v3 corpus/data/job exists; DCRD and CBC each have local preflighted generator/auditors, while CBC now also has a transport-only evaluator controller; all remain conditional; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2520,3 +2520,11 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   one context is removed. The medium 2-variant preflight contains 6,800 episodes / 77,946 rows and has 0
   malformed rows/episodes, duplicates after deduplication, exact overlap, or literal 13-gram overlap. It
   does not create durable data, an SFT checkpoint, or a GPU job; wait for `687460 -> 687461 -> 687462`.
+
+- **2026-07-13 15:53** — **The DRS v3 launch contract is staged, not admitted for execution.**
+  `train/jobs/sft_digitwise_basis_v3.sbatch` is isolated from the flagship and rejects an existing output,
+  a non-v3 audit schema, any malformed/duplicate/overlap finding, a data or held-out SHA mismatch, any
+  missing local context, or anything other than exactly 3,400 required and covered contexts across the
+  three recombination/width-held-out regimes. It also proves that SFT uses the exact inference prompt
+  boundary before taking CUDA. The static contract test passes. This creates no corpus and submits no job;
+  it only makes a later positive-evidence test reproducible without weakening the admission gate.
