@@ -1,12 +1,37 @@
 #!/usr/bin/env python3
 """Pure batching and checkpoint-state checks for the source-memory trainer."""
 
-from source_dropping_memory_train import bucketed_batches, limit_complete_batches, make_batch, non_model_state
+from source_dropping_memory_train import (
+    audit_admits_training,
+    bucketed_batches,
+    limit_complete_batches,
+    make_batch,
+    non_model_state,
+)
 from source_dropping_memory import SourceDroppingMemory
 from model import GPT, GPTConfig
 
 
 def main():
+    generic_audit = {
+        "train_sha256": "data",
+        "invalid_train_rows": 0,
+        "invalid_eval_rows": 0,
+        "duplicate_train_prompts": 0,
+        "duplicate_eval_prompts": 0,
+        "train_eval_exact_prompt_hits": 0,
+        "train_eval_13gram_hits": 0,
+    }
+    assert audit_admits_training(generic_audit, "data")
+    ledger_audit = dict(
+        generic_audit,
+        audit="certified_latent_ledger_v1",
+        counterfactual_train_pairs=2,
+        counterfactual_eval_pairs=2,
+    )
+    assert audit_admits_training(ledger_audit, "data")
+    assert not audit_admits_training(dict(ledger_audit, invalid_counterfactual_eval_pairs=1), "data")
+    assert not audit_admits_training(dict(ledger_audit, counterfactual_train_pairs=0), "data")
     examples = [
         {"shape": (2, (3, 3), 2, 2)},
         {"shape": (2, (3, 3), 2, 2)},

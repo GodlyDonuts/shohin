@@ -35,6 +35,24 @@ def sha256_file(path: str) -> str:
     return digest.hexdigest()
 
 
+def audit_admits_training(audit, data_sha256: str) -> bool:
+    """Accept generic packet data, with extra mandatory checks for CLL pairs."""
+    audit_failures = (
+        "invalid_train_rows", "invalid_eval_rows", "duplicate_train_prompts", "duplicate_eval_prompts",
+        "train_eval_exact_prompt_hits", "train_eval_13gram_hits",
+    )
+    if audit.get("train_sha256") != data_sha256 or any(audit.get(key) for key in audit_failures):
+        return False
+    if audit.get("audit") != "certified_latent_ledger_v1":
+        return True
+    pair_failures = ("invalid_counterfactual_train_pairs", "invalid_counterfactual_eval_pairs")
+    return (
+        not any(audit.get(key) for key in pair_failures)
+        and int(audit.get("counterfactual_train_pairs", 0)) > 0
+        and int(audit.get("counterfactual_eval_pairs", 0)) > 0
+    )
+
+
 def load_examples(path, tokenizer, slots, max_chunks, seq_len):
     examples = []
     skipped = defaultdict(int)
@@ -166,11 +184,7 @@ def main():
 
     audit = json.load(open(args.audit))
     data_sha256 = sha256_file(args.data)
-    audit_failures = (
-        "invalid_train_rows", "invalid_eval_rows", "duplicate_train_prompts", "duplicate_eval_prompts",
-        "train_eval_exact_prompt_hits", "train_eval_13gram_hits",
-    )
-    if audit.get("train_sha256") != data_sha256 or any(audit.get(key) for key in audit_failures):
+    if not audit_admits_training(audit, data_sha256):
         raise SystemExit("source-memory audit does not admit the requested training data")
     os.makedirs(args.out, exist_ok=True)
 
