@@ -3,16 +3,20 @@
 import random
 
 from dual_code_reversible_protocol import (
-    codebook_prompt, encode_state, forward_prompt, invert_microstep, make_codebook,
-    parse_state, reverse_prompt, transcode_prompt,
+    codebook_from_record, codebook_prompt, codebook_record, encode_state, forward_prompt,
+    invert_microstep, make_codebook, parse_state, readout_prompt, reverse_prompt, transcode_prompt,
 )
 from digitwise_protocol import apply_microstep, initial_state
 
 
 for seed in (3, 17, 101):
     a_book, b_book = make_codebook(seed, "A"), make_codebook(seed, "B")
+    a_heldout = make_codebook(seed, "A", vocabulary="heldout")
     assert a_book.aliases != b_book.aliases
+    assert set(a_book.aliases).isdisjoint(a_heldout.aliases)
+    assert codebook_from_record(codebook_record(a_book)) == a_book
     assert "fields" in codebook_prompt(a_book)
+    assert "Cipher" in codebook_prompt(a_heldout, "heldout")
     for operation, left, right, width in (("add", 95, 8, 3), ("sub", 1000, 1, 4), ("add", 999, 1, 3)):
         state = initial_state(operation, left, right, width)
         for _ in range(width):
@@ -24,6 +28,8 @@ for seed in (3, 17, 101):
             assert "dws:" not in forward_prompt(a_book, a_line)
             assert "dcr:B" in transcode_prompt(a_book, b_book, a_line)
             assert "preceding" in reverse_prompt(b_book, b_line)
+            assert "answer=<integer>" in readout_prompt(a_book, a_line)
+            assert "Retained record" in forward_prompt(a_heldout, encode_state(state, a_heldout), "heldout")
             next_state = apply_microstep(state)
             assert invert_microstep(next_state) == state
             state = next_state
@@ -43,6 +49,12 @@ for _ in range(120):
 try:
     invert_microstep(initial_state("add", 1, 2, 2))
     raise AssertionError("initial state unexpectedly has a predecessor")
+except ValueError:
+    pass
+
+try:
+    codebook_prompt(make_codebook(3, "A"), "heldout")
+    raise AssertionError("mismatched codebook and prompt style unexpectedly accepted")
 except ValueError:
     pass
 

@@ -321,10 +321,25 @@ the live pretraining run.
 The CPU-only protocol substrate is implemented in
 `train/dual_code_reversible_protocol.py`. It provides deterministic per-episode
 A/B codebooks, strict code-specific parsers, source-free prompt builders, and a
-solver-only inverse transition for data construction and scoring. The runtime
-controller is deliberately not implemented yet, and no DCRD dataset, SFT, or
-GPU job has been submitted. `train/test_dual_code_reversible_protocol.py`
-exercises codebook separation, encode/decode round trips, canonical-state
-leakage rejection, and 120 randomized inverse-transition cases. The
-implementation is a precondition for a later causal experiment, not evidence
-that the model can use the protocol.
+solver-only inverse transition for data construction and scoring. Train and
+held-out codebooks use disjoint alias vocabularies and structurally distinct
+instruction interfaces; the protocol rejects a prompt style that does not
+match the codebook vocabulary. This makes literal train/held-out n-gram overlap
+an auditable data failure rather than a hidden template confound.
+
+`pipeline/generate_dual_code_reversible_v1.py` and its independent companion
+`pipeline/audit_dual_code_reversible_v1.py` now construct and semantically
+recompute every forward, transcode, inverse, and readout target. A local
+1,000-episode preflight generated 21,000 training rows plus 200 held-out paired
+counterfactual episodes: the auditor found 0 invalid rows or episodes, 0
+normalized duplicates, 0 exact held-out prompt hits, and 0 literal 13-gram
+hits. The smaller end-to-end contract has the same result. These are only
+generator/auditor checks: no durable DCRD corpus has been admitted and no
+controller rollout, SFT, or GPU job has been submitted. The DRS causal chain
+still decides whether this branch is worth launching.
+
+`train/test_dual_code_reversible_protocol.py` exercises codebook separation,
+encode/decode round trips, canonical-state leakage rejection, prompt-style
+binding, and 120 randomized inverse-transition cases. The implementation is a
+precondition for a later causal experiment, not evidence that the model can use
+the protocol.

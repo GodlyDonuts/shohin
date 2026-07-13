@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 14:46 EDT (flagship custody is intentionally hands-off with its existing full 200k checkpoint already hash-verified on Newton and locally; both DRS v2 raw controls are zero; isolated uncompiled DRS SFT `687459` completed cleanly on verified evc49, and source-free core evaluator `687460` is running before its held-out/direct/NLL successors; DCRD remains a conditional specification only; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 15:02 EDT (flagship custody is intentionally hands-off with its existing full 200k checkpoint already hash-verified on Newton and locally; both DRS v2 raw controls are zero; isolated uncompiled DRS SFT `687459` completed cleanly on verified evc49, and source-free core evaluator `687460` is running before its held-out/direct/NLL successors; DCRD now has a locally preflighted generator/auditor but remains conditional with no submitted data/job; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2467,3 +2467,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   contract test covers codebook separation, encode/decode, canonical-state leakage rejection, and 120
   randomized reversible transitions. No DCRD data, controller rollout, SFT, or GPU job exists; it remains
   conditional on the full DRS core/held-out/direct chain and cannot affect active pretraining.
+
+- **2026-07-13 15:02** — **DCRD generator/auditor preflight passed without weakening the contamination gate.**
+  `pipeline/generate_dual_code_reversible_v1.py` emits forward-A, A-to-B, reverse-B, B-to-A, and readout
+  targets; `pipeline/audit_dual_code_reversible_v1.py` independently recomputes every target plus every
+  held-out state trajectory and counterfactual. The first implementation exposed **768 literal 13-gram
+  train/held-out template overlaps on the smoke test**. That data was rejected, not normalized away. The
+  fixed protocol binds a held-out-only alias vocabulary to a structurally different held-out prompt style.
+  The end-to-end smoke and a larger **1,000-episode / 21,000-row** preflight with **200** held-out paired
+  counterfactual episodes now report 0 malformed rows/episodes, duplicate prompts, exact held-out hits, or
+  literal 13-gram overlaps. This is only CPU infrastructure: no durable DCRD corpus, controller, SFT, or
+  GPU job is authorized until `687460 -> 687461 -> 687462` provides a positive DRS causal result.

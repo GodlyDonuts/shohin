@@ -291,6 +291,21 @@ SFT cannot alter active pretraining or its data writer. No DRS capability or
 reasoning claim is authorized until the evaluator outputs and direct transcript
 are inspected.
 
+### DCRD Generator/Auditor Preflight: 2026-07-13 15:02 EDT
+
+This is dataset infrastructure, not a training result. The conditional
+Dual-Code Reversible Deliberation branch now has a separate deterministic
+generator and independent semantic auditor. Its 1,000-episode local preflight
+produced **21,000** train rows and **200** held-out paired counterfactual
+episodes. The auditor recomputed every transition/readout and found **0**
+invalid train rows, **0** invalid held-out episodes, **0** normalized duplicate
+prompts, **0** exact held-out prompt hits, and **0** literal 13-gram hits.
+Train and held-out use both disjoint codebook aliases and incompatible prompt
+interfaces, so this result was achieved by removing the shared template rather
+than waiving the overlap gate. No durable corpus, SFT checkpoint, controller,
+or GPU job exists for DCRD; submission remains conditional on the full DRS
+causal decision chain.
+
 ## Checkpoint and Disaster-Recovery Inventory
 
 | Milestone | Numbered checkpoint at milestone | Newton durable copy | Local full checkpoint | MD5 | State |

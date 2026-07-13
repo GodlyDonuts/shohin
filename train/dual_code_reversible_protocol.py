@@ -20,6 +20,9 @@ OPERATIONS = ("add", "sub")
 FIELD_STEMS = ("ki", "lo", "mu", "ne", "pa", "ri", "so", "tu", "ve", "xa", "yo", "ze")
 DIGIT_STEMS = ("ba", "ce", "di", "fo", "gu", "ha", "jo", "qu", "we", "xy", "ra", "si", "to", "vu")
 OP_STEMS = ("nav", "sol", "ter", "via")
+HELDOUT_FIELD_STEMS = ("al", "br", "cy", "du", "ex", "fy", "go", "hi", "iv", "ju", "kw", "lx")
+HELDOUT_DIGIT_STEMS = ("am", "bn", "co", "dp", "eq", "fr", "gs", "ht", "iu", "jv", "ka", "lb", "mc", "nd")
+HELDOUT_OP_STEMS = ("ola", "pax", "qim", "rex")
 
 
 @dataclass(frozen=True)
@@ -36,10 +39,13 @@ class Codebook:
     field_aliases: tuple[str, ...]
     digit_aliases: tuple[str, ...]
     operation_aliases: tuple[str, ...]
+    vocabulary: str = "train"
 
     def __post_init__(self):
         if self.channel not in {"A", "B"}:
             raise ValueError("channel must be A or B")
+        if self.vocabulary not in {"train", "heldout"}:
+            raise ValueError("vocabulary must be train or heldout")
         if set(self.field_order) != set(FIELDS) or len(self.field_order) != len(FIELDS):
             raise ValueError("field order must be a permutation of canonical fields")
         if len(set(self.field_aliases)) != len(FIELDS) or len(self.field_aliases) != len(FIELDS):
@@ -80,34 +86,87 @@ class Codebook:
         return dict(zip(self.operation_aliases, OPERATIONS))
 
 
-def make_codebook(seed: int | str, channel: str) -> Codebook:
-    """Create a deterministic, episode-local codebook without global templates."""
+def make_codebook(seed: int | str, channel: str, vocabulary: str = "train") -> Codebook:
+    """Create a deterministic codebook with train/held-out alias vocabularies."""
     if channel not in {"A", "B"}:
         raise ValueError("channel must be A or B")
-    rng = random.Random("dcr-v1:{}:{}".format(seed, channel))
+    if vocabulary not in {"train", "heldout"}:
+        raise ValueError("vocabulary must be train or heldout")
+    rng = random.Random("dcr-v1:{}:{}:{}".format(seed, channel, vocabulary))
+    field_stems, digit_stems, op_stems = (
+        (FIELD_STEMS, DIGIT_STEMS, OP_STEMS)
+        if vocabulary == "train"
+        else (HELDOUT_FIELD_STEMS, HELDOUT_DIGIT_STEMS, HELDOUT_OP_STEMS)
+    )
     prefix = channel.lower()
     order = list(FIELDS)
     rng.shuffle(order)
-    fields = rng.sample(FIELD_STEMS, len(FIELDS))
-    digits = rng.sample(DIGIT_STEMS, 10)
-    operations = rng.sample(OP_STEMS, len(OPERATIONS))
+    fields = rng.sample(field_stems, len(FIELDS))
+    digits = rng.sample(digit_stems, 10)
+    operations = rng.sample(op_stems, len(OPERATIONS))
     return Codebook(
         channel=channel,
         field_order=tuple(order),
         field_aliases=tuple(prefix + stem for stem in fields),
         digit_aliases=tuple(prefix + stem for stem in digits),
         operation_aliases=tuple(prefix + stem for stem in operations),
+        vocabulary=vocabulary,
     )
 
 
-def codebook_prompt(book: Codebook) -> str:
-    """Render the static key retained alongside every source-dropped state."""
+def _require_prompt_style(book: Codebook, style: str) -> str:
+    if style not in {"train", "heldout"}:
+        raise ValueError("prompt style must be train or heldout")
+    if style != book.vocabulary:
+        raise ValueError("prompt style must match the codebook vocabulary")
+    return style
+
+
+def codebook_prompt(book: Codebook, style: str = "train") -> str:
+    """Render a static key in a split-specific natural-language interface.
+
+    The key itself is necessary to bind aliases to semantic roles.  The two
+    styles deliberately do not share an instruction template: literal prompt
+    n-gram overlap is otherwise a confound when measuring codebook-OOD use.
+    """
+    _require_prompt_style(book, style)
     fields = ", ".join("{}={}".format(field, book.field_to_alias[field]) for field in FIELDS)
     operations = ", ".join("{}={}".format(op, book.operation_to_alias[op]) for op in OPERATIONS)
     digits = ", ".join("{}={}".format(index, book.digit_to_alias[str(index)]) for index in range(10))
     order = ",".join(book.field_to_alias[field] for field in book.field_order)
-    return "DCR {} key. fields [{}]. order [{}]. ops [{}]. digits [{}].".format(
+    if style == "train":
+        return "DCR {} key. fields [{}]. order [{}]. ops [{}]. digits [{}].".format(
+            book.channel, fields, order, operations, digits,
+        )
+    return "Cipher {} reference: role bindings <{}>; serialization path <{}>; action bindings <{}>; numeral bindings <{}>.".format(
         book.channel, fields, order, operations, digits,
+    )
+
+
+def codebook_record(book: Codebook) -> dict[str, object]:
+    """Return a JSON-safe, hash-bindable codebook record for an episode."""
+    return {
+        "channel": book.channel,
+        "field_order": list(book.field_order),
+        "field_aliases": list(book.field_aliases),
+        "digit_aliases": list(book.digit_aliases),
+        "operation_aliases": list(book.operation_aliases),
+        "vocabulary": book.vocabulary,
+    }
+
+
+def codebook_from_record(record: Mapping[str, object]) -> Codebook:
+    """Validate and reconstruct an episode codebook from JSON data."""
+    required = {"channel", "field_order", "field_aliases", "digit_aliases", "operation_aliases", "vocabulary"}
+    if set(record) != required:
+        raise ValueError("invalid codebook record keys")
+    return Codebook(
+        channel=str(record["channel"]),
+        field_order=tuple(str(value) for value in record["field_order"]),
+        field_aliases=tuple(str(value) for value in record["field_aliases"]),
+        digit_aliases=tuple(str(value) for value in record["digit_aliases"]),
+        operation_aliases=tuple(str(value) for value in record["operation_aliases"]),
+        vocabulary=str(record["vocabulary"]),
     )
 
 
@@ -205,22 +264,54 @@ def invert_microstep(next_state: Mapping[str, object]):
     raise ValueError("state has no unique valid predecessor")
 
 
-def forward_prompt(book: Codebook, state_line: str) -> str:
+def forward_prompt(book: Codebook, state_line: str, style: str = "train") -> str:
+    _require_prompt_style(book, style)
+    if style == "train":
+        return (
+            "Advance one local decimal machine transition in DCR {}. {}\n"
+            "State: {}\nReturn exactly one dcr:{} state line.\nAnswer:"
+        ).format(book.channel, codebook_prompt(book, style), state_line, book.channel)
     return (
-        "Advance one local decimal machine transition in DCR {}. {}\n"
-        "State: {}\nReturn exactly one dcr:{} state line.\nAnswer:"
-    ).format(book.channel, codebook_prompt(book), state_line, book.channel)
+        "Use cipher {} to apply the next permitted decimal rewrite. {}\n"
+        "Retained record: {}\nEmit one canonical dcr:{} record only.\nResult:"
+    ).format(book.channel, codebook_prompt(book, style), state_line, book.channel)
 
 
-def transcode_prompt(source: Codebook, target: Codebook, state_line: str) -> str:
+def transcode_prompt(source: Codebook, target: Codebook, state_line: str, style: str = "train") -> str:
+    _require_prompt_style(source, style)
+    _require_prompt_style(target, style)
+    if style == "train":
+        return (
+            "Rewrite the identical machine state from DCR {} to DCR {}. {} {}\n"
+            "Input: {}\nReturn exactly one dcr:{} state line.\nAnswer:"
+        ).format(source.channel, target.channel, codebook_prompt(source, style), codebook_prompt(target, style), state_line, target.channel)
     return (
-        "Rewrite the identical machine state from DCR {} to DCR {}. {} {}\n"
-        "Input: {}\nReturn exactly one dcr:{} state line.\nAnswer:"
-    ).format(source.channel, target.channel, codebook_prompt(source), codebook_prompt(target), state_line, target.channel)
+        "Preserve the represented configuration while recoding cipher {} as cipher {}. {} {}\n"
+        "Retained record: {}\nEmit one canonical dcr:{} record only.\nResult:"
+    ).format(source.channel, target.channel, codebook_prompt(source, style), codebook_prompt(target, style), state_line, target.channel)
 
 
-def reverse_prompt(book: Codebook, state_line: str) -> str:
+def reverse_prompt(book: Codebook, state_line: str, style: str = "train") -> str:
+    _require_prompt_style(book, style)
+    if style == "train":
+        return (
+            "Recover exactly the immediately preceding DCR {} machine state. {}\n"
+            "Current state: {}\nReturn exactly one dcr:{} state line.\nAnswer:"
+        ).format(book.channel, codebook_prompt(book, style), state_line, book.channel)
     return (
-        "Recover exactly the immediately preceding DCR {} machine state. {}\n"
-        "Current state: {}\nReturn exactly one dcr:{} state line.\nAnswer:"
-    ).format(book.channel, codebook_prompt(book), state_line, book.channel)
+        "Undo one valid encoded rewrite inside cipher {}. {}\n"
+        "Latest record: {}\nEmit one canonical dcr:{} record only.\nResult:"
+    ).format(book.channel, codebook_prompt(book, style), state_line, book.channel)
+
+
+def readout_prompt(book: Codebook, state_line: str, style: str = "train") -> str:
+    _require_prompt_style(book, style)
+    if style == "train":
+        return (
+            "Read the completed decimal answer from this terminal DCR {} state. {}\n"
+            "State: {}\nReturn exactly answer=<integer>.\nAnswer:"
+        ).format(book.channel, codebook_prompt(book, style), state_line)
+    return (
+        "Decode the terminal quantity retained by cipher {}. {}\n"
+        "Terminal record: {}\nEmit only answer=<integer>.\nResult:"
+    ).format(book.channel, codebook_prompt(book, style), state_line)
