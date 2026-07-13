@@ -154,9 +154,11 @@ def render_question(domain, values, operations, query, heldout, reference):
     return "{}\n{}\nQuestion: {}\nAnswer:".format(intro, events, query["text"])
 
 
-def make_row(index, rng, domain, depth, heldout):
+def make_row(index, rng, domain, depth, heldout, initial_range=None):
     _, keys, _ = domain
-    low, high = ((37, 79) if heldout else (3, 29))
+    low, high = initial_range or ((37, 79) if heldout else (3, 29))
+    if low > high:
+        raise ValueError("initial_range must be ordered")
     values = {keys[0]: rng.randint(low, high), keys[1]: rng.randint(low, high)}
     initial = copy_values(values)
     operations = []

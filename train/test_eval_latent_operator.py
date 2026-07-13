@@ -12,6 +12,13 @@ def main():
     ]
     selected = select_rows(rows, per_depth=1, seed=3)
     assert len(selected) == 3 and {item["depth"] for item in selected} == {5, 6, 8}
+    sliced = select_rows([
+        {"question": "a0", "depth": 5, "eval_regime": "fit_iid"},
+        {"question": "a1", "depth": 5, "eval_regime": "fit_iid"},
+        {"question": "b0", "depth": 5, "eval_regime": "depth_ood"},
+        {"question": "b1", "depth": 5, "eval_regime": "depth_ood"},
+    ], per_depth=1, seed=3)
+    assert len(sliced) == 2 and {item["eval_regime"] for item in sliced} == {"fit_iid", "depth_ood"}
     assert final_answer("noise The answer is 3. The answer is 8.") == 8
     assert final_answer("no parse") is None
     report = summarize([
@@ -21,6 +28,11 @@ def main():
     ])
     assert report["0"]["accuracy"] == 0.5
     assert report["2"]["by_depth"]["5"]["correct"] == 1
+    sliced_report = summarize([
+        {"latent_steps": 0, "depth": 5, "eval_regime": "fit_iid", "correct": True},
+        {"latent_steps": 0, "depth": 5, "eval_regime": "depth_ood", "correct": False},
+    ])
+    assert sliced_report["0"]["by_regime"]["fit_iid"]["correct"] == 1
     print("latent operator evaluator tests passed")
 
 

@@ -1919,6 +1919,26 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   data SHA, seed, batch size, optimizer, and update count. Their separate held-out evaluators
   `687050`/`687051` test rollout depths 0/1/2/4/8 only after successful checkpoints; nothing in this
   chain can alter flagship pretraining.
+- **2026-07-13 ~00:45** — **The matched continuous-feedback pilot is rejected by the
+  factorized transfer gate.** Control `687048` and progressive-L4 `687049` both completed
+  1,500 updates from the same raw-180k checkpoint, frozen 24,000-example selection, seed,
+  optimizer, and batch size. The original full-OOD evaluator gives the control and pilot
+  **0/600 at every L=0/1/2/4/8**. Its answer parser is valid, not the cause: control replies
+  `The answer is <int>.` on all 600 L0 cases but is incorrect. To separate fit from transfer,
+  CPU-only `687057` built audited v2 evaluation slices: 896 rows, SHA-256
+  `b9106b3233c62592dba5f244d5fdec5474d56c813b6d39dc0fe8ee77a441039`, zero invalid or
+  duplicate rows and zero exact train prompts. The matched control v2 result is 50.39% IID,
+  14.06% depth-OOD, 13.28% language-OOD, 0.00% full-OOD. The feedback pilot is worse in every
+  regime: L0 41.41/6.77/10.94/0.00%, L2 44.92/9.38/11.72/0.00%, L4
+  46.48/12.50/11.72/0.00%. Thus low answer-only loss and a few in-template solves do not
+  establish latent reasoning, composition, or context scaling. Mark this final-hidden-state
+  feedback route rejected; preserve reports/control checkpoint/pilot checkpoint (md5
+  `e1c093a51a808c14acb21299fbf8be7b`, `9a516983a4b1cd85bd4bbc96f4f97230`,
+  `47abf77baabef759d68c92c6257a9e1c`, `6636e328d382db8b100309742d5bdbda`) as immutable
+  negative evidence. New local-only source-dropping fixed-slot memory code and tests are an
+  isolated follow-up: every source token must be absent at decoder time and M=0/detached/
+  shuffled-memory controls are required before any H100 run. The live flagship was untouched,
+  healthy through step 189,060 at 154.31k tok/s; next DR target remains 190k.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*

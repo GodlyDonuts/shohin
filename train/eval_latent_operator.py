@@ -50,17 +50,27 @@ def load_rows(path: str):
     return rows
 
 
+def regime_of(row):
+    """Return the optional diagnostic regime without changing v1 semantics."""
+    regime = row.get("eval_regime", "all")
+    if not isinstance(regime, str) or not regime:
+        raise ValueError("eval_regime must be a non-empty string when supplied")
+    return regime
+
+
 def select_rows(rows, per_depth: int, seed: int):
     if per_depth <= 0:
         raise ValueError("per_depth must be positive")
     grouped = collections.defaultdict(list)
     for row in rows:
-        grouped[int(row["depth"])].append(row)
+        grouped[(regime_of(row), int(row["depth"]))].append(row)
     selected = []
-    for depth in sorted(grouped):
-        candidates = grouped[depth]
+    for regime, depth in sorted(grouped):
+        candidates = grouped[(regime, depth)]
         if len(candidates) < per_depth:
-            raise ValueError("depth {} has {}, need {} rows".format(depth, len(candidates), per_depth))
+            raise ValueError(
+                "regime {} depth {} has {}, need {} rows".format(regime, depth, len(candidates), per_depth)
+            )
         selected.extend(sorted(
             candidates,
             key=lambda row: hashlib.sha256((str(seed) + "\0" + row["question"]).encode()).hexdigest(),
@@ -74,21 +84,31 @@ def final_answer(response: str):
 
 
 def summarize(rows):
+    def metric_summary(items):
+        depths = {}
+        for depth in sorted({int(row["depth"]) for row in items}):
+            depth_rows = [row for row in items if int(row["depth"]) == depth]
+            correct = sum(bool(row["correct"]) for row in depth_rows)
+            depths[str(depth)] = {"cases": len(depth_rows), "correct": correct, "accuracy": correct / len(depth_rows)}
+        correct = sum(bool(row["correct"]) for row in items)
+        return {
+            "cases": len(items),
+            "correct": correct,
+            "accuracy": correct / len(items),
+            "by_depth": depths,
+        }
+
     by_steps = {}
     for latent_steps in sorted({int(row["latent_steps"]) for row in rows}):
         matching = [row for row in rows if int(row["latent_steps"]) == latent_steps]
-        depths = {}
-        for depth in sorted({int(row["depth"]) for row in matching}):
-            depth_rows = [row for row in matching if int(row["depth"]) == depth]
-            correct = sum(bool(row["correct"]) for row in depth_rows)
-            depths[str(depth)] = {"cases": len(depth_rows), "correct": correct, "accuracy": correct / len(depth_rows)}
-        correct = sum(bool(row["correct"]) for row in matching)
-        by_steps[str(latent_steps)] = {
-            "cases": len(matching),
-            "correct": correct,
-            "accuracy": correct / len(matching),
-            "by_depth": depths,
-        }
+        result = metric_summary(matching)
+        regimes = sorted({regime_of(row) for row in matching})
+        if len(regimes) > 1:
+            result["by_regime"] = {
+                regime: metric_summary([row for row in matching if regime_of(row) == regime])
+                for regime in regimes
+            }
+        by_steps[str(latent_steps)] = result
     return by_steps
 
 
@@ -133,6 +153,7 @@ def main():
                 "latent_steps": latent_steps,
                 "depth": int(case["depth"]),
                 "family": case["family"],
+                "eval_regime": regime_of(case),
                 "question": case["question"],
                 "expected": int(case["answer"]),
                 "response": response,
@@ -153,6 +174,7 @@ def main():
         "data_sha256": sha256_file(args.data),
         "per_depth": args.per_depth,
         "seed": args.seed,
+        "eval_regimes": sorted({regime_of(case) for case in cases}),
         "latent_steps": ordered_steps,
         "summary": summarize(rows),
         "rows": rows,
