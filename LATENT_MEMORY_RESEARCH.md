@@ -416,3 +416,35 @@ This is a data-admission correction and an experiment launch, not a model
 result. Any positive result must beat raw by regime, preserve state through
 paired counterfactuals, and show response diversity rather than a fixed
 template.
+
+### Append-only Delta Ledger candidate
+
+The direct 200k transcript shows that full-state DRS asks too much of the
+untrained decoder in one generation: copy a long record, select the local
+operands, perform arithmetic, write a digit, update carry, and update a
+program counter. The **Append-only Delta Ledger (ADL)** is a separate candidate
+that decomposes this burden without letting the controller solve anything.
+
+For a fixed immutable operand tape, each model turn emits only
+`adl:step=<n>;d=<digit>;c=<carry>`. Every four exact model-authored delta lines
+are then presented back to the model for one compaction turn,
+`adl:block=<n>;digits=<lsf digits>;c=<carry>`. The controller only schedules the
+fixed program, transports exact parsed lines, and drops raw deltas after a
+model-authored block exists; it never calculates, rewrites, repairs, ranks, or
+chooses a digit/carry/block. The next prompt sees immutable operands, retained
+blocks, and any live deltas. This gives a first-level 4x reduction in retained
+execution trace and makes the later recursive block-of-block extension a
+measurable, rather than aspirational, context-scaling step.
+
+`train/append_ledger_protocol.py`, controller, generator, and independent
+audit are implemented. The initial 40-episode local smoke produced 640 train
+rows and 20 paired held-out episodes across fit, value-OOD, and width-OOD
+regimes; the audit recomputed every row/episode and passed with zero malformed
+rows, duplicate normalized prompts, exact prompt overlap, or 13-gram overlap.
+An earlier smoke initially found 147 generic delta-record n-gram collisions;
+the protocol now binds each retained record on both sides to an immutable
+base-derived identifier, without adding computed controller content. That
+correction reduced the overlap gate to zero. This is not yet a model result or
+a broad-reasoning claim. Full CPU data generation is allowed, but GPU SFT must
+wait for the DRS core-vs-heldout result to establish whether ADL addresses a
+real interface failure.

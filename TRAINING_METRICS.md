@@ -143,6 +143,21 @@ The jobs use a separate output tree, exclude evc22, and cannot modify the live c
 writer. We will report first-transition, closed-loop state, final-answer, paired-counterfactual, and
 response-diversity results by regime; broad reasoning is not inferred from any DRS score.
 
+### Append-only Delta Ledger Pre-Admission Smoke: 2026-07-13
+
+ADL is a separate, untrained candidate for reducing recurrent output burden:
+the model emits a short digit/carry delta per local step, then compacts exactly
+four model-authored deltas into a retained block. The transport-only controller
+never computes, repairs, or chooses state content. Its 40-episode smoke wrote
+**640** train rows and **20** paired held-out episodes across five regimes. The
+independent audit passed with **0** malformed rows, duplicate normalized
+prompts, exact prompt hits, or 13-gram overlap. An initial 147-hit n-gram audit
+failure was corrected before admission by binding retained prompt records to a
+base-derived immutable identifier; the output grammar remains short and no
+model-produced arithmetic is added by the controller. This is data/protocol
+evidence only. No ADL GPU job is authorized before DRS identifies whether
+whole-state copying is the actual failure locus.
+
 ## Checkpoint and Disaster-Recovery Inventory
 
 | Milestone | Numbered checkpoint at milestone | Newton durable copy | Local full checkpoint | MD5 | State |
