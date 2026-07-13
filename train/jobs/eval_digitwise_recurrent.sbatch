@@ -16,6 +16,13 @@ set -euo pipefail
 
 BASE=/lustre/fs1/home/sa305415/shohin
 PY=$BASE/miniforge3/bin/python
+# Newton's account-wide process limit can make a cold NumPy/Torch import fan
+# out before the CUDA smoke runs. Match the bounded import environment used by
+# successful isolated SFT jobs; evaluation itself still receives four CPUs.
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+export OMP_NUM_THREADS=4
 CKPT=${CKPT:?set CKPT to a raw or isolated SFT checkpoint}
 EPISODES=${EPISODES:-$BASE/artifacts/evals/digitwise_recurrent_v2_heldout.jsonl}
 OUT=${OUT:?set OUT to a fresh result JSON}

@@ -13,6 +13,10 @@ set -euo pipefail
 
 BASE=/lustre/fs1/home/sa305415/shohin
 PY=$BASE/miniforge3/bin/python
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+export OMP_NUM_THREADS=4
 CKPT=${CKPT:?set CKPT to a raw or isolated factor SFT checkpoint}
 EPISODES=${EPISODES:-$BASE/artifacts/evals/digitwise_factor_v1_heldout.jsonl}
 OUT=${OUT:?set OUT to a fresh result JSON}
