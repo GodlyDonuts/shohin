@@ -2629,3 +2629,10 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   an anti-contamination delimiter only: the controller never decodes or predicts it. The candidate has
   no Stokes artifact, SFT checkpoint, GPU allocation, or capability result yet; it is not evidence of
   reasoning or context scaling.
+
+- **2026-07-13 18:15** — **TNDL CPU build/audit is live on Stokes, not Newton.** Stokes default
+  `/usr/bin/python3` is Python 3.6 and rejected the repository's postponed-annotation syntax during
+  preflight, so both dedicated CPU scripts now pin the verified `/usr/bin/python3.12` interpreter.
+  Submission `738430` writes only fresh TNDL artifacts and `738431` is its read-only `afterok` audit;
+  both request four CPUs and 24 GiB on `normal`. Their scripts passed remote compilation and Slurm
+  `--test-only`; no H100, pretraining stream, checkpoint, or existing artifact path is shared.
