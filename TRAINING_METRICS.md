@@ -73,12 +73,15 @@ length/language OOD was **+0.09pp** against +5pp; equivalent-pair margin was **+
 +10pp; intervention pairs were **0/576** for every arm. It won only two chunk counts, not the
 required three. This is not retained-state evidence and does not justify LSA stage 2.
 
-The source-free causal-prefix-readback replacement is now the active isolated experiment. It starts
-from the immutable 190k raw checkpoint and uses the same audited 32,000 pair / 7,163-update surface:
-`687216` verified readbacks, `687217` shuffled complete readback labels, and `687218` equal-work
-replicated-final readbacks. Their read-only held-out evaluation successors `687219` through `687221`
-are `afterok`-held and use separate outputs. None shares the flagship checkpoint writer, its data
-stream, or its output tree.
+The source-free causal-prefix-readback replacement is now the active isolated experiment. The first
+submission (`687216`-`687218`) correctly refused the CPR-specific audit before model loading because
+the trainer requires the hash-bound generic LSA admission audit; its never-satisfiable evaluators were
+canceled. The corrected arms start from the immutable 190k raw checkpoint and use that generic audit
+plus the separately preserved CPR protocol audit: `687223` verified readbacks, `687224` shuffled
+complete readback labels, and `687225` equal-work replicated-final readbacks. All three reached finite
+step-80 losses after warmup on the identical 32,000-pair / 7,163-update surface. Read-only held-out
+successors `687226`-`687228` are `afterok`-held and use separate outputs. None shares the flagship
+checkpoint writer, its data stream, or its output tree.
 
 ## Checkpoint and Disaster-Recovery Inventory
 
