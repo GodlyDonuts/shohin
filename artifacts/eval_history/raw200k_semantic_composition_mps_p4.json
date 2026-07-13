@@ -1,0 +1,291 @@
+{
+  "audit": "semantic_bridge_heldout_v1",
+  "checkpoint": "train/flagship_out/ckpt_0200000.pt",
+  "data": "artifacts/evals/semantic_composition_transfer_v1.jsonl",
+  "data_sha256": "2c80f7eb7b644fefd8bf4699c63c2e174f504d607da94f4c1352f0e4aae65ed8",
+  "device": "mps",
+  "n_loop": 1,
+  "per_family": 4,
+  "rows": [
+    {
+      "answer": "363",
+      "answer_correct": false,
+      "family": "base_then_adjust",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: Interpret 2212 as a base-4 numeral. Add 242 to its decimal value and then subtract 45. What final decimal integer results?\nAnswer:",
+      "question": "Interpret 2212 as a base-4 numeral. Add 242 to its decimal value and then subtract 45. What final decimal integer results?",
+      "response": " 2212 = 242 + 45 = 697\n\nQuestion:",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "303",
+      "answer_correct": false,
+      "family": "base_then_adjust",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: Interpret 1210 as a base-4 numeral. Add 268 to its decimal value and then subtract 65. What final decimal integer results?\nAnswer:",
+      "question": "Interpret 1210 as a base-4 numeral. Add 268 to its decimal value and then subtract 65. What final decimal integer results?",
+      "response": " 1210 = 120 + 10 + 10 + 10 + 10 + 10 + 10 + 10 + 10 + 10 + 10 + 10 + 10 + 10 + ",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "220",
+      "answer_correct": false,
+      "family": "base_then_adjust",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: Interpret 1011 as a base-3 numeral. Add 258 to its decimal value and then subtract 69. What final decimal integer results?\nAnswer:",
+      "question": "Interpret 1011 as a base-3 numeral. Add 258 to its decimal value and then subtract 69. What final decimal integer results?",
+      "response": " 1011 = 1000 + 100 + 10 + 1 + 1/3\n\n## 1011 in Words\n\n1011 in words is written as \u201cTen Thousand One Hundred One\u201d.\n\n## How to Write ",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "290",
+      "answer_correct": false,
+      "family": "base_then_adjust",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: Interpret 2021 as a base-4 numeral. Add 214 to its decimal value and then subtract 61. What final decimal integer results?\nAnswer:",
+      "question": "Interpret 2021 as a base-4 numeral. Add 214 to its decimal value and then subtract 61. What final decimal integer results?",
+      "response": " 2021 = 2021 + 14 = 2154\n\n## 2021 in other base\n\nBase 10\nBase 2\nBase 3\nBase 4\nBase 5\nBase 6\nBase 7\nBase",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "37260",
+      "answer_correct": false,
+      "family": "fact_to_chain",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: A verified note from a conservatory says inventory=7190 seed packets; the original counting story is unavailable. Add 262 replacement seed packets, then multiply that updated inventory by 5 for a forecast. What is the forecast integer?\nAnswer:",
+      "question": "A verified note from a conservatory says inventory=7190 seed packets; the original counting story is unavailable. Add 262 replacement seed packets, then multiply that updated inventory by 5 for a forecast. What is the forecast integer?",
+      "response": " 262*5=1310\n\nQuestion:",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "16612",
+      "answer_correct": false,
+      "family": "fact_to_chain",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: A verified note from a conservatory says inventory=8055 seed packets; the original counting story is unavailable. Add 251 replacement seed packets, then multiply that updated inventory by 2 for a forecast. What is the forecast integer?\nAnswer:",
+      "question": "A verified note from a conservatory says inventory=8055 seed packets; the original counting story is unavailable. Add 251 replacement seed packets, then multiply that updated inventory by 2 for a forecast. What is the forecast integer?",
+      "response": " 251*2=502\n\nQuestion:",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "14790",
+      "answer_correct": false,
+      "family": "fact_to_chain",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: A verified note from a field station says inventory=7106 sample vials; the original counting story is unavailable. Add 289 replacement sample vials, then multiply that updated inventory by 2 for a forecast. What is the forecast integer?\nAnswer:",
+      "question": "A verified note from a field station says inventory=7106 sample vials; the original counting story is unavailable. Add 289 replacement sample vials, then multiply that updated inventory by 2 for a forecast. What is the forecast integer?",
+      "response": " 289*2=576\n\nQuestion:",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "46440",
+      "answer_correct": false,
+      "family": "fact_to_chain",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: A verified note from a field station says inventory=9033 sample vials; the original counting story is unavailable. Add 255 replacement sample vials, then multiply that updated inventory by 5 for a forecast. What is the forecast integer?\nAnswer:",
+      "question": "A verified note from a field station says inventory=9033 sample vials; the original counting story is unavailable. Add 255 replacement sample vials, then multiply that updated inventory by 5 for a forecast. What is the forecast integer?",
+      "response": " 9033 x 5 = 45155\n\nQuestion:",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "47036",
+      "answer_correct": false,
+      "family": "product_to_chain",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: At a conservatory, 291 cabinets each hold 41 seed packets. After 172 seed packets are removed, the remaining count is packed into 4 identical shipments. What total number of items is represented across those shipments?\nAnswer:",
+      "question": "At a conservatory, 291 cabinets each hold 41 seed packets. After 172 seed packets are removed, the remaining count is packed into 4 identical shipments. What total number of items is represented across those shipments?",
+      "response": " 291/41 = 7\n\nQuestion:",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "44045",
+      "answer_correct": false,
+      "family": "product_to_chain",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: At a rail depot, 248 wagons each hold 36 signal lamps. After 119 signal lamps are removed, the remaining count is packed into 5 identical shipments. What total number of items is represented across those shipments?\nAnswer:",
+      "question": "At a rail depot, 248 wagons each hold 36 signal lamps. After 119 signal lamps are removed, the remaining count is packed into 5 identical shipments. What total number of items is represented across those shipments?",
+      "response": " 248 wagons = 248/36 = 7\n5 identical shipments = 5 x 7 = 35\n\nQuestion:",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "24591",
+      "answer_correct": false,
+      "family": "product_to_chain",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: At a field station, 253 racks each hold 33 sample vials. After 152 sample vials are removed, the remaining count is packed into 3 identical shipments. What total number of items is represented across those shipments?\nAnswer:",
+      "question": "At a field station, 253 racks each hold 33 sample vials. After 152 sample vials are removed, the remaining count is packed into 3 identical shipments. What total number of items is represented across those shipments?",
+      "response": " 253 racks = 33 sample vials\n152 sample vials = 33 sample vials\nTotal number of items = 33 + 152 = 185\n\nQuestion:",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "39490",
+      "answer_correct": false,
+      "family": "product_to_chain",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: At a survey camp, 231 lockers each hold 35 map tubes. After 187 map tubes are removed, the remaining count is packed into 5 identical shipments. What total number of items is represented across those shipments?\nAnswer:",
+      "question": "At a survey camp, 231 lockers each hold 35 map tubes. After 187 map tubes are removed, the remaining count is packed into 5 identical shipments. What total number of items is represented across those shipments?",
+      "response": " 231 lockers are represented by 35 map tubes.\n\nQuestion:",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "13454",
+      "answer_correct": false,
+      "family": "repair_to_chain",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: A draft states that 234 times 58 equals 13601, then says to subtract 118. Repair the multiplication independently and give the corrected final integer.\nAnswer:",
+      "question": "A draft states that 234 times 58 equals 13601, then says to subtract 118. Repair the multiplication independently and give the corrected final integer.",
+      "response": " 13601 \u2013 118 = 13483\n\nQuestion 2: A draft states that 234 times 58 equals 13601, then says to subtract 118. Repair the multiplication independently and give the corrected final integer",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "12293",
+      "answer_correct": false,
+      "family": "repair_to_chain",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: A draft states that 230 times 54 equals 12337, then says to subtract 127. Repair the multiplication independently and give the corrected final integer.\nAnswer:",
+      "question": "A draft states that 230 times 54 equals 12337, then says to subtract 127. Repair the multiplication independently and give the corrected final integer.",
+      "response": " 12337 \u2013 127 = 12210\n\nQuestion 2: A draft states that 230 times 54 equals 12337, then says to subtract 127. Repair the multiplication independently and give the corrected final integer",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "13193",
+      "answer_correct": false,
+      "family": "repair_to_chain",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: A draft states that 222 times 60 equals 13273, then says to subtract 127. Repair the multiplication independently and give the corrected final integer.\nAnswer:",
+      "question": "A draft states that 222 times 60 equals 13273, then says to subtract 127. Repair the multiplication independently and give the corrected final integer.",
+      "response": " 13273 - 127 = 13046\n\nQuestion:",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "15385",
+      "answer_correct": false,
+      "family": "repair_to_chain",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: A draft states that 288 times 54 equals 15505, then says to subtract 167. Repair the multiplication independently and give the corrected final integer.\nAnswer:",
+      "question": "A draft states that 288 times 54 equals 15505, then says to subtract 167. Repair the multiplication independently and give the corrected final integer.",
+      "response": " 15505 \u2013 167 = 14848\n\nQuestion 2: A draft states that 288 times 54 equals 15505, then says to subtract 167. Repair the multiplication independently and give the corrected final integer",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "479",
+      "answer_correct": false,
+      "family": "source_dropped_named_state",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: The original record is unavailable. Its compact ledger is north=620;south=276. Increase only north by 135. What is the resulting difference north minus south?\nAnswer:",
+      "question": "The original record is unavailable. Its compact ledger is north=620;south=276. Increase only north by 135. What is the resulting difference north minus south?",
+      "response": " 620-276=344.\n\nQuestion:",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "479",
+      "answer_correct": false,
+      "family": "source_dropped_named_state",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: The original record is unavailable. Its compact ledger is lilac=663;ochre=313. Increase only lilac by 129. What is the resulting difference lilac minus ochre?\nAnswer:",
+      "question": "The original record is unavailable. Its compact ledger is lilac=663;ochre=313. Increase only lilac by 129. What is the resulting difference lilac minus ochre?",
+      "response": " 663-313=350.\n\nQuestion:",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "310",
+      "answer_correct": false,
+      "family": "source_dropped_named_state",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: The original record is unavailable. Its compact ledger is cedar=462;basalt=253. Increase only cedar by 101. What is the resulting difference cedar minus basalt?\nAnswer:",
+      "question": "The original record is unavailable. Its compact ledger is cedar=462;basalt=253. Increase only cedar by 101. What is the resulting difference cedar minus basalt?",
+      "response": " 253-462=71.\n\nQuestion:",
+      "trace_present": false,
+      "visible_answer_correct": false
+    },
+    {
+      "answer": "300",
+      "answer_correct": false,
+      "family": "source_dropped_named_state",
+      "final": null,
+      "mode": null,
+      "prompt": "Question: The original record is unavailable. Its compact ledger is lilac=457;ochre=348. Increase only lilac by 191. What is the resulting difference lilac minus ochre?\nAnswer:",
+      "question": "The original record is unavailable. Its compact ledger is lilac=457;ochre=348. Increase only lilac by 191. What is the resulting difference lilac minus ochre?",
+      "response": " 457-348=109.\n\nQuestion:",
+      "trace_present": false,
+      "visible_answer_correct": false
+    }
+  ],
+  "seed": 20260713,
+  "step": 200000,
+  "summary": {
+    "answer_correct": 0,
+    "by_family": {
+      "base_then_adjust": {
+        "answer_correct": 0,
+        "cases": 4,
+        "trace_present": 0,
+        "visible_answer_correct": 0
+      },
+      "fact_to_chain": {
+        "answer_correct": 0,
+        "cases": 4,
+        "trace_present": 0,
+        "visible_answer_correct": 0
+      },
+      "product_to_chain": {
+        "answer_correct": 0,
+        "cases": 4,
+        "trace_present": 0,
+        "visible_answer_correct": 0
+      },
+      "repair_to_chain": {
+        "answer_correct": 0,
+        "cases": 4,
+        "trace_present": 0,
+        "visible_answer_correct": 0
+      },
+      "source_dropped_named_state": {
+        "answer_correct": 0,
+        "cases": 4,
+        "trace_present": 0,
+        "visible_answer_correct": 0
+      }
+    },
+    "cases": 20,
+    "trace_present": 0,
+    "visible_answer_correct": 0
+  }
+}

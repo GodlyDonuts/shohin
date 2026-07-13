@@ -2725,3 +2725,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `0a8b8257ad3a7bf8ad4e944304b382f2` (suite) and `b14e0de24cdfa77ffc32d82772fb26c7` (audit). This
   specifically prevents V10A from advancing on its original family/template-disjoint bridge holdout
   alone. The suite is never an SFT input and does not touch the flagship.
+
+- **2026-07-13 19:55** — **Raw 200k composition baseline is a clean zero.** On the immutable local MPS
+  checkpoint, a deterministic 20-case/4-per-family sample of the admitted cross-family suite scored
+  **0/20 answers, 0/20 visible traces, and 0/20 trace-and-answer pairs**, with 0/4 in every family. It
+  often performed only the final fragment (`262*5=1310`) while ignoring the supplied source-dropped
+  inventory, interpreted base numerals as decimal text, and never emitted the required answer contract.
+  This exact output is mirrored local/Newton as
+  `artifacts/eval_history/raw200k_semantic_composition_mps_p4.json`, md5
+  `6118200f1fef077494d0250713034a9a`. It is a small diagnostic baseline rather than an estimate of a
+  public score; for V10A it establishes that any genuine cross-family/source-drop gain is measurable and
+  must be checked against the full 500-case suite before promotion.
