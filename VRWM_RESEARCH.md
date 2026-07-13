@@ -104,9 +104,12 @@ is deliberately restricted to memory transport.
 
 r5 adds two proposal-check examples per transition and trains the same model to emit a corrected canonical
 state. Its evaluation compares draft and one model-only repair pass on the same frozen p80 episodes. The
-controller records both responses and never calculates, selects, or substitutes a state. To advance, r5
-must improve semantic closed-loop and long-horizon performance over r4 scratch; default-template movement
-alone is not enough.
+controller records both responses and never calculates, selects, or substitutes a state. The completed
+semantic first pass is **17/400**, below r4 scratch's 21/400. More importantly, the r5 checkpoint fails a
+matched eight-case ordinary-reasoning interview **0/8** under initial, review, supplied-fact, compact-state,
+and reuse conditions, versus raw 180k's 1/8 initial and supplied-fact results. It compulsively produces
+`check:` / `wm:` transitions for unrelated questions. r5 is therefore rejected for broad promotion even if
+its remaining narrow repair measurements improve default-format VRWM scores.
 
 ## Current Inputs
 

@@ -1,0 +1,273 @@
+{
+  "audit": "generalization_interview_v1",
+  "device": "mps",
+  "checkpoint": "train/experimental_out/sft_vrwm_v3_repair_scratch_180k_r5.pt",
+  "step": "sft_ep1",
+  "cases": 8,
+  "summary": {
+    "initial": 0,
+    "review": 0,
+    "verified_fact": 0,
+    "valid_state_line": 0,
+    "state_reuse": 0,
+    "valid_state_and_reuse": 0
+  },
+  "rows": [
+    {
+      "id": "word_product_rejects",
+      "kind": "number",
+      "question": "A workshop packs 17 boxes with 23 gears in each box. Eight gears are rejected. How many gears remain? Return only the integer.",
+      "answer": "383",
+      "initial": {
+        "prompt": "Question: A workshop packs 17 boxes with 23 gears in each box. Eight gears are rejected. How many gears remain? Return only the integer.\nAnswer:",
+        "response": "check: a=17+23=40\nwm:a=40;b=23",
+        "correct": false
+      },
+      "review": {
+        "prompt": "Question: A workshop packs 17 boxes with 23 gears in each box. Eight gears are rejected. How many gears remain? Return only the integer.\nPrevious answer: check: a=17+23=40\nwm:a=40;b=23\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "response": "check: a=17+23=40\nwm:a=40;b=23",
+        "correct": false
+      },
+      "verified_fact": {
+        "prompt": "Question: A workshop packs 17 boxes with 23 gears in each box. Eight gears are rejected. How many gears remain? Return only the integer.\nVerified intermediate fact: 17 times 23 is 391.\nUse that fact. Return only the final answer.\nAnswer:",
+        "response": "check: a=17+23=40\nwm:a=40;b=23",
+        "correct": false
+      },
+      "compact_state": {
+        "prompt": "Question: A workshop packs 17 boxes with 23 gears in each box. Eight gears are rejected. How many gears remain? Return only the integer.\nRecord the product and rejected count as one compact state before answering. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+        "response": "check: a=17-23=-6\nwm:a=-6;b=23",
+        "valid_state_line": false
+      },
+      "state_reuse": {
+        "prompt": "Question: A workshop packs 17 boxes with 23 gears in each box. Eight gears are rejected. How many gears remain? Return only the integer.\nThe prior state was:\ncheck: a=17-23=-6\nwm:a=-6;b=23\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+        "response": "check: a=17-23=-6\nwm:a=-6;b=23",
+        "correct": false
+      },
+      "valid_state_and_reuse": false
+    },
+    {
+      "id": "base_seven_place_value",
+      "kind": "number",
+      "question": "Convert the base-7 numeral 356 to base 10. Return only the integer.",
+      "answer": "188",
+      "initial": {
+        "prompt": "Question: Convert the base-7 numeral 356 to base 10. Return only the integer.\nAnswer:",
+        "response": "check: b=10+12=22\nwm:a=356;b=22",
+        "correct": false
+      },
+      "review": {
+        "prompt": "Question: Convert the base-7 numeral 356 to base 10. Return only the integer.\nPrevious answer: check: b=10+12=22\nwm:a=356;b=22\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "response": "check: b=10+12=22\nwm:a=356;b=22",
+        "correct": false
+      },
+      "verified_fact": {
+        "prompt": "Question: Convert the base-7 numeral 356 to base 10. Return only the integer.\nVerified intermediate fact: Use 3 times 7 squared, plus 5 times 7, plus 6.\nUse that fact. Return only the final answer.\nAnswer:",
+        "response": "check: b=10+56+6=61\nwm:a=356;b=61",
+        "correct": false
+      },
+      "compact_state": {
+        "prompt": "Question: Convert the base-7 numeral 356 to base 10. Return only the integer.\nRecord the three place-value terms as one compact state before answering. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+        "response": "check: b=70+356=426\nwm:a=356;b=426",
+        "valid_state_line": false
+      },
+      "state_reuse": {
+        "prompt": "Question: Convert the base-7 numeral 356 to base 10. Return only the integer.\nThe prior state was:\ncheck: b=70+356=426\nwm:a=356;b=426\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+        "response": "check: b=356+10=366\nwm:a=356;b=366",
+        "correct": false
+      },
+      "valid_state_and_reuse": false
+    },
+    {
+      "id": "sequential_inventory",
+      "kind": "number",
+      "question": "A counter starts at 6. Double it, add 7, then triple the result. What is the final counter value? Return only the integer.",
+      "answer": "51",
+      "initial": {
+        "prompt": "Question: A counter starts at 6. Double it, add 7, then triple the result. What is the final counter value? Return only the integer.\nAnswer:",
+        "response": "check: a=6+7=13\nwm:a=13;b=1",
+        "correct": false
+      },
+      "review": {
+        "prompt": "Question: A counter starts at 6. Double it, add 7, then triple the result. What is the final counter value? Return only the integer.\nPrevious answer: check: a=6+7=13\nwm:a=13;b=1\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "response": "check: a=6+7=13\nwm:a=13;b=1",
+        "correct": false
+      },
+      "verified_fact": {
+        "prompt": "Question: A counter starts at 6. Double it, add 7, then triple the result. What is the final counter value? Return only the integer.\nVerified intermediate fact: After doubling and adding 7, the counter is 19.\nUse that fact. Return only the final answer.\nAnswer:",
+        "response": "check: a=6+7=13\nwm:a=13;b=19",
+        "correct": false
+      },
+      "compact_state": {
+        "prompt": "Question: A counter starts at 6. Double it, add 7, then triple the result. What is the final counter value? Return only the integer.\nRecord the counter after each operation as one compact state before answering. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+        "response": "check: a=6+7=13\nwm:a=13;b=11",
+        "valid_state_line": false
+      },
+      "state_reuse": {
+        "prompt": "Question: A counter starts at 6. Double it, add 7, then triple the result. What is the final counter value? Return only the integer.\nThe prior state was:\ncheck: a=6+7=13\nwm:a=13;b=11\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+        "response": "check: a=6+7=13\nwm:a=13;b=11",
+        "correct": false
+      },
+      "valid_state_and_reuse": false
+    },
+    {
+      "id": "negative_sort_unique",
+      "kind": "list",
+      "question": "Sort [-1, 12, 7, -1, 12, 0, 7] in ascending order and remove duplicates. Return only the list.",
+      "answer": "[-1,0,7,12]",
+      "initial": {
+        "prompt": "Question: Sort [-1, 12, 7, -1, 12, 0, 7] in ascending order and remove duplicates. Return only the list.\nAnswer:",
+        "response": "check: a,b=-1,12\nwm:a=-1;b=12",
+        "correct": false
+      },
+      "review": {
+        "prompt": "Question: Sort [-1, 12, 7, -1, 12, 0, 7] in ascending order and remove duplicates. Return only the list.\nPrevious answer: check: a,b=-1,12\nwm:a=-1;b=12\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "response": "check: a,b=-1,12\nwm:a=-1;b=12",
+        "correct": false
+      },
+      "verified_fact": {
+        "prompt": "Question: Sort [-1, 12, 7, -1, 12, 0, 7] in ascending order and remove duplicates. Return only the list.\nVerified intermediate fact: The distinct values are -1, 12, 7, and 0.\nUse that fact. Return only the final answer.\nAnswer:",
+        "response": "check: [-1,12,7,0]\nwm:a=-1;b=12;b=7",
+        "correct": false
+      },
+      "compact_state": {
+        "prompt": "Question: Sort [-1, 12, 7, -1, 12, 0, 7] in ascending order and remove duplicates. Return only the list.\nRecord the distinct values as one compact state before answering. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+        "response": "check: a,b=-1,12\nwm:a=-1;b=12",
+        "valid_state_line": false
+      },
+      "state_reuse": {
+        "prompt": "Question: Sort [-1, 12, 7, -1, 12, 0, 7] in ascending order and remove duplicates. Return only the list.\nThe prior state was:\ncheck: a,b=-1,12\nwm:a=-1;b=12\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+        "response": "check: a,b=-1,12\nwm:a=-1;b=12",
+        "correct": false
+      },
+      "valid_state_and_reuse": false
+    },
+    {
+      "id": "string_splice",
+      "kind": "string",
+      "question": "Insert 'XY' immediately after the first 4 characters of 'notebook'. Return only the string.",
+      "answer": "noteXYbook",
+      "initial": {
+        "prompt": "Question: Insert 'XY' immediately after the first 4 characters of 'notebook'. Return only the string.\nAnswer:",
+        "response": "check: a=11+1=12\nwm:a=12;b=1",
+        "correct": false
+      },
+      "review": {
+        "prompt": "Question: Insert 'XY' immediately after the first 4 characters of 'notebook'. Return only the string.\nPrevious answer: check: a=11+1=12\nwm:a=12;b=1\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "response": "check: a=11+1=12\nwm:a=12;b=1",
+        "correct": false
+      },
+      "verified_fact": {
+        "prompt": "Question: Insert 'XY' immediately after the first 4 characters of 'notebook'. Return only the string.\nVerified intermediate fact: The prefix is 'note' and the suffix is 'book'.\nUse that fact. Return only the final answer.\nAnswer:",
+        "response": "check: a=11+4=15\nwm:a=15;b=4",
+        "correct": false
+      },
+      "compact_state": {
+        "prompt": "Question: Insert 'XY' immediately after the first 4 characters of 'notebook'. Return only the string.\nRecord prefix, inserted text, and suffix as one compact state before answering. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+        "response": "check: a=11+4=15\nwm:a=15;b=4",
+        "valid_state_line": false
+      },
+      "state_reuse": {
+        "prompt": "Question: Insert 'XY' immediately after the first 4 characters of 'notebook'. Return only the string.\nThe prior state was:\ncheck: a=11+4=15\nwm:a=15;b=4\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+        "response": "check: a=11+4=15\nwm:a=15;b=4",
+        "correct": false
+      },
+      "valid_state_and_reuse": false
+    },
+    {
+      "id": "set_constraint",
+      "kind": "yesno",
+      "question": "Every fep is a lor. No lor is a vek. Can a fep be a vek? Answer yes or no only.",
+      "answer": "no",
+      "initial": {
+        "prompt": "Question: Every fep is a lor. No lor is a vek. Can a fep be a vek? Answer yes or no only.\nAnswer:",
+        "response": " a,b=101,12\nwm:a=101;b=12",
+        "correct": false
+      },
+      "review": {
+        "prompt": "Question: Every fep is a lor. No lor is a vek. Can a fep be a vek? Answer yes or no only.\nPrevious answer:  a,b=101,12\nwm:a=101;b=12\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "response": " a,b=101,12\nwm:a=101;b=12",
+        "correct": false
+      },
+      "verified_fact": {
+        "prompt": "Question: Every fep is a lor. No lor is a vek. Can a fep be a vek? Answer yes or no only.\nVerified intermediate fact: A fep must be a lor, and no lor may be a vek.\nUse that fact. Return only the final answer.\nAnswer:",
+        "response": "check: a,b=101,12\nwm:a=101;b=12",
+        "correct": false
+      },
+      "compact_state": {
+        "prompt": "Question: Every fep is a lor. No lor is a vek. Can a fep be a vek? Answer yes or no only.\nRecord the two set constraints as one compact state before answering. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+        "response": "check: a,b=101,12\nwm:a=101;b=12",
+        "valid_state_line": false
+      },
+      "state_reuse": {
+        "prompt": "Question: Every fep is a lor. No lor is a vek. Can a fep be a vek? Answer yes or no only.\nThe prior state was:\ncheck: a,b=101,12\nwm:a=101;b=12\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+        "response": "check: a,b=101,12\nwm:a=101;b=12",
+        "correct": false
+      },
+      "valid_state_and_reuse": false
+    },
+    {
+      "id": "python_count_evens",
+      "kind": "code",
+      "question": "Write only Python code for count_evens(values). It must return how many integers in values are even, including negative even integers.",
+      "answer": "count_evens",
+      "initial": {
+        "prompt": "Question: Write only Python code for count_evens(values). It must return how many integers in values are even, including negative even integers.\nAnswer:",
+        "response": "check: a=10+15=25\nwm:a=25;b=15",
+        "correct": false
+      },
+      "review": {
+        "prompt": "Question: Write only Python code for count_evens(values). It must return how many integers in values are even, including negative even integers.\nPrevious answer: check: a=10+15=25\nwm:a=25;b=15\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "response": "check: a=10+15=25\nwm:a=25;b=15",
+        "correct": false
+      },
+      "verified_fact": {
+        "prompt": "Question: Write only Python code for count_evens(values). It must return how many integers in values are even, including negative even integers.\nVerified intermediate fact: An integer is even exactly when value modulo 2 equals 0.\nUse that fact. Return only the final answer.\nAnswer:",
+        "response": "check: a=10-2=8\nwm:a=8;b=2",
+        "correct": false
+      },
+      "compact_state": {
+        "prompt": "Question: Write only Python code for count_evens(values). It must return how many integers in values are even, including negative even integers.\nRecord the predicate compactly, then write only the Python function. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+        "response": "check: a=10+1=11\nwm:a=11;b=1",
+        "valid_state_line": false
+      },
+      "state_reuse": {
+        "prompt": "Question: Write only Python code for count_evens(values). It must return how many integers in values are even, including negative even integers.\nThe prior state was:\ncheck: a=10+1=11\nwm:a=11;b=1\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+        "response": "check: a=10+1=11\nwm:a=11;b=1",
+        "correct": false
+      },
+      "valid_state_and_reuse": false
+    },
+    {
+      "id": "code_review_sum_positive",
+      "kind": "code",
+      "question": "Write only Python code for sum_positive(values). It must return the sum of exactly the strictly positive integers in values.",
+      "answer": "sum_positive",
+      "initial": {
+        "prompt": "Question: Write only Python code for sum_positive(values). It must return the sum of exactly the strictly positive integers in values.\nAnswer:",
+        "response": "check: a=11+13=24\nwm:a=24;b=13",
+        "correct": false
+      },
+      "review": {
+        "prompt": "Question: Write only Python code for sum_positive(values). It must return the sum of exactly the strictly positive integers in values.\nPrevious answer: check: a=11+13=24\nwm:a=24;b=13\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "response": "check: a=11+13=24\nwm:a=24;b=13",
+        "correct": false
+      },
+      "verified_fact": {
+        "prompt": "Question: Write only Python code for sum_positive(values). It must return the sum of exactly the strictly positive integers in values.\nVerified intermediate fact: Zero is not strictly positive, so only values greater than zero are added.\nUse that fact. Return only the final answer.\nAnswer:",
+        "response": "check: a=11+14=25\nwm:a=25;b=14",
+        "correct": false
+      },
+      "compact_state": {
+        "prompt": "Question: Write only Python code for sum_positive(values). It must return the sum of exactly the strictly positive integers in values.\nRecord the inclusion rule compactly, then write only the Python function. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+        "response": "check: a=11+13=24\nwm:a=24;b=13",
+        "valid_state_line": false
+      },
+      "state_reuse": {
+        "prompt": "Question: Write only Python code for sum_positive(values). It must return the sum of exactly the strictly positive integers in values.\nThe prior state was:\ncheck: a=11+13=24\nwm:a=24;b=13\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+        "response": "check: a=11+13=24\nwm:a=24;b=13",
+        "correct": false
+      },
+      "valid_state_and_reuse": false
+    }
+  ]
+}

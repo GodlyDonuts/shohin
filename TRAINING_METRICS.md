@@ -5,7 +5,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-12 20:31 EDT
+**Last refreshed:** 2026-07-12 21:07 EDT
 **Flagship source of truth:** Newton Slurm job `685084`,
 `/lustre/fs1/home/sa305415/shohin/train/flagship_out/log_r0.jsonl`  
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -91,7 +91,7 @@ the running `SHARDS` list.
 | 25B DCLM / FineWeb replacements | No final manifests or scan approvals at this refresh. | Not admitted; do not use partial output in a future relaunch. |
 | VRWM r3 transition SFT | 497,274 unique solver-checked rows, 0 malformed rows, duplicate prompts, or full-text evaluation overlaps; 18,013 packed 2,048-token sequences. SHA-256 `b2a688e1f7aa6c79dd65ed1944fa5dc00cd022acfc793896ecf4696c94d4089f`. One epoch `686742` wrote `sft_ep1.pt` (MD5 `90607e7307187c2ad4839d48dfa3a0c6`). Full default p80 closed-loop result: 43/400. | Rejected as template-bound: held-out paraphrase p10 is 0/50. |
 | VRWM r4 controlled ablation | Both state-only and deterministic-scratch branches: 513,902 audited rows, 0 malformed/duplicate/public-overlap rows; state SHA-256 `cfab3c0c06cd5eba419d42cd52937ab7159e8f30acc2bc1202375ea38c162e58`, scratch SHA-256 `0df3d86471ccc675ad2dea07bb19cd7ffd97adde5c78b3e92b7fb1581c7d7b10`. | State: 32/400 default, 2/400 semantic. Scratch: 120/400 default, 21/400 semantic. Narrow executable-state evidence only; not general reasoning or promotion. |
-| VRWM r5 repair curriculum | 1,409,072 audited rows / 68,347 packed sequences, 139,976,150 total SFT tokens and 38,629,088 answer tokens. SHA-256 `011282f032963a40b8b39ab9572808de1d3473ef2b57ef727526fb9d00985c76`; zero malformed, duplicate, exact-eval, or 13-gram-eval rows. SFT `686820` is isolated on evc37 from `best_step180000.pt`. | In progress. Paired default/semantic first-pass and same-model self-repair tests `686827`-`686830` decide whether repair gives closed-loop transfer rather than output-format memorization. |
+| VRWM r5 repair curriculum | 1,409,072 audited rows / 68,347 packed sequences, 139,976,150 total SFT tokens and 38,629,088 answer tokens. SHA-256 `011282f032963a40b8b39ab9572808de1d3473ef2b57ef727526fb9d00985c76`; zero malformed, duplicate, exact-eval, or 13-gram-eval rows. SFT `686820` completed on evc37 in 1,303s; its locally and remotely preserved checkpoint md5 is `ef99f8c2ab5835c8229bcd4f36fb8789`. | Rejected for broad promotion. Semantic p80 first-pass is 17/400, below r4 scratch's 21/400; remaining default/self-repair jobs are diagnostic-only. |
 
 ## Capability and Monitoring Baselines
 
@@ -121,6 +121,13 @@ Additional independent evidence:
   bounded, generated-state transition policy, not evidence that the base model now thinks through ordinary
   questions. The r5 self-repair comparison must improve the semantic and long-horizon rows without a
   controller-side correction before it can advance beyond research.
+- Matched direct operator interview (eight fresh non-VRWM questions): raw 180k is **1/8** initial and
+  **1/8** when supplied a correct intermediate fact; r5 is **0/8** initial, review, supplied-fact,
+  valid-state, and reuse. Its verbatim outputs are synthetic `check:` / `wm:` transitions even for logic
+  and Python requests. This is response-mode collapse, so r5 must not be compared on public boards or
+  considered a broad-reasoning checkpoint. Artifacts: raw
+  `generalization_interview_raw180k_mps_20260712_r3.json` MD5 `c4cef6117b53965776eae259868bedbb`; r5
+  `generalization_interview_vrwm_r5_180k_mps_20260712.json` MD5 `e67c6b589e6fb5d9171472129a3873c5`.
 - Fixed raw-170k monitor results: WikiText-103 test NLL **3.9648849**, PPL **52.7142** over
   301,056 targets; CodeContests test NLL **1.3537146**, PPL **3.8718** over 145,408 targets.
   They are trend monitors only. The code monitor is not source-disjointness proof, so
