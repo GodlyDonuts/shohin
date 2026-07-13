@@ -99,6 +99,7 @@ partial normal-mode counts.
 | 170k | `ckpt_0170000.pt` | `best_step170000.pt` | `train/flagship_out/ckpt_0170000.pt` | `7ad139b6b9b537a5a3e65978f8296419` | Verified Newton + local |
 | 180k | Observed and hashed, then reaped by trainer retention | `best_step180000.pt` | `train/flagship_out/ckpt_0180000.pt` | `a592a8bd46163eb1427fe64460be0c6a` | Two durable verified copies |
 | 190k | `ckpt_0190000.pt` | `best_step190000.pt` | `train/flagship_out/ckpt_0190000.pt` | `3e195aaf44a14259797c49d7f80d9c7f` | Verified Newton + local |
+| 200k | `ckpt_0200000.pt` | `best_step200000.pt` | `train/flagship_out/ckpt_0200000.pt` | `510d57df578447986b40e20029511b9d` | Verified Newton + local |
 
 All rows above are full optimizer checkpoints, not model-only exports. The next local DR
 target is 200k, or the newest clean checkpoint before any natural handoff.

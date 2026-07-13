@@ -2288,6 +2288,11 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   every prefix and report to isolated JSONs. No early normal-mode count is a result; wait for all three
   modes and the locked four-control comparator before either claiming or rejecting decoder-accessible
   intermediate state.
+- **2026-07-13 11:12** — **200k flagship recovery checkpoint preserved.** `685084` reached step
+  **200,000** cleanly at loss **1.6200**, gnorm **0.11**, and **154,296 tok/s**. Promoted Newton
+  `best_step200000.pt` and resumed the local SFTP `.part` transfer until local
+  `train/flagship_out/ckpt_0200000.pt` matched at md5 `510d57df578447986b40e20029511b9d`. This is a
+  full optimizer checkpoint and the current local/Newton DR target is complete.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
