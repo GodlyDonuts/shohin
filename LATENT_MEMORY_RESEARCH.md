@@ -175,3 +175,15 @@ This is a stronger route to constrained-context scaling because it trains the
 continuous state as an information-bearing interface throughout a sequence,
 while preserving the hard source-removal boundary. It still would establish
 narrow retained-information reasoning first, not broad intelligence.
+
+### CLL implementation boundary
+
+`pipeline/generate_certified_latent_ledger_v1.py` creates solver-recomputed
+readback probes at every source prefix plus final-event counterfactual pairs.
+`pipeline/audit_certified_latent_ledger_v1.py` independently replays every
+operation and query, requires two valid variants for every counterfactual pair,
+and rejects any exact or 13-gram train/held-out **input-prompt** collision. Each
+discarded source chunk has an inert record tag solely to make the input split
+auditable; it is never present in the query or target answer and has no answer
+relation. The CPU-only job is intentionally unsubmitted until the current
+answer-only M0/M1 packet comparison rejects or justifies a follow-on.
