@@ -5,7 +5,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-13 05:07 EDT
+**Last refreshed:** 2026-07-13 05:39 EDT
 **Flagship source of truth:** Newton Slurm job `685084`,
 `/lustre/fs1/home/sa305415/shohin/train/flagship_out/log_r0.jsonl`  
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -35,9 +35,9 @@ the numbered file under its retention policy; the ledger records which copies re
 | Absolute training target | 300,000 steps |
 | Resume point | `ckpt_0141500.pt` to step 141,501 |
 | Latest checkpoint milestone | **190,000** steps = **99,614,720,000 nominal update tokens** |
-| Last observed live step | 193,680 = 101,544,099,840 nominal update tokens |
-| Last observed throughput | 154,295 tokens/s, approximately 13.33B nominal tokens/day at that sustained rate |
-| Latest loss / gradient norm | step 193,680: loss 1.5811; gnorm 0.09; LR 0.0050 |
+| Last observed live step | 194,220 = 101,827,215,360 nominal update tokens |
+| Last observed throughput | 154,298 tokens/s, approximately 13.33B nominal tokens/day at that sustained rate |
+| Latest loss / gradient norm | step 194,220: loss 1.4431; gnorm 0.11; LR 0.0050 |
 | Direct H100 telemetry | 05:07 EDT: 100% compute utilization, 59% memory-controller utilization, 63,767 / 81,559 MiB VRAM, 280.12 / 310 W, 63 C. Low unused VRAM is deliberate: BS64 was OOM; BS32 is the largest verified single-GPU microbatch. |
 | Post-190k health | One isolated guard skip at step 193,437 (gnorm 2.21 versus 0.13 EMA) recovered at the next logged step. Surrounding recent steps remain in the normal range; no divergence or persistent skip exists. |
 | Two-H100 handoff revalidation | `686734` on evc37, 320 bounded updates from `best_step180000.pt`, `world=2`, `BS=32`, `ACC=4`, fresh optimizer, stream generation 1. Exit 0 with no CUDA/NCCL/DDP error; compile-free late windows 291.7-293.9k tok/s (about 1.90x the live one-H100 rate). One terminal gnorm guard skip at step 180,319 was not followed by an in-canary recovery step, so this is throughput/transport evidence only. |
