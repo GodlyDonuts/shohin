@@ -2666,3 +2666,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `687564` direct raw-versus-DRS interaction is running; its frozen NLL (`687565`) and post-DRS residual
   patch (`687578`) descendants remain serially held. Do not promote DRS, CWI, STRR, or TNDL before those
   diagnostic artifacts are complete and interpreted.
+
+- **2026-07-13 18:55** — **Staged a stricter paper-inspired causal diagnostic without allocating a GPU.**
+  `probe_restricted_jacobian_digit_lens.py` is a deliberately limited next-token digit analogue of the
+  paper's Jacobian lens, not a claimed reproduction: it averages per-digit gradients from selected
+  middle/late block outputs across hash-disjoint held-out DRS episodes, then tests the frozen directions
+  on separate episodes by readout and by a two-coordinate residual swap. The swap has a fixed
+  shuffled-label control and only compares matched local contexts. Local CPU contracts and remote source
+  compilation are clean. A remote CPU import test hit an OpenBLAS allocation failure before its pure
+  contract result, and the Slurm `--test-only` query did not return within a bounded minute; both were
+  stopped without creating work. Scheduler/runtime admission therefore remains unverified; no model,
+  corpus, H100 allocation, or score has been created. It is held behind `687564 -> 687565 -> 687578`:
+  use it only if that chain leaves a concrete ambiguity between absent reusable state and a whole-residual
+  patch that is too nonspecific. It cannot promote DRS, STRR, CWI, or any reasoning claim by itself.

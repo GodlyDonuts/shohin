@@ -93,6 +93,37 @@ NLL evidence chain with the identical 80-direction configuration. STRR may
 advance only if its behavioral closed-loop gates and this matched diagnostic
 are interpreted together; neither alone is a reasoning claim.
 
+### Restricted Jacobian Digit Lens: A More Specific Causal Diagnostic
+
+Whole-residual swaps are intentionally blunt: a negative result can mean that
+the relevant state is distributed, that the swapped residual carries too many
+unrelated features, or that there is no reusable state direction at all. The
+paper's J-lens suggests a more selective test, but reproducing its full
+cross-position, cross-corpus Jacobian construction would be unjustified for a
+125M model before we establish a behavioral primitive.
+
+`train/probe_restricted_jacobian_digit_lens.py` therefore implements a bounded
+middle ground. On a frozen held-out DRS split, it averages the gradient from a
+selected block's last prompt-position activation to each one-token *next-state
+digit* logit. The discovery episode IDs are hash-separated from the evaluation
+episode IDs. It then measures two disjoint evaluation conditions:
+
+1. **Readout:** can the ten averaged directions rank the correct next digit
+   above chance on new episodes?
+2. **Causal swap:** on matched pairs with the same local operation, width,
+   position, and carry but different correct output digits, does swapping only
+   the two corresponding gradient-direction coordinates shift the target's
+   next-token log odds toward the source digit more than a fixed shuffled-label
+   control?
+
+The job wrapper is tested but unsubmitted. This is not a full J-lens, not a
+semantic workspace probe, and not evidence of general reasoning. Its purpose
+is purely diagnostic: distinguish a reusable token-specific direction from a
+template-bound or distributed state representation after the active DRS direct
+interaction, NLL, and whole-residual patch chain has finished. A positive
+restricted result still cannot authorize CWI or a capability claim without the
+already-preregistered behavioral, counterfactual, and multi-readout gates.
+
 ## Conditional Technique: Counterfactual Workspace Induction
 
 The paper's counterfactual-reflection result motivates a distinct follow-on
