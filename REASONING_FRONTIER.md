@@ -93,6 +93,33 @@ rejects exact or word-13-gram overlap with the full bridge corpus. Passing the
 bridge evaluator while failing this suite is a narrowly formatted curriculum
 result, not semantic state competence.
 
+### Post-Bridge Semantic Capsule Gate
+
+The existing semantic-capsule corpus is not another raw capability test. Raw
+and broad V9 both score zero because neither can initially form a valid capsule;
+those controls reject a claim that ordinary pretraining or generic reasoning
+formatting already supplies context compression. The corpus remains valuable as
+the next **serial** mechanism test after a semantic primitive has been taught.
+
+`sft_semantic_capsule_v11a.sbatch` therefore refuses to start from raw weights.
+It requires a V10A checkpoint together with its full 500-case bridge result and
+full 500-case cross-family composition result, each bound to that exact
+checkpoint and its immutable evaluation data. Admission requires at least
+250/500 bridge answers, 200 visible trace-and-answer pairs, at least 40 bridge
+answers in every family, at least 50/500 cross-family answers, and at least
+five composition answers in every family. These are deliberately stronger than
+the rejected V9 signal and stop the capsule corpus from laundering a narrow
+template result into a context-scaling claim.
+
+Only then does one isolated capsule epoch teach source-deleted write, update,
+repair, and readout actions. The SFT is completion-bound to the exact
+controller prompt carried in every row; it does not add a second generic
+`Question:/Answer:` wrapper. Its held-out 4/8/12-step controller evaluation
+uses model-generated capsules only. CBC follows only if this result is nonzero:
+the capsule protocol measures persistence across resets, while CBC's paired
+counterfactual compiler measures whether a resulting state is causally
+interchangeable across worlds. Neither result alone establishes broad reasoning.
+
 ### Raw Workspace-Patching Baseline: No Simple Broadcast Register
 
 `train/probe_digitwise_workspace.py` is the first diagnostic built from this

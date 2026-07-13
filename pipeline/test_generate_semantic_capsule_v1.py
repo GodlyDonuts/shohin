@@ -28,6 +28,7 @@ def main():
         episodes = [json.loads(line) for line in heldout.read_text().splitlines()]
         assert len(rows) > 0 and len(episodes) == 9
         assert all(row["training_group"] == "semantic_capsule" for row in rows)
+        assert all(row["completion_prompt"] == row["question"] for row in rows)
         assert all(row["response"].startswith("<think>") for row in rows)
         assert {row["mode"] for row in rows} == {"write", "update", "repair", "readout"}
         train_prompts = {normalized(row["question"]) for row in rows}

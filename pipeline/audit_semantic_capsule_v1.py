@@ -65,6 +65,7 @@ def main():
     train_rows = [json.loads(line) for line in Path(args.data).read_text().splitlines() if line.strip()]
     episodes = [json.loads(line) for line in Path(args.episodes).read_text().splitlines() if line.strip()]
     malformed_rows = 0
+    invalid_completion_prompts = 0
     duplicate_questions = 0
     seen_questions = set()
     for row in train_rows:
@@ -76,6 +77,8 @@ def main():
         seen_questions.add(key)
         if row.get("training_group") != "semantic_capsule" or not str(row["response"]).startswith("<think>"):
             malformed_rows += 1
+        if row.get("completion_prompt") != row.get("question"):
+            invalid_completion_prompts += 1
 
     invalid_episodes, prompt_rows = 0, []
     regimes = collections.Counter()
@@ -124,6 +127,7 @@ def main():
         "heldout_controller_prompts": len(prompt_rows),
         "malformed_train_rows": malformed_rows,
         "duplicate_normalized_train_questions": duplicate_questions,
+        "invalid_completion_prompts": invalid_completion_prompts,
         "invalid_heldout_episodes": invalid_episodes,
         "regimes": dict(sorted(regimes.items())),
         "overlap": {

@@ -26,6 +26,7 @@ def main():
         ], cwd=ROOT, check=True)
         payload = json.loads(report.read_text())
         assert payload["malformed_train_rows"] == 0
+        assert payload["invalid_completion_prompts"] == 0
         assert payload["duplicate_normalized_train_questions"] == 0
         assert payload["invalid_heldout_episodes"] == 0
         assert payload["overlap"] == {"exact_prompt_hits": 0, "ngram13_hits": 0}
