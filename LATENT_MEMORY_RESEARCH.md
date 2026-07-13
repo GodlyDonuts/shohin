@@ -189,9 +189,13 @@ relation. The CPU-only job is intentionally unsubmitted until the current
 answer-only M0/M1 packet comparison rejects or justifies a follow-on.
 
 `train/eval_source_dropping_memory.py --all-heldout` retains every held-out
-ledger row instead of independently sampling rows that could split a pair. It
-reports accuracy by ledger stage and probe kind, plus the rate at which both
-members of each counterfactual pair are correct and receive different predicted
-values. When pairs exist, `compare_source_dropping_memory.py` adds a required
-10-point normal-packet advantage over M0, zeroed, and shuffled controls. This
-is still a narrow retained-information gate, not a general-reasoning result.
+ledger row instead of independently sampling rows that could split a pair. For
+a bounded but pair-safe screen, `--counterfactual-pairs-per-regime N` adds `N`
+complete deterministic pairs from each regime to the ordinary balanced
+readback selection; it never evaluates one counterfactual variant alone. The
+report records this selection, accuracy by ledger stage and probe kind, and the
+rate at which both members of each counterfactual pair are correct and receive
+different predicted values. When pairs exist,
+`compare_source_dropping_memory.py` adds a required 10-point normal-packet
+advantage over M0, zeroed, and shuffled controls. This is still a narrow
+retained-information gate, not a general-reasoning result.

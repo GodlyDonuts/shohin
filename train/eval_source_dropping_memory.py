@@ -72,6 +72,37 @@ def select_rows(rows, per_chunk_regime: int, seed: int):
     return selected
 
 
+def select_counterfactual_pairs(rows, pairs_per_regime: int, seed: int):
+    """Select complete, deterministic paired interventions for every regime."""
+    if pairs_per_regime <= 0:
+        return []
+    grouped = collections.defaultdict(list)
+    for row in rows:
+        pair_id = row.get("counterfactual_id")
+        if pair_id:
+            grouped[(str(row["eval_regime"]), str(pair_id))].append(row)
+    by_regime = collections.defaultdict(list)
+    for (regime, pair_id), pair in grouped.items():
+        if len(pair) == 2 and {item.get("counterfactual_variant") for item in pair} == {"a", "b"}:
+            by_regime[regime].append((pair_id, pair))
+    selected = []
+    expected_regimes = sorted({str(row["eval_regime"]) for row in rows})
+    for regime in expected_regimes:
+        candidates = by_regime[regime]
+        if len(candidates) < pairs_per_regime:
+            raise ValueError(
+                "{} has {} complete counterfactual pairs, need {}".format(
+                    regime, len(candidates), pairs_per_regime,
+                )
+            )
+        candidates.sort(
+            key=lambda item: hashlib.sha256((str(seed) + "\0" + item[0]).encode()).hexdigest(),
+        )
+        for _, pair in candidates[:pairs_per_regime]:
+            selected.extend(sorted(pair, key=lambda item: item["counterfactual_variant"]))
+    return selected
+
+
 def final_answer(response: str):
     matches = FINAL.findall(str(response))
     return int(matches[-1]) if matches else None
@@ -162,13 +193,19 @@ def main():
     parser.add_argument("--out", required=True)
     parser.add_argument("--per-chunk-regime", type=int, default=128)
     parser.add_argument("--all-heldout", action="store_true", help="score every held-out row, preserving all counterfactual pairs")
+    parser.add_argument(
+        "--counterfactual-pairs-per-regime", type=int, default=0,
+        help="add this many complete paired interventions per regime to the balanced screen",
+    )
     parser.add_argument("--modes", nargs="+", choices=MODES, default=list(MODES))
     parser.add_argument("--max-new", type=int, default=24)
     parser.add_argument("--seed", type=int, default=20260714)
     parser.add_argument("--eos", default="<|endoftext|>")
     args = parser.parse_args()
-    if args.max_new <= 0:
-        raise SystemExit("max-new must be positive")
+    if args.max_new <= 0 or args.counterfactual_pairs_per_regime < 0:
+        raise SystemExit("max-new must be positive and counterfactual-pairs-per-regime cannot be negative")
+    if args.all_heldout and args.counterfactual_pairs_per_regime:
+        raise SystemExit("all-heldout already preserves every counterfactual pair")
     modes = list(dict.fromkeys(args.modes))
     out = Path(args.out)
     if out.exists():
@@ -176,6 +213,11 @@ def main():
 
     loaded_cases = load_rows(args.data)
     cases = loaded_cases if args.all_heldout else select_rows(loaded_cases, args.per_chunk_regime, args.seed)
+    if args.counterfactual_pairs_per_regime:
+        selected = {row["reference"]: row for row in cases}
+        for row in select_counterfactual_pairs(loaded_cases, args.counterfactual_pairs_per_regime, args.seed):
+            selected[row["reference"]] = row
+        cases = [selected[reference] for reference in sorted(selected)]
     if not torch.cuda.is_available():
         raise SystemExit("source-memory evaluation requires a CUDA allocation")
     tokenizer = Tokenizer.from_file(args.tokenizer)
@@ -238,6 +280,7 @@ def main():
         "data_sha256": sha256_file(args.data),
         "per_chunk_regime": args.per_chunk_regime,
         "all_heldout": bool(args.all_heldout),
+        "counterfactual_pairs_per_regime": args.counterfactual_pairs_per_regime,
         "modes": modes,
         "seed": args.seed,
         "summary": summarize(rows),

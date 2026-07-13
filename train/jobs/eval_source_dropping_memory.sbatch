@@ -28,6 +28,11 @@ except Exception as exc:
     print(f"[source-memory-eval] CUDA unavailable: {exc}", file=sys.stderr)
     sys.exit(75)
 PY
-"$PY" eval_source_dropping_memory.py --ckpt "$CKPT" --data "$DATA" \
-  --tokenizer "$BASE/artifacts/shohin-tok-32k.json" --out "$OUT" \
+args=(
+  --ckpt "$CKPT" --data "$DATA" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" --out "$OUT"
   --per-chunk-regime "${PER_CHUNK_REGIME:-16}" --max-new "${MAX_NEW:-24}" --seed "${SEED:-20260714}"
+)
+if [ "${COUNTERFACTUAL_PAIRS_PER_REGIME:-0}" -gt 0 ]; then
+  args+=(--counterfactual-pairs-per-regime "${COUNTERFACTUAL_PAIRS_PER_REGIME}")
+fi
+"$PY" eval_source_dropping_memory.py "${args[@]}"

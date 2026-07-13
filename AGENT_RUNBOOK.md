@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 ~01:44 EDT (`685084` reached and passed 190k; the checkpoint is hash-verified on Newton and the Mac; M0 is a completed equal-controls null result; M1 remains independently training; CLL's generator/audit and pair-aware evaluator remain unsubmitted). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 ~01:50 EDT (`685084` remains healthy past 190k; the checkpoint is hash-verified on Newton and the Mac; M0 is a completed equal-controls null result; M1 remains independently training; the raw-190k direct interview is documented as negative behavioral evidence; CLL's generator/audit and pair-aware evaluator remain unsubmitted). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -54,11 +54,11 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-13 ~00:50 EDT) |
+| Item | Value (as of 2026-07-13 ~01:50 EDT) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | `683715` completed cleanly. Current active continuation is **`685084`** on **evc22**: one H100, `BS=32 ACC=8 CKPT=250`, exact 524,288-token updates, and the proven default compile path. It resumed `ckpt_0141500.pt -> step 141501`. User-authorized successor **`686732`** is held `afterany:685084`: two H100s, `NG=2 BS=32 ACC=4 CKPT=250`, four CPUs, fresh optimizer, and the same 524,288-token update; it excludes CUDA-preflight failures `evc26,31,36,43,50`. |
-| Extended pretrain status | **`685084` reached 180,000 cleanly** at loss **1.6526**, gnorm **0.103**, and **154.30k tok/s**, then remained healthy through observed step **188,460** at **154.31k tok/s**. The isolated guard skips at 180,030, 186,164, and 186,738 recovered immediately; recent loss/gnorm remain in the normal 1.19-2.19 / 0.07-0.41 band. The trainer later reaped numbered `ckpt_0180000.pt` under its retention policy; durable Newton `best_step180000.pt` and full local DR `train/flagship_out/ckpt_0180000.pt` match at md5 **`a592a8bd46163eb1427fe64460be0c6a`**. The exact 180k milestone is **94,371,840,000 nominal update tokens**, while current mounted corpus capacity is **57,826,022,271 manifest tokens**; these are intentionally separate metrics in `TRAINING_METRICS.md`. Next local DR target is 190k. Do not integrate CUDA graphs into live training: the clean whole-update canary gained only ~1.8% while removing the flagship's established guard/observability path. |
+| Extended pretrain status | **`685084` reached 190,000 cleanly** at loss **1.5030**, gnorm **0.09**, and **154.31k tok/s**, then remained healthy through observed step **190,180** at **154.31k tok/s**. The isolated guard skips recovered immediately; recent loss/gnorm remain in the normal band. Numbered `ckpt_0190000.pt`, durable Newton `best_step190000.pt`, and full local DR `train/flagship_out/ckpt_0190000.pt` match at md5 **`3e195aaf44a14259797c49d7f80d9c7f`**. The exact 190k milestone is **99,614,720,000 nominal update tokens**, while current mounted corpus capacity is **57,826,022,271 manifest tokens**; these are intentionally separate metrics in `TRAINING_METRICS.md`. Next local DR target is 200k. Do not integrate CUDA graphs into live training: the clean whole-update canary gained only ~1.8% while removing the flagship's established guard/observability path. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, **DONE**; wrote baseline `train/sft_out/sft_ep3.pt`. Isolated v2 pilot `685708` completed one epoch from `best_step120000.pt` to `train/sft_v2_120k/sft_ep1.pt`. It is a narrow arithmetic-format ablation, not a promoted broad-reasoning recipe. V4 `686323` was canceled before its first step after stale 40/35/15/10 weights; v4 `686324` was canceled before any artifact after a code-boundary audit found 461/3,542 legacy BPE prompt-prefix mismatches. Both are invalid and preserved. Corrected v4 pilot **`686326`** completed one epoch in 1,218s to `train/sft_v4_168750_r3/sft_ep1.pt`, with audited 40/47/8/5 weights and inference-aligned prompt/completion token construction. It is an unevaluated candidate, not promoted. |
 | **Eval board job** | Corrected CUDA-only v2 board **`686277` completed**: GSM8K maj@4 **6/100**, pass@1 **14/100**, MATH-500 **6/100**, HumanEval **6/164**, MBPP **0/100**. The v2 pilot is **rejected for promotion**. RG held-out `686278` is **90/800 = 11.25%** and in-training `686279` is **98/800 = 12.25%**: it learned a few routines that transfer but remains zero on most logic/transformation/cipher/geometry families. The corrected raw-base board **`686315`** pinned `best_step168750.pt` and completed: GSM8K maj@4 **5/100**, pass@1 **2/100**, MATH-500 **2/100**, HumanEval **7/164**, MBPP **0/100**. `686316` direct adaptive interaction was **1/6 initial, 1/6 after explicit self-review, 1/6 with a verified intermediate fact**; only the simple syllogism was correct. V4 r3 public board **`686336` completed and is rejected**: GSM8K maj@4 **5/100**, pass@1 **14/100**, MATH-500 **1/100**, HumanEval **2/164**, MBPP **0/100**. Its corrected held-out procedural result `686337` is **209/800 = 26.125%**, above V2's 90/800 on the same evaluator, but the later raw base means this is a useful diagnostic signal rather than clean data-only attribution. V4 remains a generator/verifier candidate, not a broad promotion. |
 | **V5 primitive board** | **`686401` completed; V5 is rejected for broad promotion.** From the raw-168.75k base it scored GSM8K maj@4 **10/100**, greedy **9/100**, MATH-500 **3/100**, HumanEval **2/164**, and MBPP **0/100**. It shows narrow arithmetic-format transfer but regresses code from raw's 7/164 HumanEval and does not establish broad math, code, or instruction-following transfer. |
@@ -1977,6 +1977,15 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   Commit `4eb50c9` adds a future CLL full-held-out evaluator that preserves counterfactual pairs and
   requires a 10-point pairwise normal-packet advantage only when pairs are present; it was not
   synced into the in-flight M1 evaluation to preserve the already-launched experiment definition.
+- **2026-07-13 ~01:50** — **Direct raw-190k interaction confirms that the flagship does not yet
+  think.** Local-MPS `generalization_interview_raw_190k_local_mps.json` (checkpoint
+  `ckpt_0190000.pt`, md5 `9ecff93b6d70f889b1d0fbe4decd4dd8`) scored **1/8 initial**, **0/8 after
+  explicit independent review**, and **1/8 with a supplied verified intermediate fact**; the only
+  correct case was a simple set constraint. All **8/8** requested compact states failed the exact
+  `state=` contract and all reuse attempts failed. Arithmetic, base conversion, sequential state,
+  sorting, string manipulation, and two code tasks showed prompt echo, tutorial/code imitation, or
+  incorrect computation rather than a recovered procedure. This is behavioral evidence, not a
+  benchmark proxy: no broad-reasoning or thinking claim is permitted for raw 190k.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
