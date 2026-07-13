@@ -3,7 +3,7 @@
 #SBATCH -J shohin-ledger-eval
 #SBATCH -p normal
 #SBATCH --gres=gpu:nvidia_h100_pcie:1
-#SBATCH --exclude=evc22,evc26,evc31,evc36,evc43,evc50
+#SBATCH --exclude=evc22,evc26,evc31,evc36,evc43,evc49,evc50
 #SBATCH -c 4
 #SBATCH --mem=48G
 #SBATCH -t 03:00:00
