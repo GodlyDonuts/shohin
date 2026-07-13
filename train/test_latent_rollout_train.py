@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Unit tests for pairing and curriculum mechanics, without a GPU."""
 
-from latent_rollout_train import bucketed_batches, progressive_latent_steps
+from latent_rollout_train import bucketed_batches, limit_complete_batches, progressive_latent_steps
 
 
 def main():
@@ -22,6 +22,7 @@ def main():
     second, second_report = bucketed_batches(examples, batch_size=2, seed=9)
     assert first == second and first_report == second_report
     assert first_report == {"buckets": 2, "full_batches": 3, "dropped_examples": 1}
+    assert limit_complete_batches(first, max_examples=4, batch_size=2) == first[:2]
     for batch in first:
         shapes = {(len(examples[index]["prompt"]), len(examples[index]["answer"])) for index in batch}
         assert len(shapes) == 1

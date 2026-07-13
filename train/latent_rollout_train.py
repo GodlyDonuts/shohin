@@ -50,7 +50,7 @@ def progressive_latent_steps(step: int, total_steps: int, maximum: int) -> int:
     return maximum
 
 
-def load_examples(path: str, tokenizer, eos_id: int, max_latent_steps: int, max_examples: int = 0):
+def load_examples(path: str, tokenizer, eos_id: int, max_latent_steps: int):
     """Tokenize exact question/answer continuations and reject overlength rows."""
     examples = []
     skipped = defaultdict(int)
@@ -78,8 +78,6 @@ def load_examples(path: str, tokenizer, eos_id: int, max_latent_steps: int, max_
                 "family": str(row.get("family", "")),
                 "line": line_number,
             })
-            if max_examples and len(examples) >= max_examples:
-                break
     if not examples:
         raise ValueError("no fitting latent rollout examples in {}".format(path))
     if eos_id is None or eos_id < 0:
@@ -117,6 +115,16 @@ def bucketed_batches(examples, batch_size: int, seed: int):
     }
 
 
+def limit_complete_batches(batches, max_examples: int, batch_size: int):
+    """Keep a deterministic prefix of already shape-valid batches for canaries."""
+    if max_examples <= 0:
+        return batches
+    requested = max_examples // batch_size
+    if requested <= 0:
+        raise ValueError("max_examples must cover at least one complete batch")
+    return batches[:requested]
+
+
 def lr_scale(step: int, total_steps: int, warmup: int) -> float:
     if step < warmup:
         return step / max(1, warmup)
@@ -140,7 +148,8 @@ def main():
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--max-latent-steps", type=int, default=4,
                         help="0 is the matched non-latent control")
-    parser.add_argument("--max-examples", type=int, default=0)
+    parser.add_argument("--max-examples", type=int, default=0,
+                        help="canary cap rounded down to complete exact-shape batches (0 = all)")
     parser.add_argument("--lr-muon", type=float, default=2e-3)
     parser.add_argument("--lr-adam", type=float, default=5e-4)
     parser.add_argument("--warmup", type=int, default=50)
@@ -162,8 +171,13 @@ def main():
     device = "cuda"
     tokenizer = Tokenizer.from_file(args.tokenizer)
     eos_id = tokenizer.token_to_id(args.eos)
-    examples, skipped = load_examples(args.data, tokenizer, eos_id, args.max_latent_steps, args.max_examples)
+    examples, skipped = load_examples(args.data, tokenizer, eos_id, args.max_latent_steps)
     batches, batch_report = bucketed_batches(examples, args.batch_size, args.seed)
+    batches = limit_complete_batches(batches, args.max_examples, args.batch_size)
+    if not batches:
+        raise ValueError("max_examples selected zero complete batches")
+    batch_report["selected_batches"] = len(batches)
+    batch_report["selected_examples"] = len(batches) * args.batch_size
     total_steps = args.epochs * len(batches)
     print(json.dumps({
         "latent_rollout": "continuous_v1",
@@ -188,6 +202,7 @@ def main():
     started, step = time.time(), 0
     for epoch in range(args.epochs):
         epoch_batches, _ = bucketed_batches(examples, args.batch_size, args.seed + epoch)
+        epoch_batches = limit_complete_batches(epoch_batches, args.max_examples, args.batch_size)
         for indices in epoch_batches:
             prompt_ids, answer_ids = make_batch(examples, indices, device)
             latent_steps = progressive_latent_steps(step, total_steps, args.max_latent_steps)
@@ -236,6 +251,7 @@ def main():
                 "epoch": epoch + 1,
                 "updates": step,
                 "batch_size": args.batch_size,
+                "selected_examples_per_epoch": len(batches) * args.batch_size,
                 "claim_boundary": "Answer-only continuous-state operator training; not a broad reasoning claim.",
             },
         }, output)
