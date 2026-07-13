@@ -161,9 +161,12 @@ def has_state_line(response):
     return bool(re.search(r"(?mi)^state=\S.+$", response))
 
 
-def load_model(path, device):
+def load_model(path, device, n_loop=0):
     checkpoint = torch.load(path, map_location="cpu")
-    model = GPT(GPTConfig(**checkpoint["cfg"])).to(device).eval()
+    cfg = GPTConfig(**checkpoint["cfg"])
+    if n_loop:
+        cfg.n_loop = n_loop
+    model = GPT(cfg).to(device).eval()
     model.load_state_dict(checkpoint["model"])
     return checkpoint, model
 
@@ -178,11 +181,16 @@ def main():
     parser.add_argument("--tokenizer", required=True)
     parser.add_argument("--out", required=True)
     parser.add_argument("--max-new", type=int, default=112)
+    parser.add_argument("--n-loop", type=int, default=0,
+                        help="test-only latent-depth override (0 preserves checkpoint config)")
     args = parser.parse_args()
+    if args.n_loop < 0:
+        raise SystemExit("--n-loop must be zero or positive")
 
     device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     tokenizer = Tokenizer.from_file(args.tokenizer)
-    checkpoint, model = load_model(args.ckpt, device)
+    checkpoint, model = load_model(args.ckpt, device, n_loop=args.n_loop)
+    used_n_loop = model.cfg.n_loop
     rows = []
     for case in CASES:
         initial_prompt = f"Question: {case['question']}\nAnswer:"
@@ -241,6 +249,7 @@ def main():
         "device": device,
         "checkpoint": args.ckpt,
         "step": checkpoint.get("step"),
+        "n_loop": used_n_loop,
         "cases": len(rows),
         "summary": summary,
         "rows": rows,

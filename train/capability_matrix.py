@@ -146,15 +146,19 @@ def score_response(case, response):
     return prediction == expected, prediction
 
 
-def load_model(path, device):
+def load_model(path, device, n_loop=0):
     checkpoint = torch.load(path, map_location="cpu")
-    model = GPT(GPTConfig(**checkpoint["cfg"])).to(device).eval()
+    cfg = GPTConfig(**checkpoint["cfg"])
+    if n_loop:
+        cfg.n_loop = n_loop
+    model = GPT(cfg).to(device).eval()
     model.load_state_dict(checkpoint["model"])
     return checkpoint, model
 
 
-def run_checkpoint(path, tokenizer, device, cases, modes, max_new):
-    checkpoint, model = load_model(path, device)
+def run_checkpoint(path, tokenizer, device, cases, modes, max_new, n_loop=0):
+    checkpoint, model = load_model(path, device, n_loop=n_loop)
+    used_n_loop = model.cfg.n_loop
     rows = []
     totals = collections.Counter()
     correct = collections.Counter()
@@ -189,7 +193,13 @@ def run_checkpoint(path, tokenizer, device, cases, modes, max_new):
     del model
     if device == "cuda":
         torch.cuda.empty_cache()
-    return {"checkpoint": path, "step": checkpoint.get("step"), "summary": summary, "rows": rows}
+    return {
+        "checkpoint": path,
+        "step": checkpoint.get("step"),
+        "n_loop": used_n_loop,
+        "summary": summary,
+        "rows": rows,
+    }
 
 
 def main():
@@ -201,7 +211,11 @@ def main():
     parser.add_argument("--seed", type=int, default=20260712)
     parser.add_argument("--max-new", type=int, default=64)
     parser.add_argument("--modes", nargs="+", default=["qa", "direct", "cot", "one_shot"])
+    parser.add_argument("--n-loop", type=int, default=0,
+                        help="test-only latent-depth override (0 preserves checkpoint config)")
     args = parser.parse_args()
+    if args.n_loop < 0:
+        raise SystemExit("--n-loop must be zero or positive")
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     cases = build_cases(args.n_per_family, args.seed)
@@ -210,7 +224,10 @@ def main():
     result = {
         "audit": "capability_matrix_v1", "device": device, "seed": args.seed,
         "n_per_family": args.n_per_family, "modes": args.modes,
-        "models": [run_checkpoint(path, tokenizer, device, cases, args.modes, args.max_new) for path in args.ckpt],
+        "models": [
+            run_checkpoint(path, tokenizer, device, cases, args.modes, args.max_new, args.n_loop)
+            for path in args.ckpt
+        ],
     }
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
