@@ -362,6 +362,33 @@ This artifact tests the coverage confound in the observed v2 value OOD gap; it
 does not establish algorithmic generalization by itself and remains gated on
 the active transcript evidence chain.
 
+### DRS v2 Core Result: 2026-07-13 16:25 EDT
+
+The canonical held-out core evaluation is a positive narrow mechanism result
+and a negative generalization result. The isolated checkpoint gets **275/500**
+final answers: 100/100 on fit width 4, 98/100 on fit width 6, 34/100 and
+43/100 on the two unseen-value regimes, and 0/100 on unseen width 8. However,
+the first model-authored state is correct on **497/500** episodes, including
+98/100 width-8 episodes. The model begins from valid local arithmetic but
+accumulates errors over later turns. This shifts the immediate causal priority:
+the complete v3 basis remains needed to isolate unseen interior contexts, but
+the first corrective SFT should be **STRR**, which removes immutable tape
+rewriting and thereby directly tests multi-step state transport. This remains a
+conditional decision until held-out wording and transcript probes complete.
+
+### Complete STRR Artifact: 2026-07-13 16:23 EDT
+
+The full static-tape/recurrent-register corpus is immutable and mirrored
+locally/Newton: **27,200** episodes / **311,127** deduplicated rows, **3,400 /
+3,400** required local contexts, and **900** paired held-out episodes split
+evenly across recombine widths 4/6 and width-8 OOD. Its independent admission
+audit reports zero invalid rows or episodes, normalized duplicate prompts,
+counterfactual mismatches, missing contexts, exact hits, or 13-gram hits.
+Train SHA-256 is `82245615f0849c3270f99f2db85c604ff46cb2c3dfb14f0ab3660dff3eb0d3ec`;
+held-out SHA-256 is `a699ac58ad8184f4dc23dcfa317cd6e7b8f7d4ef453dcbf1ae21201901e0948a`.
+It is not trained or allocated and should only be submitted as an isolated
+transport control after the current transcript gate.
+
 ## Conditional Hypothesis: Dual-Code Reversible Deliberation
 
 The missing ingredient may be neither a longer trace nor a larger hidden

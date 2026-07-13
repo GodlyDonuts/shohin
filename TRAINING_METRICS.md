@@ -382,6 +382,33 @@ SHA-256 is `f2fcfcae41b55aa82dd360036bd8c9c00ed6e4ca442debec1c85ed282e50dfe1`.
 It has no SFT checkpoint, score, or GPU submission. Its purpose is a causal
 coverage control for DRS v2, not a claim of reasoning.
 
+### DRS v2 Core Closed-Loop Result: 2026-07-13 16:25 EDT
+
+From the isolated DRS SFT checkpoint, canonical core wording yields **275 / 500
+(55.0%)** final answers. By regime: fit width 4 **100 / 100**, fit width 6
+**98 / 100**, unseen-value width 4 **34 / 100**, unseen-value width 6
+**43 / 100**, and unseen width 8 **0 / 100**. The paired counterfactual
+correct-and-different totals are 100, 97, 32, 40, and 0 respectively.
+
+This is explicitly not a binary learned/unlearned outcome. First emitted
+microstates are correct on **497 / 500** episodes (100, 100, 100, 99, 98 by
+regime), while later state transport fails. For example width 8 preserves 353
+correct transition responses across 453 attempted before failure but never
+reaches a correct final. This is the evidence for prioritizing the static-tape
+register transport control before interpreting a full-basis v3 result.
+
+### STRR Complete Artifact: 2026-07-13 16:23 EDT
+
+The full factorized corpus mirrors the v3 basis scale: **27,200** episodes,
+**311,127** rows, **3,400 / 3,400** required/covered contexts, and **900**
+paired held-out episodes. Its admission audit has zero invalid rows/episodes,
+normalized duplicates, counterfactual mismatches, missing contexts, exact
+train/held-out hits, or 13-gram overlap. Train SHA-256:
+`82245615f0849c3270f99f2db85c604ff46cb2c3dfb14f0ab3660dff3eb0d3ec`;
+held-out SHA-256:
+`a699ac58ad8184f4dc23dcfa317cd6e7b8f7d4ef453dcbf1ae21201901e0948a`.
+This is data admission, not a score or SFT result.
+
 ## Checkpoint and Disaster-Recovery Inventory
 
 | Milestone | Numbered checkpoint at milestone | Newton durable copy | Local full checkpoint | MD5 | State |
