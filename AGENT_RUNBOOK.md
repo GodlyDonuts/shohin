@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 17:07 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, so it is a narrow recurrent executor with path-dependent failures; the core transcript probe now confirms those failures are late recurrent-transport errors; a matched 80-direction raw residual-patching baseline is negative and the post-DRS comparison is safely queued; held-out wording, direct interaction, and NLL remain serialized through a just-passed 1-H100 CUDA preflight; both full v3 transition-basis and static-tape/recurrent-register corpora are hash-admitted but untrained, with STRR now the higher-priority representation control; DCRD and CBC remain conditional; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 17:15 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, so it is a narrow recurrent executor with path-dependent failures; the core transcript probe now confirms those failures are late recurrent-transport errors; a matched 80-direction raw residual-patching baseline is negative and the post-DRS comparison is safely queued; held-out wording, direct interaction, and NLL remain serialized through a just-passed 1-H100 CUDA preflight; both full v3 transition-basis and static-tape/recurrent-register corpora are hash-admitted but untrained, with STRR now the higher-priority representation control; a counterfactual-workspace-induction control is designed but remains conditional on a positive STRR primitive; DCRD and CBC remain conditional; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2596,6 +2596,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `687564` manual raw-versus-DRS interaction -> `687565` raw NLL with explicit frozen monitor inputs.
   This avoids interpreting a scheduler/import transient as model behavior and avoids allocating more than
   one H100 at a time for diagnostics.
+
+- **2026-07-13 17:15** — **Adopted a paper-derived workspace criterion without mistaking it for a
+  capability result.** The external global-workspace study motivates a narrow testable claim: a useful
+  compact state must be reportable, deliberately updateable, causally action-guiding, reusable by more
+  than one downstream task, and robust to held-out recombinations. It does not license more visible
+  chain-of-thought training. The expanded 80-direction raw residual-patching control is negative (carry
+  deltas +0.001 to +0.028 with only 18–22/40 positive directions; digit deltas -0.042 to +0.0002 with
+  only 14–20/40 positive), so there is no simple raw last-token broadcast register. The matching post-DRS
+  diagnostic `687578` remains dependency-held after wording, direct-interaction, and NLL evidence. A
+  conditional Counterfactual Workspace Induction design is documented in `REASONING_FRONTIER.md`: it
+  trains only a later, training-time reflection that distinguishes a legal local register from a
+  grammar-valid semantic foil, then tests the ordinary unreflected task with syntax-only,
+  label-permutation, and equal-compute continuation controls. It cannot be trained unless STRR first
+  establishes a generalizable primitive register.
 
 - **2026-07-13 16:23** — **STRR now has a durable, independently admitted full corpus but no SFT.** The
   eight-variant artifact is mirrored locally/Newton with **27,200 episodes / 311,127 rows**, 3,400/3,400
