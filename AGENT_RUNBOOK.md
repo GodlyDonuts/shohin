@@ -2690,3 +2690,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   conservative BLAS thread limits, and the shared bad-node exclusion list. Local syntax/unit contracts
   pass. Submit a fresh real CUDA preflight before rebuilding the same serial raw-200k versus DRS,
   raw-200k-NLL, and DRS residual-patch sequence; do not reinterpret cancellation as a zero score.
+
+- **2026-07-13 19:20** — **Fresh direct operator interaction confirms the raw 200k model lacks the
+  proposed state primitive.** On local MPS, using the hash-verified 200k checkpoint
+  (`510d57df578447986b40e20029511b9d`) and three new, non-benchmark source-drop prompts, it failed all
+  three: it rendered “3 blue + 4 red = 7 red” instead of compiling `blue=5;red=4`; it answered 10 from
+  source-dropped `blue=5;red=4`; and it rendered `5+4=9` rather than changing blue to 7 and total to 11.
+  The exact prompts, decoding parameters, and verbatim responses are mirrored local/Newton at
+  `artifacts/eval_history/operator_state_reuse_raw200k_mps_20260713.json`, md5
+  `5f58d29694cb715f8d6ab9f88a38a86c`. This is qualitative diagnostic evidence, not a benchmark score or
+  a claim about one causal failure, but it rules out the hypothesis that raw 200k already performs a
+  usable compact semantic state operation hidden by public evaluators.

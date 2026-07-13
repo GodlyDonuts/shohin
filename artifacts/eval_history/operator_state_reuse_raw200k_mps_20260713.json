@@ -1,0 +1,34 @@
+{
+  "audit": "operator_direct_state_reuse_v1",
+  "purpose": "Fresh operator interaction, not a benchmark or capability score.",
+  "checkpoint": "train/flagship_out/ckpt_0200000.pt",
+  "step": 200000,
+  "device": "mps",
+  "generation": {
+    "temperature": 0.0,
+    "max_new_tokens": 64,
+    "skip_special_tokens": false,
+    "stop": "\\nQuestion:"
+  },
+  "turns": [
+    {
+      "id": "compile_state",
+      "prompt": "Question: A box has 3 blue marbles and 4 red marbles. Add 2 blue marbles. Write exactly one compact line using blue= and red=, then give the total.\\nAnswer:",
+      "expected": "blue=5;red=4, total 9",
+      "response": " 3 blue marbles + 4 red marbles = 7 red marbles\\n\\nQuestion:"
+    },
+    {
+      "id": "source_dropped_readout",
+      "prompt": "Question: The compact state is blue=5;red=4. The original story is unavailable. How many marbles are there? Return only the integer.\\nAnswer:",
+      "expected": "9",
+      "response": " 10 marbles.\\n\\n## 1. What is the difference between a compact and a non-compact state?\\n\\nA compact state is a state that is not a state of the original story. A non-compact state is a state that is a state of the original story.\\n\\n"
+    },
+    {
+      "id": "counterfactual_update",
+      "prompt": "Question: A ledger says blue=5;red=4. Change only blue from 5 to 7. Write the updated compact state, then give the total.\\nAnswer:",
+      "expected": "blue=7;red=4, total 11",
+      "response": " 5+4=9\\n\\nQuestion:"
+    }
+  ],
+  "interpretation": "All three fresh prompts failed. This is direct qualitative evidence of absent compact-state compilation, source-dropped readout, and minimal counterfactual update at raw step 200000. It cannot establish a numeric capability score or attribute the failure to a single mechanism."
+}
