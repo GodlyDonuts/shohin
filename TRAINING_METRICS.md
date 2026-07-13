@@ -289,6 +289,12 @@ Additional independent evidence:
   than a formal comparison to the prior 128-token probe, but shows no visible reasoning jump.
   Artifact: `artifacts/eval_history/manual_capability_raw180k_20260712_mps32.json`, MD5
   `cc6332a5c99d6cbf6ba2f8987ae58cc0`.
+- Raw-200k counterfactual verifier feasibility probe: over **48** balanced, grammar-valid local state
+  transitions, free verdict generation is **0/48** and fixed-completion likelihood chooses `valid` for
+  every case, therefore **24/48 = 50.0%**. This is negative evidence against a hidden self-checking
+  ability; it must not be used as a verifier without supervised training and a label-shuffled control.
+  Artifact: `artifacts/eval_history/transition_verifier_likelihood_raw200k_20260713_mps.json`, MD5
+  `fb7bbdbb1fa16104117f09c6c3faa07c`.
 - VRWM raw H100 p80 control is **0/400** exact first transitions and **0/400** closed-loop programs.
   r4 scratch increases the isolated protocol to **120/400** default-prompt closed-loop programs, but only
   **21/400** under the reserved semantic prompt form and only **3/80** at default length 32. This is a

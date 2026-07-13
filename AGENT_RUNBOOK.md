@@ -2407,5 +2407,18 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   `9ae4c88aca13079fe69036a47b88e597`. This rejects the claim that raw pretraining already contains a
   reliably readable local arithmetic primitive, but supports a supervised learnability comparison.
 
+- **2026-07-13 13:30** — **Direct counterfactual-verifier probe rejects a hidden self-checker.** The
+  raw 200k model was shown 48 balanced DRS local transitions: half exact successors and half
+  grammar-valid near misses that changed only a digit, carry/borrow, or immutable operand tape. Free
+  generation emitted no usable `verdict=valid|invalid` response (**0/48**), mostly bare digit lists and
+  repeated document fragments. That could have been an answer-surface failure, so the exact two verdict
+  completions were likelihood-ranked too: the model selected `valid` on **all 48**, yielding exactly
+  **24/48 = 50%**. Artifact
+  `artifacts/eval_history/transition_verifier_likelihood_raw200k_20260713_mps.json` md5
+  `fb7bbdbb1fa16104117f09c6c3faa07c`. Therefore a proposed proof-carrying deliberation loop may not be
+  treated as an emergent raw ability; it is conditional on DRS first proving supervised core local
+  execution, then must beat a matched label-shuffled verifier control on the model's own sampled states.
+  This adds no training job and cannot affect the flagship.
+
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
