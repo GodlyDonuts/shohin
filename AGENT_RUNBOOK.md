@@ -2489,5 +2489,6 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   operation while differing in exactly one initial fact and final answer. A medium **1,000-episode /
   16,000-row** local preflight plus **120** held-out paired-counterfactual episodes reports 0 invalid rows,
   invalid episodes, normalized duplicate prompts, exact prompt hits, and literal 13-gram overlaps.
-  Corruption tests reject altered targets and replacing a counterfactual with the normal world. CBC has no
+  Corruption tests reject altered targets and a semantically valid-looking mismatched counterfactual
+  operation sequence. CBC has no
   durable corpus, controller, SFT, or GPU job; it remains gated on the serialized DRS causal chain.

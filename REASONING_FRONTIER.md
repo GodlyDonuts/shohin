@@ -250,7 +250,8 @@ readout, shared operation sequence, and counterfactual relation.  It found
 **0** invalid train rows, **0** invalid held-out episodes, **0** normalized
 duplicate prompts, and **0** exact or literal 13-gram train/held-out prompt
 hits.  Corruption tests prove that it rejects both changed train targets and a
-semantically valid-looking counterfactual replaced by the normal world.  No
+semantically valid-looking counterfactual with a mismatched operation sequence.
+No
 durable corpus, SFT checkpoint, controller rollout, or GPU job has been
 created.  CBC remains conditional on a positive DRS causal result.
 
