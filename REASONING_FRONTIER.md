@@ -93,6 +93,38 @@ NLL evidence chain with the identical 80-direction configuration. STRR may
 advance only if its behavioral closed-loop gates and this matched diagnostic
 are interpreted together; neither alone is a reasoning claim.
 
+## Conditional Technique: Counterfactual Workspace Induction
+
+The paper's counterfactual-reflection result motivates a distinct follow-on
+experiment, **Counterfactual Workspace Induction (CWI)**. It is deliberately
+not another request for the model to print a chain of thought. Starting from a
+checkpoint that can already execute a local register transition, CWI would
+append a *training-only* reflection turn after a fixed-tape local-state context:
+"Which one invariant distinguishes the legal next register from this
+grammar-valid foil?" The supervised continuation names the concrete local
+operator, input digits, carry/borrow, result digit, and immutable fields that
+must be preserved. Loss is computed only on that appended reflection; at
+evaluation, the reflection question is absent and the model must perform the
+ordinary direct state update.
+
+The critical foil is not malformed text. It is a state-shaped candidate that
+changes exactly one semantic field: an incorrect carry, a wrong `r[p]`, an
+unjustified program-counter change, or a rewritten immutable tape. Thus the
+reflection cannot be solved from style or grammar. If it transfers to the
+unreflected task, it would be evidence that training a reportable disposition
+changed the intermediate computation used for action, the limited phenomenon
+the paper tests at scale.
+
+CWI is **conditional** on a positive STRR primitive gate. It must be compared
+from the same STRR checkpoint and token budget against: (1) a syntax-only
+reflection with no local arithmetic content, (2) a reflection-label permutation
+control, and (3) an equal-compute direct-transition continuation. Advancement
+requires an improvement on held-out unreflected state loops and paired
+counterfactuals, no loss of distinct register readouts, and a matched positive
+change in the residual-patching diagnostic. A reflection that only improves its
+own prompted explanation is rejected. This would make CWI a test of
+workspace-shaped computation, not a new narration style.
+
 ## Hypothesis: Proof-Carrying Deliberation
 
 The next distinctive mechanism is **proof-carrying deliberation (PCD)**. A
