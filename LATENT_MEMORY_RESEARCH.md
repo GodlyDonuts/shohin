@@ -221,6 +221,17 @@ and supplies a record-unique first 13-token ngram. The v1 artifacts are retained
 must independently pass its audit and a full token-cost report before matched H100 training is
 resubmitted; a correct but unnecessarily long synthetic protocol is not a useful reasoning result.
 
+CPU build `687141` completed the fresh v2 paths in 85 seconds with the same 223,996/7,936
+train/held-out rows and 16,000/384 pairs. Its independent audit has zero invalid, duplicate,
+exact-overlap, 13-gram-overlap, or malformed-pair findings; train/eval SHA-256 are
+`8760df867b4da98dcc84b356eea8e0d70922e3280e868193216173603814c08c` and
+`dfcf852c0ca57b6bb58f4f7c1a775221e33e97aa261d79478cc3bf36e82e5fc7`. The local/Newton
+hash-matched token report (md5 `89ac960e6eb12b0f2dbe25f42a9ee3d1`) confirms whole-corpus
+train chunk/source means **228.60/511.63 -> 41.44/92.74** tokens and held-out means
+**194.93/660.24 -> 37.43/126.79**. This earns exactly one matched raw-190k M0/M1 screen:
+`687144` (no slots) versus `687145` (eight slots), each 24,000 examples / 6,000 updates;
+pair-safe evaluators `687146/687147` and locked comparator `687148` follow only on success.
+
 ## If CLL Fails: Latent State Algebra
 
 CLL may still fail because answer losses reward the right token without making
