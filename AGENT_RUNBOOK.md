@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 ~05:07 EDT (`685084` remains healthy through 193.68k; corrected source-free latent-state-algebra r2 primary control/candidate are actively training under a preregistered evaluator/comparator gate; the prefix-supervised packet-memory fallback has now passed an independent prefix-target audit but remains unsubmitted; the prior 4.6B FineWeb output is rejected and Stokes `738030` is building the guarded `sample-100BT` replacement). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 ~05:34 EDT (`685084` remains healthy through 194.11k; corrected source-free latent-state-algebra r2 primary control/candidate are actively training under a preregistered evaluator/comparator gate; a new causal prefix-readback fallback is independently audited and CPU-preflighted but remains unsubmitted; the prior 4.6B FineWeb output is rejected and Stokes `738030` is building the guarded `sample-100BT` replacement). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2199,6 +2199,25 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   `b83805b22343c93f962db8db57114b9a`. This admits the prefix labels as mechanically correct, not the
   new training recipe; no prefix GPU job is submitted. DCLM `686529` remains live at **188** partial
   100M-token shards (about 18.8B), still unadmitted; no live writer or `SHARDS` input was changed.
+- **2026-07-13 ~05:34** — **Causal Prefix Readback (CPR) is ready as the next, still-unsubmitted
+  source-free context-scaling ablation.** The target failure mode is specific: an auxiliary probe can
+  fit continuous packets while the model's own language decoder remains unable to read an intermediate
+  packet. CPR therefore asks the decoder, after *every* source write, a fresh question about one
+  solver-recomputed register; the decoder receives only that prefix packet and the question, never source
+  text. The equal-decoder-work controls are explicit: `replicated-final` repeats the ordinary final query
+  from the final packet at every prefix, and `shuffled` assigns another example's complete prefix
+  readback labels to each packet. Both final answer and held-out prefix readback remain source-free.
+  Independent Stokes audit `738034` passed against r2 train SHA
+  `a73c5068f9c775ea6b40b42335e01ad4f792657aeba4688d3aca42d853becb58`: **64,000** rows,
+  **191,998** readback targets, zero invalid rows or answer leakage, report md5
+  `12c8191bb159d716556ecfad6096e098`. CPU preflight `738036` caught an unacceptable extra 1,471
+  shape buckets from variable-length numeric answers before any GPU allocation; CPR was corrected to
+  group only the source-free decoder readbacks inside the established source-write batches. Replacement
+  Stokes preflight `738038` passes with **32,000** complete pairs, **2,242** source/final buckets,
+  **7,163** full batches, and **3,348** dropped pairs — exactly the current LSA batch surface, with no
+  additional CPR-induced loss. Trainer/evaluator/comparator and tests are complete locally and synced to
+  Newton. **No CPR H100 job is submitted:** it is conditioned on the in-flight LSA primary result and
+  cannot modify `685084`, its corpus, or any live experiment output.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
