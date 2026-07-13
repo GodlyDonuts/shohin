@@ -10,7 +10,7 @@
 set -euo pipefail
 
 BASE=${BASE:-/home/sa305415/shohin}
-PY=${PY:-/usr/bin/python3}
+PY=${PY:-/usr/bin/python3.12}
 TRAIN=${TRAIN:-$BASE/artifacts/sft/token_native_ledger_v1_train.jsonl}
 HELDOUT=${HELDOUT:-$BASE/artifacts/evals/token_native_ledger_v1_heldout.jsonl}
 OUT=${OUT:-$BASE/artifacts/sft/token_native_ledger_v1_train.protocol_audit.json}
