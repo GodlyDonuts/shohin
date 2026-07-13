@@ -92,3 +92,109 @@ A future PCD ablation must keep these gates:
 Even a passing PCD result would establish only narrow, model-authored
 algorithmic deliberation. Broad natural-language reasoning remains a separate
 claim and needs direct-interaction and public held-out evidence.
+
+## New Hypothesis: Counterfactual Bisimulation Compiler
+
+The repeated negative results identify a sharper problem than "the model needs
+more chain of thought." The model has not learned a representation that is
+*causally sufficient* for future work. A state string can be reproduced as a
+template, and an answer can be imitated from a familiar prompt, without the
+state actually carrying the facts needed to update, query, or explain a new
+situation. V7, VRWM, the semantic-capsule raw controls, and the continuous
+packet controls each exposed a different version of this loophole.
+
+The next mechanism to investigate, conditional on the current DRS learnability
+gate, is a **Counterfactual Bisimulation Compiler (CBC)**. It uses the model's
+own token output as a compact recurrent register, but makes that register
+answer to four linked obligations rather than one formatting target:
+
+1. **Compile:** map a natural-language history to a canonical typed state.
+2. **Advance:** map that state plus one new event to the next typed state after
+   the history has been removed.
+3. **Read out:** answer several previously unseen questions using only the
+   typed state, never the original history.
+4. **Explain the delta:** given two adjacent states, name the single event or
+   field change that connects them.
+
+For every episode, a paired paraphrase describes the same world with unrelated
+surface wording and an independently generated counterfactual changes one
+causal fact. The canonical state must be identical for paraphrases and differ
+only in the affected fields for the counterfactual. This is the operational
+meaning of *bisimulation* here: equivalent descriptions must induce the same
+future behavior under every held-out event/query; a changed fact must change
+only the future behavior that depends on it. The external generator and
+verifier create labels during training and score results afterward, but the
+runtime controller only transports exact model text, drops the source, and
+enforces grammar. It does not answer a query, repair a state, rank candidates,
+or inject a correct field.
+
+### Why This Is Different From Earlier State Work
+
+- **Not V7:** V7 rewards a rendered state/answer contract. CBC requires the
+  state to survive source deletion and support multiple forward, inverse, and
+  query tasks that were not present in the compiler prompt.
+- **Not the rejected capsule control:** that was a raw-capability test. CBC is
+  a supervised curriculum and treats compilation, transition, and decoding as
+  mutually constraining tasks rather than assuming a raw model already knows
+  the protocol.
+- **Not continuous memory:** the retained object is readable model-authored
+  text. Its content, causal effect, and failure modes can be independently
+  audited. A shuffled or zeroed state control can therefore falsify the claim.
+- **Not ordinary CoT:** a long rationale is not sufficient. The compact state
+  must make new predictions after the rationale and source are gone.
+
+### Curriculum, Not a One-Shot SFT
+
+CBC should be staged only after DRS tells us whether the current model can
+learn a local symbolic transition at all:
+
+1. **Primitive executor:** DRS establishes exact local transition learning on
+   a fixed canonical syntax. This is the active gate, not an assumed ability.
+2. **Semantic compiler:** two to four natural-language facts compile into a
+   compact state; paraphrase pairs, distractors, and randomized field names
+   block lexical copying.
+3. **Recurrent world model:** only the prior state plus a new event is
+   available for each update. Training alternates forward update, inverse
+   delta, and query readout examples so no single answer template dominates.
+4. **Compaction under pressure:** after several updates, the model emits a
+   shorter canonical state. The dropped trace is never reintroduced. Held-out
+   questions include facts that are not asked during compaction, making an
+   answer-only summary insufficient.
+5. **Self-check only after competence:** a verifier/repair role is trained on
+   balanced grammar-valid near misses and then asked to judge *model-sampled*
+   states. This is where PCD can become a component, not a premise.
+
+The phase-3/4 data must progressively randomize entities, field order,
+paraphrases, distractors, operation order, and query wording. It should also
+include reversible pairs: state-to-language descriptions and language-to-state
+compilation must agree on the same held-out world. This is deliberately a
+harder requirement than exact state formatting, because the target property is
+semantic invariance rather than a learned serialization.
+
+### Preregistered Advancement Gates
+
+CBC is not authorized for a flagship change on a positive training loss or a
+default-template score. Before a follow-on stage, report all of the following
+on disjoint worlds, vocabularies, field names, and controller prompts:
+
+- DRS core and held-out results, including first transition, full loop, final
+  answer, and paired intervention. A weak primitive means we first compare the
+  lower-copy ADL curriculum rather than build a semantic stack on sand.
+- Compilation equality for paraphrase pairs and minimal, causal state change
+  for counterfactual pairs.
+- Source-free forward updates, inverse-delta accuracy, and multiple unseen
+  query readouts from the same generated state.
+- Normal versus zeroed and shuffled-state margins on the identical generated
+  states. No margin means the state is decorative, irrespective of answer
+  accuracy.
+- A label-shuffled verifier control with matched compute. Equal performance
+  rejects the claimed self-checker.
+- Fresh direct interaction with ordinary arithmetic, code, logic, and state
+  questions. Transfer is a requirement, not an aspirational extrapolation.
+
+This is a new project hypothesis, not a claim of field-wide novelty or a claim
+that the model already possesses the mechanism. Its value is that it gives a
+small model a concrete route from language to a compact, revisable, causally
+testable token state. If the gates fail, the failure will identify whether the
+barrier is primitive execution, semantic compilation, recurrence, compression,
+or self-verification instead of producing another ambiguous SFT score.
