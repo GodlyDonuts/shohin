@@ -42,5 +42,8 @@ PY
   [ "$attempt" = 3 ] && exit 75
   sleep 30
 done
+REPAIR_ARGS=()
+[ "${SELF_REPAIR:-0}" = "1" ] && REPAIR_ARGS+=(--self-repair)
 "$PY" eval_vrwm.py --ckpt "$CKPT" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
-  --episodes "$EPISODES" --out "$OUT" --per-split "$PER_SPLIT" --max-new "${MAX_NEW:-32}"
+  --episodes "$EPISODES" --out "$OUT" --per-split "$PER_SPLIT" --max-new "${MAX_NEW:-32}" \
+  --prompt-style "${PROMPT_STYLE:-default}" "${REPAIR_ARGS[@]}"

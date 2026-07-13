@@ -49,7 +49,11 @@ if quality.get("data_sha256") != digest or quality.get("malformed_rows") or qual
 if overlap.get("data_sha256") != digest or overlap.get("overlap", {}).get("exact_rows") or overlap.get("overlap", {}).get("ngram_rows"):
     raise SystemExit("[sft-vrwm] full-text decontamination report does not admit this exact data")
 hashes = packing.get("data_sha256", {})
-if hashes.get(data) != digest or packing.get("pack_len") != 2048:
+bound_hashes = list(hashes.values())
+# Packing reports can be generated locally and consumed on Newton, so an
+# absolute path is not a stable identity. This one-file job instead requires
+# the report to bind exactly one input whose content hash is this data.
+if len(bound_hashes) != 1 or bound_hashes[0] != digest or packing.get("pack_len") != 2048:
     raise SystemExit("[sft-vrwm] packing report does not bind this exact data")
 if int(quality.get("valid_rows", 0)) < 100_000 or int(packing.get("packed_sequences", 0)) < 5_000:
     raise SystemExit("[sft-vrwm] insufficient audited VRWM capacity")

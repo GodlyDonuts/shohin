@@ -15,6 +15,7 @@ import re
 MEMORY_RE = re.compile(r"(?mi)^\s*(wm:a=(-?\d+);b=(-?\d+))\s*$")
 ANSWER_RE = re.compile(r"(?i)answer\s*=\s*(-?\d+)")
 VARIABLES = ("a", "b")
+PROMPT_STYLES = ("default", "paraphrase", "semantic")
 
 
 def canonical_memory(values):
@@ -76,36 +77,120 @@ def apply_operation(values, operation):
     return result
 
 
-def render_instruction(operation):
-    """Stable natural-language rendering; operation semantics stay structured."""
+def render_instruction(operation, style="default"):
+    """Render a structured operation in a fixed or held-out language style."""
     validate_operation(operation)
     kind, target = operation["kind"], operation["target"]
-    if kind == "add_const":
-        return f"increase {target} by {operation['value']}"
-    if kind == "sub_const":
-        return f"decrease {target} by {operation['value']}"
-    if kind == "add_var":
-        return f"add the current value of {operation['source']} to {target}"
-    if kind == "sub_var":
-        return f"subtract the current value of {operation['source']} from {target}"
-    return "swap the values of a and b"
+    if style == "default":
+        if kind == "add_const":
+            return f"increase {target} by {operation['value']}"
+        if kind == "sub_const":
+            return f"decrease {target} by {operation['value']}"
+        if kind == "add_var":
+            return f"add the current value of {operation['source']} to {target}"
+        if kind == "sub_var":
+            return f"subtract the current value of {operation['source']} from {target}"
+        return "swap the values of a and b"
+    if style == "paraphrase":
+        if kind == "add_const":
+            return f"add {operation['value']} to register {target}"
+        if kind == "sub_const":
+            return f"subtract {operation['value']} from register {target}"
+        if kind == "add_var":
+            return f"replace {target} with {target} plus {operation['source']}"
+        if kind == "sub_var":
+            return f"replace {target} with {target} minus {operation['source']}"
+        return "exchange the contents of registers a and b"
+    if style == "semantic":
+        if kind == "add_const":
+            return f"set {target} to {target} + {operation['value']}"
+        if kind == "sub_const":
+            return f"set {target} to {target} - {operation['value']}"
+        if kind == "add_var":
+            return f"set {target} to {target} + {operation['source']}"
+        if kind == "sub_var":
+            return f"set {target} to {target} - {operation['source']}"
+        return "set the pair (a, b) to (b, a)"
+    raise ValueError(f"unknown prompt style: {style!r}")
 
 
-def transition_prompt(memory, operation):
-    return (
-        "Question: Apply exactly one instruction to the working memory.\n"
-        f"Working memory: {canonical_memory(memory)}\n"
-        f"Instruction: {render_instruction(operation)}.\n"
-        "Return only the next canonical working-memory line in the form "
-        "wm:a=<integer>;b=<integer>.\nAnswer:"
-    )
+def transition_prompt(memory, operation, style="default"):
+    instruction = render_instruction(operation, style=style)
+    if style == "default":
+        return (
+            "Question: Apply exactly one instruction to the working memory.\n"
+            f"Working memory: {canonical_memory(memory)}\n"
+            f"Instruction: {instruction}.\n"
+            "Return only the next canonical working-memory line in the form "
+            "wm:a=<integer>;b=<integer>.\nAnswer:"
+        )
+    if style == "paraphrase":
+        return (
+            "Task: Update the two registers once using the command below.\n"
+            f"Registers: {canonical_memory(memory)}\n"
+            f"Command: {instruction}.\n"
+            "Emit just the resulting wm:a=<integer>;b=<integer> line.\nResult:"
+        )
+    if style == "semantic":
+        return (
+            "Compute exactly one register update.\n"
+            f"State: {canonical_memory(memory)}\n"
+            f"Rule: {instruction}.\n"
+            "Write only the new wm:a=<integer>;b=<integer> state.\nAnswer:"
+        )
+    raise ValueError(f"unknown prompt style: {style!r}")
 
 
-def readout_prompt(memory, variable):
+def repair_prompt(memory, operation, proposal, style="default"):
+    """Ask the model to verify its own proposed next state without a solver."""
+    instruction = render_instruction(operation, style=style)
+    proposed = canonical_memory(proposal)
+    if style == "default":
+        return (
+            "Question: Verify a proposed next working-memory state.\n"
+            f"Working memory: {canonical_memory(memory)}\n"
+            f"Instruction: {instruction}.\n"
+            f"Proposed next state: {proposed}\n"
+            "Check the update, then return the corrected canonical working-memory line.\nAnswer:"
+        )
+    if style == "paraphrase":
+        return (
+            "Task: Check the proposed register update.\n"
+            f"Registers before: {canonical_memory(memory)}\n"
+            f"Command: {instruction}.\n"
+            f"Proposal: {proposed}\n"
+            "Emit the verified wm:a=<integer>;b=<integer> state.\nResult:"
+        )
+    if style == "semantic":
+        return (
+            "Validate the candidate result for one register rule.\n"
+            f"State before: {canonical_memory(memory)}\n"
+            f"Rule: {instruction}.\n"
+            f"Candidate: {proposed}\n"
+            "Write the correct wm:a=<integer>;b=<integer> state.\nAnswer:"
+        )
+    raise ValueError(f"unknown prompt style: {style!r}")
+
+
+def readout_prompt(memory, variable, style="default"):
     if variable not in VARIABLES:
         raise ValueError(f"invalid readout variable: {variable!r}")
-    return (
-        f"Question: Read the value of {variable} from this working memory.\n"
-        f"Working memory: {canonical_memory(memory)}\n"
-        f"Return only answer=<integer>.\nAnswer:"
-    )
+    if style == "default":
+        return (
+            f"Question: Read the value of {variable} from this working memory.\n"
+            f"Working memory: {canonical_memory(memory)}\n"
+            f"Return only answer=<integer>.\nAnswer:"
+        )
+    if style == "paraphrase":
+        return (
+            f"Task: Look up register {variable}.\n"
+            f"Registers: {canonical_memory(memory)}\n"
+            "Emit just answer=<integer>.\nResult:"
+        )
+    if style == "semantic":
+        return (
+            f"Inspect the register state and report {variable}.\n"
+            f"State: {canonical_memory(memory)}\n"
+            "Write answer=<integer>.\nAnswer:"
+        )
+    raise ValueError(f"unknown prompt style: {style!r}")

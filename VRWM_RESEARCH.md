@@ -2,7 +2,8 @@
 
 ## Status
 
-**Research prototype. Not trained, not promoted, and not evidence of general reasoning.**
+**Research prototype. Isolated r3/r4 SFTs are trained; r5 repair SFT is running. None is promoted or
+evidence of general reasoning.**
 
 The raw control is complete on the hash-verified 180k checkpoint. Across five
 prompt-disjoint regimes (five episodes each), it scored **0/25** exact first
@@ -89,16 +90,40 @@ is deliberately restricted to memory transport.
    and broader symbolic/code tasks. Do not claim general or latent reasoning
    from the arithmetic-state experiment.
 
+## Measured Results
+
+- Raw H100 full p80 control: **0/400** exact first transitions and **0/400** closed-loop programs.
+- r3 one-epoch SFT (497,274 rows): **43/400** closed-loop programs on default prompts but **0/50** on
+  held-out paraphrase prompts. Reject as template-bound.
+- r4 state-only (513,902 rows): **32/400** default and **2/400** semantic closed-loop programs.
+- r4 deterministic-scratch (513,902 rows): **120/400** default and **21/400** semantic closed-loop
+  programs. Default split detail: length 4 **58/80**, length 8 **32/80**, length 16 **12/80**, length 32
+  **3/80**, and wide-range length 8 **15/80**. Every successful readout was conditioned on a model-created
+  successful rollout. This is the first real narrow executable-state signal, but its low semantic and
+  long-horizon transfer explicitly fails the generalization bar.
+
+r5 adds two proposal-check examples per transition and trains the same model to emit a corrected canonical
+state. Its evaluation compares draft and one model-only repair pass on the same frozen p80 episodes. The
+controller records both responses and never calculates, selects, or substitutes a state. To advance, r5
+must improve semantic closed-loop and long-horizon performance over r4 scratch; default-template movement
+alone is not enough.
+
 ## Current Inputs
 
 - Candidate r1 is rejected: its small prompt space produced 166,766 normalized
   duplicate prompts.
 - Candidate r2 passes quality but has only 2,263 packed sequences, below the
   5,000-sequence minimum for an SFT transition-policy ablation.
-- Candidate r3 is the current admissible input: **497,274** unique rows,
+- Candidate r3 is an admissible completed input: **497,274** unique rows,
   **0** malformed rows, duplicate prompts, exact evaluation rows, or 13-gram
   evaluation rows, and **18,013** packed 2,048-token sequences. Data SHA-256:
   `b2a688e1f7aa6c79dd65ed1944fa5dc00cd022acfc793896ecf4696c94d4089f`;
   local/Newton MD5: `36a747cfdb31bebcf96fd06bb0fd3950`. The 400 held-out
   episodes reserve input values outside the train range and test 4, 8, 16, and
-  32 transitions. It is staged but not yet trained.
+  32 transitions. It completed one isolated epoch as documented above.
+- r4 is a controlled prompt/trace ablation with two 513,902-row branches. The state-only and scratch
+  variants share a seed, train/evaluation episodes, two training prompt styles (default/paraphrase), and
+  reserved semantic evaluation wording; only response form differs.
+- r5 is the active repair branch: **1,409,072** rows, **68,347** packed sequences, two repair proposals
+  per transition, deterministic scratch responses, and the same reserved semantic p80 episodes. Its data
+  SHA-256 is `011282f032963a40b8b39ab9572808de1d3473ef2b57ef727526fb9d00985c76`.

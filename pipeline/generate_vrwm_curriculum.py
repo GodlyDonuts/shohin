@@ -18,7 +18,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "train"))
-from vrwm_protocol import apply_operation, canonical_memory, readout_prompt, transition_prompt
+from vrwm_protocol import (PROMPT_STYLES, apply_operation, canonical_memory, readout_prompt,
+                           repair_prompt, transition_prompt)
 
 
 OP_KINDS = ("add_const", "sub_const", "add_var", "sub_var", "swap")
@@ -72,25 +73,92 @@ def episode_signature(episode):
     }, sort_keys=True, separators=(",", ":"))
 
 
-def rows_from_episode(episode):
+def scratch_transition(memory, operation, expected):
+    """Render a deterministic one-line arithmetic check before the state."""
+    kind, target = operation["kind"], operation["target"]
+    before = memory[target]
+    after = expected[target]
+    if kind == "add_const":
+        check = f"check: {target}={before}+{operation['value']}={after}"
+    elif kind == "sub_const":
+        check = f"check: {target}={before}-{operation['value']}={after}"
+    elif kind == "add_var":
+        source = operation["source"]
+        check = f"check: {target}={before}+{memory[source]}={after}"
+    elif kind == "sub_var":
+        source = operation["source"]
+        check = f"check: {target}={before}-{memory[source]}={after}"
+    else:
+        check = f"check: a,b={memory['b']},{memory['a']}"
+    return f"{check}\n{canonical_memory(expected)}"
+
+
+def repair_proposals(memory, operation, expected, count):
+    """Create deterministic plausible drafts; only the model supplies repairs at inference."""
+    if count <= 0:
+        return []
+    proposals = [dict(expected)]
+    target = operation["target"]
+    offsets = (1, -1, 10, -10, 100, -100)
+    for index in range(1, count):
+        proposal = dict(expected)
+        if operation["kind"] == "swap":
+            proposal = dict(memory)
+        else:
+            proposal[target] += offsets[(index - 1) % len(offsets)]
+        if proposal == expected:
+            proposal[target] += 1
+        proposals.append(proposal)
+    return proposals
+
+
+def rows_from_episode(episode, prompt_style="default", response_mode="state", repair_examples=0):
+    if response_mode not in {"state", "scratch"}:
+        raise ValueError(f"unknown response mode: {response_mode!r}")
+    if repair_examples < 0:
+        raise ValueError("repair_examples must be non-negative")
     rows, memory = [], dict(episode["initial_memory"])
     for index, operation in enumerate(episode["operations"]):
         expected = episode["expected_memories"][index]
-        prompt = transition_prompt(memory, operation)
+        prompt = transition_prompt(memory, operation, style=prompt_style)
+        response = canonical_memory(expected)
+        if response_mode == "scratch":
+            response = scratch_transition(memory, operation, expected)
         rows.append({
             "question": prompt,
             "completion_prompt": prompt,
-            "response": canonical_memory(expected),
-            "source": "vrwm_transition_train",
+            "response": response,
+            "source": "vrwm_transition_train" if response_mode == "state" else "vrwm_transition_scratch_train",
             "training_group": "vrwm",
             "episode_id": episode["id"],
             "transition_index": index,
             "program_length": episode["program_length"],
             "expected_memory": canonical_memory(expected),
+            "prompt_style": prompt_style,
+            "response_mode": response_mode,
         })
+        for proposal in repair_proposals(memory, operation, expected, repair_examples):
+            repair = repair_prompt(memory, operation, proposal, style=prompt_style)
+            repair_response = canonical_memory(expected)
+            if response_mode == "scratch":
+                repair_response = scratch_transition(memory, operation, expected)
+            rows.append({
+                "question": repair,
+                "completion_prompt": repair,
+                "response": repair_response,
+                "source": "vrwm_repair_train",
+                "training_group": "vrwm",
+                "episode_id": episode["id"],
+                "transition_index": index,
+                "program_length": episode["program_length"],
+                "expected_memory": canonical_memory(expected),
+                "proposal_memory": canonical_memory(proposal),
+                "prompt_style": prompt_style,
+                "response_mode": response_mode,
+            })
         memory = expected
     variable = episode["readout_variable"]
-    prompt = readout_prompt(memory, variable)
+    prompt = readout_prompt(memory, variable, style=prompt_style)
     rows.append({
         "question": prompt,
         "completion_prompt": prompt,
@@ -101,6 +169,8 @@ def rows_from_episode(episode):
         "transition_index": episode["program_length"],
         "program_length": episode["program_length"],
         "expected_memory": canonical_memory(memory),
+        "prompt_style": prompt_style,
+        "response_mode": response_mode,
     })
     return rows
 
@@ -109,9 +179,14 @@ def normalized_prompt(text):
     return " ".join(re.findall(r"\w+", str(text).lower()))
 
 
-def episode_prompt_signatures(episode):
+def episode_prompt_signatures(episode, prompt_style="default", include_repair=False):
     """Return every inference prompt used by this episode's transitions/readout."""
-    return {normalized_prompt(row["completion_prompt"]) for row in rows_from_episode(episode)}
+    return {
+        normalized_prompt(row["completion_prompt"])
+        for row in rows_from_episode(
+            episode, prompt_style=prompt_style, repair_examples=1 if include_repair else 0
+        )
+    }
 
 
 def deduplicate_rows(rows):
@@ -148,11 +223,19 @@ def main():
     parser.add_argument("--train-max-steps", type=int, default=4)
     parser.add_argument("--train-value-limit", type=int, default=99)
     parser.add_argument("--train-const-limit", type=int, default=31)
+    parser.add_argument("--train-styles", nargs="+", choices=PROMPT_STYLES, default=["default"],
+                        help="prompt templates included in supervised rows")
+    parser.add_argument("--eval-style", choices=PROMPT_STYLES, default="default",
+                        help="template reserved for the generated held-out episodes")
+    parser.add_argument("--response-mode", choices=("state", "scratch"), default="state",
+                        help="state-only control or deterministic calculation-check completion")
+    parser.add_argument("--repair-examples", type=int, default=0,
+                        help="supervised proposed-state checks per transition (0 disables self-repair data)")
     parser.add_argument("--eval-per-length", type=int, default=80)
     parser.add_argument("--seed", type=int, default=20260712)
     args = parser.parse_args()
     if (args.train_episodes <= 0 or args.train_max_steps <= 0 or args.eval_per_length <= 0
-            or args.train_value_limit <= 0 or args.train_const_limit <= 0):
+            or args.train_value_limit <= 0 or args.train_const_limit <= 0 or args.repair_examples < 0):
         raise ValueError("episode and length arguments must be positive")
     if any(Path(path).exists() for path in (args.train_out, args.eval_out, args.report)):
         raise SystemExit("refusing to overwrite an existing VRWM artifact")
@@ -183,7 +266,15 @@ def main():
         (32, 1000, 2000, 128, 255, "value_and_length_ood_len32"),
         (8, 5000, 10000, 512, 1023, "wide_range_and_length_ood_len8"),
     )
-    train_rows_all = [row for episode in train for row in rows_from_episode(episode)]
+    train_rows_all = [
+        row
+        for episode in train
+        for style in args.train_styles
+        for row in rows_from_episode(
+            episode, prompt_style=style, response_mode=args.response_mode,
+            repair_examples=args.repair_examples,
+        )
+    ]
     train_rows, duplicate_train_prompts = deduplicate_rows(train_rows_all)
     train_prompt_signatures = {normalized_prompt(row["completion_prompt"]) for row in train_rows}
     evaluation = []
@@ -198,7 +289,9 @@ def main():
                 rng, f"{split}-{index:04d}", length, value_limit, const_limit, split,
                 value_minimum=value_minimum, const_minimum=const_minimum,
             )
-            if episode_prompt_signatures(episode) & train_prompt_signatures:
+            if episode_prompt_signatures(
+                episode, prompt_style=args.eval_style, include_repair=args.repair_examples > 0
+            ) & train_prompt_signatures:
                 continue
             evaluation.append(episode)
     train_signatures = {episode_signature(row) for row in train}
@@ -218,6 +311,10 @@ def main():
         "train_rows": len(train_rows),
         "duplicate_train_prompts_dropped": duplicate_train_prompts,
         "train_max_steps": args.train_max_steps,
+        "train_styles": args.train_styles,
+        "eval_style": args.eval_style,
+        "response_mode": args.response_mode,
+        "repair_examples": args.repair_examples,
         "evaluation_episodes": len(evaluation),
         "evaluation_by_split": dict(sorted(Counter(row["split"] for row in evaluation).items())),
         "training_group": "vrwm",

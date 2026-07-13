@@ -1,0 +1,527 @@
+{
+  "by_split": {
+    "value_and_length_ood_len16": {
+      "closed_loop_accuracy": 0.0,
+      "closed_loop_correct": 0,
+      "episodes": 80,
+      "one_step_accuracy": 0.3,
+      "one_step_correct": 24,
+      "readout_accuracy_given_closed_loop": 0.0,
+      "readout_correct_given_closed_loop": 0
+    },
+    "value_and_length_ood_len32": {
+      "closed_loop_accuracy": 0.0,
+      "closed_loop_correct": 0,
+      "episodes": 80,
+      "one_step_accuracy": 0.175,
+      "one_step_correct": 14,
+      "readout_accuracy_given_closed_loop": 0.0,
+      "readout_correct_given_closed_loop": 0
+    },
+    "value_and_length_ood_len8": {
+      "closed_loop_accuracy": 0.0,
+      "closed_loop_correct": 0,
+      "episodes": 80,
+      "one_step_accuracy": 0.2125,
+      "one_step_correct": 17,
+      "readout_accuracy_given_closed_loop": 0.0,
+      "readout_correct_given_closed_loop": 0
+    },
+    "value_ood_len4": {
+      "closed_loop_accuracy": 0.025,
+      "closed_loop_correct": 2,
+      "episodes": 80,
+      "one_step_accuracy": 0.2875,
+      "one_step_correct": 23,
+      "readout_accuracy_given_closed_loop": 1.0,
+      "readout_correct_given_closed_loop": 2
+    },
+    "wide_range_and_length_ood_len8": {
+      "closed_loop_accuracy": 0.0,
+      "closed_loop_correct": 0,
+      "episodes": 80,
+      "one_step_accuracy": 0.25,
+      "one_step_correct": 20,
+      "readout_accuracy_given_closed_loop": 0.0,
+      "readout_correct_given_closed_loop": 0
+    }
+  },
+  "checkpoint": "/lustre/fs1/home/sa305415/shohin/train/sft_vrwm_v2_state_180k_r4/sft_ep1.pt",
+  "claim_boundary": "Closed-loop success means model-produced canonical states survived every transition; it is an algorithmic working-memory result, not general long-context reasoning.",
+  "device": "cuda",
+  "episodes": "/lustre/fs1/home/sa305415/shohin/artifacts/vrwm/vrwm_v2_state_eval_r4.jsonl",
+  "examples": [
+    {
+      "closed_loop_success": false,
+      "first_step_correct": true,
+      "id": "value_ood_len4-0000",
+      "program_length": 4,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": 2918,
+          "b": 1357
+        },
+        "rows": [
+          {
+            "correct": true,
+            "expected_memory": {
+              "a": 2918,
+              "b": 1357
+            },
+            "index": 0,
+            "input_memory": {
+              "a": 1561,
+              "b": 1357
+            },
+            "predicted_memory": {
+              "a": 2918,
+              "b": 1357
+            },
+            "prompt": "Compute exactly one register update.\nState: wm:a=1561;b=1357\nRule: set a to a + b.\nWrite only the new wm:a=<integer>;b=<integer> state.\nAnswer:",
+            "response": "wm:a=2918;b=1357"
+          },
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": 3149,
+              "b": 1357
+            },
+            "index": 1,
+            "input_memory": {
+              "a": 2918,
+              "b": 1357
+            },
+            "predicted_memory": {
+              "a": 3159,
+              "b": 1357
+            },
+            "prompt": "Compute exactly one register update.\nState: wm:a=2918;b=1357\nRule: set a to a + 231.\nWrite only the new wm:a=<integer>;b=<integer> state.\nAnswer:",
+            "response": "wm:a=3159;b=1357"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_ood_len4"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_ood_len4-0001",
+      "program_length": 4,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": 1520,
+          "b": -1247
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": 2767,
+              "b": -1247
+            },
+            "index": 0,
+            "input_memory": {
+              "a": 1520,
+              "b": -1247
+            },
+            "predicted_memory": {
+              "a": 1273,
+              "b": -1247
+            },
+            "prompt": "Compute exactly one register update.\nState: wm:a=1520;b=-1247\nRule: set a to a - b.\nWrite only the new wm:a=<integer>;b=<integer> state.\nAnswer:",
+            "response": "wm:a=1273;b=-1247"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_ood_len4"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_ood_len4-0002",
+      "program_length": 4,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": 1961,
+          "b": -1734
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": 1716,
+              "b": -1734
+            },
+            "index": 0,
+            "input_memory": {
+              "a": 1961,
+              "b": -1734
+            },
+            "predicted_memory": {
+              "a": 1616,
+              "b": -1734
+            },
+            "prompt": "Compute exactly one register update.\nState: wm:a=1961;b=-1734\nRule: set a to a - 245.\nWrite only the new wm:a=<integer>;b=<integer> state.\nAnswer:",
+            "response": "wm:a=1616;b=-1734"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_ood_len4"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_ood_len4-0003",
+      "program_length": 4,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": -1567,
+          "b": 1988
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": -1406,
+              "b": 1988
+            },
+            "index": 0,
+            "input_memory": {
+              "a": -1567,
+              "b": 1988
+            },
+            "predicted_memory": {
+              "a": -1304,
+              "b": 1988
+            },
+            "prompt": "Compute exactly one register update.\nState: wm:a=-1567;b=1988\nRule: set a to a + 161.\nWrite only the new wm:a=<integer>;b=<integer> state.\nAnswer:",
+            "response": "wm:a=-1304;b=1988"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_ood_len4"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_ood_len4-0004",
+      "program_length": 4,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": 1219,
+          "b": 1698
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": 1367,
+              "b": 1698
+            },
+            "index": 0,
+            "input_memory": {
+              "a": 1219,
+              "b": 1698
+            },
+            "predicted_memory": {
+              "a": 1477,
+              "b": 1698
+            },
+            "prompt": "Compute exactly one register update.\nState: wm:a=1219;b=1698\nRule: set a to a + 148.\nWrite only the new wm:a=<integer>;b=<integer> state.\nAnswer:",
+            "response": "wm:a=1477;b=1698"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_ood_len4"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_ood_len4-0005",
+      "program_length": 4,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": -1288,
+          "b": -1517
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": -1514,
+              "b": -1517
+            },
+            "index": 0,
+            "input_memory": {
+              "a": -1288,
+              "b": -1517
+            },
+            "predicted_memory": {
+              "a": -962,
+              "b": -1517
+            },
+            "prompt": "Compute exactly one register update.\nState: wm:a=-1288;b=-1517\nRule: set a to a - 226.\nWrite only the new wm:a=<integer>;b=<integer> state.\nAnswer:",
+            "response": "wm:a=-962;b=-1517"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_ood_len4"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_ood_len4-0006",
+      "program_length": 4,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": -1419,
+          "b": 1853
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": -1419,
+              "b": 2108
+            },
+            "index": 0,
+            "input_memory": {
+              "a": -1419,
+              "b": 1853
+            },
+            "predicted_memory": {
+              "a": -1419,
+              "b": 1918
+            },
+            "prompt": "Compute exactly one register update.\nState: wm:a=-1419;b=1853\nRule: set b to b + 255.\nWrite only the new wm:a=<integer>;b=<integer> state.\nAnswer:",
+            "response": "wm:a=-1419;b=1918"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_ood_len4"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": true,
+      "id": "value_ood_len4-0007",
+      "program_length": 4,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": -1821,
+          "b": -1721
+        },
+        "rows": [
+          {
+            "correct": true,
+            "expected_memory": {
+              "a": -1821,
+              "b": -1721
+            },
+            "index": 0,
+            "input_memory": {
+              "a": -1721,
+              "b": -1821
+            },
+            "predicted_memory": {
+              "a": -1821,
+              "b": -1721
+            },
+            "prompt": "Compute exactly one register update.\nState: wm:a=-1721;b=-1821\nRule: set the pair (a, b) to (b, a).\nWrite only the new wm:a=<integer>;b=<integer> state.\nAnswer:",
+            "response": "wm:a=-1821;b=-1721"
+          },
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": -1821,
+              "b": -1970
+            },
+            "index": 1,
+            "input_memory": {
+              "a": -1821,
+              "b": -1721
+            },
+            "predicted_memory": {
+              "a": -1821,
+              "b": -432
+            },
+            "prompt": "Compute exactly one register update.\nState: wm:a=-1821;b=-1721\nRule: set b to b - 249.\nWrite only the new wm:a=<integer>;b=<integer> state.\nAnswer:",
+            "response": "wm:a=-1821;b=-432"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_ood_len4"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_ood_len4-0008",
+      "program_length": 4,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": 1250,
+          "b": 1439
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": 1250,
+              "b": 1690
+            },
+            "index": 0,
+            "input_memory": {
+              "a": 1250,
+              "b": 1439
+            },
+            "predicted_memory": {
+              "a": 1250,
+              "b": 1680
+            },
+            "prompt": "Compute exactly one register update.\nState: wm:a=1250;b=1439\nRule: set b to b + 251.\nWrite only the new wm:a=<integer>;b=<integer> state.\nAnswer:",
+            "response": "wm:a=1250;b=1680"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_ood_len4"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_ood_len4-0009",
+      "program_length": 4,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": 1000,
+          "b": 1444
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": 1000,
+              "b": 1617
+            },
+            "index": 0,
+            "input_memory": {
+              "a": 1000,
+              "b": 1444
+            },
+            "predicted_memory": {
+              "a": 1000,
+              "b": 2447
+            },
+            "prompt": "Compute exactly one register update.\nState: wm:a=1000;b=1444\nRule: set b to b + 173.\nWrite only the new wm:a=<integer>;b=<integer> state.\nAnswer:",
+            "response": "wm:a=1000;b=2447"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_ood_len4"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_ood_len4-0010",
+      "program_length": 4,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": -1564,
+          "b": -1618
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": -1564,
+              "b": -3182
+            },
+            "index": 0,
+            "input_memory": {
+              "a": -1564,
+              "b": -1618
+            },
+            "predicted_memory": {
+              "a": -1564,
+              "b": -2182
+            },
+            "prompt": "Compute exactly one register update.\nState: wm:a=-1564;b=-1618\nRule: set b to b + a.\nWrite only the new wm:a=<integer>;b=<integer> state.\nAnswer:",
+            "response": "wm:a=-1564;b=-2182"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_ood_len4"
+    },
+    {
+      "closed_loop_success": false,
+      "first_step_correct": false,
+      "id": "value_ood_len4-0011",
+      "program_length": 4,
+      "readout_correct": false,
+      "readout_response": "",
+      "rollout": {
+        "memory": {
+          "a": -1455,
+          "b": 1724
+        },
+        "rows": [
+          {
+            "correct": false,
+            "expected_memory": {
+              "a": -1455,
+              "b": 1564
+            },
+            "index": 0,
+            "input_memory": {
+              "a": -1455,
+              "b": 1724
+            },
+            "predicted_memory": {
+              "a": -1455,
+              "b": 1568
+            },
+            "prompt": "Compute exactly one register update.\nState: wm:a=-1455;b=1724\nRule: set b to b - 160.\nWrite only the new wm:a=<integer>;b=<integer> state.\nAnswer:",
+            "response": "wm:a=-1455;b=1568"
+          }
+        ],
+        "success": false
+      },
+      "split": "value_ood_len4"
+    }
+  ],
+  "max_new": 48,
+  "prompt_style": "semantic",
+  "schema": "shohin-vrwm-eval-v1",
+  "step": "sft_ep1"
+}

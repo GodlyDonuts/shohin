@@ -5,7 +5,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-12 18:31 EDT
+**Last refreshed:** 2026-07-12 20:31 EDT
 **Flagship source of truth:** Newton Slurm job `685084`,
 `/lustre/fs1/home/sa305415/shohin/train/flagship_out/log_r0.jsonl`  
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -35,7 +35,7 @@ the numbered file under its retention policy; the ledger records which copies re
 | Absolute training target | 300,000 steps |
 | Resume point | `ckpt_0141500.pt` to step 141,501 |
 | Latest checkpoint milestone | **180,000** steps = **94,371,840,000 nominal update tokens** |
-| Last observed live step | 182,440 = 95,651,102,720 nominal update tokens |
+| Last observed live step | 184,530 = 96,746,864,640 nominal update tokens |
 | Last observed throughput | 154,302 tokens/s, approximately 13.33B nominal tokens/day at that sustained rate |
 | 180k loss / gradient norm | loss 1.6526; gnorm 0.103; LR 0.0050 |
 | Post-180k health | One gnorm guard skip at step 180,030 (1.04 versus EMA 0.12), followed immediately by normal 0.09-0.13 gnorm steps. This is a recovered guard event, not a divergence. |
@@ -89,7 +89,9 @@ the running `SHARDS` list.
 | Verifier rollout `686536` | 78,654 emitted rollout rows at ledger refresh; generator log had reached 5,100/10,000 prompts and 81,600 sampled candidates. | In progress. It is not training data until the tail, global dedup, exact packing, and >=3,000 packed-512-sequence gate succeed. |
 | OpenMathReasoning COT selector `686672` | Under full problem+trace decontamination, final-answer verification, individual limits, and an exact combined 2,048-token SFT limit: 326/10,000 rows retained. Rejections: 9,398 long traces, 17 long combined examples, 198 answer mismatches, 1 exact-problem hit, 45 13-gram hits, 8 duplicate problems. | Inspection-only. No bulk candidate is authorized until yield, data balance, and source-specific quality review are recorded. |
 | 25B DCLM / FineWeb replacements | No final manifests or scan approvals at this refresh. | Not admitted; do not use partial output in a future relaunch. |
-| VRWM r3 working-memory research candidate | 497,274 unique solver-checked rows, 0 malformed rows, duplicate prompts, or full-text evaluation overlaps; 18,013 packed 2,048-token sequences. SHA-256 `b2a688e1f7aa6c79dd65ed1944fa5dc00cd022acfc793896ecf4696c94d4089f`. | Isolated context-scaling SFT candidate only. Raw 180k baseline is 0/25 first transitions and 0/25 closed-loop programs across five prompt-disjoint OOD regimes. |
+| VRWM r3 transition SFT | 497,274 unique solver-checked rows, 0 malformed rows, duplicate prompts, or full-text evaluation overlaps; 18,013 packed 2,048-token sequences. SHA-256 `b2a688e1f7aa6c79dd65ed1944fa5dc00cd022acfc793896ecf4696c94d4089f`. One epoch `686742` wrote `sft_ep1.pt` (MD5 `90607e7307187c2ad4839d48dfa3a0c6`). Full default p80 closed-loop result: 43/400. | Rejected as template-bound: held-out paraphrase p10 is 0/50. |
+| VRWM r4 controlled ablation | Both state-only and deterministic-scratch branches: 513,902 audited rows, 0 malformed/duplicate/public-overlap rows; state SHA-256 `cfab3c0c06cd5eba419d42cd52937ab7159e8f30acc2bc1202375ea38c162e58`, scratch SHA-256 `0df3d86471ccc675ad2dea07bb19cd7ffd97adde5c78b3e92b7fb1581c7d7b10`. | State: 32/400 default, 2/400 semantic. Scratch: 120/400 default, 21/400 semantic. Narrow executable-state evidence only; not general reasoning or promotion. |
+| VRWM r5 repair curriculum | 1,409,072 audited rows / 68,347 packed sequences, 139,976,150 total SFT tokens and 38,629,088 answer tokens. SHA-256 `011282f032963a40b8b39ab9572808de1d3473ef2b57ef727526fb9d00985c76`; zero malformed, duplicate, exact-eval, or 13-gram-eval rows. SFT `686820` is isolated on evc37 from `best_step180000.pt`. | In progress. Paired default/semantic first-pass and same-model self-repair tests `686827`-`686830` decide whether repair gives closed-loop transfer rather than output-format memorization. |
 
 ## Capability and Monitoring Baselines
 
@@ -113,14 +115,20 @@ Additional independent evidence:
   than a formal comparison to the prior 128-token probe, but shows no visible reasoning jump.
   Artifact: `artifacts/eval_history/manual_capability_raw180k_20260712_mps32.json`, MD5
   `cc6332a5c99d6cbf6ba2f8987ae58cc0`.
+- VRWM raw H100 p80 control is **0/400** exact first transitions and **0/400** closed-loop programs.
+  r4 scratch increases the isolated protocol to **120/400** default-prompt closed-loop programs, but only
+  **21/400** under the reserved semantic prompt form and only **3/80** at default length 32. This is a
+  bounded, generated-state transition policy, not evidence that the base model now thinks through ordinary
+  questions. The r5 self-repair comparison must improve the semantic and long-horizon rows without a
+  controller-side correction before it can advance beyond research.
 - Fixed raw-170k monitor results: WikiText-103 test NLL **3.9648849**, PPL **52.7142** over
   301,056 targets; CodeContests test NLL **1.3537146**, PPL **3.8718** over 145,408 targets.
   They are trend monitors only. The code monitor is not source-disjointness proof, so
   HumanEval/MBPP and execution-based held-out tests remain decisive.
 
-The serialized raw-180k -> V8 SFT -> board/interview decision chain is the next capability
-measurement. V8 cannot be promoted on loss, formatting, generator holdouts, or a single
-benchmark movement alone.
+The VRWM r5 paired first-pass/self-repair gate is the immediate context-scaling measurement. The separate
+raw-180k -> V8 SFT -> board/interview chain remains the broad-capability measurement. Neither branch can
+be promoted on loss, formatting, generator holdouts, or a single benchmark movement alone.
 
 ## Update Protocol
 

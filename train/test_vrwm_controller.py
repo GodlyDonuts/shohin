@@ -18,4 +18,15 @@ assert success["memory"] == {"a": 7, "b": 2}
 failure = rollout_episode(episode, lambda _: "wm:a=999;b=5")
 assert failure["success"] is False
 assert len(failure["rows"]) == 1
+
+responses = iter(("wm:a=7;b=5", "wm:a=7;b=2"))
+paraphrased = rollout_episode(episode, lambda _: next(responses), prompt_style="paraphrase")
+assert paraphrased["success"] is True
+assert "Registers:" in paraphrased["rows"][0]["prompt"]
+
+responses = iter(("wm:a=6;b=5", "wm:a=7;b=5", "wm:a=7;b=5", "wm:a=7;b=2"))
+repaired = rollout_episode(episode, lambda _: next(responses), self_repair=True)
+assert repaired["success"] is True
+assert repaired["rows"][0]["draft_memory"] == {"a": 6, "b": 5}
+assert repaired["rows"][0]["repair_response"] == "wm:a=7;b=5"
 print("vrwm controller checks: passed")
