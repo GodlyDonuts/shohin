@@ -1,0 +1,21 @@
+{
+  "admitted": true,
+  "duplicate_normalized_questions": 0,
+  "exact_question_hits_against_training": 0,
+  "families": {
+    "base_then_adjust": 100,
+    "fact_to_chain": 100,
+    "product_to_chain": 100,
+    "repair_to_chain": 100,
+    "source_dropped_named_state": 100
+  },
+  "malformed_rows": 0,
+  "question_13gram_hits_against_training": 0,
+  "response_answer_mismatches": 0,
+  "rows": 500,
+  "schema": "semantic_composition_transfer_v1_audit",
+  "suite": "/lustre/fs1/home/sa305415/shohin/artifacts/evals/semantic_composition_transfer_v1.jsonl",
+  "suite_sha256": "2c80f7eb7b644fefd8bf4699c63c2e174f504d607da94f4c1352f0e4aae65ed8",
+  "training_reference": "/lustre/fs1/home/sa305415/shohin/artifacts/sft/semantic_bridge_v1_train.jsonl",
+  "training_reference_sha256": "c219cb0a18cc82a2f634d8d1e5d0ad4e9e45233281b3c82d24d19a834aa00907"
+}

@@ -84,6 +84,15 @@ calculation trace” from “the model can form a small semantic object and use 
 after the original story is absent.” Only the latter makes semantic capsules,
 context compaction, or CWI scientifically defensible.
 
+The bridge evaluator is still only within-family generalization, so V10A also
+faces a separately generated, **evaluation-only semantic-composition suite**:
+product-to-chain, base-then-adjust, verified-fact-to-chain, repair-to-chain,
+and source-dropped named-state updates. Its values, terms, question forms, and
+operation compositions are outside bridge training; an independent audit
+rejects exact or word-13-gram overlap with the full bridge corpus. Passing the
+bridge evaluator while failing this suite is a narrowly formatted curriculum
+result, not semantic state competence.
+
 ### Raw Workspace-Patching Baseline: No Simple Broadcast Register
 
 `train/probe_digitwise_workspace.py` is the first diagnostic built from this
