@@ -148,6 +148,8 @@ At each 10k checkpoint milestone:
    files; `best_step` and the verified local copy are the required durable artifacts.
 2. Transfer to `train/flagship_out/ckpt_<step>.pt.part` (or a resumable equivalent). Verify
    the local MD5 against Newton before atomically renaming it without `.part`.
+   `scripts/preserve_flagship_checkpoint.sh <step>` performs remote `best_step` promotion,
+   resumable `sftp reget`, matching-MD5 verification, and atomic local rename in one command.
 3. Update the pretraining table with the exact step, nominal update-token count, latest
    throughput/loss/gnorm, and local DR status. Do not infer unique-data exposure from step count.
 4. Update each data row only from a saved manifest, hash-bound report, or completed job log.
