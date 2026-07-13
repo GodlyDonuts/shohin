@@ -74,6 +74,28 @@ def evaluate_pair(episode, ask, prompt_style=None):
     }
 
 
+def transcript_record(episode, pair):
+    """Keep rollout evidence without using it to alter the evaluation outcome."""
+    return {
+        "id": episode["id"],
+        "regime": episode["split"],
+        "expected_answer": episode["expected_answer"],
+        "counterfactual_expected_answer": episode["counterfactual"]["expected_answer"],
+        "normal": pair["normal"],
+        "counterfactual": pair["counterfactual"],
+        "intervention_success": pair["intervention_success"],
+    }
+
+
+def retain_regime_transcript(bucket, record, succeeded, per_outcome):
+    """Retain early successes and failures separately so a regime is interpretable."""
+    if per_outcome <= 0:
+        return
+    key = "successes" if succeeded else "failures"
+    if len(bucket[key]) < per_outcome:
+        bucket[key].append(record)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--ckpt", required=True)
@@ -82,11 +104,17 @@ def main():
     parser.add_argument("--out", required=True)
     parser.add_argument("--per-regime", type=int, default=100)
     parser.add_argument("--max-new", type=int, default=96)
+    parser.add_argument(
+        "--examples-per-regime",
+        type=int,
+        default=0,
+        help="retain this many successful and failed paired transcripts per regime (0 disables)",
+    )
     parser.add_argument("--prompt-style", choices=("auto",) + PROMPT_STYLES, default="auto",
                         help="auto uses the episode's held-out wording; core isolates execution from wording transfer")
     args = parser.parse_args()
-    if args.per_regime <= 0 or args.max_new <= 0:
-        raise SystemExit("--per-regime and --max-new must be positive")
+    if args.per_regime <= 0 or args.max_new <= 0 or args.examples_per_regime < 0:
+        raise SystemExit("--per-regime and --max-new must be positive; --examples-per-regime must be nonnegative")
     out = Path(args.out)
     if out.exists():
         raise SystemExit("refusing to overwrite output: {}".format(out))
@@ -102,6 +130,7 @@ def main():
     totals, first_correct, transition_correct, transition_attempted = (collections.Counter() for _ in range(4))
     state_loop, final_correct, counterfactual_final, paired_intervention = (collections.Counter() for _ in range(4))
     first_responses, examples = collections.Counter(), []
+    examples_by_regime = collections.defaultdict(lambda: {"successes": [], "failures": []})
     for index, episode in enumerate(episodes, 1):
         regime = episode["split"]
         totals[regime] += 1
@@ -117,13 +146,15 @@ def main():
         final_correct[regime] += int(normal["success"])
         counterfactual_final[regime] += int(counterfactual["success"])
         paired_intervention[regime] += int(pair["intervention_success"])
+        record = transcript_record(episode, pair)
         if len(examples) < 12:
-            examples.append({
-                "id": episode["id"], "regime": regime, "expected_answer": episode["expected_answer"],
-                "counterfactual_expected_answer": episode["counterfactual"]["expected_answer"],
-                "normal": normal, "counterfactual": counterfactual,
-                "intervention_success": pair["intervention_success"],
-            })
+            examples.append(record)
+        retain_regime_transcript(
+            examples_by_regime,
+            record,
+            bool(normal["success"]),
+            args.examples_per_regime,
+        )
         if index % 20 == 0 or index == len(episodes):
             print("[digitwise] {}/{} final={}".format(index, len(episodes), sum(final_correct.values())), flush=True)
 
@@ -149,11 +180,13 @@ def main():
         "episodes_sha256": sha256_file(args.episodes),
         "per_regime": args.per_regime,
         "max_new": args.max_new,
+        "examples_per_regime": args.examples_per_regime,
         "prompt_style": args.prompt_style,
         "by_regime": by_regime,
         "first_response_unique": len(first_responses),
         "first_response_mode_count": max(first_responses.values(), default=0),
         "examples": examples,
+        "examples_by_regime": dict(examples_by_regime),
         "claim_boundary": (
             "A passing result establishes model-authored local digitwise execution from a fixed canonical state only. "
             "It does not establish language parsing, broad reasoning, or general context scaling."

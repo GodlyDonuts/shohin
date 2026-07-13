@@ -7,7 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 from generate_digitwise_recurrent_v1 import counterfactual_episode, episode_from_operands
-from eval_digitwise_recurrent import evaluate_pair
+from eval_digitwise_recurrent import evaluate_pair, retain_regime_transcript
 
 
 episode = episode_from_operands("pair", "fit_w4", 4, "add", 95, 8, "heldout")
@@ -25,4 +25,10 @@ core_prompts = []
 core_result = evaluate_pair(episode, lambda prompt: (core_prompts.append(prompt), responses.pop(0))[1], prompt_style="core")
 assert core_result["normal"]["success"] is True
 assert "Microstate update." in core_prompts[0]
+
+bucket = {"successes": [], "failures": []}
+retain_regime_transcript(bucket, {"id": "good"}, True, 1)
+retain_regime_transcript(bucket, {"id": "second-good"}, True, 1)
+retain_regime_transcript(bucket, {"id": "bad"}, False, 1)
+assert bucket == {"successes": [{"id": "good"}], "failures": [{"id": "bad"}]}
 print("digitwise evaluator checks: passed")

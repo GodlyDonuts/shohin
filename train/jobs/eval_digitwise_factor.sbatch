@@ -19,6 +19,7 @@ OUT=${OUT:?set OUT to a fresh result JSON}
 PER_REGIME=${PER_REGIME:-100}
 MAX_NEW=${MAX_NEW:-96}
 STYLE=${STYLE:-auto}
+EXAMPLES_PER_REGIME=${EXAMPLES_PER_REGIME:-0}
 
 [ -f "$CKPT" ] || { echo "[factor-eval] checkpoint missing: $CKPT" >&2; exit 2; }
 [ -s "$EPISODES" ] || { echo "[factor-eval] episodes missing: $EPISODES" >&2; exit 3; }
@@ -30,9 +31,9 @@ if not torch.cuda.is_available():
     raise SystemExit("[factor-eval] CUDA unavailable after allocation")
 torch.empty(1, device="cuda")
 PY
-echo "[factor-eval] ckpt=$CKPT episodes=$EPISODES out=$OUT per_regime=$PER_REGIME style=$STYLE"
+echo "[factor-eval] ckpt=$CKPT episodes=$EPISODES out=$OUT per_regime=$PER_REGIME style=$STYLE examples_per_regime=$EXAMPLES_PER_REGIME"
 "$PY" eval_digitwise_factor.py \
   --ckpt "$CKPT" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
   --episodes "$EPISODES" --out "$OUT" --per-regime "$PER_REGIME" \
-  --max-new "$MAX_NEW" --prompt-style "$STYLE"
+  --max-new "$MAX_NEW" --prompt-style "$STYLE" --examples-per-regime "$EXAMPLES_PER_REGIME"
 echo "[factor-eval] done"

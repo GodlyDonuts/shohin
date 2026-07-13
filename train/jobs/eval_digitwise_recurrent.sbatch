@@ -22,6 +22,7 @@ OUT=${OUT:?set OUT to a fresh result JSON}
 PER_REGIME=${PER_REGIME:-100}
 MAX_NEW=${MAX_NEW:-96}
 STYLE=${STYLE:-auto}
+EXAMPLES_PER_REGIME=${EXAMPLES_PER_REGIME:-0}
 
 [ -f "$CKPT" ] || { echo "[drs-eval] checkpoint missing: $CKPT" >&2; exit 2; }
 [ -s "$EPISODES" ] || { echo "[drs-eval] episodes missing: $EPISODES" >&2; exit 3; }
@@ -35,7 +36,7 @@ if not torch.cuda.is_available():
 torch.empty(1, device="cuda")
 PY
 
-echo "[drs-eval] ckpt=$CKPT episodes=$EPISODES out=$OUT per_regime=$PER_REGIME style=$STYLE"
+echo "[drs-eval] ckpt=$CKPT episodes=$EPISODES out=$OUT per_regime=$PER_REGIME style=$STYLE examples_per_regime=$EXAMPLES_PER_REGIME"
 "$PY" eval_digitwise_recurrent.py \
   --ckpt "$CKPT" \
   --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
@@ -43,5 +44,6 @@ echo "[drs-eval] ckpt=$CKPT episodes=$EPISODES out=$OUT per_regime=$PER_REGIME s
   --out "$OUT" \
   --per-regime "$PER_REGIME" \
   --max-new "$MAX_NEW" \
-  --prompt-style "$STYLE"
+  --prompt-style "$STYLE" \
+  --examples-per-regime "$EXAMPLES_PER_REGIME"
 echo "[drs-eval] done"

@@ -11,6 +11,8 @@ text = JOB.read_text()
 assert "eval_digitwise_factor.py" in text
 assert "[ ! -e \"$OUT\" ]" in text
 assert "torch.empty(1, device=\"cuda\")" in text
+assert "EXAMPLES_PER_REGIME=${EXAMPLES_PER_REGIME:-0}" in text
+assert "--examples-per-regime \"$EXAMPLES_PER_REGIME\"" in text
 assert "flagship_out" not in text
 assert "--gres=gpu:nvidia_h100_pcie:1" in text
 print("digitwise factor evaluator job contracts passed")

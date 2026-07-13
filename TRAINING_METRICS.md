@@ -363,7 +363,10 @@ covered local contexts, and **120** paired held-out counterfactual episodes
 independent admission audit reports 0 invalid rows/episodes, normalized
 duplicates, counterfactual mismatches, missing contexts, exact split hits, and
 13-gram split hits. It is not a model score and has no durable data, SFT, or
-GPU job. The static-tested evaluator forwards model-emitted registers only.
+GPU job. The static-tested evaluator forwards model-emitted registers only;
+its staged SFT wrapper is audit-hash-bound and has not been submitted. Future
+factor evaluations retain capped successful and failed transcripts per regime
+so aggregate accuracy cannot hide a parse, transition, or transport failure.
 
 ## Checkpoint and Disaster-Recovery Inventory
 

@@ -337,10 +337,14 @@ paired held-out counterfactual episodes as the matched basis smoke. The
 generator and auditor report 0 malformed rows or episodes, duplicate prompts,
 counterfactual mismatches, exact split hits, or literal 13-gram hits; deleting
 all examples of one valid local context makes admission fail. The matched
-closed-loop evaluator is static-tested. STRR is an unsubmitted candidate: it
-has no durable corpus, SFT checkpoint, or GPU allocation. It becomes
-admissible only after the running v2 core, held-out wording, and transcript
-chain distinguish coverage failure from a deeper execution failure.
+closed-loop evaluator is static-tested and can retain capped success/failure
+transcripts separately for each regime. Its matching staged SFT wrapper binds
+the immutable data and held-out hashes to that audit, verifies exact inference
+and SFT prompt-token boundaries, refuses existing outputs, and requires a real
+CUDA allocation. STRR is still an unsubmitted candidate: it has no durable
+corpus, SFT checkpoint, or GPU allocation. It becomes admissible only after the
+running v2 core, held-out wording, and transcript chain distinguish coverage
+failure from a deeper execution failure.
 
 ## Conditional Hypothesis: Dual-Code Reversible Deliberation
 
