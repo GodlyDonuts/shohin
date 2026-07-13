@@ -326,3 +326,55 @@ first screen, then compared with equal-compute untied token decoding. No text
 chain of thought, controller, retrieval system, or external executor would be
 available at inference. This remains a design hypothesis, not an implemented
 or claimed capability.
+
+## Causal Prefix Readback Result and Direction Change
+
+CPR was the decisive decoder-interface test after CLL and LSA. It kept the
+source-removal boundary but asked the language decoder to answer a fresh,
+solver-verified question from every intermediate continuous packet. Three
+matched arms used the immutable 190k checkpoint and the same 32,000-pair /
+7,163-update surface: verified readbacks, shuffled complete readback labels,
+and an equal-work replicated-final control.
+
+The locked held-out comparison rejects the mechanism. The verified normal
+packet score is **161/10,752 = 1.497%**, exactly equal to the shuffled-source
+control; the equal-work replay scores **193/10,752 = 1.795%**. The verified
+model loses to the strongest control by **1.273 points** on fit IID, **0.493
+points** on length OOD, **0.347 points** on language OOD, and **0.439 points**
+on full OOD. It has zero positive preregistered gates. Verified and
+shuffled-label training losses were also nearly identical. This means the
+model did not learn a causal, decoder-readable continuous packet channel even
+on the matched task. CPR is rejected; stage 2 is prohibited.
+
+This changes the research direction. The negative results consistently show
+that a 125M decoder is not reliably learning to write and read a semantic
+continuous state, while broad SFT traces can teach formatting without correct
+intermediate computation. The next experiment must reduce the primitive
+transition burden rather than add another continuous interface.
+
+## Next Hypothesis: Digitwise Recurrent Scratchpad
+
+The next candidate is a **Digitwise Recurrent Scratchpad**, a discrete,
+model-authored microstate protocol. It is a design hypothesis only; no model
+has been trained on it.
+
+1. The state is a fixed-width digit tape, least-significant digit first, plus
+   a program counter, carry/borrow bit, and immutable operation digits.
+2. Each generated turn performs exactly one local rewrite: read one digit and
+   carry, emit the next digit and carry, advance the program counter, and copy
+   the remaining tape. The model emits every next state; a controller may only
+   transport that emitted text to the next fixed turn.
+3. The first screen uses canonical operations only. It must prove unseen-value
+   and longer-width arithmetic before a separate language-to-program bridge is
+   attempted. Natural-language parsing is not allowed to hide a failed
+   executor.
+4. Evaluation must include train-fit generation, teacher-forced transitions,
+   self-authored closed loops, random-tape and constant-output controls,
+   transition interventions, unseen width, and later unseen lexical wrappers.
+
+This differs from VRWM: VRWM asked the model to perform whole-register updates
+in one generation. The tape, counter, and carry reduce each generation to a
+finite local transition, preserve a strict bounded context, and make every
+state transition verifier-checkable. A passing result would still be narrow
+algorithmic-execution evidence, not general reasoning. Only after the discrete
+skeleton passes should learned compression or a language bridge be considered.

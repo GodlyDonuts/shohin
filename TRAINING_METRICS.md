@@ -35,11 +35,11 @@ the numbered file under its retention policy; the ledger records which copies re
 | Absolute training target | 300,000 steps |
 | Resume point | `ckpt_0141500.pt` to step 141,501 |
 | Latest checkpoint milestone | **200,000** steps = **104,857,600,000 nominal update tokens** |
-| Last observed live step | 200,360 = 105,046,343,680 nominal update tokens |
+| Last observed live step | 200,560 = 105,151,201,280 nominal update tokens |
 | Last observed throughput | 154,294 tokens/s, approximately 13.33B nominal tokens/day at that sustained rate |
-| Latest loss / gradient norm | step 200,360: loss 1.6012; gnorm 0.09; LR 0.0050 |
-| Direct H100 telemetry | 05:07 EDT: 100% compute utilization, 59% memory-controller utilization, 63,767 / 81,559 MiB VRAM, 280.12 / 310 W, 63 C. Low unused VRAM is deliberate: BS64 was OOM; BS32 is the largest verified single-GPU microbatch. |
-| Post-190k health | One isolated guard skip at step 193,437 (gnorm 2.21 versus 0.13 EMA) recovered at the next logged step. Surrounding recent steps remain in the normal range; no divergence or persistent skip exists. |
+| Latest loss / gradient norm | step 200,560: loss 1.4530; gnorm 0.08; LR 0.0050 |
+| Direct H100 telemetry | 11:33 EDT: 100% compute utilization, 63,767 / 81,559 MiB VRAM, 301.42 / 310 W. Low unused VRAM is deliberate: BS64 was OOM; BS32 is the largest verified single-GPU microbatch. |
+| Post-190k health | Isolated guard skips at 193,437 (gnorm 2.21 versus 0.13 EMA) and 200,387 (2.02 versus 0.11 EMA) each recovered at the next logged step. Surrounding recent steps remain in the normal range; no divergence or persistent skip exists. |
 | Two-H100 handoff revalidation | `686734` on evc37, 320 bounded updates from `best_step180000.pt`, `world=2`, `BS=32`, `ACC=4`, fresh optimizer, stream generation 1. Exit 0 with no CUDA/NCCL/DDP error; compile-free late windows 291.7-293.9k tok/s (about 1.90x the live one-H100 rate). One terminal gnorm guard skip at step 180,319 was not followed by an in-canary recovery step, so this is throughput/transport evidence only. |
 
 The current live flagship's data stream is frozen for the life of this job. Do not add
@@ -51,18 +51,18 @@ At the natural handoff only, `686732` will use `NG=2, BS=32, ACC=4`: the same
 the CUDA-preflight failures `evc26,31,36,43,50`; it must log `world=2` and pass a
 real CUDA/NCCL health check before its throughput is counted.
 
-## Overnight Comparison Snapshot: 2026-07-13 11:27 EDT
+## Overnight Comparison Snapshot: 2026-07-13 11:36 EDT
 
 This is the explicit before-sleep reference point for the next custody check.
 
 | Surface | Verified state |
 |---|---|
 | Flagship | `685084` is `RUNNING` on `evc22`, 2d 07h elapsed, one H100, `BS=32 ACC=8`, 4 CPUs. |
-| Training progress | Step **200,360**; **105,046,343,680** nominal update tokens; **154,294 tok/s**. Recent loss/gnorm remains finite and in band. |
-| Stability | No new guard skip after the recovered step-193,437 outlier. No divergence, data-loader, CUDA, or checkpoint error observed. |
+| Training progress | Step **200,560**; **105,151,201,280** nominal update tokens; **154,293 tok/s**. Recent loss/gnorm remains finite and in band. |
+| Stability | The step-200,387 gnorm outlier recovered at the next logged step. No divergence, data-loader, CUDA, or checkpoint error observed. |
 | Durable recovery | Hash-matched 200k full checkpoint on Newton/local: md5 `510d57df578447986b40e20029511b9d`. Next mandatory promotion is 210k. |
-| Frontier gate | LSA is rejected. CPR has three matched training arms complete; verified and shuffled-label evaluator reports are complete, while replay `687228` remains in held-out shuffled-source evaluation. Comparator is not submitted until all three reports exist. |
-| Corpus expansion | DCLM `686529` completed 25,000,001,792 tokens / 250 shards but is unadmitted pending a fresh scan. OpenMath PT completed 5,000,000,144 tokens / 50 shards and is likewise future-handoff-only. Stokes FineWeb r2 `738030` is live at 52 partial 100M-token shards, about 5.2B. None is in the active stream. |
+| Frontier gate | LSA and CPR are rejected. CPR's verified normal packet accuracy is identical to shuffled-source at **161/10,752 = 1.497%**; all five preregistered comparator gates are false. No source-free continuous-packet claim survives. |
+| Corpus expansion | DCLM `686529` completed 25,000,001,792 tokens / 250 shards but is unadmitted pending a fresh scan. OpenMath PT completed 5,000,000,144 tokens / 50 shards and is likewise future-handoff-only. Stokes FineWeb r2 `738030` is live through shard 53, roughly 5.4B tokens. None is in the active stream. |
 | Next protected transition | `686732` is dependency-held after the flagship: two H100s, `BS=32 ACC=4`, same 524,288-token update. It must not affect the live writer. |
 
 ### Post-Snapshot Research Update: 2026-07-13 06:32 EDT
@@ -91,6 +91,18 @@ checkpoints are separate and hash-recorded: verified `7d84282c3daaa4a238db821ff8
 `162282f3db4d7f6ce064b252be5bc35d`, replay `6c4f11caeae9701d7fd09fef957833a3`. Full held-out
 source-free readback evaluations `687226`-`687228` are running; no outcome is inferred from their
 partial normal-mode counts.
+
+### CPR Decision: 2026-07-13 11:36 EDT
+
+All three held-out evaluator reports and the locked four-control comparator are complete. CPR is
+**rejected**. The verified packet model's normal source-free readback is **161/10,752 = 1.497%**,
+exactly equal to its shuffled-source control; the equal-work replay is higher at **193/10,752 =
+1.795%**. The fit-IID margin is **-1.273pp**, length OOD **-0.493pp**, language OOD **-0.347pp**,
+and full OOD **-0.439pp** against the strongest control. Every preregistered gate is false. Training
+losses were likewise nearly indistinguishable across verified and shuffled-label arms, so this is a
+failure to establish a decoder-readable, label-dependent packet channel, not merely an OOD miss.
+Reports are preserved locally under `artifacts/evals/causal_prefix_readback_*_190k.json`; no CPR stage
+2 or flagship integration is authorized.
 
 ## Checkpoint and Disaster-Recovery Inventory
 
