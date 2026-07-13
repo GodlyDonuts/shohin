@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 ~03:11 EDT (`685084` remains healthy through 191.6k; the 190k checkpoint is hash-verified on Newton and the Mac; compact CLL M0 is a documented no-memory null; M1/evaluator/comparator remain isolated; scheduler-idle evc36 is CUDA-unhealthy). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 ~03:18 EDT (`685084` remains healthy through 191.7k; the 190k checkpoint is hash-verified on Newton and the Mac; compact CLL M0 is a documented no-memory null; M1/evaluator/comparator remain isolated; a raw-190k direct probe isolates a weak answer-commitment defect without showing reasoning). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2053,6 +2053,15 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   unallocated H100 GPUs, so isolated `687150` requested one GPU and tried an actual CUDA tensor allocation.
   The job failed after 2m15s with `CUDA-capable device(s) is/are busy or unavailable`. Keep evc36 in the
   explicit bad-node exclusion; this diagnosis did not alter or delay flagship `685084` or M1 `687145`.
+- **2026-07-13 ~03:15** — **Fresh raw-190k direct interaction separates a narrow stop defect from
+  reasoning.** At the standard 128-token decode budget, the seven-case/five-turn MPS interview is
+  **1/7 initial, 0/7 review, 1/7 verified fact, 0/7 compact-state reuse** (md5
+  `86214f2d4b096a67950cb1885c4109fd`). A 32-token replay is **2/7 initial, 1/7 review, 1/7 fact,
+  0/7 reuse** (md5 `6f37c4fcf44351773981c83c12c68811`) because one state-update trace correctly reaches
+  49 before the longer decode loops. It still computes `29 x 16 = 496`, treats base-6 425 as 0.425,
+  ignores verified facts, and cannot reuse a state. This is explicitly not a thinking claim or a decoder
+  optimization to promote; it identifies answer commitment as one interface issue after a model has learned
+  substantially broader verified operations.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*

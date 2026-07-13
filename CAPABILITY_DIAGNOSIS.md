@@ -586,3 +586,29 @@ about 1.8%, which is why they are not the central remediation path.
 The immediate success criterion is not a prettier loss or longer derivation. It is
 repeatable improvement on fresh answer-checked tasks with direct transcripts that
 show correct state updates, transformations, and final answers.
+
+## Raw 190k Decode-Depth Diagnostic
+
+A fresh seven-case, five-turn interview was run locally on MPS against the
+preserved 190k checkpoint. At the standard 128-token budget it scored **1/7**
+initial, **0/7** independent review, **1/7** with a verified fact, and **0/7**
+after compact-state reuse. The full artifact is
+`artifacts/eval_history/manual_capability_raw190k_20260713_mps.json` (md5
+`86214f2d4b096a67950cb1885c4109fd`).
+
+One state-transition response emitted the locally correct sequence `14 + 9 =
+23`, `23 * 3 = 69`, `69 - 20 = 49`, then looped between 49 and 69 instead of
+committing a final answer. The same frozen interview with a 32-token cap
+changes only this narrow behavior: **2/7** initial and **1/7** review, with
+the state-transition trace cut immediately after 49; verified-fact use remains
+**1/7** and state reuse remains **0/7**. That artifact is
+`artifacts/eval_history/manual_capability_raw190k_20260713_mps_max32.json`
+(md5 `6f37c4fcf44351773981c83c12c68811`).
+
+This is evidence of a termination and completion-contract defect layered on top
+of weak computation, not evidence of thinking: the same model still gives
+`29 x 16 = 496`, treats base-6 `425` as decimal `0.425`, cannot apply a supplied
+correct product, fails state reuse, and falls into unrelated templates on string,
+sorting, and code tasks. Future work may improve explicit answer commitment, but
+a short decoder cap cannot count as a reasoning solution unless it also transfers
+to held-out fact, review, and state-reuse conditions.

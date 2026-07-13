@@ -1,0 +1,229 @@
+{
+  "audit": "manual_capability_probe_v1",
+  "device": "mps",
+  "cases": 7,
+  "models": [
+    {
+      "checkpoint": "../train/flagship_out/ckpt_0190000.pt",
+      "step": 190000,
+      "summary": {
+        "initial": 2,
+        "review": 1,
+        "verified_fact": 1,
+        "state_reuse": 0
+      },
+      "rows": [
+        {
+          "id": "arithmetic",
+          "kind": "number",
+          "question": "Compute 29 times 16, then subtract 37. Return only the final integer.",
+          "answer": "427",
+          "initial": {
+            "prompt": "Question: Compute 29 times 16, then subtract 37. Return only the final integer.\nAnswer:",
+            "response": " 29 x 16 = 496\n\n## 29 Times Table\n\n29 times table is a multiplication table that is",
+            "correct": false
+          },
+          "review": {
+            "prompt": "Question: Compute 29 times 16, then subtract 37. Return only the final integer.\nPrevious answer:  29 x 16 = 496\n\n## 29 Times Table\n\n29 times table is a multiplication table that is\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+            "response": " 29 x 16 = 496\n\n## 29 Times Table\n\n29 times table is a multiplication table that is",
+            "correct": false
+          },
+          "verified_fact": {
+            "prompt": "Question: Compute 29 times 16, then subtract 37. Return only the final integer.\nVerified intermediate fact: 29 times 16 is 464.\nUse that fact. Return only the final answer.\nAnswer:",
+            "response": " 464\n\n### Example Question #1 : How To Find The Product Of Two Numbers\n\nFind the product of 12 and 1",
+            "correct": false
+          },
+          "compact_state": {
+            "prompt": "Question: Compute 29 times 16, then subtract 37. Return only the final integer.\nWrite the product as a one-line state, then subtract 37. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+            "response": " 29*16 = 496\n\n### Example Question #1 : How To Find The Product Of Two Numbers\n\nFind the product"
+          },
+          "state_reuse": {
+            "prompt": "Question: Compute 29 times 16, then subtract 37. Return only the final integer.\nThe previous compact state was:\n 29*16 = 496\n\n### Example Question #1 : How To Find The Product Of Two Numbers\n\nFind the product\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+            "response": "\n\nExplanation:\n\nThe product of two numbers is the result of multiplying the two numbers together.\n\nThe product of 16 and 2",
+            "correct": false
+          }
+        },
+        {
+          "id": "base_conversion",
+          "kind": "number",
+          "question": "What is the base-10 value of the base-6 number 425? Return only the integer.",
+          "answer": "161",
+          "initial": {
+            "prompt": "Question: What is the base-10 value of the base-6 number 425? Return only the integer.\nAnswer:",
+            "response": " 425 = 425/1000 = 0.425\n\n## What is the base-10 value",
+            "correct": false
+          },
+          "review": {
+            "prompt": "Question: What is the base-10 value of the base-6 number 425? Return only the integer.\nPrevious answer:  425 = 425/1000 = 0.425\n\n## What is the base-10 value\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+            "response": "  425 = 425/1000 = 0.425\n\n## What is the base-10 value",
+            "correct": false
+          },
+          "verified_fact": {
+            "prompt": "Question: What is the base-10 value of the base-6 number 425? Return only the integer.\nVerified intermediate fact: Use 4 times 6 squared, plus 2 times 6, plus 5.\nUse that fact. Return only the final answer.\nAnswer:",
+            "response": " 425 = 62 + 22 + 52\n\n### Example Question #1 : How To Find The Base-10",
+            "correct": false
+          },
+          "compact_state": {
+            "prompt": "Question: What is the base-10 value of the base-6 number 425? Return only the integer.\nWrite the three place-value terms as one compact state, then sum them. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+            "response": " 425 = 400 + 20 + 5\n\n### What is the base-10 value of the base-6"
+          },
+          "state_reuse": {
+            "prompt": "Question: What is the base-10 value of the base-6 number 425? Return only the integer.\nThe previous compact state was:\n 425 = 400 + 20 + 5\n\n### What is the base-10 value of the base-6\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+            "response": " 6 = 60\n\n### What is the base-10 value of the base-6\n\nUse that state to solve the original question",
+            "correct": false
+          }
+        },
+        {
+          "id": "state_transition",
+          "kind": "number",
+          "question": "Start with n = 14. Add 9, multiply the result by 3, then subtract 20. What is n? Return only the integer.",
+          "answer": "49",
+          "initial": {
+            "prompt": "Question: Start with n = 14. Add 9, multiply the result by 3, then subtract 20. What is n? Return only the integer.\nAnswer:",
+            "response": " 14 + 9 = 23\n23 * 3 = 69\n69 - 20 = 49\n",
+            "correct": true
+          },
+          "review": {
+            "prompt": "Question: Start with n = 14. Add 9, multiply the result by 3, then subtract 20. What is n? Return only the integer.\nPrevious answer:  14 + 9 = 23\n23 * 3 = 69\n69 - 20 = 49\n\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+            "response": " 14 + 9 = 23\n23 * 3 = 69\n69 - 20 = 49\n",
+            "correct": true
+          },
+          "verified_fact": {
+            "prompt": "Question: Start with n = 14. Add 9, multiply the result by 3, then subtract 20. What is n? Return only the integer.\nVerified intermediate fact: After the addition, n is 23.\nUse that fact. Return only the final answer.\nAnswer:",
+            "response": " n = 23\n\n### Example Question #1 : How To Find The Sum Of The Integers\n\nFind the sum of the integers from 1",
+            "correct": false
+          },
+          "compact_state": {
+            "prompt": "Question: Start with n = 14. Add 9, multiply the result by 3, then subtract 20. What is n? Return only the integer.\nWrite n after each operation as a compact state, then give the final value. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+            "response": " 14 + 9 * 3 + 20 = 14 + 27 + 20 = 51\n\n###"
+          },
+          "state_reuse": {
+            "prompt": "Question: Start with n = 14. Add 9, multiply the result by 3, then subtract 20. What is n? Return only the integer.\nThe previous compact state was:\n 14 + 9 * 3 + 20 = 14 + 27 + 20 = 51\n\n###\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+            "response": " 51\n\n###\n\nUse that state to solve the original question. Return only the final answer.\nAnswer: 51\n\n###",
+            "correct": false
+          }
+        },
+        {
+          "id": "sort_deduplicate",
+          "kind": "list",
+          "question": "Sort [13, 3, 13, 8, 1, 8] ascending and remove duplicates. Return only the list.",
+          "answer": "[1,3,8,13]",
+          "initial": {
+            "prompt": "Question: Sort [13, 3, 13, 8, 1, 8] ascending and remove duplicates. Return only the list.\nAnswer:",
+            "response": " [13, 3, 13, 8, 1, 8]\n\nExplanation:\n\n\u2022 Sort the given list in",
+            "correct": false
+          },
+          "review": {
+            "prompt": "Question: Sort [13, 3, 13, 8, 1, 8] ascending and remove duplicates. Return only the list.\nPrevious answer:  [13, 3, 13, 8, 1, 8]\n\nExplanation:\n\n\u2022 Sort the given list in\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+            "response": " [13, 3, 13, 8, 1, 8]\n\nExplanation:\n\n\u2022 Sort the given list in",
+            "correct": false
+          },
+          "verified_fact": {
+            "prompt": "Question: Sort [13, 3, 13, 8, 1, 8] ascending and remove duplicates. Return only the list.\nVerified intermediate fact: The distinct values are 13, 3, 8, and 1.\nUse that fact. Return only the final answer.\nAnswer:",
+            "response": " 13, 3, 8, 1, 8\n\n### Solution:\n\n\u2022 Sorting:\n\u2022 13,",
+            "correct": false
+          },
+          "compact_state": {
+            "prompt": "Question: Sort [13, 3, 13, 8, 1, 8] ascending and remove duplicates. Return only the list.\nWrite the distinct values as a compact state, then sort them. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+            "response": " [13, 3, 13, 8, 1, 8]\n\n### Solution:\n\n```#include <i"
+          },
+          "state_reuse": {
+            "prompt": "Question: Sort [13, 3, 13, 8, 1, 8] ascending and remove duplicates. Return only the list.\nThe previous compact state was:\n [13, 3, 13, 8, 1, 8]\n\n### Solution:\n\n```#include <i\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+            "response": " [13, 3, 13, 8, 1, 8]\n\n#include <iostream>\nusing namespace",
+            "correct": false
+          }
+        },
+        {
+          "id": "string_insert",
+          "kind": "string",
+          "question": "Insert 'PQ' after the first 3 characters of 'lantern'. Return only the resulting string.",
+          "answer": "lanPQtern",
+          "initial": {
+            "prompt": "Question: Insert 'PQ' after the first 3 characters of 'lantern'. Return only the resulting string.\nAnswer:",
+            "response": "\n\n```public String InsertLantern(String lantern) {\nString l = lantern;\nString r = \"\";\nwhile",
+            "correct": false
+          },
+          "review": {
+            "prompt": "Question: Insert 'PQ' after the first 3 characters of 'lantern'. Return only the resulting string.\nPrevious answer: \n\n```public String InsertLantern(String lantern) {\nString l = lantern;\nString r = \"\";\nwhile\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+            "response": "\n```\n\nNext answer:\n\n```public String InsertLantern(String lantern) {\nString l = lantern;\nString r",
+            "correct": false
+          },
+          "verified_fact": {
+            "prompt": "Question: Insert 'PQ' after the first 3 characters of 'lantern'. Return only the resulting string.\nVerified intermediate fact: The prefix is 'lan' and the remaining suffix is 'tern'.\nUse that fact. Return only the final answer.\nAnswer:",
+            "response": " The answer is 'lantern'.\n",
+            "correct": false
+          },
+          "compact_state": {
+            "prompt": "Question: Insert 'PQ' after the first 3 characters of 'lantern'. Return only the resulting string.\nWrite prefix, insert, and suffix as a compact state, then concatenate them. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+            "response": "\n\n``````#include <iostream>\n#include <string>\n#include <vector>\nusing namespace std;\n\nint main()"
+          },
+          "state_reuse": {
+            "prompt": "Question: Insert 'PQ' after the first 3 characters of 'lantern'. Return only the resulting string.\nThe previous compact state was:\n\n\n``````#include <iostream>\n#include <string>\n#include <vector>\nusing namespace std;\n\nint main()\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+            "response": " 1\n\n``````\n\nThe final answer is:\n",
+            "correct": false
+          }
+        },
+        {
+          "id": "logic",
+          "kind": "yesno",
+          "question": "Every zol is a mar. No mar is a tiv. Can any zol be a tiv? Answer yes or no only.",
+          "answer": "no",
+          "initial": {
+            "prompt": "Question: Every zol is a mar. No mar is a tiv. Can any zol be a tiv? Answer yes or no only.\nAnswer:",
+            "response": " No, because if a zol is a mar, then it is a tiv.\n\nQuestion:",
+            "correct": true
+          },
+          "review": {
+            "prompt": "Question: Every zol is a mar. No mar is a tiv. Can any zol be a tiv? Answer yes or no only.\nPrevious answer:  No, because if a zol is a mar, then it is a tiv.\n\nQuestion:\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+            "response": "\n\nQuestion:",
+            "correct": false
+          },
+          "verified_fact": {
+            "prompt": "Question: Every zol is a mar. No mar is a tiv. Can any zol be a tiv? Answer yes or no only.\nVerified intermediate fact: A zol must be a mar, while no mar can be a tiv.\nUse that fact. Return only the final answer.\nAnswer:",
+            "response": " No, a zol cannot be a mar.\n\n### Example Question #1 : How To Find The Number Of Zeros In A Polynomial\n\nFind",
+            "correct": true
+          },
+          "compact_state": {
+            "prompt": "Question: Every zol is a mar. No mar is a tiv. Can any zol be a tiv? Answer yes or no only.\nWrite the two set constraints as a compact state, then answer the question. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+            "response": "\n\nState:\n\nState:\n\nState:\n\nState:\n\nState:\n\nState:\n\nState:\n\nState:"
+          },
+          "state_reuse": {
+            "prompt": "Question: Every zol is a mar. No mar is a tiv. Can any zol be a tiv? Answer yes or no only.\nThe previous compact state was:\n\n\nState:\n\nState:\n\nState:\n\nState:\n\nState:\n\nState:\n\nState:\n\nState:\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+            "response": "\n\n\nState:\n\nState:\n\nState:\n\nState:\n\nState:\n\nState:\n\nState:\n\nState",
+            "correct": false
+          }
+        },
+        {
+          "id": "python_predicate",
+          "kind": "code",
+          "question": "Write only Python code for is_multiple_of_three(n), returning True exactly when n is divisible by 3.",
+          "answer": "is_multiple_of_three",
+          "initial": {
+            "prompt": "Question: Write only Python code for is_multiple_of_three(n), returning True exactly when n is divisible by 3.\nAnswer:",
+            "response": "\n\n```def is_multiple_of_three(n):\nif n % 3 == 0:\nreturn True\nreturn False\n\n",
+            "correct": false
+          },
+          "review": {
+            "prompt": "Question: Write only Python code for is_multiple_of_three(n), returning True exactly when n is divisible by 3.\nPrevious answer: \n\n```def is_multiple_of_three(n):\nif n % 3 == 0:\nreturn True\nreturn False\n\n\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+            "response": "\n\n```def is_multiple_of_three(n):\nif n % 3 == 0:\nreturn True\nreturn False\n\n",
+            "correct": false
+          },
+          "verified_fact": {
+            "prompt": "Question: Write only Python code for is_multiple_of_three(n), returning True exactly when n is divisible by 3.\nVerified intermediate fact: The required predicate is n modulo 3 equals 0.\nUse that fact. Return only the final answer.\nAnswer:",
+            "response": " True\n\n### Example 2:\n\nWrite only Python code for is_multiple_of_three(n), returning True exactly when n is divisible",
+            "correct": false
+          },
+          "compact_state": {
+            "prompt": "Question: Write only Python code for is_multiple_of_three(n), returning True exactly when n is divisible by 3.\nState the predicate compactly, then write only the Python function. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+            "response": "\ndef is_multiple_of_three(n):\nreturn n % 3 == 0\n\ndef state(n):\nreturn n %"
+          },
+          "state_reuse": {
+            "prompt": "Question: Write only Python code for is_multiple_of_three(n), returning True exactly when n is divisible by 3.\nThe previous compact state was:\n\ndef is_multiple_of_three(n):\nreturn n % 3 == 0\n\ndef state(n):\nreturn n %\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+            "response": "\n\ndef is_multiple_of_three(n):\nreturn n % 3 == 0\n\ndef state(n):\nreturn n",
+            "correct": false
+          }
+        }
+      ]
+    }
+  ]
+}
