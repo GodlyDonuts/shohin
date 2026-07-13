@@ -16,12 +16,15 @@ RAW_BOARD=${RAW_BOARD:?set RAW_BOARD}
 CANDIDATE_BOARD=${CANDIDATE_BOARD:?set CANDIDATE_BOARD}
 RAW_INTERVIEW=${RAW_INTERVIEW:?set RAW_INTERVIEW}
 CANDIDATE_INTERVIEW=${CANDIDATE_INTERVIEW:?set CANDIDATE_INTERVIEW}
+RAW_TRACE=${RAW_TRACE:?set RAW_TRACE}
+CANDIDATE_TRACE=${CANDIDATE_TRACE:?set CANDIDATE_TRACE}
 OUT=${OUT:?set OUT}
 
-for path in "$RAW_BOARD" "$CANDIDATE_BOARD" "$RAW_INTERVIEW" "$CANDIDATE_INTERVIEW"; do
+for path in "$RAW_BOARD" "$CANDIDATE_BOARD" "$RAW_INTERVIEW" "$CANDIDATE_INTERVIEW" "$RAW_TRACE" "$CANDIDATE_TRACE"; do
   [ -s "$path" ] || { echo "[v8-decision] required evaluator artifact missing: $path" >&2; exit 2; }
 done
 [ ! -e "$OUT" ] || { echo "[v8-decision] refusing existing output: $OUT" >&2; exit 3; }
 cd "$BASE/train"
 "$PY" evaluate_v8_promotion.py --raw-board "$RAW_BOARD" --candidate-board "$CANDIDATE_BOARD" \
-  --raw-interview "$RAW_INTERVIEW" --candidate-interview "$CANDIDATE_INTERVIEW" --out "$OUT"
+  --raw-interview "$RAW_INTERVIEW" --candidate-interview "$CANDIDATE_INTERVIEW" \
+  --raw-trace "$RAW_TRACE" --candidate-trace "$CANDIDATE_TRACE" --out "$OUT"

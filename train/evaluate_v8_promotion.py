@@ -49,12 +49,25 @@ def interview_summary(path):
     }
 
 
+def trace_summary(path):
+    payload = json.loads(Path(path).read_text())
+    summary = payload.get("summary", {})
+    return {
+        "cases": int(payload.get("cases", 0)),
+        "trace_correct": int(summary.get("trace_correct", 0)),
+        "answer_correct": int(summary.get("answer_correct", 0)),
+        "correct_trace_and_final": int(summary.get("correct_trace_and_final", 0)),
+    }
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--raw-board", required=True)
     parser.add_argument("--candidate-board", required=True)
     parser.add_argument("--raw-interview", required=True)
     parser.add_argument("--candidate-interview", required=True)
+    parser.add_argument("--raw-trace", required=True)
+    parser.add_argument("--candidate-trace", required=True)
     parser.add_argument("--out", required=True)
     args = parser.parse_args()
 
@@ -64,6 +77,8 @@ def main():
                if (task, metric) not in raw or (task, metric) not in candidate]
     raw_interview = interview_summary(args.raw_interview)
     candidate_interview = interview_summary(args.candidate_interview)
+    raw_trace = trace_summary(args.raw_trace)
+    candidate_trace = trace_summary(args.candidate_trace)
     reasons = []
     if raw_interview["cases"] != 8 or candidate_interview["cases"] != 8:
         reasons.append("missing_or_changed_direct_interview")
@@ -89,6 +104,13 @@ def main():
         reasons.append("no_direct_initial_gain")
     if candidate_interview["verified_fact"] < raw_interview["verified_fact"]:
         reasons.append("verified_fact_regression")
+    if raw_trace["cases"] != 12 or candidate_trace["cases"] != 12:
+        reasons.append("missing_or_changed_visible_trace_audit")
+    else:
+        if candidate_trace["trace_correct"] < raw_trace["trace_correct"]:
+            reasons.append("visible_trace_regression")
+        if candidate_trace["correct_trace_and_final"] <= raw_trace["correct_trace_and_final"]:
+            reasons.append("no_visible_trace_and_final_gain")
 
     result = {
         "audit": "v8_transfer_promotion_v1",
@@ -99,10 +121,12 @@ def main():
                 "no HumanEval or MBPP regression",
                 "eight-case direct interview with initial gain",
                 "no verified-fact regression",
+                "12-case held-out visible trace-and-final gain without trace regression",
             ],
             "explicitly_not_sufficient": [
                 "constructed generator holdout",
                 "format compliance",
+                "final-answer correctness without a verified intermediate trace",
                 "state marker emission alone",
             ],
         },
@@ -110,6 +134,8 @@ def main():
         "candidate_board": str(Path(args.candidate_board)),
         "raw_interview": raw_interview,
         "candidate_interview": candidate_interview,
+        "raw_trace": raw_trace,
+        "candidate_trace": candidate_trace,
         "public_improvements": improvements,
         "public_regressions": regressions,
         "verdict": "accept_followup" if not reasons else "reject",

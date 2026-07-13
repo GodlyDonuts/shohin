@@ -66,12 +66,25 @@ def memory(path):
     }
 
 
+def trace_summary(path):
+    payload = json.loads(Path(path).read_text())
+    summary = payload.get("summary", {})
+    return {
+        "cases": int(payload.get("cases", 0)),
+        "trace_correct": int(summary.get("trace_correct", 0)),
+        "answer_correct": int(summary.get("answer_correct", 0)),
+        "correct_trace_and_final": int(summary.get("correct_trace_and_final", 0)),
+    }
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--raw-board", required=True)
     parser.add_argument("--candidate-board", required=True)
     parser.add_argument("--raw-interview", required=True)
     parser.add_argument("--candidate-interview", required=True)
+    parser.add_argument("--raw-trace", required=True)
+    parser.add_argument("--candidate-trace", required=True)
     parser.add_argument("--memory-default", required=True)
     parser.add_argument("--memory-semantic", required=True)
     parser.add_argument("--semantic-reference", required=True)
@@ -80,6 +93,7 @@ def main():
 
     raw, candidate = board_metrics(args.raw_board), board_metrics(args.candidate_board)
     raw_interview, candidate_interview = interview(args.raw_interview), interview(args.candidate_interview)
+    raw_trace, candidate_trace = trace_summary(args.raw_trace), trace_summary(args.candidate_trace)
     default, semantic, reference = memory(args.memory_default), memory(args.memory_semantic), memory(args.semantic_reference)
     missing = [f"{task}:{metric}" for task, metric in REQUIRED if key_not_present(raw, candidate, task, metric)]
     reasons, improvements, regressions = [], [], []
@@ -103,6 +117,13 @@ def main():
         reasons.append("no_direct_initial_gain")
     if candidate_interview["verified_fact"] < raw_interview["verified_fact"]:
         reasons.append("verified_fact_regression")
+    if raw_trace["cases"] != 12 or candidate_trace["cases"] != 12:
+        reasons.append("missing_or_changed_visible_trace_audit")
+    else:
+        if candidate_trace["trace_correct"] < raw_trace["trace_correct"]:
+            reasons.append("visible_trace_regression")
+        if candidate_trace["correct_trace_and_final"] <= raw_trace["correct_trace_and_final"]:
+            reasons.append("no_visible_trace_and_final_gain")
     if default["prompt_style"] != "default" or semantic["prompt_style"] != "semantic":
         reasons.append("wrong_memory_prompt_style")
     if default["self_repair"] or semantic["self_repair"]:
@@ -122,17 +143,21 @@ def main():
                 "no HumanEval or MBPP regression",
                 "eight-case direct interview with initial gain",
                 "no verified-fact regression",
+                "12-case held-out visible trace-and-final gain without trace regression",
                 "400-case default and semantic memory reports without self-repair",
                 "semantic memory at least matches r4 scratch and has nonzero length-8 transfer",
             ],
             "explicitly_not_sufficient": [
                 "default-format working-memory score",
                 "state marker emission alone",
+                "final-answer correctness without a verified intermediate trace",
                 "self-repair that a controller selected or corrected",
             ],
         },
         "raw_interview": raw_interview,
         "candidate_interview": candidate_interview,
+        "raw_trace": raw_trace,
+        "candidate_trace": candidate_trace,
         "memory_default": default,
         "memory_semantic": semantic,
         "memory_semantic_reference": reference,

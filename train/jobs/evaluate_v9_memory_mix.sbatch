@@ -15,17 +15,20 @@ RAW_BOARD=${RAW_BOARD:?set RAW_BOARD}
 CANDIDATE_BOARD=${CANDIDATE_BOARD:?set CANDIDATE_BOARD}
 RAW_INTERVIEW=${RAW_INTERVIEW:?set RAW_INTERVIEW}
 CANDIDATE_INTERVIEW=${CANDIDATE_INTERVIEW:?set CANDIDATE_INTERVIEW}
+RAW_TRACE=${RAW_TRACE:?set RAW_TRACE}
+CANDIDATE_TRACE=${CANDIDATE_TRACE:?set CANDIDATE_TRACE}
 MEMORY_DEFAULT=${MEMORY_DEFAULT:?set MEMORY_DEFAULT}
 MEMORY_SEMANTIC=${MEMORY_SEMANTIC:?set MEMORY_SEMANTIC}
 SEMANTIC_REFERENCE=${SEMANTIC_REFERENCE:?set SEMANTIC_REFERENCE}
 OUT=${OUT:?set OUT}
 
-for path in "$RAW_BOARD" "$CANDIDATE_BOARD" "$RAW_INTERVIEW" "$CANDIDATE_INTERVIEW" "$MEMORY_DEFAULT" "$MEMORY_SEMANTIC" "$SEMANTIC_REFERENCE"; do
+for path in "$RAW_BOARD" "$CANDIDATE_BOARD" "$RAW_INTERVIEW" "$CANDIDATE_INTERVIEW" "$RAW_TRACE" "$CANDIDATE_TRACE" "$MEMORY_DEFAULT" "$MEMORY_SEMANTIC" "$SEMANTIC_REFERENCE"; do
   [ -s "$path" ] || { echo "[v9-decision] required evaluator artifact missing: $path" >&2; exit 2; }
 done
 [ ! -e "$OUT" ] || { echo "[v9-decision] refusing existing output: $OUT" >&2; exit 3; }
 cd "$BASE/train"
 "$PY" evaluate_v9_memory_mix.py --raw-board "$RAW_BOARD" --candidate-board "$CANDIDATE_BOARD" \
   --raw-interview "$RAW_INTERVIEW" --candidate-interview "$CANDIDATE_INTERVIEW" \
+  --raw-trace "$RAW_TRACE" --candidate-trace "$CANDIDATE_TRACE" \
   --memory-default "$MEMORY_DEFAULT" --memory-semantic "$MEMORY_SEMANTIC" \
   --semantic-reference "$SEMANTIC_REFERENCE" --out "$OUT"
