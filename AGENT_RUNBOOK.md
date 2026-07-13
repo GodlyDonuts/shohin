@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 18:25 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, so it is a narrow recurrent executor with path-dependent failures; the core transcript probe now confirms those failures are late recurrent-transport errors; a matched 80-direction raw residual-patching baseline is negative and the post-DRS comparison is safely queued; the held-out wording to direct-interaction to NLL chain remains serialized on one H100; both full v3 transition-basis and static-tape/recurrent-register corpora are hash-admitted but untrained, with STRR now the higher-priority representation control; token-native delta-ledger data is independently admitted as a separate three-token transport control with no capability score; counterfactual-workspace induction, DCRD, and CBC remain conditional; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 18:45 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, and the independent held-out wording result falls further to 125/500 with 0/100 width-8, so it is a template-conditioned recurrent executor rather than a transferable workspace; raw residual patching is negative and the serialized DRS direct-interaction, NLL, and post-DRS patch probes remain the final diagnostic chain before selecting STRR or stopping the line; both full v3 transition-basis and static-tape/recurrent-register corpora are hash-admitted but untrained; token-native delta-ledger data is independently admitted as a separate three-token transport control with no capability score; counterfactual-workspace induction, DCRD, and CBC remain conditional; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2652,3 +2652,17 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   and average 79.246 prompt-plus-target tokens, while the 27,103 source-dropped final readouts average
   166.040 tokens including the repeated opaque audit delimiter. It has no SFT, H100 allocation, or model
   result; wait for the DRS evidence chain before deciding whether it earns a matched comparison.
+
+- **2026-07-13 18:45** — **DRS held-out wording is a decisive negative generalization result.** One-H100
+  evaluation `687563` completed from the unchanged DRS checkpoint on 500 independently held-out wording
+  episodes and reached only **125/500 final answers (25.0%)**, down from **275/500 (55.0%)** under the
+  canonical core prompt. It remains locally/Newton mirrored at
+  `artifacts/evals/digitwise_recurrent_v2_sft200k_r3_heldout_p100.json`, md5
+  `2d33e3988a2bb42ef3bc10a7f63d4dd1`. First transitions are still often locally plausible (423/500),
+  but closed-loop final answers collapse by regime: fit-w4 67/100, fit-w6 28/100, value-OOD-w4 22/100,
+  value-OOD-w6 8/100, and width-OOD-w8 0/100. Paired counterfactual answers similarly fall to
+  66/25/23/4/0. This is neither a transferable state representation nor workspace evidence: the DRS
+  protocol is a narrow, wording-conditioned executor with increasingly fragile recurrent transport.
+  `687564` direct raw-versus-DRS interaction is running; its frozen NLL (`687565`) and post-DRS residual
+  patch (`687578`) descendants remain serially held. Do not promote DRS, CWI, STRR, or TNDL before those
+  diagnostic artifacts are complete and interpreted.
