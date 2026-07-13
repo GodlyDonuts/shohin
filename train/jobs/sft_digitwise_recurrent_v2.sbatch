@@ -55,6 +55,25 @@ if set(audit['regimes']) != expected or audit['counterfactual_pairs'] != audit['
 print('[drs-sft] hash-bound protocol audit passed')
 PY
 cd "$BASE/train"
+"$PY" - "$DATA" "$BASE/artifacts/shohin-tok-32k.json" <<'PY'
+import json
+import sys
+
+from sft import encode_supervised_example
+from tokenizers import Tokenizer
+
+row = json.loads(open(sys.argv[1]).readline())
+prompt = row.get('completion_prompt', '')
+if not prompt.endswith('Answer:') or row.get('question') != prompt:
+    raise SystemExit('[drs-sft] data does not expose an exact completion prompt')
+tokenizer = Tokenizer.from_file(sys.argv[2])
+prompt_ids, _, _ = encode_supervised_example(
+    tokenizer, prompt, row['response'], tokenizer.token_to_id('<|endoftext|>')
+)
+if prompt_ids != tokenizer.encode(prompt).ids:
+    raise SystemExit('[drs-sft] inference/SFT prompt boundary mismatch')
+print('[drs-sft] exact completion-prompt boundary passed')
+PY
 "$PY" - <<'PY'
 import torch
 if not torch.cuda.is_available():
@@ -64,6 +83,7 @@ PY
 
 echo "[drs-sft] init=$INIT data=$DATA out=$OUT epochs=$EPOCHS"
 "$PY" sft.py --init "$INIT" --data "$DATA" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
-  --q-fields question --r-fields response --epochs "$EPOCHS" --batch-size "$BS" \
+  --q-fields question --r-fields response --prompt-override-field completion_prompt \
+  --epochs "$EPOCHS" --batch-size "$BS" \
   --lr-muon "$LRMUON" --lr-adam "$LRADAM" --compile --out "$OUT"
 echo "[drs-sft] done"

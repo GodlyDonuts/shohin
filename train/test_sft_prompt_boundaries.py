@@ -38,6 +38,11 @@ def main():
         "# Task: Return an equilibrium index.\ndef equilibrium_index(arr):\r\n",
         "total_sum = sum(arr)\r\n  left_sum = 0",
     )
+    # State-protocol records already carry their exact inference prompt; SFT
+    # must not wrap them in a second Question/Answer frame.
+    check_case(tokenizer, "Read a local state.\nAnswer:", "digit=4")
+    job = (ROOT / "train" / "jobs" / "sft_digitwise_recurrent_v2.sbatch").read_text()
+    assert "--prompt-override-field completion_prompt" in job
     print("sft prompt-boundary tests: passed")
 
 

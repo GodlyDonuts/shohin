@@ -455,3 +455,31 @@ same generator/controller tests passed. It remains deliberately outside the
 GPU path: full artifact hashes, transition recomputation, all held-out prompt
 overlap checks, and the DRS diagnosis must exist before any isolated ADL SFT
 can be considered.
+
+The full build passed admission. `738186` produced 384,000 train rows and
+1,000 paired held-out episodes. Independent audit `738187` recomputed all
+rows/episodes and found zero invalid rows, duplicate normalized prompts, exact
+held-out prompt hits, or 13-gram hits over 42,000 held-out controller prompts.
+The train, held-out, and audit SHA-256s are respectively
+`ef317dd5aed85fa83add40a637c52232f4b4daf626e609f88926cb358113cbec`,
+`3117ec5072134a9bade424499be9ee3a3e504e4f26deec445c3b5b1baeccaca0`, and
+`5d0e2acd2cfc042de7c76266d048987c347d1e5d22b05e79232fce8ea5c9258f`.
+The data is ready on Newton for an isolated future experiment, but remains
+unsubmitted while DRS measures whether the bottleneck is local execution or
+the lexical interface.
+
+### Decoder Recognition Check
+
+Before interpreting a compact-state curriculum as merely an output adapter, the
+raw 200k model was also asked to *rank* fixed candidate answers without any
+free generation. Correct candidates compete against matched wrong candidates
+under the same plain question prefix. It selects the correct candidate first
+on just 1/7 fresh cases (mean rank 2.571), including preferring `yes` to the
+correct `no` on a fresh syllogism. The artifact is
+`forced_choice_raw200k_20260713_mps.json` (md5
+`7b6bcdd58f6420703fcb0b6bbbfa3afd`). This does not say the model cannot know
+anything under another prompt contract; it does say a broadly reliable answer
+representation is not waiting behind a simple emission or `<think>` adapter.
+That strengthens the local-execution curriculum hypothesis: first teach a
+small set of verifier-backed transitions, then test retention and compaction
+before asking for language-level extrapolation.

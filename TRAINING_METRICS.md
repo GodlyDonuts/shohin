@@ -168,6 +168,44 @@ counts, artifact SHA-256s, recomputed transition validity, duplicate prompts,
 exact overlaps, and 13-gram overlap. The CPU jobs neither read nor write the
 flagship output and do not authorize a GPU SFT.
 
+### ADL Full Admission: 2026-07-13 13:17 EDT
+
+Stokes `738186` completed **384,000** immutable train rows and **1,000**
+paired held-out episodes, evenly distributed across five 200-episode regimes.
+Data/held-out SHA-256 are
+`ef317dd5aed85fa83add40a637c52232f4b4daf626e609f88926cb358113cbec` and
+`3117ec5072134a9bade424499be9ee3a3e504e4f26deec445c3b5b1baeccaca0`.
+Independent audit `738187` passed: 0 invalid rows/episodes, duplicate prompts,
+exact prompt hits, or 13-gram overlaps across **42,000** held-out controller
+prompts. Its report SHA-256 is
+`5d0e2acd2cfc042de7c76266d048987c347d1e5d22b05e79232fce8ea5c9258f`.
+This admits the data/protocol only; GPU training remains intentionally gated on
+the active DRS core-versus-heldout diagnosis.
+
+### DRS Exact-Prompt Repair: 2026-07-13 13:17 EDT
+
+Pending DRS SFT `687363` and held evaluations `687364/687365` were canceled
+before allocation or artifacts because their Slurm-snapshotted script would
+have added a second `Question/Answer` wrapper around every already-complete
+protocol prompt. Replacement `687375 -> {687376,687377}` uses the same raw
+200k checkpoint, data, and dependencies, but the SFT job now validates the
+stored prompt boundary and uses `--prompt-override-field completion_prompt`.
+This prevents an otherwise confounded execution experiment; it is not a model
+result.
+
+### Direct Candidate-Likelihood Diagnosis: 2026-07-13 13:03 EDT
+
+The non-benchmark forced-choice probe scores fixed candidate completions after
+the exact same plain `Question/Answer` prompt, separating answer recognition
+from free decoding. Raw `ckpt_0200000.pt` ranks the correct candidate first on
+only **1/7** fresh cases, with a mean correct rank of **2.571**: arithmetic
+3/4, base conversion 4/4, state update 3/4, linear equation 2/4, sort/dedup
+1/4, string insertion 3/4, logic 2/2. This rules out the specific hypothesis
+that the weak greedy transcript is only an emission-format failure. It is not
+a claim about every possible prompt contract or general reasoning. Artifact:
+`artifacts/eval_history/forced_choice_raw200k_20260713_mps.json`, md5
+`7b6bcdd58f6420703fcb0b6bbbfa3afd`.
+
 ## Checkpoint and Disaster-Recovery Inventory
 
 | Milestone | Numbered checkpoint at milestone | Newton durable copy | Local full checkpoint | MD5 | State |
