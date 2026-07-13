@@ -477,6 +477,15 @@ wrapping it in another `Question/Answer` frame. This readiness work changes no
 GPU queue and lets ADL become a clean next comparison if DRS local execution
 does not transfer.
 
+Raw ADL does not already know this interface. On sixteen fixed first-step
+probes (eight tapes under core and held-out wording), it ranks the correct one
+of twenty possible digit/carry records first **0** times, with mean correct
+rank **10.688**; its top candidate is always the generic `d=0;c=0`. The
+diagnostic is intentionally not an external decoder: it only measures model
+likelihood of fixed grammar-valid completions. This confirms that ADL should be
+judged as a supervised learnability experiment, not claimed as a hidden
+pretrained reasoning path.
+
 ### Decoder Recognition Check
 
 Before interpreting a compact-state curriculum as merely an output adapter, the

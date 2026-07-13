@@ -168,7 +168,7 @@ counts, artifact SHA-256s, recomputed transition validity, duplicate prompts,
 exact overlaps, and 13-gram overlap. The CPU jobs neither read nor write the
 flagship output and do not authorize a GPU SFT.
 
-### ADL Full Admission: 2026-07-13 13:17 EDT
+### ADL Full Admission: 2026-07-13 13:04 EDT
 
 Stokes `738186` completed **384,000** immutable train rows and **1,000**
 paired held-out episodes, evenly distributed across five 200-episode regimes.
@@ -182,7 +182,7 @@ prompts. Its report SHA-256 is
 This admits the data/protocol only; GPU training remains intentionally gated on
 the active DRS core-versus-heldout diagnosis.
 
-### DRS Exact-Prompt Repair: 2026-07-13 13:17 EDT
+### DRS Exact-Prompt Repair: 2026-07-13 13:04 EDT
 
 Pending DRS SFT `687363` and held evaluations `687364/687365` were canceled
 before allocation or artifacts because their Slurm-snapshotted script would
@@ -192,6 +192,22 @@ protocol prompt. Replacement `687375 -> {687376,687377}` uses the same raw
 stored prompt boundary and uses `--prompt-override-field completion_prompt`.
 This prevents an otherwise confounded execution experiment; it is not a model
 result.
+
+### Raw DRS and ADL Primitive Diagnostics: 2026-07-13 13:05 EDT
+
+Raw 200k DRS held-out `687348` completed all 500 episodes with **0** first
+transitions, exact state loops, final answers, paired counterfactuals, and
+paired interventions in every regime. It emitted 434 unique first responses
+with a mode count of 67, mostly malformed Markdown or copied prompt fragments;
+this is a true untrained baseline rather than a constant-answer artifact.
+
+To test whether ADL merely exposes an already-known local primitive, a separate
+non-generative likelihood probe ranked all 20 grammar-valid first digit/carry
+records for eight fixed tapes under both core and held-out wording. The correct
+record is top-1 on **0/16**, with mean rank **10.688/20**; `d=0;c=0` wins every
+prompt. Artifact md5: `9ae4c88aca13079fe69036a47b88e597`. The result rejects
+pre-existing raw microstep competence, while keeping ADL viable as an isolated
+supervised learnability and compaction test.
 
 ### Direct Candidate-Likelihood Diagnosis: 2026-07-13 13:03 EDT
 
