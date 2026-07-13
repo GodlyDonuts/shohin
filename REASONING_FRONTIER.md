@@ -324,9 +324,11 @@ A/B codebooks, channel-specific serialization grammars, strict code-specific
 parsers, source-free prompt builders, and a solver-only inverse transition for
 data construction and scoring. Train and
 held-out codebooks use disjoint alias vocabularies and structurally distinct
-instruction interfaces; the protocol rejects a prompt style that does not
-match the codebook vocabulary. This makes literal train/held-out n-gram overlap
-an auditable data failure rather than a hidden template confound.
+instruction interfaces. The generator and independent auditor bind prompt
+style to codebook vocabulary for the training corpus, while the protocol still
+permits crossed style/codebook combinations for future attribution controls.
+This makes literal train/held-out n-gram overlap an auditable data failure
+rather than a hidden template confound.
 
 `pipeline/generate_dual_code_reversible_v1.py` and its independent companion
 `pipeline/audit_dual_code_reversible_v1.py` now construct and semantically

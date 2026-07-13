@@ -2473,7 +2473,8 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   targets; `pipeline/audit_dual_code_reversible_v1.py` independently recomputes every target plus every
   held-out state trajectory and counterfactual. The first implementation exposed **768 literal 13-gram
   train/held-out template overlaps on the smoke test**. That data was rejected, not normalized away. The
-  fixed protocol binds a held-out-only alias vocabulary to a structurally different held-out prompt style.
+  fixed generator/auditor bind a held-out-only alias vocabulary to a structurally different held-out prompt style;
+  the protocol itself permits crossed combinations only for later attribution controls.
   The end-to-end smoke and a larger **1,000-episode / 21,000-row** preflight with **200** held-out paired
   counterfactual episodes now report 0 malformed rows/episodes, duplicate prompts, exact held-out hits, or
   literal 13-gram overlaps. This is only CPU infrastructure: no durable DCRD corpus, controller, SFT, or

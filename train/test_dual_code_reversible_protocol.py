@@ -54,10 +54,6 @@ try:
 except ValueError:
     pass
 
-try:
-    codebook_prompt(make_codebook(3, "A"), "heldout")
-    raise AssertionError("mismatched codebook and prompt style unexpectedly accepted")
-except ValueError:
-    pass
+assert "Cipher" in codebook_prompt(make_codebook(3, "A"), "heldout")
 
 print("dual-code reversible protocol checks: passed")

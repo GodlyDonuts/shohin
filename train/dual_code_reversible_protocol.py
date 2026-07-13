@@ -114,11 +114,9 @@ def make_codebook(seed: int | str, channel: str, vocabulary: str = "train") -> C
     )
 
 
-def _require_prompt_style(book: Codebook, style: str) -> str:
+def _require_prompt_style(style: str) -> str:
     if style not in {"train", "heldout"}:
         raise ValueError("prompt style must be train or heldout")
-    if style != book.vocabulary:
-        raise ValueError("prompt style must match the codebook vocabulary")
     return style
 
 
@@ -129,7 +127,7 @@ def codebook_prompt(book: Codebook, style: str = "train") -> str:
     styles deliberately do not share an instruction template: literal prompt
     n-gram overlap is otherwise a confound when measuring codebook-OOD use.
     """
-    _require_prompt_style(book, style)
+    _require_prompt_style(style)
     fields = ", ".join("{}={}".format(field, book.field_to_alias[field]) for field in FIELDS)
     operations = ", ".join("{}={}".format(op, book.operation_to_alias[op]) for op in OPERATIONS)
     digits = ", ".join("{}={}".format(index, book.digit_to_alias[str(index)]) for index in range(10))
@@ -269,7 +267,7 @@ def invert_microstep(next_state: Mapping[str, object]):
 
 
 def forward_prompt(book: Codebook, state_line: str, style: str = "train") -> str:
-    _require_prompt_style(book, style)
+    _require_prompt_style(style)
     if style == "train":
         return (
             "Advance one local decimal machine transition in DCR {}. {}\n"
@@ -282,8 +280,7 @@ def forward_prompt(book: Codebook, state_line: str, style: str = "train") -> str
 
 
 def transcode_prompt(source: Codebook, target: Codebook, state_line: str, style: str = "train") -> str:
-    _require_prompt_style(source, style)
-    _require_prompt_style(target, style)
+    _require_prompt_style(style)
     if style == "train":
         return (
             "Rewrite the identical machine state from DCR {} to DCR {}. {} {}\n"
@@ -296,7 +293,7 @@ def transcode_prompt(source: Codebook, target: Codebook, state_line: str, style:
 
 
 def reverse_prompt(book: Codebook, state_line: str, style: str = "train") -> str:
-    _require_prompt_style(book, style)
+    _require_prompt_style(style)
     if style == "train":
         return (
             "Recover exactly the immediately preceding DCR {} machine state. {}\n"
@@ -309,7 +306,7 @@ def reverse_prompt(book: Codebook, state_line: str, style: str = "train") -> str
 
 
 def readout_prompt(book: Codebook, state_line: str, style: str = "train") -> str:
-    _require_prompt_style(book, style)
+    _require_prompt_style(style)
     if style == "train":
         return (
             "Read the completed decimal answer from this terminal DCR {} state. {}\n"

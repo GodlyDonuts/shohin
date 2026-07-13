@@ -36,6 +36,17 @@ with tempfile.TemporaryDirectory() as directory:
     ], check=True, capture_output=True, text=True)
     assert json.loads(corrupt_train_report.read_text())["invalid_train_rows"] == 1
 
+    style_rows = [json.loads(line) for line in train.read_text().splitlines()]
+    style_rows[0]["prompt_style"] = "heldout"
+    corrupt_style = root / "corrupt-style.jsonl"
+    corrupt_style.write_text("".join(json.dumps(row, sort_keys=True) + "\n" for row in style_rows))
+    corrupt_style_report = root / "corrupt-style-audit.json"
+    subprocess.run([
+        sys.executable, str(ROOT / "pipeline" / "audit_dual_code_reversible_v1.py"),
+        "--train", str(corrupt_style), "--heldout", str(heldout), "--report", str(corrupt_style_report),
+    ], check=True, capture_output=True, text=True)
+    assert json.loads(corrupt_style_report.read_text())["invalid_train_rows"] == 1
+
     episodes = [json.loads(line) for line in heldout.read_text().splitlines()]
     episodes[0]["counterfactual"]["expected_answer"] = episodes[0]["expected_answer"]
     corrupt_heldout = root / "corrupt-heldout.jsonl"
