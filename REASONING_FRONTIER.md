@@ -63,6 +63,27 @@ after a positive behavioral gate, a lightweight late-layer logit-lens trace
 can test whether a stable, reportable register has emerged inside the tiny
 model. The behavioral causal tests remain decisive.
 
+## Semantic Bootstrap: Learn One Natural-Language State Primitive Before a Broad Mix
+
+The raw 200k operator transcript and the completed V9 decision eliminate an
+important ambiguity: the model does not currently turn a two-field natural
+language record into a reusable state, and a large broad mix did not repair
+that. It is therefore premature to ask it to reason over long contexts or to
+judge an elaborate proof. The next independent test is **V10A**, bridge-only
+SFT from the immutable raw 200k checkpoint on the admitted semantic-bridge
+corpus. It covers only five solver-verified families: product adjustment,
+state chains, base conversion, continuation from a verified fact, and repair
+of a wrong computation.
+
+V10A is deliberately a *learnability* ablation. A good in-distribution loss or
+visible `<think>` block is irrelevant. It earns a second stage only if it
+improves both (a) the value/template-disjoint five-family held-out bridge
+evaluator and (b) a fresh direct source-drop/reuse interaction that is not
+part of the bridge corpus. This separates “the model can imitate a concise
+calculation trace” from “the model can form a small semantic object and use it
+after the original story is absent.” Only the latter makes semantic capsules,
+context compaction, or CWI scientifically defensible.
+
 ### Raw Workspace-Patching Baseline: No Simple Broadcast Register
 
 `train/probe_digitwise_workspace.py` is the first diagnostic built from this
