@@ -63,6 +63,36 @@ after a positive behavioral gate, a lightweight late-layer logit-lens trace
 can test whether a stable, reportable register has emerged inside the tiny
 model. The behavioral causal tests remain decisive.
 
+### Raw Workspace-Patching Baseline: No Simple Broadcast Register
+
+`train/probe_digitwise_workspace.py` is the first diagnostic built from this
+hypothesis. It does not train, generate a solver state, or claim to implement
+the paper's Jacobian lens. On a teacher-forced DRS transition, it captures the
+last-position residual after a selected block, replaces it with the residual
+from a matched held-out transition whose correct next carry or digit differs,
+and measures whether the target log-odds move toward that source state's
+answer. A genuine result must be directional under symmetric A-to-B and B-to-A
+swaps; a generic perturbation cannot satisfy that condition consistently.
+
+The raw-200k local-MPS baseline is negative. Its frozen artifact
+`artifacts/evals/digitwise_workspace_raw200k_mps_p4_layers.json` has SHA-256
+`78b5efa4f3f7fe3ef10104de8d02fdee67f253c805c58f214a4cd1985c495875`.
+It evaluates five held-out regimes, four matched pairs per regime, both carry
+and digit fields, and symmetric directions: 40 directions per field/layer.
+Carry swap deltas are only `+0.001` to `+0.028` log-odds with 18-22/40
+directions positive; digit deltas are `-0.042` to `+0.0002` with 14-20/40
+positive. A 10-direction smoke had seemed positive, but the expanded matched
+sample removed it. Therefore the raw model does **not** expose a stable,
+last-position, broadcastable local-state direction under this probe.
+
+This does not say the model has no internal arithmetic features: the state can
+be distributed across positions or represented nonlinearly. It does provide a
+specific, preregistered contrast for the DRS/STRR interventions. Post-DRS
+probe `687578` is queued after the existing wording, direct-interaction, and
+NLL evidence chain with the identical 80-direction configuration. STRR may
+advance only if its behavioral closed-loop gates and this matched diagnostic
+are interpreted together; neither alone is a reasoning claim.
+
 ## Hypothesis: Proof-Carrying Deliberation
 
 The next distinctive mechanism is **proof-carrying deliberation (PCD)**. A
