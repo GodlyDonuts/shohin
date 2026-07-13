@@ -2762,3 +2762,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   boundary mismatch. The held-out capsule evaluator now has the shared CUDA timeout/BLAS limits and bad-node
   exclusion. Local generator/auditor/evaluator/job contracts and remote Slurm `--test-only` passed; no SFT,
   eval, model result, or flagship state changed.
+
+- **2026-07-13** — **V10A semantic-bootstrap chain is submitted but correctly held behind an actual H100
+  preflight.** `687684` is isolated one-epoch bridge-only SFT from immutable `best_step200000.pt` to fresh
+  `train/sft_v10a_bridge_200k_r1`; it is `afterok:687647`, so it cannot start until the standalone real
+  CUDA/bf16 preflight passes. Three read-only children are then independently `afterok:687684`: `687685`
+  runs the full 500-case semantic-bridge gate, `687686` runs the full 500-case cross-family composition
+  gate, and `687687` preserves a raw-versus-V10A direct transcript at
+  `artifacts/eval_history/manual_capability_raw200k_vs_v10a_r1.json`. Each uses an isolated output and
+  one H100 with the shared bad-node exclusions; none can alter pretraining weights, writer output, or a
+  corpus. This is a primitive learnability experiment. V11A capsule continuation remains unsubmitted and
+  may start only after reviewing the complete checkpoint-bound bridge/composition evidence.
