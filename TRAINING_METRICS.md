@@ -158,6 +158,16 @@ model-produced arithmetic is added by the controller. This is data/protocol
 evidence only. No ADL GPU job is authorized before DRS identifies whether
 whole-state copying is the actual failure locus.
 
+### ADL CPU Admission Launch: 2026-07-13 12:49 EDT
+
+The full, separately named ADL corpus is now being generated on Stokes CPU job
+**`738186`**, after `py_compile`, controller tests, and generator/audit smoke all
+passed on that host. Its dependent independent audit is **`738187`**. No result
+from these jobs is training data until the audit records full train/held-out
+counts, artifact SHA-256s, recomputed transition validity, duplicate prompts,
+exact overlaps, and 13-gram overlap. The CPU jobs neither read nor write the
+flagship output and do not authorize a GPU SFT.
+
 ## Checkpoint and Disaster-Recovery Inventory
 
 | Milestone | Numbered checkpoint at milestone | Newton durable copy | Local full checkpoint | MD5 | State |

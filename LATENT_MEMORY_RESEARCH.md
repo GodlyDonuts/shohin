@@ -448,3 +448,10 @@ correction reduced the overlap gate to zero. This is not yet a model result or
 a broad-reasoning claim. Full CPU data generation is allowed, but GPU SFT must
 wait for the DRS core-vs-heldout result to establish whether ADL addresses a
 real interface failure.
+
+The complete candidate entered CPU-only admission on Stokes as build `738186`
+with independent dependent audit `738187`, after host-local imports and the
+same generator/controller tests passed. It remains deliberately outside the
+GPU path: full artifact hashes, transition recomputation, all held-out prompt
+overlap checks, and the DRS diagnosis must exist before any isolated ADL SFT
+can be considered.
