@@ -368,6 +368,20 @@ its staged SFT wrapper is audit-hash-bound and has not been submitted. Future
 factor evaluations retain capped successful and failed transcripts per regime
 so aggregate accuracy cannot hide a parse, transition, or transport failure.
 
+### DRS v3 Complete-Transition-Basis Artifact: 2026-07-13 16:20 EDT
+
+The durable CPU-only v3 corpus has **27,200** solver-derived episodes and
+**311,127** deduplicated SFT rows (eight tape variants for each of the 3,400
+reachable local decimal contexts). It reserves **900** paired held-out episodes:
+300 each in `recombine_w4`, `recombine_w6`, and `width_ood_w8`. The independent
+admission audit is clean: 0 invalid train rows, invalid held-out episodes,
+normalized duplicate prompts, missing contexts, exact split hits, or 13-gram
+split hits. Data SHA-256 is
+`b785866bf24813272d346e4a3bb717d4156b01a59a4dd8ccaf450733267368f6`; held-out
+SHA-256 is `f2fcfcae41b55aa82dd360036bd8c9c00ed6e4ca442debec1c85ed282e50dfe1`.
+It has no SFT checkpoint, score, or GPU submission. Its purpose is a causal
+coverage control for DRS v2, not a claim of reasoning.
+
 ## Checkpoint and Disaster-Recovery Inventory
 
 | Milestone | Numbered checkpoint at milestone | Newton durable copy | Local full checkpoint | MD5 | State |

@@ -346,6 +346,22 @@ corpus, SFT checkpoint, or GPU allocation. It becomes admissible only after the
 running v2 core, held-out wording, and transcript chain distinguish coverage
 failure from a deeper execution failure.
 
+### Complete DRS v3 Basis Artifact: 2026-07-13 16:20 EDT
+
+The full eight-variant coverage control is now immutable and mirrored locally
+and on Newton, but has not been submitted for SFT. It has **27,200** complete
+episodes / **311,127** deduplicated rows, covers **3,400 / 3,400** reachable
+local contexts, and keeps **900** paired held-out episodes (300 each of
+`recombine_w4`, `recombine_w6`, and `width_ood_w8`). Its independent audit
+reports zero invalid rows or episodes, normalized duplicate train prompts,
+missing contexts, exact train/held-out prompt collisions, or held-out
+13-gram collisions. The train and held-out SHA-256 values are respectively
+`b785866bf24813272d346e4a3bb717d4156b01a59a4dd8ccaf450733267368f6` and
+`f2fcfcae41b55aa82dd360036bd8c9c00ed6e4ca442debec1c85ed282e50dfe1`.
+This artifact tests the coverage confound in the observed v2 value OOD gap; it
+does not establish algorithmic generalization by itself and remains gated on
+the active transcript evidence chain.
+
 ## Conditional Hypothesis: Dual-Code Reversible Deliberation
 
 The missing ingredient may be neither a longer trace nor a larger hidden
