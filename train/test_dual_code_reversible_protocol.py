@@ -21,6 +21,8 @@ for seed in (3, 17, 101):
         state = initial_state(operation, left, right, width)
         for _ in range(width):
             a_line, b_line = encode_state(state, a_book), encode_state(state, b_book)
+            assert a_line.startswith("dcr:A|")
+            assert b_line.startswith("dcr:B~")
             assert parse_state(a_line, a_book) == state
             assert parse_state("<think>trace</think>\n" + b_line, b_book) == state
             assert parse_state(a_line, b_book) is None

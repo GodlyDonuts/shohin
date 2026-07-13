@@ -29,9 +29,9 @@ HELDOUT_OP_STEMS = ("ola", "pax", "qim", "rex")
 class Codebook:
     """One rendering code for a semantic DWS state.
 
-    Prefixes make A and B surface vocabularies disjoint.  Permutations, rather
-    than the prefixes, carry the codebook-binding challenge: the same semantic
-    field or decimal digit maps to a fresh alias on every episode.
+    Prefixes make A and B surface vocabularies disjoint. Channel-specific
+    serialization grammar, plus fresh field/digit permutations, makes a second
+    lane an actual recoding task instead of a copied delimiter skeleton.
     """
 
     channel: str
@@ -134,12 +134,13 @@ def codebook_prompt(book: Codebook, style: str = "train") -> str:
     operations = ", ".join("{}={}".format(op, book.operation_to_alias[op]) for op in OPERATIONS)
     digits = ", ".join("{}={}".format(index, book.digit_to_alias[str(index)]) for index in range(10))
     order = ",".join(book.field_to_alias[field] for field in book.field_order)
+    grammar = "bar/equality/semicolon" if book.channel == "A" else "tilde/colon/slash"
     if style == "train":
-        return "DCR {} key. fields [{}]. order [{}]. ops [{}]. digits [{}].".format(
-            book.channel, fields, order, operations, digits,
+        return "DCR {} key. fields [{}]. order [{}]. ops [{}]. digits [{}]. grammar [{}].".format(
+            book.channel, fields, order, operations, digits, grammar,
         )
-    return "Cipher {} reference: role bindings <{}>; serialization path <{}>; action bindings <{}>; numeral bindings <{}>.".format(
-        book.channel, fields, order, operations, digits,
+    return "Cipher {} reference: role bindings <{}>; serialization path <{}>; action bindings <{}>; numeral bindings <{}>; notation <{}>.".format(
+        book.channel, fields, order, operations, digits, grammar,
     )
 
 
@@ -198,8 +199,10 @@ def encode_state(state: Mapping[str, object], book: Codebook) -> str:
             value = book.operation_to_alias[normalized[field]]
         else:
             value = _encode_decimal(normalized[field], book)
-        fields.append("{}={}".format(alias, value))
-    return "dcr:{}|{}".format(book.channel, ";".join(fields))
+        fields.append((alias, value))
+    if book.channel == "A":
+        return "dcr:A|{}".format(";".join("{}={}".format(alias, value) for alias, value in fields))
+    return "dcr:B~{}".format("/".join("{}:{}".format(alias, value) for alias, value in fields))
 
 
 def parse_state(text: object, book: Codebook):
@@ -207,18 +210,19 @@ def parse_state(text: object, book: Codebook):
     candidates = [line.strip() for line in str(text).splitlines() if line.strip().startswith("dcr:")]
     if len(candidates) != 1:
         return None
-    prefix = "dcr:{}|".format(book.channel)
+    prefix = "dcr:A|" if book.channel == "A" else "dcr:B~"
     line = candidates[0]
     if not line.startswith(prefix):
         return None
-    parts = line[len(prefix):].split(";")
+    delimiter, assignment = (";", "=") if book.channel == "A" else ("/", ":")
+    parts = line[len(prefix):].split(delimiter)
     expected_aliases = [book.field_to_alias[field] for field in book.field_order]
     if len(parts) != len(expected_aliases):
         return None
     decoded = {}
     try:
         for part, alias in zip(parts, expected_aliases):
-            key, value = part.split("=", 1)
+            key, value = part.split(assignment, 1)
             if key != alias:
                 return None
             field = book.alias_to_field[key]

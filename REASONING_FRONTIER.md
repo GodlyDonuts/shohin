@@ -320,8 +320,9 @@ the live pretraining run.
 
 The CPU-only protocol substrate is implemented in
 `train/dual_code_reversible_protocol.py`. It provides deterministic per-episode
-A/B codebooks, strict code-specific parsers, source-free prompt builders, and a
-solver-only inverse transition for data construction and scoring. Train and
+A/B codebooks, channel-specific serialization grammars, strict code-specific
+parsers, source-free prompt builders, and a solver-only inverse transition for
+data construction and scoring. Train and
 held-out codebooks use disjoint alias vocabularies and structurally distinct
 instruction interfaces; the protocol rejects a prompt style that does not
 match the codebook vocabulary. This makes literal train/held-out n-gram overlap

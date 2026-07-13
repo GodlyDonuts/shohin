@@ -20,7 +20,7 @@ from dual_code_reversible_protocol import (
 
 
 WORD = re.compile(r"\w+")
-STATE_LINE = re.compile(r"dcr:([AB])\|[^\n]+")
+STATE_LINE = re.compile(r"dcr:(?:A\||B~)[^\n]+")
 REQUIRED_ROW = {
     "question", "completion_prompt", "response", "source", "training_group", "kind", "episode_id",
     "split", "width", "operation", "transition_index", "code_seed", "codebook_vocabulary",
