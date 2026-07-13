@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 15:02 EDT (flagship custody is intentionally hands-off with its existing full 200k checkpoint already hash-verified on Newton and locally; both DRS v2 raw controls are zero; isolated uncompiled DRS SFT `687459` completed cleanly on verified evc49, and source-free core evaluator `687460` is running before its held-out/direct/NLL successors; DCRD now has a locally preflighted generator/auditor but remains conditional with no submitted data/job; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 15:24 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; both DRS v2 raw controls are zero; isolated uncompiled DRS SFT `687459` completed cleanly on verified evc49, and source-free core evaluator `687460` is running before held-out/direct/NLL successors; DCRD and CBC each have local preflighted generator/auditors but remain conditional with no submitted corpus/data/job; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2479,3 +2479,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   counterfactual episodes now report 0 malformed rows/episodes, duplicate prompts, exact held-out hits, or
   literal 13-gram overlaps. This is only CPU infrastructure: no durable DCRD corpus, controller, SFT, or
   GPU job is authorized until `687460 -> 687461 -> 687462` provides a positive DRS causal result.
+
+- **2026-07-13 15:24** — **CBC generator/auditor preflight passed with a causal counterfactual gate.**
+  `train/bisimulation_compiler_protocol.py` defines a strict `cbc:` state and `cbc-delta:` grammar; its
+  source-free update and readout prompts have no solver/controller fallback. The paired
+  `pipeline/generate_counterfactual_bisimulation_v1.py` and
+  `pipeline/audit_counterfactual_bisimulation_v1.py` independently reconstruct all compilation,
+  transition, inverse-delta, and query targets, then require normal/counterfactual worlds to share every
+  operation while differing in exactly one initial fact and final answer. A medium **1,000-episode /
+  16,000-row** local preflight plus **120** held-out paired-counterfactual episodes reports 0 invalid rows,
+  invalid episodes, normalized duplicate prompts, exact prompt hits, and literal 13-gram overlaps.
+  Corruption tests reject altered targets and replacing a counterfactual with the normal world. CBC has no
+  durable corpus, controller, SFT, or GPU job; it remains gated on the serialized DRS causal chain.

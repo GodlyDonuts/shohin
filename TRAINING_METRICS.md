@@ -307,6 +307,19 @@ No durable corpus, SFT checkpoint, controller,
 or GPU job exists for DCRD; submission remains conditional on the full DRS
 causal decision chain.
 
+### CBC Generator/Auditor Preflight: 2026-07-13 15:24 EDT
+
+CBC is a prepared, source-free context-compiler experiment, not a training
+result.  Its medium local preflight generated **1,000** train episodes,
+**16,000** rows, and **120** held-out paired-counterfactual episodes.  The
+independent audit recomputed each compiler target, update, inverse delta,
+readout, shared normal/counterfactual operation sequence, and one-fact
+counterfactual relation.  It reported **0** invalid train rows, **0** invalid
+held-out episodes, **0** normalized duplicate prompts, **0** exact prompt
+overlaps, and **0** literal 13-gram overlaps.  The corpus has not been
+materialized as a durable artifact and no CBC SFT/GPU job is authorized until
+the DRS core, held-out wording, and direct-interaction gates complete.
+
 ## Checkpoint and Disaster-Recovery Inventory
 
 | Milestone | Numbered checkpoint at milestone | Newton durable copy | Local full checkpoint | MD5 | State |

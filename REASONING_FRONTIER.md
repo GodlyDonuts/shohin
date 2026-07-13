@@ -232,6 +232,28 @@ testable token state. If the gates fail, the failure will identify whether the
 barrier is primitive execution, semantic compilation, recurrence, compression,
 or self-verification instead of producing another ambiguous SFT score.
 
+### CBC Protocol/Audit Preflight: 2026-07-13 15:24 EDT
+
+The CBC substrate now exists as an isolated CPU-only protocol,
+`train/bisimulation_compiler_protocol.py`, plus a generator and independent
+auditor.  The protocol uses a canonical `cbc:key=value;key=value` carrier and
+a distinct `cbc-delta:` grammar.  It has two source-description compilation
+interfaces, source-free update and inverse-delta prompts, and a final query
+that receives only the carrier.  Every held-out episode carries a paired
+counterfactual whose initial first field changes by one while its operation
+sequence is identical and its final answer must differ.
+
+The medium local preflight generated **1,000** train episodes, **16,000**
+train rows, and **120** held-out paired-counterfactual episodes.  The auditor
+independently reconstructed every compilation target, state update, delta,
+readout, shared operation sequence, and counterfactual relation.  It found
+**0** invalid train rows, **0** invalid held-out episodes, **0** normalized
+duplicate prompts, and **0** exact or literal 13-gram train/held-out prompt
+hits.  Corruption tests prove that it rejects both changed train targets and a
+semantically valid-looking counterfactual replaced by the normal world.  No
+durable corpus, SFT checkpoint, controller rollout, or GPU job has been
+created.  CBC remains conditional on a positive DRS causal result.
+
 ## Conditional Hypothesis: Dual-Code Reversible Deliberation
 
 The missing ingredient may be neither a longer trace nor a larger hidden
