@@ -83,6 +83,15 @@ step-80 losses after warmup on the identical 32,000-pair / 7,163-update surface.
 successors `687226`-`687228` are `afterok`-held and use separate outputs. None shares the flagship
 checkpoint writer, its data stream, or its output tree.
 
+### CPR Training Milestone: 2026-07-13 09:34 EDT
+
+All matched CPR arms completed cleanly from immutable `best_step190000.pt`: verified `687223` in
+2h50m, shuffled-label `687224` in 2h52m, and equal-work final replay `687225` in 2h38m. Their
+checkpoints are separate and hash-recorded: verified `7d84282c3daaa4a238db821ff8c69ed3`, shuffled
+`162282f3db4d7f6ce064b252be5bc35d`, replay `6c4f11caeae9701d7fd09fef957833a3`. Full held-out
+source-free readback evaluations `687226`-`687228` are running; no outcome is inferred from their
+partial normal-mode counts.
+
 ## Checkpoint and Disaster-Recovery Inventory
 
 | Milestone | Numbered checkpoint at milestone | Newton durable copy | Local full checkpoint | MD5 | State |

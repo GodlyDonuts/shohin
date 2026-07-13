@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 06:43 EDT (`685084` remains healthy through 195.31k; the locked source-free latent-state-algebra r2 comparator rejected the candidate on every causal gate, and the corrected independently audited causal-prefix-readback three-arm replacement is now running finite updates from immutable 190k with its held-out evaluators dependency-held; the prior 4.6B FineWeb output is rejected and Stokes `738030` is building the guarded `sample-100BT` replacement). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 09:34 EDT (`685084` remains healthy through 198.38k; the locked source-free latent-state-algebra r2 comparator rejected the candidate on every causal gate, and all corrected independently audited causal-prefix-readback arms completed their matched 7,163 updates from immutable 190k while full held-out evaluators run; the prior 4.6B FineWeb output is rejected and Stokes `738030` is building the guarded `sample-100BT` replacement). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2278,6 +2278,16 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   decoder, rather than an auxiliary probe, can read intermediate source-free packets; none can write to
   or otherwise affect `685084`. The job wrapper now also rejects a CPR protocol audit in the `AUDIT`
   slot before CUDA initialization, so this input-class mistake cannot consume another H100 allocation.
+- **2026-07-13 09:34** — **All CPR matched training arms complete; held-out decoder-readback gate runs.**
+  Verified `687223`, shuffled-label `687224`, and equal-work replicated-final `687225` each completed
+  the exact 32,000-pair / 7,163-update surface from immutable `best_step190000.pt` with exit 0 in
+  2h50m / 2h52m / 2h38m. Their separate checkpoint md5s are
+  `7d84282c3daaa4a238db821ff8c69ed3`, `162282f3db4d7f6ce064b252be5bc35d`, and
+  `6c4f11caeae9701d7fd09fef957833a3`. Full all-held-out source-free decoder-readback evaluators
+  `687226/687227/687228` are RUNNING; they test normal, zero-packet, and shuffled-source modes on
+  every prefix and report to isolated JSONs. No early normal-mode count is a result; wait for all three
+  modes and the locked four-control comparator before either claiming or rejecting decoder-accessible
+  intermediate state.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
