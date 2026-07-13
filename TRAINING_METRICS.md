@@ -123,8 +123,23 @@ SHA-256 is `de6e4f798357484fb8496c396ecd930effb9b969e7dd9a16861ac5ced121102a` an
 is `b831e43d87a7594464d3721212cbcb049bdfe7e5b7657680e0147b1020c3a72f`; those rejected artifacts
 remain immutable. The corrected split reserves operand tapes across operations and counterfactuals,
 and local 1,000-episode smoke audit is 0 invalid, 0 duplicate, 0 exact, and 0 13-gram overlap.
-Stokes `738122` constructs a separately named v2 candidate and `738123` independently audits it;
-no H100 training is authorized until the v2 report passes.
+Stokes `738122` constructs a separately named v2 candidate and `738123` independently audits it.
+
+### DRS v2 Admission and Matched Causal Chain: 2026-07-13 12:16 EDT
+
+The fresh v2 candidate passed the required independent Stokes audit before any GPU job was submitted:
+**439,865** train rows, **1,500** held-out paired counterfactual episodes, five 300-episode regimes,
+and **19,800** held-out controller prompts. The audit found **0** invalid rows, duplicate normalized
+prompts, exact held-out prompt hits, or 13-gram held-out overlaps. V2 train/eval SHA-256 are
+`381b8bbf3a4eddb7b08b0f9d4b08ea3ce65e1f0ec48de930632d54417c2f7f35` and
+`89ce11b36ff2f56e83cda72a1f07b1a90f4a3dc3803c69db2779a27219712646`.
+
+The only authorized DRS GPU evidence path is the isolated serial chain
+`687348 -> 687350 -> 687351`: a raw `best_step200000.pt` closed-loop baseline, one DRS-only SFT
+epoch from exactly that checkpoint, then the matched evaluator under the same per-regime sampling.
+The jobs use a separate output tree, exclude evc22, and cannot modify the live corpus or flagship
+writer. We will report first-transition, closed-loop state, final-answer, paired-counterfactual, and
+response-diversity results by regime; broad reasoning is not inferred from any DRS score.
 
 ## Checkpoint and Disaster-Recovery Inventory
 

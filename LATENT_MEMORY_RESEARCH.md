@@ -398,7 +398,17 @@ members of each counterfactual pair. The audit now emits bounded overlap
 examples for future diagnosis. Unit tests and a 1,000-episode smoke build pass
 with zero exact and 13-gram overlap.
 
-Stokes `738122` builds a separately named v2 candidate and `738123` audits it
-after success. No DRS GPU training may be submitted unless that audit reports
-zero invalid/duplicate/exact/13-gram overlap and all five regimes plus all
-counterfactual pairs. This is a data-admission correction, not a model result.
+Stokes `738122` built a separately named v2 candidate and `738123` passed its
+independent audit: 439,865 train rows, 1,500 held-out paired episodes, 19,800
+controller prompts, and zero invalid/duplicate/exact/13-gram findings. The
+train/eval SHA-256 are
+`381b8bbf3a4eddb7b08b0f9d4b08ea3ce65e1f0ec48de930632d54417c2f7f35` and
+`89ce11b36ff2f56e83cda72a1f07b1a90f4a3dc3803c69db2779a27219712646`.
+
+The resulting GPU test is deliberately causal and narrow: `687348` measures
+raw-200k self-authored closed loops; only after that succeeds does `687350`
+perform one isolated DRS SFT epoch from the same `best_step200000.pt`; only
+then does `687351` run the identical held-out evaluator. This is a data
+admission correction and an experiment launch, not a model result. Any
+positive result must beat raw by regime, preserve state through paired
+counterfactuals, and show response diversity rather than a fixed template.
