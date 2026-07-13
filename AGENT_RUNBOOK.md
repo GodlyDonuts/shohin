@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 19:23 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, and the independent held-out wording result falls further to 125/500 with 0/100 width-8, so it is a template-conditioned recurrent executor rather than a transferable workspace; raw residual patching is negative; a first direct-interaction attempt was canceled without an artifact after the allocated evc49 H100 became unresponsive, and the DRS direct-interaction, NLL, and post-DRS patch sequence is being restarted only with bounded startup gates on a non-blacklisted node; both full v3 transition-basis and static-tape/recurrent-register corpora are hash-admitted but untrained; token-native delta-ledger data is independently admitted as a separate three-token transport control with no capability score; counterfactual-workspace induction, DCRD, and CBC remain conditional; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 19:27 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, and the independent held-out wording result falls further to 125/500 with 0/100 width-8, so it is a template-conditioned recurrent executor rather than a transferable workspace; raw residual patching is negative; a first direct-interaction attempt was canceled without an artifact after the allocated evc49 H100 became unresponsive, and the DRS direct-interaction, NLL, and post-DRS patch sequence is being restarted only with bounded startup gates on a non-blacklisted node; both full v3 transition-basis and static-tape/recurrent-register corpora are hash-admitted but untrained; token-native delta-ledger data is independently admitted as a separate three-token transport control with no capability score; counterfactual-workspace induction, DCRD, and CBC remain conditional; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2787,3 +2787,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   V10A plus source-deleted semantic-capsule transport are nonzero, and then must pass model-authored
   anchor swap/zero controls and net token/cache/work accounting; external summarization or controller
   state construction is explicitly disallowed.
+
+- **2026-07-13 19:27** — **Counterfactual Workspace Induction now has a semantic-foil protocol, not a
+  training result.** `train/counterfactual_workspace_protocol.py` builds one-step reflections from the
+  factorized static tape only. Each proposed candidate remains grammar-valid but violates exactly one
+  required semantic field: carry, the active result digit, program counter, or immutable tape. The target
+  is value-bound (`expected`/`observed` at the active position), rather than a constant legal/illegal
+  label. Local contracts independently validate legal successors, all four foil kinds, and terminal
+  exclusions. No CWI corpus, SFT, H100 allocation, checkpoint, or semantic score exists. Do not submit it
+  until STRR has first proven direct state transport and the prescribed syntax-only, label-permutation,
+  and equal-compute controls can be run from the same checkpoint.

@@ -260,6 +260,17 @@ change in the residual-patching diagnostic. A reflection that only improves its
 own prompted explanation is rejected. This would make CWI a test of
 workspace-shaped computation, not a new narration style.
 
+`train/counterfactual_workspace_protocol.py` now makes the reflection premise
+mechanically precise, without generating a corpus or allocating a GPU. Starting
+from a fixed tape and current register, it derives the legal successor and then
+constructs a candidate that is grammar-valid but differs in exactly one of four
+semantic ways: carry, active result digit, program counter, or immutable tape.
+The supervision target reports the verdict and the expected/observed value at
+the active position. Thus the reflection cannot succeed by detecting malformed
+text or predicting a constant `illegal` label. Its protocol tests are only a
+precondition for future CPU data admission; they do not establish a model
+capability or relax the STRR/CWI gates above.
+
 ## Conditional Representation Control: Token-Native Delta Ledger
 
 The static-tape register removes immutable input copying, but its next state
