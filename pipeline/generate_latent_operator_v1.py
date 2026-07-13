@@ -188,8 +188,22 @@ def build_rows(count, depths, seed, heldout):
     rng = random.Random(seed)
     domains = HELDOUT_DOMAINS if heldout else TRAIN_DOMAINS
     rows = []
+    seen = set()
     for index in range(count):
-        rows.append(make_row(index, rng, domains[index % len(domains)], depths[index % len(depths)], heldout))
+        # Train prompts intentionally do not expose the synthetic reference
+        # identifier, so random operation/value collisions are possible at
+        # corpus scale.  Reject and resample them here rather than relying on a
+        # downstream audit to discover that duplicate examples consumed a
+        # fraction of the curriculum.
+        for _ in range(10_000):
+            row = make_row(index, rng, domains[index % len(domains)], depths[index % len(depths)], heldout)
+            prompt = normalized(row["question"])
+            if prompt not in seen:
+                rows.append(row)
+                seen.add(prompt)
+                break
+        else:
+            raise RuntimeError("could not create a unique latent-operator prompt at row {}".format(index))
     return rows
 
 
