@@ -2736,3 +2736,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `6118200f1fef077494d0250713034a9a`. It is a small diagnostic baseline rather than an estimate of a
   public score; for V10A it establishes that any genuine cross-family/source-drop gain is measurable and
   must be checked against the full 500-case suite before promotion.
+
+- **2026-07-13** — **CBC CPU candidate is fully admitted, mirrored, and still untrained.** Stokes
+  CPU-only job `738468` completed the counterfactual-bisimulation candidate with **16,000** train
+  episodes / **256,000** rows and **600** paired held-out episodes (198 length-4, 201 length-8, 201
+  length-12). The independent auditor reports zero invalid train rows or held-out episodes, duplicate
+  prompts, exact train/held-out prompt hits, or 13-gram split hits. The immutable train / held-out SHA-256
+  values are `6013f5118b00c3b88afbe2af892b7e25867a4a5e5a2d1c5882ee635564326c02` /
+  `163e60398f239ab4058129ef135350d3d5509ea1dc309417d9f85dabbdf59256`; local and Newton MD5s are
+  `c3859b91199725f1eba35c68e4fa279b` / `5e061dbdd7fcab512c369ad7c5e42611`. The controller now measures
+  a real cross-world swap using the model-emitted counterfactual terminal state, never a solver repair.
+  This is a reproducible context-state candidate, not a model, SFT, reasoning, or context-scaling result;
+  it remains held until the raw-versus-DRS diagnostic chain identifies a defensible next control.

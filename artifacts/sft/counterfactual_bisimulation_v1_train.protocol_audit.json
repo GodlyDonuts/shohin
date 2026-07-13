@@ -1,0 +1,29 @@
+{
+  "audit": "counterfactual_bisimulation_v1",
+  "claim_boundary": "Data admission only; no model, compiler, or reasoning result is implied.",
+  "duplicate_heldout_prompts": 0,
+  "duplicate_train_prompts": 0,
+  "heldout": "/lustre/fs1/home/sa305415/shohin/artifacts/evals/counterfactual_bisimulation_v1_heldout.jsonl",
+  "heldout_regimes": {
+    "cbc_len12": 201,
+    "cbc_len4": 198,
+    "cbc_len8": 201
+  },
+  "heldout_sha256": "163e60398f239ab4058129ef135350d3d5509ea1dc309417d9f85dabbdf59256",
+  "invalid_heldout_episodes": 0,
+  "invalid_train_rows": 0,
+  "train": "/lustre/fs1/home/sa305415/shohin/artifacts/sft/counterfactual_bisimulation_v1_train.jsonl",
+  "train_heldout_13gram_hits": 0,
+  "train_heldout_exact_prompt_hits": 0,
+  "train_kinds": {
+    "compile_a": 32000,
+    "compile_b": 32000,
+    "inverse_delta": 80000,
+    "readout_sum": 32000,
+    "update": 80000
+  },
+  "train_sha256": "6013f5118b00c3b88afbe2af892b7e25867a4a5e5a2d1c5882ee635564326c02",
+  "valid_heldout_episodes": 600,
+  "valid_train_episodes": 16000,
+  "valid_train_rows": 256000
+}

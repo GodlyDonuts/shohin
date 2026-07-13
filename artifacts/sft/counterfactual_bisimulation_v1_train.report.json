@@ -1,0 +1,22 @@
+{
+  "claim_boundary": "Data generation only. No model, reasoning, or context-scaling claim is implied.",
+  "duplicate_train_prompts_dropped": 0,
+  "heldout_by_regime": {
+    "cbc_len12": 201,
+    "cbc_len4": 198,
+    "cbc_len8": 201
+  },
+  "heldout_episodes": 600,
+  "heldout_sha256": "163e60398f239ab4058129ef135350d3d5509ea1dc309417d9f85dabbdf59256",
+  "schema": "counterfactual_bisimulation_v1",
+  "train_by_kind": {
+    "compile_a": 32000,
+    "compile_b": 32000,
+    "inverse_delta": 80000,
+    "readout_sum": 32000,
+    "update": 80000
+  },
+  "train_episodes": 16000,
+  "train_rows": 256000,
+  "train_sha256": "6013f5118b00c3b88afbe2af892b7e25867a4a5e5a2d1c5882ee635564326c02"
+}

@@ -462,9 +462,9 @@ readout, shared operation sequence, and counterfactual relation.  It found
 duplicate prompts, and **0** exact or literal 13-gram train/held-out prompt
 hits.  Corruption tests prove that it rejects both changed train targets and a
 semantically valid-looking counterfactual with a mismatched operation sequence.
-No
-durable corpus, SFT checkpoint, controller rollout, or GPU job has been
-created.  CBC remains conditional on a positive DRS causal result.
+No model checkpoint, controller rollout, or GPU job has been created. CBC
+remains conditional on a positive causal-result gate rather than a format
+score.
 
 The matching transport-only controller is also preflighted.  It accepts only
 a parsed model-emitted state, renders the next source-free prompt around that
@@ -487,8 +487,16 @@ zero exact and 13-gram train/held-out prompt hits, all five training roles
 (two compilers, update, inverse delta, readout), and all 4/8/12-step held-out
 regimes.  The initial build uses 4,000 episodes per train domain and 200 per
 held-out domain, which exceeds 100,000 training rows without consuming a GPU.
-Stokes job `738468` is the first such build; it is data admission only, not an
-SFT or capability result.
+Stokes job `738468` completed this build without consuming a GPU. The immutable
+candidate contains **16,000** train episodes / **256,000** training rows and
+**600** held-out paired-counterfactual episodes: 198 length-4, 201 length-8,
+and 201 length-12. The independent audit found zero invalid rows or held-out
+episodes, duplicates, exact split prompts, or literal 13-gram split hits.
+The train / held-out SHA-256 values are
+`6013f5118b00c3b88afbe2af892b7e25867a4a5e5a2d1c5882ee635564326c02` /
+`163e60398f239ab4058129ef135350d3d5509ea1dc309417d9f85dabbdf59256`.
+The full data and the two small admission records are mirrored locally and on
+Newton. This is data admission only, not an SFT or capability result.
 
 `train/eval_counterfactual_bisimulation.py` now measures the controller with a
 checkpoint on a deterministic balanced slice.  It records compilation A/B,
