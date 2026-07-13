@@ -182,6 +182,7 @@ def main():
                 "mode": mode,
                 "eval_regime": case["eval_regime"],
                 "chunk_count": int(case["chunk_count"]),
+                "query_kind": case.get("query_spec", {}).get("kind"),
                 "reference": case["reference"],
                 "expected": int(case["answer"]),
                 "prediction": prediction,

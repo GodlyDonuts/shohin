@@ -139,7 +139,8 @@ training only if its held-out normal condition satisfies all of the following:
    percentage points on the fit-IID regime.
 2. It beats those same controls by at least 5 percentage points on the combined
    length-OOD and language-OOD regimes; a fit-only result is not context scale.
-3. Its correct answers are not confined to one chunk count or one query form.
+3. It has a positive normal-packet margin on at least three chunk counts and
+   two distinct query kinds; one favorable slice is not context scaling.
 4. Read-only transcript inspection shows the source-free decoder uses the
    actual retained value rather than a fixed answer prior.
 
