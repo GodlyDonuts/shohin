@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 ~02:05 EDT (`685084` remains healthy past 190k; the checkpoint is hash-verified on Newton and the Mac; matched answer-only M0/M1 source-packet evidence is rejected; the raw-190k direct interview is negative behavioral evidence; the CPU-only certified latent-ledger build is the next admitted experiment). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 ~02:07 EDT (`685084` remains healthy past 190k; the checkpoint is hash-verified on Newton and the Mac; matched answer-only M0/M1 source-packet evidence is rejected; the raw-190k direct interview is negative behavioral evidence; CPU-only certified latent-ledger build `687132` is submitted with fresh paths). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -76,6 +76,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | **Continuous latent-rollout pilot** | Commit `318c6b9` adds a soft-token continuous hidden-state rollout path that leaves normal token-id/KV-cache forward unchanged. It trains answer-only operator problems with a progressive 0→1→2→4 latent schedule and an exactly paired L=0 control, then evaluates held-out longer 5/6/8-step chains at rollout depths 0/1/2/4/8. The first CPU build `687038` was solver-rejected for **2,608 duplicate normalized train prompts** before admission or model load; all three files were moved intact to `artifacts/rejected/`. Commit `98ee9a2` enforces generation-time uniqueness and a full 96k-row uniqueness stress test. Clean CPU rebuild `687041` and admission `687042` are queued; no latent GPU training is submitted until those reports pass. |
 | **Current latent-pilot correction** | Corrected generation `687041` and admission `687042` **passed**: **96,000** unique solver-verified answer-only train rows and **1,800** held-out depth-5/6/8 rows, zero malformed/duplicate/exact/13-gram overlaps, training SHA-256 `aa65eefd1dbee25c3c7cec956059a970ea53e079bbc4f4695dd160cacd980fd9`. H100 mechanics canary `687046` completed 32 exact-shape batches across progressive L=0/1/2/4 with finite loss/gradients. Matched 24k pilots `687048` (**L=0 control**) and `687049` (**L=4 progressive latent**) are active from `best_step180000.pt` with same data, seed, batch size, and optimizer schedule; held-out read-only evaluators `687050`/`687051` wait after each. No result is promotable without transfer evidence. |
 | **Source-dropping packet memory** | **Rejected for promotion.** Admitted data has **192,000** train rows and **1,536** held-out rows across IID, length, language, and full OOD regimes; audit reports zero invalid/duplicate/exact train-eval prompt collisions, train SHA-256 `419199a756679e61601c05481ffc59221fba75b601608990539781013a51da64`, eval SHA-256 `6a10a6b27be8dc6b0a36954296d9f33abd099d87bbdff46c251a1357f1c894c3`. Matched M0 (`687082`, slots=0) completed 6,000 updates in 1,153s; M1 (`687083`, slots=8) completed the same 6,000 updates in 2,694s from the same raw-180k/data/seed/schedule. Held-out M1 normal/zero/shuffled was **6/384 / 6/384 / 9/384**. Locked comparator `687088` returned `advance=false`: M1 normal lost to shuffled on IID (**4/96 vs 5/96**) and had no positive margin in length+language (**2/192 vs 3/192 controls**), zero chunk wins, and zero query-kind wins. No source token is present at decode time, but no causal retained-information claim survived. |
+| **Certified latent ledger (CLL)** | **CPU-only build `687132` submitted** after answer-only M1 rejection. It writes fresh `certified_latent_ledger_v1` train/eval/audit paths with **16,000** train episodes and **32** held-out episodes per chunk/regime. Every prefix has solver-recomputed readbacks; final-event pairs share prefix/query but require distinct answers. No H100 training is allowed until the independent audit reports zero invalid/duplicate/exact/13-gram failures and the row/pair counts are recorded. Future M0/M1 evaluations will retain balanced readback rows plus whole counterfactual pairs. |
 | 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
 | 60k skips | **45 total**, stable/healthy |
 | **Corpus-expansion job** | `680324` — **✅ DONE** (finished ~12:10) |
@@ -1995,6 +1996,13 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   preserve reports as negative evidence and do not scale this recipe. The next bounded mechanism is
   the CPU-only certified latent-ledger data build: solver-recomputed readbacks at each source prefix,
   plus complete final-event counterfactual pairs, before any new H100 experiment is admitted.
+- **2026-07-13 ~02:07** — **Certified latent-ledger build is submitted, not yet admitted.** After
+  a fresh-path check and `sbatch --test-only` reservation, CPU-only `687132` was submitted with
+  `TRAIN_EPISODES=16000` and `EVAL_EPISODES_PER_CHUNK=32`. It may write only
+  `certified_latent_ledger_v1_train.jsonl`, `certified_latent_ledger_v1_heldout.jsonl`, and its audit
+  report. The generator/auditor and future pair-safe evaluator/comparator hashes were verified on
+  Newton before submission. No model checkpoint, SFT mix, flagship data stream, or H100 training job
+  is part of this build.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
