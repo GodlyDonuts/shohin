@@ -268,6 +268,29 @@ beat zeroed/shuffled/mismatched-state controls by a recorded state-necessity
 margin. This remains a staged research specification, not a model result or an
 authorized flagship modification.
 
+### DRS v2 Isolated SFT Completion: 2026-07-13 14:46 EDT
+
+The uncompiled replacement SFT **`687459`** completed cleanly on isolated H100
+`evc49`, from immutable `best_step200000.pt`, with no access to the flagship
+output tree. It consumed the hash-bound DRS v2 training data (SHA-256
+`381b8bbf3a4eddb7b08b0f9d4b08ea3ce65e1f0ec48de930632d54417c2f7f35`):
+**439,865** rows, **51,131,402** packed tokens, and **10,623,342** masked
+answer tokens (21% of the packed surface) in **24,966** 2,048-token sequences.
+One epoch was exactly **1,561** optimizer updates in **1,115 seconds**. Loss
+fell from `0.6846` at step zero to a near-final logged `0.0115`; this is
+training-fit evidence only. The isolated artifact is
+`train/sft_digitwise_recurrent_v2_200k_r3/sft_ep1.pt`, MD5
+`6f30db16208d274229950b17662dda01`.
+
+The causal decision chain is serialized, not inferred from this loss:
+**`687460`** runs the 500-episode source-free *core* evaluation,
+**`687461`** runs the same counterfactual episodes under held-out wording only
+after a clean core result, **`687462`** runs fresh direct raw-versus-SFT
+interaction, and **`687463`** records the independent raw NLL monitor. The
+SFT cannot alter active pretraining or its data writer. No DRS capability or
+reasoning claim is authorized until the evaluator outputs and direct transcript
+are inspected.
+
 ## Checkpoint and Disaster-Recovery Inventory
 
 | Milestone | Numbered checkpoint at milestone | Newton durable copy | Local full checkpoint | MD5 | State |
