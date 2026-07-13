@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 ~04:52 EDT (`685084` remains healthy through 193.29k; compact CLL v2 and answer-only continuous latent rollout are rejected by their matched controls; corrected source-free latent-state-algebra r2 primary control/candidate are actively training under a preregistered evaluator/comparator gate; prefix-supervised packet-memory mechanics are CPU-tested but unsubmitted; the prior 4.6B FineWeb output is rejected and Stokes `738030` is building the guarded `sample-100BT` replacement). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 ~05:02 EDT (`685084` remains healthy through 193.49k; corrected source-free latent-state-algebra r2 primary control/candidate are actively training under a preregistered evaluator/comparator gate; a complete prefix-supervised packet-memory fallback is CPU-tested but unsubmitted; the prior 4.6B FineWeb output is rejected and Stokes `738030` is building the guarded `sample-100BT` replacement). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2174,6 +2174,17 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   the current LSA causal gate rejects or demonstrates that the added prefix signal is the next justified
   ablation. Any future trial must retain matched final-only, shuffled-prefix-label, and no-memory controls;
   it cannot alter `685084` or reuse an active experiment output.
+- **2026-07-13 ~05:02** — **The prefix-state fallback is now a complete locked experiment, still
+  unsubmitted.** New `prefix_state_memory_train.py` writes one source-free packet trace per input chunk,
+  applies solver-recomputed normalized state and delta losses at every trace position, and scores the
+  answer from that same final packet without recomputing/reintroducing source text. Its `ZERO_AUXILIARY=1`
+  answer-only control and `PREFIX_MODE=shuffled` label control preserve init/data/seed/batch/update count.
+  `compare_prefix_state_memory.py` rejects unless the verified-prefix candidate clears answer-only,
+  zero-packet, shuffled-source, and shuffled-prefix controls by 10pp IID / 5pp OOD / 10pp on both
+  equivalence and intervention pairs. CPU tests cover source removal, one-pass packet loss equivalence,
+  solver targets, gradient flow, trainer labels, comparator success, and comparator rejection. It is
+  explicitly conditioned on the in-flight LSA result; no Slurm job has been submitted and no live process
+  reads these files.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*

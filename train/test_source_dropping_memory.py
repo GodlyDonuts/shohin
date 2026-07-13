@@ -41,6 +41,11 @@ def main():
     assert memory.write_slots.grad is not None and memory.write_slots.grad.abs().sum() > 0
     assert memory.model.tok.weight.grad is not None and memory.model.tok.weight.grad.abs().sum() > 0
 
+    direct_logits, direct_loss, direct_targets = memory.supervised_loss_from_packet(packet, query, answer, eos_id=1)
+    assert torch.allclose(logits, direct_logits)
+    assert torch.allclose(loss, direct_loss)
+    assert torch.equal(targets, direct_targets)
+
     changed = chunks.clone()
     changed[:, 0, 0] += 1
     with torch.no_grad():

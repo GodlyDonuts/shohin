@@ -111,18 +111,23 @@ class SourceDroppingMemory(nn.Module):
 
     def supervised_loss(self, chunks, query_ids, answer_ids, eos_id: int):
         """Answer-only loss after source removal, with gradients through all writes."""
+        memory = self.encode(chunks)
+        logits, loss, targets = self.supervised_loss_from_packet(memory, query_ids, answer_ids, eos_id)
+        return logits, loss, memory, targets
+
+    def supervised_loss_from_packet(self, memory, query_ids, answer_ids, eos_id: int):
+        """Score an answer from a precomputed source-free packet exactly once."""
         if answer_ids.ndim != 2 or answer_ids.dtype != torch.long:
             raise ValueError("answer_ids must have shape [batch, tokens] and dtype torch.long")
         if answer_ids.shape[0] != query_ids.shape[0]:
             raise ValueError("query and answer batch sizes differ")
-        memory = self.encode(chunks)
         prefix = self.answer_context(memory, query_ids)
         if prefix.shape[1] + answer_ids.shape[1] > self.model.cfg.seq_len:
             raise ValueError("memory packet plus query and answer exceeds model sequence length")
         full_embeds = torch.cat((prefix, self.model.tok(answer_ids)), dim=1)
         targets = build_answer_targets(answer_ids, prefix.shape[1], 0, eos_id)
         logits, loss = self.model.forward_embeds(full_embeds, targets=targets)
-        return logits, loss, memory, targets
+        return logits, loss, targets
 
     @torch.no_grad()
     def generate(self, chunks, query_ids, eos_id: int, max_new: int):
