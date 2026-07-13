@@ -335,6 +335,18 @@ across its 300 paired held-out episodes; width-8 contains **9,600** and
 zero unseen local-context events.  These counts define the defect a later
 position-balanced DRS curriculum must repair; they are not a model score.
 
+### DRS v3 Minimal Transition-Basis Preflight: 2026-07-13 15:45 EDT
+
+The staged v3 candidate is a full-episode local-context basis, not a magnitude
+band. Its independent medium preflight uses **6,800** complete episodes and
+**77,946** rows with two tape variants. It covers all **3,400** independently
+enumerated reachable width-4/6 local decimal contexts and reports 0 malformed
+rows/episodes, normalized duplicate prompts after deduplication, exact split
+hits, or 13-gram split hits. Its held-out set has 40 episodes each for
+`recombine_w4`, `recombine_w6`, and `width_ood_w8`. Removing all training
+instances of one still-semantic local context makes the admission audit fail.
+No durable v3 artifact or training job has been created.
+
 ## Checkpoint and Disaster-Recovery Inventory
 
 | Milestone | Numbered checkpoint at milestone | Newton durable copy | Local full checkpoint | MD5 | State |

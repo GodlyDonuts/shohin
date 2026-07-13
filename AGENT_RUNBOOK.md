@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 15:38 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; both DRS v2 raw controls are zero; isolated uncompiled DRS SFT `687459` completed cleanly on verified evc49, and source-free core evaluator `687460` is running before held-out/direct/NLL successors; its coverage audit found an exact leading-digit support gap; DCRD and CBC each have local preflighted generator/auditors, while CBC now also has a transport-only evaluator controller; all remain conditional with no submitted corpus/data/job; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 15:45 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; both DRS v2 raw controls are zero; isolated uncompiled DRS SFT `687459` completed cleanly on verified evc49, and source-free core evaluator `687460` is running before held-out/direct/NLL successors; its coverage audit found an exact leading-digit support gap and a v3 complete-transition-basis candidate now passes local admission; DCRD and CBC each have local preflighted generator/auditors, while CBC now also has a transport-only evaluator controller; all remain conditional with no submitted corpus/data/job; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2510,3 +2510,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   held-out set. Any revised DRS data must stratify coverage by width, position, tape, operation, and
   carry/borrow before value-OOD performance can answer an algorithmic-generalization question. This
   diagnostic alters no existing data, checkpoint, or job and does not pre-judge the running causal chain.
+
+- **2026-07-13 15:45** — **DRS v3 is an independently audited minimal-transition-basis candidate, not a
+  training result.** `train/digitwise_basis_protocol.py` enumerates 3,400 reachable local decimal contexts
+  across width 4/6, operation, position, carry/borrow, and operand digits. The v3 generator constructs
+  complete arithmetic episodes that hit each context while retaining real result-tape prefixes; its held-out
+  evaluator worlds use unseen full tapes rather than an unseen numeric band. The independent admission
+  audit recomputes all targets/counterfactuals, requires every one of the 3,400 contexts, and fails if any
+  one context is removed. The medium 2-variant preflight contains 6,800 episodes / 77,946 rows and has 0
+  malformed rows/episodes, duplicates after deduplication, exact overlap, or literal 13-gram overlap. It
+  does not create durable data, an SFT checkpoint, or a GPU job; wait for `687460 -> 687461 -> 687462`.

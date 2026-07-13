@@ -284,6 +284,28 @@ operation, and carry/borrow context before its value-OOD result can be used as
 evidence about algorithmic generalization.  No revised corpus or GPU job is
 created before the current serialized DRS chain finishes.
 
+### DRS v3 Minimal Transition Basis: 2026-07-13 15:45 EDT
+
+The corrective candidate is deliberately not simply “more random arithmetic.”
+`generate_digitwise_basis_v3.py` constructs complete arithmetic episodes whose
+designated transition enumerates every **reachable** local tuple of `(width,
+operation, position, carry/borrow, left digit, right digit)` for width 4 and
+width 6. It keeps full operand and result tapes, so the model still has to
+preserve a recurrent state rather than answer a disconnected lookup question.
+The paired held-out sets use unseen full tapes at the same local-support basis
+(`recombine_w4`, `recombine_w6`) and an unseen width (`width_ood_w8`).
+
+Its independent admission audit rechecks every arithmetic row and held-out
+counterfactual, then independently requires all **3,400** reachable contexts.
+The medium local preflight with two tape variants produced **6,800** complete
+episodes and **77,946** rows: 0 malformed rows/episodes, 0 normalized duplicate
+prompts after deterministic deduplication, 0 exact or literal 13-gram split
+hits, and all 3,400 contexts present. A corruption test deleting every
+instance of one otherwise valid context is rejected. This is a staged
+learnability control, not a model result, and it has no durable corpus, SFT,
+or GPU allocation before the current DRS core/held-out/direct evidence chain
+has finished.
+
 ## Conditional Hypothesis: Dual-Code Reversible Deliberation
 
 The missing ingredient may be neither a longer trace nor a larger hidden
