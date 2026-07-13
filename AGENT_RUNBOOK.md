@@ -2460,3 +2460,10 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   wording evaluator, direct raw-versus-SFT interaction, and raw NLL monitor remain serialized after it.
   The small completion loss does not establish execution, causal state transport, or reasoning. Do not
   submit DCRD, ADL, CBC, or any flagship modification until this chain provides the needed causal result.
+
+- **2026-07-13 14:52** — **DCRD has a tested CPU-only protocol substrate, not a training result.**
+  `train/dual_code_reversible_protocol.py` now implements deterministic per-episode A/B encodings,
+  strict code-specific parsing, solver-only inverse construction, and source-free prompts. Its local
+  contract test covers codebook separation, encode/decode, canonical-state leakage rejection, and 120
+  randomized reversible transitions. No DCRD data, controller rollout, SFT, or GPU job exists; it remains
+  conditional on the full DRS core/held-out/direct chain and cannot affect active pretraining.

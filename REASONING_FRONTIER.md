@@ -315,3 +315,16 @@ passes, it supplies a compact, model-authored state and an internal
 error-detection signal that can be carried into CBC's language compiler. This
 is a project hypothesis, not a novelty claim and not authorization to modify
 the live pretraining run.
+
+### Implementation Status
+
+The CPU-only protocol substrate is implemented in
+`train/dual_code_reversible_protocol.py`. It provides deterministic per-episode
+A/B codebooks, strict code-specific parsers, source-free prompt builders, and a
+solver-only inverse transition for data construction and scoring. The runtime
+controller is deliberately not implemented yet, and no DCRD dataset, SFT, or
+GPU job has been submitted. `train/test_dual_code_reversible_protocol.py`
+exercises codebook separation, encode/decode round trips, canonical-state
+leakage rejection, and 120 randomized inverse-transition cases. The
+implementation is a precondition for a later causal experiment, not evidence
+that the model can use the protocol.
