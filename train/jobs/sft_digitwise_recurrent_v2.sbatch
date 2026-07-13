@@ -32,6 +32,7 @@ EPOCHS=${EPOCHS:-1}
 BS=${BS:-16}
 LRMUON=${LRMUON:-0.001}
 LRADAM=${LRADAM:-0.0002}
+COMPILE=${COMPILE:-1}
 
 [ -f "$INIT" ] || { echo "[drs-sft] init missing: $INIT" >&2; exit 2; }
 [ -s "$DATA" ] || { echo "[drs-sft] data missing: $DATA" >&2; exit 3; }
@@ -92,9 +93,16 @@ if not torch.cuda.is_available():
 torch.empty(1, device='cuda')
 PY
 
-echo "[drs-sft] init=$INIT data=$DATA out=$OUT epochs=$EPOCHS"
-"$PY" sft.py --init "$INIT" --data "$DATA" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
-  --q-fields question --r-fields response --prompt-override-field completion_prompt \
-  --epochs "$EPOCHS" --batch-size "$BS" \
-  --lr-muon "$LRMUON" --lr-adam "$LRADAM" --compile --out "$OUT"
+if [ "$COMPILE" != 0 ] && [ "$COMPILE" != 1 ]; then
+  echo "[drs-sft] COMPILE must be 0 or 1" >&2
+  exit 7
+fi
+ARGS=(--init "$INIT" --data "$DATA" --tokenizer "$BASE/artifacts/shohin-tok-32k.json"
+  --q-fields question --r-fields response --prompt-override-field completion_prompt
+  --epochs "$EPOCHS" --batch-size "$BS" --lr-muon "$LRMUON" --lr-adam "$LRADAM" --out "$OUT")
+if [ "$COMPILE" = 1 ]; then
+  ARGS+=(--compile)
+fi
+echo "[drs-sft] init=$INIT data=$DATA out=$OUT epochs=$EPOCHS compile=$COMPILE"
+"$PY" sft.py "${ARGS[@]}"
 echo "[drs-sft] done"

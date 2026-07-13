@@ -231,3 +231,87 @@ small model a concrete route from language to a compact, revisable, causally
 testable token state. If the gates fail, the failure will identify whether the
 barrier is primitive execution, semantic compilation, recurrence, compression,
 or self-verification instead of producing another ambiguous SFT score.
+
+## Conditional Hypothesis: Dual-Code Reversible Deliberation
+
+The missing ingredient may be neither a longer trace nor a larger hidden
+packet. A small model can make a locally plausible but globally wrong state
+transition, then repeat that error with high confidence. An ordinary
+self-critique is weak evidence because the same decoder can reproduce its own
+mistake. The proposed remedy is **Dual-Code Reversible Deliberation (DCRD)**:
+the model carries one compact state in two deliberately incompatible token
+codes and must close a reversible loop across them before accepting a step.
+
+For each episode, the generator creates two canonical encodings of the same
+machine state. They use independent field order, delimiters, role names, and
+digit symbols. A short static codebook may be retained at every turn, but the
+problem history may not. The codebook is randomized per episode and held-out
+codebooks contain symbols, orders, and bindings never used during training.
+That prevents a second rendering from becoming an identity-copy shortcut.
+
+The single model learns four tagged operations:
+
+1. `FWD-A`: advance an A-code state by one local transition.
+2. `A->B`: transcode the resulting state into the unrelated B-code.
+3. `REV-B`: recover the preceding B-code state from the B-code successor.
+4. `B->A`: transcode the recovered predecessor back into A-code.
+
+At inference, the controller forwards exact model text between these calls,
+checks only that the last A-code string is byte-identical to the A-code input,
+and either accepts the proposed successor or abstains. It never computes a
+transition, chooses a digit, repairs a state, ranks candidates, or supplies a
+correct alternative. A later extension may use bounded sampling to obtain
+another proposed successor, but it may never use a solver at runtime.
+
+This is not a proof of correctness. A wrong transition can still be internally
+reversible. Its purpose is narrower and testable: force the model to represent
+state semantics through two non-copying channels, then turn agreement into a
+reliability signal rather than an ungrounded natural-language self-critique.
+
+### Why It Is Not Another Formatting Control
+
+- **Different syntax is functional, not cosmetic.** The A/B codebooks and
+  field orders vary per episode, and a held-out codebook is required. A model
+  that memorizes a fixed serialization cannot transcode or close the loop.
+- **The round trip has an asymmetric failure surface.** `FWD-A` and `REV-B`
+  operate in opposite temporal directions; the model must preserve enough
+  information for an inverse operation after source deletion.
+- **Acceptance is evaluated as a decision, not as a trace score.** Report
+  unconditional accuracy, accepted accuracy, coverage, and the improvement in
+  accepted accuracy over an equal-call baseline. A mechanism that merely
+  abstains is rejected.
+- **It has adversarial interventions.** Replace one B-code field, swap a B
+  state from a matched counterfactual episode, or permute the B codebook.
+  Correct acceptance must fall and dependent answers must change in exactly the
+  solver-predicted direction. Invariance to these changes means the second
+  code is decorative.
+
+### Required Controls And Advancement Gate
+
+DCRD is conditional on a positive DRS core execution result. It must remain an
+isolated experiment with a fresh output directory and no flagship path. Before
+it can motivate a semantic CBC compiler, all of the following must hold on
+unseen operands, widths, controller wording, and per-episode codebooks:
+
+- The basic DRS model must beat raw zero on first transitions, closed loops,
+  final answers, and paired counterfactual interventions. Otherwise DCRD only
+  adds an elaborate checksum to a nonexistent executor.
+- DCRD's accepted states must have materially higher exact solver accuracy than
+  its unfiltered proposals *and* an equal-call control that simply repeats the
+  A-code lane. Coverage must be reported with confidence intervals.
+- `A->B->A` alone, a shuffled B-codebook, and an identity-format B lane are
+  matched controls. Equal performance rejects the claimed semantic second
+  channel.
+- The model must fail closed under a one-field B-code corruption and reject
+  counterfactual B-code interchange whenever the query depends on the changed
+  field. Passing ordinary answers without this sensitivity is a failure.
+- A forward/reverse round trip may never be reported as a reasoning score by
+  itself. Only correct accepted answers on held-out tasks and fresh interactive
+  probes count as capability evidence.
+
+If this fails, we learn whether the bottleneck is primitive transition
+learning, codebook binding, inverse dynamics, or correlated self-error. If it
+passes, it supplies a compact, model-authored state and an internal
+error-detection signal that can be carried into CBC's language compiler. This
+is a project hypothesis, not a novelty claim and not authorization to modify
+the live pretraining run.

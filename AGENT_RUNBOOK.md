@@ -2435,3 +2435,17 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
+
+- **2026-07-13 ~13:55** — **Flagship custody is intentionally hands-off; capability research is
+  concentrated on the isolated causal path.** Per project direction, do not perform routine live-flagship
+  monitoring or alter the active writer. Uncompiled DRS v2 SFT `687459` has passed its hash-bound data
+  and exact completion-boundary preflights and reached **200 / 1,561** updates with finite loss falling
+  from `0.6846` to `0.0541`; GPU telemetry is 100% utilization at about 63.9GiB. This is only fit
+  evidence, not an execution or reasoning result. Its source-free core, held-out, direct-interaction,
+  and NLL jobs remain serialized after successful completion. In parallel, `REASONING_FRONTIER.md`
+  records a **Dual-Code Reversible Deliberation** hypothesis: one model carries state through two
+  per-episode randomized token codes, forward and inverse transitions must close across the codes, and
+  the controller may only transport text and compare exact strings before accepting or abstaining. It is
+  conditional on a positive DRS causal result, has no submitted job or flagship path, and must beat
+  matched repeated-lane, shuffled-codebook, identity-format, corruption, coverage, and
+  counterfactual-interchange controls before it is treated as useful.

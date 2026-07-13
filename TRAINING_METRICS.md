@@ -298,6 +298,26 @@ manifest with 5,000,000,144 tokens in 50 shards (12,662,236 kept of 12,828,009 s
 165,773 evaluation-contaminated rows dropped). Its existence is not permission to change
 the running `SHARDS` list.
 
+### Equal-Domain Exposure Accounting: 2026-07-13 14:18 EDT
+
+At live step **203,240**, the fixed 524,288-token update implies
+**106,556,293,120 nominal update tokens**, or **851.77 nominal tokens per
+125.1M trainable parameters**. This is not a unique-token claim: it counts
+replay and does not reconstruct the historical loader cursor. It is nevertheless
+useful because `ShardLoader` is confirmed to round-robin equally over the four
+mounted directories when no explicit weights are passed.
+
+Under that equal-domain policy, each directory receives about
+**26,639,073,280 nominal tokens** by this point. Relative to its manifest, the
+corresponding expected capacity-equivalents are FineMath-4 **13.32x**,
+OpenWebMath **1.894x**, CodeParrot Python **1.589x**, and FineMath-3 **1.066x**.
+Across all sources this is **1.843x** total mounted-corpus capacity. The figures
+are an exposure-risk diagnostic, not proof that any source is memorized or that
+the model is overtrained. They do make two gates non-optional before a long
+continuation of the same mix: compare fixed held-out English/code NLL at 200k
+against the 170k baseline, and finish/admit the planned language sources before
+the next natural data-mix handoff. The healthy writer remains untouched.
+
 ## Reasoning and Code Data Gates
 
 | Asset / job | Latest measured state | Admission status |
