@@ -94,6 +94,15 @@ def retain_regime_transcript(bucket, record, succeeded, per_outcome):
         bucket[key].append(record)
 
 
+def failure_mode(rollout):
+    """Classify the first closed-loop failure without changing controller behavior."""
+    if not rollout["state_closed_loop"]:
+        return "transition_{}".format(rollout["rows"][-1]["index"])
+    if not rollout["final_correct"]:
+        return "terminal_answer"
+    return "success"
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--ckpt", required=True)
@@ -126,6 +135,7 @@ def main():
 
     totals, first_correct, transition_correct, transition_attempted = (collections.Counter() for _ in range(4))
     state_loop, final_correct, counterfactual_final, paired_intervention = (collections.Counter() for _ in range(4))
+    failure_modes = collections.defaultdict(collections.Counter)
     first_responses, examples = collections.Counter(), []
     examples_by_regime = collections.defaultdict(lambda: {"successes": [], "failures": []})
     for index, episode in enumerate(episodes, 1):
@@ -143,6 +153,7 @@ def main():
         final_correct[regime] += int(normal["success"])
         counterfactual_final[regime] += int(counterfactual["success"])
         paired_intervention[regime] += int(pair["intervention_success"])
+        failure_modes[regime][failure_mode(normal)] += 1
         record = transcript_record(episode, pair)
         if len(examples) < 12:
             examples.append(record)
@@ -165,6 +176,7 @@ def main():
             "final_answer_correct": final_correct[regime],
             "counterfactual_final_correct": counterfactual_final[regime],
             "paired_intervention_correct_and_different": paired_intervention[regime],
+            "normal_failure_modes": dict(sorted(failure_modes[regime].items())),
         }
         for regime in sorted(totals)
     }
