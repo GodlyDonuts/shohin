@@ -1,7 +1,7 @@
 {
   "audit": "generalization_interview_overlap_v1",
   "case_source": "/lustre/fs1/home/sa305415/shohin/train/thinking_trace_audit.py",
-  "case_source_sha256": "427a5ae2523d7e9ea3f275f77bc41aa7463f807e24e0f75124a0777774e467af",
+  "case_source_sha256": "dcb23d078d8ad6cb9f13cbb6d850c4b934651da47f8d67598aa02222ff35f1f0",
   "cases": 12,
   "data": "/lustre/fs1/home/sa305415/shohin/artifacts/sft/sft_mix_reasoning_v8_candidate_r2.jsonl",
   "data_sha256": "da94f9f6aae1d69a12633241b3971f6cfc68f7a7edbc788b956063ec5a70fc72",

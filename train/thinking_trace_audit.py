@@ -37,6 +37,7 @@ CASES = [
         ),
         "answer": 369,
         "markers": [["product", 378]],
+        "alternate_patterns": [[r"\b27\s*(?:x|\*|times)\s*14\s*=\s*378\b"]],
     },
     {
         "id": "product_bonus_34x16",
@@ -48,6 +49,7 @@ CASES = [
         ),
         "answer": 551,
         "markers": [["product", 544]],
+        "alternate_patterns": [[r"\b34\s*(?:x|\*|times)\s*16\s*=\s*544\b"]],
     },
     {
         "id": "product_rejects_19x22",
@@ -59,6 +61,7 @@ CASES = [
         ),
         "answer": 407,
         "markers": [["product", 418]],
+        "alternate_patterns": [[r"\b19\s*(?:x|\*|times)\s*22\s*=\s*418\b"]],
     },
     {
         "id": "product_bonus_41x13",
@@ -70,6 +73,7 @@ CASES = [
         ),
         "answer": 541,
         "markers": [["product", 533]],
+        "alternate_patterns": [[r"\b41\s*(?:x|\*|times)\s*13\s*=\s*533\b"]],
     },
     {
         "id": "state_add_multiply_subtract_17",
@@ -81,6 +85,7 @@ CASES = [
         ),
         "answer": 61,
         "markers": [["after_add", 25], ["after_multiply", 75]],
+        "alternate_patterns": [[r"\b17\s*\+\s*8\s*=\s*25\b"], [r"\b25\s*\*\s*3\s*=\s*75\b"]],
     },
     {
         "id": "state_add_multiply_subtract_23",
@@ -92,6 +97,7 @@ CASES = [
         ),
         "answer": 121,
         "markers": [["after_add", 32], ["after_multiply", 128]],
+        "alternate_patterns": [[r"\b23\s*\+\s*9\s*=\s*32\b"], [r"\b32\s*\*\s*4\s*=\s*128\b"]],
     },
     {
         "id": "state_subtract_multiply_add_31",
@@ -103,6 +109,7 @@ CASES = [
         ),
         "answer": 101,
         "markers": [["after_subtract", 19], ["after_multiply", 95]],
+        "alternate_patterns": [[r"\b31\s*-\s*12\s*=\s*19\b"], [r"\b19\s*\*\s*5\s*=\s*95\b"]],
     },
     {
         "id": "state_double_add_divide_18",
@@ -114,6 +121,7 @@ CASES = [
         ),
         "answer": 12,
         "markers": [["after_double", 36], ["after_add", 48]],
+        "alternate_patterns": [[r"\b18\s*\*\s*2\s*=\s*36\b"], [r"\b36\s*\+\s*12\s*=\s*48\b"]],
     },
     {
         "id": "base7_356",
@@ -125,6 +133,7 @@ CASES = [
         ),
         "answer": 188,
         "markers": [["hundreds", 147], ["tens", 35]],
+        "alternate_patterns": [[r"\b3\s*\*\s*(?:7\s*(?:\^|\*\*)\s*2|49)\s*=\s*147\b"], [r"\b5\s*\*\s*7\s*=\s*35\b"]],
     },
     {
         "id": "base8_527",
@@ -136,6 +145,7 @@ CASES = [
         ),
         "answer": 343,
         "markers": [["hundreds", 320], ["tens", 16]],
+        "alternate_patterns": [[r"\b5\s*\*\s*(?:8\s*(?:\^|\*\*)\s*2|64)\s*=\s*320\b"], [r"\b2\s*\*\s*8\s*=\s*16\b"]],
     },
     {
         "id": "repair_product_37x14",
@@ -147,6 +157,7 @@ CASES = [
         ),
         "answer": 500,
         "markers": [["product", 518]],
+        "alternate_patterns": [[r"\b37\s*(?:x|\*|times)\s*14\s*=\s*518\b"]],
     },
     {
         "id": "repair_state_24",
@@ -158,6 +169,7 @@ CASES = [
         ),
         "answer": 105,
         "markers": [["after_add", 35]],
+        "alternate_patterns": [[r"\b24\s*\+\s*11\s*=\s*35\b"]],
     },
 ]
 
@@ -174,13 +186,17 @@ def sha256_file(path):
     return digest.hexdigest()
 
 
-def trace_matches(trace, markers):
+def trace_matches(trace, markers, alternate_patterns=()):
     if trace is None:
         return False
-    return all(
-        re.search(r"\b{}\s*=\s*{}\b".format(re.escape(key), value), trace, re.IGNORECASE)
-        for key, value in markers
-    )
+    if alternate_patterns and len(alternate_patterns) != len(markers):
+        raise ValueError("alternate_patterns must align with markers")
+    for index, (key, value) in enumerate(markers):
+        marker = re.search(r"\b{}\s*=\s*{}\b".format(re.escape(key), value), trace, re.IGNORECASE)
+        alternatives = alternate_patterns[index] if alternate_patterns else ()
+        if not marker and not any(re.search(pattern, trace, re.IGNORECASE) for pattern in alternatives):
+            return False
+    return True
 
 
 def score_response(case, response):
@@ -188,7 +204,7 @@ def score_response(case, response):
     trace = match.group(1).strip() if match else None
     finals = FINAL.findall(response)
     final = int(finals[-1]) if finals else None
-    trace_correct = trace_matches(trace, case["markers"])
+    trace_correct = trace_matches(trace, case["markers"], case.get("alternate_patterns", ()))
     answer_correct = final == case["answer"]
     return {
         "trace": trace,

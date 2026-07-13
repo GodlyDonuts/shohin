@@ -1,12 +1,17 @@
 {
   "audit": "thinking_trace_audit_v1",
-  "case_source_sha256": "427a5ae2523d7e9ea3f275f77bc41aa7463f807e24e0f75124a0777774e467af",
+  "case_source_sha256": "dcb23d078d8ad6cb9f13cbb6d850c4b934651da47f8d67598aa02222ff35f1f0",
   "cases": 12,
   "checkpoint": "train/flagship_out/ckpt_0180000.pt",
   "device": "mps",
   "n_loop": 1,
   "rows": [
     {
+      "alternate_patterns": [
+        [
+          "\\b27\\s*(?:x|\\*|times)\\s*14\\s*=\\s*378\\b"
+        ]
+      ],
       "answer": 369,
       "answer_correct": false,
       "correct_trace_and_final": false,
@@ -27,6 +32,11 @@
       "trace_present": false
     },
     {
+      "alternate_patterns": [
+        [
+          "\\b34\\s*(?:x|\\*|times)\\s*16\\s*=\\s*544\\b"
+        ]
+      ],
       "answer": 551,
       "answer_correct": false,
       "correct_trace_and_final": false,
@@ -47,6 +57,11 @@
       "trace_present": false
     },
     {
+      "alternate_patterns": [
+        [
+          "\\b19\\s*(?:x|\\*|times)\\s*22\\s*=\\s*418\\b"
+        ]
+      ],
       "answer": 407,
       "answer_correct": false,
       "correct_trace_and_final": false,
@@ -67,6 +82,11 @@
       "trace_present": false
     },
     {
+      "alternate_patterns": [
+        [
+          "\\b41\\s*(?:x|\\*|times)\\s*13\\s*=\\s*533\\b"
+        ]
+      ],
       "answer": 541,
       "answer_correct": false,
       "correct_trace_and_final": false,
@@ -87,6 +107,14 @@
       "trace_present": false
     },
     {
+      "alternate_patterns": [
+        [
+          "\\b17\\s*\\+\\s*8\\s*=\\s*25\\b"
+        ],
+        [
+          "\\b25\\s*\\*\\s*3\\s*=\\s*75\\b"
+        ]
+      ],
       "answer": 61,
       "answer_correct": false,
       "correct_trace_and_final": false,
@@ -111,6 +139,14 @@
       "trace_present": false
     },
     {
+      "alternate_patterns": [
+        [
+          "\\b23\\s*\\+\\s*9\\s*=\\s*32\\b"
+        ],
+        [
+          "\\b32\\s*\\*\\s*4\\s*=\\s*128\\b"
+        ]
+      ],
       "answer": 121,
       "answer_correct": false,
       "correct_trace_and_final": false,
@@ -135,6 +171,14 @@
       "trace_present": false
     },
     {
+      "alternate_patterns": [
+        [
+          "\\b31\\s*-\\s*12\\s*=\\s*19\\b"
+        ],
+        [
+          "\\b19\\s*\\*\\s*5\\s*=\\s*95\\b"
+        ]
+      ],
       "answer": 101,
       "answer_correct": false,
       "correct_trace_and_final": false,
@@ -159,6 +203,14 @@
       "trace_present": false
     },
     {
+      "alternate_patterns": [
+        [
+          "\\b18\\s*\\*\\s*2\\s*=\\s*36\\b"
+        ],
+        [
+          "\\b36\\s*\\+\\s*12\\s*=\\s*48\\b"
+        ]
+      ],
       "answer": 12,
       "answer_correct": false,
       "correct_trace_and_final": false,
@@ -183,6 +235,14 @@
       "trace_present": false
     },
     {
+      "alternate_patterns": [
+        [
+          "\\b3\\s*\\*\\s*(?:7\\s*(?:\\^|\\*\\*)\\s*2|49)\\s*=\\s*147\\b"
+        ],
+        [
+          "\\b5\\s*\\*\\s*7\\s*=\\s*35\\b"
+        ]
+      ],
       "answer": 188,
       "answer_correct": false,
       "correct_trace_and_final": false,
@@ -207,6 +267,14 @@
       "trace_present": false
     },
     {
+      "alternate_patterns": [
+        [
+          "\\b5\\s*\\*\\s*(?:8\\s*(?:\\^|\\*\\*)\\s*2|64)\\s*=\\s*320\\b"
+        ],
+        [
+          "\\b2\\s*\\*\\s*8\\s*=\\s*16\\b"
+        ]
+      ],
       "answer": 343,
       "answer_correct": false,
       "correct_trace_and_final": false,
@@ -231,6 +299,11 @@
       "trace_present": false
     },
     {
+      "alternate_patterns": [
+        [
+          "\\b37\\s*(?:x|\\*|times)\\s*14\\s*=\\s*518\\b"
+        ]
+      ],
       "answer": 500,
       "answer_correct": false,
       "correct_trace_and_final": false,
@@ -251,6 +324,11 @@
       "trace_present": false
     },
     {
+      "alternate_patterns": [
+        [
+          "\\b24\\s*\\+\\s*11\\s*=\\s*35\\b"
+        ]
+      ],
       "answer": 105,
       "answer_correct": false,
       "correct_trace_and_final": false,

@@ -12,6 +12,10 @@ def main():
     assert correct["answer_correct"]
     assert correct["correct_trace_and_final"]
 
+    equivalent = score_response(case, "<think>27 x 14 = 378</think>\nThe answer is 369.")
+    assert equivalent["trace_correct"]
+    assert equivalent["correct_trace_and_final"]
+
     wrong_trace = score_response(case, "<think>product=377</think>\nThe answer is 369.")
     assert not wrong_trace["trace_correct"]
     assert wrong_trace["answer_correct"]
