@@ -1,0 +1,633 @@
+{
+  "audit": "capability_matrix_v1",
+  "device": "mps",
+  "seed": 20260713,
+  "n_per_family": 8,
+  "modes": [
+    "qa"
+  ],
+  "models": [
+    {
+      "checkpoint": "../train/flagship_out/ckpt_0190000.pt",
+      "step": 190000,
+      "n_loop": 1,
+      "summary": {
+        "qa": {
+          "correct": 8,
+          "total": 48,
+          "accuracy": 0.16666666666666666,
+          "families": {
+            "arithmetic": {
+              "correct": 0,
+              "total": 8,
+              "accuracy": 0.0
+            },
+            "base_conversion": {
+              "correct": 0,
+              "total": 8,
+              "accuracy": 0.0
+            },
+            "sort_unique": {
+              "correct": 0,
+              "total": 8,
+              "accuracy": 0.0
+            },
+            "state_update": {
+              "correct": 1,
+              "total": 8,
+              "accuracy": 0.125
+            },
+            "string_insert": {
+              "correct": 0,
+              "total": 8,
+              "accuracy": 0.0
+            },
+            "syllogism": {
+              "correct": 7,
+              "total": 8,
+              "accuracy": 0.875
+            }
+          }
+        }
+      },
+      "rows": [
+        {
+          "id": "arithmetic_00",
+          "family": "arithmetic",
+          "kind": "number",
+          "mode": "qa",
+          "question": "Compute 21 times 15, then add 18. Give only the final integer.",
+          "expected": "333",
+          "prediction": "315",
+          "correct": false,
+          "prompt": "Question: Compute 21 times 15, then add 18. Give only the final integer.\nAnswer:",
+          "response": " 21 x 15 = 315\n\nExplanation:\n\n1. 21 x 15 = 315"
+        },
+        {
+          "id": "base_conversion_00",
+          "family": "base_conversion",
+          "kind": "number",
+          "mode": "qa",
+          "question": "What is the base-10 value of the base-5 number 341? Give only the integer.",
+          "expected": "96",
+          "prediction": "10",
+          "correct": false,
+          "prompt": "Question: What is the base-10 value of the base-5 number 341? Give only the integer.\nAnswer:",
+          "response": " The base-10 value of the base-5 number 341 is 5.\n\nQuestion 10.\nWrite the number "
+        },
+        {
+          "id": "state_update_00",
+          "family": "state_update",
+          "kind": "number",
+          "mode": "qa",
+          "question": "Start with n = 13. Add 9, multiply the result by 2, then subtract 9. What is n? Give only the integer.",
+          "expected": "35",
+          "prediction": "2",
+          "correct": false,
+          "prompt": "Question: Start with n = 13. Add 9, multiply the result by 2, then subtract 9. What is n? Give only the integer.\nAnswer:",
+          "response": " 13 + 9 = 22\n22 \u2013 9 = 13\n\nQuestion 2:\n\nFind the sum of"
+        },
+        {
+          "id": "sort_unique_00",
+          "family": "sort_unique",
+          "kind": "list",
+          "mode": "qa",
+          "question": "Sort [0, 10, 10, 10, 14, 2] in ascending order and remove duplicates. Return only the resulting list.",
+          "expected": "[0,2,10,14]",
+          "prediction": "[10,10,14,2]",
+          "correct": false,
+          "prompt": "Question: Sort [0, 10, 10, 10, 14, 2] in ascending order and remove duplicates. Return only the resulting list.\nAnswer:",
+          "response": " [10, 10, 14, 2]\n\nExplanation:\n\n\u2022 Sorting:\n\u2022 Sorting:\n\u2022"
+        },
+        {
+          "id": "string_insert_00",
+          "family": "string_insert",
+          "kind": "string",
+          "mode": "qa",
+          "question": "Insert the letters 'ZZ' after the first 4 characters of 'crayon'. Return only the resulting string.",
+          "expected": "crayZZon",
+          "prediction": "explanation",
+          "correct": false,
+          "prompt": "Question: Insert the letters 'ZZ' after the first 4 characters of 'crayon'. Return only the resulting string.\nAnswer:",
+          "response": "\n\n```Input:\ncrayon = \"crayon\"\n\nOutput:\ncrayon = \"crayon\"\n\nExplanation"
+        },
+        {
+          "id": "syllogism_00",
+          "family": "syllogism",
+          "kind": "yesno",
+          "mode": "qa",
+          "question": "Every dax0 is a vop0. No vop0 is a lum0. Can any dax0 be a lum0? Answer yes or no only.",
+          "expected": "no",
+          "prediction": "no",
+          "correct": true,
+          "prompt": "Question: Every dax0 is a vop0. No vop0 is a lum0. Can any dax0 be a lum0? Answer yes or no only.\nAnswer:",
+          "response": " No.\n\nQuestion:"
+        },
+        {
+          "id": "arithmetic_01",
+          "family": "arithmetic",
+          "kind": "number",
+          "mode": "qa",
+          "question": "Compute 21 times 17, then add 12. Give only the final integer.",
+          "expected": "369",
+          "prediction": "353",
+          "correct": false,
+          "prompt": "Question: Compute 21 times 17, then add 12. Give only the final integer.\nAnswer:",
+          "response": " 21 times 17 = 353\n\nExplanation:\n\n1. 21 times 17 = 353"
+        },
+        {
+          "id": "base_conversion_01",
+          "family": "base_conversion",
+          "kind": "number",
+          "mode": "qa",
+          "question": "What is the base-10 value of the base-7 number 453? Give only the integer.",
+          "expected": "234",
+          "prediction": "10",
+          "correct": false,
+          "prompt": "Question: What is the base-10 value of the base-7 number 453? Give only the integer.\nAnswer:",
+          "response": " The base-10 value of the base-7 number 453 is 7.\n\nQuestion 10.\nWrite the number "
+        },
+        {
+          "id": "state_update_01",
+          "family": "state_update",
+          "kind": "number",
+          "mode": "qa",
+          "question": "Start with n = 5. Add 2, multiply the result by 4, then subtract 15. What is n? Give only the integer.",
+          "expected": "13",
+          "prediction": "1",
+          "correct": false,
+          "prompt": "Question: Start with n = 5. Add 2, multiply the result by 4, then subtract 15. What is n? Give only the integer.\nAnswer:",
+          "response": "\n\nExplanation:\n\nThe sum of the first 5 numbers is 5 + 6 + 7 + 8 + 9 + 1"
+        },
+        {
+          "id": "sort_unique_01",
+          "family": "sort_unique",
+          "kind": "list",
+          "mode": "qa",
+          "question": "Sort [14, 14, 12, 4, 14, 2] in ascending order and remove duplicates. Return only the resulting list.",
+          "expected": "[2,4,12,14]",
+          "prediction": "[14,14,12,4,14,2]",
+          "correct": false,
+          "prompt": "Question: Sort [14, 14, 12, 4, 14, 2] in ascending order and remove duplicates. Return only the resulting list.\nAnswer:",
+          "response": " [14, 14, 12, 4, 14, 2]\n\nExplanation:\n\n\u2022 Sort the given"
+        },
+        {
+          "id": "string_insert_01",
+          "family": "string_insert",
+          "kind": "string",
+          "mode": "qa",
+          "question": "Insert the letters 'pq' after the first 3 characters of 'lantern'. Return only the resulting string.",
+          "expected": "lanpqtern",
+          "prediction": "r",
+          "correct": false,
+          "prompt": "Question: Insert the letters 'pq' after the first 3 characters of 'lantern'. Return only the resulting string.\nAnswer:",
+          "response": "\n\n```Input:\n\"p\"\n\"l\"\n\"n\"\n\"t\"\n\"a\"\n\"e\"\n\"r"
+        },
+        {
+          "id": "syllogism_01",
+          "family": "syllogism",
+          "kind": "yesno",
+          "mode": "qa",
+          "question": "Every dax1 is a vop1. Every vop1 is a lum1. Can any dax1 be a lum1? Answer yes or no only.",
+          "expected": "yes",
+          "prediction": "yes",
+          "correct": true,
+          "prompt": "Question: Every dax1 is a vop1. Every vop1 is a lum1. Can any dax1 be a lum1? Answer yes or no only.\nAnswer:",
+          "response": " Yes, every dax1 is a vop1.\n\nQuestion:"
+        },
+        {
+          "id": "arithmetic_02",
+          "family": "arithmetic",
+          "kind": "number",
+          "mode": "qa",
+          "question": "Compute 27 times 23, then add 17. Give only the final integer.",
+          "expected": "638",
+          "prediction": "10",
+          "correct": false,
+          "prompt": "Question: Compute 27 times 23, then add 17. Give only the final integer.\nAnswer:",
+          "response": " 27 times 23 = 27 \u00d7 23 = 529\n\nQuestion 10.\n\nAnswer: "
+        },
+        {
+          "id": "base_conversion_02",
+          "family": "base_conversion",
+          "kind": "number",
+          "mode": "qa",
+          "question": "What is the base-10 value of the base-7 number 165? Give only the integer.",
+          "expected": "96",
+          "prediction": "10",
+          "correct": false,
+          "prompt": "Question: What is the base-10 value of the base-7 number 165? Give only the integer.\nAnswer:",
+          "response": " The base-10 value of the base-7 number 165 is 10.\n\nQuestion 10.\nWrite the number"
+        },
+        {
+          "id": "state_update_02",
+          "family": "state_update",
+          "kind": "number",
+          "mode": "qa",
+          "question": "Start with n = 15. Add 11, multiply the result by 3, then subtract 12. What is n? Give only the integer.",
+          "expected": "66",
+          "prediction": "3",
+          "correct": false,
+          "prompt": "Question: Start with n = 15. Add 11, multiply the result by 3, then subtract 12. What is n? Give only the integer.\nAnswer:",
+          "response": "\n\nExplanation:\n\nThe sum of the first 15 positive integers is 15 \u00d7 2 + 14 \u00d7 3 + "
+        },
+        {
+          "id": "sort_unique_02",
+          "family": "sort_unique",
+          "kind": "list",
+          "mode": "qa",
+          "question": "Sort [10, 12, 13, 3, 8, 5] in ascending order and remove duplicates. Return only the resulting list.",
+          "expected": "[3,5,8,10,12,13]",
+          "prediction": "[12,13,3,5,8,10]",
+          "correct": false,
+          "prompt": "Question: Sort [10, 12, 13, 3, 8, 5] in ascending order and remove duplicates. Return only the resulting list.\nAnswer:",
+          "response": " [12, 13, 3, 5, 8, 10]\n\nExplanation:\n\n\u2022 Sort the given list"
+        },
+        {
+          "id": "string_insert_02",
+          "family": "string_insert",
+          "kind": "string",
+          "mode": "qa",
+          "question": "Insert the letters 'XY' after the first 4 characters of 'violet'. Return only the resulting string.",
+          "expected": "violXYet",
+          "prediction": "on",
+          "correct": false,
+          "prompt": "Question: Insert the letters 'XY' after the first 4 characters of 'violet'. Return only the resulting string.\nAnswer:",
+          "response": "\n\n```Input:\nUVYVX\nOutput:\nUVXYVX\n```\n\n## Recommended: Please try your approach on {"
+        },
+        {
+          "id": "syllogism_02",
+          "family": "syllogism",
+          "kind": "yesno",
+          "mode": "qa",
+          "question": "Every dax2 is a vop2. No vop2 is a lum2. Can any dax2 be a lum2? Answer yes or no only.",
+          "expected": "no",
+          "prediction": "no",
+          "correct": true,
+          "prompt": "Question: Every dax2 is a vop2. No vop2 is a lum2. Can any dax2 be a lum2? Answer yes or no only.\nAnswer:",
+          "response": " No.\n\nQuestion:"
+        },
+        {
+          "id": "arithmetic_03",
+          "family": "arithmetic",
+          "kind": "number",
+          "mode": "qa",
+          "question": "Compute 37 times 21, then add 7. Give only the final integer.",
+          "expected": "784",
+          "prediction": "747",
+          "correct": false,
+          "prompt": "Question: Compute 37 times 21, then add 7. Give only the final integer.\nAnswer:",
+          "response": " 37 times 21 = 747\n\nExplanation:\n\nLet us write the given problem in the form of an equation.\n"
+        },
+        {
+          "id": "base_conversion_03",
+          "family": "base_conversion",
+          "kind": "number",
+          "mode": "qa",
+          "question": "What is the base-10 value of the base-7 number 504? Give only the integer.",
+          "expected": "249",
+          "prediction": "10",
+          "correct": false,
+          "prompt": "Question: What is the base-10 value of the base-7 number 504? Give only the integer.\nAnswer:",
+          "response": " The base-10 value of the base-7 number 504 is 7.\n\nQuestion 10.\nWrite the number "
+        },
+        {
+          "id": "state_update_03",
+          "family": "state_update",
+          "kind": "number",
+          "mode": "qa",
+          "question": "Start with n = 8. Add 4, multiply the result by 2, then subtract 8. What is n? Give only the integer.",
+          "expected": "16",
+          "prediction": "16",
+          "correct": true,
+          "prompt": "Question: Start with n = 8. Add 4, multiply the result by 2, then subtract 8. What is n? Give only the integer.\nAnswer:",
+          "response": " 8 + 4 = 12, 12 x 2 = 24, 24 - 8 = 16,"
+        },
+        {
+          "id": "sort_unique_03",
+          "family": "sort_unique",
+          "kind": "list",
+          "mode": "qa",
+          "question": "Sort [5, 10, 10, 9, 12, 3] in ascending order and remove duplicates. Return only the resulting list.",
+          "expected": "[3,5,9,10,12]",
+          "prediction": "[10,10,12,3,5,9]",
+          "correct": false,
+          "prompt": "Question: Sort [5, 10, 10, 9, 12, 3] in ascending order and remove duplicates. Return only the resulting list.\nAnswer:",
+          "response": " [10, 10, 12, 3, 5, 9]\n\nExplanation:\n\n\u2022 Sort the given list"
+        },
+        {
+          "id": "string_insert_03",
+          "family": "string_insert",
+          "kind": "string",
+          "mode": "qa",
+          "question": "Insert the letters 'ZZ' after the first 3 characters of 'harvest'. Return only the resulting string.",
+          "expected": "harZZvest",
+          "prediction": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+          "correct": false,
+          "prompt": "Question: Insert the letters 'ZZ' after the first 3 characters of 'harvest'. Return only the resulting string.\nAnswer:",
+          "response": "\n\n```Input:\nharvest = \"ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ"
+        },
+        {
+          "id": "syllogism_03",
+          "family": "syllogism",
+          "kind": "yesno",
+          "mode": "qa",
+          "question": "Every dax3 is a vop3. Every vop3 is a lum3. Can any dax3 be a lum3? Answer yes or no only.",
+          "expected": "yes",
+          "prediction": "yes",
+          "correct": true,
+          "prompt": "Question: Every dax3 is a vop3. Every vop3 is a lum3. Can any dax3 be a lum3? Answer yes or no only.\nAnswer:",
+          "response": " Yes, any dax3 can be a lum3.\n\nQuestion:"
+        },
+        {
+          "id": "arithmetic_04",
+          "family": "arithmetic",
+          "kind": "number",
+          "mode": "qa",
+          "question": "Compute 15 times 16, then add 3. Give only the final integer.",
+          "expected": "243",
+          "prediction": "240",
+          "correct": false,
+          "prompt": "Question: Compute 15 times 16, then add 3. Give only the final integer.\nAnswer:",
+          "response": " 15 times 16 = 240\n\nExplanation:\n15 times 16 = 240\n\nExplanation:"
+        },
+        {
+          "id": "base_conversion_04",
+          "family": "base_conversion",
+          "kind": "number",
+          "mode": "qa",
+          "question": "What is the base-10 value of the base-6 number 532? Give only the integer.",
+          "expected": "200",
+          "prediction": "10",
+          "correct": false,
+          "prompt": "Question: What is the base-10 value of the base-6 number 532? Give only the integer.\nAnswer:",
+          "response": " The base-10 value of the base-6 number 532 is 6.\n\nQuestion 10.\nWrite the number "
+        },
+        {
+          "id": "state_update_04",
+          "family": "state_update",
+          "kind": "number",
+          "mode": "qa",
+          "question": "Start with n = 12. Add 8, multiply the result by 2, then subtract 1. What is n? Give only the integer.",
+          "expected": "39",
+          "prediction": "2",
+          "correct": false,
+          "prompt": "Question: Start with n = 12. Add 8, multiply the result by 2, then subtract 1. What is n? Give only the integer.\nAnswer:",
+          "response": " 12 + 8 = 20\n20 \u2013 1 = 19\n19 + 8 = 27\n2"
+        },
+        {
+          "id": "sort_unique_04",
+          "family": "sort_unique",
+          "kind": "list",
+          "mode": "qa",
+          "question": "Sort [8, 11, 9, 12, 14, 12] in ascending order and remove duplicates. Return only the resulting list.",
+          "expected": "[8,9,11,12,14]",
+          "prediction": "[11,12,14,14,12,8]",
+          "correct": false,
+          "prompt": "Question: Sort [8, 11, 9, 12, 14, 12] in ascending order and remove duplicates. Return only the resulting list.\nAnswer:",
+          "response": " [11, 12, 14, 14, 12, 8]\n\nExplanation:\n\n\u2022 Sort the"
+        },
+        {
+          "id": "string_insert_04",
+          "family": "string_insert",
+          "kind": "string",
+          "mode": "qa",
+          "question": "Insert the letters 'XY' after the first 3 characters of 'mosaic'. Return only the resulting string.",
+          "expected": "mosXYaic",
+          "prediction": "xyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxyxy",
+          "correct": false,
+          "prompt": "Question: Insert the letters 'XY' after the first 3 characters of 'mosaic'. Return only the resulting string.\nAnswer:",
+          "response": "\n\n```Input:\nmosaic = \"XYXYXYXYXYXYXYXYXYXYXYXYXYXYXYXYXYXYXYXYXYXY"
+        },
+        {
+          "id": "syllogism_04",
+          "family": "syllogism",
+          "kind": "yesno",
+          "mode": "qa",
+          "question": "Every dax4 is a vop4. No vop4 is a lum4. Can any dax4 be a lum4? Answer yes or no only.",
+          "expected": "no",
+          "prediction": "yes",
+          "correct": false,
+          "prompt": "Question: Every dax4 is a vop4. No vop4 is a lum4. Can any dax4 be a lum4? Answer yes or no only.\nAnswer:",
+          "response": " Yes, any dax4 can be a lum4.\n\nQuestion:"
+        },
+        {
+          "id": "arithmetic_05",
+          "family": "arithmetic",
+          "kind": "number",
+          "mode": "qa",
+          "question": "Compute 21 times 8, then add 10. Give only the final integer.",
+          "expected": "178",
+          "prediction": "168",
+          "correct": false,
+          "prompt": "Question: Compute 21 times 8, then add 10. Give only the final integer.\nAnswer:",
+          "response": " 21 times 8 = 168\n\nExplanation:\n\n21 times 8 = 168\n\nExplanation:\n"
+        },
+        {
+          "id": "base_conversion_05",
+          "family": "base_conversion",
+          "kind": "number",
+          "mode": "qa",
+          "question": "What is the base-10 value of the base-7 number 661? Give only the integer.",
+          "expected": "337",
+          "prediction": "10",
+          "correct": false,
+          "prompt": "Question: What is the base-10 value of the base-7 number 661? Give only the integer.\nAnswer:",
+          "response": " The base-10 value of the base-7 number 661 is 1000.\n\nQuestion 10.\nWrite"
+        },
+        {
+          "id": "state_update_05",
+          "family": "state_update",
+          "kind": "number",
+          "mode": "qa",
+          "question": "Start with n = 8. Add 11, multiply the result by 5, then subtract 5. What is n? Give only the integer.",
+          "expected": "90",
+          "prediction": "63",
+          "correct": false,
+          "prompt": "Question: Start with n = 8. Add 11, multiply the result by 5, then subtract 5. What is n? Give only the integer.\nAnswer:",
+          "response": " 8 + 11 x 5 = 8 + 55 = 63\n\nQuestion:"
+        },
+        {
+          "id": "sort_unique_05",
+          "family": "sort_unique",
+          "kind": "list",
+          "mode": "qa",
+          "question": "Sort [0, 0, 1, 7, 14, 14] in ascending order and remove duplicates. Return only the resulting list.",
+          "expected": "[0,1,7,14]",
+          "prediction": "[0,0,1,14,14]",
+          "correct": false,
+          "prompt": "Question: Sort [0, 0, 1, 7, 14, 14] in ascending order and remove duplicates. Return only the resulting list.\nAnswer:",
+          "response": " [0, 0, 1, 14, 14]\n\nExplanation:\n\n\u2022 Sorting:\n\u2022 Sorting:"
+        },
+        {
+          "id": "string_insert_05",
+          "family": "string_insert",
+          "kind": "string",
+          "mode": "qa",
+          "question": "Insert the letters 'ZZ' after the first 2 characters of 'violet'. Return only the resulting string.",
+          "expected": "viZZolet",
+          "prediction": "zzzz",
+          "correct": false,
+          "prompt": "Question: Insert the letters 'ZZ' after the first 2 characters of 'violet'. Return only the resulting string.\nAnswer:",
+          "response": "\n\n```Input:\n\"ZZ\"\n\nOutput:\n\"ZZZZ\"\n```\n\nExplanation:\n\n```ZZZZ\nZZZZ"
+        },
+        {
+          "id": "syllogism_05",
+          "family": "syllogism",
+          "kind": "yesno",
+          "mode": "qa",
+          "question": "Every dax5 is a vop5. Every vop5 is a lum5. Can any dax5 be a lum5? Answer yes or no only.",
+          "expected": "yes",
+          "prediction": "yes",
+          "correct": true,
+          "prompt": "Question: Every dax5 is a vop5. Every vop5 is a lum5. Can any dax5 be a lum5? Answer yes or no only.\nAnswer:",
+          "response": " Yes, every dax5 is a vop5.\n\nQuestion:"
+        },
+        {
+          "id": "arithmetic_06",
+          "family": "arithmetic",
+          "kind": "number",
+          "mode": "qa",
+          "question": "Compute 21 times 10, then add 14. Give only the final integer.",
+          "expected": "224",
+          "prediction": "210",
+          "correct": false,
+          "prompt": "Question: Compute 21 times 10, then add 14. Give only the final integer.\nAnswer:",
+          "response": " 21 x 10 = 210\n\nExplanation:\n21 x 10 = 210\n\nQuestion "
+        },
+        {
+          "id": "base_conversion_06",
+          "family": "base_conversion",
+          "kind": "number",
+          "mode": "qa",
+          "question": "What is the base-10 value of the base-5 number 142? Give only the integer.",
+          "expected": "47",
+          "prediction": "10",
+          "correct": false,
+          "prompt": "Question: What is the base-10 value of the base-5 number 142? Give only the integer.\nAnswer:",
+          "response": " The base-10 value of the base-5 number 142 is 10.\n\nQuestion 10.\nWrite the number"
+        },
+        {
+          "id": "state_update_06",
+          "family": "state_update",
+          "kind": "number",
+          "mode": "qa",
+          "question": "Start with n = 5. Add 6, multiply the result by 4, then subtract 8. What is n? Give only the integer.",
+          "expected": "36",
+          "prediction": "6",
+          "correct": false,
+          "prompt": "Question: Start with n = 5. Add 6, multiply the result by 4, then subtract 8. What is n? Give only the integer.\nAnswer:",
+          "response": "\n\nExplanation:\n\nThe sum of the first 5 numbers is 5 + 6 + 6 + 6 + 6 + 6"
+        },
+        {
+          "id": "sort_unique_06",
+          "family": "sort_unique",
+          "kind": "list",
+          "mode": "qa",
+          "question": "Sort [7, 14, 14, 13, 3, 9] in ascending order and remove duplicates. Return only the resulting list.",
+          "expected": "[3,7,9,13,14]",
+          "prediction": "[14,13,14,14,13,3,9]",
+          "correct": false,
+          "prompt": "Question: Sort [7, 14, 14, 13, 3, 9] in ascending order and remove duplicates. Return only the resulting list.\nAnswer:",
+          "response": " [14, 13, 14, 14, 13, 3, 9]\n\nExplanation:\n\n"
+        },
+        {
+          "id": "string_insert_06",
+          "family": "string_insert",
+          "kind": "string",
+          "mode": "qa",
+          "question": "Insert the letters 'mn' after the first 4 characters of 'violet'. Return only the resulting string.",
+          "expected": "violmnet",
+          "prediction": "letters",
+          "correct": false,
+          "prompt": "Question: Insert the letters 'mn' after the first 4 characters of 'violet'. Return only the resulting string.\nAnswer:",
+          "response": "\n\n```Input:\n\"mn\"\nOutput:\n\"mn\"\nExplanation:\n\"mn\" is the only string that contains the letters \""
+        },
+        {
+          "id": "syllogism_06",
+          "family": "syllogism",
+          "kind": "yesno",
+          "mode": "qa",
+          "question": "Every dax6 is a vop6. No vop6 is a lum6. Can any dax6 be a lum6? Answer yes or no only.",
+          "expected": "no",
+          "prediction": "no",
+          "correct": true,
+          "prompt": "Question: Every dax6 is a vop6. No vop6 is a lum6. Can any dax6 be a lum6? Answer yes or no only.\nAnswer:",
+          "response": " No, because a lum6 is a vop6.\n\nQuestion:"
+        },
+        {
+          "id": "arithmetic_07",
+          "family": "arithmetic",
+          "kind": "number",
+          "mode": "qa",
+          "question": "Compute 13 times 10, then add 6. Give only the final integer.",
+          "expected": "136",
+          "prediction": "13",
+          "correct": false,
+          "prompt": "Question: Compute 13 times 10, then add 6. Give only the final integer.\nAnswer:",
+          "response": " 13 x 10 = 130\n13 x 10 = 130\n\nExplanation:\n13 x"
+        },
+        {
+          "id": "base_conversion_07",
+          "family": "base_conversion",
+          "kind": "number",
+          "mode": "qa",
+          "question": "What is the base-10 value of the base-6 number 240? Give only the integer.",
+          "expected": "96",
+          "prediction": "10",
+          "correct": false,
+          "prompt": "Question: What is the base-10 value of the base-6 number 240? Give only the integer.\nAnswer:",
+          "response": " The base-10 value of the base-6 number 240 is 240.\n\nQuestion 10.\nWrite the"
+        },
+        {
+          "id": "state_update_07",
+          "family": "state_update",
+          "kind": "number",
+          "mode": "qa",
+          "question": "Start with n = 13. Add 2, multiply the result by 5, then subtract 14. What is n? Give only the integer.",
+          "expected": "61",
+          "prediction": "9",
+          "correct": false,
+          "prompt": "Question: Start with n = 13. Add 2, multiply the result by 5, then subtract 14. What is n? Give only the integer.\nAnswer:",
+          "response": "\n\nExplanation:\n\nThe sum of the first 13 odd numbers is 1 + 3 + 5 + 7 + 9 +"
+        },
+        {
+          "id": "sort_unique_07",
+          "family": "sort_unique",
+          "kind": "list",
+          "mode": "qa",
+          "question": "Sort [9, 3, 10, 11, 10, 9] in ascending order and remove duplicates. Return only the resulting list.",
+          "expected": "[3,9,10,11]",
+          "prediction": "[10,11,10,9,3,9]",
+          "correct": false,
+          "prompt": "Question: Sort [9, 3, 10, 11, 10, 9] in ascending order and remove duplicates. Return only the resulting list.\nAnswer:",
+          "response": " [10, 11, 10, 9, 3, 9]\n\nExplanation:\n\n\u2022 Sort the given list"
+        },
+        {
+          "id": "string_insert_07",
+          "family": "string_insert",
+          "kind": "string",
+          "mode": "qa",
+          "question": "Insert the letters 'XY' after the first 5 characters of 'lantern'. Return only the resulting string.",
+          "expected": "lanteXYrn",
+          "prediction": "ide",
+          "correct": false,
+          "prompt": "Question: Insert the letters 'XY' after the first 5 characters of 'lantern'. Return only the resulting string.\nAnswer:",
+          "response": "\n\n```Input:\n\"XY\"\nOutput:\n\"XY\"\n```\n\n## Recommended: Please try your approach on {IDE}"
+        },
+        {
+          "id": "syllogism_07",
+          "family": "syllogism",
+          "kind": "yesno",
+          "mode": "qa",
+          "question": "Every dax7 is a vop7. Every vop7 is a lum7. Can any dax7 be a lum7? Answer yes or no only.",
+          "expected": "yes",
+          "prediction": "yes",
+          "correct": true,
+          "prompt": "Question: Every dax7 is a vop7. Every vop7 is a lum7. Can any dax7 be a lum7? Answer yes or no only.\nAnswer:",
+          "response": " Yes, any dax7 can be a lum7.\n\nQuestion:"
+        }
+      ]
+    }
+  ]
+}

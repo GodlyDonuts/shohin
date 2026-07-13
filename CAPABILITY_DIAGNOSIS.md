@@ -612,3 +612,14 @@ correct product, fails state reuse, and falls into unrelated templates on string
 sorting, and code tasks. Future work may improve explicit answer commitment, but
 a short decoder cap cannot count as a reasoning solution unless it also transfers
 to held-out fact, review, and state-reuse conditions.
+
+A matched 48-case QA matrix with a new seed tests whether this is broad. The
+32-token decode scores **8/48 = 16.7%** and the standard 128-token decode
+scores **7/48 = 14.6%**. The sole changed item is one state-update case;
+both budgets are 7/8 syllogisms and **0/8** arithmetic, base conversion,
+sorting, and string insertion. The records are
+`capability_matrix_raw190k_seed20260713_qa_max32_mps.json` (md5
+`89889f3616cae656c415bf277244c67f`) and
+`capability_matrix_raw190k_seed20260713_qa_max128_mps.json` (md5
+`83ea629a248655bc4b7ceec3ecb8ec66`). This rejects decoder budget or
+answer-commitment tuning as a broad capability intervention at raw 190k.

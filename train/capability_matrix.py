@@ -217,7 +217,7 @@ def main():
     if args.n_loop < 0:
         raise SystemExit("--n-loop must be zero or positive")
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     cases = build_cases(args.n_per_family, args.seed)
     tokenizer = Tokenizer.from_file(args.tokenizer)
     print(f"[capability-matrix] device={device} cases={len(cases)} modes={args.modes}", flush=True)

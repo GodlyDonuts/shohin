@@ -2062,6 +2062,12 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   ignores verified facts, and cannot reuse a state. This is explicitly not a thinking claim or a decoder
   optimization to promote; it identifies answer commitment as one interface issue after a model has learned
   substantially broader verified operations.
+- **2026-07-13 ~03:22** — **The raw-190k decoder-depth effect fails to generalize.** The exact same
+  fresh 48-case QA matrix at max-new 32 vs 128 is **8/48 vs 7/48**; only one state-update case changes.
+  Both budgets score 7/8 syllogisms and zero across 8 arithmetic, 8 base-conversion, 8 sorting, and 8
+  string-insertion cases. The hash-bound MPS artifacts are `89889f3616cae656c415bf277244c67f` and
+  `83ea629a248655bc4b7ceec3ecb8ec66`. Reject decoder-budget/answer-commitment tuning as a broad route;
+  keep the effect only as a future interface diagnostic.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
