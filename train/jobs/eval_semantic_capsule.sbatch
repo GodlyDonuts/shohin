@@ -14,7 +14,8 @@ BASE=/lustre/fs1/home/sa305415/shohin
 PY=$BASE/miniforge3/bin/python
 CKPT=${CKPT:?set CKPT to an immutable checkpoint}
 EPISODES=${EPISODES:?set EPISODES to held-out semantic-capsule episodes}
-OUT=${OUT:?set OUT to a fresh JSON result path}
+TAG=${TAG:-semantic_capsule_eval}
+OUT=${OUT:-$BASE/artifacts/eval_history/${TAG}_${SLURM_JOB_ID}.json}
 
 [ -f "$CKPT" ] || { echo "[semantic-capsule] checkpoint missing: $CKPT" >&2; exit 2; }
 [ -s "$EPISODES" ] || { echo "[semantic-capsule] episodes missing: $EPISODES" >&2; exit 2; }

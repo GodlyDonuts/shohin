@@ -72,7 +72,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | **Current pretrain correction** | `685084` is healthy through observed **step 187,870** at **154.31k tok/s**. Recent loss/gnorm are in band and no persistent skip exists. Next DR target is 190k; dependency-held `686732` remains the validated two-H100 natural successor and cannot modify the current writer. |
 | **Current V8/V9 control correction** | Raw board `686861` is **complete** at GSM8K maj@8 **2/200**, pass@1 **7/200**, MATH-500 **5/200**, HumanEval **7/164**, MBPP **0/200**. Initial V8 `686862` failed before model load because its direct-interview overlap report bound a stale source; refreshed quality r4, full-text r2, and generalization r2 passed, and isolated replacement SFT **`687003`** is running cleanly (step 120/4,580). V9 board has GSM8K **18/200** maj@8 and **21/200** pass@1, MATH-500 **5/200**, and **HumanEval 5/164**, below raw's 7/164; MBPP is still running. Its completed direct 1/8 and visible trace 0/12 gates already block broad promotion. |
 | **Current semantic bridge control** | Held-out raw 180k baseline `686978` is **0/500** answers and 0 visible answer-traces. V9 `686979` is **29/500** answers but only **5/500** correct visible trace-and-answer pairs, concentrated in state-chain (20 answers) and fact-continuation (5); it is narrow transfer, not thinking. V10 remains untrained until full V9 control decision. |
-| **Current semantic capsule correction** | First 360,000-row build `686991` was rejected by audit `686992` for 884 duplicate no-op-swap prompts; artifacts were preserved under `artifacts/rejected/`, never edited. Corrected CPU build `687009` completed 360,000 rows and 3,000 held-out 4/8/12-step episodes. Independent audit `687010` passed: 0 malformed/duplicate rows, 0 invalid episodes, and 0 exact/13-gram hits across all 30,000 held-out controller prompts. First generic admission `687013` correctly stopped at a conservative 25,000-pack capacity threshold after measuring 22,899 exact packs; the bounded 20,000-pack rerun **`687015`** is running. No SFT references this candidate. |
+| **Current semantic capsule correction** | First 360,000-row build `686991` was rejected by audit `686992` for 884 duplicate no-op-swap prompts; artifacts were preserved under `artifacts/rejected/`, never edited. Corrected CPU build `687009` completed 360,000 rows and 3,000 held-out 4/8/12-step episodes. Independent audit `687010` passed: 0 malformed/duplicate rows, 0 invalid episodes, and 0 exact/13-gram hits across all 30,000 held-out controller prompts. Generic admission `687015` **passed** 360,000 rows, 0 generic overlaps, and 22,899 exact packs. Raw H100 control `687017` failed CUDA preflight on excluded bad node `evc26` before model load; its dependency was canceled. Replacement held controls are **`687019`** raw 180k then **`687020`** V9, both on the vetted-node exclude set and writing separate transcript artifacts. No SFT references this candidate. |
 | 60k final loss | final logged band ~1.5-1.7; last logged step 59990 loss 1.6989, lr 0.0005 |
 | 60k skips | **45 total**, stable/healthy |
 | **Corpus-expansion job** | `680324` — **✅ DONE** (finished ~12:10) |
@@ -1878,6 +1878,14 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   only because its predeclared 25,000-pack capacity floor was too high. The corpus remains sufficient for
   a low-share mixed ablation, so the floor is now an explicit 20,000 packs and rerun `687015` uses fresh
   report paths. No data file, checkpoint, SFT job, or flagship process was modified.
+- **2026-07-13 ~00:30** — **Closed-loop context baselines are held behind admission.** `687015` passed
+  every generic data gate at 360,000 rows and 22,899 exact packs. First raw job `687017` failed CUDA
+  preflight on `evc26` before model load, so it is a hardware non-result and its held V9 successor
+  `687018` was canceled. Replacement `687019` evaluates immutable raw 180k over 100 held-out episodes
+  per 4/8/12-step regime on the vetted-node exclude set; only if it is complete and clean does `687020`
+  evaluate the isolated V9 checkpoint on identical episodes. The evaluator carries only model-emitted
+  capsules, never executes or repairs a state, and records every response. These jobs cannot train or
+  promote a model; they establish the raw/V9 floor before any semantic-capsule SFT mix is considered.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
