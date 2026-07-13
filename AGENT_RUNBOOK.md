@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 15:24 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; both DRS v2 raw controls are zero; isolated uncompiled DRS SFT `687459` completed cleanly on verified evc49, and source-free core evaluator `687460` is running before held-out/direct/NLL successors; DCRD and CBC each have local preflighted generator/auditors but remain conditional with no submitted corpus/data/job; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 15:33 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; both DRS v2 raw controls are zero; isolated uncompiled DRS SFT `687459` completed cleanly on verified evc49, and source-free core evaluator `687460` is running before held-out/direct/NLL successors; DCRD and CBC each have local preflighted generator/auditors, while CBC now also has a transport-only evaluator controller; all remain conditional with no submitted corpus/data/job; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2492,3 +2492,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Corruption tests reject altered targets and a semantically valid-looking mismatched counterfactual
   operation sequence. CBC has no
   durable corpus, controller, SFT, or GPU job; it remains gated on the serialized DRS causal chain.
+
+- **2026-07-13 15:33** — **CBC's source-free transport controller is now independently tested.**
+  `train/bisimulation_compiler_controller.py` may parse only model-emitted `cbc:` text, render the next
+  source-free update/query prompt around it, and exact-compare outputs after the rollout. It does not call
+  a semantic state transition or answer solver. Its deterministic test exercises primary rollout,
+  inverse-delta checks, same-world compilation interchange, and normal-state versus counterfactual-world
+  query mismatch; corrupting the first predicted state halts the rollout with no final-answer repair. This
+  is evaluator infrastructure only. No CBC corpus, SFT checkpoint, or GPU job is authorized ahead of the
+  DRS causal decision.

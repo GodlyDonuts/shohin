@@ -255,6 +255,15 @@ No
 durable corpus, SFT checkpoint, controller rollout, or GPU job has been
 created.  CBC remains conditional on a positive DRS causal result.
 
+The matching transport-only controller is also preflighted.  It accepts only
+a parsed model-emitted state, renders the next source-free prompt around that
+text, and halts on an incorrect or malformed emission.  Its test covers
+primary rollout, inverse-delta checks, same-world compiler interchange, and a
+cross-world counterfactual mismatch on the identical query.  A bad first
+state terminates the run; it is not canonicalized into a solver answer or
+repaired.  This makes CBC's later state-necessity measurement executable
+rather than an informal data claim.
+
 ## Conditional Hypothesis: Dual-Code Reversible Deliberation
 
 The missing ingredient may be neither a longer trace nor a larger hidden

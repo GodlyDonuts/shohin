@@ -319,6 +319,9 @@ held-out episodes, **0** normalized duplicate prompts, **0** exact prompt
 overlaps, and **0** literal 13-gram overlaps.  The corpus has not been
 materialized as a durable artifact and no CBC SFT/GPU job is authorized until
 the DRS core, held-out wording, and direct-interaction gates complete.
+The companion transport-only controller test passes source-free rollout,
+inverse-delta, same-world interchange, and counterfactual mismatch checks;
+an incorrect first model state halts rather than being repaired.
 
 ## Checkpoint and Disaster-Recovery Inventory
 
