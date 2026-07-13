@@ -128,17 +128,22 @@ def evaluate_pair(episode, ask):
     normal_primary = normal["primary"]
     counter_primary = counterfactual["primary"]
     keys = tuple(episode["keys"])
-    mismatch = None
-    if normal_primary["terminal_state"] is not None:
-        prompt = sum_query_prompt(normal_primary["terminal_state"], keys, episode["reference"], episode["style"])
+    cross_world = None
+    if normal_primary["terminal_state"] is not None and counter_primary["terminal_state"] is not None:
+        # The final query receives no original source text.  Replacing only its
+        # carrier with the model-emitted counterfactual terminal state is the
+        # actual interchange intervention; re-reading the normal state would
+        # only restate the ordinary rollout score.
+        prompt = sum_query_prompt(counter_primary["terminal_state"], keys, episode["reference"], episode["style"])
         response = ask(prompt)
         answer = parse_answer(response)
-        mismatch = {
+        cross_world = {
             "prompt": prompt,
             "response": response,
             "answer": answer,
-            "preserves_normal_answer": answer == int(episode["normal"]["query"]["answer"]),
-            "rejects_counterfactual_answer": answer != int(episode["counterfactual"]["query"]["answer"]),
+            "carrier": counter_primary["terminal_state"],
+            "uses_counterfactual_answer": answer == int(episode["counterfactual"]["query"]["answer"]),
+            "rejects_normal_answer": answer != int(episode["normal"]["query"]["answer"]),
         }
     return {
         "normal": normal,
@@ -151,6 +156,10 @@ def evaluate_pair(episode, ask):
             counterfactual["compilations"]["a"]["correct"] and counterfactual["compilations"]["b"]["correct"] and
             counterfactual["compile_equal"] and counterfactual["interchange"] and counterfactual["interchange"]["final_correct"]
         ),
-        "cross_world_mismatch": mismatch,
+        "cross_world_interchange": cross_world,
+        "cross_world_counterfactual_success": bool(
+            normal_primary["final_correct"] and counter_primary["final_correct"] and cross_world and
+            cross_world["uses_counterfactual_answer"] and cross_world["rejects_normal_answer"]
+        ),
         "claim_boundary": "Transport-only rollout; no semantic solver or state repair is used at runtime.",
     }

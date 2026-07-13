@@ -22,9 +22,9 @@ for world in (episode["normal"], episode["counterfactual"]):
         responses[step["delta_prompt"]] = step["delta"]
     responses[world["query"]["prompt"]] = "answer={}".format(world["query"]["answer"])
 
-normal_terminal = episode["normal"]["steps"][-1]["after_state"]
-mismatch_prompt = sum_query_prompt(normal_terminal, keys, episode["reference"], episode["style"])
-responses[mismatch_prompt] = "answer={}".format(episode["normal"]["query"]["answer"])
+counter_terminal = episode["counterfactual"]["steps"][-1]["after_state"]
+cross_world_prompt = sum_query_prompt(counter_terminal, keys, episode["reference"], episode["style"])
+responses[cross_world_prompt] = "answer={}".format(episode["counterfactual"]["query"]["answer"])
 
 def ask(prompt):
     return responses[prompt]
@@ -36,8 +36,9 @@ assert result["counterfactual"]["primary"]["final_correct"]
 assert all(row["inverse_delta_correct"] for row in result["normal"]["primary"]["rows"])
 assert result["same_world_interchange_success"]
 assert result["counterfactual_interchange_success"]
-assert result["cross_world_mismatch"]["preserves_normal_answer"]
-assert result["cross_world_mismatch"]["rejects_counterfactual_answer"]
+assert result["cross_world_interchange"]["uses_counterfactual_answer"]
+assert result["cross_world_interchange"]["rejects_normal_answer"]
+assert result["cross_world_counterfactual_success"]
 
 broken = dict(responses)
 first_prompt = episode["normal"]["steps"][0]["update_prompt"]

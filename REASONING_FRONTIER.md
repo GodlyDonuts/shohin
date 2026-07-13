@@ -470,10 +470,33 @@ The matching transport-only controller is also preflighted.  It accepts only
 a parsed model-emitted state, renders the next source-free prompt around that
 text, and halts on an incorrect or malformed emission.  Its test covers
 primary rollout, inverse-delta checks, same-world compiler interchange, and a
-cross-world counterfactual mismatch on the identical query.  A bad first
-state terminates the run; it is not canonicalized into a solver answer or
-repaired.  This makes CBC's later state-necessity measurement executable
-rather than an informal data claim.
+real cross-world counterfactual carrier swap on the identical source-free
+query.  The swap takes the *model-emitted counterfactual terminal state* and
+requires the query to produce the counterfactual answer rather than the normal
+answer.  Re-reading the normal state would only restate ordinary rollout
+accuracy and is explicitly not counted as a causal result.  A bad first state
+terminates the run; it is not canonicalized into a solver answer or repaired.
+This makes CBC's later state-necessity measurement executable rather than an
+informal data claim.
+
+### CBC Build and Evaluation Readiness
+
+The CPU-only Stokes build wrapper creates a fresh candidate only after an
+independent audit passes: it requires zero malformed rows or held-out episodes,
+zero exact and 13-gram train/held-out prompt hits, all five training roles
+(two compilers, update, inverse delta, readout), and all 4/8/12-step held-out
+regimes.  The initial build uses 4,000 episodes per train domain and 200 per
+held-out domain, which exceeds 100,000 training rows without consuming a GPU.
+Stokes job `738468` is the first such build; it is data admission only, not an
+SFT or capability result.
+
+`train/eval_counterfactual_bisimulation.py` now measures the controller with a
+checkpoint on a deterministic balanced slice.  It records compilation A/B,
+source-deleted closed loops, inverse-delta checks, same-world interchange,
+counterfactual interchange, and the true cross-world carrier intervention.
+No SFT should be proposed from CBC unless those held-out metrics show a
+nonzero causal state-necessity margin over malformed, swapped, and
+counterfactual-mismatched carriers.
 
 ### DRS v2 Coverage Diagnosis: 2026-07-13 15:38 EDT
 
