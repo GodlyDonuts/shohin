@@ -74,23 +74,32 @@ class SourceDroppingMemory(nn.Module):
             raise ValueError("chunk count exceeds configured max_chunks")
         return chunks
 
-    def encode(self, chunks):
-        """Recursively write chunks into a fixed continuous memory packet."""
+    def encode(self, chunks, return_trace: bool = False):
+        """Recursively write chunks into a fixed continuous memory packet.
+
+        ``return_trace`` is an isolated research hook: it exposes the packet
+        after each source write for training-only prefix-state supervision.
+        It never adds source tokens to the answer decoder context, and the
+        default remains exactly the previous final-packet-only interface.
+        """
         chunks = self._validate_chunks(chunks)
         batch, chunk_count = chunks[0].shape[0], len(chunks)
         if not self.slots:
-            return self.model.tok.weight.new_empty((batch, 0, self.model.cfg.d_model))
+            state = self.model.tok.weight.new_empty((batch, 0, self.model.cfg.d_model))
+            return (state, tuple(state for _ in range(chunk_count))) if return_trace else state
         state = self.initial_slots.to(
             dtype=self.model.tok.weight.dtype,
             device=chunks[0].device,
         ).expand(batch, -1, -1)
+        trace = []
         for chunk_index in range(chunk_count):
             source = self.model.tok(chunks[chunk_index])
             write = self.write_slots.to(dtype=source.dtype, device=source.device).expand(batch, -1, -1)
             write = write + self.chunk_bias[chunk_index].to(dtype=source.dtype, device=source.device).unsqueeze(0)
             _, _, hidden = self.model.forward_embeds(torch.cat((state, source, write), dim=1), return_hidden=True)
             state = hidden[:, -self.slots:, :] * self._input_scale(hidden.dtype, hidden.device)
-        return state
+            trace.append(state)
+        return (state, tuple(trace)) if return_trace else state
 
     def answer_context(self, memory, query_ids):
         """Return the only context the decoder may see: packet plus new query."""

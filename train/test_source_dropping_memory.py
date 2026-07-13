@@ -46,6 +46,14 @@ def main():
     with torch.no_grad():
         assert not torch.allclose(packet, memory.encode(changed))
 
+    memory.zero_grad(set_to_none=True)
+    final_packet, trajectory = memory.encode(chunks, return_trace=True)
+    assert len(trajectory) == chunks.shape[1]
+    assert torch.allclose(final_packet, packet)
+    assert torch.allclose(trajectory[-1], final_packet)
+    trajectory[-1].square().mean().backward()
+    assert memory.chunk_bias.grad is not None and memory.chunk_bias.grad.abs().sum() > 0
+
     # Real source records have a stable chunk-count but variable chunk widths.
     ragged_chunks = (chunks[:, 0, :], chunks[:, 1, :-1])
     ragged_logits, ragged_loss, ragged_packet, _ = memory.supervised_loss(
@@ -59,6 +67,9 @@ def main():
     empty_packet = empty.encode(chunks)
     assert empty_packet.shape == (2, 0, 48)
     assert empty.answer_context(empty_packet, query).shape[1] == query.shape[1]
+    empty_final, empty_trace = empty.encode(chunks, return_trace=True)
+    assert len(empty_trace) == chunks.shape[1]
+    assert empty_final.shape == (2, 0, 48)
     print("source-dropping memory tests passed")
 
 

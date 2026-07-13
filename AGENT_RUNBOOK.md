@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 ~04:46 EDT (`685084` remains healthy through 193.29k; compact CLL v2 and answer-only continuous latent rollout are rejected by their matched controls; corrected source-free latent-state-algebra r2 primary control/candidate are actively training under a preregistered evaluator/comparator gate; the prior 4.6B FineWeb output is rejected as an undersized 25B replacement and Stokes CPU job `738030` has emitted its first guarded `sample-100BT` shard). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 ~04:52 EDT (`685084` remains healthy through 193.29k; compact CLL v2 and answer-only continuous latent rollout are rejected by their matched controls; corrected source-free latent-state-algebra r2 primary control/candidate are actively training under a preregistered evaluator/comparator gate; prefix-supervised packet-memory mechanics are CPU-tested but unsubmitted; the prior 4.6B FineWeb output is rejected and Stokes `738030` is building the guarded `sample-100BT` replacement). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2164,6 +2164,16 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   tokens) but is retrying transient HF 503s; it remains live and unadmitted. Stokes FineWeb r2 `738030`
   is RUNNING on ec52 and has emitted its first 100,001,543-token partial shard; it remains unadmitted
   until the >=24.5B manifest floor and full scan/approval are present. No live writer was modified.
+- **2026-07-13 ~04:52** — **Prefix-supervised packet-memory mechanics are ready locally, but no GPU
+  trial is admitted.** `SourceDroppingMemory.encode(..., return_trace=True)` now exposes only the
+  continuous packet after each source write; the answer boundary remains final packet plus fresh query
+  with all source text absent. New `prefix_state_supervision.py` solver-recomputes each operation-prefix
+  state and trains state/delta probes at every write, addressing the final-state-only credit-assignment
+  weakness of LSA. CPU tests prove final-trace identity, writer/model gradients, exact prefix targets,
+  delta targets, and all existing LSA contracts. This is a forward-only fallback: submit it only if
+  the current LSA causal gate rejects or demonstrates that the added prefix signal is the next justified
+  ablation. Any future trial must retain matched final-only, shuffled-prefix-label, and no-memory controls;
+  it cannot alter `685084` or reuse an active experiment output.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
