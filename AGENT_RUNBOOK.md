@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 ~04:02 EDT (`685084` remains healthy through 192.4k; compact CLL v2 and answer-only continuous latent rollout are rejected by their matched controls; source-free latent-state-algebra v1 has passed a fresh Stokes CPU admission audit and only its isolated H100 mechanics canary is queued). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 ~04:13 EDT (`685084` remains healthy through 192.6k; compact CLL v2 and answer-only continuous latent rollout are rejected by their matched controls; corrected source-free latent-state-algebra r2 has passed Stokes admission and its matched H100 control/candidate chain is isolated and queued). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2104,6 +2104,21 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   `train/lsa_canary_190k`. It must prove CUDA, finite pair losses, data binding, and source removal
   before any matched answer-only/control/candidate experiment is submitted. It cannot access or alter
   flagship `685084`.
+- **2026-07-13 ~04:13** — **LSA mechanics passed; r1 data was then correctly rejected at the evaluator
+  boundary, and r2 is now the only admissible experiment chain.** `687158` finished its 256-pair H100
+  mechanics run in 69s: 64 finite updates, source-removed checkpoint metadata, and hash-bound r1 data;
+  it is a transport check only. A read-through of the generic held-out evaluator caught that r1 rows lacked
+  its deterministic `reference` key, which is necessary to prove case matching and temporal shuffle
+  controls. Full r1 jobs `687164/687165` were canceled after 27/26s before any model artifact, rather than
+  producing unevaluable results. The generator now emits row-level `reference=pair_id-pair_member`; the
+  audit rejects missing/noncanonical/duplicate references and the trainer requires those zero-count fields.
+  Fresh Stokes r2 output is **64,000/2,304** rows with every prior audit gate plus zero duplicate
+  references: train/eval SHA-256 **`a73c5068f9c775ea6b40b42335e01ad4f792657aeba4688d3aca42d853becb58`** /
+  **`6a9619ebc73f1778dbb13d69d903de1790ce0292f231c437f35e282a934581da`**, audit md5
+  **`19ac94a6f42546c55596ece6a76ffc8f`**. Matched control `687168` (`ZERO_AUXILIARY=1`) and verified
+  state-algebra candidate `687169` both start from immutable `best_step190000.pt`, same r2 data/seed/BS=4,
+  and separate output directories. Complete held-out source-removed normal/zero/shuffled evaluations
+  `687170/687171` and locked comparator `687172` are dependency-held. No job references flagship paths.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*

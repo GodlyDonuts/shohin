@@ -39,6 +39,7 @@ def sha256_file(path: str) -> str:
 def audit_admits_training(audit, data_sha256: str) -> bool:
     failures = (
         "invalid_train_rows", "invalid_eval_rows", "duplicate_train_prompts", "duplicate_eval_prompts",
+        "duplicate_train_references", "duplicate_eval_references",
         "train_eval_exact_prompt_hits", "train_eval_13gram_hits", "invalid_train_pairs", "invalid_eval_pairs",
     )
     return (

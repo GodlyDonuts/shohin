@@ -50,7 +50,7 @@ def valid_row(row, heldout):
     required = (
         "chunks", "query", "response", "answer", "initial", "keys", "item", "operations", "chunk_count",
         "heldout", "style", "state", "state_scale", "pair_id", "pair_kind", "pair_member", "protocol",
-        "query_kind",
+        "reference", "query_kind",
     )
     if any(key not in row for key in required) or bool(row["heldout"]) != heldout:
         return False
@@ -59,6 +59,7 @@ def valid_row(row, heldout):
         or len(row["chunks"]) != len(row["operations"]) != int(row["chunk_count"])
         or row["pair_kind"] not in PAIR_KINDS
         or row["pair_member"] not in {"a", "b"}
+        or row["reference"] != "{}-{}".format(row["pair_id"], row["pair_member"])
         or row["query_kind"] not in {"read_left", "read_right", "sum", "difference"}
         or row["protocol"] != "source_removed_latent_state_algebra_v1"
         or int(row["state_scale"]) != STATE_SCALE
@@ -156,6 +157,8 @@ def main():
     train, evaluation = load(args.train), load(args.eval)
     train_keys = [source_key(row) for row in train]
     eval_keys = [source_key(row) for row in evaluation]
+    train_references = [row.get("reference") for row in train]
+    eval_references = [row.get("reference") for row in evaluation]
     train_pairs, invalid_train_pairs, train_kinds = pair_failures(train)
     eval_pairs, invalid_eval_pairs, eval_kinds = pair_failures(evaluation)
     regimes = Counter(row.get("eval_regime") for row in evaluation)
@@ -171,6 +174,8 @@ def main():
         "invalid_eval_rows": sum(not valid_row(row, True) for row in evaluation),
         "duplicate_train_prompts": len(train_keys) - len(set(train_keys)),
         "duplicate_eval_prompts": len(eval_keys) - len(set(eval_keys)),
+        "duplicate_train_references": len(train_references) - len(set(train_references)),
+        "duplicate_eval_references": len(eval_references) - len(set(eval_references)),
         "train_eval_exact_prompt_hits": len(set(train_keys) & set(eval_keys)),
         "train_eval_13gram_hits": overlap_hits(sorted_ngrams(train), evaluation),
         "train_pairs": train_pairs,
@@ -189,6 +194,7 @@ def main():
     print(json.dumps(report, sort_keys=True))
     failures = (
         "invalid_train_rows", "invalid_eval_rows", "duplicate_train_prompts", "duplicate_eval_prompts",
+        "duplicate_train_references", "duplicate_eval_references",
         "train_eval_exact_prompt_hits", "train_eval_13gram_hits", "invalid_train_pairs", "invalid_eval_pairs",
     )
     if any(report[key] for key in failures) or set(regimes) != EXPECTED_REGIMES or set(train_kinds) != set(PAIR_KINDS) or set(eval_kinds) != set(PAIR_KINDS):

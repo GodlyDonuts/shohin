@@ -120,6 +120,10 @@ def make_row(
         "pair_id": pair_id,
         "pair_kind": pair_kind,
         "pair_member": pair_member,
+        # The held-out evaluator keys matching and deterministic shuffles by a
+        # row-level reference.  It is metadata only and never reaches the
+        # source-free decoder.
+        "reference": "{}-{}".format(pair_id, pair_member),
         "query_kind": query_kind,
         "protocol": "source_removed_latent_state_algebra_v1",
         "tag_scheme": TAG_SCHEME,
@@ -272,6 +276,7 @@ def main():
         for row in rows:
             row["eval_regime"] = regime
             row["pair_id"] = "{}-{}".format(regime, row["pair_id"])
+            row["reference"] = "{}-{}".format(row["pair_id"], row["pair_member"])
             if row.get("counterfactual_id"):
                 row["counterfactual_id"] = "{}-{}".format(regime, row["counterfactual_id"])
         evaluation.extend(rows)
