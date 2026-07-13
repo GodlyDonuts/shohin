@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 17:15 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, so it is a narrow recurrent executor with path-dependent failures; the core transcript probe now confirms those failures are late recurrent-transport errors; a matched 80-direction raw residual-patching baseline is negative and the post-DRS comparison is safely queued; held-out wording, direct interaction, and NLL remain serialized through a just-passed 1-H100 CUDA preflight; both full v3 transition-basis and static-tape/recurrent-register corpora are hash-admitted but untrained, with STRR now the higher-priority representation control; a counterfactual-workspace-induction control is designed but remains conditional on a positive STRR primitive; DCRD and CBC remain conditional; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 18:25 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, so it is a narrow recurrent executor with path-dependent failures; the core transcript probe now confirms those failures are late recurrent-transport errors; a matched 80-direction raw residual-patching baseline is negative and the post-DRS comparison is safely queued; the held-out wording to direct-interaction to NLL chain remains serialized on one H100; both full v3 transition-basis and static-tape/recurrent-register corpora are hash-admitted but untrained, with STRR now the higher-priority representation control; token-native delta-ledger data is independently admitted as a separate three-token transport control with no capability score; counterfactual-workspace induction, DCRD, and CBC remain conditional; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2636,3 +2636,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Submission `738430` writes only fresh TNDL artifacts and `738431` is its read-only `afterok` audit;
   both request four CPUs and 24 GiB on `normal`. Their scripts passed remote compilation and Slurm
   `--test-only`; no H100, pretraining stream, checkpoint, or existing artifact path is shared.
+
+- **2026-07-13 18:25** — **TNDL CPU admission completed and is mirrored, but remains untrained.** Stokes
+  build `738430` completed in 2m15s and independent audit `738431` in 2m45s. The immutable artifact is
+  available through the shared `/lustre/fs1/home/sa305415/shohin` path on Newton and has a verified Mac
+  mirror: train data SHA-256 `dd5bcc9768b3b96c6c476333bc57ffd5563afea1b5ed74b416f207e9847f62bc`,
+  held-out SHA-256 `9ee78b94ca4798c1cf6e742b561c208b273e33eccb059a2873de1d946fbd0316`, and local/remote
+  MD5s `8cdaef594c979cddaeaba766740e4c46` / `ec0ff37b5d4c62e168ba6626a58caa2e`. The auditor confirms
+  169,115 valid training rows, 900 valid held-out episodes, and zero invalid, duplicate, missing-context,
+  exact-overlap, or 13-gram findings. `eval_token_native_ledger.py` and its unsubmitted one-H100 wrapper
+  now measure literal-carrier syntax, exact transition transport, closed-loop answers, and paired
+  counterfactual changes; local pure contracts pass. It has no SFT, H100 allocation, or model result;
+  wait for the DRS evidence chain before deciding whether it earns a matched comparison.
