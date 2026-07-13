@@ -222,6 +222,27 @@ a claim about every possible prompt contract or general reasoning. Artifact:
 `artifacts/eval_history/forced_choice_raw200k_20260713_mps.json`, md5
 `7b6bcdd58f6420703fcb0b6bbbfa3afd`.
 
+### DRS Core-Wording Completion: 2026-07-13 13:42 EDT
+
+The raw canonical-interface control `687362` completed cleanly on an isolated
+H100 (42m12s, exit 0) against the same 500 paired DRS episodes as raw
+held-out-wrapped `687348`. It records **0/500** first transitions, exact
+closed-loop states, final answers, counterfactual finals, and paired
+interventions in every 100-episode `fit_w4`, `fit_w6`, `value_ood_w4`,
+`value_ood_w6`, and `width_ood_w8` regime. It attempted exactly one transition
+per normal branch before failing, so there is no unreported partial-loop gain.
+The result has 34 unique first responses with a mode count of 265, not a
+constant-answer collapse. The artifact is
+`artifacts/evals/digitwise_recurrent_v2_raw200k_core_p100.json`, MD5
+`20a5d4cc4a776ee3ffb9220f288f4f6a`.
+
+Together with `687348`'s zero held-out-wrapped score, this rejects the
+hypothesis that the raw model contains an executable DRS primitive behind a
+lexical interface. It does **not** reject supervised learnability. The
+isolated, exact-prompt-bound one-epoch SFT `687375` started only after this
+clean control, from `best_step200000.pt`, and its core/held-out children are
+still dependency-held. The result cannot alter the flagship pretrain.
+
 ## Checkpoint and Disaster-Recovery Inventory
 
 | Milestone | Numbered checkpoint at milestone | Newton durable copy | Local full checkpoint | MD5 | State |
