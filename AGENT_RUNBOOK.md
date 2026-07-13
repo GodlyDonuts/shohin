@@ -2794,6 +2794,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   required semantic field: carry, the active result digit, program counter, or immutable tape. The target
   is value-bound (`expected`/`observed` at the active position), rather than a constant legal/illegal
   label. Local contracts independently validate legal successors, all four foil kinds, and terminal
-  exclusions. No CWI corpus, SFT, H100 allocation, checkpoint, or semantic score exists. Do not submit it
-  until STRR has first proven direct state transport and the prescribed syntax-only, label-permutation,
-  and equal-compute controls can be run from the same checkpoint.
+  exclusions. No CWI SFT, H100 allocation, checkpoint, or semantic score exists. Do not submit it until
+  STRR has first proven direct state transport and the prescribed syntax-only, label-permutation, and
+  equal-compute controls can be run from the same checkpoint.
+
+- **2026-07-13 19:39** — **CWI now has a full CPU-only data admission dry-run, still not a training
+  result.** `pipeline/build_counterfactual_workspace_v1.py` derives legal plus one-field semantic-foil
+  reflections from the admitted static-tape factor corpus, while preserving semantic,
+  label-permuted, and syntax-only response fields for later matched controls. Its independent auditor
+  (`pipeline/audit_counterfactual_workspace_v1.py`) reparses each serialized state, rederives its legal
+  successor and verdict without importing the builder, checks all prompt/response bindings, full 3,400
+  local-context coverage, pairwise held-out base/counterfactual worlds, and split leakage. The complete
+  local dry-run produced **682,957** train rows and **52,200** held-out rows with 0 malformed rows,
+  duplicate identities/prompts, missing legal contexts, invalid held-out pairs, exact prompt overlaps, or
+  13-gram overlaps; it retains **26,100** paired held-out foil worlds. The durable Stokes job wrapper
+  requests only 4 CPUs / 24 GB and refuses existing output. It must remain unsubmitted for SFT until a
+  positive STRR direct-transport gate identifies a checkpoint that can support the three matched CWI
+  controls; this creates no CWI model, workspace, reasoning, or context result.

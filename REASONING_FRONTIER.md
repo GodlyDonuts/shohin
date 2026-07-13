@@ -261,15 +261,24 @@ own prompted explanation is rejected. This would make CWI a test of
 workspace-shaped computation, not a new narration style.
 
 `train/counterfactual_workspace_protocol.py` now makes the reflection premise
-mechanically precise, without generating a corpus or allocating a GPU. Starting
-from a fixed tape and current register, it derives the legal successor and then
-constructs a candidate that is grammar-valid but differs in exactly one of four
-semantic ways: carry, active result digit, program counter, or immutable tape.
-The supervision target reports the verdict and the expected/observed value at
-the active position. Thus the reflection cannot succeed by detecting malformed
-text or predicting a constant `illegal` label. Its protocol tests are only a
-precondition for future CPU data admission; they do not establish a model
-capability or relax the STRR/CWI gates above.
+mechanically precise. Starting from a fixed tape and current register, it
+derives the legal successor and then constructs a candidate that is
+grammar-valid but differs in exactly one of four semantic ways: carry, active
+result digit, program counter, or immutable tape. The supervision target
+reports the verdict and the expected/observed value at the active position.
+Thus the reflection cannot succeed by detecting malformed text or predicting a
+constant `illegal` label.
+
+The CPU-only builder/auditor pair now has a full local dry-run against the
+admitted factor corpus: 682,957 train reflection rows and 52,200 held-out
+reflection rows, with every row semantically rederived by an auditor that does
+not import the builder. It found 0 malformed rows, duplicate identities,
+normalized duplicate prompts, exact prompt hits, or 13-gram train/held-out
+hits; it covered all 3,400 legal local contexts and preserved all 26,100
+base/counterfactual held-out foil pairs. The durable Stokes wrapper refuses to
+write over artifacts and requests CPU only. This is still corpus admission,
+not an SFT, checkpoint, H100 allocation, workspace result, or relaxation of
+the STRR/CWI gates above.
 
 ## Conditional Representation Control: Token-Native Delta Ledger
 
