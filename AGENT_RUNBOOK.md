@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 ~02:12 EDT (`685084` remains healthy past 190k; the checkpoint is hash-verified on Newton and the Mac; matched answer-only M0/M1 source-packet evidence is rejected; certified latent-ledger data is independently admitted; matched CLL M0/M1/eval/comparator jobs are submitted with fresh paths). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 ~03:10 EDT (`685084` remains healthy through 191.5k; the 190k checkpoint is hash-verified on Newton and the Mac; compact CLL M0 is a documented no-memory null; matched M1/evaluator/comparator remain isolated). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2041,6 +2041,14 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   updates, seed `20260715`, and fresh output paths. Pair-safe evaluations `687146/687147` and
   locked comparator `687148` remain dependency-held. No result is a reasoning claim unless the
   comparator's M0/zero/shuffled/counterfactual gates all pass.
+
+- **2026-07-13 ~03:10** — **Compact CLL M0 is a valid no-memory floor.** Matched M0 `687144`
+  completed all 6,000 updates in 1,181s. Held-out evaluator `687146` returned normal/zero/shuffled
+  **11/631 = 1.743%** in every condition, with **0/128** correct-and-different counterfactual pairs.
+  This is deliberately null evidence, not a CLL result. Matched eight-slot M1 `687145` remains
+  isolated on evc35 with the same raw-190k base/data/seed/schedule; `687147` and comparator `687148`
+  must finish before the route can advance or be rejected. Flagship `685084` remained healthy through
+  observed step 191,530 at 154.30k tok/s; `ckpt_0191500.pt` exists on Newton and the next DR target is 200k.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*

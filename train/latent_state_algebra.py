@@ -42,13 +42,14 @@ class LatentStateAlgebra(nn.Module):
         packet_b: torch.Tensor,
         state_a: torch.Tensor,
         state_b: torch.Tensor,
+        equivalent: torch.Tensor | None = None,
     ) -> dict[str, torch.Tensor]:
         """Return aligned, contrastive, state, and delta losses for paired records.
 
-        A and B may encode equivalent records or verified interventions. The
-        target state vectors are normalized numeric state labels supplied only
-        while training. Batch rows must be independently mismatched semantic
-        states for the contrastive term to be anti-collapse.
+        Only rows marked equivalent contribute to packet alignment and
+        contrastive geometry. Verified intervention rows retain their state
+        and delta supervision, but must not be pulled toward equal packets.
+        Target vectors are normalized numeric labels supplied only in training.
         """
         hidden_a, hidden_b = self.packet_state(packet_a), self.packet_state(packet_b)
         if (
@@ -59,16 +60,29 @@ class LatentStateAlgebra(nn.Module):
             or state_a.shape[1] != self.state_dim
         ):
             raise ValueError("paired packets and states have incompatible shapes")
+        if equivalent is None:
+            equivalent = torch.ones(hidden_a.shape[0], dtype=torch.bool, device=hidden_a.device)
+        elif equivalent.ndim != 1 or equivalent.shape[0] != hidden_a.shape[0]:
+            raise ValueError("equivalent must have shape [batch]")
+        elif equivalent.dtype != torch.bool:
+            raise ValueError("equivalent must have boolean dtype")
+        else:
+            equivalent = equivalent.to(device=hidden_a.device)
 
         projected_a = functional.normalize(self.project(hidden_a), dim=-1)
         projected_b = functional.normalize(self.project(hidden_b), dim=-1)
-        alignment = (1.0 - (projected_a * projected_b).sum(dim=-1)).mean()
-
-        if hidden_a.shape[0] == 1:
-            contrastive = alignment.new_zeros(())
+        paired_a = projected_a[equivalent]
+        paired_b = projected_b[equivalent]
+        if paired_a.shape[0] == 0:
+            alignment = hidden_a.new_zeros(())
+            contrastive = hidden_a.new_zeros(())
         else:
-            labels = torch.arange(hidden_a.shape[0], device=hidden_a.device)
-            logits = projected_a @ projected_b.T / self.temperature
+            alignment = (1.0 - (paired_a * paired_b).sum(dim=-1)).mean()
+        if paired_a.shape[0] <= 1:
+            contrastive = alignment.new_zeros(())
+        elif paired_a.shape[0] > 1:
+            labels = torch.arange(paired_a.shape[0], device=hidden_a.device)
+            logits = paired_a @ paired_b.T / self.temperature
             contrastive = 0.5 * (
                 functional.cross_entropy(logits, labels)
                 + functional.cross_entropy(logits.T, labels)

@@ -292,7 +292,10 @@ research program toward learned latent deliberation rather than more memory.
 
 `train/latent_state_algebra.py` now contains the local, focused training-only
 loss primitive and `train/test_latent_state_algebra.py` verifies its alignment,
-state, delta, anti-collapse, and shape invariants. No LSA paired-data
+state, delta, anti-collapse, and shape invariants. An explicit equivalence
+mask ensures only equivalent rows receive alignment/contrastive pressure;
+verified interventions retain state/delta supervision without being pulled
+together. No LSA paired-data
 generator, trainer, checkpoint, or cluster job exists yet. That boundary is
 intentional: the compact CLL comparator determines whether the next work
 should repair packet geometry or abandon the channel before any new GPU time

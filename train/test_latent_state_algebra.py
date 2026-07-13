@@ -33,12 +33,32 @@ def main():
         packet_a[:1], packet_b[:1], states[:1], states[:1],
     )
     assert singleton["contrastive"].item() == 0.0
+
+    intervention_packet = torch.tensor([[[0.0, 1.0]]])
+    intervention_state = auxiliary.packet_state(intervention_packet).detach()
+    intervention = auxiliary.losses(
+        packet_a[:1],
+        intervention_packet,
+        states[:1],
+        intervention_state,
+        equivalent=torch.tensor([False]),
+    )
+    assert intervention["alignment"].item() == 0.0
+    assert intervention["contrastive"].item() == 0.0
+    assert intervention["state"].item() < 1e-6
+    assert intervention["delta"].item() < 1e-6
     try:
         auxiliary.losses(packet_a, packet_b, states[:1], states[:1])
     except ValueError:
         pass
     else:
         raise AssertionError("mismatched paired states must fail")
+    try:
+        auxiliary.losses(packet_a, packet_b, states, states, equivalent=torch.tensor([True]))
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("mismatched equivalence mask must fail")
     print("latent state algebra auxiliary tests passed")
 
 
