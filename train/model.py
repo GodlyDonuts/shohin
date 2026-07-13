@@ -167,5 +167,36 @@ class GPT(nn.Module):
                 loss = loss + self.cfg.zloss * torch.logsumexp(lf, dim=-1).pow(2).mean()
         return logits, loss
 
+    def forward_embeds(self, embeds, targets=None, pos=0, return_hidden=False):
+        """Run the transformer from continuous input embeddings.
+
+        This intentionally leaves the token-id and KV-cache inference contract
+        above unchanged.  Isolated latent-rollout experiments can feed a model
+        state back as a soft token while the flagship continues to use the
+        byte-identical ``forward`` path.
+        """
+        if embeds.ndim != 3 or embeds.shape[-1] != self.cfg.d_model:
+            raise ValueError("embeds must have shape [batch, tokens, d_model]")
+        _, T, _ = embeds.shape
+        if pos < 0 or pos + T > self.cfg.seq_len:
+            raise ValueError("embedding positions exceed configured sequence length")
+        x = embeds
+        cos = self.cos[pos:pos + T].to(x.device)
+        sin = self.sin[pos:pos + T].to(x.device)
+        for _loop in range(self.cfg.n_loop):
+            for block in self.blocks:
+                x, _ = block(x, cos, sin)
+        hidden = self.norm(x)
+        logits = self.head(hidden)
+        loss = None
+        if targets is not None:
+            lf = logits.float()
+            loss = F.cross_entropy(lf.reshape(-1, lf.size(-1)), targets.reshape(-1), ignore_index=-1)
+            if self.cfg.zloss > 0:
+                loss = loss + self.cfg.zloss * torch.logsumexp(lf, dim=-1).pow(2).mean()
+        if return_hidden:
+            return logits, loss, hidden
+        return logits, loss
+
     def num_params(self):
         return sum(p.numel() for p in self.parameters())  # tied weight counted once
