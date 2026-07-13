@@ -62,7 +62,7 @@ This is the explicit before-sleep reference point for the next custody check.
 | Stability | No new guard skip after the recovered step-193,437 outlier. No divergence, data-loader, CUDA, or checkpoint error observed. |
 | Durable recovery | Hash-matched 190k full checkpoint on Newton/local: md5 `3e195aaf44a14259797c49d7f80d9c7f`. 200k has not appeared; it remains the next mandatory promotion and local DR transfer. |
 | LSA primary gate | Both matched 7,163-update training arms completed. Held-out source-free evaluators `687170` (answer-only) and `687171` (verified geometry) are running on all 2,304 examples in normal, zero-packet, and shuffled-source modes; comparator `687172` is held on their completion. Normal/zero partial evidence is not a conclusion. |
-| Corpus expansion | DCLM `686529` is running on CPU with 204 partial 100M-token shards, about 20.4B tokens. The guarded FineWeb replacement runs separately on Stokes. Neither is admitted to the live stream. |
+| Corpus expansion | DCLM `686529` is running on CPU with 204 partial 100M-token shards, about 20.4B tokens. Stokes FineWeb replacement `738030` is running with 11 partial 100M-token shards, about 1.1B tokens. Neither is admitted to the live stream. |
 | Next protected transition | `686732` is dependency-held after the flagship: two H100s, `BS=32 ACC=4`, same 524,288-token update. It must not affect the live writer. |
 
 ## Checkpoint and Disaster-Recovery Inventory

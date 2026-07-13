@@ -2252,7 +2252,9 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   mandatory preservation. LSA evaluators `687170/687171` are still running their locked held-out
   normal/zero/shuffled source-free protocol; `687172` remains dependency-held, so no causal result or
   next-stage launch is yet warranted. DCLM `686529` reached 204 partial ~100M-token shards (about 20.4B)
-  and remains unadmitted. This snapshot is the user-facing comparison baseline for the next morning.
+  and remains unadmitted. Stokes FineWeb replacement `738030` is RUNNING on ec52 with **11** partial
+  ~100M-token shards (about 1.1B), also unadmitted. This snapshot is the user-facing comparison
+  baseline for the next morning.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
