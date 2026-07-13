@@ -1,0 +1,40 @@
+{
+  "data": "/lustre/fs1/home/sa305415/shohin/artifacts/sft/sft_mix_reasoning_v10_broad_bridge_candidate.jsonl",
+  "data_sha256": "65259560b7c99d95156dc08267c74bd437ee216a2e92826eec60ddc52a9f3a2f",
+  "eval_exact_prompts": 26381,
+  "eval_files": [
+    "/lustre/fs1/home/sa305415/shohin/artifacts/evals/gsm8k.jsonl",
+    "/lustre/fs1/home/sa305415/shohin/artifacts/evals/gsm8k_platinum.jsonl",
+    "/lustre/fs1/home/sa305415/shohin/artifacts/evals/humaneval.jsonl",
+    "/lustre/fs1/home/sa305415/shohin/artifacts/evals/humaneval_full.jsonl",
+    "/lustre/fs1/home/sa305415/shohin/artifacts/evals/math500.jsonl",
+    "/lustre/fs1/home/sa305415/shohin/artifacts/evals/mbpp.jsonl",
+    "/lustre/fs1/home/sa305415/shohin/artifacts/evals/mbpp_full.jsonl",
+    "/lustre/fs1/home/sa305415/shohin/artifacts/evals/primitives_v1_heldout.jsonl",
+    "/lustre/fs1/home/sa305415/shohin/artifacts/evals/primitives_v2_contract_heldout.jsonl",
+    "/lustre/fs1/home/sa305415/shohin/artifacts/evals/primitives_v2_contract_heldout_r2.jsonl",
+    "/lustre/fs1/home/sa305415/shohin/artifacts/evals/primitives_v3_state_heldout.jsonl",
+    "/lustre/fs1/home/sa305415/shohin/artifacts/evals/semantic_bridge_v1_heldout.jsonl"
+  ],
+  "eval_ngrams": 379814,
+  "fields": [
+    "question",
+    "response",
+    "completion_prompt"
+  ],
+  "malformed_json_rows": 0,
+  "malformed_rows": 0,
+  "missing_fields": {
+    "completion_prompt": 896520
+  },
+  "ngram": 13,
+  "overlap": {
+    "exact_hits_by_field": {},
+    "exact_rows": 0,
+    "examples": [],
+    "ngram_hits_by_field": {},
+    "ngram_rows": 0
+  },
+  "schema": "shohin-training-text-overlap-v1",
+  "valid_rows": 899928
+}

@@ -1,0 +1,274 @@
+{
+  "audit": "generalization_interview_v1",
+  "device": "cuda",
+  "checkpoint": "/lustre/fs1/home/sa305415/shohin/train/sft_v9_broad_vrwm_180k_r1/sft_ep1.pt",
+  "step": "sft_ep1",
+  "n_loop": 1,
+  "cases": 8,
+  "summary": {
+    "initial": 1,
+    "review": 0,
+    "verified_fact": 1,
+    "valid_state_line": 0,
+    "state_reuse": 1,
+    "valid_state_and_reuse": 0
+  },
+  "rows": [
+    {
+      "id": "word_product_rejects",
+      "kind": "number",
+      "question": "A workshop packs 17 boxes with 23 gears in each box. Eight gears are rejected. How many gears remain? Return only the integer.",
+      "answer": "383",
+      "initial": {
+        "prompt": "Question: A workshop packs 17 boxes with 23 gears in each box. Eight gears are rejected. How many gears remain? Return only the integer.\nAnswer:",
+        "response": " A workshop has 17 boxes with 23 gears in each box.\n\n## Solution\n\nIf 17 boxes have 23 gears in each box, then 17 boxes have 23 * 17 = 391 gear in total.\n\n## Answer\n\n391 gear\nThe answer is 391.",
+        "correct": false
+      },
+      "review": {
+        "prompt": "Question: A workshop packs 17 boxes with 23 gears in each box. Eight gears are rejected. How many gears remain? Return only the integer.\nPrevious answer:  A workshop has 17 boxes with 23 gears in each box.\n\n## Solution\n\nIf 17 boxes have 23 gears in each box, then 17 boxes have 23 * 17 = 391 gear in total.\n\n## Answer\n\n391 gear\nThe answer is 391.\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "response": " Solution: 391\nThe answer is 391.",
+        "correct": false
+      },
+      "verified_fact": {
+        "prompt": "Question: A workshop packs 17 boxes with 23 gears in each box. Eight gears are rejected. How many gears remain? Return only the integer.\nVerified intermediate fact: 17 times 23 is 391.\nUse that fact. Return only the final answer.\nAnswer:",
+        "response": " A workshop packs 17 boxes with 23 gears in each box. Eight gears are rejected. How many gears remain?\n\n## Solution\n\n17 boxes with 23 gears in each box. Eight gears are rejected.\n\n## Answer\n\n391 gears.\nThe answer is 391.",
+        "correct": false
+      },
+      "compact_state": {
+        "prompt": "Question: A workshop packs 17 boxes with 23 gears in each box. Eight gears are rejected. How many gears remain? Return only the integer.\nRecord the product and rejected count as one compact state before answering. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+        "response": " Solution. The product of the number of gear boxes and the number of gears is 17 * 23 = 371. The rejected gear is 8. The short line is 371. The answer is 371.\n",
+        "valid_state_line": false
+      },
+      "state_reuse": {
+        "prompt": "Question: A workshop packs 17 boxes with 23 gears in each box. Eight gears are rejected. How many gears remain? Return only the integer.\nThe prior state was:\n Solution. The product of the number of gear boxes and the number of gears is 17 * 23 = 371. The rejected gear is 8. The short line is 371. The answer is 371.\n\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+        "response": " Solution. Let's find the number of gear boxes and the number of gears.\n\nThe number of gear boxes is 17 * 23 = 361.\n\nThe number of gears is 8.\n\nThe number of gear boxes is 361 / 8 = 45.\n\nThe number of gears is 361 - 45 = 316.\n\nThe answer is 316.\n",
+        "correct": false
+      },
+      "valid_state_and_reuse": false
+    },
+    {
+      "id": "base_seven_place_value",
+      "kind": "number",
+      "question": "Convert the base-7 numeral 356 to base 10. Return only the integer.",
+      "answer": "188",
+      "initial": {
+        "prompt": "Question: Convert the base-7 numeral 356 to base 10. Return only the integer.\nAnswer:",
+        "response": " 356_7 = 187_10 ; 187_10 = 187_10\nThe answer is 187.",
+        "correct": false
+      },
+      "review": {
+        "prompt": "Question: Convert the base-7 numeral 356 to base 10. Return only the integer.\nPrevious answer:  356_7 = 187_10 ; 187_10 = 187_10\nThe answer is 187.\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "response": " Repeated exponentiation: (356_7)^0 = 1.4085655000000002e+1\n(356_7)^1 = 356_7\n(356_7)^2 = 12987_10\n(356_7)^3 = 466032_10\n(356_7)^4 = 14460000",
+        "correct": false
+      },
+      "verified_fact": {
+        "prompt": "Question: Convert the base-7 numeral 356 to base 10. Return only the integer.\nVerified intermediate fact: Use 3 times 7 squared, plus 5 times 7, plus 6.\nUse that fact. Return only the final answer.\nAnswer:",
+        "response": " 356_7 = 255_10 ; 255_10 = 255_10\nThe answer is 255.",
+        "correct": false
+      },
+      "compact_state": {
+        "prompt": "Question: Convert the base-7 numeral 356 to base 10. Return only the integer.\nRecord the three place-value terms as one compact state before answering. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+        "response": " 356_7 = 227_10 ; 227_10 = 227_10\nThe answer is 227.",
+        "valid_state_line": false
+      },
+      "state_reuse": {
+        "prompt": "Question: Convert the base-7 numeral 356 to base 10. Return only the integer.\nThe prior state was:\n 356_7 = 227_10 ; 227_10 = 227_10\nThe answer is 227.\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+        "response": " Mapping 356_7 to base 10 is:\n\\[ 356_{7} = 227_{10} \\]\n\nThe answer is 227.\n",
+        "correct": false
+      },
+      "valid_state_and_reuse": false
+    },
+    {
+      "id": "sequential_inventory",
+      "kind": "number",
+      "question": "A counter starts at 6. Double it, add 7, then triple the result. What is the final counter value? Return only the integer.",
+      "answer": "51",
+      "initial": {
+        "prompt": "Question: A counter starts at 6. Double it, add 7, then triple the result. What is the final counter value? Return only the integer.\nAnswer:",
+        "response": " Answer: 13.\n\nSolution. Let's first calculate the result of the first doubling: $6 \\cdot 2=12$. Then, the result of the second doubling is $12+7=19$. The result of the third doubling is $19 \\cdot 3=57$. The result of the fourth doubling is $57 \\cdot 4=228$. The result of the fifth doubling is $228 \\cdot 5=1140$. The result of",
+        "correct": false
+      },
+      "review": {
+        "prompt": "Question: A counter starts at 6. Double it, add 7, then triple the result. What is the final counter value? Return only the integer.\nPrevious answer:  Answer: 13.\n\nSolution. Let's first calculate the result of the first doubling: $6 \\cdot 2=12$. Then, the result of the second doubling is $12+7=19$. The result of the third doubling is $19 \\cdot 3=57$. The result of the fourth doubling is $57 \\cdot 4=228$. The result of the fifth doubling is $228 \\cdot 5=1140$. The result of\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "response": " Solution: 13.\n\nSolution: 13.\n\nSolution: 13.\nThe answer is 13.",
+        "correct": false
+      },
+      "verified_fact": {
+        "prompt": "Question: A counter starts at 6. Double it, add 7, then triple the result. What is the final counter value? Return only the integer.\nVerified intermediate fact: After doubling and adding 7, the counter is 19.\nUse that fact. Return only the final answer.\nAnswer:",
+        "response": " Solution. Let's find the final counter value.\n\n$$\n\\begin{aligned}\n& 6+7=13 \\\\\n& 13 \\times 3=39 \\\\\n& 39+7=46 \\\\\n& 46 \\times 3=138 \\\\\n& 138+7=145 \\\\\n& 145 \\times 3=435 \\\\\n& 435+7=442 \\\\\n&",
+        "correct": false
+      },
+      "compact_state": {
+        "prompt": "Question: A counter starts at 6. Double it, add 7, then triple the result. What is the final counter value? Return only the integer.\nRecord the counter after each operation as one compact state before answering. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+        "response": " 1. **Initialization:**\n   - Start with 6.\n   - Double it: 6 * 2 = 12.\n   - Add 7: 12 + 7 = 19.\n   - Triple the result: 19 * 3 = 57.\n   - The final counter value is 57.\n\n2. **Compact State:**\n   - Start with 6.\n   - Double it: 6 * 2 =",
+        "valid_state_line": false
+      },
+      "state_reuse": {
+        "prompt": "Question: A counter starts at 6. Double it, add 7, then triple the result. What is the final counter value? Return only the integer.\nThe prior state was:\n 1. **Initialization:**\n   - Start with 6.\n   - Double it: 6 * 2 = 12.\n   - Add 7: 12 + 7 = 19.\n   - Triple the result: 19 * 3 = 57.\n   - The final counter value is 57.\n\n2. **Compact State:**\n   - Start with 6.\n   - Double it: 6 * 2 =\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+        "response": " Solution\n\nThe initial state is:\n 1. **Initialization:**\n     - Start with 6.\n     - Double it: 6 * 2 = 12.\n     - Add 7: 12 + 7 = 19.\n     - Triple the result: 19 * 3 = 57.\n     - The final counter value is 57.\n\n2. **Compact State:**\n     - Start with 6.\n    ",
+        "correct": false
+      },
+      "valid_state_and_reuse": false
+    },
+    {
+      "id": "negative_sort_unique",
+      "kind": "list",
+      "question": "Sort [-1, 12, 7, -1, 12, 0, 7] in ascending order and remove duplicates. Return only the list.",
+      "answer": "[-1,0,7,12]",
+      "initial": {
+        "prompt": "Question: Sort [-1, 12, 7, -1, 12, 0, 7] in ascending order and remove duplicates. Return only the list.\nAnswer:",
+        "response": " -1, 12, 7, 0, 12, 7, -1\nThe answer is 12, 7, 0, 12, 7, -1.",
+        "correct": false
+      },
+      "review": {
+        "prompt": "Question: Sort [-1, 12, 7, -1, 12, 0, 7] in ascending order and remove duplicates. Return only the list.\nPrevious answer:  -1, 12, 7, 0, 12, 7, -1\nThe answer is 12, 7, 0, 12, 7, -1.\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "response": " Test each integer from the list: -1, 12, 7, 0, 12, 7, -1, 12, 7, 0, 12, 7, -1\nThe answer is 12, 7, 0, 12, 7, -1, 12, 7, 0, 12, 7, -1, 12, 7, 0, 12, 7",
+        "correct": false
+      },
+      "verified_fact": {
+        "prompt": "Question: Sort [-1, 12, 7, -1, 12, 0, 7] in ascending order and remove duplicates. Return only the list.\nVerified intermediate fact: The distinct values are -1, 12, 7, and 0.\nUse that fact. Return only the final answer.\nAnswer:",
+        "response": " Apply the insertion automaton left-to-right: ['-1', '12', '7', '0']\nThe answer is ['-1', '12', '7', '0'].",
+        "correct": false
+      },
+      "compact_state": {
+        "prompt": "Question: Sort [-1, 12, 7, -1, 12, 0, 7] in ascending order and remove duplicates. Return only the list.\nRecord the distinct values as one compact state before answering. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+        "response": " -1, 12, 7, 0, 7, 12\nThe answer is 12, 7, 0, 7, 12.",
+        "valid_state_line": false
+      },
+      "state_reuse": {
+        "prompt": "Question: Sort [-1, 12, 7, -1, 12, 0, 7] in ascending order and remove duplicates. Return only the list.\nThe prior state was:\n -1, 12, 7, 0, 7, 12\nThe answer is 12, 7, 0, 7, 12.\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+        "response": " Apply remove-duplicates:\n 7, 12, 0, 12, 7, 7\nThe answer is 7, 12, 0, 12, 7, 7.",
+        "correct": false
+      },
+      "valid_state_and_reuse": false
+    },
+    {
+      "id": "string_splice",
+      "kind": "string",
+      "question": "Insert 'XY' immediately after the first 4 characters of 'notebook'. Return only the string.",
+      "answer": "noteXYbook",
+      "initial": {
+        "prompt": "Question: Insert 'XY' immediately after the first 4 characters of 'notebook'. Return only the string.\nAnswer:",
+        "response": " Apply insert automaton left-to-right: XY -> XY\nThe answer is XY.",
+        "correct": false
+      },
+      "review": {
+        "prompt": "Question: Insert 'XY' immediately after the first 4 characters of 'notebook'. Return only the string.\nPrevious answer:  Apply insert automaton left-to-right: XY -> XY\nThe answer is XY.\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "response": " Apply insert automaton left-to-right: XY -> XY\nThe answer is XY.",
+        "correct": false
+      },
+      "verified_fact": {
+        "prompt": "Question: Insert 'XY' immediately after the first 4 characters of 'notebook'. Return only the string.\nVerified intermediate fact: The prefix is 'note' and the suffix is 'book'.\nUse that fact. Return only the final answer.\nAnswer:",
+        "response": " Apply insertion automaton left-to-right: 'XY' immediately after the first 4 characters of 'notebook' is 'XY'.\n\nThe answer is 'XY'.",
+        "correct": false
+      },
+      "compact_state": {
+        "prompt": "Question: Insert 'XY' immediately after the first 4 characters of 'notebook'. Return only the string.\nRecord prefix, inserted text, and suffix as one compact state before answering. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+        "response": " Apply the insertion automaton left-to-right: ['state', 'notebook', ''] -> ['state', 'notebook', '']\nThe answer is ['state', 'notebook', ''].",
+        "valid_state_line": false
+      },
+      "state_reuse": {
+        "prompt": "Question: Insert 'XY' immediately after the first 4 characters of 'notebook'. Return only the string.\nThe prior state was:\n Apply the insertion automaton left-to-right: ['state', 'notebook', ''] -> ['state', 'notebook', '']\nThe answer is ['state', 'notebook', ''].\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+        "response": " Apply the insertion automaton left-to-right: ['notebook', ''] -> ['notebook', '']\nThe answer is ['notebook', ''].",
+        "correct": false
+      },
+      "valid_state_and_reuse": false
+    },
+    {
+      "id": "set_constraint",
+      "kind": "yesno",
+      "question": "Every fep is a lor. No lor is a vek. Can a fep be a vek? Answer yes or no only.",
+      "answer": "no",
+      "initial": {
+        "prompt": "Question: Every fep is a lor. No lor is a vek. Can a fep be a vek? Answer yes or no only.\nAnswer:",
+        "response": " No, every fep is a lor.\n\nThe answer is:\n",
+        "correct": true
+      },
+      "review": {
+        "prompt": "Question: Every fep is a lor. No lor is a vek. Can a fep be a vek? Answer yes or no only.\nPrevious answer:  No, every fep is a lor.\n\nThe answer is:\n\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "response": " If a fep is a lor, then every lor is a fep.\n\n\n\nIf a fep is a lor, then every lor is a fep.\n\n\n\nIf a fep is a lor, then every lor is a fep.\n\n\n\nIf a fep is a lor, then every lor is a fep.\n\n\n\nIf a fep is a lor, then every lor is a fep.\n\n\n\n",
+        "correct": false
+      },
+      "verified_fact": {
+        "prompt": "Question: Every fep is a lor. No lor is a vek. Can a fep be a vek? Answer yes or no only.\nVerified intermediate fact: A fep must be a lor, and no lor may be a vek.\nUse that fact. Return only the final answer.\nAnswer:",
+        "response": " A fep is a lor if and only if it is a vek.\n\n## Answer\n\nno.\nThe answer is no.",
+        "correct": true
+      },
+      "compact_state": {
+        "prompt": "Question: Every fep is a lor. No lor is a vek. Can a fep be a vek? Answer yes or no only.\nRecord the two set constraints as one compact state before answering. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+        "response": " 1. **Initial state:**\n   - State 1: \"state 1\"\n   - State 2: \"state 2\"\n   - State 3: \"state 3\"\n   - State 4: \"state 4\"\n   - State 5: \"state 5\"\n   - State 6: \"state 6\"\n   - State 7: \"state 7\"\n   - State 8: \"state 8\"\n   - State 9:",
+        "valid_state_line": false
+      },
+      "state_reuse": {
+        "prompt": "Question: Every fep is a lor. No lor is a vek. Can a fep be a vek? Answer yes or no only.\nThe prior state was:\n 1. **Initial state:**\n   - State 1: \"state 1\"\n   - State 2: \"state 2\"\n   - State 3: \"state 3\"\n   - State 4: \"state 4\"\n   - State 5: \"state 5\"\n   - State 6: \"state 6\"\n   - State 7: \"state 7\"\n   - State 8: \"state 8\"\n   - State 9:\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+        "response": " Solution\n\nNo lor is avek.\n\nNo lor is avek.\n\nNo lor is avek.\n\nNo lor is avek.\n\nNo lor is avek.\n\nNo lor is avek.\n\nNo lor is avek.\n\nNo lor is avek.\n\nNo lor is avek.\n\nNo lor is avek.\n\nNo lor is avek",
+        "correct": true
+      },
+      "valid_state_and_reuse": false
+    },
+    {
+      "id": "python_count_evens",
+      "kind": "code",
+      "question": "Write only Python code for count_evens(values). It must return how many integers in values are even, including negative even integers.",
+      "answer": "count_evens",
+      "initial": {
+        "prompt": "Question: Write only Python code for count_evens(values). It must return how many integers in values are even, including negative even integers.\nAnswer:",
+        "response": " import math\n\ndef count_evens(values):\n    if values % 2 == 0:\n        return 0\n    else:\n        return 1\n\n\nprint(count_evens(values))",
+        "correct": false
+      },
+      "review": {
+        "prompt": "Question: Write only Python code for count_evens(values). It must return how many integers in values are even, including negative even integers.\nPrevious answer:  import math\n\ndef count_evens(values):\n    if values % 2 == 0:\n        return 0\n    else:\n        return 1\n\n\nprint(count_evens(values))\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "response": " def count_evens(values):\n    if values % 2 == 0:\n        return 0\n    else:\n        return 1\n\nprint(count_evens(values))",
+        "correct": false
+      },
+      "verified_fact": {
+        "prompt": "Question: Write only Python code for count_evens(values). It must return how many integers in values are even, including negative even integers.\nVerified intermediate fact: An integer is even exactly when value modulo 2 equals 0.\nUse that fact. Return only the final answer.\nAnswer:",
+        "response": " import math\n\ndef count_evens(values):\n    if values[0] == 0:\n        return 0\n    if values[0] % 2 == 0:\n        return 1\n    return 2\n\nvalues = list(map(int, input().split()))\nprint(count_evens(values))",
+        "correct": false
+      },
+      "compact_state": {
+        "prompt": "Question: Write only Python code for count_evens(values). It must return how many integers in values are even, including negative even integers.\nRecord the predicate compactly, then write only the Python function. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+        "response": " def even_even(values):\n    return (values[0] == values[1] and values[2] % 2 == 0)\n\n\ndef count_evens(values):\n    return even_even(values)\n\n\nprint(count_evens(values))",
+        "valid_state_line": false
+      },
+      "state_reuse": {
+        "prompt": "Question: Write only Python code for count_evens(values). It must return how many integers in values are even, including negative even integers.\nThe prior state was:\n def even_even(values):\n    return (values[0] == values[1] and values[2] % 2 == 0)\n\n\ndef count_evens(values):\n    return even_even(values)\n\n\nprint(count_evens(values))\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+        "response": " def count_evens(values):\n    return even_even(values)\n\nprint(count_evens(values))",
+        "correct": false
+      },
+      "valid_state_and_reuse": false
+    },
+    {
+      "id": "code_review_sum_positive",
+      "kind": "code",
+      "question": "Write only Python code for sum_positive(values). It must return the sum of exactly the strictly positive integers in values.",
+      "answer": "sum_positive",
+      "initial": {
+        "prompt": "Question: Write only Python code for sum_positive(values). It must return the sum of exactly the strictly positive integers in values.\nAnswer:",
+        "response": " import math\n\ndef sum_positive(values):\n    return math.ceil(math.log2(values))\n\n\ndef sum_negative(values):\n    return math.ceil(math.log2(values))\n\n\ndef sum_positive_and_negative(values):\n    return sum_positive(values) + sum_negative(values)\n\n\ndef sum_positive_and_negative_and_zero(values):\n    return sum_positive_and_negative(values) + sum",
+        "correct": false
+      },
+      "review": {
+        "prompt": "Question: Write only Python code for sum_positive(values). It must return the sum of exactly the strictly positive integers in values.\nPrevious answer:  import math\n\ndef sum_positive(values):\n    return math.ceil(math.log2(values))\n\n\ndef sum_negative(values):\n    return math.ceil(math.log2(values))\n\n\ndef sum_positive_and_negative(values):\n    return sum_positive(values) + sum_negative(values)\n\n\ndef sum_positive_and_negative_and_zero(values):\n    return sum_positive_and_negative(values) + sum\n\nCheck the previous answer independently. If it is wrong, correct it. Return only the final answer.\nAnswer:",
+        "response": " import math\n\ndef sum_positive(values):\n    return math.ceil(math.log2(values))\n\n\ndef sum_negative(values):\n    return math.ceil(math.log2(values))\n\n\ndef sum_positive_and_negative(values):\n    return sum_positive(values) + sum_negative(values)\n\n\ndef sum_positive_and_negative_and_zero(values):\n    return sum_positive_and_negative(values) + sum",
+        "correct": false
+      },
+      "verified_fact": {
+        "prompt": "Question: Write only Python code for sum_positive(values). It must return the sum of exactly the strictly positive integers in values.\nVerified intermediate fact: Zero is not strictly positive, so only values greater than zero are added.\nUse that fact. Return only the final answer.\nAnswer:",
+        "response": " def sum_positive(values):\n    return (values + 1) if values > 0 else 0\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+        "correct": false
+      },
+      "compact_state": {
+        "prompt": "Question: Write only Python code for sum_positive(values). It must return the sum of exactly the strictly positive integers in values.\nRecord the inclusion rule compactly, then write only the Python function. First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:",
+        "response": " def sum_positive(values):\n    return sum(map(int, values))\n\n\nif __name__ == '__main__':\n    print(sum_positive(list(map(int, input().split()))))",
+        "valid_state_line": false
+      },
+      "state_reuse": {
+        "prompt": "Question: Write only Python code for sum_positive(values). It must return the sum of exactly the strictly positive integers in values.\nThe prior state was:\n def sum_positive(values):\n    return sum(map(int, values))\n\n\nif __name__ == '__main__':\n    print(sum_positive(list(map(int, input().split()))))\n\nUse that state to solve the original question. Return only the final answer.\nAnswer:",
+        "response": " import sys\ninput = sys.stdin.readline\n\n\ndef main():\n    values = list(map(int, input().split()))\n    print(sum_positive(values))\n\n\nif __name__ == '__main__':\n    main()",
+        "correct": false
+      },
+      "valid_state_and_reuse": false
+    }
+  ]
+}

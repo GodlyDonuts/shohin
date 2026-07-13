@@ -22,10 +22,26 @@ class FakeTokenizer:
         return 4
 
 
+class SpecialTokenizer(FakeTokenizer):
+    def decode(self, ids, skip_special_tokens=True):
+        mapping = {3: "<think>", 4: "<|endoftext|>"}
+        return "".join(
+            "" if skip_special_tokens and token in mapping else mapping.get(token, str(token))
+            for token in ids
+        )
+
+    def decode_batch(self, batch, skip_special_tokens=True):
+        return [self.decode(ids, skip_special_tokens=skip_special_tokens) for ids in batch]
+
+
 class FakeModel:
     cfg = SimpleNamespace(seq_len=16)
 
+    def __init__(self):
+        self.positions = []
+
     def __call__(self, ids, cache=None, pos=0, return_cache=False):
+        self.positions.append(pos)
         batch, length = ids.shape
         logits = torch.full((batch, length, 8), -100.0)
         # Force one cached decode update before EOS. This validates the actual
@@ -37,9 +53,13 @@ class FakeModel:
 def main():
     model, tok = FakeModel(), FakeTokenizer()
     many = generate_batch(model, tok, "Question: x\nAnswer:", "cpu", n=3, max_new=4)
-    assert many == ["3 4", "3 4", "3 4"], many
+    assert many == ["3", "3", "3"], many
+    assert model.positions[:2] == [0, 2], model.positions
     one = generate(model, tok, "Question: x\nAnswer:", "cpu", max_new=4)
     assert one == many[0], (one, many)
+    special = SpecialTokenizer()
+    assert generate(model, special, "x", "cpu", max_new=4) == ""
+    assert generate(model, special, "x", "cpu", max_new=4, skip_special_tokens=False) == "<think>"
     assert generate_batch(model, tok, "x", "cpu", n=0) == []
     print("batched generation contract: passed")
 

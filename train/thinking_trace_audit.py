@@ -261,7 +261,10 @@ def main():
     rows = []
     for case in CASES:
         prompt = "Question: {}\nAnswer:".format(case["question"])
-        response = generate(model, tokenizer, prompt, device, max_new=args.max_new, temp=0.0)
+        response = generate(
+            model, tokenizer, prompt, device, max_new=args.max_new, temp=0.0,
+            skip_special_tokens=False,
+        )
         row = dict(case)
         row["prompt"] = prompt
         row["response"] = response

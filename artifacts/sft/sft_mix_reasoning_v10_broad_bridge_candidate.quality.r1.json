@@ -1,0 +1,56 @@
+{
+  "data": "/lustre/fs1/home/sa305415/shohin/artifacts/sft/sft_mix_reasoning_v10_broad_bridge_candidate.jsonl",
+  "data_sha256": "65259560b7c99d95156dc08267c74bd437ee216a2e92826eec60ddc52a9f3a2f",
+  "duplicate_normalized_questions": 0,
+  "eval_overlap": {
+    "enabled": true,
+    "eval_exact_questions": 1982,
+    "eval_ngrams": 68997,
+    "exact_prompt_hits": 0,
+    "ngram_prompt_hits": 0
+  },
+  "format_markers": {
+    "<think>": 627319,
+    "The answer is": 892677,
+    "Therefore": 84039,
+    "\\boxed": 243249,
+    "```": 91
+  },
+  "malformed_rows": 0,
+  "missing_question_or_response": 0,
+  "response_words": {
+    "max": 672,
+    "mean": 54.92,
+    "p50": 25,
+    "p90": 142,
+    "p99": 232
+  },
+  "source_counts": {
+    "apps_train_completion": 234,
+    "augmented_gsm8k": 59132,
+    "augmented_math": 174071,
+    "claude": 147,
+    "code_contests_train": 3842,
+    "code_contests_train_completion": 2730,
+    "glm": 29,
+    "gsm8k": 3377,
+    "hy3": 22708,
+    "hy3_arc": 12,
+    "hy3_gsm8k": 448,
+    "math": 3704,
+    "mbpp_train_completion": 357,
+    "mbpp_validation_completion": 87,
+    "nemotron": 1731,
+    "openr1_math_default_solution": 52660,
+    "reasoning_gym_trace": 374659,
+    "semantic_bridge_v1_train": 200000
+  },
+  "training_group_counts": {
+    "code": 7250,
+    "math": 292944,
+    "procedural": 374659,
+    "semantic_bridge": 200000,
+    "teacher": 25075
+  },
+  "valid_rows": 899928
+}

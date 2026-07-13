@@ -104,9 +104,26 @@ def has_complete_final_answer(text):
     return bool(_COMPLETE_FINAL_ANSWER.search(text))
 
 
+def decode_tokens(tok, tokens, skip_special_tokens):
+    """Decode with explicit special-token policy, including minimal test stubs."""
+    try:
+        return tok.decode(tokens, skip_special_tokens=skip_special_tokens)
+    except TypeError:
+        return tok.decode(tokens)
+
+
+def decode_batch(tok, batches, skip_special_tokens):
+    if hasattr(tok, "decode_batch"):
+        try:
+            return tok.decode_batch(batches, skip_special_tokens=skip_special_tokens)
+        except TypeError:
+            return tok.decode_batch(batches)
+    return [decode_tokens(tok, tokens, skip_special_tokens) for tokens in batches]
+
+
 @torch.no_grad()
 def generate_batch(model, tok, prompt, device, n, max_new=256, temp=0.0, top_k=40,
-                   stop="\nQuestion:"):
+                   stop="\nQuestion:", skip_special_tokens=True):
     """Generate ``n`` independent samples for one prompt in a single decode batch.
 
     Self-consistency and verifier-data collection need multiple samples of the
@@ -144,8 +161,7 @@ def generate_batch(model, tok, prompt, device, n, max_new=256, temp=0.0, top_k=4
         # Rust-backed decode_batch removes the Python per-sample/token loop
         # from self-consistency and verifier rollouts. The fallback keeps the
         # helper testable with a minimal tokenizer stub.
-        texts = (tok.decode_batch(generated) if hasattr(tok, "decode_batch")
-                 else [tok.decode(tokens) for tokens in generated])
+        texts = decode_batch(tok, generated, skip_special_tokens)
         for row, txt in enumerate(texts):
             if finished[row]:
                 continue
@@ -162,15 +178,23 @@ def generate_batch(model, tok, prompt, device, n, max_new=256, temp=0.0, top_k=4
         with ac:
             logits, cache = model(nxt[:, None], cache=cache, pos=pos, return_cache=True)
         pos += 1
-    return [tok.decode(tokens) for tokens in generated]
+    # The completion includes EOS only because it was the sampled stop token.
+    # Retaining other special tokens is useful for trace evaluators, but EOS is
+    # never model content and would otherwise leak into a special-aware decode.
+    return [
+        decode_tokens(tok, tokens[:-1] if tokens and tokens[-1] == eos_id else tokens,
+                      skip_special_tokens)
+        for tokens in generated
+    ]
 
 
 @torch.no_grad()
-def generate(model, tok, prompt, device, max_new=256, temp=0.0, top_k=40, stop="\nQuestion:"):
+def generate(model, tok, prompt, device, max_new=256, temp=0.0, top_k=40, stop="\nQuestion:",
+             skip_special_tokens=True):
     """Generate one completion; retained as the stable public evaluator API."""
     return generate_batch(
         model, tok, prompt, device, n=1, max_new=max_new, temp=temp,
-        top_k=top_k, stop=stop,
+        top_k=top_k, stop=stop, skip_special_tokens=skip_special_tokens,
     )[0]
 
 def solve(model, tok, prompt, device, task, k, temp, max_new):

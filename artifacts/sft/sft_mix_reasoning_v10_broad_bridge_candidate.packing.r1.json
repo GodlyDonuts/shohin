@@ -1,0 +1,46 @@
+{
+  "data": [
+    "/lustre/fs1/home/sa305415/shohin/artifacts/sft/sft_mix_reasoning_v10_broad_bridge_candidate.jsonl"
+  ],
+  "data_sha256": {
+    "/lustre/fs1/home/sa305415/shohin/artifacts/sft/sft_mix_reasoning_v10_broad_bridge_candidate.jsonl": "65259560b7c99d95156dc08267c74bd437ee216a2e92826eec60ddc52a9f3a2f"
+  },
+  "group_counts": {
+    "code": 2660,
+    "math": 43767,
+    "procedural": 24847,
+    "semantic_bridge": 8432,
+    "teacher": 1999
+  },
+  "missing_weight_groups": [],
+  "natural_group_share": {
+    "code": 0.03255614711461967,
+    "math": 0.5356710115659996,
+    "procedural": 0.3041062358484793,
+    "semantic_bridge": 0.10320053852273423,
+    "teacher": 0.024466066948167185
+  },
+  "pack_len": 2048,
+  "packed_sequences": 81705,
+  "repeat_factor_per_epoch": {
+    "code": 2.457293233082707,
+    "math": 0.7093906367811365,
+    "procedural": 1.2824465730269248,
+    "semantic_bridge": 0.9689871916508539,
+    "teacher": 2.043646823411706
+  },
+  "requested_samples_per_epoch": {
+    "code": 6536.400000000001,
+    "math": 31047.9,
+    "procedural": 31864.95,
+    "semantic_bridge": 8170.5,
+    "teacher": 4085.25
+  },
+  "requested_weights": {
+    "code": 0.08,
+    "math": 0.38,
+    "procedural": 0.39,
+    "semantic_bridge": 0.1,
+    "teacher": 0.05
+  }
+}
