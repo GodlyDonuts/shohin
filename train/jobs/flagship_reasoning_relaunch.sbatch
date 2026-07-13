@@ -28,15 +28,18 @@ DSEED=${DSEED:-20260713}
 CKPT=${CKPT:-250}
 BS=${BS:-32}
 ACC=${ACC:-8}
+NG=${NG:-1}
+FINEWEB_DIR=${FINEWEB_DIR:-$BASE/artifacts/shards/fineweb_edu_25b_r2}
+DCLM_DIR=${DCLM_DIR:-$BASE/artifacts/shards/dclm_baseline_25b}
 SHARDS=(
   "$BASE/artifacts/shards/openwebmath"
   "$BASE/artifacts/shards/code_python"
   "$BASE/artifacts/shards/finemath3"
   "$BASE/artifacts/shards/openmath_pt"
-  "$BASE/artifacts/shards/fineweb_edu_25b"
-  "$BASE/artifacts/shards/dclm_baseline_25b"
+  "$FINEWEB_DIR"
+  "$DCLM_DIR"
 )
-FINEWEB_APPROVAL=${FINEWEB_APPROVAL:-$BASE/artifacts/shard_scans/fineweb_edu_25b.approved.json}
+FINEWEB_APPROVAL=${FINEWEB_APPROVAL:-$BASE/artifacts/shard_scans/fineweb_edu_25b_r2.approved.json}
 DCLM_APPROVAL=${DCLM_APPROVAL:-$BASE/artifacts/shard_scans/dclm_baseline_25b.approved.json}
 # FineMath-4 is a subset of FineMath-3, so it is deliberately excluded rather
 # than replayed as a separate narrow-math domain. With the loader's per-domain
@@ -49,6 +52,11 @@ WEIGHTS=(5 27 6 8 27 27)
 for shard in "${SHARDS[@]}"; do
   [ -s "$shard/manifest.json" ] || { echo "[relaunch] missing manifest: $shard" >&2; exit 2; }
 done
+[ "$NG" -ge 1 ] || { echo "[relaunch] NG must be positive" >&2; exit 2; }
+[ $((NG * BS * ACC * 2048)) -eq 524288 ] || {
+  echo "[relaunch] require exactly 524288 tokens/update, got $((NG * BS * ACC * 2048))" >&2
+  exit 2
+}
 LATEST=$(ls "$OUT"/ckpt_[0-9]*.pt 2>/dev/null | sort | tail -1 || true)
 [ -n "$LATEST" ] || { echo "[relaunch] no numbered resume checkpoint in $OUT" >&2; exit 3; }
 [ "$(realpath "$LATEST")" = "$(realpath "$RESUME")" ] || {
@@ -58,17 +66,13 @@ LATEST=$(ls "$OUT"/ckpt_[0-9]*.pt 2>/dev/null | sort | tail -1 || true)
 for approval in "$FINEWEB_APPROVAL" "$DCLM_APPROVAL"; do
   [ -s "$approval" ] || { echo "[relaunch] missing scan approval: $approval" >&2; exit 4; }
 done
-"$PY" - "$BASE" "$FINEWEB_APPROVAL" "$DCLM_APPROVAL" <<'PY'
+"$PY" - "$FINEWEB_DIR" "$FINEWEB_APPROVAL" "$DCLM_DIR" "$DCLM_APPROVAL" <<'PY'
 import hashlib
 import json
 import os
 import sys
 
-base = sys.argv[1]
-targets = [
-    (os.path.join(base, "artifacts/shards/fineweb_edu_25b"), sys.argv[2]),
-    (os.path.join(base, "artifacts/shards/dclm_baseline_25b"), sys.argv[3]),
-]
+targets = list(zip(sys.argv[1::2], sys.argv[2::2]))
 def sha256(path):
     digest = hashlib.sha256()
     with open(path, "rb") as source:
@@ -77,6 +81,7 @@ def sha256(path):
     return digest.hexdigest()
 
 for shard, approval_path in targets:
+    shard = os.path.realpath(shard)
     approval = json.load(open(approval_path))
     manifest = os.path.join(shard, "manifest.json")
     if approval.get("schema") != "shohin-shard-scan-approval-v1":
@@ -98,18 +103,26 @@ PY
 export OMP_NUM_THREADS=4
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 cd "$BASE/train"
-if ! "$PY" - <<'PY'
+if ! "$PY" - "$NG" <<'PY'
 import sys
 import torch
-sys.exit(0 if torch.cuda.is_available() else 75)
+needed = int(sys.argv[1])
+sys.exit(0 if torch.cuda.is_available() and torch.cuda.device_count() >= needed else 75)
 PY
 then
-  echo "[relaunch] CUDA unavailable after allocation" >&2
+  echo "[relaunch] need $NG CUDA devices after allocation" >&2
   exit 75
 fi
 
-echo "[relaunch] resume=$RESUME steps=$STEPS bs=$BS acc=$ACC weights=${WEIGHTS[*]}"
-"$PY" train.py --size shohin --shard-dirs "${SHARDS[@]}" --domain-weights "${WEIGHTS[@]}" \
+if [ "$NG" = 1 ]; then
+  RUN=("$PY" train.py)
+else
+  # Submit this script with a matching Slurm GPU request, e.g.
+  # ``sbatch --gres=gpu:nvidia_h100_pcie:2 --export=ALL,NG=2,BS=32,ACC=4 ...``.
+  RUN=("$PY" -m torch.distributed.run --standalone --nproc_per_node="$NG" train.py)
+fi
+echo "[relaunch] resume=$RESUME ng=$NG steps=$STEPS bs=$BS acc=$ACC weights=${WEIGHTS[*]}"
+"${RUN[@]}" --size shohin --shard-dirs "${SHARDS[@]}" --domain-weights "${WEIGHTS[@]}" \
   --steps "$STEPS" --batch-size "$BS" --grad-accum "$ACC" \
   --warmup "$WARMUP" --lr-muon "$LRMUON" --lr-adam "$LRADAM" --data-seed "$DSEED" \
   --log-every 10 --ckpt-every "$CKPT" --gnorm-mult 8 --out "$OUT" --resume --fresh-opt --compile

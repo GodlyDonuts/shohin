@@ -7,7 +7,7 @@
 #SBATCH -t 3-00:00:00
 #SBATCH -o /lustre/fs1/home/sa305415/shohin/logs/language_relaunch_%j.out
 #SBATCH --open-mode=append
-# Future-only curriculum handoff for the single-H100 flagship.
+# Future-only curriculum handoff for the flagship.
 #
 # The active pretrain is 75% math-oriented text / 25% raw code and has no broad
 # English source.  This recipe restores a language floor without dropping the
@@ -29,9 +29,10 @@ DSEED=${DSEED:-20260714}
 CKPT=${CKPT:-250}
 BS=${BS:-32}
 ACC=${ACC:-8}
-FINEWEB_DIR=${FINEWEB_DIR:-$BASE/artifacts/shards/fineweb_edu_25b}
+NG=${NG:-1}
+FINEWEB_DIR=${FINEWEB_DIR:-$BASE/artifacts/shards/fineweb_edu_25b_r2}
 DCLM_DIR=${DCLM_DIR:-$BASE/artifacts/shards/dclm_baseline_25b}
-FINEWEB_APPROVAL=${FINEWEB_APPROVAL:-$BASE/artifacts/shard_scans/fineweb_edu_25b.approved.json}
+FINEWEB_APPROVAL=${FINEWEB_APPROVAL:-$BASE/artifacts/shard_scans/fineweb_edu_25b_r2.approved.json}
 DCLM_APPROVAL=${DCLM_APPROVAL:-$BASE/artifacts/shard_scans/dclm_baseline_25b.approved.json}
 
 SHARDS=(
@@ -50,6 +51,11 @@ WEIGHTS=(5 27 6 8 27 27)
 # and 50.1% educational English.
 
 [ -f "$RESUME" ] || { echo "[language-relaunch] resume checkpoint missing: $RESUME" >&2; exit 2; }
+[ "$NG" -ge 1 ] || { echo "[language-relaunch] NG must be positive" >&2; exit 2; }
+[ $((NG * BS * ACC * 2048)) -eq 524288 ] || {
+  echo "[language-relaunch] require exactly 524288 tokens/update, got $((NG * BS * ACC * 2048))" >&2
+  exit 2
+}
 LATEST=$(ls "$OUT"/ckpt_[0-9]*.pt 2>/dev/null | sort | tail -1 || true)
 [ -n "$LATEST" ] || { echo "[language-relaunch] no numbered checkpoint in $OUT" >&2; exit 2; }
 [ "$(realpath "$LATEST")" = "$(realpath "$RESUME")" ] || {
@@ -101,18 +107,26 @@ PY
 export OMP_NUM_THREADS=4
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 cd "$BASE/train"
-if ! "$PY" - <<'PY'
+if ! "$PY" - "$NG" <<'PY'
 import sys
 import torch
-sys.exit(0 if torch.cuda.is_available() else 75)
+needed = int(sys.argv[1])
+sys.exit(0 if torch.cuda.is_available() and torch.cuda.device_count() >= needed else 75)
 PY
 then
-  echo "[language-relaunch] CUDA unavailable after allocation" >&2
+  echo "[language-relaunch] need $NG CUDA devices after allocation" >&2
   exit 75
 fi
 
-echo "[language-relaunch] resume=$RESUME steps=$STEPS bs=$BS acc=$ACC weights=${WEIGHTS[*]}"
-"$PY" train.py --size shohin --shard-dirs "${SHARDS[@]}" --domain-weights "${WEIGHTS[@]}" \
+if [ "$NG" = 1 ]; then
+  RUN=("$PY" train.py)
+else
+  # Submit this script with a matching Slurm GPU request, e.g.
+  # ``sbatch --gres=gpu:nvidia_h100_pcie:2 --export=ALL,NG=2,BS=32,ACC=4 ...``.
+  RUN=("$PY" -m torch.distributed.run --standalone --nproc_per_node="$NG" train.py)
+fi
+echo "[language-relaunch] resume=$RESUME ng=$NG steps=$STEPS bs=$BS acc=$ACC weights=${WEIGHTS[*]}"
+"${RUN[@]}" --size shohin --shard-dirs "${SHARDS[@]}" --domain-weights "${WEIGHTS[@]}" \
   --steps "$STEPS" --batch-size "$BS" --grad-accum "$ACC" \
   --warmup "$WARMUP" --lr-muon "$LRMUON" --lr-adam "$LRADAM" --data-seed "$DSEED" \
   --log-every 10 --ckpt-every "$CKPT" --gnorm-mult 8 --out "$OUT" \

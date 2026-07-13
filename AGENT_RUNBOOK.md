@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 ~04:35 EDT (`685084` remains healthy through 193.08k; compact CLL v2 and answer-only continuous latent rollout are rejected by their matched controls; corrected source-free latent-state-algebra r2 primary control/candidate are running and the separate shuffled-pair/permuted-code second-stage gate is prepared; the prior 4.6B FineWeb output is rejected as an undersized 25B replacement and Stokes CPU job `738030` is building a guarded `sample-100BT` replacement). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 ~04:42 EDT (`685084` remains healthy through 193.08k; compact CLL v2 and answer-only continuous latent rollout are rejected by their matched controls; corrected source-free latent-state-algebra r2 primary control/candidate are running and the separate shuffled-pair/permuted-code second-stage gate is prepared; the prior 4.6B FineWeb output is rejected as an undersized 25B replacement and Stokes CPU job `738030` is building a guarded `sample-100BT` replacement). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -57,7 +57,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | Item | Value (as of 2026-07-13 current custody check) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
-| **Extended pretrain job** | `683715` completed cleanly. Current active continuation is **`685084`** on **evc22**: one H100, `BS=32 ACC=8 CKPT=250`, exact 524,288-token updates, and the proven default compile path. It resumed `ckpt_0141500.pt -> step 141501`. User-authorized successor **`686732`** is held `afterany:685084`: two H100s, `NG=2 BS=32 ACC=4 CKPT=250`, four CPUs, fresh optimizer, and the same 524,288-token update; it excludes CUDA-preflight failures `evc26,31,36,43,50`. |
+| **Extended pretrain job** | `683715` completed cleanly. Current active continuation is **`685084`** on **evc22**: one H100, `BS=32 ACC=8 CKPT=250`, exact 524,288-token updates, and the proven default compile path. It resumed `ckpt_0141500.pt -> step 141501`. User-authorized **continuity fallback** `686732` is held `afterany:685084`: two H100s, `NG=2 BS=32 ACC=4 CKPT=250`, four CPUs, fresh optimizer, and the same 524,288-token update; it excludes CUDA-preflight failures `evc26,31,36,43,50`. It retains the old math/code-only stream. Before the dependency releases, prefer a validated language-balanced two-H100 relaunch only if both 25B language replacements are fully scanned and hash-approved; otherwise let `686732` keep tokens moving. |
 | Extended pretrain status | **`685084` reached 190,000 cleanly** at loss **1.5030**, gnorm **0.09**, and **154.31k tok/s**, then remained healthy through observed step **192,950** at **154.29k tok/s** (loss **1.6260**, gnorm **0.12**). The isolated guard skips recovered immediately; recent loss/gnorm remain in the normal band. Numbered `ckpt_0190000.pt`, durable Newton `best_step190000.pt`, and full local DR `train/flagship_out/ckpt_0190000.pt` match at md5 **`3e195aaf44a14259797c49d7f80d9c7f`**. The exact 190k milestone is **99,614,720,000 nominal update tokens**, while observed 192,950 is **101,161,369,600 nominal update tokens**; current mounted corpus capacity is **57,826,022,271 manifest tokens**. These are intentionally separate metrics in `TRAINING_METRICS.md`. Next local DR target is 200k. Do not integrate CUDA graphs into live training: the clean whole-update canary gained only ~1.8% while removing the flagship's established guard/observability path. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, **DONE**; wrote baseline `train/sft_out/sft_ep3.pt`. Isolated v2 pilot `685708` completed one epoch from `best_step120000.pt` to `train/sft_v2_120k/sft_ep1.pt`. It is a narrow arithmetic-format ablation, not a promoted broad-reasoning recipe. V4 `686323` was canceled before its first step after stale 40/35/15/10 weights; v4 `686324` was canceled before any artifact after a code-boundary audit found 461/3,542 legacy BPE prompt-prefix mismatches. Both are invalid and preserved. Corrected v4 pilot **`686326`** completed one epoch in 1,218s to `train/sft_v4_168750_r3/sft_ep1.pt`, with audited 40/47/8/5 weights and inference-aligned prompt/completion token construction. It is an unevaluated candidate, not promoted. |
 | **Eval board job** | Corrected CUDA-only v2 board **`686277` completed**: GSM8K maj@4 **6/100**, pass@1 **14/100**, MATH-500 **6/100**, HumanEval **6/164**, MBPP **0/100**. The v2 pilot is **rejected for promotion**. RG held-out `686278` is **90/800 = 11.25%** and in-training `686279` is **98/800 = 12.25%**: it learned a few routines that transfer but remains zero on most logic/transformation/cipher/geometry families. The corrected raw-base board **`686315`** pinned `best_step168750.pt` and completed: GSM8K maj@4 **5/100**, pass@1 **2/100**, MATH-500 **2/100**, HumanEval **7/164**, MBPP **0/100**. `686316` direct adaptive interaction was **1/6 initial, 1/6 after explicit self-review, 1/6 with a verified intermediate fact**; only the simple syllogism was correct. V4 r3 public board **`686336` completed and is rejected**: GSM8K maj@4 **5/100**, pass@1 **14/100**, MATH-500 **1/100**, HumanEval **2/164**, MBPP **0/100**. Its corrected held-out procedural result `686337` is **209/800 = 26.125%**, above V2's 90/800 on the same evaluator, but the later raw base means this is a useful diagnostic signal rather than clean data-only attribution. V4 remains a generator/verifier candidate, not a broad promotion. |
@@ -106,10 +106,13 @@ extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no st
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
 **Next actions in order:** (1) Watch `685084`: retain the normal ~154k tok/s band and expected 250-step
-checkpoints, preserve/download 200k, and never interrupt a recovered isolated gnorm skip. (2) When `685084`
-exits, verify `686732` resumes the newest numbered checkpoint with `world=2`, `BS=32`, `ACC=4`, a new
-data-stream generation, no NCCL/CUDA failure, and steady throughput near the prior two-H100 range before
-counting a single training step. (3) Retain V7
+checkpoints, preserve/download 200k, and never interrupt a recovered isolated gnorm skip. (2) Before `685084`
+exits, determine whether FineWeb r2 and DCLM 25B both have committed manifests, full machine-readable scans,
+and hash-bound approvals. If both pass, cancel fallback `686732` before its dependency releases and submit the
+language-balanced relaunch with `NG=2 BS=32 ACC=4`, an exact 524,288-token update, fresh optimizer, and the
+newest preserved numbered checkpoint. If either fails or is incomplete, let `686732` resume the old stream
+with `world=2`, a new data-stream generation, and no NCCL/CUDA failure rather than leaving the flagship idle.
+(3) Retain V7
 `686467` only as rejected constructed-contract evidence; its 73.10% generator holdout does not survive the
 two independent transfer interviews, so no V7 public board is justified. (3) Complete and independently scan
 the 25B DCLM replacement before it can enter any future relaunch. (4) Retain raw `686370`, V5 `686388`, V6
@@ -2142,6 +2145,14 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   metadata, source-removed decoding, and a **>=5pp** candidate advantage over every decoder and training
   control on fit, length/language, equivalent pairs, and intervention pairs. Synthetic contracts passed;
   no stage-two GPU job is queued yet, so a failed primary gate spends no further H100 time.
+- **2026-07-13 ~04:42** — **The next flagship handoff is data-gated, not just throughput-gated.**
+  Held fallback `686732` correctly preserves a two-H100 continuation but its submitted snapshot uses the
+  old math/code-only stream. It remains the continuity fallback, not an automatic quality promotion. Future
+  language/reasoning relaunch scripts now default only to `fineweb_edu_25b_r2` and its r2 approval record,
+  never the rejected 4.6B `sample-10BT` output. They reject any non-524,288-token update and verify the
+  allocated CUDA device count before allowing `NG>1` DDP. Before `685084` ends, replace `686732` only if
+  both r2 FineWeb and DCLM prove their 25B manifests plus hash-bound full scans/approvals; otherwise retain
+  `686732` so data construction cannot create an idle-training gap.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
