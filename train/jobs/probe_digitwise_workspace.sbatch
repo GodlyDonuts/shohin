@@ -4,7 +4,7 @@
 #SBATCH -J shohin-workspace-probe
 #SBATCH -p normal
 #SBATCH --gres=gpu:nvidia_h100_pcie:1
-#SBATCH --exclude=evc22,evc23,evc26,evc31,evc32,evc36,evc43,evc44,evc50
+#SBATCH --exclude=evc22,evc23,evc26,evc31,evc32,evc36,evc43,evc44,evc49,evc50
 #SBATCH -c 4
 #SBATCH --mem=48G
 #SBATCH -t 01:00:00
@@ -30,7 +30,7 @@ ALPHA=${ALPHA:-1.0}
 [ -s "$EPISODES" ] || { echo "[workspace-probe] episodes missing: $EPISODES" >&2; exit 3; }
 [ ! -e "$OUT" ] || { echo "[workspace-probe] refusing existing output: $OUT" >&2; exit 4; }
 cd "$BASE/train"
-"$PY" - <<'PY'
+timeout --kill-after=10s 90s "$PY" - <<'PY'
 import torch
 if not torch.cuda.is_available():
     raise SystemExit("[workspace-probe] CUDA unavailable after allocation")

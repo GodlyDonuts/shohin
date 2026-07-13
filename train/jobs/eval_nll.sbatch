@@ -2,6 +2,7 @@
 #SBATCH -J shohin-pretrain-nll
 #SBATCH -p normal
 #SBATCH --gres=gpu:nvidia_h100_pcie:1
+#SBATCH --exclude=evc22,evc23,evc26,evc31,evc32,evc36,evc43,evc44,evc49,evc50
 #SBATCH -c 4
 #SBATCH --mem=48G
 #SBATCH -t 00:35:00
@@ -22,7 +23,7 @@ export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
 [ -f "$CKPT" ] || { echo "[pretrain-nll] checkpoint missing: $CKPT" >&2; exit 2; }
 cd "$BASE/train"
 for preflight in 1 2 3; do
-  if "$PY" - <<'PY'
+  if timeout --kill-after=10s 90s "$PY" - <<'PY'
 import sys
 import torch
 try:

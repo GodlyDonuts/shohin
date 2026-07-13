@@ -127,31 +127,42 @@ def ask(model, tokenizer, device, prompt, max_new):
 
 
 def probe(path, tokenizer, device, max_new):
+    print(f"[manual-probe] loading checkpoint={path}", flush=True)
     checkpoint, model = load_model(path, device)
+    print(
+        f"[manual-probe] loaded checkpoint={path} step={checkpoint.get('step')} "
+        f"cases={len(CASES)}",
+        flush=True,
+    )
     rows = []
     for case in CASES:
         initial_prompt = f"Question: {case['question']}\nAnswer:"
+        print(f"[manual-probe] {case['id']} phase=initial", flush=True)
         initial = ask(model, tokenizer, device, initial_prompt, max_new)
         review_prompt = (
             f"Question: {case['question']}\nPrevious answer: {initial}\n\n"
             "Check the previous answer independently. If it is wrong, correct it. "
             "Return only the final answer.\nAnswer:"
         )
+        print(f"[manual-probe] {case['id']} phase=review", flush=True)
         review = ask(model, tokenizer, device, review_prompt, max_new)
         fact_prompt = (
             f"Question: {case['question']}\nVerified intermediate fact: {case['fact']}\n"
             "Use that fact. Return only the final answer.\nAnswer:"
         )
+        print(f"[manual-probe] {case['id']} phase=verified_fact", flush=True)
         fact = ask(model, tokenizer, device, fact_prompt, max_new)
         state_prompt = (
             f"Question: {case['question']}\n{case['state']} "
             "First write exactly one short line beginning with 'state=', then give the final answer.\nAnswer:"
         )
+        print(f"[manual-probe] {case['id']} phase=compact_state", flush=True)
         state = ask(model, tokenizer, device, state_prompt, max_new)
         reuse_prompt = (
             f"Question: {case['question']}\nThe previous compact state was:\n{state}\n\n"
             "Use that state to solve the original question. Return only the final answer.\nAnswer:"
         )
+        print(f"[manual-probe] {case['id']} phase=state_reuse", flush=True)
         reuse = ask(model, tokenizer, device, reuse_prompt, max_new)
         row = {
             "id": case["id"],

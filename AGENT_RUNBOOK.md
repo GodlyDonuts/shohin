@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 18:45 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, and the independent held-out wording result falls further to 125/500 with 0/100 width-8, so it is a template-conditioned recurrent executor rather than a transferable workspace; raw residual patching is negative and the serialized DRS direct-interaction, NLL, and post-DRS patch probes remain the final diagnostic chain before selecting STRR or stopping the line; both full v3 transition-basis and static-tape/recurrent-register corpora are hash-admitted but untrained; token-native delta-ledger data is independently admitted as a separate three-token transport control with no capability score; counterfactual-workspace induction, DCRD, and CBC remain conditional; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 19:15 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, and the independent held-out wording result falls further to 125/500 with 0/100 width-8, so it is a template-conditioned recurrent executor rather than a transferable workspace; raw residual patching is negative; a first direct-interaction attempt was canceled without an artifact after the allocated evc49 H100 became unresponsive, and the DRS direct-interaction, NLL, and post-DRS patch sequence is being restarted only with bounded startup gates on a non-blacklisted node; both full v3 transition-basis and static-tape/recurrent-register corpora are hash-admitted but untrained; token-native delta-ledger data is independently admitted as a separate three-token transport control with no capability score; counterfactual-workspace induction, DCRD, and CBC remain conditional; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2679,3 +2679,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   corpus, H100 allocation, or score has been created. It is held behind `687564 -> 687565 -> 687578`:
   use it only if that chain leaves a concrete ambiguity between absent reusable state and a whole-residual
   patch that is too nonspecific. It cannot promote DRS, STRR, CWI, or any reasoning claim by itself.
+
+- **2026-07-13 19:15** — **Canceled one genuinely dead DRS diagnostic attempt without losing evidence.**
+  Direct interaction `687564` began on evc49 and wrote its immutable raw/SFT/output binding, but after
+  18m46s it had emitted no case-level transcript, used only nine CPU seconds, and wrote no JSON. A
+  read-only node check printed the hostname then hung in `nvidia-smi`; this is a node/CUDA failure, not
+  a model result. `687564` and its unstarted descendants `687565/687578` were canceled before either
+  could write output. evc49 joins the diagnostic exclusion list. `manual_capability_probe.py` now logs
+  model-load and every prompt phase; manual/NLL/workspace wrappers now use bounded CUDA preflights,
+  conservative BLAS thread limits, and the shared bad-node exclusion list. Local syntax/unit contracts
+  pass. Submit a fresh real CUDA preflight before rebuilding the same serial raw-200k versus DRS,
+  raw-200k-NLL, and DRS residual-patch sequence; do not reinterpret cancellation as a zero score.
