@@ -18,21 +18,22 @@ MIX_REPORT=${MIX_REPORT:-$BASE/artifacts/sft/sft_mix_reasoning_v9_broad_vrwm_can
 QUALITY=${QUALITY:-$BASE/artifacts/sft/sft_mix_reasoning_v9_broad_vrwm_candidate.quality.r1.json}
 FULL_TEXT=${FULL_TEXT:-$BASE/artifacts/sft/sft_mix_reasoning_v9_broad_vrwm_candidate.training_text_overlap.r1.json}
 PACKING=${PACKING:-$BASE/artifacts/sft/sft_mix_reasoning_v9_broad_vrwm_candidate.packing.r1.json}
+CONTRACTS=${CONTRACTS:-$BASE/artifacts/sft/sft_mix_reasoning_v9_broad_vrwm_candidate.response_contracts.r1.json}
 INIT=${INIT:?set INIT to a preserved raw checkpoint}
 OUT=${OUT:?set OUT to a fresh isolated output directory}
 WEIGHTS=(math=0.40 procedural=0.42 code=0.08 teacher=0.05 vrwm=0.05)
 
-for path in "$DATA" "$MIX_REPORT" "$QUALITY" "$FULL_TEXT" "$PACKING" "$INIT"; do
+for path in "$DATA" "$MIX_REPORT" "$QUALITY" "$FULL_TEXT" "$PACKING" "$CONTRACTS" "$INIT"; do
   [ -s "$path" ] || { echo "[sft-v9] required input missing: $path" >&2; exit 2; }
 done
 [ ! -e "$OUT" ] || { echo "[sft-v9] refusing existing output: $OUT" >&2; exit 3; }
-"$PY" - "$DATA" "$MIX_REPORT" "$QUALITY" "$FULL_TEXT" "$PACKING" <<'PY'
+"$PY" - "$DATA" "$MIX_REPORT" "$QUALITY" "$FULL_TEXT" "$PACKING" "$CONTRACTS" <<'PY'
 import hashlib
 import json
 import os
 import sys
 
-data, mix_path, quality_path, text_path, packing_path = map(os.path.realpath, sys.argv[1:])
+data, mix_path, quality_path, text_path, packing_path, contracts_path = map(os.path.realpath, sys.argv[1:])
 def sha256(path):
     digest = hashlib.sha256()
     with open(path, "rb") as source:
@@ -40,7 +41,7 @@ def sha256(path):
             digest.update(chunk)
     return digest.hexdigest()
 digest = sha256(data)
-mix, quality, text, packing = (json.load(open(path)) for path in (mix_path, quality_path, text_path, packing_path))
+mix, quality, text, packing, contracts = (json.load(open(path)) for path in (mix_path, quality_path, text_path, packing_path, contracts_path))
 expected = {"math": 0.40, "procedural": 0.42, "code": 0.08, "teacher": 0.05, "vrwm": 0.05}
 if mix.get("out") != data or mix.get("out_sha256") != digest:
     raise SystemExit("[sft-v9] mix report does not bind data")
@@ -58,6 +59,19 @@ if set(packing.get("group_counts", {})) != set(expected) or any(float(v) > 3.0 f
     raise SystemExit("[sft-v9] group/replay gate failed")
 if float(packing["repeat_factor_per_epoch"]["vrwm"]) > 0.30:
     raise SystemExit("[sft-v9] VRWM replay concentration gate failed")
+if contracts.get("data_sha256") != digest or contracts.get("rows") != quality.get("valid_rows"):
+    raise SystemExit("[sft-v9] response-contract report does not bind data")
+if contracts.get("malformed_rows") or contracts.get("missing_response_rows"):
+    raise SystemExit("[sft-v9] response-contract report has invalid rows")
+groups = contracts.get("groups", {})
+if set(groups) != set(expected):
+    raise SystemExit("[sft-v9] response-contract groups do not match weights")
+if groups["procedural"].get("starts_think_rate", 0.0) < 0.95:
+    raise SystemExit("[sft-v9] procedural reasoning trace contract regressed")
+if groups["vrwm"].get("state_marker_rate", 0.0) < 0.80:
+    raise SystemExit("[sft-v9] VRWM state contract is not present")
+if groups["vrwm"].get("short_response_rate", 1.0) < 0.95:
+    raise SystemExit("[sft-v9] VRWM response is no longer compact")
 print(f"[sft-v9] frozen input gate passed rows={quality['valid_rows']} packs={packing['packed_sequences']}")
 PY
 cd "$BASE/train"
