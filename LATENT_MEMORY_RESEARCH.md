@@ -255,3 +255,48 @@ This is intentionally a falsifiable architectural bet, not a claim that a
 continuous packet is already semantic. It is not implemented or submitted
 until the current CLL M0/M1 comparison identifies a representation failure
 rather than a data or optimization failure.
+
+### LSA preregistration
+
+LSA is not more slots or a hidden symbolic controller. It tests whether a
+fixed continuous packet can acquire the algebra of a verified state while the
+only inference interface remains `packet + fresh query -> answer`.
+
+1. Generate matched episode quartets. Equivalent pairs use different natural-
+   language update sequences that end in exactly the same two-variable state
+   through operation commutation and delta decomposition. Intervention pairs
+   share a prefix and differ in a verified final delta. Anti-equivalent pairs
+   retain similar surface form but finish in different states.
+2. Keep ordinary source-free readback cross-entropy primary. Add training-only
+   packet objectives: equivalent packets align after a learned projection;
+   intervention packet differences predict the signed normalized state delta;
+   and a contrastive term separates packets whose verified states differ. A
+   small probe may read numeric state only for these losses and is discarded
+   with the projection before inference.
+3. Prevent a cosmetic solution. The paired batch must include random
+   mismatches, permuted state-code controls, and a zero-auxiliary CLL control.
+   Equivalent alignment without state separation is collapse; accurate probe
+   output without source-free decoder transfer is an auxiliary-only shortcut.
+4. Admit LSA only if compact CLL establishes some packet information flow but
+   misses pairwise or compositional gates. It must beat CLL-without-auxiliaries,
+   M0, zeroed packet, shuffled source, and shuffled pair assignments on the
+   same held-out length, language, and counterfactual regimes. A narrow pass
+   remains constrained-context evidence, not autonomous general reasoning.
+
+The prediction is diagnostic. No CLL margin means the writer/decoder has not
+learned a usable channel and LSA should not be funded yet. CLL readback with
+weak equivalence or counterfactual transfer identifies exactly the state-
+geometry defect that LSA targets. A CLL pair pass followed by weak direct
+reasoning means retained context is necessary but not sufficient and moves the
+research program toward learned latent deliberation rather than more memory.
+
+## Original Directions After LSA
+
+If LSA proves a stable semantic packet, the next architectural experiment is
+a Causal Latent Workspace: a small fixed recurrent workspace that repeatedly
+updates only the packet from the question and current packet before decoding.
+It would be trained on verified state transitions with halting fixed during the
+first screen, then compared with equal-compute untied token decoding. No text
+chain of thought, controller, retrieval system, or external executor would be
+available at inference. This remains a design hypothesis, not an implemented
+or claimed capability.
