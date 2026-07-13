@@ -5,7 +5,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-13 06:22 EDT
+**Last refreshed:** 2026-07-13 06:32 EDT
 **Flagship source of truth:** Newton Slurm job `685084`,
 `/lustre/fs1/home/sa305415/shohin/train/flagship_out/log_r0.jsonl`  
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -64,6 +64,21 @@ This is the explicit before-sleep reference point for the next custody check.
 | LSA primary gate | Both matched 7,163-update training arms completed. Held-out source-free evaluators `687170` (answer-only) and `687171` (verified geometry) are running on all 2,304 examples in normal, zero-packet, and shuffled-source modes; comparator `687172` is held on their completion. Normal/zero partial evidence is not a conclusion. |
 | Corpus expansion | DCLM `686529` is running on CPU with 204 partial 100M-token shards, about 20.4B tokens. Stokes FineWeb replacement `738030` is running with 11 partial 100M-token shards, about 1.1B tokens. Neither is admitted to the live stream. |
 | Next protected transition | `686732` is dependency-held after the flagship: two H100s, `BS=32 ACC=4`, same 524,288-token update. It must not affect the live writer. |
+
+### Post-Snapshot Research Update: 2026-07-13 06:32 EDT
+
+The locked LSA comparator `687172` **rejected** the verified-geometry candidate. The candidate's
+fit-IID margin over the strongest control was **+1.04pp** against a required +10pp; combined
+length/language OOD was **+0.09pp** against +5pp; equivalent-pair margin was **+0.52pp** against
++10pp; intervention pairs were **0/576** for every arm. It won only two chunk counts, not the
+required three. This is not retained-state evidence and does not justify LSA stage 2.
+
+The source-free causal-prefix-readback replacement is now the active isolated experiment. It starts
+from the immutable 190k raw checkpoint and uses the same audited 32,000 pair / 7,163-update surface:
+`687216` verified readbacks, `687217` shuffled complete readback labels, and `687218` equal-work
+replicated-final readbacks. Their read-only held-out evaluation successors `687219` through `687221`
+are `afterok`-held and use separate outputs. None shares the flagship checkpoint writer, its data
+stream, or its output tree.
 
 ## Checkpoint and Disaster-Recovery Inventory
 
