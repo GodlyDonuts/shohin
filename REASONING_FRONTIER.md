@@ -16,6 +16,53 @@ That is useful for symbols but weak for answer-mode control and natural-language
 parsing. The future language-balanced corpus is a required data transition at
 a natural handoff, not a speculative fix for the active run.
 
+## Workspace Hypothesis: A Small Reportable Register, Not More Narration
+
+The [global-workspace study](https://transformer-circuits.pub/2026/workspace/index.html)
+is relevant to Shohin, but it is not evidence that a 125M model already has a
+usable workspace. Its useful operational claim is narrower: deliberate
+reasoning is associated with a **small, reportable, selectively used
+representation** that can be written once and consumed by multiple downstream
+computations. The study also distinguishes this from ordinary automatic
+processing and tests it with causal interventions, rather than treating an
+eloquent explanation as evidence of thought.
+
+That maps directly onto the current DRS result. DRS v2 gets the first local
+state right on 497/500 core episodes yet ends only 275/500 closed loops; it can
+compute a local action but does not reliably transport the evolving state. The
+original DRS carrier also needlessly makes the model rewrite immutable operand
+tapes on every turn. The static-tape recurrent-register (STRR) control removes
+that copy burden: the controller re-sends immutable evidence verbatim, while
+the model emits only `p,c,r,z`, the compact mutable register. The controller
+does not calculate, repair, rank, or choose that register.
+
+STRR is therefore the first workspace-style experiment, not a latent-reasoning
+claim. It advances only if all of these are true on held-out tapes, wording,
+and paired counterfactuals:
+
+1. **Write:** the model emits the exact next compact register from the fixed
+   tape and preceding register.
+2. **Maintain:** model-emitted registers, not solver states, survive the full
+   closed loop.
+3. **Broadcast:** the same terminal register supports distinct readouts
+   (final result and indexed-digit queries), rather than merely the response
+   template that produced it.
+4. **Intervene:** swapping one operand in a paired counterfactual changes the
+   resulting model-authored state and final answer in the predicted direction;
+   malformed, zeroed, shuffled, or mismatched registers fail on the same
+   readouts.
+5. **Generalize:** results hold under disjoint values, widths, and natural
+   wording. A default-syntax score is not a workspace result.
+
+Only a positive STRR result justifies the next step: a semantic compiler that
+maps natural-language facts into this compact register and then tests
+state interchange across paraphrases. A negative STRR result would instead
+localize the bottleneck below semantic reasoning, in primitive recurrent state
+transport itself. We will not imitate the paper's Jacobian lens prematurely;
+after a positive behavioral gate, a lightweight late-layer logit-lens trace
+can test whether a stable, reportable register has emerged inside the tiny
+model. The behavioral causal tests remain decisive.
+
 ## Hypothesis: Proof-Carrying Deliberation
 
 The next distinctive mechanism is **proof-carrying deliberation (PCD)**. A

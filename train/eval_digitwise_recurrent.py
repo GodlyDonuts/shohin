@@ -87,10 +87,11 @@ def transcript_record(episode, pair):
     }
 
 
-def retain_regime_transcript(bucket, record, succeeded, per_outcome):
+def retain_regime_transcript(examples_by_regime, regime, record, succeeded, per_outcome):
     """Retain early successes and failures separately so a regime is interpretable."""
     if per_outcome <= 0:
         return
+    bucket = examples_by_regime[regime]
     key = "successes" if succeeded else "failures"
     if len(bucket[key]) < per_outcome:
         bucket[key].append(record)
@@ -162,6 +163,7 @@ def main():
             examples.append(record)
         retain_regime_transcript(
             examples_by_regime,
+            regime,
             record,
             bool(normal["success"]),
             args.examples_per_regime,
