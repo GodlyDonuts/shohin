@@ -127,13 +127,17 @@ No source-dropping packet may be called useful unless all of these are met:
 - Only the source-dropping packet can test the constrained-context objective;
   its source-removal and memory-ablation gates are mandatory before training.
 
-## Source-Packet Pilot Rule
+## Source-Packet Pilot Result
 
-The current source-packet run is deliberately a `24,000`-example, `6,000`
-update M0/M1 screen, not a result claim. M0 has zero memory slots and M1 has
-eight; both start from the same raw-180k checkpoint and use the same examples,
-seed, optimizer schedule, and exact answer target. A packet receives more
-training only if its held-out normal condition satisfies all of the following:
+The answer-only source-packet screen is rejected. M0 (zero slots) and M1
+(eight slots) each used `24,000` selected examples, `6,000` updates, the same
+raw-180k checkpoint, seed, optimizer schedule, and exact answer target. M1's
+held-out normal/zero/shuffled scores were `6/384`, `6/384`, and `9/384`.
+Normal lost to shuffled on IID (`4/96` versus `5/96`) and had no positive
+margin on length plus language transfer (`2/192` versus `3/192` controls),
+with zero positive chunk or query-kind margins.
+
+The predeclared advancement rule was:
 
 1. It beats **each** of M0, zeroed packet, and shuffled packet by at least 15
    percentage points on the fit-IID regime.
@@ -144,9 +148,8 @@ training only if its held-out normal condition satisfies all of the following:
 4. Read-only transcript inspection shows the source-free decoder uses the
    actual retained value rather than a fixed answer prior.
 
-The screen is intentionally permitted to reject the answer-only packet. Its
-short mechanics canary already demonstrates that low loss and formatted answers
-are insufficient evidence.
+The screen did reject the answer-only packet. Low loss and formatted answers
+are insufficient evidence of retained information.
 
 ## If Answer-Only Memory Fails: Certified Latent Ledger
 
@@ -185,8 +188,11 @@ operation and query, requires two valid variants for every counterfactual pair,
 and rejects any exact or 13-gram train/held-out **input-prompt** collision. Each
 discarded source chunk has an inert record tag solely to make the input split
 auditable; it is never present in the query or target answer and has no answer
-relation. The CPU-only job is intentionally unsubmitted until the current
-answer-only M0/M1 packet comparison rejects or justifies a follow-on.
+relation. CPU-only build `687132` completed in 153 seconds and independently
+admitted `223,996` train rows, `7,936` held-out rows, `16,000` train pairs,
+and `384` held-out pairs with zero invalid, duplicate, exact-overlap,
+13-gram-overlap, or malformed-pair findings. The matched raw-190k CLL M0/M1
+screen is `687134`/`687135`; neither can touch the flagship.
 
 `train/eval_source_dropping_memory.py --all-heldout` retains every held-out
 ledger row instead of independently sampling rows that could split a pair. For
@@ -199,3 +205,27 @@ different predicted values. When pairs exist,
 `compare_source_dropping_memory.py` adds a required 10-point normal-packet
 advantage over M0, zeroed, and shuffled controls. This is still a narrow
 retained-information gate, not a general-reasoning result.
+
+## If CLL Fails: Latent State Algebra
+
+CLL may still fail because answer losses reward the right token without making
+the memory geometry represent the same state consistently. The next unsubmitted
+idea is **Latent State Algebra (LSA)**: keep the same source-free decoder, but
+use verified equivalent and counterfactual records to constrain the memory
+packet itself during training.
+
+1. Two distinct verified update sequences that finish in the same ledger state
+   should yield equivalent normalized packets; a lightweight training-only
+   projection is aligned across those equivalent records.
+2. Counterfactual records sharing a prefix but differing in one final update
+   should have packet deltas that decode the signed verified state change.
+3. The ordinary source-free readback loss remains primary. The alignment and
+   delta objectives are removed at inference; there is no symbolic executor,
+   textual scratchpad, or external controller.
+4. It must be matched against CLL without those auxiliaries, with the same
+   source-removal, zero, shuffled, length, language, and pairwise tests.
+
+This is intentionally a falsifiable architectural bet, not a claim that a
+continuous packet is already semantic. It is not implemented or submitted
+until the current CLL M0/M1 comparison identifies a representation failure
+rather than a data or optimization failure.
