@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 ~03:18 EDT (`685084` remains healthy through 191.7k; the 190k checkpoint is hash-verified on Newton and the Mac; compact CLL M0 is a documented no-memory null; M1/evaluator/comparator remain isolated; a raw-190k direct probe isolates a weak answer-commitment defect without showing reasoning). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 ~03:28 EDT (`685084` remains healthy through 191.8k; the 190k checkpoint is hash-verified on Newton and the Mac; compact CLL M0 is a documented no-memory null; M1 completed cleanly and its evaluator is isolated on evc35; decoder-depth tuning is rejected; Stokes is validated for future CPU-only work). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -97,7 +97,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | Preserved checkpoints (cluster) | Includes prior milestones plus durable **`best_step190000.pt`** (copied from numbered `ckpt_0190000.pt` before normal retention can reap it); md5 **`3e195aaf44a14259797c49d7f80d9c7f`**. |
 | **Local DR backup (Mac)** | Includes prior milestones plus **`train/flagship_out/ckpt_0190000.pt`**, full+optimizer, locally and remotely md5 **`3e195aaf44a14259797c49d7f80d9c7f`**. Next DR target: 200k. |
 | **Large artifact transfer policy** | For big checkpoints/shards/uploads, prefer VPS-to-VPS or Newton-to-VPS staging when credentials/hosts are available; the VPS links have ~20 Gbit internet and should beat Mac↔Newton transfers. Still use `.part` files and md5/sha256 on both ends before trusting or deleting anything. |
-| **CPU-only execution policy** | User-directed: route future CPU-only corpus generation, audits, packing, and report jobs to **Stokes** (`ssh sa305415@stokes.ist.ucf.edu`), preserving Newton for H100 work and GPU-adjacent scheduler coordination. Before a launch, verify Stokes access, the shared path/output ownership, and that no writer overlaps an existing Newton job. Current read-only tests returned SSH authentication refusal on both Stokes and Newton after v2 submission; this is a transport/auth issue, not a reason to duplicate or move an in-flight job. |
+| **CPU-only execution policy** | User-directed: route future CPU-only corpus generation, audits, packing, and report jobs to **Stokes** (`ssh sa305415@stokes.ist.ucf.edu`), preserving Newton for H100 work and GPU-adjacent scheduler coordination. Access was revalidated 2026-07-13: Stokes host `euser1` exposes 64 CPUs and the shared `/lustre/fs1/home/sa305415` workspace. Before a launch, verify output ownership and that no writer overlaps an existing Newton job; do not duplicate an in-flight CPU writer. |
 
 **Checkpoints preserved so far:** every 10k through 50k; 60k is model-only because the trainer writes
 `ckpt_final.pt` without optimizer state. `ckpt_0060000.pt` is local and cluster hash-matched. The 300k
@@ -2068,6 +2068,10 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   string-insertion cases. The hash-bound MPS artifacts are `89889f3616cae656c415bf277244c67f` and
   `83ea629a248655bc4b7ceec3ecb8ec66`. Reject decoder-budget/answer-commitment tuning as a broad route;
   keep the effect only as a future interface diagnostic.
+- **2026-07-13 ~03:25** — **Stokes is ready for CPU-only work.** Read-only SSH validation reached
+  `euser1`, confirmed 64 CPUs, and verified the shared Lustre root `/lustre/fs1/home/sa305415` with ample
+  space. Future generation, audit, packing, and report jobs should use Stokes after a single-writer/output
+  check, leaving Newton H100 capacity for the flagship and GPU experiments.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
