@@ -2646,5 +2646,9 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   169,115 valid training rows, 900 valid held-out episodes, and zero invalid, duplicate, missing-context,
   exact-overlap, or 13-gram findings. `eval_token_native_ledger.py` and its unsubmitted one-H100 wrapper
   now measure literal-carrier syntax, exact transition transport, closed-loop answers, and paired
-  counterfactual changes; local pure contracts pass. It has no SFT, H100 allocation, or model result;
-  wait for the DRS evidence chain before deciding whether it earns a matched comparison.
+  counterfactual changes; local pure contracts pass. Hash-bound token accounting
+  `token_native_ledger_v1_train.token_accounting.json` is local/Newton md5
+  `c7ae47c14bf374a85323ba186b459a7a`: all 142,012 transition targets are exactly three tokenizer tokens
+  and average 79.246 prompt-plus-target tokens, while the 27,103 source-dropped final readouts average
+  166.040 tokens including the repeated opaque audit delimiter. It has no SFT, H100 allocation, or model
+  result; wait for the DRS evidence chain before deciding whether it earns a matched comparison.

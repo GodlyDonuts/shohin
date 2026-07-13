@@ -1,0 +1,34 @@
+{
+  "audit": "token_native_ledger_v1_token_accounting",
+  "by_kind": {
+    "final": {
+      "mean_prompt_plus_response_tokens": 166.03962660960042,
+      "mean_prompt_tokens": 158.57030587019887,
+      "mean_response_tokens": 7.469320739401542,
+      "response_length_counts": {
+        "3": 159,
+        "4": 7,
+        "5": 96,
+        "6": 7344,
+        "7": 2906,
+        "8": 12269,
+        "9": 4322
+      },
+      "rows": 27103
+    },
+    "transition": {
+      "mean_prompt_plus_response_tokens": 79.2456975466862,
+      "mean_prompt_tokens": 76.2456975466862,
+      "mean_response_tokens": 3.0,
+      "response_length_counts": {
+        "3": 142012
+      },
+      "rows": 142012
+    }
+  },
+  "claim_boundary": "This report measures serialized token cost only. It neither compares matched SFT outcomes nor establishes reasoning, context scaling, or a workspace.",
+  "data": "/Users/sairamen/projects/shohin/artifacts/sft/token_native_ledger_v1_train.jsonl",
+  "data_sha256": "dd5bcc9768b3b96c6c476333bc57ffd5563afea1b5ed74b416f207e9847f62bc",
+  "tokenizer": "/Users/sairamen/projects/shohin/artifacts/shohin-tok-32k.json",
+  "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4"
+}
