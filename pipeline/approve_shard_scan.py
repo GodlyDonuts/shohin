@@ -50,7 +50,10 @@ def main():
     shards = report.get("shards", [])
     if not shards or any(int(row.get("n", 0)) <= 0 for row in shards):
         raise SystemExit("scan report has no nonempty shard records")
-    total_tokens = int(manifest.get("total_tokens", 0))
+    # Tokenized pretraining manifests historically use ``tokens`` while some
+    # newer builders use ``total_tokens``.  Admission must bind the actual
+    # manifest count instead of treating a valid corpus as zero tokens.
+    total_tokens = int(manifest.get("total_tokens", manifest.get("tokens", 0)))
     if total_tokens < args.min_total_tokens:
         raise SystemExit(
             f"manifest token floor failed: {total_tokens} < {args.min_total_tokens}"

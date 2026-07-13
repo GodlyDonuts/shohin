@@ -16,7 +16,9 @@ PILOT=${PILOT:-$BASE/artifacts/shards/fineweb_edu_5b}
 OUT=${OUT:-$BASE/artifacts/shards/fineweb_edu_25b}
 TMP=${OUT}.partial
 MAX_TOKENS=${MAX_TOKENS:-25000000000}
+MIN_TOKENS=${MIN_TOKENS:-24500000000}
 MIN_SCORE=${MIN_SCORE:-3.0}
+DATASET_CONFIG=${DATASET_CONFIG:-sample-100BT}
 
 [ -s "$PILOT/manifest.json" ] || { echo "[fineweb-edu-scale] pilot manifest missing: $PILOT" >&2; exit 2; }
 [ "$OUT" != "$PILOT" ] || { echo "[fineweb-edu-scale] output must replace, not overwrite, pilot" >&2; exit 3; }
@@ -27,7 +29,7 @@ cd "$BASE"
 "$PY" pipeline/tokenize_shards.py \
   --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
   --dataset HuggingFaceFW/fineweb-edu \
-  --config sample-10BT \
+  --config "$DATASET_CONFIG" \
   --text-col text \
   --lang en \
   --lang-field language \
@@ -41,5 +43,19 @@ cd "$BASE"
   --max-tokens "$MAX_TOKENS"
 
 test -s "$TMP/manifest.json"
+"$PY" - "$TMP/manifest.json" "$MIN_TOKENS" <<'PY'
+import json
+import sys
+
+manifest = json.load(open(sys.argv[1]))
+tokens = int(manifest.get("total_tokens", manifest.get("tokens", 0)))
+required = int(sys.argv[2])
+if tokens < required:
+    raise SystemExit(
+        "[fineweb-edu-scale] corpus is too short for a 25B replacement: "
+        f"{tokens} < {required}; partial retained for diagnosis"
+    )
+print(f"[fineweb-edu-scale] token floor passed: {tokens} >= {required}")
+PY
 mv "$TMP" "$OUT"
 echo "[fineweb-edu-scale] committed $OUT; require a fresh full scan before admission"

@@ -5,7 +5,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-12 21:07 EDT
+**Last refreshed:** 2026-07-13 04:29 EDT
 **Flagship source of truth:** Newton Slurm job `685084`,
 `/lustre/fs1/home/sa305415/shohin/train/flagship_out/log_r0.jsonl`  
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -34,11 +34,11 @@ the numbered file under its retention policy; the ledger records which copies re
 | Global tokens per update | `32 * 8 * 2,048 = 524,288` |
 | Absolute training target | 300,000 steps |
 | Resume point | `ckpt_0141500.pt` to step 141,501 |
-| Latest checkpoint milestone | **180,000** steps = **94,371,840,000 nominal update tokens** |
-| Last observed live step | 184,530 = 96,746,864,640 nominal update tokens |
-| Last observed throughput | 154,302 tokens/s, approximately 13.33B nominal tokens/day at that sustained rate |
-| 180k loss / gradient norm | loss 1.6526; gnorm 0.103; LR 0.0050 |
-| Post-180k health | One gnorm guard skip at step 180,030 (1.04 versus EMA 0.12), followed immediately by normal 0.09-0.13 gnorm steps. This is a recovered guard event, not a divergence. |
+| Latest checkpoint milestone | **190,000** steps = **99,614,720,000 nominal update tokens** |
+| Last observed live step | 192,950 = 101,161,369,600 nominal update tokens |
+| Last observed throughput | 154,294 tokens/s, approximately 13.33B nominal tokens/day at that sustained rate |
+| Latest loss / gradient norm | step 192,950: loss 1.6260; gnorm 0.12; LR 0.0050 |
+| Post-190k health | The earlier isolated gnorm guard events recovered immediately; recent observed steps remain in the 0.10-0.14 gnorm band. No divergence or persistent skip exists. |
 | Two-H100 handoff revalidation | `686734` on evc37, 320 bounded updates from `best_step180000.pt`, `world=2`, `BS=32`, `ACC=4`, fresh optimizer, stream generation 1. Exit 0 with no CUDA/NCCL/DDP error; compile-free late windows 291.7-293.9k tok/s (about 1.90x the live one-H100 rate). One terminal gnorm guard skip at step 180,319 was not followed by an in-canary recovery step, so this is throughput/transport evidence only. |
 
 The current live flagship's data stream is frozen for the life of this job. Do not add
@@ -56,9 +56,10 @@ real CUDA/NCCL health check before its throughput is counted.
 |---|---|---|---|---|---|
 | 170k | `ckpt_0170000.pt` | `best_step170000.pt` | `train/flagship_out/ckpt_0170000.pt` | `7ad139b6b9b537a5a3e65978f8296419` | Verified Newton + local |
 | 180k | Observed and hashed, then reaped by trainer retention | `best_step180000.pt` | `train/flagship_out/ckpt_0180000.pt` | `a592a8bd46163eb1427fe64460be0c6a` | Two durable verified copies |
+| 190k | `ckpt_0190000.pt` | `best_step190000.pt` | `train/flagship_out/ckpt_0190000.pt` | `3e195aaf44a14259797c49d7f80d9c7f` | Verified Newton + local |
 
 All rows above are full optimizer checkpoints, not model-only exports. The next local DR
-target is 190k, or the newest clean checkpoint before any natural handoff.
+target is 200k, or the newest clean checkpoint before any natural handoff.
 
 ## Current Active Pretraining Corpus
 
@@ -88,7 +89,7 @@ the running `SHARDS` list.
 | TACO shuffled all-test audit `686584` | Last durable log: 400/3,000 selected candidates passed all supplied bounded stdin/stdout tests; 1,605 source rows scanned. The active pre-fix partial file is not treated as durable. | In progress. Success path is `686585 -> 686586`; non-success retry is `686659 -> 686660 -> 686661` with immutable input and all tests retained. |
 | Verifier rollout `686536` | 78,654 emitted rollout rows at ledger refresh; generator log had reached 5,100/10,000 prompts and 81,600 sampled candidates. | In progress. It is not training data until the tail, global dedup, exact packing, and >=3,000 packed-512-sequence gate succeed. |
 | OpenMathReasoning COT selector `686672` | Under full problem+trace decontamination, final-answer verification, individual limits, and an exact combined 2,048-token SFT limit: 326/10,000 rows retained. Rejections: 9,398 long traces, 17 long combined examples, 198 answer mismatches, 1 exact-problem hit, 45 13-gram hits, 8 duplicate problems. | Inspection-only. No bulk candidate is authorized until yield, data balance, and source-specific quality review are recorded. |
-| 25B DCLM / FineWeb replacements | No final manifests or scan approvals at this refresh. | Not admitted; do not use partial output in a future relaunch. |
+| 25B DCLM / FineWeb replacements | FineWeb job `686530` completed only 4,599,748,648 tokens because it used `sample-10BT`; it is explicitly rejected as a 25B replacement. Corrected Stokes CPU job `738030` uses `sample-100BT`, writes only `fineweb_edu_25b_r2.partial`, and enforces a >=24.5B manifest-token floor before publication. DCLM `686529` remains an independent build. | Not admitted; no partial or pilot output may enter a future relaunch. |
 | VRWM r3 transition SFT | 497,274 unique solver-checked rows, 0 malformed rows, duplicate prompts, or full-text evaluation overlaps; 18,013 packed 2,048-token sequences. SHA-256 `b2a688e1f7aa6c79dd65ed1944fa5dc00cd022acfc793896ecf4696c94d4089f`. One epoch `686742` wrote `sft_ep1.pt` (MD5 `90607e7307187c2ad4839d48dfa3a0c6`). Full default p80 closed-loop result: 43/400. | Rejected as template-bound: held-out paraphrase p10 is 0/50. |
 | VRWM r4 controlled ablation | Both state-only and deterministic-scratch branches: 513,902 audited rows, 0 malformed/duplicate/public-overlap rows; state SHA-256 `cfab3c0c06cd5eba419d42cd52937ab7159e8f30acc2bc1202375ea38c162e58`, scratch SHA-256 `0df3d86471ccc675ad2dea07bb19cd7ffd97adde5c78b3e92b7fb1581c7d7b10`. | State: 32/400 default, 2/400 semantic. Scratch: 120/400 default, 21/400 semantic. Narrow executable-state evidence only; not general reasoning or promotion. |
 | VRWM r5 repair curriculum | 1,409,072 audited rows / 68,347 packed sequences, 139,976,150 total SFT tokens and 38,629,088 answer tokens. SHA-256 `011282f032963a40b8b39ab9572808de1d3473ef2b57ef727526fb9d00985c76`; zero malformed, duplicate, exact-eval, or 13-gram-eval rows. SFT `686820` completed on evc37 in 1,303s; its locally and remotely preserved checkpoint md5 is `ef99f8c2ab5835c8229bcd4f36fb8789`. | Rejected for broad promotion. Semantic p80 first-pass is 17/400, below r4 scratch's 21/400; remaining default/self-repair jobs are diagnostic-only. |
