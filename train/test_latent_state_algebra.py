@@ -24,6 +24,7 @@ def main():
     total = auxiliary.total(losses, {
         "alignment": 0.1,
         "contrastive": 0.1,
+        "separation": 0.1,
         "state": 1.0,
         "delta": 0.5,
     })
@@ -45,8 +46,18 @@ def main():
     )
     assert intervention["alignment"].item() == 0.0
     assert intervention["contrastive"].item() == 0.0
+    assert intervention["separation"].item() == 0.0
     assert intervention["state"].item() < 1e-6
     assert intervention["delta"].item() < 1e-6
+
+    collapsed = auxiliary.losses(
+        packet_a[:1],
+        packet_a[:1],
+        states[:1],
+        states[:1] + torch.tensor([[0.5, 0.0]]),
+        equivalent=torch.tensor([False]),
+    )
+    assert collapsed["separation"].item() > 0.0
     try:
         auxiliary.losses(packet_a, packet_b, states[:1], states[:1])
     except ValueError:

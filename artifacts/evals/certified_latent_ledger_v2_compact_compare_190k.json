@@ -1,0 +1,494 @@
+{
+  "advance_answer_only_source_packet": false,
+  "audit": "source_dropping_memory_matched_comparison_v1",
+  "by_chunk": {
+    "1": {
+      "control_max_accuracy": 0.09375,
+      "controls": {
+        "m0_no_slot": {
+          "accuracy": 0.03125,
+          "cases": 64,
+          "correct": 2
+        },
+        "m1_shuffled_source": {
+          "accuracy": 0.09375,
+          "cases": 64,
+          "correct": 6
+        },
+        "m1_zero_packet": {
+          "accuracy": 0.015625,
+          "cases": 64,
+          "correct": 1
+        }
+      },
+      "m1_normal": {
+        "accuracy": 0.09375,
+        "cases": 64,
+        "correct": 6
+      },
+      "normal_margin": 0.0
+    },
+    "2": {
+      "control_max_accuracy": 0.027777777777777776,
+      "controls": {
+        "m0_no_slot": {
+          "accuracy": 0.027777777777777776,
+          "cases": 108,
+          "correct": 3
+        },
+        "m1_shuffled_source": {
+          "accuracy": 0.009259259259259259,
+          "cases": 108,
+          "correct": 1
+        },
+        "m1_zero_packet": {
+          "accuracy": 0.009259259259259259,
+          "cases": 108,
+          "correct": 1
+        }
+      },
+      "m1_normal": {
+        "accuracy": 0.009259259259259259,
+        "cases": 108,
+        "correct": 1
+      },
+      "normal_margin": -0.018518518518518517
+    },
+    "3": {
+      "control_max_accuracy": 0.01904761904761905,
+      "controls": {
+        "m0_no_slot": {
+          "accuracy": 0.01904761904761905,
+          "cases": 105,
+          "correct": 2
+        },
+        "m1_shuffled_source": {
+          "accuracy": 0.009523809523809525,
+          "cases": 105,
+          "correct": 1
+        },
+        "m1_zero_packet": {
+          "accuracy": 0.0,
+          "cases": 105,
+          "correct": 0
+        }
+      },
+      "m1_normal": {
+        "accuracy": 0.0380952380952381,
+        "cases": 105,
+        "correct": 4
+      },
+      "normal_margin": 0.01904761904761905
+    },
+    "4": {
+      "control_max_accuracy": 0.019417475728155338,
+      "controls": {
+        "m0_no_slot": {
+          "accuracy": 0.019417475728155338,
+          "cases": 103,
+          "correct": 2
+        },
+        "m1_shuffled_source": {
+          "accuracy": 0.019417475728155338,
+          "cases": 103,
+          "correct": 2
+        },
+        "m1_zero_packet": {
+          "accuracy": 0.009708737864077669,
+          "cases": 103,
+          "correct": 1
+        }
+      },
+      "m1_normal": {
+        "accuracy": 0.0,
+        "cases": 103,
+        "correct": 0
+      },
+      "normal_margin": -0.019417475728155338
+    },
+    "5": {
+      "control_max_accuracy": 0.014084507042253521,
+      "controls": {
+        "m0_no_slot": {
+          "accuracy": 0.014084507042253521,
+          "cases": 71,
+          "correct": 1
+        },
+        "m1_shuffled_source": {
+          "accuracy": 0.0,
+          "cases": 71,
+          "correct": 0
+        },
+        "m1_zero_packet": {
+          "accuracy": 0.0,
+          "cases": 71,
+          "correct": 0
+        }
+      },
+      "m1_normal": {
+        "accuracy": 0.0,
+        "cases": 71,
+        "correct": 0
+      },
+      "normal_margin": -0.014084507042253521
+    },
+    "6": {
+      "control_max_accuracy": 0.011494252873563218,
+      "controls": {
+        "m0_no_slot": {
+          "accuracy": 0.011494252873563218,
+          "cases": 87,
+          "correct": 1
+        },
+        "m1_shuffled_source": {
+          "accuracy": 0.011494252873563218,
+          "cases": 87,
+          "correct": 1
+        },
+        "m1_zero_packet": {
+          "accuracy": 0.0,
+          "cases": 87,
+          "correct": 0
+        }
+      },
+      "m1_normal": {
+        "accuracy": 0.034482758620689655,
+        "cases": 87,
+        "correct": 3
+      },
+      "normal_margin": 0.022988505747126436
+    },
+    "7": {
+      "control_max_accuracy": 0.03125,
+      "controls": {
+        "m0_no_slot": {
+          "accuracy": 0.0,
+          "cases": 32,
+          "correct": 0
+        },
+        "m1_shuffled_source": {
+          "accuracy": 0.03125,
+          "cases": 32,
+          "correct": 1
+        },
+        "m1_zero_packet": {
+          "accuracy": 0.0,
+          "cases": 32,
+          "correct": 0
+        }
+      },
+      "m1_normal": {
+        "accuracy": 0.03125,
+        "cases": 32,
+        "correct": 1
+      },
+      "normal_margin": 0.0
+    },
+    "8": {
+      "control_max_accuracy": 0.01639344262295082,
+      "controls": {
+        "m0_no_slot": {
+          "accuracy": 0.0,
+          "cases": 61,
+          "correct": 0
+        },
+        "m1_shuffled_source": {
+          "accuracy": 0.0,
+          "cases": 61,
+          "correct": 0
+        },
+        "m1_zero_packet": {
+          "accuracy": 0.01639344262295082,
+          "cases": 61,
+          "correct": 1
+        }
+      },
+      "m1_normal": {
+        "accuracy": 0.01639344262295082,
+        "cases": 61,
+        "correct": 1
+      },
+      "normal_margin": 0.0
+    }
+  },
+  "by_query_kind": {
+    "difference": {
+      "control_max_accuracy": 0.04,
+      "controls": {
+        "m0_no_slot": {
+          "accuracy": 0.04,
+          "cases": 100,
+          "correct": 4
+        },
+        "m1_shuffled_source": {
+          "accuracy": 0.03,
+          "cases": 100,
+          "correct": 3
+        },
+        "m1_zero_packet": {
+          "accuracy": 0.02,
+          "cases": 100,
+          "correct": 2
+        }
+      },
+      "m1_normal": {
+        "accuracy": 0.02,
+        "cases": 100,
+        "correct": 2
+      },
+      "normal_margin": -0.02
+    },
+    "read_left": {
+      "control_max_accuracy": 0.014084507042253521,
+      "controls": {
+        "m0_no_slot": {
+          "accuracy": 0.014084507042253521,
+          "cases": 355,
+          "correct": 5
+        },
+        "m1_shuffled_source": {
+          "accuracy": 0.008450704225352112,
+          "cases": 355,
+          "correct": 3
+        },
+        "m1_zero_packet": {
+          "accuracy": 0.0028169014084507044,
+          "cases": 355,
+          "correct": 1
+        }
+      },
+      "m1_normal": {
+        "accuracy": 0.014084507042253521,
+        "cases": 355,
+        "correct": 5
+      },
+      "normal_margin": 0.0
+    },
+    "read_right": {
+      "control_max_accuracy": 0.022222222222222223,
+      "controls": {
+        "m0_no_slot": {
+          "accuracy": 0.022222222222222223,
+          "cases": 90,
+          "correct": 2
+        },
+        "m1_shuffled_source": {
+          "accuracy": 0.011111111111111112,
+          "cases": 90,
+          "correct": 1
+        },
+        "m1_zero_packet": {
+          "accuracy": 0.011111111111111112,
+          "cases": 90,
+          "correct": 1
+        }
+      },
+      "m1_normal": {
+        "accuracy": 0.03333333333333333,
+        "cases": 90,
+        "correct": 3
+      },
+      "normal_margin": 0.01111111111111111
+    },
+    "sum": {
+      "control_max_accuracy": 0.05813953488372093,
+      "controls": {
+        "m0_no_slot": {
+          "accuracy": 0.0,
+          "cases": 86,
+          "correct": 0
+        },
+        "m1_shuffled_source": {
+          "accuracy": 0.05813953488372093,
+          "cases": 86,
+          "correct": 5
+        },
+        "m1_zero_packet": {
+          "accuracy": 0.0,
+          "cases": 86,
+          "correct": 0
+        }
+      },
+      "m1_normal": {
+        "accuracy": 0.06976744186046512,
+        "cases": 86,
+        "correct": 6
+      },
+      "normal_margin": 0.011627906976744186
+    }
+  },
+  "by_regime": {
+    "fit_iid": {
+      "control_max_accuracy": 0.031746031746031744,
+      "controls": {
+        "m0_no_slot": {
+          "accuracy": 0.031746031746031744,
+          "cases": 126,
+          "correct": 4
+        },
+        "m1_shuffled_source": {
+          "accuracy": 0.023809523809523808,
+          "cases": 126,
+          "correct": 3
+        },
+        "m1_zero_packet": {
+          "accuracy": 0.007936507936507936,
+          "cases": 126,
+          "correct": 1
+        }
+      },
+      "m1_normal": {
+        "accuracy": 0.03968253968253968,
+        "cases": 126,
+        "correct": 5
+      },
+      "normal_margin": 0.007936507936507936
+    },
+    "full_ood": {
+      "control_max_accuracy": 0.010526315789473684,
+      "controls": {
+        "m0_no_slot": {
+          "accuracy": 0.010526315789473684,
+          "cases": 190,
+          "correct": 2
+        },
+        "m1_shuffled_source": {
+          "accuracy": 0.005263157894736842,
+          "cases": 190,
+          "correct": 1
+        },
+        "m1_zero_packet": {
+          "accuracy": 0.005263157894736842,
+          "cases": 190,
+          "correct": 1
+        }
+      },
+      "m1_normal": {
+        "accuracy": 0.005263157894736842,
+        "cases": 190,
+        "correct": 1
+      },
+      "normal_margin": -0.005263157894736842
+    },
+    "language_ood": {
+      "control_max_accuracy": 0.023809523809523808,
+      "controls": {
+        "m0_no_slot": {
+          "accuracy": 0.023809523809523808,
+          "cases": 126,
+          "correct": 3
+        },
+        "m1_shuffled_source": {
+          "accuracy": 0.023809523809523808,
+          "cases": 126,
+          "correct": 3
+        },
+        "m1_zero_packet": {
+          "accuracy": 0.007936507936507936,
+          "cases": 126,
+          "correct": 1
+        }
+      },
+      "m1_normal": {
+        "accuracy": 0.023809523809523808,
+        "cases": 126,
+        "correct": 3
+      },
+      "normal_margin": 0.0
+    },
+    "length_ood": {
+      "control_max_accuracy": 0.026455026455026454,
+      "controls": {
+        "m0_no_slot": {
+          "accuracy": 0.010582010582010581,
+          "cases": 189,
+          "correct": 2
+        },
+        "m1_shuffled_source": {
+          "accuracy": 0.026455026455026454,
+          "cases": 189,
+          "correct": 5
+        },
+        "m1_zero_packet": {
+          "accuracy": 0.005291005291005291,
+          "cases": 189,
+          "correct": 1
+        }
+      },
+      "m1_normal": {
+        "accuracy": 0.037037037037037035,
+        "cases": 189,
+        "correct": 7
+      },
+      "normal_margin": 0.010582010582010581
+    }
+  },
+  "chunk_count_wins": 2,
+  "claim_boundary": "Passing shows a causal advantage on this held-out source-removal memory task only. It does not establish broad reasoning or justify modifying flagship pretraining.",
+  "counterfactual_margin_threshold": 0.1,
+  "counterfactual_pairs": {
+    "control_max_accuracy": 0.0,
+    "controls": {
+      "m0_no_slot": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "pairs": 128
+      },
+      "m1_shuffled_source": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "pairs": 128
+      },
+      "m1_zero_packet": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "pairs": 128
+      }
+    },
+    "m1_normal": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "pairs": 128
+    },
+    "normal_margin": 0.0
+  },
+  "data_sha256": "dfcf852c0ca57b6bb58f4f7c1a775221e33e97aa261d79478cc3bf36e82e5fc7",
+  "fit_margin_threshold": 0.15,
+  "gates": {
+    "at_least_three_chunk_counts_beat_controls": false,
+    "at_least_two_query_kinds_beat_controls": true,
+    "counterfactual_pair_margin_at_least_10pp": false,
+    "fit_margin_at_least_15pp": false,
+    "length_language_margin_at_least_5pp": false
+  },
+  "length_language_combined": {
+    "control_max_accuracy": 0.025396825396825397,
+    "controls": {
+      "m0_no_slot": {
+        "accuracy": 0.015873015873015872,
+        "cases": 315,
+        "correct": 5
+      },
+      "m1_shuffled_source": {
+        "accuracy": 0.025396825396825397,
+        "cases": 315,
+        "correct": 8
+      },
+      "m1_zero_packet": {
+        "accuracy": 0.006349206349206349,
+        "cases": 315,
+        "correct": 2
+      }
+    },
+    "m1_normal": {
+      "accuracy": 0.031746031746031744,
+      "cases": 315,
+      "correct": 10
+    },
+    "normal_margin": 0.0063492063492063475
+  },
+  "m0_checkpoint": "/lustre/fs1/home/sa305415/shohin/train/certified_latent_ledger_v2_compact_m0_190k/source_memory_ep1.pt",
+  "m1_checkpoint": "/lustre/fs1/home/sa305415/shohin/train/certified_latent_ledger_v2_compact_m1_190k/source_memory_ep1.pt",
+  "ood_margin_threshold": 0.05,
+  "query_kind_wins": 2
+}

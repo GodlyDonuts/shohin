@@ -30,9 +30,14 @@ except Exception as exc:
 PY
 args=(
   --ckpt "$CKPT" --data "$DATA" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" --out "$OUT"
-  --per-chunk-regime "${PER_CHUNK_REGIME:-16}" --max-new "${MAX_NEW:-24}" --seed "${SEED:-20260714}"
+  --max-new "${MAX_NEW:-24}" --seed "${SEED:-20260714}"
 )
-if [ "${COUNTERFACTUAL_PAIRS_PER_REGIME:-0}" -gt 0 ]; then
-  args+=(--counterfactual-pairs-per-regime "${COUNTERFACTUAL_PAIRS_PER_REGIME}")
+if [ "${ALL_HELDOUT:-0}" = 1 ]; then
+  args+=(--all-heldout)
+else
+  args+=(--per-chunk-regime "${PER_CHUNK_REGIME:-16}")
+  if [ "${COUNTERFACTUAL_PAIRS_PER_REGIME:-0}" -gt 0 ]; then
+    args+=(--counterfactual-pairs-per-regime "${COUNTERFACTUAL_PAIRS_PER_REGIME}")
+  fi
 fi
 "$PY" eval_source_dropping_memory.py "${args[@]}"

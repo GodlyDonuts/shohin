@@ -15,15 +15,18 @@ import torch.nn.functional as functional
 class LatentStateAlgebra(nn.Module):
     """Measure state equivalence and verified deltas in continuous packets."""
 
-    def __init__(self, d_model: int, state_dim: int, temperature: float = 0.1):
+    def __init__(self, d_model: int, state_dim: int, temperature: float = 0.1, separation_margin: float = 0.2):
         super().__init__()
         if d_model <= 0 or state_dim <= 0:
             raise ValueError("d_model and state_dim must be positive")
         if temperature <= 0:
             raise ValueError("temperature must be positive")
+        if separation_margin <= 0:
+            raise ValueError("separation_margin must be positive")
         self.d_model = int(d_model)
         self.state_dim = int(state_dim)
         self.temperature = float(temperature)
+        self.separation_margin = float(separation_margin)
         self.project = nn.Linear(d_model, d_model, bias=False)
         self.state_probe = nn.Linear(d_model, state_dim)
 
@@ -44,12 +47,15 @@ class LatentStateAlgebra(nn.Module):
         state_b: torch.Tensor,
         equivalent: torch.Tensor | None = None,
     ) -> dict[str, torch.Tensor]:
-        """Return aligned, contrastive, state, and delta losses for paired records.
+        """Return geometric and verified-state losses for paired records.
 
         Only rows marked equivalent contribute to packet alignment and
         contrastive geometry. Verified intervention rows retain their state
         and delta supervision, but must not be pulled toward equal packets.
-        Target vectors are normalized numeric labels supplied only in training.
+        Non-equivalent rows also receive a packet-space separation margin. This
+        prevents the state probe from encoding distinct values solely by
+        amplifying a nearly collapsed packet direction. Target vectors are
+        normalized numeric labels supplied only in training.
         """
         hidden_a, hidden_b = self.packet_state(packet_a), self.packet_state(packet_b)
         if (
@@ -88,6 +94,14 @@ class LatentStateAlgebra(nn.Module):
                 + functional.cross_entropy(logits.T, labels)
             )
 
+        intervened_a = projected_a[~equivalent]
+        intervened_b = projected_b[~equivalent]
+        if intervened_a.shape[0] == 0:
+            separation = hidden_a.new_zeros(())
+        else:
+            distance = (intervened_a - intervened_b).norm(dim=-1)
+            separation = functional.relu(self.separation_margin - distance).square().mean()
+
         predicted_a = self.state_probe(hidden_a)
         predicted_b = self.state_probe(hidden_b)
         state = 0.5 * (
@@ -98,6 +112,7 @@ class LatentStateAlgebra(nn.Module):
         return {
             "alignment": alignment,
             "contrastive": contrastive,
+            "separation": separation,
             "state": state,
             "delta": delta,
         }
@@ -105,7 +120,7 @@ class LatentStateAlgebra(nn.Module):
     @staticmethod
     def total(losses: dict[str, torch.Tensor], weights: dict[str, float]) -> torch.Tensor:
         """Combine explicitly named losses so the zero-auxiliary control is exact."""
-        required = {"alignment", "contrastive", "state", "delta"}
+        required = {"alignment", "contrastive", "separation", "state", "delta"}
         if set(losses) != required or set(weights) != required:
             raise ValueError("losses and weights must contain exactly {}".format(sorted(required)))
         total = None

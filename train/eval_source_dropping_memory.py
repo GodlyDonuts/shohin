@@ -257,10 +257,16 @@ def main():
                 "mode": mode,
                 "eval_regime": case["eval_regime"],
                 "chunk_count": int(case["chunk_count"]),
-                "query_kind": case.get("ledger_probe_kind") or case.get("query_spec", {}).get("kind"),
+                "query_kind": case.get("query_kind") or case.get("ledger_probe_kind") or case.get("query_spec", {}).get("kind"),
                 "ledger_stage": case.get("ledger_stage"),
                 "counterfactual_id": case.get("counterfactual_id"),
                 "counterfactual_variant": case.get("counterfactual_variant"),
+                # Generic pair metadata is copied for held-out LSA analysis.
+                # It is absent for older packet datasets and never enters the
+                # model's source-free decoder context.
+                "pair_id": case.get("pair_id"),
+                "pair_kind": case.get("pair_kind"),
+                "pair_member": case.get("pair_member"),
                 "reference": case["reference"],
                 "expected": int(case["answer"]),
                 "prediction": prediction,

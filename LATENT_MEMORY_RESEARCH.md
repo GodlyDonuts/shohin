@@ -230,7 +230,14 @@ hash-matched token report (md5 `89ac960e6eb12b0f2dbe25f42a9ee3d1`) confirms whol
 train chunk/source means **228.60/511.63 -> 41.44/92.74** tokens and held-out means
 **194.93/660.24 -> 37.43/126.79**. This earns exactly one matched raw-190k M0/M1 screen:
 `687144` (no slots) versus `687145` (eight slots), each 24,000 examples / 6,000 updates;
-pair-safe evaluators `687146/687147` and locked comparator `687148` follow only on success.
+pair-safe evaluators `687146/687147` and locked comparator `687148` followed only on success.
+The screen is now complete and **rejected**. M0 is a valid 11/631 (1.743%) no-memory floor in
+every mode. M1 normal/zero/shuffled is 16/631 (2.536%) / 4/631 (0.634%) / 12/631 (1.902%),
+but the locked comparator finds only a 0.79-point fit margin, a 0.63-point combined
+length/language margin, two positive chunk counts, and 0/128 correct-and-different intervention
+pairs. It fails every required gate except the weak query-kind count. The result establishes that
+the source-free writer can influence a few formatted fit answers, not that it retains a causally
+useful, compositional state.
 
 ## If CLL Fails: Latent State Algebra
 
@@ -252,9 +259,10 @@ packet itself during training.
    source-removal, zero, shuffled, length, language, and pairwise tests.
 
 This is intentionally a falsifiable architectural bet, not a claim that a
-continuous packet is already semantic. It is not implemented or submitted
-until the current CLL M0/M1 comparison identifies a representation failure
-rather than a data or optimization failure.
+continuous packet is already semantic. CLL now rejects answer-only packets
+while showing a small normal-versus-zero fit gap. That is weak enough to reject
+the route, but sufficient to justify exactly one denser, matched geometry
+screen before abandoning source-free packet memory.
 
 ### LSA preregistration
 
@@ -277,11 +285,11 @@ only inference interface remains `packet + fresh query -> answer`.
    mismatches, permuted state-code controls, and a zero-auxiliary CLL control.
    Equivalent alignment without state separation is collapse; accurate probe
    output without source-free decoder transfer is an auxiliary-only shortcut.
-4. Admit LSA only if compact CLL establishes some packet information flow but
-   misses pairwise or compositional gates. It must beat CLL-without-auxiliaries,
-   M0, zeroed packet, shuffled source, and shuffled pair assignments on the
-   same held-out length, language, and counterfactual regimes. A narrow pass
-   remains constrained-context evidence, not autonomous general reasoning.
+4. The LSA candidate must beat a matched answer-only control, zeroed packet,
+   shuffled source, shuffled pair assignments, and permuted state-code controls
+   on the same held-out length, language, equivalence, and intervention regimes.
+   A narrow pass remains constrained-context evidence, not autonomous general
+   reasoning.
 
 The prediction is diagnostic. No CLL margin means the writer/decoder has not
 learned a usable channel and LSA should not be funded yet. CLL readback with
@@ -290,16 +298,23 @@ geometry defect that LSA targets. A CLL pair pass followed by weak direct
 reasoning means retained context is necessary but not sufficient and moves the
 research program toward learned latent deliberation rather than more memory.
 
-`train/latent_state_algebra.py` now contains the local, focused training-only
-loss primitive and `train/test_latent_state_algebra.py` verifies its alignment,
-state, delta, anti-collapse, and shape invariants. An explicit equivalence
-mask ensures only equivalent rows receive alignment/contrastive pressure;
-verified interventions retain state/delta supervision without being pulled
-together. No LSA paired-data
-generator, trainer, checkpoint, or cluster job exists yet. That boundary is
-intentional: the compact CLL comparator determines whether the next work
-should repair packet geometry or abandon the channel before any new GPU time
-is consumed.
+`train/latent_state_algebra.py` now contains the focused training-only loss
+primitive; `train/test_latent_state_algebra.py` verifies alignment, state,
+delta, separation, and shape invariants. Equivalent rows alone receive
+alignment/contrastive pressure; verified interventions retain state/delta
+supervision and now also have a packet-space separation margin, preventing a
+state probe from hiding distinct values in a collapsed packet direction.
+
+The resulting, still-unsubmitted LSA v1 screen is fully wired before any GPU
+allocation: `pipeline/generate_latent_state_algebra_v1.py` produces paired
+commutation/intervention records, `pipeline/audit_latent_state_algebra_v1.py`
+recomputes every state and checks pair structure plus exact/13-gram splits,
+and `train/latent_state_algebra_train.py` exposes verified, shuffled-pair,
+permuted-state-code, and zero-auxiliary modes. `train/compare_latent_state_algebra.py`
+locks a 10-point fit/equivalence/intervention and 5-point length/language gate
+against the matched answer-only model. The generator/auditor/trainer/comparator
+have only passed CPU smoke contracts so far; no LSA data, checkpoint, or GPU
+result exists yet.
 
 ## Original Directions After LSA
 
