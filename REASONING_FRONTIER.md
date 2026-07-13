@@ -128,6 +128,34 @@ runtime controller only transports exact model text, drops the source, and
 enforces grammar. It does not answer a query, repair a state, rank candidates,
 or inject a correct field.
 
+### The Crucial New Constraint: State Interchange
+
+The easy way to fake a state curriculum is to answer from the current prompt
+and treat the rendered state as decoration. CBC therefore adds an *interchange*
+operation that is not present in ordinary chain-of-thought SFT. For one latent
+world, generate two independently worded histories, compile each to a state,
+then give the first state's output to a query drawn from the second history.
+Because the worlds are semantically identical, the answer must remain correct.
+For a counterfactual world, perform the same exchange after changing exactly
+one causal fact; now exactly the dependent answers must change. The model is
+not shown the original history for either readout.
+
+This turns "does the model emit a plausible state?" into a causal intervention:
+
+1. Same-world interchange must preserve answers across wording.
+2. Cross-world interchange must fail in the exact directions predicted by the
+   changed fact, rather than merely changing output style.
+3. Zeroed, shuffled, and counterfactually mismatched states must lose the
+   corresponding advantage on the *same* queries.
+4. An inverse-delta prompt must recover the changed field from adjacent states,
+   so a lossy answer-only summary cannot pass by accident.
+
+The resulting metric is a **state-necessity margin**: normal model-authored
+state accuracy minus matched zeroed/shuffled/mismatched-state accuracy, with
+the paraphrase and counterfactual rows reported separately. A high ordinary
+answer score with no margin rejects the mechanism. This is the central
+distinction from all earlier state experiments in this project.
+
 ### Why This Is Different From Earlier State Work
 
 - **Not V7:** V7 rewards a rendered state/answer contract. CBC requires the
@@ -160,7 +188,11 @@ learn a local symbolic transition at all:
    shorter canonical state. The dropped trace is never reintroduced. Held-out
    questions include facts that are not asked during compaction, making an
    answer-only summary insufficient.
-5. **Self-check only after competence:** a verifier/repair role is trained on
+5. **Interchange before self-check:** generated states must solve queries from
+   a separate paraphrase of the same world and fail predictably when swapped
+   with a counterfactual world. This is the first point at which a state can be
+   called causally useful rather than merely well formatted.
+6. **Self-check only after competence:** a verifier/repair role is trained on
    balanced grammar-valid near misses and then asked to judge *model-sampled*
    states. This is where PCD can become a component, not a premise.
 
@@ -184,9 +216,10 @@ on disjoint worlds, vocabularies, field names, and controller prompts:
   for counterfactual pairs.
 - Source-free forward updates, inverse-delta accuracy, and multiple unseen
   query readouts from the same generated state.
-- Normal versus zeroed and shuffled-state margins on the identical generated
-  states. No margin means the state is decorative, irrespective of answer
-  accuracy.
+- Same-world state interchange plus cross-world counterfactual interchange.
+  Normal versus zeroed, shuffled, and mismatched-state margins must be
+  measured on the identical generated states. No margin means the state is
+  decorative, irrespective of answer accuracy.
 - A label-shuffled verifier control with matched compute. Equal performance
   rejects the claimed self-checker.
 - Fresh direct interaction with ordinary arithmetic, code, logic, and state

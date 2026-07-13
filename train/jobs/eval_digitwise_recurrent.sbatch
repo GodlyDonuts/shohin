@@ -3,7 +3,10 @@
 #SBATCH -J shohin-drs-eval
 #SBATCH -p normal
 #SBATCH --gres=gpu:nvidia_h100_pcie:1
-#SBATCH --exclude=evc22,evc26,evc31,evc36,evc43,evc50
+# DRS-specific CUDA exclusions. `evc23`/`evc32` stalled before framework
+# startup and `evc44` failed a real CUDA allocation; do not generalize this
+# list to the flagship scheduler policy.
+#SBATCH --exclude=evc22,evc23,evc26,evc31,evc32,evc36,evc43,evc44,evc50
 #SBATCH -c 4
 #SBATCH --mem=48G
 #SBATCH -t 03:00:00

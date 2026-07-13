@@ -243,6 +243,31 @@ isolated, exact-prompt-bound one-epoch SFT `687375` started only after this
 clean control, from `best_step200000.pt`, and its core/held-out children are
 still dependency-held. The result cannot alter the flagship pretrain.
 
+### DRS CUDA Recovery and Causal-Workspace Refinement: 2026-07-13 14:18 EDT
+
+The first hash-bound, exact-prompt DRS SFT allocation `687419` on evc44 passed
+both data and completion-boundary preflights but then failed before model load
+at `torch.empty(..., device='cuda')` with CUDA-capable devices busy or
+unavailable. It produced no checkpoint, batches, loss, or capability result.
+This is an infrastructure non-result, not a negative DRS result. The isolated
+DRS SFT/evaluation exclusions now include evc44; they are not a flagship-wide
+node policy.
+
+Before reusing H100 time, `687428` requested a real H100 allocation on idle
+evc49 and passed a CUDA tensor plus bfloat16 matmul in 28 seconds. Fresh,
+non-overlapping paths are now chained as `687430 -> {687431,687432}` on that
+verified node: one exact-boundary SFT epoch from `best_step200000.pt`, then
+parallel matched core and held-out DRS evaluations. Only those child results can
+answer whether supervised local execution transfers across wording.
+
+The follow-on Counterfactual Bisimulation Compiler hypothesis now has a stricter
+falsification condition: model-authored states must be interchangeable between
+unseen paraphrases of the same world, must change downstream answers in the
+predicted direction when swapped with a one-fact counterfactual world, and must
+beat zeroed/shuffled/mismatched-state controls by a recorded state-necessity
+margin. This remains a staged research specification, not a model result or an
+authorized flagship modification.
+
 ## Checkpoint and Disaster-Recovery Inventory
 
 | Milestone | Numbered checkpoint at milestone | Newton durable copy | Local full checkpoint | MD5 | State |

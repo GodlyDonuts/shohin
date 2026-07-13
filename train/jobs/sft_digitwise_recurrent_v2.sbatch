@@ -4,7 +4,9 @@
 #SBATCH -J shohin-drs-sft
 #SBATCH -p normal
 #SBATCH --gres=gpu:nvidia_h100_pcie:1
-#SBATCH --exclude=evc22,evc26,evc31,evc36,evc43,evc50
+# `evc44` failed the same real CUDA allocation after the data and prompt
+# preflights had passed. Keep this exclusion local to the DRS experiment.
+#SBATCH --exclude=evc22,evc23,evc26,evc31,evc32,evc36,evc43,evc44,evc50
 #SBATCH -c 4
 #SBATCH --mem=96G
 #SBATCH -t 03:00:00
@@ -14,6 +16,13 @@ set -euo pipefail
 
 BASE=/lustre/fs1/home/sa305415/shohin
 PY=$BASE/miniforge3/bin/python
+# The account-wide process limit is low relative to NumPy/OpenBLAS's default
+# thread fan-out. Keep preflight and SFT imports below that limit; the model
+# still uses the job's four CPU cores through PyTorch's OpenMP pool.
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+export OMP_NUM_THREADS=4
 INIT=${INIT:?set INIT to best_step200000.pt}
 DATA=${DATA:-$BASE/artifacts/sft/digitwise_recurrent_v2_train.jsonl}
 EPISODES=${EPISODES:-$BASE/artifacts/evals/digitwise_recurrent_v2_heldout.jsonl}
@@ -55,7 +64,9 @@ if set(audit['regimes']) != expected or audit['counterfactual_pairs'] != audit['
 print('[drs-sft] hash-bound protocol audit passed')
 PY
 cd "$BASE/train"
-"$PY" - "$DATA" "$BASE/artifacts/shohin-tok-32k.json" <<'PY'
+# A cold framework import can take several minutes from Lustre. Bound it well
+# below wall time while allowing a known-good node to finish initialization.
+timeout 600 "$PY" - "$DATA" "$BASE/artifacts/shohin-tok-32k.json" <<'PY'
 import json
 import sys
 
