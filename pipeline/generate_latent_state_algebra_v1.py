@@ -205,7 +205,11 @@ def intervention_pair(index, rng, domain, depth, style, initial_range, heldout):
 def build_pairs(pair_count, chunk_counts, domains, styles, initial_range, heldout, seed, forbidden=(), forbidden_ngrams=()):
     rng = random.Random(seed)
     rows, seen = [], set(forbidden)
-    seen_ngrams = set(forbidden_ngrams)
+    # Match the existing certified-ledger admission rule: n-grams only guard
+    # the train/eval boundary.  Requiring every templated train prompt to have
+    # globally unique 13-grams is not a decontamination requirement and caps
+    # a valid large corpus long before the requested pair count.
+    forbidden_ngrams = set(forbidden_ngrams)
     for index in range(pair_count):
         pair_kind = PAIR_KINDS[index % len(PAIR_KINDS)]
         domain = domains[index % len(domains)]
@@ -220,10 +224,9 @@ def build_pairs(pair_count, chunk_counts, domains, styles, initial_range, heldou
             )
             keys = [source_key(row) for row in block]
             ngrams = set().union(*(prompt_ngram_hashes(row) for row in block))
-            if len(keys) == len(set(keys)) and not (set(keys) & seen) and not (ngrams & seen_ngrams):
+            if len(keys) == len(set(keys)) and not (set(keys) & seen) and not (ngrams & forbidden_ngrams):
                 rows.extend(block)
                 seen.update(keys)
-                seen_ngrams.update(ngrams)
                 break
         else:
             raise RuntimeError("could not create unique pair {}".format(index))

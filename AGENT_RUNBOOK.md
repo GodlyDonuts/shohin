@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 ~03:50 EDT (`685084` remains healthy through 192.0k; compact CLL v2 is rejected by its locked causal comparator; answer-only continuous latent rollout is rejected by its matched no-latent control; a source-free latent-state-algebra screen is code-complete and CPU-smoke-tested, awaiting Stokes admission only). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 ~04:02 EDT (`685084` remains healthy through 192.4k; compact CLL v2 and answer-only continuous latent rollout are rejected by their matched controls; source-free latent-state-algebra v1 has passed a fresh Stokes CPU admission audit and only its isolated H100 mechanics canary is queued). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2091,6 +2091,19 @@ Auth auto-refreshes. This unblocks our thesis (short-CoT distillation), previous
   equivalence/intervention gates. Generator, audit, trainer, evaluator metadata, comparator, and CPU smoke
   tests are complete locally; route only its unique CPU data build through Stokes next, then require a fresh
   audit before any H100 mechanics canary.
+- **2026-07-13 ~04:00** — **Latent-state-algebra v1 is CPU-admitted; only a bounded mechanics canary is
+  queued.** The first 32k-pair Stokes build exposed and stopped on an over-strict *intra-train* 13-gram
+  uniqueness condition at pair 19,772 before writing artifacts. The condition was corrected to the
+  intended train/eval decontamination boundary, regression-smoked locally at 2,048 pairs, then rebuilt
+  from scratch on Stokes. The new independent audit passes **64,000** train rows and **2,304** held-out
+  rows: zero malformed rows, duplicate prompts, exact/13-gram train-eval hits, or invalid pairs; train
+  SHA-256 **`7bdf783797981863caca8fc82d6c0c857b948e678c00c5ac5794220eabc4cd53`**, held-out
+  **`83d14d65f319decebe3195ffc7b20269161a299212142f3bd555875b8dcd7f3a`**, audit md5
+  **`6d3c0b7c18619017bcf6732e3a45867a`**. Isolated `687158` is a 256-pair, one-H100 mechanics-only
+  canary from immutable `best_step190000.pt`, excluding the active/bad nodes and writing solely to
+  `train/lsa_canary_190k`. It must prove CUDA, finite pair losses, data binding, and source removal
+  before any matched answer-only/control/candidate experiment is submitted. It cannot access or alter
+  flagship `685084`.
 
 *Keep this file honest. When you hit a milestone, do the work, then come back and update §1 (LIVE
 STATE) and any step that changed. A future agent — maybe you after a context reset — is relying on it.*
