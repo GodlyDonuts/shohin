@@ -468,6 +468,15 @@ The data is ready on Newton for an isolated future experiment, but remains
 unsubmitted while DRS measures whether the bottleneck is local execution or
 the lexical interface.
 
+The evaluation and SFT surfaces are prepared but unsubmitted:
+`eval_append_ledger.py` separately scores first delta, all delta and block
+transitions, exact chains, final answers, paired counterfactuals, response
+diversity, and core versus held-out wording. The corresponding SFT wrapper
+hash-binds the audit and uses the data's exact `completion_prompt` rather than
+wrapping it in another `Question/Answer` frame. This readiness work changes no
+GPU queue and lets ADL become a clean next comparison if DRS local execution
+does not transfer.
+
 ### Decoder Recognition Check
 
 Before interpreting a compact-state curriculum as merely an output adapter, the

@@ -41,8 +41,9 @@ def main():
     # State-protocol records already carry their exact inference prompt; SFT
     # must not wrap them in a second Question/Answer frame.
     check_case(tokenizer, "Read a local state.\nAnswer:", "digit=4")
-    job = (ROOT / "train" / "jobs" / "sft_digitwise_recurrent_v2.sbatch").read_text()
-    assert "--prompt-override-field completion_prompt" in job
+    for name in ("sft_digitwise_recurrent_v2.sbatch", "sft_append_ledger_v1.sbatch"):
+        job = (ROOT / "train" / "jobs" / name).read_text()
+        assert "--prompt-override-field completion_prompt" in job
     print("sft prompt-boundary tests: passed")
 
 
