@@ -405,10 +405,14 @@ train/eval SHA-256 are
 `381b8bbf3a4eddb7b08b0f9d4b08ea3ce65e1f0ec48de930632d54417c2f7f35` and
 `89ce11b36ff2f56e83cda72a1f07b1a90f4a3dc3803c69db2779a27219712646`.
 
-The resulting GPU test is deliberately causal and narrow: `687348` measures
-raw-200k self-authored closed loops; only after that succeeds does `687350`
-perform one isolated DRS SFT epoch from the same `best_step200000.pt`; only
-then does `687351` run the identical held-out evaluator. This is a data
-admission correction and an experiment launch, not a model result. Any
-positive result must beat raw by regime, preserve state through paired
-counterfactuals, and show response diversity rather than a fixed template.
+The resulting GPU test is deliberately causal and narrow. `687348` measures
+raw-200k self-authored closed loops under held-out wording, and `687362` then
+measures the same episodes under the core wording. Only after both succeeds
+does `687363` perform one isolated DRS SFT epoch from the same
+`best_step200000.pt`; `687364` and `687365` evaluate the SFT result under
+core and held-out wording respectively. The initial `687350`/`687351`
+children were canceled before start because they lacked the raw-core control.
+This is a data-admission correction and an experiment launch, not a model
+result. Any positive result must beat raw by regime, preserve state through
+paired counterfactuals, and show response diversity rather than a fixed
+template.

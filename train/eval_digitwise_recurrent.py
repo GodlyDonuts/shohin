@@ -18,7 +18,7 @@ import torch
 from tokenizers import Tokenizer
 
 from digitwise_controller import rollout_episode
-from digitwise_protocol import parse_answer
+from digitwise_protocol import PROMPT_STYLES, parse_answer
 from eval_suite import generate
 from model import GPT, GPTConfig
 
@@ -55,9 +55,9 @@ def read_episodes(path, per_regime):
     return selected
 
 
-def evaluate_pair(episode, ask):
+def evaluate_pair(episode, ask, prompt_style=None):
     """Run normal and counterfactual branches without an arithmetic fallback."""
-    style = episode["prompt_style"]
+    style = episode["prompt_style"] if prompt_style is None else prompt_style
     normal = rollout_episode(episode, ask, prompt_style=style)
     counterfactual = rollout_episode(episode["counterfactual"], ask, prompt_style=style)
     expected_changed = int(episode["expected_answer"]) != int(episode["counterfactual"]["expected_answer"])
@@ -82,6 +82,8 @@ def main():
     parser.add_argument("--out", required=True)
     parser.add_argument("--per-regime", type=int, default=100)
     parser.add_argument("--max-new", type=int, default=96)
+    parser.add_argument("--prompt-style", choices=("auto",) + PROMPT_STYLES, default="auto",
+                        help="auto uses the episode's held-out wording; core isolates execution from wording transfer")
     args = parser.parse_args()
     if args.per_regime <= 0 or args.max_new <= 0:
         raise SystemExit("--per-regime and --max-new must be positive")
@@ -103,7 +105,7 @@ def main():
     for index, episode in enumerate(episodes, 1):
         regime = episode["split"]
         totals[regime] += 1
-        pair = evaluate_pair(episode, ask)
+        pair = evaluate_pair(episode, ask, None if args.prompt_style == "auto" else args.prompt_style)
         normal, counterfactual = pair["normal"], pair["counterfactual"]
         normal_rows = normal["rows"]
         if normal_rows:
@@ -147,6 +149,7 @@ def main():
         "episodes_sha256": sha256_file(args.episodes),
         "per_regime": args.per_regime,
         "max_new": args.max_new,
+        "prompt_style": args.prompt_style,
         "by_regime": by_regime,
         "first_response_unique": len(first_responses),
         "first_response_mode_count": max(first_responses.values(), default=0),

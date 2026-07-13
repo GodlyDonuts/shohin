@@ -134,9 +134,11 @@ prompts, exact held-out prompt hits, or 13-gram held-out overlaps. V2 train/eval
 `381b8bbf3a4eddb7b08b0f9d4b08ea3ce65e1f0ec48de930632d54417c2f7f35` and
 `89ce11b36ff2f56e83cda72a1f07b1a90f4a3dc3803c69db2779a27219712646`.
 
-The only authorized DRS GPU evidence path is the isolated serial chain
-`687348 -> 687350 -> 687351`: a raw `best_step200000.pt` closed-loop baseline, one DRS-only SFT
-epoch from exactly that checkpoint, then the matched evaluator under the same per-regime sampling.
+The authorized DRS GPU evidence path now separates execution from wording transfer:
+`687348 -> 687362 -> 687363 -> {687364, 687365}`. It runs raw `best_step200000.pt` with held-out
+wording, raw `best_step200000.pt` with core wording on the identical episodes, one DRS-only SFT epoch
+from exactly that checkpoint, then matched post-SFT core and held-out evaluations. The former children
+`687350`/`687351` were canceled before allocation or output because they lacked the raw-core control.
 The jobs use a separate output tree, exclude evc22, and cannot modify the live corpus or flagship
 writer. We will report first-transition, closed-loop state, final-answer, paired-counterfactual, and
 response-diversity results by regime; broad reasoning is not inferred from any DRS score.

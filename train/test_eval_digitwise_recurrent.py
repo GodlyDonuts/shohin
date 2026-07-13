@@ -18,4 +18,11 @@ result = evaluate_pair(episode, lambda _: responses.pop(0))
 assert result["normal"]["success"] is True
 assert result["counterfactual"]["success"] is True
 assert result["intervention_success"] is True
+
+responses = list(episode["expected_states"]) + ["answer={}".format(episode["expected_answer"])]
+responses += list(episode["counterfactual"]["expected_states"]) + ["answer={}".format(episode["counterfactual"]["expected_answer"])]
+core_prompts = []
+core_result = evaluate_pair(episode, lambda prompt: (core_prompts.append(prompt), responses.pop(0))[1], prompt_style="core")
+assert core_result["normal"]["success"] is True
+assert "Microstate update." in core_prompts[0]
 print("digitwise evaluator checks: passed")
