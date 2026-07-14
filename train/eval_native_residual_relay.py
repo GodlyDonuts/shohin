@@ -36,10 +36,26 @@ def decode_with_relay(model, tokenizer, relay, suffix, layer, eos_id, max_new):
     return tokenizer.decode(tokens.tolist(), skip_special_tokens=False).strip()
 
 
+def decode_direct(model, tokenizer, source, suffix, eos_id, max_new):
+    """Full-source bypass for diagnosing a failed relay, never a positive gate."""
+    prompt_ids = tokenizer.encode("{}\n{}".format(source, suffix)).ids
+    context = torch.tensor([prompt_ids], dtype=torch.long, device="cuda")
+    generated = []
+    for _ in range(max_new):
+        logits, _ = model(context)
+        next_id = logits[:, -1, :].argmax(dim=-1, keepdim=True)
+        if int(next_id.item()) == int(eos_id) or context.shape[1] + 1 >= model.cfg.seq_len:
+            break
+        generated.append(int(next_id.item()))
+        context = torch.cat((context, next_id), dim=1)
+    return tokenizer.decode(generated, skip_special_tokens=False).strip()
+
+
 def score_result(result):
     """Score one full causal-control row without consulting a model."""
     if result["expected"] == result["counterfactual_expected"]:
         raise ValueError("counterfactual target must differ from the normal target")
+    result["direct_correct"] = result["direct"] == result["expected"]
     result["normal_correct"] = result["normal"] == result["expected"]
     result["paraphrase_correct"] = result["paraphrase"] == result["expected"]
     result["counterfactual_correct"] = result["counterfactual"] == result["counterfactual_expected"]
@@ -86,9 +102,10 @@ def main():
             normal, relay = decode_answer(model, tokenizer, row["source"], row["suffix_prompt"], int(metadata["layer"]), eos_id, args.max_new)
             paraphrase, same_relay = decode_answer(model, tokenizer, row["paraphrase_source"], row["suffix_prompt"], int(metadata["layer"]), eos_id, args.max_new)
             counter, _ = decode_answer(model, tokenizer, row["counterfactual_source"], row["suffix_prompt"], int(metadata["layer"]), eos_id, args.max_new)
+            direct = decode_direct(model, tokenizer, row["source"], row["suffix_prompt"], eos_id, args.max_new)
             zero = decode_with_relay(model, tokenizer, torch.zeros_like(relay), row["suffix_prompt"], int(metadata["layer"]), eos_id, args.max_new)
             relays.append(relay)
-            results.append({"episode_id": row["episode_id"], "normal": normal, "paraphrase": paraphrase,
+            results.append({"episode_id": row["episode_id"], "normal": normal, "paraphrase": paraphrase, "direct": direct,
                             "counterfactual": counter, "zero": zero, "expected": row["response"],
                             "counterfactual_expected": row["counterfactual_response"],
                             "same_cosine": float(torch.nn.functional.cosine_similarity(relay.float(), same_relay.float(), dim=-1).item())})
@@ -98,7 +115,7 @@ def main():
             result["shuffled"] = decode_with_relay(model, tokenizer, donor, rows[index]["suffix_prompt"], int(metadata["layer"]), eos_id, args.max_new)
     for result in results:
         score_result(result)
-    summary = {key: sum(bool(row[key]) for row in results) for key in ("normal_correct", "paraphrase_correct", "counterfactual_correct", "zero_recreates_normal", "shuffle_recreates_normal", "strict_causal")}
+    summary = {key: sum(bool(row[key]) for row in results) for key in ("direct_correct", "normal_correct", "paraphrase_correct", "counterfactual_correct", "zero_recreates_normal", "shuffle_recreates_normal", "strict_causal")}
     report = {"audit": "native_residual_relay_v1", "checkpoint": args.ckpt, "step": checkpoint.get("step"),
               "checkpoint_metadata": metadata, "data": args.data, "data_sha256": sha256_file(args.data),
               "rows": len(results), "summary": summary, "mean_same_relay_cosine": sum(row["same_cosine"] for row in results) / len(results),

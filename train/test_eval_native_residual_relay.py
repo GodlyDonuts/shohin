@@ -5,6 +5,7 @@ from eval_native_residual_relay import score_result
 
 def row(**changes):
     value = {
+        "direct": "answer=7",
         "normal": "answer=7",
         "paraphrase": "answer=7",
         "counterfactual": "answer=9",
