@@ -1,0 +1,34 @@
+{
+  "build": "role_equivariant_microcode_v3",
+  "claim_boundary": "Training-only anchor, paraphrase, and exact register-automorphism views. Held-out prompt text is read only to reject exact collisions; no evaluation answer is consumed.",
+  "data_sha256": "9f97e9339f665de27d99195d5b4f61c8c09681ea268cd4459a5e212b8875267f",
+  "depths": {
+    "1": 70374,
+    "2": 72510,
+    "3": 72558,
+    "4": 72558
+  },
+  "eval": "/lustre/fs1/home/sa305415/shohin/artifacts/evals/latent_operator_eval_slices_v2_64.jsonl",
+  "eval_prompts_loaded": 896,
+  "eval_sha256": "b9106b3233c62592dba5f244d5fdec5474d56c813b6d39dc0fe8ee77a441039c",
+  "programs": 48000,
+  "register_permutations": {
+    "0": 144000,
+    "1": 144000
+  },
+  "rows": 288000,
+  "selected_source_indices_sha256": "9d2cc034fcf43d65ba04c3851669f0f9887aa96b07e633c90a50d2a6663d404e",
+  "semantic_views": {
+    "anchor": 96000,
+    "paraphrase_a": 96000,
+    "paraphrase_b": 96000
+  },
+  "skipped_groups": {
+    "duplicate_prior_group": 369,
+    "exact_eval_prompt": 3
+  },
+  "source": "/lustre/fs1/home/sa305415/shohin/artifacts/sft/latent_operator_v1_train.jsonl",
+  "source_rows_available": 96000,
+  "source_rows_scanned": 48372,
+  "source_sha256": "aa65eefd1dbee25c3c7cec956059a970ea53e079bbc4f4695dd160cacd980fd9"
+}

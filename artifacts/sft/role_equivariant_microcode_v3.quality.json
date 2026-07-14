@@ -1,0 +1,31 @@
+{
+  "data": "/lustre/fs1/home/sa305415/shohin/artifacts/sft/role_equivariant_microcode_v3.jsonl",
+  "data_sha256": "9f97e9339f665de27d99195d5b4f61c8c09681ea268cd4459a5e212b8875267f",
+  "duplicate_normalized_questions": 0,
+  "eval_overlap": {
+    "enabled": true,
+    "eval_exact_questions": 1982,
+    "eval_ngrams": 68997,
+    "exact_prompt_hits": 0,
+    "ngram_prompt_hits": 0
+  },
+  "format_markers": {
+    "The answer is": 288000
+  },
+  "malformed_rows": 0,
+  "missing_question_or_response": 0,
+  "response_words": {
+    "max": 4,
+    "mean": 4.0,
+    "p50": 4,
+    "p90": 4,
+    "p99": 4
+  },
+  "source_counts": {
+    "role_equivariant_microcode_v3": 288000
+  },
+  "training_group_counts": {
+    "role_equivariant_microcode": 288000
+  },
+  "valid_rows": 288000
+}

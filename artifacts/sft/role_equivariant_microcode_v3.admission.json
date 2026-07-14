@@ -1,0 +1,98 @@
+{
+  "all_checks_pass": true,
+  "audit": "role_equivariant_microcode_v3",
+  "claim_boundary": "This proves group integrity, exact register automorphisms, lexical/executor integrity, and held-out-language exclusion only. It does not establish learned equivariance or reasoning.",
+  "duplicate_train_questions": 0,
+  "eval": "/lustre/fs1/home/sa305415/shohin/artifacts/evals/latent_operator_eval_slices_v2_64.jsonl",
+  "eval_report": {
+    "depths": {
+      "1": 128,
+      "2": 128,
+      "3": 128,
+      "4": 128,
+      "5": 128,
+      "6": 128,
+      "8": 128
+    },
+    "executor_width_violations": 0,
+    "max_answer": 749,
+    "max_initial": 79,
+    "max_register": 504,
+    "max_tokens": 194,
+    "opcodes": {
+      "add_0": 385,
+      "add_1": 353,
+      "merge_0_1": 371,
+      "merge_1_0": 360,
+      "move_0_1": 362,
+      "move_1_0": 376,
+      "sub_0": 409,
+      "sub_1": 344,
+      "swap": 752
+    },
+    "oracle_answer_errors": 0,
+    "queries": {
+      "difference_0_1": 167,
+      "difference_1_0": 145,
+      "read_0": 132,
+      "read_1": 157,
+      "sum": 295
+    },
+    "regimes": {
+      "depth_ood": 192,
+      "fit_iid": 256,
+      "full_ood": 192,
+      "language_ood": 256
+    },
+    "rows": 896
+  },
+  "eval_sha256": "b9106b3233c62592dba5f244d5fdec5474d56c813b6d39dc0fe8ee77a441039c",
+  "exact_eval_prompt_hits": 0,
+  "heldout_language_ngram13_rows": 0,
+  "incomplete_groups": 0,
+  "malformed_group_rows": 0,
+  "permutation_mismatches": 0,
+  "programs": 48000,
+  "rows": 288000,
+  "semantic_mismatches": 0,
+  "tokenizer": "/lustre/fs1/home/sa305415/shohin/artifacts/shohin-tok-32k.json",
+  "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4",
+  "train": "/lustre/fs1/home/sa305415/shohin/artifacts/sft/role_equivariant_microcode_v3.jsonl",
+  "train_report": {
+    "depths": {
+      "1": 70374,
+      "2": 72510,
+      "3": 72558,
+      "4": 72558
+    },
+    "executor_width_violations": 0,
+    "max_answer": 277,
+    "max_initial": 29,
+    "max_register": 215,
+    "max_tokens": 131,
+    "opcodes": {
+      "add_0": 72930,
+      "add_1": 72930,
+      "merge_0_1": 70965,
+      "merge_1_0": 70965,
+      "move_0_1": 73305,
+      "move_1_0": 73305,
+      "sub_0": 73581,
+      "sub_1": 73581,
+      "swap": 141738
+    },
+    "oracle_answer_errors": 0,
+    "queries": {
+      "difference_0_1": 47799,
+      "difference_1_0": 47799,
+      "read_0": 48588,
+      "read_1": 48588,
+      "sum": 95226
+    },
+    "regimes": {
+      "train": 288000
+    },
+    "rows": 288000
+  },
+  "train_sha256": "9f97e9339f665de27d99195d5b4f61c8c09681ea268cd4459a5e212b8875267f"
+}

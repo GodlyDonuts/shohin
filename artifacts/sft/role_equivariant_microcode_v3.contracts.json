@@ -1,0 +1,29 @@
+{
+  "data": "artifacts/sft/role_equivariant_microcode_v3.jsonl",
+  "data_sha256": "9f97e9339f665de27d99195d5b4f61c8c09681ea268cd4459a5e212b8875267f",
+  "group_field": "training_group",
+  "groups": {
+    "role_equivariant_microcode": {
+      "answer_marker": 288000,
+      "answer_marker_rate": 1.0,
+      "code_fence": 0,
+      "code_fence_rate": 0.0,
+      "response_chars_p50": 17,
+      "response_chars_p90": 17,
+      "rows": 288000,
+      "short_response": 288000,
+      "short_response_rate": 1.0,
+      "starts_think": 0,
+      "starts_think_rate": 0.0,
+      "state_marker": 0,
+      "state_marker_rate": 0.0,
+      "think_marker": 0,
+      "think_marker_rate": 0.0
+    }
+  },
+  "malformed_rows": 0,
+  "missing_response_rows": 0,
+  "response_field": "response",
+  "rows": 288000,
+  "schema": "shohin-response-contract-audit-v1"
+}
