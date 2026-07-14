@@ -3229,7 +3229,9 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `eval_counterfactual_residual_algebra_nll.py` / `eval_counterfactual_residual_algebra_nll.sbatch` to
   report the same evidence for the trained checkpoint. `688599` is held after full CRA training and runs
   in parallel with the behavioral chain; its likelihood result remains **diagnostic only**, never a
-  reasoning or promotion score. At this entry, full isolated L19 training `688556` is still running,
+  reasoning or promotion score. CPU-only `688601` is held after the behavioral, train-diagnostic, and
+  likelihood reports; it writes a hash-bound gate aggregation with an automatic reject unless the
+  pre-registered combined behavioral thresholds clear. At this entry, full isolated L19 training `688556` is still running,
   most recently through 4,560/15,000 updates; do not infer success from its loss and do not touch the
   flagship.
 
