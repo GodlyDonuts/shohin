@@ -24,6 +24,13 @@ def primitive(arithmetic, base):
     return {"summary": {"by_family": {"arithmetic": {"accuracy": arithmetic}, "base_conversion": {"accuracy": base}}}}
 
 
+def primitive_by_contract(arithmetic, base):
+    return {"by_contract": {"answer": {"families": {
+        "arithmetic": {"accuracy": arithmetic},
+        "base_conversion": {"accuracy": base},
+    }}}}
+
+
 def trace(joint):
     return {"summary": {"correct_trace_and_final": joint}}
 
@@ -52,6 +59,12 @@ with tempfile.TemporaryDirectory() as temporary:
     accepted = temporary / "accepted.json"
     subprocess.run([sys.executable, str(ROOT / "assess_operator_trace_v2.py"), *arguments, "--out", str(accepted)], check=True, capture_output=True)
     assert json.loads(accepted.read_text())["decision"] == "bounded_operator_binding_transfer"
+    values["candidate_primitives"] = primitive_by_contract(0.10, 0.10)
+    path = temporary / "candidate_primitives.json"
+    path.write_text(json.dumps(values["candidate_primitives"]))
+    contract_accepted = temporary / "contract_accepted.json"
+    subprocess.run([sys.executable, str(ROOT / "assess_operator_trace_v2.py"), *arguments, "--out", str(contract_accepted)], check=True, capture_output=True)
+    assert json.loads(contract_accepted.read_text())["decision"] == "bounded_operator_binding_transfer"
     values["candidate_primitives"] = primitive(0.09, 0.10)
     path = temporary / "candidate_primitives.json"
     path.write_text(json.dumps(values["candidate_primitives"]))

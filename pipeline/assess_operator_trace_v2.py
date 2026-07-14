@@ -61,10 +61,22 @@ def factor_summary(report: dict) -> dict:
 
 
 def primitive_accuracy(report: dict, family: str) -> float:
-    value = report.get("summary", report).get("by_family", {}).get(family, {}).get("accuracy")
-    if value is None:
-        raise ValueError(f"primitive report lacks {family} accuracy")
-    return float(value)
+    payload = report.get("summary", report)
+    direct = payload.get("by_family", {}).get(family, {})
+    if direct.get("accuracy") is not None:
+        return float(direct["accuracy"])
+    # ``eval_contract_primitives.py`` emits contract-nested families.  The
+    # currently admitted primitive gate uses exactly one answer contract, but
+    # reject an ambiguous report rather than silently selecting a contract.
+    matches = [
+        stats for contract in payload.get("by_contract", {}).values()
+        if isinstance(contract, dict)
+        for stats in [contract.get("families", {}).get(family, {})]
+        if stats.get("accuracy") is not None
+    ]
+    if len(matches) != 1:
+        raise ValueError(f"primitive report lacks one unambiguous {family} accuracy")
+    return float(matches[0]["accuracy"])
 
 
 def manual_summary(report: dict) -> dict:
