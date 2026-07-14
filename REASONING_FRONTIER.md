@@ -388,6 +388,15 @@ prefixes, counterfactual event substitutions, source/paraphrase interchange,
 and length-OOD continuations; a template score alone would immediately reject
 the idea.
 
+For the current one-step depth sweep, "substantial" is pre-registered as at
+least **300/500 strict causal** cases on the frozen combined held-out set,
+with each of normal, paraphrase, and counterfactual correctness at least
+350/500 and each zero/shuffled relay recreating the normal answer at most
+25/500. A candidate meeting that bar must still clear the newly separated
+language, values, delta, and combined factor sets before recurrence is
+implemented. The full-source bypass remains diagnostic only and cannot satisfy
+any of these thresholds.
+
 ### Conditional Next Hypothesis: Counterfactual Reflection Route
 
 An exact external carrier, even if it passes V2, would still be an explicit
