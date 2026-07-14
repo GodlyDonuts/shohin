@@ -72,6 +72,7 @@ assert len(group_rows(two_edit_rows, "heldout", 0)) == 1
 ecli_rows = [row("ecli", kind) for kind in QUERY_KINDS]
 for item in ecli_rows:
     item["basis_mode"] = "multi_consumer_ephemeral_codebook"
+    item["codebook"] = {"answer=one": "amber"}
     item["codebook_swap_suffix_prompt"] = "binding table"
     item["codebook_swap_response"] = "code=swapped"
 assert len(group_rows(ecli_rows, "heldout", 0)) == 1

@@ -66,6 +66,9 @@ def group_rows(rows: list[dict], split: str, max_groups: int) -> list[tuple[str,
             raise ValueError("basis {} has an unknown composition mode".format(basis_id))
         if any(any(row.get(field) != first.get(field) for row in group[1:]) for field in shared_fields):
             raise ValueError("basis {} does not share an identical source triple".format(basis_id))
+        if first.get("basis_mode") == "multi_consumer_ephemeral_codebook":
+            if not isinstance(first.get("codebook"), dict) or any(row.get("codebook") != first["codebook"] for row in group[1:]):
+                raise ValueError("ephemeral-codebook basis {} does not share one binding table".format(basis_id))
         if any(row.get("response") == row.get("counterfactual_response") for row in group):
             raise ValueError("basis {} has an answer-invariant counterfactual".format(basis_id))
         indexed = {row["query_kind"]: row for row in group}
