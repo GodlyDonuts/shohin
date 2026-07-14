@@ -3464,3 +3464,10 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   the 350-per-reader, 300 joint-strict, and <=25 control gate before an ECLI result can be interpreted.
   No ECLI data, model, GPU job, or capability claim exists yet. It is admissible only if FQRB demonstrates
   a bounded multi-reader source-free basis first.
+
+- **2026-07-14 06:40** — **A transcript-first FQRB interview is queued after the existing manual
+  comparison.** Read-only job `688687` is held `afterok:688675`, uses
+  `train/fqrb_200k_l19_r1/cra_ep1.pt`, explicit bad/live-node exclusions, and the fresh output tag
+  `deep_interaction_fqrb_200k_l19_r1`. It runs the longer eight-case five-turn `deep_interaction_audit.py`
+  only after the seven-case raw-vs-FQRB manual probe completes. It never writes a model or training path.
+  Read the retained responses directly; its score is a diagnosis, not an ECLI or reasoning gate.
