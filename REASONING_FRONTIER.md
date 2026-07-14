@@ -242,6 +242,39 @@ token-budget-matched neutral auxiliary control. It is not evidence that
 visible `think` tokens create reasoning, nor evidence that the technique will
 transfer from the paper's large model to this one.
 
+### Conditional Direct Counterfactual Reflection: Operator Semantics, Not a Hidden Carrier
+
+The direct-only operator-anchor experiment is the first clean test of whether
+the previous COTA failure was caused by paired-answer grammar rather than by
+the entire direct trace curriculum. Only if its pre-registered gate preserves
+ordinary direct decoding and produces a bounded operator signal may the next
+experiment run.
+
+That follow-up is intentionally different from the closed source-dropped
+ledger/workspace branches. It keeps the complete natural-language problem in
+context and never transports a hidden state. During training only, an external
+interruption reverses one named operation and asks for the operation labels,
+the state immediately before it, and the exact counterfactual next state. The
+original task's answer is *not* a target on that interruption. Normal
+evaluation asks only the original direct question, with no reflection request.
+
+The experiment must have two otherwise identical arms:
+
+1. **Numeric reflection:** the interruption target contains the task-derived
+   counterfactual state.
+2. **Neutral structural control:** it retains the identical operation-label
+   and fixed-width reflection surface, but both state fields are zeros and so
+   contain no task-derived numeric information.
+
+The comparison therefore asks a falsifiable question: does supervising a
+counterfactual numeric consequence improve unreflected direct operation
+selection beyond reflection grammar and operation-name exposure alone? A
+credible result requires the numeric arm to beat the neutral arm on the frozen
+wording/value/full factor suite and direct transcripts, with no response-mode
+leakage, arithmetic/base collapse, or RG regression. It would still establish
+only a bounded operator-semantics improvement, not general intelligence or a
+workspace.
+
 ### Conditional Candidate: Paraphrase-Equivariant State Alignment
 
 If the factor matrix confirms that wording transfer, rather than only numeric

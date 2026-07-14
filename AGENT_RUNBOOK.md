@@ -3778,3 +3778,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   H100 is now **100% utilized** at 31.4/81.6GiB, so the apparent startup pause was compiler work rather
   than a CPU fallback or a failed fit. This is only a mechanics/admission result: the isolated checkpoint
   remains unpromoted until its fixed-trace, factor, OOD, primitive, RG, and direct behavioral gates pass.
+
+- **2026-07-14 11:45** — **A conditional numeric-reflection control is prepared, but no new fit has
+  been authorized.** `pipeline/generate_operator_counterfactual_reflection_v1.py` creates matched
+  source-visible auxiliary arms for the direct operator curriculum: one requires the exact state after a
+  single counterfactual operation, while the other retains the same operation labels and fixed-width
+  reflection format but replaces both state fields with zeros. Both are evaluated only on ordinary,
+  unreflected direct prompts. This is a direct operator-semantics test inspired by counterfactual
+  reflection, not a revival of the failed source-dropped carrier/workspace routes. It is conditional on
+  the direct-only anchor preserving direct behavior and showing a bounded signal; it has no H100 job,
+  checkpoint, data artifact, or flagship reference yet.
