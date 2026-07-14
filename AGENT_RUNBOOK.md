@@ -3253,4 +3253,6 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   This is a functional causal-discrimination loss, not a hidden-vector cosine objective. Full fallback job
   `688603` is dependency-held after `688601`: it reads the gate JSON and exits with no output if the first
   CRA arm clears its combined gate; only an automatic first-arm rejection permits the fresh isolated
-  `train/cra_paired_200k_l19_r1` run. Its behavioral/factor evaluation remains required before any claim.
+  `train/cra_paired_200k_l19_r1` run. Conditional evaluator `688604` follows `688603` and writes the
+  same fresh 500-world combined behavioral report only when that fallback actually trained. Its
+  behavioral/factor evaluation remains required before any claim.
