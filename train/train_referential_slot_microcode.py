@@ -53,6 +53,8 @@ def load_groups(path, tokenizer, seq_len):
             if len(example.compiled.ids) > seq_len:
                 raise ValueError("overlength referential row {}".format(line_number))
             group[key] = example
+            if line_number % 50000 == 0:
+                print("[referential] compiled {}/? input rows".format(line_number), flush=True)
     ordered = []
     for group_id in sorted(groups):
         if set(groups[group_id]) != set(VIEW_ORDER):

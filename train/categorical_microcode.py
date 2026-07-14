@@ -141,9 +141,9 @@ class CompiledExample:
     reference: str
 
 
-def compile_example(row, tokenizer):
+def compile_example(row, tokenizer, encoding=None):
     question = row["question"]
-    encoding = tokenizer.encode(question)
+    encoding = tokenizer.encode(question) if encoding is None else encoding
     event_positions, query_position, event_lines = structural_positions(question, encoding)
     operations = row["operations"]
     keys = row["keys"]

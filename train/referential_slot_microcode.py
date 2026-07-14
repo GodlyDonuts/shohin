@@ -115,7 +115,7 @@ def compile_referential_example(row, tokenizer):
     """Compile labels and mention supervision without exposing them to inference."""
     question = row["question"]
     encoding = tokenizer.encode(question)
-    compiled = compile_example(row, tokenizer)
+    compiled = compile_example(row, tokenizer, encoding=encoding)
     intro, operation_spans, query_span, intro_chars, operation_chars, query_chars = (
         structural_token_spans(question, encoding)
     )
