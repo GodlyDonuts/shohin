@@ -12,6 +12,8 @@ for required in (
     "sha256sum \"$DATA\"",
     "torch.empty(1, device=\"cuda\", dtype=torch.bfloat16)",
     "case \"$MODE\" in same|mismatch|none)",
+    "CONTRASTIVE_WEIGHT=${CONTRASTIVE_WEIGHT:-0}",
+    "contrastive alignment requires MODE=same",
     "sft_paraphrase_state_alignment.py",
     "test -s \"$OUT/psa_ep${EPOCHS}.pt\"",
 ):

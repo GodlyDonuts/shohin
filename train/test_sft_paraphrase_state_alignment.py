@@ -7,7 +7,10 @@ from pathlib import Path
 import torch
 
 from model import GPT, GPTConfig
-from sft_paraphrase_state_alignment import BoundaryCapture, alignment_statistics, collect_state_pairs, mismatch_order, pad_prompts
+from sft_paraphrase_state_alignment import (
+    BoundaryCapture, alignment_statistics, collect_state_pairs, contrastive_statistics,
+    mismatch_order, pad_prompts, select_distinct_pair_indices,
+)
 
 
 def row(episode_id, phase, response):
@@ -33,6 +36,9 @@ def main():
         pass
     else:
         raise AssertionError("single-pair mismatch control was accepted")
+    duplicates = [pairs[0], pairs[0], pairs[1]]
+    indices, cursor = select_distinct_pair_indices(duplicates, [0, 1, 2], 0, 2)
+    assert indices == [0, 2] and cursor == 0
 
     cfg = GPTConfig(vocab_size=32, n_layer=2, n_head=2, n_kv_head=1, d_model=16, d_ff=32, seq_len=8, zloss=0.0)
     model = GPT(cfg)
@@ -44,7 +50,9 @@ def main():
         assert hidden.shape == (2, cfg.d_model)
         loss, stats = alignment_statistics(hidden, hidden.clone())
         assert loss.item() < 1e-5 and stats["variance"].item() >= 0
-        loss.backward()
+        contrastive, contrastive_stats = contrastive_statistics(hidden, hidden.clone(), 0.1)
+        assert contrastive_stats["positive_cosine"].item() >= contrastive_stats["negative_cosine"].item()
+        (loss + contrastive).backward()
         assert model.tok.weight.grad is not None
     finally:
         capture.close()

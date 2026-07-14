@@ -292,6 +292,25 @@ baseline is still not a high-power estimate; the aligned, CE-only, and
 wrong-state models must each receive the same 50-pair audit after their normal
 behavioral transfer gate.
 
+### Conditional Follow-Up: Contrastive State Geometry
+
+The raw baseline also exposes why positive-pair alignment may be too weak:
+same and different states have nearly identical cosine geometry. The trainer
+therefore supports an optional symmetric InfoNCE term over a distinct-ledger
+batch: compile must identify its own reflect state among the batch, and vice
+versa. Unlike positive-only alignment, this simultaneously attracts equivalent
+descriptions and repels other ledger states. It logs positive and hardest
+negative cosine separately, and it refuses duplicate ledger states in a batch.
+
+This is a conditional successor, not a replacement for the attraction-only
+canary. First compare CE-only, same-state attraction, and wrong-state
+attraction with identical data and updates. If same-state attraction fails its
+language causal gate while the raw geometry remains collapsed, the next
+isolated candidate is same-state attraction plus contrastive geometry. It must
+beat all three prior arms on language transfer and activation-exchange
+criteria, then be evaluated on values and delta. A successful contrastive loss
+or lower same-state cosine is not a capability result.
+
 ### Conditional Next Hypothesis: Counterfactual Reflection Route
 
 An exact external carrier, even if it passes V2, would still be an explicit

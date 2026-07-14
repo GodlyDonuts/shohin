@@ -20,6 +20,8 @@ DATA_SHA=4363101c9773b055e24bce3e79f727f3c103a0fb357a6820206ddeab2567234f
 OUT=${OUT:?set OUT to a fresh isolated output directory}
 MODE=${MODE:-same}
 ALIGN_WEIGHT=${ALIGN_WEIGHT:-0.05}
+CONTRASTIVE_WEIGHT=${CONTRASTIVE_WEIGHT:-0}
+CONTRASTIVE_TEMPERATURE=${CONTRASTIVE_TEMPERATURE:-0.1}
 CAPTURE_LAYER=${CAPTURE_LAYER:-19}
 EPOCHS=${EPOCHS:-1}
 BS=${BS:-16}
@@ -32,9 +34,13 @@ export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=4 MKL_NUM_THREADS=1 NUMEXPR_NUM_TH
 [ ! -e "$OUT" ] || { echo "[psa] refusing existing output: $OUT" >&2; exit 4; }
 [ "$(sha256sum "$DATA" | awk '{print $1}')" = "$DATA_SHA" ] || { echo "[psa] data hash mismatch" >&2; exit 5; }
 case "$MODE" in same|mismatch|none) ;; *) echo "[psa] invalid mode: $MODE" >&2; exit 6;; esac
-if [ "$MODE" = none ] && [ "$ALIGN_WEIGHT" != 0 ]; then
-  echo "[psa] CE-only mode requires ALIGN_WEIGHT=0" >&2
+if [ "$MODE" = none ] && { [ "$ALIGN_WEIGHT" != 0 ] || [ "$CONTRASTIVE_WEIGHT" != 0 ]; }; then
+  echo "[psa] CE-only mode requires zero alignment weights" >&2
   exit 7
+fi
+if [ "$MODE" != same ] && [ "$CONTRASTIVE_WEIGHT" != 0 ]; then
+  echo "[psa] contrastive alignment requires MODE=same" >&2
+  exit 8
 fi
 
 cd "$BASE/train"
@@ -48,12 +54,13 @@ then
   echo "[psa] CUDA unavailable or timed out after allocation" >&2
   exit 75
 fi
-echo "[psa] init=$INIT data=$DATA mode=$MODE weight=$ALIGN_WEIGHT layer=$CAPTURE_LAYER out=$OUT"
+echo "[psa] init=$INIT data=$DATA mode=$MODE align=$ALIGN_WEIGHT contrastive=$CONTRASTIVE_WEIGHT layer=$CAPTURE_LAYER out=$OUT"
 ARGS=()
 if [ "$MAX_EXAMPLES" -gt 0 ]; then ARGS+=(--max-examples "$MAX_EXAMPLES"); fi
 "$PY" sft_paraphrase_state_alignment.py \
   --init "$INIT" --data "$DATA" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" --out "$OUT" \
   --epochs "$EPOCHS" --batch-size "$BS" --pair-batch-size "$PAIR_BS" --capture-layer "$CAPTURE_LAYER" \
-  --align-weight "$ALIGN_WEIGHT" --pair-mode "$MODE" "${ARGS[@]}"
+  --align-weight "$ALIGN_WEIGHT" --contrastive-weight "$CONTRASTIVE_WEIGHT" \
+  --contrastive-temperature "$CONTRASTIVE_TEMPERATURE" --pair-mode "$MODE" "${ARGS[@]}"
 test -s "$OUT/psa_ep${EPOCHS}.pt"
 echo "[psa] wrote $OUT/psa_ep${EPOCHS}.pt"

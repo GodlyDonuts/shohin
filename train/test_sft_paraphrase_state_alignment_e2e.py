@@ -47,13 +47,15 @@ def main():
                 make_row("episode-{}".format(index), "sum", "answer=2"),
             ))
         data_path.write_text("\n".join(json.dumps(row) for row in rows) + "\n")
-        for mode, weight in (("same", "0.05"), ("mismatch", "0.05"), ("none", "0")):
-            out = work / "out-{}".format(mode)
+        for mode, weight, contrastive in (("same", "0.05", "0"), ("mismatch", "0.05", "0"),
+                                          ("none", "0", "0"), ("same", "0.05", "0.1")):
+            out = work / "out-{}-{}".format(mode, contrastive)
             command = [
                 sys.executable, str(root / "train" / "sft_paraphrase_state_alignment.py"),
                 "--init", str(checkpoint_path), "--data", str(data_path), "--tokenizer", str(tokenizer_path),
                 "--out", str(out), "--epochs", "1", "--batch-size", "1", "--pair-batch-size", "2",
-                "--capture-layer", "1", "--align-weight", weight, "--pair-mode", mode, "--warmup", "0",
+                "--capture-layer", "1", "--align-weight", weight, "--contrastive-weight", contrastive,
+                "--pair-mode", mode, "--warmup", "0",
                 "--device", "cpu", "--log-every", "1",
             ]
             result = subprocess.run(command, cwd=root, capture_output=True, text=True)
@@ -62,6 +64,7 @@ def main():
             saved = torch.load(out / "psa_ep1.pt", map_location="cpu")
             assert saved["state_alignment"]["mode"] == mode
             assert saved["state_alignment"]["pairs"] == 12
+            assert saved["state_alignment"]["contrastive_weight"] == float(contrastive)
     print("paraphrase state alignment e2e checks: passed")
 
 

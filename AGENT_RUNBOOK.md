@@ -3093,3 +3093,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   separation at the selected raw layer. Hash-bound report:
   `ac6f42ffa36e089afa2ab2da1a9b9b0087287393ab54e9cb9728b15d5852af60`. This is the local raw reference for
   post-alignment causal audits, not a workspace claim or evidence that the aligned canary will work.
+
+- **2026-07-14 01:51** — **Hardened the alignment trainer and pre-registered a contrastive-geometry fallback.**
+  Pair batches now deterministically exclude duplicate ledger targets, preventing an accidental same-state
+  mismatch control. Optional same-state InfoNCE (`CONTRASTIVE_WEIGHT`) identifies each compile prompt's own
+  reflect state among distinct ledger states and reports positive versus hardest-negative cosine; it is rejected
+  for mismatch/CE-only modes and is **not** being substituted into the pending attraction-only canary. All unit,
+  CPU end-to-end (same, mismatch, CE-only, and contrastive same), static-job, shell, and causal-audit tests pass.
+  Only if the clean same-state arm fails to separate the raw 0.9747/0.9734 geometry and fails its language gate
+  may an isolated contrastive arm be run; it must beat CE-only, same-state, and wrong-state arms before
+  value/delta scoring. This remains a representation experiment, not a latent-reasoning or context claim.
