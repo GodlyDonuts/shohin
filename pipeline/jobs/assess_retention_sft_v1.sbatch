@@ -17,12 +17,15 @@ RAW_RG=${RAW_RG:?}
 CANDIDATE_RG=${CANDIDATE_RG:?}
 MANUAL=${MANUAL:?}
 DEEP=${DEEP:?}
+RAW_TRACE=${RAW_TRACE:?}
+CANDIDATE_TRACE=${CANDIDATE_TRACE:?}
 OUT=${OUT:?}
-for path in "$RAW_PRIMITIVES" "$CANDIDATE_PRIMITIVES" "$RAW_RG" "$CANDIDATE_RG" "$MANUAL" "$DEEP"; do
+for path in "$RAW_PRIMITIVES" "$CANDIDATE_PRIMITIVES" "$RAW_RG" "$CANDIDATE_RG" "$MANUAL" "$DEEP" "$RAW_TRACE" "$CANDIDATE_TRACE"; do
   [ -s "$path" ] || { echo "[retain-assess] missing evidence: $path" >&2; exit 2; }
 done
 [ ! -e "$OUT" ] || { echo "[retain-assess] refusing existing output" >&2; exit 3; }
 cd "$BASE"
 "$PY" pipeline/assess_retention_sft_v1.py \
   --raw-primitives "$RAW_PRIMITIVES" --candidate-primitives "$CANDIDATE_PRIMITIVES" \
-  --raw-rg "$RAW_RG" --candidate-rg "$CANDIDATE_RG" --manual "$MANUAL" --deep "$DEEP" --out "$OUT"
+  --raw-rg "$RAW_RG" --candidate-rg "$CANDIDATE_RG" --manual "$MANUAL" --deep "$DEEP" \
+  --raw-trace "$RAW_TRACE" --candidate-trace "$CANDIDATE_TRACE" --out "$OUT"

@@ -38,12 +38,15 @@ def main() -> None:
     parser.add_argument("--candidate-rg", required=True)
     parser.add_argument("--manual", required=True)
     parser.add_argument("--deep", required=True)
+    parser.add_argument("--raw-trace", required=True)
+    parser.add_argument("--candidate-trace", required=True)
     parser.add_argument("--raw-checkpoint-name", default="best_step200000.pt")
     parser.add_argument("--candidate-checkpoint-name", default="sft_ep1.pt")
     parser.add_argument("--out", required=True)
     args = parser.parse_args()
     paths = {name: Path(getattr(args, name.replace("-", "_"))) for name in (
         "raw-primitives", "candidate-primitives", "raw-rg", "candidate-rg", "manual", "deep",
+        "raw-trace", "candidate-trace",
     )}
     out = Path(args.out)
     if out.exists():
@@ -56,6 +59,8 @@ def main() -> None:
     candidate_rg = read_json(str(paths["candidate-rg"]))
     manual = read_json(str(paths["manual"]))
     deep = read_json(str(paths["deep"]))
+    raw_trace = read_json(str(paths["raw-trace"]))
+    candidate_trace = read_json(str(paths["candidate-trace"]))
     raw_manual = summary_for_manual(manual, args.raw_checkpoint_name)
     candidate_manual = summary_for_manual(manual, args.candidate_checkpoint_name)
     direct_preserved = all(
@@ -71,11 +76,15 @@ def main() -> None:
     }
     operation_floor = all(value >= 0.10 for value in arithmetic_and_base.values())
     deep_summary = dict(deep.get("model", {}).get("summary") or {})
+    raw_visible_traces = int(raw_trace.get("summary", {}).get("correct_trace_and_final", 0))
+    candidate_visible_traces = int(candidate_trace.get("summary", {}).get("correct_trace_and_final", 0))
+    visible_trace_gain = candidate_visible_traces - raw_visible_traces
+    visible_reasoning_present = candidate_visible_traces >= 1 and visible_trace_gain >= 1
     # A positive decision is deliberately modest: it permits further direct
     # investigations, never broad promotion or a reasoning claim.
     decision = "reject_retention_candidate"
-    if direct_preserved and primitive_gain >= 0.10 and rg_gain >= 0.02 and operation_floor:
-        decision = "bounded_behavior_preserving_skill_signal"
+    if direct_preserved and primitive_gain >= 0.10 and rg_gain >= 0.02 and operation_floor and visible_reasoning_present:
+        decision = "bounded_behavior_preserving_visible_reasoning_signal"
     report = {
         "audit": "assess_retention_sft_v1",
         "decision": decision,
@@ -94,12 +103,16 @@ def main() -> None:
             "manual": candidate_manual,
             "deep": deep_summary,
             "arithmetic_and_base_accuracy": arithmetic_and_base,
+            "visible_trace_and_final": candidate_visible_traces,
         },
         "gates": {
             "direct_decode_preserved": direct_preserved,
             "primitive_gain": primitive_gain,
             "rg_gain": rg_gain,
             "arithmetic_and_base_operation_floor": operation_floor,
+            "raw_visible_trace_and_final": raw_visible_traces,
+            "visible_trace_gain": visible_trace_gain,
+            "visible_reasoning_present": visible_reasoning_present,
         },
         "evidence_sha256": {name: sha256_file(path) for name, path in sorted(paths.items())},
     }

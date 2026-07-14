@@ -17,7 +17,7 @@ def write_json(path: Path, value: dict) -> Path:
     return path
 
 
-def run_assessment(root: Path, candidate_manual: dict) -> dict:
+def run_assessment(root: Path, candidate_manual: dict, candidate_visible_traces: int = 1) -> dict:
     raw_primitive = write_json(root / "raw_primitive.json", {"accuracy": 0.10})
     candidate_primitive = write_json(root / "candidate_primitive.json", {
         "accuracy": 0.25,
@@ -33,6 +33,10 @@ def run_assessment(root: Path, candidate_manual: dict) -> dict:
         {"checkpoint": "/x/sft_ep1.pt", "summary": candidate_manual},
     ]})
     deep = write_json(root / "deep.json", {"model": {"summary": {"initial": 1}}})
+    raw_trace = write_json(root / "raw_trace.json", {"summary": {"correct_trace_and_final": 0}})
+    candidate_trace = write_json(root / "candidate_trace.json", {
+        "summary": {"correct_trace_and_final": candidate_visible_traces},
+    })
     out = root / "assessment.json"
     script = Path(__file__).with_name("assess_retention_sft_v1.py")
     subprocess.run([
@@ -43,6 +47,8 @@ def run_assessment(root: Path, candidate_manual: dict) -> dict:
         "--candidate-rg", str(candidate_rg),
         "--manual", str(manual),
         "--deep", str(deep),
+        "--raw-trace", str(raw_trace),
+        "--candidate-trace", str(candidate_trace),
         "--out", str(out),
     ], check=True, stdout=subprocess.DEVNULL)
     return json.loads(out.read_text())
@@ -60,8 +66,10 @@ else:
 with tempfile.TemporaryDirectory() as root:
     root_path = Path(root)
     admitted = run_assessment(root_path / "admitted", {"initial": 1, "verified_fact": 1})
-    assert admitted["decision"] == "bounded_behavior_preserving_skill_signal"
+    assert admitted["decision"] == "bounded_behavior_preserving_visible_reasoning_signal"
     rejected = run_assessment(root_path / "rejected", {"initial": 0, "verified_fact": 1})
     assert rejected["decision"] == "reject_retention_candidate"
+    no_trace = run_assessment(root_path / "no_trace", {"initial": 1, "verified_fact": 1}, 0)
+    assert no_trace["decision"] == "reject_retention_candidate"
 
 print("Retention assessment checks: passed")
