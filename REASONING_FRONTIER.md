@@ -311,6 +311,43 @@ beat all three prior arms on language transfer and activation-exchange
 criteria, then be evaluated on values and delta. A successful contrastive loss
 or lower same-state cosine is not a capability result.
 
+### New Hypothesis: Native Residual Relay
+
+The earlier continuous-memory and CPR branches are closed: they added learned
+slots or packet machinery, then failed shuffled-source causal controls. The
+next experiment must not add a second model around Shohin and call that
+reasoning. **Native Residual Relay (NRR)** instead uses one residual the
+existing transformer already computes. There are no relay parameters, slots,
+state parser, external readout, or source K/V cache in the downstream pass.
+
+For a source description `S`, encode `S` only through a selected layer `L` and
+take that layer's final residual `h(S)`. The remaining blocks then process a
+fresh sequence `[h(S), event, query, answer]`; source tokens never enter that
+suffix computation. This creates a physical information cut: gradients can
+teach `h(S)` to be a useful compact state, but the suffix cannot retrieve a
+forgotten lexical source through attention. At inference the identical native
+two-pass operation is used. The ordinary `GPT.forward` and flagship remain
+unchanged.
+
+NRR is deliberately stronger than response-level state SFT. Each synthetic
+world supplies independently worded equivalent sources, a counterfactual
+source with one changed fact, source-free forward events, inverse-delta
+questions, and two distinct readouts. A model passes only when all of these
+are measured on held-out language/value/delta regimes:
+
+1. a relay from either equivalent source gives the same correct downstream
+   answers;
+2. a counterfactual relay changes the answers in the predicted direction;
+3. a zero relay and a shuffled-world relay fail materially; and
+4. the source text is absent from the suffix by construction, verified by an
+   execution-level no-KV/no-source unit test.
+
+The current implementation is limited to the no-parameter relay primitive and
+its hard-cut test. It has **no checkpoint, data corpus, H100 run, or result**
+yet. The PSA comparison remains useful as an inexpensive test of whether a
+standard representation objective already solves the problem; NRR is the
+separate, more ambitious causal-bottleneck route if it does not.
+
 ### Conditional Next Hypothesis: Counterfactual Reflection Route
 
 An exact external carrier, even if it passes V2, would still be an explicit

@@ -3126,3 +3126,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   tokenizer thread-quota panic; rerunning with `RAYON_NUM_THREADS=1` passed, so it is recorded as an
   infrastructure constraint rather than a model/trainer error. All full-arm checkpoints will receive the same
   factorized behavioral and activation-exchange audits before any causal or context claim.
+
+- **2026-07-14 02:14** — **All three PSA causal controls completed; evaluation, not loss, is now decisive.**
+  CE-only `688502` finished 251 updates in 159s (checkpoint md5 `c08ad5523488cbbb6713cea835ede59b`),
+  same-state `688503` in 188s (`affc7a9f337bb76d905d4c799894fcd2`), and wrong-state `688504` in 187s
+  (`defd882b37d639f331ad3d42a801a3e0`), all on evc33 from the immutable raw-200k source and the frozen
+  150,000-row corpus. CE loss trajectories are near-identical. More importantly, both same and wrong
+  attraction reduced their own pairwise loss to about 0.0002 / cosine about 0.9998. Therefore the alignment
+  scalar alone cannot distinguish semantic equivalence from generic collapse; factor-language, values, delta,
+  and full-replay activation-exchange controls are mandatory and pending.
