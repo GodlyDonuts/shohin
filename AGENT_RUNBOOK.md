@@ -3545,3 +3545,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   factors run in parallel and it receives the same raw-vs-candidate and deep transcript audits. CPU gate
   `688694` was canceled before start only to capture the bounded decoding cap; current CPU gate **688699** is
   held `afterok:688687`. No generic residual-algebra retry is authorized.
+
+- **2026-07-14 09:00** — **CRCS curriculum generation is now reproducible but remains ECLI-gated.**
+  `pipeline/generate_causal_residual_count_sketch_v1.py` accepts only a parent assessment with decision
+  `bounded_ecli_late_binding_candidate`; otherwise it refuses to write anything. Its intended first run is
+  12,000 four-event training histories and 500 held-out eight/sixteen-event histories, five consumer rows
+  per history, at a fixed 4x4 signed sketch geometry. Every row holds an ordinary source-free suffix with
+  a fresh opaque codebook plus independently solver-derived event-edit and codebook-swap targets. The
+  builder requires zero exact history, codebook, and semantic 13-gram train/held-out overlap and rejects
+  answer-invariant interventions. `train/test_generate_causal_residual_count_sketch_v1.py` confirms both
+  the parent-admission refusal and the small split audit. This is CPU-only research staging: no data was
+  materialized, no CRCS job was submitted, and no context/reasoning claim is open.
+
+- **2026-07-14 09:00** — **Isolated FQRB writer 688665 remains finite and stable on evc35.** It reached
+  step 19,200 / 29,890 at roughly 6 seconds per 20 steps with finite loss, gradient norm, and tape norm.
+  The only valid next evidence remains the dependency-held train diagnostic, three capped frozen factors,
+  manual comparison, deep transcript, watcher assessment, and then exactly one of the ECLI or PAAT gates.
+  Do not infer causal transport or reasoning from this training trace and do not modify the writer.

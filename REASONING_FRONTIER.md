@@ -784,6 +784,19 @@ source-free latent state can be interrogated through a current query and
 binding table. That prerequisite prevents a count-sketch failure from being
 misread as a hashing problem when the model cannot yet read one latent state.
 
+The CPU-only `pipeline/generate_causal_residual_count_sketch_v1.py` is staged
+for that gate, but no CRCS training data or GPU job is authorized yet. It
+refuses any parent assessment other than
+`bounded_ecli_late_binding_candidate`, then constructs 12,000 four-event
+training histories and 500 held-out histories of eight or sixteen events.
+Each history has five consumer questions, a fresh opaque codebook, a
+counterfactual event-edit answer, and a same-history codebook-swap answer.
+The builder rejects non-changing interventions and records zero exact-history,
+codebook, and semantic 13-gram train/held-out overlap before it writes data.
+`train/test_generate_causal_residual_count_sketch_v1.py` fixes those
+admission and split-audit conditions. This is reproducible curriculum
+groundwork, not evidence for CRCS or a claim that the model can reason.
+
 ### Conditional Context Mechanism: Reversible Semantic Checkpoints
 
 Only after exact transport and the reflection control have a positive causal
