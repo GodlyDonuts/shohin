@@ -192,15 +192,21 @@ the entire source prefix:
    would report if stopped before answering, and supervise only the strict
    `ledger:P=<integer>;Q=<integer>` carrier.
 
-The experimental model receives both routes. Its control receives only direct
-routes, resampled to match supervised answer-token count, updates, learning
-rate schedule, source records, and prompt lengths. Held-out scoring first asks
-the direct route only. A reflection benefit is credible only when it improves
-unseen-label direct answers **without** emitting a ledger, beats the matched
-direct-only control, and also succeeds when explicitly interrupted and routed
-through the exact-carrier transport gate. This creates a falsifiable route to
-an internal preparatory representation rather than equating visible text with
-thought.
+The practical augmentation arm receives both routes. Its control receives only
+direct routes, resampled to match supervised answer-token count, updates,
+learning-rate schedule, source records, and prompt lengths. That tests whether
+reflection improves a direct-answer foundation rather than merely adding more
+supervision. A stricter paper-faithful arm starts from that same direct-answer
+foundation and then receives **only** reflection-turn loss; a length- and
+token-matched neutral auxiliary continuation is its control. Neither arm is
+ever asked for a reflection at ordinary evaluation time.
+
+Held-out scoring first asks the direct route only. A reflection benefit is
+credible only when it improves unseen-label direct answers **without** emitting
+a ledger, beats its token-matched control, and also succeeds when explicitly
+interrupted and routed through the exact-carrier transport gate. This creates a
+falsifiable route to an internal preparatory representation rather than
+equating visible text with thought.
 
 If the reflection model merely improves the interrupted route but not the
 ordinary direct route, it is an output-format skill and is rejected. If both
