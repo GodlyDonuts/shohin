@@ -26,6 +26,8 @@ EPOCHS=${EPOCHS:-1}
 BS=${BS:-4}
 MAX_EXAMPLES=${MAX_EXAMPLES:-0}
 MAX_BATCHES=${MAX_BATCHES:-0}
+PAIRED_COUNTERFACTUAL=${PAIRED_COUNTERFACTUAL:-0}
+CONTRAST_MARGIN=${CONTRAST_MARGIN:-0.2}
 export OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=4
 export RAYON_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false
 
@@ -69,6 +71,7 @@ ARGS=()
 if [ "$TAPE_LEN" -gt 0 ]; then ARGS+=(--tape-len "$TAPE_LEN"); fi
 if [ "$MAX_EXAMPLES" -gt 0 ]; then ARGS+=(--max-examples "$MAX_EXAMPLES"); fi
 if [ "$MAX_BATCHES" -gt 0 ]; then ARGS+=(--max-batches "$MAX_BATCHES"); fi
+if [ "$PAIRED_COUNTERFACTUAL" = 1 ]; then ARGS+=(--paired-counterfactual --contrast-margin "$CONTRAST_MARGIN"); fi
 echo "[cra-train] init=$INIT data=$DATA layer=$LAYER tape_len=${TAPE_LEN:-auto} out=$OUT epochs=$EPOCHS batch=$BS max_batches=$MAX_BATCHES"
 "$PY" train_counterfactual_residual_algebra.py \
   --init "$INIT" --data "$DATA" --audit "$AUDIT" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \

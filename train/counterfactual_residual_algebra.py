@@ -96,6 +96,76 @@ def supervised_algebra_loss(model, base_ids, edited_ids, donor_ids, suffix_promp
     return logits, loss, tape, targets
 
 
+def answer_loss_for_algebra_tape(model, tape, suffix_prompt_ids, answer_ids, layer, tape_len, eos_id):
+    """Return answer-only CE after a previously composed native tape."""
+    _check_ids("suffix_prompt_ids", suffix_prompt_ids)
+    _check_ids("answer_ids", answer_ids)
+    if tape.shape[0] != suffix_prompt_ids.shape[0] or tape.shape[0] != answer_ids.shape[0]:
+        raise ValueError("tape, suffix, and answer batch sizes must agree")
+    suffix = torch.cat((model.tok(suffix_prompt_ids), model.tok(answer_ids)), dim=1)
+    logits = algebra_suffix_logits(model, tape, suffix, layer, tape_len)
+    targets = build_answer_targets(answer_ids, tape_len + suffix_prompt_ids.shape[1], 0, eos_id)
+    loss = torch.nn.functional.cross_entropy(
+        logits.float().reshape(-1, logits.shape[-1]), targets.reshape(-1), ignore_index=-1,
+    )
+    return logits, loss, targets
+
+
+def paired_counterfactual_algebra_loss(
+    model, base_ids, edited_ids, counter_edited_ids, donor_ids, suffix_prompt_ids,
+    answer_ids, counter_answer_ids, layer, tape_len, eos_id, margin,
+):
+    """Train both edit directions plus a functional paired-answer margin.
+
+    This does not align hidden vectors.  Each source-free algebra tape must
+    assign lower answer CE to its own solver target than to the paired
+    counterfactual target, preventing a decoder from treating +d and -d as one
+    template while preserving the original hard cut.
+    """
+    if margin < 0:
+        raise ValueError("margin must be nonnegative")
+    for name, ids in (
+        ("base_ids", base_ids), ("edited_ids", edited_ids), ("counter_edited_ids", counter_edited_ids),
+        ("donor_ids", donor_ids), ("suffix_prompt_ids", suffix_prompt_ids), ("answer_ids", answer_ids),
+        ("counter_answer_ids", counter_answer_ids),
+    ):
+        _check_ids(name, ids)
+    batch = base_ids.shape[0]
+    if any(ids.shape[0] != batch for ids in (
+        edited_ids, counter_edited_ids, donor_ids, suffix_prompt_ids, answer_ids, counter_answer_ids,
+    )):
+        raise ValueError("all paired algebra inputs must share a batch")
+    base = encode_residual_tape(model, base_ids, layer, tape_len)
+    edited = encode_residual_tape(model, edited_ids, layer, tape_len)
+    counter_edited = encode_residual_tape(model, counter_edited_ids, layer, tape_len)
+    donor = encode_residual_tape(model, donor_ids, layer, tape_len)
+    normal_tape = compose_counterfactual_tape(base, edited, donor)
+    counter_tape = compose_counterfactual_tape(base, counter_edited, donor)
+    _, normal_ce, _ = answer_loss_for_algebra_tape(
+        model, normal_tape, suffix_prompt_ids, answer_ids, layer, tape_len, eos_id,
+    )
+    _, normal_foil, _ = answer_loss_for_algebra_tape(
+        model, normal_tape, suffix_prompt_ids, counter_answer_ids, layer, tape_len, eos_id,
+    )
+    _, counter_ce, _ = answer_loss_for_algebra_tape(
+        model, counter_tape, suffix_prompt_ids, counter_answer_ids, layer, tape_len, eos_id,
+    )
+    _, counter_foil, _ = answer_loss_for_algebra_tape(
+        model, counter_tape, suffix_prompt_ids, answer_ids, layer, tape_len, eos_id,
+    )
+    rank = torch.relu(margin + normal_ce - normal_foil) + torch.relu(margin + counter_ce - counter_foil)
+    return {
+        "loss": normal_ce + counter_ce + rank,
+        "normal_ce": normal_ce,
+        "counter_ce": counter_ce,
+        "normal_foil": normal_foil,
+        "counter_foil": counter_foil,
+        "rank": rank,
+        "normal_tape": normal_tape,
+        "counter_tape": counter_tape,
+    }
+
+
 @torch.no_grad()
 def generate_from_algebra_tape(model, tape, suffix_prompt_ids, layer, tape_len, eos_id, max_new):
     """Greedily decode from a supplied composed tape with sources absent."""

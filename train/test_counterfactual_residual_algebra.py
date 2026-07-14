@@ -8,6 +8,7 @@ from counterfactual_residual_algebra import (
     compose_two_edit_counterfactual_tape,
     encode_residual_tape,
     generate_from_algebra_tape,
+    paired_counterfactual_algebra_loss,
     supervised_algebra_loss,
 )
 from model import GPT, GPTConfig
@@ -20,6 +21,7 @@ def main():
     base = torch.tensor([[3, 5, 7, 9, 11]], dtype=torch.long)
     edited = torch.tensor([[3, 5, 13, 9, 11]], dtype=torch.long)
     donor = torch.tensor([[17, 19, 23, 29, 31]], dtype=torch.long)
+    counter_edited = torch.tensor([[3, 5, 15, 9, 11]], dtype=torch.long)
     prompt = torch.tensor([[37, 41]], dtype=torch.long)
     answer = torch.tensor([[43, 47]], dtype=torch.long)
     tape_len = 2
@@ -49,7 +51,15 @@ def main():
     assert torch.equal(one, two)
     assert generate_from_algebra_tape(model, tape, prompt, layer=1, tape_len=tape_len, eos_id=0, max_new=4).ndim == 1
 
+    paired = paired_counterfactual_algebra_loss(
+        model, base, edited, counter_edited, donor, prompt, answer, torch.tensor([[53, 59]], dtype=torch.long),
+        layer=1, tape_len=tape_len, eos_id=0, margin=0.2,
+    )
+    assert all(torch.isfinite(paired[field]) for field in ("loss", "normal_ce", "counter_ce", "normal_foil", "counter_foil", "rank"))
+    assert paired["normal_tape"].shape == tape.shape and paired["counter_tape"].shape == tape.shape
+
     loss.backward()
+    paired["loss"].backward()
     assert model.tok.weight.grad is not None
     assert torch.isfinite(model.tok.weight.grad).all()
     print("counterfactual residual algebra checks: passed")

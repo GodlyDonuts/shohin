@@ -34,6 +34,8 @@ def main():
         assert report["full_batches"] > 0 and report["dropped_examples"] < 2 * report["buckets"]
         base, edited, donor, suffix, answer = make_batch(examples, batches[0], "cpu")
         assert base.shape[0] == edited.shape[0] == donor.shape[0] == suffix.shape[0] == answer.shape[0] == 2
+        paired = make_batch(examples, batches[0], "cpu", include_counter=True)
+        assert len(paired) == 7 and all(value.shape[0] == 2 for value in paired)
         assert all(row["base"][-len(anchor_ids):] == anchor_ids for row in examples)
         factor = build("factor_delta", 24, 47, delta_heldout=True)
         factor_audit = factor_audit_sets(rows, factor)

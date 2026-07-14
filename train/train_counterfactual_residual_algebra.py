@@ -20,7 +20,7 @@ from collections import defaultdict
 import torch
 from tokenizers import Tokenizer
 
-from counterfactual_residual_algebra import supervised_algebra_loss
+from counterfactual_residual_algebra import paired_counterfactual_algebra_loss, supervised_algebra_loss
 from model import GPT, GPTConfig
 from muon import Muon, split_params
 
@@ -45,29 +45,34 @@ def load_examples(path, tokenizer, seq_len, anchor_ids, include_paraphrases=True
         if row.get("schema") != "counterfactual_residual_algebra_v1" or row.get("split") != "train":
             skipped["schema"] += 1
             continue
-        suffix, response = row.get("suffix_prompt"), row.get("response")
-        if not isinstance(suffix, str) or not isinstance(response, str):
+        suffix, response, counter_response = row.get("suffix_prompt"), row.get("response"), row.get("counterfactual_response")
+        if not isinstance(suffix, str) or not isinstance(response, str) or not isinstance(counter_response, str):
             skipped["fields"] += 1
             continue
         suffix_ids = tokenizer.encode(suffix).ids
         answer_ids = tokenizer.encode(" " + response.strip()).ids
+        counter_answer_ids = tokenizer.encode(" " + counter_response.strip()).ids
         for group_index, source_keys in enumerate(source_groups):
+            counter_key = "paraphrase_counterfactual_edited_source" if group_index else "counterfactual_edited_source"
             values = [row.get(key) for key in source_keys]
-            if not all(isinstance(value, str) for value in values):
+            counter_value = row.get(counter_key)
+            if not all(isinstance(value, str) for value in values) or not isinstance(counter_value, str):
                 skipped["fields"] += 1
                 continue
             encoded = [tokenizer.encode(value).ids for value in values]
-            if not suffix_ids or not answer_ids or any(not ids for ids in encoded):
+            counter_encoded = tokenizer.encode(counter_value).ids
+            if not suffix_ids or not answer_ids or not counter_answer_ids or any(not ids for ids in encoded) or not counter_encoded:
                 skipped["empty"] += 1
                 continue
-            if any(ids[-len(anchor_ids):] != anchor_ids for ids in encoded):
+            if any(ids[-len(anchor_ids):] != anchor_ids for ids in encoded + [counter_encoded]):
                 raise ValueError("row {} does not end in the exact native anchor".format(line_number))
             if len(anchor_ids) + len(suffix_ids) + len(answer_ids) > seq_len:
                 skipped["overlong_suffix"] += 1
                 continue
             examples.append({
-                "base": encoded[0], "edited": encoded[1], "donor": encoded[2], "suffix": suffix_ids,
-                "answer": answer_ids, "shape": tuple(len(ids) for ids in encoded) + (len(suffix_ids), len(answer_ids)),
+                "base": encoded[0], "edited": encoded[1], "counter_edited": counter_encoded, "donor": encoded[2],
+                "suffix": suffix_ids, "answer": answer_ids, "counter_answer": counter_answer_ids,
+                "shape": tuple(len(ids) for ids in encoded) + (len(counter_encoded), len(suffix_ids), len(answer_ids), len(counter_answer_ids)),
                 "episode_id": row["episode_id"], "source_group": group_index,
             })
     if not examples:
@@ -94,10 +99,13 @@ def bucketed_batches(examples, batch_size, seed):
     return batches, {"buckets": len(buckets), "full_batches": len(batches), "dropped_examples": dropped}
 
 
-def make_batch(examples, indices, device):
+def make_batch(examples, indices, device, include_counter=False):
     def tensor(field):
         return torch.tensor([examples[index][field] for index in indices], dtype=torch.long, device=device)
-    return tensor("base"), tensor("edited"), tensor("donor"), tensor("suffix"), tensor("answer")
+    fields = ("base", "edited", "donor", "suffix", "answer")
+    if include_counter:
+        fields = ("base", "edited", "counter_edited", "donor", "suffix", "answer", "counter_answer")
+    return tuple(tensor(field) for field in fields)
 
 
 def lr_scale(step, total_steps, warmup):
@@ -126,10 +134,12 @@ def main():
     parser.add_argument("--seed", type=int, default=20260714)
     parser.add_argument("--max-examples", type=int, default=0)
     parser.add_argument("--max-batches", type=int, default=0)
+    parser.add_argument("--paired-counterfactual", action="store_true")
+    parser.add_argument("--contrast-margin", type=float, default=0.2)
     parser.add_argument("--eos", default="<|endoftext|>")
     parser.add_argument("--log-every", type=int, default=20)
     args = parser.parse_args()
-    if args.epochs <= 0 or args.batch_size <= 0 or args.layer < 0 or args.max_batches < 0:
+    if args.epochs <= 0 or args.batch_size <= 0 or args.layer < 0 or args.max_batches < 0 or args.contrast_margin < 0:
         raise SystemExit("epochs, batch size, layer, and max batches must be valid")
     if not torch.cuda.is_available():
         raise SystemExit("CRA training requires CUDA")
@@ -175,7 +185,7 @@ def main():
         if args.max_batches:
             epoch_batches = epoch_batches[:args.max_batches]
         for indices in epoch_batches:
-            base, edited, donor, suffix, answer = make_batch(examples, indices, "cuda")
+            batch = make_batch(examples, indices, "cuda", args.paired_counterfactual)
             scale = lr_scale(step, total_steps, args.warmup)
             for group in opt_muon.param_groups:
                 group["lr"] = args.lr_muon * scale
@@ -184,9 +194,18 @@ def main():
             opt_muon.zero_grad(set_to_none=True)
             opt_adam.zero_grad(set_to_none=True)
             with torch.autocast("cuda", dtype=torch.bfloat16):
-                _, loss, tape, _ = supervised_algebra_loss(
-                    model, base, edited, donor, suffix, answer, args.layer, tape_len, eos_id,
-                )
+                if args.paired_counterfactual:
+                    base, edited, counter_edited, donor, suffix, answer, counter_answer = batch
+                    pair = paired_counterfactual_algebra_loss(
+                        model, base, edited, counter_edited, donor, suffix, answer, counter_answer,
+                        args.layer, tape_len, eos_id, args.contrast_margin,
+                    )
+                    loss, tape = pair["loss"], pair["normal_tape"]
+                else:
+                    base, edited, donor, suffix, answer = batch
+                    _, loss, tape, _ = supervised_algebra_loss(
+                        model, base, edited, donor, suffix, answer, args.layer, tape_len, eos_id,
+                    )
             if not torch.isfinite(loss):
                 raise RuntimeError("non-finite CRA loss at {}".format(step))
             loss.backward()
@@ -196,9 +215,14 @@ def main():
             opt_muon.step()
             opt_adam.step()
             if step % args.log_every == 0:
-                print("[cra] epoch={} step={}/{} loss={:.4f} gnorm={:.3f} tape_norm={:.3f} lr={:.6f} {}s".format(
+                message = "[cra] epoch={} step={}/{} loss={:.4f} gnorm={:.3f} tape_norm={:.3f} lr={:.6f} {}s".format(
                     epoch, step, total_steps, loss.item(), float(grad_norm), tape.float().norm(dim=-1).mean().item(),
-                    args.lr_muon * scale, int(time.time() - started)), flush=True)
+                    args.lr_muon * scale, int(time.time() - started))
+                if args.paired_counterfactual:
+                    message += " normal_ce={:.4f} counter_ce={:.4f} rank={:.4f}".format(
+                        pair["normal_ce"].item(), pair["counter_ce"].item(), pair["rank"].item(),
+                    )
+                print(message, flush=True)
             step += 1
     os.makedirs(args.out)
     output = os.path.join(args.out, "cra_ep1.pt")
@@ -209,6 +233,7 @@ def main():
             "data_sha256": data_sha, "source_present_at_suffix": False, "extra_trainable_parameters": 0,
             "composition": "donor + edited - base", "paraphrase_bundles": True,
             "train_examples": len(examples), "max_batches_per_epoch": args.max_batches,
+            "paired_counterfactual": args.paired_counterfactual, "contrast_margin": args.contrast_margin,
             "init_sha256": sha256_file(args.init),
         },
     }, output)
