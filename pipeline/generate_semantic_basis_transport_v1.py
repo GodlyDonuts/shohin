@@ -134,16 +134,18 @@ def row(
 def settings(heldout: bool) -> dict:
     if heldout:
         return {
-            "p": (101, 199),
-            "q": (101, 199),
+            "p": (201, 299),
+            "q": (201, 299),
             "delta": (11, 29),
             "places": HELDOUT_PLACES,
             "labels": HELDOUT_LABELS,
             "split": "heldout",
         }
     return {
-        "p": (10, 99),
-        "q": (10, 99),
+        # Difference and sum prompts only contain P and Q, so their value
+        # space itself must support the full 30k unique-episode admission.
+        "p": (10, 199),
+        "q": (10, 199),
         "delta": (1, 9),
         "places": TRAIN_PLACES,
         "labels": TRAIN_LABELS,
@@ -155,29 +157,26 @@ def build_split(episodes: int, seed: int, heldout: bool) -> list[dict]:
     if episodes <= 0:
         raise ValueError("episodes must be positive")
     cfg = settings(heldout)
+    p_values = cfg["p"][1] - cfg["p"][0] + 1
+    q_values = cfg["q"][1] - cfg["q"][0] + 1
+    # Difference and sum prompts depend only on P/Q. Each episode must own a
+    # distinct pair or the independent prompt-identity audit would reject it.
+    if episodes > p_values * q_values:
+        raise ValueError("requested episodes exceed unique P/Q prompt capacity")
     rng = random.Random(seed)
     rows: list[dict] = []
     questions: set[str] = set()
-    states: set[tuple[int, int, int, str, tuple[str, str]]] = set()
-    attempts = 0
-    while len(states) < episodes:
-        attempts += 1
-        if attempts > episodes * 100:
-            raise RuntimeError("could not create enough unique semantic-basis episodes")
-        p = rng.randint(*cfg["p"])
-        q = rng.randint(*cfg["q"])
+    pairs = [(p, q) for p in range(cfg["p"][0], cfg["p"][1] + 1) for q in range(cfg["q"][0], cfg["q"][1] + 1)]
+    rng.shuffle(pairs)
+    for episode_index, (p, q) in enumerate(pairs[:episodes]):
         delta = rng.randint(*cfg["delta"])
         place = rng.choice(cfg["places"])
         labels = rng.choice(cfg["labels"])
-        identity = (p, q, delta, place, labels)
-        if identity in states:
-            continue
-        episode_id = "{}-{:06d}".format(cfg["split"], len(states))
+        episode_id = "{}-{:06d}".format(cfg["split"], episode_index)
         candidate = [row(cfg["split"], episode_id, phase, p, q, delta, place, labels, heldout) for phase in PHASES]
         normalized = [normalized_question(item["question"]) for item in candidate]
         if len(set(normalized)) != len(normalized) or any(item in questions for item in normalized):
-            continue
-        states.add(identity)
+            raise RuntimeError("unexpected duplicate semantic-basis prompt")
         questions.update(normalized)
         rows.extend(candidate)
     rng.shuffle(rows)

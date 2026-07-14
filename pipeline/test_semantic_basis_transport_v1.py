@@ -29,6 +29,12 @@ def main() -> None:
     assert clean(report), report
     assert report["cross_split_exact_prompt_hits"] == 0
     assert report["cross_split_ngram13_hits"] == 0
+    try:
+        build_split(40_000, seed=19, heldout=False)
+    except ValueError as exc:
+        assert "P/Q prompt capacity" in str(exc)
+    else:
+        raise AssertionError("capacity guard did not reject an impossible request")
     print("semantic basis transport generation and audit checks: passed")
 
 

@@ -89,9 +89,9 @@ def audit_split(rows: list[dict], split: str) -> tuple[dict, set[str], set[str]]
             assert row.get("episode_id")
             assert row.get("question")
             if split == "train":
-                assert 10 <= p <= 99 and 10 <= q <= 99 and 1 <= delta <= 9
+                assert 10 <= p <= 199 and 10 <= q <= 199 and 1 <= delta <= 9
             else:
-                assert 101 <= p <= 199 and 101 <= q <= 199 and 11 <= delta <= 29
+                assert 201 <= p <= 299 and 201 <= q <= 299 and 11 <= delta <= 29
             if phase in {"compile", "reflect", "update"}:
                 found = LEDGER.findall(row["response"])
                 assert found
