@@ -100,6 +100,8 @@ def summarize_groups(results: list[dict], group_keys: list[str]) -> dict:
         summary["joint_" + field.removesuffix("_correct").removesuffix("_causal")] = sum(
             all(bool(row[field]) for row in by_group[key]) for key in group_keys
         )
+    for field in ("zero_recreates_normal", "shuffle_recreates_normal", "wrong_query_recreates_normal"):
+        summary["any_" + field] = sum(any(bool(row[field]) for row in by_group[key]) for key in group_keys)
     if any(len(by_group[key]) != len(QUERY_KINDS) for key in group_keys):
         raise ValueError("result set lost a FQRB consumer")
     return summary

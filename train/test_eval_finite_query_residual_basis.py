@@ -30,7 +30,10 @@ for basis_id, group in groups:
         }
         results.append(score_result(result))
 summary = summarize_groups(results, [basis_id for basis_id, _ in groups])
-assert summary == {"groups": 2, "joint_normal": 2, "joint_paraphrase": 2, "joint_counterfactual": 2, "joint_strict": 2}
+assert summary == {
+    "groups": 2, "joint_normal": 2, "joint_paraphrase": 2, "joint_counterfactual": 2, "joint_strict": 2,
+    "any_zero_recreates_normal": 0, "any_shuffle_recreates_normal": 0, "any_wrong_query_recreates_normal": 0,
+}
 results[0]["wrong_query"] = results[0]["expected"]
 score_result(results[0])
 assert summarize_groups(results, [basis_id for basis_id, _ in groups])["joint_strict"] == 1
