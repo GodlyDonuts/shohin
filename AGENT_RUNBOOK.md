@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 15:02 EDT (the protected two-H100 pretrain remains healthy and isolated. Counterfactual Role-Equivariant Compilation r3 completed its matched control/candidate fits, held-out board, frozen direct interaction, and locked comparator. R3 is rejected for a decoder bridge, but its component diagnostics isolate referential role binding and exact sequence accumulation as the next frontier.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 15:21 EDT (the protected two-H100 pretrain remains healthy and isolated. R3 is formally rejected. Binding-First Referential Slot Compilation r4 is implemented, CPU-admitted over the complete frozen train/eval/manual surfaces, and awaiting a tiny isolated mechanics canary before any matched full fit.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4013,3 +4013,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   **0/64** exact at depth 8. This local-factor/whole-program split points to a missing dynamic entity
   binder plus multiplicative sequence error, not a missing stronger equivariance coefficient. Preserve
   R3; do not tune the failed weights or authorize a decoder bridge.
+
+- **2026-07-14 15:02--15:21** — **R4 Binding-First Referential Slot Compilation is implemented and
+  fully CPU-admitted; no full H100 fit yet.** The compiler predicts two entity mentions in the
+  introductory line and a semantic target mention in each role-bearing event/query using token-level
+  attention. At inference `classify_text` receives only token states and formatting-derived
+  intro/event/query spans. Structured keys create training-only mention supervision and score attention;
+  they are not model inputs. The candidate resolves role by matching the predicted target's raw token
+  identity to the two predicted intro slots; exchanging the slots exchanges role logits exactly. The
+  equal-parameter control gets the same token encoder, attention supervision, data, and schedule but
+  predicts an absolute role bit from the selected mention context. Stokes `738806` audited all **288,000
+  train / 896 eval / 8 manual** rows in 320s with zero alignment or structural errors. Admission SHA-256
+  is `c9758c191d6dc0754547c14ad554a7479cc5375f25e6259e9eefa409f30847fc`; train/eval/manual SHA-256
+  remains `9f97e933...` / `b9106b32...` / `56be3873...`. Locked full-fit attribution requires matched
+  metadata and initialization, all original absolute CMB gates, >=5pp candidate gains on language+full
+  answers and all exact programs, >=10pp gain in language+full operation role conditioned on correct
+  kind, and <=3pp fit/depth regression. A 64-group candidate mechanics canary must be finite before
+  either full arm may start.

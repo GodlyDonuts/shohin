@@ -2082,3 +2082,26 @@ This is a new causal claim: dynamic slot identity, rather than stronger
 surface invariance, should make role transport survive unseen nouns and
 templates. It should first be implemented and falsified on a CPU mechanics
 smoke and tiny isolated H100 canary before any full matched fit.
+
+The text-only mechanics are now implemented. Intro slots and per-line target
+mentions are soft attention distributions over token spans. Mention labels
+supervise those distributions during training, but `classify_text` has no key
+or target-label input. Role-pointer logits compare a projected raw-token
+identity pooled from the predicted target to identities pooled from the two
+predicted intro slots. The matched absolute-role control instantiates the same
+modules and parameter count and receives the same mention supervision, but its
+role logits come from the selected contextual mention rather than a slot
+identity match. This separates relational reference from extra span capacity.
+
+Stokes job `738806` admitted the complete existing frozen substrate: 288,000
+training rows, 896 held-out rows, and eight manual rows, with zero mention
+alignment or structural failures. The admission binds train/eval/manual and
+tokenizer hashes and records 581,562 role-bearing training operations plus
+192,774 role-bearing training queries. Its SHA-256 is
+`c9758c191d6dc0754547c14ad554a7479cc5375f25e6259e9eefa409f30847fc`.
+The full comparison is preregistered before any H100 result: absolute versus
+pointer, mention-loss weight 1.0, same seed/init/data/order/schedule and equal
+parameter count; original absolute CMB gates; at least five points on both
+language+full answers and all-program exactness; at least ten points on
+language+full operation role conditioned on a correct kind; and at most three
+points fit/depth regression. A 64-group pointer canary is the next gate.

@@ -1,0 +1,66 @@
+{
+  "all_checks_pass": true,
+  "audit": "referential_slot_label_admission_v1",
+  "claim_boundary": "Keys generate attention supervision and scoring labels only. Model inference receives token states and formatting-derived intro/event/query spans, never structured key identities.",
+  "datasets": {
+    "eval": {
+      "all_checks_pass": true,
+      "counts": {
+        "intro_mention_tokens": 2837,
+        "intro_slot_mentions": 1792,
+        "max_tokens": 194,
+        "operation_mention_tokens": 4660,
+        "query_mention_tokens": 943,
+        "role_free_operations": 752,
+        "role_free_queries": 295,
+        "role_operations": 2960,
+        "role_queries": 601,
+        "rows": 896
+      },
+      "errors": [],
+      "expected_rows": 896,
+      "path": "/lustre/fs1/home/sa305415/shohin/artifacts/evals/latent_operator_eval_slices_v2_64.jsonl",
+      "sha256": "b9106b3233c62592dba5f244d5fdec5474d56c813b6d39dc0fe8ee77a441039c"
+    },
+    "manual": {
+      "all_checks_pass": true,
+      "counts": {
+        "intro_mention_tokens": 37,
+        "intro_slot_mentions": 16,
+        "max_tokens": 156,
+        "operation_mention_tokens": 71,
+        "query_mention_tokens": 11,
+        "role_free_operations": 7,
+        "role_free_queries": 2,
+        "role_operations": 37,
+        "role_queries": 6,
+        "rows": 8
+      },
+      "errors": [],
+      "expected_rows": 8,
+      "path": "/lustre/fs1/home/sa305415/shohin/artifacts/evals/categorical_microcode_manual_v1.jsonl",
+      "sha256": "56be38734feeb60cfb000318502e41f3576aa6673bf0d5a904fc8d225f6536b2"
+    },
+    "train": {
+      "all_checks_pass": true,
+      "counts": {
+        "intro_mention_tokens": 879994,
+        "intro_slot_mentions": 576000,
+        "max_tokens": 131,
+        "operation_mention_tokens": 889207,
+        "query_mention_tokens": 294474,
+        "role_free_operations": 141738,
+        "role_free_queries": 95226,
+        "role_operations": 581562,
+        "role_queries": 192774,
+        "rows": 288000
+      },
+      "errors": [],
+      "expected_rows": 288000,
+      "path": "/lustre/fs1/home/sa305415/shohin/artifacts/sft/role_equivariant_microcode_v3.jsonl",
+      "sha256": "9f97e9339f665de27d99195d5b4f61c8c09681ea268cd4459a5e212b8875267f"
+    }
+  },
+  "tokenizer": "/lustre/fs1/home/sa305415/shohin/artifacts/shohin-tok-32k.json",
+  "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4"
+}
