@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 21:10 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; V10A r2 is rejected by completed checkpoint-bound bridge, source-drop composition, and direct-interaction evidence; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, and the independent held-out wording result falls further to 125/500 with 0/100 width-8, so it is a template-conditioned recurrent executor rather than a transferable workspace; raw residual patching and the restricted four-layer Jacobian digit lens are negative; semantic-basis v1 is preserved but controller-ineligible, while exact-carrier semantic-basis v2 is locally admitted with an unstarted aligned raw baseline and a held one-epoch SFT launcher; counterfactual-workspace induction, DCRD, CBC, semantic capsules, and ISL remain conditional). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 21:18 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; V10A r2 is rejected by completed checkpoint-bound bridge, source-drop composition, and direct-interaction evidence; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, and the independent held-out wording result falls further to 125/500 with 0/100 width-8, so it is a template-conditioned recurrent executor rather than a transferable workspace; raw residual patching and the restricted four-layer Jacobian digit lens are negative; semantic-basis v1 is preserved but controller-ineligible, while exact-carrier semantic-basis v2 is locally admitted with a queued full-transcript aligned raw baseline and a held one-epoch SFT launcher; counterfactual-workspace induction, DCRD, CBC, semantic capsules, ISL, counterfactual reflection, and reversible checkpoints remain conditional). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2964,8 +2964,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Q/A surface and records the chosen prompt mode; direct mode remains explicit diagnostic-only. Both local MPS
   smokes are zero (aligned report SHA-256 `52f235a7c8f363371495dc42d4dedf279f7789f60e175c264b6cec0a915e5ba4`),
   so alignment did not hide an existing capability. Code and v2 data gates were resynced to Newton and passed
-  remote static tests. Corrected read-only 100-pair raw baseline **`687790`** is pending priority. Separately,
+  remote static tests. Corrected read-only 100-pair raw baseline **`687790`** was initially pending priority. Separately,
   SFT input admission completed locally: quality and full-text overlap reports are clean, response contracts
   show exactly one 150,000-row carrier group with no `<think>`/answer-marker imitation, and standard-Q/A
   packing is 4,016 sequences with 1.0x replay. `sft_semantic_basis_transport_v2.sbatch` is static-tested but
-  remains held until `687790` completes and is reviewed; no flagship read, write, or dependency was added.
+  remains held until the aligned raw baseline completes and is reviewed; no flagship read, write, or dependency was added.
+
+- **2026-07-13 21:18** — **Made raw-baseline artifact completeness a hard gate.** `687790` was canceled
+  13 seconds into launch before an evaluator artifact or model result was accepted, because review found that
+  the report retained only aggregate metrics and a small sample of transcripts. The replacement **`687792`**
+  is a read-only, standard-Q/A, 100-pair H100 raw baseline from immutable `best_step200000.pt`; it is pending
+  resources and writes a fresh output only. Its evaluator now retains every per-pair raw compile, reflect,
+  update, consumer, interchange, zero, and mismatch response. No partial or summary-only output can advance
+  the SFT gate. `REASONING_FRONTIER.md` also pre-registers two later, conditional mechanisms: a token-matched
+  counterfactual-reflection route versus a direct-only control, and reversible semantic checkpoints. Neither
+  has data, an SFT job, or any flagship path; both require a positive exact-carrier causal result first.

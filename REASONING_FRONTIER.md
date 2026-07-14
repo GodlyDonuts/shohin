@@ -174,6 +174,59 @@ fixed checkpoint and must still survive the controls rather than being called
 recovered latent reasoning. The queued full H100 baseline uses that same
 standard prompt surface, eliminating SFT/evaluation boundary ambiguity.
 
+### Conditional Next Hypothesis: Counterfactual Reflection Route
+
+An exact external carrier, even if it passes V2, would still be an explicit
+tool-use skill. The next question is whether a small model can be trained to
+*prepare a useful state without being rewarded for printing a reasoning trace
+on the ordinary answer path*. This is the project-specific adaptation of the
+paper's counterfactual-reflection idea.
+
+For each solver-verified source record, construct two continuations that share
+the entire source prefix:
+
+1. **Direct route:** request the final source-visible answer and supervise only
+   `answer=<integer>`; no ledger and no `<think>` token is allowed in the
+   target.
+2. **Interrupted reflection route:** ask what exact portable state the model
+   would report if stopped before answering, and supervise only the strict
+   `ledger:P=<integer>;Q=<integer>` carrier.
+
+The experimental model receives both routes. Its control receives only direct
+routes, resampled to match supervised answer-token count, updates, learning
+rate schedule, source records, and prompt lengths. Held-out scoring first asks
+the direct route only. A reflection benefit is credible only when it improves
+unseen-label direct answers **without** emitting a ledger, beats the matched
+direct-only control, and also succeeds when explicitly interrupted and routed
+through the exact-carrier transport gate. This creates a falsifiable route to
+an internal preparatory representation rather than equating visible text with
+thought.
+
+If the reflection model merely improves the interrupted route but not the
+ordinary direct route, it is an output-format skill and is rejected. If both
+models improve equally, the auxiliary reflection branch has no demonstrated
+value. Any later residual/cache intervention must be evaluated against these
+behavioral controls; neither a probe nor a logit lens is accepted as a shortcut
+to a thinking claim.
+
+### Conditional Context Mechanism: Reversible Semantic Checkpoints
+
+Only after exact transport and the reflection control have a positive causal
+result should the project test bounded-context scaling. The candidate is a
+**reversible semantic checkpoint**: after a fixed number of events, the model
+authors one bounded ledger plus two independently checkable readouts. The old
+history is discarded, the ledger is used as the sole prefix for the next
+window, and a later query must recover the same state across two consumers.
+
+The checkpoint is not trusted because it is short. At every reset the evaluator
+must test a model-authored checkpoint swap between two histories, a zero
+checkpoint, a P/Q mismatch, and a replay from the original history. It must
+also account for total source tokens, checkpoint tokens, mutable tokens,
+prefill work, retained KV bytes, and task accuracy as context length increases.
+The mechanism earns a context-scaling claim only if it maintains causal state
+utility after resets at a fixed prompt budget; it is otherwise just lossy
+summarization.
+
 ### Conditional Next Primitive: Interchangeable Semantic Ledger
 
 If V10A learns its five families but fails the cross-family composition suite,
