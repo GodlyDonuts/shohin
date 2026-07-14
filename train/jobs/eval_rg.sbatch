@@ -2,6 +2,7 @@
 #SBATCH -J shohin-rg-eval
 #SBATCH -p normal
 #SBATCH --gres=gpu:nvidia_h100_pcie:1
+#SBATCH --exclude=evc26,evc31,evc36,evc43,evc45,evc49,evc50
 #SBATCH -c 4
 #SBATCH --mem=64G
 #SBATCH -t 01:30:00
@@ -26,6 +27,22 @@ for i in $(seq 1 30); do
   echo "[rg-eval] GPU not ready (max ${U:-unknown} MiB), retry $i/30"
   sleep 10
 done
+if ! timeout --kill-after=10s 90s "$PY" - <<'PY'
+import sys
+import torch
+try:
+    if not torch.cuda.is_available():
+        raise RuntimeError("CUDA unavailable")
+    probe = torch.empty(1024, device="cuda", dtype=torch.bfloat16)
+    del probe
+except Exception as exc:
+    print(f"[rg-eval] CUDA preflight failed: {exc}", file=sys.stderr)
+    sys.exit(75)
+PY
+then
+  echo "[rg-eval] CUDA unavailable after allocation" >&2
+  exit 75
+fi
 "$PY" eval_rg.py \
   --ckpt "$CKPT" \
   --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \

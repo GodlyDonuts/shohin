@@ -2,6 +2,7 @@
 #SBATCH -J shohin-contract-eval
 #SBATCH -p normal
 #SBATCH --gres=gpu:nvidia_h100_pcie:1
+#SBATCH --exclude=evc26,evc31,evc36,evc43,evc45,evc49,evc50
 #SBATCH -c 4
 #SBATCH --mem=64G
 #SBATCH -t 01:30:00
