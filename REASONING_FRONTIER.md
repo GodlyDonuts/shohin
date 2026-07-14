@@ -530,6 +530,58 @@ transportable source-free intervention primitive, not general reasoning. A
 failure would close residual-algebra work instead of inviting another format
 or geometry loss.
 
+### Next Admitted Research Question: Finite-Query Residual Basis (FQRB)
+
+The completed CRA factor matrix changes the question. Its support-matched
+value control keeps every answer string in the training vocabulary but remains
+at zero strict causal cases, while the delta factor reaches 208/500 strict.
+The primary defect is therefore not merely an unseen answer token and not
+primarily the sign of an edit: the model does not yet carry a reusable numeric
+source state through the residual composition.
+
+**Finite-Query Residual Basis (FQRB)** tests that prerequisite without asking a
+small model to emit an unbounded integer. Each source still contains a base
+world, an edited base world, and a donor world, and the decoder still receives
+only the source-free composition
+
+`Z(donor) + [Z(edited) - Z(base)]`.
+
+Instead of a single direct numeral, independently sampled suffix consumers ask
+for one bounded, solver-derived property of the composed target: signed tens
+digit, ones digit, sign, parity, or the relation between the two target
+fields. The answer alphabet is fixed and fully present in training. For every
+episode the normal and counterfactual edits are selected to change that
+consumer's answer, so an edit-insensitive tape cannot pass by returning a
+constant class.
+
+This is not a parser, an external calculator, a vector-alignment objective, a
+new parameter, or a visible trace. It is functional tomography: the same
+source-free native state must support several incompatible finite readouts.
+The multi-consumer condition matters. A tape that answers `parity` but cannot
+also answer `ones` and `relation` has not established a reusable number state;
+it has learned a query-specific classifier.
+
+The frozen train split will cover every local decimal digit and carry/borrow
+context across two-digit signed values. The first held-out split must use unseen
+full source tuples but no unseen answer classes; its language factor changes
+only source wording, and its magnitude factor moves to three-digit values while
+retaining the same finite output alphabet. Exact three-source bundles, latent
+world transitions, and held-out prompt n-grams must remain absent. Evaluation
+will re-use each encoded source triple for all five suffix consumers, then test
+normal, paraphrase, counterfactual, zero, shuffled, and wrong-query controls.
+
+Before a full arm is submitted, CPU generation and a separate audit must prove
+the coverage and split claims. A future one-epoch isolated arm can advance only
+if a frozen 500-episode combined evaluation has at least 300 strict episodes,
+each consumer is at least 350/500 on its applicable direct path, all five
+consumer answers are jointly correct on at least 300 episodes, and zero,
+shuffled, or wrong-query tapes recreate a correct answer on at most 25/500.
+The same thresholds apply to the answer-support-matched and language factors;
+the three-digit magnitude factor is reported separately as the first true
+numeric-length generalization test. A pass would show only a bounded causal
+numeric basis. It would be a necessary but still insufficient precursor to a
+general reasoning claim.
+
 ### Conditional Next Hypothesis: Counterfactual Reflection Route
 
 An exact external carrier, even if it passes V2, would still be an explicit

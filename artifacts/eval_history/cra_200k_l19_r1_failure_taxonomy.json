@@ -1,0 +1,171 @@
+{
+  "audit": "counterfactual_residual_algebra_failure_taxonomy_v1",
+  "claim_boundary": "Diagnostic classification only; no output authorizes a reasoning, workspace, or benchmark claim.",
+  "combined": {
+    "counts": {
+      "counterfactual_correct": 39,
+      "normal_correct": 35,
+      "paraphrase_correct": 30,
+      "shuffle_recreates_normal": 27,
+      "strict_causal": 0,
+      "zero_recreates_normal": 13
+    },
+    "path": "/lustre/fs1/home/sa305415/shohin/artifacts/eval_history/cra_200k_l19_r1_combined.json",
+    "rates": {
+      "counterfactual_correct": 0.078,
+      "normal_correct": 0.07,
+      "paraphrase_correct": 0.06,
+      "shuffle_recreates_normal": 0.054,
+      "strict_causal": 0.0,
+      "zero_recreates_normal": 0.026
+    },
+    "rows": 500,
+    "sha256": "6b91aacdf6ee2721bb828dcf1c57270a79ea24c5cf3de6c8623a5b513700cdcb"
+  },
+  "diagnoses": [
+    "cross_split_generalization_failure"
+  ],
+  "factors": {
+    "delta": {
+      "counts": {
+        "counterfactual_correct": 339,
+        "normal_correct": 315,
+        "paraphrase_correct": 319,
+        "shuffle_recreates_normal": 39,
+        "strict_causal": 208,
+        "zero_recreates_normal": 46
+      },
+      "path": "/lustre/fs1/home/sa305415/shohin/artifacts/eval_history/cra_200k_l19_r1_delta.json",
+      "rates": {
+        "counterfactual_correct": 0.678,
+        "normal_correct": 0.63,
+        "paraphrase_correct": 0.638,
+        "shuffle_recreates_normal": 0.078,
+        "strict_causal": 0.416,
+        "zero_recreates_normal": 0.092
+      },
+      "rows": 500,
+      "sha256": "651edfe1a3c424a9055101ee6bfd5b7f9780b75b57dbc2e6332c61e174754edf"
+    },
+    "language": {
+      "counts": {
+        "counterfactual_correct": 193,
+        "normal_correct": 165,
+        "paraphrase_correct": 168,
+        "shuffle_recreates_normal": 41,
+        "strict_causal": 66,
+        "zero_recreates_normal": 59
+      },
+      "path": "/lustre/fs1/home/sa305415/shohin/artifacts/eval_history/cra_200k_l19_r1_language.json",
+      "rates": {
+        "counterfactual_correct": 0.386,
+        "normal_correct": 0.33,
+        "paraphrase_correct": 0.336,
+        "shuffle_recreates_normal": 0.082,
+        "strict_causal": 0.132,
+        "zero_recreates_normal": 0.118
+      },
+      "rows": 500,
+      "sha256": "f158a844afd51f217a4a4ca3bd75cc46a67615cddc86bb390ec9f5f82c8b2498"
+    },
+    "query": {
+      "counts": {
+        "counterfactual_correct": 196,
+        "normal_correct": 213,
+        "paraphrase_correct": 213,
+        "shuffle_recreates_normal": 33,
+        "strict_causal": 116,
+        "zero_recreates_normal": 59
+      },
+      "path": "/lustre/fs1/home/sa305415/shohin/artifacts/eval_history/cra_200k_l19_r1_query.json",
+      "rates": {
+        "counterfactual_correct": 0.392,
+        "normal_correct": 0.426,
+        "paraphrase_correct": 0.426,
+        "shuffle_recreates_normal": 0.066,
+        "strict_causal": 0.232,
+        "zero_recreates_normal": 0.118
+      },
+      "rows": 500,
+      "sha256": "f04132486434312549e2b4161291f2b6852aca692729dc4ea79af67b76a4188f"
+    },
+    "two_edit": {
+      "counts": {
+        "counterfactual_correct": 200,
+        "normal_correct": 206,
+        "paraphrase_correct": 205,
+        "shuffle_recreates_normal": 68,
+        "strict_causal": 131,
+        "zero_recreates_normal": 66
+      },
+      "path": "/lustre/fs1/home/sa305415/shohin/artifacts/eval_history/cra_200k_l19_r1_two_edit.json",
+      "rates": {
+        "counterfactual_correct": 0.4,
+        "normal_correct": 0.412,
+        "paraphrase_correct": 0.41,
+        "shuffle_recreates_normal": 0.136,
+        "strict_causal": 0.262,
+        "zero_recreates_normal": 0.132
+      },
+      "rows": 500,
+      "sha256": "49db8decf5e4fac6a54d938a83eb24af69490d3bb7d6155e2fa4298590e5cba8"
+    },
+    "values": {
+      "counts": {
+        "counterfactual_correct": 15,
+        "normal_correct": 20,
+        "paraphrase_correct": 23,
+        "shuffle_recreates_normal": 18,
+        "strict_causal": 0,
+        "zero_recreates_normal": 15
+      },
+      "path": "/lustre/fs1/home/sa305415/shohin/artifacts/eval_history/cra_200k_l19_r1_values.json",
+      "rates": {
+        "counterfactual_correct": 0.03,
+        "normal_correct": 0.04,
+        "paraphrase_correct": 0.046,
+        "shuffle_recreates_normal": 0.036,
+        "strict_causal": 0.0,
+        "zero_recreates_normal": 0.03
+      },
+      "rows": 500,
+      "sha256": "7847080a4b7f7d2d18ff557c1e0c3c0b062d72a69633df5f862625d2b8e06062"
+    }
+  },
+  "nll": {
+    "margins": {
+      "counterfactual_margin": 0.10253277951944682,
+      "normal_margin": 0.2409226805474609,
+      "paraphrase_margin": 0.13794009733595886,
+      "shuffle_margin": 1.5179081295604628,
+      "zero_margin": -0.6256206604260951
+    },
+    "paired_directional": 12,
+    "path": "/lustre/fs1/home/sa305415/shohin/artifacts/eval_history/cra_200k_l19_r1_combined_nll.json",
+    "rows": 500,
+    "sha256": "6dd4bd29ee3b5daaf214a3427b2388843d93e01d8014e0027999a4c67509baa2",
+    "strict_directional": 3
+  },
+  "recommendation": "inspect_row_level_failures_before_any_new_arm",
+  "train": {
+    "counts": {
+      "counterfactual_correct": 150,
+      "normal_correct": 141,
+      "paraphrase_correct": 140,
+      "shuffle_recreates_normal": 17,
+      "strict_causal": 102,
+      "zero_recreates_normal": 21
+    },
+    "path": "/lustre/fs1/home/sa305415/shohin/artifacts/eval_history/cra_200k_l19_r1_train_diagnostic.json",
+    "rates": {
+      "counterfactual_correct": 0.75,
+      "normal_correct": 0.705,
+      "paraphrase_correct": 0.7,
+      "shuffle_recreates_normal": 0.085,
+      "strict_causal": 0.51,
+      "zero_recreates_normal": 0.105
+    },
+    "rows": 200,
+    "sha256": "25f027d9fe77d0c1ffa07653685750b9b059e3dcdb8efcefc908cb2906629451"
+  }
+}

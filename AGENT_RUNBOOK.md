@@ -3374,3 +3374,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   CPU gate and evaluates only `train/cra_200k_l19_r1/cra_ep1.pt` into a fresh report. It is diagnostic-only:
   a pass isolates numeric output support as the immediate bottleneck, while a failure closes that
   explanation and points to source-OOD numeric transport itself. Neither outcome is a reasoning claim.
+
+- **2026-07-14 05:30** — **CRA L19 is rejected; paired CRA was canceled before it could consume a
+  mismatched five-hour allocation.** The completed factor matrix is: in-distribution **102/200** strict;
+  language **66/500**; values **0/500**; delta **208/500**; query **116/500**; and two-edit **131/500**.
+  The support-matched value control `688656` removes the answer-string ambiguity and is still only
+  **48/500** normal, **58/500** paraphrase, **44/500** counterfactual, and **0/500** strict, with
+  30/500 zero and 48/500 shuffled recreations. Thus the model cannot transport an out-of-range numeric
+  source even when every possible answer string was already trained. Conversely, delta is the strongest
+  axis, so the pre-staged paired sign-margin loss does not target the observed bottleneck. The full factor
+  taxonomy `cra_200k_l19_r1_failure_taxonomy.json` (SHA-256
+  `a1cbc7f8e0b308dcd0dfb5e423a0413207ed64d91e048643bfeb774dc40142a`) diagnoses cross-split
+  generalization failure and recommends row-level inspection; `cra_200k_l19_r1_decision.json` (SHA-256
+  `8cb3805e45a2f21bdb1179840170249383fbc3a510518767b347bbbd556598eb`) rejects recurrence/public
+  promotion. On this evidence, running paired job `688609` would test a sign intervention after sign had
+  already generalized relatively well; it was canceled after 3m42s with **no checkpoint**, along with its
+  never-started children `688610`, `688616`, `688622`, and `688626`–`688631`. Treat them as canceled
+  setup, not negative results. CRA is closed as a direct-numeric residual-algebra route.
