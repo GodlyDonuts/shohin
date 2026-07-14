@@ -3114,3 +3114,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   exactly three full one-epoch, raw-200k arms: CE-only, same-state, and wrong-state, all with the same packed
   corpus, seed, token/update schedule, and isolated output; then factorized behavioral and activation-exchange
   evaluations. Never promote or touch the flagship based on this canary.
+
+- **2026-07-14 02:01** — **PSA matched causal-control chain submitted after recovered Newton access and remote
+  static re-validation.** `688502` is CE-only (`MODE=none`, zero alignment), `688503` is correct
+  compile-to-reflect attraction (`MODE=same`, weight 0.05), and `688504` is deliberately wrong-state
+  attraction (`MODE=mismatch`, weight 0.05). They are serialized with `afterany` dependencies and each starts
+  from the immutable raw 200k checkpoint, same frozen 150,000-row corpus/hash, one epoch, `BS=16`, and
+  `PAIR_BS=8`; outputs are respectively `psa_ce_200k_r1`, `psa_same_200k_r1`, and
+  `psa_mismatch_200k_r1`. `688502` began on evc33 and its startup line confirms the raw 200k checkpoint,
+  CE-only configuration, and isolated output. The remote causal-evaluator tests initially hit a login-node
+  tokenizer thread-quota panic; rerunning with `RAYON_NUM_THREADS=1` passed, so it is recorded as an
+  infrastructure constraint rather than a model/trainer error. All full-arm checkpoints will receive the same
+  factorized behavioral and activation-exchange audits before any causal or context claim.
