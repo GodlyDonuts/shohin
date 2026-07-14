@@ -127,6 +127,42 @@ language. The Stokes CPU builder is only an audited data-admission step; no SFT
 may start until this basis evaluator and its counterfactual controls are bound
 to the generated artifacts.
 
+### Exact-Carrier Correction: Semantic-Basis V2
+
+The first admitted semantic-basis corpus remains preserved as a data-quality
+artifact, but it cannot be used for the causal experiment. Its compile,
+reflection, and update completions contained reasoning prose followed by a
+ledger line. Any controller that extracts, parses, or reprints that substring
+would become an unmeasured semantic component, so a good score would not prove
+that the model's own emission is portable.
+
+V2 is a distinct, immutable candidate with only five targets per episode:
+`compile -> ledger:P=<int>;Q=<int>`, `reflect ->` the identical exact ledger,
+`update ->` the next exact ledger, and two `answer=<int>` consumers. The
+consumer prompts receive the updated raw model emission by one literal-string
+replacement and have no access to the source description. The 150,000-row
+train / 5,000-row held-out build has distinct train/held-out values, labels,
+domains, and every phase's wording. It also enforces uniqueness of both source
+and post-update ledgers, so no downstream prompt is duplicated accidentally.
+
+The controller rejects any non-full carrier or answer and never calculates,
+normalizes, or repairs a model output. The held-out evaluator requires:
+
+1. Correct exact compile and reflection from two source descriptions.
+2. A raw compile emission to drive an update, and that raw update emission to
+   drive both arithmetic consumers.
+3. Two normal episodes to pass before cross-episode interchange is tested;
+   the donor's literal model-produced update string is then placed in the
+   receiver's source-deleted consumer prompts.
+4. A zero-carrier non-recreation control and an evaluator-created P/Q mismatch
+   that must produce the counterfactual answers rather than the original
+   answers. These controls are explicitly never called model-authored state.
+
+This is the minimum behavioral analogue of a workspace-style claim: reportable
+content, multiple downstream readers, and causal swaps. A pass would still be
+only a narrow synthetic transport result. It would justify an isolated learning
+ablation, not a broad-reasoning or context-scaling conclusion.
+
 ### Conditional Next Primitive: Interchangeable Semantic Ledger
 
 If V10A learns its five families but fails the cross-family composition suite,
