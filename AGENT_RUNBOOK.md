@@ -3473,8 +3473,8 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Read the retained responses directly; its score is a diagnosis, not an ECLI or reasoning gate.
 
 - **2026-07-14 06:45** — **The FQRB assessment watcher is Stokes CPU-only and one-shot.**
-  `pipeline/watch_fqrb_assessment.sh` waits for nonempty combined/core/magnitude/manual reports plus the
-  isolated FQRB checkpoint, then invokes the existing hash-recording assessor once into a fresh
-  `fqrb_200k_l19_r1_assessment.json`. It cannot submit jobs, modify a checkpoint/data file, or create ECLI
-  artifacts. Its role is to make the pre-registered decision available promptly; inspect that decision and
-  the transcript evidence before any conditional successor is admitted.
+  `pipeline/watch_fqrb_assessment.sh` waits for nonempty train-diagnostic, combined/core/magnitude/manual
+  reports plus the isolated FQRB checkpoint, then writes both the hash-recording assessment and a separate
+  source-tuple/language/magnitude/control failure taxonomy. It cannot submit jobs, modify a checkpoint/data
+  file, or create ECLI artifacts. Its role is to make the pre-registered decision available promptly;
+  inspect that decision and the transcript evidence before any conditional successor is admitted.
