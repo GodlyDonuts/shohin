@@ -3135,3 +3135,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   attraction reduced their own pairwise loss to about 0.0002 / cosine about 0.9998. Therefore the alignment
   scalar alone cannot distinguish semantic equivalence from generic collapse; factor-language, values, delta,
   and full-replay activation-exchange controls are mandatory and pending.
+
+- **2026-07-14 02:29** — **Native Residual Relay corpus admitted on Stokes and independently verified on
+  Newton.** This is a new, no-extra-parameters alternative to the rejected continuous-memory/CPR branches:
+  encode a natural source only through an intermediate layer, carry exactly its final native residual into a
+  second source-free suffix pass, and train answer loss there. The CPU builder created 30,000 train rows at
+  SHA-256 `bac1e8d041abbfefa892056302a8d78c14abd0d31dd1694e9bc92aefac2fe03c` and 2,000 held-out rows at
+  `1d8b633713fff41b331e7c2728e9c0aa3ae307a7b99622c526d99d6dc84120f2`; its report has zero duplicate prompts,
+  exact cross-split prompts, or cross-split word-13-grams. Every row has independent same-world paraphrase,
+  one-fact counterfactual, source-free event/query suffix, and two query types. This is only an admitted data
+  and hard-cut primitive, not a model result; it remains isolated until the PSA behavior matrix is complete.

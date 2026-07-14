@@ -342,11 +342,15 @@ are measured on held-out language/value/delta regimes:
 4. the source text is absent from the suffix by construction, verified by an
    execution-level no-KV/no-source unit test.
 
-The current implementation is limited to the no-parameter relay primitive and
-its hard-cut test. It has **no checkpoint, data corpus, H100 run, or result**
-yet. The PSA comparison remains useful as an inexpensive test of whether a
-standard representation objective already solves the problem; NRR is the
-separate, more ambitious causal-bottleneck route if it does not.
+The no-parameter relay primitive and its hard-cut test now pass. Its CPU-only
+v1 corpus is also admitted on shared Stokes/Newton storage: 30,000 train rows
+(SHA-256 `bac1e8d041abbfefa892056302a8d78c14abd0d31dd1694e9bc92aefac2fe03c`)
+and 2,000 held-out rows (`1d8b633713fff41b331e7c2728e9c0aa3ae307a7b99622c526d99d6dc84120f2`),
+with zero duplicate prompts and zero exact or word-13-gram cross-split hits.
+It has **no checkpoint, H100 run, or result** yet. The PSA comparison remains
+useful as an inexpensive test of whether a standard representation objective
+already solves the problem; NRR is the separate, more ambitious
+causal-bottleneck route if it does not.
 
 ### Conditional Next Hypothesis: Counterfactual Reflection Route
 

@@ -6,8 +6,6 @@ source-to-suffix cut.  Each source world has an independently worded paraphrase
 and a one-fact counterfactual; the downstream event/query text contains neither
 source values.  This builder is CPU-only and creates no model artifact.
 """
-from __future__ import annotations
-
 import argparse
 import hashlib
 import json
