@@ -8,6 +8,7 @@ import collections
 import copy
 import hashlib
 import json
+import re
 from pathlib import Path
 
 from generate_categorical_microcode_equivalence_v2 import make_view
@@ -15,6 +16,7 @@ from generate_latent_operator_v1 import TRAIN_DOMAINS, render_question
 
 
 SEMANTIC_VIEWS = ("anchor", "paraphrase_a", "paraphrase_b")
+WORD = re.compile(r"\w+")
 
 
 def sha256(path):
@@ -23,6 +25,10 @@ def sha256(path):
         for chunk in iter(lambda: source.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def normalized_question(text):
+    return " ".join(WORD.findall(str(text).lower()))
 
 
 def swap_key(value, keys):
@@ -84,7 +90,7 @@ def anchor_view(source, index, permutation):
     }
 
 
-def decorate(row, index, semantic_view, permutation):
+def decorate(row, index, semantic_view, permutation, source_index=None):
     output = dict(row)
     output.update({
         "source": "role_equivariant_microcode_v3",
@@ -93,24 +99,66 @@ def decorate(row, index, semantic_view, permutation):
         "semantic_view": semantic_view,
         "register_permutation": int(permutation),
         "reference": "CREC-{:06d}-{}-{}".format(index, semantic_view, permutation),
+        "source_index": int(index if source_index is None else source_index),
         "heldout": False,
     })
     return output
 
 
-def make_rows(source, index):
+def make_rows(source, index, source_index=None):
     rows = []
     for permutation in (0, 1):
         transformed = permute_source(source) if permutation else copy.deepcopy(source)
-        rows.append(decorate(anchor_view(transformed, index, permutation), index, "anchor", permutation))
-        rows.append(decorate(make_view(transformed, index, 0), index, "paraphrase_a", permutation))
-        rows.append(decorate(make_view(transformed, index, 1), index, "paraphrase_b", permutation))
+        rows.append(decorate(
+            anchor_view(transformed, index, permutation), index, "anchor", permutation, source_index,
+        ))
+        rows.append(decorate(
+            make_view(transformed, index, 0), index, "paraphrase_a", permutation, source_index,
+        ))
+        rows.append(decorate(
+            make_view(transformed, index, 1), index, "paraphrase_b", permutation, source_index,
+        ))
     return rows
+
+
+def select_rows(source_rows, programs, eval_questions):
+    """Select complete unique groups without changing any rendered example."""
+    rows = []
+    seen_questions = set()
+    selected_source_indices = []
+    skipped = collections.Counter()
+    for source_index, source in enumerate(source_rows):
+        selected_index = len(selected_source_indices)
+        candidate_rows = make_rows(source, selected_index, source_index)
+        candidate_questions = [normalized_question(row["question"]) for row in candidate_rows]
+        candidate_set = set(candidate_questions)
+        if len(candidate_set) != len(candidate_questions):
+            skipped["duplicate_within_group"] += 1
+            continue
+        if candidate_set & eval_questions:
+            skipped["exact_eval_prompt"] += 1
+            continue
+        if candidate_set & seen_questions:
+            skipped["duplicate_prior_group"] += 1
+            continue
+        rows.extend(candidate_rows)
+        seen_questions.update(candidate_set)
+        selected_source_indices.append(source_index)
+        if len(selected_source_indices) == programs:
+            break
+    if len(selected_source_indices) != programs:
+        raise ValueError(
+            "only selected {} unique groups from {} source rows".format(
+                len(selected_source_indices), len(source_rows),
+            )
+        )
+    return rows, selected_source_indices, skipped
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", required=True)
+    parser.add_argument("--eval", required=True, help="held-out prompt JSONL; answers are never read")
     parser.add_argument("--out", required=True)
     parser.add_argument("--report", required=True)
     parser.add_argument("--programs", type=int, default=48000)
@@ -120,18 +168,33 @@ def main():
     if Path(args.out).exists() or Path(args.report).exists():
         raise SystemExit("refusing existing output")
     source_rows = [json.loads(line) for line in Path(args.source).read_text().splitlines() if line.strip()]
+    eval_rows = [json.loads(line) for line in Path(args.eval).read_text().splitlines() if line.strip()]
+    eval_questions = {
+        normalized_question(row.get("question", "")) for row in eval_rows
+        if normalized_question(row.get("question", ""))
+    }
     if len(source_rows) < args.programs:
         raise SystemExit("source has fewer rows than requested programs")
-    rows = []
-    for index, source in enumerate(source_rows[:args.programs]):
-        rows.extend(make_rows(source, index))
+    try:
+        rows, selected_source_indices, skipped = select_rows(source_rows, args.programs, eval_questions)
+    except ValueError as error:
+        raise SystemExit(str(error)) from error
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     Path(args.out).write_text("".join(json.dumps(row, sort_keys=True) + "\n" for row in rows))
     report = {
         "build": "role_equivariant_microcode_v3",
         "source": str(Path(args.source).resolve()),
         "source_sha256": sha256(args.source),
+        "eval": str(Path(args.eval).resolve()),
+        "eval_sha256": sha256(args.eval),
+        "eval_prompts_loaded": len(eval_questions),
         "programs": args.programs,
+        "source_rows_available": len(source_rows),
+        "source_rows_scanned": selected_source_indices[-1] + 1,
+        "selected_source_indices_sha256": hashlib.sha256(
+            json.dumps(selected_source_indices, separators=(",", ":")).encode()
+        ).hexdigest(),
+        "skipped_groups": dict(sorted(skipped.items())),
         "rows": len(rows),
         "semantic_views": dict(collections.Counter(row["semantic_view"] for row in rows)),
         "register_permutations": dict(collections.Counter(str(row["register_permutation"]) for row in rows)),
@@ -139,7 +202,7 @@ def main():
         "data_sha256": sha256(args.out),
         "claim_boundary": (
             "Training-only anchor, paraphrase, and exact register-automorphism views. Held-out "
-            "language remains excluded and no evaluation answer is consumed."
+            "prompt text is read only to reject exact collisions; no evaluation answer is consumed."
         ),
     }
     Path(args.report).write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")

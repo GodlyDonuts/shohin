@@ -34,7 +34,7 @@ export MKL_NUM_THREADS=1
 export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-8}"
 cd "$BASE"
 "$PY" pipeline/generate_role_equivariant_microcode_v3.py \
-  --source "$SOURCE" --out "$DATA" --report "$BUILD" --programs "$PROGRAMS"
+  --source "$SOURCE" --eval "$EVAL" --out "$DATA" --report "$BUILD" --programs "$PROGRAMS"
 "$PY" pipeline/audit_role_equivariant_microcode_v3.py \
   --train "$DATA" --eval "$EVAL" --tokenizer "$TOKENIZER" --out "$ADMISSION" --programs "$PROGRAMS"
 "$PY" pipeline/audit_sft_quality.py --data "$DATA" --evals "$BASE/artifacts/evals" --out "$QUALITY"

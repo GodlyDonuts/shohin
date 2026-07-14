@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 14:07 EDT (the protected two-H100 pretrain remains healthy and isolated. CMB r2 is formally rejected. Counterfactual Role-Equivariant Compilation r3 passed a 64-program / 384-row structural, automorphism, executor, contamination, and response-contract smoke; the full CPU build remains unstarted.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 14:20 EDT (the protected two-H100 pretrain remains healthy and isolated. CMB r2 is formally rejected. Counterfactual Role-Equivariant Compilation r3 passed its mechanics canary, while the first full CPU artifact was rejected for duplicate and exact-eval prompts; a deterministic whole-group decontaminated rebuild is pending.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -3938,3 +3938,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   replacement regime-aware audit permits exactly those 128 anchor rows and reports zero forbidden
   rows against language/full OOD, the manual board, and all other evaluations. The full 48,000-program
   job must reproduce exactly two allowed anchor rows per program and zero forbidden rows.
+
+- **2026-07-14 14:07--14:20** — **R3 mechanics pass, but its first full artifact is correctly rejected
+  before training.** Isolated H100 `689057` completed 16 updates over 64 six-view groups from immutable
+  200k with finite classification, semantic, permutation, basis, and gradient-norm telemetry; the base
+  stayed frozen and no CMB capability is claimed. Full Stokes build `738788` then produced 288,000 rows
+  but independent admission found **988 duplicate normalized questions** and **3 exact fit-IID prompt
+  matches**. Automorphism, group integrity, oracle execution, width, and held-out-language checks were
+  otherwise clean. The artifact is rejected and must be preserved under its job ID. The builder now
+  selects complete six-view groups from the larger immutable source pool, rejecting any group with an
+  internal collision, collision with a prior selected group, or exact held-out prompt match; it reports
+  source rows scanned, skip reasons, and a hash of selected source indices. No JSONL is edited in place.
+  The matched full arms are preregistered at semantic/permutation weights **0/0** for control and
+  **0.5/1.0** for candidate, with identical 48,000 groups, seed, order, 12,000 updates, base, and initial
+  adapter. Neither H100 arm may start until the rebuilt artifact passes every structural, quality,
+  regime-aware full-text, and response-contract gate.

@@ -1968,3 +1968,20 @@ This is not generic symbolic leakage: numbers and line boundaries remain the
 same disclosed deterministic frontend as r1, but operation kind and argument
 binding remain neural. A pass would establish narrow language-to-program
 equivariance, not broad autonomous reasoning.
+
+The treatment strength is frozen before the full fits: semantic feature
+alignment weight **0.5** and permutation-equivariance weight **1.0** for the
+candidate, versus **0/0** for the matched control. Both use 48,000 complete
+six-view groups, batch four groups, exactly 12,000 updates, seed 20260714, and
+the same initial adapter hash. The 64-group mechanics canary established finite
+losses and gradients only; it did not tune these weights against capability.
+
+The first full construction is preserved as a rejected admission result.
+Although its automorphisms, executor replay, width, and held-out-language tests
+were clean, it contained 988 duplicate normalized questions and three exact
+fit-IID prompts. The corrected construction never edits a rendered row. It
+scans the larger immutable source in order and admits a whole six-view group
+only when every rendered question is unique within the group, disjoint from
+previously selected groups, and not an exact held-out prompt. Its build report
+binds the selected source-index sequence and skip counts. Training remains
+blocked until the rebuilt 288,000-row artifact passes every independent gate.
