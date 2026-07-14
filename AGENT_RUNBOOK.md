@@ -3293,3 +3293,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   that visible CoT-like text or a correct first token is not a functioning workspace. Any CRA result must
   materially improve this kind of source deletion, counterfactual use, and compact-state reuse before it is
   described as reasoning.
+
+- **2026-07-14 04:52** — **Counterfactual Chart Closure (C3) is specified as the next *conditional*
+  mechanism, not launched.** If paired CRA produces a sign-sensitive but wording-bound residual edit, C3
+  will require two independently worded source charts to compile the same edit operator and will score both
+  cross-chart target paths plus a source-free edit-plus-inverse closed path that must recover the donor
+  answer. It has no vector similarity objective, added parameter, parser, controller, or visible thought
+  channel: only output behavior after native residual compositions is supervised. Its proposed 500-case
+  gate is at least 300 strict jointly correct cross-chart/closure cases, at least 350 on each direct path,
+  and at most 25 zero/shuffled/chart-mismatched/wrong-inverse recreations; separate factor suites remain
+  required. This is intentionally held until paired evidence identifies chart binding rather than generic
+  learnability as the failure, and no C3 corpus or GPU job exists yet.

@@ -484,6 +484,52 @@ must then clear the same behavioral combined and factor gates; improved
 training loss or teacher-forced margin alone cannot advance a context or
 reasoning claim.
 
+### Conditional Next Mechanism: Counterfactual Chart Closure (C3)
+
+If paired CRA learns the sign of an edit in-distribution but fails the language
+or combined factors, the likely defect is deeper than a missing contrastive
+answer: a residual difference is still tied to the particular wording that
+produced it. The next candidate is therefore **Counterfactual Chart Closure
+(C3)**. A *chart* is simply one natural-language rendering of the same small
+two-field world; it is not a learned module, an external state carrier, or a
+new model parameter.
+
+For a source state `A`, an edit `d`, a donor `B`, and two independently
+rendered charts `alpha` and `beta`, C3 trains and evaluates only functional
+output constraints such as:
+
+`Z(B^gamma) + [Z((A+d)^alpha) - Z(A^alpha)]`
+
+and
+
+`Z(B^gamma) + [Z((A+d)^beta) - Z(A^beta)]`.
+
+Both source-free tails must answer the same target world `B+d`. Crucially, a
+closed cross-chart path must recover the donor answer:
+
+`Z(B^gamma) + [Z((A+d)^alpha) - Z(A^alpha)] + [Z(A^beta) - Z((A+d)^beta)]`.
+
+The model is never rewarded for a residual cosine, a vector norm, a parser
+output, or an explanatory string. It is rewarded only when independently
+compiled paths cause the correct tail answer, and it is penalized when a
+same-shaped but semantically wrong path reaches that answer. This turns
+surface-language invariance from a post-hoc probe into a *path-independence*
+requirement on the causal operation itself.
+
+C3 is deliberately conditional on a diagnostic paired-CRA outcome, not on
+low loss. A C3 corpus may be admitted only if it has disjoint value ranges,
+chart vocabularies, question forms, and exact source bundles across splits.
+Its minimum behavioral gate is pre-registered before any training: on a
+frozen 500-case jointly held-out suite, at least 300 strict cases must get
+both independently compiled edit paths and the cross-chart closed path right;
+each direct edit path must reach 350/500; and zero, shuffled, chart-mismatched,
+or wrong-inverse paths may recreate the correct answer on at most 25/500.
+Separate language, values, edit-magnitude, donor-chart, and two-edit
+commutation factors remain mandatory. A pass would establish only a
+transportable source-free intervention primitive, not general reasoning. A
+failure would close residual-algebra work instead of inviting another format
+or geometry loss.
+
 ### Conditional Next Hypothesis: Counterfactual Reflection Route
 
 An exact external carrier, even if it passes V2, would still be an explicit
