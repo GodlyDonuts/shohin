@@ -26,19 +26,46 @@ STATUS=$BASE/artifacts/eval_history/ecli_fqrb_200k_l19_r1_admission.json
 mkdir -p "$BASE/artifacts/eval_history"
 [ ! -e "$STATUS" ] || { echo "[ecli-gate] status already exists; refusing to repeat"; exit 0; }
 
-if [ ! -s "$ASSESSMENT" ] || [ ! -s "$DATA" ] || [ ! -s "$HELDOUT" ] || [ ! -s "$AUDIT" ] || [ ! -s "$INIT" ]; then
-  "$PY" - "$STATUS" <<'PY'
+for poll in $(seq 1 120); do
+  if [ -s "$ASSESSMENT" ]; then
+    PARENT_DECISION=$("$PY" - "$ASSESSMENT" <<'PY'
+import json
+import sys
+print(json.load(open(sys.argv[1])).get('decision', 'missing_decision'))
+PY
+)
+    if [ "$PARENT_DECISION" != bounded_fqrb_basis_candidate_magnitude_and_interaction_still_required ]; then
+      "$PY" - "$STATUS" "$PARENT_DECISION" <<'PY'
 import json
 import sys
 json.dump({
     'audit': 'ecli_fqrb_admission_v1',
-    'decision': 'blocked_missing_fqrb_admission_or_ecli_data',
+    'decision': 'blocked_fqrb_not_admitted:' + sys.argv[2],
     'claim_boundary': 'No GPU job was submitted.',
 }, open(sys.argv[1], 'w'), indent=2, sort_keys=True)
 PY
-  echo "[ecli-gate] blocked: FQRB did not admit ECLI data"
-  exit 0
-fi
+      echo "[ecli-gate] blocked: FQRB decision=$PARENT_DECISION"
+      exit 0
+    fi
+    if [ -s "$DATA" ] && [ -s "$HELDOUT" ] && [ -s "$AUDIT" ] && [ -s "$INIT" ]; then
+      break
+    fi
+  fi
+  if [ "$poll" = 120 ]; then
+    "$PY" - "$STATUS" <<'PY'
+import json
+import sys
+json.dump({
+    'audit': 'ecli_fqrb_admission_v1',
+    'decision': 'blocked_timed_out_waiting_for_fqrb_admission_or_ecli_data',
+    'claim_boundary': 'No GPU job was submitted.',
+}, open(sys.argv[1], 'w'), indent=2, sort_keys=True)
+PY
+    echo "[ecli-gate] timed out waiting for FQRB admission or ECLI data"
+    exit 0
+  fi
+  sleep 60
+done
 
 DATA_SHA=$(sha256sum "$DATA" | awk '{print $1}')
 HELDOUT_SHA=$(sha256sum "$HELDOUT" | awk '{print $1}')
