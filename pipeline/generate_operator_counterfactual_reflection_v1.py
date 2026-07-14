@@ -4,7 +4,7 @@
 This is a *conditional* follow-up to the direct-only operator-trace baseline.
 It does not ask the model to answer the original task.  Instead, a training
 turn interrupts an ordinary three-operation story and asks for the state after
-one explicitly counterfactual operation.  A token-surface-matched neutral arm
+one explicitly counterfactual operation.  A response-token-matched neutral arm
 keeps the operation names but replaces every task-derived state with zeros.
 
 The intended test is narrow and causal: when both arms receive the same direct

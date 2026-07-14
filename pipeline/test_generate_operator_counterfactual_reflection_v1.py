@@ -36,6 +36,7 @@ def main() -> None:
         baseline = control["response"]
         assert "<reflect>" in target and "</reflect>" in target
         assert "old_op=" in target and "new_op=" in target
+        assert len(target) == len(baseline)
         assert f"state_before={'0' * STATE_WIDTH}" in baseline
         assert f"counterfactual_after={'0' * STATE_WIDTH}" in baseline
         state = reflected["counterfactual"]
