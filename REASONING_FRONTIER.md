@@ -2298,3 +2298,48 @@ gain can then be attributed to future-effect geometry rather than extra output
 channels. Numeric values must eventually be inferred from text as well; until
 that separate value-binding gate passes, the experiment remains an operation-
 semantics/compiler result rather than autonomous text-only execution.
+
+#### Frozen R5 Result: Arity Transfers, Capability Does Not
+
+The confirmatory result rejects R5. The board and both admissions passed, and
+the raw/argument evaluations were concurrent on separate H100s with identical
+base, pointer adapter, data, and hash-bound admissions. Raw versus argument-
+constrained fresh answers are 196/448 versus 195/448; exact programs are 174/448
+versus 172/448. Language changes 146/256 -> 142/256 and full changes 50/192 ->
+53/192. None of the frozen gain or absolute gates passes.
+
+This is not a failure to detect the graph. Fresh arity accuracy is 96.61%.
+Instead, the graph is too coarse: only 115/408 raw operation-kind errors cross
+the unary/binary partition, while 293 remain within it. The intervention changes
+130 kinds, correcting 21, harming 23, and replacing one wrong kind with another
+in 86 cases. At the answer level it fixes seven cases and breaks eight. Fresh
+add is only 140/353 before intervention, with 99 add->subtract and 114 add->merge
+errors; move has 67 move->merge and 27 move->swap errors, while swap has 99
+swap->merge errors. These are different future transformations with equal or
+overlapping argument incidence. Threshold tuning cannot provide the missing
+semantic relation, so R5 is closed rather than rescued.
+
+### R6 Hypothesis: Counterfactual Effect-Coded Operators
+
+R6 is a new experiment, not a continuation that bypasses R5's failed gate. Its
+premise is that a tiny compiler should identify an event by the entire function
+it induces over possible states and future queries, including the event's
+numeric value, instead of choosing an operation noun and receiving the value
+from structured data. The current Hadamard-derived 64-effect code is exactly
+conditioned: its nine operator coordinates are orthogonal, clean codes project
+with zero syndrome, and one corrupted scalar is exactly recoverable in the CPU
+reference. Every existing 896 program round-trips through the code and split
+chunks compose after independent decode.
+
+The confirmatory comparison must separate future-effect semantics from extra
+width and coding redundancy. Treatment and control receive the same dynamic
+slots, token states, parameters, output width, examples, optimizer schedule,
+and update budget. The treatment uses the fixed state/query effect code; the
+control uses a frozen random orthogonal 64x9 code with equal condition number
+and the same decoder capacity. The R6 board must be generated only after those
+arms and hashes are frozen, with unseen language, unseen numeric values,
+held-out probe combinations, longer compositions, counterfactual one-event
+edits, source dropping, zero/shuffled code controls, and a fresh manual
+interaction. Structured operation values are forbidden at inference. A pass
+would establish a narrow learned effect algebra; broad model reasoning would
+still require transport into ordinary decoding and unrelated domains.
