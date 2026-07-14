@@ -24,6 +24,7 @@ def main():
         "#SBATCH --gres=gpu:nvidia_h100_pcie:1",
         "native_residual_relay_v1_heldout.jsonl",
         "1d8b633713fff41b331e7c2728e9c0aa3ae307a7b99622c526d99d6dc84120f2",
+        "DATA_SHA=${DATA_SHA:-1d8b633713fff41b331e7c2728e9c0aa3ae307a7b99622c526d99d6dc84120f2}",
         "eval_native_residual_relay.py",
         "OUT must be an NRR eval-history JSON",
         "torch.empty(1, device='cuda', dtype=torch.bfloat16)",
