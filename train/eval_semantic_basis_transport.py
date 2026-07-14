@@ -266,6 +266,7 @@ def main():
         "prompt_mode": args.prompt_mode,
         "inference_prompt_template": "Question: {protocol_prompt}\\nAnswer:" if args.prompt_mode == "qa" else "{protocol_prompt}",
         "summary": summarize(results),
+        "results": results,
         "examples": results[:args.examples],
         "claim_boundary": (
             "A strict pass establishes only exact model-authored two-value carrier transport over this "
