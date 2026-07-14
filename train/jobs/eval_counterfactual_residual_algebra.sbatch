@@ -21,13 +21,21 @@ OUT=${OUT:?set OUT to a fresh artifacts/eval_history/cra_*.json path}
 ROWS=${ROWS:-500}
 MAX_NEW=${MAX_NEW:-12}
 SPLIT=${SPLIT:-heldout}
+ALLOW_RAW=${ALLOW_RAW:-0}
+LAYER=${LAYER:-19}
 export OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=4
 export RAYON_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false
 
 [ -f "$CKPT" ] || { echo "[cra-eval] checkpoint missing" >&2; exit 2; }
 [ -s "$DATA" ] || { echo "[cra-eval] data missing" >&2; exit 3; }
 [ ! -e "$OUT" ] || { echo "[cra-eval] refusing existing output" >&2; exit 4; }
-case "$CKPT" in "$BASE"/train/cra_*/cra_ep1.pt) ;; *) echo "[cra-eval] checkpoint must be isolated CRA output" >&2; exit 5;; esac
+case "$CKPT" in
+  "$BASE"/train/cra_*/cra_ep1.pt) ;;
+  "$BASE"/train/flagship_out/best_step200000.pt)
+    [ "$ALLOW_RAW" = 1 ] || { echo "[cra-eval] raw checkpoint requires ALLOW_RAW=1" >&2; exit 5; }
+    ;;
+  *) echo "[cra-eval] checkpoint must be isolated CRA output or explicit immutable raw baseline" >&2; exit 5;;
+esac
 case "$OUT" in "$BASE"/artifacts/eval_history/cra_*.json) ;; *) echo "[cra-eval] OUT must be a CRA eval-history JSON" >&2; exit 6;; esac
 [ "$(sha256sum "$DATA" | awk '{print $1}')" = "$DATA_SHA" ] || { echo "[cra-eval] held-out hash mismatch" >&2; exit 7; }
 
@@ -42,9 +50,11 @@ then
   echo "[cra-eval] CUDA unavailable or timed out after allocation" >&2
   exit 75
 fi
-echo "[cra-eval] ckpt=$CKPT data=$DATA split=$SPLIT rows=$ROWS out=$OUT"
+RAW_ARGS=()
+if [ "$ALLOW_RAW" = 1 ]; then RAW_ARGS=(--allow-raw --layer "$LAYER"); fi
+echo "[cra-eval] ckpt=$CKPT data=$DATA split=$SPLIT rows=$ROWS out=$OUT allow_raw=$ALLOW_RAW"
 "$PY" eval_counterfactual_residual_algebra.py \
   --ckpt "$CKPT" --data "$DATA" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
-  --out "$OUT" --split "$SPLIT" --max-examples "$ROWS" --max-new "$MAX_NEW"
+  --out "$OUT" --split "$SPLIT" --max-examples "$ROWS" --max-new "$MAX_NEW" "${RAW_ARGS[@]}"
 test -s "$OUT"
 echo "[cra-eval] wrote $OUT"

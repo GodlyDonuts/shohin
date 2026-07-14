@@ -83,26 +83,48 @@ def main():
     parser.add_argument("--split", default="heldout")
     parser.add_argument("--max-examples", type=int, default=500)
     parser.add_argument("--max-new", type=int, default=12)
+    parser.add_argument("--allow-raw", action="store_true", help="evaluate immutable raw baseline with explicit tape settings")
+    parser.add_argument("--layer", type=int, default=19, help="raw-baseline export layer")
+    parser.add_argument("--tape-len", type=int, default=0, help="raw-baseline tape length; zero uses source anchor")
+    parser.add_argument("--source-anchor", default="\nEnd state record:")
     args = parser.parse_args()
     if not torch.cuda.is_available() or Path(args.out).exists():
         raise SystemExit("CUDA required and output path must be fresh")
     checkpoint = torch.load(args.ckpt, map_location="cpu")
-    metadata = checkpoint.get("counterfactual_residual_algebra")
-    if not isinstance(metadata, dict) or metadata.get("source_present_at_suffix") is not False:
-        raise SystemExit("checkpoint does not certify source-free residual algebra")
-    if metadata.get("extra_trainable_parameters") != 0 or metadata.get("composition") != "donor + edited - base":
-        raise SystemExit("checkpoint does not certify the native CRA mechanism")
     model = GPT(GPTConfig(**checkpoint["cfg"])).to("cuda").eval()
     model.load_state_dict(checkpoint["model"])
     tokenizer = Tokenizer.from_file(args.tokenizer)
     eos_id = tokenizer.token_to_id("<|endoftext|>")
     if eos_id is None:
         raise SystemExit("tokenizer EOS missing")
+    metadata = checkpoint.get("counterfactual_residual_algebra")
+    if isinstance(metadata, dict):
+        if metadata.get("source_present_at_suffix") is not False:
+            raise SystemExit("checkpoint does not certify source-free residual algebra")
+        if metadata.get("extra_trainable_parameters") != 0 or metadata.get("composition") != "donor + edited - base":
+            raise SystemExit("checkpoint does not certify the native CRA mechanism")
+        layer, tape_len = int(metadata["layer"]), int(metadata["tape_len"])
+    elif args.allow_raw:
+        anchor_ids = tokenizer.encode(args.source_anchor).ids
+        tape_len = args.tape_len or len(anchor_ids)
+        if not anchor_ids or tape_len != len(anchor_ids):
+            raise SystemExit("raw CRA baseline requires tape length equal to exact source anchor")
+        layer = int(args.layer)
+        metadata = {
+            "raw_baseline": True,
+            "layer": layer,
+            "tape_len": tape_len,
+            "source_anchor": args.source_anchor,
+            "source_present_at_suffix": False,
+            "extra_trainable_parameters": 0,
+            "composition": "donor + edited - base",
+        }
+    else:
+        raise SystemExit("checkpoint does not certify source-free residual algebra; pass --allow-raw only for raw baseline")
     rows = [json.loads(line) for line in open(args.data) if line.strip()]
     rows = [row for row in rows if row.get("schema") == "counterfactual_residual_algebra_v1" and row.get("split") == args.split][:args.max_examples]
     if not rows:
         raise SystemExit("no CRA rows for requested split")
-    layer, tape_len = int(metadata["layer"]), int(metadata["tape_len"])
     results, tapes = [], []
     with torch.no_grad():
         for index, row in enumerate(rows):
