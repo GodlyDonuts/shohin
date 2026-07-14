@@ -3578,5 +3578,6 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   decision, and only for `bounded_ecli_late_binding_candidate` may it invoke the CRCS builder. It
   independently rechecks the completed builder audit and writes `crcs_v1_admission.json` with immutable
   hashes. It has no Slurm submission command and cannot allocate a GPU. The watcher is appropriate for a
-  Stokes CPU screen session while the conditional ECLI chain runs; a CRCS *model* experiment is still
-  explicitly unsubmitted.
+  Stokes CPU screen session while the conditional ECLI chain runs; it is now running as
+  `shohin_ecli_crcs_watch` (screen PID `3034774`) with output at
+  `logs/ecli_crcs_watch_stokes.log`. A CRCS *model* experiment is still explicitly unsubmitted.
