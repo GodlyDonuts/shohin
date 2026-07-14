@@ -713,6 +713,50 @@ This is protocol groundwork only; data generation, SFT, and evaluation remain
 blocked on a positive exact-carrier causal result. V2's held-out failure leaves
 that gate closed.
 
+### Conditional Context Primitive: Causal Residual Count-Sketch (CRCS)
+
+The rejected packet-memory and semantic-ledger routes share a structural
+weakness: they ask the small model to serialize a complete state before it has
+shown a transferable internal state. **Causal Residual Count-Sketch (CRCS)**
+starts from the opposite end. It retains no model-authored text and introduces
+no learned memory slot. Instead, each fixed-format event is encoded once to a
+native anchor tape, then placed into a fixed number of deterministic signed
+residual lanes:
+
+`S[b] = sum_i sign(i,b) * Z(event_i)` for `b = 1..B`.
+
+The event ordinal determines its public, nonsemantic hash lane and sign; the
+controller never chooses a fact by meaning, computes an answer, or rewrites a
+state. A later source-free query receives the same fixed-width lane tape plus
+its ordinary query tokens. Multiple independent lanes make interference a
+measurable capacity property rather than an opaque learned-memory claim. The
+model must learn to use the query and native lanes to recover one event or
+combine two events. The representation, not an external lookup, carries the
+content.
+
+CRCS is deliberately more demanding than ordinary retrieval. Its first
+solver-derived curriculum would ask late-bound finite questions about one
+event, then about a two-event relation, with all original events removed. The
+held-out suite must grow from four training events to eight and sixteen events
+at the *same* lane budget, change event wording and assignments, and use
+disjoint codebook permutations. It must compare the signed multi-lane sketch
+to a token/compute-matched flat residual sum; otherwise an apparent gain could
+be ordinary extra capacity rather than structured compaction.
+
+The causal controls are required at each length: zero every lane, shuffle
+event-to-ordinal assignments, invert a lane's sign pattern, replace a query
+with a mismatched event query, and swap exactly one event between paired
+histories. A positive result needs a source-free margin over all controls,
+per-event and two-event readout, and a non-collapsing length curve at fixed
+lane width. It must also report retained residual bytes and prefill/decoding
+work. Passing would establish only a bounded, fixed-width native context
+sketch, not unbounded memory or general reasoning.
+
+CRCS is not currently admissible. It requires ECLI to establish that a
+source-free latent state can be interrogated through a current query and
+binding table. That prerequisite prevents a count-sketch failure from being
+misread as a hashing problem when the model cannot yet read one latent state.
+
 ### Conditional Context Mechanism: Reversible Semantic Checkpoints
 
 Only after exact transport and the reflection control have a positive causal

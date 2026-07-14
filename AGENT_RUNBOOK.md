@@ -3481,3 +3481,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   admits a bounded FQRB candidate, it may generate the hash-bound ECLI data on Stokes CPU; it cannot submit
   jobs or modify a model/checkpoint. Inspect that decision and the transcript evidence before any ECLI
   training allocation.
+
+- **2026-07-14 07:00** — **Causal Residual Count-Sketch (CRCS) is a new untrained context-scaling
+  substrate, gated behind ECLI.** `train/causal_residual_count_sketch.py` deterministically bundles an
+  arbitrary number of native event anchor tapes into fixed signed CountSketch lanes from public event
+  ordinals, with no learned slot, parser, semantic retrieval controller, or external answer computation.
+  Its CPU test verifies deterministic lanes, exact zero/flat-sum controls, event-order sensitivity, and
+  differentiable gradients. CRCS is deliberately not a job or corpus: only a passing ECLI late-binding
+  result can admit a source-free event-query curriculum with length, collision, sign, shuffle, and
+  two-event controls. It must beat a matched flat residual-sum baseline at a fixed lane budget before any
+  context-scaling claim.
