@@ -3513,8 +3513,9 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   hash-bound watcher-generated ECLI train/held-out/audit files; only then does it submit one fresh isolated
   ECLI train, dependent evaluation, and CPU-only threshold assessment chain and write an admission JSON with
   all job IDs/hashes. The assessment applies the per-reader, codebook-swap, joint, and control thresholds
-  but cannot submit a successor. CPU gate
-  **688692** is held `afterok:688687`. A failed or
+  but cannot submit a successor. Original pending gate `688692` was canceled before start after a race audit;
+  replacement CPU gate **688695** is held `afterok:688687` and waits up to two hours for the FQRB assessment
+  and its watcher-generated bound data rather than treating an early transcript completion as a failed gate. A failed or
   absent FQRB admission records a blocked no-op. This removes idle time without allowing a failed primitive
   to consume an ECLI GPU allocation.
 
