@@ -292,6 +292,17 @@ baseline is still not a high-power estimate; the aligned, CE-only, and
 wrong-state models must each receive the same 50-pair audit after their normal
 behavioral transfer gate.
 
+That matched matrix is now complete and rejects PSA. CE-only, same-state, and
+wrong-state score respectively **1/100**, **2/100**, and **1/100** strict
+language-only causal passes. Their full-replay 50-pair activation audits are
+all zero on baseline/identity/same exact target reports, mismatch exact donor
+reports, and positive mismatch donor margins. Same-state attraction reduces
+its own objective but does not beat the deliberately wrong-state control; both
+train to cosine about 0.9998. The 2/100 is well within this small test's noise
+and has no causal support. Values/delta scoring and contrastive PSA are
+therefore not justified. This closes PSA as an ordinary representation-loss
+route and leaves NRR as the next causal-bottleneck test.
+
 ### Conditional Follow-Up: Contrastive State Geometry
 
 The raw baseline also exposes why positive-pair alignment may be too weak:
@@ -302,14 +313,11 @@ versa. Unlike positive-only alignment, this simultaneously attracts equivalent
 descriptions and repels other ledger states. It logs positive and hardest
 negative cosine separately, and it refuses duplicate ledger states in a batch.
 
-This is a conditional successor, not a replacement for the attraction-only
-canary. First compare CE-only, same-state attraction, and wrong-state
-attraction with identical data and updates. If same-state attraction fails its
-language causal gate while the raw geometry remains collapsed, the next
-isolated candidate is same-state attraction plus contrastive geometry. It must
-beat all three prior arms on language transfer and activation-exchange
-criteria, then be evaluated on values and delta. A successful contrastive loss
-or lower same-state cosine is not a capability result.
+This hypothesis is now closed without a contrastive run. The matched controls
+showed that an attraction objective can make even deliberately wrong states
+nearly identical while leaving causal behavior null. A stronger geometric loss
+would only optimize the same unvalidated surrogate. NRR changes the actual
+information path instead of adding another similarity term.
 
 ### New Hypothesis: Native Residual Relay
 

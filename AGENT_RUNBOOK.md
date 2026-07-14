@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 01:53 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; V10A r2 is rejected by completed checkpoint-bound bridge, source-drop composition, and direct-interaction evidence; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, and the independent held-out wording result falls further to 125/500 with 0/100 width-8, so it is a template-conditioned recurrent executor rather than a transferable workspace; raw residual patching and the restricted four-layer Jacobian digit lens are negative; semantic-basis v1 is preserved but controller-ineligible, while exact-carrier semantic-basis v2 is a genuinely causal 48/100 in-distribution executor that falls to 1/100 language-only, 3/100 values-only, and 2/100 delta-only factorized transfer; the raw activation-exchange null is 0/8; attraction-only alignment canary 687871 passed real-H100 serialization in three bounded updates and the matched full arms are now admissible; contrastive state geometry remains a controlled fallback; counterfactual-workspace induction, DCRD, CBC, semantic capsules, ISL, counterfactual reflection, and reversible checkpoints remain conditional). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 02:47 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; V10A r2 is rejected by completed checkpoint-bound bridge, source-drop composition, and direct-interaction evidence; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, and the independent held-out wording result falls further to 125/500 with 0/100 width-8, so it is a template-conditioned recurrent executor rather than a transferable workspace; raw residual patching and the restricted four-layer Jacobian digit lens are negative; semantic-basis v1 is preserved but controller-ineligible, while exact-carrier semantic-basis v2 is a genuinely causal 48/100 in-distribution executor that falls to 1/100 language-only, 3/100 values-only, and 2/100 delta-only factorized transfer; the full CE/same/wrong PSA matrix is rejected because all activation exchanges are null and held-out causal transport is 1/100, 2/100, and 1/100; contrastive PSA is not justified; Native Residual Relay is the next isolated causal-bottleneck candidate with admitted data but no checkpoint; counterfactual-workspace induction, DCRD, CBC, semantic capsules, ISL, counterfactual reflection, and reversible checkpoints remain conditional). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -3145,3 +3145,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   exact cross-split prompts, or cross-split word-13-grams. Every row has independent same-world paraphrase,
   one-fact counterfactual, source-free event/query suffix, and two query types. This is only an admitted data
   and hard-cut primitive, not a model result; it remains isolated until the PSA behavior matrix is complete.
+
+- **2026-07-14 02:47** — **PSA is rejected by its complete matched causal matrix.** All arms ran 251
+  matched updates from raw 200k. On the same frozen language-only 100-pair evaluator, CE-only `688511` is
+  **1/100** strict causal passes (report SHA-256 `972ad7be944b305c73e359ceaa7e9efa3d1acd8ee40a5dea41b4ad9171bb6191`),
+  correct-state `688513` is **2/100** (`8589b1daa74f05d7ca4970539945e2f9131be46f56ff25fdc92bdfd387026308`), and
+  wrong-state `688515` is **1/100** (`610be09f1db163c87c97a3e85d32c0c0aaf6a9c40a8d063c8fe8003d83d2fbf7`).
+  The tiny one-pass difference is not credible, especially because all three 50-pair full-replay activation
+  audits have zero baseline/identity/same exact target reports, zero mismatch exact donor reports, and zero
+  positive mismatch donor margins: CE/same/wrong audit SHA-256 are
+  `27fadc76d54a1652ce97b807000d23b62192a0e6ec5341f1975bd383629c41bc` /
+  `9b539385caca296f03c47314a57f755ca803853a281df6df0ef10c25747277f1` /
+  `7ae7e6244f4bbcde9ed358a654772c48a273a1418358eb866143791231b90e9d`.
+  Both attraction modes drove their own training cosine to about 0.9998, proving the loss can collapse
+  geometry without creating a usable state. Do not run values/delta or contrastive PSA; advance only the
+  separately designed Native Residual Relay hard-bottleneck candidate.
