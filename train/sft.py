@@ -9,9 +9,10 @@ seq_len for efficiency (single-GPU friendly). The prompt format matches eval_sui
   python sft.py --init flagship_out/best_step10000.model.pt --data ../artifacts/sft/math.jsonl \\
       --tokenizer ../artifacts/shohin-tok-32k.json --epochs 3 --out sft_out
 """
-import argparse, glob, json, math, os, time
+import argparse, glob, hashlib, json, math, os, time
 import numpy as np
 import torch
+import torch.nn.functional as F
 from tokenizers import Tokenizer
 from model import GPT, GPTConfig
 from muon import Muon, split_params
@@ -120,6 +121,73 @@ def weighted_epoch_order(rng, groups, batch_size, weights):
     return order, requested
 
 
+def sha256_file(path):
+    digest = hashlib.sha256()
+    with open(path, "rb") as source:
+        for block in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def load_replay_prompts(path, tokenizer, max_tokens):
+    """Load prompt-only contexts used for raw-model behavior retention.
+
+    These examples intentionally carry no answer target. They are used only to
+    keep the candidate's next-token distribution near the immutable raw model
+    on broad natural prompts while SFT teaches verified skills elsewhere.
+    """
+    if max_tokens < 2:
+        raise ValueError("replay max tokens must be at least two")
+    prompts, skipped = [], {"invalid": 0, "short": 0}
+    with open(path) as source:
+        for line in source:
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            prompt = row.get("prompt")
+            if not isinstance(prompt, str) or not prompt.strip():
+                skipped["invalid"] += 1
+                continue
+            ids = tokenizer.encode(prompt).ids[:max_tokens]
+            if len(ids) < 2:
+                skipped["short"] += 1
+                continue
+            prompts.append(ids)
+    if not prompts:
+        raise ValueError("no fitting prompt-only replay rows")
+    return prompts, {key: value for key, value in sorted(skipped.items()) if value}
+
+
+def make_replay_batch(prompts, batch_size, max_tokens, pad_id, rng, device):
+    if batch_size <= 0:
+        raise ValueError("replay batch size must be positive")
+    indices = rng.integers(0, len(prompts), size=batch_size)
+    ids = torch.full((batch_size, max_tokens), pad_id, dtype=torch.long, device=device)
+    lengths = torch.zeros(batch_size, dtype=torch.long, device=device)
+    for row, index in enumerate(indices):
+        prompt = prompts[int(index)]
+        length = min(len(prompt), max_tokens)
+        ids[row, :length] = torch.tensor(prompt[:length], dtype=torch.long, device=device)
+        lengths[row] = length
+    return ids, lengths
+
+
+def replay_kl(student_logits, teacher_logits, lengths):
+    """Mean next-token KL on unpadded prompt positions."""
+    if student_logits.shape != teacher_logits.shape or student_logits.ndim != 3:
+        raise ValueError("student and teacher replay logits must be matching rank-3 tensors")
+    positions = torch.arange(student_logits.shape[1], device=student_logits.device).unsqueeze(0)
+    mask = positions < (lengths.unsqueeze(1) - 1).clamp_min(0)
+    if not bool(mask.any()):
+        raise ValueError("replay batch has no next-token positions")
+    pointwise = F.kl_div(
+        F.log_softmax(student_logits.float(), dim=-1),
+        F.softmax(teacher_logits.float(), dim=-1),
+        reduction="none",
+    ).sum(dim=-1)
+    return (pointwise * mask).sum() / mask.sum()
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--init", required=True, help="pretrained checkpoint to fine-tune from")
@@ -141,11 +209,25 @@ def main():
                     help="optional row field containing an exact completion prompt (for code completion SFT)")
     ap.add_argument("--sample-weights", nargs="*", default=[], metavar="GROUP=WEIGHT",
                     help="weighted per-epoch sampling over --group-field values; examples are sampled with replacement")
+    ap.add_argument("--reference", default="", help="immutable raw checkpoint for prompt-only logit retention")
+    ap.add_argument("--replay-prompts", default="", help="JSONL prompt-only replay contexts (no answer targets)")
+    ap.add_argument("--replay-weight", type=float, default=0.0)
+    ap.add_argument("--replay-batch-size", type=int, default=4)
+    ap.add_argument("--replay-max-tokens", type=int, default=128)
+    ap.add_argument("--freeze-lexicon", action="store_true",
+                    help="freeze tied token embedding/output geometry during SFT")
     ap.add_argument("--eos", default="<|endoftext|>")
     ap.add_argument("--out", default="sft_out")
     ap.add_argument("--compile", action="store_true")
     ap.add_argument("--log-every", type=int, default=20)
     a = ap.parse_args()
+
+    if bool(a.reference) != bool(a.replay_prompts):
+        raise SystemExit("--reference and --replay-prompts must be supplied together")
+    if a.replay_prompts and a.replay_weight <= 0:
+        raise SystemExit("--replay-weight must be positive with --replay-prompts")
+    if a.replay_batch_size <= 0 or a.replay_max_tokens < 2:
+        raise SystemExit("replay batch size and max tokens must be valid")
 
     device = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
     torch.manual_seed(1337)
@@ -158,6 +240,10 @@ def main():
     cfg = GPTConfig(**ck["cfg"])
     model = GPT(cfg).to(device)
     model.load_state_dict(ck["model"])
+    if a.freeze_lexicon:
+        # head is tied to tok.weight, so freezing this one parameter preserves
+        # both the input lexicon and raw output-token geometry.
+        model.tok.weight.requires_grad_(False)
     print(f"[sft] init from {a.init} (step {ck.get('step')}), params {model.num_params()/1e6:.1f}M, device {device}", flush=True)
 
     paths = []
@@ -174,6 +260,42 @@ def main():
     weights = parse_sample_weights(a.sample_weights)
     if weights and not a.group_field:
         raise ValueError("--sample-weights requires --group-field")
+    replay_prompts, replay_skipped, reference = [], {}, None
+    if a.replay_prompts:
+        if a.replay_max_tokens > cfg.seq_len:
+            raise ValueError("replay max tokens exceeds model context length")
+        replay_prompts, replay_skipped = load_replay_prompts(a.replay_prompts, tok, a.replay_max_tokens)
+        reference_ckpt = torch.load(a.reference, map_location="cpu")
+        reference_cfg = GPTConfig(**reference_ckpt["cfg"])
+        if reference_cfg != cfg:
+            raise ValueError("reference checkpoint config differs from init")
+        reference = GPT(reference_cfg).to(device).eval()
+        reference.load_state_dict(reference_ckpt["model"])
+        for parameter in reference.parameters():
+            parameter.requires_grad_(False)
+    metadata = {
+        "audit": "behavior_preserving_sft_v1",
+        "init": a.init,
+        "init_sha256": sha256_file(a.init),
+        "data": paths,
+        "data_sha256": {path: sha256_file(path) for path in paths},
+        "freeze_lexicon": a.freeze_lexicon,
+        "reference": a.reference,
+        "reference_sha256": sha256_file(a.reference) if a.reference else "",
+        "replay_prompts": a.replay_prompts,
+        "replay_prompts_sha256": sha256_file(a.replay_prompts) if a.replay_prompts else "",
+        "replay_rows": len(replay_prompts),
+        "replay_skipped": replay_skipped,
+        "replay_weight": a.replay_weight,
+        "replay_batch_size": a.replay_batch_size,
+        "replay_max_tokens": a.replay_max_tokens,
+        "pack_len": pack_len,
+        "packed_sequences": int(N),
+        "sample_weights": weights,
+    }
+    with open(os.path.join(a.out, "sft_metadata.json"), "w") as sink:
+        json.dump(metadata, sink, indent=2, sort_keys=True)
+        sink.write("\n")
     raw = model
     if a.compile:
         model = torch.compile(model)
@@ -208,14 +330,30 @@ def main():
             opt_muon.zero_grad(set_to_none=True)
             opt_adam.zero_grad(set_to_none=True)
             with torch.autocast("cuda", dtype=torch.bfloat16, enabled=("cuda" in str(device))):
-                _, loss = model(x, y)
+                _, supervised_loss = model(x, y)
+                retention_loss = None
+                if reference is not None:
+                    replay_x, replay_lengths = make_replay_batch(
+                        replay_prompts, a.replay_batch_size, a.replay_max_tokens, eos_id, rng, device,
+                    )
+                    with torch.no_grad():
+                        teacher_logits, _ = reference(replay_x)
+                    student_logits, _ = model(replay_x)
+                    retention_loss = replay_kl(student_logits, teacher_logits, replay_lengths)
+                    loss = supervised_loss + a.replay_weight * retention_loss
+                else:
+                    loss = supervised_loss
             loss.backward()
             torch.nn.utils.clip_grad_norm_(raw.parameters(), a.clip)
             opt_muon.step()
             opt_adam.step()
             if step % a.log_every == 0:
-                print(f"epoch {ep} step {step}/{total_steps} loss {loss.item():.4f} "
-                      f"lr {a.lr_muon*sc:.5f} {time.time()-t0:.0f}s", flush=True)
+                message = (f"epoch {ep} step {step}/{total_steps} loss {loss.item():.4f} "
+                           f"supervised {supervised_loss.item():.4f} "
+                           f"lr {a.lr_muon*sc:.5f} {time.time()-t0:.0f}s")
+                if retention_loss is not None:
+                    message += f" replay_kl {retention_loss.item():.4f}"
+                print(message, flush=True)
             step += 1
         torch.save(dict(model=raw.state_dict(), cfg=cfg.__dict__, step=f"sft_ep{ep+1}"),
                    os.path.join(a.out, f"sft_ep{ep+1}.pt"))
