@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 15:50 EDT (the protected two-H100 pretrain remains healthy and isolated. R3 is formally rejected. Binding-First Referential Slot Compilation r4 matched fits are live, and an exact read-only future-Jacobian workspace diagnostic is staged under separate gates.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 16:00 EDT (the protected two-H100 pretrain remains healthy and isolated. R4 matched fits are live. Exact future-Jacobian transport is reproducible across disjoint prompt samples and now faces a frozen semantic readout gate; this is not yet workspace or reasoning evidence.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4057,3 +4057,17 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   concept swaps, zero/shuffled controls, and cross-operation reuse are all still required. The
   conditional Sparse Jacobian Recurrent Workspace idea is documented in `REASONING_FRONTIER.md` but
   no fit is authorized before both R4 and causal J-space evidence.
+
+- **2026-07-14 15:50--16:00** — **Future-Jacobian mechanics and cross-prompt stability pass; semantic
+  utility remains untested.** Job `689112` was a valid one-layer partial because Slurm truncated a
+  comma-separated exported layer list to layer 5; it is preserved, locally hash-verified at SHA-256
+  `d6a453cd09c7946c6aff4afdff36039a36c2638ecbbf386762dd25ebce029dcc`, and makes no seven-layer
+  claim. Corrected default-layer canary `689114` completed layers 5/9/13/17/21/25/28 in 17s with all
+  finite 576x576 matrices; local SHA-256 is
+  `c60ae98ebcbf7c835c0ca543491ea1b0c551b9477b626bdc43b548679f1e49b3`. Independent disjoint
+  eight-prompt fits `689115/689116` then completed in 38s/35s. Whole-matrix cosine rises from 0.949
+  at layer 5 to 0.999 at layer 28; top-16 right-subspace overlap spans 0.866--0.993. This establishes
+  a reproducible future-causal transport map, not a workspace. The next frozen 896-case readout gate
+  compares future-Jacobian against immediate-logit ranks at identical event/query positions, selects
+  only among layers 13/17/21/25, and requires >=1.25x language/full MRR plus >=10pp top-10 gain before
+  any separate causal swap.

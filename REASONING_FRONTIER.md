@@ -2141,6 +2141,16 @@ immediate-logit control; (3) coordinate swaps that redirect a downstream
 conclusion in both directions; (4) zero/shuffled/non-Jacobian controls; and (5)
 evidence that the same sparse directions support more than one operation.
 
+The readout selection rule is frozen before its H100 run. Two disjoint
+eight-document lens fits must have >=0.90 whole-matrix cosine at every fitted
+layer. On the existing 896-case operator board, operation/query kind is scored
+at the same line-ending residual under future-Jacobian and immediate-logit
+readout. Among layers 13/17/21/25, select the layer with the largest combined
+language/full MRR gain; it advances only if future MRR is >=1.25x immediate
+MRR and future top-10 accuracy improves by >=10 points. The separate eight-case
+manual board remains untouched for the bidirectional causal-swap test. This is
+a diagnostic selection rule, not a capability metric.
+
 If those gates and R4 binding both pass, the next architecture candidate is a
 **Sparse Jacobian Recurrent Workspace**: bind text to dynamic entity slots,
 write only a top-k future-verbalizable state into a recurrent workspace,
