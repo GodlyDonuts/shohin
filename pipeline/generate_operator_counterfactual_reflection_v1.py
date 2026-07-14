@@ -121,7 +121,7 @@ def response_for(state: dict, *, neutral: bool) -> str:
     )
 
 
-def row_for(episode: Episode, question: str, *, neutral: bool) -> dict:
+def row_for(episode: Episode, question: str, variant: int, *, neutral: bool) -> dict:
     state = counterfactual_state(episode)
     prompt = prompt_for(question, state, neutral=neutral)
     response = response_for(state, neutral=neutral)
@@ -132,7 +132,14 @@ def row_for(episode: Episode, question: str, *, neutral: bool) -> dict:
         "source": "operator_counterfactual_reflection_v1",
         "training_group": "operator_counterfactual_aux",
         "family": episode.family,
+        "variant": variant,
         "contract": CONTRACT_NEUTRAL if neutral else CONTRACT_REFLECTION,
+        "episode": {
+            "start": episode.start,
+            "operands": list(operands(episode)),
+            "operations": list(episode.operations),
+            "states": list(episode.states),
+        },
         "operations": list(episode.operations),
         "counterfactual": state,
         "neutral_states": neutral,
@@ -159,13 +166,13 @@ def build_rows(per_family: int, seed: int) -> tuple[list[dict], list[dict]]:
                 continue
             for variant in range(len(TRAIN_TEMPLATES[family])):
                 question = render_question(episode, TRAIN_TEMPLATES, variant)
-                reflected = row_for(episode, question, neutral=False)
+                reflected = row_for(episode, question, variant, neutral=False)
                 key = " ".join(reflected["completion_prompt"].lower().split())
                 if key in seen:
                     continue
                 seen.add(key)
                 reflection.append(reflected)
-                neutral.append(row_for(episode, question, neutral=True))
+                neutral.append(row_for(episode, question, variant, neutral=True))
             count += 1
     rng.shuffle(reflection)
     rng.shuffle(neutral)

@@ -22,13 +22,15 @@ def main() -> None:
     assert {row["contract"] for row in reflection} == {CONTRACT_REFLECTION}
     assert {row["contract"] for row in neutral} == {CONTRACT_NEUTRAL}
     reflection_by_episode = {
-        (row["family"], tuple(row["operations"]), tuple(sorted(row["counterfactual"].items()))): row
+        (row["family"], row["variant"], tuple(row["operations"]), tuple(sorted(row["counterfactual"].items()))): row
         for row in reflection
     }
     neutral_by_episode = {
-        (row["family"], tuple(row["operations"]), tuple(sorted(row["counterfactual"].items()))): row
+        (row["family"], row["variant"], tuple(row["operations"]), tuple(sorted(row["counterfactual"].items()))): row
         for row in neutral
     }
+    assert len(reflection_by_episode) == len(reflection)
+    assert len(neutral_by_episode) == len(neutral)
     assert reflection_by_episode.keys() == neutral_by_episode.keys()
     for key, reflected in reflection_by_episode.items():
         control = neutral_by_episode[key]
@@ -41,6 +43,8 @@ def main() -> None:
         assert f"counterfactual_after={'0' * STATE_WIDTH}" in baseline
         state = reflected["counterfactual"]
         assert state["state_before"] >= 0 and state["counterfactual_after"] >= 0
+        assert reflected["episode"] == control["episode"]
+        assert reflected["episode"]["states"][state["index"]] == state["state_before"]
     print("operator counterfactual reflection generator checks: passed")
 
 
