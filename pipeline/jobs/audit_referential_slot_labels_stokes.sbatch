@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -J shohin-slot-label-audit
-#SBATCH -p cpu
+#SBATCH -p normal
 #SBATCH -c 1
 #SBATCH --mem=12G
 #SBATCH -t 01:00:00
