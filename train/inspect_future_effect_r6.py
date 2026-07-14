@@ -47,7 +47,7 @@ def build_transcript(report, rows, count):
     )
     buckets = {name: [] for name in priorities}
     for record in report["records"]:
-        if record["regime"] not in {"language", "full"}:
+        if record["regime"] not in {"language_ood", "full_ood"}:
             continue
         buckets[category(record)].append(record)
     selected = []
@@ -80,7 +80,7 @@ def build_transcript(report, rows, count):
         "selected_cases": len(transcript),
         "available_categories": {
             name: sum(
-                record["regime"] in {"language", "full"} and category(record) == name
+                record["regime"] in {"language_ood", "full_ood"} and category(record) == name
                 for record in report["records"]
             )
             for name in priorities

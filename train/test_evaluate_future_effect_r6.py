@@ -16,9 +16,9 @@ def policy(cases, answers, exact, operations=896, operations_correct=0):
 
 def passing_report():
     regimes = {}
-    answers = {"all": 650, "fit": 230, "depth": 140, "language": 180, "full": 100}
-    exact = {"all": 570, "fit": 215, "depth": 120, "language": 160, "full": 90}
-    for regime, cases in (("all", 896), ("fit", 256), ("depth", 192), ("language", 256), ("full", 192)):
+    answers = {"all": 650, "fit_iid": 230, "depth_ood": 140, "language_ood": 180, "full_ood": 100}
+    exact = {"all": 570, "fit_iid": 215, "depth_ood": 120, "language_ood": 160, "full_ood": 90}
+    for regime, cases in (("all", 896), ("fit_iid", 256), ("depth_ood", 192), ("language_ood", 256), ("full_ood", 192)):
         operations = 896 if regime == "all" else max(cases * 2, 1)
         active_answers = answers[regime]
         active_exact = exact[regime]
@@ -51,7 +51,7 @@ def main():
     assert all(metrics["checks"].values())
 
     report = passing_report()
-    for regime in ("language", "full"):
+    for regime in ("language_ood", "full_ood"):
         report["summary"][regime]["policies"]["random"] = (
             report["summary"][regime]["policies"]["active"].copy()
         )
@@ -61,8 +61,8 @@ def main():
     assert "active_beats_random_operations_by_5pp" in reasons
 
     report = passing_report()
-    report["summary"]["language"]["heldout_probe_mse"] = 9.0
-    report["summary"]["full"]["heldout_probe_mse"] = 9.0
+    report["summary"]["language_ood"]["heldout_probe_mse"] = 9.0
+    report["summary"]["full_ood"]["heldout_probe_mse"] = 9.0
     reasons, _ = evaluate(report)
     assert "heldout_probe_mse_calibrated" in reasons
     print("R6 active-distinction development gate: passed")

@@ -60,7 +60,7 @@ def evaluate(report):
     if tuple(report.get("policies", ())) != POLICIES:
         reasons.append("wrong_policy_set_or_order")
     summary = report.get("summary", {})
-    for regime in ("all", "fit", "depth", "language", "full"):
+    for regime in ("all", "fit_iid", "depth_ood", "language_ood", "full_ood"):
         if regime not in summary:
             reasons.append("missing_regime_{}".format(regime))
     if reasons:
@@ -69,7 +69,7 @@ def evaluate(report):
     all_summary = summary["all"]
     if all_summary.get("cases") != 896:
         reasons.append("wrong_case_count")
-    fresh = combine_regimes(summary, ("language", "full"))
+    fresh = combine_regimes(summary, ("language_ood", "full_ood"))
     if fresh["cases"] != 448:
         reasons.append("wrong_fresh_case_count")
     metrics = {}
@@ -87,8 +87,8 @@ def evaluate(report):
         metrics["zero"]["exact_program_accuracy"],
         metrics["shuffled"]["exact_program_accuracy"],
     )
-    language = summary["language"]["policies"]["active"]
-    full = summary["full"]["policies"]["active"]
+    language = summary["language_ood"]["policies"]["active"]
+    full = summary["full_ood"]["policies"]["active"]
     query_accuracy = fraction(fresh["query_correct"], fresh["cases"])
     train_mse = float(fresh["train_probe_mse"])
     heldout_mse = float(fresh["heldout_probe_mse"])
@@ -101,10 +101,10 @@ def evaluate(report):
         "language_answer_accuracy": fraction(language["answers_correct"], language["cases"]),
         "full_answer_accuracy": fraction(full["answers_correct"], full["cases"]),
         "fit_answer_accuracy": fraction(
-            summary["fit"]["policies"]["active"]["answers_correct"], summary["fit"]["cases"],
+            summary["fit_iid"]["policies"]["active"]["answers_correct"], summary["fit_iid"]["cases"],
         ),
         "depth_answer_accuracy": fraction(
-            summary["depth"]["policies"]["active"]["answers_correct"], summary["depth"]["cases"],
+            summary["depth_ood"]["policies"]["active"]["answers_correct"], summary["depth_ood"]["cases"],
         ),
         "query_accuracy": query_accuracy,
         "train_probe_mse": train_mse,

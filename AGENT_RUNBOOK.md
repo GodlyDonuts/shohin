@@ -4220,3 +4220,11 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   >=95% query accuracy, and finite held-out MSE <= max(2x train MSE, 1.0). Unit fixtures prove a nominal
   pass, equal-active/random rejection, and held-out-calibration rejection. A pass authorizes only one
   untouched board; any failed conjunct closes this head before confirmatory generation.
+
+- **2026-07-14 18:18--18:27** — **Pre-score board/schema audits preserve the intended R6 gate.** The
+  admitted file has 896 rows named `fit_iid`, `depth_ood`, `language_ood`, and `full_ood`; the gate and
+  qualitative trace reader now enforce those exact names rather than shorthand. A label-only mechanics
+  audit using true effects and the evaluator's actual three-step top-64 scheduler establishes its fresh
+  ceiling at **382/448 answers (85.27%)** and **365/448 exact programs (81.47%)**. Thus the frozen 80%
+  oracle floors are attainable but nontrivial. This audit does not inspect learned adapter outputs and
+  does not change the active/random budgets or capability thresholds.

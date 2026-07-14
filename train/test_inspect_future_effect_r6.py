@@ -19,7 +19,7 @@ def record(index, active, random, zero=False, shuffled=False):
     return {
         "index": index,
         "reference": "case-{}".format(index),
-        "regime": "language",
+        "regime": "language_ood",
         "answer": 3,
         "query_prediction": 0,
         "query_correct": True,

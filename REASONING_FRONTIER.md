@@ -2412,6 +2412,13 @@ exact programs; >=95% query accuracy; and finite held-out-probe MSE no greater
 than max(2x train MSE, 1.0). Any failed conjunct closes this R6 head before a
 fresh board exists.
 
+An exact pre-score board audit also bounds the runtime scheduler itself. Using
+true event effects but the evaluator's actual three-step top-64 approximation,
+fresh language/full reaches 382/448 answers (85.27%) and 365/448 exact programs
+(81.47%). The frozen >=80% oracle floors are therefore attainable but close to
+the mechanism's current ceiling. This prevents a learned head from being judged
+against 100% while also preventing a weak compiler ceiling from excusing it.
+
 #### Conditional Context Extension: Distinction-Certified Context Folding
 
 If and only if the learned active policy clears its frozen active-over-random
