@@ -12,6 +12,7 @@ from referential_slot_microcode import (
     ReferentialSlotMicrocodeCompiler,
     attention_mass_loss,
     compile_referential_example,
+    constrain_operation_kind_logits,
 )
 
 
@@ -44,6 +45,7 @@ def main():
     )
     assert len(result["operations"]) == len(row["operations"])
     operation = result["operations"][0]
+    assert operation["slot_presence_scores"].shape == (2,)
     composed = pointer.compose_operation_logits(
         operation["kind_logits"].unsqueeze(0), operation["role_logits"].unsqueeze(0),
     )
@@ -79,6 +81,20 @@ def main():
         target, context, torch.nn.functional.normalize(slots.flip(0), dim=-1), "operation",
     )
     assert torch.allclose(logits.flip(0), swapped)
+
+    kind_logits = torch.tensor([0.0, 4.0, 5.0, 1.0, 2.0])
+    unary, unary_arity = constrain_operation_kind_logits(
+        kind_logits, torch.tensor([0.95, 0.20]), 0.80,
+    )
+    binary, binary_arity = constrain_operation_kind_logits(
+        kind_logits, torch.tensor([0.95, 0.92]), 0.80,
+    )
+    unchanged, absent_arity = constrain_operation_kind_logits(
+        kind_logits, torch.tensor([0.20, 0.10]), 0.80,
+    )
+    assert unary_arity == 1 and int(unary.argmax()) == 1
+    assert binary_arity == 2 and int(binary.argmax()) == 2
+    assert absent_arity == 0 and torch.equal(unchanged, kind_logits)
     print("referential slot microcode tests passed")
 
 

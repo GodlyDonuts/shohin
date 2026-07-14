@@ -31,6 +31,9 @@ from role_equivariant_microcode import (
 )
 
 
+OPERATION_ARITIES = (1, 1, 2, 2, 2)
+
+
 @dataclass(frozen=True)
 class ReferentialCompiledExample:
     compiled: CompiledExample
@@ -255,6 +258,7 @@ class ReferentialSlotMicrocodeCompiler(nn.Module):
         target_context, target_weights = self._pool(features, positions, target_scorer)
         index = torch.tensor(positions, dtype=torch.long, device=features.device)
         projected_identity = self.identity_projection(identity.index_select(0, index))
+        slot_similarity = F.normalize(projected_identity.float(), dim=-1) @ slots.transpose(0, 1)
         target_identity = (
             target_weights.to(projected_identity.dtype).unsqueeze(-1) * projected_identity
         ).sum(0)
@@ -264,6 +268,7 @@ class ReferentialSlotMicrocodeCompiler(nn.Module):
             "kind_context": kind_context,
             "kind_weights": kind_weights,
             "target_weights": target_weights,
+            "slot_presence_scores": slot_similarity.amax(dim=0),
             "positions": positions,
         }
 
@@ -297,3 +302,28 @@ class ReferentialSlotMicrocodeCompiler(nn.Module):
     def basis_loss(self):
         targets = transition_basis_targets(self.transition_logits.device)
         return F.cross_entropy(self.transition_logits.reshape(-1, 20), targets.reshape(-1))
+
+
+def constrain_operation_kind_logits(kind_logits, slot_presence_scores, threshold):
+    """Mask operation kinds by text-derived entity arity.
+
+    Slot presence is inferred only from projected token identities and the two
+    predicted introductory slots. If the threshold detects neither slot, the
+    original logits are retained instead of inventing an argument structure.
+    """
+    if kind_logits.shape != (len(OPERATION_KINDS),):
+        raise ValueError("kind_logits must contain one score per operation kind")
+    if slot_presence_scores.shape != (2,):
+        raise ValueError("slot_presence_scores must contain two entity scores")
+    threshold = float(threshold)
+    if not -1.0 <= threshold <= 1.0:
+        raise ValueError("arity threshold must be in [-1, 1]")
+    arity = int(slot_presence_scores.ge(threshold).sum().item())
+    if arity not in (1, 2):
+        return kind_logits, arity
+    allowed = torch.tensor(
+        [candidate == arity for candidate in OPERATION_ARITIES],
+        dtype=torch.bool,
+        device=kind_logits.device,
+    )
+    return kind_logits.masked_fill(~allowed, torch.finfo(kind_logits.dtype).min), arity

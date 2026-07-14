@@ -15,7 +15,12 @@ from tokenizers import Tokenizer
 from categorical_microcode import alu_basis_accuracy, execute_program, sha256_file
 from eval_categorical_microcode import locked_gates, summarize
 from model import GPT, GPTConfig
-from referential_slot_microcode import ReferentialSlotMicrocodeCompiler, compile_referential_example
+from referential_slot_microcode import (
+    OPERATION_ARITIES,
+    ReferentialSlotMicrocodeCompiler,
+    compile_referential_example,
+    constrain_operation_kind_logits,
+)
 from role_equivariant_microcode import IGNORE_ROLE, factor_operation, factor_query
 
 
@@ -128,6 +133,37 @@ def factor_diagnostics(records):
     return output
 
 
+def argument_graph_diagnostics(records, enabled):
+    """Score the text-derived graph independently of downstream opcode choice."""
+    output = {"enabled": bool(enabled)}
+    if not enabled:
+        return output
+    regimes = ["all"] + sorted({record["regime"] for record in records})
+    for regime in regimes:
+        selected = records if regime == "all" else [
+            record for record in records if record["regime"] == regime
+        ]
+        cells = [
+            (OPERATION_ARITIES[target_kind], predicted_arity, target_kind)
+            for record in selected
+            for target_kind, predicted_arity in zip(
+                record["operation_kind_targets"], record["argument_arity_predictions"],
+            )
+        ]
+        output[regime] = {
+            "operations": len(cells),
+            "arity_correct": sum(target == predicted for target, predicted, _ in cells),
+            "arity_accuracy": (
+                sum(target == predicted for target, predicted, _ in cells) / len(cells)
+                if cells else 0.0
+            ),
+            "unresolved_arity": sum(predicted not in (1, 2) for _, predicted, _ in cells),
+            "target_operation_kinds": sorted({kind for _, _, kind in cells}),
+            "target_query_kinds": sorted({record["query_kind_target"] for record in selected}),
+        }
+    return output
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base", required=True)
@@ -136,8 +172,10 @@ def main():
     parser.add_argument("--tokenizer", required=True)
     parser.add_argument("--admission", required=True)
     parser.add_argument("--label-admission", required=True)
+    parser.add_argument("--evaluation-label-admission")
     parser.add_argument("--out", required=True)
     parser.add_argument("--batch-size", type=int, default=16)
+    parser.add_argument("--argument-arity-threshold", type=float)
     args = parser.parse_args()
     if not torch.cuda.is_available():
         raise SystemExit("referential slot evaluation requires CUDA")
@@ -151,18 +189,26 @@ def main():
     if metadata.get("base_sha256") != sha256_file(args.base):
         raise SystemExit("adapter does not bind supplied base")
     admission = json.load(open(args.admission))
-    label_admission = json.load(open(args.label_admission))
+    adapter_label_admission = json.load(open(args.label_admission))
+    evaluation_label_path = args.evaluation_label_admission or args.label_admission
+    evaluation_label_admission = json.load(open(evaluation_label_path))
     data_sha256 = sha256_file(args.data)
     if not admission.get("all_checks_pass") or admission.get("eval_sha256") != data_sha256:
         raise SystemExit("structural admission does not bind evaluation data")
     if admission.get("train_sha256") != metadata.get("data_sha256"):
         raise SystemExit("structural admission does not bind adapter data")
-    if not label_admission.get("all_checks_pass"):
-        raise SystemExit("mention-label admission failed")
-    if label_admission["datasets"]["eval"].get("sha256") != data_sha256:
-        raise SystemExit("mention-label admission does not bind evaluation data")
+    if not adapter_label_admission.get("all_checks_pass"):
+        raise SystemExit("adapter mention-label admission failed")
+    if adapter_label_admission["datasets"]["train"].get("sha256") != metadata.get("data_sha256"):
+        raise SystemExit("adapter mention-label admission does not bind adapter data")
     if metadata.get("label_admission_sha256") != sha256_file(args.label_admission):
         raise SystemExit("adapter does not bind mention-label admission")
+    if not evaluation_label_admission.get("all_checks_pass"):
+        raise SystemExit("evaluation mention-label admission failed")
+    if evaluation_label_admission["datasets"]["train"].get("sha256") != metadata.get("data_sha256"):
+        raise SystemExit("evaluation mention-label admission does not bind adapter data")
+    if evaluation_label_admission["datasets"]["eval"].get("sha256") != data_sha256:
+        raise SystemExit("evaluation mention-label admission does not bind evaluation data")
     tokenizer = Tokenizer.from_file(args.tokenizer)
     base_checkpoint = torch.load(args.base, map_location="cpu")
     cfg = GPTConfig(**base_checkpoint["cfg"])
@@ -194,12 +240,24 @@ def main():
                     hidden[local], identity[local], example.intro_positions,
                     example.operation_spans, example.query_span,
                 )
-                op_kind = [int(item["kind_logits"].argmax().item()) for item in output["operations"]]
+                raw_op_kind = [int(item["kind_logits"].argmax().item()) for item in output["operations"]]
+                if args.argument_arity_threshold is None:
+                    constrained = [(item["kind_logits"], None) for item in output["operations"]]
+                else:
+                    constrained = [
+                        constrain_operation_kind_logits(
+                            item["kind_logits"], item["slot_presence_scores"],
+                            args.argument_arity_threshold,
+                        )
+                        for item in output["operations"]
+                    ]
+                op_kind = [int(logits.argmax().item()) for logits, _ in constrained]
                 op_role = [int(item["role_logits"].argmax().item()) for item in output["operations"]]
                 opcodes = [
                     int(compiler.compose_operation_logits(
-                        item["kind_logits"].unsqueeze(0), item["role_logits"].unsqueeze(0),
-                    ).argmax().item()) for item in output["operations"]
+                        kind_logits.unsqueeze(0), item["role_logits"].unsqueeze(0),
+                    ).argmax().item())
+                    for item, (kind_logits, _) in zip(output["operations"], constrained)
                 ]
                 query_kind = int(output["query"]["kind_logits"].argmax().item())
                 query_role = int(output["query"]["role_logits"].argmax().item())
@@ -210,7 +268,13 @@ def main():
                 predictions[index] = {
                     "operations": opcodes,
                     "operation_kind": op_kind,
+                    "raw_operation_kind": raw_op_kind,
                     "operation_role": op_role,
+                    "argument_arity": [arity for _, arity in constrained],
+                    "slot_presence_scores": [
+                        item["slot_presence_scores"].float().cpu().tolist()
+                        for item in output["operations"]
+                    ],
                     "query": query,
                     "query_kind": query_kind,
                     "query_role": query_role,
@@ -259,6 +323,9 @@ def main():
             "operation_total": len(example.operation_targets),
             "operation_kind_targets": op_kind_targets,
             "operation_kind_predictions": prediction["operation_kind"],
+            "raw_operation_kind_predictions": prediction["raw_operation_kind"],
+            "argument_arity_predictions": prediction["argument_arity"],
+            "slot_presence_scores": prediction["slot_presence_scores"],
             "operation_kind_correct": [
                 predicted == target for predicted, target in zip(prediction["operation_kind"], op_kind_targets)
             ],
@@ -309,8 +376,12 @@ def main():
 
     summary = summarize(records)
     gates = locked_gates(summary, basis_correct, basis_total)
+    argument_graph = args.argument_arity_threshold is not None
     result = {
-        "audit": "referential_slot_microcode_eval_v4",
+        "audit": (
+            "referential_argument_graph_eval_v5" if argument_graph
+            else "referential_slot_microcode_eval_v4"
+        ),
         "base": os.path.realpath(args.base),
         "base_sha256": sha256_file(args.base),
         "adapter": os.path.realpath(args.adapter),
@@ -322,17 +393,33 @@ def main():
         "admission_sha256": sha256_file(args.admission),
         "label_admission": os.path.realpath(args.label_admission),
         "label_admission_sha256": sha256_file(args.label_admission),
+        "evaluation_label_admission": os.path.realpath(evaluation_label_path),
+        "evaluation_label_admission_sha256": sha256_file(evaluation_label_path),
         "cases": len(examples),
         "batches": len(batches),
         "alu_basis": {"correct": basis_correct, "total": basis_total},
         "summary": summary,
         "factor_diagnostics": factor_diagnostics(records),
+        "argument_graph_diagnostics": argument_graph_diagnostics(records, argument_graph),
         "gates": gates,
         "advance_to_decoder_bridge": all(gates.values()),
+        "argument_graph": {
+            "enabled": argument_graph,
+            "threshold": args.argument_arity_threshold,
+            "changed_operation_kinds": sum(
+                sum(raw != constrained for raw, constrained in zip(
+                    record["raw_operation_kind_predictions"],
+                    record["operation_kind_predictions"],
+                )) for record in records
+            ),
+            "inference_inputs": (
+                "projected token identities, predicted introductory slots, and structural line spans"
+            ),
+        },
         "records": records,
         "claim_boundary": (
-            "A pass establishes narrow text-only dynamic entity binding, categorical compilation, "
-            "and exact supplied execution; it is not broad autonomous reasoning."
+            "A pass establishes narrow text-only dynamic entity/argument binding, categorical "
+            "compilation, and exact supplied execution; it is not broad autonomous reasoning."
         ),
     }
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)

@@ -2244,3 +2244,35 @@ all original absolute compiler gates, a matched gain on the fresh split,
 counterfactual operator necessity, associative chunk invariance, and a fresh
 manual board. Passing those would establish a compact causal program state,
 not broad language reasoning.
+
+The first text-only argument-graph implementation is now frozen. For each event
+line, it compares every projected token identity with the two dynamically
+predicted introductory slots. A threshold of **0.80**, fixed before fresh
+scoring, infers one versus two participating entities and masks operation kinds
+with incompatible arity. Structured keys remain supervision/audit labels only;
+inference receives token states and formatting-derived line spans. On the old
+development board this changes the unchanged R4 pointer adapter to 252/256 fit,
+173/192 depth, 226/256 language, 146/192 full, and 773/896 exact programs. That
+is a strong engineering signal but not confirmatory evidence because R4's error
+analysis selected the intervention.
+
+The confirmatory contract was therefore committed before reading a fresh score.
+The new board retains the 448 fit/depth preservation controls and replaces all
+448 language/full cases with new greenhouse, depot, laboratory, and library
+domains, three unseen surface forms per operation, new introductions, and new
+queries. It must have zero exact or 13-gram overlap with both R4 training and
+development. The same pointer adapter is evaluated twice, once raw and once
+with the frozen argument graph. Advancement requires all original absolute
+gates, >=70% fresh language answers, >=55% fresh long-composition answers,
+>=15 percentage points fresh answer gain, >=10 points fresh exact-program gain,
+>=95% fresh arity accuracy, complete five-operation/three-query coverage, and
+no more than 10 points fit/depth regression. These are intentionally difficult:
+a failure closes this parser intervention instead of inviting threshold tuning.
+
+Even a pass authorizes only the next matched mechanism test. That test will
+replace arbitrary event-label prediction with **future-effect identification**:
+two text encoders must be compared under equal parameter/update/data budgets,
+one emitting ordinary class/vector state and one emitting an operator selected
+by its effects across counterfactual initial states and future queries. The
+operator arm must additionally pass zero/shuffle necessity, argument-edit
+specificity, associative chunk composition, and source-dropping transport.
