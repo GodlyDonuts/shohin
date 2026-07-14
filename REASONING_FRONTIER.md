@@ -2398,3 +2398,31 @@ and hash-matches Newton/local at SHA-256
 `b27805f489cd39069c5d3b919d113d38d2441b27f63ac70ba4d4c0187724a929`.
 This certifies mechanics only; a longer development fit must show that effect
 loss and gradient norms settle before any fresh-board generation.
+
+#### Conditional Context Extension: Distinction-Certified Context Folding
+
+If and only if the learned active policy clears its frozen active-over-random
+and causal-control gates, the same mechanism has a non-token context extension.
+An event may leave context only when its selected counterfactual observations
+reduce the lawful hypothesis set to one operator and a separately predicted,
+previously unused probe agrees with that operator. The accepted event operator
+then composes into a fixed 3x3 chronological state. Ambiguous or independently
+inconsistent events retain their source instead of being silently compressed.
+
+The exact CPU reference in `train/counterfactual_context_folding.py` admits all
+597 oracle event certificates using at most three selected probes plus one
+independent validation probe. It folds 4,096 chronological events, discards all
+event sources, and retains the same nine-scalar operator and answers as direct
+execution. Independently folded chunks merge associatively. Empty evidence is
+rejected as ambiguous and a corrupted validation effect is rejected before
+folding.
+
+This is a proof-carrying algebra contract, not a learned context result. It is
+intentionally stronger than retaining an opaque latent or model-authored text
+ledger: source deletion is conditional on a falsifiable future-effect witness.
+The neural mechanism may advance only after the R6 head demonstrates calibrated
+held-out-probe certificates. A context-scaling claim would additionally require
+source-dropped length transfer beyond the native window, injected-certificate
+corruption that causes retention or reopening, equal-model raw-context controls,
+and measured retained-state, prefill, and accuracy curves. Until then the
+nine-scalar result is an oracle upper bound.

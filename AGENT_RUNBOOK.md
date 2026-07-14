@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 18:02 EDT (the protected two-H100 pretrain remains healthy and isolated. R5 is closed. R6 full old-substrate development fit 689190 is healthy on isolated evc25; frozen development evaluator 689196 is dependency-held after successful fit completion. No fresh confirmatory board or capability claim exists.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 18:10 EDT (the protected two-H100 pretrain remains healthy and isolated. R5 is closed. R6 full old-substrate development fit 689190 is healthy on isolated evc25; frozen development evaluator 689196 is dependency-held. Exact distinction-certified context folding passes CPU mechanics only. No fresh confirmatory board or capability claim exists.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4199,3 +4199,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   active and random arms call the byte-identical scalar effect head exactly three times per operation;
   zero/shuffled are causal controls and oracle is only an upper bound. The output is development-only
   `artifacts/eval_history/future_effect_r6_200k_dev1.json`; no R6 confirmatory generator or board exists.
+
+- **2026-07-14 18:02--18:10** — **A conditional R6 context mechanism now has an exact CPU contract,
+  without authorizing neural context claims.** `counterfactual_context_folding.py` permits source
+  deletion only after selected counterfactual observations leave one lawful operator and an unused
+  independent probe validates it. All 597 oracle event certificates pass with at most three selected
+  probes plus validation; empty evidence and a corrupted validation effect are rejected. A 4,096-event
+  chronological sequence folds exactly into one nine-scalar 3x3 state, retains direct-execution answers,
+  and matches associative merging of independently folded chunks. This is an oracle algebra upper bound.
+  Neural advancement requires calibrated held-out-probe certificates after active beats random; any later
+  context claim also requires beyond-window source-drop transfer, corruption-triggered retention/reopening,
+  equal-model raw-context controls, and measured retained-state/prefill/accuracy curves.
