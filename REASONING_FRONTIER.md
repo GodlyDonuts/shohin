@@ -1879,3 +1879,30 @@ geometry for a small head to learn an equivalence quotient. Merely adding the
 held-out templates would be leakage and is forbidden. A matched classification
 arm without the equivalence loss is required before attributing any gain to
 the new constraint.
+
+### R2 Locked Protocol
+
+R2 begins from 48,000 immutable structured programs and renders two views of
+each. The views use different operation and query paraphrase families and
+different entity labels, while retaining identical register-relative opcodes,
+numeric operands, initial register values, query opcode, and answer. Sixteen
+training-only domain vocabularies rotate through both views, preventing view
+identity from being inferred from labels. The exact held-out event/query
+phrases and all held-out domain labels remain excluded.
+
+The two H100 arms must match base, data, admission report, seed, layer, hidden
+width, pair order, batch size, pair count, schedule, and initial-adapter hash:
+
+- diverse-pair control: classification plus the same 400-cell ALU basis loss,
+  equivalence weight 0;
+- semantic-equivalence candidate: identical objectives plus symmetric KL
+  between corresponding event and query distributions, weight 0.2.
+
+Both arms retain the r1 absolute gates. Attribution to semantic equivalence
+additionally requires at least five percentage points over the control on
+combined language/full answer accuracy and all-case exact-program accuracy,
+while fit-IID and depth-OOD answer accuracy may regress by at most three
+points. If only the control passes, the result supports language-diverse
+compiler supervision but rejects the equivalence-loss claim. If neither
+passes, CMB remains a same-language symbolic executor and no decoder bridge is
+allowed.

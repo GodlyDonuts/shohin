@@ -124,7 +124,10 @@ def main():
 
     adapter_checkpoint = torch.load(args.adapter, map_location="cpu")
     metadata = adapter_checkpoint.get("categorical_microcode", {})
-    if metadata.get("protocol") != "causal_microcode_bottleneck_v1":
+    if metadata.get("protocol") not in {
+        "causal_microcode_bottleneck_v1",
+        "causal_microcode_bottleneck_equivalence_v2",
+    }:
         raise SystemExit("invalid microcode adapter metadata")
     if metadata.get("base_sha256") != sha256_file(args.base):
         raise SystemExit("adapter does not bind supplied base")
