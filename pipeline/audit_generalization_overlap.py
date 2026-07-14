@@ -82,6 +82,10 @@ def main():
     parser.add_argument("--cases-json", default="")
     parser.add_argument("--out", required=True)
     parser.add_argument("--ngram", type=int, default=13)
+    parser.add_argument(
+        "--case-regimes", nargs="*", default=[],
+        help="optional case['regime'] values to audit; useful for factorized held-out suites",
+    )
     args = parser.parse_args()
     if args.ngram <= 0:
         raise ValueError("ngram must be positive")
@@ -94,6 +98,11 @@ def main():
     else:
         cases = load_cases(args.case_source)
         case_source = args.case_source
+    regimes = sorted(set(args.case_regimes))
+    if regimes:
+        cases = [case for case in cases if str(case.get("regime", "")) in regimes]
+        if not cases:
+            raise ValueError("no cases matched --case-regimes")
     exact = {normalized(case["question"]): str(case["id"]) for case in cases}
     case_grams = {}
     for case in cases:
@@ -135,6 +144,7 @@ def main():
         "case_source": str(Path(case_source)),
         "case_source_sha256": sha256(case_source),
         "cases": len(cases),
+        "case_regimes": regimes,
         "ngram": args.ngram,
         "valid_rows": rows,
         "malformed_rows": malformed,
