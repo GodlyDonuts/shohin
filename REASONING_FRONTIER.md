@@ -355,10 +355,38 @@ v1 corpus is also admitted on shared Stokes/Newton storage: 30,000 train rows
 (SHA-256 `bac1e8d041abbfefa892056302a8d78c14abd0d31dd1694e9bc92aefac2fe03c`)
 and 2,000 held-out rows (`1d8b633713fff41b331e7c2728e9c0aa3ae307a7b99622c526d99d6dc84120f2`),
 with zero duplicate prompts and zero exact or word-13-gram cross-split hits.
-It has **no checkpoint, H100 run, or result** yet. The PSA comparison remains
-useful as an inexpensive test of whether a standard representation objective
-already solves the problem; NRR is the separate, more ambitious
-causal-bottleneck route if it does not.
+The 12-update H100 launch canary is complete: it exercised real gradients and
+serialization from immutable raw-200k weights, then the read-only evaluator
+completed its 24-row control path. Its zero score is intentionally
+non-interpretable because all 12 updates were in warmup. Two full, isolated,
+one-epoch layer arms now test `L=13` and `L=19` with the same corpus, batch
+size, initialization, and 500-row dependency-held evaluation. The evaluator
+also records a full-source diagnostic bypass, which is never a positive gate:
+if that bypass fails too, the model did not learn the synthetic computation;
+if it succeeds while the relay fails, the causal bottleneck is the failure.
+
+### Conditional Extension: Native Relay Recurrence
+
+A one-step relay is only a compression test. The actual context-scaling
+hypothesis is to reuse the transformer tail as a recurrent state transition
+without adding an RNN, memory slots, a controller, or a serialization channel:
+
+`h_0 = Encode_L(source)`
+
+`h_(t+1) = Tail_(L+1..N)([h_t, event_t])[-1]`
+
+`answer = Tail_(L+1..N)([h_T, query])`
+
+The recurrent state is always a native residual and every transition uses the
+same frozen architecture and the same source-free hard cut. This would give
+fixed-size latent context whose compute grows with events while represented
+context does not. It is **not yet implemented or claimed**. It is admitted
+only if a one-step NRR arm shows a substantial held-out strict-causal signal,
+with zero/shuffle controls low and no evidence that the full-source diagnostic
+is carrying the result. The recurrent corpus must then use random trajectory
+prefixes, counterfactual event substitutions, source/paraphrase interchange,
+and length-OOD continuations; a template score alone would immediately reject
+the idea.
 
 ### Conditional Next Hypothesis: Counterfactual Reflection Route
 

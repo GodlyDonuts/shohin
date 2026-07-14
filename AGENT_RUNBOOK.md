@@ -3160,3 +3160,19 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Both attraction modes drove their own training cosine to about 0.9998, proving the loss can collapse
   geometry without creating a usable state. Do not run values/delta or contrastive PSA; advance only the
   separately designed Native Residual Relay hard-bottleneck candidate.
+
+- **2026-07-14 02:43** — **NRR H100 canary passed infrastructure and control-path gates; full depth sweep is
+  running.** The no-parameter trainer/evaluator were static-tested, then shared Stokes/Newton artifacts were
+  re-hashed to the admitted train/held-out SHA-256 values. A CPU token-shape audit found **60,000** fitting
+  source/paraphrase examples, **81** exact-shape buckets, **7,465** full `BS=8` batches, and only **280**
+  shape-tail drops. H100 canary `688529` on evc34 ran **12** complete batches from immutable raw-200k in 4s,
+  with finite initial loss/gradient/relay norm and wrote only
+  `train/nrr_canary_200k_r1/nrr_ep1.pt` (md5 `06a5005489d0609cac2cc7b546fcb17d`). Its dependency-free
+  24-row evaluator `688530` completed all normal/paraphrase/counterfactual/zero/shuffle paths and returned
+  `0/24`; because those 12 steps are entirely warmup, that is a hardware/evaluator result, **not** a capability
+  verdict. Full one-epoch arms `688533` (`L=13`) and `688534` (`L=19`) are independently running from the
+  same immutable source with 7,465 updates each; held-out 500-row causal evaluations `688535` and `688536`
+  are `afterok`-held. They use separate `train/nrr_*` outputs and cannot touch the flagship. The evaluator now
+  additionally records a full-source bypass only to distinguish failure to learn from failure of the hard
+  relay; it cannot contribute to a positive causal score. A recurrent native-relay extension remains
+  conditional on a material one-step causal success.
