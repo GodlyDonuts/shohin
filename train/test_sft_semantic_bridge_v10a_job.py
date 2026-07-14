@@ -12,6 +12,7 @@ for required in (
     "semantic_bridge_v1_train.packing.r1.json",
     "semantic_bridge_v1_train.response_contracts.r1.json",
     "best_step200000.pt",
+    "evc45",
     "[ ! -e \"$OUT\" ]",
     "timeout --kill-after=10s 90s",
     "--epochs \"$EPOCHS\"",

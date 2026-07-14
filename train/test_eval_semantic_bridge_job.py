@@ -8,6 +8,7 @@ JOB = ROOT / "train" / "jobs" / "eval_semantic_bridge.sbatch"
 text = JOB.read_text()
 for required in (
     "--gres=gpu:nvidia_h100_pcie:1",
+    "evc45",
     "timeout --kill-after=10s 90s",
     "torch.empty(1, device=\"cuda\", dtype=torch.bfloat16)",
     "PER_FAMILY=${PER_FAMILY:-100}",

@@ -4,7 +4,7 @@
 #SBATCH -J shohin-sft-v10a-bridge
 #SBATCH -p normal
 #SBATCH --gres=gpu:nvidia_h100_pcie:1
-#SBATCH --exclude=evc22,evc23,evc26,evc31,evc32,evc36,evc43,evc44,evc49,evc50
+#SBATCH --exclude=evc22,evc23,evc26,evc31,evc32,evc36,evc43,evc44,evc45,evc49,evc50
 #SBATCH -c 4
 #SBATCH --mem=96G
 #SBATCH -t 02:00:00
