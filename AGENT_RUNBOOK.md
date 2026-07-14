@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 11:41 EDT (the protected two-H100 pretrain remains healthy and isolated; FQRB and full-strength COTA are closed negative. The retained direct-skill SFT has a real but narrow visible-trace signal. The direct-only, broad-anchored operator SFT has passed CUDA/compile/startup health and is fitting from an immutable retained checkpoint; its entire post-fit evidence chain remains dependency-held and pre-registered.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 11:46 EDT (the protected two-H100 pretrain remains healthy and isolated; FQRB and full-strength COTA are closed negative. The retained direct-skill SFT has a real but narrow visible-trace signal. The direct-only, broad-anchored operator SFT is fitting from an immutable retained checkpoint with all behavioral gates held. A numeric counterfactual-reflection versus neutral-control branch is staged in code only and remains conditional on a positive direct-only result.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
