@@ -77,6 +77,7 @@ def main():
     parser.add_argument("--data", required=True)
     parser.add_argument("--tokenizer", required=True)
     parser.add_argument("--out", required=True)
+    parser.add_argument("--split", default="heldout")
     parser.add_argument("--max-examples", type=int, default=500)
     parser.add_argument("--max-new", type=int, default=12)
     args = parser.parse_args()
@@ -93,7 +94,7 @@ def main():
     if eos_id is None:
         raise SystemExit("tokenizer EOS missing")
     rows = [json.loads(line) for line in open(args.data) if line.strip()]
-    rows = [row for row in rows if row.get("schema") == "native_residual_relay_v1" and row.get("split") == "heldout"][:args.max_examples]
+    rows = [row for row in rows if row.get("schema") == "native_residual_relay_v1" and row.get("split") == args.split][:args.max_examples]
     if not rows:
         raise SystemExit("no held-out NRR rows")
     results, relays = [], []
@@ -117,7 +118,7 @@ def main():
         score_result(result)
     summary = {key: sum(bool(row[key]) for row in results) for key in ("direct_correct", "normal_correct", "paraphrase_correct", "counterfactual_correct", "zero_recreates_normal", "shuffle_recreates_normal", "strict_causal")}
     report = {"audit": "native_residual_relay_v1", "checkpoint": args.ckpt, "step": checkpoint.get("step"),
-              "checkpoint_metadata": metadata, "data": args.data, "data_sha256": sha256_file(args.data),
+              "checkpoint_metadata": metadata, "data": args.data, "data_sha256": sha256_file(args.data), "split": args.split,
               "rows": len(results), "summary": summary, "mean_same_relay_cosine": sum(row["same_cosine"] for row in results) / len(results),
               "results": results, "claim_boundary": "A strict pass only establishes source-free relay use on this synthetic counterfactual suite."}
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)

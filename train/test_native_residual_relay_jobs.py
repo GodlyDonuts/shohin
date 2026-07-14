@@ -27,6 +27,8 @@ def main():
         "eval_native_residual_relay.py",
         "OUT must be an NRR eval-history JSON",
         "torch.empty(1, device='cuda', dtype=torch.bfloat16)",
+        "SPLIT=${SPLIT:-heldout}",
+        "--split \"$SPLIT\"",
     ):
         assert required in evaluate, required
     assert "flagship.sbatch" not in train + evaluate

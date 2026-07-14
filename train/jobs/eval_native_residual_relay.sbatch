@@ -20,6 +20,7 @@ DATA_SHA=1d8b633713fff41b331e7c2728e9c0aa3ae307a7b99622c526d99d6dc84120f2
 OUT=${OUT:?set OUT to a fresh artifacts/eval_history/nrr_*.json path}
 ROWS=${ROWS:-500}
 MAX_NEW=${MAX_NEW:-12}
+SPLIT=${SPLIT:-heldout}
 export OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=4
 export RAYON_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false
 
@@ -41,9 +42,9 @@ then
   echo "[nrr-eval] CUDA unavailable or timed out after allocation" >&2
   exit 75
 fi
-echo "[nrr-eval] ckpt=$CKPT data=$DATA rows=$ROWS out=$OUT"
+echo "[nrr-eval] ckpt=$CKPT data=$DATA split=$SPLIT rows=$ROWS out=$OUT"
 "$PY" eval_native_residual_relay.py \
   --ckpt "$CKPT" --data "$DATA" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
-  --out "$OUT" --max-examples "$ROWS" --max-new "$MAX_NEW"
+  --out "$OUT" --split "$SPLIT" --max-examples "$ROWS" --max-new "$MAX_NEW"
 test -s "$OUT"
 echo "[nrr-eval] wrote $OUT"
