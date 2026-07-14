@@ -561,14 +561,15 @@ The multi-consumer condition matters. A tape that answers `parity` but cannot
 also answer `ones` and `relation` has not established a reusable number state;
 it has learned a query-specific classifier.
 
-The frozen train split will cover every local decimal digit and carry/borrow
-context across two-digit signed values. The first held-out split must use unseen
-full source tuples but no unseen answer classes; its language factor changes
-only source wording, and its magnitude factor moves to three-digit values while
-retaining the same finite output alphabet. Exact three-source bundles, latent
-world transitions, and held-out prompt n-grams must remain absent. Evaluation
+The admitted train split uses signed two-digit source fields and a fixed finite
+answer alphabet. Its first held-out split uses unseen full source bundles and
+unseen source wording but no unseen answer classes. Exact three-source bundles
+and held-out prompt n-grams must remain absent. A later dedicated magnitude
+factor, rather than the first combined score, will move source fields to
+three-digit values while retaining the same finite output alphabet. Evaluation
 will re-use each encoded source triple for all five suffix consumers, then test
-normal, paraphrase, counterfactual, zero, shuffled, and wrong-query controls.
+normal, paraphrase, counterfactual, zero, whole-group shuffled, and wrong-query
+controls.
 
 Before a full arm is submitted, CPU generation and a separate audit must prove
 the coverage and split claims. A future one-epoch isolated arm can advance only

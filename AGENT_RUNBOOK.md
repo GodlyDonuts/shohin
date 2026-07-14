@@ -3391,3 +3391,22 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   already generalized relatively well; it was canceled after 3m42s with **no checkpoint**, along with its
   never-started children `688610`, `688616`, `688622`, and `688626`–`688631`. Treat them as canceled
   setup, not negative results. CRA is closed as a direct-numeric residual-algebra route.
+
+- **2026-07-14 05:49** — **Finite-Query Residual Basis (FQRB) data is admitted, but no FQRB model
+  result exists yet.** The new solver-derived corpus keeps the exact source-free native composition
+  `donor + edited - base`, but one identical source triple is consumed through five independently
+  supervised suffixes: `ones`, `tens`, `sign`, `parity`, and `relation`. This makes an edit-insensitive
+  answer template insufficient: a group can pass only if the same composed tape supports all five
+  finite readouts. CPU-only Stokes generation produced a frozen **60,000-row / 12,000-group** training
+  file `artifacts/sft/finite_query_residual_basis_v1_train.jsonl` (SHA-256
+  `6d42ce87a202f293b64708e8bbca2193fb90f3cb60c232f6c968b0edaa46f113`) and a **2,500-row /
+  500-group** held-out file `artifacts/evals/finite_query_residual_basis_v1_heldout.jsonl` (SHA-256
+  `832da1a5264dbd0ec9ccf5b8515276794d545531da5f3dbdacdf4c239452ef97`). Its audit
+  `artifacts/evals/finite_query_residual_basis_v1_audit.json` (SHA-256
+  `7e4f928b7deca799a15c58a18ad81bef21c503373f874cc69c59279f5423dde4`) reports zero duplicate
+  prompts, zero exact train/held-out prompt and 13-gram hits, zero full source-bundle overlap, and exact
+  five-row group cardinality throughout. The 13 answer labels are fully present in train and held-out
+  normal/counterfactual targets. `train/eval_finite_query_residual_basis.py` scores a whole group only
+  when all five consumers survive normal, paraphrase, counterfactual, zero, whole-group shuffle, and
+  wrong-query controls. The forthcoming FQRB arm is isolated from the flagship and can establish only a
+  bounded causal numeric basis, never general reasoning by itself.

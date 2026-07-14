@@ -1,0 +1,52 @@
+{
+  "answer_labels": [
+    "answer=even",
+    "answer=negative",
+    "answer=odd",
+    "answer=ones_nine",
+    "answer=ones_one",
+    "answer=ones_zero",
+    "answer=positive",
+    "answer=relation_equal",
+    "answer=relation_greater",
+    "answer=relation_less",
+    "answer=tens_one",
+    "answer=tens_zero",
+    "answer=zero"
+  ],
+  "audit": "counterfactual_residual_algebra_v1",
+  "bad_heldout_group_cardinality": 0,
+  "bad_train_group_cardinality": 0,
+  "claim_boundary": "CPU-only FQRB data admission; no model or reasoning result is created.",
+  "combined_heldout_axes": [
+    "source_tuple",
+    "language"
+  ],
+  "duplicate_heldout_prompts": 0,
+  "duplicate_train_prompts": 0,
+  "heldout_groups": 500,
+  "heldout_rows": 2500,
+  "heldout_sha256": "832da1a5264dbd0ec9ccf5b8515276794d545531da5f3dbdacdf4c239452ef97",
+  "heldout_source_value_range": [
+    -99,
+    99
+  ],
+  "mechanism": "finite_query_residual_basis_v1",
+  "normal_source_value_range": [
+    -99,
+    99
+  ],
+  "query_kinds": [
+    "ones",
+    "tens",
+    "sign",
+    "parity",
+    "relation"
+  ],
+  "train_groups": 12000,
+  "train_heldout_13gram_hits": 0,
+  "train_heldout_exact_prompt_hits": 0,
+  "train_heldout_exact_source_bundle_hits": 0,
+  "train_rows": 60000,
+  "train_sha256": "6d42ce87a202f293b64708e8bbca2193fb90f3cb60c232f6c968b0edaa46f113"
+}

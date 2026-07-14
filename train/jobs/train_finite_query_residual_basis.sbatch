@@ -1,0 +1,88 @@
+#!/bin/bash
+# Isolated FQRB training. Source worlds influence suffix answers only through
+# donor + edited - base native residual tapes; flagship paths are never writable.
+#SBATCH -J shohin-fqrb-train
+#SBATCH -p normal
+#SBATCH --gres=gpu:nvidia_h100_pcie:1
+#SBATCH --exclude=evc22,evc23,evc26,evc31,evc32,evc36,evc43,evc44,evc45,evc49,evc50
+#SBATCH -c 4
+#SBATCH --mem=80G
+#SBATCH -t 05:00:00
+#SBATCH -o /lustre/fs1/home/sa305415/shohin/logs/fqrb_train_%j.out
+#SBATCH --open-mode=append
+set -euo pipefail
+
+BASE=/lustre/fs1/home/sa305415/shohin
+PY=$BASE/miniforge3/bin/python
+INIT=${INIT:-$BASE/train/flagship_out/best_step200000.pt}
+DATA=${DATA:-$BASE/artifacts/sft/finite_query_residual_basis_v1_train.jsonl}
+DATA_SHA=6d42ce87a202f293b64708e8bbca2193fb90f3cb60c232f6c968b0edaa46f113
+AUDIT=${AUDIT:-$BASE/artifacts/evals/finite_query_residual_basis_v1_audit.json}
+OUT=${OUT:?set OUT to a fresh isolated train/fqrb_* output directory}
+LAYER=${LAYER:-19}
+TAPE_LEN=${TAPE_LEN:-0}
+EPOCHS=${EPOCHS:-1}
+BS=${BS:-4}
+MAX_EXAMPLES=${MAX_EXAMPLES:-0}
+MAX_BATCHES=${MAX_BATCHES:-0}
+export OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=4
+export RAYON_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false
+
+[ -f "$INIT" ] || { echo "[fqrb-train] init checkpoint missing" >&2; exit 2; }
+[ -s "$DATA" ] || { echo "[fqrb-train] data missing" >&2; exit 3; }
+[ -s "$AUDIT" ] || { echo "[fqrb-train] audit missing" >&2; exit 4; }
+[ ! -e "$OUT" ] || { echo "[fqrb-train] refusing existing output" >&2; exit 5; }
+case "$OUT" in "$BASE"/train/fqrb_*) ;; *) echo "[fqrb-train] OUT must remain an isolated train/fqrb_* directory" >&2; exit 6;; esac
+[ "$(sha256sum "$DATA" | awk '{print $1}')" = "$DATA_SHA" ] || { echo "[fqrb-train] data hash mismatch" >&2; exit 7; }
+
+"$PY" - "$DATA" "$AUDIT" <<'PY'
+import hashlib
+import json
+import sys
+
+data_path, audit_path = sys.argv[1:]
+digest = hashlib.sha256(open(data_path, 'rb').read()).hexdigest()
+audit = json.load(open(audit_path))
+required_zero = (
+    'duplicate_train_prompts', 'duplicate_heldout_prompts', 'train_heldout_exact_prompt_hits',
+    'train_heldout_13gram_hits', 'train_heldout_exact_source_bundle_hits',
+    'bad_train_group_cardinality', 'bad_heldout_group_cardinality',
+)
+expected_queries = ['ones', 'tens', 'sign', 'parity', 'relation']
+expected_answers = {
+    'answer=even', 'answer=negative', 'answer=odd', 'answer=ones_nine', 'answer=ones_one',
+    'answer=ones_zero', 'answer=positive', 'answer=relation_equal', 'answer=relation_greater',
+    'answer=relation_less', 'answer=tens_one', 'answer=tens_zero', 'answer=zero',
+}
+if audit.get('audit') != 'counterfactual_residual_algebra_v1' or audit.get('mechanism') != 'finite_query_residual_basis_v1':
+    raise SystemExit('[fqrb-train] audit mechanism mismatch')
+if audit.get('train_sha256') != digest or audit.get('train_rows') != 60000 or audit.get('heldout_rows') != 2500:
+    raise SystemExit('[fqrb-train] audit does not bind the frozen FQRB corpus')
+if audit.get('query_kinds') != expected_queries or set(audit.get('answer_labels', ())) != expected_answers:
+    raise SystemExit('[fqrb-train] FQRB finite-consumer contract mismatch')
+if any(audit.get(field) for field in required_zero):
+    raise SystemExit('[fqrb-train] FQRB overlap/group admission gate failed')
+print('[fqrb-train] hash-bound FQRB admission passed')
+PY
+
+cd "$BASE/train"
+if ! timeout --kill-after=10s 90s "$PY" - <<'PY'
+import torch
+if not torch.cuda.is_available():
+    raise SystemExit(75)
+torch.empty(1, device='cuda', dtype=torch.bfloat16)
+PY
+then
+  echo "[fqrb-train] CUDA unavailable or timed out after allocation" >&2
+  exit 75
+fi
+ARGS=()
+if [ "$TAPE_LEN" -gt 0 ]; then ARGS+=(--tape-len "$TAPE_LEN"); fi
+if [ "$MAX_EXAMPLES" -gt 0 ]; then ARGS+=(--max-examples "$MAX_EXAMPLES"); fi
+if [ "$MAX_BATCHES" -gt 0 ]; then ARGS+=(--max-batches "$MAX_BATCHES"); fi
+echo "[fqrb-train] init=$INIT data=$DATA layer=$LAYER tape_len=${TAPE_LEN:-auto} out=$OUT epochs=$EPOCHS batch=$BS max_batches=$MAX_BATCHES"
+"$PY" train_counterfactual_residual_algebra.py \
+  --init "$INIT" --data "$DATA" --audit "$AUDIT" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
+  --out "$OUT" --layer "$LAYER" --epochs "$EPOCHS" --batch-size "$BS" "${ARGS[@]}"
+test -s "$OUT/cra_ep1.pt"
+echo "[fqrb-train] wrote $OUT/cra_ep1.pt"
