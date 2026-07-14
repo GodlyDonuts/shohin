@@ -2847,3 +2847,10 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `best_step200000.pt` to a fresh `train/sft_v10a_bridge_200k_r2`. The full bridge, composition, and direct
   interaction children `687728`-`687730` remain dependency-held. This establishes usable diagnostic GPU
   allocation only; it is not a V10A capability score or a reason to unblock capsule/CWI work.
+
+- **2026-07-13 20:10** — **V10A r2 on-node data binding passed before training.** `687727` loaded immutable
+  raw `best_step200000.pt` at step 200,000 (125.1M parameters) only after recomputing the frozen bridge
+  data SHA-256 `c219cb0a18cc82a2f634d8d1e5d0ad4e9e45233281b3c82d24d19a834aa00907`, all admission reports,
+  and the response contract. It reports exactly 200,000 examples, 17,270,366 source tokens, 10,962,976
+  answer tokens (63% of supervised tokens), and 8,432 2,048-token packs, all in the sole
+  `semantic_bridge` group. This is confirmed input provenance, not a loss/score/capability result.
