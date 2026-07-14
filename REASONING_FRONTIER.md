@@ -797,6 +797,42 @@ codebook, and semantic 13-gram train/held-out overlap before it writes data.
 admission and split-audit conditions. This is reproducible curriculum
 groundwork, not evidence for CRCS or a claim that the model can reason.
 
+### Conditional Direct-Transfer Test: Counterfactual Workspace Reflection (CWR)
+
+The raw 200k transcript audit shows that Shohin has neither a dependable
+visible scratchpad nor a useful reportable intermediate state. The FQRB/ECLI
+branch tests whether a narrow native state can exist without those behaviors.
+Only if both stages pass, the next question is whether that state can change
+ordinary, source-visible reasoning rather than merely answer an artificial
+suffix. **Counterfactual Workspace Reflection (CWR)** is a narrow test of
+that transfer.
+
+For a frozen FQRB source triple and ordinary direct question, CWR appends a
+counterfactual interruption, such as asking what five semantic facts should
+be held in mind before answering. Training computes loss only on the
+interruption's reflection, which must name the complete donor-after-edit
+state. It never computes loss on the direct answer. At evaluation, the
+interruption is absent: the model receives the ordinary source-visible
+question and must give the answer directly. A result can therefore not be
+explained by having trained that answer completion in the target context.
+
+The arm must use held-out source bundles, wording, query templates, and
+counterfactual source edits. It requires a direct answer change under the
+edited source, failure under whole-source shuffle or source zeroing, and a
+matched placebo-reflection arm whose reflection describes a different world.
+It additionally reports a reflection-probed held-out score, but that score is
+diagnostic only: the primary endpoint is a source-visible direct answer with
+no reflection instruction. The same checkpoint must improve the existing
+seven-task transcript audit without a reflection prompt before it can be
+called a general capability gain.
+
+CWR is intentionally not a generic chain-of-thought or answer-distillation
+recipe. The prediction is mechanistic: if a reportable latent basis exists,
+supervising its *future counterfactual report* should make those concepts
+available while the preceding direct answer is formed. If FQRB or ECLI fails,
+there is no evidence that the model owns such a carrier and CWR remains
+blocked rather than becoming another ungrounded SFT run.
+
 ### Conditional Context Mechanism: Reversible Semantic Checkpoints
 
 Only after exact transport and the reflection control have a positive causal

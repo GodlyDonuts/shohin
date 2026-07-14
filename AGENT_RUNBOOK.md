@@ -3562,3 +3562,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   The only valid next evidence remains the dependency-held train diagnostic, three capped frozen factors,
   manual comparison, deep transcript, watcher assessment, and then exactly one of the ECLI or PAAT gates.
   Do not infer causal transport or reasoning from this training trace and do not modify the writer.
+
+- **2026-07-14 09:10** — **Counterfactual Workspace Reflection (CWR) is registered as a later direct-transfer
+  test, not an SFT job.** The workspace-circuits result motivates a falsifiable Shohin-specific hypothesis:
+  after a positive FQRB + ECLI chain proves a reportable latent carrier, train only an appended interrupted
+  reflection of a source-visible FQRB task (loss never touches the ordinary direct answer), then evaluate
+  the uninterrupted direct answer on held-out source bundles, wording, templates, and source edits. CWR
+  must beat a matched wrong-world reflection placebo and retain source-change/shuffle/zero causality; it
+  also has to improve the existing seven-task direct transcript audit without any reflection prompt. If
+  the FQRB/ECLI prerequisite fails, CWR is blocked. No data or GPU job exists yet.
