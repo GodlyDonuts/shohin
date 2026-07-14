@@ -3515,3 +3515,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   **688692** is held `afterok:688687`. A failed or
   absent FQRB admission records a blocked no-op. This removes idle time without allowing a failed primitive
   to consume an ECLI GPU allocation.
+
+- **2026-07-14 08:35** — **PAAT has an equally narrow conditional failure branch.** Dependency-held CPU
+  gate `submit_paat_if_fqrb_transport_rejected.sbatch` waits for the bound FQRB assessment and taxonomy.
+  It can submit the fresh `fqrb_200k_l19_phase_r1` arm only when the original train primitive passes,
+  combined/core controls remain clean, and combined or unseen-source-tuple transfer fails. A positive FQRB
+  candidate, a missing primitive, or control leakage produces an auditable no-op. The submitted PAAT arm
+  fixes `SOURCE_WINDOW=26` (the measured full-corpus source maximum), with all other FQRB data, init,
+  BS=4, epoch/update schedule, hard source cut, and evaluator settings unchanged. Its combined/core/magnitude
+  factors run in parallel and it receives the same raw-vs-candidate and deep transcript audits. No generic
+  residual-algebra retry is authorized.
