@@ -1,0 +1,21 @@
+{
+  "advance_to_autoregressive_eval": false,
+  "audit": "causal_recurrent_scratch_comparison_v1",
+  "claim_boundary": "A pass admits autoregressive causal evaluation only. It is not evidence of broad reasoning.",
+  "gates": {
+    "depth_ood_nll_advantage_at_least_0_03": false,
+    "exact_sequence_wins_at_least_two_regimes": false,
+    "fit_iid_nll_advantage_at_least_0_05": false,
+    "matched_evaluation": true,
+    "matched_training": true,
+    "state_necessity_nll_margin_at_least_0_05": false,
+    "within_model_recurrence_nll_margin_at_least_0_03": false
+  },
+  "metrics": {
+    "depth_ood_recurrent_over_reset_nll": -0.2676908589423972,
+    "exact_sequence_regime_wins": 0,
+    "fit_iid_recurrent_over_reset_nll": -0.26736021041870117,
+    "state_necessity_nll_margin": 0.003766127880338477,
+    "within_model_recurrence_nll_margin": 0.014461583279548718
+  }
+}

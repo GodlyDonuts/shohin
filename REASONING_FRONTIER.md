@@ -1758,3 +1758,28 @@ contracts. The first canary is capped at 8,192 admitted answer-only operator
 examples per arm (1,024 updates at batch size eight) from immutable 200k. No
 VRW checkpoint or capability result exists until both arms complete and the
 hash-bound comparator runs.
+
+### VRW Result: 2026-07-14 13:08 EDT
+
+The bounded experiment is complete and **VRW is rejected**. The recurrent and
+reset arms used the same immutable 200k base, admitted answer-only corpus,
+8,192 examples, 1,024 updates, seed, 297,217 adapter parameters, and exact
+initial-adapter SHA-256. The reset arm was trained and evaluated in reset mode;
+the evaluator did not accidentally enable recurrence.
+
+On 224 held-out cases, reset beats recurrence by 0.26736 fit-IID NLL and
+0.26769 depth-OOD NLL. Within the recurrent adapter, four steps improve
+depth-OOD NLL over one step/reset by only 0.01446, below the locked 0.03 gate.
+Shuffling state between matched-shape examples changes all-case NLL by only
+0.00377, below the 0.05 state-necessity gate. Neither model gets one exact
+answer sequence in any regime. Every advancement gate is false, so no
+autoregressive state-swap evaluation is permitted.
+
+This rejects the specific hypothesis that a sparse token-aligned readout plus
+final-answer supervision is enough to identify a useful recurrent workspace.
+The reset adapter's substantially better NLL shows that the readout can learn a
+one-step prompt-conditioned correction. Repeated GRU updates instead erase or
+homogenize useful information, and the near-invariance to shuffled state shows
+that the learned recurrent state is not prompt-specific enough to mediate an
+answer. Future work must supervise or structurally identify local state
+transitions; adding more answer-only recurrent depth is blocked.
