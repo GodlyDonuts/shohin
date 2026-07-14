@@ -3428,3 +3428,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   factor moves all three **primary** source fields to absolute values 100–997 while retaining two-digit
   secondaries solely to keep the relation consumer counterfactually falsifiable. Neither factor may be
   called a language- or all-field-magnitude result beyond those stated boundaries.
+
+- **2026-07-14 06:18** — **The raw FQRB floor is exactly zero and locally preserved.** Read-only H100
+  evaluation `688664` completed the frozen 500-group / 2,500-row combined suite against immutable
+  `best_step200000.pt`: normal **0/2500**, paraphrase **0/2500**, counterfactual **0/2500**, and all
+  zero, whole-group shuffled, and wrong-query recreations **0/2500**; normal, paraphrase,
+  counterfactual, and strict joint groups are each **0/500**. The report
+  `artifacts/eval_history/fqrb_raw200k_baseline.json` is mirrored locally and on Newton with SHA-256
+  `b68e3b92673e0cca9b94e41bef7f4cd8abda5b17323e5b7d639640f821bb2695`. This is a clean task floor, not
+  an indication of future FQRB performance and not a reasoning score. Full isolated FQRB training `688665`
+  remains the only active FQRB training writer.
