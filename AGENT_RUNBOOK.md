@@ -2876,3 +2876,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   composition holdout on `evc48`; both use the new intermediate-equation trace-contract metric. `687730`
   remains resource-pending for the raw-versus-V10A direct transcript. No bridge, composition, or direct
   capability score has completed; V11A, CWI, and anchors remain blocked.
+
+- **2026-07-13 20:18** — **Pre-registered a conditional Interchangeable Semantic Ledger (ISL) ablation,
+  without creating data or a model.** The hypothesis is that V10A may learn five family-specific prose
+  traces yet still fail composition because no one shared model-authored object is required to cross a
+  family boundary. ISL would force natural language to compile into a small exact token ledger, then drop
+  the source and require that same emitted ledger to drive two distinct consumers plus paired
+  counterfactual swaps. The controller would forward text verbatim and would be prohibited from parsing,
+  selecting, repairing, or calculating the ledger. Matched syntax-only, label-permuted, zeroed, and
+  mismatched-ledger controls are mandatory. This is neither data nor training: it is the next falsifiable
+  branch only if V10A passes its own bridge holdout but fails cross-family composition. If V10A fails its
+  bridge holdout, ISL must not be used to hide a more basic language-to-state failure.

@@ -93,6 +93,50 @@ rejects exact or word-13-gram overlap with the full bridge corpus. Passing the
 bridge evaluator while failing this suite is a narrowly formatted curriculum
 result, not semantic state competence.
 
+### Conditional Next Primitive: Interchangeable Semantic Ledger
+
+If V10A learns its five families but fails the cross-family composition suite,
+the diagnosis is not simply "needs more examples." Its current traces are
+family-specific prose: a multiplication trace, a place-value trace, and a
+repair trace have no enforced shared object that a later operation must consume.
+That allows separate local programs without an interchangeable semantic state.
+
+The proposed **Interchangeable Semantic Ledger (ISL)** is a deliberately small,
+token-native state interface that a model must author and then use. A single
+ordinary-language record is compiled to a canonical ledger containing named
+values, operation-ready values, and immutable identity fields. The source
+record is then absent. A second prompt can ask a distinct consumer to update
+the ledger, answer a different query about it, or evaluate a counterfactual.
+The controller only forwards exact model-emitted text; it never normalizes a
+value, selects a field, or performs an operation.
+
+The requirement is *interchangeability*, not ledger formatting:
+
+1. Multiple unrelated source descriptions must compile to the same typed
+   ledger when they denote the same state.
+2. The same model-authored ledger must support at least two disjoint consumers
+   such as an arithmetic update and an indexed/value query.
+3. A paired counterfactual ledger swap must change each consumer's output in
+   the solver-predicted direction; zeroed, mismatched, syntax-only, and
+   label-permuted controls must fail on the same consumers.
+4. Evaluation independently holds out values, source language, field names,
+   downstream operation combinations, and multi-step lengths. No exact ledger
+   syntax is sufficient without the causal swap result.
+
+ISL is held until the completed V10A result establishes the right failure mode.
+If V10A fails even its own bridge holdout, language-to-state compilation is not
+yet learnable at this scale and ISL would only add another template. If V10A
+passes bridge but fails composition, ISL becomes the next controlled ablation:
+it tests whether a shared state interface, rather than more family-specific
+traces, creates the missing transport primitive.
+
+If ISL later passes source-deleted, multi-consumer, and counterfactual gates,
+the ledger becomes the only admissible input to a context-scaling experiment.
+Its exact tokens can be held as a KV anchor, and periodic re-anchoring must be
+model-authored and pass the same swap/zero controls. That would measure a real
+bounded state-compression mechanism without claiming an extended context window
+or allowing an external summarizer to do the reasoning.
+
 ### Post-Bridge Semantic Capsule Gate
 
 The existing semantic-capsule corpus is not another raw capability test. Raw
