@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 14:34 EDT (the protected two-H100 pretrain remains healthy and isolated. CMB r2 is formally rejected. Counterfactual Role-Equivariant Compilation r3 has structurally admitted clean full data; its regime-aware overlap gate is being corrected before a fresh signed-feature mechanics canary.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 14:35 EDT (the protected two-H100 pretrain remains healthy and isolated. CMB r2 is formally rejected. Counterfactual Role-Equivariant Compilation r3 is running matched full signed-feature control/candidate fits after complete CPU admission and a clean mechanics canary.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -3981,3 +3981,17 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   still requires exactly 96,000 rows in each semantic view, zero exact matches, zero forbidden overlap,
   and overlap only from anchors, but treats 96,000 as a maximum rather than a required contamination
   count. The failed report is preserved; the immutable data is not regenerated or edited.
+
+- **2026-07-14 14:34--14:35** — **Full r3 is admitted and the matched causal test is live.** Corrected
+  Stokes audit `738794` completed in 35s: 95,972 allowed anchor-only boilerplate rows, zero exact or
+  forbidden overlap, exactly 96,000 rows in each semantic view, and an answer-only response contract
+  over all 288,000 rows. Structural admission SHA-256 is
+  `0de260a4f6e820603fd4a45cacec75b076730fc2b206d6093b46b5f8479db457`; full-text report is
+  `dff807b1f02694c37af6a0b10500c290c85f699ad0cbca0243d320d2cff0ff7d`; contracts report is
+  `9890f2d7d4a4378d286ff152cc6cf91a5f459eb13500fc7bcd3002cda370d48a`. Fresh signed-feature
+  canary `689068` on evc22 completed 16 updates in 6s with frozen base, 354,504 trainable parameters,
+  initial adapter SHA-256 `7cd0690d30aa44ae1e739ddd871cccadaa994ddeabf72ea393650882fa9daee9`, finite gnorm 1.138,
+  semantic loss 0.0999, and nontrivial permutation loss 1.8672. Matched full jobs are now concurrent:
+  control `689070` on evc22 at weights 0/0 and candidate `689071` on evc23 at 0.5/1.0. Each has
+  48,000 groups / 288,000 examples / 12,000 updates and writes only its own isolated output. No
+  evaluation, bridge, or reasoning claim is authorized until both exit 0 and matched metadata agrees.

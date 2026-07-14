@@ -2005,3 +2005,11 @@ from anchors against fit/depth diagnostics, and rejects every exact prompt or
 language/full/manual overlap; it no longer treats absence of overlap as an
 error. The immutable data SHA-256 is
 `9f97e9339f665de27d99195d5b4f61c8c09681ea268cd4459a5e212b8875267f`.
+
+The corrected full-text and response-contract pass is complete. A fresh
+signed-feature mechanics canary then trained 64 groups for 16 updates with a
+frozen base and finite gradients. Its initial semantic/permutation losses were
+0.0999/1.8672, confirming that the representation-level counterfactual term is
+not the near-zero redundant logit term it replaced. The matched full control
+and candidate are jobs `689070` and `689071`; they remain experiments in
+progress, not evidence of reasoning.
