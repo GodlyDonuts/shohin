@@ -151,6 +151,66 @@ def effect_measurement_matrix(states, queries):
     return torch.einsum("ia,jb->ijab", queries, states).reshape(-1, 9)
 
 
+def random_orthogonal_measurement_matrix(
+    channels=64, coordinates=9, *, seed=20260714, scale=1.0,
+    dtype=torch.float64, device=None,
+):
+    """Return a deterministic random code with orthogonal columns.
+
+    This is useful as an exact control and, more importantly, for proving a
+    limitation of representation-only comparisons: any two full-rank linear
+    operator codes are connected by a fixed linear transport. A random code is
+    therefore not a distinct reasoning mechanism when both arms decode to the
+    same operator and use the same composition law.
+    """
+    channels = int(channels)
+    coordinates = int(coordinates)
+    if channels < coordinates or coordinates <= 0:
+        raise ValueError("orthogonal code requires channels >= coordinates > 0")
+    generator = torch.Generator(device="cpu")
+    generator.manual_seed(int(seed))
+    raw = torch.randn((channels, coordinates), generator=generator, dtype=torch.float64)
+    basis, _ = torch.linalg.qr(raw, mode="reduced")
+    return (float(scale) * basis).to(dtype=dtype, device=device)
+
+
+def encode_operator_code(operator, measurements):
+    """Encode a 3x3 operator with an arbitrary full-rank linear code."""
+    if operator.shape != (3, 3):
+        raise ValueError("operator must be 3x3")
+    if measurements.ndim != 2 or measurements.shape[1] != 9:
+        raise ValueError("measurements must have shape [channels, 9]")
+    coordinates = operator.reshape(-1).to(
+        dtype=measurements.dtype, device=measurements.device,
+    )
+    return measurements @ coordinates
+
+
+def decode_operator_code(code, measurements):
+    """Decode the least-squares operator represented by a linear code."""
+    if measurements.ndim != 2 or measurements.shape[1] != 9:
+        raise ValueError("measurements must have shape [channels, 9]")
+    if code.shape != (measurements.shape[0],):
+        raise ValueError("code must have one scalar per measurement channel")
+    coordinates = torch.linalg.lstsq(
+        measurements, code.to(dtype=measurements.dtype, device=measurements.device),
+    ).solution
+    return coordinates.reshape(3, 3)
+
+
+def transport_operator_code(code, source_measurements, target_measurements):
+    """Move a valid code between arbitrary full-rank linear codebooks."""
+    operator = decode_operator_code(code, source_measurements)
+    return encode_operator_code(operator, target_measurements)
+
+
+def compose_operator_codes(left_code, right_code, measurements):
+    """Compose chronological code chunks after exact decode and re-encode."""
+    left = decode_operator_code(left_code, measurements)
+    right = decode_operator_code(right_code, measurements)
+    return encode_operator_code(right @ left, measurements)
+
+
 def decode_effect_signature(signature, states, queries, max_outliers=0):
     """Project a redundant effect code onto its nearest valid operator.
 

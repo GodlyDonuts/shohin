@@ -266,6 +266,7 @@ class ReferentialSlotMicrocodeCompiler(nn.Module):
             "kind_logits": kind_head(kind_context).float(),
             "role_logits": self._role_logits(target_identity, target_context, slots, kind),
             "kind_context": kind_context,
+            "target_context": target_context,
             "kind_weights": kind_weights,
             "target_weights": target_weights,
             "slot_presence_scores": slot_similarity.amax(dim=0),

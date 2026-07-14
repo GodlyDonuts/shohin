@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 17:15 EDT (the protected two-H100 pretrain remains healthy and isolated. R5's frozen fresh-board argument-graph intervention is formally rejected despite 96.61% arity recovery. R6 is a separate counterfactual effect-coded operator hypothesis; no fit is authorized before a new confirmatory split and matched random-code control are frozen.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 17:26 EDT (the protected two-H100 pretrain remains healthy and isolated. R5's frozen fresh-board argument-graph intervention is formally rejected despite 96.61% arity recovery. A pre-fit proof shows R6's proposed structured-versus-random linear code comparison is only a basis change; it is superseded by an active counterfactual distinction loop before any H100 fit.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4152,3 +4152,17 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Before any fit, freeze a new lexical/value/composition split, the control code/hash, probe holdouts,
   source-drop/zero/shuffle/counterfactual gates, and an inference path that does not consume structured
   operation values. No broad reasoning claim can precede transfer through that full chain.
+
+- **2026-07-14 17:15--17:26** — **A pre-fit equivalence proof blocks a cosmetic R6 and replaces it
+  with active latent experimentation.** Any two full-rank 64x9 linear codes that decode to the same
+  3x3 operator are connected by a fixed transport; operator composition commutes with that transport.
+  The proposed structured-code versus random-orthogonal-code comparison would therefore test a basis
+  name, not reasoning, and no H100 fit is authorized under that design. New exact CPU mechanics define
+  an Active Counterfactual Distinction Loop over 597 lawful event hypotheses (six numeric families at
+  values 1--99 plus three structural operators). It selects the state/query probe with maximal
+  hypothesis-partition information. Oracle identification resolves every operator in at most three
+  probes, mean 1.838, versus deterministic random mean 2.822 and maximum 13. The next neural test must
+  use one shared text-conditioned scalar effect head and compare active versus random scheduling on
+  that byte-identical model with an equal probe budget. Structured operation values remain forbidden;
+  zero/shuffle/oracle, unseen value/language, longer composition, source dropping, intervention, and
+  direct interaction gates must be frozen before any confirmatory board or H100 fit.

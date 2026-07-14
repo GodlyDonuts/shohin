@@ -2343,3 +2343,45 @@ edits, source dropping, zero/shuffled code controls, and a fresh manual
 interaction. Structured operation values are forbidden at inference. A pass
 would establish a narrow learned effect algebra; broad model reasoning would
 still require transport into ordinary decoding and unrelated domains.
+
+#### Pre-Fit Correction: Basis Coding Is Not the Mechanism
+
+The random-code comparison above is superseded before any H100 fit. An exact
+CPU contract now proves why: for any full-rank 64x9 treatment and control
+codebooks, decoding to a common 3x3 operator and re-encoding gives a fixed
+linear transport between codes. Chronological composition commutes with that
+transport exactly. Equal singular values make the map an isometry on the valid
+nine-dimensional subspace. A structured effect code versus random orthogonal
+code is therefore a coordinate change, not a distinct reasoning mechanism.
+No result from such a comparison could justify the intended causal claim.
+
+R6 is refined to an **Active Counterfactual Distinction Loop**. A shared neural
+head receives one event's text representation plus one counterfactual state and
+future-query probe and predicts the resulting scalar effect. The cell maintains
+a distribution over lawful event operators, selects the unobserved probe that
+maximally partitions the currently plausible hypotheses, obtains one more
+text-conditioned effect prediction, and repeats only while ambiguity remains.
+The committed operator is then composed into a fixed 3x3 carried state and the
+event text can be dropped. The internal reasoning trace is thus an auditable
+sequence of questions of the form "what would this event do under this state
+and future readout?", not generated prose or an arbitrary latent vector.
+
+The exact oracle mechanics cover 597 distinct hypotheses: six numeric operator
+families over values 1--99 plus three structural operators. The active policy
+identifies every operator in at most three probes, averaging 1.838. A
+deterministic random-probe policy also eventually identifies every operator but
+averages 2.822 and requires as many as 13 probes. This is only a decision-tree
+upper bound; it does not show that Shohin can answer a selected counterfactual
+from text.
+
+The neural causal test will therefore train one probe-conditioned effect head,
+not two code-basis heads. Read-only inference compares active and random probe
+schedulers on the byte-identical model with the same maximum number of probe
+calls. A one-pass pointer compiler, zeroed effects, shuffled predicted effects,
+and oracle effects are required controls. The board remains frozen only after
+the head, scheduler, numeric range, tolerance, maximum latent steps, hashes,
+and value/language/composition splits are fixed. Advancement requires unseen
+values and language, counterfactual edit specificity, longer source-dropped
+composition, a material active-over-random gain, and direct transcript evidence.
+This makes adaptive future distinction operational while avoiding a basis-
+renaming result.

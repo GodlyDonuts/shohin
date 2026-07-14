@@ -8,14 +8,19 @@ import torch
 
 from categorical_microcode import OPCODE_TO_ID, QUERY_TO_ID, opcode_for, operation_value, query_for
 from future_effect_algebra import (
+    compose_operator_codes,
     compose_operators,
     decode_effect_signature,
+    decode_operator_code,
+    encode_operator_code,
     effect_measurement_matrix,
     effect_signature,
     execute_operator,
     operation_operator,
     program_operator,
+    random_orthogonal_measurement_matrix,
     redundant_probe_bank,
+    transport_operator_code,
 )
 
 
@@ -85,6 +90,35 @@ def main():
     )["operator"]
     composed_code = effect_signature(decoded_right @ decoded_left, states=states, queries=queries)
     assert torch.allclose(composed_code, code)
+
+    # A random orthogonal code is only a coordinate change when both arms
+    # decode to the same operator. This blocks a meaningless R6 comparison in
+    # which the treatment and control differ only by their 64x9 codebook.
+    structured = effect_measurement_matrix(states, queries)
+    scale = torch.linalg.svdvals(structured)[0].item()
+    random_codebook = random_orthogonal_measurement_matrix(scale=scale)
+    assert torch.linalg.matrix_rank(random_codebook).item() == 9
+    assert torch.allclose(
+        torch.linalg.svdvals(random_codebook),
+        torch.linalg.svdvals(structured),
+        atol=1e-10,
+        rtol=0,
+    )
+    structured_code = encode_operator_code(operator, structured)
+    random_code = transport_operator_code(structured_code, structured, random_codebook)
+    assert torch.allclose(random_code, encode_operator_code(operator, random_codebook), atol=1e-10)
+    assert torch.allclose(decode_operator_code(random_code, random_codebook), operator, atol=1e-10)
+    left_structured = encode_operator_code(left, structured)
+    right_structured = encode_operator_code(right, structured)
+    left_random = transport_operator_code(left_structured, structured, random_codebook)
+    right_random = transport_operator_code(right_structured, structured, random_codebook)
+    structured_composed = compose_operator_codes(left_structured, right_structured, structured)
+    random_composed = compose_operator_codes(left_random, right_random, random_codebook)
+    assert torch.allclose(
+        transport_operator_code(structured_composed, structured, random_codebook),
+        random_composed,
+        atol=1e-10,
+    )
     print("future-effect algebra tests passed: 896 exact programs")
 
 
