@@ -27,35 +27,42 @@ def sha256_file(path):
     return digest.hexdigest()
 
 
-def encode_tape(model, tokenizer, source, layer, tape_len):
+def encode_tape(model, tokenizer, source, layer, tape_len, source_window=0):
     ids = torch.tensor([tokenizer.encode(source).ids], dtype=torch.long, device="cuda")
-    return encode_residual_tape(model, ids, layer, tape_len)
+    return encode_residual_tape(model, ids, layer, tape_len, source_window)
 
 
-def compose_decode(model, tokenizer, base_source, edited_source, donor_source, suffix, layer, tape_len, eos_id, max_new):
-    base = encode_tape(model, tokenizer, base_source, layer, tape_len)
-    edited = encode_tape(model, tokenizer, edited_source, layer, tape_len)
-    donor = encode_tape(model, tokenizer, donor_source, layer, tape_len)
+def compose_decode(
+    model, tokenizer, base_source, edited_source, donor_source, suffix, layer, tape_len, eos_id, max_new, source_window=0,
+):
+    base = encode_tape(model, tokenizer, base_source, layer, tape_len, source_window)
+    edited = encode_tape(model, tokenizer, edited_source, layer, tape_len, source_window)
+    donor = encode_tape(model, tokenizer, donor_source, layer, tape_len, source_window)
     tape = compose_counterfactual_tape(base, edited, donor)
     suffix_ids = torch.tensor([tokenizer.encode(suffix).ids], dtype=torch.long, device="cuda")
-    tokens = generate_from_algebra_tape(model, tape, suffix_ids, layer, tape_len, eos_id, max_new)
+    tape_start_pos = source_window - tape_len if source_window else 0
+    tokens = generate_from_algebra_tape(model, tape, suffix_ids, layer, tape_len, eos_id, max_new, tape_start_pos)
     return tokenizer.decode(tokens.tolist(), skip_special_tokens=False).strip(), tape
 
 
-def compose_two_edit_decode(model, tokenizer, base_source, primary_edited_source, secondary_edited_source, donor_source, suffix, layer, tape_len, eos_id, max_new):
-    base = encode_tape(model, tokenizer, base_source, layer, tape_len)
-    primary = encode_tape(model, tokenizer, primary_edited_source, layer, tape_len)
-    secondary = encode_tape(model, tokenizer, secondary_edited_source, layer, tape_len)
-    donor = encode_tape(model, tokenizer, donor_source, layer, tape_len)
+def compose_two_edit_decode(
+    model, tokenizer, base_source, primary_edited_source, secondary_edited_source, donor_source, suffix,
+    layer, tape_len, eos_id, max_new, source_window=0,
+):
+    base = encode_tape(model, tokenizer, base_source, layer, tape_len, source_window)
+    primary = encode_tape(model, tokenizer, primary_edited_source, layer, tape_len, source_window)
+    secondary = encode_tape(model, tokenizer, secondary_edited_source, layer, tape_len, source_window)
+    donor = encode_tape(model, tokenizer, donor_source, layer, tape_len, source_window)
     tape = compose_two_edit_counterfactual_tape(base, primary, secondary, donor)
     suffix_ids = torch.tensor([tokenizer.encode(suffix).ids], dtype=torch.long, device="cuda")
-    tokens = generate_from_algebra_tape(model, tape, suffix_ids, layer, tape_len, eos_id, max_new)
+    tape_start_pos = source_window - tape_len if source_window else 0
+    tokens = generate_from_algebra_tape(model, tape, suffix_ids, layer, tape_len, eos_id, max_new, tape_start_pos)
     return tokenizer.decode(tokens.tolist(), skip_special_tokens=False).strip(), tape
 
 
-def decode_tape(model, tokenizer, tape, suffix, layer, tape_len, eos_id, max_new):
+def decode_tape(model, tokenizer, tape, suffix, layer, tape_len, eos_id, max_new, tape_start_pos=0):
     suffix_ids = torch.tensor([tokenizer.encode(suffix).ids], dtype=torch.long, device="cuda")
-    tokens = generate_from_algebra_tape(model, tape, suffix_ids, layer, tape_len, eos_id, max_new)
+    tokens = generate_from_algebra_tape(model, tape, suffix_ids, layer, tape_len, eos_id, max_new, tape_start_pos)
     return tokenizer.decode(tokens.tolist(), skip_special_tokens=False).strip()
 
 
@@ -104,12 +111,14 @@ def main():
         if metadata.get("extra_trainable_parameters") != 0 or metadata.get("composition") != "donor + edited - base":
             raise SystemExit("checkpoint does not certify the native CRA mechanism")
         layer, tape_len = int(metadata["layer"]), int(metadata["tape_len"])
+        source_window = int(metadata.get("source_window", 0))
     elif args.allow_raw:
         anchor_ids = tokenizer.encode(args.source_anchor).ids
         tape_len = args.tape_len or len(anchor_ids)
         if not anchor_ids or tape_len != len(anchor_ids):
             raise SystemExit("raw CRA baseline requires tape length equal to exact source anchor")
         layer = int(args.layer)
+        source_window = 0
         metadata = {
             "raw_baseline": True,
             "layer": layer,
@@ -131,30 +140,34 @@ def main():
             if row.get("mode") == "two_edit":
                 normal, tape = compose_two_edit_decode(
                     model, tokenizer, row["base_source"], row["primary_edited_source"], row["secondary_edited_source"], row["donor_source"],
-                    row["suffix_prompt"], layer, tape_len, eos_id, args.max_new,
+                    row["suffix_prompt"], layer, tape_len, eos_id, args.max_new, source_window,
                 )
                 paraphrase, paraphrase_tape = compose_two_edit_decode(
                     model, tokenizer, row["paraphrase_base_source"], row["paraphrase_primary_edited_source"], row["paraphrase_secondary_edited_source"], row["paraphrase_donor_source"],
-                    row["suffix_prompt"], layer, tape_len, eos_id, args.max_new,
+                    row["suffix_prompt"], layer, tape_len, eos_id, args.max_new, source_window,
                 )
                 counterfactual, _ = compose_two_edit_decode(
                     model, tokenizer, row["base_source"], row["counterfactual_primary_edited_source"], row["secondary_edited_source"], row["donor_source"],
-                    row["suffix_prompt"], layer, tape_len, eos_id, args.max_new,
+                    row["suffix_prompt"], layer, tape_len, eos_id, args.max_new, source_window,
                 )
             else:
                 normal, tape = compose_decode(
                     model, tokenizer, row["base_source"], row["edited_source"], row["donor_source"],
-                    row["suffix_prompt"], layer, tape_len, eos_id, args.max_new,
+                    row["suffix_prompt"], layer, tape_len, eos_id, args.max_new, source_window,
                 )
                 paraphrase, paraphrase_tape = compose_decode(
                     model, tokenizer, row["paraphrase_base_source"], row["paraphrase_edited_source"], row["paraphrase_donor_source"],
-                    row["suffix_prompt"], layer, tape_len, eos_id, args.max_new,
+                    row["suffix_prompt"], layer, tape_len, eos_id, args.max_new, source_window,
                 )
                 counterfactual, _ = compose_decode(
                     model, tokenizer, row["base_source"], row["counterfactual_edited_source"], row["donor_source"],
-                    row["suffix_prompt"], layer, tape_len, eos_id, args.max_new,
+                    row["suffix_prompt"], layer, tape_len, eos_id, args.max_new, source_window,
                 )
-            zero = decode_tape(model, tokenizer, torch.zeros_like(tape), row["suffix_prompt"], layer, tape_len, eos_id, args.max_new)
+            tape_start_pos = source_window - tape_len if source_window else 0
+            zero = decode_tape(
+                model, tokenizer, torch.zeros_like(tape), row["suffix_prompt"], layer, tape_len, eos_id, args.max_new,
+                tape_start_pos,
+            )
             tapes.append(tape)
             results.append({
                 "episode_id": row["episode_id"], "normal": normal, "paraphrase": paraphrase,
@@ -167,7 +180,8 @@ def main():
             print("[cra-eval] {}/{}".format(index + 1, len(rows)), flush=True)
         for index, result in enumerate(results):
             result["shuffled"] = decode_tape(
-                model, tokenizer, tapes[(index + 1) % len(tapes)], rows[index]["suffix_prompt"], layer, tape_len, eos_id, args.max_new,
+                model, tokenizer, tapes[(index + 1) % len(tapes)], rows[index]["suffix_prompt"], layer, tape_len, eos_id,
+                args.max_new, source_window - tape_len if source_window else 0,
             )
     for result in results:
         score_result(result)

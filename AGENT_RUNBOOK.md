@@ -3491,3 +3491,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   result can admit a source-free event-query curriculum with length, collision, sign, shuffle, and
   two-event controls. It must beat a matched flat residual-sum baseline at a fixed lane budget before any
   context-scaling claim.
+
+- **2026-07-14 08:15** — **Phase-Aligned Anchor Tapes (PAAT) is staged as a controlled FQRB failure
+  ablation, not a change to the active run.** A direct tokenizer measurement over the first 5,000 frozen
+  FQRB rows found base/edited/donor source lengths spanning **20–25** tokens and paraphrases spanning
+  **22–26**, with **0/5,000** source triples sharing one token length. Thus current residual arithmetic can
+  mix anchor states at different RoPE phases and then decode them at a third phase. The new optional
+  `source_window` path right-aligns sources in a fixed zero-embedded positional window and starts the
+  source-free suffix at the aligned anchor phase; it adds no token ids, parameters, controller, or source
+  content. Defaults preserve the active FQRB path exactly, and CPU contract tests for CRA/FQRB/CRCS pass.
+  PAAT may be submitted only if current FQRB fails the combined or unseen-source-tuple gate, using the same
+  frozen data, initialization, updates, optimizer, hard cut, and evaluator with `source_window` as the sole
+  changed variable. Its checkpoint metadata binds that setting; no current writer has been changed.

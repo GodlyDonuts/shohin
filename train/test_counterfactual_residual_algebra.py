@@ -32,6 +32,16 @@ def main():
     tape = compose_counterfactual_tape(base_tape, edited_tape, donor_tape)
     assert tape.shape == (1, tape_len, cfg.d_model)
     assert torch.equal(tape, donor_tape + edited_tape - base_tape)
+    # A full-width window has no prefix and therefore preserves the old path
+    # exactly; a wider window aligns the terminal anchor at a fixed RoPE phase.
+    assert torch.equal(
+        base_tape, encode_residual_tape(model, base, layer=1, tape_len=tape_len, source_window=base.shape[1]),
+    )
+    phase_base = encode_residual_tape(model, base, layer=1, tape_len=tape_len, source_window=8)
+    phase_edited = encode_residual_tape(model, edited, layer=1, tape_len=tape_len, source_window=8)
+    phase_donor = encode_residual_tape(model, donor, layer=1, tape_len=tape_len, source_window=8)
+    phase_tape = compose_counterfactual_tape(phase_base, phase_edited, phase_donor)
+    assert phase_tape.shape == tape.shape
     two_edit = compose_two_edit_counterfactual_tape(base_tape, edited_tape, donor_tape, donor_tape)
     assert torch.equal(two_edit, donor_tape + edited_tape + donor_tape - 2 * base_tape)
 
@@ -49,7 +59,12 @@ def main():
     one = algebra_suffix_logits(model, tape, suffix, layer=1, tape_len=tape_len)
     two = algebra_suffix_logits(model, tape.clone(), suffix, layer=1, tape_len=tape_len)
     assert torch.equal(one, two)
+    phase_logits = algebra_suffix_logits(model, phase_tape, suffix, layer=1, tape_len=tape_len, tape_start_pos=6)
+    assert phase_logits.shape == one.shape
     assert generate_from_algebra_tape(model, tape, prompt, layer=1, tape_len=tape_len, eos_id=0, max_new=4).ndim == 1
+    assert generate_from_algebra_tape(
+        model, phase_tape, prompt, layer=1, tape_len=tape_len, eos_id=0, max_new=4, tape_start_pos=6,
+    ).ndim == 1
 
     paired = paired_counterfactual_algebra_loss(
         model, base, edited, counter_edited, donor, prompt, answer, torch.tensor([[53, 59]], dtype=torch.long),
@@ -57,6 +72,11 @@ def main():
     )
     assert all(torch.isfinite(paired[field]) for field in ("loss", "normal_ce", "counter_ce", "normal_foil", "counter_foil", "rank"))
     assert paired["normal_tape"].shape == tape.shape and paired["counter_tape"].shape == tape.shape
+
+    phase_logits, phase_loss, _, _ = supervised_algebra_loss(
+        model, base, edited, donor, prompt, answer, layer=1, tape_len=tape_len, eos_id=0, source_window=8,
+    )
+    assert phase_logits.shape == logits.shape and torch.isfinite(phase_loss)
 
     loss.backward()
     paired["loss"].backward()

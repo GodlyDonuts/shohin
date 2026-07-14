@@ -80,33 +80,33 @@ def group_rows(rows: list[dict], split: str, max_groups: int) -> list[tuple[str,
     return result
 
 
-def compose_group_tapes(model, tokenizer, group: list[dict], layer: int, tape_len: int):
+def compose_group_tapes(model, tokenizer, group: list[dict], layer: int, tape_len: int, source_window: int = 0):
     """Encode a shared FQRB group once, with optional unseen two-edit composition."""
     first = group[0]
-    base = encode_tape(model, tokenizer, first["base_source"], layer, tape_len)
-    donor = encode_tape(model, tokenizer, first["donor_source"], layer, tape_len)
-    para_base = encode_tape(model, tokenizer, first["paraphrase_base_source"], layer, tape_len)
-    para_donor = encode_tape(model, tokenizer, first["paraphrase_donor_source"], layer, tape_len)
+    base = encode_tape(model, tokenizer, first["base_source"], layer, tape_len, source_window)
+    donor = encode_tape(model, tokenizer, first["donor_source"], layer, tape_len, source_window)
+    para_base = encode_tape(model, tokenizer, first["paraphrase_base_source"], layer, tape_len, source_window)
+    para_donor = encode_tape(model, tokenizer, first["paraphrase_donor_source"], layer, tape_len, source_window)
     if first.get("mode", "one_edit") == "two_edit":
-        primary = encode_tape(model, tokenizer, first["primary_edited_source"], layer, tape_len)
-        secondary = encode_tape(model, tokenizer, first["secondary_edited_source"], layer, tape_len)
-        para_primary = encode_tape(model, tokenizer, first["paraphrase_primary_edited_source"], layer, tape_len)
-        para_secondary = encode_tape(model, tokenizer, first["paraphrase_secondary_edited_source"], layer, tape_len)
+        primary = encode_tape(model, tokenizer, first["primary_edited_source"], layer, tape_len, source_window)
+        secondary = encode_tape(model, tokenizer, first["secondary_edited_source"], layer, tape_len, source_window)
+        para_primary = encode_tape(model, tokenizer, first["paraphrase_primary_edited_source"], layer, tape_len, source_window)
+        para_secondary = encode_tape(model, tokenizer, first["paraphrase_secondary_edited_source"], layer, tape_len, source_window)
         return (
             compose_two_edit_counterfactual_tape(base, primary, secondary, donor),
             compose_two_edit_counterfactual_tape(para_base, para_primary, para_secondary, para_donor),
             base, donor, secondary,
         )
-    edited = encode_tape(model, tokenizer, first["edited_source"], layer, tape_len)
-    para_edited = encode_tape(model, tokenizer, first["paraphrase_edited_source"], layer, tape_len)
+    edited = encode_tape(model, tokenizer, first["edited_source"], layer, tape_len, source_window)
+    para_edited = encode_tape(model, tokenizer, first["paraphrase_edited_source"], layer, tape_len, source_window)
     return compose_counterfactual_tape(base, edited, donor), compose_counterfactual_tape(para_base, para_edited, para_donor), base, donor, None
 
 
-def compose_counter_tape(model, tokenizer, row: dict, base, donor, secondary, layer: int, tape_len: int):
+def compose_counter_tape(model, tokenizer, row: dict, base, donor, secondary, layer: int, tape_len: int, source_window: int = 0):
     if row.get("mode", "one_edit") == "two_edit":
-        counter = encode_tape(model, tokenizer, row["counterfactual_primary_edited_source"], layer, tape_len)
+        counter = encode_tape(model, tokenizer, row["counterfactual_primary_edited_source"], layer, tape_len, source_window)
         return compose_two_edit_counterfactual_tape(base, counter, secondary, donor)
-    counter = encode_tape(model, tokenizer, row["counterfactual_edited_source"], layer, tape_len)
+    counter = encode_tape(model, tokenizer, row["counterfactual_edited_source"], layer, tape_len, source_window)
     return compose_counterfactual_tape(base, counter, donor)
 
 
@@ -193,12 +193,14 @@ def main() -> None:
         if metadata.get("extra_trainable_parameters") != 0 or metadata.get("composition") != "donor + edited - base":
             raise SystemExit("checkpoint does not certify native residual composition")
         layer, tape_len = int(metadata["layer"]), int(metadata["tape_len"])
+        source_window = int(metadata.get("source_window", 0))
     elif args.allow_raw:
         anchor_ids = tokenizer.encode(args.source_anchor).ids
         tape_len = args.tape_len or len(anchor_ids)
         if not anchor_ids or tape_len != len(anchor_ids):
             raise SystemExit("raw FQRB baseline requires the exact source anchor tape")
         layer = int(args.layer)
+        source_window = 0
         metadata = {
             "raw_baseline": True, "layer": layer, "tape_len": tape_len,
             "source_anchor": args.source_anchor, "source_present_at_suffix": False,
@@ -215,21 +217,26 @@ def main() -> None:
     results: list[dict] = []
     with torch.no_grad():
         for index, (basis_id, group) in enumerate(groups, 1):
-            tape, paraphrase_tape, base, donor, secondary = compose_group_tapes(model, tokenizer, group, layer, tape_len)
+            tape, paraphrase_tape, base, donor, secondary = compose_group_tapes(
+                model, tokenizer, group, layer, tape_len, source_window,
+            )
             tapes[basis_id], paraphrase_tapes[basis_id] = tape, paraphrase_tape
             cosine = float(torch.nn.functional.cosine_similarity(
                 tape.float().reshape(1, -1), paraphrase_tape.float().reshape(1, -1), dim=-1,
             ).item())
             for query_index, row in enumerate(group):
-                counter_tape = compose_counter_tape(model, tokenizer, row, base, donor, secondary, layer, tape_len)
+                counter_tape = compose_counter_tape(
+                    model, tokenizer, row, base, donor, secondary, layer, tape_len, source_window,
+                )
                 wrong_row = group[(query_index + 1) % len(group)]
+                tape_start_pos = source_window - tape_len if source_window else 0
                 result = {
                     "basis_id": basis_id, "episode_id": row["episode_id"], "query_kind": row["query_kind"],
-                    "normal": decode_tape(model, tokenizer, tape, row["suffix_prompt"], layer, tape_len, eos_id, args.max_new),
-                    "paraphrase": decode_tape(model, tokenizer, paraphrase_tape, row["suffix_prompt"], layer, tape_len, eos_id, args.max_new),
-                    "counterfactual": decode_tape(model, tokenizer, counter_tape, row["suffix_prompt"], layer, tape_len, eos_id, args.max_new),
-                    "zero": decode_tape(model, tokenizer, torch.zeros_like(tape), row["suffix_prompt"], layer, tape_len, eos_id, args.max_new),
-                    "wrong_query": decode_tape(model, tokenizer, tape, wrong_row["suffix_prompt"], layer, tape_len, eos_id, args.max_new),
+                    "normal": decode_tape(model, tokenizer, tape, row["suffix_prompt"], layer, tape_len, eos_id, args.max_new, tape_start_pos),
+                    "paraphrase": decode_tape(model, tokenizer, paraphrase_tape, row["suffix_prompt"], layer, tape_len, eos_id, args.max_new, tape_start_pos),
+                    "counterfactual": decode_tape(model, tokenizer, counter_tape, row["suffix_prompt"], layer, tape_len, eos_id, args.max_new, tape_start_pos),
+                    "zero": decode_tape(model, tokenizer, torch.zeros_like(tape), row["suffix_prompt"], layer, tape_len, eos_id, args.max_new, tape_start_pos),
+                    "wrong_query": decode_tape(model, tokenizer, tape, wrong_row["suffix_prompt"], layer, tape_len, eos_id, args.max_new, tape_start_pos),
                     "expected": row["response"], "counterfactual_expected": row["counterfactual_response"],
                     "same_tape_cosine": cosine,
                 }
@@ -238,7 +245,7 @@ def main() -> None:
                     if not isinstance(swap_expected, str):
                         raise ValueError("codebook row lacks a swap response")
                     result["codebook_swap"] = decode_tape(
-                        model, tokenizer, tape, row["codebook_swap_suffix_prompt"], layer, tape_len, eos_id, args.max_new,
+                        model, tokenizer, tape, row["codebook_swap_suffix_prompt"], layer, tape_len, eos_id, args.max_new, tape_start_pos,
                     )
                     result["codebook_swap_expected"] = swap_expected
                 results.append(result)
@@ -247,7 +254,7 @@ def main() -> None:
             result["shuffled"] = decode_tape(
                 model, tokenizer, tapes[shuffled_from[result["basis_id"]]],
                 next(row for basis_id, group in groups if basis_id == result["basis_id"] for row in group if row["query_kind"] == result["query_kind"])["suffix_prompt"],
-                layer, tape_len, eos_id, args.max_new,
+                layer, tape_len, eos_id, args.max_new, source_window - tape_len if source_window else 0,
             )
     for result in results:
         score_result(result)

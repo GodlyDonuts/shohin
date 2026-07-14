@@ -21,6 +21,7 @@ AUDIT=${AUDIT:?set frozen ECLI audit}
 ASSESSMENT=${ASSESSMENT:?set admitted FQRB assessment}
 OUT=${OUT:?set fresh isolated train/ephemeral_codebook_fqrb_* output}
 LAYER=${LAYER:-19}
+SOURCE_WINDOW=${SOURCE_WINDOW:--1}
 EPOCHS=${EPOCHS:-1}
 BS=${BS:-4}
 MAX_BATCHES=${MAX_BATCHES:-0}
@@ -70,8 +71,9 @@ if not torch.cuda.is_available():
 torch.empty(1, device='cuda', dtype=torch.bfloat16)
 PY
 ARGS=()
+ARGS+=(--source-window "$SOURCE_WINDOW")
 if [ "$MAX_BATCHES" -gt 0 ]; then ARGS+=(--max-batches "$MAX_BATCHES"); fi
-echo "[ecli-train] init=$INIT data=$DATA layer=$LAYER out=$OUT epochs=$EPOCHS batch=$BS"
+echo "[ecli-train] init=$INIT data=$DATA layer=$LAYER source_window=$SOURCE_WINDOW out=$OUT epochs=$EPOCHS batch=$BS"
 "$PY" train_ephemeral_codebook_fqrb.py \
   --init "$INIT" --data "$DATA" --audit "$AUDIT" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
   --out "$OUT" --layer "$LAYER" --epochs "$EPOCHS" --batch-size "$BS" "${ARGS[@]}"

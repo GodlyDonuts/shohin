@@ -583,6 +583,33 @@ numeric-length generalization test. A pass would show only a bounded causal
 numeric basis. It would be a necessary but still insufficient precursor to a
 general reasoning claim.
 
+### Conditional FQRB Ablation: Phase-Aligned Anchor Tapes (PAAT)
+
+FQRB source records are ordinary token sequences, so their terminal anchors
+can land at different RoPE positions when a signed or multi-digit value changes
+tokenization. Residual arithmetic across `base`, `edited`, and `donor` then
+adds states from different positional frames, while the tail may decode that
+same tape from positions zero onward. That is a concrete mechanism failure
+hypothesis, not an explanation after the fact.
+
+**Phase-Aligned Anchor Tapes (PAAT)** is a zero-parameter ablation. It
+right-aligns each source into the same fixed zero-embedded positional window,
+so all ordinary source tokens and the terminal anchor use a common endpoint.
+The source-free suffix then continues from the anchor's true RoPE positions.
+The inserted prefix has no token ids, learned vector, semantic content,
+attention mask exception, controller, or external computation. It merely makes
+the residual coordinates being added commensurate.
+
+PAAT is eligible only if the current FQRB arm fails its combined or
+source-tuple gate. Its experiment must preserve the frozen corpus, layer,
+tape length, model initialization, batch/update count, optimizer schedule,
+and evaluator; `source_window` is the only changed variable and is bound into
+the checkpoint metadata. The same combined, core, magnitude, zero, shuffle,
+wrong-query, and transcript gates apply. Equal or worse performance rejects
+positional misalignment as the limiting explanation. A positive result would
+still establish only a bounded phase-consistent latent basis, not a reasoning
+system.
+
 ### Conditional Next Hypothesis: Ephemeral-Codebook Latent Interrogation (ECLI)
 
 FQRB's five readers are stronger than one fixed numeral head, but they remain

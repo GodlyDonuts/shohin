@@ -49,6 +49,8 @@ def main() -> None:
     parser.add_argument("--out", required=True)
     parser.add_argument("--layer", type=int, default=19)
     parser.add_argument("--tape-len", type=int, default=0)
+    parser.add_argument("--source-window", type=int, default=-1,
+                        help="must match the FQRB parent's positional window; -1 inherits it")
     parser.add_argument("--source-anchor", default="\nEnd state record:")
     parser.add_argument("--epochs", type=int, default=1)
     parser.add_argument("--batch-size", type=int, default=4)
@@ -93,7 +95,15 @@ def main() -> None:
     cfg = GPTConfig(**checkpoint["cfg"])
     if not args.layer < cfg.n_layer - 1 or cfg.n_loop != 1:
         raise SystemExit("invalid layer or unsupported recurrent model")
+    parent_metadata = checkpoint.get("counterfactual_residual_algebra", {})
+    parent_window = int(parent_metadata.get("source_window", 0))
+    source_window = parent_window if args.source_window < 0 else args.source_window
+    if source_window != parent_window:
+        raise SystemExit("ECLI source window must match its FQRB parent")
     examples, skipped = load_examples(args.data, tokenizer, cfg.seq_len, anchor_ids)
+    source_lengths = [max(len(example[field]) for field in ("base", "edited", "counter_edited", "donor")) for example in examples]
+    if source_window and (source_window < max(source_lengths) or source_window < tape_len):
+        raise SystemExit("source window must fit every source and the native anchor tape")
     code_lengths = {
         len(tokenizer.encode(" " + json.loads(line)["response"]).ids)
         for line in open(args.data) if line.strip()
@@ -108,6 +118,7 @@ def main() -> None:
     total_steps = args.epochs * len(batches)
     print(json.dumps({"mechanism": "ephemeral_codebook_fqrb_v1", "examples": len(examples), "skipped": skipped,
                       "batch_report": batch_report, "steps": total_steps, "layer": args.layer, "tape_len": tape_len,
+                      "source_window": source_window, "max_source_tokens": max(source_lengths),
                       "data_sha256": data_sha}, sort_keys=True), flush=True)
     model = GPT(cfg).to("cuda")
     model.load_state_dict(checkpoint["model"])
@@ -129,7 +140,9 @@ def main() -> None:
             opt_muon.zero_grad(set_to_none=True)
             opt_adam.zero_grad(set_to_none=True)
             with torch.autocast("cuda", dtype=torch.bfloat16):
-                _, loss, tape, _ = supervised_algebra_loss(model, base, edited, donor, suffix, answer, args.layer, tape_len, eos_id)
+                _, loss, tape, _ = supervised_algebra_loss(
+                    model, base, edited, donor, suffix, answer, args.layer, tape_len, eos_id, source_window,
+                )
             if not torch.isfinite(loss):
                 raise RuntimeError("non-finite loss at {}".format(step))
             loss.backward()
@@ -146,7 +159,7 @@ def main() -> None:
     os.makedirs(args.out)
     output = os.path.join(args.out, "ecfqrb_ep1.pt")
     metadata = {
-        "layer": args.layer, "tape_len": tape_len, "source_anchor": args.source_anchor,
+        "layer": args.layer, "tape_len": tape_len, "source_anchor": args.source_anchor, "source_window": source_window,
         "data_sha256": data_sha, "source_present_at_suffix": False, "extra_trainable_parameters": 0,
         "composition": "donor + edited - base", "paraphrase_bundles": True,
         "train_examples": len(examples), "max_batches_per_epoch": args.max_batches,

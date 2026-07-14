@@ -21,6 +21,7 @@ AUDIT=${AUDIT:-$BASE/artifacts/evals/finite_query_residual_basis_v1_audit.json}
 OUT=${OUT:?set OUT to a fresh isolated train/fqrb_* output directory}
 LAYER=${LAYER:-19}
 TAPE_LEN=${TAPE_LEN:-0}
+SOURCE_WINDOW=${SOURCE_WINDOW:-0}
 EPOCHS=${EPOCHS:-1}
 BS=${BS:-4}
 MAX_EXAMPLES=${MAX_EXAMPLES:-0}
@@ -78,9 +79,10 @@ then
 fi
 ARGS=()
 if [ "$TAPE_LEN" -gt 0 ]; then ARGS+=(--tape-len "$TAPE_LEN"); fi
+if [ "$SOURCE_WINDOW" -gt 0 ]; then ARGS+=(--source-window "$SOURCE_WINDOW"); fi
 if [ "$MAX_EXAMPLES" -gt 0 ]; then ARGS+=(--max-examples "$MAX_EXAMPLES"); fi
 if [ "$MAX_BATCHES" -gt 0 ]; then ARGS+=(--max-batches "$MAX_BATCHES"); fi
-echo "[fqrb-train] init=$INIT data=$DATA layer=$LAYER tape_len=${TAPE_LEN:-auto} out=$OUT epochs=$EPOCHS batch=$BS max_batches=$MAX_BATCHES"
+echo "[fqrb-train] init=$INIT data=$DATA layer=$LAYER tape_len=${TAPE_LEN:-auto} source_window=$SOURCE_WINDOW out=$OUT epochs=$EPOCHS batch=$BS max_batches=$MAX_BATCHES"
 "$PY" train_counterfactual_residual_algebra.py \
   --init "$INIT" --data "$DATA" --audit "$AUDIT" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
   --out "$OUT" --layer "$LAYER" --epochs "$EPOCHS" --batch-size "$BS" "${ARGS[@]}"

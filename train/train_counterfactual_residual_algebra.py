@@ -124,6 +124,8 @@ def main():
     parser.add_argument("--out", required=True)
     parser.add_argument("--layer", type=int, default=19)
     parser.add_argument("--tape-len", type=int, default=0)
+    parser.add_argument("--source-window", type=int, default=0,
+                        help="right-align sources in a fixed zero-embedded positional window; zero preserves the original path")
     parser.add_argument("--source-anchor", default="\nEnd state record:")
     parser.add_argument("--epochs", type=int, default=1)
     parser.add_argument("--batch-size", type=int, default=4)
@@ -164,6 +166,9 @@ def main():
     if not args.layer < cfg.n_layer - 1 or cfg.n_loop != 1:
         raise SystemExit("invalid CRA layer or unsupported recurrent model")
     examples, skipped = load_examples(args.data, tokenizer, cfg.seq_len, anchor_ids)
+    source_lengths = [max(len(example[field]) for field in ("base", "edited", "counter_edited", "donor")) for example in examples]
+    if args.source_window and (args.source_window < max(source_lengths) or args.source_window < tape_len):
+        raise SystemExit("source window must fit every source and the native anchor tape")
     if args.max_examples:
         examples = examples[:args.max_examples]
     batches, batch_report = bucketed_batches(examples, args.batch_size, args.seed)
@@ -172,6 +177,7 @@ def main():
     total_steps = args.epochs * len(batches)
     print(json.dumps({"cra": "counterfactual_residual_algebra_v1", "examples": len(examples), "skipped": skipped,
                       "batch_report": batch_report, "steps": total_steps, "layer": args.layer, "tape_len": tape_len,
+                      "source_window": args.source_window, "max_source_tokens": max(source_lengths),
                       "max_batches": args.max_batches, "data_sha256": data_sha}, sort_keys=True), flush=True)
 
     model = GPT(cfg).to("cuda")
@@ -198,13 +204,13 @@ def main():
                     base, edited, counter_edited, donor, suffix, answer, counter_answer = batch
                     pair = paired_counterfactual_algebra_loss(
                         model, base, edited, counter_edited, donor, suffix, answer, counter_answer,
-                        args.layer, tape_len, eos_id, args.contrast_margin,
+                        args.layer, tape_len, eos_id, args.contrast_margin, args.source_window,
                     )
                     loss, tape = pair["loss"], pair["normal_tape"]
                 else:
                     base, edited, donor, suffix, answer = batch
                     _, loss, tape, _ = supervised_algebra_loss(
-                        model, base, edited, donor, suffix, answer, args.layer, tape_len, eos_id,
+                        model, base, edited, donor, suffix, answer, args.layer, tape_len, eos_id, args.source_window,
                     )
             if not torch.isfinite(loss):
                 raise RuntimeError("non-finite CRA loss at {}".format(step))
@@ -230,6 +236,7 @@ def main():
         "model": model.state_dict(), "cfg": cfg.__dict__, "step": "cra_ep1",
         "counterfactual_residual_algebra": {
             "layer": args.layer, "tape_len": tape_len, "source_anchor": args.source_anchor,
+            "source_window": args.source_window,
             "data_sha256": data_sha, "source_present_at_suffix": False, "extra_trainable_parameters": 0,
             "composition": "donor + edited - base", "paraphrase_bundles": True,
             "train_examples": len(examples), "max_batches_per_epoch": args.max_batches,

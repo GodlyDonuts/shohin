@@ -29,17 +29,35 @@ def _check_tape(model, tape, tape_len):
         raise ValueError("tape must have shape [batch, tape_len, d_model]")
 
 
-def encode_residual_tape(model, source_ids, layer, tape_len):
-    """Encode a source to a native tape at one fixed intermediate layer."""
+def encode_residual_tape(model, source_ids, layer, tape_len, source_window=0):
+    """Encode a source to a native tape at one fixed intermediate layer.
+
+    ``source_window=0`` preserves the original path.  A positive window
+    right-aligns source tokens in a fixed, zero-embedded positional frame so
+    independently rendered source records place their common anchor at the
+    same RoPE positions before residual arithmetic.  The prefix has no token
+    ids, trainable state, or source content.
+    """
     _check_ids("source_ids", source_ids)
     _check_layer(model, layer)
     if tape_len <= 0 or tape_len > source_ids.shape[1]:
         raise ValueError("tape_len must be positive and no longer than source")
     if source_ids.shape[1] > model.cfg.seq_len:
         raise ValueError("source exceeds configured sequence length")
+    if source_window < 0 or (source_window and source_window < source_ids.shape[1]):
+        raise ValueError("source_window must be zero or at least the source length")
+    width = source_window or source_ids.shape[1]
+    if width > model.cfg.seq_len:
+        raise ValueError("source_window exceeds configured sequence length")
     x = model.tok(source_ids)
-    cos = model.cos[:source_ids.shape[1]].to(x.device)
-    sin = model.sin[:source_ids.shape[1]].to(x.device)
+    if width > source_ids.shape[1]:
+        prefix = torch.zeros(
+            (source_ids.shape[0], width - source_ids.shape[1], model.cfg.d_model),
+            device=x.device, dtype=x.dtype,
+        )
+        x = torch.cat((prefix, x), dim=1)
+    cos = model.cos[:width].to(x.device)
+    sin = model.sin[:width].to(x.device)
     for block in model.blocks[:layer + 1]:
         x, _ = block(x, cos, sin)
     return x[:, -tape_len:, :]
@@ -59,23 +77,27 @@ def compose_two_edit_counterfactual_tape(base, primary_edited, secondary_edited,
     return donor + primary_edited + secondary_edited - 2 * base
 
 
-def algebra_suffix_logits(model, tape, suffix_embeds, layer, tape_len):
+def algebra_suffix_logits(model, tape, suffix_embeds, layer, tape_len, tape_start_pos=0):
     """Run the tail from a composed tape and source-free suffix embeddings."""
     _check_layer(model, layer)
     _check_tape(model, tape, tape_len)
     if suffix_embeds.ndim != 3 or suffix_embeds.shape[0] != tape.shape[0] or suffix_embeds.shape[-1] != model.cfg.d_model:
         raise ValueError("suffix embeddings must match tape batch and width")
+    if tape_start_pos < 0:
+        raise ValueError("tape_start_pos must be nonnegative")
     x = torch.cat((tape, suffix_embeds), dim=1)
-    if x.shape[1] > model.cfg.seq_len:
+    if tape_start_pos + x.shape[1] > model.cfg.seq_len:
         raise ValueError("tape suffix exceeds configured sequence length")
-    cos = model.cos[:x.shape[1]].to(x.device)
-    sin = model.sin[:x.shape[1]].to(x.device)
+    cos = model.cos[tape_start_pos:tape_start_pos + x.shape[1]].to(x.device)
+    sin = model.sin[tape_start_pos:tape_start_pos + x.shape[1]].to(x.device)
     for block in model.blocks[layer + 1:]:
         x, _ = block(x, cos, sin)
     return model.head(model.norm(x))
 
 
-def supervised_algebra_loss(model, base_ids, edited_ids, donor_ids, suffix_prompt_ids, answer_ids, layer, tape_len, eos_id):
+def supervised_algebra_loss(
+    model, base_ids, edited_ids, donor_ids, suffix_prompt_ids, answer_ids, layer, tape_len, eos_id, source_window=0,
+):
     """Completion loss after a three-source residual-algebra hard cut."""
     for name, ids in (("base_ids", base_ids), ("edited_ids", edited_ids), ("donor_ids", donor_ids),
                       ("suffix_prompt_ids", suffix_prompt_ids), ("answer_ids", answer_ids)):
@@ -83,12 +105,13 @@ def supervised_algebra_loss(model, base_ids, edited_ids, donor_ids, suffix_promp
     batch = base_ids.shape[0]
     if any(ids.shape[0] != batch for ids in (edited_ids, donor_ids, suffix_prompt_ids, answer_ids)):
         raise ValueError("all algebra inputs must share the same batch")
-    base = encode_residual_tape(model, base_ids, layer, tape_len)
-    edited = encode_residual_tape(model, edited_ids, layer, tape_len)
-    donor = encode_residual_tape(model, donor_ids, layer, tape_len)
+    base = encode_residual_tape(model, base_ids, layer, tape_len, source_window)
+    edited = encode_residual_tape(model, edited_ids, layer, tape_len, source_window)
+    donor = encode_residual_tape(model, donor_ids, layer, tape_len, source_window)
     tape = compose_counterfactual_tape(base, edited, donor)
     suffix = torch.cat((model.tok(suffix_prompt_ids), model.tok(answer_ids)), dim=1)
-    logits = algebra_suffix_logits(model, tape, suffix, layer, tape_len)
+    tape_start_pos = source_window - tape_len if source_window else 0
+    logits = algebra_suffix_logits(model, tape, suffix, layer, tape_len, tape_start_pos)
     targets = build_answer_targets(answer_ids, tape_len + suffix_prompt_ids.shape[1], 0, eos_id)
     loss = torch.nn.functional.cross_entropy(
         logits.float().reshape(-1, logits.shape[-1]), targets.reshape(-1), ignore_index=-1,
@@ -96,14 +119,16 @@ def supervised_algebra_loss(model, base_ids, edited_ids, donor_ids, suffix_promp
     return logits, loss, tape, targets
 
 
-def answer_loss_for_algebra_tape(model, tape, suffix_prompt_ids, answer_ids, layer, tape_len, eos_id):
+def answer_loss_for_algebra_tape(
+    model, tape, suffix_prompt_ids, answer_ids, layer, tape_len, eos_id, tape_start_pos=0,
+):
     """Return answer-only CE after a previously composed native tape."""
     _check_ids("suffix_prompt_ids", suffix_prompt_ids)
     _check_ids("answer_ids", answer_ids)
     if tape.shape[0] != suffix_prompt_ids.shape[0] or tape.shape[0] != answer_ids.shape[0]:
         raise ValueError("tape, suffix, and answer batch sizes must agree")
     suffix = torch.cat((model.tok(suffix_prompt_ids), model.tok(answer_ids)), dim=1)
-    logits = algebra_suffix_logits(model, tape, suffix, layer, tape_len)
+    logits = algebra_suffix_logits(model, tape, suffix, layer, tape_len, tape_start_pos)
     targets = build_answer_targets(answer_ids, tape_len + suffix_prompt_ids.shape[1], 0, eos_id)
     loss = torch.nn.functional.cross_entropy(
         logits.float().reshape(-1, logits.shape[-1]), targets.reshape(-1), ignore_index=-1,
@@ -111,14 +136,16 @@ def answer_loss_for_algebra_tape(model, tape, suffix_prompt_ids, answer_ids, lay
     return logits, loss, targets
 
 
-def answer_nll_per_example_for_algebra_tape(model, tape, suffix_prompt_ids, answer_ids, layer, tape_len, eos_id):
+def answer_nll_per_example_for_algebra_tape(
+    model, tape, suffix_prompt_ids, answer_ids, layer, tape_len, eos_id, tape_start_pos=0,
+):
     """Return one answer-only mean NLL per batch item after a fixed tape."""
     _check_ids("suffix_prompt_ids", suffix_prompt_ids)
     _check_ids("answer_ids", answer_ids)
     if tape.shape[0] != suffix_prompt_ids.shape[0] or tape.shape[0] != answer_ids.shape[0]:
         raise ValueError("tape, suffix, and answer batch sizes must agree")
     suffix = torch.cat((model.tok(suffix_prompt_ids), model.tok(answer_ids)), dim=1)
-    logits = algebra_suffix_logits(model, tape, suffix, layer, tape_len)
+    logits = algebra_suffix_logits(model, tape, suffix, layer, tape_len, tape_start_pos)
     targets = build_answer_targets(answer_ids, tape_len + suffix_prompt_ids.shape[1], 0, eos_id)
     token_nll = torch.nn.functional.cross_entropy(
         logits.float().transpose(1, 2), targets, ignore_index=-1, reduction="none",
@@ -129,7 +156,7 @@ def answer_nll_per_example_for_algebra_tape(model, tape, suffix_prompt_ids, answ
 
 def paired_counterfactual_algebra_loss(
     model, base_ids, edited_ids, counter_edited_ids, donor_ids, suffix_prompt_ids,
-    answer_ids, counter_answer_ids, layer, tape_len, eos_id, margin,
+    answer_ids, counter_answer_ids, layer, tape_len, eos_id, margin, source_window=0,
 ):
     """Train both edit directions plus a functional paired-answer margin.
 
@@ -151,23 +178,24 @@ def paired_counterfactual_algebra_loss(
         edited_ids, counter_edited_ids, donor_ids, suffix_prompt_ids, answer_ids, counter_answer_ids,
     )):
         raise ValueError("all paired algebra inputs must share a batch")
-    base = encode_residual_tape(model, base_ids, layer, tape_len)
-    edited = encode_residual_tape(model, edited_ids, layer, tape_len)
-    counter_edited = encode_residual_tape(model, counter_edited_ids, layer, tape_len)
-    donor = encode_residual_tape(model, donor_ids, layer, tape_len)
+    base = encode_residual_tape(model, base_ids, layer, tape_len, source_window)
+    edited = encode_residual_tape(model, edited_ids, layer, tape_len, source_window)
+    counter_edited = encode_residual_tape(model, counter_edited_ids, layer, tape_len, source_window)
+    donor = encode_residual_tape(model, donor_ids, layer, tape_len, source_window)
     normal_tape = compose_counterfactual_tape(base, edited, donor)
     counter_tape = compose_counterfactual_tape(base, counter_edited, donor)
+    tape_start_pos = source_window - tape_len if source_window else 0
     normal_ce_each = answer_nll_per_example_for_algebra_tape(
-        model, normal_tape, suffix_prompt_ids, answer_ids, layer, tape_len, eos_id,
+        model, normal_tape, suffix_prompt_ids, answer_ids, layer, tape_len, eos_id, tape_start_pos,
     )
     normal_foil_each = answer_nll_per_example_for_algebra_tape(
-        model, normal_tape, suffix_prompt_ids, counter_answer_ids, layer, tape_len, eos_id,
+        model, normal_tape, suffix_prompt_ids, counter_answer_ids, layer, tape_len, eos_id, tape_start_pos,
     )
     counter_ce_each = answer_nll_per_example_for_algebra_tape(
-        model, counter_tape, suffix_prompt_ids, counter_answer_ids, layer, tape_len, eos_id,
+        model, counter_tape, suffix_prompt_ids, counter_answer_ids, layer, tape_len, eos_id, tape_start_pos,
     )
     counter_foil_each = answer_nll_per_example_for_algebra_tape(
-        model, counter_tape, suffix_prompt_ids, answer_ids, layer, tape_len, eos_id,
+        model, counter_tape, suffix_prompt_ids, answer_ids, layer, tape_len, eos_id, tape_start_pos,
     )
     normal_ce, normal_foil = normal_ce_each.mean(), normal_foil_each.mean()
     counter_ce, counter_foil = counter_ce_each.mean(), counter_foil_each.mean()
@@ -186,7 +214,9 @@ def paired_counterfactual_algebra_loss(
 
 
 @torch.no_grad()
-def generate_from_algebra_tape(model, tape, suffix_prompt_ids, layer, tape_len, eos_id, max_new):
+def generate_from_algebra_tape(
+    model, tape, suffix_prompt_ids, layer, tape_len, eos_id, max_new, tape_start_pos=0,
+):
     """Greedily decode from a supplied composed tape with sources absent."""
     _check_ids("suffix_prompt_ids", suffix_prompt_ids)
     _check_tape(model, tape, tape_len)
@@ -197,9 +227,9 @@ def generate_from_algebra_tape(model, tape, suffix_prompt_ids, layer, tape_len, 
     suffix = model.tok(suffix_prompt_ids)
     generated = []
     for _ in range(max_new):
-        logits = algebra_suffix_logits(model, tape, suffix, layer, tape_len)
+        logits = algebra_suffix_logits(model, tape, suffix, layer, tape_len, tape_start_pos)
         next_id = logits[:, -1, :].argmax(dim=-1, keepdim=True)
-        if int(next_id.item()) == int(eos_id) or tape_len + suffix.shape[1] + 1 > model.cfg.seq_len:
+        if int(next_id.item()) == int(eos_id) or tape_start_pos + tape_len + suffix.shape[1] + 1 > model.cfg.seq_len:
             break
         generated.append(int(next_id.item()))
         suffix = torch.cat((suffix, model.tok(next_id)), dim=1)
