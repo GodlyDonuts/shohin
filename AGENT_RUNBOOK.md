@@ -3519,6 +3519,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   absent FQRB admission records a blocked no-op. This removes idle time without allowing a failed primitive
   to consume an ECLI GPU allocation.
 
+- **2026-07-14 08:45** — **Read-only causal evaluation generation caps were tightened from tokenizer
+  evidence, not score tuning.** Every normal/counterfactual FQRB response in all three frozen 500-group
+  factors is exactly **3 or 5** tokenizer tokens, so pending combined/core/magnitude jobs `688666/688690/688691`
+  were canceled before start and replaced by `688696/688697/688698` with `MAX_NEW=6`. This retains a one-token
+  margin above every valid completion but avoids up to six useless tail passes per decode. ECLI codes are
+  uniformly three tokens; its future evaluator now receives `MAX_NEW=4`. PAAT inherits the six-token FQRB
+  cap. These limits affect only when greedy decoding stops, never the frozen target, source tape, controls,
+  or scoring predicate.
+
 - **2026-07-14 08:35** — **PAAT has an equally narrow conditional failure branch.** Dependency-held CPU
   gate `submit_paat_if_fqrb_transport_rejected.sbatch` waits for the bound FQRB assessment and taxonomy.
   It can submit the fresh `fqrb_200k_l19_phase_r1` arm only when the original train primitive passes,

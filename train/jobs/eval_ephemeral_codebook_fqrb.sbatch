@@ -20,6 +20,7 @@ DATA_SHA=${DATA_SHA:?set expected ECLI evaluation SHA-256}
 OUT=${OUT:?set fresh evaluation report path}
 SPLIT=${SPLIT:-heldout}
 GROUPS=${GROUPS:-500}
+MAX_NEW=${MAX_NEW:-12}
 export OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=4
 export RAYON_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false
 
@@ -44,9 +45,9 @@ if not torch.cuda.is_available():
     raise SystemExit(75)
 torch.empty(1, device='cuda', dtype=torch.bfloat16)
 PY
-echo "[ecli-eval] ckpt=$CKPT data=$DATA split=$SPLIT groups=$GROUPS out=$OUT"
+echo "[ecli-eval] ckpt=$CKPT data=$DATA split=$SPLIT groups=$GROUPS max_new=$MAX_NEW out=$OUT"
 "$PY" eval_finite_query_residual_basis.py \
   --ckpt "$CKPT" --data "$DATA" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
-  --out "$OUT" --split "$SPLIT" --max-groups "$GROUPS"
+  --out "$OUT" --split "$SPLIT" --max-groups "$GROUPS" --max-new "$MAX_NEW"
 test -s "$OUT"
 echo "[ecli-eval] wrote $OUT"

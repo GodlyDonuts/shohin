@@ -97,7 +97,7 @@ PY
 
 cd "$BASE"
 TRAIN_JOB=$(sbatch --parsable --export=NONE,INIT="$INIT",DATA="$DATA",DATA_SHA="$DATA_SHA",AUDIT="$AUDIT",ASSESSMENT="$ASSESSMENT",OUT="$OUT" "$BASE/train/jobs/train_ephemeral_codebook_fqrb.sbatch")
-EVAL_JOB=$(sbatch --parsable --dependency=afterok:"$TRAIN_JOB" --export=NONE,CKPT="$OUT/ecfqrb_ep1.pt",DATA="$HELDOUT",DATA_SHA="$HELDOUT_SHA",OUT="$EVAL_OUT",SPLIT=heldout,GROUPS=500 "$BASE/train/jobs/eval_ephemeral_codebook_fqrb.sbatch")
+EVAL_JOB=$(sbatch --parsable --dependency=afterok:"$TRAIN_JOB" --export=NONE,CKPT="$OUT/ecfqrb_ep1.pt",DATA="$HELDOUT",DATA_SHA="$HELDOUT_SHA",OUT="$EVAL_OUT",SPLIT=heldout,GROUPS=500,MAX_NEW=4 "$BASE/train/jobs/eval_ephemeral_codebook_fqrb.sbatch")
 ASSESS_JOB=$(sbatch --parsable --dependency=afterok:"$EVAL_JOB" --export=NONE,REPORT="$EVAL_OUT",AUDIT="$AUDIT",OUT="$ASSESS_OUT" "$BASE/train/jobs/assess_ephemeral_codebook_fqrb.sbatch")
 
 "$PY" - "$STATUS" "$TRAIN_JOB" "$EVAL_JOB" "$ASSESS_JOB" "$DATA_SHA" "$HELDOUT_SHA" "$ASSESSMENT_SHA" "$AUDIT_SHA" <<'PY'
