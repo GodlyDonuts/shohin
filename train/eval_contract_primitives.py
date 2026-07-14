@@ -52,8 +52,16 @@ def read_rows(path, limit, per_contract_family):
             if not line.strip():
                 continue
             row = json.loads(line)
-            if not row.get("completion_prompt") or not row.get("answer"):
+            prompt = str(row.get("completion_prompt") or "")
+            if not prompt:
+                question = str(row.get("question") or "").strip()
+                prompt = f"Question: {question}\nAnswer:" if question else ""
+            if not prompt or not row.get("answer"):
                 continue
+            # SFT uses the same fallback for ordinary question/answer rows.
+            # Store the resolved inference boundary so every evaluator row has
+            # one explicit, auditable completion prompt.
+            row["completion_prompt"] = prompt
             # The original verified primitive curriculum predates explicit
             # contract labels. Its rows are ordinary answer contracts, and
             # must remain evaluable under the newer contract evaluator.
