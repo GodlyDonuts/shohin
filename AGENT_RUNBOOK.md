@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 11:23 EDT (the protected two-H100 pretrain remains healthy and isolated; FQRB and full-strength COTA are closed negative. The retained direct-skill SFT has a real but narrow visible-trace signal. A direct-only, broad-anchored operator SFT is now running from an immutable retained checkpoint after all source-contract and decontamination gates passed; its entire post-fit evidence chain is dependency-held and pre-registered.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 11:41 EDT (the protected two-H100 pretrain remains healthy and isolated; FQRB and full-strength COTA are closed negative. The retained direct-skill SFT has a real but narrow visible-trace signal. The direct-only, broad-anchored operator SFT has passed CUDA/compile/startup health and is fitting from an immutable retained checkpoint; its entire post-fit evidence chain remains dependency-held and pre-registered.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -3770,3 +3770,11 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   passed its independent wrapper admission on evc22 and starts one isolated epoch from the retained SFT.
   `688859`--`688866` are dependency-held read-only evaluations; no job may write a flagship path or submit
   another training successor. The public board remains blocked until the held-out operational gates pass.
+
+- **2026-07-14 11:28--11:41** — **Direct-only anchor fit cleared its real startup health gate.** `688858`
+  completed TorchInductor startup without error, then reported finite step-0 loss **0.5368** (supervised
+  **0.5367**, replay KL **0.0003**). It is stable through step **460/4,943**: observed losses remain
+  finite (0.1864--0.5728) and replay KL small (0.0020--0.0049) under the frozen reference. The allocated
+  H100 is now **100% utilized** at 31.4/81.6GiB, so the apparent startup pause was compiler work rather
+  than a CPU fallback or a failed fit. This is only a mechanics/admission result: the isolated checkpoint
+  remains unpromoted until its fixed-trace, factor, OOD, primitive, RG, and direct behavioral gates pass.
