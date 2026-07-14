@@ -458,6 +458,32 @@ general technique. If the residual algebra does not pass the first primitive,
 it closes with NRR rather than acquiring a recurrence, a public benchmark, or
 a post-hoc story.
 
+### Conditional Fallback: Paired Counterfactual Discrimination
+
+Raw-model geometry gives this first CRA arm a specific, falsifiable failure
+mode: the residual differences for `+d` and `-d` are almost collinear even
+though their answers must diverge. Ordinary one-target CE could therefore
+lower loss by making the source-free suffix sensitive to a broad
+"there was an edit" template without making the *direction* of that edit
+functional.
+
+The conditional **paired CRA** fallback keeps the exact native tape, hard cut,
+source corpus, and no-extra-parameter rule. For each episode it decodes both
+`Z(B) + Z(A') - Z(A)` and
+`Z(B) + Z(A'_{cf}) - Z(A)`. Besides CE for both solver answers, it applies a
+per-example margin only at the output distribution:
+
+`NLL(correct | tape) + m < NLL(opposite-counterfactual-answer | tape)`.
+
+This is not an activation-attraction loss and does not assert that residual
+vectors should have a particular cosine. It only rejects a model that assigns
+the same completion preference to both causal interventions. Each example's
+margin is computed independently, so errors cannot cancel across a minibatch.
+The fallback can run only after a fully evaluated ordinary CRA rejection. It
+must then clear the same behavioral combined and factor gates; improved
+training loss or teacher-forced margin alone cannot advance a context or
+reasoning claim.
+
 ### Conditional Next Hypothesis: Counterfactual Reflection Route
 
 An exact external carrier, even if it passes V2, would still be an explicit
