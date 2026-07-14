@@ -3514,7 +3514,8 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   ECLI train, dependent evaluation, and CPU-only threshold assessment chain and write an admission JSON with
   all job IDs/hashes. The assessment applies the per-reader, codebook-swap, joint, and control thresholds
   but cannot submit a successor. Original pending gate `688692` was canceled before start after a race audit;
-  replacement CPU gate **688695** is held `afterok:688687` and waits up to two hours for the FQRB assessment
+  replacement CPU gate `688695` was canceled before start only to capture the bounded decoding cap; current
+  CPU gate **688700** is held `afterok:688687` and waits up to two hours for the FQRB assessment
   and its watcher-generated bound data rather than treating an early transcript completion as a failed gate. A failed or
   absent FQRB admission records a blocked no-op. This removes idle time without allowing a failed primitive
   to consume an ECLI GPU allocation.
@@ -3536,4 +3537,5 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   fixes `SOURCE_WINDOW=26` (the measured full-corpus source maximum), with all other FQRB data, init,
   BS=4, epoch/update schedule, hard source cut, and evaluator settings unchanged. Its combined/core/magnitude
   factors run in parallel and it receives the same raw-vs-candidate and deep transcript audits. CPU gate
-  **688694** is held `afterok:688687`. No generic residual-algebra retry is authorized.
+  `688694` was canceled before start only to capture the bounded decoding cap; current CPU gate **688699** is
+  held `afterok:688687`. No generic residual-algebra retry is authorized.
