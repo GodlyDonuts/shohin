@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 04:33 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; V10A r2, continuous latent rollout, LSA, CPR, DRS, exact-carrier transport, PSA, and **Native Residual Relay v1** are closed negative branches; NRR's full arms score 0/500 held-out and only 2/200 strict causal in-distribution, so recurrence is blocked; the original Counterfactual Residual Algebra primitive has a solver-verified 30k/2k corpus, raw-200k zero floor, hardware/evaluator canary, independent language/value/delta/query/two-edit controls, teacher-forced diagnostic, and one isolated raw-200k L19 full arm running; its distinct paired causal-discrimination fallback passed hardware validation and is dependency-gated behind first-arm evidence; counterfactual-workspace induction, DCRD, CBC, semantic capsules, ISL, counterfactual reflection, and reversible checkpoints remain conditional). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 04:41 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; V10A r2, continuous latent rollout, LSA, CPR, DRS, exact-carrier transport, PSA, and **Native Residual Relay v1** are closed negative branches; NRR's full arms score 0/500 held-out and only 2/200 strict causal in-distribution, so recurrence is blocked; the original Counterfactual Residual Algebra primitive has a solver-verified 30k/2k corpus, raw-200k zero floor, hardware/evaluator canary, independent language/value/delta/query/two-edit controls, teacher-forced diagnostic, and one isolated raw-200k L19 full arm running; its distinct paired causal-discrimination fallback passed hardware validation and now has a conditional full behavior/NLL/factor/gate chain; counterfactual-workspace induction, DCRD, CBC, semantic capsules, ISL, counterfactual reflection, and reversible checkpoints remain conditional). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -3266,3 +3266,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   not a capability score. Its measured ~0.9 seconds/update means a 15,000-update paired epoch needs about
   3.75 hours plus queue/serialization margin; the original 3-hour held fallback could have timed out before
   saving. Replaced it with the five-hour `688609 -> 688610` chain. Never infer capability from the canary.
+
+- **2026-07-14 04:41** — **Paired CRA post-evidence chain is fully conditional, hash-bound, and
+  auto-assessed.** After the first-arm CPU gate `688601` rejects, paired trainer `688609` and combined
+  evaluator `688610` may run. Only then do held jobs `688616` (teacher-forced likelihood), `688617`
+  (language), `688618` (values), `688619` (delta), `688620` (query), `688621` (two-edit), and `688622`
+  (200-row in-distribution diagnostic) become eligible; `688623` aggregates them with the same pre-registered
+  CRA thresholds. Every paired wrapper first reads the original decision and exits **successfully without
+  an artifact** unless it is exactly `reject_cra_l19_r1_no_recurrence_or_public_benchmark`; this prevents an
+  ordinary CRA success from producing false fallback failures. The paired factor chain uses the already
+  admitted language/value/delta/query/two-edit SHA-256 values recorded above, and the training diagnostic
+  binds the 30k-row training corpus SHA. The paired gate is still not a promotion: any result must survive
+  behavioral normal/paraphrase/counterfactual, zero/shuffle, all factors, and independent interaction before
+  it can motivate another mechanism.
