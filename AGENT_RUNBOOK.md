@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 03:57 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; V10A r2, continuous latent rollout, LSA, CPR, DRS, exact-carrier transport, PSA, and **Native Residual Relay v1** are closed negative branches; NRR's full arms score 0/500 held-out and only 2/200 strict causal in-distribution, so recurrence is blocked; the original Counterfactual Residual Algebra primitive has a solver-verified 30k/2k corpus, hardware/evaluator canary, independent language/value/delta/query/two-edit controls, and one isolated raw-200k L19 full arm running; counterfactual-workspace induction, DCRD, CBC, semantic capsules, ISL, counterfactual reflection, and reversible checkpoints remain conditional). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 04:17 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; V10A r2, continuous latent rollout, LSA, CPR, DRS, exact-carrier transport, PSA, and **Native Residual Relay v1** are closed negative branches; NRR's full arms score 0/500 held-out and only 2/200 strict causal in-distribution, so recurrence is blocked; the original Counterfactual Residual Algebra primitive has a solver-verified 30k/2k corpus, raw-200k zero floor, hardware/evaluator canary, independent language/value/delta/query/two-edit controls, teacher-forced diagnostic, and one isolated raw-200k L19 full arm running; counterfactual-workspace induction, DCRD, CBC, semantic capsules, ISL, counterfactual reflection, and reversible checkpoints remain conditional). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -3215,3 +3215,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   in the controlled delta/query factors is reported explicitly; exact source bundles and the required
   unseen world transitions remain zero. **No CRA score exists yet and no recurrence/public-board claim is
   allowed unless the pre-registered causal gates clear.**
+
+- **2026-07-14 04:17** — **CRA now has a checkpoint-bound raw zero floor and a separate likelihood
+  diagnostic.** Read-only raw-200k L19 evaluation `688595` completed all 500 jointly held-out worlds:
+  **0/500** normal, paraphrase, counterfactual, and strict causal passes; zero and shuffled controls also
+  recreated no correct normal answers. This is not a generic-language score: it measures the deliberately
+  source-free residual-algebra path, whose raw continuations are expectedly off-manifold. The same raw
+  checkpoint's teacher-forced audit `688596` is similarly non-causal: only **1/500** has simultaneous
+  normal/counterfactual/paraphrase directional preference and strict control margins. Mean normal
+  target-versus-counterfactual margin is +0.0973 NLL, but the required counterfactual direction is
+  **-0.0967** NLL; the raw tape slightly favors the normal target regardless of which edit is applied.
+  This establishes a clean zero floor rather than a greedy-decoding ambiguity. Added and GitHub-backed
+  `eval_counterfactual_residual_algebra_nll.py` / `eval_counterfactual_residual_algebra_nll.sbatch` to
+  report the same evidence for the trained checkpoint. `688599` is held after full CRA training and runs
+  in parallel with the behavioral chain; its likelihood result remains **diagnostic only**, never a
+  reasoning or promotion score. At this entry, full isolated L19 training `688556` is still running,
+  most recently through 4,560/15,000 updates; do not infer success from its loss and do not touch the
+  flagship.
