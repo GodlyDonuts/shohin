@@ -21,12 +21,14 @@ TEXT_OVERLAP=${TEXT_OVERLAP:?set TEXT_OVERLAP to the full-text overlap report}
 TRACE_OVERLAP=${TRACE_OVERLAP:?set TRACE_OVERLAP to the fixed trace overlap report}
 OOD_OVERLAP=${OOD_OVERLAP:?set OOD_OVERLAP to the state OOD overlap report}
 FACTOR_OVERLAP=${FACTOR_OVERLAP:?set FACTOR_OVERLAP to the wording/full factor overlap report}
+DIRECTNESS=${DIRECTNESS:?set DIRECTNESS to the source-level operator directness report}
 INIT=${INIT:?set INIT to an immutable retained-SFT checkpoint}
 REFERENCE=${REFERENCE:-$INIT}
 REPLAY=${REPLAY:?set REPLAY to the frozen prompt-only replay JSONL}
 REPLAY_SHA=${REPLAY_SHA:?set REPLAY_SHA to its expected SHA-256}
 OUT=${OUT:?set OUT to a fresh train/sft_operator_trace_anchor_* directory}
 REQUIRED_EXCLUDED_CONTRACT=${REQUIRED_EXCLUDED_CONTRACT:-}
+REQUIRED_OPERATOR_MIN_ROWS=${REQUIRED_OPERATOR_MIN_ROWS:-160000}
 EPOCHS=${EPOCHS:-1}
 BS=${BS:-16}
 LRMUON=${LRMUON:-0.0006}
@@ -36,7 +38,7 @@ REPLAY_BATCH=${REPLAY_BATCH:-4}
 REPLAY_MAX_TOKENS=${REPLAY_MAX_TOKENS:-128}
 WEIGHTS=${WEIGHTS:-"math=0.25 procedural=0.30 code=0.05 teacher=0.05 primitives=0.20 operator_trace_contrast=0.15"}
 
-for path in "$DATA" "$MIX" "$QUALITY" "$TEXT_OVERLAP" "$TRACE_OVERLAP" "$OOD_OVERLAP" "$FACTOR_OVERLAP" "$INIT" "$REFERENCE" "$REPLAY"; do
+for path in "$DATA" "$MIX" "$QUALITY" "$TEXT_OVERLAP" "$TRACE_OVERLAP" "$OOD_OVERLAP" "$FACTOR_OVERLAP" "$DIRECTNESS" "$INIT" "$REFERENCE" "$REPLAY"; do
   [ -s "$path" ] || { echo "[opanchor] required input missing: $path" >&2; exit 2; }
 done
 [ "$(sha256sum "$REPLAY" | awk '{print $1}')" = "$REPLAY_SHA" ] || {
@@ -47,16 +49,17 @@ case "$OUT" in "$BASE"/train/sft_operator_trace_anchor_*) ;; *)
   echo "[opanchor] OUT must be an isolated train/sft_operator_trace_anchor_* directory" >&2; exit 5;;
 esac
 
-"$PY" - "$DATA" "$MIX" "$QUALITY" "$TEXT_OVERLAP" "$TRACE_OVERLAP" "$OOD_OVERLAP" "$FACTOR_OVERLAP" "$REQUIRED_EXCLUDED_CONTRACT" <<'PY'
+"$PY" - "$DATA" "$MIX" "$QUALITY" "$TEXT_OVERLAP" "$TRACE_OVERLAP" "$OOD_OVERLAP" "$FACTOR_OVERLAP" "$DIRECTNESS" "$REQUIRED_EXCLUDED_CONTRACT" "$REQUIRED_OPERATOR_MIN_ROWS" <<'PY'
 import hashlib
 import json
 import os
 import sys
 
-data, mix_path, quality_path, text_path, trace_path, ood_path, factor_path = [
-    os.path.realpath(path) for path in sys.argv[1:8]
+data, mix_path, quality_path, text_path, trace_path, ood_path, factor_path, directness_path = [
+    os.path.realpath(path) for path in sys.argv[1:9]
 ]
-required_contract = sys.argv[8]
+required_contract = sys.argv[9]
+required_operator_min_rows = int(sys.argv[10])
 
 def sha256(path):
     digest = hashlib.sha256()
@@ -66,8 +69,8 @@ def sha256(path):
     return digest.hexdigest()
 
 digest = sha256(data)
-mix, quality, text, trace, ood, factor = (json.load(open(path)) for path in (
-    mix_path, quality_path, text_path, trace_path, ood_path, factor_path
+mix, quality, text, trace, ood, factor, directness = (json.load(open(path)) for path in (
+    mix_path, quality_path, text_path, trace_path, ood_path, factor_path, directness_path
 ))
 if mix.get("out") != data or mix.get("out_sha256") != digest:
     raise SystemExit("[opanchor] mix report does not bind data")
@@ -79,6 +82,12 @@ if not mix.get("eval_filter", {}).get("enabled"):
     raise SystemExit("[opanchor] public-eval filter was not enabled")
 if required_contract and not mix.get("excluded_contract_rows", {}).get(required_contract, 0):
     raise SystemExit("[opanchor] expected source-split contract exclusion is absent")
+if directness.get("data_sha256") != digest or directness.get("operator_rows", 0) < required_operator_min_rows:
+    raise SystemExit("[opanchor] source-level directness report does not bind enough operator rows")
+if directness.get("contract_rows") != {"direct": directness.get("operator_rows")}:
+    raise SystemExit("[opanchor] non-direct operator rows remain")
+if any(directness.get("pair_marker_rows", {}).values()):
+    raise SystemExit("[opanchor] paired-answer response grammar remains")
 if quality.get("data_sha256") != digest or any(quality.get(key, 1) for key in (
     "malformed_rows", "missing_question_or_response", "duplicate_normalized_questions"
 )):

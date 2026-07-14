@@ -12,9 +12,12 @@ def main():
         "audit_sft_quality.py",
         "audit_training_text_overlap.py",
         "audit_generalization_overlap.py",
+        "audit_operator_trace_directness.py",
         "--case-regimes wording full",
         "EXCLUDE_CONTRACTS",
         "--exclude-contract",
+        "REQUIRED_OPERATOR_MIN_ROWS",
+        "paired-answer response grammar remains",
         "hard public-eval filter was not enabled",
         "cannot write a checkpoint",
     )
