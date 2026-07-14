@@ -220,12 +220,24 @@ episode IDs. It then measures two disjoint evaluation conditions:
    next-token log odds toward the source digit more than a fixed shuffled-label
    control?
 
-The job wrapper is tested but unsubmitted. This is not a full J-lens, not a
-semantic workspace probe, and not evidence of general reasoning. Its purpose
-is purely diagnostic: distinguish a reusable token-specific direction from a
-template-bound or distributed state representation after the active DRS direct
-interaction, NLL, and whole-residual patch chain has finished. A positive
-restricted result still cannot authorize CWI or a capability claim without the
+The raw-200k four-layer baseline is negative. From 80 hash-separated discovery
+gradients (eight per digit), all four layers have exactly 20/200 top-1 readout
+on separate contexts, the ten-way chance count. Their 40-direction matched
+causal effects above a shuffled-label control are +0.108, +0.217, +0.240, and
++0.286 log-odds at layers 13/17/21/25, respectively, but their descriptive
+SEMs are +0.252, +0.339, +0.326, and +0.330 with only 20-21/40 directions
+favoring the signal. The immutable artifact is
+`artifacts/eval_history/restricted_jacobian_digit_lens_raw200k_mps_l13_17_21_25_d8_r20_p4.json`,
+md5 `d5c61ead369acc0e1fbf0daf6006cb53`. Thus the raw model has no detectable
+reusable, verbalizable next-digit direction under this restricted method. That
+is a constraint on the project hypothesis, not a full J-lens result or proof
+that all internal state is absent; a distributed or nonlinear code can evade
+the test.
+
+The job wrapper remains an isolated diagnostic, not a semantic workspace probe
+or evidence of general reasoning. It should next run only on a checkpoint that
+first passes V10A's behavioral semantic-primitive gates. A positive restricted
+result still cannot authorize CWI or a capability claim without the
 already-preregistered behavioral, counterfactual, and multi-readout gates.
 
 ## Conditional Technique: Counterfactual Workspace Induction
