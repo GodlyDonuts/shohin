@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 07:41 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; V10A r2, continuous latent rollout, LSA, CPR, DRS, exact-carrier transport, PSA, and **Native Residual Relay v1** are closed negative branches; NRR's full arms score 0/500 held-out and only 2/200 strict causal in-distribution, so recurrence is blocked. Isolated FQRB writer `688665` is stable on evc35 at step 21.1k / 29.89k, with its factor, transcript, PAAT/ECLI, checkpoint-mirror, and CPU-only CRCS-admission chain held behind it. CWR is specified but remains blocked on FQRB plus ECLI evidence.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 09:50 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; V10A r2, continuous latent rollout, LSA, CPR, DRS, exact-carrier transport, PSA, and **Native Residual Relay v1** are closed negative branches; NRR's full arms score 0/500 held-out and only 2/200 strict causal in-distribution, so recurrence is blocked. Isolated FQRB writer `688665` completed cleanly and its locally verified checkpoint is isolated. The combined evaluation, train diagnostic, and deep transcript are active. The original core/magnitude evaluations selected a nonexistent `heldout` split and wrote no score; corrected read-only replacements `688737`/`688738` select `factor_core`/`factor_magnitude`. The direct raw-vs-FQRB transcript is a hard negative: raw is 1/7 initial and FQRB is 0/7 with repetitive label-token collapse. PAAT/ECLI remain gated on the completed factor taxonomy; CWR remains blocked on FQRB plus ECLI evidence.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -3581,3 +3581,21 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Stokes CPU screen session while the conditional ECLI chain runs; it is now running as
   `shohin_ecli_crcs_watch` (screen PID `3034774`) with output at
   `logs/ecli_crcs_watch_stokes.log`. A CRCS *model* experiment is still explicitly unsubmitted.
+
+- **2026-07-14 09:50** — **FQRB writer completed; direct-transfer evidence is negative, and the missing
+  factor scores were repaired without changing a model or dataset.** Isolated writer `688665` completed
+  all **29,890** updates and wrote `train/fqrb_200k_l19_r1/cra_ep1.pt`. Its SHA-256 is
+  `d732963dde59e224c6f494b503e54a57ec9a81d4b2b1b586a9d212a7095a1c6d`, matching the local isolated
+  DR copy and mirror record. The seven-case raw-versus-FQRB manual report is locally mirrored with
+  SHA-256 `18af73e38c28cd3a1e80f7159e70a1de74d651f255cda70c3d1969e94d2e836d`: raw 200k is **1/7**
+  initial, **0/7** review, **1/7** verified-fact use, **0/7** compact reuse; FQRB is **0/7** on all four
+  modes. The FQRB outputs are repetitive label-token fragments (for example `positivelessless...`), so
+  this is a direct behavioral regression, not a hidden-reasoning claim. Original core/magnitude jobs
+  `688697`/`688698` failed before scoring because the frozen factor files label their rows
+  `factor_core`/`factor_magnitude`, while those jobs requested `heldout`; no report was written and no
+  model/output was modified. `train/jobs/submit_paat_if_fqrb_transport_rejected.sbatch` now uses the
+  correct split labels for any future PAAT factor jobs. Read-only replacement evaluations **`688737`**
+  (core) and **`688738`** (magnitude) bind the same checkpoint, immutable data hashes, group count, and
+  six-token decode cap. Combined `688696`, train diagnostic `688681`, and deep transcript `688687` remain
+  independent. Do not admit PAAT, ECLI, CWR, or CRCS unless the completed assessment still supplies the
+  required bounded primitive evidence; the direct transcript alone already blocks any reasoning claim.
