@@ -3331,7 +3331,7 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   sleeping shell between checks. If the original evidence chain is intentionally replaced, kill this PID and
   update the bound paths rather than letting it classify a mixture of reports.
 
-- **2026-07-14 05:14** — **CRA answer-support geometry is now an explicit interpretation rule.** The
+- **2026-07-14 05:11** — **CRA answer-support geometry is now an explicit interpretation rule.** The
   30,000-row training corpus has **17** distinct normal/counterfactual answer strings across **243**
   target-state/query combinations, with values `[-4,4]` and edits `{-1,+1}`. The 2,000-row jointly
   held-out suite changes language, values, and edit magnitude together; it has **31** answer strings, of
@@ -3340,3 +3340,11 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   all 17 train answer strings and isolate their named axes; only values also introduces 20 new answers.
   The taxonomy and any next-arm decision must use this matrix rather than treating the joint score as a
   single causal diagnosis.
+
+- **2026-07-14 05:11** — **Ordinary CRA L19 training completed cleanly, pending evidence.** Isolated job
+  `688556` completed all **15,000** fixed batches in **4,586 s** on evc35 and wrote only
+  `train/cra_200k_l19_r1/cra_ep1.pt` (478 MB, md5 `52ec66d951a28cd22ade37bf35be4490`). Its downstream
+  combined behavioral evaluator `688557` began on evc35 and teacher-forced diagnostic `688599` began
+  independently on evc40. No score has been read from either job at this entry; the checkpoint is not a
+  promotion, and its low training loss is not capability evidence. The original factor/train/gate and
+  conditional paired chains remain unchanged.
