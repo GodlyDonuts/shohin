@@ -269,6 +269,27 @@ same-state versus different-state prompts, feature norms/variance to rule out
 collapse, ordinary token loss, and every causal control. No reflection or
 context-compaction claim can be made from representation alignment alone.
 
+The paired SFT objective is not, by itself, a mechanistic result. The matching
+read-only `eval_paraphrase_state_causality.py` therefore uses a full replay at
+every decode token and replaces only the answer-boundary residual after the
+selected block. This avoids reusing a pre-patch KV cache whose keys would make
+the intervention ambiguous. It evaluates identity replacement, same-ledger
+compile/reflect exchange, and different-ledger exchange. A viable state result
+requires all of the following: identity replacement is neutral; same-ledger
+exchange preserves the target ledger; and different-ledger exchange increases
+the donor-ledger likelihood or exact report. Even that result establishes only
+causal influence on ledger *report*, not flexible downstream use.
+
+The local raw-200k smoke baseline is cleanly negative on one bidirectional
+language-only pair: **0/2** baseline or same-state exact reports, **0/2**
+mismatch donor reports, and zero positive donor-vs-target mismatch margins.
+Equivalent and distinct prompt-boundary states are almost indistinguishable
+at this layer (mean cosine **0.9742** versus **0.9714**). Artifact SHA-256:
+`544456ebc7a227ed7a9a556c94719dac2d9a933bd48a5b016f494d0a116768c2`.
+This is only a real-model path smoke test, not a high-power estimate; the
+aligned, CE-only, and wrong-state models must each receive the same 50-pair
+audit after their normal behavioral transfer gate.
+
 ### Conditional Next Hypothesis: Counterfactual Reflection Route
 
 An exact external carrier, even if it passes V2, would still be an explicit

@@ -3073,3 +3073,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Promotion requires matched CE-only and deliberately wrong-ledger controls plus gains on language-only causal
   transfer that survive the value and delta gates. Local Newton DNS was unavailable at this entry, so no canary
   execution result is claimed.
+
+- **2026-07-14 01:43** — **Added a causal activation-exchange audit before interpreting representation alignment.**
+  `train/eval_paraphrase_state_causality.py` full-replays every generated token while replacing only the
+  selected answer-boundary residual: this avoids a stale pre-patch KV cache and makes the intervention
+  interpretable. It compares identity replacement, an independently worded same-ledger reflection state, and
+  a different-ledger reflection state. A tiny raw-200k local-MPS smoke (one pair, two directions) is negative:
+  baseline/same exact target **0/2**, mismatch exact donor **0/2**, positive mismatch donor margin **0/2**;
+  same/mismatch state cosines are 0.9742/0.9714. Its report SHA-256 is
+  `544456ebc7a227ed7a9a556c94719dac2d9a933bd48a5b016f494d0a116768c2`. This validates the actual 125M
+  model/intervention path but is not a powered capability score. After the alignment canary is verified, score
+  all same/CE-only/wrong-state models on 50 pairs; require neutral identity, preserved same-state reports, and
+  donor-directed mismatch effects *in addition to* the pre-registered behavioral language/value/delta gates.
