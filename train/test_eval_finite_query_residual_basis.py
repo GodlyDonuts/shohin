@@ -38,6 +38,25 @@ results[0]["wrong_query"] = results[0]["expected"]
 score_result(results[0])
 assert summarize_groups(results, [basis_id for basis_id, _ in groups])["joint_strict"] == 1
 
+codebook_results = []
+for basis_id, group in groups:
+    for item in group:
+        result = {
+            "basis_id": basis_id, "query_kind": item["query_kind"], "expected": item["response"],
+            "counterfactual_expected": item["counterfactual_response"], "normal": item["response"],
+            "paraphrase": item["response"], "counterfactual": item["counterfactual_response"],
+            "zero": "wrong", "shuffled": "wrong", "wrong_query": "wrong",
+            "codebook_swap": "code=swapped", "codebook_swap_expected": "code=swapped",
+        }
+        codebook_results.append(score_result(result))
+codebook_summary = summarize_groups(codebook_results, [basis_id for basis_id, _ in groups])
+assert codebook_summary["joint_codebook_swap"] == 2
+assert codebook_summary["any_codebook_swap_recreates_normal"] == 0
+assert all(result["strict_causal"] for result in codebook_results)
+codebook_results[0]["codebook_swap"] = codebook_results[0]["expected"]
+score_result(codebook_results[0])
+assert not codebook_results[0]["strict_causal"]
+
 two_edit_rows = [row("two", kind) for kind in QUERY_KINDS]
 for item in two_edit_rows:
     item["basis_mode"] = "multi_consumer_two_edit"

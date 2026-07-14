@@ -49,7 +49,7 @@ def group_rows(rows: list[dict], split: str, max_groups: int) -> list[tuple[str,
     for row in rows:
         if row.get("schema") != "counterfactual_residual_algebra_v1" or row.get("split") != split:
             continue
-        if row.get("basis_mode") not in ("multi_consumer", "multi_consumer_two_edit") or not isinstance(row.get("basis_id"), str):
+        if row.get("basis_mode") not in ("multi_consumer", "multi_consumer_two_edit", "multi_consumer_ephemeral_codebook") or not isinstance(row.get("basis_id"), str):
             raise ValueError("row is not a finite-query residual-basis example")
         groups.setdefault(row["basis_id"], []).append(row)
     result = []
@@ -123,10 +123,17 @@ def score_result(result: dict) -> dict:
     result["zero_recreates_normal"] = result["zero"] == result["expected"]
     result["shuffle_recreates_normal"] = result["shuffled"] == result["expected"]
     result["wrong_query_recreates_normal"] = result["wrong_query"] == result["expected"]
+    has_codebook_control = "codebook_swap" in result
+    if has_codebook_control:
+        if result.get("codebook_swap_expected") == result["expected"]:
+            raise ValueError("codebook intervention must alter the expected code")
+        result["codebook_swap_correct"] = result["codebook_swap"] == result["codebook_swap_expected"]
+        result["codebook_swap_recreates_normal"] = result["codebook_swap"] == result["expected"]
     result["strict_causal"] = bool(
         result["normal_correct"] and result["paraphrase_correct"] and result["counterfactual_correct"]
         and not result["zero_recreates_normal"] and not result["shuffle_recreates_normal"]
         and not result["wrong_query_recreates_normal"]
+        and (not has_codebook_control or (result["codebook_swap_correct"] and not result["codebook_swap_recreates_normal"]))
     )
     return result
 
@@ -135,13 +142,18 @@ def summarize_groups(results: list[dict], group_keys: list[str]) -> dict:
     by_group: dict[str, list[dict]] = {key: [] for key in group_keys}
     for result in results:
         by_group[result["basis_id"]].append(result)
-    required = ("normal_correct", "paraphrase_correct", "counterfactual_correct", "strict_causal")
+    required = ["normal_correct", "paraphrase_correct", "counterfactual_correct", "strict_causal"]
+    if results and all("codebook_swap_correct" in row for row in results):
+        required.append("codebook_swap_correct")
     summary = {"groups": len(group_keys)}
     for field in required:
         summary["joint_" + field.removesuffix("_correct").removesuffix("_causal")] = sum(
             all(bool(row[field]) for row in by_group[key]) for key in group_keys
         )
-    for field in ("zero_recreates_normal", "shuffle_recreates_normal", "wrong_query_recreates_normal"):
+    controls = ["zero_recreates_normal", "shuffle_recreates_normal", "wrong_query_recreates_normal"]
+    if results and all("codebook_swap_recreates_normal" in row for row in results):
+        controls.append("codebook_swap_recreates_normal")
+    for field in controls:
         summary["any_" + field] = sum(any(bool(row[field]) for row in by_group[key]) for key in group_keys)
     if any(len(by_group[key]) != len(QUERY_KINDS) for key in group_keys):
         raise ValueError("result set lost a FQRB consumer")
@@ -208,7 +220,7 @@ def main() -> None:
             for query_index, row in enumerate(group):
                 counter_tape = compose_counter_tape(model, tokenizer, row, base, donor, secondary, layer, tape_len)
                 wrong_row = group[(query_index + 1) % len(group)]
-                results.append({
+                result = {
                     "basis_id": basis_id, "episode_id": row["episode_id"], "query_kind": row["query_kind"],
                     "normal": decode_tape(model, tokenizer, tape, row["suffix_prompt"], layer, tape_len, eos_id, args.max_new),
                     "paraphrase": decode_tape(model, tokenizer, paraphrase_tape, row["suffix_prompt"], layer, tape_len, eos_id, args.max_new),
@@ -217,7 +229,16 @@ def main() -> None:
                     "wrong_query": decode_tape(model, tokenizer, tape, wrong_row["suffix_prompt"], layer, tape_len, eos_id, args.max_new),
                     "expected": row["response"], "counterfactual_expected": row["counterfactual_response"],
                     "same_tape_cosine": cosine,
-                })
+                }
+                if "codebook_swap_suffix_prompt" in row:
+                    swap_expected = row.get("codebook_swap_response")
+                    if not isinstance(swap_expected, str):
+                        raise ValueError("codebook row lacks a swap response")
+                    result["codebook_swap"] = decode_tape(
+                        model, tokenizer, tape, row["codebook_swap_suffix_prompt"], layer, tape_len, eos_id, args.max_new,
+                    )
+                    result["codebook_swap_expected"] = swap_expected
+                results.append(result)
             print("[fqrb-eval] encoded group {}/{}".format(index, len(groups)), flush=True)
         for result in results:
             result["shuffled"] = decode_tape(
@@ -227,10 +248,12 @@ def main() -> None:
             )
     for result in results:
         score_result(result)
-    fields = (
+    fields = [
         "normal_correct", "paraphrase_correct", "counterfactual_correct", "zero_recreates_normal",
         "shuffle_recreates_normal", "wrong_query_recreates_normal", "strict_causal",
-    )
+    ]
+    if results and all("codebook_swap_correct" in row for row in results):
+        fields.extend(("codebook_swap_correct", "codebook_swap_recreates_normal"))
     consumer_summary = {
         kind: {field: sum(bool(row[field]) for row in results if row["query_kind"] == kind) for field in fields}
         for kind in QUERY_KINDS
@@ -243,7 +266,7 @@ def main() -> None:
         "consumer_summary": consumer_summary, "basis_summary": summarize_groups(results, group_keys),
         "mean_same_tape_cosine": sum(row["same_tape_cosine"] for row in results) / len(results),
         "results": results,
-        "claim_boundary": "A strict FQRB group pass establishes only a bounded source-free numeric basis, not general reasoning.",
+        "claim_boundary": "A strict finite-query group pass establishes only a bounded source-free latent basis; an ephemeral-codebook pass additionally tests late-bound query use, not general reasoning.",
     }
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     Path(args.out).write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")

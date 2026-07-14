@@ -583,6 +583,46 @@ numeric-length generalization test. A pass would show only a bounded causal
 numeric basis. It would be a necessary but still insufficient precursor to a
 general reasoning claim.
 
+### Conditional Next Hypothesis: Ephemeral-Codebook Latent Interrogation (ECLI)
+
+FQRB's five readers are stronger than one fixed numeral head, but they remain
+fixed readers. A model could still learn five template-specific classifiers
+whose outputs happen to depend on a source tape. **ECLI** adds a late-binding
+test before any semantic or reflection claim: for every source world, the
+source-free suffix supplies a fresh arbitrary binding table from each of the
+thirteen FQRB semantic classes to an opaque code word. The model must return
+the code word, never the semantic class directly.
+
+The source triple and native composition remain unchanged:
+
+`Z(donor) + [Z(edited) - Z(base)]`.
+
+All five consumers of a world share one codebook, while every world receives a
+different permutation drawn from sixteen ordinary code words. The source is
+absent from the binding-table suffix. Thus a successful output has two
+separable requirements: recover the correct semantic property from the tape,
+then use the *current* query-local table to bind that property to a code word.
+The codebook is not a parser or tool: it is literal prompt text, and all
+targets are ordinary next-token targets.
+
+The held-out split must make source bundles, wording, and complete codebook
+permutations disjoint from training while retaining the same code-word
+vocabulary. Every row also has a codebook-swap control: with the identical
+source-free tape and question, two semantic entries of the table are swapped,
+and the required output must change to the newly bound code. Normal,
+paraphrase, counterfactual, zero, whole-group shuffle, wrong-query, and
+codebook-swap controls all count in a group-strict score.
+
+ECLI is eligible **only** after FQRB passes its combined held-out and unseen
+source-tuple gates. Its frozen 500-world admission threshold is at least 350
+correct cases on every consumer for normal, paraphrase, counterfactual, and
+codebook-swap paths; at least 300 worlds jointly strict across all five
+consumers; and at most 25 zero, shuffled, wrong-query, or codebook-swap
+normal-answer recreations. A pass would establish only a bounded,
+late-bound latent interrogation primitive: it would be evidence that a query
+can modulate how one source-free state is read. It would not establish
+open-ended reasoning, language understanding, or a general workspace.
+
 ### Conditional Next Hypothesis: Counterfactual Reflection Route
 
 An exact external carrier, even if it passes V2, would still be an explicit

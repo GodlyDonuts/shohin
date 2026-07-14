@@ -3450,3 +3450,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   group normal/paraphrase/counterfactual/zero/shuffle/wrong-query controls. Do **not** submit it merely
   because it exists: it is a conditional composition gate only after one-edit combined and source-tuple
   transfer evidence pass.
+
+- **2026-07-14 06:34** — **Ephemeral-Codebook Latent Interrogation (ECLI) is staged as a conditional
+  late-binding test, not submitted.** `pipeline/generate_ephemeral_codebook_fqrb_v1.py` can derive a
+  fresh 60,000-row / 12,000-world FQRB-shaped corpus only after FQRB's combined and unseen-source-tuple
+  gates pass. Each source-free suffix carries a distinct arbitrary mapping from the 13 semantic FQRB
+  classes to opaque code words; every group shares one table across five consumers, and a same-tape
+  codebook-swap control must change the answer. Train/held codebook permutations, full source bundles,
+  semantic 13-grams, and exact prompts are audited disjointly; repeated binding-table syntax is reported
+  rather than hidden. `train/train_ephemeral_codebook_fqrb.py` and isolated wrappers are mechanically
+  checked, while the existing finite-query evaluator now adds codebook-swap correctness to strict causal
+  scoring only for rows that carry that field. No ECLI data, model, GPU job, or capability claim exists
+  yet. It is admissible only if FQRB demonstrates a bounded multi-reader source-free basis first.
