@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 18:10 EDT (the protected two-H100 pretrain remains healthy and isolated. R5 is closed. R6 full old-substrate development fit 689190 is healthy on isolated evc25; frozen development evaluator 689196 is dependency-held. Exact distinction-certified context folding passes CPU mechanics only. No fresh confirmatory board or capability claim exists.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 18:18 EDT (the protected two-H100 pretrain remains healthy and isolated. R5 is closed. R6 full old-substrate development fit 689190 is healthy on isolated evc25; evaluator 689196 and its executable development gate are frozen before scores. Exact context folding passes CPU mechanics only. No fresh confirmatory board or capability claim exists.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4210,3 +4210,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Neural advancement requires calibrated held-out-probe certificates after active beats random; any later
   context claim also requires beyond-window source-drop transfer, corruption-triggered retention/reopening,
   equal-model raw-context controls, and measured retained-state/prefill/accuracy curves.
+
+- **2026-07-14 18:10--18:18** — **The R6 development advancement rule is frozen in executable code
+  before evaluator `689196` can reveal a score.** `evaluate_future_effect_r6.py` correctly treats the
+  board as 448 fresh language/full cases plus 448 pinned fit/depth controls. Fresh advancement requires
+  >=55% answers, >=50% exact programs, >=65% operations, >=60% language, >=40% full, +10pp over raw R5,
+  +5pp answer/exact and +10pp operations over equal-call random, and +10pp answer/exact over the better
+  zero/shuffled control. It separately requires >=80% fit, >=60% depth, >=80% oracle answer/exact,
+  >=95% query accuracy, and finite held-out MSE <= max(2x train MSE, 1.0). Unit fixtures prove a nominal
+  pass, equal-active/random rejection, and held-out-calibration rejection. A pass authorizes only one
+  untouched board; any failed conjunct closes this head before confirmatory generation.
