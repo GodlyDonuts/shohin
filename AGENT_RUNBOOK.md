@@ -3304,3 +3304,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   and at most 25 zero/shuffled/chart-mismatched/wrong-inverse recreations; separate factor suites remain
   required. This is intentionally held until paired evidence identifies chart binding rather than generic
   learnability as the failure, and no C3 corpus or GPU job exists yet.
+
+- **2026-07-14 05:00** — **CRA failure taxonomy is available on Stokes for post-report analysis.**
+  `pipeline/analyze_counterfactual_residual_algebra.py` consumes only hash-recorded combined, likelihood,
+  train-diagnostic, and five factor reports. It can classify no in-distribution primitive, missing
+  counterfactual sign discrimination, source-free control failure, cross-split failure, or a tentative
+  language-chart-binding pattern. Its recommendations are intentionally narrow: close residual algebra,
+  retain paired sign discrimination, conditionally consider C3, or inspect row-level failures. Unit tests
+  pass both locally and on Stokes; the script is mirrored at
+  `/lustre/fs1/home/sa305415/shohin/pipeline/`. It is diagnostic only and does not change a model, train a
+  controller, or authorize a reasoning claim.
