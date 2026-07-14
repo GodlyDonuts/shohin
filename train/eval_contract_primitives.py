@@ -54,7 +54,11 @@ def read_rows(path, limit, per_contract_family):
             row = json.loads(line)
             if not row.get("completion_prompt") or not row.get("answer"):
                 continue
-            key = (row.get("contract"), row.get("family"))
+            # The original verified primitive curriculum predates explicit
+            # contract labels. Its rows are ordinary answer contracts, and
+            # must remain evaluable under the newer contract evaluator.
+            row.setdefault("contract", "answer")
+            key = (row["contract"], row.get("family"))
             if per_contract_family and selected[key] >= per_contract_family:
                 continue
             rows.append(row)
@@ -101,7 +105,7 @@ def main():
         if (index + 1) % 100 == 0 or index + 1 == len(rows):
             print(f"[contract-eval] {index + 1}/{len(rows)} correct={sum(correct.values())}", flush=True)
     by_contract = {}
-    for contract in sorted({row["contract"] for row in rows}):
+    for contract in sorted({row.get("contract", "answer") for row in rows}):
         c_total = sum(totals[(contract, family)] for family in sorted({row["family"] for row in rows}))
         c_correct = sum(correct[(contract, family)] for family in sorted({row["family"] for row in rows}))
         by_contract[contract] = {

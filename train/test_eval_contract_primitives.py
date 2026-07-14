@@ -26,4 +26,8 @@ with tempfile.TemporaryDirectory() as root:
     assert {(row["contract"], row["family"]) for row in selected} == {
         ("direct", "arithmetic"), ("review", "syllogism"),
     }
+    primitive_path = Path(root) / "primitive.jsonl"
+    primitive_path.write_text(json.dumps({"completion_prompt": "e", "answer": "3", "family": "arithmetic"}) + "\n")
+    legacy = read_rows(primitive_path, 0, 0)
+    assert legacy[0]["contract"] == "answer"
 print("contract primitive evaluator checks: passed")
