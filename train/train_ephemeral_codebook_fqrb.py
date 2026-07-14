@@ -76,6 +76,7 @@ def main() -> None:
     if (
         audit.get("audit") != "ephemeral_codebook_fqrb_v1"
         or audit.get("mechanism") != "ephemeral_codebook_fqrb_v1"
+        or audit.get("fqrb_parent_decision") != "bounded_fqrb_basis_candidate_magnitude_and_interaction_still_required"
         or audit.get("train_sha256") != data_sha
         or any(audit.get(key) for key in required_zero)
     ):

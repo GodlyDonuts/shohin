@@ -3463,7 +3463,9 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   scoring only for rows that carry that field. `pipeline/assess_ephemeral_codebook_fqrb_v1.py` pre-registers
   the 350-per-reader, 300 joint-strict, and <=25 control gate before an ECLI result can be interpreted.
   No ECLI data, model, GPU job, or capability claim exists yet. It is admissible only if FQRB demonstrates
-  a bounded multi-reader source-free basis first.
+  a bounded multi-reader source-free basis first. The ECLI builder now requires that exact FQRB assessment
+  decision at CLI admission and records its SHA-256 in the ECLI audit; the training wrapper independently
+  rechecks the parent decision and bound hash before allocating CUDA.
 
 - **2026-07-14 06:40** — **A transcript-first FQRB interview is queued after the existing manual
   comparison.** Read-only job `688687` is held `afterok:688675`, uses

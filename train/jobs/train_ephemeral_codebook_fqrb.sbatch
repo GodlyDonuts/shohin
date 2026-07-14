@@ -18,6 +18,7 @@ INIT=${INIT:?set immutable source checkpoint}
 DATA=${DATA:?set frozen ECLI train data}
 DATA_SHA=${DATA_SHA:?set expected ECLI train SHA-256}
 AUDIT=${AUDIT:?set frozen ECLI audit}
+ASSESSMENT=${ASSESSMENT:?set admitted FQRB assessment}
 OUT=${OUT:?set fresh isolated train/ephemeral_codebook_fqrb_* output}
 LAYER=${LAYER:-19}
 EPOCHS=${EPOCHS:-1}
@@ -29,17 +30,19 @@ export RAYON_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false
 [ -s "$INIT" ] || { echo "[ecli-train] init checkpoint missing" >&2; exit 2; }
 [ -s "$DATA" ] || { echo "[ecli-train] data missing" >&2; exit 3; }
 [ -s "$AUDIT" ] || { echo "[ecli-train] audit missing" >&2; exit 4; }
+[ -s "$ASSESSMENT" ] || { echo "[ecli-train] FQRB assessment missing" >&2; exit 4; }
 [ ! -e "$OUT" ] || { echo "[ecli-train] refusing existing output" >&2; exit 5; }
 case "$OUT" in "$BASE"/train/ephemeral_codebook_fqrb_*) ;; *) echo "[ecli-train] output must remain isolated" >&2; exit 6;; esac
 [ "$(sha256sum "$DATA" | awk '{print $1}')" = "$DATA_SHA" ] || { echo "[ecli-train] data hash mismatch" >&2; exit 7; }
 
-"$PY" - "$DATA" "$AUDIT" <<'PY'
+"$PY" - "$DATA" "$AUDIT" "$ASSESSMENT" <<'PY'
 import hashlib
 import json
 import sys
 
-data_path, audit_path = sys.argv[1:]
+data_path, audit_path, assessment_path = sys.argv[1:]
 audit = json.load(open(audit_path))
+assessment = json.load(open(assessment_path))
 required_zero = (
     'duplicate_train_prompts', 'duplicate_heldout_prompts', 'train_heldout_exact_prompt_hits',
     'train_heldout_exact_source_bundle_hits', 'train_heldout_codebook_hits',
@@ -52,6 +55,10 @@ if audit.get('train_sha256') != digest or audit.get('train_rows') != 60000 or au
     raise SystemExit('[ecli-train] audit does not bind a frozen ECLI corpus')
 if any(audit.get(field) for field in required_zero):
     raise SystemExit('[ecli-train] overlap/group admission gate failed')
+if assessment.get('audit') != 'finite_query_residual_basis_v1_assessment' or assessment.get('decision') != 'bounded_fqrb_basis_candidate_magnitude_and_interaction_still_required':
+    raise SystemExit('[ecli-train] FQRB parent decision does not admit ECLI')
+if audit.get('fqrb_parent_assessment_sha256') != hashlib.sha256(open(assessment_path, 'rb').read()).hexdigest():
+    raise SystemExit('[ecli-train] audit does not bind the supplied FQRB assessment')
 print('[ecli-train] hash-bound ECLI admission passed')
 PY
 

@@ -199,18 +199,33 @@ def audit(train: list[dict], heldout: list[dict]) -> dict:
     }
 
 
+def admitted_parent(path: Path) -> dict:
+    if not path.is_file() or not path.stat().st_size:
+        raise SystemExit("FQRB assessment is missing or empty")
+    assessment = json.loads(path.read_text())
+    if (
+        assessment.get("audit") != "finite_query_residual_basis_v1_assessment"
+        or assessment.get("decision") != "bounded_fqrb_basis_candidate_magnitude_and_interaction_still_required"
+    ):
+        raise SystemExit("FQRB assessment does not admit the conditional ECLI build")
+    return assessment
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--train-out", required=True)
     parser.add_argument("--heldout-out", required=True)
     parser.add_argument("--report", required=True)
+    parser.add_argument("--fqrb-assessment", required=True)
     parser.add_argument("--train-groups", type=int, default=12_000)
     parser.add_argument("--heldout-groups", type=int, default=500)
     parser.add_argument("--seed", type=int, default=2026071418)
     args = parser.parse_args()
     paths = tuple(Path(path) for path in (args.train_out, args.heldout_out, args.report))
+    assessment_path = Path(args.fqrb_assessment)
     if args.train_groups <= 0 or args.heldout_groups <= 0 or any(path.exists() for path in paths):
         raise SystemExit("group counts must be positive and all output paths fresh")
+    assessment = admitted_parent(assessment_path)
     train_base = build_fqrb(args.train_groups, args.seed, "train", TWO_DIGIT_VALUES, 90)
     heldout_base = build_fqrb(args.heldout_groups, args.seed + 1, "heldout", TWO_DIGIT_VALUES, 90, language_heldout=True)
     train, train_codebooks = wrap_groups(train_base, random.Random(args.seed + 2), set())
@@ -237,6 +252,9 @@ def main() -> None:
         "train_sha256": sha256_file(paths[0]), "heldout_sha256": sha256_file(paths[1]),
         "query_kinds": list(QUERY_KINDS), "code_tags": list(CODE_TAGS),
         "combined_heldout_axes": ["source_tuple", "language", "ephemeral_codebook"],
+        "fqrb_parent_assessment": str(assessment_path),
+        "fqrb_parent_assessment_sha256": sha256_file(assessment_path),
+        "fqrb_parent_decision": assessment["decision"],
     })
     paths[2].write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
     print(json.dumps(report, sort_keys=True))
