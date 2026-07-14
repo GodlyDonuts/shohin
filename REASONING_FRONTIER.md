@@ -69,7 +69,7 @@ The raw 200k operator transcript and the completed V9 decision eliminate an
 important ambiguity: the model does not currently turn a two-field natural
 language record into a reusable state, and a large broad mix did not repair
 that. It is therefore premature to ask it to reason over long contexts or to
-judge an elaborate proof. The next independent test is **V10A**, bridge-only
+judge an elaborate proof. **V10A** was the next independent test: bridge-only
 SFT from the immutable raw 200k checkpoint on the admitted semantic-bridge
 corpus. It covers only five solver-verified families: product adjustment,
 state chains, base conversion, continuation from a verified fact, and repair
@@ -92,6 +92,40 @@ operation compositions are outside bridge training; an independent audit
 rejects exact or word-13-gram overlap with the full bridge corpus. Passing the
 bridge evaluator while failing this suite is a narrowly formatted curriculum
 result, not semantic state competence.
+
+### V10A Outcome: Reject the Family-Trace Hypothesis
+
+The isolated one-epoch V10A checkpoint fit its 200,000 bridge rows (loss
+`1.0546 -> 0.0126`) but did not acquire a semantic state primitive. Its
+checkpoint-bound 500-case bridge score was **123/500** answers and **121/500**
+solver-equation trace contracts: base conversion 35/100, fact continuation
+62/100, product adjustment 3/100, state chain 15/100, and trace repair 8/100.
+The separate source-dropped cross-family suite was **4/500**, all four in
+repair-to-chain; the other four families, including named-state source drop,
+were 0/100. The direct seven-case interview improved only to 3/7 initial,
+1/7 review, 3/7 supplied-fact use, and 1/7 state reuse. These are learned
+family responses, not a reportable state that survives source removal.
+
+V10A therefore blocks the semantic capsule, CWI, KV-anchor, and ISL branches.
+No formatting score, low training loss, or apparently explanatory `<think>`
+text can reopen those branches without a source-deleted, multi-consumer pass.
+
+### Next Basis: Two-Value Semantic Transport
+
+The right next experiment is smaller than ISL. V10A confounds language-to-state
+transport with multiplication, base conversion, and long family traces. The
+new **semantic-basis transport** candidate asks only for a natural-language
+record to compile to `ledger:P=<integer>;Q=<integer>`, after which the source is
+removed. The same model-emitted ledger must support an add-to-P transition and
+two independent consumers (`P-Q` and `P+Q`). Train and held-out splits differ
+in values, language, field labels, and domains.
+
+This is not an ISL claim and not a context-scaling claim. It must first pass a
+closed-loop evaluator that forwards only the model's exact emitted ledger, then
+pass paired state swaps, zeroed/mismatched-ledger controls, and held-out source
+language. The Stokes CPU builder is only an audited data-admission step; no SFT
+may start until this basis evaluator and its counterfactual controls are bound
+to the generated artifacts.
 
 ### Conditional Next Primitive: Interchangeable Semantic Ledger
 
@@ -123,12 +157,11 @@ The requirement is *interchangeability*, not ledger formatting:
    downstream operation combinations, and multi-step lengths. No exact ledger
    syntax is sufficient without the causal swap result.
 
-ISL is held until the completed V10A result establishes the right failure mode.
-If V10A fails even its own bridge holdout, language-to-state compilation is not
-yet learnable at this scale and ISL would only add another template. If V10A
-passes bridge but fails composition, ISL becomes the next controlled ablation:
-it tests whether a shared state interface, rather than more family-specific
-traces, creates the missing transport primitive.
+V10A failed its own bridge holdout and failed composition, so ISL is explicitly
+held. A richer ledger would only add a template before the model has shown that
+it can transport even two simple semantic values. ISL can become a controlled
+ablation only after the two-value basis passes closed-loop source deletion,
+multi-consumer use, and paired counterfactual controls.
 
 If ISL later passes source-deleted, multi-consumer, and counterfactual gates,
 the ledger becomes the only admissible input to a context-scaling experiment.
