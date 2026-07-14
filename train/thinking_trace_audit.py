@@ -186,6 +186,23 @@ def sha256_file(path):
     return digest.hexdigest()
 
 
+def load_cases_json(path):
+    value = json.loads(Path(path).read_text())
+    cases = value.get("cases") if isinstance(value, dict) else value
+    if not isinstance(cases, list) or not cases:
+        raise ValueError("cases JSON must contain a non-empty list")
+    required = ("id", "family", "question", "answer", "markers")
+    for case in cases:
+        if not isinstance(case, dict) or any(field not in case for field in required):
+            raise ValueError("every case requires id, family, question, answer, and markers")
+        case["answer"] = int(case["answer"])
+        if not isinstance(case["markers"], list) or not all(
+            isinstance(marker, list) and len(marker) == 2 for marker in case["markers"]
+        ):
+            raise ValueError("every case marker must be a [name, value] pair")
+    return cases
+
+
 def trace_matches(trace, markers, alternate_patterns=()):
     if trace is None:
         return False
@@ -248,18 +265,29 @@ def main():
     parser.add_argument("--tokenizer", required=True)
     parser.add_argument("--out", required=True)
     parser.add_argument("--max-new", type=int, default=128)
+    parser.add_argument("--cases-json", default="",
+                        help="optional generated JSON case file; default uses the fixed literal audit")
     parser.add_argument("--n-loop", type=int, default=0,
                         help="test-only latent-depth override (0 preserves checkpoint config)")
     args = parser.parse_args()
     if args.n_loop < 0:
         raise SystemExit("--n-loop must be zero or positive")
 
+    if args.cases_json:
+        cases = load_cases_json(args.cases_json)
+        case_source = args.cases_json
+        case_source_sha256 = sha256_file(args.cases_json)
+    else:
+        cases = CASES
+        case_source = __file__
+        case_source_sha256 = sha256_file(__file__)
+
     device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     tokenizer = Tokenizer.from_file(args.tokenizer)
     checkpoint, model = load_model(args.ckpt, device, n_loop=args.n_loop)
     used_n_loop = model.cfg.n_loop
     rows = []
-    for case in CASES:
+    for case in cases:
         prompt = "Question: {}\nAnswer:".format(case["question"])
         response = generate(
             model, tokenizer, prompt, device, max_new=args.max_new, temp=0.0,
@@ -279,7 +307,8 @@ def main():
 
     result = {
         "audit": "thinking_trace_audit_v1",
-        "case_source_sha256": sha256_file(__file__),
+        "case_source": case_source,
+        "case_source_sha256": case_source_sha256,
         "device": device,
         "checkpoint": args.ckpt,
         "step": checkpoint.get("step"),

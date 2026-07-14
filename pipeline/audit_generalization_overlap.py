@@ -64,17 +64,36 @@ def load_cases(path):
     raise ValueError(f"literal CASES assignment not found in {path}")
 
 
+def load_cases_json(path):
+    value = json.loads(Path(path).read_text())
+    cases = value.get("cases") if isinstance(value, dict) else value
+    if not isinstance(cases, list) or not cases:
+        raise ValueError("cases JSON must contain a non-empty list")
+    for case in cases:
+        if not isinstance(case, dict) or not case.get("id") or not case.get("question"):
+            raise ValueError("every JSON case needs id and question")
+    return cases
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", required=True)
-    parser.add_argument("--case-source", required=True)
+    parser.add_argument("--case-source", default="")
+    parser.add_argument("--cases-json", default="")
     parser.add_argument("--out", required=True)
     parser.add_argument("--ngram", type=int, default=13)
     args = parser.parse_args()
     if args.ngram <= 0:
         raise ValueError("ngram must be positive")
+    if bool(args.case_source) == bool(args.cases_json):
+        raise ValueError("supply exactly one of --case-source or --cases-json")
 
-    cases = load_cases(args.case_source)
+    if args.cases_json:
+        cases = load_cases_json(args.cases_json)
+        case_source = args.cases_json
+    else:
+        cases = load_cases(args.case_source)
+        case_source = args.case_source
     exact = {normalized(case["question"]): str(case["id"]) for case in cases}
     case_grams = {}
     for case in cases:
@@ -113,8 +132,8 @@ def main():
         "audit": "generalization_interview_overlap_v1",
         "data": str(Path(args.data)),
         "data_sha256": sha256(args.data),
-        "case_source": str(Path(args.case_source)),
-        "case_source_sha256": sha256(args.case_source),
+        "case_source": str(Path(case_source)),
+        "case_source_sha256": sha256(case_source),
         "cases": len(cases),
         "ngram": args.ngram,
         "valid_rows": rows,

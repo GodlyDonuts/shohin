@@ -16,9 +16,11 @@ PY=$BASE/miniforge3/bin/python
 CKPT=${CKPT:?set CKPT to an immutable checkpoint}
 TAG=${TAG:-thinking_trace}
 OUT=$BASE/artifacts/eval_history/${TAG}_${SLURM_JOB_ID}.json
+CASE_FILE=${CASE_FILE:-}
 export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1
 
 [ -f "$CKPT" ] || { echo "[thinking-trace] checkpoint missing: $CKPT" >&2; exit 2; }
+[ -z "$CASE_FILE" ] || [ -s "$CASE_FILE" ] || { echo "[thinking-trace] case file missing: $CASE_FILE" >&2; exit 3; }
 cd "$BASE/train"
 if ! timeout --kill-after=10s 90s "$PY" - <<'PY'
 import sys
@@ -37,5 +39,7 @@ then
   exit 75
 fi
 
-"$PY" thinking_trace_audit.py --ckpt "$CKPT" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" --out "$OUT"
+ARGS=(--ckpt "$CKPT" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" --out "$OUT")
+[ -z "$CASE_FILE" ] || ARGS+=(--cases-json "$CASE_FILE")
+"$PY" thinking_trace_audit.py "${ARGS[@]}"
 echo "[thinking-trace] wrote $OUT"
