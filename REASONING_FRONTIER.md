@@ -187,6 +187,53 @@ show source paraphrase, generic explanation, or prompt continuation, not a
 single full ledger. This makes the next SFT a clean **learnability** ablation,
 not an attempt to recover an unmeasured raw latent skill.
 
+The isolated learnability result closes the broad V2 claim. One epoch from the
+same immutable 200k checkpoint reaches **198/200** exact compile emissions,
+**200/200** exact reflection emissions, and **198/200** identical carriers on
+the full held-out evaluator. Yet it completes only **23/200** state updates and
+**6/200** complete update-plus-two-reader episodes; no pair contains two normal
+strict episodes, so all **100** model-authored swap, zero, mismatch, and strict
+causal outcomes are zero. The full transcript artifact is SHA-256
+`b643241ea154b49482627e9c6c2e73d20ad17b64422cf5341c06702c7327505e`.
+
+This is a useful negative rather than a confusing mixed result: the model can
+report and reproduce an exact carrier under two independently worded source
+prompts, but cannot reliably operate on that carrier once source information
+is removed. It is not flexible multi-reader state, and it is not evidence for
+a workspace. The present held-out split changes source wording, labels and
+domains, value range, and delta range together, so the completed train-split
+diagnostic may localize the failing axis. It cannot reopen the causal claim.
+The next admissible experiment, if the diagnostic finds in-distribution
+execution, is a factorial *evaluation* matrix that holds three factors fixed
+while changing one: language, P/Q magnitude, or update delta. No new SFT,
+reflection data, or context mechanism is justified before that measurement.
+
+### External Workspace Paper: What It Changes
+
+The 2026 global-workspace paper is a useful experimental standard, not a
+turnkey recipe for a 125M model. Its central criteria are stronger than
+verbalization: a candidate representation must be reportable, deliberately
+modulable, used in intermediate computation, flexibly reused by distinct
+downstream readers, and selectively necessary for the resulting behavior. V2
+was designed as a small behavioral proxy for the reportability, multi-reader,
+and intervention portions of that standard. Its failed held-out operation gate
+means Shohin does not yet warrant a workspace claim.
+
+The paper's Jacobian lens is a corpus-averaged, per-layer causal readout, not a
+logit-lens screenshot. A faithful implementation would need a reproducible
+prompt corpus, averaged Jacobian maps, layer/position selection, and a
+pre-registered activation intervention. The prior restricted four-layer digit
+lens was negative. A full lens build is therefore deferred until a behavioral
+primitive passes a source-deleted causal transport gate; otherwise it risks
+finding correlations in a model that cannot use the proposed content.
+
+Its counterfactual-reflection result is directly relevant only as a later
+ablation: supervise an interrupted reflection continuation, score the original
+uninterrupted context with no reflection request, and compare against a
+token-budget-matched neutral auxiliary control. It is not evidence that
+visible `think` tokens create reasoning, nor evidence that the technique will
+transfer from the paper's large model to this one.
+
 ### Conditional Next Hypothesis: Counterfactual Reflection Route
 
 An exact external carrier, even if it passes V2, would still be an explicit
@@ -238,7 +285,8 @@ budget matching before the control is eligible. Its future source-dropped consum
 state by literal replacement but cannot parse, calculate, repair, or choose it.
 `train/test_counterfactual_reflection_protocol.py` covers those boundaries.
 This is protocol groundwork only; data generation, SFT, and evaluation remain
-blocked on the exact-carrier raw and learnability gates.
+blocked on a positive exact-carrier causal result. V2's held-out failure leaves
+that gate closed.
 
 ### Conditional Context Mechanism: Reversible Semantic Checkpoints
 
