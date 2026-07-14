@@ -33,8 +33,8 @@ WORD = re.compile(r"\w+")
 OPS = ("add", "subtract", "multiply", "divide")
 TRAIN_TEMPLATES = {
     "add_multiply_subtract": (
-        "Set a running total t to {start}. Increase t by {a}, scale the updated total by {b}, then remove {c}.",
-        "Begin with t={start}. Add {a}; multiply that result by {b}; finally subtract {c}.",
+        "A register opens with {start}. Credit {a}, apply a factor of {b} to the new balance, and debit {c}.",
+        "Begin with t={start}. Combine in {a}; take {b} copies of that total; finally take away {c}.",
     ),
     "subtract_multiply_add": (
         "Open a register r at {start}. Deduct {a}, multiply the remainder by {b}, and finally add {c}.",
