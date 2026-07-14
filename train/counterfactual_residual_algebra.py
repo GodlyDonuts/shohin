@@ -111,6 +111,22 @@ def answer_loss_for_algebra_tape(model, tape, suffix_prompt_ids, answer_ids, lay
     return logits, loss, targets
 
 
+def answer_nll_per_example_for_algebra_tape(model, tape, suffix_prompt_ids, answer_ids, layer, tape_len, eos_id):
+    """Return one answer-only mean NLL per batch item after a fixed tape."""
+    _check_ids("suffix_prompt_ids", suffix_prompt_ids)
+    _check_ids("answer_ids", answer_ids)
+    if tape.shape[0] != suffix_prompt_ids.shape[0] or tape.shape[0] != answer_ids.shape[0]:
+        raise ValueError("tape, suffix, and answer batch sizes must agree")
+    suffix = torch.cat((model.tok(suffix_prompt_ids), model.tok(answer_ids)), dim=1)
+    logits = algebra_suffix_logits(model, tape, suffix, layer, tape_len)
+    targets = build_answer_targets(answer_ids, tape_len + suffix_prompt_ids.shape[1], 0, eos_id)
+    token_nll = torch.nn.functional.cross_entropy(
+        logits.float().transpose(1, 2), targets, ignore_index=-1, reduction="none",
+    )
+    mask = targets.ne(-1)
+    return (token_nll * mask).sum(dim=1) / mask.sum(dim=1).clamp_min(1)
+
+
 def paired_counterfactual_algebra_loss(
     model, base_ids, edited_ids, counter_edited_ids, donor_ids, suffix_prompt_ids,
     answer_ids, counter_answer_ids, layer, tape_len, eos_id, margin,
@@ -141,19 +157,22 @@ def paired_counterfactual_algebra_loss(
     donor = encode_residual_tape(model, donor_ids, layer, tape_len)
     normal_tape = compose_counterfactual_tape(base, edited, donor)
     counter_tape = compose_counterfactual_tape(base, counter_edited, donor)
-    _, normal_ce, _ = answer_loss_for_algebra_tape(
+    normal_ce_each = answer_nll_per_example_for_algebra_tape(
         model, normal_tape, suffix_prompt_ids, answer_ids, layer, tape_len, eos_id,
     )
-    _, normal_foil, _ = answer_loss_for_algebra_tape(
+    normal_foil_each = answer_nll_per_example_for_algebra_tape(
         model, normal_tape, suffix_prompt_ids, counter_answer_ids, layer, tape_len, eos_id,
     )
-    _, counter_ce, _ = answer_loss_for_algebra_tape(
+    counter_ce_each = answer_nll_per_example_for_algebra_tape(
         model, counter_tape, suffix_prompt_ids, counter_answer_ids, layer, tape_len, eos_id,
     )
-    _, counter_foil, _ = answer_loss_for_algebra_tape(
+    counter_foil_each = answer_nll_per_example_for_algebra_tape(
         model, counter_tape, suffix_prompt_ids, answer_ids, layer, tape_len, eos_id,
     )
-    rank = torch.relu(margin + normal_ce - normal_foil) + torch.relu(margin + counter_ce - counter_foil)
+    normal_ce, normal_foil = normal_ce_each.mean(), normal_foil_each.mean()
+    counter_ce, counter_foil = counter_ce_each.mean(), counter_foil_each.mean()
+    rank = (torch.relu(margin + normal_ce_each - normal_foil_each) +
+            torch.relu(margin + counter_ce_each - counter_foil_each)).mean()
     return {
         "loss": normal_ce + counter_ce + rank,
         "normal_ce": normal_ce,
