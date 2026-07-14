@@ -2419,6 +2419,24 @@ fresh language/full reaches 382/448 answers (85.27%) and 365/448 exact programs
 the mechanism's current ceiling. This prevents a learned head from being judged
 against 100% while also preventing a weak compiler ceiling from excusing it.
 
+A separate **R6b posterior scheduler** is frozen before any R6a learned output
+is read. It does not change or rescue the R6a decision. Instead of discarding
+all but a hard top-64 list after each noisy effect, it retains a Gaussian score
+posterior over all 597 operators and selects the next probe by maximum weighted
+partition entropy. Its assumed effect-noise scale is fixed at 1.0 and its effect
+bin width at 2.0. Under deterministic equal-noise CPU mechanics, three posterior
+probes recover 100% of operators with exact effects and 92.46% at noise 0.5,
+versus 88.27% for R6a's hard top-64 scheduler. The implementation is
+`train/future_posterior_distinction.py`.
+
+R6a must be scored and recorded first under its existing gate. R6b may then be
+run read-only on the byte-identical adapter and old development board only; it
+receives the same three scalar-effect calls and must face the same random,
+zero, shuffled, absolute-capability, and held-out-fidelity gates. It cannot
+advance a fresh board unless its policy and comparator are frozen independently
+before that evaluation. This separation prevents a stronger inference rule
+from being used as a post-hoc relabeling of R6a.
+
 #### Conditional Context Extension: Distinction-Certified Context Folding
 
 If and only if the learned active policy clears its frozen active-over-random

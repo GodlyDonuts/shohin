@@ -4228,3 +4228,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   ceiling at **382/448 answers (85.27%)** and **365/448 exact programs (81.47%)**. Thus the frozen 80%
   oracle floors are attainable but nontrivial. This audit does not inspect learned adapter outputs and
   does not change the active/random budgets or capability thresholds.
+
+- **2026-07-14 18:27--18:38** — **A noise-calibrated R6b scheduler is preregistered without changing
+  R6a.** The hard top-64 runtime has a measurable tie/noise failure mode. New CPU-only
+  `future_posterior_distinction.py` keeps a Gaussian score posterior over all 597 hypotheses and chooses
+  the maximum weighted-partition-entropy probe. Assumed noise is frozen at 1.0, effect-bin width at 2.0,
+  and latent budget at three. Deterministic mechanics recover 100% under exact effects and **92.46%** at
+  noise 0.5 versus **88.27%** for hard top-64 under equal noise draws. R6a `689190 -> 689196` must finish,
+  score, and retain its original decision first. R6b is eligible only as a separate read-only old-board
+  scheduler comparison on the byte-identical adapter with equal calls and unchanged controls; it cannot
+  retroactively rescue R6a or authorize fresh data without its own frozen comparator.
