@@ -1843,13 +1843,39 @@ local arithmetic, depth composition, or causal-program sensitivity. It does
 not authorize scaling an answer-only recurrent adapter or changing the
 protected flagship.
 
-### Implementation Status: 2026-07-14 13:25 EDT
+### R1 Result: 2026-07-14 13:22 EDT
 
-The compiler, categorical executor, trainer, evaluator, admission audit,
-Slurm wrappers, and CPU contracts are implemented. Local unit tests verify
-lexical exclusion of reference identifiers, operation/query bindings,
-400-context execution, multi-digit carry/borrow, frozen-base gradients, and
-shell/syntax validity. Review corrected the board cardinality from a stale 224
-assumption to its actual 896 cases and added defense-in-depth hash binding of
-the CMB admission report to training and evaluation. No CMB model, checkpoint,
-score, or reasoning claim exists yet. Full-corpus CPU admission is next.
+The compiler, categorical executor, trainer, evaluator, admission audit, and
+Slurm wrappers passed their mechanical gates. CPU admission `738772` checked
+96,000 train and 896 evaluation rows, all 400 local arithmetic contexts, every
+intermediate register, and every oracle answer. Its report SHA-256 is
+`893386103c2484308769e24ab94001d5b6026a38095d038bf8e42ccc6a841fa2`.
+
+H100 `688994` trained a 225,742-parameter compiler/table from immutable 200k on
+32,768 examples and 2,048 updates; no base parameter was trainable. Read-only
+evaluation `688995` provides a split result:
+
+- fit-IID: 251/256 answers and 250/256 exact programs;
+- depth-5/6/8 OOD under training language: 155/192 answers and 150/192 exact
+  programs;
+- unseen language at training depths: 19/256 answers and 8/256 exact programs;
+- full unseen language/range/depth: 1/192 answers and 0 exact programs;
+- overall: 426/896 answers versus 45/896 after depth-matched program shuffling.
+
+The result is real but narrow. Categorical execution avoids the recurrent
+text-state decay and composes programs past training depth. The 42.5-point
+answer margin over shuffled programs shows that the compiled program is
+causal. Yet the operation/query compiler is surface-bound: held-out synonyms
+map systematically to trained but wrong opcodes, and unseen query wording
+often defaults to register 1. Four locked gates fail, including language and
+full OOD, so no decoder bridge is authorized.
+
+The next admissible test is **Paired Semantic-Equivalence Compilation**. It
+must render the same structured program through two training-only paraphrase
+and entity-label views, train on both, and explicitly align corresponding
+operation/query distributions. Held-out words, templates, and domains remain
+untouched. This isolates whether the frozen base contains enough semantic
+geometry for a small head to learn an equivalence quotient. Merely adding the
+held-out templates would be leakage and is forbidden. A matched classification
+arm without the equivalence loss is required before attributing any gain to
+the new constraint.
