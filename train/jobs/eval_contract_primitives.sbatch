@@ -21,11 +21,23 @@ OUT=${OUT:?set OUT to a fresh JSON report}
 [ -f "$DATA" ] || { echo "[contract-eval] missing data: $DATA" >&2; exit 3; }
 [ ! -e "$OUT" ] || { echo "[contract-eval] refusing existing output: $OUT" >&2; exit 4; }
 cd "$BASE/train"
-"$PY" - <<'PY'
+if ! timeout --kill-after=10s 90s "$PY" - <<'PY'
 import sys
 import torch
-sys.exit(0 if torch.cuda.is_available() else 75)
+try:
+    if not torch.cuda.is_available():
+        raise RuntimeError("CUDA unavailable")
+    probe = torch.empty(1024, device="cuda", dtype=torch.bfloat16)
+    torch.cuda.synchronize()
+    del probe
+except Exception as exc:
+    print(f"[contract-eval] CUDA preflight failed: {exc}", file=sys.stderr)
+    sys.exit(75)
 PY
+then
+  echo "[contract-eval] CUDA unavailable after allocation" >&2
+  exit 75
+fi
 "$PY" eval_contract_primitives.py --ckpt "$CKPT" \
   --tokenizer "$BASE/artifacts/shohin-tok-32k.json" --data "$DATA" --out "$OUT" \
   --n "${N:-0}" --per-contract-family "${PER_CONTRACT_FAMILY:-0}" --max-new "${MAX_NEW:-96}"
