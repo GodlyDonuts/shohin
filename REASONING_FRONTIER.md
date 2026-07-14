@@ -174,6 +174,19 @@ fixed checkpoint and must still survive the controls rather than being called
 recovered latent reasoning. The queued full H100 baseline uses that same
 standard prompt surface, eliminating SFT/evaluation boundary ambiguity.
 
+The full H100 baseline now corroborates that anchor rather than merely being
+consistent with it. Read-only run `687792` evaluated 100 deterministic held-out
+pairs from `best_step200000.pt` on the standard Q/A surface: **0/200** correct
+compile emissions, **0/200** correct reflection emissions, **0/200** exact
+reportability matches, **0/200** correct updates, **0/200** normal strict
+transports, and **0/100** model-authored interchange, mismatch, and strict
+causal pairs. All 100 per-pair raw transcripts are retained in the
+hash-verified artifact SHA-256
+`e4a96192abc528bad1a8c7ed4e5f275dc5bdb1080a2ac36a4e65a19026a8067e`; they
+show source paraphrase, generic explanation, or prompt continuation, not a
+single full ledger. This makes the next SFT a clean **learnability** ablation,
+not an attempt to recover an unmeasured raw latent skill.
+
 ### Conditional Next Hypothesis: Counterfactual Reflection Route
 
 An exact external carrier, even if it passes V2, would still be an explicit
