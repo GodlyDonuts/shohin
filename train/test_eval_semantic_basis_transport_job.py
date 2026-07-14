@@ -13,6 +13,8 @@ for required in (
     "[ ! -e \"$OUT\" ]",
     "eval_semantic_basis_transport.py",
     "--pairs \"$PAIRS\"",
+    "SPLIT=${SPLIT:-heldout}",
+    "--split \"$SPLIT\"",
     "PROMPT_MODE=${PROMPT_MODE:-qa}",
     "--prompt-mode \"$PROMPT_MODE\"",
 ):
@@ -23,6 +25,8 @@ evaluator = Path(__file__).with_name("eval_semantic_basis_transport.py").read_te
 for required in (
     '"results": results',
     '"prompt_mode": args.prompt_mode',
+    '"split": args.split',
+    'load_episodes(args.data, args.split)',
     '"inference_prompt_template"',
     'model_prompt(prompt, args.prompt_mode)',
     '"claim_boundary"',

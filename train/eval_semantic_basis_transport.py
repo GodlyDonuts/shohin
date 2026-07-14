@@ -50,15 +50,15 @@ def model_prompt(protocol_prompt, mode):
     raise ValueError("unknown prompt mode: {}".format(mode))
 
 
-def load_episodes(path):
+def load_episodes(path, split):
     episodes = collections.defaultdict(list)
     with open(path) as source:
         for line_number, line in enumerate(source, 1):
             if not line.strip():
                 continue
             row = json.loads(line)
-            if row.get("schema") != "semantic_basis_transport_v2" or row.get("split") != "heldout":
-                raise ValueError("invalid held-out semantic-basis row at line {}".format(line_number))
+            if row.get("schema") != "semantic_basis_transport_v2" or row.get("split") != split:
+                raise ValueError("invalid {} semantic-basis row at line {}".format(split, line_number))
             episodes[row["episode_id"]].append(row)
     checked = []
     for episode_id, rows in episodes.items():
@@ -225,6 +225,8 @@ def main():
     parser.add_argument("--pairs", type=int, default=100)
     parser.add_argument("--seed", type=int, default=20260713)
     parser.add_argument("--examples", type=int, default=8)
+    parser.add_argument("--split", choices=("train", "heldout"), default="heldout",
+                        help="data split to score; train is diagnostic-only and cannot support a capability claim")
     parser.add_argument("--prompt-mode", choices=("qa", "direct"), default="qa",
                         help="qa matches train/sft.py's standard Question/Answer surface")
     args = parser.parse_args()
@@ -236,7 +238,7 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
     checkpoint, model = load_model(args.ckpt, device)
     tokenizer = Tokenizer.from_file(args.tokenizer)
-    pairs = select_pairs(load_episodes(args.data), args.pairs, args.seed)
+    pairs = select_pairs(load_episodes(args.data, args.split), args.pairs, args.seed)
 
     def ask(prompt, max_new):
         return generate(
@@ -261,6 +263,7 @@ def main():
         "device": device,
         "data": args.data,
         "data_sha256": sha256_file(args.data),
+        "split": args.split,
         "pairs": args.pairs,
         "seed": args.seed,
         "prompt_mode": args.prompt_mode,
@@ -270,8 +273,8 @@ def main():
         "examples": results[:args.examples],
         "claim_boundary": (
             "A strict pass establishes only exact model-authored two-value carrier transport over this "
-            "synthetic source-deleted task. It does not establish general language reasoning, latent "
-            "thought, autonomous context compression, or a global workspace."
+            "synthetic source-deleted task. Train-split results are diagnostic-only. No result establishes "
+            "general language reasoning, latent thought, autonomous context compression, or a global workspace."
         ),
         "control_boundary": (
             "Cross-episode interchanges use an exact raw model emission. Zero and mismatch carriers are "
