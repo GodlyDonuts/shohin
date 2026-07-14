@@ -10,6 +10,7 @@ from categorical_microcode import OPCODE_TO_ID, QUERY_TO_ID, opcode_for, operati
 from future_effect_algebra import (
     compose_operators,
     decode_effect_signature,
+    effect_measurement_matrix,
     effect_signature,
     execute_operator,
     operation_operator,
@@ -24,6 +25,9 @@ def main():
     rows = [json.loads(line) for line in data.open() if line.strip()]
     assert len(rows) == 896
     states, queries = redundant_probe_bank()
+    singular_values = torch.linalg.svdvals(effect_measurement_matrix(states, queries))
+    assert torch.linalg.matrix_rank(effect_measurement_matrix(states, queries)).item() == 9
+    assert torch.allclose(singular_values, singular_values[:1].expand_as(singular_values))
 
     for row in rows:
         keys = row["keys"]

@@ -125,14 +125,18 @@ def redundant_probe_bank(*, dtype=torch.float64, device=None):
     syndrome and correct one arbitrarily corrupted scalar in the exact CPU
     contract.
     """
-    states = torch.tensor([
-        [0, 0, 1], [1, 0, 1], [0, 1, 1], [1, 1, 1],
-        [-1, 2, 1], [2, -1, 1], [3, 1, 1], [1, 3, 1],
+    hadamard = torch.tensor([
+        [1, 1, 1, 1, 1, 1, 1, 1],
+        [1, -1, 1, -1, 1, -1, 1, -1],
+        [1, 1, -1, -1, 1, 1, -1, -1],
+        [1, -1, -1, 1, 1, -1, -1, 1],
+        [1, 1, 1, 1, -1, -1, -1, -1],
+        [1, -1, 1, -1, -1, 1, -1, 1],
+        [1, 1, -1, -1, -1, -1, 1, 1],
+        [1, -1, -1, 1, -1, 1, 1, -1],
     ], dtype=dtype, device=device)
-    queries = torch.tensor([
-        [1, 0, 0], [0, 1, 0], [1, 1, 0], [1, -1, 0],
-        [-1, 1, 0], [2, 1, 0], [1, 2, 0], [0, 0, 1],
-    ], dtype=dtype, device=device)
+    states = hadamard[:, [1, 2, 0]]
+    queries = hadamard[:, [3, 4, 0]]
     return states, queries
 
 
