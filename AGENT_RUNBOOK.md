@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 15:41 EDT (the protected two-H100 pretrain remains healthy and isolated. R3 is formally rejected. Binding-First Referential Slot Compilation r4 passed its isolated mechanics canary; matched equal-parameter control/pointer fits and their read-only evaluation chains are live.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 15:50 EDT (the protected two-H100 pretrain remains healthy and isolated. R3 is formally rejected. Binding-First Referential Slot Compilation r4 matched fits are live, and an exact read-only future-Jacobian workspace diagnostic is staged under separate gates.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4045,3 +4045,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `fd1d2b04607b1d0c81c12551ea9d7667b91b9260453e862370e540344619fabb`; early telemetry is finite.
   Held-out `689106/689107` and manual `689108/689109` are dependency-gated. No score or bridge claim
   exists until the full matched comparator closes every preregistered gate.
+
+- **2026-07-14 15:41--15:50** — **An exact future-Jacobian diagnostic is staged while R4 trains.**
+  The 2026 global-workspace paper's J-lens averages causal influence on all current/future final
+  residuals; prior Shohin logit-lens nulls measured immediate unembedding and cannot close that
+  hypothesis. New read-only `jacobian_workspace.py` adapts the exact row-batched estimator to the
+  custom 30-layer / 576-width model, freezes all weights, hashes every input, and writes only an
+  isolated diagnostic matrix. A tiny-transformer contract proves dim-batch 1/4 equivalence, finite
+  matrices, correct transport, and zero parameter gradients. The preregistered one-prompt H100
+  canary cannot establish a workspace: stability, future-over-immediate readout, bidirectional
+  concept swaps, zero/shuffled controls, and cross-operation reuse are all still required. The
+  conditional Sparse Jacobian Recurrent Workspace idea is documented in `REASONING_FRONTIER.md` but
+  no fit is authorized before both R4 and causal J-space evidence.

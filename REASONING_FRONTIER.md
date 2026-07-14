@@ -2114,3 +2114,40 @@ use 300,493 parameters each and share the same initial adapter SHA-256
 Both have cleared finite startup telemetry. Held-out and manual evaluations are
 dependency-gated; no R4 capability or decoder-bridge conclusion exists until
 the locked comparator reports.
+
+### Parallel Diagnostic: Exact Future-Jacobian Workspace
+
+The 2026 Jacobian-lens result changes one measurement assumption without
+changing any R4 gate. Our earlier immediate logit-lens and residual-patching
+nulls do not test the paper's object: the average causal map from a source
+residual to *all current and future* final-block residuals. Shohin may lack such
+a map, but that must be measured rather than inferred from immediate
+unembedding.
+
+`train/jacobian_workspace.py` implements the exact row-batched estimator for
+Shohin's custom transformer. At every valid target position it injects one
+output-coordinate cotangent, backpropagates to selected source-layer
+residuals, averages source positions, and freezes every model parameter. The
+first canary is raw `best_step200000.pt`, one deterministic 48-token prompt,
+source layers 5/9/13/17/21/25/28, final block target, and no weight or data
+write. Its unit contract proves that one-row and four-row batching agree on a
+tiny transformer, matrices are finite, transport shapes are correct, and no
+model parameter receives a gradient.
+
+Even a clean matrix is **not** a workspace result. Advancement requires: (1)
+stable directions across disjoint prompt samples; (2) a mid-layer band where
+future-Jacobian readouts recover unspoken intermediate concepts better than an
+immediate-logit control; (3) coordinate swaps that redirect a downstream
+conclusion in both directions; (4) zero/shuffled/non-Jacobian controls; and (5)
+evidence that the same sparse directions support more than one operation.
+
+If those gates and R4 binding both pass, the next architecture candidate is a
+**Sparse Jacobian Recurrent Workspace**: bind text to dynamic entity slots,
+write only a top-k future-verbalizable state into a recurrent workspace,
+broadcast it through a shared block, and train counterfactual interruption
+probes to report the hidden state without requiring visible chain-of-thought
+in ordinary inference. Context scaling would retain the sparse workspace plus
+source provenance across chunks while dropping raw source tokens. Normal,
+zero, shuffled, concept-swap, source-dropped length, and direct transcript
+controls are mandatory. This is a conditional mechanism proposal, not an
+authorized fit or a reasoning claim.
