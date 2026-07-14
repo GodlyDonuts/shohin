@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 14:00 EDT (the protected two-H100 pretrain remains healthy and isolated. CMB r2 is formally rejected: output-logit equivalence is redundant with shared labels, forgets the r1 anchor distribution, and solves only 1/8 frozen manual prompts. Anchor-preserving Counterfactual Role-Equivariant Compilation r3 is implemented and awaiting CPU admission.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 14:07 EDT (the protected two-H100 pretrain remains healthy and isolated. CMB r2 is formally rejected. Counterfactual Role-Equivariant Compilation r3 passed a 64-program / 384-row structural, automorphism, executor, contamination, and response-contract smoke; the full CPU build remains unstarted.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -3926,3 +3926,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   normalized semantic-view feature alignment plus kind-invariant/role-swapped counterfactual losses.
   They must match base/data/admission/seed/order/schedule/init hash. The original absolute CMB gates,
   >=5pp matched attribution gates, and byte-identical eight-case manual board remain binding.
+
+- **2026-07-14 14:00--14:07** — **R3 passes its 64-program CPU smoke; full data remains
+  unauthorized until a real Stokes batch runs.** Stokes jobs `738783` on ec59 and `738784` on ec60
+  were scheduler-canceled after two seconds before opening a log or writing an artifact; both are
+  infrastructure non-results. The lightweight smoke then ran directly on the Stokes login host with
+  one BLAS thread: 384 rows, 64 complete six-view groups, zero semantic/permutation mismatches,
+  384/384 oracle execution, zero width errors, zero exact or held-out-language 13-gram hits, and all
+  response contracts valid. A blanket all-eval full-text scan correctly found 128 intended anchor
+  boilerplate hits against same-surface fit/depth slices. It is preserved as a rejected report. The
+  replacement regime-aware audit permits exactly those 128 anchor rows and reports zero forbidden
+  rows against language/full OOD, the manual board, and all other evaluations. The full 48,000-program
+  job must reproduce exactly two allowed anchor rows per program and zero forbidden rows.

@@ -45,8 +45,11 @@ if (quality.get("data_sha256") != sha or quality.get("malformed_rows")
     raise SystemExit("[role-equiv] quality admission failed")
 if any(quality.get("eval_overlap",{}).get(key) for key in ("exact_prompt_hits","ngram_prompt_hits")):
     raise SystemExit("[role-equiv] public evaluation overlap")
-if (text.get("data_sha256") != sha or text.get("malformed_rows") or text.get("malformed_json_rows")
-        or any(text.get("overlap",{}).get(key) for key in ("exact_rows","ngram_rows"))):
+if (text.get("data_sha256") != sha or not text.get("all_checks_pass")
+        or text.get("malformed_rows") or text.get("malformed_json_rows")
+        or text.get("exact_rows") or text.get("forbidden_rows")
+        or text.get("allowed_same_surface_rows") != admission.get("programs", -1) * 2
+        or text.get("allowed_by_view") != {"anchor": admission.get("programs", -1) * 2}):
     raise SystemExit("[role-equiv] full-text overlap")
 group=contracts.get("groups",{}).get("role_equivariant_microcode",{})
 if (contracts.get("data_sha256") != sha or contracts.get("malformed_rows")

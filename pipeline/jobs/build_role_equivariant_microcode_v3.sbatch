@@ -38,6 +38,6 @@ cd "$BASE"
 "$PY" pipeline/audit_role_equivariant_microcode_v3.py \
   --train "$DATA" --eval "$EVAL" --tokenizer "$TOKENIZER" --out "$ADMISSION" --programs "$PROGRAMS"
 "$PY" pipeline/audit_sft_quality.py --data "$DATA" --evals "$BASE/artifacts/evals" --out "$QUALITY"
-"$PY" pipeline/audit_training_text_overlap.py --data "$DATA" --evals "$BASE/artifacts/evals" \
-  --out "$FULL_TEXT" --fields question response --require-zero
+"$PY" pipeline/audit_role_equivariant_full_text_v3.py --data "$DATA" --evals "$BASE/artifacts/evals" \
+  --out "$FULL_TEXT" --programs "$PROGRAMS"
 "$PY" pipeline/audit_response_contracts.py --data "$DATA" --out "$CONTRACTS"
