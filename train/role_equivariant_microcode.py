@@ -156,23 +156,27 @@ class RoleEquivariantMicrocodeCompiler(nn.Module):
 
     @staticmethod
     def compose_operation_logits(kind_logits, role_logits):
+        kind_scores = F.log_softmax(kind_logits.float(), dim=-1)
+        role_scores = F.log_softmax(role_logits.float(), dim=-1)
         columns = []
         for opcode in range(len(OPCODES)):
             kind, role = factor_operation(opcode)
-            score = kind_logits[:, kind]
+            score = kind_scores[:, kind]
             if role != IGNORE_ROLE:
-                score = score + role_logits[:, role]
+                score = score + role_scores[:, role]
             columns.append(score)
         return torch.stack(columns, dim=-1)
 
     @staticmethod
     def compose_query_logits(kind_logits, role_logits):
+        kind_scores = F.log_softmax(kind_logits.float(), dim=-1)
+        role_scores = F.log_softmax(role_logits.float(), dim=-1)
         columns = []
         for query in range(len(QUERIES)):
             kind, role = factor_query(query)
-            score = kind_logits[:, kind]
+            score = kind_scores[:, kind]
             if role != IGNORE_ROLE:
-                score = score + role_logits[:, role]
+                score = score + role_scores[:, role]
             columns.append(score)
         return torch.stack(columns, dim=-1)
 

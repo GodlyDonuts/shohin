@@ -36,6 +36,15 @@ def main():
         else:
             assert factor_query(permute_query(index))[1] == 1 - role
 
+    kind_logits = torch.full((1, 5), -8.0)
+    role_logits = torch.tensor([[100.0, 99.0]])
+    kind_logits[0, 4] = 8.0
+    operation = RoleEquivariantMicrocodeCompiler.compose_operation_logits(kind_logits, role_logits)
+    assert int(operation.argmax(-1)) == OPCODES.index("swap")
+    query_kind_logits = torch.tensor([[-8.0, 8.0, -8.0]])
+    query = RoleEquivariantMicrocodeCompiler.compose_query_logits(query_kind_logits, role_logits)
+    assert int(query.argmax(-1)) == QUERIES.index("sum")
+
     torch.manual_seed(3)
     model = GPT(GPTConfig(
         vocab_size=64, n_layer=3, n_head=4, n_kv_head=2,
