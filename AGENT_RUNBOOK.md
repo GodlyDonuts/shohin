@@ -3314,3 +3314,11 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   pass both locally and on Stokes; the script is mirrored at
   `/lustre/fs1/home/sa305415/shohin/pipeline/`. It is diagnostic only and does not change a model, train a
   controller, or authorize a reasoning claim.
+
+- **2026-07-14 05:06** — **Fixed paired-factor split labels before any affected job ran.** Pending paired
+  jobs `688617`–`688621` and their gate `688623` were canceled with no allocation, output, or model change
+  after audit showed their factor JSONL rows use `factor_language`, `factor_values`, `factor_delta`,
+  `factor_query`, and `two_edit`, not `heldout`. Correct replacements are `688626 -> 688627 -> 688628 ->
+  688629 -> 688630`, with the paired gate `688631` after NLL `688616`, two-edit `688630`, and the already
+  correct 200-row train diagnostic `688622`. Each replacement preserves the original bound file SHA-256 and
+  fresh output path. Treat `688617`–`688621`/`688623` as canceled setup, never as failed evidence.
