@@ -3251,8 +3251,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   controller, parser, or visible thought trace. For each episode it trains both normal and counterfactual
   tapes and requires each tape's own answer CE to beat the paired opposite answer by a fixed 0.2 NLL margin.
   This is a functional causal-discrimination loss, not a hidden-vector cosine objective. Full fallback job
-  `688603` is dependency-held after `688601`: it reads the gate JSON and exits with no output if the first
+  original `688603`/`688604` chain was canceled while dependency-held after its 3-hour allocation was
+  found too short; replacement `688609` is dependency-held after `688601`, with `688610` evaluating it.
+  It reads the gate JSON and exits with no output if the first
   CRA arm clears its combined gate; only an automatic first-arm rejection permits the fresh isolated
-  `train/cra_paired_200k_l19_r1` run. Conditional evaluator `688604` follows `688603` and writes the
+  `train/cra_paired_200k_l19_r1` run. Conditional evaluator `688610` follows `688609` and writes the
   same fresh 500-world combined behavioral report only when that fallback actually trained. Its
   behavioral/factor evaluation remains required before any claim.
+
+- **2026-07-14 04:33** — **Paired CRA CUDA canary passed and corrected the full-run allocation.** `688605`
+  completed its isolated 12-batch raw-200k test on evc41: finite first loss **24.0210**, gnorm **159.494**
+  before clipping, normal/counter CE **11.8162/11.0095**, pair margin loss **1.1954**, and checkpoint
+  `train/cra_paired_canary_200k_r1/cra_ep1.pt` after 11 seconds. This is hardware/serialization only,
+  not a capability score. Its measured ~0.9 seconds/update means a 15,000-update paired epoch needs about
+  3.75 hours plus queue/serialization margin; the original 3-hour held fallback could have timed out before
+  saving. Replaced it with the five-hour `688609 -> 688610` chain. Never infer capability from the canary.
