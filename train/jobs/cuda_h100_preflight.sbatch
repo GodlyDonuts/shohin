@@ -21,15 +21,21 @@ export OMP_NUM_THREADS=2
 
 echo "[cuda-preflight] host=$(hostname)"
 timeout --kill-after=10s 30s nvidia-smi --query-gpu=name,driver_version,memory.total --format=csv,noheader
-timeout --kill-after=10s 90s "$PY" - <<'PY'
+timeout --kill-after=10s 300s "$PY" -u - <<'PY'
+print("[cuda-preflight] python-start", flush=True)
 import torch
+print(f"[cuda-preflight] torch-imported version={torch.__version__}", flush=True)
 
-if not torch.cuda.is_available():
+available = torch.cuda.is_available()
+print(f"[cuda-preflight] cuda-available={available}", flush=True)
+if not available:
     raise SystemExit("[cuda-preflight] CUDA unavailable after Slurm allocation")
 device = torch.device("cuda")
 x = torch.randn((1024, 1024), device=device, dtype=torch.bfloat16)
+print("[cuda-preflight] tensor-allocated", flush=True)
 y = x @ x
 torch.cuda.synchronize()
+print("[cuda-preflight] matmul-synchronized", flush=True)
 if not torch.isfinite(y).all().item():
     raise SystemExit("[cuda-preflight] non-finite CUDA matmul")
 print(

@@ -2,7 +2,7 @@
 #SBATCH -J shohin-effect-r6-eval
 #SBATCH -p normal
 #SBATCH --gres=gpu:nvidia_h100_pcie:1
-#SBATCH --exclude=evc26,evc31,evc34,evc36,evc37,evc38,evc43,evc45,evc49,evc50
+#SBATCH --exclude=evc22,evc26,evc31,evc34,evc36,evc37,evc38,evc43,evc45,evc49,evc50
 #SBATCH -c 4
 #SBATCH --mem=96G
 #SBATCH -t 01:00:00
@@ -27,11 +27,15 @@ done
 case "$OUT" in "$BASE"/artifacts/eval_history/future_effect_r6_*.json) ;; *) echo "[effect-r6-eval] invalid OUT path" >&2; exit 4;; esac
 
 cd "$BASE/train"
-timeout --kill-after=10s 90s "$PY" - <<'PY'
-import sys, torch
+timeout --kill-after=10s 300s "$PY" -u - <<'PY'
+import sys
+print("[effect-r6-eval] python-start", flush=True)
+import torch
+print(f"[effect-r6-eval] torch-imported version={torch.__version__}", flush=True)
 try:
     if not torch.cuda.is_available(): raise RuntimeError("CUDA unavailable")
     torch.empty(1024,device="cuda",dtype=torch.bfloat16); torch.cuda.synchronize()
+    print("[effect-r6-eval] CUDA preflight passed", flush=True)
 except Exception as exc:
     print("[effect-r6-eval] CUDA preflight failed: {}".format(exc),file=sys.stderr); sys.exit(75)
 PY

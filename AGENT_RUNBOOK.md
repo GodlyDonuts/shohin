@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 18:36 EDT (the protected two-H100 pretrain remains healthy and isolated. R5 is closed. R6 development fit 689190 is healthy through step 6,700/12,000; evaluator 689196 and its executable gate remain frozen before scores. Exact context folding and posterior scheduling pass CPU mechanics only. No fresh confirmatory board or capability claim exists.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 19:28 EDT (the protected two-H100 pretrain remains isolated. R5 is closed. R6 development fit 689190 completed 12,000/12,000 updates with exit 0; its hash-matched 466,894-parameter adapter is finite and contains no base tensors. Evaluators 689196/689220 produced no score because their 90-second guards killed slow Lustre-backed framework imports. Instrumented five-minute CUDA smoke 689224 on evc46 gates the unchanged evaluator 689225 on the same node. Exact context folding and posterior scheduling pass CPU mechanics only. No fresh confirmatory board or capability claim exists.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4254,3 +4254,19 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   averages **0.00180** with maximum 0.0090; finite pre-clip gradient norm averages **0.216** with one
   isolated 1.082 point that recovered on the next log; operation-kind and role accuracy remain 1.0 at
   every logged point. No schedule, data, model, probe split, output, or dependent evaluator changed.
+
+- **2026-07-14 19:14--19:28** — **R6 development fit completes cleanly; evaluation remains unscored
+  behind an infrastructure gate.** `689190` completed all **12,000/12,000** updates in 4,997 training
+  seconds and Slurm records `COMPLETED`, exit `0`. Its isolated adapter is 1,878,643 bytes, SHA-256
+  **`22f88b6af36e07afe4fbe1f87de13bbbbad61f7234d4df1570da82d78b539f69`**, hash-matched Newton/local,
+  and CPU-load validated as exactly **466,894** finite adapter parameters in 27 tensors, no `model.*`
+  base tensors, protocol `active_counterfactual_distinction_r6`, 12,000 updates, immutable 200k-base
+  hash, and frozen pointer-adapter hash. Dependency evaluator `689196` on evc22 and retry `689220` on
+  evc25 each exited `124` after 91 seconds with empty reports: instrumentation on idle evc46 proved the
+  old guard was killing a still-progressing Lustre-backed `import torch`, before CUDA discovery or any
+  R6 inference. No report exists and neither attempt has statistical standing. The generic smoke and
+  R6 evaluator now retain a real CUDA tensor test but allow up to five minutes for cold framework import.
+  Instrumented smoke `689224` runs on idle evc46; byte-identical frozen evaluator `689225` is pinned to
+  the same node with `afterok:689224`. All six local R6 gate/scheduler/folding/trace mechanics scripts
+  pass. Do not inspect or generate a confirmatory board until `689225` exits 0 and the preregistered
+  executable decision and qualitative transcript readers consume its one fresh development report.
