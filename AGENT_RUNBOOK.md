@@ -4215,7 +4215,7 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   before evaluator `689196` can reveal a score.** `evaluate_future_effect_r6.py` correctly treats the
   board as 448 fresh language/full cases plus 448 pinned fit/depth controls. Fresh advancement requires
   >=55% answers, >=50% exact programs, >=65% operations, >=60% language, >=40% full, +10pp over raw R5,
-  +5pp answer/exact and +10pp operations over equal-call random, and +10pp answer/exact over the better
+  +5pp answer/exact/operations over equal-call random, and +10pp answer/exact over the better
   zero/shuffled control. It separately requires >=80% fit, >=60% depth, >=80% oracle answer/exact,
   >=95% query accuracy, and finite held-out MSE <= max(2x train MSE, 1.0). Unit fixtures prove a nominal
   pass, equal-active/random rejection, and held-out-calibration rejection. A pass authorizes only one

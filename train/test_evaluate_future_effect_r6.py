@@ -58,7 +58,7 @@ def main():
     reasons, _ = evaluate(report)
     assert "active_beats_random_answers_by_5pp" in reasons
     assert "active_beats_random_exact_by_5pp" in reasons
-    assert "active_beats_random_operations_by_10pp" in reasons
+    assert "active_beats_random_operations_by_5pp" in reasons
 
     report = passing_report()
     report["summary"]["language"]["heldout_probe_mse"] = 9.0

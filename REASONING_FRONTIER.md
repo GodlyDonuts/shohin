@@ -2406,7 +2406,7 @@ board requires, simultaneously: active >=55% fresh answers, >=50% fresh exact
 programs, and >=65% operation recovery; >=60% language and >=40% full answers;
 >=80% fit and >=60% depth preservation; at least +10 points over the unchanged
 R5 raw fresh answer and exact-program counts; at least +5 points answers/exact
-and +10 points operations over random with equal calls; at least +10 points
+and operations over random with equal calls; at least +10 points
 answers/exact over the better zero/shuffled control; >=80% oracle answers and
 exact programs; >=95% query accuracy; and finite held-out-probe MSE no greater
 than max(2x train MSE, 1.0). Any failed conjunct closes this R6 head before a

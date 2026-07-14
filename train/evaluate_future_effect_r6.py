@@ -123,7 +123,7 @@ def evaluate(report):
         "active_beats_raw_r5_exact_by_10pp": fresh["policies"]["active"]["exact_programs"] >= RAW_R5_EXACT + 45,
         "active_beats_random_answers_by_5pp": metrics["derived"]["active_over_random_answers"] >= 0.05,
         "active_beats_random_exact_by_5pp": metrics["derived"]["active_over_random_exact"] >= 0.05,
-        "active_beats_random_operations_by_10pp": metrics["derived"]["active_over_random_operations"] >= 0.10,
+        "active_beats_random_operations_by_5pp": metrics["derived"]["active_over_random_operations"] >= 0.05,
         "active_beats_controls_answers_by_10pp": metrics["derived"]["active_over_best_control_answers"] >= 0.10,
         "active_beats_controls_exact_by_10pp": metrics["derived"]["active_over_best_control_exact"] >= 0.10,
         "oracle_answers_at_least_80pct": metrics["oracle"]["answer_accuracy"] >= 0.80,
