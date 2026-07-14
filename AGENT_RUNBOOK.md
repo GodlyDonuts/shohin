@@ -3503,3 +3503,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   PAAT may be submitted only if current FQRB fails the combined or unseen-source-tuple gate, using the same
   frozen data, initialization, updates, optimizer, hard cut, and evaluator with `source_window` as the sole
   changed variable. Its checkpoint metadata binds that setting; no current writer has been changed.
+
+- **2026-07-14 08:25** — **FQRB evidence is now parallelized and its passing branch has a one-shot CPU
+  admission gate.** Pending core `688668` and magnitude `688670` evaluations were canceled before start and
+  replaced by independent read-only `afterok:688665` jobs **688690** and **688691** with their original frozen
+  data hashes and distinct output reports; combined `688666`, train diagnostic `688681`, and manual/deep
+  transcript jobs are unchanged. `train/jobs/submit_ecli_if_admitted.sbatch` is dependency-held after the
+  deep audit. It makes no CUDA allocation itself. It first requires the exact FQRB candidate decision plus
+  hash-bound watcher-generated ECLI train/held-out/audit files; only then does it submit one fresh isolated
+  ECLI train and dependent evaluation chain and write an admission JSON with all job IDs/hashes. A failed or
+  absent FQRB admission records a blocked no-op. This removes idle time without allowing a failed primitive
+  to consume an ECLI GPU allocation.
