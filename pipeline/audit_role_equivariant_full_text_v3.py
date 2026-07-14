@@ -79,6 +79,7 @@ def audit_rows(rows, exact_sources, gram_sources, width, max_examples=24):
     }
     valid = malformed = allowed_rows = forbidden_rows = exact_rows = 0
     allowed_by_view = collections.Counter()
+    semantic_view_rows = collections.Counter()
     forbidden_by_label = collections.Counter()
     examples = []
     for line_number, row in enumerate(rows, 1):
@@ -86,6 +87,8 @@ def audit_rows(rows, exact_sources, gram_sources, width, max_examples=24):
             malformed += 1
             continue
         valid += 1
+        view = str(row.get("semantic_view") or "missing")
+        semantic_view_rows[view] += 1
         row_sources = set()
         row_exact = False
         for field in TRAIN_FIELDS:
@@ -102,7 +105,6 @@ def audit_rows(rows, exact_sources, gram_sources, width, max_examples=24):
         exact_rows += int(row_exact)
         if not row_sources:
             continue
-        view = str(row.get("semantic_view") or "missing")
         permitted = view == "anchor" and row_sources <= allowed_labels
         if permitted:
             allowed_rows += 1
@@ -124,6 +126,7 @@ def audit_rows(rows, exact_sources, gram_sources, width, max_examples=24):
         "exact_rows": exact_rows,
         "allowed_same_surface_rows": allowed_rows,
         "allowed_by_view": dict(sorted(allowed_by_view.items())),
+        "semantic_view_rows": dict(sorted(semantic_view_rows.items())),
         "forbidden_rows": forbidden_rows,
         "forbidden_by_label": dict(sorted(forbidden_by_label.items())),
         "forbidden_examples": examples,
@@ -171,16 +174,25 @@ def main():
     }
     report["all_checks_pass"] = (
         report["valid_rows"] == args.programs * 6
+        and report["semantic_view_rows"] == {
+            "anchor": args.programs * 2,
+            "paraphrase_a": args.programs * 2,
+            "paraphrase_b": args.programs * 2,
+        }
         and not report["malformed_rows"]
         and not report["malformed_json_rows"]
         and not report["exact_rows"]
-        and report["allowed_same_surface_rows"] == args.programs * 2
-        and report["allowed_by_view"] == {"anchor": args.programs * 2}
+        and report["allowed_same_surface_rows"] <= args.programs * 2
+        and report["allowed_by_view"] == (
+            {"anchor": report["allowed_same_surface_rows"]}
+            if report["allowed_same_surface_rows"] else {}
+        )
         and not report["forbidden_rows"]
     )
     report["claim_boundary"] = (
-        "Only anchor boilerplate shared with fit-IID/depth-only diagnostics is allowed. "
-        "Language/full OOD, manual, and every other evaluation source must remain zero."
+        "Exactly two anchor rows per program are present. Any overlap may come only from anchor "
+        "boilerplate shared with fit-IID/depth-only diagnostics; language/full OOD, manual, and "
+        "every other evaluation source must remain zero. Clean anchors need not overlap."
     )
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")

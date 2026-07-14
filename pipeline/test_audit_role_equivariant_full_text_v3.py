@@ -24,6 +24,7 @@ def main():
     assert report["allowed_same_surface_rows"] == 1
     assert report["forbidden_rows"] == 2
     assert report["allowed_by_view"] == {"anchor": 1}
+    assert report["semantic_view_rows"] == {"anchor": 2, "paraphrase_a": 1, "paraphrase_b": 1}
     print("role-equivariant full-text audit tests passed")
 
 

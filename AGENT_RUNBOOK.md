@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 14:27 EDT (the protected two-H100 pretrain remains healthy and isolated. CMB r2 is formally rejected. Counterfactual Role-Equivariant Compilation r3 is rebuilding decontaminated data while a nonredundant signed-feature implementation awaits a fresh mechanics canary.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 14:34 EDT (the protected two-H100 pretrain remains healthy and isolated. CMB r2 is formally rejected. Counterfactual Role-Equivariant Compilation r3 has structurally admitted clean full data; its regime-aware overlap gate is being corrected before a fresh signed-feature mechanics canary.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -3967,3 +3967,17 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   weight, signed-role contract, and exact 0.5/1.0 treatment weights. Local tensor, gradient-freeze,
   generator, and comparator contracts pass. The earlier `689057` canary no longer certifies this revised
   architecture; a fresh isolated mechanics canary is mandatory after CPU admission.
+
+- **2026-07-14 14:27--14:34** — **The clean full artifact passes its hard content gates; an inverted
+  sanity expectation, not the data, stopped the job.** Stokes `738790` selected 48,000 groups after
+  scanning 48,372 immutable sources and skipping 369 prior-group collisions plus 3 exact held-out
+  prompts. Its 288,000 rows (SHA-256
+  `9f97e9339f665de27d99195d5b4f61c8c09681ea268cd4459a5e212b8875267f`) have zero duplicate
+  questions, exact eval prompts, held-out-language 13-grams, malformed groups, semantic/permutation
+  mismatches, oracle errors, width violations, or public-eval overlaps. The regime-aware full-text
+  audit found 95,972 allowed anchor-boilerplate overlaps and zero forbidden rows, then failed because
+  it incorrectly required all 96,000 anchor rows to overlap. Direct inspection found the 28 misses are
+  ordinary orchard anchors with no shared 13-gram; absence of overlap is desirable. The corrected gate
+  still requires exactly 96,000 rows in each semantic view, zero exact matches, zero forbidden overlap,
+  and overlap only from anchors, but treats 96,000 as a maximum rather than a required contamination
+  count. The failed report is preserved; the immutable data is not regenerated or edited.

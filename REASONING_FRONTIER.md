@@ -1993,3 +1993,15 @@ only when every rendered question is unique within the group, disjoint from
 previously selected groups, and not an exact held-out prompt. Its build report
 binds the selected source-index sequence and skip counts. Training remains
 blocked until the rebuilt 288,000-row artifact passes every independent gate.
+
+The corrected build selected 48,000 groups from 48,372 source rows and passed
+the structural, automorphism, oracle, uniqueness, exact-prompt, held-out
+language, and public-evaluation gates. A regime-aware scanner then observed
+95,972 allowed anchor-boilerplate overlaps and zero forbidden rows, but its
+first version incorrectly required all 96,000 anchors to overlap. The 28 clean
+anchors were ordinary orchard examples with no shared 13-gram. The repaired
+logic still requires exactly two anchor rows per program, permits overlap only
+from anchors against fit/depth diagnostics, and rejects every exact prompt or
+language/full/manual overlap; it no longer treats absence of overlap as an
+error. The immutable data SHA-256 is
+`9f97e9339f665de27d99195d5b4f61c8c09681ea268cd4459a5e212b8875267f`.

@@ -48,8 +48,16 @@ if any(quality.get("eval_overlap",{}).get(key) for key in ("exact_prompt_hits","
 if (text.get("data_sha256") != sha or not text.get("all_checks_pass")
         or text.get("malformed_rows") or text.get("malformed_json_rows")
         or text.get("exact_rows") or text.get("forbidden_rows")
-        or text.get("allowed_same_surface_rows") != admission.get("programs", -1) * 2
-        or text.get("allowed_by_view") != {"anchor": admission.get("programs", -1) * 2}):
+        or text.get("semantic_view_rows") != {
+            "anchor": admission.get("programs", -1) * 2,
+            "paraphrase_a": admission.get("programs", -1) * 2,
+            "paraphrase_b": admission.get("programs", -1) * 2,
+        }
+        or text.get("allowed_same_surface_rows", -1) > admission.get("programs", -1) * 2
+        or text.get("allowed_by_view") != (
+            {"anchor": text.get("allowed_same_surface_rows")}
+            if text.get("allowed_same_surface_rows") else {}
+        )):
     raise SystemExit("[role-equiv] full-text overlap")
 group=contracts.get("groups",{}).get("role_equivariant_microcode",{})
 if (contracts.get("data_sha256") != sha or contracts.get("malformed_rows")
