@@ -7,7 +7,7 @@
 #SBATCH --exclude=evc22,evc23,evc26,evc31,evc32,evc36,evc43,evc44,evc45,evc49,evc50
 #SBATCH -c 4
 #SBATCH --mem=80G
-#SBATCH -t 03:00:00
+#SBATCH -t 05:00:00
 #SBATCH -o /lustre/fs1/home/sa305415/shohin/logs/cra_paired_%j.out
 #SBATCH --open-mode=append
 set -euo pipefail
