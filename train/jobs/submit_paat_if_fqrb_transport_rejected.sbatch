@@ -59,6 +59,8 @@ combined = gates.get('combined', {})
 core = gates.get('core', {})
 if assessment.get('decision') == 'bounded_fqrb_basis_candidate_magnitude_and_interaction_still_required':
     print('not_needed_fqrb_candidate')
+elif not assessment.get('manual', {}).get('direct_decode_preserved', False):
+    print('blocked_direct_decode_regression')
 elif train.get('pass') and combined.get('controls') and core.get('controls') and (not combined.get('pass') or not core.get('pass')):
     print('admit_phase_aligned_transport_ablation')
 else:
