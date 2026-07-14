@@ -34,19 +34,19 @@ def sha256_file(path):
     return digest.hexdigest()
 
 
-def answer_nll(model, tape, suffix_ids, answer_ids, tape_len, layer, eos_id):
+def answer_nll(model, tape, suffix_ids, answer_ids, tape_len, layer, eos_id, tape_start_pos=0):
     """Return mean answer-only NLL after a fixed continuous tape."""
     suffix = torch.cat((model.tok(suffix_ids), model.tok(answer_ids)), dim=1)
-    logits = algebra_suffix_logits(model, tape, suffix, layer, tape_len)
+    logits = algebra_suffix_logits(model, tape, suffix, layer, tape_len, tape_start_pos)
     targets = build_answer_targets(answer_ids, tape_len + suffix_ids.shape[1], 0, eos_id)
     return float(F.cross_entropy(
         logits.float().reshape(-1, logits.shape[-1]), targets.reshape(-1), ignore_index=-1,
     ).item())
 
 
-def encode(model, tokenizer, source, layer, tape_len):
+def encode(model, tokenizer, source, layer, tape_len, source_window=0):
     ids = torch.tensor([tokenizer.encode(source).ids], dtype=torch.long, device="cuda")
-    return encode_residual_tape(model, ids, layer, tape_len)
+    return encode_residual_tape(model, ids, layer, tape_len, source_window)
 
 
 def resolve_metadata(checkpoint, tokenizer, args):
@@ -56,7 +56,7 @@ def resolve_metadata(checkpoint, tokenizer, args):
             raise SystemExit("checkpoint does not certify source-free residual algebra")
         if metadata.get("extra_trainable_parameters") != 0 or metadata.get("composition") != "donor + edited - base":
             raise SystemExit("checkpoint does not certify the native CRA mechanism")
-        return metadata, int(metadata["layer"]), int(metadata["tape_len"])
+        return metadata, int(metadata["layer"]), int(metadata["tape_len"]), int(metadata.get("source_window", 0))
     if not args.allow_raw:
         raise SystemExit("checkpoint does not certify source-free residual algebra; raw requires --allow-raw")
     anchor_ids = tokenizer.encode(args.source_anchor).ids
@@ -72,7 +72,7 @@ def resolve_metadata(checkpoint, tokenizer, args):
         "source_present_at_suffix": False,
         "extra_trainable_parameters": 0,
         "composition": "donor + edited - base",
-    }, layer, tape_len
+    }, layer, tape_len, 0
 
 
 def mean(rows, field):
@@ -101,7 +101,8 @@ def main():
     eos_id = tokenizer.token_to_id("<|endoftext|>")
     if eos_id is None:
         raise SystemExit("tokenizer EOS missing")
-    metadata, layer, tape_len = resolve_metadata(checkpoint, tokenizer, args)
+    metadata, layer, tape_len, source_window = resolve_metadata(checkpoint, tokenizer, args)
+    tape_start_pos = source_window - tape_len if source_window else 0
     rows = [json.loads(line) for line in open(args.data) if line.strip()]
     rows = [row for row in rows if row.get("schema") == "counterfactual_residual_algebra_v1" and row.get("split") == args.split]
     rows = rows[:args.max_examples]
@@ -111,26 +112,26 @@ def main():
     results, tapes = [], []
     with torch.no_grad():
         for index, row in enumerate(rows):
-            base = encode(model, tokenizer, row["base_source"], layer, tape_len)
-            edited = encode(model, tokenizer, row["edited_source"], layer, tape_len)
-            counter_edited = encode(model, tokenizer, row["counterfactual_edited_source"], layer, tape_len)
-            donor = encode(model, tokenizer, row["donor_source"], layer, tape_len)
+            base = encode(model, tokenizer, row["base_source"], layer, tape_len, source_window)
+            edited = encode(model, tokenizer, row["edited_source"], layer, tape_len, source_window)
+            counter_edited = encode(model, tokenizer, row["counterfactual_edited_source"], layer, tape_len, source_window)
+            donor = encode(model, tokenizer, row["donor_source"], layer, tape_len, source_window)
             normal_tape = compose_counterfactual_tape(base, edited, donor)
             counter_tape = compose_counterfactual_tape(base, counter_edited, donor)
-            pbase = encode(model, tokenizer, row["paraphrase_base_source"], layer, tape_len)
-            pedited = encode(model, tokenizer, row["paraphrase_edited_source"], layer, tape_len)
-            pdonor = encode(model, tokenizer, row["paraphrase_donor_source"], layer, tape_len)
+            pbase = encode(model, tokenizer, row["paraphrase_base_source"], layer, tape_len, source_window)
+            pedited = encode(model, tokenizer, row["paraphrase_edited_source"], layer, tape_len, source_window)
+            pdonor = encode(model, tokenizer, row["paraphrase_donor_source"], layer, tape_len, source_window)
             paraphrase_tape = compose_counterfactual_tape(pbase, pedited, pdonor)
             suffix = torch.tensor([tokenizer.encode(row["suffix_prompt"]).ids], dtype=torch.long, device="cuda")
             normal_answer = torch.tensor([tokenizer.encode(" " + row["response"]).ids], dtype=torch.long, device="cuda")
             counter_answer = torch.tensor([tokenizer.encode(" " + row["counterfactual_response"]).ids], dtype=torch.long, device="cuda")
             result = {
                 "episode_id": row["episode_id"],
-                "normal_target_nll": answer_nll(model, normal_tape, suffix, normal_answer, tape_len, layer, eos_id),
-                "normal_counterfactual_nll": answer_nll(model, normal_tape, suffix, counter_answer, tape_len, layer, eos_id),
-                "counterfactual_normal_nll": answer_nll(model, counter_tape, suffix, normal_answer, tape_len, layer, eos_id),
-                "counterfactual_target_nll": answer_nll(model, counter_tape, suffix, counter_answer, tape_len, layer, eos_id),
-                "paraphrase_target_nll": answer_nll(model, paraphrase_tape, suffix, normal_answer, tape_len, layer, eos_id),
+                "normal_target_nll": answer_nll(model, normal_tape, suffix, normal_answer, tape_len, layer, eos_id, tape_start_pos),
+                "normal_counterfactual_nll": answer_nll(model, normal_tape, suffix, counter_answer, tape_len, layer, eos_id, tape_start_pos),
+                "counterfactual_normal_nll": answer_nll(model, counter_tape, suffix, normal_answer, tape_len, layer, eos_id, tape_start_pos),
+                "counterfactual_target_nll": answer_nll(model, counter_tape, suffix, counter_answer, tape_len, layer, eos_id, tape_start_pos),
+                "paraphrase_target_nll": answer_nll(model, paraphrase_tape, suffix, normal_answer, tape_len, layer, eos_id, tape_start_pos),
             }
             result["normal_margin"] = result["normal_counterfactual_nll"] - result["normal_target_nll"]
             result["counterfactual_margin"] = result["counterfactual_normal_nll"] - result["counterfactual_target_nll"]
@@ -145,9 +146,11 @@ def main():
             row = rows[index]
             suffix = torch.tensor([tokenizer.encode(row["suffix_prompt"]).ids], dtype=torch.long, device="cuda")
             normal_answer = torch.tensor([tokenizer.encode(" " + row["response"]).ids], dtype=torch.long, device="cuda")
-            result["zero_target_nll"] = answer_nll(model, torch.zeros_like(tapes[index]), suffix, normal_answer, tape_len, layer, eos_id)
+            result["zero_target_nll"] = answer_nll(
+                model, torch.zeros_like(tapes[index]), suffix, normal_answer, tape_len, layer, eos_id, tape_start_pos,
+            )
             result["shuffled_target_nll"] = answer_nll(
-                model, tapes[(index + 1) % len(tapes)], suffix, normal_answer, tape_len, layer, eos_id,
+                model, tapes[(index + 1) % len(tapes)], suffix, normal_answer, tape_len, layer, eos_id, tape_start_pos,
             )
             result["zero_margin"] = result["zero_target_nll"] - result["normal_target_nll"]
             result["shuffle_margin"] = result["shuffled_target_nll"] - result["normal_target_nll"]
