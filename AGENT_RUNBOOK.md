@@ -3530,7 +3530,7 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   or scoring predicate.
 
 - **2026-07-14 08:50** — **Local FQRB disaster-recovery mirror is armed.** `pipeline/mirror_fqrb_checkpoint.sh`
-  runs locally as PID `94745`, polling the isolated remote
+  runs locally in detached screen session `shohin_fqrb_mirror` (the initial shell child did not persist), polling the isolated remote
   `train/fqrb_200k_l19_r1/cra_ep1.pt` for up to six hours. On appearance it copies to the local isolated
   `train/fqrb_200k_l19_r1/cra_ep1.pt.part`, verifies SHA-256 against Newton, atomically promotes it, and
   writes `cra_ep1.mirror.json`. It never writes Newton or touches a live training directory.
