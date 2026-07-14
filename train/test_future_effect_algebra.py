@@ -23,6 +23,7 @@ def main():
     data = root / "artifacts/evals/latent_operator_eval_slices_v2_64.jsonl"
     rows = [json.loads(line) for line in data.open() if line.strip()]
     assert len(rows) == 896
+    states, queries = redundant_probe_bank()
 
     for row in rows:
         keys = row["keys"]
@@ -37,6 +38,10 @@ def main():
         right = program_operator(opcodes[midpoint:], values[midpoint:])
         full = program_operator(opcodes, values)
         assert torch.equal(compose_operators([left, right]), full)
+        decoded = decode_effect_signature(
+            effect_signature(full, states=states, queries=queries), states, queries,
+        )["operator"]
+        assert torch.allclose(decoded, full)
 
     base = operation_operator("add_0", 3)
     counterfactual = operation_operator("add_1", 3)
@@ -53,7 +58,6 @@ def main():
 
     # Overcomplete future-effect codes recover a valid operator and expose a
     # sparse corruption without inspecting an arbitrary latent coordinate.
-    states, queries = redundant_probe_bank()
     operator = compose_operators([first, second, third])
     code = effect_signature(operator, states=states, queries=queries)
     clean = decode_effect_signature(code, states, queries)
