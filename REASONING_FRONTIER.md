@@ -215,6 +215,18 @@ value. Any later residual/cache intervention must be evaluated against these
 behavioral controls; neither a probe nor a logit lens is accepted as a shortcut
 to a thinking claim.
 
+The CPU-only substrate in `train/counterfactual_reflection_protocol.py` now
+makes this contrast mechanically testable without creating a corpus or
+allocating a GPU. It defines a source-visible direct answer, a counterfactual
+interrupted reflection whose response is only an exact post-change state, and a
+fixed-shape neutral auxiliary continuation that contains no source-specific
+numeric task state. A future data builder must prove tokenizer-level target
+budget matching before the control is eligible. Its future source-dropped consumers may forward one full model-authored
+state by literal replacement but cannot parse, calculate, repair, or choose it.
+`train/test_counterfactual_reflection_protocol.py` covers those boundaries.
+This is protocol groundwork only; data generation, SFT, and evaluation remain
+blocked on the exact-carrier raw and learnability gates.
+
 ### Conditional Context Mechanism: Reversible Semantic Checkpoints
 
 Only after exact transport and the reflection control have a positive causal
