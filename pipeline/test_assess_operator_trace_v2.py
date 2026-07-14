@@ -65,6 +65,19 @@ with tempfile.TemporaryDirectory() as temporary:
     contract_accepted = temporary / "contract_accepted.json"
     subprocess.run([sys.executable, str(ROOT / "assess_operator_trace_v2.py"), *arguments, "--out", str(contract_accepted)], check=True, capture_output=True)
     assert json.loads(contract_accepted.read_text())["decision"] == "bounded_operator_binding_transfer"
+    values["candidate_primitives"] = primitive(0.10, 0.10)
+    values["manual"] = {"models": [
+        {"checkpoint": "baseline", "summary": {"initial": 2, "verified_fact": 1}},
+        {"checkpoint": "candidate", "summary": {"initial": 2, "verified_fact": 1}, "rows": [
+            {"initial": {"response": "Problem A: 1 + 1 = 2"}},
+        ]},
+    ]}
+    path = temporary / "manual.json"
+    path.write_text(json.dumps(values["manual"]))
+    pair_rejected = temporary / "pair_rejected.json"
+    subprocess.run([sys.executable, str(ROOT / "assess_operator_trace_v2.py"), *arguments, "--out", str(pair_rejected)], check=True, capture_output=True)
+    assert not json.loads(pair_rejected.read_text())["gates"]["paired_response_mode_absent"]
+    assert json.loads(pair_rejected.read_text())["decision"] == "reject_operator_trace_candidate"
     values["candidate_primitives"] = primitive(0.09, 0.10)
     path = temporary / "candidate_primitives.json"
     path.write_text(json.dumps(values["candidate_primitives"]))

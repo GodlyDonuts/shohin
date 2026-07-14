@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -20,6 +21,11 @@ from pathlib import Path
 REGIME_GAIN_MIN = {"wording": 15, "value": 15, "full": 10}
 PER_FAMILY_JOINT_MIN = 5
 MAX_RG_REGRESSION = 0.02
+PAIR_RESPONSE_MARKERS = (
+    re.compile(r"\bproblem\s+a\s*:", re.IGNORECASE),
+    re.compile(r"\bproblem\s+b\s*:", re.IGNORECASE),
+    re.compile(r"\bthe\s+answers\s+are\s+a\s*=", re.IGNORECASE),
+)
 
 
 def sha256(path: str) -> str:
@@ -83,7 +89,21 @@ def manual_summary(report: dict) -> dict:
     models = report.get("models")
     if not isinstance(models, list) or len(models) != 2:
         raise ValueError("manual report must compare exactly two checkpoints")
-    return {model["checkpoint"]: model["summary"] for model in models}
+    result = {}
+    for model in models:
+        summary = dict(model["summary"])
+        # Old transcript reports predate the explicit response-mode field, so
+        # derive the same safety signal from their immutable raw responses.
+        observed = {condition: 0 for condition in (
+            "initial", "review", "verified_fact", "compact_state", "state_reuse"
+        )}
+        for row in model.get("rows", []):
+            for condition in observed:
+                response = str(row.get(condition, {}).get("response") or "")
+                observed[condition] += int(any(pattern.search(response) for pattern in PAIR_RESPONSE_MARKERS))
+        summary.setdefault("paired_answer_mode", observed)
+        result[model["checkpoint"]] = summary
+    return result
 
 
 def main() -> None:
@@ -139,10 +159,14 @@ def main() -> None:
         int(candidate_manual.get("initial", -1)) >= int(baseline_manual.get("initial", -1))
         and int(candidate_manual.get("verified_fact", -1)) >= int(baseline_manual.get("verified_fact", -1))
     )
+    paired_response_free = not any(candidate_manual.get("paired_answer_mode", {}).values())
     trace_nonregression = int(candidate_trace["summary"].get("correct_trace_and_final", 0)) >= int(
         baseline_trace["summary"].get("correct_trace_and_final", 0)
     )
-    accepted = all((factor_gains_pass, factor_family_pass, operation_floor, rg_nonregression, direct_preserved, trace_nonregression))
+    accepted = all((
+        factor_gains_pass, factor_family_pass, operation_floor, rg_nonregression, direct_preserved,
+        paired_response_free, trace_nonregression,
+    ))
     result = {
         "audit": "assess_operator_trace_v2",
         "decision": "bounded_operator_binding_transfer" if accepted else "reject_operator_trace_candidate",
@@ -169,6 +193,7 @@ def main() -> None:
             "arithmetic_and_base_operation_floor": operation_floor,
             "rg_nonregression": rg_nonregression,
             "direct_decode_preserved": direct_preserved,
+            "paired_response_mode_absent": paired_response_free,
             "fixed_trace_nonregression": trace_nonregression,
         },
         "evidence_sha256": {name: sha256(path) for name, path in paths.items()},
