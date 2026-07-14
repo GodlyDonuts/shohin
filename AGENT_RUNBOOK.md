@@ -3243,3 +3243,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   the strongest same-world-paraphrase invariance among the materially sized edit signals (0.9848 versus
   0.9798 at layer 25), so it is the only currently justified full arm. Do not consume another 15,000
   updates on a depth sweep unless L19 creates a real but depth-limited causal signal.
+
+- **2026-07-14 04:31** — **Conditional paired-CRA fallback is staged but cannot run early.** The raw
+  geometry diagnosis suggests the core failure mode: opposite `+d`/`-d` source edits are almost collinear,
+  so a one-target CE objective can treat them as one response template. `paired_counterfactual_algebra_loss`
+  retains the exact same source-free `donor + edited - base` hard cut and adds no parameter, slot,
+  controller, parser, or visible thought trace. For each episode it trains both normal and counterfactual
+  tapes and requires each tape's own answer CE to beat the paired opposite answer by a fixed 0.2 NLL margin.
+  This is a functional causal-discrimination loss, not a hidden-vector cosine objective. Full fallback job
+  `688603` is dependency-held after `688601`: it reads the gate JSON and exits with no output if the first
+  CRA arm clears its combined gate; only an automatic first-arm rejection permits the fresh isolated
+  `train/cra_paired_200k_l19_r1` run. Its behavioral/factor evaluation remains required before any claim.
