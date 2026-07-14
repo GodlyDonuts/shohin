@@ -10,6 +10,9 @@ MAX_POLLS=${MAX_POLLS:-480}
 SLEEP_SECONDS=${SLEEP_SECONDS:-60}
 OUT=$BASE/artifacts/eval_history/fqrb_200k_l19_r1_assessment.json
 TAXONOMY_OUT=$BASE/artifacts/eval_history/fqrb_200k_l19_r1_failure_taxonomy.json
+ECLI_TRAIN=$BASE/artifacts/sft/ephemeral_codebook_fqrb_v1_train.jsonl
+ECLI_HELDOUT=$BASE/artifacts/evals/ephemeral_codebook_fqrb_v1_heldout.jsonl
+ECLI_AUDIT=$BASE/artifacts/evals/ephemeral_codebook_fqrb_v1_audit.json
 TRAIN=$BASE/artifacts/eval_history/fqrb_200k_l19_r1_train_diagnostic.json
 COMBINED=$BASE/artifacts/eval_history/fqrb_200k_l19_r1_combined.json
 CORE=$BASE/artifacts/eval_history/fqrb_200k_l19_r1_core_factor.json
@@ -27,8 +30,25 @@ for ((poll=1; poll<=MAX_POLLS; poll++)); do
     "$PY" "$BASE/pipeline/assess_finite_query_residual_basis_v1.py" \
       --combined "$COMBINED" --core "$CORE" --magnitude "$MAGNITUDE" --manual "$MANUAL" \
       --fqrb-checkpoint "$CKPT" --out "$OUT"
-    exec "$PY" "$BASE/pipeline/analyze_finite_query_residual_basis_v1.py" \
+    "$PY" "$BASE/pipeline/analyze_finite_query_residual_basis_v1.py" \
       --train "$TRAIN" --combined "$COMBINED" --core "$CORE" --magnitude "$MAGNITUDE" --out "$TAXONOMY_OUT"
+    decision=$("$PY" - "$OUT" <<'PY'
+import json
+import sys
+print(json.load(open(sys.argv[1]))['decision'])
+PY
+)
+    if [ "$decision" != "bounded_fqrb_basis_candidate_magnitude_and_interaction_still_required" ]; then
+      echo "[fqrb-watch] decision=$decision; ECLI data remains blocked"
+      exit 0
+    fi
+    if [ -e "$ECLI_TRAIN" ] || [ -e "$ECLI_HELDOUT" ] || [ -e "$ECLI_AUDIT" ]; then
+      echo "[fqrb-watch] ECLI output already exists; refusing to replace it"
+      exit 0
+    fi
+    echo "[fqrb-watch] FQRB gate passed; generating conditional ECLI data only"
+    exec "$PY" "$BASE/pipeline/generate_ephemeral_codebook_fqrb_v1.py" \
+      --train-out "$ECLI_TRAIN" --heldout-out "$ECLI_HELDOUT" --report "$ECLI_AUDIT" --fqrb-assessment "$OUT"
   fi
   if (( poll % 30 == 0 )); then
     echo "[fqrb-watch] waiting poll=$poll"

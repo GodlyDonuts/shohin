@@ -3477,6 +3477,7 @@ STATE) and any step that changed. A future agent — maybe you after a context r
 - **2026-07-14 06:45** — **The FQRB assessment watcher is Stokes CPU-only and one-shot.**
   `pipeline/watch_fqrb_assessment.sh` waits for nonempty train-diagnostic, combined/core/magnitude/manual
   reports plus the isolated FQRB checkpoint, then writes both the hash-recording assessment and a separate
-  source-tuple/language/magnitude/control failure taxonomy. It cannot submit jobs, modify a checkpoint/data
-  file, or create ECLI artifacts. Its role is to make the pre-registered decision available promptly;
-  inspect that decision and the transcript evidence before any conditional successor is admitted.
+  source-tuple/language/magnitude/control failure taxonomy. If and only if the exact assessment decision
+  admits a bounded FQRB candidate, it may generate the hash-bound ECLI data on Stokes CPU; it cannot submit
+  jobs or modify a model/checkpoint. Inspect that decision and the transcript evidence before any ECLI
+  training allocation.
