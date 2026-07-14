@@ -2104,4 +2104,13 @@ pointer, mention-loss weight 1.0, same seed/init/data/order/schedule and equal
 parameter count; original absolute CMB gates; at least five points on both
 language+full answers and all-program exactness; at least ten points on
 language+full operation role conditioned on a correct kind; and at most three
-points fit/depth regression. A 64-group pointer canary is the next gate.
+points fit/depth regression. The 64-group pointer canary has now passed.
+Isolated job `689101` completed 16 finite updates with the base frozen and
+wrote a locally hash-verified, CPU-loadable adapter (SHA-256
+`1867b5b7f3c25c93785e4e924d43ce68a7e6c40d544e1a3348d3d5e85ac029d2`).
+Matched full jobs `689104` (absolute control) and `689105` (pointer candidate)
+use 300,493 parameters each and share the same initial adapter SHA-256
+`fd1d2b04607b1d0c81c12551ea9d7667b91b9260453e862370e540344619fabb`.
+Both have cleared finite startup telemetry. Held-out and manual evaluations are
+dependency-gated; no R4 capability or decoder-bridge conclusion exists until
+the locked comparator reports.
