@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-13 20:08 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, and the independent held-out wording result falls further to 125/500 with 0/100 width-8, so it is a template-conditioned recurrent executor rather than a transferable workspace; raw residual patching and the restricted four-layer Jacobian digit lens are negative; both full v3 transition-basis and static-tape/recurrent-register corpora are hash-admitted but untrained; token-native delta-ledger data is independently admitted as a separate three-token transport control with no capability score; counterfactual-workspace induction, DCRD, and CBC remain conditional; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-13 20:15 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, and the independent held-out wording result falls further to 125/500 with 0/100 width-8, so it is a template-conditioned recurrent executor rather than a transferable workspace; raw residual patching and the restricted four-layer Jacobian digit lens are negative; both full v3 transition-basis and static-tape/recurrent-register corpora are hash-admitted but untrained; token-native delta-ledger data is independently admitted as a separate three-token transport control with no capability score; counterfactual-workspace induction, DCRD, and CBC remain conditional; ADL remains CPU-admitted only). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -2866,3 +2866,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   each bridge family, in addition to its existing answer/composition gates; it also excludes failed CUDA
   node `evc45`. This changes only pending read-only evaluation and an unsubmitted continuation guard, not
   V10A's training data, running SFT, flagship, or any prior score.
+
+- **2026-07-13 20:15** — **V10A r2 bridge-only SFT completed; capability gates are now running.** `687727`
+  completed one epoch on `evc48` with no CUDA/checkpoint/data-contract failure: 527 updates in 282 seconds,
+  falling from training loss 1.0546 at update 0 to 0.0126 at update 520, and wrote isolated
+  `train/sft_v10a_bridge_200k_r2/sft_ep1.pt`. This is expected narrow curriculum fit, **not** reasoning
+  evidence. Its two independent children started from that exact checkpoint: `687728` runs the full
+  five-family bridge holdout on `evc29`, while `687729` runs the full cross-family/source-dropped
+  composition holdout on `evc48`; both use the new intermediate-equation trace-contract metric. `687730`
+  remains resource-pending for the raw-versus-V10A direct transcript. No bridge, composition, or direct
+  capability score has completed; V11A, CWI, and anchors remain blocked.
