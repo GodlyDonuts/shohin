@@ -3529,6 +3529,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   cap. These limits affect only when greedy decoding stops, never the frozen target, source tape, controls,
   or scoring predicate.
 
+- **2026-07-14 08:50** — **Local FQRB disaster-recovery mirror is armed.** `pipeline/mirror_fqrb_checkpoint.sh`
+  runs locally as PID `94745`, polling the isolated remote
+  `train/fqrb_200k_l19_r1/cra_ep1.pt` for up to six hours. On appearance it copies to the local isolated
+  `train/fqrb_200k_l19_r1/cra_ep1.pt.part`, verifies SHA-256 against Newton, atomically promotes it, and
+  writes `cra_ep1.mirror.json`. It never writes Newton or touches a live training directory.
+
 - **2026-07-14 08:35** — **PAAT has an equally narrow conditional failure branch.** Dependency-held CPU
   gate `submit_paat_if_fqrb_transport_rejected.sbatch` waits for the bound FQRB assessment and taxonomy.
   It can submit the fresh `fqrb_200k_l19_phase_r1` arm only when the original train primitive passes,
