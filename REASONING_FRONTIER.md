@@ -1906,3 +1906,12 @@ points. If only the control passes, the result supports language-diverse
 compiler supervision but rejects the equivalence-loss claim. If neither
 passes, CMB remains a same-language symbolic executor and no decoder bridge is
 allowed.
+
+Before either r2 arm trains, eight hand-authored interaction prompts are
+frozen in `artifacts/evals/categorical_microcode_manual_v1.jsonl`. They cover
+all nine opcodes, depths four through seven, and domains and wording absent
+from both r1 and the deterministic r2 render banks. Exact-table replay is 8/8.
+The same transcript inspector runs r1, the diverse-pair control, and the
+equivalence candidate, reporting the full predicted program rather than only
+an aggregate score. These interactions are diagnostic and cannot override the
+896-case locked board.
