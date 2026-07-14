@@ -3678,3 +3678,44 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Raw visible-thinking control `688774` is complete at 0/12 tags, verified traces, answers, and joint
   trace-and-final pairs; its locally mirrored report SHA-256 is
   `a6d297c1f2097a32482e69e428d22142840d79ec528144932448b1cbb04f958b`. The candidate has no result yet.
+
+- **2026-07-14 10:04** — **The behavior-preserving retention candidate is a real narrow trace result but
+  fails its pre-registered general-operation gate.** The frozen one-epoch checkpoint
+  `train/sft_retention_v1_200k_r1/sft_ep1.pt` (SHA-256
+  `46970cdc8692787fe78499bc4a8c7d8b7bd4f3a4b9d29408dd8a14a670f53404`) increased the balanced
+  800-row Reasoning-Gym score from **31/800 = 3.875%** to **143/800 = 17.875%**, and the fixed
+  12-case visible trace audit from **0/12** to **3/12** verified trace-and-final pairs. Its fresh
+  post-freeze state OOD control is raw **0/72** versus candidate **6/72**, concentrated in
+  subtract-multiply-add. The raw/candidate direct transcript is only 1/7 versus 2/7 initial and has
+  no reliable compact-state reuse. Crucially, the exact balanced 700-row primitive gate gives only
+  **7/100 arithmetic** and **2/100 base conversion**, below the immutable 10% floors; the CPU
+  assessment `sft_retention_v1_200k_r1_assessment.json` therefore records
+  `reject_retention_candidate`. The meaningful observation is that the candidate often preserves
+  numbers while substituting an incorrect operation, so this is an operator-to-state binding failure,
+  not evidence of broad reasoning.
+
+- **2026-07-14 10:12** — **A new factorized operator-trace test is admitted only as an isolated falsification
+  experiment.** The first generated v1 corpus was preserved but rejected before GPU use after its
+  13-gram audit found 23 overlaps with the prior state OOD wording. The decontaminated v2 corpus has
+  **222,409** unique solver-derived rows (SHA-256
+  `31affcc78a7b446360eb71db1d440a02c4b11fe3b033e7f2375da571080e4017`) and a 900-case factorized
+  evaluation (SHA-256 `3371e062fd9a46a951c328b54411c8ecf263f8f44885dfaf8939d5cd6c22f035`): 300
+  wording-only, 300 value-only, and 300 combined wording/value cases over three operation families.
+  Its quality audit has 0 malformed/missing/duplicate/public-eval overlaps; fixed-trace and prior-OOD
+  audits have 0 exact and 13-gram hits; wording/full factor regimes have 0 exact and 13-gram hits.
+  Value-only deliberately reuses the language templates but has 0 exact prompts, so it isolates numeric
+  transfer rather than claiming lexical novelty. The corpus contains direct single-problem traces plus
+  minimal pairs that change exactly one add/subtract operator; it is not a hidden controller or an
+  alteration to pretraining.
+
+- **2026-07-14 10:16** — **Operator-trace SFT and its entire read-only gate chain are live and
+  pre-registered.** Isolated H100 job `688797` on evc28 starts from the retained checkpoint, freezes the
+  tied lexicon, applies prompt-only KL against that same retained checkpoint, and writes only
+  `train/sft_operator_trace_v2_from_retention_r1`. It has 17,819 exact 2,048-token packs / 1,114
+  updates for one epoch; no flagship path is referenced. Baseline factor audit `688798` evaluates the
+  retained checkpoint. After a successful SFT exit, `688800` factorized traces, `688801` fixed traces,
+  `688802` prior state OOD, `688803` balanced primitives, `688804` RG, `688805` verbatim manual
+  comparison, and `688806` deep interaction run as separate read-only jobs. CPU-only `688807` can only
+  write `sft_operator_trace_v2_from_retention_r1_assessment.json`; acceptance requires improvement in
+  wording, value, and full factor regimes, every operation cell, arithmetic/base floors, direct/RG
+  non-regression, and fixed-trace non-regression. It cannot submit a successor or modify the flagship.
