@@ -3460,5 +3460,7 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   semantic 13-grams, and exact prompts are audited disjointly; repeated binding-table syntax is reported
   rather than hidden. `train/train_ephemeral_codebook_fqrb.py` and isolated wrappers are mechanically
   checked, while the existing finite-query evaluator now adds codebook-swap correctness to strict causal
-  scoring only for rows that carry that field. No ECLI data, model, GPU job, or capability claim exists
-  yet. It is admissible only if FQRB demonstrates a bounded multi-reader source-free basis first.
+  scoring only for rows that carry that field. `pipeline/assess_ephemeral_codebook_fqrb_v1.py` pre-registers
+  the 350-per-reader, 300 joint-strict, and <=25 control gate before an ECLI result can be interpreted.
+  No ECLI data, model, GPU job, or capability claim exists yet. It is admissible only if FQRB demonstrates
+  a bounded multi-reader source-free basis first.
