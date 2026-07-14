@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 18:27 EDT (the protected two-H100 pretrain remains healthy and isolated. R5 is closed. R6 full old-substrate development fit 689190 is healthy on isolated evc25; evaluator 689196 and its executable development gate are frozen before scores. Exact context folding and posterior scheduling pass CPU mechanics only. No fresh confirmatory board or capability claim exists.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 18:36 EDT (the protected two-H100 pretrain remains healthy and isolated. R5 is closed. R6 development fit 689190 is healthy through step 6,700/12,000; evaluator 689196 and its executable gate remain frozen before scores. Exact context folding and posterior scheduling pass CPU mechanics only. No fresh confirmatory board or capability claim exists.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4248,3 +4248,9 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   hypothesis distinction -> independent unused-probe certificate -> associative source-dropped operator
   fold. This is an inference from a bounded search, never proof of world-first status; empirical causal
   gates remain mandatory.
+
+- **2026-07-14 18:36** — **R6 development fit midpoint remains healthy and attributable.** Job
+  `689190` reached step 6,700/12,000. Across the latest 2,000-step logged window, normalized effect loss
+  averages **0.00180** with maximum 0.0090; finite pre-clip gradient norm averages **0.216** with one
+  isolated 1.082 point that recovered on the next log; operation-kind and role accuracy remain 1.0 at
+  every logged point. No schedule, data, model, probe split, output, or dependent evaluator changed.
