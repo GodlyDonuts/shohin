@@ -17,9 +17,10 @@ ADAPTER=${ADAPTER:?set adapter}
 DATA=${DATA:-$BASE/artifacts/evals/latent_operator_eval_slices_v2_64.jsonl}
 ADMISSION=${ADMISSION:-$BASE/artifacts/sft/role_equivariant_microcode_v3.admission.json}
 LABEL_ADMISSION=${LABEL_ADMISSION:-$BASE/artifacts/sft/referential_slot_labels_v4.admission.json}
+EVALUATION_LABEL_ADMISSION=${EVALUATION_LABEL_ADMISSION:-$LABEL_ADMISSION}
 OUT=${OUT:?set fresh evaluation output}
 
-for path in "$BASE_CKPT" "$ADAPTER" "$DATA" "$ADMISSION" "$LABEL_ADMISSION"; do
+for path in "$BASE_CKPT" "$ADAPTER" "$DATA" "$ADMISSION" "$LABEL_ADMISSION" "$EVALUATION_LABEL_ADMISSION"; do
   [ -s "$path" ] || { echo "[referential-eval] missing input: $path" >&2; exit 2; }
 done
 [ ! -e "$OUT" ] || { echo "[referential-eval] refusing existing output: $OUT" >&2; exit 3; }
@@ -27,4 +28,5 @@ done
 cd "$BASE/train"
 "$PY" eval_referential_slot_microcode.py --base "$BASE_CKPT" --adapter "$ADAPTER" \
   --data "$DATA" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
-  --admission "$ADMISSION" --label-admission "$LABEL_ADMISSION" --out "$OUT"
+  --admission "$ADMISSION" --label-admission "$LABEL_ADMISSION" \
+  --evaluation-label-admission "$EVALUATION_LABEL_ADMISSION" --out "$OUT"
