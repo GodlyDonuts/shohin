@@ -280,15 +280,17 @@ exchange preserves the target ledger; and different-ledger exchange increases
 the donor-ledger likelihood or exact report. Even that result establishes only
 causal influence on ledger *report*, not flexible downstream use.
 
-The local raw-200k smoke baseline is cleanly negative on one bidirectional
-language-only pair: **0/2** baseline or same-state exact reports, **0/2**
+The local raw-200k baseline is cleanly negative over four bidirectional
+language-only pairs: **0/8** baseline or same-state exact reports, **0/8**
 mismatch donor reports, and zero positive donor-vs-target mismatch margins.
 Equivalent and distinct prompt-boundary states are almost indistinguishable
-at this layer (mean cosine **0.9742** versus **0.9714**). Artifact SHA-256:
-`544456ebc7a227ed7a9a556c94719dac2d9a933bd48a5b016f494d0a116768c2`.
-This is only a real-model path smoke test, not a high-power estimate; the
-aligned, CE-only, and wrong-state models must each receive the same 50-pair
-audit after their normal behavioral transfer gate.
+at this layer (mean cosine **0.9747** versus **0.9734**); the mean
+donor-minus-target mismatch log probability is **-13.50**. Artifact SHA-256:
+`ac6f42ffa36e089afa2ab2da1a9b9b0087287393ab54e9cb9728b15d5852af60`.
+The earlier one-pair smoke remains preserved as a path check. This small
+baseline is still not a high-power estimate; the aligned, CE-only, and
+wrong-state models must each receive the same 50-pair audit after their normal
+behavioral transfer gate.
 
 ### Conditional Next Hypothesis: Counterfactual Reflection Route
 

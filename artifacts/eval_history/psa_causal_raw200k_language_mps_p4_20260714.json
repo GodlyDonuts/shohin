@@ -1,0 +1,511 @@
+{
+  "alpha": 1.0,
+  "audit": "paraphrase_state_causality_v1",
+  "checkpoint": "train/flagship_out/ckpt_0200000.pt",
+  "claim_boundary": "This measures an activation-exchange effect on one synthetic exact-ledger report. Same-state preservation plus mismatch-state redirection would be causal evidence for a prompt-boundary representation, not evidence of flexible downstream reuse, general reasoning, or a global workspace.",
+  "control_boundary": "Identity replacement checks hook fidelity. Same-state sources are independent compile/reflect prompts with the same frozen ledger. Mismatch sources are model states from a different frozen episode; no controller parses, rewrites, or selects the ledger. Every generated token is full-replayed with the intervention at the original prompt boundary, so no pre-patch KV cache is reused.",
+  "data": "artifacts/evals/semantic_basis_transport_v2_factor_language.jsonl",
+  "data_sha256": "482f303465aef45bb3f046ebdb3a1e5f7bc8d24f4ab5bae8973e8dcf9c7f5a3a",
+  "device": "mps",
+  "examples": [
+    {
+      "baseline": {
+        "exact": null,
+        "response": "\n\nThe first field is the first day of the month. The second field",
+        "target_logprob": -37.27526092529297
+      },
+      "donor_episode_id": "factor_language-000783",
+      "donor_ledger": "ledger:P=106;Q=58",
+      "identity": {
+        "exact": null,
+        "response": "\n\nThe first field is the first day of the month. The second field",
+        "target_logprob": -37.27527618408203
+      },
+      "mismatch_state": {
+        "donor_logprob": -51.477848052978516,
+        "donor_minus_target_logprob": -14.195964813232422,
+        "exact": null,
+        "response": " 108\n\nQuestion: An inventory system has 100",
+        "target_logprob": -37.281883239746094
+      },
+      "same_state": {
+        "exact": null,
+        "response": " 108\n\nQuestion: An inventory system has 100",
+        "target_logprob": -37.2471923828125
+      },
+      "target_episode_id": "factor_language-000123",
+      "target_ledger": "ledger:P=108;Q=196",
+      "target_mismatch_cosine": 0.9660483002662659,
+      "target_same_cosine": 0.9767647981643677
+    },
+    {
+      "baseline": {
+        "exact": null,
+        "response": " 106 silver and 58 basalt\n\nQuestion: An",
+        "target_logprob": -38.201087951660156
+      },
+      "donor_episode_id": "factor_language-000123",
+      "donor_ledger": "ledger:P=108;Q=196",
+      "identity": {
+        "exact": null,
+        "response": " 106 silver and 58 basalt\n\nQuestion: An",
+        "target_logprob": -38.201087951660156
+      },
+      "mismatch_state": {
+        "donor_logprob": -52.82021713256836,
+        "donor_minus_target_logprob": -14.902236938476562,
+        "exact": null,
+        "response": " 106 silver and 58 basalt\n\nQuestion: An",
+        "target_logprob": -37.9179801940918
+      },
+      "same_state": {
+        "exact": null,
+        "response": " 106 silver and 58 basalt\n\nQuestion: An",
+        "target_logprob": -38.237449645996094
+      },
+      "target_episode_id": "factor_language-000783",
+      "target_ledger": "ledger:P=106;Q=58",
+      "target_mismatch_cosine": 0.9766898155212402,
+      "target_same_cosine": 0.9715638160705566
+    },
+    {
+      "baseline": {
+        "exact": null,
+        "response": "\n\n196\n\n132\n\n196\n",
+        "target_logprob": -37.642906188964844
+      },
+      "donor_episode_id": "factor_language-000024",
+      "donor_ledger": "ledger:P=192;Q=160",
+      "identity": {
+        "exact": null,
+        "response": "\n\n196\n\n132\n\n196\n",
+        "target_logprob": -37.64290237426758
+      },
+      "mismatch_state": {
+        "donor_logprob": -50.48646545410156,
+        "donor_minus_target_logprob": -12.598175048828125,
+        "exact": null,
+        "response": " 196 lilac and 132 ivory\n\nQuestion",
+        "target_logprob": -37.88829040527344
+      },
+      "same_state": {
+        "exact": null,
+        "response": " 196 lilac and 132 ivory\n\nQuestion",
+        "target_logprob": -37.88230514526367
+      },
+      "target_episode_id": "factor_language-000090",
+      "target_ledger": "ledger:P=196;Q=132",
+      "target_mismatch_cosine": 0.977570652961731,
+      "target_same_cosine": 0.9779132008552551
+    },
+    {
+      "baseline": {
+        "exact": null,
+        "response": "\n\nQuestion: A company has 10000000",
+        "target_logprob": -37.631805419921875
+      },
+      "donor_episode_id": "factor_language-000090",
+      "donor_ledger": "ledger:P=196;Q=132",
+      "identity": {
+        "exact": null,
+        "response": "\n\nQuestion: A company has 10000000",
+        "target_logprob": -37.631797790527344
+      },
+      "mismatch_state": {
+        "donor_logprob": -50.386993408203125,
+        "donor_minus_target_logprob": -12.699806213378906,
+        "exact": null,
+        "response": " 192 is the first field and 160 is the second",
+        "target_logprob": -37.68718719482422
+      },
+      "same_state": {
+        "exact": null,
+        "response": "\n\nQuestion: A company has 10000000",
+        "target_logprob": -37.787498474121094
+      },
+      "target_episode_id": "factor_language-000024",
+      "target_ledger": "ledger:P=192;Q=160",
+      "target_mismatch_cosine": 0.9796944856643677,
+      "target_same_cosine": 0.9797559380531311
+    },
+    {
+      "baseline": {
+        "exact": null,
+        "response": "\n\nThe following table shows the number of units of the first and second field",
+        "target_logprob": -36.65922546386719
+      },
+      "donor_episode_id": "factor_language-000074",
+      "donor_ledger": "ledger:P=160;Q=138",
+      "identity": {
+        "exact": null,
+        "response": "\n\nThe following table shows the number of units of the first and second field",
+        "target_logprob": -36.65922927856445
+      },
+      "mismatch_state": {
+        "donor_logprob": -51.659263610839844,
+        "donor_minus_target_logprob": -14.622638702392578,
+        "exact": null,
+        "response": " 175 for north and 55 for south\n\nQuestion:",
+        "target_logprob": -37.036624908447266
+      },
+      "same_state": {
+        "exact": null,
+        "response": " The answer is 175.\n\nQuestion: A company has ",
+        "target_logprob": -36.777854919433594
+      },
+      "target_episode_id": "factor_language-000384",
+      "target_ledger": "ledger:P=175;Q=55",
+      "target_mismatch_cosine": 0.9800818562507629,
+      "target_same_cosine": 0.9722586274147034
+    },
+    {
+      "baseline": {
+        "exact": null,
+        "response": "\n\nQuestion: A company has 10000000",
+        "target_logprob": -37.63248062133789
+      },
+      "donor_episode_id": "factor_language-000384",
+      "donor_ledger": "ledger:P=175;Q=55",
+      "identity": {
+        "exact": null,
+        "response": "\n\nQuestion: A company has 10000000",
+        "target_logprob": -37.63246154785156
+      },
+      "mismatch_state": {
+        "donor_logprob": -50.46487045288086,
+        "donor_minus_target_logprob": -12.99044418334961,
+        "exact": null,
+        "response": " 160 for north and 138 for south\n\nQuestion",
+        "target_logprob": -37.47442626953125
+      },
+      "same_state": {
+        "exact": null,
+        "response": " 160 for north and 138 for south\n\nQuestion",
+        "target_logprob": -37.78096389770508
+      },
+      "target_episode_id": "factor_language-000074",
+      "target_ledger": "ledger:P=160;Q=138",
+      "target_mismatch_cosine": 0.9716615676879883,
+      "target_same_cosine": 0.9802311658859253
+    },
+    {
+      "baseline": {
+        "exact": null,
+        "response": " 198 silver 42 basalt\n\n## 1.",
+        "target_logprob": -39.03881072998047
+      },
+      "donor_episode_id": "factor_language-000122",
+      "donor_ledger": "ledger:P=56;Q=83",
+      "identity": {
+        "exact": null,
+        "response": " 198 silver 42 basalt\n\n## 1.",
+        "target_logprob": -39.038787841796875
+      },
+      "mismatch_state": {
+        "donor_logprob": -50.89524841308594,
+        "donor_minus_target_logprob": -12.212821960449219,
+        "exact": null,
+        "response": " 198 silver 42 basalt\n\n## 1.",
+        "target_logprob": -38.68242645263672
+      },
+      "same_state": {
+        "exact": null,
+        "response": " 198 silver 42 basalt\n\n## 1.",
+        "target_logprob": -38.9620361328125
+      },
+      "target_episode_id": "factor_language-000921",
+      "target_ledger": "ledger:P=198;Q=42",
+      "target_mismatch_cosine": 0.9664153456687927,
+      "target_same_cosine": 0.9679891467094421
+    },
+    {
+      "baseline": {
+        "exact": null,
+        "response": "\n\nThe first field is the number of units of the first type of led",
+        "target_logprob": -36.088417053222656
+      },
+      "donor_episode_id": "factor_language-000921",
+      "donor_ledger": "ledger:P=198;Q=42",
+      "identity": {
+        "exact": null,
+        "response": "\n\nThe first field is the number of units of the first type of led",
+        "target_logprob": -36.08842086791992
+      },
+      "mismatch_state": {
+        "donor_logprob": -49.841064453125,
+        "donor_minus_target_logprob": -13.803787231445312,
+        "exact": null,
+        "response": "\n\nQuestion: An observatory inventory calls lilac its operational first field",
+        "target_logprob": -36.03727722167969
+      },
+      "same_state": {
+        "exact": null,
+        "response": " 56 lilac and 83 ivory\n\nQuestion: An",
+        "target_logprob": -36.001739501953125
+      },
+      "target_episode_id": "factor_language-000122",
+      "target_ledger": "ledger:P=56;Q=83",
+      "target_mismatch_cosine": 0.9693602323532104,
+      "target_same_cosine": 0.9708762168884277
+    }
+  ],
+  "layer": 19,
+  "pairs": 4,
+  "results": [
+    {
+      "baseline": {
+        "exact": null,
+        "response": "\n\nThe first field is the first day of the month. The second field",
+        "target_logprob": -37.27526092529297
+      },
+      "donor_episode_id": "factor_language-000783",
+      "donor_ledger": "ledger:P=106;Q=58",
+      "identity": {
+        "exact": null,
+        "response": "\n\nThe first field is the first day of the month. The second field",
+        "target_logprob": -37.27527618408203
+      },
+      "mismatch_state": {
+        "donor_logprob": -51.477848052978516,
+        "donor_minus_target_logprob": -14.195964813232422,
+        "exact": null,
+        "response": " 108\n\nQuestion: An inventory system has 100",
+        "target_logprob": -37.281883239746094
+      },
+      "same_state": {
+        "exact": null,
+        "response": " 108\n\nQuestion: An inventory system has 100",
+        "target_logprob": -37.2471923828125
+      },
+      "target_episode_id": "factor_language-000123",
+      "target_ledger": "ledger:P=108;Q=196",
+      "target_mismatch_cosine": 0.9660483002662659,
+      "target_same_cosine": 0.9767647981643677
+    },
+    {
+      "baseline": {
+        "exact": null,
+        "response": " 106 silver and 58 basalt\n\nQuestion: An",
+        "target_logprob": -38.201087951660156
+      },
+      "donor_episode_id": "factor_language-000123",
+      "donor_ledger": "ledger:P=108;Q=196",
+      "identity": {
+        "exact": null,
+        "response": " 106 silver and 58 basalt\n\nQuestion: An",
+        "target_logprob": -38.201087951660156
+      },
+      "mismatch_state": {
+        "donor_logprob": -52.82021713256836,
+        "donor_minus_target_logprob": -14.902236938476562,
+        "exact": null,
+        "response": " 106 silver and 58 basalt\n\nQuestion: An",
+        "target_logprob": -37.9179801940918
+      },
+      "same_state": {
+        "exact": null,
+        "response": " 106 silver and 58 basalt\n\nQuestion: An",
+        "target_logprob": -38.237449645996094
+      },
+      "target_episode_id": "factor_language-000783",
+      "target_ledger": "ledger:P=106;Q=58",
+      "target_mismatch_cosine": 0.9766898155212402,
+      "target_same_cosine": 0.9715638160705566
+    },
+    {
+      "baseline": {
+        "exact": null,
+        "response": "\n\n196\n\n132\n\n196\n",
+        "target_logprob": -37.642906188964844
+      },
+      "donor_episode_id": "factor_language-000024",
+      "donor_ledger": "ledger:P=192;Q=160",
+      "identity": {
+        "exact": null,
+        "response": "\n\n196\n\n132\n\n196\n",
+        "target_logprob": -37.64290237426758
+      },
+      "mismatch_state": {
+        "donor_logprob": -50.48646545410156,
+        "donor_minus_target_logprob": -12.598175048828125,
+        "exact": null,
+        "response": " 196 lilac and 132 ivory\n\nQuestion",
+        "target_logprob": -37.88829040527344
+      },
+      "same_state": {
+        "exact": null,
+        "response": " 196 lilac and 132 ivory\n\nQuestion",
+        "target_logprob": -37.88230514526367
+      },
+      "target_episode_id": "factor_language-000090",
+      "target_ledger": "ledger:P=196;Q=132",
+      "target_mismatch_cosine": 0.977570652961731,
+      "target_same_cosine": 0.9779132008552551
+    },
+    {
+      "baseline": {
+        "exact": null,
+        "response": "\n\nQuestion: A company has 10000000",
+        "target_logprob": -37.631805419921875
+      },
+      "donor_episode_id": "factor_language-000090",
+      "donor_ledger": "ledger:P=196;Q=132",
+      "identity": {
+        "exact": null,
+        "response": "\n\nQuestion: A company has 10000000",
+        "target_logprob": -37.631797790527344
+      },
+      "mismatch_state": {
+        "donor_logprob": -50.386993408203125,
+        "donor_minus_target_logprob": -12.699806213378906,
+        "exact": null,
+        "response": " 192 is the first field and 160 is the second",
+        "target_logprob": -37.68718719482422
+      },
+      "same_state": {
+        "exact": null,
+        "response": "\n\nQuestion: A company has 10000000",
+        "target_logprob": -37.787498474121094
+      },
+      "target_episode_id": "factor_language-000024",
+      "target_ledger": "ledger:P=192;Q=160",
+      "target_mismatch_cosine": 0.9796944856643677,
+      "target_same_cosine": 0.9797559380531311
+    },
+    {
+      "baseline": {
+        "exact": null,
+        "response": "\n\nThe following table shows the number of units of the first and second field",
+        "target_logprob": -36.65922546386719
+      },
+      "donor_episode_id": "factor_language-000074",
+      "donor_ledger": "ledger:P=160;Q=138",
+      "identity": {
+        "exact": null,
+        "response": "\n\nThe following table shows the number of units of the first and second field",
+        "target_logprob": -36.65922927856445
+      },
+      "mismatch_state": {
+        "donor_logprob": -51.659263610839844,
+        "donor_minus_target_logprob": -14.622638702392578,
+        "exact": null,
+        "response": " 175 for north and 55 for south\n\nQuestion:",
+        "target_logprob": -37.036624908447266
+      },
+      "same_state": {
+        "exact": null,
+        "response": " The answer is 175.\n\nQuestion: A company has ",
+        "target_logprob": -36.777854919433594
+      },
+      "target_episode_id": "factor_language-000384",
+      "target_ledger": "ledger:P=175;Q=55",
+      "target_mismatch_cosine": 0.9800818562507629,
+      "target_same_cosine": 0.9722586274147034
+    },
+    {
+      "baseline": {
+        "exact": null,
+        "response": "\n\nQuestion: A company has 10000000",
+        "target_logprob": -37.63248062133789
+      },
+      "donor_episode_id": "factor_language-000384",
+      "donor_ledger": "ledger:P=175;Q=55",
+      "identity": {
+        "exact": null,
+        "response": "\n\nQuestion: A company has 10000000",
+        "target_logprob": -37.63246154785156
+      },
+      "mismatch_state": {
+        "donor_logprob": -50.46487045288086,
+        "donor_minus_target_logprob": -12.99044418334961,
+        "exact": null,
+        "response": " 160 for north and 138 for south\n\nQuestion",
+        "target_logprob": -37.47442626953125
+      },
+      "same_state": {
+        "exact": null,
+        "response": " 160 for north and 138 for south\n\nQuestion",
+        "target_logprob": -37.78096389770508
+      },
+      "target_episode_id": "factor_language-000074",
+      "target_ledger": "ledger:P=160;Q=138",
+      "target_mismatch_cosine": 0.9716615676879883,
+      "target_same_cosine": 0.9802311658859253
+    },
+    {
+      "baseline": {
+        "exact": null,
+        "response": " 198 silver 42 basalt\n\n## 1.",
+        "target_logprob": -39.03881072998047
+      },
+      "donor_episode_id": "factor_language-000122",
+      "donor_ledger": "ledger:P=56;Q=83",
+      "identity": {
+        "exact": null,
+        "response": " 198 silver 42 basalt\n\n## 1.",
+        "target_logprob": -39.038787841796875
+      },
+      "mismatch_state": {
+        "donor_logprob": -50.89524841308594,
+        "donor_minus_target_logprob": -12.212821960449219,
+        "exact": null,
+        "response": " 198 silver 42 basalt\n\n## 1.",
+        "target_logprob": -38.68242645263672
+      },
+      "same_state": {
+        "exact": null,
+        "response": " 198 silver 42 basalt\n\n## 1.",
+        "target_logprob": -38.9620361328125
+      },
+      "target_episode_id": "factor_language-000921",
+      "target_ledger": "ledger:P=198;Q=42",
+      "target_mismatch_cosine": 0.9664153456687927,
+      "target_same_cosine": 0.9679891467094421
+    },
+    {
+      "baseline": {
+        "exact": null,
+        "response": "\n\nThe first field is the number of units of the first type of led",
+        "target_logprob": -36.088417053222656
+      },
+      "donor_episode_id": "factor_language-000921",
+      "donor_ledger": "ledger:P=198;Q=42",
+      "identity": {
+        "exact": null,
+        "response": "\n\nThe first field is the number of units of the first type of led",
+        "target_logprob": -36.08842086791992
+      },
+      "mismatch_state": {
+        "donor_logprob": -49.841064453125,
+        "donor_minus_target_logprob": -13.803787231445312,
+        "exact": null,
+        "response": "\n\nQuestion: An observatory inventory calls lilac its operational first field",
+        "target_logprob": -36.03727722167969
+      },
+      "same_state": {
+        "exact": null,
+        "response": " 56 lilac and 83 ivory\n\nQuestion: An",
+        "target_logprob": -36.001739501953125
+      },
+      "target_episode_id": "factor_language-000122",
+      "target_ledger": "ledger:P=56;Q=83",
+      "target_mismatch_cosine": 0.9693602323532104,
+      "target_same_cosine": 0.9708762168884277
+    }
+  ],
+  "seed": 20260714,
+  "split": "factor_language",
+  "step": 200000,
+  "summary": {
+    "baseline_exact_target": 0,
+    "directions": 8,
+    "identity_exact_target": 0,
+    "mean_mismatch_donor_minus_target_logprob": -13.503234386444092,
+    "mean_same_minus_baseline_logprob": -0.06338071823120117,
+    "mean_target_mismatch_cosine": 0.9734402820467949,
+    "mean_target_same_cosine": 0.9746691137552261,
+    "mismatch_state_donor_margin_positive": 0,
+    "mismatch_state_exact_donor": 0,
+    "same_state_exact_target": 0
+  }
+}

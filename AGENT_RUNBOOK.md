@@ -3085,3 +3085,11 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   model/intervention path but is not a powered capability score. After the alignment canary is verified, score
   all same/CE-only/wrong-state models on 50 pairs; require neutral identity, preserved same-state reports, and
   donor-directed mismatch effects *in addition to* the pre-registered behavioral language/value/delta gates.
+
+- **2026-07-14 01:45** — **Expanded the raw activation null to four independent language-only pairs.** The
+  same full-replay answer-boundary intervention reports **0/8** baseline exact target, same-state exact target,
+  or mismatch exact donor reports; donor-versus-target mismatch margin is positive **0/8** times and averages
+  **-13.5032** log probability. Same/mismatch residual cosine is 0.9747/0.9734, showing no meaningful semantic
+  separation at the selected raw layer. Hash-bound report:
+  `ac6f42ffa36e089afa2ab2da1a9b9b0087287393ab54e9cb9728b15d5852af60`. This is the local raw reference for
+  post-alignment causal audits, not a workspace claim or evidence that the aligned canary will work.
