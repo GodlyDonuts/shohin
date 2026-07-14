@@ -11,6 +11,7 @@ import hashlib
 import json
 import os
 import random
+import re
 from pathlib import Path
 
 
@@ -149,8 +150,15 @@ def validate_row(row: dict) -> None:
     ))
     if row.get("response") != expected or row.get("counterfactual_response") != counter:
         raise ValueError("row answer is not solver-derived")
-    if any(str(value) in row["suffix_prompt"] for value in (primary, secondary)):
-        raise ValueError("suffix leaked a source value")
+    # The suffix is generated only from ``event_delta`` and query wording. A
+    # source number can legitimately equal the event delta, so a substring
+    # test would reject valid counterfactual rows. Permit only the structured
+    # event number if a source value happens to share that spelling.
+    suffix_numbers = set(re.findall(r"(?<!\\d)-?\\d+(?!\\d)", row["suffix_prompt"]))
+    permitted_event_numbers = {str(abs(int(row["event_delta"]))), str(int(row["event_delta"]))}
+    leaked = {str(value) for value in (primary, secondary)} & suffix_numbers - permitted_event_numbers
+    if leaked:
+        raise ValueError("suffix leaked a source value: {}".format(sorted(leaked)))
     if row["source"] == row["paraphrase_source"] or row["source"] == row["counterfactual_source"]:
         raise ValueError("paired sources are not distinct")
 
