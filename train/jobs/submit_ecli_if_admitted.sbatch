@@ -20,6 +20,7 @@ AUDIT=$BASE/artifacts/evals/ephemeral_codebook_fqrb_v1_audit.json
 INIT=$BASE/train/fqrb_200k_l19_r1/cra_ep1.pt
 OUT=$BASE/train/ephemeral_codebook_fqrb_200k_l19_r1
 EVAL_OUT=$BASE/artifacts/eval_history/ecli_fqrb_200k_l19_r1_combined.json
+ASSESS_OUT=$BASE/artifacts/eval_history/ecli_fqrb_200k_l19_r1_assessment.json
 STATUS=$BASE/artifacts/eval_history/ecli_fqrb_200k_l19_r1_admission.json
 
 mkdir -p "$BASE/artifacts/eval_history"
@@ -65,20 +66,23 @@ PY
 
 [ ! -e "$OUT" ] || { echo "[ecli-gate] output exists; refusing to submit"; exit 2; }
 [ ! -e "$EVAL_OUT" ] || { echo "[ecli-gate] evaluation output exists; refusing to submit"; exit 2; }
+[ ! -e "$ASSESS_OUT" ] || { echo "[ecli-gate] assessment output exists; refusing to submit"; exit 2; }
 
 cd "$BASE"
 TRAIN_JOB=$(sbatch --parsable --export=NONE,INIT="$INIT",DATA="$DATA",DATA_SHA="$DATA_SHA",AUDIT="$AUDIT",ASSESSMENT="$ASSESSMENT",OUT="$OUT" "$BASE/train/jobs/train_ephemeral_codebook_fqrb.sbatch")
 EVAL_JOB=$(sbatch --parsable --dependency=afterok:"$TRAIN_JOB" --export=NONE,CKPT="$OUT/ecfqrb_ep1.pt",DATA="$HELDOUT",DATA_SHA="$HELDOUT_SHA",OUT="$EVAL_OUT",SPLIT=heldout,GROUPS=500 "$BASE/train/jobs/eval_ephemeral_codebook_fqrb.sbatch")
+ASSESS_JOB=$(sbatch --parsable --dependency=afterok:"$EVAL_JOB" --export=NONE,REPORT="$EVAL_OUT",AUDIT="$AUDIT",OUT="$ASSESS_OUT" "$BASE/train/jobs/assess_ephemeral_codebook_fqrb.sbatch")
 
-"$PY" - "$STATUS" "$TRAIN_JOB" "$EVAL_JOB" "$DATA_SHA" "$HELDOUT_SHA" "$ASSESSMENT_SHA" "$AUDIT_SHA" <<'PY'
+"$PY" - "$STATUS" "$TRAIN_JOB" "$EVAL_JOB" "$ASSESS_JOB" "$DATA_SHA" "$HELDOUT_SHA" "$ASSESSMENT_SHA" "$AUDIT_SHA" <<'PY'
 import json
 import sys
-path, train_job, eval_job, data_sha, heldout_sha, assessment_sha, audit_sha = sys.argv[1:]
+path, train_job, eval_job, assess_job, data_sha, heldout_sha, assessment_sha, audit_sha = sys.argv[1:]
 json.dump({
     'audit': 'ecli_fqrb_admission_v1',
     'decision': 'submitted_conditional_ecli_chain',
     'train_job': train_job,
     'eval_job': eval_job,
+    'assess_job': assess_job,
     'train_data_sha256': data_sha,
     'heldout_data_sha256': heldout_sha,
     'fqrb_assessment_sha256': assessment_sha,
