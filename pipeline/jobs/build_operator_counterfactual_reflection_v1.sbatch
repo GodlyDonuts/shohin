@@ -17,7 +17,7 @@ TOKPY=${TOKPY:-$BASE/miniforge3/bin/python}
 TOKENIZER=$BASE/artifacts/shohin-tok-32k.json
 EVALS=$BASE/artifacts/evals
 PER_FAMILY=${PER_FAMILY:-10000}
-PREFIX=${PREFIX:-$BASE/artifacts/sft/operator_counterfactual_reflection_v1}
+PREFIX=${PREFIX:-$BASE/artifacts/sft/operator_counterfactual_reflection_v1_r2}
 REFLECTION=${REFLECTION:-${PREFIX}_reflection.jsonl}
 NEUTRAL=${NEUTRAL:-${PREFIX}_neutral.jsonl}
 BUILD_REPORT=${BUILD_REPORT:-${PREFIX}.build.json}
@@ -43,7 +43,10 @@ done
 cd "$BASE"
 "$PY" pipeline/generate_operator_counterfactual_reflection_v1.py \
   --reflection-out "$REFLECTION" --neutral-out "$NEUTRAL" --report-out "$BUILD_REPORT" \
-  --per-family "$PER_FAMILY"
+  --per-family "$PER_FAMILY" \
+  --case-source "$BASE/train/thinking_trace_audit.py" \
+  --cases-json "$EVALS/trace_state_ood_v2.json" \
+  --cases-json "$EVALS/operator_trace_contrast_v2_eval.json"
 "$TOKPY" pipeline/audit_operator_counterfactual_reflection_v1.py \
   --reflection "$REFLECTION" --neutral "$NEUTRAL" --tokenizer "$TOKENIZER" --out "$AUDIT"
 
@@ -94,6 +97,8 @@ build = json.load(open(build_path))
 audit = json.load(open(audit_path))
 if build.get("reflection_sha256") != reflection_sha or build.get("neutral_sha256") != neutral_sha:
     raise SystemExit("[counterfact-data] build report does not bind both arms")
+if build.get("heldout_filter", {}).get("cases", 0) != 984:
+    raise SystemExit("[counterfact-data] construction-time held-out filter is incomplete")
 if audit.get("reflection_sha256") != reflection_sha or audit.get("neutral_sha256") != neutral_sha:
     raise SystemExit("[counterfact-data] semantic audit does not bind both arms")
 if audit.get("matched_pairs") != build.get("rows_per_arm") or not audit.get("supervised_response_token_delta", {}).get("all_pairs_equal"):

@@ -24,6 +24,7 @@ import os
 from pathlib import Path
 from random import Random
 
+from audit_generalization_overlap import grams, load_cases, load_cases_json, normalized
 from generate_operator_trace_contrast_v1 import (
     TRAIN_TEMPLATES,
     Episode,
@@ -146,12 +147,50 @@ def row_for(episode: Episode, question: str, variant: int, *, neutral: bool) -> 
     }
 
 
-def build_rows(per_family: int, seed: int) -> tuple[list[dict], list[dict]]:
+def heldout_index(case_sources: list[str], cases_jsons: list[str], ngram: int) -> tuple[set[str], set[str], dict]:
+    """Index literal held-out prompts before generating a frozen candidate."""
+    if ngram <= 0:
+        raise ValueError("ngram must be positive")
+    cases = []
+    for path in case_sources:
+        cases.extend(load_cases(path))
+    for path in cases_jsons:
+        cases.extend(load_cases_json(path))
+    exact = {normalized(case["question"]) for case in cases}
+    ngrams = {gram for case in cases for gram in grams(case["question"], ngram)}
+    return exact, ngrams, {
+        "case_sources": list(case_sources),
+        "cases_json": list(cases_jsons),
+        "cases": len(cases),
+        "ngram": ngram,
+    }
+
+
+def overlaps_heldout(prompt: str, exact: set[str], ngrams: set[str], ngram: int) -> str | None:
+    if normalized(prompt) in exact:
+        return "exact"
+    if any(gram in ngrams for gram in grams(prompt, ngram)):
+        return "ngram"
+    return None
+
+
+def build_rows(
+    per_family: int,
+    seed: int,
+    *,
+    heldout_exact: set[str] | None = None,
+    heldout_ngrams: set[str] | None = None,
+    ngram: int = 13,
+    return_filter_stats: bool = False,
+) -> tuple[list[dict], list[dict]] | tuple[list[dict], list[dict], dict]:
     if per_family <= 0:
         raise ValueError("per_family must be positive")
+    heldout_exact = heldout_exact or set()
+    heldout_ngrams = heldout_ngrams or set()
     rng = Random(seed)
     reflection, neutral = [], []
     seen = set()
+    dropped = collections.Counter()
     for family in TRAIN_TEMPLATES:
         count = attempts = 0
         while count < per_family:
@@ -170,6 +209,9 @@ def build_rows(per_family: int, seed: int) -> tuple[list[dict], list[dict]]:
                 key = " ".join(reflected["completion_prompt"].lower().split())
                 if key in seen:
                     continue
+                if reason := overlaps_heldout(reflected["completion_prompt"], heldout_exact, heldout_ngrams, ngram):
+                    dropped[reason] += 1
+                    continue
                 seen.add(key)
                 reflection.append(reflected)
                 neutral.append(row_for(episode, question, variant, neutral=True))
@@ -178,6 +220,8 @@ def build_rows(per_family: int, seed: int) -> tuple[list[dict], list[dict]]:
     rng.shuffle(neutral)
     if len(reflection) != len(neutral):
         raise RuntimeError("matched arms diverged")
+    if return_filter_stats:
+        return reflection, neutral, dict(sorted(dropped.items()))
     return reflection, neutral
 
 
@@ -199,13 +243,26 @@ def main() -> None:
     parser.add_argument("--report-out", required=True)
     parser.add_argument("--per-family", type=int, default=40_000)
     parser.add_argument("--seed", type=int, default=20260714)
+    parser.add_argument("--case-source", action="append", default=[], help="Python evaluator with literal CASES")
+    parser.add_argument("--cases-json", action="append", default=[], help="JSON evaluator with cases")
+    parser.add_argument("--ngram", type=int, default=13)
     args = parser.parse_args()
+    if not (args.case_source or args.cases_json):
+        raise SystemExit("at least one held-out case source is required")
     reflection_path, neutral_path, report_path = map(
         Path, (args.reflection_out, args.neutral_out, args.report_out)
     )
     if any(path.exists() for path in (reflection_path, neutral_path, report_path)):
         raise SystemExit("refusing to overwrite a counterfactual reflection candidate")
-    reflection, neutral = build_rows(args.per_family, args.seed)
+    heldout_exact, heldout_ngrams, heldout_sources = heldout_index(args.case_source, args.cases_json, args.ngram)
+    reflection, neutral, filter_drops = build_rows(
+        args.per_family,
+        args.seed,
+        heldout_exact=heldout_exact,
+        heldout_ngrams=heldout_ngrams,
+        ngram=args.ngram,
+        return_filter_stats=True,
+    )
     write_jsonl(reflection_path, reflection)
     write_jsonl(neutral_path, neutral)
     report = {
@@ -218,6 +275,7 @@ def main() -> None:
         "neutral_by_family": dict(sorted(collections.Counter(row["family"] for row in neutral).items())),
         "reflection_contracts": dict(sorted(collections.Counter(row["contract"] for row in reflection).items())),
         "neutral_contracts": dict(sorted(collections.Counter(row["contract"] for row in neutral).items())),
+        "heldout_filter": {**heldout_sources, "drops": filter_drops},
         "claim_boundary": (
             "Data-only matched auxiliary arms. Any later comparison must score ordinary direct prompts "
             "without a reflection request and compare numeric reflection against the neutral arm."

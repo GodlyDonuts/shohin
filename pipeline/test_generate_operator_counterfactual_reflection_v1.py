@@ -13,6 +13,8 @@ from generate_operator_counterfactual_reflection_v1 import (
     CONTRACT_REFLECTION,
     STATE_WIDTH,
     build_rows,
+    grams,
+    normalized,
 )
 
 
@@ -45,6 +47,17 @@ def main() -> None:
         assert state["state_before"] >= 0 and state["counterfactual_after"] >= 0
         assert reflected["episode"] == control["episode"]
         assert reflected["episode"]["states"][state["index"]] == state["state_before"]
+    heldout_prompt = reflection[0]["completion_prompt"]
+    filtered, filtered_neutral, drops = build_rows(
+        per_family=8,
+        seed=7,
+        heldout_exact={normalized(heldout_prompt)},
+        heldout_ngrams={gram for gram in grams(heldout_prompt, 13)},
+        return_filter_stats=True,
+    )
+    assert len(filtered) == len(filtered_neutral) < len(reflection)
+    assert drops
+    assert all(normalized(row["completion_prompt"]) != normalized(heldout_prompt) for row in filtered)
     print("operator counterfactual reflection generator checks: passed")
 
 
