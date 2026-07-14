@@ -3599,3 +3599,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   six-token decode cap. Combined `688696`, train diagnostic `688681`, and deep transcript `688687` remain
   independent. Do not admit PAAT, ECLI, CWR, or CRCS unless the completed assessment still supplies the
   required bounded primitive evidence; the direct transcript alone already blocks any reasoning claim.
+
+- **2026-07-14 10:05** — **Automatic late-binding continuation now requires ordinary decode health.**
+  The completed raw-versus-FQRB and eight-case deep transcripts show that all-parameter FQRB tuning can
+  make the model emit the tiny synthetic answer alphabet on ordinary language (for example,
+  `positivelessless...`). A local checkpoint comparison confirms that this is broad parameter drift, not a
+  prompt parser issue: the tied token embedding/output matrix moved by **18%** of its raw norm, while the
+  largest relative changes are in early attention and normalization parameters. Therefore
+  `assess_finite_query_residual_basis_v1.py` records `direct_decode_preserved` and admits ECLI only when
+  the candidate does not regress on the raw model's initial-answer and supplied-fact counts. This is a
+  non-regression safety gate, not a seven-case reasoning score. It prevents a narrow latent-label result
+  from automatically consuming a GPU as a purported reasoning continuation after global decode collapse.
+  The tested watcher copy on Stokes must use this policy before it writes the one-shot assessment.

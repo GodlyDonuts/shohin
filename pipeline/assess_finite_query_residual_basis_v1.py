@@ -61,10 +61,19 @@ def manual_summary(report: dict, fqrb_checkpoint: str) -> dict:
     if candidate.get("checkpoint") != fqrb_checkpoint:
         raise ValueError("manual report candidate does not bind the requested FQRB checkpoint")
     fields = ("initial", "review", "verified_fact", "state_reuse")
+    raw_summary = {field: int(raw.get("summary", {}).get(field, -1)) for field in fields}
+    fqrb_summary = {field: int(candidate.get("summary", {}).get(field, -1)) for field in fields}
     return {
-        "raw": {field: int(raw.get("summary", {}).get(field, -1)) for field in fields},
-        "fqrb": {field: int(candidate.get("summary", {}).get(field, -1)) for field in fields},
-        "claim_boundary": "Seven hand-authored cases are diagnostic only and cannot establish general reasoning.",
+        "raw": raw_summary,
+        "fqrb": fqrb_summary,
+        # This is deliberately a non-regression guard, not a reasoning score. A
+        # carrier arm that emits its tiny answer alphabet on ordinary prompts is
+        # unusable as the parent of a direct-reasoning continuation.
+        "direct_decode_preserved": bool(
+            fqrb_summary["initial"] >= raw_summary["initial"]
+            and fqrb_summary["verified_fact"] >= raw_summary["verified_fact"]
+        ),
+        "claim_boundary": "Seven hand-authored cases are diagnostic only; this non-regression guard blocks automatic continuation but cannot establish general reasoning.",
     }
 
 
@@ -88,8 +97,10 @@ def main() -> None:
     reports = {key: json.loads(path.read_text()) for key, path in paths.items()}
     combined, core, magnitude = (evaluate_report(reports[key]) for key in ("combined", "core", "magnitude"))
     manual = manual_summary(reports["manual"], args.fqrb_checkpoint)
-    if combined["bounded_basis_gate"] and core["bounded_basis_gate"]:
+    if combined["bounded_basis_gate"] and core["bounded_basis_gate"] and manual["direct_decode_preserved"]:
         decision = "bounded_fqrb_basis_candidate_magnitude_and_interaction_still_required"
+    elif combined["bounded_basis_gate"] and core["bounded_basis_gate"]:
+        decision = "reject_fqrb_due_to_direct_decode_regression"
     else:
         decision = "reject_fqrb_as_reusable_source_free_numeric_basis"
     report = {
@@ -97,7 +108,7 @@ def main() -> None:
         "evidence": {key: {"path": str(path), "sha256": sha256_file(path)} for key, path in paths.items()},
         "combined": combined, "core": core, "magnitude": magnitude, "manual": manual,
         "decision": decision,
-        "claim_boundary": "No outcome of this assessor authorizes a general-reasoning claim. A positive result is only a bounded numeric-basis candidate.",
+        "claim_boundary": "No outcome of this assessor authorizes a general-reasoning claim. A positive result is only a bounded numeric-basis candidate whose direct decoding did not regress on the diagnostic interview.",
     }
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
