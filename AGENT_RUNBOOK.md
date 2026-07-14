@@ -4238,3 +4238,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   score, and retain its original decision first. R6b is eligible only as a separate read-only old-board
   scheduler comparison on the byte-identical adapter with equal calls and unchanged controls; it cannot
   retroactively rescue R6a or authorize fresh data without its own frozen comparator.
+
+- **2026-07-14 18:38--18:42** — **A bounded prior-art check narrows, rather than inflates, the novelty
+  claim.** Adjacent primary work exists for uncertainty-aware KV/hidden compression (UNComp),
+  compiler-output search compression (Compile to Compress), proof-carrying numeric rendering, and
+  natural-language Selection-Inference loops. None of those ingredients is claimed as new. The bounded
+  search found no direct match for the full learned scalar counterfactual-effect interface -> posterior
+  hypothesis distinction -> independent unused-probe certificate -> associative source-dropped operator
+  fold. This is an inference from a bounded search, never proof of world-first status; empirical causal
+  gates remain mandatory.

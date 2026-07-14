@@ -2439,6 +2439,20 @@ from being used as a post-hoc relabeling of R6a.
 
 #### Conditional Context Extension: Distinction-Certified Context Folding
 
+A bounded literature search finds important adjacent work. [UNComp](https://openreview.net/forum?id=28oMPC5bcE)
+uses uncertainty to vary hidden-state and KV-cache compression; [Compile to
+Compress](https://openreview.net/forum?id=NjbMkeaOKD) uses compiler failure modes
+to compress theorem-proving search history; [Proof-Carrying
+Numbers](https://openreview.net/forum?id=455AaEhQbu) fail-closes numeric display
+through external verification; and [Selection-Inference](https://arxiv.org/abs/2205.09712)
+alternates model-generated natural-language selection and inference. These block
+novelty claims for uncertainty-aware compression, verifier-backed outputs, or
+alternating selection alone. The bounded search did not find their exact
+combination with a learned scalar counterfactual-effect interface, active
+posterior operator distinction, independent unused-probe certification, and
+associative source-dropped operator folding. That absence is not proof of
+world-first novelty; the causal mechanism and empirical result remain the claim.
+
 If and only if the learned active policy clears its frozen active-over-random
 and causal-control gates, the same mechanism has a non-token context extension.
 An event may leave context only when its selected counterfactual observations
