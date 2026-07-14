@@ -796,6 +796,10 @@ codebook, and semantic 13-gram train/held-out overlap before it writes data.
 `train/test_generate_causal_residual_count_sketch_v1.py` fixes those
 admission and split-audit conditions. This is reproducible curriculum
 groundwork, not evidence for CRCS or a claim that the model can reason.
+`pipeline/watch_ecli_crcs_admission.sh` is the corresponding one-shot
+CPU-only continuation: it may build that audited corpus only after the exact
+ECLI assessment is present and positive. It never submits a CRCS training job;
+any learned context claim remains separately gated on a later model result.
 
 ### Conditional Direct-Transfer Test: Counterfactual Workspace Reflection (CWR)
 

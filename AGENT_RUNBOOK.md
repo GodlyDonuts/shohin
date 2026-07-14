@@ -3571,3 +3571,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   must beat a matched wrong-world reflection placebo and retain source-change/shuffle/zero causality; it
   also has to improve the existing seven-task direct transcript audit without any reflection prompt. If
   the FQRB/ECLI prerequisite fails, CWR is blocked. No data or GPU job exists yet.
+
+- **2026-07-14 09:20** — **The ECLI-to-CRCS continuation is now CPU-only and one-shot.**
+  `pipeline/watch_ecli_crcs_admission.sh` waits for
+  `ecli_fqrb_200k_l19_r1_assessment.json`. It writes a hash-recorded blocked no-op for any non-candidate
+  decision, and only for `bounded_ecli_late_binding_candidate` may it invoke the CRCS builder. It
+  independently rechecks the completed builder audit and writes `crcs_v1_admission.json` with immutable
+  hashes. It has no Slurm submission command and cannot allocate a GPU. The watcher is appropriate for a
+  Stokes CPU screen session while the conditional ECLI chain runs; a CRCS *model* experiment is still
+  explicitly unsubmitted.
