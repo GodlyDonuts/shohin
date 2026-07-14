@@ -24,6 +24,7 @@ with tempfile.TemporaryDirectory() as root:
     for case in cases:
         assert isinstance(case["answer"], int)
         assert len(case["markers"]) == 2
+        assert len(case["alternate_patterns"]) == len(case["markers"])
         assert "<think>" in case["question"]
 
 print("trace state OOD builder checks: passed")

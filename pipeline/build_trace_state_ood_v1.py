@@ -30,6 +30,10 @@ def add_multiply_subtract(rng, band, index):
         ),
         "answer": answer,
         "markers": [["after_add", after_add], ["after_multiply", after_multiply]],
+        "alternate_patterns": [
+            [rf"\b{start}\s*(?:\+|plus)\s*{add}\s*=\s*{after_add}\b"],
+            [rf"\b{after_add}\s*(?:x|\*|times)\s*{multiplier}\s*=\s*{after_multiply}\b"],
+        ],
     }
 
 
@@ -55,6 +59,10 @@ def subtract_multiply_add(rng, band, index):
         ),
         "answer": answer,
         "markers": [["after_subtract", after_subtract], ["after_multiply", after_multiply]],
+        "alternate_patterns": [
+            [rf"\b{start}\s*-\s*{subtract}\s*=\s*{after_subtract}\b"],
+            [rf"\b{after_subtract}\s*(?:x|\*|times)\s*{multiplier}\s*=\s*{after_multiply}\b"],
+        ],
     }
 
 
@@ -80,6 +88,10 @@ def double_add_divide(rng, band, index):
                 ),
                 "answer": after_add // divisor,
                 "markers": [["after_double", after_double], ["after_add", after_add]],
+                "alternate_patterns": [
+                    [rf"(?:{start}\s*\*\s*2|2\s*\*\s*{start})\s*=\s*{after_double}\b"],
+                    [rf"\b{after_double}\s*(?:\+|plus)\s*{add}\s*=\s*{after_add}\b"],
+                ],
             }
     raise RuntimeError("could not construct an exact division case")
 
