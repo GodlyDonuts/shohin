@@ -623,6 +623,42 @@ late-bound latent interrogation primitive: it would be evidence that a query
 can modulate how one source-free state is read. It would not establish
 open-ended reasoning, language understanding, or a general workspace.
 
+### Conditional Research Direction: Latent Interrogation Cascade (LIC)
+
+The missing ingredient after a late-bound readout is **intermediate use**. A
+model can answer arbitrary probes about a source-free tape and still fail to
+prepare that state before an ordinary direct answer. **Latent Interrogation
+Cascade (LIC)** is a project-specific attempt to bridge that gap without
+teaching visible chain-of-thought or giving the evaluator a parser.
+
+LIC has two strictly separated routes over the same solver-generated world:
+
+1. **Interrogation route:** encode the world once, remove it, and answer a
+   randomized sequence of late-bound finite probes from the native tape. Probe
+   order, binding table, and selected intermediate property vary per world.
+2. **Silent-action route:** encode the ordinary source-visible question, append
+   a fixed small number of differentiable native latent-rollout states, then
+   supervise only the ordinary final answer. No probe text, binding table,
+   ledger, or `<think>` target appears on this route.
+
+The proposed training objective couples the routes only through the model's
+shared weights. It does not copy a probe answer into the direct prompt, add a
+controller, or decode a model-produced state externally. The key comparison is
+a compute- and token-matched **neutral-latent control**: it receives the same
+number of latent rollouts and direct-answer updates, but its auxiliary suffixes
+are source-independent neutral continuations rather than counterfactual
+interrogations. If both improve equally, LIC has no evidence of a reasoning
+benefit.
+
+LIC is not eligible until ECLI has passed its multi-reader, codebook-swap, and
+source-control gate. A future pass requires direct-answer improvement on
+unseen source language and unseen query compositions *without* a codebook or
+probe prompt at evaluation, exceeding the neutral-latent control, and
+remaining sensitive to a pre-registered source-state intervention. That would
+be evidence for a small, silent preparatory computation. It would still fall
+well short of a claim of open-ended reasoning, and a failure would reject the
+interrogation-to-action bridge rather than invite a larger trace corpus.
+
 ### Conditional Next Hypothesis: Counterfactual Reflection Route
 
 An exact external carrier, even if it passes V2, would still be an explicit
