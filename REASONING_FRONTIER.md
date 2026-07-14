@@ -1783,3 +1783,73 @@ homogenize useful information, and the near-invariance to shuffled state shows
 that the learned recurrent state is not prompt-specific enough to mediate an
 answer. Future work must supervise or structurally identify local state
 transitions; adding more answer-only recurrent depth is blocked.
+
+## Active Architecture Hypothesis: Causal Microcode Bottleneck
+
+The strongest positive mechanism evidence is not a public benchmark score. In
+the Digitwise Recurrent Scratchpad, the first local state was correct on
+497/500 episodes, including 98/100 width-eight cases, while repeated textual
+rollout ended with only 275/500 correct answers. The model can select a local
+transition, but serializing and rereading an exact state accumulates errors.
+VRW then showed that final-answer loss does not identify a prompt-specific
+recurrent latent state: reset beat recurrence and shuffled state was nearly
+invariant. Causal Microcode Bottleneck (CMB) tests a different decomposition.
+
+### Mechanism And Claim Boundary
+
+- The 125M base is frozen. Its layer-19 hidden state at each event-line end and
+  the final query-line end feeds shared operation/query classifiers. The
+  compiler predicts one of nine register-relative operations per event and one
+  of five readout operations per query.
+- A deterministic lexical frontend extracts only the two standalone initial
+  integers, at most one standalone integer per event, and line boundaries. It
+  does not classify operations, bind registers, execute arithmetic, or select
+  the answer. This supplied structure is reported rather than hidden.
+- Execution uses two eight-digit categorical registers. Add and subtract are
+  performed by one learned table over operation, carry/borrow, left digit, and
+  right digit. Its complete basis has 2 x 2 x 10 x 10 = 400 contexts and 20
+  digit/carry outputs. Move, merge, swap, and queries compose those local
+  transitions without generating intermediate text.
+- This is a narrow neuro-symbolic executor experiment. A pass would show that
+  a tiny frozen LM can compile paraphrased language into an exact reusable
+  internal program when lexical number extraction and an execution substrate
+  are supplied. It would not show broad language reasoning or autonomous
+  algorithm discovery.
+
+### Locked Admission And Causal Gates
+
+The immutable training source is the 96,000-row latent-operator answer-only
+corpus at depths one through four. The evaluation board contains 896 disjoint
+cases: fit-IID, depth-only OOD at depths 5/6/8, language-only OOD, and full OOD
+with new language, labels, numeric range, and depth. Before H100 use, a CPU
+admission independently replays every structured program, checks lexical and
+structured values agree, rejects every negative or eight-digit-overflowing
+intermediate register, proves the oracle answer, and binds train, evaluation,
+and tokenizer hashes.
+
+Advancement requires every condition below:
+
+1. The learned local transition table is exactly 400/400.
+2. Answer accuracy is at least 70% fit-IID, 60% depth OOD, 50% language OOD,
+   and 40% full OOD.
+3. At least 50% of complete operation-plus-query programs are exactly right.
+4. Answer accuracy exceeds a depth-matched shuffled-program intervention by at
+   least 20 percentage points.
+5. Oracle programs execute to the gold answer on 100% of the board.
+
+Passing these gates permits only an output decoder bridge and fresh manual
+interaction. Failure is decomposed into semantic compilation, query binding,
+local arithmetic, depth composition, or causal-program sensitivity. It does
+not authorize scaling an answer-only recurrent adapter or changing the
+protected flagship.
+
+### Implementation Status: 2026-07-14 13:25 EDT
+
+The compiler, categorical executor, trainer, evaluator, admission audit,
+Slurm wrappers, and CPU contracts are implemented. Local unit tests verify
+lexical exclusion of reference identifiers, operation/query bindings,
+400-context execution, multi-digit carry/borrow, frozen-base gradients, and
+shell/syntax validity. Review corrected the board cardinality from a stale 224
+assumption to its actual 896 cases and added defense-in-depth hash binding of
+the CMB admission report to training and evaluation. No CMB model, checkpoint,
+score, or reasoning claim exists yet. Full-corpus CPU admission is next.
