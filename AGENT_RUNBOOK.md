@@ -3511,6 +3511,7 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   transcript jobs are unchanged. `train/jobs/submit_ecli_if_admitted.sbatch` is dependency-held after the
   deep audit. It makes no CUDA allocation itself. It first requires the exact FQRB candidate decision plus
   hash-bound watcher-generated ECLI train/held-out/audit files; only then does it submit one fresh isolated
-  ECLI train and dependent evaluation chain and write an admission JSON with all job IDs/hashes. A failed or
+  ECLI train and dependent evaluation chain and write an admission JSON with all job IDs/hashes. CPU gate
+  **688692** is held `afterok:688687`. A failed or
   absent FQRB admission records a blocked no-op. This removes idle time without allowing a failed primitive
   to consume an ECLI GPU allocation.
