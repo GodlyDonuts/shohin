@@ -2,7 +2,7 @@
 """Controller-only tests for exact semantic-basis carrier forwarding."""
 import re
 
-from eval_semantic_basis_transport import evaluate_pair
+from eval_semantic_basis_transport import evaluate_pair, model_prompt
 from semantic_basis_transport_controller import rollout_episode
 
 import sys
@@ -50,6 +50,8 @@ def make_oracle(episodes):
 
 
 def main():
+    assert model_prompt("state", "qa") == "Question: state\nAnswer:"
+    assert model_prompt("state", "direct") == "state"
     episodes = split_episodes(build_split(4, 29, True))
     ask, prompts = make_oracle(episodes)
     single = rollout_episode(episodes[0], ask)

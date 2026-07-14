@@ -13,6 +13,8 @@ for required in (
     "[ ! -e \"$OUT\" ]",
     "eval_semantic_basis_transport.py",
     "--pairs \"$PAIRS\"",
+    "PROMPT_MODE=${PROMPT_MODE:-qa}",
+    "--prompt-mode \"$PROMPT_MODE\"",
 ):
     assert required in text, required
 assert "sft.py" not in text

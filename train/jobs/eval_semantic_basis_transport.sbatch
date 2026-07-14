@@ -21,6 +21,7 @@ OUT=${OUT:-$BASE/artifacts/eval_history/${TAG}_${SLURM_JOB_ID}.json}
 PAIRS=${PAIRS:-100}
 SEED=${SEED:-20260713}
 EXAMPLES=${EXAMPLES:-8}
+PROMPT_MODE=${PROMPT_MODE:-qa}
 export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=4 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
 
 [ -f "$CKPT" ] || { echo "[semantic-basis] checkpoint missing: $CKPT" >&2; exit 2; }
@@ -37,8 +38,9 @@ then
   echo "[semantic-basis] CUDA unavailable or timed out after allocation" >&2
   exit 75
 fi
-echo "[semantic-basis] ckpt=$CKPT data=$DATA out=$OUT pairs=$PAIRS"
+echo "[semantic-basis] ckpt=$CKPT data=$DATA out=$OUT pairs=$PAIRS prompt_mode=$PROMPT_MODE"
 "$PY" eval_semantic_basis_transport.py \
   --ckpt "$CKPT" --tokenizer "$BASE/artifacts/shohin-tok-32k.json" \
-  --data "$DATA" --out "$OUT" --pairs "$PAIRS" --seed "$SEED" --examples "$EXAMPLES"
+  --data "$DATA" --out "$OUT" --pairs "$PAIRS" --seed "$SEED" --examples "$EXAMPLES" \
+  --prompt-mode "$PROMPT_MODE"
 echo "[semantic-basis] wrote $OUT"

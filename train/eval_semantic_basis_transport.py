@@ -41,6 +41,15 @@ def load_model(path, device):
     return checkpoint, model
 
 
+def model_prompt(protocol_prompt, mode):
+    """Use the same inference surface that completion-masked SFT sees."""
+    if mode == "qa":
+        return "Question: {}\nAnswer:".format(protocol_prompt)
+    if mode == "direct":
+        return protocol_prompt
+    raise ValueError("unknown prompt mode: {}".format(mode))
+
+
 def load_episodes(path):
     episodes = collections.defaultdict(list)
     with open(path) as source:
@@ -216,6 +225,8 @@ def main():
     parser.add_argument("--pairs", type=int, default=100)
     parser.add_argument("--seed", type=int, default=20260713)
     parser.add_argument("--examples", type=int, default=8)
+    parser.add_argument("--prompt-mode", choices=("qa", "direct"), default="qa",
+                        help="qa matches train/sft.py's standard Question/Answer surface")
     args = parser.parse_args()
     if args.examples < 0:
         raise SystemExit("--examples must be nonnegative")
@@ -228,7 +239,10 @@ def main():
     pairs = select_pairs(load_episodes(args.data), args.pairs, args.seed)
 
     def ask(prompt, max_new):
-        return generate(model, tokenizer, prompt, device, max_new=max_new, temp=0.0, skip_special_tokens=False)
+        return generate(
+            model, tokenizer, model_prompt(prompt, args.prompt_mode), device,
+            max_new=max_new, temp=0.0, skip_special_tokens=False,
+        )
 
     results = []
     for index, (left, right) in enumerate(pairs, 1):
@@ -249,6 +263,8 @@ def main():
         "data_sha256": sha256_file(args.data),
         "pairs": args.pairs,
         "seed": args.seed,
+        "prompt_mode": args.prompt_mode,
+        "inference_prompt_template": "Question: {protocol_prompt}\\nAnswer:" if args.prompt_mode == "qa" else "{protocol_prompt}",
         "summary": summarize(results),
         "examples": results[:args.examples],
         "claim_boundary": (
