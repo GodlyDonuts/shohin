@@ -3279,3 +3279,17 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   binds the 30k-row training corpus SHA. The paired gate is still not a promotion: any result must survive
   behavioral normal/paraphrase/counterfactual, zero/shuffle, all factors, and independent interaction before
   it can motivate another mechanism.
+
+- **2026-07-14 04:45** — **Direct raw-200k interaction confirms a real reasoning deficit, rather than
+  merely a benchmark-format deficit.** Fresh local-MPS transcript audit
+  `artifacts/eval_history/manual_capability_raw200k_20260714_r1.json` (SHA-256
+  `3d995a3f373891b366d7a5b98b0a1d4e026f57f268b0f365c8b6c25f8bbfde02`) ran seven hand-authored tasks,
+  each through initial, independent review, verified-intermediate-fact, requested compact-state, and
+  state-reuse turns. The immutable step-200k model scored **1/7 initial**, **0/7 review**, **1/7 with a
+  supplied verified fact**, and **0/7 compact-state reuse**. The sole initial success was a simple
+  syllogism. It multiplied 29×16 incorrectly, repeated the same error under review, and failed to finish
+  even after emitting the supplied correct product; it also produced malformed/repetitive state text and
+  inverted the requested Python predicate. This is an interaction diagnosis, not a benchmark: it establishes
+  that visible CoT-like text or a correct first token is not a functioning workspace. Any CRA result must
+  materially improve this kind of source deletion, counterfactual use, and compact-state reuse before it is
+  described as reasoning.
