@@ -1,0 +1,48 @@
+{
+  "factors": {
+    "delta": {
+      "bad_episodes": {},
+      "cross_factor_exact_prompt_hits": 0,
+      "cross_train_exact_prompt_hits": 0,
+      "duplicate_normalized_questions": 0,
+      "episodes": 1000,
+      "invalid_rows": [],
+      "path": "artifacts/evals/semantic_basis_transport_v2_factor_delta.jsonl",
+      "rows": 5000,
+      "sha256": "898b591d43a710a3e8a1ee1415a03782fdfd999b72dff7505ee38a808b8f1c11",
+      "shared_scaffold_ngram13_with_prior_factors": 69,
+      "shared_scaffold_ngram13_with_train": 5601,
+      "source_pair_overlap_with_train": 0
+    },
+    "language": {
+      "bad_episodes": {},
+      "cross_factor_exact_prompt_hits": 0,
+      "cross_train_exact_prompt_hits": 0,
+      "duplicate_normalized_questions": 0,
+      "episodes": 1000,
+      "invalid_rows": [],
+      "path": "artifacts/evals/semantic_basis_transport_v2_factor_language.jsonl",
+      "rows": 5000,
+      "sha256": "482f303465aef45bb3f046ebdb3a1e5f7bc8d24f4ab5bae8973e8dcf9c7f5a3a",
+      "shared_scaffold_ngram13_with_prior_factors": 0,
+      "shared_scaffold_ngram13_with_train": 0,
+      "source_pair_overlap_with_train": 0
+    },
+    "values": {
+      "bad_episodes": {},
+      "cross_factor_exact_prompt_hits": 0,
+      "cross_train_exact_prompt_hits": 0,
+      "duplicate_normalized_questions": 0,
+      "episodes": 1000,
+      "invalid_rows": [],
+      "path": "artifacts/evals/semantic_basis_transport_v2_factor_values.jsonl",
+      "rows": 5000,
+      "sha256": "b94119eeb0108cd488e4b407f8c6c89cc32dbd9332ed8c5f66abcc3be1f5f967",
+      "shared_scaffold_ngram13_with_prior_factors": 0,
+      "shared_scaffold_ngram13_with_train": 59,
+      "source_pair_overlap_with_train": 0
+    }
+  },
+  "schema": "semantic_basis_transport_v2_factor_matrix_audit",
+  "train_sha256": "4363101c9773b055e24bce3e79f727f3c103a0fb357a6820206ddeab2567234f"
+}

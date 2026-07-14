@@ -225,8 +225,8 @@ def main():
     parser.add_argument("--pairs", type=int, default=100)
     parser.add_argument("--seed", type=int, default=20260713)
     parser.add_argument("--examples", type=int, default=8)
-    parser.add_argument("--split", choices=("train", "heldout"), default="heldout",
-                        help="data split to score; train is diagnostic-only and cannot support a capability claim")
+    parser.add_argument("--split", choices=("train", "heldout", "factor_language", "factor_values", "factor_delta"),
+                        default="heldout", help="data split to score; train and factor splits are diagnostic-only")
     parser.add_argument("--prompt-mode", choices=("qa", "direct"), default="qa",
                         help="qa matches train/sft.py's standard Question/Answer surface")
     args = parser.parse_args()
@@ -273,7 +273,7 @@ def main():
         "examples": results[:args.examples],
         "claim_boundary": (
             "A strict pass establishes only exact model-authored two-value carrier transport over this "
-            "synthetic source-deleted task. Train-split results are diagnostic-only. No result establishes "
+            "synthetic source-deleted task. Train and factor-split results are diagnostic-only. No result establishes "
             "general language reasoning, latent thought, autonomous context compression, or a global workspace."
         ),
         "control_boundary": (

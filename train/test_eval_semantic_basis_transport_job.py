@@ -27,6 +27,7 @@ for required in (
     '"prompt_mode": args.prompt_mode',
     '"split": args.split',
     'load_episodes(args.data, args.split)',
+    '"factor_language", "factor_values", "factor_delta"',
     '"inference_prompt_template"',
     'model_prompt(prompt, args.prompt_mode)',
     '"claim_boundary"',

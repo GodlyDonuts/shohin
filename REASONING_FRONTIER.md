@@ -200,13 +200,17 @@ This is a useful negative rather than a confusing mixed result: the model can
 report and reproduce an exact carrier under two independently worded source
 prompts, but cannot reliably operate on that carrier once source information
 is removed. It is not flexible multi-reader state, and it is not evidence for
-a workspace. The present held-out split changes source wording, labels and
-domains, value range, and delta range together, so the completed train-split
-diagnostic may localize the failing axis. It cannot reopen the causal claim.
-The next admissible experiment, if the diagnostic finds in-distribution
-execution, is a factorial *evaluation* matrix that holds three factors fixed
-while changing one: language, P/Q magnitude, or update delta. No new SFT,
-reflection data, or context mechanism is justified before that measurement.
+a workspace. The completed train-only diagnostic confirms that this is not an
+evaluator boundary failure: it reaches **200/200** compile/reflection/equality,
+**194/200** updates, **160/200** normal strict transports, **65/100** raw
+model-authored swaps, and **48/100** full causal passes, with artifact SHA-256
+`b13050b50345834cf0ce861f23facb0c43a3e9753649ee3d0a410001355171ce`.
+
+The present held-out split changes source wording, labels/domains, value range,
+and delta range together. The next admissible experiment is therefore a
+factorial *evaluation* matrix that holds three factors fixed while changing one:
+language, P/Q magnitude, or update delta. No new SFT, reflection data, or
+context mechanism is justified before that measurement.
 
 ### External Workspace Paper: What It Changes
 
