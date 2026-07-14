@@ -2756,8 +2756,9 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Raw and V9 controls were both 0/300 closed loops, so this is not a claim that capsules emerge from
   pretraining. New isolated wrapper `sft_semantic_capsule_v11a.sbatch` refuses raw initialization and
   requires the exact V10A checkpoint plus checkpoint-bound full 500-case bridge and composition results:
-  >=250 bridge answers, >=200 visible bridge trace-and-answer pairs, >=40 bridge answers per family,
-  >=50 composition answers, and >=5 composition answers per family. It also independently verifies that
+  >=250 bridge answers, >=200 solver-derived intermediate-equation contracts, >=25 contracts in every
+  bridge family, >=40 bridge answers per family, >=50 composition answers, and >=5 composition answers
+  per family. It also independently verifies that
   every capsule SFT row's `completion_prompt` exactly equals the controller prompt before using
   `--prompt-override-field completion_prompt`; this removes the otherwise fatal double `Question:/Answer:`
   boundary mismatch. The held-out capsule evaluator now has the shared CUDA timeout/BLAS limits and bad-node
@@ -2854,3 +2855,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   and the response contract. It reports exactly 200,000 examples, 17,270,366 source tokens, 10,962,976
   answer tokens (63% of supervised tokens), and 8,432 2,048-token packs, all in the sole
   `semantic_bridge` group. This is confirmed input provenance, not a loss/score/capability result.
+
+- **2026-07-13 20:14** — **Strengthened the post-V10A trace gate before evaluation allocation.** The old
+  semantic-bridge metric counted a `<think>` tag plus correct final answer as a visible trace, which can
+  reward decorative narration. `eval_semantic_bridge.py` now separately reports `trace_contract_correct`:
+  the response must contain every solver-derived intermediate equation from the frozen gold trace (base
+  conversion additionally requires every place-value equation and its multi-term sum). Focused local
+  contracts prove that whitespace-equivalent equations pass while a correct answer with generic narration
+  fails. The synced V11A wrapper now requires at least 200 such correct trace contracts and at least 25 in
+  each bridge family, in addition to its existing answer/composition gates; it also excludes failed CUDA
+  node `evc45`. This changes only pending read-only evaluation and an unsubmitted continuation guard, not
+  V10A's training data, running SFT, flagship, or any prior score.

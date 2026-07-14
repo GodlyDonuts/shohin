@@ -17,6 +17,8 @@ for required in (
     "semantic_bridge_v1_heldout.jsonl",
     "semantic_composition_transfer_v1.jsonl",
     "MIN_BRIDGE_ANSWERS=${MIN_BRIDGE_ANSWERS:-250}",
+    "MIN_BRIDGE_TRACE_CONTRACT=${MIN_BRIDGE_TRACE_CONTRACT:-200}",
+    "MIN_BRIDGE_TRACE_CONTRACT_PER_FAMILY=${MIN_BRIDGE_TRACE_CONTRACT_PER_FAMILY:-25}",
     "MIN_COMPOSITION_ANSWERS=${MIN_COMPOSITION_ANSWERS:-50}",
     "completion_prompt\") != row.get(\"question\")",
     "--prompt-override-field completion_prompt",
@@ -32,4 +34,5 @@ assert "flagship_out" not in text
 assert "SHARDS=" not in text
 assert "--gres=gpu:nvidia_h100_pcie:1" in text
 assert "evc49" in text
+assert "evc45" in text
 print("V11A semantic-capsule SFT job checks: passed")

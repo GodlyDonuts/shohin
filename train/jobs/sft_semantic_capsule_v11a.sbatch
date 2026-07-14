@@ -5,7 +5,7 @@
 #SBATCH -J shohin-sft-v11a-capsule
 #SBATCH -p normal
 #SBATCH --gres=gpu:nvidia_h100_pcie:1
-#SBATCH --exclude=evc22,evc23,evc26,evc31,evc32,evc36,evc43,evc44,evc49,evc50
+#SBATCH --exclude=evc22,evc23,evc26,evc31,evc32,evc36,evc43,evc44,evc45,evc49,evc50
 #SBATCH -c 4
 #SBATCH --mem=96G
 #SBATCH -t 02:00:00
@@ -30,7 +30,8 @@ BS=${BS:-16}
 LRMUON=${LRMUON:-0.0008}
 LRADAM=${LRADAM:-0.0002}
 MIN_BRIDGE_ANSWERS=${MIN_BRIDGE_ANSWERS:-250}
-MIN_BRIDGE_VISIBLE=${MIN_BRIDGE_VISIBLE:-200}
+MIN_BRIDGE_TRACE_CONTRACT=${MIN_BRIDGE_TRACE_CONTRACT:-200}
+MIN_BRIDGE_TRACE_CONTRACT_PER_FAMILY=${MIN_BRIDGE_TRACE_CONTRACT_PER_FAMILY:-25}
 MIN_BRIDGE_PER_FAMILY=${MIN_BRIDGE_PER_FAMILY:-40}
 MIN_COMPOSITION_ANSWERS=${MIN_COMPOSITION_ANSWERS:-50}
 MIN_COMPOSITION_PER_FAMILY=${MIN_COMPOSITION_PER_FAMILY:-5}
@@ -47,17 +48,18 @@ done
 [ ! -e "$OUT" ] || { echo "[v11a] refusing existing output: $OUT" >&2; exit 3; }
 
 "$PY" - "$INIT" "$BRIDGE_EVAL" "$COMPOSITION_EVAL" "$BRIDGE_DATA" "$COMPOSITION_DATA" "$DATA" "$QUALITY" "$PACKING" "$CONTRACTS" "$PROTOCOL" \
-  "$MIN_BRIDGE_ANSWERS" "$MIN_BRIDGE_VISIBLE" "$MIN_BRIDGE_PER_FAMILY" "$MIN_COMPOSITION_ANSWERS" "$MIN_COMPOSITION_PER_FAMILY" <<'PY'
+  "$MIN_BRIDGE_ANSWERS" "$MIN_BRIDGE_TRACE_CONTRACT" "$MIN_BRIDGE_TRACE_CONTRACT_PER_FAMILY" "$MIN_BRIDGE_PER_FAMILY" "$MIN_COMPOSITION_ANSWERS" "$MIN_COMPOSITION_PER_FAMILY" <<'PY'
 import hashlib
 import json
 import os
 import sys
 
 (init, bridge_eval_path, composition_eval_path, bridge_data, composition_data, data, quality_path,
- packing_path, contracts_path, protocol_path, min_bridge_answers, min_bridge_visible,
- min_bridge_per_family, min_composition_answers, min_composition_per_family) = sys.argv[1:]
-min_bridge_answers, min_bridge_visible, min_bridge_per_family, min_composition_answers, min_composition_per_family = map(
-    int, (min_bridge_answers, min_bridge_visible, min_bridge_per_family, min_composition_answers, min_composition_per_family)
+ packing_path, contracts_path, protocol_path, min_bridge_answers, min_bridge_trace_contract,
+ min_bridge_trace_contract_per_family, min_bridge_per_family, min_composition_answers,
+ min_composition_per_family) = sys.argv[1:]
+min_bridge_answers, min_bridge_trace_contract, min_bridge_trace_contract_per_family, min_bridge_per_family, min_composition_answers, min_composition_per_family = map(
+    int, (min_bridge_answers, min_bridge_trace_contract, min_bridge_trace_contract_per_family, min_bridge_per_family, min_composition_answers, min_composition_per_family)
 )
 
 def sha256(path):
@@ -93,8 +95,14 @@ for label, result, minimum, per_family_minimum in (
     families = summary.get("by_family", {})
     if len(families) != 5 or any(int(stats.get("answer_correct", 0)) < per_family_minimum for stats in families.values()):
         raise SystemExit("[v11a] {} is not family-balanced".format(label))
-if int(bridge.get("summary", {}).get("visible_answer_correct", 0)) < min_bridge_visible:
-    raise SystemExit("[v11a] bridge visible-trace gate failed")
+bridge_summary = bridge.get("summary", {})
+if int(bridge_summary.get("trace_contract_correct", 0)) < min_bridge_trace_contract:
+    raise SystemExit("[v11a] bridge trace-contract gate failed")
+if any(
+    int(stats.get("trace_contract_correct", 0)) < min_bridge_trace_contract_per_family
+    for stats in bridge_summary.get("by_family", {}).values()
+):
+    raise SystemExit("[v11a] bridge trace-contract gate is not family-balanced")
 data_sha = sha256(data)
 invalid_completion_prompts = 0
 with open(data) as source:

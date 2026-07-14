@@ -24,6 +24,9 @@ from model import GPT, GPTConfig
 
 FINAL = re.compile(r"the\s+answer\s+is\s*(-?\d+)\b", re.IGNORECASE)
 THINK = re.compile(r"<think>\s*(.*?)\s*</think>", re.IGNORECASE | re.DOTALL)
+BINOP = re.compile(r"(?<![\d^])-?\d+\s*[+*\-]\s*-?\d+\s*=\s*-?\d+")
+POWER = re.compile(r"\d+\s*\*\s*\d+\s*\^\s*\d+\s*=\s*\d+")
+SUM = re.compile(r"-?\d+(?:\s*\+\s*-?\d+){2,}\s*=\s*-?\d+")
 
 
 def sha256_file(path):
@@ -68,15 +71,42 @@ def select_rows(rows, per_family, seed):
     return selected
 
 
-def score_response(answer, response):
+def normalized_expression(expression):
+    return re.sub(r"\s+", "", expression)
+
+
+def trace_equation_contract(response):
+    """Return the solver-derived arithmetic obligations inside a think block.
+
+    A tag alone is not evidence of an intermediate computation.  The bridge
+    families are programmatically rendered, so their gold traces define a
+    compact, solver-verifiable equation contract.  Base conversion uses
+    power-place-value equations plus a multi-term sum; the other families use
+    chained binary equations.
+    """
+    trace = THINK.search(response)
+    if trace is None:
+        return frozenset()
+    text = trace.group(1)
+    power_terms = {normalized_expression(item) for item in POWER.findall(text)}
+    if power_terms:
+        return frozenset(power_terms | {normalized_expression(item) for item in SUM.findall(text)})
+    return frozenset(normalized_expression(item) for item in BINOP.findall(text))
+
+
+def score_response(answer, response, expected_response=None):
     matches = FINAL.findall(response)
     predicted = int(matches[-1]) if matches else None
     trace = THINK.search(response)
+    expected_contract = trace_equation_contract(expected_response or "")
+    actual_contract = trace_equation_contract(response)
+    trace_contract = bool(expected_contract) and expected_contract.issubset(actual_contract)
     return {
         "final": predicted,
         "answer_correct": predicted == int(answer),
         "trace_present": trace is not None,
         "visible_answer_correct": trace is not None and predicted == int(answer),
+        "trace_contract_correct": predicted == int(answer) and trace_contract,
     }
 
 
@@ -97,7 +127,7 @@ def summarize(rows):
         totals["cases"] += 1
         family = by_family[row["family"]]
         family["cases"] += 1
-        for key in ("answer_correct", "trace_present", "visible_answer_correct"):
+        for key in ("answer_correct", "trace_present", "visible_answer_correct", "trace_contract_correct"):
             totals[key] += int(row[key])
             family[key] += int(row[key])
     return {
@@ -141,12 +171,12 @@ def main():
             "prompt": prompt,
             "response": response,
         }
-        row.update(score_response(case["answer"], response))
+        row.update(score_response(case["answer"], response, case["response"]))
         rows.append(row)
         print(
-            "[semantic-bridge] {}/{} family={} answer={} trace={} visible={}".format(
+            "[semantic-bridge] {}/{} family={} answer={} trace={} visible={} contract={}".format(
                 index, len(selected), row["family"], row["answer_correct"],
-                row["trace_present"], row["visible_answer_correct"],
+                row["trace_present"], row["visible_answer_correct"], row["trace_contract_correct"],
             ),
             flush=True,
         )

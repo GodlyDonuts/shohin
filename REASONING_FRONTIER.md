@@ -105,9 +105,10 @@ the next **serial** mechanism test after a semantic primitive has been taught.
 It requires a V10A checkpoint together with its full 500-case bridge result and
 full 500-case cross-family composition result, each bound to that exact
 checkpoint and its immutable evaluation data. Admission requires at least
-250/500 bridge answers, 200 visible trace-and-answer pairs, at least 40 bridge
-answers in every family, at least 50/500 cross-family answers, and at least
-five composition answers in every family. These are deliberately stronger than
+250/500 bridge answers, 200 solver-derived intermediate-equation contracts, at
+least 25 such contracts in every bridge family, at least 40 bridge answers in
+every family, at least 50/500 cross-family answers, and at least five
+composition answers in every family. These are deliberately stronger than
 the rejected V9 signal and stop the capsule corpus from laundering a narrow
 template result into a context-scaling claim.
 
