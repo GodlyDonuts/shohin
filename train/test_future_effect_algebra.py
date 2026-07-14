@@ -9,10 +9,12 @@ import torch
 from categorical_microcode import OPCODE_TO_ID, QUERY_TO_ID, opcode_for, operation_value, query_for
 from future_effect_algebra import (
     compose_operators,
+    decode_effect_signature,
     effect_signature,
     execute_operator,
     operation_operator,
     program_operator,
+    redundant_probe_bank,
 )
 
 
@@ -48,6 +50,33 @@ def main():
         compose_operators([first, second, third]),
         third @ second @ first,
     )
+
+    # Overcomplete future-effect codes recover a valid operator and expose a
+    # sparse corruption without inspecting an arbitrary latent coordinate.
+    states, queries = redundant_probe_bank()
+    operator = compose_operators([first, second, third])
+    code = effect_signature(operator, states=states, queries=queries)
+    clean = decode_effect_signature(code, states, queries)
+    assert torch.allclose(clean["operator"], operator)
+    assert clean["syndrome"].abs().max().item() < 1e-10
+
+    corrupted = code.clone()
+    corrupted[3, 5] += 17
+    robust = decode_effect_signature(corrupted, states, queries, max_outliers=1)
+    assert torch.allclose(robust["operator"], operator, atol=1e-9, rtol=0)
+    assert robust["omitted_index"] == 3 * states.shape[0] + 5
+    assert robust["syndrome"].abs().max().item() > 16.9
+
+    left = compose_operators([first, second])
+    right = third
+    decoded_left = decode_effect_signature(
+        effect_signature(left, states=states, queries=queries), states, queries,
+    )["operator"]
+    decoded_right = decode_effect_signature(
+        effect_signature(right, states=states, queries=queries), states, queries,
+    )["operator"]
+    composed_code = effect_signature(decoded_right @ decoded_left, states=states, queries=queries)
+    assert torch.allclose(composed_code, code)
     print("future-effect algebra tests passed: 896 exact programs")
 
 

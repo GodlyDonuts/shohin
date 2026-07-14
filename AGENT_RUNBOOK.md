@@ -4119,3 +4119,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   13-gram overlap against both R4 train and development. Separate structural and mention-label
   admissions bind fresh evaluation without changing the adapter's original training admission. No
   H100 evaluation or future-effect operator fit is authorized before those immutable admissions pass.
+
+- **2026-07-14 16:46** — **Added an exact error-correcting future-effect code reference, without
+  authorizing a model fit.** Eight fixed state probes crossed with eight future-query probes encode a
+  3x3 operator as 64 observable effects. Valid codes occupy a nine-dimensional linear subspace; the
+  projection residual is an explicit syndrome. CPU tests recover clean operators, exactly repair one
+  arbitrarily corrupted effect scalar, and preserve source-dropped chunk composition after independent
+  decode. This is a coding/mechanics contract, not a novelty or reasoning claim. If the fresh R5 parser
+  gate passes, the eventual matched control must use the same 64 output channels and a frozen random
+  full-rank operator code so any gain tests future-effect geometry rather than redundancy or parameters.

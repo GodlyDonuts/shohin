@@ -2276,3 +2276,25 @@ one emitting ordinary class/vector state and one emitting an operator selected
 by its effects across counterfactual initial states and future queries. The
 operator arm must additionally pass zero/shuffle necessity, argument-edit
 specificity, associative chunk composition, and source-dropping transport.
+
+The exact algebra now also has an **error-correcting future-effect code**
+reference. Eight fixed counterfactual states crossed with eight future-query
+probes produce 64 scalar effects for a nine-coordinate affine operator. The
+valid signatures therefore occupy a strict linear subspace: projection yields
+the nearest valid operator and the orthogonal residual is an explicit error
+syndrome. The CPU contract recovers every clean operator, exactly corrects one
+arbitrarily corrupted scalar by leave-one-measurement decoding, and preserves
+chronological composition after both chunks are independently decoded. This is
+not claimed as a world-first coding-theory primitive. Its research claim is
+narrower and testable: a tiny language compiler may generalize better when its
+hidden computation is trained as redundant observable future behavior rather
+than as an arbitrary opcode or unconstrained vector.
+
+If R5 admission passes, the matched treatment must control for redundancy as
+well as parameter count. Both arms will emit the same-width code and use fixed
+decoders; the treatment code consists of structured state/query effects, while
+the control uses a frozen random full-rank encoding of the same operator. A
+gain can then be attributed to future-effect geometry rather than extra output
+channels. Numeric values must eventually be inferred from text as well; until
+that separate value-binding gate passes, the experiment remains an operation-
+semantics/compiler result rather than autonomous text-only execution.

@@ -115,3 +115,73 @@ def effect_signature(operator, states=None, queries=None):
     if queries.ndim != 2 or queries.shape[1] != 3:
         raise ValueError("queries must have shape [probes, 3]")
     return queries @ operator @ states.transpose(0, 1)
+
+
+def redundant_probe_bank(*, dtype=torch.float64, device=None):
+    """Return fixed overcomplete state/query probes for effect coding.
+
+    These probes are deliberately not learned. Their 64 scalar effects encode
+    a nine-coordinate operator with enough redundancy to expose an error
+    syndrome and correct one arbitrarily corrupted scalar in the exact CPU
+    contract.
+    """
+    states = torch.tensor([
+        [0, 0, 1], [1, 0, 1], [0, 1, 1], [1, 1, 1],
+        [-1, 2, 1], [2, -1, 1], [3, 1, 1], [1, 3, 1],
+    ], dtype=dtype, device=device)
+    queries = torch.tensor([
+        [1, 0, 0], [0, 1, 0], [1, 1, 0], [1, -1, 0],
+        [-1, 1, 0], [2, 1, 0], [1, 2, 0], [0, 0, 1],
+    ], dtype=dtype, device=device)
+    return states, queries
+
+
+def effect_measurement_matrix(states, queries):
+    """Linear map from row-major operator coordinates to flattened effects."""
+    if states.ndim != 2 or states.shape[1] != 3:
+        raise ValueError("states must have shape [probes, 3]")
+    if queries.ndim != 2 or queries.shape[1] != 3:
+        raise ValueError("queries must have shape [probes, 3]")
+    if states.device != queries.device or states.dtype != queries.dtype:
+        raise ValueError("state and query probes must share dtype and device")
+    return torch.einsum("ia,jb->ijab", queries, states).reshape(-1, 9)
+
+
+def decode_effect_signature(signature, states, queries, max_outliers=0):
+    """Project a redundant effect code onto its nearest valid operator.
+
+    ``max_outliers=1`` enumerates one omitted scalar and minimizes the residual
+    after trimming the largest error. It is intentionally small and exact for
+    mechanism tests; a future neural implementation may use a learned or
+    vectorized decoder but must match this reference on admitted examples.
+    """
+    expected = (queries.shape[0], states.shape[0])
+    if signature.shape != expected:
+        raise ValueError("signature must have shape {}".format(expected))
+    max_outliers = int(max_outliers)
+    measurements = effect_measurement_matrix(states, queries)
+    values = signature.reshape(-1).to(dtype=measurements.dtype, device=measurements.device)
+    if max_outliers not in (0, 1):
+        raise ValueError("reference decoder supports zero or one outlier")
+    candidates = [None] if max_outliers == 0 else list(range(values.numel()))
+    best = None
+    for omitted in candidates:
+        mask = torch.ones(values.numel(), dtype=torch.bool, device=values.device)
+        if omitted is not None:
+            mask[omitted] = False
+        solution = torch.linalg.lstsq(measurements[mask], values[mask]).solution
+        projected = measurements @ solution
+        residual = values - projected
+        trimmed = residual.square().sort().values[:values.numel() - max_outliers]
+        score = trimmed.mean()
+        tie_break = residual.square().mean()
+        key = (float(score.item()), float(tie_break.item()))
+        if best is None or key < best[0]:
+            best = (key, solution, projected, residual, omitted)
+    _, solution, projected, residual, omitted = best
+    return {
+        "operator": solution.reshape(3, 3),
+        "projected_signature": projected.reshape(expected),
+        "syndrome": residual.reshape(expected),
+        "omitted_index": omitted,
+    }
