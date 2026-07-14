@@ -3360,3 +3360,17 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `6dd4bd29ee3b5daaf214a3427b2388843d93e01d8014e0027999a4c67509baa2`. Language and train diagnostics
   are currently running, followed by remaining factors; do not promote or diagnose the failure from this
   joint all-axes result alone.
+
+- **2026-07-14 05:26** — **CRA now has a support-matched value diagnostic, pending execution.** The
+  ordinary values factor shifts both source values and answer strings, so its result cannot distinguish a
+  failed source-state transport from an inability to emit unseen integer strings. CPU-only Stokes generation
+  created a fresh 500-row factor at
+  `artifacts/evals/counterfactual_residual_algebra_v1_values_answer_supported.jsonl` (SHA-256
+  `cfe048abee712cf0b87014d0be7eb2d8d4c11e9a82b18630061769f05ed12244`). Every source-state number is in
+  `[-9,-5] U [5,9]`, while both normal and counterfactual targets use only 9 strings from the frozen
+  17-string training answer vocabulary. Its audit SHA-256 is
+  `a6b2eaa5a78081513d5c19c8fe42723e3a15f01b312619aa0289a4325f334f2a`; it reports zero exact source-bundle
+  or latent-state overlaps with the 30k train corpus. Read-only H100 job `688656` is held after the original
+  CPU gate and evaluates only `train/cra_200k_l19_r1/cra_ep1.pt` into a fresh report. It is diagnostic-only:
+  a pass isolates numeric output support as the immediate bottleneck, while a failure closes that
+  explanation and points to source-OOD numeric transport itself. Neither outcome is a reasoning claim.

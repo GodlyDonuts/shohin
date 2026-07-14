@@ -1,0 +1,28 @@
+{
+  "audit": "counterfactual_residual_algebra_v1_supported_values",
+  "claim_boundary": "CPU-only evaluation-factor construction; no model or reasoning claim is created.",
+  "data_sha256": "cfe048abee712cf0b87014d0be7eb2d8d4c11e9a82b18630061769f05ed12244",
+  "factor_answer_strings": 9,
+  "factor_answer_support_subset": true,
+  "query_kinds": [
+    "difference"
+  ],
+  "rows": 500,
+  "source_value_range": [
+    -9,
+    -8,
+    -7,
+    -6,
+    -5,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "train_answer_strings": 17,
+  "train_factor_exact_bundle_hits": 0,
+  "train_factor_exact_state_hits": 0,
+  "train_factor_surface_13gram_hits": 0,
+  "train_sha256": "e067c2561d397d9e0c44318c5e21d9e50820bd6cd88ccd2513d5b8e2f6e059f5"
+}
