@@ -3523,5 +3523,5 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   candidate, a missing primitive, or control leakage produces an auditable no-op. The submitted PAAT arm
   fixes `SOURCE_WINDOW=26` (the measured full-corpus source maximum), with all other FQRB data, init,
   BS=4, epoch/update schedule, hard source cut, and evaluator settings unchanged. Its combined/core/magnitude
-  factors run in parallel and it receives the same raw-vs-candidate and deep transcript audits. No generic
-  residual-algebra retry is authorized.
+  factors run in parallel and it receives the same raw-vs-candidate and deep transcript audits. CPU gate
+  **688694** is held `afterok:688687`. No generic residual-algebra retry is authorized.
