@@ -163,6 +163,15 @@ content, multiple downstream readers, and causal swaps. A pass would still be
 only a narrow synthetic transport result. It would justify an isolated learning
 ablation, not a broad-reasoning or context-scaling conclusion.
 
+The immutable raw-200k MPS smoke is the required pre-learning anchor: **0/8**
+correct compile emissions, **0/8** correct reflection emissions, and therefore
+0/8 exact reportability or downstream transport. Its raw continuations are
+generic pretraining-style prose (for example, "The first step is ..."), not a
+ledger. This is a useful negative: the base model does not already implement
+the requested output interface, so any later success must be judged against
+this fixed checkpoint and must still survive the controls rather than being
+called recovered latent reasoning.
+
 ### Conditional Next Primitive: Interchangeable Semantic Ledger
 
 If V10A learns its five families but fails the cross-family composition suite,
