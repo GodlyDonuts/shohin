@@ -136,10 +136,10 @@ def main():
         "This proves group integrity, exact register automorphisms, lexical/executor integrity, and "
         "held-out-language exclusion only. It does not establish learned equivariance or reasoning."
     )
-    if not report["all_checks_pass"]:
-        raise SystemExit("role-equivariant admission failed: " + json.dumps(report, sort_keys=True))
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     Path(args.out).write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")
+    if not report["all_checks_pass"]:
+        raise SystemExit("role-equivariant admission failed: " + json.dumps(report, sort_keys=True))
     print(json.dumps(report, sort_keys=True))
 
 
