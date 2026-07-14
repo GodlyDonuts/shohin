@@ -2478,3 +2478,71 @@ source-dropped length transfer beyond the native window, injected-certificate
 corruption that causes retention or reopening, equal-model raw-context controls,
 and measured retained-state, prefill, and accuracy curves. Until then the
 nine-scalar result is an oracle upper bound.
+
+#### R6 Outcome: Causal Use Without Semantic Transport
+
+R6a is rejected before any fresh confirmatory board. Its isolated 466,894-
+parameter effect adapter completed 12,000 updates and the frozen evaluator
+scored 896 old-board cases under five policies with exactly three effect calls
+per event. On the 448 development-fresh language/full cases, active probing
+recovers 610/1,856 operations, compared with 407 for equal-call random, 78 for
+shuffled effects, and 24 for zero effects. The +10.94 percentage-point operation
+gain over random is real causal evidence that the selected interventions are
+used. It is not reasoning evidence: active reaches only 36/448 answers and
+19/448 exact programs, while learned effect MSE rises from 0.33 on fit and 0.84
+on depth to about 130.74 on unseen language/full.
+
+The failure is representational, not merely schedular. Of 1,856 active fresh
+operations, 884 have the wrong opcode and another 362 have the right opcode but
+the wrong value; subtraction is essentially absent. Query binding is only
+342/448. R6b's stronger posterior scheduler therefore remains an unrun CPU
+mechanics result: choosing a better question cannot repair an answer interface
+whose unseen semantic response is off-scale. No R6 fresh board, source-drop,
+context-folding, or broad capability claim is authorized.
+
+### R7 Hypothesis: Interventional Semantic Quotients
+
+R7 changes the observable instead of tuning R6. The central hypothesis is that
+a natural-language operation can be identified by its **causal response field**
+inside a frozen language model. For an unknown event, the evaluator makes
+matched finite interventions to visible initial values, event values, and
+entity roles, then measures how the final future-token hidden state changes at
+frozen layers 5, 11, 17, 23, and 29. It constructs the same nonlinear finite-
+difference signature for lawful canonical operator hypotheses. The predicted
+operator is the canonical hypothesis whose intervention signature best matches
+the unknown event.
+
+This is not a learned operation classifier, a chain-of-thought prompt, a logit
+lens, or R6's supervised scalar-effect head. It uses no gradients and trains no
+weights. It asks whether two descriptions implement the same transformation by
+comparing what the frozen network itself does under matched interventions.
+The active policy spends a frozen budget of two intervention channels chosen to
+maximize pairwise candidate separation. Equal-budget random-channel,
+unintervened direct-hidden-similarity, and shuffled-signature policies prevent a
+generic representation or extra-compute gain from being called causal
+semantics.
+
+The adjacent literature prevents an unqualified novelty claim. [CausaLM](https://arxiv.org/abs/2005.13407)
+trains counterfactual representations for causal explanation; [Passive Learning
+of Active Causal Strategies](https://arxiv.org/abs/2305.16183) studies learned
+intervention policies; [Model-based Interactive Semantic
+Parsing](https://arxiv.org/abs/1910.05389) uses a world model and clarification;
+and [Selection-Inference](https://arxiv.org/abs/2205.09712) alternates language
+selection and inference. A bounded search did not find the exact combination of
+canonical operator hypotheses, nonlinear future-hidden finite-difference
+fields, actively selected matched textual interventions, and an independent
+unused-intervention certificate. That is an informed project-novelty hypothesis,
+not proof that the method is world-first.
+
+The first canary is deliberately small and read-only: exactly 108 development
+events, 12 for each of nine opcodes, restricted to the already-used language and
+full regimes. It uses visible identifier strings and numeric literals supplied
+by the board to construct lexical candidates; therefore a pass is only a
+semantic-identification canary, not a complete text-only reasoner. Before any
+score is read, advancement is frozen as all of: active opcode accuracy at least
+45%; active at least five points above random and direct hidden similarity;
+active at least 15 points above shuffled signatures; and at least seven of nine
+opcodes reaching 4/12. A pass authorizes only a full evaluation on the already-
+used R5 board. It does not authorize training, fresh data, source deletion,
+reasoning, or context-scaling claims. A failure closes this R7 observable rather
+than triggering threshold tuning.

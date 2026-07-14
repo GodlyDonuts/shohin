@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 19:28 EDT (the protected two-H100 pretrain remains isolated. R5 is closed. R6 development fit 689190 completed 12,000/12,000 updates with exit 0; its hash-matched 466,894-parameter adapter is finite and contains no base tensors. Evaluators 689196/689220 produced no score because their 90-second guards killed slow Lustre-backed framework imports. Instrumented five-minute CUDA smoke 689224 on evc46 gates the unchanged evaluator 689225 on the same node. Exact context folding and posterior scheduling pass CPU mechanics only. No fresh confirmatory board or capability claim exists.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 19:53 EDT (the protected two-H100 pretrain remains isolated. R6a is formally rejected after causal use without semantic transport. R7 Interventional Semantic Quotient is preregistered and locally mechanics-tested: a frozen-model, no-training read-only canary identifies operators by nonlinear future-hidden response fields under matched textual interventions. Its exact 108-event balance, layers 5/11/17/23/29, two-channel budget, active/random/direct/shuffled controls, advancement floors, and claim limits are frozen before H100 scoring. No R7 neural result or capability claim exists yet.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4270,3 +4270,46 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   the same node with `afterok:689224`. All six local R6 gate/scheduler/folding/trace mechanics scripts
   pass. Do not inspect or generate a confirmatory board until `689225` exits 0 and the preregistered
   executable decision and qualitative transcript readers consume its one fresh development report.
+
+- **2026-07-14 19:31--19:40** — **R6a is formally rejected before a fresh board, while preserving one
+  real causal signal.** Instrumented smoke `689224` completed on idle evc46 after a 2m52s cold import,
+  then proved CUDA discovery, BF16 allocation, matmul, synchronization, and finite output. Frozen
+  evaluator `689225` completed all 896 cases / five equal-three-call policies in 7m32s with exit 0.
+  Report SHA-256 is **`cf2c03eeb351044635c700499e186bbcfa53c5156401116f1ceb45e71d2fee4b`**;
+  executable decision SHA-256 is **`ad7fa1667d693d3a32f7df0dd05792805869211b38c78159b54994346a8f99de`**;
+  deterministic qualitative selection SHA-256 is
+  **`8f793c9d9e526d75ddd43769cdac795519f9833f382a0d5145d943fea6a73394`**. On the 448 development-fresh
+  language/full cases, active scores **36 answers / 19 exact programs / 610 of 1,856 exact operations**;
+  random is **25 / 11 / 407**, zero is **14 / 1 / 24**, and shuffled is **11 / 3 / 78**. Thus selected
+  counterfactual experiments are physically useful: active beats equal-call random by **+10.94pp**
+  operation accuracy and both causal controls by much more. But answer/exact gains over random are only
+  **+2.46pp / +1.79pp**, below every advancement gate. Active fit is 165/256 answers and depth 51/192;
+  language is 33/256 and full 3/192. Query parsing itself falls to **342/448 = 76.34%** fresh. Oracle
+  effects reach 1,733/1,856 operations but only 271/448 answers and 252/448 exact programs because the
+  predicted query and three-step truncation still cap the whole program. Learned fresh effect MSE is
+  about **130.74** on both train-probe and heldout-probe partitions versus 0.33 fit and 0.84 depth.
+  Post-score diagnosis decomposes active fresh operations into **610 exact**, **362 same-opcode/wrong-value**
+  (mean absolute value error 5.09; only 35.36% within one), and **884 wrong-opcode**. Subtraction has only
+  one exact event across both roles, while structural swap/merge transfers relatively well. Twelve
+  verbatim traces confirm both genuine active-only recoveries and catastrophic off-scale semantic
+  predictions. Decision is `reject_r6_before_fresh_board`; no fresh R6 board may be generated. R6b's
+  preregistered posterior scheduler remains valid mechanics but is not run as a rescue: better experiment
+  selection cannot repair the observed unseen-language effect and query representation collapse. The next
+  mechanism must identify semantics by a different causal observable, not tune R6 thresholds or probes.
+
+- **2026-07-14 19:40--19:53** — **R7 is preregistered as a genuinely different causal observable,
+  not a rescue fit.** Interventional Semantic Quotient compares an unknown natural-language event to
+  lawful canonical operators by their nonlinear finite-difference response fields in the immutable
+  raw-200k model. Matched visible interventions alter initial values, event values, or entity roles;
+  the evaluator records final future-token hidden changes at frozen layers **5, 11, 17, 23, 29**.
+  Active selection gets exactly **two** intervention channels, as do deterministic random and shuffled
+  controls; unintervened direct hidden similarity is a no-intervention baseline. The canary is frozen at
+  exactly **108** already-used development events, **12 per each of nine opcodes**, from language/full
+  regimes. Local tests pass, all candidate interventions preserve token width within each finite
+  difference, maximum prompt length is 216, and a numeral-binding audit covers all 108 events. The
+  executable pre-score gate requires active opcode accuracy >=45%, >=5 points over both random and
+  direct similarity, >=15 points over shuffled signatures, and >=4/12 on at least seven opcodes. A pass
+  authorizes only a full already-used R5-board evaluation; it cannot authorize training, fresh data,
+  source deletion, reasoning, or context-scaling claims. A failure closes the R7 observable. The
+  evaluator uses visible identifier strings and numeric literals supplied by the board to construct
+  lexical hypotheses, so even a pass is a semantic-identification canary, not a full text-only system.
