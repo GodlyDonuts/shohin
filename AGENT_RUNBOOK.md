@@ -3348,3 +3348,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   independently on evc40. No score has been read from either job at this entry; the checkpoint is not a
   promotion, and its low training loss is not capability evidence. The original factor/train/gate and
   conditional paired chains remain unchanged.
+
+- **2026-07-14 05:14** — **Ordinary CRA combined held-out behavior is a failed but nonzero signal.**
+  `688557` completed all 500 frozen jointly held-out worlds: normal **35/500**, paraphrase **30/500**,
+  counterfactual **39/500**, zero control **13/500**, shuffled control **27/500**, and strict causal
+  **0/500** (report SHA-256 `6b91aacdf6ee2721bb828dcf1c57270a79ea24c5cf3de6c8623a5b513700cdcb`). It misses
+  every pre-registered pass threshold, so it is not a residual-algebra or reasoning result. The matched
+  likelihood diagnostic `688599` has positive *mean* normal/counter margins (+0.2409 / +0.1025 NLL) but
+  only **12/500** per-example paired-directional and **3/500** strict-directional cases; zero tape has a
+  negative mean margin (-0.6256), so the real tape is not consistently necessary. Its report SHA-256 is
+  `6dd4bd29ee3b5daaf214a3427b2388843d93e01d8014e0027999a4c67509baa2`. Language and train diagnostics
+  are currently running, followed by remaining factors; do not promote or diagnose the failure from this
+  joint all-axes result alone.
