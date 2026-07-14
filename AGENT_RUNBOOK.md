@@ -3330,3 +3330,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Its log is `logs/cra_taxonomy_stokes.log`. It owns no model/checkpoint/data writer and consumes one
   sleeping shell between checks. If the original evidence chain is intentionally replaced, kill this PID and
   update the bound paths rather than letting it classify a mixture of reports.
+
+- **2026-07-14 05:14** — **CRA answer-support geometry is now an explicit interpretation rule.** The
+  30,000-row training corpus has **17** distinct normal/counterfactual answer strings across **243**
+  target-state/query combinations, with values `[-4,4]` and edits `{-1,+1}`. The 2,000-row jointly
+  held-out suite changes language, values, and edit magnitude together; it has **31** answer strings, of
+  which **20** are absent from train, values `[-9,-5] U [5,9]`, and edits `{-2,+2}`. Therefore a zero
+  combined score alone cannot identify a residual-algebra failure. Language, delta, and query factors retain
+  all 17 train answer strings and isolate their named axes; only values also introduces 20 new answers.
+  The taxonomy and any next-arm decision must use this matrix rather than treating the joint score as a
+  single causal diagnosis.
