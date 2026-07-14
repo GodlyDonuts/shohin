@@ -350,22 +350,34 @@ are measured on held-out language/value/delta regimes:
 4. the source text is absent from the suffix by construction, verified by an
    execution-level no-KV/no-source unit test.
 
-The no-parameter relay primitive and its hard-cut test now pass. Its CPU-only
-v1 corpus is also admitted on shared Stokes/Newton storage: 30,000 train rows
-(SHA-256 `bac1e8d041abbfefa892056302a8d78c14abd0d31dd1694e9bc92aefac2fe03c`)
-and 2,000 held-out rows (`1d8b633713fff41b331e7c2728e9c0aa3ae307a7b99622c526d99d6dc84120f2`),
+The no-parameter relay primitive and its hard-cut test passed only as
+infrastructure. Its CPU-only v1 corpus is admitted on shared Stokes/Newton
+storage: 30,000 train rows (SHA-256
+`bac1e8d041abbfefa892056302a8d78c14abd0d31dd1694e9bc92aefac2fe03c`) and
+2,000 held-out rows (`1d8b633713fff41b331e7c2728e9c0aa3ae307a7b99622c526d99d6dc84120f2`),
 with zero duplicate prompts and zero exact or word-13-gram cross-split hits.
-The 12-update H100 launch canary is complete: it exercised real gradients and
-serialization from immutable raw-200k weights, then the read-only evaluator
-completed its 24-row control path. Its zero score is intentionally
-non-interpretable because all 12 updates were in warmup. Two full, isolated,
-one-epoch layer arms now test `L=13` and `L=19` with the same corpus, batch
-size, initialization, and 500-row dependency-held evaluation. The evaluator
-also records a full-source diagnostic bypass, which is never a positive gate:
-if that bypass fails too, the model did not learn the synthetic computation;
-if it succeeds while the relay fails, the causal bottleneck is the failure.
+The 12-update H100 launch canary exercised gradients and serialization from
+immutable raw-200k weights; it was not a capability result.
 
-### Conditional Extension: Native Relay Recurrence
+**Closed result, 2026-07-14: NRR v1 is rejected.** The two full isolated
+one-epoch arms, `L=13` (`688533`, 7,465 updates, checkpoint md5
+`f721645e5b5c38622cf2bc55563957b9`) and `L=19` (`688534`, 7,465 updates,
+checkpoint md5 `1616cf2eb21f656e4e781093fb524dfe`), both score **0/500** on
+the frozen combined held-out causal evaluation. That is 0 normal, paraphrase,
+counterfactual, direct-bypass, and strict-causal answers for both arms.
+The relay is not inert: for L19, replacing it with zero or a shuffled relay
+changes the emitted answer on 499/500 and 500/500 cases respectively, and a
+counterfactual source changes the prediction on 355/500 cases. But it has no
+semantic success: it neither preserves the answer across paraphrase nor
+updates it correctly under a counterfactual. A L19 in-distribution diagnostic
+is also inadequate: only 21/200 normal, 23/200 paraphrase, 13/200
+counterfactual, and 2/200 strict-causal cases. Low training loss therefore
+represented local token formatting and near-number imitation, not a usable
+latent state. The separately admitted language/value/delta factor suite is
+retained for methodology but is not worth H100 time after this primary gate.
+No continuation or recurrence may be built from this mechanism.
+
+### Conditional Extension: Native Relay Recurrence (Blocked)
 
 A one-step relay is only a compression test. The actual context-scaling
 hypothesis is to reuse the transformer tail as a recurrent state transition
@@ -377,16 +389,14 @@ without adding an RNN, memory slots, a controller, or a serialization channel:
 
 `answer = Tail_(L+1..N)([h_T, query])`
 
-The recurrent state is always a native residual and every transition uses the
-same frozen architecture and the same source-free hard cut. This would give
-fixed-size latent context whose compute grows with events while represented
-context does not. It is **not yet implemented or claimed**. It is admitted
-only if a one-step NRR arm shows a substantial held-out strict-causal signal,
-with zero/shuffle controls low and no evidence that the full-source diagnostic
-is carrying the result. The recurrent corpus must then use random trajectory
-prefixes, counterfactual event substitutions, source/paraphrase interchange,
-and length-OOD continuations; a template score alone would immediately reject
-the idea.
+The recurrent state would be native and every transition would use the same
+frozen architecture and source-free hard cut. That hypothesis is now
+**blocked, not pending**: NRR v1 scored 0/500 held-out strict causal and 2/200
+on the in-distribution diagnostic, far below the advancement gate below.
+Implementing recurrence would merely compound an unlearned state channel.
+Retain these specifications as a falsification record, but spend no further
+training time on native-relay recurrence unless a materially different
+one-step state mechanism independently clears the same gate.
 
 For the current one-step depth sweep, "substantial" is pre-registered as at
 least **300/500 strict causal** cases on the frozen combined held-out set,
@@ -396,6 +406,57 @@ with each of normal, paraphrase, and counterfactual correctness at least
 language, values, delta, and combined factor sets before recurrence is
 implemented. The full-source bypass remains diagnostic only and cannot satisfy
 any of these thresholds.
+
+### New Hypothesis: Counterfactual Residual Algebra
+
+NRR showed that a single source residual can influence a suffix without
+becoming a semantic state. The next hypothesis therefore does **not** ask for
+another answer conditioned on another hidden vector. It asks the model to make
+an *intervention* in residual space work across unrelated worlds.
+
+**Counterfactual Residual Algebra (CRA)** exports a short tape of the last
+native residuals from a fixed, ordinary source anchor, rather than adding slots
+or parameters. Let `Z(x, y)` be that tape for a world with two latent facts.
+For three independently rendered sources,
+
+`A = (p, q_a)`, `A' = (p + d, q_a)`, and `B = (r, q_b)`,
+
+the source-free suffix receives only
+
+`Z(B) + Z(A') - Z(A)`
+
+and a question about the unshown target world `(r + d, q_b)`. It must answer
+several readouts (field, sum, difference, and later affine readouts). Thus a
+successful model cannot merely encode an answer-like number in one residual:
+the residual *difference* for a fact change must transfer over a different
+background, and the suffix must decode the composed result with all source text
+and all source K/V states absent.
+
+This is intentionally an end-to-end causal objective, not a cosine,
+clustering, attraction, probe, or text-state loss. The only supervised target
+is the answer produced after the residual intervention. It is also distinct
+from the failed DRS/CPR/PSA/NRR branches: no string is emitted or parsed as
+state; no learned slot, controller, or packet is added; and a wrong residual
+algebra operation has a solver-verifiable wrong answer.
+
+The first candidate begins with a small no-carry arithmetic curriculum so the
+test isolates semantic composition rather than the raw model's known multi-
+digit arithmetic deficit. It must then clear all of the following before any
+larger-value, event-transition, or recurrent version exists:
+
+1. at least **300/500** strict compositional-causal cases on a frozen combined
+   held-out set;
+2. at least **350/500** correct each for normal source renderings,
+   independent paraphrases, and a counterfactual `d` substitution;
+3. no more than **25/500** answers recreated by a zero or shuffled residual
+   tape; and
+4. separate language, value, delta, query-family, and two-edit commutativity
+   factor evaluations, all constructed before training.
+
+This is a project-specific falsification attempt, not a claim of a new
+general technique. If the residual algebra does not pass the first primitive,
+it closes with NRR rather than acquiring a recurrence, a public benchmark, or
+a post-hoc story.
 
 ### Conditional Next Hypothesis: Counterfactual Reflection Route
 

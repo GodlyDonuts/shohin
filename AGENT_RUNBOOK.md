@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 02:47 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; V10A r2 is rejected by completed checkpoint-bound bridge, source-drop composition, and direct-interaction evidence; continuous latent rollout, LSA, and CPR are closed negative branches; DRS v2 core establishes 497/500 correct first emitted states but only 275/500 final answers, including 0/100 width-8, and the independent held-out wording result falls further to 125/500 with 0/100 width-8, so it is a template-conditioned recurrent executor rather than a transferable workspace; raw residual patching and the restricted four-layer Jacobian digit lens are negative; semantic-basis v1 is preserved but controller-ineligible, while exact-carrier semantic-basis v2 is a genuinely causal 48/100 in-distribution executor that falls to 1/100 language-only, 3/100 values-only, and 2/100 delta-only factorized transfer; the full CE/same/wrong PSA matrix is rejected because all activation exchanges are null and held-out causal transport is 1/100, 2/100, and 1/100; contrastive PSA is not justified; Native Residual Relay has a passing H100 hardware canary and two isolated depth-sweep arms but no capability result; counterfactual-workspace induction, DCRD, CBC, semantic capsules, ISL, counterfactual reflection, and reversible checkpoints remain conditional). Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 03:57 EDT (flagship custody remains intentionally hands-off with its full 200k checkpoint hash-verified on Newton and locally; V10A r2, continuous latent rollout, LSA, CPR, DRS, exact-carrier transport, PSA, and **Native Residual Relay v1** are closed negative branches; NRR's full arms score 0/500 held-out and only 2/200 strict causal in-distribution, so recurrence is blocked; the original Counterfactual Residual Algebra primitive has a solver-verified 30k/2k corpus, hardware/evaluator canary, independent language/value/delta/query/two-edit controls, and one isolated raw-200k L19 full arm running; counterfactual-workspace induction, DCRD, CBC, semantic capsules, ISL, counterfactual reflection, and reversible checkpoints remain conditional). Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -3176,3 +3176,42 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   additionally records a full-source bypass only to distinguish failure to learn from failure of the hard
   relay; it cannot contribute to a positive causal score. A recurrent native-relay extension remains
   conditional on a material one-step causal success.
+
+- **2026-07-14 03:04** — **NRR v1 depth sweep is rejected; do not build recurrence.** Both full
+  raw-200k one-epoch arms completed all **7,465** exact-shape updates: layer-13 `688533` in 1,442s to
+  `train/nrr_200k_l13_r1/nrr_ep1.pt` (md5 `f721645e5b5c38622cf2bc55563957b9`) and layer-19 `688534` in
+  1,434s to `train/nrr_200k_l19_r1/nrr_ep1.pt` (md5 `1616cf2eb21f656e4e781093fb524dfe`). Each frozen
+  500-row held-out evaluation is **0/500** normal, paraphrase, counterfactual, direct-bypass, and strict
+  causal; L19 report SHA-256 is `43f583e5e1d9fd51475aefad856bac6b06b62b0b17aa3f3784d8f747c4d4f61f`.
+  The relay was physically consequential but not semantic: L13 normal differed after paraphrase/counter/
+  zero/shuffle on 275/378/500/500 cases and L19 on 192/355/499/500 cases, yet no counterfactual changed
+  the prediction to the correct answer. The L19 in-distribution 200-row diagnostic `688540` rules out a
+  simple OOD explanation: normal **21/200**, paraphrase **23/200**, counterfactual **13/200**, direct
+  **0/200**, and strict causal **2/200**. The low final NRR loss therefore reflected local output
+  regularities and near-number imitation, not an executable compact state. The clean factorized suite is
+  retained for audit, but no further NRR or recurrence H100 time is justified.
+
+- **2026-07-14 03:57** — **Counterfactual Residual Algebra (CRA) is the new isolated falsification path.**
+  CRA does not add slots, a controller, a parser, a text carrier, or a geometric objective. It exports the
+  final five native residuals at a fixed ordinary-token source anchor and requires a source-free tail to
+  answer from `Z(donor) + Z(edited) - Z(base)`. The frozen solver-verified corpus was generated on Stokes
+  and mirrored to Newton/Mac: **30,000 train** rows at SHA-256
+  `e067c2561d397d9e0c44318c5e21d9e50820bd6cd88ccd2513d5b8e2f6e059f5` and **2,000 jointly held-out** at
+  `f66536b85cfe2fafa71690a0e3a5a2adc8fb5db0dd5b912ad69f8362c927b248`, with zero duplicate prompts,
+  exact cross-split bundles, or cross-split word-13-grams. The H100 canary `688551` on evc34 completed
+  12 batches from immutable raw 200k in 7s with finite loss, gradient, tape norm, and checkpoint
+  `train/cra_canary_200k_r1/cra_ep1.pt` (md5 `431393f0041673838b04944f71d54ee9`); its 24-row evaluator
+  smoke `688553` is 0/24 by design because all updates were warmup. Full raw-200k layer-19 arm `688556`
+  is running in isolated `train/cra_200k_l19_r1` with **60,000** normal/paraphrase examples, 8 exact-shape
+  buckets, **15,000** updates at BS=4, and no flagship path. The output-only evaluation chain is
+  `688557` combined -> `688558` language -> `688559` values -> `688560` delta -> `688561` query ->
+  `688562` two-edit; all are `afterok` serialized and write fresh CRA reports. Factor artifacts are bound
+  to this exact train SHA: language/value/delta/query SHA-256
+  `9d65c670cec5c937d2460986c0168c2733fc016fa8b564e956928553c09361e4` /
+  `55651ef8656d574ebf2d6b82234299c6363e48a99465fc6b6561018f38bb9ced` /
+  `d67455dc1037fc9b5f82a1e32a64a2d220c8e587b6251e7f0463dd6fe1a69437` /
+  `11d0d98c44b8eaf7701e40f81c83402c22c1f43b79a4970ed5c4fc4b6c9ab97c`; two-edit SHA-256 is
+  `7254bd0a857aa27cfb32a323620a7cd6adb46a062c3200a4076d3affae82b560`. Shared wording/state overlap
+  in the controlled delta/query factors is reported explicitly; exact source bundles and the required
+  unseen world transitions remain zero. **No CRA score exists yet and no recurrence/public-board claim is
+  allowed unless the pre-registered causal gates clear.**
