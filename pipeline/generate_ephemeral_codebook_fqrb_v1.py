@@ -37,8 +37,8 @@ from generate_finite_query_residual_basis_v1 import (
 # categories they encode.  Sixteen choices yield a large disjoint-permutation
 # space while keeping every code word in the normal tokenizer vocabulary.
 CODE_TAGS = (
-    "amber", "birch", "cedar", "dingo", "ember", "fable", "garnet", "harbor",
-    "indigo", "juniper", "kestrel", "linden", "marble", "nectar", "onyx", "piper",
+    "amber", "ember", "slice", "reset", "wood", "wheel", "world", "trust",
+    "dummy", "boxed", "folk", "flies", "credit", "handler", "voltage", "vertex",
 )
 CANONICAL_LABELS = tuple(sorted({
     label(primary, secondary, kind)

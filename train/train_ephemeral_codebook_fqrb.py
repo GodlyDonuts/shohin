@@ -93,6 +93,12 @@ def main() -> None:
     if not args.layer < cfg.n_layer - 1 or cfg.n_loop != 1:
         raise SystemExit("invalid layer or unsupported recurrent model")
     examples, skipped = load_examples(args.data, tokenizer, cfg.seq_len, anchor_ids)
+    code_lengths = {
+        len(tokenizer.encode(" " + json.loads(line)["response"]).ids)
+        for line in open(args.data) if line.strip()
+    }
+    if len(code_lengths) != 1:
+        raise SystemExit("ephemeral code words must have a uniform tokenizer length")
     if args.max_examples:
         examples = examples[:args.max_examples]
     batches, batch_report = bucketed_batches(examples, args.batch_size, args.seed)
