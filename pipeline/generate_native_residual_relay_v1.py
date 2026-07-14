@@ -46,6 +46,22 @@ HELDOUT_QUERIES = (
     ("difference", "Report north less south."),
     ("sum", "What total is stored across north and south?"),
 )
+FACTOR_SOURCES = (
+    "A survey gives a primary quantity of {p} and a secondary quantity of {q}.",
+    "For two measured quantities, the first is {p} while the second is {q}.",
+)
+FACTOR_PARAPHRASES = (
+    "The first surveyed amount is {p}; the second surveyed amount is {q}.",
+    "Measurements list primary={p} and secondary={q}.",
+)
+FACTOR_EVENTS = (
+    "A revision shifts the primary quantity by {delta:+d} and preserves the secondary quantity.",
+    "Change only the first measurement by {delta:+d}.",
+)
+FACTOR_QUERIES = (
+    ("difference", "Give the first quantity minus the second quantity."),
+    ("sum", "Give the total of the two measured quantities."),
+)
 
 
 def sha256_file(path: Path) -> str:
@@ -76,14 +92,19 @@ def answer(primary: int, secondary: int, delta: int, kind: str) -> int:
     raise ValueError("unknown query kind")
 
 
-def make_row(rng: random.Random, split: str, index: int) -> dict:
-    heldout = split == "heldout"
-    sources = HELDOUT_SOURCES if heldout else TRAIN_SOURCES
-    paraphrases = HELDOUT_PARAPHRASES if heldout else TRAIN_PARAPHRASES
-    events = HELDOUT_EVENTS if heldout else TRAIN_EVENTS
-    queries = HELDOUT_QUERIES if heldout else TRAIN_QUERIES
-    low, high = (1000, 8999) if heldout else (20, 899)
-    delta_low, delta_high = (25, 99) if heldout else (1, 19)
+def make_row_axes(rng: random.Random, split: str, index: int, language_heldout: bool, value_heldout: bool, delta_heldout: bool, template_family=None) -> dict:
+    """Build one row with independently selected language/value/delta axes."""
+    if template_family == "factor":
+        sources, paraphrases, events, queries = FACTOR_SOURCES, FACTOR_PARAPHRASES, FACTOR_EVENTS, FACTOR_QUERIES
+    elif template_family is None:
+        sources = HELDOUT_SOURCES if language_heldout else TRAIN_SOURCES
+        paraphrases = HELDOUT_PARAPHRASES if language_heldout else TRAIN_PARAPHRASES
+        events = HELDOUT_EVENTS if language_heldout else TRAIN_EVENTS
+        queries = HELDOUT_QUERIES if language_heldout else TRAIN_QUERIES
+    else:
+        raise ValueError("unknown template family")
+    low, high = (1000, 8999) if value_heldout else (20, 899)
+    delta_low, delta_high = (25, 99) if delta_heldout else (1, 19)
     primary, secondary = rng.randint(low, high), rng.randint(low, high)
     delta = rng.randint(delta_low, delta_high) * (-1 if rng.randrange(2) else 1)
     counter_delta = rng.choice((-1, 1)) * rng.randint(delta_low, delta_high)
@@ -108,6 +129,11 @@ def make_row(rng: random.Random, split: str, index: int) -> dict:
         "counterfactual_primary_delta": counter_delta,
         "state": {"primary": primary, "secondary": secondary},
     }
+
+
+def make_row(rng: random.Random, split: str, index: int) -> dict:
+    heldout = split == "heldout"
+    return make_row_axes(rng, split, index, heldout, heldout, heldout)
 
 
 def validate_row(row: dict) -> None:
