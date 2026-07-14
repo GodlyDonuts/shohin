@@ -3438,3 +3438,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `b68e3b92673e0cca9b94e41bef7f4cd8abda5b17323e5b7d639640f821bb2695`. This is a clean task floor, not
   an indication of future FQRB performance and not a reasoning score. Full isolated FQRB training `688665`
   remains the only active FQRB training writer.
+
+- **2026-07-14 06:28** — **An unseen FQRB two-edit composition factor is frozen but intentionally not
+  launched.** The 500-group / 2,500-row
+  `artifacts/evals/finite_query_residual_basis_v1_two_edit_factor.jsonl` (SHA-256
+  `561d2136a4767c9a280946e0a2228e8dae5daa0f1e2255bc514a3bce9220ed15`) requires the native four-source
+  tape `donor + primary_edit + secondary_edit - 2*base`; FQRB training contains no two-edit rows. Its
+  audit (SHA-256 `a82f5e6b7f3a230c7b4a60015c69a4d65029bec51bc4be00738a790595390db9`) verifies five finite
+  consumers per group, changed counterfactual answers, zero exact one-edit prompt collisions, and records
+  familiar-wording n-gram overlap explicitly. The evaluator now supports this mode with the same whole
+  group normal/paraphrase/counterfactual/zero/shuffle/wrong-query controls. Do **not** submit it merely
+  because it exists: it is a conditional composition gate only after one-edit combined and source-tuple
+  transfer evidence pass.

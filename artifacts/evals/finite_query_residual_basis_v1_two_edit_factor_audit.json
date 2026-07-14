@@ -1,0 +1,35 @@
+{
+  "answer_labels": [
+    "answer=even",
+    "answer=negative",
+    "answer=odd",
+    "answer=ones_nine",
+    "answer=ones_one",
+    "answer=ones_zero",
+    "answer=positive",
+    "answer=relation_equal",
+    "answer=relation_greater",
+    "answer=relation_less",
+    "answer=tens_one",
+    "answer=tens_zero",
+    "answer=zero"
+  ],
+  "audit": "finite_query_residual_basis_v1_two_edit_factor",
+  "bad_group_cardinality": 0,
+  "claim_boundary": "Unseen two-edit source-free composition factor; it is never FQRB training data.",
+  "duplicate_factor_prompts": 0,
+  "factor_groups": 500,
+  "factor_rows": 2500,
+  "factor_sha256": "561d2136a4767c9a280946e0a2228e8dae5daa0f1e2255bc514a3bce9220ed15",
+  "query_kinds": [
+    "ones",
+    "tens",
+    "sign",
+    "parity",
+    "relation"
+  ],
+  "train_exact_prompt_hits": 0,
+  "train_sha256": "6d42ce87a202f293b64708e8bbca2193fb90f3cb60c232f6c968b0edaa46f113",
+  "train_surface_13gram_hits": 7275,
+  "train_surface_13gram_overlap_expected": true
+}

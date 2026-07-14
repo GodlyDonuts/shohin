@@ -37,4 +37,16 @@ assert summary == {
 results[0]["wrong_query"] = results[0]["expected"]
 score_result(results[0])
 assert summarize_groups(results, [basis_id for basis_id, _ in groups])["joint_strict"] == 1
+
+two_edit_rows = [row("two", kind) for kind in QUERY_KINDS]
+for item in two_edit_rows:
+    item["basis_mode"] = "multi_consumer_two_edit"
+    item["mode"] = "two_edit"
+    item.pop("edited_source")
+    item.pop("paraphrase_edited_source")
+    item["primary_edited_source"] = "primary"
+    item["secondary_edited_source"] = "secondary"
+    item["paraphrase_primary_edited_source"] = "pprimary"
+    item["paraphrase_secondary_edited_source"] = "psecondary"
+assert len(group_rows(two_edit_rows, "heldout", 0)) == 1
 print("FQRB evaluator checks: passed")

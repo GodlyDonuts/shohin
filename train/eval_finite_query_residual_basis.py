@@ -18,15 +18,20 @@ from pathlib import Path
 import torch
 from tokenizers import Tokenizer
 
-from counterfactual_residual_algebra import compose_counterfactual_tape
+from counterfactual_residual_algebra import compose_counterfactual_tape, compose_two_edit_counterfactual_tape
 from eval_counterfactual_residual_algebra import decode_tape, encode_tape
 from model import GPT, GPTConfig
 
 
 QUERY_KINDS = ("ones", "tens", "sign", "parity", "relation")
-SHARED_SOURCE_FIELDS = (
+ONE_EDIT_SHARED_SOURCE_FIELDS = (
     "base_source", "edited_source", "donor_source",
     "paraphrase_base_source", "paraphrase_edited_source", "paraphrase_donor_source",
+)
+TWO_EDIT_SHARED_SOURCE_FIELDS = (
+    "base_source", "primary_edited_source", "secondary_edited_source", "donor_source",
+    "paraphrase_base_source", "paraphrase_primary_edited_source", "paraphrase_secondary_edited_source",
+    "paraphrase_donor_source",
 )
 
 
@@ -44,7 +49,7 @@ def group_rows(rows: list[dict], split: str, max_groups: int) -> list[tuple[str,
     for row in rows:
         if row.get("schema") != "counterfactual_residual_algebra_v1" or row.get("split") != split:
             continue
-        if row.get("basis_mode") != "multi_consumer" or not isinstance(row.get("basis_id"), str):
+        if row.get("basis_mode") not in ("multi_consumer", "multi_consumer_two_edit") or not isinstance(row.get("basis_id"), str):
             raise ValueError("row is not a finite-query residual-basis example")
         groups.setdefault(row["basis_id"], []).append(row)
     result = []
@@ -53,7 +58,13 @@ def group_rows(rows: list[dict], split: str, max_groups: int) -> list[tuple[str,
         if len(group) != len(QUERY_KINDS) or kinds != set(QUERY_KINDS):
             raise ValueError("basis {} does not contain exactly one row per query kind".format(basis_id))
         first = group[0]
-        if any(any(row.get(field) != first.get(field) for row in group[1:]) for field in SHARED_SOURCE_FIELDS):
+        mode = first.get("mode", "one_edit")
+        if any(row.get("mode", "one_edit") != mode for row in group):
+            raise ValueError("basis {} mixes composition modes".format(basis_id))
+        shared_fields = TWO_EDIT_SHARED_SOURCE_FIELDS if mode == "two_edit" else ONE_EDIT_SHARED_SOURCE_FIELDS
+        if mode not in ("one_edit", "two_edit"):
+            raise ValueError("basis {} has an unknown composition mode".format(basis_id))
+        if any(any(row.get(field) != first.get(field) for row in group[1:]) for field in shared_fields):
             raise ValueError("basis {} does not share an identical source triple".format(basis_id))
         if any(row.get("response") == row.get("counterfactual_response") for row in group):
             raise ValueError("basis {} has an answer-invariant counterfactual".format(basis_id))
@@ -64,6 +75,36 @@ def group_rows(rows: list[dict], split: str, max_groups: int) -> list[tuple[str,
     if not result:
         raise ValueError("no FQRB groups for requested split")
     return result
+
+
+def compose_group_tapes(model, tokenizer, group: list[dict], layer: int, tape_len: int):
+    """Encode a shared FQRB group once, with optional unseen two-edit composition."""
+    first = group[0]
+    base = encode_tape(model, tokenizer, first["base_source"], layer, tape_len)
+    donor = encode_tape(model, tokenizer, first["donor_source"], layer, tape_len)
+    para_base = encode_tape(model, tokenizer, first["paraphrase_base_source"], layer, tape_len)
+    para_donor = encode_tape(model, tokenizer, first["paraphrase_donor_source"], layer, tape_len)
+    if first.get("mode", "one_edit") == "two_edit":
+        primary = encode_tape(model, tokenizer, first["primary_edited_source"], layer, tape_len)
+        secondary = encode_tape(model, tokenizer, first["secondary_edited_source"], layer, tape_len)
+        para_primary = encode_tape(model, tokenizer, first["paraphrase_primary_edited_source"], layer, tape_len)
+        para_secondary = encode_tape(model, tokenizer, first["paraphrase_secondary_edited_source"], layer, tape_len)
+        return (
+            compose_two_edit_counterfactual_tape(base, primary, secondary, donor),
+            compose_two_edit_counterfactual_tape(para_base, para_primary, para_secondary, para_donor),
+            base, donor, secondary,
+        )
+    edited = encode_tape(model, tokenizer, first["edited_source"], layer, tape_len)
+    para_edited = encode_tape(model, tokenizer, first["paraphrase_edited_source"], layer, tape_len)
+    return compose_counterfactual_tape(base, edited, donor), compose_counterfactual_tape(para_base, para_edited, para_donor), base, donor, None
+
+
+def compose_counter_tape(model, tokenizer, row: dict, base, donor, secondary, layer: int, tape_len: int):
+    if row.get("mode", "one_edit") == "two_edit":
+        counter = encode_tape(model, tokenizer, row["counterfactual_primary_edited_source"], layer, tape_len)
+        return compose_two_edit_counterfactual_tape(base, counter, secondary, donor)
+    counter = encode_tape(model, tokenizer, row["counterfactual_edited_source"], layer, tape_len)
+    return compose_counterfactual_tape(base, counter, donor)
 
 
 def shifted_group_keys(group_keys: list[str]) -> dict[str, str]:
@@ -159,22 +200,13 @@ def main() -> None:
     results: list[dict] = []
     with torch.no_grad():
         for index, (basis_id, group) in enumerate(groups, 1):
-            first = group[0]
-            base = encode_tape(model, tokenizer, first["base_source"], layer, tape_len)
-            edited = encode_tape(model, tokenizer, first["edited_source"], layer, tape_len)
-            donor = encode_tape(model, tokenizer, first["donor_source"], layer, tape_len)
-            tape = compose_counterfactual_tape(base, edited, donor)
-            para_base = encode_tape(model, tokenizer, first["paraphrase_base_source"], layer, tape_len)
-            para_edited = encode_tape(model, tokenizer, first["paraphrase_edited_source"], layer, tape_len)
-            para_donor = encode_tape(model, tokenizer, first["paraphrase_donor_source"], layer, tape_len)
-            paraphrase_tape = compose_counterfactual_tape(para_base, para_edited, para_donor)
+            tape, paraphrase_tape, base, donor, secondary = compose_group_tapes(model, tokenizer, group, layer, tape_len)
             tapes[basis_id], paraphrase_tapes[basis_id] = tape, paraphrase_tape
             cosine = float(torch.nn.functional.cosine_similarity(
                 tape.float().reshape(1, -1), paraphrase_tape.float().reshape(1, -1), dim=-1,
             ).item())
             for query_index, row in enumerate(group):
-                counter_edited = encode_tape(model, tokenizer, row["counterfactual_edited_source"], layer, tape_len)
-                counter_tape = compose_counterfactual_tape(base, counter_edited, donor)
+                counter_tape = compose_counter_tape(model, tokenizer, row, base, donor, secondary, layer, tape_len)
                 wrong_row = group[(query_index + 1) % len(group)]
                 results.append({
                     "basis_id": basis_id, "episode_id": row["episode_id"], "query_kind": row["query_kind"],
