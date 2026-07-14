@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+"""Exact contracts for the future-effect affine algebra."""
+
+import json
+from pathlib import Path
+
+import torch
+
+from categorical_microcode import OPCODE_TO_ID, QUERY_TO_ID, opcode_for, operation_value, query_for
+from future_effect_algebra import (
+    compose_operators,
+    effect_signature,
+    execute_operator,
+    operation_operator,
+    program_operator,
+)
+
+
+def main():
+    root = Path(__file__).resolve().parents[1]
+    data = root / "artifacts/evals/latent_operator_eval_slices_v2_64.jsonl"
+    rows = [json.loads(line) for line in data.open() if line.strip()]
+    assert len(rows) == 896
+
+    for row in rows:
+        keys = row["keys"]
+        opcodes = [OPCODE_TO_ID[opcode_for(operation, keys)] for operation in row["operations"]]
+        values = [operation_value(operation) for operation in row["operations"]]
+        query = QUERY_TO_ID[query_for(row["query"], keys)]
+        initial = [row["initial"][key] for key in keys]
+        assert execute_operator(initial, opcodes, values, query) == int(row["answer"])
+
+        midpoint = len(opcodes) // 2
+        left = program_operator(opcodes[:midpoint], values[:midpoint])
+        right = program_operator(opcodes[midpoint:], values[midpoint:])
+        full = program_operator(opcodes, values)
+        assert torch.equal(compose_operators([left, right]), full)
+
+    base = operation_operator("add_0", 3)
+    counterfactual = operation_operator("add_1", 3)
+    assert not torch.equal(effect_signature(base), effect_signature(counterfactual))
+    assert torch.equal(effect_signature(base), base)
+
+    first = operation_operator("merge_0_1")
+    second = operation_operator("sub_1", 4)
+    third = operation_operator("swap")
+    assert torch.equal(
+        compose_operators([first, second, third]),
+        third @ second @ first,
+    )
+    print("future-effect algebra tests passed: 896 exact programs")
+
+
+if __name__ == "__main__":
+    main()

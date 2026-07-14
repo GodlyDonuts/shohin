@@ -2115,6 +2115,25 @@ Both have cleared finite startup telemetry. Held-out and manual evaluations are
 dependency-gated; no R4 capability or decoder-bridge conclusion exists until
 the locked comparator reports.
 
+R4 is now complete. The locked comparator formally rejects promotion because
+the pointer candidate reaches only 51/192 = 26.56% full OOD, below the 40%
+absolute floor. That rejection must stand. The matched intervention is still
+the strongest causal component result in this program: language OOD rises
+29/256 -> 139/256, full OOD 2/192 -> 51/192, all exact programs 469/896 ->
+624/896, and language+full operation-role accuracy conditioned on a correct
+kind rises 57.92% -> 100%. The candidate retains perfect fit/depth behavior.
+Comparator SHA-256 is
+`890a19c1d9eaad04b5d09b5216f2622a01036ba140c11455bc6837bc23a79d54`.
+
+The factor record changes the mechanism diagnosis. Dynamic reference binding
+is no longer hypothetical; it works. Remaining OOD error is dominated by
+argument structure: 116/123 language and 206/243 full subtraction events using
+the unseen construction `take ... away from` are classified as move. Both
+phrases describe loss from an entity, but subtract has one entity argument and
+move has a source and destination. R4's kind head pools a line independently
+of that incidence graph. It therefore resolves the noun correctly and still
+chooses the wrong transformation.
+
 ### Parallel Diagnostic: Exact Future-Jacobian Workspace
 
 The 2026 Jacobian-lens result changes one measurement assumption without
@@ -2183,3 +2202,45 @@ would not test a meaningful workspace. The preregistration therefore blocks
 the swap and blocks direct use of this map in a recurrent bridge. Any next
 workspace experiment must explicitly install and causally validate semantic
 state; it cannot assume that raw pretraining already produced one.
+
+### R5 Hypothesis: Future-Effect Argument Algebra
+
+A literature check rules out a weak novelty claim. [Adaptive recurrence,
+algorithmic supervision, discrete latent anchors, and explicit error
+correction](https://openreview.net/forum?id=8bFgEyRLrO), [dynamic entity
+memory](https://arxiv.org/abs/1708.00781), and [compositional latent
+programs](https://openreview.net/forum?id=N99odDSTM7) all have direct prior
+art. R5 does not claim novelty for those ingredients. Its narrower hypothesis
+is that a tiny reasoner should carry a **function over future consequences**,
+not an unconstrained vector or a generated rationale.
+
+For the admitted two-register domain, every event is exactly a 3x3 homogeneous
+affine operator over `[entity_0, entity_1, 1]`. Chronological matrix products
+compose arbitrary event chunks, while query row operators read the final
+answer. `train/future_effect_algebra.py` now proves this contract over all 896
+held-out programs and proves that separately compiled chunks yield the same
+operator after source text is discarded. This is exact mathematics, not a
+trained-model result.
+
+The proposed learned object combines two causal structures:
+
+1. R4-style dynamic slots identify entity identity without absolute names.
+2. A text-derived argument-incidence graph identifies which slots participate
+   in each event and in what relation.
+3. The event encoder emits an operator whose identity is supervised by its
+   effects over multiple initial-state and future-query probes, rather than by
+   a single arbitrary opcode label.
+4. Operators compose associatively into a fixed-size source-droppable state.
+5. Counterfactual one-argument/two-argument edits must change exactly the
+   corresponding future effects; zero and shuffled operators must fail.
+
+The existing R4 board is now development data. A post-hoc label-assisted arity
+rule raises the frozen pointer result from 139 to 213/256 language and roughly
+52 to 120/192 full while changing no fit/depth case. That result motivates R5
+but cannot score it. Before any H100 fit, freeze a fresh lexical split and an
+equal-parameter control that sees the same tokens, slots, examples, and update
+budget but predicts unconstrained labels or vector state. Advancement requires
+all original absolute compiler gates, a matched gain on the fresh split,
+counterfactual operator necessity, associative chunk invariance, and a fresh
+manual board. Passing those would establish a compact causal program state,
+not broad language reasoning.
