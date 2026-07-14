@@ -2161,3 +2161,25 @@ source provenance across chunks while dropping raw source tokens. Normal,
 zero, shuffled, concept-swap, source-dropped length, and direct transcript
 controls are mandatory. This is a conditional mechanism proposal, not an
 authorized fit or a reasoning claim.
+
+#### Frozen Readout Result: Stable Map, No Semantic Workspace
+
+The exact readout gate completed in job `689118` and **failed**. Independent
+future-Jacobian fits remained highly reproducible across disjoint prompt
+samples, but reproducibility did not imply semantic usefulness. The frozen
+selection rule chose layer 13: on 2,304 language/full operation and query
+concept targets, future-Jacobian MRR was 0.0002588 versus 0.0001535 for the
+immediate-logit control (1.69x), while both had 0% top-10 and 0% top-100
+accuracy. The required +10 percentage-point top-10 gain was therefore absent.
+The hash-bound report is
+`artifacts/diagnostics/jacobian_readout_raw200k_p16_v1.json`, SHA-256
+`dd173d677748d4b08113c02c4664c4fcca533f1ab5028c77a25062b28362533e`.
+
+This separates two claims that must not be conflated. Raw Shohin has a stable
+average future-causal transport map, but the map does not expose the unspoken
+operation/query concepts needed by the referential compiler. A coordinate
+swap would consequently manipulate an unreadable rank-tail direction and
+would not test a meaningful workspace. The preregistration therefore blocks
+the swap and blocks direct use of this map in a recurrent bridge. Any next
+workspace experiment must explicitly install and causally validate semantic
+state; it cannot assume that raw pretraining already produced one.
