@@ -207,10 +207,14 @@ model-authored swaps, and **48/100** full causal passes, with artifact SHA-256
 `b13050b50345834cf0ce861f23facb0c43a3e9753649ee3d0a410001355171ce`.
 
 The present held-out split changes source wording, labels/domains, value range,
-and delta range together. The next admissible experiment is therefore a
-factorial *evaluation* matrix that holds three factors fixed while changing one:
-language, P/Q magnitude, or update delta. No new SFT, reflection data, or
-context mechanism is justified before that measurement.
+and delta range together. The completed factorial *evaluation* matrix therefore
+held three factors fixed while changing one: language, P/Q magnitude, or update
+delta. It finds **1/100** strict causal passes for language-only, **3/100** for
+values-only, and **2/100** for delta-only, versus **48/100** on train-only
+episodes. Each condition still compiles and reflects almost perfectly, so this
+is not a format or controller failure: it is a three-axis failure of semantic,
+numeric, and operator invariance. The first follow-up may target wording
+invariance, but no reflection data or context mechanism is justified yet.
 
 ### External Workspace Paper: What It Changes
 
@@ -237,6 +241,33 @@ uninterrupted context with no reflection request, and compare against a
 token-budget-matched neutral auxiliary control. It is not evidence that
 visible `think` tokens create reasoning, nor evidence that the technique will
 transfer from the paper's large model to this one.
+
+### Conditional Candidate: Paraphrase-Equivariant State Alignment
+
+If the factor matrix confirms that wording transfer, rather than only numeric
+extrapolation, is the bottleneck, test a representation-level objective rather
+than another larger response-format corpus. Each train episode already provides
+two independently worded source prompts (`compile` and `reflect`) with the
+same exact latent P/Q state. At the final prompt token, capture a designated
+mid-layer residual for each prompt and add a normalized alignment loss between
+the two states while retaining the ordinary completion-only next-token loss.
+
+The aim is deliberately narrow: force distinct descriptions of the same facts
+to write a common *internal* state before the ledger is emitted. It is neither
+a latent-token rollout nor a claim that the aligned vector is a workspace.
+The isolated ablation must use the immutable raw-200k checkpoint and compare:
+
+1. CE-only on the identical paired corpus and update budget.
+2. CE plus same-state residual alignment.
+3. CE plus a length- and batch-matched **different-state** pairing control.
+
+All three retain the same ledger targets. A benefit is credible only if the
+same-state arm improves the source-language-only causal gate over both
+controls, then retains a measured fraction of that gain under the values-only
+and delta-only gates. Diagnostics must report feature cosine similarity for
+same-state versus different-state prompts, feature norms/variance to rule out
+collapse, ordinary token loss, and every causal control. No reflection or
+context-compaction claim can be made from representation alignment alone.
 
 ### Conditional Next Hypothesis: Counterfactual Reflection Route
 
