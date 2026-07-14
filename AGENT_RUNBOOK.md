@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 17:26 EDT (the protected two-H100 pretrain remains healthy and isolated. R5's frozen fresh-board argument-graph intervention is formally rejected despite 96.61% arity recovery. A pre-fit proof shows R6's proposed structured-versus-random linear code comparison is only a basis change; it is superseded by an active counterfactual distinction loop before any H100 fit.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 17:47 EDT (the protected two-H100 pretrain remains healthy and isolated. R5 is closed. R6's active counterfactual distinction mechanics and selected-probe head are frozen; isolated 64-group CUDA canary 689183 completed cleanly, while no fresh confirmatory board or capability claim exists.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4166,3 +4166,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   that byte-identical model with an equal probe budget. Structured operation values remain forbidden;
   zero/shuffle/oracle, unseen value/language, longer composition, source dropping, intervention, and
   direct interaction gates must be frozen before any confirmatory board or H100 fit.
+
+- **2026-07-14 17:26--17:47** — **R6 selected-probe neural mechanics pass their first isolated H100
+  canary.** Commit `1ce95ed` freezes the active distinction cell, probe-conditioned scalar head,
+  48-train/16-held-out probe split, preservation losses, and active/random/zero/shuffle/oracle evaluator
+  before fresh data. Job `689183` ran on evc33, separate from protected evc34, exhaustively compiled the
+  admitted 288,000-row development substrate and completed 16/16 updates over 64 groups in 13 training
+  seconds. It reports 466,894 adapter parameters, zero trainable base parameters, finite initial effect
+  loss 0.0526, inherited kind/role accuracy 1.0, and finite pre-clip gnorm 9.881 under the locked 1.0
+  clip. Adapter SHA-256 is `b27805f489cd39069c5d3b919d113d38d2441b27f63ac70ba4d4c0187724a929`,
+  hash-matched Newton/local and CPU-load-validated with no base tensors and all finite values. This is
+  mechanics evidence only. A longer development fit may proceed on the old substrate to verify effect
+  learning and gradient settling; no new confirmatory board may be generated until that architecture,
+  schedule, policy tolerance, and latent-step budget remain frozen.

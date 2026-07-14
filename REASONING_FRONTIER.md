@@ -2385,3 +2385,16 @@ values and language, counterfactual edit specificity, longer source-dropped
 composition, a material active-over-random gain, and direct transcript evidence.
 This makes adaptive future distinction operational while avoiding a basis-
 renaming result.
+
+The first isolated CUDA mechanics canary is clean. Job `689183` initialized
+from the immutable raw-200k checkpoint and the frozen R4 pointer adapter,
+compiled the complete admitted 288,000-row substrate, then ran 16 updates over
+64 groups. It reports 466,894 trainable adapter parameters, zero trainable base
+parameters, finite effect loss 0.0526 at step zero, inherited operation kind and
+role accuracy 1.0 on the canary sample, and a finite pre-clip gradient norm
+9.881 under the locked 1.0 clip. Training took 13 seconds after preprocessing
+and the saved adapter is CPU-loadable, finite, contains no base-model tensors,
+and hash-matches Newton/local at SHA-256
+`b27805f489cd39069c5d3b919d113d38d2441b27f63ac70ba4d4c0187724a929`.
+This certifies mechanics only; a longer development fit must show that effect
+loss and gradient norms settle before any fresh-board generation.

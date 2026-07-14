@@ -77,4 +77,5 @@ PY
   --probes-per-operation "${PROBES_PER_OPERATION:-4}" --lr "${LR:-0.0005}" \
   --classification-weight "${CLASSIFICATION_WEIGHT:-1.0}" \
   --mention-weight "${MENTION_WEIGHT:-1.0}" --basis-weight "${BASIS_WEIGHT:-1.0}" \
-  --effect-weight "${EFFECT_WEIGHT:-4.0}" --seed "${SEED:-20260714}"
+  --effect-weight "${EFFECT_WEIGHT:-4.0}" --seed "${SEED:-20260714}" \
+  --log-every "${LOG_EVERY:-50}"

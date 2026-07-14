@@ -68,14 +68,15 @@ def infer_hypothesis(
             asked_probe = (probe + 17) % codes.shape[1] if policy == "shuffled" else probe
             state, query = probe_pair(asked_probe, states, queries)
             effect = compiler.predict_effect(operation_output, state, query) * EFFECT_SCALE
-        scores = scores + (codes[:, probe] - effect.float()).square()
+        effect_value = float(effect.item())
+        scores = scores + (codes[:, probe] - effect_value).square()
         observed.append(probe)
         top = int(scores.argmin().item())
         trace.append({
             "latent_step": latent_step,
             "selected_probe": int(probe),
             "asked_probe": int(asked_probe),
-            "predicted_effect": float(effect.item()),
+            "predicted_effect": effect_value,
             "top_hypothesis": top,
             "top_score": float(scores[top].item()),
         })
@@ -204,6 +205,7 @@ def main():
     hypotheses = legal_operator_hypotheses(range(1, args.max_value + 1), dtype=torch.float32)
     states, queries = redundant_probe_bank(dtype=torch.float32, device="cuda")
     codes = hypothesis_effect_codes(hypotheses, states, queries).to("cuda")
+    scheduler_codes = codes.detach().cpu()
     hypothesis_index = {
         (hypothesis.opcode, hypothesis.value): index
         for index, hypothesis in enumerate(hypotheses)
@@ -251,7 +253,7 @@ def main():
                         selected, trace = infer_hypothesis(
                             compiler,
                             output,
-                            codes,
+                            scheduler_codes,
                             states,
                             queries,
                             policy=policy,
