@@ -2011,5 +2011,74 @@ signed-feature mechanics canary then trained 64 groups for 16 updates with a
 frozen base and finite gradients. Its initial semantic/permutation losses were
 0.0999/1.8672, confirming that the representation-level counterfactual term is
 not the near-zero redundant logit term it replaced. The matched full control
-and candidate are jobs `689070` and `689071`; they remain experiments in
-progress, not evidence of reasoning.
+and candidate are jobs `689070` and `689071`.
+
+### R3 Result: Local Equivariance Is Not Referential Binding
+
+Both arms completed their locked 12,000-update schedules and all read-only
+evaluations. Control/candidate results are:
+
+| Slice | Control answers | Candidate answers | Control exact programs | Candidate exact programs |
+|---|---:|---:|---:|---:|
+| fit IID | 256/256 | 251/256 | 255/256 | 250/256 |
+| depth OOD | 166/192 | 167/192 | 160/192 | 160/192 |
+| language OOD | 52/256 | 60/256 | 17/256 | 32/256 |
+| full OOD | 20/192 | 19/192 | 3/192 | 3/192 |
+| all | 494/896 | 497/896 | 435/896 | 445/896 |
+
+The candidate therefore gains only **1.56 percentage points** on the locked
+language+full answer aggregate and **1.12 points** on all-program exactness.
+Both are below the preregistered five-point attribution gates, both absolute
+language/full gates fail, and both frozen eight-case direct interactions are
+0/8 answers and 0/8 exact programs. Comparator `738798` correctly records
+`reject_role_equivariant_compiler_r3`; no decoder bridge is authorized.
+
+The component errors are more informative than the aggregate. On language
+OOD, signed equivariance improves operation-kind accuracy from 69.22% to
+79.69%, query-kind accuracy from 45.31% to 66.41%, and joint non-sum query
+role accuracy from 2.91% to 25.58%. It does **not** improve operation role
+given the right kind: 55.70% control versus 55.61% candidate. Merge remains
+nearly unreadable at 7/119 correct kinds, while the move kind rises from
+43/122 to 116/122. Full-OOD local factors improve but exact programs do not;
+both arms are 0/64 exact at depth 8. The candidate repairs some semantic
+categories and query geometry, but each unresolved role or kind error poisons
+the deterministic execution chain.
+
+This rejects the hypothesis that stronger role-equivariance pressure alone is
+the missing mechanism. The role bit is currently an absolute class predicted
+from a line-ending hidden state. Unseen entity names require a *relational
+identity match* between the introduction, each event, and the final query;
+class-level antisymmetry cannot manufacture that match. The next mechanism
+must bind dynamic entities before it classifies operations, and it must expose
+enough redundant evidence that one local mistake does not destroy an entire
+program.
+
+### R4 Hypothesis: Binding-First Referential Slot Compilation
+
+The next bounded architecture candidate is a two-slot referential compiler,
+not a larger loss coefficient or another output agreement term:
+
+1. A small token-level tagger, supervised only during training, identifies the
+   two entity mentions in the introductory clause and their later mentions.
+   At evaluation it receives question text only; structured keys may score the
+   tagger but may never be supplied as input features.
+2. Two dynamic slot vectors are pooled from the predicted introductory
+   mentions. Event/query role logits are pointer similarities to those slots,
+   not fixed `role_0`/`role_1` classifiers. Swapping the two slots therefore
+   swaps roles by construction.
+3. Operation/query kind is read from token-span attention after projecting out
+   slot identity. This directly targets the observed move/merge confusion and
+   avoids relying on one punctuation-position hidden state.
+4. Training uses complete entity-renaming orbits, including nonce labels, so
+   lexical familiarity cannot identify a register. A matched control gets the
+   same token encoder, parameters, examples, and update budget but replaces
+   pointer binding with an equally sized absolute-role head.
+5. Held-out scoring keeps the existing 896-case and eight-case boards and adds
+   tagger, pointer, and depth-conditioned exactness diagnostics. Decoder-bridge
+   authorization remains the original absolute gates plus a matched gain; no
+   component score alone can promote it.
+
+This is a new causal claim: dynamic slot identity, rather than stronger
+surface invariance, should make role transport survive unseen nouns and
+templates. It should first be implemented and falsified on a CPU mechanics
+smoke and tiny isolated H100 canary before any full matched fit.

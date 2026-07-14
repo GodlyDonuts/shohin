@@ -1,0 +1,21 @@
+{
+  "attribution_gates": {
+    "all_program_exact_gain_at_least_0_05": false,
+    "depth_answer_regression_at_most_0_03": true,
+    "fit_answer_regression_at_most_0_03": true,
+    "language_full_answer_gain_at_least_0_05": false,
+    "matched_metadata": true,
+    "matched_weight_contract": true
+  },
+  "audit": "role_equivariant_microcode_comparison_v3",
+  "candidate": "/lustre/fs1/home/sa305415/shohin/artifacts/eval_history/microcode_role_equiv_200k_r3.json",
+  "candidate_absolute_pass": false,
+  "candidate_language_full_answer_accuracy": 0.17633928571428573,
+  "claim_boundary": "Only a matched gain can be attributed to representation alignment and role equivariance. A control-only pass supports anchor replay and factorization but not the constraints.",
+  "constraints_attributed": false,
+  "control": "/lustre/fs1/home/sa305415/shohin/artifacts/eval_history/microcode_role_control_200k_r3.json",
+  "control_absolute_pass": false,
+  "control_language_full_answer_accuracy": 0.16071428571428573,
+  "decision": "reject_role_equivariant_compiler_r3",
+  "mismatches": {}
+}
