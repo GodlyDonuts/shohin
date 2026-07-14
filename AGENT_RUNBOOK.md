@@ -3322,3 +3322,11 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   688629 -> 688630`, with the paired gate `688631` after NLL `688616`, two-edit `688630`, and the already
   correct 200-row train diagnostic `688622`. Each replacement preserves the original bound file SHA-256 and
   fresh output path. Treat `688617`–`688621`/`688623` as canceled setup, never as failed evidence.
+
+- **2026-07-14 05:10** — **Original CRA taxonomy watcher runs on Stokes CPU only.** Detached PID
+  `2699587` (recorded in `logs/cra_taxonomy_stokes.pid`) polls the shared report paths for at most 16 hours
+  and, only once all eight original CRA behavior/NLL/factor reports are nonempty, writes
+  `artifacts/eval_history/cra_200k_l19_r1_failure_taxonomy.json` using the hash-recording diagnostic.
+  Its log is `logs/cra_taxonomy_stokes.log`. It owns no model/checkpoint/data writer and consumes one
+  sleeping shell between checks. If the original evidence chain is intentionally replaced, kill this PID and
+  update the bound paths rather than letting it classify a mixture of reports.
