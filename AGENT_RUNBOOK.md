@@ -3410,3 +3410,21 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   when all five consumers survive normal, paraphrase, counterfactual, zero, whole-group shuffle, and
   wrong-query controls. The forthcoming FQRB arm is isolated from the flagship and can establish only a
   bounded causal numeric basis, never general reasoning by itself.
+
+- **2026-07-14 06:00** — **FQRB factor evaluation is pre-registered before the full arm can report a
+  result.** After the successful 12-update data/mechanics canary `688663` (12/12 finite updates,
+  source-free checkpoint only), full isolated training `688665` began from the immutable raw-200k
+  checkpoint. `688666` evaluates the 500-group combined held-out suite after it. Its read-only raw-200k
+  floor `688664` runs independently and is not a training dependency. Two additional frozen 500-group
+  factors are serially held: familiar-wording, unseen-source-tuple
+  `finite_query_residual_basis_v1_core_factor.jsonl` (SHA-256
+  `888d18e29740edf4ff1a184ed023debad1715b2610e2e3ec34d871ded4f6abf5`; audit
+  `9313bebaa3e338f1859f0eb558dbcd1e9c7dc766beb701ef9aaa7b97afe80e66`) runs as `688668` after the
+  combined evaluation; then the three-digit-primary factor
+  `finite_query_residual_basis_v1_magnitude_factor.jsonl` (SHA-256
+  `3e530f4e8210aa7faf737c5d8a4605d0e899ab38a3d051f1291317ce3c41b452`; audit
+  `efa6b8c8470725b7569d0f9724ce609f107f7c59dc8e0fc37eb3d71040f19fb4`) runs as `688670`. The core
+  factor intentionally retains train wording and records its expected 13-gram overlap; the magnitude
+  factor moves all three **primary** source fields to absolute values 100–997 while retaining two-digit
+  secondaries solely to keep the relation consumer counterfactually falsifiable. Neither factor may be
+  called a language- or all-field-magnitude result beyond those stated boundaries.

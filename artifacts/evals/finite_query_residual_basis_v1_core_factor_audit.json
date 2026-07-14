@@ -1,0 +1,43 @@
+{
+  "answer_labels": [
+    "answer=even",
+    "answer=negative",
+    "answer=odd",
+    "answer=ones_nine",
+    "answer=ones_one",
+    "answer=ones_zero",
+    "answer=positive",
+    "answer=relation_equal",
+    "answer=relation_greater",
+    "answer=relation_less",
+    "answer=tens_one",
+    "answer=tens_zero",
+    "answer=zero"
+  ],
+  "audit": "finite_query_residual_basis_v1_core_factor",
+  "bad_heldout_group_cardinality": 0,
+  "bad_train_group_cardinality": 0,
+  "claim_boundary": "Familiar-wording source-tuple factor; it does not test language generalization.",
+  "duplicate_heldout_prompts": 0,
+  "duplicate_train_prompts": 0,
+  "factor_groups": 500,
+  "factor_rows": 2500,
+  "factor_sha256": "888d18e29740edf4ff1a184ed023debad1715b2610e2e3ec34d871ded4f6abf5",
+  "familiar_wording_13gram_overlap_is_expected": true,
+  "heldout_axes": [
+    "source_tuple"
+  ],
+  "heldout_groups": 500,
+  "query_kinds": [
+    "ones",
+    "tens",
+    "sign",
+    "parity",
+    "relation"
+  ],
+  "train_groups": 12000,
+  "train_heldout_13gram_hits": 10374,
+  "train_heldout_exact_prompt_hits": 0,
+  "train_heldout_exact_source_bundle_hits": 0,
+  "train_sha256": "6d42ce87a202f293b64708e8bbca2193fb90f3cb60c232f6c968b0edaa46f113"
+}
