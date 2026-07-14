@@ -78,8 +78,21 @@ CASES = [
 ]
 
 
+PAIR_RESPONSE_MARKERS = {
+    "problem_a": re.compile(r"\bproblem\s+a\s*:", re.IGNORECASE),
+    "problem_b": re.compile(r"\bproblem\s+b\s*:", re.IGNORECASE),
+    "answers_are_a": re.compile(r"\bthe\s+answers\s+are\s+a\s*=", re.IGNORECASE),
+}
+
+
 def normalized(value):
     return re.sub(r"\s+", "", str(value).strip().lower()).rstrip(".")
+
+
+def response_mode(response):
+    """Record the paired-answer grammar that should never leak into direct QA."""
+    markers = [name for name, pattern in PAIR_RESPONSE_MARKERS.items() if pattern.search(response)]
+    return {"paired_answer_mode": bool(markers), "paired_answer_markers": markers}
 
 
 def score(case, response):
@@ -169,11 +182,25 @@ def probe(path, tokenizer, device, max_new):
             "kind": case["kind"],
             "question": case["question"],
             "answer": case["answer"],
-            "initial": {"prompt": initial_prompt, "response": initial, "correct": score(case, initial)},
-            "review": {"prompt": review_prompt, "response": review, "correct": score(case, review)},
-            "verified_fact": {"prompt": fact_prompt, "response": fact, "correct": score(case, fact)},
-            "compact_state": {"prompt": state_prompt, "response": state},
-            "state_reuse": {"prompt": reuse_prompt, "response": reuse, "correct": score(case, reuse)},
+            "initial": {
+                "prompt": initial_prompt, "response": initial, "correct": score(case, initial),
+                "response_mode": response_mode(initial),
+            },
+            "review": {
+                "prompt": review_prompt, "response": review, "correct": score(case, review),
+                "response_mode": response_mode(review),
+            },
+            "verified_fact": {
+                "prompt": fact_prompt, "response": fact, "correct": score(case, fact),
+                "response_mode": response_mode(fact),
+            },
+            "compact_state": {
+                "prompt": state_prompt, "response": state, "response_mode": response_mode(state),
+            },
+            "state_reuse": {
+                "prompt": reuse_prompt, "response": reuse, "correct": score(case, reuse),
+                "response_mode": response_mode(reuse),
+            },
         }
         rows.append(row)
         print(
@@ -185,6 +212,10 @@ def probe(path, tokenizer, device, max_new):
     summary = {
         condition: sum(row[condition]["correct"] for row in rows)
         for condition in ("initial", "review", "verified_fact", "state_reuse")
+    }
+    summary["paired_answer_mode"] = {
+        condition: sum(row[condition]["response_mode"]["paired_answer_mode"] for row in rows)
+        for condition in ("initial", "review", "verified_fact", "compact_state", "state_reuse")
     }
     del model
     if device == "cuda":
