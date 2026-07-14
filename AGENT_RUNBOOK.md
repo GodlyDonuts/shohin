@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 18:18 EDT (the protected two-H100 pretrain remains healthy and isolated. R5 is closed. R6 full old-substrate development fit 689190 is healthy on isolated evc25; evaluator 689196 and its executable development gate are frozen before scores. Exact context folding passes CPU mechanics only. No fresh confirmatory board or capability claim exists.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 18:27 EDT (the protected two-H100 pretrain remains healthy and isolated. R5 is closed. R6 full old-substrate development fit 689190 is healthy on isolated evc25; evaluator 689196 and its executable development gate are frozen before scores. Exact context folding and posterior scheduling pass CPU mechanics only. No fresh confirmatory board or capability claim exists.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4194,7 +4194,8 @@ STATE) and any step that changed. A future agent — maybe you after a context r
 - **2026-07-14 18:02** — **The frozen R6 development evaluator is dependency-held, not allowed to
   inspect a partial fit.** Job `689196` has `afterok:689190`, one isolated H100, and the immutable
   three-probe active/random/zero/shuffled/oracle policies. It is hash/admission-bound to the unchanged
-  200k base, the completed `future_effect_r6_200k_dev1` adapter, the admitted 448-case R5 fresh board,
+  200k base, the completed `future_effect_r6_200k_dev1` adapter, the admitted 896-row R5 board
+  (448 fresh plus 448 pinned controls),
   the original training-label admission, and that board's separate evaluation-label admission. The
   active and random arms call the byte-identical scalar effect head exactly three times per operation;
   zero/shuffled are causal controls and oracle is only an upper bound. The output is development-only
@@ -4229,7 +4230,7 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   oracle floors are attainable but nontrivial. This audit does not inspect learned adapter outputs and
   does not change the active/random budgets or capability thresholds.
 
-- **2026-07-14 18:27--18:38** — **A noise-calibrated R6b scheduler is preregistered without changing
+- **2026-07-14 18:22--18:25** — **A noise-calibrated R6b scheduler is preregistered without changing
   R6a.** The hard top-64 runtime has a measurable tie/noise failure mode. New CPU-only
   `future_posterior_distinction.py` keeps a Gaussian score posterior over all 597 hypotheses and chooses
   the maximum weighted-partition-entropy probe. Assumed noise is frozen at 1.0, effect-bin width at 2.0,
@@ -4239,7 +4240,7 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   scheduler comparison on the byte-identical adapter with equal calls and unchanged controls; it cannot
   retroactively rescue R6a or authorize fresh data without its own frozen comparator.
 
-- **2026-07-14 18:38--18:42** — **A bounded prior-art check narrows, rather than inflates, the novelty
+- **2026-07-14 18:25--18:27** — **A bounded prior-art check narrows, rather than inflates, the novelty
   claim.** Adjacent primary work exists for uncertainty-aware KV/hidden compression (UNComp),
   compiler-output search compression (Compile to Compress), proof-carrying numeric rendering, and
   natural-language Selection-Inference loops. None of those ingredients is claimed as new. The bounded
