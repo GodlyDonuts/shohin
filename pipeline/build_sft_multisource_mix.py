@@ -78,6 +78,17 @@ def load_eval_prompts(patterns, n):
     return exact, ngrams, paths
 
 
+def eval_overlap_kind(text, exact, ngrams, n):
+    key = normalized_question(text)
+    if not key:
+        return None
+    if key in exact:
+        return "exact"
+    if any(gram in ngrams for gram in grams(text, n)):
+        return "ngram"
+    return None
+
+
 def sha256(path):
     digest = hashlib.sha256()
     with open(path, "rb") as source:
@@ -126,6 +137,7 @@ def main():
     group_rows = collections.Counter()
     input_rows = collections.Counter()
     malformed = missing = duplicates = eval_exact_drops = eval_ngram_drops = 0
+    eval_field_drops = collections.Counter()
     excluded_contract_rows = collections.Counter()
     kept = 0
     with partial.open("w") as target:
@@ -154,11 +166,23 @@ def main():
                     if not key:
                         missing += 1
                         continue
-                    if key in eval_exact:
-                        eval_exact_drops += 1
-                        continue
-                    if any(gram in eval_ngrams for gram in grams(question, args.ngram)):
-                        eval_ngram_drops += 1
+                    consumed_fields = {
+                        "question": question,
+                        "response": response,
+                        "completion_prompt": str(row.get("completion_prompt") or ""),
+                    }
+                    overlap = next(
+                        ((field, kind) for field, value in consumed_fields.items()
+                         if value and (kind := eval_overlap_kind(value, eval_exact, eval_ngrams, args.ngram))),
+                        None,
+                    )
+                    if overlap is not None:
+                        field, kind = overlap
+                        eval_field_drops[f"{kind}:{field}"] += 1
+                        if kind == "exact":
+                            eval_exact_drops += 1
+                        else:
+                            eval_ngram_drops += 1
                         continue
                     if key in seen:
                         duplicates += 1
@@ -189,6 +213,7 @@ def main():
             "eval_ngrams": len(eval_ngrams),
             "exact_prompt_drops": eval_exact_drops,
             "ngram_prompt_drops": eval_ngram_drops,
+            "drops_by_consumed_field": dict(eval_field_drops),
         },
         "excluded_contract_rows": dict(excluded_contract_rows),
         "source_rows": dict(source_rows),

@@ -19,6 +19,7 @@ def main():
         write_rows(broad, [
             {"question": "What is two plus two?", "response": "4", "source": "math", "training_group": "math"},
             {"question": "Write a Python identity function", "response": "def identity(x):\n    return x", "source": "code", "training_group": "code"},
+            {"question": "Summarize this unrelated text", "response": "What is two plus two?", "source": "math", "training_group": "math"},
         ])
         write_rows(memory, [
             {"question": "What is two plus two?", "response": "wm:a=4;b=0", "source": "vrwm", "training_group": "vrwm"},
@@ -41,7 +42,8 @@ def main():
         assert summary["duplicate_normalized_questions_dropped"] == 0
         assert summary["training_group_rows"] == {"code": 1, "vrwm": 1}
         assert summary["eval_filter"]["enabled"]
-        assert summary["eval_filter"]["exact_prompt_drops"] == 2
+        assert summary["eval_filter"]["exact_prompt_drops"] == 3
+        assert summary["eval_filter"]["drops_by_consumed_field"] == {"exact:question": 2, "exact:response": 1}
         assert summary["excluded_contract_rows"] == {"minimal_pair": 1}
     print("multi-source SFT mix builder: passed")
 
