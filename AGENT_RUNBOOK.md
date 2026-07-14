@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 17:59 EDT (the protected two-H100 pretrain remains healthy and isolated. R5 is closed. R6 mechanics canary 689183 passed; full old-substrate development fit 689190 is healthy on isolated evc25 through step 450/12,000. No fresh confirmatory board or capability claim exists.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 18:02 EDT (the protected two-H100 pretrain remains healthy and isolated. R5 is closed. R6 full old-substrate development fit 689190 is healthy on isolated evc25; frozen development evaluator 689196 is dependency-held after successful fit completion. No fresh confirmatory board or capability claim exists.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4190,3 +4190,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   effect/gnorm telemetry stays finite. After exit 0, the old R5 board is development for the locked
   active/random/zero/shuffled/oracle evaluator. Do not generate the untouched R6 board until those
   scores establish a viable head and the architecture/scheduler stay unchanged.
+
+- **2026-07-14 18:02** — **The frozen R6 development evaluator is dependency-held, not allowed to
+  inspect a partial fit.** Job `689196` has `afterok:689190`, one isolated H100, and the immutable
+  three-probe active/random/zero/shuffled/oracle policies. It is hash/admission-bound to the unchanged
+  200k base, the completed `future_effect_r6_200k_dev1` adapter, the admitted 448-case R5 fresh board,
+  the original training-label admission, and that board's separate evaluation-label admission. The
+  active and random arms call the byte-identical scalar effect head exactly three times per operation;
+  zero/shuffled are causal controls and oracle is only an upper bound. The output is development-only
+  `artifacts/eval_history/future_effect_r6_200k_dev1.json`; no R6 confirmatory generator or board exists.
