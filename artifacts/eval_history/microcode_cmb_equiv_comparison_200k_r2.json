@@ -1,0 +1,21 @@
+{
+  "attribution_gates": {
+    "all_program_exact_gain_at_least_0_05": false,
+    "depth_answer_regression_at_most_0_03": true,
+    "fit_answer_regression_at_most_0_03": true,
+    "language_full_answer_gain_at_least_0_05": false,
+    "matched_metadata": true,
+    "matched_weight_contract": true
+  },
+  "audit": "categorical_microcode_equivalence_comparison_v2",
+  "claim_boundary": "Only a matched improvement can be attributed to equivalence loss; a control-only pass supports diverse compiler supervision but not the new loss.",
+  "control": "/lustre/fs1/home/sa305415/shohin/artifacts/eval_history/microcode_cmb_equiv_control_200k_r2.json",
+  "control_absolute_pass": false,
+  "control_language_full_answer_accuracy": 0.11830357142857142,
+  "decision": "reject_paired_compiler_r2",
+  "equivalence": "/lustre/fs1/home/sa305415/shohin/artifacts/eval_history/microcode_cmb_equiv_200k_r2.json",
+  "equivalence_absolute_pass": false,
+  "equivalence_attributed": false,
+  "equivalence_language_full_answer_accuracy": 0.125,
+  "mismatches": {}
+}

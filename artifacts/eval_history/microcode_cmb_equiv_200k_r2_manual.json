@@ -1,0 +1,239 @@
+{
+  "adapter": "/lustre/fs1/home/sa305415/shohin/train/microcode_cmb_equiv_200k_r2/microcode_adapter_ep1.pt",
+  "adapter_metadata": {
+    "adapter_parameters": 225742,
+    "admission": "/lustre/fs1/home/sa305415/shohin/artifacts/sft/categorical_microcode_equivalence_v2.admission.json",
+    "admission_eval_sha256": "b9106b3233c62592dba5f244d5fdec5474d56c813b6d39dc0fe8ee77a441039c",
+    "admission_sha256": "7cc9f308a27f58db61313f28fd3806b800214671f1acd4ffd87181d65bdd5206",
+    "base_checkpoint": "/lustre/fs1/home/sa305415/shohin/train/flagship_out/best_step200000.pt",
+    "base_parameters_trainable": 0,
+    "base_sha256": "675af7cffdc87ccd43c56a15f0616d368442aad56deb0df3fe11b5a5064aac2a",
+    "base_step": 200000,
+    "batch_pairs": 8,
+    "claim_boundary": "Paired surface-invariance test for a narrow semantic compiler; numeric lexing and the categorical executor remain supplied structure.",
+    "data": "/lustre/fs1/home/sa305415/shohin/artifacts/sft/categorical_microcode_equivalence_v2.jsonl",
+    "data_sha256": "4532e06c32321d8e93c8e2f8bdb15334faaf95d9a756f5361d3af2920834dd05",
+    "equivalence_weight": 0.2,
+    "hidden": 256,
+    "initial_adapter_sha256": "31c3769b6e2e9e4111919386101afaefc52ce1875c03ea4031e15079fd76d72f",
+    "layer": 19,
+    "padding_contract": "right-padding only; causal read positions precede padding",
+    "protocol": "causal_microcode_bottleneck_equivalence_v2",
+    "seed": 20260714,
+    "selected_examples": 96000,
+    "selected_pairs": 48000,
+    "updates": 6000
+  },
+  "adapter_sha256": "836e52b8abb207dbeb34ed4575129638db995f66eafecb9cacf4ba13bd9de931",
+  "answer_correct": 1,
+  "audit": "categorical_microcode_manual_interaction_v1",
+  "base": "/lustre/fs1/home/sa305415/shohin/train/flagship_out/best_step200000.pt",
+  "base_sha256": "675af7cffdc87ccd43c56a15f0616d368442aad56deb0df3fe11b5a5064aac2a",
+  "cases": 8,
+  "claim_boundary": "These are hand-authored direct compiler interactions. Structured fields are used for scoring and lexical positions; the neural compiler sees only question text.",
+  "data": "/lustre/fs1/home/sa305415/shohin/artifacts/evals/categorical_microcode_manual_v1.jsonl",
+  "data_sha256": "56be38734feeb60cfb000318502e41f3576aa6673bf0d5a904fc8d225f6536b2",
+  "program_exact": 1,
+  "records": [
+    {
+      "answer_correct": false,
+      "expected_answer": 42,
+      "expected_operations": [
+        "add_0",
+        "move_1_0",
+        "swap",
+        "sub_0"
+      ],
+      "expected_query": "sum",
+      "predicted_answer": 70,
+      "predicted_operations": [
+        "add_1",
+        "move_0_1",
+        "merge_1_0",
+        "sub_1"
+      ],
+      "predicted_query": "sum",
+      "program_exact": false,
+      "question": "A spaceport account opens with 23 fuel cells in fuel cells and 17 coolant drums in coolant drums.\nEvent 1: Expand fuel cells by 6 units.\nEvent 2: Reassign 5 units from coolant drums into fuel cells.\nEvent 3: Have fuel cells and coolant drums trade which total each carries.\nEvent 4: Contract fuel cells by 4 units.\nDetermine the aggregate remaining across both accounts.\nAnswer:",
+      "reference": "manual-spaceport"
+    },
+    {
+      "answer_correct": false,
+      "expected_answer": 30,
+      "expected_operations": [
+        "sub_0",
+        "add_1",
+        "merge_0_1",
+        "move_1_0",
+        "swap"
+      ],
+      "expected_query": "difference_0_1",
+      "predicted_answer": 71,
+      "predicted_operations": [
+        "add_1",
+        "sub_1",
+        "merge_1_0",
+        "merge_0_1",
+        "merge_1_0"
+      ],
+      "predicted_query": "difference_0_1",
+      "program_exact": false,
+      "question": "An aquarium sheet starts with 42 specimens under reef tanks and 31 specimens under kelp tanks.\nEvent 1: Shrink the reef tanks count by 7.\nEvent 2: Enlarge the kelp tanks count by 9.\nEvent 3: Make kelp tanks additionally include a duplicate of reef tanks, keeping reef tanks intact.\nEvent 4: Reassign 5 specimens from kelp tanks to reef tanks.\nEvent 5: Have reef tanks and kelp tanks exchange which total each one carries.\nFind the positive final gap from kelp tanks to reef tanks.\nAnswer:",
+      "reference": "manual-aquarium"
+    },
+    {
+      "answer_correct": false,
+      "expected_answer": 71,
+      "expected_operations": [
+        "merge_1_0",
+        "add_1",
+        "move_0_1",
+        "sub_1",
+        "merge_0_1"
+      ],
+      "expected_query": "read_1",
+      "predicted_answer": 63,
+      "predicted_operations": [
+        "merge_1_0",
+        "sub_1",
+        "move_0_1",
+        "sub_1",
+        "merge_1_0"
+      ],
+      "predicted_query": "read_0",
+      "program_exact": false,
+      "question": "A music hall ledger initially shows 18 instruments for violins and 27 instruments for cellos.\nEvent 1: Let violins also count a copy of the current cellos total, without altering cellos.\nEvent 2: Broaden cellos by 4 instruments.\nEvent 3: Redirect 6 instruments from violins into cellos.\nEvent 4: Narrow cellos by 5 instruments.\nEvent 5: Let cellos also count a copy of the current violins total, without altering violins.\nReturn the final total associated with cellos.\nAnswer:",
+      "reference": "manual-music-hall"
+    },
+    {
+      "answer_correct": false,
+      "expected_answer": 22,
+      "expected_operations": [
+        "swap",
+        "add_0",
+        "move_0_1",
+        "merge_1_0",
+        "sub_0"
+      ],
+      "expected_query": "read_1",
+      "predicted_answer": 43,
+      "predicted_operations": [
+        "merge_0_1",
+        "move_0_1",
+        "move_0_1",
+        "merge_1_0",
+        "sub_1"
+      ],
+      "predicted_query": "read_1",
+      "program_exact": false,
+      "question": "Mission control begins with 15 machines assigned to drones and 22 machines assigned to rovers.\nEvent 1: Make drones and rovers exchange their recorded totals.\nEvent 2: Extend drones by 8 machines.\nEvent 3: Reallocate 7 machines out of drones and into rovers.\nEvent 4: Add a duplicate of the rovers count onto drones while retaining rovers.\nEvent 5: Decrease drones by 9 machines.\nIdentify the ending count carried by rovers.\nAnswer:",
+      "reference": "manual-mission-control"
+    },
+    {
+      "answer_correct": false,
+      "expected_answer": 93,
+      "expected_operations": [
+        "move_0_1",
+        "merge_1_0",
+        "swap",
+        "sub_1",
+        "add_0",
+        "merge_0_1"
+      ],
+      "expected_query": "sum",
+      "predicted_answer": 99,
+      "predicted_operations": [
+        "move_0_1",
+        "merge_1_0",
+        "swap",
+        "sub_1",
+        "add_0",
+        "merge_1_0"
+      ],
+      "predicted_query": "sum",
+      "program_exact": false,
+      "question": "A greenhouse register lists 28 seed packets for iris packets and 19 seed packets for fern packets at the outset.\nEvent 1: Convey 4 packets from iris packets over to fern packets.\nEvent 2: Increase iris packets by a duplicate of fern packets while leaving fern packets as is.\nEvent 3: Switch the totals owned by iris packets and fern packets.\nEvent 4: Trim fern packets by 12 packets.\nEvent 5: Supplement iris packets with 6 packets.\nEvent 6: Increase fern packets by a duplicate of iris packets while leaving iris packets as is.\nCompute the combined ending inventory.\nAnswer:",
+      "reference": "manual-greenhouse"
+    },
+    {
+      "answer_correct": true,
+      "expected_answer": 32,
+      "expected_operations": [
+        "add_0",
+        "add_1",
+        "move_0_1",
+        "sub_1",
+        "swap",
+        "merge_1_0"
+      ],
+      "expected_query": "difference_0_1",
+      "predicted_answer": 32,
+      "predicted_operations": [
+        "add_0",
+        "add_1",
+        "move_0_1",
+        "sub_1",
+        "swap",
+        "merge_1_0"
+      ],
+      "predicted_query": "difference_0_1",
+      "program_exact": true,
+      "question": "The newsroom tally opens at 33 items for briefs and 26 items for photos.\nEvent 1: Grow briefs by 7 items.\nEvent 2: Grow photos by 5 items.\nEvent 3: Carry 10 items away from briefs and over to photos.\nEvent 4: Cut photos by 9 items.\nEvent 5: Reverse which total briefs and photos possess.\nEvent 6: Make briefs include one extra copy of photos, with photos unchanged.\nHow far does the final briefs count stand above the final photos count?\nAnswer:",
+      "reference": "manual-newsroom"
+    },
+    {
+      "answer_correct": false,
+      "expected_answer": 55,
+      "expected_operations": [
+        "sub_0",
+        "move_1_0",
+        "add_1",
+        "merge_0_1",
+        "swap",
+        "move_0_1"
+      ],
+      "expected_query": "read_0",
+      "predicted_answer": 78,
+      "predicted_operations": [
+        "add_1",
+        "move_0_1",
+        "move_0_1",
+        "merge_1_0",
+        "swap",
+        "move_0_1"
+      ],
+      "predicted_query": "read_1",
+      "program_exact": false,
+      "question": "A robotics lab account begins with 37 units in sensors and 24 units in servos.\nEvent 1: Diminish sensors by 8 units.\nEvent 2: Route 6 units from servos toward sensors.\nEvent 3: Expand servos by 11 units.\nEvent 4: Make servos absorb an additional copy of sensors, preserving sensors.\nEvent 5: Trade the totals attached to sensors and servos.\nEvent 6: Route 9 units from sensors toward servos.\nState the final amount attached to sensors.\nAnswer:",
+      "reference": "manual-robotics-lab"
+    },
+    {
+      "answer_correct": false,
+      "expected_answer": 24,
+      "expected_operations": [
+        "merge_0_1",
+        "sub_1",
+        "move_1_0",
+        "add_0",
+        "swap",
+        "merge_1_0",
+        "sub_0"
+      ],
+      "expected_query": "difference_0_1",
+      "predicted_answer": null,
+      "predicted_operations": [
+        "merge_1_0",
+        "sub_1",
+        "move_0_1",
+        "sub_1",
+        "swap",
+        "merge_1_0",
+        "sub_1"
+      ],
+      "predicted_query": "difference_1_0",
+      "program_exact": false,
+      "question": "A film vault index opens with 21 objects cataloged as reels and 34 objects cataloged as canisters.\nEvent 1: Have canisters additionally count all reels while reels stays unchanged.\nEvent 2: Reduce canisters by 13 objects.\nEvent 3: Dispatch 8 objects from canisters into reels.\nEvent 4: Add 7 objects onto reels.\nEvent 5: Swap ownership of the two totals between reels and canisters.\nEvent 6: Have reels additionally count all canisters while canisters stays unchanged.\nEvent 7: Reduce reels by 10 objects.\nMeasure the final excess of reels over canisters.\nAnswer:",
+      "reference": "manual-film-vault"
+    }
+  ]
+}

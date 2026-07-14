@@ -1,0 +1,29 @@
+{
+  "data": "/lustre/fs1/home/sa305415/shohin/artifacts/sft/categorical_microcode_equivalence_v2.jsonl",
+  "data_sha256": "4532e06c32321d8e93c8e2f8bdb15334faaf95d9a756f5361d3af2920834dd05",
+  "group_field": "training_group",
+  "groups": {
+    "categorical_microcode_equivalence": {
+      "answer_marker": 96000,
+      "answer_marker_rate": 1.0,
+      "code_fence": 0,
+      "code_fence_rate": 0.0,
+      "response_chars_p50": 17,
+      "response_chars_p90": 17,
+      "rows": 96000,
+      "short_response": 96000,
+      "short_response_rate": 1.0,
+      "starts_think": 0,
+      "starts_think_rate": 0.0,
+      "state_marker": 0,
+      "state_marker_rate": 0.0,
+      "think_marker": 0,
+      "think_marker_rate": 0.0
+    }
+  },
+  "malformed_rows": 0,
+  "missing_response_rows": 0,
+  "response_field": "response",
+  "rows": 96000,
+  "schema": "shohin-response-contract-audit-v1"
+}

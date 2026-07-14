@@ -1915,3 +1915,56 @@ The same transcript inspector runs r1, the diverse-pair control, and the
 equivalence candidate, reporting the full predicted program rather than only
 an aggregate score. These interactions are diagnostic and cannot override the
 896-case locked board.
+
+### R2 Result: Output Equivalence Is Not Semantic Identification
+
+R2 completed with immutable 96,000-row paired data and matched control versus
+KL=0.2 arms. The control/candidate scores are respectively fit 44/256 versus
+46/256, depth OOD 4/192 versus 1/192, language OOD 44/256 versus 44/256, full
+OOD 9/192 versus 12/192, and exact programs 30/896 versus 30/896. Combined
+language plus full answer accuracy changes only 11.83% to 12.50%. Both solve
+1/8 frozen hand-authored cases, the same newsroom program. The locked
+comparator rejects both absolute capability and equivalence attribution.
+
+The negative result is mechanistically useful. Assigning two paraphrases the
+same opcode labels already pushes both output distributions toward the same
+one-hot target, so symmetric output KL contributes little independent
+information. It does not force the trunk to separate operation kind from who
+acts on whom. Replacing rather than replaying the r1 language also caused
+catastrophic anchor forgetting. Yet operation-kind recognition on held-out
+language increased from r1's 255/640 to about 374/640, while register and query
+roles remained poor. The next intervention targets that remaining factor
+rather than scaling the redundant objective.
+
+### R3 Locked Protocol: Counterfactual Role-Equivariant Compilation
+
+R3 is an anchor-preserving, representation-level causal test:
+
+- Every structured program has six views: the exact r1 anchor, two disjoint
+  training-only paraphrases, and an exact register-permuted version of each.
+  The permutation swaps initial register values and every event/query role but
+  keeps key order fixed. It is an automorphism of the two-register executor,
+  so the scalar answer is preserved while every non-symmetric role label
+  flips.
+- The compiler predicts operation kind (add/sub/move/merge/swap) separately
+  from destination register, and query kind (read/sum/difference) separately
+  from selected register. Deterministic composition maps those factors back to
+  the original nine opcodes and five query codes.
+- The matched control sees all six views and all factor labels. The candidate
+  sees byte-identical data/order and additionally aligns normalized event/query
+  features across semantic views, preserves kind distributions under register
+  permutation, and requires role distributions to swap.
+- Independent CPU admission must bind source/data/evaluation/tokenizer hashes,
+  prove every six-view group and permutation signature, execute every oracle
+  program, reject negative/overflowing states, and find zero exact or 13-gram
+  held-out-language overlap before any H100 allocation.
+- Both arms retain all CMB absolute gates. Attribution requires at least five
+  points over the factorized control on combined language/full answers and
+  all-program exactness, with no more than three points fit/depth regression.
+  The frozen eight-case manual board then remains a diagnostic gate before any
+  decoder bridge.
+
+This is not generic symbolic leakage: numbers and line boundaries remain the
+same disclosed deterministic frontend as r1, but operation kind and argument
+binding remain neural. A pass would establish narrow language-to-program
+equivariance, not broad autonomous reasoning.

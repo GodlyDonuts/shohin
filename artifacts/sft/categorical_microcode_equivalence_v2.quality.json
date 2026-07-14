@@ -1,0 +1,31 @@
+{
+  "data": "/lustre/fs1/home/sa305415/shohin/artifacts/sft/categorical_microcode_equivalence_v2.jsonl",
+  "data_sha256": "4532e06c32321d8e93c8e2f8bdb15334faaf95d9a756f5361d3af2920834dd05",
+  "duplicate_normalized_questions": 0,
+  "eval_overlap": {
+    "enabled": true,
+    "eval_exact_questions": 1982,
+    "eval_ngrams": 68997,
+    "exact_prompt_hits": 0,
+    "ngram_prompt_hits": 0
+  },
+  "format_markers": {
+    "The answer is": 96000
+  },
+  "malformed_rows": 0,
+  "missing_question_or_response": 0,
+  "response_words": {
+    "max": 4,
+    "mean": 4.0,
+    "p50": 4,
+    "p90": 4,
+    "p99": 4
+  },
+  "source_counts": {
+    "categorical_microcode_equivalence_v2": 96000
+  },
+  "training_group_counts": {
+    "categorical_microcode_equivalence": 96000
+  },
+  "valid_rows": 96000
+}

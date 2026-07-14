@@ -1,0 +1,19 @@
+{
+  "build": "categorical_microcode_equivalence_v2",
+  "data_sha256": "4532e06c32321d8e93c8e2f8bdb15334faaf95d9a756f5361d3af2920834dd05",
+  "depths": {
+    "1": 24000,
+    "2": 24000,
+    "3": 24000,
+    "4": 24000
+  },
+  "heldout_phrase_policy": "training-only templates; latent-operator heldout render strings excluded",
+  "pairs": 48000,
+  "rows": 96000,
+  "source": "/lustre/fs1/home/sa305415/shohin/artifacts/sft/latent_operator_v1_train.jsonl",
+  "source_sha256": "aa65eefd1dbee25c3c7cec956059a970ea53e079bbc4f4695dd160cacd980fd9",
+  "views": {
+    "0": 48000,
+    "1": 48000
+  }
+}

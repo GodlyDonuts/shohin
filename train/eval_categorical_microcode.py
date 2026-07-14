@@ -19,6 +19,7 @@ from categorical_microcode import (
     execute_program,
     sha256_file,
 )
+from role_equivariant_microcode import RoleEquivariantMicrocodeCompiler
 from model import GPT, GPTConfig
 
 
@@ -127,6 +128,7 @@ def main():
     if metadata.get("protocol") not in {
         "causal_microcode_bottleneck_v1",
         "causal_microcode_bottleneck_equivalence_v2",
+        "causal_microcode_role_equivariance_v3",
     }:
         raise SystemExit("invalid microcode adapter metadata")
     if metadata.get("base_sha256") != sha256_file(args.base):
@@ -153,7 +155,12 @@ def main():
 
     model = GPT(cfg).to("cuda").eval()
     model.load_state_dict(base_checkpoint["model"])
-    compiler = CategoricalMicrocodeCompiler(
+    compiler_class = (
+        RoleEquivariantMicrocodeCompiler
+        if metadata.get("protocol") == "causal_microcode_role_equivariance_v3"
+        else CategoricalMicrocodeCompiler
+    )
+    compiler = compiler_class(
         model, layer=int(metadata["layer"]), hidden=int(metadata["hidden"]),
     ).to("cuda").eval()
     missing, unexpected = compiler.load_state_dict(adapter_checkpoint["adapter_state"], strict=False)
