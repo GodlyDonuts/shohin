@@ -1690,3 +1690,71 @@ encode/decode round trips, canonical-state leakage rejection, prompt-style
 binding, and 120 randomized inverse-transition cases. The implementation is a
 precondition for a later causal experiment, not evidence that the model can use
 the protocol.
+
+## Active Architecture Hypothesis: Verbalizable Recurrent Workspace
+
+The next isolated experiment is a **Verbalizable Recurrent Workspace (VRW)**.
+It targets a failure shared by the closed soft-token, source-dropped packet,
+typed-state, and operator-trace branches: adding a carrier or teaching a trace
+does not prove that the frozen decoder can read a causally necessary internal
+state. VRW changes that interface while leaving the 125M base immutable.
+
+The design is informed by the sparse, reportable workspace observations in
+<https://transformer-circuits.pub/2026/workspace/index.html>, but it does not
+claim to implement that paper's J-lens. Its top-k normalized unembedding basis
+is an explicit late-layer verbalizability approximation and is evaluated as an
+engineering hypothesis.
+
+### Mechanism
+
+- The pretrained base is frozen. The ordinary source prompt remains visible to
+  all upper transformer blocks, so the experiment does not manufacture a hard
+  source-removal bottleneck that the base was never trained to cross.
+- At block boundary 19, four 96-wide slots cross-attend only to prompt
+  residuals. One shared GRU cell updates those slots four times. Recurrent
+  depth therefore adds compute without adding step-specific parameters.
+- Answer tokens never enter scratch construction. The state is read only at
+  answer-predicting positions through query-conditioned slot attention.
+- The readout is projected onto the top eight frozen normalized unembedding
+  directions with nonnegative mixture weights, rescaled to local residual RMS,
+  and applied through one signed scalar gate. The gate starts at exactly zero,
+  making the initialized wrapper exactly equal to the frozen base.
+- Only adapter parameters are optimized. Checkpoints store the small adapter,
+  immutable base/data hashes, architecture values, and an exact initial-adapter
+  hash rather than copying or drifting the base.
+
+### Causal Controls
+
+The recurrent candidate and reset control use the same checkpoint, data,
+seed, shape-bucketed batches, optimizer, parameter count, initialization, and
+four cell executions. In the reset arm every execution starts from the learned
+initial slots; their identical outputs are averaged so every call participates
+in backward while no information can accumulate across steps.
+
+Held-out evaluation keeps the source visible and measures teacher-forced NLL,
+token accuracy, and exact answer sequences under:
+
+1. adapter disabled;
+2. one recurrent step;
+3. the adapter's trained depth and trained recurrence mode;
+4. recurrent candidate reset at inference;
+5. zero scratch state; and
+6. scratch states shuffled between matched-shape examples.
+
+The locked comparator requires all of the following before autoregressive
+evaluation: at least 0.05 fit-IID NLL advantage over the reset fit; at least
+0.03 depth-OOD NLL advantage; at least 0.05 state-necessity margin over the
+strongest zero/shuffle control; at least 0.03 within-model depth-OOD advantage
+over one-step/reset inference; and exact-sequence wins in at least two of four
+held-out regimes. Passing these gates only admits state-swap generation and
+manual interaction. It is not itself a reasoning result. Failure closes VRW
+without scaling it or modifying the protected pretraining writer.
+
+### Implementation
+
+The isolated implementation is in `train/causal_recurrent_scratch.py`, with
+paired trainer, NLL evaluator, locked comparator, Slurm wrappers, and CPU unit
+contracts. The first canary is capped at 8,192 admitted answer-only operator
+examples per arm (1,024 updates at batch size eight) from immutable 200k. No
+VRW checkpoint or capability result exists until both arms complete and the
+hash-bound comparator runs.
