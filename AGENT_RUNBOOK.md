@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 14:20 EDT (the protected two-H100 pretrain remains healthy and isolated. CMB r2 is formally rejected. Counterfactual Role-Equivariant Compilation r3 passed its mechanics canary, while the first full CPU artifact was rejected for duplicate and exact-eval prompts; a deterministic whole-group decontaminated rebuild is pending.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 14:27 EDT (the protected two-H100 pretrain remains healthy and isolated. CMB r2 is formally rejected. Counterfactual Role-Equivariant Compilation r3 is rebuilding decontaminated data while a nonredundant signed-feature implementation awaits a fresh mechanics canary.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -3953,3 +3953,17 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   **0.5/1.0** for candidate, with identical 48,000 groups, seed, order, 12,000 updates, base, and initial
   adapter. Neither H100 arm may start until the rebuilt artifact passes every structural, quality,
   regime-aware full-text, and response-contract gate.
+
+- **2026-07-14 14:20--14:27** — **Pre-fit review removed a redundant treatment before it could waste
+  the matched experiment.** The first r3 mechanics code applied the register permutation loss to output
+  logits. Opposite supervised role labels already impose nearly the same constraint, repeating the
+  central weakness diagnosed in r2. It is superseded before any full fit. The corrected compiler splits
+  every operation/query representation into kind and role features. Role logits come from one signed
+  scalar as `[s, -s]`; the exact register-swap action therefore flips them. Candidate-only losses align
+  kind features under the `Z2` swap and align role features to the negative of their counterfactual,
+  while semantic paraphrases align both factors. Supervised labels prevent the zero-feature collapse.
+  The control uses the identical factorized architecture and all six views but weights these feature
+  constraints 0/0. Comparator metadata now also locks updates, learning rate, warmup, clipping, basis
+  weight, signed-role contract, and exact 0.5/1.0 treatment weights. Local tensor, gradient-freeze,
+  generator, and comparator contracts pass. The earlier `689057` canary no longer certifies this revised
+  architecture; a fresh isolated mechanics canary is mandatory after CPU admission.

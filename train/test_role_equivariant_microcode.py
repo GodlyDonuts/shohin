@@ -57,6 +57,13 @@ def main():
     position = torch.tensor([6, 7])
     operation = compiler.classify_positions(hidden, batch, position, "operation")
     query = compiler.classify_positions(hidden, batch, position, "query")
+    features = compiler.position_features(hidden, batch, position)
+    _, role_features = compiler.operation_factor_features(features)
+    role_logits = compiler.operation_factor_logits(
+        compiler.operation_factor_features(features)[0], role_features,
+    )[1]
+    negated_logits = compiler.paired_role_logits(compiler.operation_role_score(-role_features))
+    assert torch.allclose(role_logits.flip(-1), negated_logits)
     loss = operation.sum() + query.sum() + compiler.basis_loss()
     loss.backward()
     assert operation.shape == (2, len(OPCODES))

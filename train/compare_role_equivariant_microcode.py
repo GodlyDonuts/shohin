@@ -10,7 +10,9 @@ from pathlib import Path
 
 MATCHED_METADATA = (
     "base_sha256", "data_sha256", "admission_sha256", "seed", "layer", "hidden",
-    "batch_groups", "selected_groups", "selected_examples", "initial_adapter_sha256",
+    "batch_groups", "selected_groups", "selected_examples", "updates", "learning_rate",
+    "warmup_updates", "gradient_clip", "basis_weight", "role_factor_contract",
+    "initial_adapter_sha256",
 )
 
 
@@ -28,8 +30,8 @@ def compare(control, candidate):
     weights_valid = (
         float(control_meta.get("semantic_weight", -1)) == 0.0
         and float(control_meta.get("permutation_weight", -1)) == 0.0
-        and float(candidate_meta.get("semantic_weight", -1)) > 0.0
-        and float(candidate_meta.get("permutation_weight", -1)) > 0.0
+        and float(candidate_meta.get("semantic_weight", -1)) == 0.5
+        and float(candidate_meta.get("permutation_weight", -1)) == 1.0
     )
     control_language_full = combined_accuracy(control, ("language_ood", "full_ood"))
     candidate_language_full = combined_accuracy(candidate, ("language_ood", "full_ood"))

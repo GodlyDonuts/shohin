@@ -120,10 +120,15 @@ class RoleEquivariantMicrocodeCompiler(nn.Module):
             nn.Linear(width, hidden, bias=False), nn.SiLU(),
             nn.Linear(hidden, hidden, bias=False), nn.SiLU(),
         )
-        self.operation_kind_head = nn.Linear(hidden, len(OPERATION_KINDS))
-        self.operation_role_head = nn.Linear(hidden, 2)
-        self.query_kind_head = nn.Linear(hidden, len(QUERY_KINDS))
-        self.query_role_head = nn.Linear(hidden, 2)
+        factor_width = max(8, hidden // 2)
+        self.operation_kind_projection = nn.Linear(hidden, factor_width, bias=False)
+        self.operation_role_projection = nn.Linear(hidden, factor_width, bias=False)
+        self.query_kind_projection = nn.Linear(hidden, factor_width, bias=False)
+        self.query_role_projection = nn.Linear(hidden, factor_width, bias=False)
+        self.operation_kind_head = nn.Linear(factor_width, len(OPERATION_KINDS))
+        self.operation_role_score = nn.Linear(factor_width, 1, bias=False)
+        self.query_kind_head = nn.Linear(factor_width, len(QUERY_KINDS))
+        self.query_role_score = nn.Linear(factor_width, 1, bias=False)
         self.transition_logits = nn.Parameter(torch.zeros(2, 2, 10, 10, 20))
 
     def adapter_parameters(self):
@@ -148,11 +153,34 @@ class RoleEquivariantMicrocodeCompiler(nn.Module):
         selected = hidden[batch_indices, token_positions]
         return self.trunk(self.norm(selected))
 
+    @staticmethod
+    def paired_role_logits(score):
+        """Map one signed role coordinate to exactly antisymmetric two-role logits."""
+        return torch.cat((score, -score), dim=-1)
+
+    def operation_factor_features(self, features):
+        return self.operation_kind_projection(features), self.operation_role_projection(features)
+
+    def query_factor_features(self, features):
+        return self.query_kind_projection(features), self.query_role_projection(features)
+
+    def operation_factor_logits(self, kind_features, role_features):
+        return (
+            self.operation_kind_head(kind_features),
+            self.paired_role_logits(self.operation_role_score(role_features)),
+        )
+
+    def query_factor_logits(self, kind_features, role_features):
+        return (
+            self.query_kind_head(kind_features),
+            self.paired_role_logits(self.query_role_score(role_features)),
+        )
+
     def operation_factors(self, features):
-        return self.operation_kind_head(features), self.operation_role_head(features)
+        return self.operation_factor_logits(*self.operation_factor_features(features))
 
     def query_factors(self, features):
-        return self.query_kind_head(features), self.query_role_head(features)
+        return self.query_factor_logits(*self.query_factor_features(features))
 
     @staticmethod
     def compose_operation_logits(kind_logits, role_logits):

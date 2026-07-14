@@ -101,16 +101,6 @@ def lr_scale(step, total, warmup):
     return 0.1 + 0.9 * 0.5 * (1 + math.cos(math.pi * progress))
 
 
-def symmetric_kl(left, right):
-    left_log = F.log_softmax(left.float(), dim=-1)
-    right_log = F.log_softmax(right.float(), dim=-1)
-    left_prob, right_prob = left_log.exp(), right_log.exp()
-    return 0.5 * (
-        F.kl_div(left_log, right_prob, reduction="batchmean")
-        + F.kl_div(right_log, left_prob, reduction="batchmean")
-    )
-
-
 def normalized_distance(left, right):
     return (F.normalize(left.float(), dim=-1) - F.normalize(right.float(), dim=-1)).pow(2).sum(-1).mean()
 
@@ -123,8 +113,8 @@ def masked_cross_entropy(logits, targets):
 
 
 def group_constraints(
-    op_features, op_kind_logits, op_role_logits, op_role_targets, op_slices,
-    query_features, query_kind_logits, query_role_logits, query_role_targets,
+    op_kind_features, op_role_features, op_role_targets, op_slices,
+    query_kind_features, query_role_features, query_role_targets,
     batch_group_count,
 ):
     semantic_terms, permutation_terms = [], []
@@ -140,30 +130,43 @@ def group_constraints(
             for view in ("paraphrase_a", "paraphrase_b"):
                 other = example_index(group_local, (view, permutation))
                 semantic_terms.append(normalized_distance(
-                    op_features[op_slices[anchor]], op_features[op_slices[other]],
+                    op_kind_features[op_slices[anchor]], op_kind_features[op_slices[other]],
                 ))
-                semantic_terms.append(normalized_distance(query_features[anchor:anchor + 1], query_features[other:other + 1]))
+                valid = op_role_targets[op_slices[anchor]].ne(IGNORE_ROLE)
+                if bool(valid.any()):
+                    semantic_terms.append(normalized_distance(
+                        op_role_features[op_slices[anchor]][valid],
+                        op_role_features[op_slices[other]][valid],
+                    ))
+                semantic_terms.append(normalized_distance(
+                    query_kind_features[anchor:anchor + 1], query_kind_features[other:other + 1],
+                ))
+                if int(query_role_targets[anchor]) != IGNORE_ROLE:
+                    semantic_terms.append(normalized_distance(
+                        query_role_features[anchor:anchor + 1],
+                        query_role_features[other:other + 1],
+                    ))
 
         for view in ("anchor", "paraphrase_a", "paraphrase_b"):
             original = example_index(group_local, (view, 0))
             permuted = example_index(group_local, (view, 1))
             original_slice, permuted_slice = op_slices[original], op_slices[permuted]
-            permutation_terms.append(symmetric_kl(
-                op_kind_logits[original_slice], op_kind_logits[permuted_slice],
+            permutation_terms.append(normalized_distance(
+                op_kind_features[original_slice], op_kind_features[permuted_slice],
             ))
             valid = op_role_targets[original_slice].ne(IGNORE_ROLE)
             if bool(valid.any()):
-                permutation_terms.append(symmetric_kl(
-                    op_role_logits[original_slice][valid],
-                    op_role_logits[permuted_slice][valid].flip(-1),
+                permutation_terms.append(normalized_distance(
+                    op_role_features[original_slice][valid],
+                    -op_role_features[permuted_slice][valid],
                 ))
-            permutation_terms.append(symmetric_kl(
-                query_kind_logits[original:original + 1], query_kind_logits[permuted:permuted + 1],
+            permutation_terms.append(normalized_distance(
+                query_kind_features[original:original + 1], query_kind_features[permuted:permuted + 1],
             ))
             if int(query_role_targets[original]) != IGNORE_ROLE:
-                permutation_terms.append(symmetric_kl(
-                    query_role_logits[original:original + 1],
-                    query_role_logits[permuted:permuted + 1].flip(-1),
+                permutation_terms.append(normalized_distance(
+                    query_role_features[original:original + 1],
+                    -query_role_features[permuted:permuted + 1],
                 ))
     semantic = torch.stack(semantic_terms).mean()
     permutation = torch.stack(permutation_terms).mean()
@@ -243,6 +246,11 @@ def main():
         "updates": total_steps,
         "semantic_weight": args.semantic_weight,
         "permutation_weight": args.permutation_weight,
+        "learning_rate": args.lr,
+        "warmup_updates": args.warmup,
+        "gradient_clip": args.clip,
+        "basis_weight": args.basis_weight,
+        "role_factor_contract": "signed-z2-feature-v1",
         "adapter_parameters": compiler.adapter_num_params(),
         "base_parameters_trainable": 0,
         "initial_adapter_sha256": initial_hash,
@@ -276,15 +284,21 @@ def main():
             query_features = compiler.position_features(
                 hidden, torch.arange(len(examples), device="cuda"), query_positions,
             )
-            op_kind_logits, op_role_logits = compiler.operation_factors(op_features)
-            query_kind_logits, query_role_logits = compiler.query_factors(query_features)
+            op_kind_features, op_role_features = compiler.operation_factor_features(op_features)
+            query_kind_features, query_role_features = compiler.query_factor_features(query_features)
+            op_kind_logits, op_role_logits = compiler.operation_factor_logits(
+                op_kind_features, op_role_features,
+            )
+            query_kind_logits, query_role_logits = compiler.query_factor_logits(
+                query_kind_features, query_role_features,
+            )
             op_kind_loss = F.cross_entropy(op_kind_logits.float(), op_kind_targets)
             op_role_loss = masked_cross_entropy(op_role_logits, op_role_targets)
             query_kind_loss = F.cross_entropy(query_kind_logits.float(), query_kind_targets)
             query_role_loss = masked_cross_entropy(query_role_logits, query_role_targets)
             semantic_loss, permutation_loss = group_constraints(
-                op_features, op_kind_logits, op_role_logits, op_role_targets, op_slices,
-                query_features, query_kind_logits, query_role_logits, query_role_targets,
+                op_kind_features, op_role_features, op_role_targets, op_slices,
+                query_kind_features, query_role_features, query_role_targets,
                 len(batch),
             )
             basis_loss = compiler.basis_loss()

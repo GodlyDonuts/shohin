@@ -1950,6 +1950,12 @@ R3 is an anchor-preserving, representation-level causal test:
   from destination register, and query kind (read/sum/difference) separately
   from selected register. Deterministic composition maps those factors back to
   the original nine opcodes and five query codes.
+- Kind and role use separate learned feature projections. Each role head emits
+  one signed scalar `s` and constructs logits `[s, -s]`, so negating the role
+  feature implements the exact two-register `Z2` action. The candidate aligns
+  kind features under register exchange and aligns role features to the
+  negative of their counterfactual. This is representation-level structure,
+  not the output-KL redundancy that failed in r2.
 - The matched control sees all six views and all factor labels. The candidate
   sees byte-identical data/order and additionally aligns normalized event/query
   features across semantic views, preserves kind distributions under register
@@ -1974,7 +1980,9 @@ alignment weight **0.5** and permutation-equivariance weight **1.0** for the
 candidate, versus **0/0** for the matched control. Both use 48,000 complete
 six-view groups, batch four groups, exactly 12,000 updates, seed 20260714, and
 the same initial adapter hash. The 64-group mechanics canary established finite
-losses and gradients only; it did not tune these weights against capability.
+losses and gradients for the superseded output-logit implementation only; it
+did not tune these weights against capability. The signed-feature revision
+must pass a new isolated mechanics canary before either full arm starts.
 
 The first full construction is preserved as a rejected admission result.
 Although its automorphisms, executor replay, width, and held-out-language tests
