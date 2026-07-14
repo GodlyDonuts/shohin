@@ -3232,3 +3232,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   reasoning or promotion score. At this entry, full isolated L19 training `688556` is still running,
   most recently through 4,560/15,000 updates; do not infer success from its loss and do not touch the
   flagship.
+
+- **2026-07-14 04:20** — **CRA depth selection is measured, not a blind sweep.** A 48-world raw-200k
+  geometry audit compared the same five-anchor residual tape at layers 7/13/19/25. The base-to-edited
+  signal grows with depth (3.70% / 8.93% / 15.52% / 17.41% of donor norm), but opposite signed edits
+  remain nearly collinear at every depth (cosine 0.9812 / 0.9828 / 0.9855 / 0.9859) and normal versus
+  counterfactual composed tapes have cosine 0.999986 / 0.999857 / 0.999561 / 0.999461. Layer 19 retains
+  the strongest same-world-paraphrase invariance among the materially sized edit signals (0.9848 versus
+  0.9798 at layer 25), so it is the only currently justified full arm. Do not consume another 15,000
+  updates on a depth sweep unless L19 creates a real but depth-limited causal signal.
