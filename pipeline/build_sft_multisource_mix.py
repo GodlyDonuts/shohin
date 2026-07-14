@@ -98,9 +98,16 @@ def main():
         help="optional public-eval JSONL globs whose prompt identity/grams are hard-filtered",
     )
     parser.add_argument("--ngram", type=int, default=13)
+    parser.add_argument(
+        "--exclude-contract",
+        action="append",
+        default=[],
+        help="optional row contract labels to remove before freezing the mix",
+    )
     args = parser.parse_args()
     if args.ngram <= 0:
         raise SystemExit("--ngram must be positive")
+    excluded_contracts = set(args.exclude_contract)
 
     out = Path(args.out)
     report_path = Path(args.report)
@@ -119,6 +126,7 @@ def main():
     group_rows = collections.Counter()
     input_rows = collections.Counter()
     malformed = missing = duplicates = eval_exact_drops = eval_ngram_drops = 0
+    excluded_contract_rows = collections.Counter()
     kept = 0
     with partial.open("w") as target:
         for path in args.inputs:
@@ -137,6 +145,10 @@ def main():
                     group = str(row.get("training_group") or "").strip()
                     if not question or not response or not group:
                         missing += 1
+                        continue
+                    contract = str(row.get("contract") or "").strip()
+                    if contract in excluded_contracts:
+                        excluded_contract_rows[contract] += 1
                         continue
                     key = normalized_question(question)
                     if not key:
@@ -178,6 +190,7 @@ def main():
             "exact_prompt_drops": eval_exact_drops,
             "ngram_prompt_drops": eval_ngram_drops,
         },
+        "excluded_contract_rows": dict(excluded_contract_rows),
         "source_rows": dict(source_rows),
         "training_group_rows": dict(group_rows),
     }

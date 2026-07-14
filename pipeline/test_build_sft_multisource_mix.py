@@ -22,7 +22,8 @@ def main():
         ])
         write_rows(memory, [
             {"question": "What is two plus two?", "response": "wm:a=4;b=0", "source": "vrwm", "training_group": "vrwm"},
-            {"question": "Update wm:a=3;b=1 by adding b to a", "response": "wm:a=4;b=1", "source": "vrwm", "training_group": "vrwm"},
+            {"question": "Update wm:a=3;b=1 by adding b to a", "response": "wm:a=4;b=1", "source": "vrwm", "training_group": "vrwm", "contract": "minimal_pair"},
+            {"question": "Read wm:a=4;b=1", "response": "4", "source": "vrwm", "training_group": "vrwm", "contract": "direct"},
         ])
         write_rows(evals, [
             {"question": "What is two plus two?", "answer": "4"},
@@ -31,7 +32,7 @@ def main():
         subprocess.run([
             sys.executable, str(root / "build_sft_multisource_mix.py"),
             "--inputs", str(broad), str(memory), "--out", str(out), "--report", str(report),
-            "--eval-glob", str(evals),
+            "--eval-glob", str(evals), "--exclude-contract", "minimal_pair",
         ], check=True, capture_output=True, text=True)
         rows = [json.loads(line) for line in out.read_text().splitlines()]
         summary = json.loads(report.read_text())
@@ -41,6 +42,7 @@ def main():
         assert summary["training_group_rows"] == {"code": 1, "vrwm": 1}
         assert summary["eval_filter"]["enabled"]
         assert summary["eval_filter"]["exact_prompt_drops"] == 2
+        assert summary["excluded_contract_rows"] == {"minimal_pair": 1}
     print("multi-source SFT mix builder: passed")
 
 

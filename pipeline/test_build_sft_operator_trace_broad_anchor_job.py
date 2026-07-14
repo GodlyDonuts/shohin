@@ -13,6 +13,8 @@ def main():
         "audit_training_text_overlap.py",
         "audit_generalization_overlap.py",
         "--case-regimes wording full",
+        "EXCLUDE_CONTRACTS",
+        "--exclude-contract",
         "hard public-eval filter was not enabled",
         "cannot write a checkpoint",
     )

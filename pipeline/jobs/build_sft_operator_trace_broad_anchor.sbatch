@@ -22,6 +22,7 @@ TEXT_OVERLAP=${TEXT_OVERLAP:-$BASE/artifacts/sft/operator_trace_v2_broad_anchor_
 TRACE_OVERLAP=${TRACE_OVERLAP:-$BASE/artifacts/sft/operator_trace_v2_broad_anchor_v1.trace_overlap.json}
 OOD_OVERLAP=${OOD_OVERLAP:-$BASE/artifacts/sft/operator_trace_v2_broad_anchor_v1.ood_overlap.json}
 FACTOR_OVERLAP=${FACTOR_OVERLAP:-$BASE/artifacts/sft/operator_trace_v2_broad_anchor_v1.factor_wf_overlap.json}
+EXCLUDE_CONTRACTS=${EXCLUDE_CONTRACTS:-}
 
 for path in "$BROAD" "$PRIMITIVES" "$OPERATOR"; do
   [ -s "$path" ] || { echo "[optrace-anchor] missing input: $path" >&2; exit 2; }
@@ -31,9 +32,15 @@ for path in "$OUT" "$MIX" "$QUALITY" "$TEXT_OVERLAP" "$TRACE_OVERLAP" "$OOD_OVER
 done
 
 cd "$BASE"
+BUILD_ARGS=(--inputs "$BROAD" "$PRIMITIVES" "$OPERATOR" --out "$OUT" --report "$MIX" --eval-glob "$BASE"/artifacts/evals/*.jsonl)
+if [ -n "$EXCLUDE_CONTRACTS" ]; then
+  IFS=',' read -r -a CONTRACTS <<< "$EXCLUDE_CONTRACTS"
+  for contract in "${CONTRACTS[@]}"; do
+    BUILD_ARGS+=(--exclude-contract "$contract")
+  done
+fi
 "$PY" pipeline/build_sft_multisource_mix.py \
-  --inputs "$BROAD" "$PRIMITIVES" "$OPERATOR" \
-  --out "$OUT" --report "$MIX" --eval-glob "$BASE"/artifacts/evals/*.jsonl
+  "${BUILD_ARGS[@]}"
 "$PY" pipeline/audit_sft_quality.py --data "$OUT" --evals "$BASE/artifacts/evals" --out "$QUALITY"
 "$PY" pipeline/audit_training_text_overlap.py --data "$OUT" --evals "$BASE/artifacts/evals" \
   --out "$TEXT_OVERLAP" --require-zero
@@ -94,6 +101,7 @@ print(json.dumps({
     "rows": quality["valid_rows"],
     "eval_filter_drops": mix["eval_filter"],
     "groups": groups,
+    "excluded_contract_rows": mix.get("excluded_contract_rows", {}),
 }, sort_keys=True))
 PY
 echo "[optrace-anchor] admitted frozen broad anchor: $OUT"
