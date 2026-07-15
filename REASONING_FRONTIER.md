@@ -3370,3 +3370,33 @@ control combines nonlinear local rules with an asymptotically good code, but
 it assumes coordinates, code geometry, wiring, independent faults, and
 noiseless repair. No CPU experiment is authorized without a resource
 separation against structure-aware ECC and fault-tolerant recurrent controls.
+
+### R12 Commutator Factorization No-Go
+
+`R12_COMMUTATOR_FACTORIZATION_NO_GO.md` closes pairwise event commutation as the
+missing intrinsic symmetry breaker. Components of the noncommutation graph
+generate pairwise commuting subgroups, but multiplication need only form a
+central product. Even a true group direct product does not imply product state:
+the stabilizer may be diagonal. The explicit `S_3 x S_3` left-right action has
+two commuting factors but only one six-state residual orbit.
+
+Exact state-uniform commutation also requires extensional state coverage in the
+unrestricted class. When all transitions are known, the positive calculation
+reduces to established permutation-group, automata, Cartesian-graph, or trace-
+monoid decomposition; it saves description under a supplied product chart but
+not residual information. No CPU experiment is authorized on commutators
+alone.
+
+### R12 Holonomy State No-Go
+
+`R12_HOLONOMY_STATE_NO_GO.md` closes closed-loop curvature as the task-native
+symmetry breaker. Holonomy traces and spectra are gauge invariant and, for a
+declared compact finite-dimensional operator family, finitely many joint loop
+signatures can identify the connection up to simultaneous conjugation. But
+they do not identify which causal state currently occupies the fiber.
+
+Incomplete signatures merge actions that differ on later words. Complete
+signatures reconstruct a canonical operator tuple and reduce exactly to matrix
+recurrence; adding state-dependent continuation probes is a PSR/OOM. Loop-based
+correction requires redundant state-bearing observations and becomes
+synchronization or ECC. No CPU experiment is authorized on holonomy alone.

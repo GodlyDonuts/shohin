@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-15 02:40 EDT (the protected two-H100 pretrain is healthy through step 261,560 at ~283.94k tok/s. Exact 260k equals 136,314,880,000 nominal update tokens. Newton promoted `best_step260000.pt` and local `train/flagship_out/ckpt_0260000.pt` match at MD5 `301082250e15c26820790ec7ff7730a0`; the local 1,076,597,546-byte file is complete after its 1,035,468,800-byte prefix was independently matched before resume. R9c is a closed negative. R10 and R11 are dormant controls. R12 is theory-only: exact state, fork-core compression, coherent profile extension, arbitrary late-query compression, secret sharing, finite relation loss, unrestricted MDL, unsupervised latent locality, passive general-matroid learning, and uncoded noise stability have collapsed to established objects or lower bounds. Binary matroid closure and local reversible rules remain controls. A survivor must supply a task-native observable symmetry breaker without labeling hidden axes, plus a comparator-relative nonlinear learnability advantage and robust context scaling. No R12 implementation, data, fit, score, CPU board, or GPU job is authorized. Irreversible source deletion is forbidden.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-15 02:45 EDT (the protected two-H100 pretrain is healthy through step 261,560 at ~283.94k tok/s. Exact 260k equals 136,314,880,000 nominal update tokens. Newton promoted `best_step260000.pt` and local `train/flagship_out/ckpt_0260000.pt` match at MD5 `301082250e15c26820790ec7ff7730a0`; the local 1,076,597,546-byte file is complete after its 1,035,468,800-byte prefix was independently matched before resume. R9c is a closed negative. R10 and R11 are dormant controls. R12 is theory-only: exact state, fork-core compression, coherent profile extension, arbitrary late-query compression, secret sharing, finite relation loss, unrestricted MDL, unsupervised latent locality, passive general-matroid learning, uncoded noise stability, pairwise commutator factorization, and state-independent holonomy have collapsed to established objects or lower bounds. Binary matroid closure and local reversible rules remain controls. A survivor must supply a task-native observable symmetry breaker that identifies joint action and state without labeling hidden axes, plus a comparator-relative nonlinear learnability advantage and robust context scaling. No R12 implementation, data, fit, score, CPU board, or GPU job is authorized. Irreversible source deletion is forbidden.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4709,3 +4709,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   code with distance at least `2t+1`; decode-compute-reencode is the converse, and noisy repair is ordinary fault-
   tolerant computation. `R12_NOISE_STABLE_ACTION_NO_GO.md` and the strengthened
   `R12_MATROID_CLOSURE_TARGET.md` freeze these boundaries. No CPU falsifier or neural fit was authorized.
+
+- **2026-07-15 02:44** — **Observable event commutators fail to identify independent reasoning
+  registers.** Noncommutation components generate pairwise commuting transition subgroups, but only a central
+  product unless cross-intersections vanish. Even a true group direct product need not factor residual state: an
+  `S_3 x S_3` left-right action has a diagonal stabilizer and one six-state orbit rather than two independent
+  six-state factors. Exact unrestricted commutation tests also require extensional state coverage; complete-table
+  positives reduce to established group, automata, trace-monoid, or Cartesian-graph decomposition.
+  `R12_COMMUTATOR_FACTORIZATION_NO_GO.md` freezes the theorem and no-CPU verdict. The live theory lanes now test
+  higher-order holonomy, dynamic interaction width, query-kernel factor congruences, and verifiable witness state.
+
+- **2026-07-15 02:45** — **Gauge-invariant holonomy identifies a connection orbit, not the
+  current causal state.** For a finite compact matrix action, spanning-tree gauge fixing and joint loop traces can
+  reconstruct fundamental transports up to simultaneous conjugation. Complete signatures then reduce exactly to
+  ordinary operator recurrence; incomplete signatures merge actions that differ on later words. State-independent
+  loops cannot distinguish future-separable points in one fiber, while adding state-dependent continuation probes
+  is PSR/OOM state. `R12_HOLONOMY_STATE_NO_GO.md` freezes the finite collapse test and no-CPU verdict. The vacated
+  lane now attacks active self-generated determining experiments with only verifier feedback.
