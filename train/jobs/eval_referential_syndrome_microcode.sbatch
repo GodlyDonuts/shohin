@@ -9,6 +9,7 @@
 #SBATCH -o /lustre/fs1/home/sa305415/shohin/logs/r9c_eval_%j.out
 #SBATCH --open-mode=append
 set -euo pipefail
+export OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 OMP_NUM_THREADS=4
 
 BASE=/lustre/fs1/home/sa305415/shohin
 PY=$BASE/miniforge3/bin/python
