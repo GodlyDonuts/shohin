@@ -16,6 +16,9 @@
 set -euo pipefail
 umask 077
 export PATH=/usr/bin:/bin
+export GIT_CONFIG_GLOBAL=/dev/null
+export GIT_CONFIG_NOSYSTEM=1
+export GIT_NO_REPLACE_OBJECTS=1
 export CUBLAS_WORKSPACE_CONFIG=:4096:8
 export OPENBLAS_NUM_THREADS=1
 export MKL_NUM_THREADS=1
@@ -25,6 +28,7 @@ export PYTHONDONTWRITEBYTECODE=1
 export PYTHONNOUSERSITE=1
 export PYTHONHASHSEED=0
 export PYTHONSAFEPATH=1
+unset GIT_ALTERNATE_OBJECT_DIRECTORIES GIT_DIR GIT_OBJECT_DIRECTORY GIT_REPLACE_REF_BASE GIT_WORK_TREE
 unset LD_PRELOAD PYTHONHOME PYTHONPATH
 export PYTHONOPTIMIZE=0
 
@@ -122,19 +126,19 @@ fi
 EVIDENCE_GIT_DIR=${SLURM_TMPDIR:?SLURM_TMPDIR is required}/shohin_operation_likelihood_evidence.git
 [ ! -e "$EVIDENCE_GIT_DIR" ] || { echo "[operation-selection] evidence Git path already exists" >&2; exit 5; }
 git init --bare --quiet "$EVIDENCE_GIT_DIR"
-git --git-dir="$EVIDENCE_GIT_DIR" bundle verify "$EVIDENCE_BUNDLE" >/dev/null
-git --git-dir="$EVIDENCE_GIT_DIR" -c pack.threads=1 -c index.threads=1 fetch --quiet "$EVIDENCE_BUNDLE" refs/heads/main:refs/heads/main
-test "$(git --git-dir="$EVIDENCE_GIT_DIR" rev-parse refs/heads/main)" = "$EVIDENCE_COMMIT" || {
+git --no-replace-objects --git-dir="$EVIDENCE_GIT_DIR" bundle verify "$EVIDENCE_BUNDLE" >/dev/null
+git --no-replace-objects --git-dir="$EVIDENCE_GIT_DIR" -c pack.threads=1 -c index.threads=1 fetch --quiet "$EVIDENCE_BUNDLE" refs/heads/main:refs/heads/main
+test "$(git --no-replace-objects --git-dir="$EVIDENCE_GIT_DIR" rev-parse refs/heads/main)" = "$EVIDENCE_COMMIT" || {
   echo "[operation-selection] evidence bundle main does not match EVIDENCE_COMMIT" >&2
   exit 5
 }
-git --git-dir="$EVIDENCE_GIT_DIR" cat-file -e "${FROZEN_COMMIT}^{commit}"
-git --git-dir="$EVIDENCE_GIT_DIR" merge-base --is-ancestor "$FROZEN_COMMIT" "$EVIDENCE_COMMIT" || {
+git --no-replace-objects --git-dir="$EVIDENCE_GIT_DIR" cat-file -e "${FROZEN_COMMIT}^{commit}"
+git --no-replace-objects --git-dir="$EVIDENCE_GIT_DIR" merge-base --is-ancestor "$FROZEN_COMMIT" "$EVIDENCE_COMMIT" || {
   echo "[operation-selection] frozen commit is not an ancestor of evidence commit" >&2
   exit 5
 }
 PRESCORE_RECEIPT_TMP=$SLURM_TMPDIR/shohin_operation_likelihood_prescore_receipt.json
-git --git-dir="$EVIDENCE_GIT_DIR" show "$EVIDENCE_COMMIT:$PRESCORE_RECEIPT_RELATIVE" > "$PRESCORE_RECEIPT_TMP"
+git --no-replace-objects --git-dir="$EVIDENCE_GIT_DIR" show "$EVIDENCE_COMMIT:$PRESCORE_RECEIPT_RELATIVE" > "$PRESCORE_RECEIPT_TMP"
 PRESCORE_RECEIPT_SHA256=$(sha256sum "$PRESCORE_RECEIPT_TMP" | awk '{print $1}')
 "$PY" - "$PRESCORE_RECEIPT_TMP" "$FROZEN_COMMIT" <<'PY'
 import json
@@ -166,7 +170,7 @@ IMPLEMENTATION_FILES=(
 )
 for relative in "${IMPLEMENTATION_FILES[@]}"; do
   observed=$(sha256sum -- "$BASE/$relative" | awk '{print $1}')
-  committed=$(git --git-dir="$EVIDENCE_GIT_DIR" show "$FROZEN_COMMIT:$relative" | sha256sum | awk '{print $1}')
+  committed=$(git --no-replace-objects --git-dir="$EVIDENCE_GIT_DIR" show "$FROZEN_COMMIT:$relative" | sha256sum | awk '{print $1}')
   if [ "$observed" != "$committed" ]; then
     echo "[operation-selection] working bytes differ from frozen commit: $relative" >&2
     exit 5
@@ -226,7 +230,13 @@ def create_memfd(name):
 
 for name, relative in implementation_files.items():
     payload = subprocess.run(
-        ["git", f"--git-dir={git_dir}", "show", f"{frozen_commit}:{relative}"],
+        [
+            "git",
+            "--no-replace-objects",
+            f"--git-dir={git_dir}",
+            "show",
+            f"{frozen_commit}:{relative}",
+        ],
         check=True,
         stdout=subprocess.PIPE,
     ).stdout

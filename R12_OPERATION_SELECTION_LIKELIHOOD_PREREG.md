@@ -270,7 +270,9 @@ read-only Git bundle containing both commits. The wrapper verifies the bundle's
 object graph, requires bundle `main` to equal the supplied evidence commit,
 requires `FROZEN_COMMIT` to be its ancestor, reconstructs and validates the
 pre-score receipt, and requires every deployed implementation file's bytes to
-equal the corresponding frozen Git object. It then reads each implementation
+equal the corresponding frozen Git object. Git replacement objects, alternate
+object directories, inherited repository paths, global configuration, and
+system configuration are disabled for every object read. It then reads each implementation
 blob directly from that verified commit into a Linux `memfd`, removes write
 permission, applies write/grow/shrink/seal kernel seals, and compiles the
 evaluator only from those sealed bytes. The evaluator reads and re-hashes every
