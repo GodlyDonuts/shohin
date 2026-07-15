@@ -2824,3 +2824,28 @@ rounds, widening memory, or relaxing the frozen thresholds is not an R9c repair.
 The canonical decision is
 `artifacts/eval_history/r9c_used_board_decision_r2.json`, SHA-256
 `cb3013800daaeb95b0bc8b2d454b89cf177a4e2dc652633eb0392a625a87b012`.
+
+A post-result identifiability audit closes the certificate more strongly. The
+eight-dimensional categorical probability simplex projects into an affine
+operator family of affine rank five. Two strictly positive distributions with
+different argmax operations (`add_0` and `move_1_0`) have the same exact
+expected operator to `1.1102230246251565e-16`. R9c's runtime float32 probability
+cast leaves a syndrome norm of only `2.2130991894593727e-08`, still far below
+the frozen `0.05` halt threshold. Expected-operator agreement is therefore not
+injective with respect to the categorical decision that the evaluator executes.
+
+The original shuffled-goal arm also does not support a strong semantic-goal
+attribution. Six equivalent views are adjacent in every selected group, so a
+one-position batch roll sends five of six examples a goal from the same
+equivalence group. The static and no-syndrome losses remain valid negative
+comparators and already reject treatment, but the shuffled-goal margin must not
+be interpreted as a clean future-semantics intervention. The exact regression
+audit is `train/audit_bidirectional_syndrome_identifiability.py`; report SHA-256
+is `9c54c1cf498804056aa34b5b5b1d7b78a4c181a69c8b9b7a77904cfb816f1777`.
+
+This eliminates a point-distribution syndrome as the next interface. A future
+certificate must preserve the **set** of lawful exact transforms still
+consistent with text evidence, compose that set without pruning, and permit
+source deletion only when the complete-transform version space is a singleton.
+Agreement on one current query may authorize a selective answer but cannot
+authorize reusable context compression.

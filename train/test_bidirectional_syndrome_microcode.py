@@ -4,6 +4,7 @@
 import torch
 
 from audit_bidirectional_syndrome_dynamics import audit
+from audit_bidirectional_syndrome_identifiability import audit as audit_identifiability
 from bidirectional_syndrome_microcode import (
     BidirectionalSyndromeMicrocode,
     apply_operator,
@@ -54,6 +55,13 @@ def main():
     report = audit()
     assert report["mechanics_pass"] and not report["authorize_language_fit"]
     assert all(report["gates"].values())
+    identifiability = audit_identifiability()
+    assert not identifiability["fail_closed_argmax_certificate_valid"]
+    assert not identifiability["authorize_r9c_reuse"]
+    assert identifiability["collision"]["argmaxes_differ"]
+    assert identifiability["collision"]["exact_collision_at_tolerance_1e_12"]
+    assert identifiability["collision"]["runtime_collision_below_r9c_threshold_0_05"]
+    assert identifiability["goal_roll_control"]["unchanged_semantic_goal_fraction"] == 5 / 6
     print("bidirectional syndrome microcode dynamics: passed")
 
 

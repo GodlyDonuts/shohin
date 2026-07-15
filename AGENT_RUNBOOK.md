@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 21:03 EDT (the protected two-H100 pretrain remains isolated. R9c is now a closed neural negative after four hash-matched arms, eight frozen evaluations, and the preregistered assessor. Treatment underperforms static, no-syndrome, and shuffled-goal controls on the fresh OOD board; 88.8% of its wrong operations are agreed-wrong common-mode errors. Preserve the exact mechanics and artifacts, but do not run a full R9c fit or claim reasoning/context scaling.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 21:12 EDT (the protected two-H100 pretrain remains isolated. R9c is a closed neural and mathematical negative. Treatment underperforms valid static/no-syndrome controls, and a post-result exact audit proves the expected-operator syndrome is non-injective with respect to executed argmax operations. The original rolled-goal arm is also only a weak shuffle, so it cannot support a semantic-goal attribution. Preserve the artifacts; do not repair R9c by threshold, width, memory, or replay tuning.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4441,3 +4441,19 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   claim, or context-scaling claim is allowed. Canonical decision SHA-256 is
   `cb3013800daaeb95b0bc8b2d454b89cf177a4e2dc652633eb0392a625a87b012`; all eight reports and four
   adapters are hash-mirrored locally and retained on Newton.
+
+- **2026-07-14 21:03--21:12** — **Independent ultra-effort review finds a fatal certificate alias and
+  narrows the neural result's attribution.** The categorical operator simplex has dimension eight,
+  but its expected 3x3 affine-operator projection has linear rank six and affine rank five at values
+  1, 3, and 99. Two strictly positive distributions with different executed argmaxes (`add_0` versus
+  `move_1_0`) therefore produce the same exact expected operator to **1.11e-16**; after R9c's runtime
+  float32 probability cast, their syndrome norm is still only **2.21e-08**, far below the frozen 0.05
+  halting threshold. Matrix-syndrome zero can never be a fail-closed certificate for categorical
+  execution. The review also proves the training `roll(1)` is not a semantic-goal derangement: examples
+  are laid out as six adjacent equivalent views, so **5/6** receive a goal from the same equivalence
+  group. Other assessor hardening gaps include missing cross-board adapter-hash enforcement, no selected-
+  batch manifest hash, and nominal rather than active parameter matching. These issues cannot rescue the
+  result because treatment already loses to the valid static and no-syndrome ablations; they do block
+  any stronger future-goal or fail-closed-certificate interpretation. Exact audit
+  `train/audit_bidirectional_syndrome_identifiability.py` is regression-tested; local/Newton report
+  SHA-256 is **`9c54c1cf498804056aa34b5b5b1d7b78a4c181a69c8b9b7a77904cfb816f1777`**.
