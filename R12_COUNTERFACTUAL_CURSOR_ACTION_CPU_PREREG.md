@@ -1,8 +1,10 @@
 # R12 Counterfactual Cursor-Action CPU Preregistration
 
-**Status:** implementation frozen for pre-board review. Ephemeral test instances
-pass six mutation-focused unit tests; no persistent board, score-bearing model
-result, fit, or GPU job has been run.
+**Status:** implementation candidate complete for the final clean-commit freeze.
+The symbolic mechanics, disjoint neural generator/auditor, typed exposure
+loader, six-arm trainer, score-blind evaluator, independent scorer, and focused
+mutation tests pass locally. No persistent neural canary, score-bearing model
+result, fit, or GPU job has been run under this version.
 
 **Depends on:** `R12_COUNTERFACTUAL_CURSOR_ACTION_THEORY.md` and
 `R12_OPERATION_SELECTION_LIKELIHOOD_RESULT.md`.
@@ -143,6 +145,20 @@ search. Any later location change is a new version with a new development and
 confirmation contract. No layer, head, seed, renderer, threshold, or checkpoint
 shopping is allowed.
 
+The neural-canary geometry is exact:
+
+| Split | Renderers | Operand packs | Sources | Cells |
+|---|---:|---:|---:|---:|
+| train | 6 | 8 | 1,152 | 5,760 |
+| development | 2 | 4 | 192 | 960 |
+| confirmation | 5 | 8 | 960 | 4,800 |
+
+Every renderer/pack combination contains all 24 operation permutations and
+every source contains all five cursor interventions. Confirmation contains
+192 five-renderer content groups and 1,440 canonical adjacent-transposition
+pairs. Development is an integrity diagnostic only; it may not select a seed,
+loss weight, threshold, adapter location, epoch count, or checkpoint.
+
 ## 6. Matched neural arms required before H100 authorization
 
 Every learned arm receives byte-identical sources, cursors, labels, batching,
@@ -158,7 +174,9 @@ optimizer, number of updates, and initialization seed:
    same 192-scalar projection evaluated under one fixed centered cursor code
    for every row; its weights remain trainable and receive gradients.
 5. **Favorable cursor-table control:** an unconstrained eight-entry by 64-wide
-   explicit cursor table with 512 parameters and the same labels.
+   explicit cursor table with 512 parameters and the same labels. Five entries
+   (320 scalars) are active in the selector canary and three entries (192
+   scalars) are inactive future-state capacity; both counts are reported.
 6. **Ordinary text-cursor LoRA control:** the same source and semantic cursor,
    with cursor rendered by a frozen textual suffix and a favorable rank-one
    LoRA on the final-head Q slice (`576 + 64 = 640` trainable scalars), trained
@@ -173,6 +191,30 @@ ordinary-loss, relation-sham, and source-only training FLOP proxies must match
 within 1%; the larger cursor-table and text-LoRA arms are favorable ceilings
 and report their excess explicitly.
 
+The first fit is fixed to raw `best_step260000.pt`, step `260000`, SHA-256
+`91d5288f184fc5230516add9851ac1a8815d3369ffd816cd7d0c03d8bafc741d`.
+The seed is `2026071506`. Each arm receives four epochs over the same 288
+canonical relation units: 1,152 optimizer updates, 60 rows per update, and
+69,120 repeated row presentations total. The unit graph exposes every one of
+the 5,760 unique train cells exactly three times per epoch.
+
+The optimizer is AdamW with learning rate `0.01`, 50-update linear warmup,
+cosine decay to `0.1` of peak, betas `(0.9, 0.95)`, epsilon `1e-8`, zero weight
+decay, and gradient clipping at 1.0. Base weights are frozen. The frozen prefix
+is cached only through the block before the final block; the trainable path
+then executes the exact final block and tied full-vocabulary output projection.
+Action CE is full-vocabulary CE. Relation terms use the five preregistered
+action-token logits only after subtracting each row's mean, so they constrain
+relative action evidence without changing under an arbitrary common logit
+offset. Cursor interchange uses a unit donor-target margin; adjacent and
+renderer terms use centered-logit mean squared error. The relation-sham arm
+uses the same graph and coefficient with every cursor relation rotated locally
+by exactly `+1 mod 5`. The ordinary-loss and source-only arms still execute the
+same relation graph with coefficient zero. Thus treatment, ordinary-loss,
+relation-sham, and source-only have identical fixed compute proxies and shared
+192-scalar initialization; the manifest must prove both facts before any arm is
+evaluable.
+
 ## 7. Frozen selector decision rule
 
 The later confirmation must report both cell accuracy and exact five-action
@@ -180,17 +222,18 @@ groups. A treatment GO requires all of:
 
 - at least 95% unique-top-1 cell accuracy on each untouched renderer;
 - at least 90% exact five-action source groups, including DONE;
-- at least 95% of all 2,400 directed cursor-interchange pairs switch to the
+- at least 95% of all 19,200 directed cursor-interchange pairs switch to the
   donor cursor's target;
-- at least 95% adjacent-order equivariance separately on all 360 affected and
-  540 unaffected cell pairs;
-- at least 99% renderer invariance over all 1,200 unordered content-matched
+- at least 95% adjacent-order equivariance separately on all 2,880 affected and
+  4,320 unaffected cell pairs;
+- at least 99% renderer invariance over all 9,600 unordered content-matched
   renderer/cursor pairs;
 - at least +10 percentage points over the ordinary-loss control and relation
   sham on exact source groups. The comparison uses 20,000 deterministic paired
-  bootstrap replicates with seed `2026071504`, resampling source groups within
-  renderer; the simultaneous one-sided 95% lower bound for both differences
-  must be strictly above zero;
+  cluster-bootstrap replicates with seed `2026071504`, resampling the 192
+  content-matched pack/permutation groups and carrying all five renderers in a
+  sampled cluster together; the simultaneous one-sided 95% lower bound for
+  both differences must be strictly above zero;
 - constant and deranged cursor ablations within two points of their symbolic
   20% and 0% predictions after conditioning on treatment-correct groups;
 - at least `520/704` on the immutable raw atomic executor gate, and no family
@@ -198,6 +241,12 @@ groups. A treatment GO requires all of:
 
 A near miss is a NO-GO. It cannot trigger a threshold, seed, renderer, loss
 weight, or adapter-location change under this version.
+
+Full-vocabulary unique-top-1 is the primary selector decision. Restricted
+five-action unique-top-1 is reported as a diagnostic and may not rescue a
+full-vocabulary failure. Relation gates require both the declared relation and
+correct endpoint predictions; common wrong answers do not count as
+equivariance or invariance.
 
 ## 8. Separate one-call and halt gate
 
@@ -225,8 +274,30 @@ score-bearing artifact is opened.
 The protected flagship output path and checkpoints are read-only inputs. No
 canary may share its output directory or modify the live data stream.
 
-Persistent board generation additionally refuses a dirty implementation
-surface. The board records the pre-board Git commit and SHA-256 of the theory,
-preregistration, declarative contract, generator, auditor, and tests. The
-auditor verifies every hash against both the live file and `git show` at that
-commit. A board generated before that clean commit is inadmissible.
+The six arms train serially into one exclusive read-only output tree. A
+read-only training manifest binds the base, canary, audit, tokenizer,
+implementation commit, every adapter artifact hash, every initial/final state
+hash, update count, parameter count, relation coefficient, and fixed compute
+proxy. Evaluation refuses an adapter unless all six artifacts exist, re-hash
+to the manifest, and the four information-matched arms have one initialization
+and identical compute ledgers.
+
+The evaluator receives confirmation prompts and cursor interventions but no
+gold action. It emits only full-vocabulary top-1 metadata and the five frozen
+action logits under canonical, clamped-zero, and deranged-cycle conditions.
+Each arm writes a separate exclusive read-only raw artifact and score-free
+receipt. All six receipts and their exact SHA-256 values must be mirrored and
+committed before the independent scorer is invoked. The scorer imports no
+evaluator code, re-hashes the base, manifest, adapters, canary, audit, live
+inference code, raw artifacts, and receipts, then applies the frozen full-vocab
+decision and 20,000 paired bootstrap replicates. A selector pass still records
+the atomic executor and one-call DONE/EOS gates as pending and never authorizes
+a reasoning claim.
+
+Persistent canary generation additionally refuses a dirty implementation
+surface. The canary records the pre-generation Git commit and SHA-256 of the
+theory, preregistration, declarative contract, generator, auditor, loader,
+objective, adapter factory, trainer, evaluator, scorer, jobs, and focused
+tests. The auditor verifies every hash against both the live file and `git
+show` at that commit. A canary generated before that clean commit is
+inadmissible.

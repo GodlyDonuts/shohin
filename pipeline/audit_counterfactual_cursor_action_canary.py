@@ -29,11 +29,28 @@ CONTRACT = ROOT / "pipeline/counterfactual_cursor_action_canary_contract_v1.json
 GENERATOR = ROOT / "pipeline/generate_counterfactual_cursor_action_canary.py"
 CONTRACT_SHA256 = "d767e2bf405364d929d6aab0b1e202d643b974e62e71adbddde012a09255a49b"
 IMPLEMENTATION_PATHS = (
+    "R12_COUNTERFACTUAL_CURSOR_ACTION_THEORY.md",
     "R12_COUNTERFACTUAL_CURSOR_ACTION_CPU_PREREG.md",
     "pipeline/counterfactual_cursor_action_canary_contract_v1.json",
     "pipeline/generate_counterfactual_cursor_action_canary.py",
     "pipeline/audit_counterfactual_cursor_action_canary.py",
     "pipeline/test_counterfactual_cursor_action_canary.py",
+    "train/model.py",
+    "train/counterfactual_cursor_action.py",
+    "train/counterfactual_cursor_action_data.py",
+    "train/counterfactual_cursor_action_objectives.py",
+    "train/counterfactual_cursor_action_training.py",
+    "train/train_counterfactual_cursor_action.py",
+    "train/eval_counterfactual_cursor_action.py",
+    "train/score_counterfactual_cursor_action.py",
+    "train/test_counterfactual_cursor_action.py",
+    "train/test_counterfactual_cursor_action_data.py",
+    "train/test_counterfactual_cursor_action_objectives.py",
+    "train/test_counterfactual_cursor_action_training.py",
+    "train/test_train_counterfactual_cursor_action.py",
+    "train/test_eval_counterfactual_cursor_action.py",
+    "train/jobs/counterfactual_cursor_action_canary.sbatch",
+    "train/jobs/eval_counterfactual_cursor_action.sbatch",
 )
 EXPECTED_EXPOSURE = {
     "sidecar_model_row_inputs": ["prompt_token_ids"],
@@ -71,6 +88,42 @@ def file_sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def reject_symlink_components(path: Path) -> Path:
+    absolute = Path(os.path.abspath(path))
+    for alias, target in {
+        Path("/var"): Path("/private/var"),
+        Path("/tmp"): Path("/private/tmp"),
+        Path("/etc"): Path("/private/etc"),
+    }.items():
+        if (
+            alias.is_symlink()
+            and alias.resolve() == target
+            and (absolute == alias or alias in absolute.parents)
+        ):
+            absolute = target / absolute.relative_to(alias)
+            break
+    current = Path(absolute.anchor)
+    for component in absolute.parts[1:]:
+        current /= component
+        if os.path.lexists(current) and stat.S_ISLNK(os.lstat(current).st_mode):
+            raise ValueError(f"symlink path component is forbidden: {current}")
+    return absolute
+
+
+def read_regular_file(path: Path, *, require_read_only: bool) -> bytes:
+    absolute = reject_symlink_components(path)
+    metadata = os.lstat(absolute)
+    require(stat.S_ISREG(metadata.st_mode), f"input is not a regular file: {absolute}")
+    if require_read_only:
+        require(metadata.st_mode & 0o222 == 0, f"input is writable: {absolute}")
+    descriptor = os.open(
+        absolute,
+        os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0),
+    )
+    with os.fdopen(descriptor, "rb") as source:
+        return source.read()
+
+
 def reject_duplicate_keys(pairs):
     result = {}
     for key, value in pairs:
@@ -81,7 +134,10 @@ def reject_duplicate_keys(pairs):
 
 
 def load_json_strict(path: Path) -> Any:
-    return json.loads(path.read_text(encoding="ascii"), object_pairs_hook=reject_duplicate_keys)
+    return json.loads(
+        read_regular_file(path, require_read_only=False).decode("ascii"),
+        object_pairs_hook=reject_duplicate_keys,
+    )
 
 
 def load_contract() -> dict[str, Any]:
@@ -199,11 +255,18 @@ def audit_document(
     canary_file_sha256: str | None = None, verify_commit: bool = False,
 ) -> dict[str, Any]:
     contract = load_contract()
-    require(file_sha256(tokenizer_path) == contract["tokenizer_sha256"], "tokenizer hash mismatch")
-    require(file_sha256(evalgrams_path) == contract["evalgrams_sha256"], "evalgrams hash mismatch")
-    tokenizer = Tokenizer.from_file(str(tokenizer_path))
-    with evalgrams_path.open("rb") as source:
-        evalgrams = pickle.load(source)
+    tokenizer_payload = read_regular_file(
+        tokenizer_path, require_read_only=verify_commit,
+    )
+    evalgrams_payload = read_regular_file(
+        evalgrams_path, require_read_only=verify_commit,
+    )
+    require(sha256_bytes(tokenizer_payload) == contract["tokenizer_sha256"],
+            "tokenizer hash mismatch")
+    require(sha256_bytes(evalgrams_payload) == contract["evalgrams_sha256"],
+            "evalgrams hash mismatch")
+    tokenizer = Tokenizer.from_str(tokenizer_payload.decode("utf-8"))
+    evalgrams = pickle.loads(evalgrams_payload)
     require(
         isinstance(evalgrams, dict)
         and evalgrams.get("n") == contract["evalgrams_n"]
@@ -502,13 +565,20 @@ def audit_document(
 
 
 def write_exclusive_read_only(path: Path, document: dict[str, Any]) -> None:
-    path = path.resolve()
+    path = Path(os.path.abspath(path))
+    reject_symlink_components(path)
     path.parent.mkdir(parents=True, exist_ok=True)
+    path = reject_symlink_components(path)
     if path.exists():
         raise FileExistsError(f"refusing to replace existing output: {path}")
     temporary = path.parent / f".{path.name}.{os.getpid()}.tmp"
     payload = json.dumps(document, indent=2, sort_keys=True).encode("ascii") + b"\n"
-    descriptor = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    descriptor = os.open(
+        temporary,
+        os.O_WRONLY | os.O_CREAT | os.O_EXCL
+        | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0),
+        0o600,
+    )
     try:
         with os.fdopen(descriptor, "wb") as handle:
             handle.write(payload)
@@ -528,8 +598,8 @@ def write_exclusive_read_only(path: Path, document: dict[str, Any]) -> None:
 
 
 def require_regular_read_only(path: Path) -> None:
-    require(not path.is_symlink(), "canary input may not be a symlink")
-    mode = path.stat().st_mode
+    absolute = reject_symlink_components(path)
+    mode = os.lstat(absolute).st_mode
     require(stat.S_ISREG(mode), "canary input is not a regular file")
     require(mode & 0o222 == 0, "canary input is not read-only")
 
@@ -543,10 +613,15 @@ def main() -> None:
     parser.add_argument("--verify-commit", action="store_true")
     arguments = parser.parse_args()
     require_regular_read_only(arguments.canary)
-    document = load_json_strict(arguments.canary)
+    require_regular_read_only(arguments.tokenizer)
+    require_regular_read_only(arguments.evalgrams)
+    canary_payload = read_regular_file(arguments.canary, require_read_only=True)
+    document = json.loads(
+        canary_payload.decode("ascii"), object_pairs_hook=reject_duplicate_keys,
+    )
     report = audit_document(
         document, arguments.tokenizer, arguments.evalgrams,
-        canary_file_sha256=file_sha256(arguments.canary),
+        canary_file_sha256=sha256_bytes(canary_payload),
         verify_commit=arguments.verify_commit,
     )
     write_exclusive_read_only(arguments.out, report)

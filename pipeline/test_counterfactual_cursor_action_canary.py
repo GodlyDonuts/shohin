@@ -1,5 +1,6 @@
 import copy
 import pickle
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -9,6 +10,14 @@ import generate_counterfactual_cursor_action_canary as generate
 
 
 ROOT = Path(__file__).resolve().parents[1]
+TRAIN = ROOT / "train"
+if str(TRAIN) not in sys.path:
+    sys.path.insert(0, str(TRAIN))
+
+from counterfactual_cursor_action_data import (  # noqa: E402
+    IMPLEMENTATION_PATHS as LOADER_IMPLEMENTATION_PATHS,
+)
+
 TOKENIZER = ROOT / "artifacts/shohin-tok-32k.json"
 EVALGRAMS = ROOT / "artifacts/evals/evalgrams.pkl"
 
@@ -20,6 +29,10 @@ class CounterfactualCursorActionCanaryTest(unittest.TestCase):
 
     def setUp(self):
         self.candidate = copy.deepcopy(self.document)
+
+    def test_implementation_ledgers_are_identical(self):
+        self.assertEqual(generate.IMPLEMENTATION_PATHS, audit.IMPLEMENTATION_PATHS)
+        self.assertEqual(generate.IMPLEMENTATION_PATHS, LOADER_IMPLEMENTATION_PATHS)
 
     def rehash(self, split=None):
         if split is not None:

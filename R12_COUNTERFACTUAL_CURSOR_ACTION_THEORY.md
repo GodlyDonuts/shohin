@@ -154,21 +154,24 @@ For each fixed source `x`, all five cursor interventions are present. For each
 renderer and operand assignment, all 24 clause-order permutations are present.
 Every arm receives byte-identical rows and targets.
 
-The proposed treatment adds three relation losses to ordinary action
-cross-entropy:
+The proposed treatment adds three relation losses to ordinary full-vocabulary
+action cross-entropy. Relation matching is computed only on the five frozen
+action-token logits after subtracting each row's mean; this removes an
+unidentifiable common-logit offset without renormalizing away relative action
+evidence:
 
 1. **Cursor interchange:** swapping `c` while holding the source fixed must
    swap the preferred action to the target at the donor cursor.
 2. **Adjacent-order equivariance:** applying an adjacent transposition to two
    source clauses must swap only the affected cursor targets.
 3. **Renderer invariance:** sources with the same ordered clauses but different
-   renderers must agree on action logits at every cursor.
+   renderers must agree on centered restricted action logits at every cursor.
 
 These losses reveal no target that is absent from the ordinary rows. Their only
 possible contribution is an optimization bias toward the intended relation.
 A relation-sham arm receives the same tensor counts, coefficients, and
-computation with deterministically wrong pairings. Its numerical loss magnitude
-is model-dependent and is not asserted equal.
+computation with every local cursor relation rotated by exactly `+1 mod 5`.
+Its numerical loss magnitude is model-dependent and is not asserted equal.
 
 ## 6. Identifiability limits
 

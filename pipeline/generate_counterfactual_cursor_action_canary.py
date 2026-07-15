@@ -8,6 +8,7 @@ import hashlib
 import itertools
 import json
 import os
+import stat
 import subprocess
 from pathlib import Path
 from typing import Any
@@ -26,11 +27,28 @@ CONTRACT_PATH = Path(__file__).resolve().with_name(
 )
 CONTRACT_SHA256 = "d767e2bf405364d929d6aab0b1e202d643b974e62e71adbddde012a09255a49b"
 IMPLEMENTATION_PATHS = (
+    "R12_COUNTERFACTUAL_CURSOR_ACTION_THEORY.md",
     "R12_COUNTERFACTUAL_CURSOR_ACTION_CPU_PREREG.md",
     "pipeline/counterfactual_cursor_action_canary_contract_v1.json",
     "pipeline/generate_counterfactual_cursor_action_canary.py",
     "pipeline/audit_counterfactual_cursor_action_canary.py",
     "pipeline/test_counterfactual_cursor_action_canary.py",
+    "train/model.py",
+    "train/counterfactual_cursor_action.py",
+    "train/counterfactual_cursor_action_data.py",
+    "train/counterfactual_cursor_action_objectives.py",
+    "train/counterfactual_cursor_action_training.py",
+    "train/train_counterfactual_cursor_action.py",
+    "train/eval_counterfactual_cursor_action.py",
+    "train/score_counterfactual_cursor_action.py",
+    "train/test_counterfactual_cursor_action.py",
+    "train/test_counterfactual_cursor_action_data.py",
+    "train/test_counterfactual_cursor_action_objectives.py",
+    "train/test_counterfactual_cursor_action_training.py",
+    "train/test_train_counterfactual_cursor_action.py",
+    "train/test_eval_counterfactual_cursor_action.py",
+    "train/jobs/counterfactual_cursor_action_canary.sbatch",
+    "train/jobs/eval_counterfactual_cursor_action.sbatch",
 )
 EXPOSURE_CONTRACT = {
     "sidecar_model_row_inputs": ["prompt_token_ids"],
@@ -60,6 +78,43 @@ def file_sha256(path: Path) -> str:
         for chunk in iter(lambda: source.read(1 << 20), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def reject_symlink_components(path: Path) -> Path:
+    absolute = Path(os.path.abspath(path))
+    for alias, target in {
+        Path("/var"): Path("/private/var"),
+        Path("/tmp"): Path("/private/tmp"),
+        Path("/etc"): Path("/private/etc"),
+    }.items():
+        if (
+            alias.is_symlink()
+            and alias.resolve() == target
+            and (absolute == alias or alias in absolute.parents)
+        ):
+            absolute = target / absolute.relative_to(alias)
+            break
+    current = Path(absolute.anchor)
+    for component in absolute.parts[1:]:
+        current /= component
+        if os.path.lexists(current) and stat.S_ISLNK(os.lstat(current).st_mode):
+            raise ValueError(f"symlink path component is forbidden: {current}")
+    return absolute
+
+
+def read_regular_file(path: Path, *, require_read_only: bool) -> bytes:
+    absolute = reject_symlink_components(path)
+    metadata = os.lstat(absolute)
+    if not stat.S_ISREG(metadata.st_mode):
+        raise ValueError(f"input is not a regular file: {absolute}")
+    if require_read_only and metadata.st_mode & 0o222:
+        raise ValueError(f"input is writable: {absolute}")
+    descriptor = os.open(
+        absolute,
+        os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0),
+    )
+    with os.fdopen(descriptor, "rb") as source:
+        return source.read()
 
 
 def reject_duplicate_keys(pairs):
@@ -286,9 +341,12 @@ def generate_split(
 
 def generate_document(tokenizer_path: Path, bind_identity: bool = True) -> dict[str, Any]:
     contract = load_contract()
-    if file_sha256(tokenizer_path) != contract["tokenizer_sha256"]:
+    tokenizer_payload = read_regular_file(
+        tokenizer_path, require_read_only=bind_identity,
+    )
+    if sha256_bytes(tokenizer_payload) != contract["tokenizer_sha256"]:
         raise ValueError("canary tokenizer hash mismatch")
-    tokenizer = Tokenizer.from_file(str(tokenizer_path))
+    tokenizer = Tokenizer.from_str(tokenizer_payload.decode("utf-8"))
     document = {
         "schema": SCHEMA,
         "canary_id": CANARY_ID,
@@ -314,13 +372,20 @@ def generate_document(tokenizer_path: Path, bind_identity: bool = True) -> dict[
 
 
 def write_exclusive_read_only(path: Path, document: dict[str, Any]) -> None:
-    path = path.resolve()
+    path = Path(os.path.abspath(path))
+    reject_symlink_components(path)
     path.parent.mkdir(parents=True, exist_ok=True)
+    path = reject_symlink_components(path)
     if path.exists():
         raise FileExistsError(f"refusing to replace existing output: {path}")
     temporary = path.parent / f".{path.name}.{os.getpid()}.tmp"
     payload = json.dumps(document, indent=2, sort_keys=True).encode("ascii") + b"\n"
-    descriptor = os.open(temporary, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    descriptor = os.open(
+        temporary,
+        os.O_WRONLY | os.O_CREAT | os.O_EXCL
+        | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0),
+        0o600,
+    )
     try:
         with os.fdopen(descriptor, "wb") as handle:
             handle.write(payload)
