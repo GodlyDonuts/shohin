@@ -604,8 +604,8 @@ be promoted on loss, formatting, generator holdouts, or a single benchmark movem
   Immutable raw-260k remains the causal-diagnostic reference at checkpoint
   SHA-256 `91d5288f184fc5230516add9851ac1a8815d3369ffd816cd7d0c03d8bafc741d`.
 - Live continuation `686732`: two H100s, `BS=32`, `ACC=4`, exact same 524,288
-  tokens/update. At 2026-07-15 12:30 EDT it was healthy through step 280,410 at
-  about 282.20k tok/s, loss 1.6450, gnorm 0.10, and LR 0.0020.
+  tokens/update. At 2026-07-15 16:20 EDT it was healthy through step 287,910 at
+  about 282.37k tok/s, loss 1.5960, gnorm 0.10, and LR 0.0014.
 
 ### Raw-260k capability accounting
 
@@ -620,6 +620,7 @@ be promoted on loss, formatting, generator holdouts, or a single benchmark movem
 | Frozen updater candidate likelihood | 6 prompts / 5 candidates / 30 forwards | correct normalized/total/plus-EOS wins 0/6; EOS top-1 0/6; mean winning gap 0.653693 nats/token | `4ca100029806c933ba1d3137044c040b468d380ae9bb9f5efeadcbc949374525`; independently replayed exactly |
 | Strict operation-cursor diagnostic | 64 cases / 176 transitions / 528 calls | parse 0/528; all 16,896 sampled tokens hit the 32-token cap; EOS stops 0/528; semantic scores are interface-confounded zeros | `5ba772ec68aaa445d1252022f00285fa83b3403f3376437d4386d143619da681`; `R12_OPERATION_CURSOR_RESULT.md` |
 | Future-operation Jacobian probe | 12 primary cases reached; first replication intervention invalid | failed closed before a result because the norm-matched swap was below the frozen minimum relative norm; no score artifact | log `60e26d88432675f233b3b1a2c58e0d06814d12eee03bacb2954ad15a0d2c3804`; `R12_OPERATION_WORKSPACE_JACOBIAN_RESULT.md` |
+| Restricted operation-selection likelihood | 64 cases / 176 transitions / 3 arms / 528 forwards / 2,112 candidate logits | full source+cursor 80/176 vs controls 64/176, but only 1/112 adjacent prediction changes, 0/64 exact schedules, and no multiply/remainder predictions; lexical family cue, not cursor scheduler | result `772050a9c30c229ff200f81895a01377c63a7e07a8ccc7e944afc54779bca5b6`; receipt `73e4241a00e40d4ed7491039f4b9410931a5e46164dc59c86ae07893857b3dd1` |
 
 The 10/20 result is not autonomous model reasoning. The controller imports the
 public operation schedule, parses integers, carries model-produced state, and
@@ -665,6 +666,28 @@ No fit was launched. An adversarial implementation audit found a broken
 relation-sham stratum contract, an independent-audit bypass, and a scorer that
 could accept arbitrary checkpoint bytes plus hand-authored success rows. The
 locked preregistration therefore closes v1 before its planned 60 fits.
+
+### Counterfactual cursor-action mechanics accounting
+
+- Primitive verdict: exact finite-state/pointer collapse; **not** a new
+  computational primitive.
+- Frozen mechanics board: 600 cells = 24 operation permutations x five
+  content-matched renderers x five cursor/DONE states; 120 unique sources, 180
+  adjacent-order pairs, and 24 five-renderer groups.
+- Exact label counts: add/subtract/multiply/remainder/DONE are 120 each.
+- Exact symbolic scores: source+cursor oracle 600/600; best cursor-only and
+  renderer+cursor 240/600; global/source-only/renderer-only/clamped-zero
+  120/600; fixed five-cycle cursor 0/600.
+- Exact collapse checks: 12 event states, eight event classes, 96 one-hot FSM
+  assertions, and 320 exact query-projection-folding assertions.
+- Custody: implementation commit `bde30db0fd89f143463a09eaf403f38bc6d31128`;
+  board SHA-256 `02a202070efa45f14c4e53b7d7f532d98791c7eef9daf438b02d31cc0ec6ab95`;
+  row SHA-256 `64710b7ca5f5da910f4e784b86c3f5c600a488c0899d070c4d8798ba6836435a`;
+  audit SHA-256 `c64951a1369b3dd29ca7e651840e5644e8445c7236cf994c3e54f05ca4a844b2`.
+- Verification: eight mutation-focused unit tests, `py_compile`, and Ruff pass.
+- Claim boundary: this only admits implementation of matched CPU neural
+  plumbing. It is not a model score, not autonomous execution, and not a
+  reasoning result. No H100 fit has been submitted.
 
 ## Update Protocol
 

@@ -1,0 +1,115 @@
+{
+  "all_passed": true,
+  "auditor_sha256": "40969931337c7894d232e6095ffd73ea93f68978fb9f1e9351a16dc6b23e9dd7",
+  "board_canonical_sha256": "c378ed307777fcc76cc6421bba146dca517dab540a6890d27e93629fdb0e18de",
+  "board_file_sha256": "02a202070efa45f14c4e53b7d7f532d98791c7eef9daf438b02d31cc0ec6ab95",
+  "board_id": "ccaa-mechanics-600-v1",
+  "board_rows_sha256": "64710b7ca5f5da910f4e784b86c3f5c600a488c0899d070c4d8798ba6836435a",
+  "claim_boundary": "A pass establishes finite board geometry and shortcut rejection only; it does not establish a novel primitive, neural learnability, autonomous execution, or reasoning.",
+  "collapse": {
+    "event_classes": 8,
+    "event_fsm_realizations_equal": true,
+    "event_fsm_states": 12,
+    "event_transition_assertions": 96,
+    "fixed_duration_checked_steps": 11,
+    "fixed_duration_cursor_sequence": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "fixed_duration_realizations_equal": true,
+    "primitive_novelty_rejected": true,
+    "query_projection_assertions": 320,
+    "query_projection_folded": true,
+    "valid_event_trace": [
+      [
+        0,
+        "SELECT"
+      ],
+      [
+        1,
+        "EXECUTE"
+      ],
+      [
+        1,
+        "SELECT"
+      ],
+      [
+        2,
+        "EXECUTE"
+      ],
+      [
+        2,
+        "SELECT"
+      ],
+      [
+        3,
+        "EXECUTE"
+      ],
+      [
+        3,
+        "SELECT"
+      ],
+      [
+        4,
+        "EXECUTE"
+      ],
+      [
+        4,
+        "SELECT"
+      ],
+      [
+        "HALT_PENDING",
+        "HALT_PENDING"
+      ],
+      [
+        "HALT",
+        "HALT"
+      ]
+    ]
+  },
+  "contract_sha256": "a7061e553b13189e91d25a19f164ccdecfe49404591f1fe0ecfa83b72b690a3c",
+  "counts": {
+    "adjacent_order_pairs": 180,
+    "renderer_groups": 24,
+    "rows": 600,
+    "sources": 120
+  },
+  "implementation_identity": {
+    "file_sha256": {
+      "R12_COUNTERFACTUAL_CURSOR_ACTION_CPU_PREREG.md": "14a73fc7565566ff520bdb6b1524ce968cc283385b833b049f55cd1e4deeec1e",
+      "R12_COUNTERFACTUAL_CURSOR_ACTION_THEORY.md": "2c634edc5e174b39f106971f86adea083ed0e3f9c16a5e0fe0fda4b29a62a364",
+      "pipeline/audit_counterfactual_cursor_action_board.py": "40969931337c7894d232e6095ffd73ea93f68978fb9f1e9351a16dc6b23e9dd7",
+      "pipeline/counterfactual_cursor_action_contract_v1.json": "a7061e553b13189e91d25a19f164ccdecfe49404591f1fe0ecfa83b72b690a3c",
+      "pipeline/generate_counterfactual_cursor_action_board.py": "2f2cf44a716dfe24f396bed9cde39cc7480ebcceac5d706fc657af2d8c1dfd21",
+      "pipeline/test_counterfactual_cursor_action_board.py": "cb64f22735ec6f76c16ed936d808f7330631e8257017994a67c8f21c0c5b53b3"
+    },
+    "git_commit": "bde30db0fd89f143463a09eaf403f38bc6d31128"
+  },
+  "schema": "counterfactual_cursor_action_board_audit_v1",
+  "symbolic_scores": {
+    "best_cursor_only": 240,
+    "best_renderer_cursor": 240,
+    "best_renderer_only": 120,
+    "best_source_only": 120,
+    "global_constant": 120,
+    "oracle_cursor_clamped_zero": 120,
+    "oracle_cursor_five_cycle": 0,
+    "oracle_source_cursor": 600
+  },
+  "target_counts": {
+    "DONE": 120,
+    "add": 120,
+    "multiply": 120,
+    "remainder": 120,
+    "subtract": 120
+  }
+}
