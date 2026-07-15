@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-15 02:23 EDT (the protected two-H100 pretrain reached the exact 260k checkpoint, or 136,314,880,000 nominal update tokens. Newton `ckpt_0260000.pt` and promoted `best_step260000.pt` match at MD5 `301082250e15c26820790ec7ff7730a0`. The Mac has a 1,035,468,800 / 1,076,598,762-byte resumable `.part`; the final transfer and local hash await restoration of the campus SSH route and must not be restarted. R9c is a closed neural and mathematical negative. R10 and R11 are dormant controls. R12 is theory-only: exact state, fork-core compression, coherent profile extension, arbitrary late-query compression, and secret-shared causal bootstrapping have collapsed to established objects or lower bounds. `R12_STRUCTURED_RESIDUAL_RESOURCE_LAW.md` proves that structure can exponentially reduce description and global-certification cost relative to an explicit table, but never the residual information bound; its linear positive family collapses to weighted automata/PSRs. The next target is a nonlinear learnability separation with bounded precision, stable online update, and sublinear residual innovation. No R12 implementation, data, fit, score, CPU board, or GPU job is authorized. Irreversible source deletion is forbidden.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-15 02:34 EDT (the protected two-H100 pretrain reached the exact 260k checkpoint, or 136,314,880,000 nominal update tokens. Newton `ckpt_0260000.pt` and promoted `best_step260000.pt` match at MD5 `301082250e15c26820790ec7ff7730a0`. The Mac has a 1,035,468,800 / 1,076,598,762-byte resumable `.part`; the final transfer and local hash await restoration of the campus SSH route and must not be restarted. R9c is a closed neural and mathematical negative. R10 and R11 are dormant controls. R12 is theory-only: exact state, fork-core compression, coherent profile extension, arbitrary late-query compression, secret sharing, finite relation loss, unrestricted MDL, and unsupervised latent locality have collapsed to established objects or lower bounds. Matroid closure is retained as the first deduction-shaped target, and local reversible rules as the strongest nonlinear structured control; both still assume latent structure. Adaptive ordinary traces are conjugacy-invariant, so a survivor must supply a task-native observable symmetry breaker without labeling hidden axes, plus bounded precision, runtime noise stability, and sublinear residual innovation. No R12 implementation, data, fit, score, CPU board, or GPU job is authorized. Irreversible source deletion is forbidden.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4674,3 +4674,26 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   trivial, conjugate, and nonfaithful actions add further ambiguity. Relations certify already identified local
   maps rather than identify them. `R12_AXIOMATIC_PRESENTATION_NO_GO.md` freezes the theorem, finite-test no-free-
   lunch boundary, resource ledger, and prior-art collapse. No CPU falsifier or Shohin fit was authorized.
+
+- **2026-07-15 02:30** — **Three further R12 boundaries are frozen before compute.** Matroid
+  closure supplies a real deduction target: exact states are flats and fixed rank-`r` flat readouts have VC
+  dimension exactly `r`, but binary projective families still require roughly `r^2/4` exact state bits and the
+  learnability theorem assumes the matroid class. Local reversible `k`-bit rules give a polynomial noisy-sample
+  theorem and a nonlinear action whose balanced-readout Hankel family has full rank `2^n`; however, the result
+  is handed wire coordinates, affected tuples, and rule sharing, all destroyed by arbitrary latent conjugacy.
+  Unrestricted MDL is rejected: exact success assumes a characteristic set against every shorter incorrect
+  program, delayed failure costs only `O(log L)`, the reference machine changes the ranking, and ideal shortest-
+  total-program selection is uncomputable. `R12_MATROID_CLOSURE_TARGET.md`,
+  `R12_LOCAL_REVERSIBLE_RULE_CONTROL.md`, and `R12_MDL_IDENTIFIABILITY_NO_GO.md` freeze these results. No CPU or
+  GPU experiment was authorized; current pure-math lanes attack hidden-coordinate identifiability, runtime-noise
+  correction, matroid learnability from ordinary traces, and verifiable witness state.
+
+- **2026-07-15 02:34** — **A conjugacy theorem closes unsupervised discovery of latent
+  locality from ordinary adaptive traces.** Simultaneously conjugating hidden dynamics and interventions and
+  pulling back the observation kernel leaves every adaptive transcript distribution unchanged, so coordinates,
+  support size, sparsity, and locality are not identifiable in a conjugacy-closed class. A finite positive result
+  recovers product axes from a complete family of opaque atomic resets using their noncommutation graph and fixed
+  sets, but those resets already carry a coordinate signature and collapse to interventional causal representation
+  learning. `R12_HIDDEN_COORDINATE_IDENTIFIABILITY_NO_GO.md` freezes the proof and prior-art boundary. R12 now
+  requires a task-native observable asymmetry that breaks conjugacy without labeling the hidden axes. No CPU
+  falsifier or neural fit was authorized.

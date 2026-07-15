@@ -3272,3 +3272,69 @@ many relation suites. Relations are therefore global consistency certificates
 for already identified local maps, not a source of identifiability. The
 remaining target must explain how a small robust hypothesis class is learned
 and how its determining set is covered without hard-coding the algebra.
+
+### R12 Matroid Closure Deduction Target
+
+`R12_MATROID_CLOSURE_TARGET.md` identifies the first deduction-shaped residual
+family worth retaining. Histories accumulate matroid premises and a late query
+asks whether an element lies in their closure. Exact causal states are flats,
+and the flat-indicator concept class of a fixed rank-`r` matroid has VC
+dimension exactly `r`, versus `|E|` for arbitrary subset readouts. A binary
+rank-two witness already derives `c=a+b` from `{a,b}`.
+
+The gain is conditional. Binary projective matroids still have
+`2^(r^2/4+O(r))` flats, so exact state needs quadratic bits, and the VC theorem
+assumes the target matroid class is known. With supplied coordinates the
+mechanism is Gaussian elimination; with a closure oracle it is standard
+matroid learning; over unrestricted unknown matroids the class can recover
+arbitrary subsets. The open gate is learning a compact robust closure action
+from ordinary traces without handed coordinates, circuits, or oracle access.
+
+### R12 Local Reversible Rule Control
+
+`R12_LOCAL_REVERSIBLE_RULE_CONTROL.md` records a nonlinear polynomial
+presentation that does not collapse to low-rank PSR machinery. With labeled
+wire tuples and shared rule labels, `L` unknown reversible `k`-bit maps are
+recoverable from noisy transitions in roughly
+`L 2^k (1-2 eta)^-2 log(L k 2^k/delta)` samples. NOT plus Toffoli supports
+universal reversible computation, while a balanced-readout Hankel family has
+full rank `2^n` and resists low-rank approximation.
+
+This is a hard control, not the invention. An arbitrary conjugacy destroys the
+visible wire locality while preserving abstract behavior. The theorem assumes
+the coordinates, affected wires, and sharing map that R12 must discover, and it
+does not correct runtime state noise. Any candidate must beat this control with
+identical ordinary observations and no structural side channel.
+
+### R12 MDL Identifiability No-Go
+
+`R12_MDL_IDENTIFIABILITY_NO_GO.md` rejects shortest-consistent-program
+selection as the missing extrapolation law. Exact identification requires the
+finite data to distinguish the target from every equally short incorrect
+program, which is precisely a characteristic teaching-set assumption. A
+delayed-failure program costs only `O(log L)` extra bits, finite off-support
+patches survive, the code ordering depends on the universal machine, and the
+ideal shortest-total-program selector is uncomputable.
+
+The valid remainder is a classical iid Occam bound: a zero-error prefix program
+of length `K` has risk at most approximately `(K ln 2 + ln(1/delta))/n`. MDL is
+therefore retained as a regularizer inside an independently identified
+hypothesis class, not as a reasoning mechanism. No CPU experiment is
+authorized on MDL alone.
+
+### R12 Hidden-Coordinate Identifiability No-Go
+
+`R12_HIDDEN_COORDINATE_IDENTIFIABILITY_NO_GO.md` proves that adaptive ordinary
+observations cannot reveal locality in a conjugacy-closed model class. For any
+latent bijection `phi`, conjugating dynamics and interventions and pulling back
+the observation kernel preserves every adaptive transcript distribution.
+Locality, factorization, and sparsity are therefore not observational
+properties without an additional symmetry breaker.
+
+The strongest finite positive result uses the full family of opaque atomic
+resets. Their noncommutation graph recovers coordinate groups and their fixed
+sets recover coordinate values, giving polynomial identification up to axis
+and value relabeling. But the interventions already encode the axes and the
+result collapses to interventional causal representation learning. The next
+candidate must name a task-native observable asymmetry that is weaker than a
+coordinate oracle yet quantitatively breaks the conjugacy.
