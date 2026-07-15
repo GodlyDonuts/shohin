@@ -7,13 +7,16 @@ from counterfactual_cursor_action import (
     HALT,
     HALT_PENDING,
     SELECT,
+    CursorTableSidecar,
     CursorQSidecar,
     DecodeState,
     EventTokenManifest,
     FrozenBaseCursorSelector,
+    RankOneQueryLoRA,
     advance_state,
     centered_cursor_bits,
     initial_state,
+    selector_position_grid,
     teacher_forced_state_grid,
 )
 from model import GPT, GPTConfig
@@ -60,6 +63,15 @@ class CounterfactualCursorActionTest(unittest.TestCase):
         delta = sidecar(grid, mask)
         self.assertTrue(torch.equal(delta[:, 1], torch.zeros_like(delta[:, 1])))
         self.assertFalse(torch.equal(delta[:, 0], torch.zeros_like(delta[:, 0])))
+        table = CursorTableSidecar(64)
+        self.assertEqual(table.metadata()["parameters"], 512)
+
+    def test_padded_selector_positions(self):
+        cursor = torch.tensor([1, 4])
+        positions = torch.tensor([2, 5])
+        grid, mask = selector_position_grid(cursor, positions, 7)
+        self.assertEqual(grid.tolist(), [[1] * 7, [4] * 7])
+        self.assertEqual(mask.nonzero().tolist(), [[0, 2], [1, 5]])
 
     def test_event_fsm_and_batch_independence(self):
         state = DecodeState(
@@ -101,6 +113,23 @@ class CounterfactualCursorActionTest(unittest.TestCase):
         self.assertIsNotNone(model.sidecar.projection.weight.grad)
         self.assertTrue(torch.isfinite(model.sidecar.projection.weight.grad).all())
         self.assertTrue(all(parameter.grad is None for parameter in model.base.parameters()))
+
+    def test_rank_one_text_lora_parity_and_gradients(self):
+        model = GPT(self.cfg).eval()
+        for parameter in model.parameters():
+            parameter.requires_grad_(False)
+        adapter = RankOneQueryLoRA(self.cfg.d_model, self.cfg.d_model // self.cfg.n_head)
+        self.assertEqual(adapter.metadata()["parameters"], 24)
+        ids = torch.randint(0, self.cfg.vocab_size, (2, 8))
+        expected, _ = model(ids)
+        observed, _ = model(ids, q_adapter=adapter, q_delta_layer=-1, q_delta_head=0)
+        self.assertTrue(torch.equal(expected, observed))
+        observed[:, -1].sum().backward()
+        self.assertIsNotNone(adapter.up.weight.grad)
+        self.assertTrue(torch.isfinite(adapter.up.weight.grad).all())
+        self.assertTrue(all(parameter.grad is None for parameter in model.parameters()))
+        production = RankOneQueryLoRA(576, 64)
+        self.assertEqual(production.metadata()["parameters"], 640)
 
     def test_cached_decode_matches_full_replay(self):
         model = GPT(self.cfg).eval()

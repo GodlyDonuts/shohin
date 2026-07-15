@@ -136,6 +136,64 @@ class CursorQSidecar(nn.Module):
         }
 
 
+class CursorTableSidecar(nn.Module):
+    """Favorable explicit eight-entry table for the three-bit cursor code."""
+
+    def __init__(self, head_dim: int = 64):
+        super().__init__()
+        if head_dim <= 0:
+            raise ValueError("head_dim must be positive")
+        self.table = nn.Embedding(8, head_dim)
+        nn.init.zeros_(self.table.weight)
+
+    def forward(self, cursor: torch.Tensor, select_mask: torch.Tensor) -> torch.Tensor:
+        if cursor.shape != select_mask.shape:
+            raise ValueError("cursor and select_mask shapes differ")
+        if cursor.dtype != torch.long or select_mask.dtype != torch.bool:
+            raise ValueError("cursor/select-mask dtypes are invalid")
+        if bool(((cursor < 0) | (cursor > 4)).any()):
+            raise ValueError("cursor is outside [0,4]")
+        delta = self.table(cursor)
+        return delta * select_mask.unsqueeze(-1).to(delta.dtype)
+
+    def metadata(self) -> dict[str, int | str]:
+        return {
+            "schema": "counterfactual_cursor_table_sidecar_v1",
+            "parameters": self.table.weight.numel(),
+            "entries": self.table.num_embeddings,
+            "head_dim": self.table.embedding_dim,
+        }
+
+
+class RankOneQueryLoRA(nn.Module):
+    """Rank-one LoRA applied to one query-head slice from normalized block input."""
+
+    def __init__(self, d_model: int, head_dim: int, seed: int = 2026071505):
+        super().__init__()
+        if d_model <= 0 or head_dim <= 0:
+            raise ValueError("LoRA dimensions must be positive")
+        self.down = nn.Linear(d_model, 1, bias=False)
+        self.up = nn.Linear(1, head_dim, bias=False)
+        generator = torch.Generator(device="cpu").manual_seed(seed)
+        with torch.no_grad():
+            self.down.weight.normal_(0.0, d_model ** -0.5, generator=generator)
+            self.up.weight.zero_()
+
+    def forward(self, hidden: torch.Tensor) -> torch.Tensor:
+        if hidden.ndim != 3 or hidden.shape[-1] != self.down.in_features:
+            raise ValueError("LoRA hidden input has the wrong shape")
+        return self.up(self.down(hidden))
+
+    def metadata(self) -> dict[str, int | str]:
+        return {
+            "schema": "counterfactual_text_cursor_q_lora_v1",
+            "parameters": sum(parameter.numel() for parameter in self.parameters()),
+            "rank": 1,
+            "d_model": self.down.in_features,
+            "head_dim": self.up.out_features,
+        }
+
+
 def selector_grid(cursor: torch.Tensor, tokens: int) -> tuple[torch.Tensor, torch.Tensor]:
     """Place a supplied selector cursor only at each sequence's final position."""
     if cursor.dtype != torch.long or cursor.ndim != 1:
@@ -145,6 +203,22 @@ def selector_grid(cursor: torch.Tensor, tokens: int) -> tuple[torch.Tensor, torc
     grid = cursor[:, None].expand(-1, tokens).clone()
     mask = torch.zeros_like(grid, dtype=torch.bool)
     mask[:, -1] = True
+    return grid, mask
+
+
+def selector_position_grid(
+    cursor: torch.Tensor, positions: torch.Tensor, tokens: int,
+) -> tuple[torch.Tensor, torch.Tensor]:
+    """Place each cursor intervention at its own right-padded final position."""
+    if cursor.dtype != torch.long or cursor.ndim != 1:
+        raise ValueError("cursor must be an int64 batch vector")
+    if positions.dtype != torch.long or positions.shape != cursor.shape:
+        raise ValueError("positions must be an int64 batch vector")
+    if tokens <= 0 or bool(((positions < 0) | (positions >= tokens)).any()):
+        raise ValueError("selector position is outside the token grid")
+    grid = cursor[:, None].expand(-1, tokens).clone()
+    mask = torch.zeros_like(grid, dtype=torch.bool)
+    mask.scatter_(1, positions[:, None], True)
     return grid, mask
 
 

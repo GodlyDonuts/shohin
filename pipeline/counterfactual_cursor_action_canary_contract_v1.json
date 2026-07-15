@@ -1,0 +1,230 @@
+{
+  "schema": "counterfactual_cursor_action_canary_contract_v1",
+  "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4",
+  "evalgrams_n": 13,
+  "evalgrams_sha256": "e0d0a8cf1fa0313be9d1250d7eec0f38df0812b3bf4e8a084c53de97e3d65522",
+  "prompt_suffix": "\nNext action:",
+  "operations": [
+    {"name": "add", "target_text": " add", "target_token_id": 820},
+    {"name": "subtract", "target_text": " subtract", "target_token_id": 5498},
+    {"name": "multiply", "target_text": " multiply", "target_token_id": 4307},
+    {"name": "remainder", "target_text": " remainder", "target_token_id": 7486}
+  ],
+  "done": {"name": "DONE", "target_text": " done", "target_token_id": 2165},
+  "event_tokens": {"commit_text": " commit", "commit_token_id": 3694, "eos_token_id": 0},
+  "text_cursor_suffixes": [
+    "\nCursor: first.\nNext action:",
+    "\nCursor: second.\nNext action:",
+    "\nCursor: third.\nNext action:",
+    "\nCursor: fourth.\nNext action:",
+    "\nCursor: complete.\nNext action:"
+  ],
+  "splits": {
+    "train": {
+      "renderer_ids": [0, 1, 2, 3, 4, 5],
+      "packs": [
+        {"start": 17, "add": 2, "subtract": 3, "multiply": 4, "remainder": 5},
+        {"start": 17, "add": 3, "subtract": 4, "multiply": 5, "remainder": 2},
+        {"start": 17, "add": 4, "subtract": 5, "multiply": 2, "remainder": 3},
+        {"start": 17, "add": 5, "subtract": 2, "multiply": 3, "remainder": 4},
+        {"start": 23, "add": 6, "subtract": 7, "multiply": 8, "remainder": 9},
+        {"start": 23, "add": 7, "subtract": 8, "multiply": 9, "remainder": 6},
+        {"start": 23, "add": 8, "subtract": 9, "multiply": 6, "remainder": 7},
+        {"start": 23, "add": 9, "subtract": 6, "multiply": 7, "remainder": 8}
+      ]
+    },
+    "development": {
+      "renderer_ids": [6, 7],
+      "packs": [
+        {"start": 107, "add": 101, "subtract": 102, "multiply": 103, "remainder": 104},
+        {"start": 107, "add": 102, "subtract": 103, "multiply": 104, "remainder": 101},
+        {"start": 107, "add": 103, "subtract": 104, "multiply": 101, "remainder": 102},
+        {"start": 107, "add": 104, "subtract": 101, "multiply": 102, "remainder": 103}
+      ]
+    },
+    "confirmation": {
+      "renderer_ids": [8, 9, 10, 11, 12],
+      "packs": [
+        {"start": 211, "add": 201, "subtract": 202, "multiply": 203, "remainder": 204},
+        {"start": 211, "add": 202, "subtract": 203, "multiply": 204, "remainder": 201},
+        {"start": 211, "add": 203, "subtract": 204, "multiply": 201, "remainder": 202},
+        {"start": 211, "add": 204, "subtract": 201, "multiply": 202, "remainder": 203},
+        {"start": 213, "add": 205, "subtract": 206, "multiply": 207, "remainder": 208},
+        {"start": 213, "add": 206, "subtract": 207, "multiply": 208, "remainder": 205},
+        {"start": 213, "add": 207, "subtract": 208, "multiply": 205, "remainder": 206},
+        {"start": 213, "add": 208, "subtract": 205, "multiply": 206, "remainder": 207}
+      ]
+    }
+  },
+  "renderers": [
+    {
+      "renderer_id": 0,
+      "split": "train",
+      "prefix": "Start with {start}. Execute these instructions in the listed order: ",
+      "joiner": "; ",
+      "suffix": ".",
+      "clauses": {
+        "add": "add {add}",
+        "subtract": "subtract {subtract}",
+        "multiply": "multiply by {multiply}",
+        "remainder": "take the remainder modulo {remainder}"
+      }
+    },
+    {
+      "renderer_id": 1,
+      "split": "train",
+      "prefix": "The register starts at {start}. Its ordered updates are ",
+      "joiner": ", then ",
+      "suffix": ".",
+      "clauses": {
+        "add": "increase the register by {add}",
+        "subtract": "decrease the register by {subtract}",
+        "multiply": "scale the register by {multiply}",
+        "remainder": "reduce the register modulo {remainder}"
+      }
+    },
+    {
+      "renderer_id": 2,
+      "split": "train",
+      "prefix": "Let x = {start}. Run left to right: ",
+      "joiner": " | ",
+      "suffix": ".",
+      "clauses": {
+        "add": "x <- x + {add}",
+        "subtract": "x <- x - {subtract}",
+        "multiply": "x <- x * {multiply}",
+        "remainder": "x <- x mod {remainder}"
+      }
+    },
+    {
+      "renderer_id": 3,
+      "split": "train",
+      "prefix": "Initial value {start}. Follow this exact procedure: ",
+      "joiner": " / next / ",
+      "suffix": ".",
+      "clauses": {
+        "add": "combine it with {add} by addition",
+        "subtract": "remove {subtract} from it",
+        "multiply": "form the product with {multiply}",
+        "remainder": "keep its residue on division by {remainder}"
+      }
+    },
+    {
+      "renderer_id": 4,
+      "split": "train",
+      "prefix": "STATE={start}; PROGRAM=",
+      "joiner": " -> ",
+      "suffix": ".",
+      "clauses": {
+        "add": "ADD({add})",
+        "subtract": "SUBTRACT({subtract})",
+        "multiply": "MULTIPLY({multiply})",
+        "remainder": "REMAINDER({remainder})"
+      }
+    },
+    {
+      "renderer_id": 5,
+      "split": "train",
+      "prefix": "Beginning from {start}, use this sequence without reordering: ",
+      "joiner": "; after that, ",
+      "suffix": ".",
+      "clauses": {
+        "add": "raise the value by {add}",
+        "subtract": "lower the value by {subtract}",
+        "multiply": "make it {multiply} times as large",
+        "remainder": "replace it by the remainder after division by {remainder}"
+      }
+    },
+    {
+      "renderer_id": 6,
+      "split": "development",
+      "prefix": "A calculator contains {start}. Apply, in order, ",
+      "joiner": "; subsequently, ",
+      "suffix": ".",
+      "clauses": {
+        "add": "an addition of {add}",
+        "subtract": "a subtraction of {subtract}",
+        "multiply": "a multiplication by {multiply}",
+        "remainder": "a modulo-{remainder} reduction"
+      }
+    },
+    {
+      "renderer_id": 7,
+      "split": "development",
+      "prefix": "Input register: {start}. Ordered pipeline: ",
+      "joiner": " => ",
+      "suffix": ".",
+      "clauses": {
+        "add": "PLUS {add}",
+        "subtract": "MINUS {subtract}",
+        "multiply": "TIMES {multiply}",
+        "remainder": "MOD {remainder}"
+      }
+    },
+    {
+      "renderer_id": 8,
+      "split": "confirmation",
+      "prefix": "Let the working value initially equal {start}. The prescribed order is: ",
+      "joiner": "; followed by ",
+      "suffix": ".",
+      "clauses": {
+        "add": "augment it by {add}",
+        "subtract": "diminish it by {subtract}",
+        "multiply": "amplify it by a factor of {multiply}",
+        "remainder": "retain its residue modulo {remainder}"
+      }
+    },
+    {
+      "renderer_id": 9,
+      "split": "confirmation",
+      "prefix": "Machine state begins as {start}. Process this tape from left to right: ",
+      "joiner": " || ",
+      "suffix": ".",
+      "clauses": {
+        "add": "ACCUMULATE {add}",
+        "subtract": "DECREMENT {subtract}",
+        "multiply": "SCALE {multiply}",
+        "remainder": "REDUCE_MOD {remainder}"
+      }
+    },
+    {
+      "renderer_id": 10,
+      "split": "confirmation",
+      "prefix": "The current total is {start}. Respect this transformation sequence: ",
+      "joiner": ", and next ",
+      "suffix": ".",
+      "clauses": {
+        "add": "put {add} more into the total",
+        "subtract": "take {subtract} away from the total",
+        "multiply": "repeat the total {multiply}-fold",
+        "remainder": "use what remains after grouping by {remainder}"
+      }
+    },
+    {
+      "renderer_id": 11,
+      "split": "confirmation",
+      "prefix": "value := {start}; pipeline := ",
+      "joiner": " >> ",
+      "suffix": ".",
+      "clauses": {
+        "add": "plus({add})",
+        "subtract": "minus({subtract})",
+        "multiply": "times({multiply})",
+        "remainder": "modulo({remainder})"
+      }
+    },
+    {
+      "renderer_id": 12,
+      "split": "confirmation",
+      "prefix": "Seed {start}. Ordered transformations: ",
+      "joiner": "--then--",
+      "suffix": ".",
+      "clauses": {
+        "add": "produce the sum with {add}",
+        "subtract": "produce the difference from {subtract}",
+        "multiply": "produce the product with {multiply}",
+        "remainder": "produce the residue for divisor {remainder}"
+      }
+    }
+  ]
+}

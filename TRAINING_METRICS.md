@@ -5,7 +5,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-15 16:30 EDT
+**Last refreshed:** 2026-07-15 17:26 EDT
 **Flagship source of truth:** Newton Slurm job `686732`,
 `/lustre/fs1/home/sa305415/shohin/logs/flagship2_686732.out`
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -34,10 +34,10 @@ the numbered file under its retention policy; the ledger records which copies re
 | Global tokens per update | `2 * 32 * 4 * 2,048 = 524,288` |
 | Absolute training target | 300,000 steps |
 | Resume point | `ckpt_0217250.pt` to step 217,251 with fresh optimizer rewarmup and stream generation 1 |
-| Latest checkpoint milestone | **280,000** steps = **146,800,640,000 nominal update tokens**. Newton `best_step280000.pt` and local `train/flagship_out/ckpt_0280000.pt` are complete at 1,076,597,546 bytes and match at MD5 `60a921e4e7e7c11c77dc7334f987f6fd`; local SHA-256 is `a6f48b2b6ce633dea77fdf09691dd892b0ab096f1830b30e09e28cecf47f079b`. The 270k rolling numbered file aged out before promotion; protected 260k remains available. |
-| Last observed live step | At least 288,210 = 151,105,044,480 nominal update tokens |
-| Last observed throughput | 282,358 tokens/s, approximately 24.396B nominal tokens/day at that sustained rate |
-| Latest loss / gradient norm | step 288,210: loss 1.5825; gnorm 0.12; LR 0.0014. Short gnorm bursts at 287,344--287,347 and 287,803--287,807 recovered into the normal band without a persistent skip or divergence. |
+| Latest checkpoint milestone | **290,000** steps = **152,043,520,000 nominal update tokens**. Newton `best_step290000.pt` and local read-only `train/flagship_out/ckpt_0290000.pt` are complete at 1,076,597,546 bytes and match at MD5 `81b9db27e19f82d86c170d7159afba41` and SHA-256 `d93128affd1cb83fc3e7034ec045dbb1817be5d2cbbf866ff3b2002ef93e2a31`. Protected 260k and 280k remain available. |
+| Last observed live step | At least 290,110 = 152,101,191,680 nominal update tokens |
+| Last observed throughput | 282,472 tokens/s, approximately 24.405B nominal tokens/day at that sustained rate |
+| Latest loss / gradient norm | step 290,110: loss 1.6764; gnorm 0.12; LR 0.0012. The job has 123 guarded skips across its full run; recent logged updates are finite and no persistent instability is present. |
 | Direct H100 telemetry | No intrusive telemetry task was added at this milestone. The established two-H100 configuration remains `BS32/ACC4`; current sustained throughput is about 1.85x the prior one-H100 154.3k tok/s band. |
 | Post-handoff health | Startup guard events at 217,569--217,573 and 217,643 recovered into the normal band; the later isolated 234,419 event recovered at 234,420. Isolated gnorm skips at 258,239 and 261,479 recovered on the immediately following updates. Logged updates through 262,060 are finite with normal gradient norms and no persistent skip, loader, CUDA, NCCL, or DDP error. |
 | Two-H100 handoff validation | `686734` first established world-2 transport; live `686732` then resumed the exact writer at step 217,251 and has sustained roughly 285--287k tok/s after rewarmup. This is now production throughput, not a canary extrapolation. |
@@ -84,7 +84,7 @@ These are experiment-state measurements, not capability scores.
 |---|---|---|
 | R10 ACAW/VSPT | Exact noncommutative composition, rank-six exact-rational ambiguity, monotone replay, fail-closed overflow, fixed-size commitments, and canonical serialized-store accounting pass local mechanics. The replacement finite-board contract uses 800 calibration rows and 1,840 factorial confirmation rows, exact operation/query/depth cells, at least 10 accepted cases per cell, at least 400 per confirmation partition, and zero false certificates. Local checks passed, but a second custody audit found seven claim-blocking failures: self-attesting manifests, job-only clean-code enforcement, selectable seeds/R5 input, rehashable score substitution, hash/read TOCTOU, incomplete batch/device/determinism identity, and source changes between admission identities. | **Dormant control; no score read; second audit NO-GO.** Preserve the mechanics and hardening as comparator evidence. Do not resume its score chain unless an R12 contract explicitly requires it. |
 | R11a causal mediator | V3 closes the v2 source/query sampling, cached-generation, common-evaluation, and confirmation-derivation contract defects on paper. Its six source-derived slots, tied recurrent writer, and query readers remain established recurrence/memory machinery rather than a new primitive. | **Dormant favorable control; no implementation, board, fit, score, or GPU job.** |
-| R12 mathematical invention frontier | Exact extensional states remain conjugate to the residual transducer, and the new event cursor also collapses exactly to a finite-state recurrence/hard pointer at fixed depth. A commit-bound 600-cell operation-order board passes exact shortcut and collapse audits: oracle 600/600, cursor-only 240/600, source/global/clamp 120/600, deranged cursor 0/600, 96 FSM assertions, and 320 query-folding assertions. The optional final-block/head-zero Q path and zero-initialized 192-scalar sidecar pass focused CPU plus existing inference regressions. | **Mechanics admitted; capability untested.** The cursor is not a new primitive, no neural fit has run, and no reasoning claim exists. Freeze the matched treatment/ordinary/sham/source-only/text-control data and score-blind receipt before any H100 canary. |
+| R12 mathematical invention frontier | Exact extensional states remain conjugate to the residual transducer, and the event cursor also collapses exactly to a finite-state recurrence/hard pointer at fixed depth. A commit-bound 600-cell operation-order board passes exact shortcut and collapse audits: oracle 600/600, cursor-only 240/600, source/global/clamp 120/600, deranged cursor 0/600, 96 FSM assertions, and 320 query-folding assertions. The optional final-block/head-zero Q path, 192-scalar sidecar, favorable 512-scalar table, and 640-scalar text LoRA pass focused CPU plus existing inference regressions. The audited neural-data draft contains 5,760 train, 960 development, and 4,800 confirmation cells with Latin-balanced operand marginals and explicit side-state exposure. | **Mechanics/data preflight only; capability untested.** The cursor is not a new primitive, no neural fit has run, and no reasoning claim exists. The typed loader, six matched arms, full-vocabulary/restricted evaluator, checkpoint identity, and score-blind receipt must freeze before any H100 canary. |
 | Raw-260k operation-selection likelihood | Frozen one-forward/four-candidate probe completed 528 forwards over 64 cases / 176 transitions. Full source + cursor is **80/176** versus **64/176** for both controls, but prediction changes by cursor in only **1/64** multi-step sources. Predictions are `add` 145, `subtract` 31, `multiply` 0, `remainder` 0. Result SHA-256 `772050a9c30c229ff200f81895a01377c63a7e07a8ccc7e944afc54779bca5b6`. | **Negative cursor-awareness gate.** Source text affects logits, but the effect is a lexical family cue rather than operation-order recovery. No full controller fit is authorized. |
 
 The research decision rule is stricter: infrastructure, training loss, local mechanics, and a
@@ -589,23 +589,23 @@ be promoted on loss, formatting, generator holdouts, or a single benchmark movem
 ### Protected pretraining denominator
 
 - Model: 125,081,664 trained parameters.
-- Exact step 280,000 nominal update tokens: **146,800,640,000**
-  (`280000 * 524288`). This counts replay and is not a unique-token claim.
+- Exact step 290,000 nominal update tokens: **152,043,520,000**
+  (`290000 * 524288`). This counts replay and is not a unique-token claim.
 - Mounted decoded-token manifest capacity: **57,826,022,271** across 290
   shards: FineMath-4+ 2,000,001,108; OpenWebMath 14,063,689,153;
   CodeParrot-Clean Python 16,762,327,600; FineMath-3+ 25,000,004,410.
-- Nominal update-token / mounted-capacity ratio at 280k: **2.5387x**. Because
+- Nominal update-token / mounted-capacity ratio at 290k: **2.6293x**. Because
   the loader round-robins directories rather than weighting by manifest size,
   this aggregate ratio is not a per-source exposure estimate.
-- Durable latest checkpoint: Newton `best_step280000.pt` and local
-  `train/flagship_out/ckpt_0280000.pt`, 1,076,597,546 bytes, MD5
-  `60a921e4e7e7c11c77dc7334f987f6fd`, local SHA-256
-  `a6f48b2b6ce633dea77fdf09691dd892b0ab096f1830b30e09e28cecf47f079b`.
+- Durable latest checkpoint: Newton `best_step290000.pt` and local read-only
+  `train/flagship_out/ckpt_0290000.pt`, 1,076,597,546 bytes, MD5
+  `81b9db27e19f82d86c170d7159afba41`, SHA-256
+  `d93128affd1cb83fc3e7034ec045dbb1817be5d2cbbf866ff3b2002ef93e2a31`.
   Immutable raw-260k remains the causal-diagnostic reference at checkpoint
   SHA-256 `91d5288f184fc5230516add9851ac1a8815d3369ffd816cd7d0c03d8bafc741d`.
 - Live continuation `686732`: two H100s, `BS=32`, `ACC=4`, exact same 524,288
-  tokens/update. At 2026-07-15 16:20 EDT it was healthy through step 287,910 at
-  about 282.37k tok/s, loss 1.5960, gnorm 0.10, and LR 0.0014.
+  tokens/update. At 2026-07-15 17:26 EDT it was healthy through step 290,110 at
+  about 282.47k tok/s, loss 1.6764, gnorm 0.12, and LR 0.0012.
 
 ### Raw-260k capability accounting
 

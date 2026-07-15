@@ -97,11 +97,17 @@ class Attention(nn.Module):
         if cfg.qk_norm:
             self.qn, self.kn = RMSNorm(self.hd), RMSNorm(self.hd)
 
-    def forward(self, x, cos, sin, past=None, q_delta=None, q_delta_head=0):
+    def forward(
+        self, x, cos, sin, past=None, q_delta=None, q_adapter=None, q_delta_head=0,
+    ):
         B, T, _ = x.shape
         q = self.q(x).view(B, T, self.nh, self.hd).transpose(1, 2)
         k = self.k(x).view(B, T, self.nkv, self.hd).transpose(1, 2)
         v = self.v(x).view(B, T, self.nkv, self.hd).transpose(1, 2)
+        if q_delta is not None and q_adapter is not None:
+            raise ValueError("q_delta and q_adapter are mutually exclusive")
+        if q_adapter is not None:
+            q_delta = q_adapter(x)
         if q_delta is not None:
             if q_delta.shape != (B, T, self.hd):
                 raise ValueError("q_delta must have shape [batch, tokens, head_dim]")
@@ -147,9 +153,12 @@ class Block(nn.Module):
         self.n1, self.attn = RMSNorm(cfg.d_model), Attention(cfg)
         self.n2, self.mlp = RMSNorm(cfg.d_model), MLP(cfg)
 
-    def forward(self, x, cos, sin, past=None, q_delta=None, q_delta_head=0):
+    def forward(
+        self, x, cos, sin, past=None, q_delta=None, q_adapter=None, q_delta_head=0,
+    ):
         a, new_past = self.attn(
-            self.n1(x), cos, sin, past, q_delta=q_delta, q_delta_head=q_delta_head,
+            self.n1(x), cos, sin, past, q_delta=q_delta, q_adapter=q_adapter,
+            q_delta_head=q_delta_head,
         )
         x = x + a
         x = x + self.mlp(self.n2(x))
@@ -177,16 +186,18 @@ class GPT(nn.Module):
 
     def forward(
         self, idx, targets=None, cache=None, pos=0, return_cache=False,
-        q_delta=None, q_delta_layer=None, q_delta_head=0,
+        q_delta=None, q_adapter=None, q_delta_layer=None, q_delta_head=0,
     ):
         # Training path is unchanged: cache=None, pos=0, return_cache=False -> identical to before.
         # Inference path: pass return_cache=True to get per-layer (K,V); feed it back with pos=len so
         # decoding is O(1) per token instead of re-encoding the whole prompt (KV cache).
         B, T = idx.shape
-        if q_delta is not None:
+        if q_delta is not None or q_adapter is not None:
             if self.cfg.n_loop != 1:
-                raise ValueError("q_delta requires n_loop=1")
-            if q_delta.shape != (B, T, self.cfg.d_model // self.cfg.n_head):
+                raise ValueError("query intervention requires n_loop=1")
+            if q_delta is not None and q_delta.shape != (
+                B, T, self.cfg.d_model // self.cfg.n_head,
+            ):
                 raise ValueError("q_delta has the wrong shape")
             if q_delta_layer is None:
                 q_delta_layer = self.cfg.n_layer - 1
@@ -202,9 +213,12 @@ class GPT(nn.Module):
         for _loop in range(self.cfg.n_loop):   # n_loop=1 -> identical to before; >1 = weight-shared depth
             for block_index, b in enumerate(self.blocks):
                 past = cache[ci] if cache is not None else None
-                block_delta = q_delta if q_delta is not None and block_index == q_delta_layer else None
+                selected = block_index == q_delta_layer
+                block_delta = q_delta if q_delta is not None and selected else None
+                block_adapter = q_adapter if q_adapter is not None and selected else None
                 x, np_ = b(
-                    x, cos, sin, past, q_delta=block_delta, q_delta_head=q_delta_head,
+                    x, cos, sin, past, q_delta=block_delta, q_adapter=block_adapter,
+                    q_delta_head=q_delta_head,
                 )
                 if return_cache:
                     new_cache.append(np_)
