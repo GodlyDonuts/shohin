@@ -97,11 +97,22 @@ class Attention(nn.Module):
         if cfg.qk_norm:
             self.qn, self.kn = RMSNorm(self.hd), RMSNorm(self.hd)
 
-    def forward(self, x, cos, sin, past=None):
+    def forward(self, x, cos, sin, past=None, q_delta=None, q_delta_head=0):
         B, T, _ = x.shape
         q = self.q(x).view(B, T, self.nh, self.hd).transpose(1, 2)
         k = self.k(x).view(B, T, self.nkv, self.hd).transpose(1, 2)
         v = self.v(x).view(B, T, self.nkv, self.hd).transpose(1, 2)
+        if q_delta is not None:
+            if q_delta.shape != (B, T, self.hd):
+                raise ValueError("q_delta must have shape [batch, tokens, head_dim]")
+            if not 0 <= q_delta_head < self.nh:
+                raise ValueError("q_delta_head is outside the query-head range")
+            delta = q_delta.to(device=q.device, dtype=q.dtype).unsqueeze(1)
+            q = torch.cat(
+                (q[:, :q_delta_head], q[:, q_delta_head:q_delta_head + 1] + delta,
+                 q[:, q_delta_head + 1:]),
+                dim=1,
+            )
         if self.qk_norm:
             q, k = self.qn(q), self.kn(k)
         q, k = apply_rope(q, cos, sin), apply_rope(k, cos, sin)
@@ -136,8 +147,10 @@ class Block(nn.Module):
         self.n1, self.attn = RMSNorm(cfg.d_model), Attention(cfg)
         self.n2, self.mlp = RMSNorm(cfg.d_model), MLP(cfg)
 
-    def forward(self, x, cos, sin, past=None):
-        a, new_past = self.attn(self.n1(x), cos, sin, past)
+    def forward(self, x, cos, sin, past=None, q_delta=None, q_delta_head=0):
+        a, new_past = self.attn(
+            self.n1(x), cos, sin, past, q_delta=q_delta, q_delta_head=q_delta_head,
+        )
         x = x + a
         x = x + self.mlp(self.n2(x))
         return x, new_past
@@ -162,20 +175,37 @@ class GPT(nn.Module):
         if isinstance(m, (nn.Linear, nn.Embedding)):
             nn.init.normal_(m.weight, mean=0.0, std=0.02)
 
-    def forward(self, idx, targets=None, cache=None, pos=0, return_cache=False):
+    def forward(
+        self, idx, targets=None, cache=None, pos=0, return_cache=False,
+        q_delta=None, q_delta_layer=None, q_delta_head=0,
+    ):
         # Training path is unchanged: cache=None, pos=0, return_cache=False -> identical to before.
         # Inference path: pass return_cache=True to get per-layer (K,V); feed it back with pos=len so
         # decoding is O(1) per token instead of re-encoding the whole prompt (KV cache).
         B, T = idx.shape
+        if q_delta is not None:
+            if self.cfg.n_loop != 1:
+                raise ValueError("q_delta requires n_loop=1")
+            if q_delta.shape != (B, T, self.cfg.d_model // self.cfg.n_head):
+                raise ValueError("q_delta has the wrong shape")
+            if q_delta_layer is None:
+                q_delta_layer = self.cfg.n_layer - 1
+            if q_delta_layer < 0:
+                q_delta_layer += self.cfg.n_layer
+            if not 0 <= q_delta_layer < self.cfg.n_layer:
+                raise ValueError("q_delta_layer is outside the block range")
         x = self.tok(idx)
         cos = self.cos[pos:pos + T].to(x.device)
         sin = self.sin[pos:pos + T].to(x.device)
         new_cache = []
         ci = 0
         for _loop in range(self.cfg.n_loop):   # n_loop=1 -> identical to before; >1 = weight-shared depth
-            for b in self.blocks:
+            for block_index, b in enumerate(self.blocks):
                 past = cache[ci] if cache is not None else None
-                x, np_ = b(x, cos, sin, past)
+                block_delta = q_delta if q_delta is not None and block_index == q_delta_layer else None
+                x, np_ = b(
+                    x, cos, sin, past, q_delta=block_delta, q_delta_head=q_delta_head,
+                )
                 if return_cache:
                     new_cache.append(np_)
                 ci += 1

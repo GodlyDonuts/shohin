@@ -1,8 +1,9 @@
 # R12 Counterfactual Cursor-Action CPU Preregistration
 
-**Status:** implementation frozen for pre-board review. Ephemeral test instances
-pass six mutation-focused unit tests; no persistent board, score-bearing model
-result, fit, or GPU job has been run.
+**Status:** persistent mechanics board admitted and independently audited. The
+optional final-block/head-zero Q-intervention path and separately serializable
+192-parameter sidecar pass focused CPU and existing inference regressions. No
+score-bearing model fit or GPU job has been run.
 
 **Depends on:** `R12_COUNTERFACTUAL_CURSOR_ACTION_THEORY.md` and
 `R12_OPERATION_SELECTION_LIKELIHOOD_RESULT.md`.
@@ -230,3 +231,38 @@ surface. The board records the pre-board Git commit and SHA-256 of the theory,
 preregistration, declarative contract, generator, auditor, and tests. The
 auditor verifies every hash against both the live file and `git show` at that
 commit. A board generated before that clean commit is inadmissible.
+
+## 10. Mechanics and implementation result
+
+The immutable board contains 600 cells, 120 sources, 180 adjacent-order pairs,
+and 24 renderer groups. The independent audit reproduced the frozen symbolic
+scores exactly:
+
+| Arm | Exact result |
+|---|---:|
+| Oracle source + cursor | `600/600` |
+| Cursor-only | `240/600` |
+| Renderer + cursor | `240/600` |
+| Source/global/renderer/clamped | `120/600` |
+| Deranged cursor | `0/600` |
+
+It also passed all 96 finite-state transition assertions and all 320 exact
+query-folding assertions. Board SHA-256 is
+`02a202070efa45f14c4e53b7d7f532d98791c7eef9daf438b02d31cc0ec6ab95`;
+audit SHA-256 is
+`c64951a1369b3dd29ca7e651840e5644e8445c7236cf994c3e54f05ca4a844b2`.
+
+`train/model.py` now accepts an optional Q delta at one named layer/head. With
+the argument omitted, old checkpoints still load strictly and the original
+path is unchanged. `train/counterfactual_cursor_action.py` supplies the frozen
+event FSM and a zero-initialized centered-three-bit projection. The production
+projection has exactly `3 * 64 = 192` trainable scalars; all base parameters are
+frozen. Six focused tests cover strict-load/zero-delta parity, code geometry,
+event transitions, prompt-boundary alignment, gradient isolation, and cached
+decode/full-replay equivalence. Existing causal-KV, batched-generation,
+recurrent-inference, and masked-loss regressions also pass.
+
+This is a mechanics result only. It does not show that Shohin uses the cursor,
+selects the correct action, executes arithmetic, carries state, or halts. A
+neural run remains forbidden until the matched-arm data generator, immutable
+split hashes, loader allowlist, and score-blind result receipt are frozen.
