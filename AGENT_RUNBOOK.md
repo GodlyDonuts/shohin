@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 20:07 EDT (the protected two-H100 pretrain remains isolated. R7 and R8 are formally closed: direct hidden similarity is 46/108, first-order intervention 32/108, and mixed second-order curvature 26/108 versus random-pair 28/108. The raw representation contains lexical operator information, but local prompt derivatives are not a semantic execution interface. The next direction is an exact-audited orbit-consistent recurrent microcode with a causal error syndrome; it is a documented hypothesis only, not yet an authorized neural experiment.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 20:18 EDT (the protected two-H100 pretrain remains isolated. R9a is formally rejected: static orbit recurrence has an exact feed-forward closed form, identical gradients, and orbit CE is transformed-label augmentation. R9b's CPU-only bidirectional noncommutative operator tree passes its mechanics gates: all 896 programs execute exactly, 4,096 clean events fold to one nine-scalar operator, and one directional error is localized exactly. This is an execution-contract result only; no neural compiler, reasoning, or novelty claim is authorized until independent directional evidence and same-parameter controls are frozen.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4346,3 +4346,34 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   operator/state cell, causal orbit laws train its transitions, and an independent unused-counterfactual
   syndrome gates commitment and adaptive replay. It must first pass a CPU equivalence audit proving it is
   not ordinary label augmentation or confidence thresholding; no H100 R9 fit is authorized yet.
+
+- **2026-07-14 20:07--20:12** — **The first R9 recurrence is killed by an exact equivalence proof
+  before consuming an H100.** `train/orbit_recurrent_microcode.py` and
+  `train/compare_orbit_recurrent_microcode_equivalence.py` instantiate the simplest static orbit-
+  consensus loop and compare it with its analytic one-shot form over random views, hypotheses,
+  recurrence depths, and update rates. Maximum forward error is
+  **8.881784197001252e-16**, maximum gradient error is **2.168404344971009e-19**, and orbit-output
+  cross-entropy differs from ordinary transformed-label augmentation by exactly **0.0**. Its static
+  Jensen-Shannon syndrome is computed entirely from the unchanged view logits. All equivalence gates
+  pass, so decision is `reject_static_orbit_recurrence_as_reparameterized_classifier` and
+  `authorize_neural_fit=false`. Report SHA-256 is
+  **`2985a56636bd288b1a1b3ea88fa80fec4f2da0e64298c7754b92637029a70bfa`**. Replaying fixed evidence
+  is not reasoning, regardless of whether the loop is weight-tied or given an adaptive stop label.
+
+- **2026-07-14 20:12--20:18** — **R9b replaces fixed consensus with a bidirectional,
+  noncommutative, fail-closed execution contract; exact CPU mechanics pass, neural semantics remain
+  unproven.** `train/bidirectional_operator_tree.py` requires independent forward state-conditioned
+  and backward goal-conditioned operator hypotheses at every event. A leaf is source-droppable only
+  when both full affine effects agree; internal chronological products remain certified only if both
+  children were already certified, so opposite leaf errors cannot cancel at a parent. Across all
+  **896/896** frozen programs the oracle tree certifies and answers exactly. The same event multiset in
+  two orders yields different answers (**7** and **10**). A clean **4,096-event** history collapses to
+  one nine-scalar operator and zero source strings. Corrupting only the backward hypothesis at event
+  **2,345** retains exactly that source plus 12 certified sibling summaries: **13** frontier nodes and
+  **109** numeric scalars. Equal 99.9% confidence cannot reproduce the directional syndrome. Report
+  SHA-256 is **`d9f303168d78363a780b94e203bb2435e3b1b3086d46b2c31e67d3da419a1350`**. The explicit limitation
+  is equally important: two channels that agree on the same wrong operator are falsely certified.
+  Therefore this result authorizes only neural-design preregistration. Before an H100 canary, freeze
+  genuinely different evidence paths, a same-parameter single compiler, two heads without syndrome,
+  shuffled backward goals, fixed-step versus syndrome-adaptive replay, and an agreed-wrong stress set.
+  Do not describe exact oracle execution or source folding as learned reasoning.

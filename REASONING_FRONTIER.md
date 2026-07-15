@@ -2639,3 +2639,78 @@ same-parameter classifier without orbit losses, a shuffled-orbit control, a
 no-syndrome recurrent control, and fixed-step versus adaptive-step evaluation.
 It may reach an H100 only if the proposed orbit and syndrome constraints are not
 mathematically reducible to label augmentation or confidence thresholding.
+
+#### R9a Outcome: Static Orbit Recurrence Is Not a New Mechanism
+
+The pre-neural equivalence audit rejects the first formulation. With orbit-view
+logits fixed during replay, the affine consensus recurrence has an exact
+closed-form feed-forward expression. Across recurrence depths 1, 2, 4, 8, and
+16 and update rates 0.2, 0.5, and 1.0, the largest float64 output discrepancy is
+`8.881784197001252e-16` and the largest autograd discrepancy is
+`2.168404344971009e-19`. Orbit-output cross-entropy is exactly ordinary
+cross-entropy after transforming each view's class label. The static
+Jensen-Shannon syndrome is likewise a one-shot function of the unchanged view
+logits.
+
+This closes static orbit replay, not the broader attempt to build a program
+substrate. A loop becomes a candidate reasoning mechanism only if executing a
+step changes the evidence available to a later step or applies noncommuting
+transitions to carried state. Weight tying, more replay steps, and adaptive
+thresholds alone do not meet that bar.
+
+### R9b Hypothesis: Bidirectional Noncommutative Operator Trees
+
+R9b changes both the evidence and the context contract. A forward compiler must
+predict an event operator from the source plus its incoming carried state. A
+separate backward compiler must predict the same operator from the source plus
+the future query or goal propagated backward through the suffix. These are not
+two heads over one pooled text embedding: the conditioning variables and
+training evidence must be directionally different. Each event therefore has a
+semantic syndrome given by disagreement between its complete forward and
+backward affine effects.
+
+Certified leaves compose in chronological order inside a binary product tree.
+Because the affine operators are noncommutative, event order is part of the
+state transition. A parent may become certified only when both children were
+already certified and the two directional products agree. This inheritance law
+prevents equal-and-opposite leaf mistakes from disappearing in a correct parent
+product. Certified subtrees discard their source and retain one fixed-size
+operator. An uncertified tree recursively opens only the failed leaves while
+keeping certified sibling summaries, so later neural replay can revisit the
+syndrome-localized evidence rather than re-reading the full history.
+
+The exact CPU contract passes all frozen mechanics gates. It executes all
+896/896 frozen programs exactly; distinguishes two orders of the same event
+multiset with answers 7 and 10; folds 4,096 clean events to one nine-scalar
+operator; and localizes a single directional error at event 2,345 while
+retaining exactly one source and 12 certified sibling summaries. The resulting
+frontier has 13 nodes and 109 numeric scalars. This decision is not reproducible
+by a confidence threshold: matched 99.9% confidence can either agree or
+disagree. The report SHA-256 is
+`d9f303168d78363a780b94e203bb2435e3b1b3086d46b2c31e67d3da419a1350`.
+
+The mechanics also expose the hard failure mode: independently named channels
+that learn the same bias can agree confidently on the same wrong operator. The
+neural experiment is therefore unauthorized until its preregistration freezes
+all of the following:
+
+1. Forward evidence conditioned on an incoming state and backward evidence
+   conditioned on a propagated future goal, with no structured labels provided
+   at inference.
+2. A same-parameter single static compiler and a two-head compiler without
+   syndrome-gated reopening.
+3. A shuffled-backward-goal control that preserves extra compute and parameter
+   count but destroys semantic direction.
+4. Fixed-step versus adaptive syndrome-localized replay under an equal maximum
+   compute budget.
+5. An agreed-wrong stress partition measuring common-mode certification errors,
+   not only directional disagreements.
+6. Fresh length and language transfer, retained-source curves, and exact
+   operation/program/answer gates frozen before fitting.
+
+The bounded project-novelty hypothesis is the combination of directionally
+independent state/goal compilation, inherited fail-closed certification, and
+hierarchical source reopening for adaptive recurrent execution. Affine operator
+composition and bidirectional processing are established ideas individually.
+No world-first claim, neural reasoning claim, or context-scaling claim follows
+from the current oracle mechanics.
