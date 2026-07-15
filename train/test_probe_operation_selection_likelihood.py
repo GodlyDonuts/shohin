@@ -605,7 +605,7 @@ class WrapperContractTests(unittest.TestCase):
             "probe_operation_selection_likelihood.py",
             'git --git-dir="$EVIDENCE_GIT_DIR" bundle verify "$EVIDENCE_BUNDLE"',
             'git init --bare --quiet "$EVIDENCE_GIT_DIR"',
-            'git --git-dir="$EVIDENCE_GIT_DIR" fetch --quiet "$EVIDENCE_BUNDLE" refs/heads/main:refs/heads/main',
+            'git --git-dir="$EVIDENCE_GIT_DIR" -c pack.threads=1 -c index.threads=1 fetch --quiet "$EVIDENCE_BUNDLE" refs/heads/main:refs/heads/main',
             "R12_OPERATION_SELECTION_PRESCORE_RECEIPT.json",
             "authenticated_gh_api_commit_lookup_and_origin_main_match",
             ".operation_selection_quarantine.",
