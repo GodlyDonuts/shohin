@@ -15,6 +15,14 @@
 #SBATCH --open-mode=append
 set -euo pipefail
 umask 077
+export CUBLAS_WORKSPACE_CONFIG=:4096:8
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+export OMP_NUM_THREADS=4
+export PYTHONDONTWRITEBYTECODE=1
+export PYTHONNOUSERSITE=1
+export PYTHONHASHSEED=0
 
 BASE=${BASE:-/lustre/fs1/home/sa305415/shohin}
 PY=${PY:-$BASE/miniforge3/bin/python}
@@ -25,13 +33,16 @@ PROBE=$BASE/train/probe_operation_selection_likelihood.py
 EVAL_ROOT=$BASE/artifacts/eval_history
 MIRROR_ROOT=${MIRROR_ROOT:-$BASE/artifacts/eval_history_mirror}
 OUT=${OUT:?set OUT to a fresh raw260k_operation_selection_likelihood_*.json path under artifacts/eval_history}
-FROZEN_COMMIT=${FROZEN_COMMIT:?set FROZEN_COMMIT to the public pre-score Git commit}
+FROZEN_COMMIT=${FROZEN_COMMIT:?set FROZEN_COMMIT to the pre-score code commit}
+EVIDENCE_COMMIT=${EVIDENCE_COMMIT:?set EVIDENCE_COMMIT to the pushed pre-score receipt commit}
+EVIDENCE_BUNDLE=${EVIDENCE_BUNDLE:-$BASE/artifacts/evidence/shohin_operation_likelihood_prescore.bundle}
+PRESCORE_RECEIPT_RELATIVE=R12_OPERATION_SELECTION_PRESCORE_RECEIPT.json
 
 EXPECTED_CKPT=91d5288f184fc5230516add9851ac1a8815d3369ffd816cd7d0c03d8bafc741d
 EXPECTED_TOKENIZER=87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4
 EXPECTED_SOURCE=19a84165f15b19911fc8ef229022e47753833d703d77d1e8cc25db9dfc993474
 
-for path in "$PY" "$CKPT" "$SOURCE" "$TOKENIZER" "$PROBE"; do
+for path in "$PY" "$CKPT" "$SOURCE" "$TOKENIZER" "$PROBE" "$EVIDENCE_BUNDLE"; do
   [ -s "$path" ] || { echo "[operation-selection] missing required input: $path" >&2; exit 2; }
 done
 
@@ -41,6 +52,7 @@ CKPT=$(realpath -e -- "$CKPT")
 SOURCE=$(realpath -e -- "$SOURCE")
 TOKENIZER=$(realpath -e -- "$TOKENIZER")
 PROBE=$(realpath -e -- "$PROBE")
+EVIDENCE_BUNDLE=$(realpath -e -- "$EVIDENCE_BUNDLE")
 mkdir -p -- "$EVAL_ROOT"
 mkdir -p -- "$MIRROR_ROOT"
 EVAL_ROOT=$(realpath -e -- "$EVAL_ROOT")
@@ -75,6 +87,10 @@ if [ -w "$SOURCE" ]; then
   echo "[operation-selection] frozen source must be read-only" >&2
   exit 4
 fi
+if [ -w "$EVIDENCE_BUNDLE" ]; then
+  echo "[operation-selection] evidence bundle must be read-only" >&2
+  exit 4
+fi
 
 check_sha256() {
   local path=$1
@@ -95,16 +111,45 @@ if [[ ! "$FROZEN_COMMIT" =~ ^[0-9a-f]{40}$ ]]; then
   echo "[operation-selection] FROZEN_COMMIT must be a full lowercase SHA-1" >&2
   exit 5
 fi
+if [[ ! "$EVIDENCE_COMMIT" =~ ^[0-9a-f]{40}$ ]]; then
+  echo "[operation-selection] EVIDENCE_COMMIT must be a full lowercase SHA-1" >&2
+  exit 5
+fi
 EVIDENCE_GIT_DIR=${SLURM_TMPDIR:?SLURM_TMPDIR is required}/shohin_operation_likelihood_evidence.git
 [ ! -e "$EVIDENCE_GIT_DIR" ] || { echo "[operation-selection] evidence Git path already exists" >&2; exit 5; }
-git init --bare --quiet "$EVIDENCE_GIT_DIR"
-git --git-dir="$EVIDENCE_GIT_DIR" remote add origin https://github.com/GodlyDonuts/shohin.git
-git --git-dir="$EVIDENCE_GIT_DIR" fetch --quiet --force origin main:refs/remotes/origin/main
-git --git-dir="$EVIDENCE_GIT_DIR" cat-file -e "${FROZEN_COMMIT}^{commit}"
-git --git-dir="$EVIDENCE_GIT_DIR" merge-base --is-ancestor "$FROZEN_COMMIT" refs/remotes/origin/main || {
-  echo "[operation-selection] frozen commit is not on the fetched public origin/main" >&2
+git bundle verify "$EVIDENCE_BUNDLE" >/dev/null
+git clone --bare --quiet "$EVIDENCE_BUNDLE" "$EVIDENCE_GIT_DIR"
+test "$(git --git-dir="$EVIDENCE_GIT_DIR" rev-parse refs/heads/main)" = "$EVIDENCE_COMMIT" || {
+  echo "[operation-selection] evidence bundle main does not match EVIDENCE_COMMIT" >&2
   exit 5
 }
+git --git-dir="$EVIDENCE_GIT_DIR" cat-file -e "${FROZEN_COMMIT}^{commit}"
+git --git-dir="$EVIDENCE_GIT_DIR" merge-base --is-ancestor "$FROZEN_COMMIT" "$EVIDENCE_COMMIT" || {
+  echo "[operation-selection] frozen commit is not an ancestor of evidence commit" >&2
+  exit 5
+}
+PRESCORE_RECEIPT_TMP=$SLURM_TMPDIR/shohin_operation_likelihood_prescore_receipt.json
+git --git-dir="$EVIDENCE_GIT_DIR" show "$EVIDENCE_COMMIT:$PRESCORE_RECEIPT_RELATIVE" > "$PRESCORE_RECEIPT_TMP"
+PRESCORE_RECEIPT_SHA256=$(sha256sum "$PRESCORE_RECEIPT_TMP" | awk '{print $1}')
+"$PY" - "$PRESCORE_RECEIPT_TMP" "$FROZEN_COMMIT" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+receipt = json.loads(Path(sys.argv[1]).read_text(encoding="ascii"))
+expected = {
+    "schema": "raw260k_operation_selection_prescore_receipt_v1",
+    "repository": "GodlyDonuts/shohin",
+    "branch": "main",
+    "frozen_commit": sys.argv[2],
+    "verified_remote_commit": sys.argv[2],
+    "verification_method": "authenticated_gh_api_commit_lookup_and_origin_main_match",
+    "score_observed_before_receipt": False,
+}
+if receipt != expected:
+    raise SystemExit("[operation-selection] pre-score receipt contract mismatch")
+print("[operation-selection] pushed pre-score receipt verified", flush=True)
+PY
 IMPLEMENTATION_FILES=(
   "R12_OPERATION_SELECTION_LIKELIHOOD_PREREG.md"
   "R12_OPERATION_CURSOR_DIAGNOSTIC.md"
@@ -124,15 +169,6 @@ for relative in "${IMPLEMENTATION_FILES[@]}"; do
 done
 echo "[operation-selection] implementation frozen at $FROZEN_COMMIT" | tee /dev/stderr
 
-export CUBLAS_WORKSPACE_CONFIG=:4096:8
-export OPENBLAS_NUM_THREADS=1
-export MKL_NUM_THREADS=1
-export NUMEXPR_NUM_THREADS=1
-export OMP_NUM_THREADS=4
-export PYTHONDONTWRITEBYTECODE=1
-export PYTHONNOUSERSITE=1
-export PYTHONHASHSEED=0
-
 cd "$BASE/train"
 QUARANTINE_DIR=$(mktemp -d "$EVAL_ROOT/.operation_selection_quarantine.XXXXXX")
 chmod 0700 "$QUARANTINE_DIR"
@@ -148,7 +184,9 @@ trap cleanup_quarantine EXIT
   --tokenizer "$TOKENIZER" \
   --source "$SOURCE" \
   --out "$QUARANTINE_OUT" \
-  --frozen-commit "$FROZEN_COMMIT"
+  --frozen-commit "$FROZEN_COMMIT" \
+  --evidence-commit "$EVIDENCE_COMMIT" \
+  --prescore-receipt-sha256 "$PRESCORE_RECEIPT_SHA256"
 
 [ -s "$QUARANTINE_OUT" ] || { echo "[operation-selection] evaluator wrote no result" >&2; exit 6; }
 [ ! -w "$QUARANTINE_OUT" ] || { echo "[operation-selection] output remained writable" >&2; exit 6; }
@@ -159,7 +197,9 @@ trap cleanup_quarantine EXIT
   --source "$SOURCE" \
   --out "$QUARANTINE_OUT" \
   --audit-result "$QUARANTINE_OUT" \
-  --frozen-commit "$FROZEN_COMMIT"
+  --frozen-commit "$FROZEN_COMMIT" \
+  --evidence-commit "$EVIDENCE_COMMIT" \
+  --prescore-receipt-sha256 "$PRESCORE_RECEIPT_SHA256"
 
 "$PY" - "$QUARANTINE_OUT" "$OUT" <<'PY'
 import os
@@ -174,14 +214,14 @@ PY
 rmdir -- "$QUARANTINE_DIR"
 trap - EXIT
 
-"$PY" - "$OUT" "$MIRROR" "$RECEIPT" "$FROZEN_COMMIT" "${SLURM_JOB_ID:-none}" <<'PY'
+"$PY" - "$OUT" "$MIRROR" "$RECEIPT" "$FROZEN_COMMIT" "$EVIDENCE_COMMIT" "$PRESCORE_RECEIPT_SHA256" "${SLURM_JOB_ID:-none}" <<'PY'
 import hashlib
 import json
 import os
 import stat
 import sys
 
-source_path, mirror_path, receipt_path, frozen_commit, job_id = sys.argv[1:]
+source_path, mirror_path, receipt_path, frozen_commit, evidence_commit, prescore_receipt_sha256, job_id = sys.argv[1:]
 read_flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
 source_fd = os.open(source_path, read_flags)
 with os.fdopen(source_fd, "rb") as source:
@@ -207,6 +247,8 @@ if mirror_sha256 != result_sha256:
 receipt = {
     "schema": "raw260k_operation_selection_likelihood_receipt_v1",
     "frozen_commit": frozen_commit,
+    "evidence_commit": evidence_commit,
+    "prescore_receipt_sha256": prescore_receipt_sha256,
     "slurm_job_id": job_id,
     "full_preserved_result_audit": True,
     "result_path": os.path.realpath(source_path),

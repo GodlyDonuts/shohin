@@ -23,6 +23,8 @@ ROOT = TRAIN_DIR.parent
 SOURCE = ROOT / "artifacts/evals/source_scheduled_reasoning_confirmation_v1.json"
 TOKENIZER = ROOT / "artifacts/shohin-tok-32k.json"
 FROZEN_COMMIT = "a" * 40
+EVIDENCE_COMMIT = "b" * 40
+PRESCORE_RECEIPT_SHA256 = "c" * 64
 
 
 class FrozenFixture(unittest.TestCase):
@@ -87,6 +89,8 @@ class FrozenFixture(unittest.TestCase):
                 "inherited_operation_cursor_geometry": "7" * 64,
             },
             "frozen_commit": FROZEN_COMMIT,
+            "evidence_commit": EVIDENCE_COMMIT,
+            "prescore_receipt_sha256": PRESCORE_RECEIPT_SHA256,
             "device": {
                 "type": "cuda",
                 "index": 0,
@@ -362,8 +366,10 @@ class ScoringAndAccountingTests(FrozenFixture):
         self.assertEqual(ledger["quarantine_result_files_created"], 1)
         self.assertEqual(ledger["preserved_result_copies"], 2)
         self.assertEqual(ledger["read_only_receipt_files"], 1)
-        self.assertEqual(ledger["authenticated_git_fetches"], 1)
+        self.assertEqual(ledger["authenticated_prescore_remote_verifications"], 1)
+        self.assertEqual(ledger["read_only_git_bundles"], 1)
         self.assertEqual(ledger["temporary_bare_git_repositories"], 1)
+        self.assertEqual(ledger["temporary_prescore_receipt_files"], 1)
         for zero_field in (
             "generated_tokens",
             "sampled_tokens",
@@ -490,6 +496,14 @@ class ResultCustodyTests(FrozenFixture):
         mutations.append(value)
 
         value = copy.deepcopy(self.result)
+        value["bindings"]["evidence_commit"] = "0" * 40
+        mutations.append(value)
+
+        value = copy.deepcopy(self.result)
+        value["bindings"]["prescore_receipt_sha256"] = "0" * 64
+        mutations.append(value)
+
+        value = copy.deepcopy(self.result)
         value["integrity"]["exclusive_read_only_output"] = False
         mutations.append(value)
 
@@ -589,9 +603,10 @@ class WrapperContractTests(unittest.TestCase):
             "EXPECTED_SOURCE=19a84165f15b19911fc8ef229022e47753833d703d77d1e8cc25db9dfc993474",
             "raw260k_operation_selection_likelihood_*.json",
             "probe_operation_selection_likelihood.py",
-            'git init --bare --quiet "$EVIDENCE_GIT_DIR"',
-            'git --git-dir="$EVIDENCE_GIT_DIR" fetch --quiet --force origin main:refs/remotes/origin/main',
-            "https://github.com/GodlyDonuts/shohin.git",
+            'git bundle verify "$EVIDENCE_BUNDLE"',
+            'git clone --bare --quiet "$EVIDENCE_BUNDLE" "$EVIDENCE_GIT_DIR"',
+            "R12_OPERATION_SELECTION_PRESCORE_RECEIPT.json",
+            "authenticated_gh_api_commit_lookup_and_origin_main_match",
             ".operation_selection_quarantine.",
             "full_preserved_result_audit",
             "score_printed_by_wrapper",
@@ -599,6 +614,8 @@ class WrapperContractTests(unittest.TestCase):
             "MIRROR_ROOT",
             "RECEIPT",
             '--frozen-commit "$FROZEN_COMMIT"',
+            '--evidence-commit "$EVIDENCE_COMMIT"',
+            '--prescore-receipt-sha256 "$PRESCORE_RECEIPT_SHA256"',
         ):
             self.assertIn(required, wrapper)
 

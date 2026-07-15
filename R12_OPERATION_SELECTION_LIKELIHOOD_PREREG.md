@@ -60,6 +60,12 @@ first JSON label and are label-copy controls only.
 | Expanded prompt manifest SHA-256 | `0a85a49f6ba818d51f6b74a48129f48e9e9d6bcd02dde152c31d626c68a472d6` |
 | Tokenized prompt manifest SHA-256 | `2e910eb13ad2200cee82d713174f43c95d5c8a8544b9089b5b6de2fff976aaa6` |
 
+The code freeze commit is supplied as `FROZEN_COMMIT`. A later evidence commit
+may add only the canonical pre-score receipt; its full SHA-1 and the receipt
+SHA-256 are late-bound execution inputs because a commit cannot contain its own
+identity. Both must exist in the read-only bundle before scoring, and both are
+embedded in the result. They cannot change prompts, candidates, code, or scores.
+
 The source reader uses `O_NOFOLLOW` where available, requires a regular file
 with no write bits, rejects duplicate JSON keys and non-finite constants, and
 requires the complete artifact hash before any model load. It independently
@@ -235,8 +241,10 @@ confidence interval, pass threshold, inferred bottleneck, or promotion gate.
 | Quarantine result files created | 1 |
 | Preserved result copies / read-only receipts | 2 / 1 |
 | Mutable sidecars | 0 |
-| Authenticated Git fetches | 1 |
+| Authenticated pre-score remote verifications | 1 |
+| Read-only Git bundles | 1 |
 | Temporary bare Git repositories | 1 |
+| Temporary pre-score receipt files | 1 |
 | Mutable scheduler log files | 1 |
 
 There is no batching, padding, KV reuse, candidate-specific forward, candidate
@@ -246,13 +254,18 @@ data write, retry loop, or downstream submission.
 ## 8. Pre-model freeze and post-model custody
 
 The canonical wrapper must first receive a full `FROZEN_COMMIT` that was pushed
-before execution. It creates a fresh bare evidence repository under
-`SLURM_TMPDIR`, performs a TLS-protected fetch of GitHub `origin/main`, verifies
-that the commit is contained in that fetched ref, and requires every deployed
-implementation file's working bytes to equal the corresponding fetched Git
-object. This does not require or modify Git metadata in the deployed Newton
-tree. A runtime hash without this commit binding is self-attestation and is
-inadmissible. The result itself binds `FROZEN_COMMIT`.
+before execution. Because the GitHub repository is private and no credential may
+be copied to a compute node, the pre-score controller first verifies the commit
+with authenticated `gh api` and an exact `origin/main` match, writes a
+score-unobserved receipt, commits and pushes that receipt, then creates a
+read-only Git bundle containing both commits. The wrapper verifies the bundle's
+object graph, requires bundle `main` to equal the supplied evidence commit,
+requires `FROZEN_COMMIT` to be its ancestor, reconstructs and validates the
+pre-score receipt, and requires every deployed implementation file's bytes to
+equal the corresponding frozen Git object. This does not require credentials or
+modify Git metadata in the deployed Newton tree. A runtime hash without this
+commit/receipt/bundle chain is inadmissible. The result binds `FROZEN_COMMIT`,
+the evidence commit, and the pre-score receipt SHA-256.
 
 The executable must then complete this order before `torch.load`:
 
@@ -302,8 +315,8 @@ Slurm log is counted separately and has no evidentiary standing by itself.
 node, one task, one `nvidia_h100_pcie` GPU, four CPUs, 64 GiB RAM, and two hours
 on `normal`. It excludes `evc34`. It requires an explicitly supplied fresh
 output path directly under `artifacts/eval_history`, checks all three immutable
-input hashes, freshly fetches `origin/main`, verifies every implementation byte
-against `FROZEN_COMMIT`, invokes only this evaluator into a private quarantine,
+input hashes, verifies the read-only pre-score Git bundle and receipt, verifies
+every implementation byte against `FROZEN_COMMIT`, invokes only this evaluator into a private quarantine,
 invokes the evaluator's no-model full preserved-result audit mode, and only then
 publishes the result, mirror, and receipt. It contains no `sbatch`, training,
 retry, score-conditioned branch, or downstream command and is not submitted by

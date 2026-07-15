@@ -50,6 +50,7 @@ EXPECTED_CONTEXT_LENGTH = 2048
 EXPECTED_MODEL_CALLS = 528
 EXPECTED_CANDIDATE_LOGIT_VALUES = 2112
 FROZEN_COMMIT_RE = re.compile(r"^[0-9a-f]{40}$")
+SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 
 FAMILIES = (
     "multiply_subtract",
@@ -1068,8 +1069,10 @@ def resource_ledger(prepared: Sequence[PreparedTransition]) -> dict[str, Any]:
         "preserved_result_copies": 2,
         "read_only_receipt_files": 1,
         "mutable_sidecars": 0,
-        "authenticated_git_fetches": 1,
+        "authenticated_prescore_remote_verifications": 1,
+        "read_only_git_bundles": 1,
         "temporary_bare_git_repositories": 1,
+        "temporary_prescore_receipt_files": 1,
         "scheduler_log_files": 1,
         "mutable_scheduler_log_files": 1,
     }
@@ -1304,6 +1307,8 @@ def build_result(
     tokenized_sha256: str,
     implementation_hashes: Mapping[str, str],
     frozen_commit: str,
+    evidence_commit: str,
+    prescore_receipt_sha256: str,
     device: Mapping[str, Any],
     prepared: Sequence[PreparedTransition],
     rows: list[dict[str, Any]],
@@ -1313,6 +1318,15 @@ def build_result(
         isinstance(frozen_commit, str) and FROZEN_COMMIT_RE.fullmatch(frozen_commit),
         "frozen commit is not a full lowercase Git SHA-1",
     )
+    _require(
+        isinstance(evidence_commit, str) and FROZEN_COMMIT_RE.fullmatch(evidence_commit),
+        "evidence commit is not a full lowercase Git SHA-1",
+    )
+    _require(
+        isinstance(prescore_receipt_sha256, str)
+        and SHA256_RE.fullmatch(prescore_receipt_sha256),
+        "pre-score receipt is not bound by SHA-256",
+    )
     audit_execution(rows, prepared, observed_calls)
     ledger = resource_ledger(prepared)
     summary = build_summary(rows)
@@ -1321,6 +1335,8 @@ def build_result(
         "diagnostic_scope": diagnostic_scope(),
         "bindings": {
             "frozen_commit": frozen_commit,
+            "evidence_commit": evidence_commit,
+            "prescore_receipt_sha256": prescore_receipt_sha256,
             "source": str(Path(source_path).resolve()),
             "source_sha256": source_sha256,
             "source_rows_sha256": EXPECTED_SOURCE_ROWS_SHA256,
@@ -1371,6 +1387,8 @@ def build_result(
         tokenized_sha256=tokenized_sha256,
         implementation_hashes=implementation_hashes,
         frozen_commit=frozen_commit,
+        evidence_commit=evidence_commit,
+        prescore_receipt_sha256=prescore_receipt_sha256,
         device=device,
         prepared=prepared,
     )
@@ -1391,6 +1409,8 @@ def audit_preserved_result(
     tokenized_sha256: str,
     implementation_hashes: Mapping[str, str],
     frozen_commit: str,
+    evidence_commit: str,
+    prescore_receipt_sha256: str,
     device: Mapping[str, Any],
     prepared: Sequence[PreparedTransition],
 ) -> bool:
@@ -1412,8 +1432,19 @@ def audit_preserved_result(
         isinstance(frozen_commit, str) and FROZEN_COMMIT_RE.fullmatch(frozen_commit),
         "frozen commit is not a full lowercase Git SHA-1",
     )
+    _require(
+        isinstance(evidence_commit, str) and FROZEN_COMMIT_RE.fullmatch(evidence_commit),
+        "evidence commit is not a full lowercase Git SHA-1",
+    )
+    _require(
+        isinstance(prescore_receipt_sha256, str)
+        and SHA256_RE.fullmatch(prescore_receipt_sha256),
+        "pre-score receipt is not bound by SHA-256",
+    )
     expected_bindings = {
         "frozen_commit": frozen_commit,
+        "evidence_commit": evidence_commit,
+        "prescore_receipt_sha256": prescore_receipt_sha256,
         "source": str(Path(source_path).resolve()),
         "source_sha256": source_sha256,
         "source_rows_sha256": EXPECTED_SOURCE_ROWS_SHA256,
@@ -1632,6 +1663,8 @@ def audit_existing_result_file(
     tokenizer_path: str | Path,
     source_path: str | Path,
     frozen_commit: str,
+    evidence_commit: str,
+    prescore_receipt_sha256: str,
 ) -> str:
     """Reconstruct and fully audit a completed result without loading the model."""
     result_payload = read_regular_file_bytes(result_path, require_read_only=True)
@@ -1675,6 +1708,8 @@ def audit_existing_result_file(
         tokenized_sha256=tokenized_sha256,
         implementation_hashes=implementation_hashes,
         frozen_commit=frozen_commit,
+        evidence_commit=evidence_commit,
+        prescore_receipt_sha256=prescore_receipt_sha256,
         device=device,
         prepared=prepared,
     )
@@ -1689,10 +1724,20 @@ def main() -> None:
     parser.add_argument("--out", required=True)
     parser.add_argument("--audit-result")
     parser.add_argument("--frozen-commit", required=True)
+    parser.add_argument("--evidence-commit", required=True)
+    parser.add_argument("--prescore-receipt-sha256", required=True)
     args = parser.parse_args()
     _require(
         FROZEN_COMMIT_RE.fullmatch(args.frozen_commit) is not None,
         "frozen commit is not a full lowercase Git SHA-1",
+    )
+    _require(
+        FROZEN_COMMIT_RE.fullmatch(args.evidence_commit) is not None,
+        "evidence commit is not a full lowercase Git SHA-1",
+    )
+    _require(
+        SHA256_RE.fullmatch(args.prescore_receipt_sha256) is not None,
+        "pre-score receipt is not bound by SHA-256",
     )
 
     if args.audit_result is not None:
@@ -1702,6 +1747,8 @@ def main() -> None:
             tokenizer_path=args.tokenizer,
             source_path=args.source,
             frozen_commit=args.frozen_commit,
+            evidence_commit=args.evidence_commit,
+            prescore_receipt_sha256=args.prescore_receipt_sha256,
         )
         print(
             json.dumps(
@@ -1791,6 +1838,8 @@ def main() -> None:
         tokenized_sha256=tokenized_sha256,
         implementation_hashes=implementation_hashes,
         frozen_commit=args.frozen_commit,
+        evidence_commit=args.evidence_commit,
+        prescore_receipt_sha256=args.prescore_receipt_sha256,
         device=device_record,
         prepared=prepared,
         rows=rows,
