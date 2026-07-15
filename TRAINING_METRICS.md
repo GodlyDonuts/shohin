@@ -5,7 +5,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-15 02:55 EDT
+**Last refreshed:** 2026-07-15 15:35 EDT
 **Flagship source of truth:** Newton Slurm job `686732`,
 `/lustre/fs1/home/sa305415/shohin/logs/flagship2_686732.out`
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -34,10 +34,10 @@ the numbered file under its retention policy; the ledger records which copies re
 | Global tokens per update | `2 * 32 * 4 * 2,048 = 524,288` |
 | Absolute training target | 300,000 steps |
 | Resume point | `ckpt_0217250.pt` to step 217,251 with fresh optimizer rewarmup and stream generation 1 |
-| Latest checkpoint milestone | **260,000** steps = **136,314,880,000 nominal update tokens**. Newton promoted `best_step260000.pt` and local `train/flagship_out/ckpt_0260000.pt` match at MD5 `301082250e15c26820790ec7ff7730a0`; the local file is complete at 1,076,597,546 bytes. The rolling numbered Newton file aged out after promotion. Before resuming from the promoted artifact, the complete 1,035,468,800-byte local prefix was independently verified against the remote prefix. |
-| Last observed live step | At least 262,060 = 137,394,913,280 nominal update tokens |
-| Last observed throughput | 283,710 tokens/s, approximately 24.512B nominal tokens/day at that sustained rate |
-| Latest loss / gradient norm | step 262,060: loss 1.8301; gnorm 0.10; LR 0.0033 |
+| Latest checkpoint milestone | **280,000** steps = **146,800,640,000 nominal update tokens**. Newton `best_step280000.pt` and local `train/flagship_out/ckpt_0280000.pt` are complete at 1,076,597,546 bytes and match at MD5 `60a921e4e7e7c11c77dc7334f987f6fd`; local SHA-256 is `a6f48b2b6ce633dea77fdf09691dd892b0ab096f1830b30e09e28cecf47f079b`. The 270k rolling numbered file aged out before promotion; protected 260k remains available. |
+| Last observed live step | At least 286,240 = 150,072,033,280 nominal update tokens |
+| Last observed throughput | 282,426 tokens/s, approximately 24.402B nominal tokens/day at that sustained rate |
+| Latest loss / gradient norm | step 286,240: loss 1.6781; gnorm 0.13; LR 0.0015. One gnorm skip at 286,235 recovered immediately. |
 | Direct H100 telemetry | No intrusive telemetry task was added at this milestone. The established two-H100 configuration remains `BS32/ACC4`; current sustained throughput is about 1.85x the prior one-H100 154.3k tok/s band. |
 | Post-handoff health | Startup guard events at 217,569--217,573 and 217,643 recovered into the normal band; the later isolated 234,419 event recovered at 234,420. Isolated gnorm skips at 258,239 and 261,479 recovered on the immediately following updates. Logged updates through 262,060 are finite with normal gradient norms and no persistent skip, loader, CUDA, NCCL, or DDP error. |
 | Two-H100 handoff validation | `686734` first established world-2 transport; live `686732` then resumed the exact writer at step 217,251 and has sustained roughly 285--287k tok/s after rewarmup. This is now production throughput, not a canary extrapolation. |
@@ -85,6 +85,7 @@ These are experiment-state measurements, not capability scores.
 | R10 ACAW/VSPT | Exact noncommutative composition, rank-six exact-rational ambiguity, monotone replay, fail-closed overflow, fixed-size commitments, and canonical serialized-store accounting pass local mechanics. The replacement finite-board contract uses 800 calibration rows and 1,840 factorial confirmation rows, exact operation/query/depth cells, at least 10 accepted cases per cell, at least 400 per confirmation partition, and zero false certificates. Local checks passed, but a second custody audit found seven claim-blocking failures: self-attesting manifests, job-only clean-code enforcement, selectable seeds/R5 input, rehashable score substitution, hash/read TOCTOU, incomplete batch/device/determinism identity, and source changes between admission identities. | **Dormant control; no score read; second audit NO-GO.** Preserve the mechanics and hardening as comparator evidence. Do not resume its score chain unless an R12 contract explicitly requires it. |
 | R11a causal mediator | V3 closes the v2 source/query sampling, cached-generation, common-evaluation, and confirmation-derivation contract defects on paper. Its six source-derived slots, tied recurrent writer, and query readers remain established recurrence/memory machinery rather than a new primitive. | **Dormant favorable control; no implementation, board, fit, score, or GPU job.** |
 | R12 mathematical invention frontier | Exact extensional states are conjugate to the residual transducer. Fork-core compression, coherent profile extension, arbitrary late-query compression, secret sharing, finite relation loss, unrestricted MDL, hidden-coordinate locality, passive general-matroid learning, uncoded noise stability, commutator/holonomy state recovery, private-bank causal-address revelation, query-kernel factorization, active verifier queries, and dynamic-frontier compression each have an explicit theorem/collapse record. The latest CAR audit is decisive: centralized preprocessing can store a composite table or segment tree, so its private-bank communication gap is not a neural reasoning separation. | **Theory-only; current candidates rejected or retained only as controls.** No code, data, fit, score, CPU board, or GPU job is authorized. The next candidate must prove a uniform advantage over the strongest structure-aware centralized comparator, not raw history or an artificially one-round baseline. |
+| Raw-260k operation-selection likelihood | Frozen one-forward/four-candidate probe completed 528 forwards over 64 cases / 176 transitions. Full source + cursor is **80/176** versus **64/176** for both controls, but prediction changes by cursor in only **1/64** multi-step sources. Predictions are `add` 145, `subtract` 31, `multiply` 0, `remainder` 0. Result SHA-256 `772050a9c30c229ff200f81895a01377c63a7e07a8ccc7e944afc54779bca5b6`. | **Negative cursor-awareness gate.** Source text affects logits, but the effect is a lexical family cue rather than operation-order recovery. No full controller fit is authorized. |
 
 The research decision rule is stricter: infrastructure, training loss, local mechanics, and a
 decodable hidden state are not reasoning. R10 and R11 are dormant controls. R12 requires a uniform
@@ -454,17 +455,19 @@ This is data admission, not a score or SFT result.
 | Milestone | Numbered checkpoint at milestone | Newton durable copy | Local full checkpoint | MD5 | State |
 |---|---|---|---|---|---|
 | 170k | `ckpt_0170000.pt` | `best_step170000.pt` | `train/flagship_out/ckpt_0170000.pt` | `7ad139b6b9b537a5a3e65978f8296419` | Verified Newton + local |
-| 180k | Observed and hashed, then reaped by trainer retention | `best_step180000.pt` | `train/flagship_out/ckpt_0180000.pt` | `a592a8bd46163eb1427fe64460be0c6a` | Two durable verified copies |
-| 190k | `ckpt_0190000.pt` | `best_step190000.pt` | `train/flagship_out/ckpt_0190000.pt` | `3e195aaf44a14259797c49d7f80d9c7f` | Verified Newton + local |
+| 180k | Observed and hashed, then reaped by trainer retention | `best_step180000.pt` | Removed after remote re-verification | `a592a8bd46163eb1427fe64460be0c6a` | Durable Newton anchor; redundant local copy pruned after 280k |
+| 190k | `ckpt_0190000.pt` | `best_step190000.pt` | Removed after remote re-verification | `3e195aaf44a14259797c49d7f80d9c7f` | Durable Newton anchor; redundant local copy pruned after 280k |
 | 200k | `ckpt_0200000.pt` | `best_step200000.pt` | `train/flagship_out/ckpt_0200000.pt` | `510d57df578447986b40e20029511b9d` | Verified Newton + local |
 | 252.5k | `ckpt_0252500.pt` | `best_step252500.pt` | `train/flagship_out/ckpt_0252500.pt` | `1769bb0a8a06d4565df001f0521db99e` | Post-250k recovery point; verified Newton + local |
 | 260k | Numbered file subsequently reaped | `best_step260000.pt` | `train/flagship_out/ckpt_0260000.pt` | `301082250e15c26820790ec7ff7730a0` | Verified promoted Newton + local full checkpoint |
 | 280k | `ckpt_0280000.pt` | `best_step280000.pt` | `train/flagship_out/ckpt_0280000.pt` | `60a921e4e7e7c11c77dc7334f987f6fd` | 270k numbered file aged out; 280k substitute promoted and verified Newton + local; local SHA-256 `a6f48b2b6ce633dea77fdf09691dd892b0ab096f1830b30e09e28cecf47f079b` |
 
 All rows above are full optimizer checkpoints, not model-only exports. The next local DR
-target is 290k, or the newest clean checkpoint before any natural handoff. Superseded local
-DR copies were removed after explicit user authorization; scientific anchors 60k,
-166.25k--200k, 252.5k, 260k, and 280k remain local.
+target is 290k. The obsolete local 59k optimizer fallback and redundant local
+166.25k/180k/190k copies were removed on 2026-07-15 only after the corresponding
+scientific anchors were no longer required locally and the Newton 166.25k/180k/190k
+files were independently hash-verified. Retained local anchors are model-only 60k and
+full checkpoints 170k, 200k, 252.5k, 260k, and 280k.
 
 ## Current Active Pretraining Corpus
 
