@@ -5,7 +5,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-15 02:02 EDT
+**Last refreshed:** 2026-07-15 02:55 EDT
 **Flagship source of truth:** Newton Slurm job `686732`,
 `/lustre/fs1/home/sa305415/shohin/logs/flagship2_686732.out`
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -35,11 +35,11 @@ the numbered file under its retention policy; the ledger records which copies re
 | Absolute training target | 300,000 steps |
 | Resume point | `ckpt_0217250.pt` to step 217,251 with fresh optimizer rewarmup and stream generation 1 |
 | Latest checkpoint milestone | **260,000** steps = **136,314,880,000 nominal update tokens**. Newton promoted `best_step260000.pt` and local `train/flagship_out/ckpt_0260000.pt` match at MD5 `301082250e15c26820790ec7ff7730a0`; the local file is complete at 1,076,597,546 bytes. The rolling numbered Newton file aged out after promotion. Before resuming from the promoted artifact, the complete 1,035,468,800-byte local prefix was independently verified against the remote prefix. |
-| Last observed live step | At least 261,560 = 137,132,769,280 nominal update tokens |
-| Last observed throughput | 283,942 tokens/s, approximately 24.533B nominal tokens/day at that sustained rate |
-| Latest loss / gradient norm | step 261,560: loss 1.5335; gnorm 0.09; LR 0.0034 |
+| Last observed live step | At least 262,060 = 137,394,913,280 nominal update tokens |
+| Last observed throughput | 283,710 tokens/s, approximately 24.512B nominal tokens/day at that sustained rate |
+| Latest loss / gradient norm | step 262,060: loss 1.8301; gnorm 0.10; LR 0.0033 |
 | Direct H100 telemetry | No intrusive telemetry task was added at this milestone. The established two-H100 configuration remains `BS32/ACC4`; current sustained throughput is about 1.85x the prior one-H100 154.3k tok/s band. |
-| Post-handoff health | Startup guard events at 217,569--217,573 and 217,643 recovered into the normal band; the later isolated 234,419 event recovered at 234,420. Isolated gnorm skips at 258,239 and 261,479 recovered on the immediately following updates. Logged updates through 261,560 are finite with normal gradient norms and no persistent skip, loader, CUDA, NCCL, or DDP error. |
+| Post-handoff health | Startup guard events at 217,569--217,573 and 217,643 recovered into the normal band; the later isolated 234,419 event recovered at 234,420. Isolated gnorm skips at 258,239 and 261,479 recovered on the immediately following updates. Logged updates through 262,060 are finite with normal gradient norms and no persistent skip, loader, CUDA, NCCL, or DDP error. |
 | Two-H100 handoff validation | `686734` first established world-2 transport; live `686732` then resumed the exact writer at step 217,251 and has sustained roughly 285--287k tok/s after rewarmup. This is now production throughput, not a canary extrapolation. |
 
 The current live flagship's data stream is frozen for the life of `686732`. Do not add
@@ -47,16 +47,17 @@ new shards, alter weights, or apply an experimental runtime optimization. The jo
 already logged `world=2`, passed real CUDA/NCCL execution, and preserves the exact
 524,288-token global update with 250-step checkpoints.
 
-### Raw-Checkpoint Direct Interaction: 200k vs 252.5k
+### Raw-Checkpoint Direct Interaction: 200k vs 252.5k vs 260k
 
 The same seven fresh transcript-first prompts were run greedily on the verified local
-`ckpt_0200000.pt` and `ckpt_0252500.pt` checkpoints. This is a qualitative capability
-audit, not a public benchmark.
+`ckpt_0200000.pt`, `ckpt_0252500.pt`, and `ckpt_0260000.pt` checkpoints. This is a
+qualitative capability audit, not a public benchmark.
 
 | Checkpoint | Initial | Independent review | Supplied verified fact | Valid compact-state reuse |
 |---|---:|---:|---:|---:|
 | Raw 200k | 1/7 | 0/7 | 1/7 | 0/7 |
 | Raw 252.5k | 1/7 | 0/7 | 1/7 | 0/7 after transcript audit |
+| Raw 260k | 1/7 | 0/7 | 1/7 | 0/7 |
 
 The automated artifact originally marked 252.5k reuse as 1/7 because the old yes/no
 scorer found a repeated `No mar...` premise inside malformed state text. It did not emit
@@ -68,6 +69,13 @@ of better local completion, not multi-step reasoning. Canonical local artifact:
 `artifacts/eval_history/manual_raw_200k_vs_252500_local_mps.json`, SHA-256
 `169564bde33eeb21a0f224147d38b7cc972cb8215e598627774e43aea111eed3`.
 
+The 260k probe still reports `29*16=496`, treats base-6 `425` as decimal
+`425`, omits the multiplication in the sequential update, copies the unsorted
+input, fails insertion, and emits verbose code/template continuations. Only the
+simple syllogism passes. This is no capability movement from 200k or 252.5k.
+Artifact: `artifacts/eval_history/manual_capability_raw260k_20260715_mps.json`,
+SHA-256 `42590202834294cea182821f09613503c5ca91f6a1676d020d9f2cc2100c0aac`.
+
 ## Current Reasoning-Mechanism Frontier
 
 These are experiment-state measurements, not capability scores.
@@ -76,7 +84,7 @@ These are experiment-state measurements, not capability scores.
 |---|---|---|
 | R10 ACAW/VSPT | Exact noncommutative composition, rank-six exact-rational ambiguity, monotone replay, fail-closed overflow, fixed-size commitments, and canonical serialized-store accounting pass local mechanics. The replacement finite-board contract uses 800 calibration rows and 1,840 factorial confirmation rows, exact operation/query/depth cells, at least 10 accepted cases per cell, at least 400 per confirmation partition, and zero false certificates. Local checks passed, but a second custody audit found seven claim-blocking failures: self-attesting manifests, job-only clean-code enforcement, selectable seeds/R5 input, rehashable score substitution, hash/read TOCTOU, incomplete batch/device/determinism identity, and source changes between admission identities. | **Dormant control; no score read; second audit NO-GO.** Preserve the mechanics and hardening as comparator evidence. Do not resume its score chain unless an R12 contract explicitly requires it. |
 | R11a causal mediator | V3 closes the v2 source/query sampling, cached-generation, common-evaluation, and confirmation-derivation contract defects on paper. Its six source-derived slots, tied recurrent writer, and query readers remain established recurrence/memory machinery rather than a new primitive. | **Dormant favorable control; no implementation, board, fit, score, or GPU job.** |
-| R12 mathematical invention frontier | Exact extensional states are conjugate to the residual transducer, and fork-core compression collapses to AIS/PSR/rate-distortion plus Helly/Jung geometry. `R12_COHERENT_ACTION_THEORY.md` proves a coherent hyperconvex function-space extension with optimal merge radius `Delta/2` and no word-length error growth, but its displayed unrestricted finite construction uses `|X|*|A|` coordinates; the reduced form assumes an event-closed predictive profile and collapses to observable-profile/Koopman/equivariant representation machinery. `R12_CLOSED_LATE_QUERY_NO_GO.md` proves that post-commit internal computation adds no source information and that arbitrary late INDEX requires `n` exact retained bits or at least `n(1-h2(epsilon))` at error `epsilon`. | **Theory-only; state-ontology, fork-core, coherent-profile, and arbitrary-late-query compression claims rejected.** No code, data, fit, score, CPU board, or GPU job is authorized. The next candidate must prove a uniform advantage in learnability, dynamic sparsity, amortized verification, noise stability, or another named resource on a structured residual family. |
+| R12 mathematical invention frontier | Exact extensional states are conjugate to the residual transducer. Fork-core compression, coherent profile extension, arbitrary late-query compression, secret sharing, finite relation loss, unrestricted MDL, hidden-coordinate locality, passive general-matroid learning, uncoded noise stability, commutator/holonomy state recovery, private-bank causal-address revelation, query-kernel factorization, active verifier queries, and dynamic-frontier compression each have an explicit theorem/collapse record. The latest CAR audit is decisive: centralized preprocessing can store a composite table or segment tree, so its private-bank communication gap is not a neural reasoning separation. | **Theory-only; current candidates rejected or retained only as controls.** No code, data, fit, score, CPU board, or GPU job is authorized. The next candidate must prove a uniform advantage over the strongest structure-aware centralized comparator, not raw history or an artificially one-round baseline. |
 
 The research decision rule is stricter: infrastructure, training loss, local mechanics, and a
 decodable hidden state are not reasoning. R10 and R11 are dormant controls. R12 requires a uniform
@@ -450,9 +458,10 @@ This is data admission, not a score or SFT result.
 | 190k | `ckpt_0190000.pt` | `best_step190000.pt` | `train/flagship_out/ckpt_0190000.pt` | `3e195aaf44a14259797c49d7f80d9c7f` | Verified Newton + local |
 | 200k | `ckpt_0200000.pt` | `best_step200000.pt` | `train/flagship_out/ckpt_0200000.pt` | `510d57df578447986b40e20029511b9d` | Verified Newton + local |
 | 252.5k | `ckpt_0252500.pt` | `best_step252500.pt` | `train/flagship_out/ckpt_0252500.pt` | `1769bb0a8a06d4565df001f0521db99e` | Post-250k recovery point; verified Newton + local |
+| 260k | Numbered file subsequently reaped | `best_step260000.pt` | `train/flagship_out/ckpt_0260000.pt` | `301082250e15c26820790ec7ff7730a0` | Verified promoted Newton + local full checkpoint |
 
 All rows above are full optimizer checkpoints, not model-only exports. The next local DR
-target is 260k, or the newest clean checkpoint before any natural handoff.
+target is 270k, or the newest clean checkpoint before any natural handoff.
 
 ## Current Active Pretraining Corpus
 

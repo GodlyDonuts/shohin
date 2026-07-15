@@ -3387,6 +3387,59 @@ monoid decomposition; it saves description under a supplied product chart but
 not residual information. No CPU experiment is authorized on commutators
 alone.
 
+### R12 Causal-Address Revelation No-Go
+
+`R12_CAUSAL_ADDRESS_REVELATION.md` preserves a correct private-bank
+communication theorem but rejects its neural interpretation. Pointer-chasing
+functions give a `Theta(m)` activated-payload gap between one simultaneous
+private-bank round and `H` adaptive addressed reads. The smallest witness is two
+Boolean function banks: three simultaneous payload bits versus two adaptive
+payload bits.
+
+The independent audit found two claim-blocking collapses. First, the retained-
+state law is `Hm log m` only when length-one interval queries expose every bank;
+for full-chain queries alone, the residual is just one composite table with
+`m log m` bits. Second, a normal centralized model may preprocess across banks:
+it can store the composite table, keep raw tables plus that table at only
+`1+1/H` relative overhead, or use a segment tree for arbitrary intervals. A
+depth-matched tied Transformer or recurrent-memory model already has adaptive
+routing rounds. The proposed CPU comparison would therefore force a lazy-
+evaluation win against an artificially one-round baseline. No CAR fit or CPU
+board is authorized.
+
+### R12 Query-Kernel Factorization No-Go
+
+`R12_QUERY_KERNEL_FACTORIZATION_NO_GO.md` proves that future-stable query
+kernels are the greatest event congruences inside immediate output kernels.
+Their quotient map always gives a subdirect product and gives a true direct
+product only under joint-realizability/CRT conditions. Three signatures
+`00,01,11` are the smallest missing-combination obstruction; the symmetric
+`x,y,x xor y` family shows pairwise complements do not select a canonical
+basis. This is output-projected Moore-machine learning plus factor congruences,
+not discovery of interacting reasoning modules. No CPU experiment is
+authorized.
+
+### R12 Active Verifier Query No-Go
+
+`R12_ACTIVE_VERIFIER_QUERY_NO_GO.md` isolates the exact positive theorem:
+balanced disagreement queries identify a finite verifier quotient in
+`O(log N / beta)` target-coupled oracle calls. A target-independent verifier
+adds no information; a target-coupled verifier is membership/equivalence access;
+and compact hypotheses can still require exponentially many calls. The lane is
+generalized binary search, active automata learning, or CEGIS, so it remains a
+data-generation doctrine rather than a latent-reasoning mechanism.
+
+### R12 Dynamic Frontier Compression No-Go
+
+`R12_DYNAMIC_FRONTIER_NO_GO.md` gives the tight context law for a known active
+dependency frontier. Exact memory is the logarithm of the number of possible
+frontier supports, assignments, and closed summaries. Minimizing it over
+processing orders is pathwidth; factor graphs, tensor contraction, OBDDs, and
+recurrent memory use the same separator state. A nonlinear Heisenberg-action
+control demonstrates logarithmic residual growth, but that is classical
+polynomial-growth group accumulation. The route does not beat a
+structure-aware recurrent comparator and receives no CPU board.
+
 ### R12 Holonomy State No-Go
 
 `R12_HOLONOMY_STATE_NO_GO.md` closes closed-loop curvature as the task-native
