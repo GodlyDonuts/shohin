@@ -3254,3 +3254,21 @@ The next target is now sharper: learn a short **nonlinear** residual-action
 presentation from ordinary noisy traces with bounded precision, stable sparse
 updates, sublinear residual innovation, and a comparator-relative polynomial
 learning advantage. Linear Hankel-rank examples are controls, not candidates.
+
+### R12 Axiomatic Presentation Identifiability No-Go
+
+`R12_AXIOMATIC_PRESENTATION_NO_GO.md` closes the naive form of “teach a few
+axioms and extrapolate.” A generator assignment that satisfies every defining
+relation on its complete state domain does factor uniquely through the
+presented category, so all word actions are determined. Identifying the target
+action, however, additionally requires every generator to be correct on a
+determining set for a declared hypothesis class.
+
+Finite relation and interchange tests do not provide that condition for an
+unrestricted neural updater. Any unvisited state-generator transition can be
+patched while preserving every frozen loss and breaking the first unseen word
+that reaches it. Trivial, conjugate, and nonfaithful representations also pass
+many relation suites. Relations are therefore global consistency certificates
+for already identified local maps, not a source of identifiability. The
+remaining target must explain how a small robust hypothesis class is learned
+and how its determining set is covered without hard-coding the algebra.

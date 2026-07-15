@@ -4664,3 +4664,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   a bounded-precision nonlinear action that is polynomially learnable from ordinary noisy traces while a named
   unstructured comparator is not. `R12_STRUCTURED_RESIDUAL_RESOURCE_LAW.md` freezes the proofs and boundary.
   No CPU neural board or H100 experiment was authorized.
+
+- **2026-07-15 02:25** — **Finite axiom/relation loss is rejected as a standalone route to
+  extrapolation.** The presentation theorem is valid: generator maps satisfying every defining relation on
+  their complete domains factor through the presented category and therefore determine all word actions. But
+  target identification already requires each generator to be covered on a determining set for a restricted
+  hypothesis class. An unrestricted neural updater can patch any unvisited state-generator transition while
+  preserving every finite relation and interchange test, then fail on the first unseen word reaching it;
+  trivial, conjugate, and nonfaithful actions add further ambiguity. Relations certify already identified local
+  maps rather than identify them. `R12_AXIOMATIC_PRESENTATION_NO_GO.md` freezes the theorem, finite-test no-free-
+  lunch boundary, resource ledger, and prior-art collapse. No CPU falsifier or Shohin fit was authorized.
