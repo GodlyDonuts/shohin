@@ -5,7 +5,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-15 00:31 EDT
+**Last refreshed:** 2026-07-15 01:32 EDT
 **Flagship source of truth:** Newton Slurm job `686732`,
 `/lustre/fs1/home/sa305415/shohin/logs/flagship2_686732.out`
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -35,11 +35,11 @@ the numbered file under its retention policy; the ledger records which copies re
 | Absolute training target | 300,000 steps |
 | Resume point | `ckpt_0217250.pt` to step 217,251 with fresh optimizer rewarmup and stream generation 1 |
 | Latest checkpoint milestone | **252,500** steps = **132,382,720,000 nominal update tokens** |
-| Last observed live step | 257,680 = 135,098,531,840 nominal update tokens |
-| Last observed throughput | 285,206 tokens/s, approximately 24.642B nominal tokens/day at that sustained rate |
-| Latest loss / gradient norm | step 257,680: loss 1.5544; gnorm 0.10; LR 0.0037 |
+| Last observed live step | 259,520 = 136,063,221,760 nominal update tokens |
+| Last observed throughput | 284,520 tokens/s, approximately 24.583B nominal tokens/day at that sustained rate |
+| Latest loss / gradient norm | step 259,520: loss 1.5095; gnorm 0.09; LR 0.0035 |
 | Direct H100 telemetry | No intrusive telemetry task was added at this milestone. The established two-H100 configuration remains `BS32/ACC4`; current sustained throughput is about 1.85x the prior one-H100 154.3k tok/s band. |
-| Post-handoff health | Startup guard events at 217,569--217,573 and 217,643 recovered into the normal band; the later isolated 234,419 event recovered at 234,420. The cumulative log contains 72 guard-skip records, all recovered; recent logged updates through 257,680 are finite with normal gradient norms and no persistent skip, loader, CUDA, NCCL, or DDP error. |
+| Post-handoff health | Startup guard events at 217,569--217,573 and 217,643 recovered into the normal band; the later isolated 234,419 event recovered at 234,420. The isolated step-258,239 gnorm skip recovered at 258,240. Recent logged updates through 259,520 are finite with normal gradient norms and no persistent skip, loader, CUDA, NCCL, or DDP error. |
 | Two-H100 handoff validation | `686734` first established world-2 transport; live `686732` then resumed the exact writer at step 217,251 and has sustained roughly 285--287k tok/s after rewarmup. This is now production throughput, not a canary extrapolation. |
 
 The current live flagship's data stream is frozen for the life of `686732`. Do not add
@@ -76,7 +76,7 @@ These are experiment-state measurements, not capability scores.
 |---|---|---|
 | R10 ACAW/VSPT | Exact noncommutative composition, rank-six exact-rational ambiguity, monotone replay, fail-closed overflow, fixed-size commitments, and canonical serialized-store accounting pass local mechanics. The replacement finite-board contract uses 800 calibration rows and 1,840 factorial confirmation rows, exact operation/query/depth cells, at least 10 accepted cases per cell, at least 400 per confirmation partition, and zero false certificates. Local checks passed, but a second custody audit found seven claim-blocking failures: self-attesting manifests, job-only clean-code enforcement, selectable seeds/R5 input, rehashable score substitution, hash/read TOCTOU, incomplete batch/device/determinism identity, and source changes between admission identities. | **Dormant control; no score read; second audit NO-GO.** Preserve the mechanics and hardening as comparator evidence. Do not resume its score chain unless an R12 contract explicitly requires it. |
 | R11a causal mediator | V3 closes the v2 source/query sampling, cached-generation, common-evaluation, and confirmation-derivation contract defects on paper. Its six source-derived slots, tied recurrent writer, and query readers remain established recurrence/memory machinery rather than a new primitive. | **Dormant favorable control; no implementation, board, fit, score, or GPU job.** |
-| R12 uniform late-query causal composition | `R12_REASONING_INVENTION_CHARTER.md` defines causal equivalence, counterfactual residual derivatives, six state/update axioms, the `log2(N)` information bound, and an adjacent-transposition late-query witness whose `m=2` restriction separates from `AC0` via parity. It also records the finite-circuit collapse boundary and rejects product-tree and Schur-boundary proposals as inventions. | **Theory-only; no mechanism or capability result.** A theorem, equivalence dossier, exact collapse test, prior-art boundary, and CPU falsifier are mandatory before any implementation. |
+| R12 mathematical invention frontier | Exact extensional states are conjugate to the residual transducer, and fork-core compression collapses to AIS/PSR/rate-distortion plus Helly/Jung geometry. `R12_COHERENT_ACTION_THEORY.md` proves a coherent hyperconvex function-space extension with optimal merge radius `Delta/2` and no word-length error growth, but its displayed unrestricted finite construction uses `|X|*|A|` coordinates; the reduced form assumes an event-closed predictive profile and collapses to observable-profile/Koopman/equivariant representation machinery. `R12_CLOSED_LATE_QUERY_NO_GO.md` proves that post-commit internal computation adds no source information and that arbitrary late INDEX requires `n` exact retained bits or at least `n(1-h2(epsilon))` at error `epsilon`. | **Theory-only; state-ontology, fork-core, coherent-profile, and arbitrary-late-query compression claims rejected.** No code, data, fit, score, CPU board, or GPU job is authorized. The next candidate must prove a uniform advantage in learnability, dynamic sparsity, amortized verification, noise stability, or another named resource on a structured residual family. |
 
 The research decision rule is stricter: infrastructure, training loss, local mechanics, and a
 decodable hidden state are not reasoning. R10 and R11 are dormant controls. R12 requires a uniform

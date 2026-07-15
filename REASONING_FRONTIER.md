@@ -3141,3 +3141,76 @@ data structures and differentiable algebra. They remain useful favorable
 controls. No R12 code, board, training data, fit, score, or GPU job is authorized
 until a candidate abstract operator survives the charter's mandatory theorem,
 equivalence dossier, exact collapse test, prior-art boundary, and CPU falsifier.
+
+### R12 Exact-State No-Go And Fork-Core Audit
+
+The exact target cannot itself be the invention. If a reachable state `E(h)`
+has deterministic event updates, realizes every continuation-query answer, and
+uses extensional equality, then `E(h) -> rho_h` is a bijection that conjugates
+the learned update to the residual derivative. It is therefore the minimal
+Moore transducer and transition monoid in different coordinates. Exact
+non-automaton wording is rejected before implementation.
+
+`R12_FORK_CORE_THEORY.md` audits the first approximate replacement. It defines
+joint adaptive transcript signatures and requires one current-and-successor
+center for every history in a proposed merge fiber. In a convex center space of
+affine dimension `D`, a fiber's exact radius is witnessed by at most `D+1`
+histories. Pairwise-valid fibers can still require the sharp inflated radius
+`2D/(D+1)`; three delta answer laws are the smallest obstruction, with pair
+radius `1/2` and global radius `2/3`.
+
+Those statements are useful, but not a new primitive. The shared-kernel object
+is an approximate information state / predictive-state representation, the
+finite certificate is Helly geometry, and the sharp radius factor is classical
+Jung/Bohnenblust geometry. A June 2026 bounded-memory paper already applies the
+higher-order compatibility and Helly-certificate idea. FCQ is therefore
+rejected for implementation and retained only as a falsifier: any learned
+context merge must be tested on multi-history forks, not only pairs.
+
+The next theory target is coherent action extension. Extending each event map
+independently into a convex, injective, or hyperconvex ambiguity space does not
+guarantee that word updates preserve the original event-monoid relations away
+from exact states. R12 now seeks either a simultaneous equivariant extension
+theorem with explicit dimension/error cost or a smallest obstruction that
+changes the trainable objective. No architecture is authorized while that
+question is unresolved.
+
+### R12 Coherent-Action Theorem And Closed-Query No-Go
+
+The simultaneous-extension question now has a complete project-level answer.
+`R12_COHERENT_ACTION_THEORY.md` embeds any bounded nonexpansive monoid action
+into a hyperconvex sup-norm function space. The embedding is isometric, updates
+are coordinate substitutions, every monoid relation holds throughout the
+ambient space, and a fiber of diameter `Delta` has optimal merge radius
+`Delta/2` with no further word-length error growth. Grid quantization commutes
+with the updates and preserves the relations exactly.
+
+This does not survive the invention gate. The displayed unrestricted finite
+construction uses `|X| * |A|` coordinates for exact-state set `X` and
+transition monoid `A`.
+Its reduced form requires an event-closed observable family and is therefore an
+observable-profile, PSR, Koopman-pullback, or equivariant linear representation.
+The construction buys horizon stability by explicitly carrying the future
+observable profile. Classical semigroup linearization, Lipschitz-free spaces,
+and injective hulls already occupy this neighborhood.
+
+The smallest prescribed-ambient obstruction is nevertheless useful. A
+two-point involution on `{1,2}` has nonexpansive extensions to the three-point
+line `{0,1,2}`, but none can remain involutive; the minimum global `a^2=1`
+defect is one. Independent generator extension therefore cannot certify a
+whole action, even in the hyperconvex interval `[0,2]`.
+
+An orthogonal information-theory attack closes the arbitrary-late-query escape.
+`R12_CLOSED_LATE_QUERY_NO_GO.md` treats every still-accessible activation,
+certificate, transcript, cache, or context token as retained state. Once the
+source is inaccessible, internally generated computation is downstream of that
+state and adds no source mutual information. Exact late INDEX needs `n` retained
+bits; error `epsilon` still needs at least `n(1-h2(epsilon))`. Search,
+recurrence, internal debate, and self-generated proofs cannot reconstruct
+discarded arbitrary bits.
+
+R12 must now seek a resource theorem on a structured residual family. The
+admissible axes are learnability, dynamic sparsity, amortized verification,
+noise stability, or another named cost with a matched comparator. A new exact
+state ontology, arbitrary context compression, and coordinate-pullback action
+are closed claims. No code or neural experiment is authorized.
