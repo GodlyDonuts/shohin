@@ -459,9 +459,12 @@ This is data admission, not a score or SFT result.
 | 200k | `ckpt_0200000.pt` | `best_step200000.pt` | `train/flagship_out/ckpt_0200000.pt` | `510d57df578447986b40e20029511b9d` | Verified Newton + local |
 | 252.5k | `ckpt_0252500.pt` | `best_step252500.pt` | `train/flagship_out/ckpt_0252500.pt` | `1769bb0a8a06d4565df001f0521db99e` | Post-250k recovery point; verified Newton + local |
 | 260k | Numbered file subsequently reaped | `best_step260000.pt` | `train/flagship_out/ckpt_0260000.pt` | `301082250e15c26820790ec7ff7730a0` | Verified promoted Newton + local full checkpoint |
+| 280k | `ckpt_0280000.pt` | `best_step280000.pt` | `train/flagship_out/ckpt_0280000.pt` | `60a921e4e7e7c11c77dc7334f987f6fd` | 270k numbered file aged out; 280k substitute promoted and verified Newton + local; local SHA-256 `a6f48b2b6ce633dea77fdf09691dd892b0ab096f1830b30e09e28cecf47f079b` |
 
 All rows above are full optimizer checkpoints, not model-only exports. The next local DR
-target is 270k, or the newest clean checkpoint before any natural handoff.
+target is 290k, or the newest clean checkpoint before any natural handoff. Superseded local
+DR copies were removed after explicit user authorization; scientific anchors 60k,
+166.25k--200k, 252.5k, 260k, and 280k remain local.
 
 ## Current Active Pretraining Corpus
 
@@ -583,21 +586,23 @@ be promoted on loss, formatting, generator holdouts, or a single benchmark movem
 ### Protected pretraining denominator
 
 - Model: 125,081,664 trained parameters.
-- Exact step 260,000 nominal update tokens: **136,314,880,000**
-  (`260000 * 524288`). This counts replay and is not a unique-token claim.
+- Exact step 280,000 nominal update tokens: **146,800,640,000**
+  (`280000 * 524288`). This counts replay and is not a unique-token claim.
 - Mounted decoded-token manifest capacity: **57,826,022,271** across 290
   shards: FineMath-4+ 2,000,001,108; OpenWebMath 14,063,689,153;
   CodeParrot-Clean Python 16,762,327,600; FineMath-3+ 25,000,004,410.
-- Nominal update-token / mounted-capacity ratio at 260k: **2.3572x**. Because
+- Nominal update-token / mounted-capacity ratio at 280k: **2.5387x**. Because
   the loader round-robins directories rather than weighting by manifest size,
   this aggregate ratio is not a per-source exposure estimate.
-- Durable raw checkpoint: Newton `best_step260000.pt` and local
-  `train/flagship_out/ckpt_0260000.pt`, 1,076,597,546 bytes, MD5
-  `301082250e15c26820790ec7ff7730a0`.
+- Durable latest checkpoint: Newton `best_step280000.pt` and local
+  `train/flagship_out/ckpt_0280000.pt`, 1,076,597,546 bytes, MD5
+  `60a921e4e7e7c11c77dc7334f987f6fd`, local SHA-256
+  `a6f48b2b6ce633dea77fdf09691dd892b0ab096f1830b30e09e28cecf47f079b`.
+  Immutable raw-260k remains the causal-diagnostic reference at checkpoint
+  SHA-256 `91d5288f184fc5230516add9851ac1a8815d3369ffd816cd7d0c03d8bafc741d`.
 - Live continuation `686732`: two H100s, `BS=32`, `ACC=4`, exact same 524,288
-  tokens/update. At 2026-07-15 04:26 EDT it was healthy through step 264,890 at
-  about 283.38k tok/s. Four gnorm skips at 264,031--264,034 recovered without
-  intervention by 264,040.
+  tokens/update. At 2026-07-15 12:30 EDT it was healthy through step 280,410 at
+  about 282.20k tok/s, loss 1.6450, gnorm 0.10, and LR 0.0020.
 
 ### Raw-260k capability accounting
 
@@ -607,7 +612,11 @@ be promoted on loss, formatting, generator holdouts, or a single benchmark movem
 | Failed `Next state` SSC renderer | 55 calls / 20 chains | 0/20 chains; 43/55 outputs equal input+1 | `a152e85294d02173a697e29d8537bf4b53428d747d16c7e3baf692095d9b6a2f` |
 | Three-renderer source-free matrix | 330 calls / 20 cases | `Problem/Work` 44/55 atomic, 10/20 chains | `b33c26b3963296c0d97b2a6d3332c0be18af40f460137c25652b881824a1ca4b` |
 | Causal renderer interchange | 18 candidate-sequence scores / 6 cells | displayed state favored 6/6, min margin 0.79386 | `963177139b6abb333710f0db19a521c341a039fce3f65743ebdd698be6f12170` |
-| Fresh source-scheduled confirmation | 256 cases / 704 transitions / at most 1,920 model calls | running as Newton `689535`; locked gates in `R12_SOURCE_SCHEDULED_REASONING_CONFIRMATION.md` | board `19a84165f15b19911fc8ef229022e47753833d703d77d1e8cc25db9dfc993474` |
+| Fresh source-scheduled confirmation | 256 cases / 704 transitions / exactly 1,920 model calls | direct 16/256; whole 9/256; scheduled 115/256; atomic 534/704; sequential gate failed 38/64 vs 45/64 | result `be2e64c8df2797c3b35c7431b3b6af4d6d7fb3600cd25e5a0371415b45de6a0d`; assessment `0e1e49ea864d3958a765e11ac395aac7e2d87a4b9433950b00a3bb213a7933bd` |
+| Whole-decode failure taxonomy | 256 whole responses | 45 reached answer; 36 later lost it; 96 wrong first op; 37 wrong first arithmetic; 71 loop/replay; 7 later failures; 214/256 loop signature; 256/256 cap stops | Derived from immutable confirmation; `R12_SOURCE_SCHEDULED_FAILURE_TAXONOMY.md` |
+| Frozen updater candidate likelihood | 6 prompts / 5 candidates / 30 forwards | correct normalized/total/plus-EOS wins 0/6; EOS top-1 0/6; mean winning gap 0.653693 nats/token | `4ca100029806c933ba1d3137044c040b468d380ae9bb9f5efeadcbc949374525`; independently replayed exactly |
+| Strict operation-cursor diagnostic | 64 cases / 176 transitions / 528 calls | parse 0/528; all 16,896 sampled tokens hit the 32-token cap; EOS stops 0/528; semantic scores are interface-confounded zeros | `5ba772ec68aaa445d1252022f00285fa83b3403f3376437d4386d143619da681`; `R12_OPERATION_CURSOR_RESULT.md` |
+| Future-operation Jacobian probe | 12 primary cases reached; first replication intervention invalid | failed closed before a result because the norm-matched swap was below the frozen minimum relative norm; no score artifact | log `60e26d88432675f233b3b1a2c58e0d06814d12eee03bacb2954ad15a0d2c3804`; `R12_OPERATION_WORKSPACE_JACOBIAN_RESULT.md` |
 
 The 10/20 result is not autonomous model reasoning. The controller imports the
 public operation schedule, parses integers, carries model-produced state, and
@@ -618,11 +627,16 @@ makes one model call per operation. Those resources remain part of every claim.
 - DRS complete-basis SFT `689524`: 311,127 examples, 36,516,108 total tokens,
   7,650,920 answer tokens, 17,830 packed 2,048-token sequences, one epoch and
   1,115 updates. Training completed in 846 seconds after model start. Locked
-  900-case evaluation is `689525`.
+  900-case evaluation `689525` is complete: first transitions 533/900,
+  transitions 1,259/2,088, finals 63/900, width-4 49/300, width-6 14/300,
+  width-8 0/300. Result SHA-256 is
+  `eb0b15413e7dcf42f27d275a5a922c3f293dbead6c5507ca7910e802d80d9484`.
 - STRR factorized static-tape SFT `689526`: 311,127 examples, 36,532,447 total
   tokens, 4,123,456 answer tokens, 17,838 packed sequences, one epoch and 1,115
-  updates. Training completed in 824 seconds. Locked 900-case evaluation is
-  `689527`.
+  updates. Training completed in 824 seconds. Locked 900-case evaluation
+  `689527` is complete: first transitions 365/900, transitions 653/1,537,
+  finals 15/900, width-8 0/300. Result SHA-256 is
+  `9a8bd97cc5f450b626aed204c47ebb6260e3f1af89e39c8eb959175f9b2adf5f`.
 - Both start from immutable raw `best_step200000.pt`; neither writes the
   flagship output. The first attempts `689496/689498` timed out before their
   first update because a pure prompt-boundary check imported the full PyTorch
