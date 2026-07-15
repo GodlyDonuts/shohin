@@ -157,3 +157,37 @@ small learner acquires a restricted, robust hypothesis class whose local
 coverage is both feasible and sufficient, without hard-coding the target
 algebra. No CPU falsifier or Shohin fit follows from the presentation theorem
 alone.
+
+## 8. Finite determining-family refinement
+
+There is one exact local-to-global result worth preserving. Let every primitive
+map belong to a declared stationary hypothesis class with a finite determining
+set. If all primitive maps are recovered exactly on those sets, then every
+composition at every length is correct by induction; no union bound over words
+is required.
+
+For `M` primitive determining cases observed independently `m` times through
+binary noise below `eta < 1/2`, majority recovery obeys the conservative bound
+
+```
+P(any primitive case is wrong)
+  <= M * exp(-m * (1 - 2 eta)^2 / 2).
+```
+
+If each learned primitive has uniform error at most `epsilon` and the relevant
+composition maps have Lipschitz factors at most `lambda_j`, the usual telescopic
+bound is
+
+```
+error_L <= epsilon * sum_(j=0)^(L-1) product_(k=j+1)^(L-1) lambda_k.
+```
+
+This yields horizon-independent stability only under contraction or exact
+primitive recovery. Without the declared stationary class and determining
+sets, a delayed-sabotage map agrees on every finite tested composition and
+fails immediately afterward.
+
+The theorem is a useful curriculum contract but not an R12 invention. A fair
+structure-aware recurrent, acyclic, symbolic, or transformer control receives
+the same primitive family and determining observations and inherits the same
+guarantee.

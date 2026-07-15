@@ -623,3 +623,55 @@ sorting, and string insertion. The records are
 `capability_matrix_raw190k_seed20260713_qa_max128_mps.json` (md5
 `83ea629a248655bc4b7ceec3ecb8ec66`). This rejects decoder budget or
 answer-commitment tuning as a broad capability intervention at raw 190k.
+
+## Raw 260k Continuation-Mode Confirmation
+
+The old seven-case direct-interaction score understated one narrow capability
+because the raw pretrained model often emits a worked solution and then
+continues into another textbook example instead of placing only the final
+integer in the answer slot. This was tested without changing the checkpoint or
+using training data.
+
+An exploratory four-case, five-format probe first found three brittle positive
+paths: one complete sequential update, one modular worked continuation, and one
+correct subtraction from a supplied product. That artifact is
+`artifacts/eval_history/raw260k_continuation_modes_20260715_mps.json`, SHA-256
+`f462391f3351a8491955587c036e7579559deb6d52e3c44827a236f245d41290`.
+
+A score-blind confirmation then generated 20 fresh cases from fixed seed
+`2026071501`, five each for multiply-subtract, base conversion, sequential
+state update, and modular update. The immutable case manifest SHA-256 is
+`3bae0add841e403d01251ae6e6ff110f3c6a07324b28de1b671a59f012071f7c`;
+the transcript artifact SHA-256 is
+`f333c8f54383c411813551bc2001077b88e49514923b76c3cfe0331e9fd6bb47`.
+After a parser defect around numbered `Question 2:` headers was found, the
+responses were not regenerated. A separate hash-bound assessor read the same
+immutable transcript and wrote SHA-256
+`058aa9dafdc741efc181e6377db5d46b233875504b4b4b6d92837a0db71ea62b`.
+
+Strict final-answer results over the first answer segment are:
+
+| Family (5 cases each) | Direct QA | Bare expression | Two-example worked continuation |
+|---|---:|---:|---:|
+| Multiply then subtract | 0/5 | 0/5 | 1/5 |
+| Base conversion | 0/5 | 0/5 | 0/5 |
+| Add, multiply, subtract | **4/5** | 0/5 | **5/5** |
+| Modular update | 0/5 | 1/5 | 2/5 |
+| **All** | **4/20** | **1/20** | **8/20** |
+
+The sequential-state result is genuine narrow procedural evidence: every
+worked-continuation case contains both correct intermediate states and the
+correct final answer, while all five direct cases contain the correct answer
+and four stop the first answer segment correctly. It is not broad arithmetic.
+The model gets all modular sums but only two remainders under demonstrations,
+gets only two of five multiplication intermediates, and treats every tested
+non-decimal numeral as positional-looking decimal text rather than applying the
+base.
+
+The operational conclusion changes in one precise way. Shohin is not a blank
+template generator: pretrain-native worked-example context can elicit a stable
+local add/multiply/subtract transition routine. However, the routine does not
+transport across arithmetic families or response formats. Future training
+should test whether surface-format conjugacy can stabilize an already present
+procedure, but one successful family cannot be promoted as latent thought or
+general reasoning.

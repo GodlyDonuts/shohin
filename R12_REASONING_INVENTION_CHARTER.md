@@ -35,6 +35,14 @@ requirement: it rejects every bounded implementation. Novelty must instead be
 stated relative to an explicit resource-scaled comparator family. No R12 report
 may claim separation from all static computation.
 
+The converse is equally important. Exact finite unrolling establishes only
+extensional computability. It does **not** preserve parameters, retained bits,
+precision, source access, training examples, oracle calls, training FLOPs,
+inference FLOPs, sequential depth, external memory, or external execution. A
+reduction is claim-rejecting only when it preserves the preregistered resource
+vector within constant or polylogarithmic overhead. Otherwise it defines a
+control or downgrades the novelty claim; it cannot veto every finite mechanism.
+
 ## 3. Operational definition
 
 At scale `n`, let `Sigma_n`, `Q_n`, and `A_n` be event, late-query, and answer
@@ -191,13 +199,23 @@ Every future worker must produce these artifacts in order:
    proof or explicitly labeled conjecture.
 2. **Axiomatic primitive:** state and operators defined without neural-module
    vocabulary.
-3. **Equivalence dossier:** algebraic checks against SFT, fixed/tied recurrence,
-   retrieval, fast weights, hypernetworks, external execution, and finite
-   unrolling.
+3. **Equivalence dossier:** algebraic and resource-preserving checks against
+   SFT, fixed/tied recurrence, retrieval, fast weights, hypernetworks, external
+   execution, and finite unrolling. The mandatory resource vector is
+   `(parameters, retained bits, precision, source bytes, training examples,
+   oracle calls, training FLOPs, inference FLOPs, sequential depth, external
+   memory, external execution)`.
 4. **Exact collapse test:** a symbolic or exhaustive CPU test that tries to
-   reduce the proposal to those controls. A successful reduction rejects it.
+   reduce the proposal to those controls. A successful reduction rejects the
+   specific novelty or resource claim only when it preserves behavior,
+   information access, and the preregistered resource vector within constant or
+   polylogarithmic overhead. Extensional finite unrolling alone is not rejection
+   evidence.
 5. **Prior-art boundary:** search after the object is defined, then state the
-   exact delta. A combination of known ingredients is not a new primitive.
+   exact delta. Known components may support a new algorithm or training
+   protocol, but cannot be called new primitives. A known-component reduction
+   defines a mandatory control and an allowed-claim boundary rather than an
+   automatic experiment veto.
 6. **Finite falsifier:** frozen scale extrapolation, causal interchange,
    equivalent-state invariance, non-equivalent-state separation, and full
    resource accounting.
@@ -206,14 +224,18 @@ Every future worker must produce these artifacts in order:
 8. **Score-blind confirmation:** one immutable implementation and one frozen
    confirmation generation. No board, seed, threshold, or artifact shopping.
 
-No neural implementation is authorized through gate 4. No Shohin fit is
-authorized through gate 6. No H100 experiment is authorized through gate 7.
-An exact candidate rejected by the no-go theorem cannot be rescued by renaming
-its state or operators.
+No neural implementation is authorized through gate 4. After gates 1--5, one
+isolated CPU falsifier may test a bounded resource hypothesis; a CPU pass is
+required before any Shohin fit. No Shohin fit is authorized through gate 6. No
+H100 experiment is authorized through gate 7. An exact candidate rejected by a
+genuine information or identifiability no-go cannot be rescued by renaming its
+state or operators.
 
 ## 8. Rejected starting points
 
-The following are controls, not R12 inventions:
+The following are controls, not R12 primitives. Their presence prevents a
+primitive-novelty claim but does not by itself prohibit a resource-matched
+training-protocol experiment:
 
 - more CoT/SFT/RL, teacher traces, self-review, or verifier reranking;
 - more hidden slots, recurrent loops, adaptive depth, equilibrium iterations,
@@ -256,9 +278,11 @@ recreate discarded source information. Arbitrary adversarial late INDEX needs
 internal thinking does not change that information bound.
 
 No candidate implementation has survived the invention gates. The next
-authorized action remains mathematical, but the target is narrower: a uniform
-resource advantage in learnability, dynamic sparsity, amortized verification,
-noise stability, or another named cost on a structured residual family. A new
-state ontology, arbitrary late-query compression, or coherent coordinate
-pullback is no longer an admissible invention claim. Architecture design
-remains blocked until a surviving theorem and finite CPU falsifier exist.
+authorized action remains a theorem and preregistration, but the target is
+narrower: a uniform resource advantage in learnability, dynamic sparsity,
+amortized verification, noise stability, or another named cost on a structured
+residual family. A new state ontology, arbitrary late-query compression, or
+coherent coordinate pullback is no longer an admissible invention claim.
+Architecture design remains blocked until a bounded resource hypothesis and
+equivalence dossier survive gates 1--5; only then may one isolated CPU
+falsifier be implemented.

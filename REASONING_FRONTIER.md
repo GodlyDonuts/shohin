@@ -1573,6 +1573,23 @@ audit reports zero invalid rows or episodes, normalized duplicate prompts,
 counterfactual mismatches, missing contexts, exact hits, or 13-gram hits.
 Train SHA-256 is `82245615f0849c3270f99f2db85c604ff46cb2c3dfb14f0ab3660dff3eb0d3ec`;
 held-out SHA-256 is `a699ac58ad8184f4dc23dcfa317cd6e7b8f7d4ef453dcbf1ae21201901e0948a`.
+
+### Complete-Basis Matched Control Reactivation: 2026-07-15 03:04 EDT
+
+The previously admitted DRS-v3 and STRR corpora are now running only as
+matched empirical controls while R12 remains theory-gated. DRS chain
+`689496 -> 689497` tests whether exhaustive coverage of all 3,400 reachable
+local decimal transitions is enough for unseen full-tape recombination and
+width-8 rollout. STRR chain `689498 -> 689499` uses the same local support but
+keeps the immutable operand tape in context and asks the model to transport
+only the changing register. Both start from immutable raw 200k, write fresh
+isolated outputs, and evaluate all 300 episodes in each recombination-width
+4/6 and unseen-width-8 regime.
+
+This pair does not claim a new R12 primitive. Its purpose is to establish the
+strongest known tied-recurrence/control floor: whether complete local support
+plus reduced copy burden can produce real length extrapolation at all. Any
+future invention must beat the stronger arm, not the incomplete v2 DRS result.
 It is not trained or allocated and should only be submitted as an isolated
 transport control after the current transcript gate.
 
@@ -3453,3 +3470,150 @@ signatures reconstruct a canonical operator tuple and reduce exactly to matrix
 recurrence; adding state-dependent continuation probes is a PSR/OOM. Loop-based
 correction requires redundant state-bearing observations and becomes
 synchronization or ECC. No CPU experiment is authorized on holonomy alone.
+
+### R12 Closed Deliberation No-Go
+
+`R12_CLOSED_DELIBERATION_NO_GO.md` proves that target-independent internal
+self-questioning cannot improve information-theoretic learnability. Every
+question, generated answer, critique, proof, and state update is a function of
+the same observed data and private randomness, so the transcript has zero
+additional conditional mutual information with the target and the finite
+computation composes into a one-shot learner with identical output
+distribution. A target-answering experiment is an active-learning oracle, not
+internally created evidence.
+
+Sequential computation can still improve an explicitly named time, space,
+activation, communication, or circuit-description resource. The surviving
+theory target is therefore a computational generalization separation under
+identical samples, structural prior, and target access. Self-review,
+proof-carrying state, or private debate without that theorem receives no CPU
+board.
+
+### R12 Polynomial-Coded Action No-Go
+
+`R12_POLYNOMIAL_CODED_ACTION_NO_GO.md` records a rigorous nonlinear positive
+control. A degree-`k` action over `F_q^d` has `binomial(d+k,k)` coefficients;
+full-rank evaluation identifies it exactly, and correction of `e` adversarial
+transition errors is equivalent to evaluation-code distance at least `2e+1`.
+Encoding runtime state and applying decode-compute-reencode then gives exact
+noise-robust length extrapolation.
+
+The result is not a fair recurrent separation. A universal recurrent control
+with the same field/degree promise, state bits, samples, and update compute can
+run the same interpolation, decoder, action, and encoder. Unknown coordinates
+also destroy the presentation-dependent low degree unless the field basis is
+anchored externally. Retain this as an exact interpolation/ECC control; no CPU
+falsifier or Shohin fit is authorized.
+
+### R12 Gate-Vacuity Correction
+
+`R12_GATE_VACUITY_AND_WGRQ_PREREG.md` records a claim-critical correction to
+the invention charter. Exact finite unrolling proves only extensional
+computability; if it automatically rejected a candidate, every bounded
+classical mechanism would fail gate 4. Likewise, no candidate can strictly
+beat a comparator class that is explicitly allowed to contain and copy that
+candidate.
+
+A reduction now rejects a resource claim only when it preserves behavior,
+information access, and the preregistered vector of parameters, retained bits,
+precision, source bytes, training examples, oracle calls, training/inference
+FLOPs, sequential depth, external memory, and external execution within
+constant or polylogarithmic overhead. Known machinery blocks primitive novelty
+and defines matched controls; it no longer vetoes every bounded training-
+protocol experiment. The real information, identifiability, conjugacy, and
+delayed-sabotage no-go results remain absolute.
+
+### R12 WGRQ Audit and Stage-A Falsifier
+
+Independent audit rejects Witness-Guided Residual Quotienting as a new state,
+algorithm, recurrence mechanism, or oracle-complexity result. Residual merging
+is automata minimization/bisimulation; witness continuations are active
+automata-learning suffixes; query-blind future state is PSR/OOM machinery. If
+every relational label is derived from ordinary counted answers, a fair active
+answer-only learner replays the identical policy and derives the identical
+labels.
+
+One empirical optimization hypothesis survives. `R12_WGRQ_CPU_PREREG.md`
+freezes a delayed-witness edge-parity ring whose only sensor is `x_0 xor x_1`.
+Its `2^(n-1)` observable classes need exactly `n-1` bits, and some distinct
+classes require `n-2` rotations before any observation separates them. Every
+arm receives byte-identical frozen histories, answer bits, equivalence labels,
+and witness masks. A 5,136-parameter tied recurrent learner serializes a
+15-bit packet across a real process boundary. Sixty paired CPU fits compare
+shortest-witness loss, active answer-only, uniform-witness, sham-relation, and
+privileged-edge controls under a simultaneous committed-episode decision rule.
+
+This Stage-A CPU falsifier is authorized only in its disjoint namespace. A pass
+could claim a relational-loss optimization gain on one finite reversible
+family. It cannot authorize language transfer, an H100 fit, or a general
+reasoning claim.
+
+### R12 Self-Authenticating State No-Go
+
+`R12_SELF_AUTHENTICATING_STATE_NO_GO.md` proves that local state verification
+is coding plus a trust boundary. Detection of `t` bit errors requires code
+distance at least `t+1`; correction requires at least `2t+1`. Unrestricted
+replacement by another valid state cannot be detected without an external
+root, key, counter, checkpoint, or trusted prior state.
+
+A matched recurrent control with the same state bits and update work runs the
+same decoder, logical action, encoder, and recovery policy, giving a
+resource-preserving identity simulation. The valid gain is a longer reliable
+horizon purchased with redundancy and trusted repair, not self-created
+reasoning. No CPU board is authorized.
+
+### R12 Query-Distributional Context No-Go
+
+`R12_QUERY_DISTRIBUTIONAL_CONTEXT_NO_GO.md` gives the tight average-case law
+for independent source bits and a known late-query distribution. Sublinear
+memory with vanishing error is possible exactly when `1-o(1)` of query mass
+concentrates on `o(n)` coordinates. A power-law recency distribution yields a
+tight polynomial error decay by retaining a sublinear sliding window.
+
+This is functional source coding and weighted INDEX, implemented by a cache or
+streaming sketch with the same resource vector. Error falls because discarded
+history is almost never queried; worst-case and discarded-coordinate error do
+not improve. It is a valid workload policy, not intelligent context compaction,
+and receives no CPU board.
+
+### R12 Canonical Residual Naming Control
+
+`R12_CANONICAL_RESIDUAL_NAMING_CONTROL.md` gives the exact symbolic ceiling
+for finite observable systems. A minimal `r`-state Moore quotient has
+distinguishing suffixes of length at most `r-2`; shortlex access words plus
+those residual rows canonically reconstruct its transition table from endpoint
+observations through a conservative `2r-2` combined length.
+
+The construction identifies only the observable residual quotient. Hidden
+state labels, axes, and any physical states with identical futures are not
+identifiable. WGRQ witnesses and merge labels must therefore be generated from
+observable residual differences and scored modulo relabeling. The construction
+is classical partition refinement and remains a symbolic ceiling, not a new
+reasoning primitive.
+
+### R12 Compiler-Prior No-Go
+
+`R12_COMPILER_PRIOR_NO_GO.md` closes recurrence itself as a fair
+generalization separation. A uniform acyclic compiler copies the learned
+transition cell across length while sharing parameter source nodes, preserving
+samples, prior, learned bits, precision, work, sequential depth, and peak
+scheduled state. Only reusable program description versus instantiated graph
+area differs.
+
+Recurrence can still be an excellent optimization/compiler prior. Any positive
+R12 claim must now isolate a training or oracle-allocation advantage against
+favorable controls at the same complete resource vector; it cannot attribute
+the gain to a loop or tied state update by itself.
+
+### R12 Finite Determining-Family Control
+
+`R12_AXIOMATIC_PRESENTATION_NO_GO.md` now records the strongest legitimate
+local-to-global theorem. Exact recovery of every primitive on a finite
+determining set inside a declared stationary hypothesis class gives all-length
+composition correctness by induction. Majority recovery under independent
+noise and the usual Lipschitz telescoping bound quantify the finite and
+approximate cases.
+
+Without that class and determining set, delayed sabotage survives every finite
+board. With them, every fair structure-aware control inherits the same theorem.
+This is a curriculum specification, not an R12 invention.

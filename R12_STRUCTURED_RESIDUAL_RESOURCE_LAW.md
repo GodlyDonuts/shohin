@@ -195,10 +195,12 @@ Do not implement the bit-flip family as an R12 candidate: it is exactly a
 low-rank weighted automaton. Do not claim that a low-dimensional vector beats
 the residual information bound.
 
-The remaining admissible target is a **nonlinear learnability separation**:
-one small learner must discover and stably execute a short action presentation
-from ordinary noisy traces with polynomial resources, while a named
-unstructured residual learner requires exponentially more samples, parameters,
-or verification work. The claim must include bounded precision and online
-identification. Until such a family survives the equivalence and prior-art
-gates, no CPU neural falsifier or Shohin fit is authorized.
+`R12_COMPILER_PRIOR_NO_GO.md` closes recurrence itself as the missing nonlinear
+learnability separation: a fair uniform acyclic compiler preserves the learned
+bits, samples, precision, work, and sequential depth exactly. The remaining
+admissible target is narrower: a frozen **training or oracle-allocation
+protocol** must discover and stably execute a short action presentation more
+reliably than favorable controls at the same complete resource vector. It may
+claim an optimization or bounded sample-allocation advantage, not an intrinsic
+expressivity advantage of recurrence. Until such a protocol survives the
+equivalence and prior-art gates, no Shohin fit is authorized.

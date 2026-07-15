@@ -16,22 +16,7 @@ import torch.nn.functional as F
 from tokenizers import Tokenizer
 from model import GPT, GPTConfig
 from muon import Muon, split_params
-
-
-def encode_supervised_example(tok, prompt, continuation, eos_id):
-    """Return an inference-aligned token sequence and completion-only mask.
-
-    Tokenizing ``prompt + continuation`` as one string can merge BPE pieces
-    across the boundary. That makes the separately tokenized inference prompt
-    differ from the supervised prefix, especially for CRLF-terminated Python
-    function headers. Encode each side independently so the first generated
-    token is exactly the first supervised completion token.
-    """
-    prompt_ids = tok.encode(prompt).ids
-    completion_ids = tok.encode(continuation).ids
-    token_ids = prompt_ids + completion_ids + [eos_id]
-    completion_mask = [0] * len(prompt_ids) + [1] * (len(completion_ids) + 1)
-    return prompt_ids, token_ids, completion_mask
+from sft_encoding import encode_supervised_example
 
 
 def build_packed(data_paths, tok, seq_len, q_fields, r_fields, eos_id, max_examples=0,

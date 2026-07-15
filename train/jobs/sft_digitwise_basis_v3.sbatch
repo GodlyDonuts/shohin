@@ -78,7 +78,7 @@ timeout 600 "$PY" - "$DATA" "$BASE/artifacts/shohin-tok-32k.json" <<'PY'
 import json
 import sys
 
-from sft import encode_supervised_example
+from sft_encoding import encode_supervised_example
 from tokenizers import Tokenizer
 
 row = json.loads(open(sys.argv[1]).readline())

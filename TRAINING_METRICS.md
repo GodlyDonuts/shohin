@@ -538,6 +538,18 @@ Additional independent evidence:
   than a formal comparison to the prior 128-token probe, but shows no visible reasoning jump.
   Artifact: `artifacts/eval_history/manual_capability_raw180k_20260712_mps32.json`, MD5
   `cc6332a5c99d6cbf6ba2f8987ae58cc0`.
+- Raw-260k continuation-mode confirmation uses 20 fresh, fixed-seed cases and
+  immutable transcripts. Strict first-segment final accuracy is **4/20 direct
+  QA**, **1/20 bare expression**, and **8/20 two-example worked continuation**.
+  The only robust family is sequential add/multiply/subtract: **4/5 direct**
+  and **5/5 worked**, with all required intermediates present. Multiply-
+  subtract is 1/5 worked, modular update 2/5 worked, and base conversion 0/5
+  in every mode. Transcript SHA-256 is
+  `f333c8f54383c411813551bc2001077b88e49514923b76c3cfe0331e9fd6bb47`;
+  hash-bound corrected assessment SHA-256 is
+  `058aa9dafdc741efc181e6377db5d46b233875504b4b4b6d92837a0db71ea62b`.
+  This is narrow procedural competence plus response-mode brittleness, not a
+  broad reasoning score.
 - Raw-200k counterfactual verifier feasibility probe: over **48** balanced, grammar-valid local state
   transitions, free verdict generation is **0/48** and fixed-completion likelihood chooses `valid` for
   every case, therefore **24/48 = 50.0%**. This is negative evidence against a hidden self-checking
@@ -565,6 +577,77 @@ Additional independent evidence:
 The VRWM r5 paired first-pass/self-repair gate is the immediate context-scaling measurement. The separate
 raw-180k -> V8 SFT -> board/interview chain remains the broad-capability measurement. Neither branch can
 be promoted on loss, formatting, generator holdouts, or a single benchmark movement alone.
+
+## 260k Reasoning Sprint Ledger: 2026-07-15
+
+### Protected pretraining denominator
+
+- Model: 125,081,664 trained parameters.
+- Exact step 260,000 nominal update tokens: **136,314,880,000**
+  (`260000 * 524288`). This counts replay and is not a unique-token claim.
+- Mounted decoded-token manifest capacity: **57,826,022,271** across 290
+  shards: FineMath-4+ 2,000,001,108; OpenWebMath 14,063,689,153;
+  CodeParrot-Clean Python 16,762,327,600; FineMath-3+ 25,000,004,410.
+- Nominal update-token / mounted-capacity ratio at 260k: **2.3572x**. Because
+  the loader round-robins directories rather than weighting by manifest size,
+  this aggregate ratio is not a per-source exposure estimate.
+- Durable raw checkpoint: Newton `best_step260000.pt` and local
+  `train/flagship_out/ckpt_0260000.pt`, 1,076,597,546 bytes, MD5
+  `301082250e15c26820790ec7ff7730a0`.
+- Live continuation `686732`: two H100s, `BS=32`, `ACC=4`, exact same 524,288
+  tokens/update. At 2026-07-15 04:26 EDT it was healthy through step 264,890 at
+  about 283.38k tok/s. Four gnorm skips at 264,031--264,034 recovered without
+  intervention by 264,040.
+
+### Raw-260k capability accounting
+
+| Evidence | Calls / cases | Strict result | Artifact SHA-256 |
+|---|---:|---:|---|
+| Frozen continuation-mode confirmation | 60 generations / 20 cases | direct 4/20; bare 1/20; worked 8/20 | transcript `f333c8f54383c411813551bc2001077b88e49514923b76c3cfe0331e9fd6bb47`; assessor `058aa9dafdc741efc181e6377db5d46b233875504b4b4b6d92837a0db71ea62b` |
+| Failed `Next state` SSC renderer | 55 calls / 20 chains | 0/20 chains; 43/55 outputs equal input+1 | `a152e85294d02173a697e29d8537bf4b53428d747d16c7e3baf692095d9b6a2f` |
+| Three-renderer source-free matrix | 330 calls / 20 cases | `Problem/Work` 44/55 atomic, 10/20 chains | `b33c26b3963296c0d97b2a6d3332c0be18af40f460137c25652b881824a1ca4b` |
+| Causal renderer interchange | 18 candidate-sequence scores / 6 cells | displayed state favored 6/6, min margin 0.79386 | `963177139b6abb333710f0db19a521c341a039fce3f65743ebdd698be6f12170` |
+| Fresh source-scheduled confirmation | 256 cases / 704 transitions / at most 1,920 model calls | running as Newton `689535`; locked gates in `R12_SOURCE_SCHEDULED_REASONING_CONFIRMATION.md` | board `19a84165f15b19911fc8ef229022e47753833d703d77d1e8cc25db9dfc993474` |
+
+The 10/20 result is not autonomous model reasoning. The controller imports the
+public operation schedule, parses integers, carries model-produced state, and
+makes one model call per operation. Those resources remain part of every claim.
+
+### Matched SFT control accounting
+
+- DRS complete-basis SFT `689524`: 311,127 examples, 36,516,108 total tokens,
+  7,650,920 answer tokens, 17,830 packed 2,048-token sequences, one epoch and
+  1,115 updates. Training completed in 846 seconds after model start. Locked
+  900-case evaluation is `689525`.
+- STRR factorized static-tape SFT `689526`: 311,127 examples, 36,532,447 total
+  tokens, 4,123,456 answer tokens, 17,838 packed sequences, one epoch and 1,115
+  updates. Training completed in 824 seconds. Locked 900-case evaluation is
+  `689527`.
+- Both start from immutable raw `best_step200000.pt`; neither writes the
+  flagship output. The first attempts `689496/689498` timed out before their
+  first update because a pure prompt-boundary check imported the full PyTorch
+  module over Lustre. The lightweight `train/sft_encoding.py` correction was
+  smoke-tested at 1.78 seconds before clean resubmission.
+
+### WGRQ Stage-A CPU accounting
+
+Stokes `739105 -> 739106` generated and independently replay-audited exactly
+18,432 committed episodes, four histories per episode, 32 ordinary one-bit
+answers per episode, and **589,824 answer calls**. The immutable files total
+302,572,503 bytes and are mode 0444 on Stokes. Their transcript, call-ledger,
+generation-report, and audit-report SHA-256 values are respectively:
+
+```
+ae2849db5d57fda36e2e2fd634ce6e1d0f11eaed7fefe8d9ce722f016f28295a
+251d85432d845c31ce64da1adae132fa8df8f6a63b5db744654b519f2413c9e8
+12c1e54f23b27f3a97a86857b723fec3573f5d558b7528e1615c55746899befb
+8f5fac80e0c50bdc807287599f8468194431f3612d6d79a1331f51a073fa2dd4
+```
+
+No fit was launched. An adversarial implementation audit found a broken
+relation-sham stratum contract, an independent-audit bypass, and a scorer that
+could accept arbitrary checkpoint bytes plus hand-authored success rows. The
+locked preregistration therefore closes v1 before its planned 60 fits.
 
 ## Update Protocol
 
