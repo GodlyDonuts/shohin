@@ -2791,3 +2791,36 @@ authorizes only a full matched-arm fit followed by one untouched confirmation
 board. It cannot establish broad reasoning, internal decoder thinking, or
 context scaling until learned certificates correctly govern source folding and
 reopening on lengths beyond the native context.
+
+#### R9c Outcome: Dynamic Causal Paths Are Not Sufficient
+
+R9c is rejected by its preregistered used-board gate. The corrected neural fits
+used four exactly matched arms with the same initial adapter hash, 328,502
+trainable parameters, 4,092 selected semantic groups, 24,552 text examples,
+1,023 updates, and immutable base, pointer, tokenizer, and data hashes. Eight
+dependency-held evaluations and one CPU-only assessor completed without a
+contract error.
+
+On the fresh OOD board, treatment operation and answer accuracy are 78.29% and
+47.77%. Static conditioning reaches 80.12% and 51.12%; directional conditioning
+without syndrome reaches 81.14% and 51.79%; treatment with shuffled future goals
+reaches 79.58% and 50.89%. Treatment also misses the 35% full-OOD answer floor at
+30.21%, while 88.83% of its wrong operations are common-mode errors on which both
+directional channels agree. Adaptive replay preserves treatment accuracy while
+reducing mean event updates from 3.0 to 1.62, but that efficiency does not rescue
+an inferior learned operator.
+
+This separates a necessary mechanism property from a sufficient one. R9c's
+untrained graph genuinely contained cross-event, future-goal, and cross-channel
+causal paths; nevertheless, supervised optimization converged to nearly the same
+local event classifier in every arm. The syndrome transported disagreement, not
+independent semantic evidence, so shared bias remained invisible. The shuffled-
+goal control outperforming treatment further shows that useful backward goal
+semantics were not learned. Future work must create an observable that one
+direction cannot reconstruct from the other direction's local text evidence,
+and must causally require that observable on transfer examples. Adding more
+rounds, widening memory, or relaxing the frozen thresholds is not an R9c repair.
+
+The canonical decision is
+`artifacts/eval_history/r9c_used_board_decision_r2.json`, SHA-256
+`cb3013800daaeb95b0bc8b2d454b89cf177a4e2dc652633eb0392a625a87b012`.
