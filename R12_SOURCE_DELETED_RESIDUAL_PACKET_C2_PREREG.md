@@ -1,8 +1,17 @@
 # RSP-C2: Source-Deleted Residual Packet Control
 
-**Status:** frozen pre-seed salvage contract on 2026-07-15. No production C2
-seed has been derived, no beacon pulse has been fetched for C2, and no C2
-board, training row, fit, transcript, or score exists.
+**Status:** **CLOSED 2026-07-15 before seed revelation or production.** The
+source-scheduled prerequisite independently recomputed 115/256 scheduled
+finals and 534/704 atomic transitions, but failed the immutable sequential
+absolute gate at 38/64 (59.38% versus the required 70%). Primary result
+SHA-256 is
+`be2e64c8df2797c3b35c7431b3b6af4d6d7fb3600cd25e5a0371415b45de6a0d`;
+independent assessment SHA-256 is
+`0e1e49ea864d3958a765e11ac395aac7e2d87a4b9433950b00a3bb213a7933bd`.
+No production C2 seed was derived, no beacon pulse was fetched for C2, and no
+C2 board, training row, fit, transcript, or score exists. The toy-only
+pre-seed implementation may be preserved as dormant custody infrastructure,
+but **no C2 production action is authorized**.
 
 RSP-C2 is a clean replacement for the closed RSP-C1 experiment. It tests a
 bounded arithmetic controller. It is not evidence of general reasoning,
