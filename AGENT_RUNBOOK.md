@@ -4642,3 +4642,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Newton connectivity returns, use `sftp reget`, require the remote MD5, and only then rename it. The last
   pre-milestone training observation was healthy at step 259,520, ~284.52k tok/s, loss 1.5095, gnorm 0.09.
   No R12 implementation or GPU capability experiment was authorized.
+
+- **2026-07-15 02:02--02:37** — **Secret-shared causal bootstrapping is formally rejected before
+  execution.** The construction yields a valid tight memory theorem: two finite-group shares separately hide
+  a target, exact sequential recovery needs at least `log2|G|` retained bits, and a running product keeps that
+  memory independent of sequence length. It does not yield reasoning. The late share is a one-time-padded
+  answer; the transition-mask version is a gauge-transformed Cayley recurrence; arbitrary latent bijections
+  remain behaviorally indistinguishable; relabeling with support is meta-learning; and masked behavior places
+  no constraint on distinguishable unmasked inputs. `R12_SECRET_SHARED_CAUSAL_BOOTSTRAP_NO_GO.md` freezes the
+  proof, equivalence dossier, and gate-4 rejection. It may serve only as a balanced causal-memory control. No
+  CPU falsifier, Shohin fit, or H100 experiment was authorized.

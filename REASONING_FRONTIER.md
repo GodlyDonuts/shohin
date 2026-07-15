@@ -3214,3 +3214,21 @@ admissible axes are learnability, dynamic sparsity, amortized verification,
 noise stability, or another named cost with a matched comparator. A new exact
 state ontology, arbitrary context compression, and coordinate-pullback action
 are closed claims. No code or neural experiment is authorized.
+
+### R12 Secret-Shared Causal Bootstrap No-Go
+
+`R12_SECRET_SHARED_CAUSAL_BOOTSTRAP_NO_GO.md` rejects the first attempt to make
+a state path information-theoretically compulsory. Splitting a finite-group
+target into `U` and `U^{-1}Y` proves a tight `log2|G|` retained-state lower
+bound, and a sequence of shares admits a constant-size running product. The
+transition-mask variant similarly makes the current event statistically
+insufficient without the previous masked state.
+
+The result is a causal-memory control, not reasoning. The final share is a
+one-time-padded answer, the running product is the minimal Cayley automaton,
+time-dependent transition masks are a gauge transform of the same recurrence,
+and state swaps reduce to interchange intervention training. Any bijective
+encoding of the retained share is behaviorally equivalent. More decisively,
+two models can agree on every distinguishable masked input and disagree on all
+unmasked inputs, so masked success gives no transfer theorem. Gate 4 therefore
+rejects the proposal before a CPU falsifier or neural fit.
