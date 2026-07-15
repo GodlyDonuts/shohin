@@ -1,0 +1,9 @@
+{
+  "branch": "main",
+  "frozen_commit": "3f12df601e557a1cb092abebceff2ac0e8655655",
+  "repository": "GodlyDonuts/shohin",
+  "schema": "raw260k_operation_selection_prescore_receipt_v1",
+  "score_observed_before_receipt": false,
+  "verification_method": "authenticated_gh_api_commit_lookup_and_origin_main_match",
+  "verified_remote_commit": "3f12df601e557a1cb092abebceff2ac0e8655655"
+}
