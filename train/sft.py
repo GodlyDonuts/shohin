@@ -187,6 +187,8 @@ def main():
     ap.add_argument("--warmup", type=int, default=50)
     ap.add_argument("--clip", type=float, default=1.0)
     ap.add_argument("--max-examples", type=int, default=0)
+    ap.add_argument("--seed", type=int, default=1337,
+                    help="torch and NumPy ordering seed (default preserves legacy behavior)")
     ap.add_argument("--pack-len", type=int, default=0, help="pack sequence length (0 = model seq_len); shorter = less memory")
     ap.add_argument("--group-field", default=None,
                     help="optional immutable row field used to keep packed sequences by group")
@@ -215,7 +217,7 @@ def main():
         raise SystemExit("replay batch size and max tokens must be valid")
 
     device = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
-    torch.manual_seed(1337)
+    torch.manual_seed(a.seed)
     torch.set_float32_matmul_precision("high")
     os.makedirs(a.out, exist_ok=True)
     tok = Tokenizer.from_file(a.tokenizer)
@@ -276,6 +278,7 @@ def main():
         "replay_max_tokens": a.replay_max_tokens,
         "pack_len": pack_len,
         "packed_sequences": int(N),
+        "seed": a.seed,
         "sample_weights": weights,
     }
     with open(os.path.join(a.out, "sft_metadata.json"), "w") as sink:
@@ -287,7 +290,10 @@ def main():
     muon_p, adam_p = split_params(raw)
     opt_muon = Muon(muon_p, lr=a.lr_muon)
     opt_adam = torch.optim.AdamW(adam_p, lr=a.lr_adam, betas=(0.9, 0.95), weight_decay=0.0)
-    total_steps = a.epochs * math.ceil(N / a.batch_size)
+    steps_per_epoch = N // a.batch_size
+    if steps_per_epoch == 0:
+        raise ValueError("packed sequence count is smaller than batch size")
+    total_steps = a.epochs * steps_per_epoch
 
     def lr_at(step):
         if step < a.warmup:
@@ -295,7 +301,7 @@ def main():
         r = (step - a.warmup) / max(1, total_steps - a.warmup)
         return 0.1 + 0.9 * 0.5 * (1 + math.cos(math.pi * r))   # cosine decay to 0.1
 
-    rng = np.random.default_rng(1337)
+    rng = np.random.default_rng(a.seed)
     t0, step = time.time(), 0
     for ep in range(a.epochs):
         if weights:
