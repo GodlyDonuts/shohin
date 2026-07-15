@@ -3232,3 +3232,25 @@ encoding of the retained share is behaviorally equivalent. More decisively,
 two models can agree on every distinguishable masked input and disagree on all
 unmasked inputs, so masked success gives no transfer theorem. Gate 4 therefore
 rejects the proposal before a CPU falsifier or neural fit.
+
+### R12 Structured Residual Resource Law
+
+`R12_STRUCTURED_RESIDUAL_RESOURCE_LAW.md` separates three resources that were
+being conflated. Every exact causal realization maps equivariantly onto its
+residual system, so it cannot use fewer distinguishable states or fewer than
+`log2|R|` retained bits. A structured representation can nevertheless be
+exponentially shorter and cheaper to certify than an explicit residual table.
+
+The exact bit-flip family has `2^r` residual states but an `r`-dimensional
+Hankel realization, `O(1)` sparse updates and queries, and a polynomial-size
+group presentation, versus `r*2^r` black-box transition entries. This is a real
+description/certification separation, but it collapses exactly to weighted
+automata, OOMs, PSRs, and finite-dimensional linear systems. Likewise, a
+structured source language with `p(n)` admissible blocks needs exactly
+`ceil(log2 p(n))` retained bits for arbitrary coordinate readback; low entropy
+does not itself provide an efficient encoder or updater.
+
+The next target is now sharper: learn a short **nonlinear** residual-action
+presentation from ordinary noisy traces with bounded precision, stable sparse
+updates, sublinear residual innovation, and a comparator-relative polynomial
+learning advantage. Linear Hankel-rank examples are controls, not candidates.

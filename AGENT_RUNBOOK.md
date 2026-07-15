@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-15 02:02 EDT (the protected two-H100 pretrain reached the exact 260k checkpoint, or 136,314,880,000 nominal update tokens. Newton `ckpt_0260000.pt` and promoted `best_step260000.pt` match at MD5 `301082250e15c26820790ec7ff7730a0`. The Mac has a 1,035,468,800 / 1,076,598,762-byte resumable `.part`; the final transfer and local hash await restoration of the campus SSH route and must not be restarted. R9c is a closed neural and mathematical negative. R10 and R11 are dormant controls. R12 is theory-only: exact state, fork-core compression, coherent profile extension, and arbitrary late-query compression have all collapsed to established objects or lower bounds. `R12_COHERENT_ACTION_THEORY.md` proves a relation-preserving hyperconvex extension but pays for the full event-closed observable profile. `R12_CLOSED_LATE_QUERY_NO_GO.md` proves that longer closed computation cannot recreate discarded source information. The next target is a resource theorem for structured residuals, not another state ontology. No R12 implementation, data, fit, score, CPU board, or GPU job is authorized. Irreversible source deletion is forbidden.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-15 02:23 EDT (the protected two-H100 pretrain reached the exact 260k checkpoint, or 136,314,880,000 nominal update tokens. Newton `ckpt_0260000.pt` and promoted `best_step260000.pt` match at MD5 `301082250e15c26820790ec7ff7730a0`. The Mac has a 1,035,468,800 / 1,076,598,762-byte resumable `.part`; the final transfer and local hash await restoration of the campus SSH route and must not be restarted. R9c is a closed neural and mathematical negative. R10 and R11 are dormant controls. R12 is theory-only: exact state, fork-core compression, coherent profile extension, arbitrary late-query compression, and secret-shared causal bootstrapping have collapsed to established objects or lower bounds. `R12_STRUCTURED_RESIDUAL_RESOURCE_LAW.md` proves that structure can exponentially reduce description and global-certification cost relative to an explicit table, but never the residual information bound; its linear positive family collapses to weighted automata/PSRs. The next target is a nonlinear learnability separation with bounded precision, stable online update, and sublinear residual innovation. No R12 implementation, data, fit, score, CPU board, or GPU job is authorized. Irreversible source deletion is forbidden.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4643,7 +4643,7 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   pre-milestone training observation was healthy at step 259,520, ~284.52k tok/s, loss 1.5095, gnorm 0.09.
   No R12 implementation or GPU capability experiment was authorized.
 
-- **2026-07-15 02:02--02:37** — **Secret-shared causal bootstrapping is formally rejected before
+- **2026-07-15 02:02--02:23** — **Secret-shared causal bootstrapping is formally rejected before
   execution.** The construction yields a valid tight memory theorem: two finite-group shares separately hide
   a target, exact sequential recovery needs at least `log2|G|` retained bits, and a running product keeps that
   memory independent of sequence length. It does not yield reasoning. The late share is a one-time-padded
@@ -4652,3 +4652,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   no constraint on distinguishable unmasked inputs. `R12_SECRET_SHARED_CAUSAL_BOOTSTRAP_NO_GO.md` freezes the
   proof, equivalence dossier, and gate-4 rejection. It may serve only as a balanced causal-memory control. No
   CPU falsifier, Shohin fit, or H100 experiment was authorized.
+
+- **2026-07-15 02:23** — **Structured residuals yield a real resource separation, but the first
+  positive family is an established linear control.** Every exact realization maps onto the residual quotient,
+  so retained information remains at least `log2|R|`. The bit-flip family nevertheless represents `2^r`
+  residual states with `r` Hankel coordinates, `O(1)` updates and queries, and a polynomial presentation,
+  exponentially smaller and cheaper to certify than an arbitrary `r*2^r` transition table. The gain is in
+  description and global verification, not memory, and it reduces exactly to weighted automata/OOM/PSR
+  machinery. A parallel context law gives `ceil(log2 p(n))` retained bits for a source language with `p(n)`
+  admissible blocks; low entropy alone does not make online encoding tractable. The next admissible theorem is
+  a bounded-precision nonlinear action that is polynomially learnable from ordinary noisy traces while a named
+  unstructured comparator is not. `R12_STRUCTURED_RESIDUAL_RESOURCE_LAW.md` freezes the proofs and boundary.
+  No CPU neural board or H100 experiment was authorized.
