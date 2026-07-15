@@ -29,7 +29,9 @@ case "$OUT" in "$BASE"/train/r12_cursor_action_canary_v1*) ;;
 esac
 
 cd "$BASE/train"
-timeout --kill-after=10s 90s "$PY" - <<'PY'
+CUDA_PREFLIGHT_TIMEOUT=${CUDA_PREFLIGHT_TIMEOUT:-300}
+echo "[ccaa-job] CUDA preflight timeout=${CUDA_PREFLIGHT_TIMEOUT}s"
+timeout --kill-after=10s "${CUDA_PREFLIGHT_TIMEOUT}s" "$PY" - <<'PY'
 import sys
 import torch
 try:
