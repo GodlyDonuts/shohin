@@ -117,8 +117,9 @@ if [[ ! "$EVIDENCE_COMMIT" =~ ^[0-9a-f]{40}$ ]]; then
 fi
 EVIDENCE_GIT_DIR=${SLURM_TMPDIR:?SLURM_TMPDIR is required}/shohin_operation_likelihood_evidence.git
 [ ! -e "$EVIDENCE_GIT_DIR" ] || { echo "[operation-selection] evidence Git path already exists" >&2; exit 5; }
-git bundle verify "$EVIDENCE_BUNDLE" >/dev/null
-git clone --bare --quiet "$EVIDENCE_BUNDLE" "$EVIDENCE_GIT_DIR"
+git init --bare --quiet "$EVIDENCE_GIT_DIR"
+git --git-dir="$EVIDENCE_GIT_DIR" bundle verify "$EVIDENCE_BUNDLE" >/dev/null
+git --git-dir="$EVIDENCE_GIT_DIR" fetch --quiet "$EVIDENCE_BUNDLE" refs/heads/main:refs/heads/main
 test "$(git --git-dir="$EVIDENCE_GIT_DIR" rev-parse refs/heads/main)" = "$EVIDENCE_COMMIT" || {
   echo "[operation-selection] evidence bundle main does not match EVIDENCE_COMMIT" >&2
   exit 5
