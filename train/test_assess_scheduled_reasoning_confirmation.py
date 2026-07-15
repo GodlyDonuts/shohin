@@ -249,6 +249,15 @@ class IndependentAssessorTests(unittest.TestCase):
             assess.hash_paths(assess.implementation_paths()),
             assess.EXPECTED_IMPLEMENTATION_SHA256,
         )
+        self.assertTrue(
+            all(
+                path.is_relative_to(assess.FROZEN_IMPLEMENTATION_ROOT)
+                for path in assess.implementation_paths().values()
+            )
+        )
+        self.assertNotEqual(
+            assess.implementation_paths()["model_loader"], ROOT / "train/model.py"
+        )
         source = Path(assess.__file__).read_text()
         self.assertNotIn("import eval_scheduled_reasoning_confirmation", source)
 

@@ -20,6 +20,9 @@ from pathlib import Path
 from typing import Callable, Iterable, Mapping
 
 ROOT = Path(__file__).resolve().parents[1]
+FROZEN_IMPLEMENTATION_ROOT = (
+    ROOT / "train/frozen_sources/source_scheduled_reasoning_confirmation_v1"
+)
 BOARD_SCHEMA = "source_scheduled_reasoning_confirmation_v1"
 RESULT_SCHEMA = "source_scheduled_reasoning_confirmation_result_v1"
 ASSESSMENT_SCHEMA = "source_scheduled_reasoning_confirmation_assessment_v1"
@@ -268,11 +271,11 @@ def sha256_file(path: Path) -> str:
 
 def implementation_paths() -> dict[str, Path]:
     return {
-        "contract": ROOT / "R12_SOURCE_SCHEDULED_REASONING_CONFIRMATION.md",
-        "generator": ROOT / "train/generate_scheduled_reasoning_confirmation.py",
-        "evaluator": ROOT / "train/eval_scheduled_reasoning_confirmation.py",
-        "job": ROOT / "train/jobs/eval_scheduled_reasoning_confirmation.sbatch",
-        "model_loader": ROOT / "train/model.py",
+        "contract": FROZEN_IMPLEMENTATION_ROOT / "contract.md",
+        "generator": FROZEN_IMPLEMENTATION_ROOT / "generator.py",
+        "evaluator": FROZEN_IMPLEMENTATION_ROOT / "evaluator.py",
+        "job": FROZEN_IMPLEMENTATION_ROOT / "job.sbatch",
+        "model_loader": FROZEN_IMPLEMENTATION_ROOT / "model_loader.py",
     }
 
 
