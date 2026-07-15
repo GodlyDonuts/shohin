@@ -443,6 +443,16 @@ class ResultCustodyTests(FrozenFixture):
         with self.assertRaises(ValueError):
             probe.audit_preserved_result(value, **self.result_args)
 
+    def test_repository_root_uses_sentinel_for_shallow_sealed_file(self) -> None:
+        self.assertEqual(
+            probe.repository_root("/proc/self/fd/4", sealed_runtime=True),
+            Path("/"),
+        )
+        self.assertEqual(
+            probe.repository_root(str(TRAIN_DIR / "probe.py"), sealed_runtime=False),
+            ROOT,
+        )
+
     def test_complete_result_audits(self) -> None:
         self.assertTrue(
             probe.audit_preserved_result(self.result, **self.result_args)

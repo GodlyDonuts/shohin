@@ -29,9 +29,22 @@ import torch
 from tokenizers import Tokenizer
 
 
-ROOT = Path(__file__).resolve().parents[1]
 SEALED_IMPLEMENTATION_PATHS_ENV = "SHOHIN_SEALED_IMPLEMENTATION_PATHS"
 SEALED_IMPLEMENTATION_HASHES_ENV = "SHOHIN_SEALED_IMPLEMENTATION_SHA256"
+
+
+def repository_root(file_path: str, *, sealed_runtime: bool) -> Path:
+    if sealed_runtime:
+        return Path("/")
+    resolved = Path(file_path).resolve()
+    if len(resolved.parents) < 2:
+        raise ValueError("evaluator path has no repository root")
+    return resolved.parents[1]
+
+
+ROOT = repository_root(
+    __file__, sealed_runtime=SEALED_IMPLEMENTATION_PATHS_ENV in os.environ
+)
 PROC_FD_RE = re.compile(r"^/proc/self/fd/([0-9]+)$")
 F_GET_SEALS = getattr(fcntl, "F_GET_SEALS", 1034)
 REQUIRED_MEMFD_SEALS = (
