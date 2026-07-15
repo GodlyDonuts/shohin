@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 21:19 EDT (the protected two-H100 pretrain remains isolated. R9c is a closed neural and mathematical negative. R10 is preregistered before score extraction: an exact version-space oracle plus Annihilator-Certified Ambiguity Workspace, with fail-closed overflow, query-only versus source-drop certificates, and one frozen conformal threshold. Preserve R9c; do not repair it by threshold, width, memory, or replay tuning.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 21:50 EDT (the protected two-H100 pretrain remains isolated. R9c is a closed neural and mathematical negative. R10 remains pre-score: exact version spaces plus Annihilator-Certified Ambiguity Workspace, now hardened to program-level operation-and-query calibration, rank-six affine invariants, reversible hot-context eviction, monotone exact replay, and fixed-size all-support commitments instead of linear opcode witnesses. Irreversible source deletion is forbidden. Preserve R9c; do not repair it by threshold, width, memory, or replay tuning.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4473,3 +4473,31 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   coverage, and explicit query-intervention/replay gates are preregistered in `REASONING_FRONTIER.md`.
   A used-board pass can authorize only one untouched 4/8/16/32 board; failure closes the score-provider
   path without threshold or cap tuning.
+
+- **2026-07-14 21:19--21:32** — **Adversarial proof review hardens R10 before any neural score is
+  extracted.** The affine product formula is sound, but three initial claim boundaries were too loose.
+  First, 97% event-marginal coverage compounds across a long program, so the single frozen conformal
+  score is now the program maximum over every true operation **and** the true query. Second, current-
+  query annihilation can become observable after a future continuation, so reader-family deletion is
+  removed. Rank zero now permits only candidate-conditional hot-context eviction with an immutable
+  retrieval pointer; irreversible deletion remains zero. Third, bilinear cross-terms can make two
+  leaves jointly observable, so basis-magnitude witness selection is forbidden. Refinement must be a
+  monotone candidate-set reduction followed by exact path-to-root recomputation, and it may resolve an
+  abstention or uncertified top-1 error but never "correct" a sound certificate. Homogeneous affine
+  ambiguity also has rank at most six, not nine. Event/query coverage, complete-program coverage, false
+  hot evictions, and retrieval-backed hot-source removal are now distinct frozen metrics. The score
+  tensor still does not exist; these changes remain genuinely preregistered.
+
+- **2026-07-14 21:32--21:50** — **The exact replay reference removes its own hidden linear witness
+  before untouched-board scoring.** The first VSPT implementation concatenated a canonical opcode
+  path inside every complete transform. Although compact serialization omitted that field, the live
+  Python root still carried a 4,096-step witness and duplicated source tuples through its ancestors;
+  that was logical rather than physical compaction. The corrected tree SHA-256-commits every leaf
+  atom, every alias support, and every supporting child pair while retaining the exact factorized
+  child topology as replay authority. Raw source references now exist only at leaves. A compact
+  singleton stores one exact transform, fixed-size support/node commitments, and a contiguous range
+  retrieval pointer, never a linear opcode list. The established affine-operator/query parity test,
+  noncommutative exhaustive mechanics, alternate-derivation refinement, overflow reconstruction,
+  and 4,096-event history all pass. This strengthens the context implementation without overstating
+  it: unresolved factorized provenance and external source remain linear in the worst case, and no
+  neural reasoning score has yet been read.

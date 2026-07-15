@@ -2845,10 +2845,11 @@ is `9c54c1cf498804056aa34b5b5b1d7b78a4c181a69c8b9b7a77904cfb816f1777`.
 
 This eliminates a point-distribution syndrome as the next interface. A future
 certificate must preserve the **set** of lawful exact transforms still
-consistent with text evidence, compose that set without pruning, and permit
-source deletion only when the complete-transform version space is a singleton.
-Agreement on one current query may authorize a selective answer but cannot
-authorize reusable context compression.
+consistent with text evidence and compose that set without pruning. Agreement
+on one current query may authorize a selective answer but cannot authorize
+irreversible deletion. Even a singleton is conditional on candidate-set
+coverage, so compressed source must retain a retrieval pointer unless semantic
+completeness is established independently.
 
 ### R10 Preregistration: Annihilator-Certified Ambiguity Workspace
 
@@ -2882,21 +2883,53 @@ exact transform set into a sound affine hull `A0 + span(U1, ..., Ur)`.
 For chronological composition of an earlier hull `A0 + U` and a later hull
 `B0 + V`, the child product is overapproximated by an anchor `B0 A0` and the
 span of all `B0 Ui`, `Vj A0`, and `Vj Ui` terms. Exact rank reduction follows
-each product; because the transforms are 3x3, the ambiguity rank cannot exceed
-nine. The hull may add impossible transforms and therefore reduce coverage,
+each product. Homogeneous 2D affine differences have a zero bottom row, so the
+ambiguity rank cannot exceed six; a larger rank is a contract failure. The hull may add impossible transforms and therefore reduce coverage,
 but it must never remove a lawful transform or create false certainty.
 
 For initial homogeneous state `s` and query covector `g`, ACAW may certify the
 current scalar answer only when `g Ui s = 0` for every ambiguity basis element.
 This is the annihilator condition: all transforms in the sound hull give the
 same current answer. That certificate does **not** authorize general source
-deletion. Reusable deletion requires rank zero, or an explicitly declared
-future reader family for which every reader annihilates every ambiguity
-direction. Nonzero-rank nodes retain provenance pointers to unresolved witness
-leaves. Adaptive computation reopens a witness selected by its contribution to
-the uncertified query, rather than replaying the full history. This is the
-context-scaling hypothesis under test: fixed-dimensional algebraic state plus
-sparse ambiguity witnesses, with source retention whenever proof is absent.
+deletion: a later continuation can rotate a currently invisible ambiguity into
+the query. Rank zero authorizes only **candidate-conditional hot-context
+eviction**, backed by an immutable retrieval pointer. Irreversible source
+deletion is forbidden in R10. Nonzero-rank nodes retain every unresolved leaf;
+rank-zero siblings remain exact summaries. Adaptive computation may refine one
+leaf only by a monotone candidate-set reduction and must then recompute the
+exact product-tree path to the root. Selection uses exact leaf interventions,
+not basis-vector magnitude, because bilinear cross-terms can make two leaves
+jointly observable. This is the context-scaling hypothesis under test: fixed-
+dimensional **certificate** state, exact factorized subtree provenance, and
+retrieval-backed reopening without putting certified source back into the hot
+token window. It is not a constant-memory replay claim: worst-case unresolved
+provenance remains linear in history length.
+
+The affine hull is never treated as replay provenance. Every leaf candidate has
+a stable atom identity, exact transform, source hash, and replayable external
+reference. Every internal node retains its two child commitments and exact
+transform set while under the cap. A leaf-local monotone refinement rebuilds
+all Cartesian child products on its root path, costing `O(K^2 log n)` for cap
+`K=32`. Overflow retains its factorized children and emits no certificate; it
+does not resurrect hot source already represented by an exact singleton
+sibling. A self-contained flattened node would require the complete derivation
+circuit for every transform, not one canonical witness. Global evidence,
+candidate additions, or cross-leaf constraints fail closed and force broader
+reconstruction. Active token bytes, factorized provenance bytes, external
+source bytes, and reread bytes are reported separately.
+
+The executable reference does not store flattened opcode witnesses. Each leaf
+atom is SHA-256 committed; aliases of the same exact transform commit to every
+supporting atom; and each internal transform commits to every supporting child
+pair. The exact child topology remains the replay authority, so a commitment is
+an integrity binding rather than a substitute for alternate derivations. Raw
+source references live only at leaves, not duplicated in every ancestor. A
+singleton compact-frontier record contains the exact transform, fixed-size
+support and node commitments, and a contiguous `(start, end)` external
+retrieval reference. This removes the accidental linear witness and
+`O(n log n)` duplicated source tuples from the reference representation. It
+does not change the lower bound: the retained factorized tree and external
+source store are still linear in unresolved history in the worst case.
 
 #### Frozen Score Provider And Board
 
@@ -2906,29 +2939,44 @@ The only neural score provider is the strongest already-frozen R9c arm,
 It is read-only. R10 may not retrain it, tune its logits, search layers, or
 change its text bridge.
 
-The used development board is
+The old development board is
 `artifacts/evals/referential_argument_graph_v5_fresh.jsonl`, SHA-256
 `d85f16ff374b0c650cf3603826cc5f3b377842818db62bada3b84e71308b9473`.
 Its structural admission and label admission must both remain true; their file
 SHA-256 values are respectively
 `4a24a6999ae43d433d44fc24f25bc13ce60b4ab1856094dcdfd7b24a776abfd2`
 and `a93f1b2623e8962efbd63541ad1a79694a8fb3f2e7c8aa1931c0b55faa786699`.
-`fit_iid` plus `depth_ood` are calibration-only. `language_ood` and `full_ood`
-are the frozen used-board evaluation partitions and cannot alter the threshold.
+Because `no_syndrome` was selected as the strongest R9c arm using this exact
+board, it is exploratory and kill-only for R10. It cannot calibrate or authorize
+a positive result. Before any score extraction, a model-unseen calibration
+board and separate confirmation board must be generated, independently audited,
+hash-frozen here, and kept score-blind. The confirmation board contains at
+least 1,024 programs balanced across lengths 4, 8, 16, and 32 so that 40%
+coverage can yield more than 300 accepted cases.
 
-For every calibration event, nonconformity is `-log p(true_operation)`. At
-target marginal coverage 97%, the threshold is the `k`th sorted calibration
-score with `k = ceil((n + 1) * 0.97)`; if `k > n`, the threshold is infinity.
-An event candidate set contains every operation whose probability is at least
-`exp(-threshold)`. There is one global threshold. Per-family, per-length, and
-post-result threshold selection are forbidden.
+For each calibration **program**, nonconformity is the maximum of
+`-log p(true_operation)` over all events and `-log p(true_query)`. At target
+program coverage 97%, the threshold is the `k`th sorted program score with
+`k = ceil((n_programs + 1) * 0.97)`; if `k > n_programs`, the threshold is
+infinity. Each event candidate set contains every operation whose probability
+is at least `exp(-threshold)`, and the query candidate set follows the same
+rule. There is one global threshold. Per-event calibration would compound its
+error across long programs and is forbidden, as are per-family, per-length,
+and post-result threshold selection.
 
 The extractor must bind the base, adapter, tokenizer, board, both admissions,
-code revision, seed, and complete per-event categorical distribution into one
-machine-readable report. No evaluation may start from a missing or mismatched
-hash. The exact VSPT, point-argmax execution, shuffled candidate sets, and oracle
-candidate sets are reported controls. Candidate sets are composed using exact
-integer/rational affine effects; floating matrix equality is not a certificate.
+code revision, seed, complete per-event categorical distributions, and the
+complete query distribution into one machine-readable report. No evaluation
+may start from a missing or mismatched hash. The exact VSPT, point-argmax
+execution, shuffled candidate sets, and oracle candidate sets are reported
+controls. Candidate sets are composed using exact integer/rational affine
+effects; floating matrix equality is not a certificate. Opcode candidates
+include role binding. Numeric values and event order remain deterministic text-
+extraction contracts, not model predictions: the bridge directly receives the
+lexically extracted initial and event-value slots after admission verifies them
+against structured metadata. Parsed-slot and oracle-structured controls must be
+named separately. R10 is therefore an external neuro-symbolic execution test,
+not evidence that Shohin internally thinks.
 
 #### Frozen Mechanics Gates
 
@@ -2936,43 +2984,68 @@ Before neural scores can decide anything, the CPU reference and ACAW must pass
 all of the following:
 
 1. Exact VSPT composition matches exhaustive enumeration on every tested small
-   program, preserves event order, and has zero false answer or source-drop
+   program, preserves event order, and has zero false answer or hot-eviction
    certificates under injected ambiguity and overflow.
 2. Every exact VSPT transform is contained in ACAW's affine hull after every
-   leaf and internal product; ambiguity rank never exceeds nine.
+   leaf and internal product; every ambiguity direction has a zero bottom row
+   and rank never exceeds six.
 3. ACAW has zero false query certificates against exhaustive VSPT. It may
    abstain where VSPT answers, but it may never certify a different answer.
-4. Rank-zero source deletion has zero false drops. Query-only agreement never
-   increments the reusable source-removal metric.
+4. Rank-zero candidate-conditional hot eviction has zero false evictions
+   against the known oracle. Query-only agreement never increments hot source
+   removal, and irreversible source deletion remains exactly zero.
 5. A query intervention that changes which ambiguity directions matter must
    change or revoke the certificate on the corresponding constructed cases.
-6. Witness-localized replay must produce the same final exact version space as
-   full replay after the same witness evidence is supplied. A failed match
-   rejects adaptive context scaling even if answer accuracy is high.
+6. A monotone leaf refinement followed by path-to-root recomputation must
+   produce the same exact version space, all-support commitments, and overflow
+   state as full replay under the same evidence. A failed match rejects
+   adaptive context scaling even if answer accuracy is high.
+7. The indistinguishable-root counterexample with left/right candidate sets
+   `{I,S}/{I,S}` versus `{I}/{I,S}` must diverge correctly after the right leaf
+   is fixed to `I`. Removing one canonical derivation must not remove a
+   transform supported by another derivation.
+8. Serialized singleton summaries contain no raw source and no linear-length
+   opcode witness. Overflow preserves factorized child state without emitting
+   a certificate. Candidate additions and non-local evidence are rejected.
 
 #### Frozen Used-Board Gates
 
 All gates are conjunctive and evaluated separately where stated:
 
-1. True-operation candidate coverage is at least 97% on `language_ood` and at
-   least 97% on `full_ood`.
+1. True-operation event coverage and true-query coverage are each at least 97%
+   on `language_ood` and `full_ood`; complete-program candidate coverage is at
+   least 95% on each partition.
 2. Selective answer accuracy is at least 99% at at least 40% program coverage
-   on the combined used-board OOD partitions, with neither partition below 95%
-   selective accuracy.
-3. There are zero false full-transform certificates and zero false source
-   drops. Query certificates are counted separately from source deletion.
-4. Median non-overflow root VSPT size is at most 32 and total overflow rate is
-   at most 10%.
+   independently on every confirmation partition. Every depth and query stratum
+   has at least 25% selective coverage; no partition may subsidize another.
+3. There are zero false full-transform certificates and zero false hot-context
+   evictions against known truth. Query certificates are counted separately,
+   every eviction retains a retrieval pointer, and irreversible deletion is
+   zero by construction.
+4. Root-size statistics encode overflow as 33: p50 is at most 16, p90 is at
+   most 32, and total overflow is at most 10%. Uncapped exact root size is also
+   reported wherever feasible; a non-overflow size-at-cap gate is forbidden as
+   tautological.
 5. ACAW preserves zero false certificates and never reports higher certified
    coverage than exact VSPT on a case that its hull does not prove.
-6. Compared with top-1 execution, certified rows must reduce wrong answers by
-   at least 80% rather than merely selecting the same easy language templates.
+6. At exactly ACAW's accepted count within each partition, its observed
+   selective accuracy exceeds the best of frozen max-probability, minimum-
+   margin, and entropy abstention baselines by at least one percentage point.
+   Since every nonempty candidate set contains top-1, ACAW is an abstention
+   mechanism on this board and cannot claim to correct accepted top-1 answers.
+7. Hot-context reduction is computed over every original event in a disjoint
+   root compact frontier, not only convenient certified subtrees. Canonical
+   serialized hot bytes, factorized-provenance bytes, external-source bytes,
+   retrieval count, and runtime are reported separately by length and accepted
+   status. Integer/rational bit growth counts toward memory.
 
-Failure closes this frozen score-provider path. There is no threshold, cap,
-rank, or reader-family rescue on the used board. Passing authorizes exactly one
-untouched board stratified at lengths 4, 8, 16, and 32. That board must reach
-at least 99% selective accuracy at 40% coverage, zero false source drops, and at
-least 75% source removal among certified execution segments. It must also show
-that witness-localized replay corrects a failed certificate with less retained
-source than full replay. Only that result could authorize a trainable ACAW
-interface; it would still not by itself establish broad language reasoning.
+Failure closes this frozen score-provider path. There is no threshold, cap, or
+rank rescue. The old board can only reject. The new calibration board fixes one
+threshold; the already-frozen confirmation board then decides. Confirmation
+must reach the gates above, include at least 300 zero-error accepted cases
+before a 99% population-reliability statement is even considered, and achieve
+at least 75% retrieval-backed hot-source removal over all events with zero false
+hot evictions. No localized learned replay claim is available in R10 because a
+non-oracle second evidence source has not yet been frozen. A static pass could
+authorize a separate preregistration for that re-reader; it cannot establish
+broad language reasoning, internal thinking, or safe irreversible deletion.
