@@ -2849,3 +2849,130 @@ consistent with text evidence, compose that set without pruning, and permit
 source deletion only when the complete-transform version space is a singleton.
 Agreement on one current query may authorize a selective answer but cannot
 authorize reusable context compression.
+
+### R10 Preregistration: Annihilator-Certified Ambiguity Workspace
+
+R10 does not replace one point estimate with another. It carries uncertainty
+through execution and permits commitment only when the remaining uncertainty is
+provably irrelevant to the requested read. The exact reference implementation
+is a version-space product tree (VSPT): each event owns a finite set of lawful
+3x3 affine transforms, internal nodes compose every chronological product, and
+identical transforms are deduplicated without score-based pruning. A node that
+would exceed 32 exact transforms overflows fail-closed: it retains its source,
+emits no certificate, and cannot be counted as context compression.
+
+VSPT is a diagnostic oracle, not the novelty claim. Version-space algebra and
+automata representations of program sets are established
+([Lau et al., 2003](https://homes.cs.washington.edu/~pedrod/papers/kcap03b.pdf);
+[Wang et al., 2021](https://arxiv.org/abs/2107.12568)), and recent
+neurosymbolic synthesis already uses calibrated candidate sets and active
+disambiguation
+([Barnaby et al., 2025](https://arxiv.org/abs/2508.15750)). Calibrated semantic
+interpretation is also established
+([Stengel-Eskin and Van Durme, 2023](https://arxiv.org/abs/2211.07443)). R10's
+bounded project-novel hypothesis is the combination of a neural compiler with
+an exact noncommutative product tree, a sound affine ambiguity quotient,
+query-annihilator certificates, and witness-localized reopening for context
+management. No world-first statement is authorized without a broader review
+and positive untouched-board evidence.
+
+The proposed **Annihilator-Certified Ambiguity Workspace (ACAW)** compresses an
+exact transform set into a sound affine hull `A0 + span(U1, ..., Ur)`.
+
+For chronological composition of an earlier hull `A0 + U` and a later hull
+`B0 + V`, the child product is overapproximated by an anchor `B0 A0` and the
+span of all `B0 Ui`, `Vj A0`, and `Vj Ui` terms. Exact rank reduction follows
+each product; because the transforms are 3x3, the ambiguity rank cannot exceed
+nine. The hull may add impossible transforms and therefore reduce coverage,
+but it must never remove a lawful transform or create false certainty.
+
+For initial homogeneous state `s` and query covector `g`, ACAW may certify the
+current scalar answer only when `g Ui s = 0` for every ambiguity basis element.
+This is the annihilator condition: all transforms in the sound hull give the
+same current answer. That certificate does **not** authorize general source
+deletion. Reusable deletion requires rank zero, or an explicitly declared
+future reader family for which every reader annihilates every ambiguity
+direction. Nonzero-rank nodes retain provenance pointers to unresolved witness
+leaves. Adaptive computation reopens a witness selected by its contribution to
+the uncertified query, rather than replaying the full history. This is the
+context-scaling hypothesis under test: fixed-dimensional algebraic state plus
+sparse ambiguity witnesses, with source retention whenever proof is absent.
+
+#### Frozen Score Provider And Board
+
+The only neural score provider is the strongest already-frozen R9c arm,
+`train/r9c_no_syndrome_200k_canary_r2/syndrome_adapter_ep1.pt`, SHA-256
+`bf07d65075a42142c34bfc510cbef95290a9b8a0f7ed96ac1d4abc5f175a6480`.
+It is read-only. R10 may not retrain it, tune its logits, search layers, or
+change its text bridge.
+
+The used development board is
+`artifacts/evals/referential_argument_graph_v5_fresh.jsonl`, SHA-256
+`d85f16ff374b0c650cf3603826cc5f3b377842818db62bada3b84e71308b9473`.
+Its structural admission and label admission must both remain true; their file
+SHA-256 values are respectively
+`4a24a6999ae43d433d44fc24f25bc13ce60b4ab1856094dcdfd7b24a776abfd2`
+and `a93f1b2623e8962efbd63541ad1a79694a8fb3f2e7c8aa1931c0b55faa786699`.
+`fit_iid` plus `depth_ood` are calibration-only. `language_ood` and `full_ood`
+are the frozen used-board evaluation partitions and cannot alter the threshold.
+
+For every calibration event, nonconformity is `-log p(true_operation)`. At
+target marginal coverage 97%, the threshold is the `k`th sorted calibration
+score with `k = ceil((n + 1) * 0.97)`; if `k > n`, the threshold is infinity.
+An event candidate set contains every operation whose probability is at least
+`exp(-threshold)`. There is one global threshold. Per-family, per-length, and
+post-result threshold selection are forbidden.
+
+The extractor must bind the base, adapter, tokenizer, board, both admissions,
+code revision, seed, and complete per-event categorical distribution into one
+machine-readable report. No evaluation may start from a missing or mismatched
+hash. The exact VSPT, point-argmax execution, shuffled candidate sets, and oracle
+candidate sets are reported controls. Candidate sets are composed using exact
+integer/rational affine effects; floating matrix equality is not a certificate.
+
+#### Frozen Mechanics Gates
+
+Before neural scores can decide anything, the CPU reference and ACAW must pass
+all of the following:
+
+1. Exact VSPT composition matches exhaustive enumeration on every tested small
+   program, preserves event order, and has zero false answer or source-drop
+   certificates under injected ambiguity and overflow.
+2. Every exact VSPT transform is contained in ACAW's affine hull after every
+   leaf and internal product; ambiguity rank never exceeds nine.
+3. ACAW has zero false query certificates against exhaustive VSPT. It may
+   abstain where VSPT answers, but it may never certify a different answer.
+4. Rank-zero source deletion has zero false drops. Query-only agreement never
+   increments the reusable source-removal metric.
+5. A query intervention that changes which ambiguity directions matter must
+   change or revoke the certificate on the corresponding constructed cases.
+6. Witness-localized replay must produce the same final exact version space as
+   full replay after the same witness evidence is supplied. A failed match
+   rejects adaptive context scaling even if answer accuracy is high.
+
+#### Frozen Used-Board Gates
+
+All gates are conjunctive and evaluated separately where stated:
+
+1. True-operation candidate coverage is at least 97% on `language_ood` and at
+   least 97% on `full_ood`.
+2. Selective answer accuracy is at least 99% at at least 40% program coverage
+   on the combined used-board OOD partitions, with neither partition below 95%
+   selective accuracy.
+3. There are zero false full-transform certificates and zero false source
+   drops. Query certificates are counted separately from source deletion.
+4. Median non-overflow root VSPT size is at most 32 and total overflow rate is
+   at most 10%.
+5. ACAW preserves zero false certificates and never reports higher certified
+   coverage than exact VSPT on a case that its hull does not prove.
+6. Compared with top-1 execution, certified rows must reduce wrong answers by
+   at least 80% rather than merely selecting the same easy language templates.
+
+Failure closes this frozen score-provider path. There is no threshold, cap,
+rank, or reader-family rescue on the used board. Passing authorizes exactly one
+untouched board stratified at lengths 4, 8, 16, and 32. That board must reach
+at least 99% selective accuracy at 40% coverage, zero false source drops, and at
+least 75% source removal among certified execution segments. It must also show
+that witness-localized replay corrects a failed certificate with less retained
+source than full replay. Only that result could authorize a trainable ACAW
+interface; it would still not by itself establish broad language reasoning.

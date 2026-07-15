@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 21:12 EDT (the protected two-H100 pretrain remains isolated. R9c is a closed neural and mathematical negative. Treatment underperforms valid static/no-syndrome controls, and a post-result exact audit proves the expected-operator syndrome is non-injective with respect to executed argmax operations. The original rolled-goal arm is also only a weak shuffle, so it cannot support a semantic-goal attribution. Preserve the artifacts; do not repair R9c by threshold, width, memory, or replay tuning.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 21:19 EDT (the protected two-H100 pretrain remains isolated. R9c is a closed neural and mathematical negative. R10 is preregistered before score extraction: an exact version-space oracle plus Annihilator-Certified Ambiguity Workspace, with fail-closed overflow, query-only versus source-drop certificates, and one frozen conformal threshold. Preserve R9c; do not repair it by threshold, width, memory, or replay tuning.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4457,3 +4457,19 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   any stronger future-goal or fail-closed-certificate interpretation. Exact audit
   `train/audit_bidirectional_syndrome_identifiability.py` is regression-tested; local/Newton report
   SHA-256 is **`9c54c1cf498804056aa34b5b5b1d7b78a4c181a69c8b9b7a77904cfb816f1777`**.
+
+- **2026-07-14 21:12--21:19** — **Ultra mode starts R10 with the score and decision gates frozen
+  before probability extraction.** Plain version-space composition is retained only as an exact
+  diagnostic reference because version-space algebra, candidate-set calibration, and active program
+  disambiguation have clear prior art. The actual hypothesis is Annihilator-Certified Ambiguity
+  Workspace (ACAW): carry a sound affine hull of every still-lawful 3x3 transform, certify the current
+  answer only when its query annihilates every ambiguity direction, and delete reusable source only
+  under rank-zero or a declared-reader-family proof. Nonzero ambiguity retains witness provenance for
+  localized replay. The frozen neural score provider is the R9c no-syndrome adapter SHA-256
+  `bf07d65075a42142c34bfc510cbef95290a9b8a0f7ed96ac1d4abc5f175a6480`; the used board SHA-256 is
+  `d85f16ff374b0c650cf3603826cc5f3b377842818db62bada3b84e71308b9473`. One global 97% split-conformal
+  threshold is calibrated on fit/depth only; language/full are evaluation only. Exact-set cap 32,
+  overflow fail-closed, zero false certificates/drops, >=99% selective answer accuracy at >=40%
+  coverage, and explicit query-intervention/replay gates are preregistered in `REASONING_FRONTIER.md`.
+  A used-board pass can authorize only one untouched 4/8/16/32 board; failure closes the score-provider
+  path without threshold or cap tuning.
