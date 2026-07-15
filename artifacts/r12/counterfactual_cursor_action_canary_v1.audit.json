@@ -1,9 +1,9 @@
 {
   "all_checks_pass": true,
-  "auditor_sha256": "986dbef006920fc3969ab1e85d68e523dc4144e3f9cae6edcadc5a99262558d7",
-  "canary_file_sha256": "4ba93de805a383f16d1468aae48d44d5700b1c305e4531400ee6a4019105bb2f",
+  "auditor_sha256": "c6f18bec2d4e93f34ea69f1236e856c178228374c66de6d764843695df6cadaa",
+  "canary_file_sha256": "4db2adfe23059ea68a0b6da5450992d2d1aa67c151e650746d8b1397450df307",
   "canary_id": "ccaa-neural-canary-v1",
-  "canary_payload_sha256": "dcf051c9473dc42e2859f07943500e69a3c8c94eae0308ab9fc4d9d435c35478",
+  "canary_payload_sha256": "f86c6fee982d02a7e6c2061346125e45ccce1d25eaeeec8e319448b92eca02bd",
   "contract_sha256": "d767e2bf405364d929d6aab0b1e202d643b974e62e71adbddde012a09255a49b",
   "cross_split_13gram_counts": {
     "development__confirmation": 0,
@@ -13,30 +13,35 @@
   "evalgrams_sha256": "e0d0a8cf1fa0313be9d1250d7eec0f38df0812b3bf4e8a084c53de97e3d65522",
   "implementation_identity": {
     "file_sha256": {
-      "R12_COUNTERFACTUAL_CURSOR_ACTION_CPU_PREREG.md": "82e1cf5f4ae64e8457c452a6c53b95498b8c065ec1ec543a07738840230b7edf",
-      "R12_COUNTERFACTUAL_CURSOR_ACTION_THEORY.md": "e9732773744b4e6885d419a6ec9bf8c545d0a237f0db8f3dc31cfef9b8aa69df",
-      "pipeline/audit_counterfactual_cursor_action_canary.py": "986dbef006920fc3969ab1e85d68e523dc4144e3f9cae6edcadc5a99262558d7",
+      "R12_COUNTERFACTUAL_CURSOR_ACTION_CPU_PREREG.md": "5f6b4356606f152adb3e3c989b1b4f4221b50ecd1dff447b311903dda3279c73",
+      "R12_COUNTERFACTUAL_CURSOR_ACTION_THEORY.md": "1c1c794c4ae969f0edbdc200b0b8db5c602594077e7bbbab280894ecd06ac66b",
+      "pipeline/audit_counterfactual_cursor_action_canary.py": "c6f18bec2d4e93f34ea69f1236e856c178228374c66de6d764843695df6cadaa",
       "pipeline/counterfactual_cursor_action_canary_contract_v1.json": "d767e2bf405364d929d6aab0b1e202d643b974e62e71adbddde012a09255a49b",
       "pipeline/generate_counterfactual_cursor_action_canary.py": "ae077e9a0798a915f42ec4968018e5bb69506d3e8169e5a16da7bb3984b643e6",
-      "pipeline/test_counterfactual_cursor_action_canary.py": "72ee73f1d4c217049f5fb30a10b874472036c20753243384dc6c0f16ff6d323c",
+      "pipeline/test_counterfactual_cursor_action_canary.py": "54456ceb66d78ea2e164d354ec87a3634a13d8e04399dfd549e6f50a7aeb14ed",
       "train/counterfactual_cursor_action.py": "e9ffa29ef8802e9f7a62705f6e2b5307e072fa56075c566c582ac35af440f71e",
-      "train/counterfactual_cursor_action_data.py": "a385687655acd0984a2fce5cf2567e25531789c18253f6735aa15534f4592e9f",
+      "train/counterfactual_cursor_action_data.py": "5c34beebe79ce7bbca3c9c9c42bfcb148533a17195a344bcb19088badcaf7479",
       "train/counterfactual_cursor_action_objectives.py": "9559cab6d10322a977c595c67b980ada1cbe6559c1b43b98c36b92d72cd883a2",
       "train/counterfactual_cursor_action_training.py": "97d911ce2773d9085c33d529658e12063dbfb8e43b3950973ea1dea2abd98f87",
-      "train/eval_counterfactual_cursor_action.py": "693df5547de737a75d9afb83786b3814767482e43397e25b72ba8038136509d5",
+      "train/eval_counterfactual_cursor_action.py": "85098bd9e86a719ff36978e6724b404c19d169e2fee2f012e004c289d191db5f",
       "train/jobs/counterfactual_cursor_action_canary.sbatch": "8e75b6fdd68df63c81660da38730f8a303a68ac2d0d6011e3e52ec4d1277fc76",
       "train/jobs/eval_counterfactual_cursor_action.sbatch": "bccd31371e347b5ca395883dd6442d92689738e9215bb62d080a4081e9f08555",
       "train/model.py": "45fc0dc46ceb0f91d08e3f671cbe9ef202ea212e72d5bba8b77356c3fb0983d4",
-      "train/score_counterfactual_cursor_action.py": "174c472793df830474f773a42228b9808f31aef3a666964d2911f7b0285542a6",
+      "train/score_counterfactual_cursor_action.py": "6be08f00124cb85f5caad809d67141b71d16b72810b07ec009ece26a880ee9fa",
       "train/test_counterfactual_cursor_action.py": "685f70dfd7f4cd148df1963dc6d0dbb2998bac864fdece95b07238e0d8ab062c",
       "train/test_counterfactual_cursor_action_data.py": "f2183f90f0da47dd4539cfdc1c69abd6d8a638a97029b7d9d121abfc29c22bc0",
       "train/test_counterfactual_cursor_action_objectives.py": "9b76ca88fec89dacdfc7f85f2db29035eb38339dcc6af067a6f111b58fa5dd80",
       "train/test_counterfactual_cursor_action_training.py": "4174660995b34811127f4290f27b9d11b7fcb2a305e497d775ea7b4567616d2f",
-      "train/test_eval_counterfactual_cursor_action.py": "74ebbdf1cc17c3832fc836d75b1e76013f1b7480e23c4e09daa7bf157f931eac",
+      "train/test_eval_counterfactual_cursor_action.py": "ccbd74b4ccd207bd6bd2e1d8cafc703f54fc890b21574bd70f6aff8bf673c0a7",
       "train/test_train_counterfactual_cursor_action.py": "53baeb506d0b20ce5a07194c67e335d85952ad75392dbf536bd559dde65e77fa",
       "train/train_counterfactual_cursor_action.py": "bad0008b7f1cfd3d6e20e9ad0e2e1e30e8ac4d5036082caca45c9b77c48e3bf2"
     },
-    "git_commit": "5468b9e03d75c2928ca9513c761c1ab00e3cf283"
+    "git_commit": "2c1adead12e1a3bb02e20c7e4a73997827a27713"
+  },
+  "pretraining_corpus_overlap": {
+    "claim_authorized": false,
+    "consequence": "no_pretraining_novelty_or_memorization_exclusion_claim",
+    "status": "not_audited_packed_shards_lack_raw_row_boundaries"
   },
   "schema": "counterfactual_cursor_action_canary_audit_v1",
   "split_summary": {
