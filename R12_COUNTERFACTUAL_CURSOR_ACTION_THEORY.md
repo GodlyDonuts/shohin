@@ -75,9 +75,15 @@ or EXECUTE. It is updated only by emitted token events:
 ```
 SELECT + operation-token -> EXECUTE, cursor := min(c + 1, 4)
 EXECUTE + COMMIT-token   -> SELECT,  cursor unchanged
-SELECT + DONE-token      -> HALT-PENDING, cursor unchanged
+SELECT(c=4) + DONE-token -> HALT-PENDING, cursor unchanged
+HALT-PENDING + EOS-token -> HALT
 all other tokens         -> state unchanged.
 ```
+
+Premature DONE at `c<4` and operation tokens at terminal `c=4` leave the state
+unchanged and count as protocol failures. The Q intervention is exactly zero
+outside SELECT phase, so execution tokens cannot observe or be perturbed by the
+already-advanced next cursor.
 
 The operation tokens already exist as single tokenizer IDs for leading-space
 `add`, `subtract`, `multiply`, and `remainder` (`820`, `5498`, `4307`, and
@@ -160,8 +166,9 @@ cross-entropy:
 
 These losses reveal no target that is absent from the ordinary rows. Their only
 possible contribution is an optimization bias toward the intended relation.
-A relation-sham arm receives the same tensors and loss magnitudes with
-deterministically wrong pairings.
+A relation-sham arm receives the same tensor counts, coefficients, and
+computation with deterministically wrong pairings. Its numerical loss magnitude
+is model-dependent and is not asserted equal.
 
 ## 6. Identifiability limits
 
@@ -260,6 +267,14 @@ controls receive relation-sham pairings, zeroed cursor projection, constant
 cursor, deranged cursor, and an equal-parameter source-only adapter. An
 unconstrained eight-entry cursor embedding is a 512-parameter favorable ceiling,
 not an information-matched denominator.
+
+Teacher-forced alignment is prefix-causal: the state supplied while predicting
+token `t` is reconstructed only from events in tokens `<t`. The selected
+operation token is predicted under `(c, SELECT)`; only after that token is
+observed does the state become `(c+1, EXECUTE)`. In cached decoding, state
+updates after sampling and before forwarding the sampled token. Full replay
+must prefix-scan the same event table and match cached logits exactly. No mutable
+`model.cursor` field or cursor inside the K/V tuple is allowed.
 
 ## 9. Advancement rule
 

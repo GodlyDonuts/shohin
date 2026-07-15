@@ -37,10 +37,21 @@ Every source contains exactly one clause for each of `add`, `subtract`,
 same four clause strings and operands; only clause order changes. Cursor is a
 separate field and is never serialized into source text by the CPU board.
 
+Across renderers, start value and the `(operation, operand)` sequence are also
+identical. Only syntax and clause wording differ, so renderer-invariance pairs
+are content-matched rather than value-matched by assumption.
+
 The five renderers must differ in syntax while retaining an auditable
 one-to-one clause map. Renderer IDs, operand tuples, source strings, clause
 spans, permutation IDs, cursor values, target actions, and pair memberships are
 all serialized. No model output or score may influence generation.
+
+The model-exposure allowlist is exact. Selector training/evaluation may expose
+only row field `source` plus the separate internal `cursor` tensor. One-call
+evaluation may expose only `source` and initializes side state to
+`(cursor=0, phase=SELECT)`. IDs, renderer/permutation metadata, start value,
+operation order, clause spans, targets, and target indices are gold-only and
+must cause the loader to fail if requested as model inputs.
 
 ## 3. Mandatory exact audits
 
@@ -82,8 +93,8 @@ The source-only ceiling is computed per source, not approximated from global
 counts. The cursor-only and renderer-plus-cursor ceilings are solved by exact
 enumeration. Unique top-1 is required; ties are failures, not fractional credit.
 
-The collapse test exhaustively checks all 11 `(cursor, phase)`/HALT states
-against all seven token-event classes through one-hot transition matrices. It
+The collapse test exhaustively checks all 12 `(cursor, phase)`/HALT states
+against all eight token-event classes through one-hot transition matrices. It
 then constructs the five-state selector cursor and proves exact agreement
 between:
 
@@ -102,9 +113,11 @@ The frozen implementation surface is:
 pipeline/generate_counterfactual_cursor_action_board.py
 pipeline/audit_counterfactual_cursor_action_board.py
 pipeline/test_counterfactual_cursor_action_board.py
+pipeline/counterfactual_cursor_action_contract_v1.json
 ```
 
-The auditor does not import the generator. It reconstructs source order,
+The generator and auditor bind the SHA-256 of a separate declarative semantic
+contract. The auditor does not import the generator. It reconstructs source order,
 targets, spans, pair maps, shortcut ceilings, FSM transitions, and the folded
 query projection independently. It binds both canonical and physical-file
 board hashes in its report.
@@ -141,15 +154,24 @@ optimizer, number of updates, and initialization seed:
    parameters, with action CE only.
 3. **Relation-sham control:** treatment tensors and coefficients with frozen
    wrong relation pairings.
-4. **Source-only control:** equal trainable parameters and compute, cursor
-   projection zeroed.
+4. **Source-only control:** equal trainable parameters and compute, with the
+   same 192-scalar projection evaluated under one fixed centered cursor code
+   for every row; its weights remain trainable and receive gradients.
 5. **Favorable cursor-table control:** an unconstrained eight-entry by 64-wide
    explicit cursor table with 512 parameters and the same labels.
+6. **Ordinary text-cursor LoRA control:** the same source and semantic cursor,
+   with cursor rendered by a frozen textual suffix and a favorable rank-one
+   LoRA on the final-head Q slice (`576 + 64 = 640` trainable scalars), trained
+   by ordinary action CE. This tests whether conventional adaptation with more
+   parameters solves the literal ordinal-copy task without the event sidecar.
 
 All arms must log trainable scalars, retained bits, dtype, source/cache bytes,
 examples, oracle calls, training FLOPs or a fixed proxy, inference FLOPs,
 sequential token depth, external memory, and external execution. Missing or
-unequal resources reject the comparison.
+unequal resources reject the information-matched comparisons. Treatment,
+ordinary-loss, relation-sham, and source-only training FLOP proxies must match
+within 1%; the larger cursor-table and text-LoRA arms are favorable ceilings
+and report their excess explicitly.
 
 ## 7. Frozen selector decision rule
 
@@ -158,15 +180,21 @@ groups. A treatment GO requires all of:
 
 - at least 95% unique-top-1 cell accuracy on each untouched renderer;
 - at least 90% exact five-action source groups, including DONE;
-- at least 95% of cursor-interchange pairs switch to the donor cursor's target;
-- at least 95% adjacent-order equivariance on affected and unaffected cells;
-- at least 99% renderer invariance of top-1 actions for matched schedules;
+- at least 95% of all 2,400 directed cursor-interchange pairs switch to the
+  donor cursor's target;
+- at least 95% adjacent-order equivariance separately on all 360 affected and
+  540 unaffected cell pairs;
+- at least 99% renderer invariance over all 1,200 unordered content-matched
+  renderer/cursor pairs;
 - at least +10 percentage points over the ordinary-loss control and relation
-  sham on exact source groups, with a preregistered paired interval above zero;
+  sham on exact source groups. The comparison uses 20,000 deterministic paired
+  bootstrap replicates with seed `2026071504`, resampling source groups within
+  renderer; the simultaneous one-sided 95% lower bound for both differences
+  must be strictly above zero;
 - constant and deranged cursor ablations within two points of their symbolic
   20% and 0% predictions after conditioning on treatment-correct groups;
-- no regression beyond a preregistered tolerance on the immutable raw atomic
-  executor gate.
+- at least `520/704` on the immutable raw atomic executor gate, and no family
+  may regress by more than five percentage points from its raw baseline.
 
 A near miss is a NO-GO. It cannot trigger a threshold, seed, renderer, loss
 weight, or adapter-location change under this version.
@@ -196,3 +224,9 @@ score-bearing artifact is opened.
 
 The protected flagship output path and checkpoints are read-only inputs. No
 canary may share its output directory or modify the live data stream.
+
+Persistent board generation additionally refuses a dirty implementation
+surface. The board records the pre-board Git commit and SHA-256 of the theory,
+preregistration, declarative contract, generator, auditor, and tests. The
+auditor verifies every hash against both the live file and `git show` at that
+commit. A board generated before that clean commit is inadmissible.

@@ -1,0 +1,83 @@
+{
+  "schema": "counterfactual_cursor_action_contract_v1",
+  "operations": [
+    "add",
+    "subtract",
+    "multiply",
+    "remainder"
+  ],
+  "labels": [
+    "add",
+    "subtract",
+    "multiply",
+    "remainder",
+    "DONE"
+  ],
+  "renderers": [
+    {
+      "renderer_id": 0,
+      "start_value": 17,
+      "prefix": "Start with 17. Execute these clauses in order: ",
+      "joiner": "; ",
+      "suffix": ".",
+      "clauses": [
+        {"operation": "add", "operand": 7, "text": "add 7"},
+        {"operation": "subtract", "operand": 5, "text": "subtract 5"},
+        {"operation": "multiply", "operand": 3, "text": "multiply by 3"},
+        {"operation": "remainder", "operand": 11, "text": "take the remainder modulo 11"}
+      ]
+    },
+    {
+      "renderer_id": 1,
+      "start_value": 17,
+      "prefix": "Initial value: 17. Ordered procedure: ",
+      "joiner": ", then ",
+      "suffix": ".",
+      "clauses": [
+        {"operation": "add", "operand": 7, "text": "increase the value by 7"},
+        {"operation": "subtract", "operand": 5, "text": "decrease the value by 5"},
+        {"operation": "multiply", "operand": 3, "text": "triple the value"},
+        {"operation": "remainder", "operand": 11, "text": "reduce the value modulo 11"}
+      ]
+    },
+    {
+      "renderer_id": 2,
+      "start_value": 17,
+      "prefix": "Let n = 17. Apply from left to right: ",
+      "joiner": " | ",
+      "suffix": ".",
+      "clauses": [
+        {"operation": "add", "operand": 7, "text": "n <- n + 7"},
+        {"operation": "subtract", "operand": 5, "text": "n <- n - 5"},
+        {"operation": "multiply", "operand": 3, "text": "n <- n * 3"},
+        {"operation": "remainder", "operand": 11, "text": "n <- n mod 11"}
+      ]
+    },
+    {
+      "renderer_id": 3,
+      "start_value": 17,
+      "prefix": "The register begins at 17. Its ordered program is: ",
+      "joiner": "; next, ",
+      "suffix": ".",
+      "clauses": [
+        {"operation": "add", "operand": 7, "text": "add 7 to the register"},
+        {"operation": "subtract", "operand": 5, "text": "subtract 5 from the register"},
+        {"operation": "multiply", "operand": 3, "text": "multiply the register by 3"},
+        {"operation": "remainder", "operand": 11, "text": "replace the register by its remainder modulo 11"}
+      ]
+    },
+    {
+      "renderer_id": 4,
+      "start_value": 17,
+      "prefix": "STATE(17) runs this sequence: ",
+      "joiner": " -> ",
+      "suffix": ".",
+      "clauses": [
+        {"operation": "add", "operand": 7, "text": "ADD(7)"},
+        {"operation": "subtract", "operand": 5, "text": "SUBTRACT(5)"},
+        {"operation": "multiply", "operand": 3, "text": "MULTIPLY(3)"},
+        {"operation": "remainder", "operand": 11, "text": "REMAINDER(11)"}
+      ]
+    }
+  ]
+}

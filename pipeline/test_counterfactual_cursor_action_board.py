@@ -18,8 +18,8 @@ class CounterfactualCursorActionBoardTest(unittest.TestCase):
         self.assertEqual(report["counts"]["rows"], 600)
         self.assertEqual(report["counts"]["sources"], 120)
         self.assertEqual(report["counts"]["adjacent_order_pairs"], 180)
-        self.assertEqual(report["collapse"]["event_fsm_states"], 11)
-        self.assertEqual(report["collapse"]["event_transition_assertions"], 77)
+        self.assertEqual(report["collapse"]["event_fsm_states"], 12)
+        self.assertEqual(report["collapse"]["event_transition_assertions"], 96)
         self.assertEqual(report["collapse"]["query_projection_assertions"], 320)
         self.assertEqual(report["collapse"]["valid_event_trace"][-1], ["HALT", "HALT"])
         self.assertEqual(report["symbolic_scores"], {
@@ -72,6 +72,29 @@ class CounterfactualCursorActionBoardTest(unittest.TestCase):
         hashed = copy.deepcopy(self.document)
         hashed["rows_sha256"] = "0" * 64
         self.assert_rejected(hashed, "row hash mismatch")
+
+    def test_rejects_reordering_boolean_integers_and_exposure_tamper(self):
+        reordered = copy.deepcopy(self.document)
+        reordered["rows"][0], reordered["rows"][1] = reordered["rows"][1], reordered["rows"][0]
+        self.rehash(reordered)
+        self.assert_rejected(reordered, "canonical row ordering mismatch")
+
+        boolean_id = copy.deepcopy(self.document)
+        boolean_id["rows"][0]["permutation_id"] = False
+        boolean_id["rows"][0]["target_index"] = False
+        self.rehash(boolean_id)
+        self.assert_rejected(boolean_id, "permutation ID is not an integer")
+
+        exposed = copy.deepcopy(self.document)
+        exposed["exposure_contract"]["selector_model_visible_row_fields"].append("target_action")
+        self.assert_rejected(exposed, "model exposure contract mismatch")
+
+    def test_strict_json_rejects_duplicate_keys(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "duplicate.json"
+            path.write_text('{"schema": 1, "schema": 2}\n')
+            with self.assertRaisesRegex(ValueError, "duplicate JSON key"):
+                audit.load_json_strict(path)
 
     def test_exclusive_read_only_outputs(self):
         with tempfile.TemporaryDirectory() as directory:

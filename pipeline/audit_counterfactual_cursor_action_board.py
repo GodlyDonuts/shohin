@@ -8,6 +8,8 @@ import hashlib
 import itertools
 import json
 import os
+import stat
+import subprocess
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
@@ -19,33 +21,26 @@ OPERATIONS = ("add", "subtract", "multiply", "remainder")
 LABELS = OPERATIONS + ("DONE",)
 ROOT = Path(__file__).resolve().parents[1]
 GENERATOR = ROOT / "pipeline/generate_counterfactual_cursor_action_board.py"
-
-# This source deliberately does not import the generator. The literal renderer
-# contract is duplicated so a malformed board cannot certify itself.
-RENDERERS = (
-    (17, "Start with 17. Execute these clauses in order: ", "; ", ".", {
-        "add": (7, "add 7"), "subtract": (5, "subtract 5"),
-        "multiply": (3, "multiply by 3"),
-        "remainder": (11, "take the remainder modulo 11")}),
-    (23, "Initial value: 23. Ordered procedure: ", ", then ", ".", {
-        "add": (13, "increase the value by 13"),
-        "subtract": (4, "decrease the value by 4"),
-        "multiply": (3, "triple the value"),
-        "remainder": (17, "reduce the value modulo 17")}),
-    (31, "Let n = 31. Apply from left to right: ", " | ", ".", {
-        "add": (9, "n <- n + 9"), "subtract": (6, "n <- n - 6"),
-        "multiply": (2, "n <- n * 2"),
-        "remainder": (13, "n <- n mod 13")}),
-    (29, "The register begins at 29. Its ordered program is: ", "; next, ", ".", {
-        "add": (8, "add 8 to the register"),
-        "subtract": (3, "subtract 3 from the register"),
-        "multiply": (5, "multiply the register by 5"),
-        "remainder": (17, "replace the register by its remainder modulo 17")}),
-    (37, "STATE(37) runs this sequence: ", " -> ", ".", {
-        "add": (12, "ADD(12)"), "subtract": (7, "SUBTRACT(7)"),
-        "multiply": (4, "MULTIPLY(4)"),
-        "remainder": (19, "REMAINDER(19)")}),
+CONTRACT = ROOT / "pipeline/counterfactual_cursor_action_contract_v1.json"
+CONTRACT_SHA256 = "a7061e553b13189e91d25a19f164ccdecfe49404591f1fe0ecfa83b72b690a3c"
+IMPLEMENTATION_PATHS = (
+    "R12_COUNTERFACTUAL_CURSOR_ACTION_THEORY.md",
+    "R12_COUNTERFACTUAL_CURSOR_ACTION_CPU_PREREG.md",
+    "pipeline/counterfactual_cursor_action_contract_v1.json",
+    "pipeline/generate_counterfactual_cursor_action_board.py",
+    "pipeline/audit_counterfactual_cursor_action_board.py",
+    "pipeline/test_counterfactual_cursor_action_board.py",
 )
+EXPECTED_EXPOSURE_CONTRACT = {
+    "selector_model_visible_row_fields": ["source"],
+    "selector_model_visible_side_state": ["cursor"],
+    "one_call_model_visible_row_fields": ["source"],
+    "one_call_initial_side_state": {"cursor": 0, "phase": "SELECT"},
+    "forbidden_model_visible_fields": [
+        "row_id", "source_id", "renderer_id", "permutation_id", "start_value",
+        "operation_order", "clause_spans", "target_action", "target_index",
+    ],
+}
 
 
 def require(condition: bool, message: str) -> None:
@@ -69,9 +64,71 @@ def file_sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def expected_source(renderer_id: int, order: tuple[str, ...]) -> tuple[str, list[dict[str, Any]]]:
-    start_value, prefix, joiner, suffix, clauses = RENDERERS[renderer_id]
-    texts = [clauses[operation][1] for operation in order]
+def reject_duplicate_keys(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate JSON key: {key}")
+        result[key] = value
+    return result
+
+
+def load_json_strict(path: Path) -> Any:
+    return json.loads(path.read_text(), object_pairs_hook=reject_duplicate_keys)
+
+
+def load_contract() -> dict[str, Any]:
+    require(file_sha256(CONTRACT) == CONTRACT_SHA256, "contract hash mismatch")
+    contract = load_json_strict(CONTRACT)
+    require(contract.get("schema") == "counterfactual_cursor_action_contract_v1",
+            "contract schema mismatch")
+    require(tuple(contract.get("operations", ())) == OPERATIONS, "contract operations mismatch")
+    require(tuple(contract.get("labels", ())) == LABELS, "contract labels mismatch")
+    renderers = contract.get("renderers")
+    require(isinstance(renderers, list) and len(renderers) == 5, "contract renderer mismatch")
+    for renderer_id, renderer in enumerate(renderers):
+        require(isinstance(renderer, dict), "contract renderer is not an object")
+        require(renderer.get("renderer_id") == renderer_id, "contract renderer ID mismatch")
+        require(type(renderer.get("start_value")) is int, "contract start value is not an integer")
+        clauses = renderer.get("clauses")
+        require(isinstance(clauses, list) and len(clauses) == 4, "contract clauses mismatch")
+        require(tuple(clause.get("operation") for clause in clauses) == OPERATIONS,
+                "contract clause order mismatch")
+        for clause in clauses:
+            require(type(clause.get("operand")) is int, "contract operand is not an integer")
+            require(isinstance(clause.get("text"), str) and clause["text"], "contract clause text missing")
+    semantic_tuples = [
+        tuple((clause["operation"], clause["operand"]) for clause in renderer["clauses"])
+        for renderer in renderers
+    ]
+    require(len(set(semantic_tuples)) == 1, "renderer groups are not content-matched")
+    return contract
+
+
+def verify_implementation_identity(identity: dict[str, Any]) -> None:
+    require(isinstance(identity, dict) and set(identity) == {"git_commit", "file_sha256"},
+            "implementation identity fields mismatch")
+    commit = identity["git_commit"]
+    hashes = identity["file_sha256"]
+    require(isinstance(commit, str) and len(commit) == 40, "implementation commit mismatch")
+    require(isinstance(hashes, dict) and set(hashes) == set(IMPLEMENTATION_PATHS),
+            "implementation file ledger mismatch")
+    for relative in IMPLEMENTATION_PATHS:
+        expected = hashes[relative]
+        require(expected == file_sha256(ROOT / relative), f"live implementation hash mismatch: {relative}")
+        committed = subprocess.run(
+            ["git", "show", f"{commit}:{relative}"], cwd=ROOT, check=True, capture_output=True,
+        ).stdout
+        require(expected == sha256_bytes(committed), f"committed implementation hash mismatch: {relative}")
+
+
+def expected_source(
+    renderers: list[dict[str, Any]], renderer_id: int, order: tuple[str, ...]
+) -> tuple[str, list[dict[str, Any]]]:
+    renderer = renderers[renderer_id]
+    clauses = {clause["operation"]: clause for clause in renderer["clauses"]}
+    prefix, joiner, suffix = renderer["prefix"], renderer["joiner"], renderer["suffix"]
+    texts = [clauses[operation]["text"] for operation in order]
     source = prefix + joiner.join(texts) + suffix
     spans = []
     scan = len(prefix)
@@ -81,7 +138,7 @@ def expected_source(renderer_id: int, order: tuple[str, ...]) -> tuple[str, list
         end = start + len(text)
         spans.append({
             "operation": operation,
-            "operand": clauses[operation][0],
+            "operand": clauses[operation]["operand"],
             "text": text,
             "start": start,
             "end": end,
@@ -90,10 +147,12 @@ def expected_source(renderer_id: int, order: tuple[str, ...]) -> tuple[str, list
     return source, spans
 
 
-def recover_order(renderer_id: int, source: str) -> tuple[int, tuple[str, ...], list[dict[str, Any]]]:
+def recover_order(
+    renderers: list[dict[str, Any]], renderer_id: int, source: str
+) -> tuple[int, tuple[str, ...], list[dict[str, Any]]]:
     matches = []
     for permutation_id, order in enumerate(itertools.permutations(OPERATIONS)):
-        expected, spans = expected_source(renderer_id, order)
+        expected, spans = expected_source(renderers, renderer_id, order)
         if expected == source:
             matches.append((permutation_id, order, spans))
     require(len(matches) == 1, "source does not recover exactly one operation order")
@@ -111,20 +170,22 @@ def audit_collapse() -> dict[str, Any]:
     phases = ("SELECT", "EXECUTE")
     states: list[tuple[int | str, str]] = [
         (cursor, phase) for cursor in range(5) for phase in phases
-    ] + [("HALT", "HALT")]
-    events = OPERATIONS + ("COMMIT", "DONE", "OTHER")
+    ] + [("HALT_PENDING", "HALT_PENDING"), ("HALT", "HALT")]
+    events = OPERATIONS + ("COMMIT", "DONE", "EOS", "OTHER")
 
     def explicit_transition(state: tuple[int | str, str], event: str) -> tuple[int | str, str]:
         cursor, phase = state
         if phase == "HALT":
             return state
+        if phase == "HALT_PENDING":
+            return ("HALT", "HALT") if event == "EOS" else state
         require(type(cursor) is int, "non-halt state has noninteger cursor")
         if phase == "SELECT" and cursor < 4 and event in OPERATIONS:
             return (min(cursor + 1, 4), "EXECUTE")
         if phase == "EXECUTE" and event == "COMMIT":
             return (cursor, "SELECT")
         if phase == "SELECT" and cursor == 4 and event == "DONE":
-            return ("HALT", "HALT")
+            return ("HALT_PENDING", "HALT_PENDING")
         return state
 
     matrices = {}
@@ -146,7 +207,7 @@ def audit_collapse() -> dict[str, Any]:
 
     trace = (
         "add", "COMMIT", "subtract", "COMMIT", "multiply", "COMMIT",
-        "remainder", "COMMIT", "DONE",
+        "remainder", "COMMIT", "DONE", "EOS",
     )
     event_state: tuple[int | str, str] = (0, "SELECT")
     event_trace = [event_state]
@@ -154,6 +215,10 @@ def audit_collapse() -> dict[str, Any]:
         event_state = explicit_transition(event_state, event)
         event_trace.append(event_state)
     require(event_state == ("HALT", "HALT"), "valid event trace did not halt")
+    require(explicit_transition((0, "SELECT"), "DONE") == (0, "SELECT"),
+            "premature DONE was not rejected")
+    require(explicit_transition((4, "SELECT"), "add") == (4, "SELECT"),
+            "terminal operation event was not rejected")
 
     # At fixed one-controller-step duration, the event cursor degenerates to
     # the ordinary clamped position table. This is a narrower collapse than the
@@ -212,14 +277,31 @@ def audit_collapse() -> dict[str, Any]:
     }
 
 
-def audit_document(document: dict[str, Any], board_file_sha256: str | None = None) -> dict[str, Any]:
+def audit_document(
+    document: dict[str, Any], board_file_sha256: str | None = None,
+    verify_commit: bool = False,
+) -> dict[str, Any]:
+    contract = load_contract()
+    renderers = contract["renderers"]
     require(set(document) == {
-        "schema", "board_id", "generator_sha256", "geometry", "rows_sha256",
+        "schema", "board_id", "contract_sha256", "generator_sha256",
+        "implementation_identity", "exposure_contract", "geometry", "rows_sha256",
         "rows", "adjacent_order_pairs", "renderer_groups",
     }, "board top-level fields mismatch")
     require(document["schema"] == BOARD_SCHEMA, "board schema mismatch")
     require(document["board_id"] == BOARD_ID, "board ID mismatch")
+    require(document["contract_sha256"] == CONTRACT_SHA256, "board contract hash mismatch")
     require(document["generator_sha256"] == file_sha256(GENERATOR), "generator hash mismatch")
+    require(document["exposure_contract"] == EXPECTED_EXPOSURE_CONTRACT,
+            "model exposure contract mismatch")
+    if verify_commit:
+        verify_implementation_identity(document["implementation_identity"])
+    else:
+        identity = document["implementation_identity"]
+        require(isinstance(identity, dict) and set(identity) == {"git_commit", "file_sha256"},
+                "implementation identity fields mismatch")
+        require(set(identity["file_sha256"]) == set(IMPLEMENTATION_PATHS),
+                "implementation file ledger mismatch")
     rows = document["rows"]
     require(isinstance(rows, list) and len(rows) == 600, "board must contain 600 rows")
     require(document["rows_sha256"] == sha256_bytes(canonical_json(rows)), "row hash mismatch")
@@ -237,6 +319,7 @@ def audit_document(document: dict[str, Any], board_file_sha256: str | None = Non
         "target_action", "target_index",
     }
     row_ids = set()
+    observed_row_order = []
     source_cursor_keys = set()
     source_texts: dict[str, set[str]] = defaultdict(set)
     recovered_sources: dict[str, tuple[int, tuple[str, ...]]] = {}
@@ -246,20 +329,31 @@ def audit_document(document: dict[str, Any], board_file_sha256: str | None = Non
     for row in rows:
         require(isinstance(row, dict) and set(row) == expected_row_fields, "row fields mismatch")
         require(row["schema"] == "counterfactual_cursor_action_cell_v1", "row schema mismatch")
+        require(isinstance(row["row_id"], str), "row ID is not a string")
+        require(isinstance(row["source_id"], str), "source ID is not a string")
+        require(isinstance(row["source"], str), "source is not a string")
         require(row["row_id"] not in row_ids, "duplicate row ID")
         row_ids.add(row["row_id"])
+        observed_row_order.append(row["row_id"])
         renderer_id = row["renderer_id"]
         cursor = row["cursor"]
         require(type(renderer_id) is int and 0 <= renderer_id < 5, "invalid renderer")
         require(type(cursor) is int and 0 <= cursor < 5, "invalid cursor")
-        permutation_id, order, spans = recover_order(renderer_id, row["source"])
+        require(type(row["permutation_id"]) is int, "permutation ID is not an integer")
+        require(type(row["start_value"]) is int, "start value is not an integer")
+        require(type(row["target_index"]) is int, "target index is not an integer")
+        permutation_id, order, spans = recover_order(renderers, renderer_id, row["source"])
         source_id = f"r{renderer_id:02d}-p{permutation_id:02d}"
         require(row["source_id"] == source_id, "source ID mismatch")
         require(row["row_id"] == f"{source_id}-c{cursor}", "row ID mismatch")
         require(row["permutation_id"] == permutation_id, "permutation ID mismatch")
         require(row["operation_order"] == list(order), "operation order mismatch")
         require(row["clause_spans"] == spans, "clause spans mismatch")
-        require(row["start_value"] == RENDERERS[renderer_id][0], "start value mismatch")
+        require(row["start_value"] == renderers[renderer_id]["start_value"], "start value mismatch")
+        for span in row["clause_spans"]:
+            require(type(span.get("operand")) is int, "span operand is not an integer")
+            require(type(span.get("start")) is int, "span start is not an integer")
+            require(type(span.get("end")) is int, "span end is not an integer")
         target = order[cursor] if cursor < 4 else "DONE"
         require(row["target_action"] == target, "target action mismatch")
         require(row["target_index"] == LABELS.index(target), "target index mismatch")
@@ -272,6 +366,11 @@ def audit_document(document: dict[str, Any], board_file_sha256: str | None = Non
         operation_by_renderer_cursor[(renderer_id, cursor)][target] += 1
 
     require(len(source_texts) == 120, "source count mismatch")
+    expected_row_order = [
+        f"r{renderer_id:02d}-p{permutation_id:02d}-c{cursor}"
+        for renderer_id in range(5) for permutation_id in range(24) for cursor in range(5)
+    ]
+    require(observed_row_order == expected_row_order, "canonical row ordering mismatch")
     require(all(len(values) == 1 for values in source_texts.values()), "cursor leaked into source text")
     require(all(sum(source_id == row["source_id"] for row in rows) == 5 for source_id in source_texts),
             "source cursor group is incomplete")
@@ -336,6 +435,8 @@ def audit_document(document: dict[str, Any], board_file_sha256: str | None = Non
         "board_canonical_sha256": sha256_bytes(canonical_json(document)),
         "board_file_sha256": board_file_sha256,
         "board_rows_sha256": document["rows_sha256"],
+        "contract_sha256": CONTRACT_SHA256,
+        "implementation_identity": document["implementation_identity"],
         "auditor_sha256": file_sha256(Path(__file__).resolve()),
         "counts": {
             "rows": len(rows), "sources": len(source_texts),
@@ -368,6 +469,11 @@ def write_exclusive_read_only(path: Path, document: dict[str, Any]) -> None:
         os.chmod(temporary, 0o444)
         os.link(temporary, path)
         os.unlink(temporary)
+        directory = os.open(path.parent, os.O_RDONLY)
+        try:
+            os.fsync(directory)
+        finally:
+            os.close(directory)
     except BaseException:
         temporary.unlink(missing_ok=True)
         raise
@@ -378,9 +484,15 @@ def main() -> None:
     parser.add_argument("--board", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     arguments = parser.parse_args()
-    with arguments.board.open("r", encoding="utf-8") as handle:
-        board = json.load(handle)
-    report = audit_document(board, board_file_sha256=file_sha256(arguments.board))
+    board_path = arguments.board.resolve()
+    original = arguments.board.lstat()
+    require(not stat.S_ISLNK(original.st_mode), "board must not be a symlink")
+    require(stat.S_ISREG(original.st_mode), "board must be a regular file")
+    require(original.st_mode & 0o222 == 0, "board must be read-only")
+    board = load_json_strict(board_path)
+    report = audit_document(
+        board, board_file_sha256=file_sha256(board_path), verify_commit=True,
+    )
     write_exclusive_read_only(arguments.out, report)
     print(
         f"[ccaa-audit] passed rows={report['counts']['rows']} "

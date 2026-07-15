@@ -8,6 +8,7 @@ import hashlib
 import itertools
 import json
 import os
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -17,69 +18,26 @@ BOARD_ID = "ccaa-mechanics-600-v1"
 OPERATIONS = ("add", "subtract", "multiply", "remainder")
 DONE = "DONE"
 ROOT = Path(__file__).resolve().parents[1]
-
-RENDERERS = (
-    {
-        "start": 17,
-        "prefix": "Start with 17. Execute these clauses in order: ",
-        "joiner": "; ",
-        "suffix": ".",
-        "clauses": {
-            "add": (7, "add 7"),
-            "subtract": (5, "subtract 5"),
-            "multiply": (3, "multiply by 3"),
-            "remainder": (11, "take the remainder modulo 11"),
-        },
-    },
-    {
-        "start": 23,
-        "prefix": "Initial value: 23. Ordered procedure: ",
-        "joiner": ", then ",
-        "suffix": ".",
-        "clauses": {
-            "add": (13, "increase the value by 13"),
-            "subtract": (4, "decrease the value by 4"),
-            "multiply": (3, "triple the value"),
-            "remainder": (17, "reduce the value modulo 17"),
-        },
-    },
-    {
-        "start": 31,
-        "prefix": "Let n = 31. Apply from left to right: ",
-        "joiner": " | ",
-        "suffix": ".",
-        "clauses": {
-            "add": (9, "n <- n + 9"),
-            "subtract": (6, "n <- n - 6"),
-            "multiply": (2, "n <- n * 2"),
-            "remainder": (13, "n <- n mod 13"),
-        },
-    },
-    {
-        "start": 29,
-        "prefix": "The register begins at 29. Its ordered program is: ",
-        "joiner": "; next, ",
-        "suffix": ".",
-        "clauses": {
-            "add": (8, "add 8 to the register"),
-            "subtract": (3, "subtract 3 from the register"),
-            "multiply": (5, "multiply the register by 5"),
-            "remainder": (17, "replace the register by its remainder modulo 17"),
-        },
-    },
-    {
-        "start": 37,
-        "prefix": "STATE(37) runs this sequence: ",
-        "joiner": " -> ",
-        "suffix": ".",
-        "clauses": {
-            "add": (12, "ADD(12)"),
-            "subtract": (7, "SUBTRACT(7)"),
-            "multiply": (4, "MULTIPLY(4)"),
-            "remainder": (19, "REMAINDER(19)"),
-        },
-    },
+CONTRACT_PATH = Path(__file__).resolve().with_name("counterfactual_cursor_action_contract_v1.json")
+CONTRACT_SHA256 = "a7061e553b13189e91d25a19f164ccdecfe49404591f1fe0ecfa83b72b690a3c"
+IMPLEMENTATION_PATHS = (
+    "R12_COUNTERFACTUAL_CURSOR_ACTION_THEORY.md",
+    "R12_COUNTERFACTUAL_CURSOR_ACTION_CPU_PREREG.md",
+    "pipeline/counterfactual_cursor_action_contract_v1.json",
+    "pipeline/generate_counterfactual_cursor_action_board.py",
+    "pipeline/audit_counterfactual_cursor_action_board.py",
+    "pipeline/test_counterfactual_cursor_action_board.py",
 )
+EXPOSURE_CONTRACT = {
+    "selector_model_visible_row_fields": ["source"],
+    "selector_model_visible_side_state": ["cursor"],
+    "one_call_model_visible_row_fields": ["source"],
+    "one_call_initial_side_state": {"cursor": 0, "phase": "SELECT"},
+    "forbidden_model_visible_fields": [
+        "row_id", "source_id", "renderer_id", "permutation_id", "start_value",
+        "operation_order", "clause_spans", "target_action", "target_index",
+    ],
+}
 
 
 def canonical_json(value: Any) -> bytes:
@@ -98,9 +56,59 @@ def file_sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def render_source(renderer_id: int, order: tuple[str, ...]) -> tuple[str, list[dict[str, Any]]]:
-    renderer = RENDERERS[renderer_id]
-    texts = [renderer["clauses"][operation][1] for operation in order]
+def reject_duplicate_keys(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate JSON key in contract: {key}")
+        result[key] = value
+    return result
+
+
+def load_contract() -> dict[str, Any]:
+    if file_sha256(CONTRACT_PATH) != CONTRACT_SHA256:
+        raise ValueError("cursor-action contract hash mismatch")
+    contract = json.loads(CONTRACT_PATH.read_text(), object_pairs_hook=reject_duplicate_keys)
+    if contract.get("schema") != "counterfactual_cursor_action_contract_v1":
+        raise ValueError("cursor-action contract schema mismatch")
+    if tuple(contract.get("operations", ())) != OPERATIONS:
+        raise ValueError("cursor-action operation alphabet mismatch")
+    if tuple(contract.get("labels", ())) != OPERATIONS + (DONE,):
+        raise ValueError("cursor-action label alphabet mismatch")
+    renderers = contract.get("renderers")
+    if not isinstance(renderers, list) or len(renderers) != 5:
+        raise ValueError("cursor-action renderer count mismatch")
+    return contract
+
+
+def implementation_identity() -> dict[str, Any]:
+    commit = subprocess.run(
+        ["git", "rev-parse", "HEAD"], cwd=ROOT, check=True,
+        capture_output=True, text=True,
+    ).stdout.strip()
+    return {
+        "git_commit": commit,
+        "file_sha256": {
+            relative: file_sha256(ROOT / relative) for relative in IMPLEMENTATION_PATHS
+        },
+    }
+
+
+def require_clean_implementation() -> None:
+    status = subprocess.run(
+        ["git", "status", "--porcelain", "--", *IMPLEMENTATION_PATHS],
+        cwd=ROOT, check=True, capture_output=True, text=True,
+    ).stdout.strip()
+    if status:
+        raise RuntimeError("refusing persistent board from a dirty implementation surface")
+
+
+def render_source(
+    renderers: list[dict[str, Any]], renderer_id: int, order: tuple[str, ...]
+) -> tuple[str, list[dict[str, Any]]]:
+    renderer = renderers[renderer_id]
+    clauses = {clause["operation"]: clause for clause in renderer["clauses"]}
+    texts = [clauses[operation]["text"] for operation in order]
     source = renderer["prefix"] + renderer["joiner"].join(texts) + renderer["suffix"]
     spans = []
     scan = len(renderer["prefix"])
@@ -109,7 +117,7 @@ def render_source(renderer_id: int, order: tuple[str, ...]) -> tuple[str, list[d
         if start < 0:
             raise AssertionError("rendered clause is absent")
         end = start + len(text)
-        operand = renderer["clauses"][operation][0]
+        operand = clauses[operation]["operand"]
         spans.append(
             {
                 "operation": operation,
@@ -124,15 +132,17 @@ def render_source(renderer_id: int, order: tuple[str, ...]) -> tuple[str, list[d
 
 
 def generate_document() -> dict[str, Any]:
+    contract = load_contract()
+    renderers = contract["renderers"]
     permutations = list(itertools.permutations(OPERATIONS))
     permutation_index = {value: index for index, value in enumerate(permutations)}
     rows = []
     source_rows: dict[str, dict[str, Any]] = {}
 
-    for renderer_id in range(len(RENDERERS)):
+    for renderer_id in range(len(renderers)):
         for permutation_id, order in enumerate(permutations):
             source_id = f"r{renderer_id:02d}-p{permutation_id:02d}"
-            source, spans = render_source(renderer_id, order)
+            source, spans = render_source(renderers, renderer_id, order)
             source_rows[source_id] = {
                 "source_id": source_id,
                 "renderer_id": renderer_id,
@@ -150,7 +160,7 @@ def generate_document() -> dict[str, Any]:
                         "renderer_id": renderer_id,
                         "permutation_id": permutation_id,
                         "source": source,
-                        "start_value": RENDERERS[renderer_id]["start"],
+                        "start_value": renderers[renderer_id]["start_value"],
                         "operation_order": list(order),
                         "clause_spans": spans,
                         "cursor": cursor,
@@ -160,7 +170,7 @@ def generate_document() -> dict[str, Any]:
                 )
 
     adjacent_order_pairs = []
-    for renderer_id in range(len(RENDERERS)):
+    for renderer_id in range(len(renderers)):
         for permutation_id, order in enumerate(permutations):
             for swap_index in range(3):
                 swapped = list(order)
@@ -184,7 +194,7 @@ def generate_document() -> dict[str, Any]:
             "permutation_id": permutation_id,
             "source_ids": [
                 f"r{renderer_id:02d}-p{permutation_id:02d}"
-                for renderer_id in range(len(RENDERERS))
+                for renderer_id in range(len(renderers))
             ],
         }
         for permutation_id in range(len(permutations))
@@ -193,10 +203,13 @@ def generate_document() -> dict[str, Any]:
     document = {
         "schema": SCHEMA,
         "board_id": BOARD_ID,
+        "contract_sha256": CONTRACT_SHA256,
         "generator_sha256": file_sha256(Path(__file__).resolve()),
+        "implementation_identity": implementation_identity(),
+        "exposure_contract": EXPOSURE_CONTRACT,
         "geometry": {
             "operations": list(OPERATIONS),
-            "renderers": len(RENDERERS),
+            "renderers": len(renderers),
             "permutations_per_renderer": len(permutations),
             "cursor_states": 5,
             "sources": len(source_rows),
@@ -240,6 +253,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, required=True)
     arguments = parser.parse_args()
+    require_clean_implementation()
     document = generate_document()
     write_exclusive_read_only(arguments.out, document)
     print(
