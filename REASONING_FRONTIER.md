@@ -2594,3 +2594,48 @@ of nine opcodes reaching 5/12. Failure closes curvature binding rather than
 authorizing a fitted rescue. Even a pass would establish only a read-only
 operator-semantic observable. It would not establish execution, multi-step
 reasoning, source deletion, or a trainable tiny-model reasoning mechanism.
+
+#### R8 Outcome: Hidden Curvature Is Real but Not Operator-Aligned
+
+Read-only H100 canary `689237` completed all 108 registered events with exit 0.
+Counterfactual curvature scores **26/108 = 24.07%**, random pairs 28/108,
+shuffled curvature 24/108, and the byte-identical direct-hidden baseline remains
+46/108. Numeric curvature is exactly chance at 12/72; structural curvature is
+14/36. Only two opcode families reach 5/12. Every frozen advancement condition
+fails, so no untouched confirmation board is generated.
+
+The mixed response is not numerically absent: the unknown-event curvature norm
+has median 87.15 across the registered layers. It is simply not aligned with
+operator identity. Curvature is uniquely correct in 15 cases but direct is
+uniquely correct in 35, with only 11 shared. Therefore neither first-order nor
+second-order local prompt derivatives provide the semantic execution interface
+we need. More layer searches, pair searches, normalizations, or classifiers on
+this same board would be post-score fitting and are not authorized.
+
+### Architectural Direction After R8: Orbit-Consistent Recurrent Microcode
+
+The next hypothesis must **create** a causal program substrate rather than mine
+one from a next-token-pretrained representation. The development direction is a
+small weight-tied recurrent microcode cell with three explicit latent objects:
+an operator hypothesis, a carried state, and an independently predicted error
+syndrome. Direct hidden states initialize the operator hypothesis because R7/R8
+show they contain the strongest available semantic signal. Training then
+enforces an orbit law: paraphrases must preserve the operator, role swaps must
+permute it, value perturbations must translate it, inverse compositions must
+cancel, and an unused counterfactual must predict the same committed update.
+
+At inference the same cell is replayed, without adding parameters, until the
+syndrome is below a frozen threshold or a step cap is reached. A state update is
+committed only when the independent counterfactual checksum agrees; otherwise
+the source remains available and the cell iterates. This gives additional test-
+time computation to a tiny model while tying every latent step to an executable
+causal invariant. It also supplies a future context rule: only syndrome-zero
+events may fold into the associative carried state.
+
+This is a research direction, not yet a preregistered R9 experiment. Its first
+requirement is an exact CPU mechanics contract and an equivalence audit against
+ordinary supervised operator classification. The experiment must include a
+same-parameter classifier without orbit losses, a shuffled-orbit control, a
+no-syndrome recurrent control, and fixed-step versus adaptive-step evaluation.
+It may reach an H100 only if the proposed orbit and syndrome constraints are not
+mathematically reducible to label augmentation or confidence thresholding.

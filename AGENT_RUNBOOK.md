@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 19:58 EDT (the protected two-H100 pretrain remains isolated. R7 read-only canary 689233 completed and is formally rejected: active first-order intervention signatures score 32/108, random 30/108, shuffled 24/108, and direct hidden similarity 46/108. First-order causal response retains structural-role signal but loses numeric operator semantics. R8 Counterfactual Curvature Binding is preregistered as a separate second-order mixed-response test; no R8 neural result or capability claim exists yet.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 20:07 EDT (the protected two-H100 pretrain remains isolated. R7 and R8 are formally closed: direct hidden similarity is 46/108, first-order intervention 32/108, and mixed second-order curvature 26/108 versus random-pair 28/108. The raw representation contains lexical operator information, but local prompt derivatives are not a semantic execution interface. The next direction is an exact-audited orbit-consistent recurrent microcode with a causal error syndrome; it is a documented hypothesis only, not yet an authorized neural experiment.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4329,3 +4329,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   value x each initial role for numeric events and event roles x each initial role for structural events;
   equal-count random-pair, shuffled-curvature, direct, R7-active, numeric/structural, and per-opcode gates
   are frozen in `REASONING_FRONTIER.md`. This is a used-board read-only mechanism test only.
+
+- **2026-07-14 19:59--20:07** — **R8 completes cleanly and rejects local hidden curvature as the
+  missing program interface.** The complete 108-case joint-intervention audit passed before scoring:
+  exact 12-per-opcode balance, all base/single/joint variants token-width matched, and maximum 216 tokens.
+  Code, controls, and gates were committed as `f7acc04` before H100 job `689237` ran on evc46. The job
+  completed all cases in 22 seconds with Slurm exit 0. Report SHA-256 is
+  **`c9abe1642bcdfd85544bf415a386450ae91cca0a5955fa6ee3e676e46a13d807`**; executable decision
+  SHA-256 is **`d10368d992a8fba6da3927ef4b28a2181d6a8c61d3f7d5ec65463676cfc32361`**. Curvature is
+  **26/108**, random-pair **28/108**, shuffled-curvature **24/108**, and direct remains **46/108**.
+  Numeric curvature is **12/72**, structural **14/36**, and only two opcode families reach 5/12. All
+  eight gates fail; decision is `reject_r8_curvature_canary`, and no confirmation board exists. Median
+  unknown-event curvature norm is 87.15, so the signal is present but semantically unaligned rather than
+  numerically zero. Do not search layers, pairs, or score normalizations post hoc. The documented next
+  direction is Orbit-Consistent Recurrent Microcode: direct semantics initialize a weight-tied latent
+  operator/state cell, causal orbit laws train its transitions, and an independent unused-counterfactual
+  syndrome gates commitment and adaptive replay. It must first pass a CPU equivalence audit proving it is
+  not ordinary label augmentation or confidence thresholding; no H100 R9 fit is authorized yet.
