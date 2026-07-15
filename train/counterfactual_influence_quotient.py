@@ -193,6 +193,52 @@ def operation_intervention_bundle(row, operation_index, candidate_opcode=None):
     }
 
 
+def operation_intervention_text(row, operation_index, candidate_opcode=None, channels=()):
+    """Apply multiple independent matched interventions to one event prompt."""
+    question = str(row["question"])
+    keys = tuple(map(str, row["keys"]))
+    initial = row["initial"]
+    lines = question.splitlines()
+    line_index = _event_line_indices(lines)[int(operation_index)]
+    value, candidates = event_candidates(lines[line_index], keys)
+    if candidate_opcode is not None:
+        question = _replace_line(question, line_index, candidates[str(candidate_opcode)])
+    requested = tuple(channels)
+    if len(requested) != len(set(requested)):
+        raise ValueError("intervention channels must be unique")
+    lawful = {"initial_0", "initial_1", "query_roles"}
+    lawful.add("event_value" if value else "event_roles")
+    if not set(requested).issubset(lawful):
+        raise ValueError("invalid intervention channel")
+
+    result = question
+    # Apply independent replacements in a fixed order so joint variants are reproducible.
+    for channel in ("initial_0", "initial_1", "event_value", "event_roles", "query_roles"):
+        if channel not in requested:
+            continue
+        if channel == "initial_0":
+            result = _perturb_initial(result, keys[0], initial[keys[0]])
+        elif channel == "initial_1":
+            result = _perturb_initial(result, keys[1], initial[keys[1]])
+        elif channel == "event_value":
+            current = result.splitlines()
+            body_start = current[line_index].index(":") + 1
+            current[line_index] = _replace_one_integer(
+                current[line_index], value, _same_width_perturbation(value), after=body_start,
+            )
+            result = "\n".join(current)
+        elif channel == "event_roles":
+            current = result.splitlines()
+            current[line_index] = _swap_literals(current[line_index], keys[0], keys[1])
+            result = "\n".join(current)
+        else:
+            current = result.splitlines()
+            query_index = _query_line_index(current)
+            current[query_index] = _swap_literals(current[query_index], keys[0], keys[1])
+            result = "\n".join(current)
+    return result
+
+
 def query_intervention_bundle(row, candidate_code=None):
     question = str(row["question"])
     keys = tuple(map(str, row["keys"]))
@@ -222,6 +268,24 @@ def normalized_signature(baseline_states, intervention_states, eps=1e-8):
         raise ValueError("baseline/intervention state shapes differ")
     delta = intervention_states.float() - baseline_states.float().unsqueeze(0)
     return F.normalize(delta, dim=-1, eps=float(eps))
+
+
+def normalized_curvature(baseline_states, first_states, second_states, joint_states, eps=1e-8):
+    """Return normalized mixed finite differences for intervention pairs."""
+    if baseline_states.ndim != 2:
+        raise ValueError("baseline states must be [layers,width]")
+    expected = (first_states, second_states, joint_states)
+    if any(states.ndim != 3 for states in expected):
+        raise ValueError("paired states must be [pairs,layers,width]")
+    if any(tuple(states.shape[1:]) != tuple(baseline_states.shape) for states in expected):
+        raise ValueError("curvature state shapes differ")
+    if not (first_states.shape == second_states.shape == joint_states.shape):
+        raise ValueError("curvature pair counts differ")
+    curvature = (
+        joint_states.float() - first_states.float() - second_states.float()
+        + baseline_states.float().unsqueeze(0)
+    )
+    return F.normalize(curvature, dim=-1, eps=float(eps)), curvature.norm(dim=-1)
 
 
 def informative_channel_order(candidate_signatures):

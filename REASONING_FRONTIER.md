@@ -2546,3 +2546,51 @@ opcodes reaching 4/12. A pass authorizes only a full evaluation on the already-
 used R5 board. It does not authorize training, fresh data, source deletion,
 reasoning, or context-scaling claims. A failure closes this R7 observable rather
 than triggering threshold tuning.
+
+#### R7 Outcome: First-Order Causal Signatures Are Not the Semantic Interface
+
+Read-only H100 canary `689233` completed all 108 events with exit 0. Active
+first-order signatures score **32/108 = 29.63%**, random channels 30/108,
+shuffled signatures 24/108, and unintervened direct hidden similarity 46/108.
+All five frozen advancement conjuncts fail: active is below 45%, leads random by
+only 1.85 points, trails direct by 12.96 points, leads shuffled by only 7.41
+points, and reaches 4/12 in only four of nine opcode families. R7 is therefore
+closed without a full old-board or fresh evaluation.
+
+The failure is informative. Direct hidden similarity identifies 24/72 numeric
+and 22/36 structural events. Active first-order intervention falls to 13/72
+numeric while retaining 19/36 structural. It has no correct `add_1` cases and
+only three correct subtraction cases across both roles. Thus the frozen model's
+ordinary state contains lexical/operator information, but the first derivative
+of that state under a one-token-width value or role perturbation is dominated by
+generic entity structure. A stronger classifier on the R7 signatures would be
+another fit, not a new mechanism.
+
+### R8 Hypothesis: Counterfactual Curvature Binding
+
+R8 tests whether operator semantics appears in a **mixed second-order causal
+response** rather than the failed first-order direction. For two matched
+interventions `i` and `j`, define a hidden-state curvature
+`K(i,j) = h(i,j) - h(i) - h(j) + h(0)`. The subtraction cancels each generic
+first-order replacement. What remains measures whether the model nonlinearly
+binds the event value or event roles to a particular initial-state role. The
+same curvature is computed for an unknown natural-language event and every
+lawful canonical operator hypothesis; nearest curvature identifies the
+operator without a trained classifier.
+
+Numeric events use the two pre-score binding pairs `(event_value, initial_0)`
+and `(event_value, initial_1)`. Structural events use `(event_roles, initial_0)`
+and `(event_roles, initial_1)`. Equal-count random-pair and shuffled-curvature
+controls, plus the already-measured direct-hidden baseline, remain mandatory.
+All four variants of a pair have matched token width. This is a used-board
+mechanism-development test; it cannot claim confirmation.
+
+Before R8 scoring, advancement to one untouched confirmatory board requires all
+of: curvature accuracy at least 50%; at least +7 points over the frozen R7
+direct baseline and +15 points over R7 active; at least +10 points over
+equal-count random pairs and +20 points over shuffled curvature; numeric
+accuracy at least 40% and structural accuracy at least 65%; and at least seven
+of nine opcodes reaching 5/12. Failure closes curvature binding rather than
+authorizing a fitted rescue. Even a pass would establish only a read-only
+operator-semantic observable. It would not establish execution, multi-step
+reasoning, source deletion, or a trainable tiny-model reasoning mechanism.

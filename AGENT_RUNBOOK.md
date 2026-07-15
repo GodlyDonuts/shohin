@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 19:53 EDT (the protected two-H100 pretrain remains isolated. R6a is formally rejected after causal use without semantic transport. R7 Interventional Semantic Quotient is preregistered and locally mechanics-tested: a frozen-model, no-training read-only canary identifies operators by nonlinear future-hidden response fields under matched textual interventions. Its exact 108-event balance, layers 5/11/17/23/29, two-channel budget, active/random/direct/shuffled controls, advancement floors, and claim limits are frozen before H100 scoring. No R7 neural result or capability claim exists yet.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 19:58 EDT (the protected two-H100 pretrain remains isolated. R7 read-only canary 689233 completed and is formally rejected: active first-order intervention signatures score 32/108, random 30/108, shuffled 24/108, and direct hidden similarity 46/108. First-order causal response retains structural-role signal but loses numeric operator semantics. R8 Counterfactual Curvature Binding is preregistered as a separate second-order mixed-response test; no R8 neural result or capability claim exists yet.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4313,3 +4313,19 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   source deletion, reasoning, or context-scaling claims. A failure closes the R7 observable. The
   evaluator uses visible identifier strings and numeric literals supplied by the board to construct
   lexical hypotheses, so even a pass is a semantic-identification canary, not a full text-only system.
+
+- **2026-07-14 19:54--19:58** — **R7 completes cleanly and is formally rejected; R8 is frozen from the
+  resulting diagnosis.** Read-only H100 job `689233` on evc46 passed CUDA preflight and scored all 108
+  events in 23 seconds, Slurm exit 0. Report SHA-256 is
+  **`2531c6f5b0166feab75a02ac4061fb96e1f773e072c4a690a72436d8a106cfbd`** and executable decision
+  SHA-256 is **`30825f9ced2d91051638ecabab29c543422c804ff54aeb6b08ff3c31e397457f`**. Active is **32/108**,
+  random **30/108**, direct **46/108**, and shuffled **24/108**; active reaches the opcode floor in only
+  four of nine families. All five frozen gates fail, so no full or fresh R7 board is authorized. Direct
+  hidden similarity is 24/72 numeric and 22/36 structural, whereas active first-order intervention is
+  13/72 numeric and 19/36 structural. R7 therefore finds that generic first-order perturbation directions
+  retain role structure but obscure arithmetic operator identity. R8 is preregistered before its code or
+  score as **Counterfactual Curvature Binding**: compare the mixed response
+  `h(i,j) - h(i) - h(j) + h(0)` for unknown text and canonical operators. The fixed pairs are event
+  value x each initial role for numeric events and event roles x each initial role for structural events;
+  equal-count random-pair, shuffled-curvature, direct, R7-active, numeric/structural, and per-opcode gates
+  are frozen in `REASONING_FRONTIER.md`. This is a used-board read-only mechanism test only.
