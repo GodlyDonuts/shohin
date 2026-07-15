@@ -363,6 +363,7 @@ class ScoringAndAccountingTests(FrozenFixture):
         self.assertEqual(ledger["preserved_result_copies"], 2)
         self.assertEqual(ledger["read_only_receipt_files"], 1)
         self.assertEqual(ledger["authenticated_git_fetches"], 1)
+        self.assertEqual(ledger["temporary_bare_git_repositories"], 1)
         for zero_field in (
             "generated_tokens",
             "sampled_tokens",
@@ -588,7 +589,9 @@ class WrapperContractTests(unittest.TestCase):
             "EXPECTED_SOURCE=19a84165f15b19911fc8ef229022e47753833d703d77d1e8cc25db9dfc993474",
             "raw260k_operation_selection_likelihood_*.json",
             "probe_operation_selection_likelihood.py",
-            'git -C "$BASE" fetch --quiet --force origin main:refs/remotes/origin/main',
+            'git init --bare --quiet "$EVIDENCE_GIT_DIR"',
+            'git --git-dir="$EVIDENCE_GIT_DIR" fetch --quiet --force origin main:refs/remotes/origin/main',
+            "https://github.com/GodlyDonuts/shohin.git",
             ".operation_selection_quarantine.",
             "full_preserved_result_audit",
             "score_printed_by_wrapper",

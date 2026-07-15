@@ -18,7 +18,7 @@ umask 077
 
 BASE=${BASE:-/lustre/fs1/home/sa305415/shohin}
 PY=${PY:-$BASE/miniforge3/bin/python}
-CKPT=${CKPT:-$BASE/best_step260000.pt}
+CKPT=${CKPT:-$BASE/train/flagship_out/best_step260000.pt}
 SOURCE=$BASE/artifacts/evals/source_scheduled_reasoning_confirmation_v1.json
 TOKENIZER=$BASE/artifacts/shohin-tok-32k.json
 PROBE=$BASE/train/probe_operation_selection_likelihood.py
@@ -95,9 +95,13 @@ if [[ ! "$FROZEN_COMMIT" =~ ^[0-9a-f]{40}$ ]]; then
   echo "[operation-selection] FROZEN_COMMIT must be a full lowercase SHA-1" >&2
   exit 5
 fi
-git -C "$BASE" fetch --quiet --force origin main:refs/remotes/origin/main
-git -C "$BASE" cat-file -e "${FROZEN_COMMIT}^{commit}"
-git -C "$BASE" merge-base --is-ancestor "$FROZEN_COMMIT" refs/remotes/origin/main || {
+EVIDENCE_GIT_DIR=${SLURM_TMPDIR:?SLURM_TMPDIR is required}/shohin_operation_likelihood_evidence.git
+[ ! -e "$EVIDENCE_GIT_DIR" ] || { echo "[operation-selection] evidence Git path already exists" >&2; exit 5; }
+git init --bare --quiet "$EVIDENCE_GIT_DIR"
+git --git-dir="$EVIDENCE_GIT_DIR" remote add origin https://github.com/GodlyDonuts/shohin.git
+git --git-dir="$EVIDENCE_GIT_DIR" fetch --quiet --force origin main:refs/remotes/origin/main
+git --git-dir="$EVIDENCE_GIT_DIR" cat-file -e "${FROZEN_COMMIT}^{commit}"
+git --git-dir="$EVIDENCE_GIT_DIR" merge-base --is-ancestor "$FROZEN_COMMIT" refs/remotes/origin/main || {
   echo "[operation-selection] frozen commit is not on the fetched public origin/main" >&2
   exit 5
 }
@@ -112,7 +116,7 @@ IMPLEMENTATION_FILES=(
 )
 for relative in "${IMPLEMENTATION_FILES[@]}"; do
   observed=$(sha256sum -- "$BASE/$relative" | awk '{print $1}')
-  committed=$(git -C "$BASE" show "$FROZEN_COMMIT:$relative" | sha256sum | awk '{print $1}')
+  committed=$(git --git-dir="$EVIDENCE_GIT_DIR" show "$FROZEN_COMMIT:$relative" | sha256sum | awk '{print $1}')
   if [ "$observed" != "$committed" ]; then
     echo "[operation-selection] working bytes differ from frozen commit: $relative" >&2
     exit 5

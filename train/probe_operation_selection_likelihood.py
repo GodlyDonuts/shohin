@@ -1069,6 +1069,7 @@ def resource_ledger(prepared: Sequence[PreparedTransition]) -> dict[str, Any]:
         "read_only_receipt_files": 1,
         "mutable_sidecars": 0,
         "authenticated_git_fetches": 1,
+        "temporary_bare_git_repositories": 1,
         "scheduler_log_files": 1,
         "mutable_scheduler_log_files": 1,
     }

@@ -236,6 +236,7 @@ confidence interval, pass threshold, inferred bottleneck, or promotion gate.
 | Preserved result copies / read-only receipts | 2 / 1 |
 | Mutable sidecars | 0 |
 | Authenticated Git fetches | 1 |
+| Temporary bare Git repositories | 1 |
 | Mutable scheduler log files | 1 |
 
 There is no batching, padding, KV reuse, candidate-specific forward, candidate
@@ -245,11 +246,13 @@ data write, retry loop, or downstream submission.
 ## 8. Pre-model freeze and post-model custody
 
 The canonical wrapper must first receive a full `FROZEN_COMMIT` that was pushed
-before execution. It performs a fresh TLS-protected fetch of GitHub
-`origin/main`, verifies that the commit is contained in that fetched ref, and
-requires every implementation file's working bytes to equal the corresponding
-Git object. A runtime hash without this commit binding is self-attestation and
-is inadmissible. The result itself binds `FROZEN_COMMIT`.
+before execution. It creates a fresh bare evidence repository under
+`SLURM_TMPDIR`, performs a TLS-protected fetch of GitHub `origin/main`, verifies
+that the commit is contained in that fetched ref, and requires every deployed
+implementation file's working bytes to equal the corresponding fetched Git
+object. This does not require or modify Git metadata in the deployed Newton
+tree. A runtime hash without this commit binding is self-attestation and is
+inadmissible. The result itself binds `FROZEN_COMMIT`.
 
 The executable must then complete this order before `torch.load`:
 
