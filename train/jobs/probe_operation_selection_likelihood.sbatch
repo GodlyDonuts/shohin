@@ -123,7 +123,14 @@ if [[ ! "$EVIDENCE_COMMIT" =~ ^[0-9a-f]{40}$ ]]; then
   echo "[operation-selection] EVIDENCE_COMMIT must be a full lowercase SHA-1" >&2
   exit 5
 fi
-EVIDENCE_GIT_DIR=${SLURM_TMPDIR:?SLURM_TMPDIR is required}/shohin_operation_likelihood_evidence.git
+RUNTIME_PARENT=${SLURM_TMPDIR:-${TMPDIR:-/tmp}}
+RUNTIME_DIR=$(mktemp -d "$RUNTIME_PARENT/shohin_operation_likelihood.${SLURM_JOB_ID:-manual}.XXXXXX")
+chmod 0700 "$RUNTIME_DIR"
+cleanup_runtime() {
+  rm -rf -- "${RUNTIME_DIR:-}"
+}
+trap cleanup_runtime EXIT
+EVIDENCE_GIT_DIR=$RUNTIME_DIR/evidence.git
 [ ! -e "$EVIDENCE_GIT_DIR" ] || { echo "[operation-selection] evidence Git path already exists" >&2; exit 5; }
 git init --bare --quiet "$EVIDENCE_GIT_DIR"
 git --no-replace-objects --git-dir="$EVIDENCE_GIT_DIR" bundle verify "$EVIDENCE_BUNDLE" >/dev/null
@@ -137,7 +144,7 @@ git --no-replace-objects --git-dir="$EVIDENCE_GIT_DIR" merge-base --is-ancestor 
   echo "[operation-selection] frozen commit is not an ancestor of evidence commit" >&2
   exit 5
 }
-PRESCORE_RECEIPT_TMP=$SLURM_TMPDIR/shohin_operation_likelihood_prescore_receipt.json
+PRESCORE_RECEIPT_TMP=$RUNTIME_DIR/prescore_receipt.json
 git --no-replace-objects --git-dir="$EVIDENCE_GIT_DIR" show "$EVIDENCE_COMMIT:$PRESCORE_RECEIPT_RELATIVE" > "$PRESCORE_RECEIPT_TMP"
 PRESCORE_RECEIPT_SHA256=$(sha256sum "$PRESCORE_RECEIPT_TMP" | awk '{print $1}')
 "$PY" - "$PRESCORE_RECEIPT_TMP" "$FROZEN_COMMIT" <<'PY'
@@ -292,6 +299,7 @@ cleanup_publication() {
   if [ "${PUBLISH_COMPLETE:-0}" != 1 ]; then
     rm -f -- "${OUT:-}" "${MIRROR:-}" "${RECEIPT:-}"
   fi
+  cleanup_runtime
 }
 trap cleanup_publication EXIT
 
@@ -412,5 +420,6 @@ PY
 rm -f -- "$QUARANTINE_OUT"
 rmdir -- "$QUARANTINE_DIR"
 PUBLISH_COMPLETE=1
+cleanup_runtime
 trap - EXIT
 sha256sum -- "$OUT" "$MIRROR" "$RECEIPT"

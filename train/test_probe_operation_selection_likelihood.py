@@ -370,6 +370,7 @@ class ScoringAndAccountingTests(FrozenFixture):
         self.assertEqual(ledger["authenticated_prescore_remote_verifications"], 1)
         self.assertEqual(ledger["read_only_git_bundles"], 1)
         self.assertEqual(ledger["temporary_bare_git_repositories"], 1)
+        self.assertEqual(ledger["private_runtime_directories"], 1)
         self.assertEqual(ledger["kernel_sealed_runtime_snapshots"], 2)
         self.assertEqual(ledger["kernel_sealed_implementation_memfds_created"], 14)
         self.assertEqual(ledger["h100_preflight_allocations"], 2)
@@ -635,6 +636,8 @@ class WrapperContractTests(unittest.TestCase):
             "AUDITED_RESULT_SHA256",
             "PUBLISH_COMPLETE=0",
             "cleanup_publication",
+            'RUNTIME_PARENT=${SLURM_TMPDIR:-${TMPDIR:-/tmp}}',
+            "cleanup_runtime",
             "fsync_parent(receipt_path)",
             '"audited_result_sha256": audited_sha256',
             '--frozen-commit "$FROZEN_COMMIT"',
@@ -655,6 +658,7 @@ class WrapperContractTests(unittest.TestCase):
         self.assertEqual(executable.count('--audit-result "$QUARANTINE_OUT"'), 1)
         self.assertNotIn('"summary": result["summary"]', executable)
         self.assertNotIn("assert value.get", executable)
+        self.assertNotIn("SLURM_TMPDIR is required", executable)
         self.assertLess(wrapper.index("receipt_fd ="), wrapper.index("mirror_sha256 ="))
         self.assertLess(wrapper.index("receipt_fd ="), wrapper.index("published_sha256 ="))
 

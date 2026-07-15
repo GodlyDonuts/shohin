@@ -244,6 +244,7 @@ confidence interval, pass threshold, inferred bottleneck, or promotion gate.
 | Authenticated pre-score remote verifications | 1 |
 | Read-only Git bundles | 1 |
 | Temporary bare Git repositories | 1 |
+| Private runtime directories | 1 |
 | Kernel-sealed runtime snapshots / implementation memfds | 2 / 14 |
 | Temporary pre-score receipt files | 1 |
 | Mutable scheduler log files | 1 |
@@ -344,7 +345,9 @@ kernel-sealed in-memory runtime directly from that commit, invokes only its
 frozen evaluator into a private quarantine, invokes the evaluator's no-model
 full preserved-result audit mode, binds publication to the audited SHA-256,
 writes the receipt first, and only then publishes the result and mirror. It
-contains no `sbatch`, training,
+creates one mode-`0700` private runtime under `SLURM_TMPDIR`, `TMPDIR`, or
+`/tmp` in that order and removes it on every normal exit. It contains no
+`sbatch`, training,
 retry, score-conditioned branch, or downstream command and is not submitted by
 this change.
 

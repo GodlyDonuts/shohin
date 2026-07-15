@@ -1107,6 +1107,7 @@ def resource_ledger(prepared: Sequence[PreparedTransition]) -> dict[str, Any]:
         "authenticated_prescore_remote_verifications": 1,
         "read_only_git_bundles": 1,
         "temporary_bare_git_repositories": 1,
+        "private_runtime_directories": 1,
         "kernel_sealed_runtime_snapshots": 2,
         "kernel_sealed_implementation_memfds_created": 14,
         "temporary_prescore_receipt_files": 1,
