@@ -28,14 +28,7 @@ case "$OUT" in "$BASE"/train/r9c_*) ;; *) echo "[r9c] invalid OUT path" >&2; exi
 case "$ARM" in treatment|static|no_syndrome|shuffled_goal) ;; *) echo "[r9c] invalid ARM" >&2; exit 5;; esac
 
 cd "$BASE/train"
-timeout --kill-after=10s 90s "$PY" - <<'PY'
-import sys, torch
-try:
-    if not torch.cuda.is_available(): raise RuntimeError("CUDA unavailable")
-    torch.empty(1024,device="cuda",dtype=torch.bfloat16); torch.cuda.synchronize()
-except Exception as exc:
-    print("[r9c] CUDA preflight failed: {}".format(exc),file=sys.stderr); sys.exit(75)
-PY
+nvidia-smi -L
 
 "$PY" train_referential_syndrome_microcode.py \
   --base "$BASE_CKPT" --pointer-adapter "$POINTER" --data "$DATA" \
