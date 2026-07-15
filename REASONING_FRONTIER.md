@@ -3338,3 +3338,35 @@ and value relabeling. But the interventions already encode the axes and the
 result collapses to interventional causal representation learning. The next
 candidate must name a task-native observable asymmetry that is weaker than a
 coordinate oracle yet quantitatively breaks the conjugacy.
+
+### R12 Passive Matroid-Learning Boundary
+
+The stronger audit in `R12_MATROID_CLOSURE_TARGET.md` closes passive matroid
+discovery as a general route. Fixed-field rank-`r` matroids have a polynomial
+description and information-theoretic sample bound, but recovering the matrix
+and updating its span is ordinary representation learning plus Gaussian
+elimination. A target-aware binary teacher can expose a basis and fundamental
+circuits, but that is the missing determining set supplied by hand.
+
+Sparse-paving matroids give the opposite theorem. Distinguishing the uniform
+rank-`r` matroid from alternatives with one hidden circuit-hyperplane requires
+`binomial(n,r)` passive witnesses in the worst case. Their closure class has VC
+dimension at least `binomial(n,r)/(r(n-r)+1)`, exponential at middle rank.
+Matroid exchange therefore does not make nonlinear deduction passively
+learnable. Binary/projective closure remains a favorable linear control only.
+
+### R12 Noise-Stable Action No-Go
+
+`R12_NOISE_STABLE_ACTION_NO_GO.md` proves that every exact `t`-error-tolerant
+binary residual representation has code distance at least `2t+1` and obeys the
+Hamming sphere-packing bound. Conversely, decode-compute-reencode makes any
+logical action robust under noiseless repair. Exact boundary-state robustness
+is therefore coded computation; noisy repair moves the problem to classical
+fault-tolerant circuits or cellular automata.
+
+Nonlinear updates do not add correction and can amplify errors: a Toffoli
+action maps one pair of distance-one states to distance two. The valid positive
+control combines nonlinear local rules with an asymptotically good code, but
+it assumes coordinates, code geometry, wiring, independent faults, and
+noiseless repair. No CPU experiment is authorized without a resource
+separation against structure-aware ECC and fault-tolerant recurrent controls.
