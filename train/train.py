@@ -10,6 +10,9 @@ import argparse
 import json
 import os
 import time
+from collections.abc import Mapping
+from dataclasses import fields
+
 import torch
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
@@ -26,6 +29,40 @@ CONFIGS = {
     # flagship (~125-135M)
     "shohin": dict(n_layer=30, n_head=9, n_kv_head=3, d_model=576, d_ff=1536, seq_len=2048),
 }
+
+
+def validate_resume_config(requested_cfg, checkpoint_cfg):
+    """Reject resumes whose checkpoint cannot prove the exact model behavior."""
+    field_names = tuple(field.name for field in fields(GPTConfig))
+    expected_fields = set(field_names)
+    if not isinstance(checkpoint_cfg, Mapping):
+        raise ValueError(
+            "resume checkpoint has no exact cfg mapping; legacy checkpoints "
+            "cannot be resumed safely"
+        )
+
+    actual_fields = set(checkpoint_cfg)
+    missing = sorted(expected_fields - actual_fields)
+    unknown = sorted(actual_fields - expected_fields)
+    if missing or unknown:
+        details = []
+        if missing:
+            details.append(f"missing fields: {', '.join(missing)}")
+        if unknown:
+            details.append(f"unknown fields: {', '.join(unknown)}")
+        raise ValueError("resume checkpoint cfg schema mismatch (" + "; ".join(details) + ")")
+
+    mismatches = [
+        (name, checkpoint_cfg[name], getattr(requested_cfg, name))
+        for name in field_names
+        if checkpoint_cfg[name] != getattr(requested_cfg, name)
+    ]
+    if mismatches:
+        rendered = ", ".join(
+            f"{name}: checkpoint={checkpoint_value!r}, requested={requested_value!r}"
+            for name, checkpoint_value, requested_value in mismatches
+        )
+        raise ValueError(f"resume checkpoint cfg does not match requested model ({rendered})")
 
 
 def wsd_lr(step, total, warmup, decay_frac=0.2, final=0.1):
@@ -117,6 +154,7 @@ def main():
     _cks = sorted(_glob.glob(os.path.join(a.out, "ckpt_[0-9]*.pt")))
     if a.resume and _cks:
         ck = torch.load(_cks[-1], map_location=device)
+        validate_resume_config(cfg, ck.get("cfg"))
         raw.load_state_dict(ck["model"])
         if not a.fresh_opt:
             if "opt_muon" in ck and opt_muon is not None:

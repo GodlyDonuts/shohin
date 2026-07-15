@@ -4,8 +4,8 @@ Clean, correct baseline (modded-nanoGPT-class). Speedrun extras (sliding-window 
 squared-ReLU, value embeddings, weight-shared/looped depth) are ablation-gated add-ons layered
 on this later — see MASTER_PLAN.md §3.
 """
-import math
 from dataclasses import dataclass
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -27,6 +27,32 @@ class GPTConfig:
     n_loop: int = 1            # latent recursion: re-run the block stack N times (weight-shared
                                # extra depth). 1 = off (default, byte-identical). >1 = "think longer"
                                # per token without adding params — an ablation-gated reasoning bet.
+
+
+def _supervised_lm_loss(logits, targets, zloss_weight):
+    """Cross-entropy plus z-loss over exactly the supervised target positions."""
+    if logits.shape[:-1] != targets.shape:
+        raise ValueError("targets must match the batch and token dimensions of logits")
+
+    lf = logits.float()
+    flat_targets = targets.reshape(-1)
+    supervised = targets.ne(-1)
+    has_supervision = supervised.any()
+    if torch.compiler.is_compiling():
+        torch._assert_async(has_supervision, "targets contain no supervised positions")
+    elif not bool(has_supervision):
+        raise ValueError("targets contain no supervised positions")
+
+    loss = F.cross_entropy(
+        lf.reshape(-1, lf.size(-1)),
+        flat_targets,
+        ignore_index=-1,
+    )
+    if zloss_weight > 0:
+        zsq = torch.logsumexp(lf, dim=-1).pow(2)
+        supervised_zsq = torch.where(supervised, zsq, torch.zeros_like(zsq))
+        loss = loss + zloss_weight * supervised_zsq.sum() / supervised.sum()
+    return loss
 
 
 class RMSNorm(nn.Module):
@@ -158,13 +184,7 @@ class GPT(nn.Module):
             return logits, new_cache
         loss = None
         if targets is not None:
-            lf = logits.float()
-            # Callers may pass a valid non-contiguous target slice during
-            # diagnostics or future auxiliary objectives; reshape preserves the
-            # established contiguous fast path and avoids a view-only crash.
-            loss = F.cross_entropy(lf.reshape(-1, lf.size(-1)), targets.reshape(-1), ignore_index=-1)
-            if self.cfg.zloss > 0:
-                loss = loss + self.cfg.zloss * torch.logsumexp(lf, dim=-1).pow(2).mean()
+            loss = _supervised_lm_loss(logits, targets, self.cfg.zloss)
         return logits, loss
 
     def forward_embeds(self, embeds, targets=None, pos=0, return_hidden=False):
@@ -190,10 +210,7 @@ class GPT(nn.Module):
         logits = self.head(hidden)
         loss = None
         if targets is not None:
-            lf = logits.float()
-            loss = F.cross_entropy(lf.reshape(-1, lf.size(-1)), targets.reshape(-1), ignore_index=-1)
-            if self.cfg.zloss > 0:
-                loss = loss + self.cfg.zloss * torch.logsumexp(lf, dim=-1).pow(2).mean()
+            loss = _supervised_lm_loss(logits, targets, self.cfg.zloss)
         if return_hidden:
             return logits, loss, hidden
         return logits, loss
