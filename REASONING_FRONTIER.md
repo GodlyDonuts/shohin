@@ -2733,3 +2733,61 @@ noncommutative product tree, and syndrome-localized reopening of only failed
 source leaves. This supports a project-novel combination hypothesis only. A
 broader systematic review and positive matched neural evidence would be needed
 before any publication-level novelty statement.
+
+#### R9c Preregistration: Dynamic Directional Evidence
+
+R9c is the first trainable formulation that clears the R9a equivalence failure.
+Its forward compiler consumes an event feature, its incoming affine state, its
+private recurrent memory, and the prior signed syndrome. Its backward compiler
+has independent parameters and replaces incoming state with the future query
+covector propagated backward through later candidate operators. Replaying the
+cell changes private memory and therefore later prefix and suffix evidence.
+Static conditioning, removal of syndrome, goal shuffling, fixed replay, and
+adaptive replay are runtime switches over the same parameter tensors.
+
+The untrained causal audit establishes the intended graph. The last forward
+decision has nonzero gradient `5.291302579726353e-05` with respect to the first
+event; the identical static mode is exactly zero. The first backward decision
+has nonzero gradient `0.0003757792082463462` with respect to the last event;
+static is exactly zero. Perturbing the backward compiler changes second-round
+forward logits by `0.07678362727165222` when syndrome is enabled and exactly
+zero when it is removed. Adaptive replay can update 15 events in round one and
+zero thereafter under a certifying threshold, while fixed replay updates all 15
+in every round. This proves dynamic causal paths, not useful semantics.
+
+The language bridge reuses the admitted R4 pointer adapter because prior work
+already solved dynamic entity binding. It discards R4's static opcode decision
+and constructs a 521-coordinate event feature from text-derived kind/target
+contexts, old kind evidence, pointer-role evidence, and slot-presence evidence.
+The frozen text query head supplies a soft query covector. The production
+96-coordinate private memories add 328,502 trainable parameters; every arm has
+the same initialization and parameter count.
+
+Supervision is intentionally split by causal direction. The forward arm is
+trained only on each candidate operator's effect on the actual oracle prefix
+state. The backward arm is trained only on the candidate's pullback of the
+actual future goal. Agreement, endpoint consistency, and a small categorical
+entropy term join them, but neither channel receives opcode cross-entropy. The
+structured program therefore supplies training effects, never an inference
+input.
+
+Before any score is observed, the used-board canary is frozen at 4,096 semantic
+groups per arm, three recurrent rounds, one H100 per isolated arm, and four
+arms: treatment, static conditioning, directional conditioning without
+syndrome, and treatment with shuffled goals. Advancement requires all of:
+
+1. OOD operation accuracy at least 3 points over static, 2 over no-syndrome,
+   and 5 over shuffled goals.
+2. OOD answer accuracy at least 3 points over static, with language/full answer
+   floors of 60% and 35%.
+3. At least 95% operation accuracy on fit/depth preservation regimes and 98%
+   query accuracy.
+4. Agreed-wrong operations no more than 50% of all wrong operations.
+5. Syndrome-adaptive replay within one point of fixed-replay OOD operation
+   accuracy while using at most 80% as many event updates.
+
+Failure rejects this R9c formulation without threshold tuning. Passing
+authorizes only a full matched-arm fit followed by one untouched confirmation
+board. It cannot establish broad reasoning, internal decoder thinking, or
+context scaling until learned certificates correctly govern source folding and
+reopening on lengths beyond the native context.

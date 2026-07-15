@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 20:18 EDT (the protected two-H100 pretrain remains isolated. R9a is formally rejected: static orbit recurrence has an exact feed-forward closed form, identical gradients, and orbit CE is transformed-label augmentation. R9b's CPU-only bidirectional noncommutative operator tree passes its mechanics gates: all 896 programs execute exactly, 4,096 clean events fold to one nine-scalar operator, and one directional error is localized exactly. This is an execution-contract result only; no neural compiler, reasoning, or novelty claim is authorized until independent directional evidence and same-parameter controls are frozen.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-14 20:36 EDT (the protected two-H100 pretrain remains isolated. R9a is rejected as reducible; R9b exact tree mechanics pass; and R9c now passes its untrained causal-path audit. Forward decisions depend on earlier events through carried state, backward decisions depend on later events through propagated goals, and perturbing the backward compiler changes forward replay only when the executable syndrome path is enabled. The real raw-200k/R4-pointer text bridge passes locally. Four parameter-identical used-board arms and hard common-mode/adaptive-replay gates are frozen in code; no H100 result or reasoning claim exists yet.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -4387,3 +4387,35 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   reopening of only failed source leaves. `REASONING_FRONTIER.md` records the closest primary sources
   and the claim boundary. Positive matched neural evidence and a broader systematic review are required
   before any publication-level novelty statement.
+
+- **2026-07-14 20:23--20:36** — **R9c turns the oracle contract into a dynamic trainable tensor
+  mechanism and clears the pre-language causal audit.** `train/bidirectional_syndrome_microcode.py`
+  implements independent recurrent compilers. Forward event evidence is conditioned only on the
+  incoming carried state; backward event evidence is conditioned only on the future query covector
+  pulled through the suffix. Their only recurrent cross-channel message is the signed difference of
+  the complete 3x3 affine effects. In the deterministic CPU audit, the gradient of the last forward
+  decision with respect to the first event is **5.2913e-05** while its parameter-identical static
+  control is exactly **0.0**; the reverse-direction gradient is **3.7578e-04** versus static **0.0**.
+  Perturbing the backward compiler changes second-round forward logits by **0.0767836** with syndrome
+  and exactly **0.0** without syndrome. An adaptive high-threshold run spends **15/0/0** event updates
+  over three rounds versus fixed **15/15/15**. All nine mechanics gates pass. Report SHA-256 is
+  **`aa61b2ca539c7aaf7d4dd23bdce3c65ab63d3b270e3dae9b4cea45ed43c52536`** and explicitly keeps
+  `authorize_language_fit=false` until the bridge and controls are frozen.
+
+- **2026-07-14 20:23--20:36** — **The text bridge, disjoint supervision, four matched arms, and
+  used-board decision are now frozen before any H100 score.** The immutable raw-200k checkpoint and
+  admitted R4 pointer adapter produce a **521-dimensional** per-event feature from text-derived kind
+  context, target context, old kind evidence, pointer-role evidence, and slot-presence evidence. The
+  old static opcode decision is not reused. The frozen text query head produces a soft query covector;
+  structured keys/opcodes remain absent at inference. Forward training observes only next-state effects
+  on actual prefixes, backward training only future-goal pullbacks, plus agreement and endpoint losses;
+  there is **no opcode cross-entropy**. The production memory width 96 adds **328,502** trainable
+  parameters to the frozen base/pointer substrate. `treatment`, `static`, `no_syndrome`, and
+  `shuffled_goal` arms have identical initialization, data, updates, and parameter count. A full local
+  integration through the actual checkpoint/tokenizer/pointer/held-out row passes. The used-board gate
+  requires treatment operation margins of +3pp over static, +2pp over no-syndrome, and +5pp over
+  shuffled goals; +3pp answer margin over static; language/full answer floors 60%/35%; 95% fit/depth
+  operation preservation; <=50% common-mode share of wrong operations; adaptive replay within -1pp
+  operation accuracy while spending <=80% of fixed updates; and >=98% query accuracy. Passing can
+  authorize only a full matched fit and one untouched confirmation board, never a reasoning claim by
+  itself.
