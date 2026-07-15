@@ -65,6 +65,11 @@ EXPECTED_EXPOSURE = {
     ],
 }
 WORD = re.compile(r"\w+")
+PRETRAINING_OVERLAP_STATUS = {
+    "status": "not_audited_packed_shards_lack_raw_row_boundaries",
+    "claim_authorized": False,
+    "consequence": "no_pretraining_novelty_or_memorization_exclusion_claim",
+}
 
 
 def require(condition: bool, message: str) -> None:
@@ -560,6 +565,7 @@ def audit_document(
         "implementation_identity": document["implementation_identity"],
         "split_summary": summary,
         "cross_split_13gram_counts": cross_split_13gram_counts,
+        "pretraining_corpus_overlap": PRETRAINING_OVERLAP_STATUS,
         "all_checks_pass": True,
     }
 

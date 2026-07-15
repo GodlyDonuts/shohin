@@ -25,6 +25,65 @@ LABELS = ["add", "subtract", "multiply", "remainder", "DONE"]
 TOKEN_IDS = [10, 11, 12, 13, 14]
 
 
+def valid_training_ledger(arm, initial_hash, final_hash):
+    return {
+        "seed": evaluator.EXPECTED_SEED,
+        "epochs": evaluator.EXPECTED_EPOCHS,
+        "updates": evaluator.FROZEN_UPDATES,
+        "units_per_epoch": 288,
+        "examples_per_update": evaluator.EXPECTED_EXAMPLES_PER_UPDATE,
+        "optimizer": "AdamW",
+        "learning_rate": 0.01,
+        "minimum_lr_ratio": 0.1,
+        "warmup_updates": 50,
+        "betas": [0.9, 0.95],
+        "epsilon": 1e-8,
+        "weight_decay": 0.0,
+        "gradient_clip": 1.0,
+        "cursor_margin": 1.0,
+        "action_ce_weight": 1.0,
+        "relation_coefficient": evaluator.EXPECTED_RELATION_COEFFICIENTS[arm],
+        "relation_mapping": "deranged" if arm == "relation_sham" else "true",
+        "relation_pairs_per_update": {
+            "cursor_interchange": 1, "adjacent_equivariance": 1,
+            "renderer_invariance": 1,
+        },
+        "epoch_history": [
+            {"epoch": epoch, "updates": 288} for epoch in range(1, 5)
+        ],
+        "elapsed_seconds": 1.0,
+        "initial_adapter_sha256": initial_hash,
+        "final_adapter_sha256": final_hash,
+        "created_at_utc": "2026-07-15T00:00:00+00:00",
+    }
+
+
+def valid_resource_ledger(arm, compute_proxy):
+    return {
+        "trainable_scalars": evaluator.EXPECTED_PARAMETERS[arm],
+        "active_trainable_scalars": evaluator.EXPECTED_PARAMETERS[arm],
+        "inactive_trainable_scalars": 0,
+        "base_trainable_scalars": 0,
+        "retained_cursor_bits_selector": 3,
+        "retained_phase_bits_selector": 0,
+        "retained_bits_future_one_call": 4,
+        "adapter_dtype": "float32",
+        "base_autocast_dtype": "bfloat16",
+        "source_token_count": 1_152,
+        "source_token_storage_bytes_int64": 1,
+        "padded_cache_token_positions": 1,
+        "pre_final_hidden_cache_bytes": 1,
+        "unique_training_cells": 5_760,
+        "training_examples_with_repetition": evaluator.EXPECTED_TRAINING_EXAMPLES,
+        "oracle_calls": 0,
+        "fixed_training_compute_proxy": compute_proxy,
+        "inference_compute_proxy_per_cell": {},
+        "sequential_token_depth": 1,
+        "external_memory": "ordinary prompt/KV plus declared cursor bits only",
+        "external_execution": 0,
+    }
+
+
 class FakeRuntime:
     arm_name = "orbit_interchange"
     adapter_contract = {
@@ -171,6 +230,26 @@ def synthetic_artifact(gold, *, perfect=True, tie_cell=None, arm="orbit_intercha
 
 
 class CounterfactualCursorEvaluatorTest(unittest.TestCase):
+    def test_frozen_code_identity_rejects_substitution(self):
+        observed = evaluator.code_hashes()
+        bound = evaluator.BoundCanary(
+            document={
+                "implementation_identity": {
+                    "git_commit": "1" * 40,
+                    "file_sha256": {
+                        relative: observed[name]
+                        for name, relative in evaluator.CODE_IMPLEMENTATION_PATHS.items()
+                    },
+                },
+            },
+            audit={}, canary_sha256="2" * 64, audit_sha256="3" * 64,
+        )
+        evaluator.verify_code_identity(bound, observed)
+        altered = dict(observed)
+        altered["evaluator"] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "frozen implementation"):
+            evaluator.verify_code_identity(bound, altered)
+
     def test_prediction_ties_have_no_prediction(self):
         logits = torch.zeros(20)
         record = evaluator.prediction_record(logits, TOKEN_IDS)
@@ -275,9 +354,35 @@ class CounterfactualCursorEvaluatorTest(unittest.TestCase):
                 canary_sha256="f" * 64,
                 audit_sha256="1" * 64,
             )
-            seed = 19
+            seed = evaluator.EXPECTED_SEED
             adapter, spec = build_adapter("ordinary_loss", cfg, seed)
+            initial_hash = evaluator.hash_adapter_state(adapter.state_dict())
+            with torch.no_grad():
+                next(adapter.parameters()).add_(0.01)
             state_payload = adapter_state_payload(adapter, spec)
+            final_hash = evaluator.hash_adapter_state(state_payload["adapter_state"])
+            compute_proxy = {"positions": 1}
+            manifest_entry = {
+                "initial_adapter_sha256": initial_hash,
+                "final_adapter_sha256": final_hash,
+                "fixed_training_compute_proxy": compute_proxy,
+            }
+            initialized_adapter, _ = build_adapter("ordinary_loss", cfg, seed)
+            bad_training = valid_training_ledger(
+                "ordinary_loss", initial_hash, "0" * 64,
+            )
+            with self.assertRaisesRegex(ValueError, "final-state provenance"):
+                evaluator.validate_adapter_provenance(
+                    arm="ordinary_loss",
+                    adapter_spec=state_payload["adapter_spec"],
+                    state_dict=state_payload["adapter_state"],
+                    training=bad_training,
+                    resource_ledger=valid_resource_ledger(
+                        "ordinary_loss", compute_proxy,
+                    ),
+                    initialized_adapter=initialized_adapter,
+                    manifest_entry=manifest_entry,
+                )
             commit = "2" * 40
             payload = {
                 "schema": "counterfactual_cursor_action_adapter_v1",
@@ -292,8 +397,12 @@ class CounterfactualCursorEvaluatorTest(unittest.TestCase):
                     "tokenizer_sha256": bound.document["tokenizer_sha256"],
                     "implementation_commit": commit,
                 },
-                "training": {"seed": seed},
-                "resource_ledger": {"trainable_parameters": 192},
+                "training": valid_training_ledger(
+                    "ordinary_loss", initial_hash, final_hash,
+                ),
+                "resource_ledger": valid_resource_ledger(
+                    "ordinary_loss", compute_proxy,
+                ),
             }
             adapter_path = root / "adapter.pt"
             torch.save(payload, adapter_path)
@@ -303,7 +412,10 @@ class CounterfactualCursorEvaluatorTest(unittest.TestCase):
                 document={},
                 sha256="7" * 64,
                 path=root / "training_manifest.json",
-                entries={"ordinary_loss": {"artifact_sha256": adapter_sha}},
+                entries={"ordinary_loss": {
+                    "artifact_sha256": adapter_sha,
+                    **manifest_entry,
+                }},
                 artifact_paths={"ordinary_loss": evaluator._absolute(adapter_path)},
             )
             runtime = evaluator.load_model_and_adapter(
@@ -416,6 +528,22 @@ class CounterfactualCursorScorerTest(unittest.TestCase):
             "payload_sha256": "1" * 64,
             "contract_sha256": "2" * 64,
             "tokenizer_sha256": "3" * 64,
+            "implementation_identity": {
+                "git_commit": "6" * 40,
+                "file_sha256": {
+                    **{
+                        relative: scorer.hash_regular_file(
+                            scorer.LIVE_CODE_PATHS[name], require_read_only=False,
+                        )
+                        for name, relative in (
+                            scorer.LIVE_CODE_IMPLEMENTATION_PATHS.items()
+                        )
+                    },
+                    scorer.SCORER_IMPLEMENTATION_PATH: scorer.hash_regular_file(
+                        scorer.SCORER_PATH, require_read_only=False,
+                    ),
+                },
+            },
             "splits": {"confirmation": {
                 "sources_sha256": "4" * 64,
                 "cells_sha256": "5" * 64,
@@ -610,8 +738,12 @@ class CounterfactualCursorScorerTest(unittest.TestCase):
             }
         }
         decision = scorer.selector_gate_decision(treatment_score, comparison)
-        self.assertTrue(decision["selector_checks_passed"])
-        self.assertEqual(decision["decision"], "selector_go_executor_pending")
+        self.assertTrue(decision["neural_selector_checks_passed"])
+        self.assertFalse(decision["overall_selector_go"])
+        self.assertEqual(
+            decision["decision"], "neural_selector_pass_executor_gate_pending",
+        )
+        self.assertIn("cursor_ablations", decision["diagnostics"])
         self.assertTrue(decision["atomic_executor_gate_pending"])
         self.assertTrue(decision["one_call_done_eos_gate_pending"])
         self.assertFalse(decision["reasoning_claim_authorized"])

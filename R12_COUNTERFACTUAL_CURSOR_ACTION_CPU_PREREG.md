@@ -136,8 +136,17 @@ domains before model initialization:
 - shared-prefix variable-length schedules of two, three, and four operations
   for the separate DONE/EOS gate;
 - exact token audits for operation labels and the future COMMIT marker;
-- zero overlap with public eval prompts and existing Shohin training rows under
-  normalized exact and preregistered n-gram checks.
+- zero 13-gram overlap with the frozen public-evaluation index, plus exact
+  source and numeric-domain separation across train, development, and
+  confirmation.
+
+The already-packed Shohin pretraining shards no longer preserve raw document
+row boundaries, and this version has no independently frozen index over those
+raw rows. The audit must therefore record pretraining-corpus overlap as **not
+audited** and must set `claim_authorized=false`. This canary may test transfer
+across its own disjoint synthetic domains, but it may not support a claim that
+its language scaffold was absent from pretraining, that memorization has been
+excluded, or that the result generalizes to arbitrary new operands/renderers.
 
 The frozen first location is head 0 of the final block, Q-only, with a centered
 three-bit code and 192-scalar bias-free sidecar. It is not selected by a score
@@ -233,11 +242,15 @@ groups. A treatment GO requires all of:
   cluster-bootstrap replicates with seed `2026071504`, resampling the 192
   content-matched pack/permutation groups and carrying all five renderers in a
   sampled cluster together; the simultaneous one-sided 95% lower bound for
-  both differences must be strictly above zero;
-- constant and deranged cursor ablations within two points of their symbolic
-  20% and 0% predictions after conditioning on treatment-correct groups;
+  both differences must be strictly above zero. This is finite-board cluster
+  stability only, not uncertainty over unseen operand packs or renderers;
 - at least `520/704` on the immutable raw atomic executor gate, and no family
   may regress by more than five percentage points from its raw baseline.
+
+Constant and deranged cursor ablations are still reported against their
+symbolic 20% and 0% predictions, but after conditioning on exact five-action
+groups they are algebraically determined. They are a serialization/condition
+consistency diagnostic, not an independent selector gate or causal claim.
 
 A near miss is a NO-GO. It cannot trigger a threshold, seed, renderer, loss
 weight, or adapter-location change under this version.
@@ -250,7 +263,9 @@ equivariance or invariance.
 
 ## 8. Separate one-call and halt gate
 
-Even a selector GO does not authorize a reasoning claim. One additional frozen
+Passing the neural selector checks is not a selector GO while the immutable raw
+atomic executor gate is pending. Even a complete selector GO does not authorize
+a reasoning claim. One additional frozen
 experiment must start from one source prompt and use one uninterrupted model
 call. The model must emit the four correct operation labels in order, produce a
 COMMIT event after each completed step, emit DONE at the source-dependent end,
@@ -290,9 +305,11 @@ receipt. All six receipts and their exact SHA-256 values must be mirrored and
 committed before the independent scorer is invoked. The scorer imports no
 evaluator code, re-hashes the base, manifest, adapters, canary, audit, live
 inference code, raw artifacts, and receipts, then applies the frozen full-vocab
-decision and 20,000 paired bootstrap replicates. A selector pass still records
-the atomic executor and one-call DONE/EOS gates as pending and never authorizes
-a reasoning claim.
+decision and 20,000 paired bootstrap replicates. A neural-selector pass is
+reported only as `neural_selector_pass_executor_gate_pending`; overall selector
+GO remains false until the raw atomic executor result is supplied. The one-call
+DONE/EOS gate remains separate, and no selector result authorizes a reasoning
+claim.
 
 Persistent canary generation additionally refuses a dirty implementation
 surface. The canary records the pre-generation Git commit and SHA-256 of the

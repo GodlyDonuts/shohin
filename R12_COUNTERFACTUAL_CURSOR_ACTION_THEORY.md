@@ -284,6 +284,7 @@ must prefix-scan the same event table and match cached logits exactly. No mutabl
 The next artifact is the CPU preregistration. A symbolic board pass can only
 establish that the test has the claimed geometry and exact collapse scores. It
 cannot authorize a Shohin fit until the prior-art boundary and all matched
-controls are frozen. A neural selector pass would still authorize only the
+controls are frozen. Passing the neural selector checks would still leave the
+raw atomic executor gate pending and authorize only the
 separate one-call action-sequence/DONE test; it would not establish autonomous
 reasoning.

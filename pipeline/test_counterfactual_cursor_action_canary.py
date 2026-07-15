@@ -63,6 +63,11 @@ class CounterfactualCursorActionCanaryTest(unittest.TestCase):
         self.assertEqual(report["split_summary"]["train"]["training_units"], 288)
         self.assertEqual(report["split_summary"]["confirmation"]["cursor_only_ceiling"], 1920)
         self.assertEqual(report["split_summary"]["confirmation"]["public_evalgram_hits"], 0)
+        self.assertEqual(
+            report["pretraining_corpus_overlap"],
+            audit.PRETRAINING_OVERLAP_STATUS,
+        )
+        self.assertFalse(report["pretraining_corpus_overlap"]["claim_authorized"])
 
     def test_rejects_target_tamper_after_full_rehash(self):
         cell = self.candidate["splits"]["confirmation"]["cells"][0]

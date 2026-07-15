@@ -936,7 +936,8 @@ def _validate_audit_report(
     _require_exact_keys(report, {
         "schema", "canary_id", "canary_file_sha256", "canary_payload_sha256",
         "contract_sha256", "tokenizer_sha256", "evalgrams_sha256", "auditor_sha256",
-        "implementation_identity", "split_summary", "cross_split_13gram_counts", "all_checks_pass",
+        "implementation_identity", "split_summary", "cross_split_13gram_counts",
+        "pretraining_corpus_overlap", "all_checks_pass",
     }, "audit")
     if report["schema"] != AUDIT_SCHEMA or report["canary_id"] != CANARY_ID:
         raise ValueError("audit identity mismatch")
@@ -960,6 +961,12 @@ def _validate_audit_report(
         "train__development", "train__confirmation", "development__confirmation",
     } or any(type(value) is not int or value < 0 for value in counts.values()):
         raise ValueError("audit cross-split ngram summary mismatch")
+    if report["pretraining_corpus_overlap"] != {
+        "status": "not_audited_packed_shards_lack_raw_row_boundaries",
+        "claim_authorized": False,
+        "consequence": "no_pretraining_novelty_or_memorization_exclusion_claim",
+    }:
+        raise ValueError("audit pretraining-corpus overlap boundary mismatch")
 
 
 def _validate_audit_split_summary(value: Any) -> None:

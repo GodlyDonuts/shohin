@@ -101,6 +101,34 @@ CODE_PATHS = {
     "cursor_sidecar": ROOT / "train/counterfactual_cursor_action.py",
     "adapter_factory": ROOT / "train/counterfactual_cursor_action_training.py",
 }
+CODE_IMPLEMENTATION_PATHS = {
+    "evaluator": "train/eval_counterfactual_cursor_action.py",
+    "model": "train/model.py",
+    "cursor_sidecar": "train/counterfactual_cursor_action.py",
+    "adapter_factory": "train/counterfactual_cursor_action_training.py",
+}
+EXPECTED_SEED = 2026071506
+EXPECTED_EPOCHS = 4
+EXPECTED_EXAMPLES_PER_UPDATE = 60
+EXPECTED_TRAINING_EXAMPLES = 69_120
+TRAINING_KEYS = {
+    "seed", "epochs", "updates", "units_per_epoch", "examples_per_update",
+    "optimizer", "learning_rate", "minimum_lr_ratio", "warmup_updates", "betas",
+    "epsilon", "weight_decay", "gradient_clip", "cursor_margin", "action_ce_weight",
+    "relation_coefficient", "relation_mapping", "relation_pairs_per_update",
+    "epoch_history", "elapsed_seconds", "initial_adapter_sha256",
+    "final_adapter_sha256", "created_at_utc",
+}
+RESOURCE_LEDGER_KEYS = {
+    "trainable_scalars", "active_trainable_scalars", "inactive_trainable_scalars",
+    "base_trainable_scalars", "retained_cursor_bits_selector",
+    "retained_phase_bits_selector", "retained_bits_future_one_call", "adapter_dtype",
+    "base_autocast_dtype", "source_token_count", "source_token_storage_bytes_int64",
+    "padded_cache_token_positions", "pre_final_hidden_cache_bytes",
+    "unique_training_cells", "training_examples_with_repetition", "oracle_calls",
+    "fixed_training_compute_proxy", "inference_compute_proxy_per_cell",
+    "sequential_token_depth", "external_memory", "external_execution",
+}
 
 CONDITION_LIBRARY = {
     "canonical": (0, 1, 2, 3, 4),
@@ -167,6 +195,7 @@ AUDIT_KEYS = {
     "implementation_identity",
     "split_summary",
     "cross_split_13gram_counts",
+    "pretraining_corpus_overlap",
     "all_checks_pass",
 }
 BINDING_KEYS = {
@@ -468,6 +497,13 @@ def load_bound_canary(
             "audit/canary contract binding mismatch")
     require(audit["tokenizer_sha256"] == canary["tokenizer_sha256"],
             "audit/canary tokenizer binding mismatch")
+    require(audit["implementation_identity"] == canary["implementation_identity"],
+            "audit/canary implementation binding mismatch")
+    require(audit["pretraining_corpus_overlap"] == {
+        "status": "not_audited_packed_shards_lack_raw_row_boundaries",
+        "claim_authorized": False,
+        "consequence": "no_pretraining_novelty_or_memorization_exclusion_claim",
+    }, "audit pretraining-corpus overlap boundary changed")
     summary = audit["split_summary"].get("confirmation")
     require(type(summary) is dict, "audit lacks confirmation summary")
     require(summary.get("cells") == len(confirmation["cells"]),
@@ -741,6 +777,92 @@ def load_training_manifest(
     )
 
 
+def hash_adapter_state(state: Mapping[str, torch.Tensor]) -> str:
+    """Hash a tensor state independently of the trainer's implementation."""
+    digest = hashlib.sha256()
+    for name in sorted(state):
+        tensor = state[name].detach().cpu().contiguous()
+        digest.update(name.encode("ascii") + b"\0")
+        digest.update(str(tensor.dtype).encode("ascii") + b"\0")
+        digest.update(json.dumps(list(tensor.shape), separators=(",", ":")).encode("ascii"))
+        digest.update(b"\0" + tensor.view(torch.uint8).numpy().tobytes())
+    return digest.hexdigest()
+
+
+def validate_adapter_provenance(
+    *,
+    arm: str,
+    adapter_spec: Mapping[str, Any],
+    state_dict: Mapping[str, torch.Tensor],
+    training: Mapping[str, Any],
+    resource_ledger: Mapping[str, Any],
+    initialized_adapter: torch.nn.Module,
+    manifest_entry: Mapping[str, Any],
+) -> None:
+    """Reconcile serialized adapter internals with the frozen run contract."""
+    require(set(training) == TRAINING_KEYS, "adapter training ledger schema changed")
+    require(set(resource_ledger) == RESOURCE_LEDGER_KEYS,
+            "adapter resource ledger schema changed")
+    expected_training = {
+        "seed": EXPECTED_SEED,
+        "epochs": EXPECTED_EPOCHS,
+        "updates": FROZEN_UPDATES,
+        "units_per_epoch": 288,
+        "examples_per_update": EXPECTED_EXAMPLES_PER_UPDATE,
+        "optimizer": "AdamW",
+        "learning_rate": 0.01,
+        "minimum_lr_ratio": 0.1,
+        "warmup_updates": 50,
+        "betas": [0.9, 0.95],
+        "epsilon": 1e-8,
+        "weight_decay": 0.0,
+        "gradient_clip": 1.0,
+        "cursor_margin": 1.0,
+        "action_ce_weight": 1.0,
+        "relation_coefficient": EXPECTED_RELATION_COEFFICIENTS[arm],
+        "relation_mapping": "deranged" if arm == "relation_sham" else "true",
+    }
+    for key, expected in expected_training.items():
+        require(training[key] == expected, f"adapter frozen training field changed: {key}")
+    history = training["epoch_history"]
+    require(isinstance(history, list) and len(history) == EXPECTED_EPOCHS,
+            "adapter epoch history length changed")
+    require(all(type(item) is dict and item.get("epoch") == index + 1
+                and item.get("updates") == 288
+                for index, item in enumerate(history)),
+            "adapter epoch history accounting mismatch")
+    require(type(training["elapsed_seconds"]) in (int, float)
+            and training["elapsed_seconds"] > 0,
+            "adapter elapsed time is invalid")
+    require(isinstance(training["created_at_utc"], str) and training["created_at_utc"],
+            "adapter creation timestamp is invalid")
+    initial_hash = hash_adapter_state(initialized_adapter.state_dict())
+    final_hash = hash_adapter_state(state_dict)
+    require(initial_hash == training["initial_adapter_sha256"]
+            == manifest_entry["initial_adapter_sha256"],
+            "adapter initial-state provenance mismatch")
+    require(final_hash == training["final_adapter_sha256"]
+            == manifest_entry["final_adapter_sha256"],
+            "adapter final-state provenance mismatch")
+    require(final_hash != initial_hash, "adapter state did not change during training")
+    require(adapter_spec.get("parameters") == EXPECTED_PARAMETERS[arm],
+            "adapter spec parameter count changed")
+    require(resource_ledger["trainable_scalars"] == EXPECTED_PARAMETERS[arm],
+            "adapter resource parameter count mismatch")
+    require(resource_ledger["base_trainable_scalars"] == 0,
+            "adapter resource ledger claims trainable base weights")
+    require(resource_ledger["unique_training_cells"] == 5_760,
+            "adapter unique training cell count changed")
+    require(resource_ledger["training_examples_with_repetition"] == EXPECTED_TRAINING_EXAMPLES,
+            "adapter repeated training example count changed")
+    require(resource_ledger["oracle_calls"] == 0
+            and resource_ledger["external_execution"] == 0,
+            "adapter resource ledger contains external assistance")
+    require(resource_ledger["fixed_training_compute_proxy"]
+            == manifest_entry["fixed_training_compute_proxy"],
+            "adapter compute ledger differs from training manifest")
+
+
 def load_model_and_adapter(
     base_path: str | os.PathLike[str],
     adapter_path: str | os.PathLike[str],
@@ -823,6 +945,15 @@ def load_model_and_adapter(
     adapter, spec = build_adapter(arm, base.cfg, seed)
     expected_spec = adapter_state_payload(adapter, spec)["adapter_spec"]
     require(adapter_spec == expected_spec, "adapter spec does not match shared factory")
+    validate_adapter_provenance(
+        arm=arm,
+        adapter_spec=adapter_spec,
+        state_dict=state_dict,
+        training=training,
+        resource_ledger=resource_ledger,
+        initialized_adapter=adapter,
+        manifest_entry=training_manifest.entries[arm],
+    )
     adapter.load_state_dict(state_dict, strict=True)
     observed_parameters = sum(parameter.numel() for parameter in adapter.parameters())
     require(observed_parameters == adapter_spec["parameters"],
@@ -989,6 +1120,24 @@ def code_hashes() -> dict[str, str]:
     }
 
 
+def verify_code_identity(bound: BoundCanary, observed: Mapping[str, str]) -> None:
+    """Require every score-bearing live code file to equal the frozen commit ledger."""
+    identity = bound.document.get("implementation_identity")
+    require(type(identity) is dict and set(identity) == {"git_commit", "file_sha256"},
+            "canary implementation identity is missing")
+    ledger = identity["file_sha256"]
+    require(type(ledger) is dict, "canary implementation ledger is malformed")
+    expected = {
+        name: ledger.get(relative)
+        for name, relative in CODE_IMPLEMENTATION_PATHS.items()
+    }
+    require(all(isinstance(value, str) and SHA256_RE.fullmatch(value) is not None
+                for value in expected.values()),
+            "canary implementation ledger lacks evaluator dependencies")
+    require(dict(observed) == expected,
+            "live score-bearing evaluator code differs from frozen implementation")
+
+
 def _bound_input_hashes(paths: Mapping[str, str | os.PathLike[str]]) -> dict[str, str]:
     return {name: hash_regular_file(path) for name, path in paths.items()}
 
@@ -1051,6 +1200,7 @@ def main() -> None:
         arguments.canary_sha256,
         arguments.audit_sha256,
     )
+    verify_code_identity(bound, initial_code_hashes)
     examples = build_inference_examples(bound)
     conditions = parse_conditions(arguments.conditions)
     training_manifest = load_training_manifest(

@@ -71,6 +71,13 @@ LIVE_CODE_PATHS = {
     "cursor_sidecar": ROOT / "train/counterfactual_cursor_action.py",
     "adapter_factory": ROOT / "train/counterfactual_cursor_action_training.py",
 }
+LIVE_CODE_IMPLEMENTATION_PATHS = {
+    "evaluator": "train/eval_counterfactual_cursor_action.py",
+    "model": "train/model.py",
+    "cursor_sidecar": "train/counterfactual_cursor_action.py",
+    "adapter_factory": "train/counterfactual_cursor_action_training.py",
+}
+SCORER_IMPLEMENTATION_PATH = "train/score_counterfactual_cursor_action.py"
 SCORER_PATH = Path(__file__).resolve()
 
 CONDITION_LIBRARY = {
@@ -101,7 +108,7 @@ AUDIT_KEYS = {
     "schema", "canary_id", "canary_file_sha256", "canary_payload_sha256",
     "contract_sha256", "tokenizer_sha256", "evalgrams_sha256",
     "auditor_sha256", "implementation_identity", "split_summary",
-    "cross_split_13gram_counts", "all_checks_pass",
+    "cross_split_13gram_counts", "pretraining_corpus_overlap", "all_checks_pass",
 }
 BINDING_KEYS = {
     "canary_file_sha256", "canary_payload_sha256", "canary_contract_sha256",
@@ -354,6 +361,29 @@ def load_gold_index(
             "audit/canary contract mismatch")
     require(audit["tokenizer_sha256"] == canary["tokenizer_sha256"],
             "audit/canary tokenizer mismatch")
+    require(audit["implementation_identity"] == canary["implementation_identity"],
+            "audit/canary implementation binding mismatch")
+    require(audit["pretraining_corpus_overlap"] == {
+        "status": "not_audited_packed_shards_lack_raw_row_boundaries",
+        "claim_authorized": False,
+        "consequence": "no_pretraining_novelty_or_memorization_exclusion_claim",
+    }, "audit pretraining-corpus overlap boundary changed")
+    identity = canary.get("implementation_identity")
+    require(type(identity) is dict and set(identity) == {"git_commit", "file_sha256"},
+            "canary implementation identity is missing")
+    require(isinstance(identity["git_commit"], str)
+            and COMMIT_RE.fullmatch(identity["git_commit"]) is not None,
+            "canary implementation commit is invalid")
+    ledger = identity["file_sha256"]
+    required_paths = set(LIVE_CODE_IMPLEMENTATION_PATHS.values()) | {
+        SCORER_IMPLEMENTATION_PATH
+    }
+    require(type(ledger) is dict and required_paths <= set(ledger),
+            "canary implementation ledger lacks scoring code")
+    require(all(isinstance(ledger[path], str)
+                and SHA256_RE.fullmatch(ledger[path]) is not None
+                for path in required_paths),
+            "canary implementation scoring hashes are invalid")
 
     sources: dict[str, dict[str, Any]] = {}
     for source in confirmation["sources"]:
@@ -650,6 +680,11 @@ def validate_chain(
         },
         "live evaluation code differs from receipt binding",
     )
+    implementation_ledger = gold.canary["implementation_identity"]["file_sha256"]
+    require(bindings["code_sha256"] == {
+        name: implementation_ledger[relative]
+        for name, relative in LIVE_CODE_IMPLEMENTATION_PATHS.items()
+    }, "receipt-bound evaluation code differs from frozen implementation")
 
     require(type(receipt["job_identity"]) is dict and set(receipt["job_identity"]) == {
         "scheduler", "job_id", "array_task_id", "attempt_id"
@@ -1025,6 +1060,10 @@ def paired_bootstrap_comparisons(
         "unit": "exact_five_action_source_group",
         "cluster_unit": "content_matched_pack_permutation_across_all_renderers",
         "paired_within_content_cluster": True,
+        "interpretation": (
+            "finite_confirmation_board_cluster_stability_only;not_uncertainty_over_"
+            "new_operands_or_renderers"
+        ),
         "seed": seed,
         "replicates": replicates,
         "source_group_count": source_count,
@@ -1131,17 +1170,24 @@ def selector_gate_decision(
             "passed": metrics["canonical_exact_group_count"] > 0
             and deviation is not None and deviation <= 0.02,
         }
-    checks["cursor_ablations"] = {
+    cursor_ablation_diagnostic = {
         "observed": ablation_checks,
         "passed": all(value["passed"] for value in ablation_checks.values()),
+        "interpretation": (
+            "deterministic_consistency_check_conditioned_on_exact_groups;"
+            "not_independent_causal_evidence"
+        ),
     }
-    selector_passed = all(check["passed"] for check in checks.values())
+    neural_selector_passed = all(check["passed"] for check in checks.values())
     return {
         "primary_prediction_mode": "full_vocab",
         "checks": checks,
-        "selector_checks_passed": selector_passed,
+        "diagnostics": {"cursor_ablations": cursor_ablation_diagnostic},
+        "neural_selector_checks_passed": neural_selector_passed,
+        "overall_selector_go": False,
         "decision": (
-            "selector_go_executor_pending" if selector_passed else "selector_no_go"
+            "neural_selector_pass_executor_gate_pending"
+            if neural_selector_passed else "neural_selector_no_go"
         ),
         "atomic_executor_gate_pending": True,
         "one_call_done_eos_gate_pending": True,
@@ -1163,6 +1209,14 @@ def build_score_report(
         mode: paired_bootstrap_comparisons(gold, treatment, primary_controls, mode)
         for mode in ("restricted", "full_vocab")
     }
+    scorer_sha256 = hash_regular_file(SCORER_PATH, require_read_only=False)
+    require(
+        scorer_sha256
+        == gold.canary["implementation_identity"]["file_sha256"][
+            SCORER_IMPLEMENTATION_PATH
+        ],
+        "live scorer differs from frozen implementation",
+    )
     report = {
         "schema": SCORE_SCHEMA,
         "bindings": {
@@ -1173,7 +1227,7 @@ def build_score_report(
             "training_manifest_sha256": treatment.raw["bindings"][
                 "training_manifest_sha256"
             ],
-            "scorer_sha256": hash_regular_file(SCORER_PATH, require_read_only=False),
+            "scorer_sha256": scorer_sha256,
             "treatment_receipt_sha256": treatment.receipt_sha256,
             "control_receipt_sha256": {
                 name: artifact.receipt_sha256 for name, artifact in controls.items()
