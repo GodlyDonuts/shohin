@@ -16,6 +16,7 @@ REPO_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 REMOTE_HOST=${REMOTE_HOST:-newton}
 REMOTE_BASE=${REMOTE_BASE:-/lustre/fs1/home/sa305415/shohin}
 LOCAL_OUT=${LOCAL_OUT:-$REPO_DIR/train/flagship_out}
+WAIT_SECONDS=${WAIT_SECONDS:-0}
 REMOTE_OUT="$REMOTE_BASE/train/flagship_out"
 REMOTE_CHECKPOINT="$REMOTE_OUT/ckpt_${STEP_PAD}.pt"
 REMOTE_BEST="$REMOTE_OUT/best_step${STEP}.pt"
@@ -24,8 +25,35 @@ LOCAL_PART="$LOCAL_CHECKPOINT.part"
 
 mkdir -p "$LOCAL_OUT"
 
-REMOTE_MD5=$(ssh -o BatchMode=yes -o ConnectTimeout=20 "$REMOTE_HOST" \
+if ! [[ "$WAIT_SECONDS" =~ ^[0-9]+$ ]]; then
+  echo "WAIT_SECONDS must be a non-negative integer" >&2
+  exit 2
+fi
+
+SSH=(ssh -o BatchMode=yes -o ConnectTimeout=20)
+SFTP=(sftp -o BatchMode=yes -o ConnectTimeout=20)
+if [ -n "${NEWTON_PW:-}" ]; then
+  command -v sshpass >/dev/null 2>&1 || {
+    echo "NEWTON_PW is set but sshpass is unavailable" >&2
+    exit 6
+  }
+  export SSHPASS="$NEWTON_PW"
+  SSH=(sshpass -e ssh -o PubkeyAuthentication=no -o PreferredAuthentications=password \
+    -o NumberOfPasswordPrompts=1 -o ConnectTimeout=20)
+  SFTP=(sshpass -e sftp -o PubkeyAuthentication=no -o PreferredAuthentications=password \
+    -o NumberOfPasswordPrompts=1 -o ConnectTimeout=20)
+fi
+
+REMOTE_MD5=$("${SSH[@]}" "$REMOTE_HOST" \
   "set -euo pipefail
+   deadline=\$((SECONDS + $WAIT_SECONDS))
+   while ! test -s '$REMOTE_CHECKPOINT' && ! test -s '$REMOTE_BEST'; do
+     if test \$SECONDS -ge \$deadline; then
+       echo 'no numbered or durable checkpoint exists for step $STEP' >&2
+       exit 5
+     fi
+     sleep 5
+   done
    if test -s '$REMOTE_CHECKPOINT'; then
      source_path='$REMOTE_CHECKPOINT'
    elif test -s '$REMOTE_BEST'; then
@@ -52,7 +80,7 @@ fi
 
 # macOS ships openrsync, which lacks the flags needed for a safe append verify.
 # OpenSSH sftp's reget resumes the local .part file without restarting it.
-sftp -o BatchMode=yes -o ConnectTimeout=20 -b - "$REMOTE_HOST" <<EOF
+"${SFTP[@]}" -b - "$REMOTE_HOST" <<EOF
 reget $REMOTE_BEST $LOCAL_PART
 EOF
 
