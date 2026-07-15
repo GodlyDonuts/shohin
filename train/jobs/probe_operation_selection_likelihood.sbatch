@@ -15,6 +15,7 @@
 #SBATCH --open-mode=append
 set -euo pipefail
 umask 077
+export PATH=/usr/bin:/bin
 export CUBLAS_WORKSPACE_CONFIG=:4096:8
 export OPENBLAS_NUM_THREADS=1
 export MKL_NUM_THREADS=1
@@ -23,9 +24,12 @@ export OMP_NUM_THREADS=4
 export PYTHONDONTWRITEBYTECODE=1
 export PYTHONNOUSERSITE=1
 export PYTHONHASHSEED=0
+export PYTHONSAFEPATH=1
+unset LD_PRELOAD PYTHONHOME PYTHONPATH
+export PYTHONOPTIMIZE=0
 
-BASE=${BASE:-/lustre/fs1/home/sa305415/shohin}
-PY=${PY:-$BASE/miniforge3/bin/python}
+BASE=/lustre/fs1/home/sa305415/shohin
+PY=$BASE/miniforge3/bin/python
 CKPT=${CKPT:-$BASE/train/flagship_out/best_step260000.pt}
 SOURCE=$BASE/artifacts/evals/source_scheduled_reasoning_confirmation_v1.json
 TOKENIZER=$BASE/artifacts/shohin-tok-32k.json
@@ -168,19 +172,120 @@ for relative in "${IMPLEMENTATION_FILES[@]}"; do
     exit 5
   fi
 done
+run_frozen_probe() {
+  "$PY" - "$EVIDENCE_GIT_DIR" "$FROZEN_COMMIT" "$@" <<'PY'
+import fcntl
+import ctypes
+import hashlib
+import json
+import os
+import subprocess
+import sys
+
+git_dir, frozen_commit, *probe_args = sys.argv[1:]
+implementation_files = {
+    "preregistration": "R12_OPERATION_SELECTION_LIKELIHOOD_PREREG.md",
+    "evaluator": "train/probe_operation_selection_likelihood.py",
+    "tests": "train/test_probe_operation_selection_likelihood.py",
+    "job": "train/jobs/probe_operation_selection_likelihood.sbatch",
+    "model_loader": "train/model.py",
+    "inherited_operation_cursor_contract": "R12_OPERATION_CURSOR_DIAGNOSTIC.md",
+    "inherited_operation_cursor_geometry": "train/eval_operation_cursor.py",
+}
+payloads = {}
+paths = {}
+hashes = {}
+descriptors = []
+f_add_seals = getattr(fcntl, "F_ADD_SEALS", 1033)
+f_get_seals = getattr(fcntl, "F_GET_SEALS", 1034)
+f_seal_seal = getattr(fcntl, "F_SEAL_SEAL", 0x0001)
+f_seal_shrink = getattr(fcntl, "F_SEAL_SHRINK", 0x0002)
+f_seal_grow = getattr(fcntl, "F_SEAL_GROW", 0x0004)
+f_seal_write = getattr(fcntl, "F_SEAL_WRITE", 0x0008)
+required_seals = f_seal_write | f_seal_grow | f_seal_shrink | f_seal_seal
+
+def create_memfd(name):
+    if hasattr(os, "memfd_create"):
+        return os.memfd_create(name, getattr(os, "MFD_ALLOW_SEALING", 0x0002))
+    libc = ctypes.CDLL(None, use_errno=True)
+    encoded = name.encode("ascii")
+    try:
+        function = libc.memfd_create
+        function.argtypes = [ctypes.c_char_p, ctypes.c_uint]
+        function.restype = ctypes.c_int
+        descriptor = function(encoded, 0x0002)
+    except AttributeError:
+        machine = os.uname().machine
+        if machine != "x86_64":
+            raise SystemExit(f"[operation-selection] no memfd_create binding on {machine}")
+        descriptor = libc.syscall(319, encoded, 0x0002)
+    if descriptor < 0:
+        error = ctypes.get_errno()
+        raise OSError(error, os.strerror(error))
+    return descriptor
+
+for name, relative in implementation_files.items():
+    payload = subprocess.run(
+        ["git", f"--git-dir={git_dir}", "show", f"{frozen_commit}:{relative}"],
+        check=True,
+        stdout=subprocess.PIPE,
+    ).stdout
+    descriptor = create_memfd(f"shohin-operation-{name}")
+    descriptors.append(descriptor)
+    offset = 0
+    while offset < len(payload):
+        offset += os.write(descriptor, payload[offset:])
+    os.fchmod(descriptor, 0o444)
+    fcntl.fcntl(descriptor, f_add_seals, required_seals)
+    if fcntl.fcntl(descriptor, f_get_seals) != required_seals:
+        raise SystemExit(f"[operation-selection] incomplete memfd seals: {name}")
+    os.lseek(descriptor, 0, os.SEEK_SET)
+    payloads[name] = payload
+    paths[name] = f"/proc/self/fd/{descriptor}"
+    hashes[name] = hashlib.sha256(payload).hexdigest()
+
+os.environ["SHOHIN_SEALED_IMPLEMENTATION_PATHS"] = json.dumps(
+    paths, sort_keys=True, separators=(",", ":")
+)
+os.environ["SHOHIN_SEALED_IMPLEMENTATION_SHA256"] = json.dumps(
+    hashes, sort_keys=True, separators=(",", ":")
+)
+sys.argv = [paths["evaluator"], *probe_args]
+namespace = {
+    "__builtins__": __builtins__,
+    "__file__": paths["evaluator"],
+    "__name__": "__main__",
+    "__package__": None,
+}
+exec(
+    compile(
+        payloads["evaluator"],
+        f"<frozen-git:{frozen_commit}:train/probe_operation_selection_likelihood.py>",
+        "exec",
+        dont_inherit=True,
+    ),
+    namespace,
+    namespace,
+)
+PY
+}
 echo "[operation-selection] implementation frozen at $FROZEN_COMMIT" | tee /dev/stderr
 
 cd "$BASE/train"
 QUARANTINE_DIR=$(mktemp -d "$EVAL_ROOT/.operation_selection_quarantine.XXXXXX")
 chmod 0700 "$QUARANTINE_DIR"
 QUARANTINE_OUT=$QUARANTINE_DIR/$(basename -- "$OUT")
-cleanup_quarantine() {
+PUBLISH_COMPLETE=0
+cleanup_publication() {
   rm -f -- "${QUARANTINE_OUT:-}"
   rmdir -- "${QUARANTINE_DIR:-}" 2>/dev/null || true
+  if [ "${PUBLISH_COMPLETE:-0}" != 1 ]; then
+    rm -f -- "${OUT:-}" "${MIRROR:-}" "${RECEIPT:-}"
+  fi
 }
-trap cleanup_quarantine EXIT
+trap cleanup_publication EXIT
 
-"$PY" "$PROBE" \
+run_frozen_probe \
   --ckpt "$CKPT" \
   --tokenizer "$TOKENIZER" \
   --source "$SOURCE" \
@@ -192,7 +297,7 @@ trap cleanup_quarantine EXIT
 [ -s "$QUARANTINE_OUT" ] || { echo "[operation-selection] evaluator wrote no result" >&2; exit 6; }
 [ ! -w "$QUARANTINE_OUT" ] || { echo "[operation-selection] output remained writable" >&2; exit 6; }
 
-"$PY" "$PROBE" \
+AUDIT_JSON=$(run_frozen_probe \
   --ckpt "$CKPT" \
   --tokenizer "$TOKENIZER" \
   --source "$SOURCE" \
@@ -200,29 +305,32 @@ trap cleanup_quarantine EXIT
   --audit-result "$QUARANTINE_OUT" \
   --frozen-commit "$FROZEN_COMMIT" \
   --evidence-commit "$EVIDENCE_COMMIT" \
-  --prescore-receipt-sha256 "$PRESCORE_RECEIPT_SHA256"
-
-"$PY" - "$QUARANTINE_OUT" "$OUT" <<'PY'
-import os
+  --prescore-receipt-sha256 "$PRESCORE_RECEIPT_SHA256")
+AUDITED_RESULT_SHA256=$(printf '%s\n' "$AUDIT_JSON" | "$PY" -c '
+import json
 import sys
+value = json.load(sys.stdin)
+if value.get("full_preserved_result_audit") is not True:
+    raise SystemExit("full preserved-result audit flag is absent")
+digest = value.get("sha256")
+if not isinstance(digest, str):
+    raise SystemExit("full preserved-result audit SHA-256 is absent")
+print(digest)
+')
+[[ "$AUDITED_RESULT_SHA256" =~ ^[0-9a-f]{64}$ ]] || {
+  echo "[operation-selection] full audit did not return a SHA-256" >&2
+  exit 6
+}
+echo "[operation-selection] full preserved-result audit passed" >&2
 
-source, destination = sys.argv[1:]
-if os.path.lexists(destination):
-    raise SystemExit("[operation-selection] final result path appeared during quarantine")
-os.link(source, destination, follow_symlinks=False)
-os.unlink(source)
-PY
-rmdir -- "$QUARANTINE_DIR"
-trap - EXIT
-
-"$PY" - "$OUT" "$MIRROR" "$RECEIPT" "$FROZEN_COMMIT" "$EVIDENCE_COMMIT" "$PRESCORE_RECEIPT_SHA256" "${SLURM_JOB_ID:-none}" <<'PY'
+"$PY" - "$QUARANTINE_OUT" "$OUT" "$MIRROR" "$RECEIPT" "$AUDITED_RESULT_SHA256" "$FROZEN_COMMIT" "$EVIDENCE_COMMIT" "$PRESCORE_RECEIPT_SHA256" "${SLURM_JOB_ID:-none}" <<'PY'
 import hashlib
 import json
 import os
 import stat
 import sys
 
-source_path, mirror_path, receipt_path, frozen_commit, evidence_commit, prescore_receipt_sha256, job_id = sys.argv[1:]
+source_path, result_path, mirror_path, receipt_path, audited_sha256, frozen_commit, evidence_commit, prescore_receipt_sha256, job_id = sys.argv[1:]
 read_flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
 source_fd = os.open(source_path, read_flags)
 with os.fdopen(source_fd, "rb") as source:
@@ -231,19 +339,32 @@ with os.fdopen(source_fd, "rb") as source:
         raise SystemExit("[operation-selection] final result is not a read-only regular file")
     payload = source.read()
 result_sha256 = hashlib.sha256(payload).hexdigest()
+if result_sha256 != audited_sha256:
+    raise SystemExit("[operation-selection] quarantined bytes differ from audited SHA-256")
 
 write_flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
-mirror_fd = os.open(mirror_path, write_flags, 0o400)
-with os.fdopen(mirror_fd, "wb") as mirror:
-    mirror.write(payload)
-    mirror.flush()
-    os.fsync(mirror.fileno())
-    os.fchmod(mirror.fileno(), 0o444)
-mirror_fd = os.open(mirror_path, read_flags)
-with os.fdopen(mirror_fd, "rb") as mirror:
-    mirror_sha256 = hashlib.sha256(mirror.read()).hexdigest()
-if mirror_sha256 != result_sha256:
-    raise SystemExit("[operation-selection] external mirror hash mismatch")
+
+def write_verified_copy(path):
+    descriptor = os.open(path, write_flags, 0o400)
+    with os.fdopen(descriptor, "wb") as sink:
+        sink.write(payload)
+        sink.flush()
+        os.fchmod(sink.fileno(), 0o444)
+        os.fsync(sink.fileno())
+    descriptor = os.open(path, read_flags)
+    with os.fdopen(descriptor, "rb") as source:
+        observed = hashlib.sha256(source.read()).hexdigest()
+    if observed != audited_sha256:
+        raise SystemExit(f"[operation-selection] published copy hash mismatch: {path}")
+    return observed
+
+def fsync_parent(path):
+    directory_flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_DIRECTORY", 0)
+    descriptor = os.open(os.path.dirname(path), directory_flags)
+    try:
+        os.fsync(descriptor)
+    finally:
+        os.close(descriptor)
 
 receipt = {
     "schema": "raw260k_operation_selection_likelihood_receipt_v1",
@@ -252,10 +373,12 @@ receipt = {
     "prescore_receipt_sha256": prescore_receipt_sha256,
     "slurm_job_id": job_id,
     "full_preserved_result_audit": True,
-    "result_path": os.path.realpath(source_path),
-    "result_sha256": result_sha256,
+    "audited_result_sha256": audited_sha256,
+    "result_path": os.path.realpath(result_path),
+    "result_sha256": audited_sha256,
     "mirror_path": os.path.realpath(mirror_path),
-    "mirror_sha256": mirror_sha256,
+    "mirror_sha256": audited_sha256,
+    "publication_protocol": "receipt_precedes_score_files",
     "score_printed_by_wrapper": False,
 }
 receipt_payload = (json.dumps(receipt, sort_keys=True, separators=(",", ":")) + "\n").encode("ascii")
@@ -263,8 +386,11 @@ receipt_fd = os.open(receipt_path, write_flags, 0o400)
 with os.fdopen(receipt_fd, "wb") as sink:
     sink.write(receipt_payload)
     sink.flush()
-    os.fsync(sink.fileno())
     os.fchmod(sink.fileno(), 0o444)
+    os.fsync(sink.fileno())
+fsync_parent(receipt_path)
+mirror_sha256 = write_verified_copy(mirror_path)
+published_sha256 = write_verified_copy(result_path)
 print(json.dumps({
     "receipt_path": receipt_path,
     "receipt_sha256": hashlib.sha256(receipt_payload).hexdigest(),
@@ -273,4 +399,8 @@ print(json.dumps({
 }, sort_keys=True), flush=True)
 PY
 
+rm -f -- "$QUARANTINE_OUT"
+rmdir -- "$QUARANTINE_DIR"
+PUBLISH_COMPLETE=1
+trap - EXIT
 sha256sum -- "$OUT" "$MIRROR" "$RECEIPT"

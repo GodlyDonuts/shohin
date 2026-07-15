@@ -10,6 +10,7 @@ It contains no generation, training, retry, repair, or adaptive search path.
 from __future__ import annotations
 
 import argparse
+import fcntl
 import hashlib
 import io
 import json
@@ -29,6 +30,16 @@ from tokenizers import Tokenizer
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SEALED_IMPLEMENTATION_PATHS_ENV = "SHOHIN_SEALED_IMPLEMENTATION_PATHS"
+SEALED_IMPLEMENTATION_HASHES_ENV = "SHOHIN_SEALED_IMPLEMENTATION_SHA256"
+PROC_FD_RE = re.compile(r"^/proc/self/fd/([0-9]+)$")
+F_GET_SEALS = getattr(fcntl, "F_GET_SEALS", 1034)
+REQUIRED_MEMFD_SEALS = (
+    getattr(fcntl, "F_SEAL_SEAL", 0x0001)
+    | getattr(fcntl, "F_SEAL_SHRINK", 0x0002)
+    | getattr(fcntl, "F_SEAL_GROW", 0x0004)
+    | getattr(fcntl, "F_SEAL_WRITE", 0x0008)
+)
 
 SOURCE_SCHEMA = "source_scheduled_reasoning_confirmation_v1"
 RESULT_SCHEMA = "raw260k_operation_selection_likelihood_v1"
@@ -224,19 +235,47 @@ def digest_rows(rows: Sequence[Mapping[str, Any]]) -> str:
     return sha256_bytes(canonical_json_bytes(rows))
 
 
-def hash_regular_file(
+def open_regular_file_descriptor(
     path: str | Path, *, require_read_only: bool = False
-) -> str:
+) -> int:
     source_path = Path(path)
-    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
-    descriptor = os.open(source_path, flags)
-    digest = hashlib.sha256()
-    with os.fdopen(descriptor, "rb") as source:
-        metadata = os.fstat(source.fileno())
+    match = PROC_FD_RE.fullmatch(str(source_path))
+    if match is not None:
+        descriptor = os.dup(int(match.group(1)))
+        try:
+            seals = fcntl.fcntl(descriptor, F_GET_SEALS)
+            if seals & REQUIRED_MEMFD_SEALS != REQUIRED_MEMFD_SEALS:
+                raise PermissionError(
+                    f"implementation descriptor is not fully sealed: {source_path}"
+                )
+            os.lseek(descriptor, 0, os.SEEK_SET)
+        except Exception:
+            os.close(descriptor)
+            raise
+    else:
+        flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+        descriptor = os.open(source_path, flags)
+    try:
+        metadata = os.fstat(descriptor)
         if not stat.S_ISREG(metadata.st_mode):
             raise ValueError(f"not a regular file: {source_path}")
         if require_read_only and metadata.st_mode & 0o222:
             raise PermissionError(f"frozen input has write bits: {source_path}")
+    except Exception:
+        os.close(descriptor)
+        raise
+    return descriptor
+
+
+def hash_regular_file(
+    path: str | Path, *, require_read_only: bool = False
+) -> str:
+    source_path = Path(path)
+    descriptor = open_regular_file_descriptor(
+        source_path, require_read_only=require_read_only
+    )
+    digest = hashlib.sha256()
+    with os.fdopen(descriptor, "rb") as source:
         for block in iter(lambda: source.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
@@ -262,14 +301,10 @@ def read_regular_file_bytes(
 ) -> bytes:
     """Read one regular-file snapshot through a no-follow descriptor."""
     source_path = Path(path)
-    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
-    descriptor = os.open(source_path, flags)
+    descriptor = open_regular_file_descriptor(
+        source_path, require_read_only=require_read_only
+    )
     with os.fdopen(descriptor, "rb") as source:
-        metadata = os.fstat(source.fileno())
-        if not stat.S_ISREG(metadata.st_mode):
-            raise ValueError(f"not a regular file: {source_path}")
-        if require_read_only and metadata.st_mode & 0o222:
-            raise PermissionError(f"frozen input has write bits: {source_path}")
         payload = source.read()
     return payload
 
@@ -1052,9 +1087,9 @@ def resource_ledger(prepared: Sequence[PreparedTransition]) -> dict[str, Any]:
         "checkpoint_hash_passes": 4,
         "tokenizer_hash_passes": 4,
         "source_hash_passes": 4,
-        "implementation_hash_passes": 5,
+        "implementation_hash_passes": 7,
         "tokenizer_loads": 2,
-        "h100_preflight_allocations": 1,
+        "h100_preflight_allocations": 2,
         "model_loads": 1,
         "generated_tokens": 0,
         "sampled_tokens": 0,
@@ -1072,6 +1107,8 @@ def resource_ledger(prepared: Sequence[PreparedTransition]) -> dict[str, Any]:
         "authenticated_prescore_remote_verifications": 1,
         "read_only_git_bundles": 1,
         "temporary_bare_git_repositories": 1,
+        "kernel_sealed_runtime_snapshots": 2,
+        "kernel_sealed_implementation_memfds_created": 14,
         "temporary_prescore_receipt_files": 1,
         "scheduler_log_files": 1,
         "mutable_scheduler_log_files": 1,
@@ -1263,6 +1300,30 @@ def prompt_contract() -> dict[str, Any]:
 
 
 def implementation_source_paths() -> dict[str, Path]:
+    sealed_paths = os.environ.get(SEALED_IMPLEMENTATION_PATHS_ENV)
+    if sealed_paths is not None:
+        value = strict_json_loads(sealed_paths.encode("ascii"))
+        _require(type(value) is dict, "sealed implementation path manifest is not an object")
+        expected_names = {
+            "preregistration",
+            "evaluator",
+            "tests",
+            "job",
+            "model_loader",
+            "inherited_operation_cursor_contract",
+            "inherited_operation_cursor_geometry",
+        }
+        _require(set(value) == expected_names, "sealed implementation path names drift")
+        _require(
+            all(
+                type(path) is str and re.fullmatch(r"/proc/self/fd/[0-9]+", path)
+                for path in value.values()
+            ),
+            "sealed implementation paths are not process file descriptors",
+        )
+        _require(len(set(value.values())) == len(value), "sealed implementation paths alias")
+        return {name: Path(path) for name, path in value.items()}
+
     train_dir = Path(__file__).resolve().parent
     return {
         "preregistration": ROOT / "R12_OPERATION_SELECTION_LIKELIHOOD_PREREG.md",
@@ -1273,6 +1334,23 @@ def implementation_source_paths() -> dict[str, Path]:
         "inherited_operation_cursor_contract": ROOT / "R12_OPERATION_CURSOR_DIAGNOSTIC.md",
         "inherited_operation_cursor_geometry": train_dir / "eval_operation_cursor.py",
     }
+
+
+def expected_sealed_implementation_hashes() -> dict[str, str] | None:
+    raw = os.environ.get(SEALED_IMPLEMENTATION_HASHES_ENV)
+    if raw is None:
+        return None
+    value = strict_json_loads(raw.encode("ascii"))
+    _require(type(value) is dict, "sealed implementation hash manifest is not an object")
+    _require(
+        set(value) == set(implementation_source_paths()),
+        "sealed implementation hash names drift",
+    )
+    _require(
+        all(type(digest) is str and SHA256_RE.fullmatch(digest) for digest in value.values()),
+        "sealed implementation hash value is invalid",
+    )
+    return dict(value)
 
 
 def hash_implementation(paths: Mapping[str, Path]) -> dict[str, str]:
@@ -1688,13 +1766,18 @@ def audit_existing_result_file(
         tokenizer_path, EXPECTED_TOKENIZER_SHA256, "tokenizer"
     )
     implementation_hashes = hash_implementation(implementation_source_paths())
+    expected_implementation_hashes = expected_sealed_implementation_hashes()
+    if expected_implementation_hashes is not None:
+        _require(
+            implementation_hashes == expected_implementation_hashes,
+            "sealed audit implementation differs from frozen commit bytes",
+        )
     tokenizer = Tokenizer.from_str(tokenizer_payload.decode("utf-8"))
     prepared = prepare_transitions(frozen_transitions, tokenizer)
     tokenized_sha256 = verify_tokenized_manifest(prepared)
 
     _require(type(result) is dict, "result is not an object")
-    device = result.get("device")
-    _require(type(device) is dict, "result device record is missing")
+    _, device = preflight_h100()
     audit_preserved_result(
         result,
         source_path=source_path,
@@ -1787,6 +1870,12 @@ def main() -> None:
     implementation_hashes, implementation_payloads = snapshot_implementation(
         implementation_paths
     )
+    expected_implementation_hashes = expected_sealed_implementation_hashes()
+    if expected_implementation_hashes is not None:
+        _require(
+            implementation_hashes == expected_implementation_hashes,
+            "sealed runtime implementation differs from frozen commit bytes",
+        )
 
     tokenizer = Tokenizer.from_str(tokenizer_payload.decode("utf-8"))
     prepared = prepare_transitions(frozen_transitions, tokenizer)

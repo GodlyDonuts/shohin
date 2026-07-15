@@ -9,6 +9,7 @@ import json
 import math
 import tempfile
 import unittest
+from unittest import mock
 from collections import Counter
 from pathlib import Path
 
@@ -362,13 +363,16 @@ class ScoringAndAccountingTests(FrozenFixture):
         self.assertEqual(ledger["candidate_logit_values_scored"], 2112)
         self.assertEqual(ledger["model_input_token_positions"], 33160)
         self.assertEqual(ledger["candidate_tokens_appended_to_model_input"], 0)
-        self.assertEqual(ledger["implementation_hash_passes"], 5)
+        self.assertEqual(ledger["implementation_hash_passes"], 7)
         self.assertEqual(ledger["quarantine_result_files_created"], 1)
         self.assertEqual(ledger["preserved_result_copies"], 2)
         self.assertEqual(ledger["read_only_receipt_files"], 1)
         self.assertEqual(ledger["authenticated_prescore_remote_verifications"], 1)
         self.assertEqual(ledger["read_only_git_bundles"], 1)
         self.assertEqual(ledger["temporary_bare_git_repositories"], 1)
+        self.assertEqual(ledger["kernel_sealed_runtime_snapshots"], 2)
+        self.assertEqual(ledger["kernel_sealed_implementation_memfds_created"], 14)
+        self.assertEqual(ledger["h100_preflight_allocations"], 2)
         self.assertEqual(ledger["temporary_prescore_receipt_files"], 1)
         for zero_field in (
             "generated_tokens",
@@ -598,6 +602,12 @@ class WrapperContractTests(unittest.TestCase):
             "#SBATCH --mem=64G",
             "#SBATCH --time=02:00:00",
             "set -euo pipefail",
+            "export PATH=/usr/bin:/bin",
+            "BASE=/lustre/fs1/home/sa305415/shohin",
+            "PY=$BASE/miniforge3/bin/python",
+            "export PYTHONSAFEPATH=1",
+            "unset LD_PRELOAD PYTHONHOME PYTHONPATH",
+            "export PYTHONOPTIMIZE=0",
             "EXPECTED_CKPT=91d5288f184fc5230516add9851ac1a8815d3369ffd816cd7d0c03d8bafc741d",
             "EXPECTED_TOKENIZER=87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4",
             "EXPECTED_SOURCE=19a84165f15b19911fc8ef229022e47753833d703d77d1e8cc25db9dfc993474",
@@ -606,6 +616,10 @@ class WrapperContractTests(unittest.TestCase):
             'git --git-dir="$EVIDENCE_GIT_DIR" bundle verify "$EVIDENCE_BUNDLE"',
             'git init --bare --quiet "$EVIDENCE_GIT_DIR"',
             'git --git-dir="$EVIDENCE_GIT_DIR" -c pack.threads=1 -c index.threads=1 fetch --quiet "$EVIDENCE_BUNDLE" refs/heads/main:refs/heads/main',
+            "create_memfd",
+            "libc.memfd_create",
+            'getattr(fcntl, "F_ADD_SEALS", 1033)',
+            'getattr(fcntl, "F_SEAL_WRITE", 0x0008)',
             "R12_OPERATION_SELECTION_PRESCORE_RECEIPT.json",
             "authenticated_gh_api_commit_lookup_and_origin_main_match",
             ".operation_selection_quarantine.",
@@ -614,6 +628,12 @@ class WrapperContractTests(unittest.TestCase):
             "score_released",
             "MIRROR_ROOT",
             "RECEIPT",
+            "SHOHIN_SEALED_IMPLEMENTATION_PATHS",
+            "AUDITED_RESULT_SHA256",
+            "PUBLISH_COMPLETE=0",
+            "cleanup_publication",
+            "fsync_parent(receipt_path)",
+            '"audited_result_sha256": audited_sha256',
             '--frozen-commit "$FROZEN_COMMIT"',
             '--evidence-commit "$EVIDENCE_COMMIT"',
             '--prescore-receipt-sha256 "$PRESCORE_RECEIPT_SHA256"',
@@ -628,9 +648,30 @@ class WrapperContractTests(unittest.TestCase):
         self.assertNotIn("sft.py", executable)
         self.assertNotIn("optimizer", executable.lower())
         self.assertNotIn("--device", executable)
-        self.assertEqual(executable.count('"$PY" "$PROBE" \\\n'), 2)
+        self.assertEqual(executable.count("run_frozen_probe \\\n"), 2)
         self.assertEqual(executable.count('--audit-result "$QUARANTINE_OUT"'), 1)
         self.assertNotIn('"summary": result["summary"]', executable)
+        self.assertNotIn("assert value.get", executable)
+        self.assertLess(wrapper.index("receipt_fd ="), wrapper.index("mirror_sha256 ="))
+        self.assertLess(wrapper.index("receipt_fd ="), wrapper.index("published_sha256 ="))
+
+    def test_procfd_reader_duplicates_and_requires_full_seals(self) -> None:
+        with tempfile.TemporaryFile() as source:
+            source.write(b"sealed-runtime")
+            source.flush()
+            source.seek(0)
+            path = f"/proc/self/fd/{source.fileno()}"
+            with mock.patch.object(
+                probe.fcntl, "fcntl", return_value=probe.REQUIRED_MEMFD_SEALS
+            ):
+                self.assertEqual(probe.read_regular_file_bytes(path), b"sealed-runtime")
+                self.assertEqual(
+                    probe.hash_regular_file(path),
+                    probe.sha256_bytes(b"sealed-runtime"),
+                )
+            with mock.patch.object(probe.fcntl, "fcntl", return_value=0):
+                with self.assertRaisesRegex(PermissionError, "not fully sealed"):
+                    probe.read_regular_file_bytes(path)
 
 
 if __name__ == "__main__":

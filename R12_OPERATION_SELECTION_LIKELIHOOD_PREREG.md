@@ -232,9 +232,9 @@ confidence interval, pass threshold, inferred bottleneck, or promotion gate.
 | Maximum prompt length | 79 |
 | Candidate tokens appended to model input | 0 |
 | Checkpoint / tokenizer / source hash passes | 4 / 4 / 4 |
-| Implementation hash passes | 5 |
+| Implementation hash passes | 7 |
 | Tokenizer loads / model loads | 2 / 1 |
-| H100 preflight allocations | 1 |
+| H100 preflight allocations | 2 |
 | Generated / sampled / training tokens | 0 / 0 / 0 |
 | Retries / repairs / searches / threshold searches | 0 / 0 / 0 / 0 |
 | Verifier feedback / external generation calls | 0 / 0 |
@@ -244,8 +244,16 @@ confidence interval, pass threshold, inferred bottleneck, or promotion gate.
 | Authenticated pre-score remote verifications | 1 |
 | Read-only Git bundles | 1 |
 | Temporary bare Git repositories | 1 |
+| Kernel-sealed runtime snapshots / implementation memfds | 2 / 14 |
 | Temporary pre-score receipt files | 1 |
 | Mutable scheduler log files | 1 |
+
+The seven implementation-hash passes are: deployed-tree bytes, committed Git
+objects, scoring-launcher Git payloads, scoring-evaluator pre-forward sealed
+descriptors, scoring-evaluator post-forward sealed descriptors, audit-launcher
+Git payloads, and audit-evaluator sealed descriptors. Each of the two evaluator
+invocations creates seven independently sealed memfds. The two H100 preflights
+are the scoring-process allocation and the independent audit-process allocation.
 
 There is no batching, padding, KV reuse, candidate-specific forward, candidate
 token input, generation API, sampling API, optimizer, backward pass, training
@@ -262,10 +270,15 @@ read-only Git bundle containing both commits. The wrapper verifies the bundle's
 object graph, requires bundle `main` to equal the supplied evidence commit,
 requires `FROZEN_COMMIT` to be its ancestor, reconstructs and validates the
 pre-score receipt, and requires every deployed implementation file's bytes to
-equal the corresponding frozen Git object. This does not require credentials or
-modify Git metadata in the deployed Newton tree. A runtime hash without this
-commit/receipt/bundle chain is inadmissible. The result binds `FROZEN_COMMIT`,
-the evidence commit, and the pre-score receipt SHA-256.
+equal the corresponding frozen Git object. It then reads each implementation
+blob directly from that verified commit into a Linux `memfd`, removes write
+permission, applies write/grow/shrink/seal kernel seals, and compiles the
+evaluator only from those sealed bytes. The evaluator reads and re-hashes every
+other implementation input through its sealed descriptor and requires the
+commit-derived SHA-256 manifest. This does not require credentials or modify Git
+metadata in the deployed Newton tree. A runtime hash without this
+commit/receipt/bundle/sealed-descriptor chain is inadmissible. The result binds
+`FROZEN_COMMIT`, the evidence commit, and the pre-score receipt SHA-256.
 
 The executable must then complete this order before `torch.load`:
 
@@ -300,14 +313,22 @@ overwrite, serializes ASCII JSON with non-finite values forbidden, flushes and
 `fsync`s, changes mode to `0444`, verifies no write bits remain, and attempts a
 parent-directory `fsync`. The evaluator prints no score or summary. The wrapper
 then runs the no-model full preserved-result reconstruction against the
-quarantined artifact. Only after that audit passes does it atomically hard-link
-the artifact into the final result path, remove the quarantine name, create an
-exclusive hash-verified copy outside the result directory, and create an
-exclusive read-only receipt binding the result, mirror, frozen commit, and
-Slurm job. The wrapper still prints no score. Mode `0444` is write protection,
-not absolute immutability. Canonical interpretation additionally requires the
-receipt to be mirrored locally and pushed before any score is read. The mutable
-Slurm log is counted separately and has no evidentiary standing by itself.
+quarantined artifact, independently repeats the one-H100 allocation/device
+record, and captures the audited artifact SHA-256 without releasing the
+summary. Only after that audit passes does it reopen the
+quarantine through a no-follow descriptor, require the exact audited hash, and
+construct an exclusive read-only receipt binding the intended result and mirror
+paths, the audited hash, the frozen commit, and the Slurm job. The receipt is
+durably written **before** either score-bearing copy. The wrapper then writes
+exclusive, hash-verified, read-only copies to the external mirror and result
+paths. Thus even an untrappable node loss can leave at most a receipt alone or a
+receipt plus an incomplete/hash-invalid copy; it cannot leave a score-bearing
+file without its prior receipt. Ordinary cleanup remains armed until all three
+publication artifacts and the quarantine cleanup succeed. The wrapper still
+prints no score. Mode `0444` is write protection, not absolute immutability.
+Canonical interpretation additionally requires the receipt to be mirrored
+locally and pushed before any score is read. The mutable Slurm log is counted
+separately and has no evidentiary standing by itself.
 
 ## 9. Isolated H100 wrapper
 
@@ -316,9 +337,12 @@ node, one task, one `nvidia_h100_pcie` GPU, four CPUs, 64 GiB RAM, and two hours
 on `normal`. It excludes `evc34`. It requires an explicitly supplied fresh
 output path directly under `artifacts/eval_history`, checks all three immutable
 input hashes, verifies the read-only pre-score Git bundle and receipt, verifies
-every implementation byte against `FROZEN_COMMIT`, invokes only this evaluator into a private quarantine,
-invokes the evaluator's no-model full preserved-result audit mode, and only then
-publishes the result, mirror, and receipt. It contains no `sbatch`, training,
+every deployed implementation byte against `FROZEN_COMMIT`, builds a
+kernel-sealed in-memory runtime directly from that commit, invokes only its
+frozen evaluator into a private quarantine, invokes the evaluator's no-model
+full preserved-result audit mode, binds publication to the audited SHA-256,
+writes the receipt first, and only then publishes the result and mirror. It
+contains no `sbatch`, training,
 retry, score-conditioned branch, or downstream command and is not submitted by
 this change.
 
