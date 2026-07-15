@@ -4377,3 +4377,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   genuinely different evidence paths, a same-parameter single compiler, two heads without syndrome,
   shuffled backward goals, fixed-step versus syndrome-adaptive replay, and an agreed-wrong stress set.
   Do not describe exact oracle execution or source folding as learned reasoning.
+
+- **2026-07-14 20:18--20:23** — **A bounded prior-art check narrows R9b to a plausible combination
+  novelty, not a world-first claim.** Existing work separately covers neural-guided bidirectional
+  program search, iterative forward-backward abstract interpretation, execute-and-repair neural
+  synthesis, fixed-point recurrent halting, and commitment-preserving context compression. The search
+  did not locate the exact combination of independently state/goal-conditioned per-event compilers,
+  fail-closed certification inherited through a noncommutative product tree, and syndrome-localized
+  reopening of only failed source leaves. `REASONING_FRONTIER.md` records the closest primary sources
+  and the claim boundary. Positive matched neural evidence and a broader systematic review are required
+  before any publication-level novelty statement.

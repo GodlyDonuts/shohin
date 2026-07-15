@@ -2714,3 +2714,22 @@ hierarchical source reopening for adaptive recurrent execution. Affine operator
 composition and bidirectional processing are established ideas individually.
 No world-first claim, neural reasoning claim, or context-scaling claim follows
 from the current oracle mechanics.
+
+A bounded prior-art check further narrows that boundary. Neural-guided
+bidirectional program search already uses inverse semantics
+([Alford et al., 2021](https://arxiv.org/abs/2110.11536)); iterative
+forward-backward abstract interpretation already alternates input and output
+constraints to prune synthesis
+([Yoon et al., 2023](https://arxiv.org/abs/2304.10768)); neural synthesis systems
+already execute and iteratively repair candidate programs
+([Gupta et al., 2020](https://arxiv.org/abs/2007.08095)); and looped models
+already halt on fixed-point convergence
+([Movahedi et al., 2026](https://openreview.net/forum?id=8HeM93bcCq)). Verifiable
+context compression also has a commitment-preservation formulation
+([Trukhina and Vashkelis, 2026](https://arxiv.org/abs/2605.17304)). The bounded
+search did not locate their exact combination with independently conditioned
+per-event neural compilers, inherited leaf-level certification through a
+noncommutative product tree, and syndrome-localized reopening of only failed
+source leaves. This supports a project-novel combination hypothesis only. A
+broader systematic review and positive matched neural evidence would be needed
+before any publication-level novelty statement.
