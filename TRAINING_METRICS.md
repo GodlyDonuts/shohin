@@ -5,9 +5,9 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-13 12:04 EDT
-**Flagship source of truth:** Newton Slurm job `685084`,
-`/lustre/fs1/home/sa305415/shohin/train/flagship_out/log_r0.jsonl`  
+**Last refreshed:** 2026-07-15 00:31 EDT
+**Flagship source of truth:** Newton Slurm job `686732`,
+`/lustre/fs1/home/sa305415/shohin/logs/flagship2_686732.out`
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
 `best_step<step>.pt`, and verify the local full checkpoint. The trainer may subsequently reap
 the numbered file under its retention policy; the ledger records which copies remain durable.
@@ -28,28 +28,60 @@ the numbered file under its retention policy; the ledger records which copies re
 | Field | Confirmed value |
 |---|---|
 | Model | 125.1M trained parameters; frozen 32k tokenizer; 2,048-token sequence length |
-| Active job / node | `685084` on `evc22`, one H100, 4 CPU cores. Dependency-held natural successor `686732` requests two H100s/four CPUs only after `685084` exits; it does not share the live writer. |
-| Start / scheduled end | 2026-07-11 03:51:47 / 2026-07-14 03:51:47 EDT (Slurm allocation; not a completion guarantee) |
-| Microbatch / accumulation | `BS=32`, `ACC=8` |
-| Global tokens per update | `32 * 8 * 2,048 = 524,288` |
+| Active job / node | `686732` on `evc34`, two H100s, 4 CPU cores; one protected writer with no capability-experiment output sharing. |
+| Start / scheduled end | 2026-07-14 03:52:10 / 2026-07-17 03:52:10 EDT (Slurm allocation; not a completion guarantee) |
+| Microbatch / accumulation | `world=2`, `BS=32`, `ACC=4` |
+| Global tokens per update | `2 * 32 * 4 * 2,048 = 524,288` |
 | Absolute training target | 300,000 steps |
-| Resume point | `ckpt_0141500.pt` to step 141,501 |
-| Latest checkpoint milestone | **200,000** steps = **104,857,600,000 nominal update tokens** |
-| Last observed live step | 200,920 = 105,339,944,960 nominal update tokens |
-| Last observed throughput | 154,291 tokens/s, approximately 13.33B nominal tokens/day at that sustained rate |
-| Latest loss / gradient norm | step 200,920: loss 1.5956; gnorm 0.10; LR 0.0050 |
-| Direct H100 telemetry | 12:01 EDT: 94% compute utilization, 63,767 / 81,559 MiB VRAM, 297.21 / 310 W. Low unused VRAM is deliberate: BS64 was OOM; BS32 is the largest verified single-GPU microbatch. |
-| Post-190k health | Isolated guard skips at 193,437 (gnorm 2.21 versus 0.13 EMA) and 200,387 (2.02 versus 0.11 EMA) each recovered at the next logged step. Surrounding recent steps remain in the normal range; no divergence or persistent skip exists. |
-| Two-H100 handoff revalidation | `686734` on evc37, 320 bounded updates from `best_step180000.pt`, `world=2`, `BS=32`, `ACC=4`, fresh optimizer, stream generation 1. Exit 0 with no CUDA/NCCL/DDP error; compile-free late windows 291.7-293.9k tok/s (about 1.90x the live one-H100 rate). One terminal gnorm guard skip at step 180,319 was not followed by an in-canary recovery step, so this is throughput/transport evidence only. |
+| Resume point | `ckpt_0217250.pt` to step 217,251 with fresh optimizer rewarmup and stream generation 1 |
+| Latest checkpoint milestone | **252,500** steps = **132,382,720,000 nominal update tokens** |
+| Last observed live step | 257,680 = 135,098,531,840 nominal update tokens |
+| Last observed throughput | 285,206 tokens/s, approximately 24.642B nominal tokens/day at that sustained rate |
+| Latest loss / gradient norm | step 257,680: loss 1.5544; gnorm 0.10; LR 0.0037 |
+| Direct H100 telemetry | No intrusive telemetry task was added at this milestone. The established two-H100 configuration remains `BS32/ACC4`; current sustained throughput is about 1.85x the prior one-H100 154.3k tok/s band. |
+| Post-handoff health | Startup guard events at 217,569--217,573 and 217,643 recovered into the normal band; the later isolated 234,419 event recovered at 234,420. The cumulative log contains 72 guard-skip records, all recovered; recent logged updates through 257,680 are finite with normal gradient norms and no persistent skip, loader, CUDA, NCCL, or DDP error. |
+| Two-H100 handoff validation | `686734` first established world-2 transport; live `686732` then resumed the exact writer at step 217,251 and has sustained roughly 285--287k tok/s after rewarmup. This is now production throughput, not a canary extrapolation. |
 
-The current live flagship's data stream is frozen for the life of this job. Do not add
-new shards, alter weights, or apply an experimental runtime optimization to `685084`.
+The current live flagship's data stream is frozen for the life of `686732`. Do not add
+new shards, alter weights, or apply an experimental runtime optimization. The job has
+already logged `world=2`, passed real CUDA/NCCL execution, and preserves the exact
+524,288-token global update with 250-step checkpoints.
 
-At the natural handoff only, `686732` will use `NG=2, BS=32, ACC=4`: the same
-`2 * 32 * 4 * 2,048 = 524,288` global tokens/update, fresh optimizer rewarmup,
-250-step checkpoints, and the audited distinct data-stream generation. It excludes
-the CUDA-preflight failures `evc26,31,36,43,50`; it must log `world=2` and pass a
-real CUDA/NCCL health check before its throughput is counted.
+### Raw-Checkpoint Direct Interaction: 200k vs 252.5k
+
+The same seven fresh transcript-first prompts were run greedily on the verified local
+`ckpt_0200000.pt` and `ckpt_0252500.pt` checkpoints. This is a qualitative capability
+audit, not a public benchmark.
+
+| Checkpoint | Initial | Independent review | Supplied verified fact | Valid compact-state reuse |
+|---|---:|---:|---:|---:|
+| Raw 200k | 1/7 | 0/7 | 1/7 | 0/7 |
+| Raw 252.5k | 1/7 | 0/7 | 1/7 | 0/7 after transcript audit |
+
+The automated artifact originally marked 252.5k reuse as 1/7 because the old yes/no
+scorer found a repeated `No mar...` premise inside malformed state text. It did not emit
+or reuse a valid compact state, so the human-forensic result is 0/7. Arithmetic, base
+conversion, sequential state, sorting, string insertion, and Python all remain wrong.
+The 252.5k model more often emits locally relevant fragments, such as the correct
+`29 * 16 = 464`, but does not perform the required next operation. This is weak evidence
+of better local completion, not multi-step reasoning. Canonical local artifact:
+`artifacts/eval_history/manual_raw_200k_vs_252500_local_mps.json`, SHA-256
+`169564bde33eeb21a0f224147d38b7cc972cb8215e598627774e43aea111eed3`.
+
+## Current Reasoning-Mechanism Frontier
+
+These are experiment-state measurements, not capability scores.
+
+| Mechanism | Verified state | Capability status |
+|---|---|---|
+| R10 ACAW/VSPT | Exact noncommutative composition, rank-six exact-rational ambiguity, monotone replay, fail-closed overflow, fixed-size commitments, and canonical serialized-store accounting pass local mechanics. The replacement finite-board contract uses 800 calibration rows and 1,840 factorial confirmation rows, exact operation/query/depth cells, at least 10 accepted cases per cell, at least 400 per confirmation partition, and zero false certificates. Local checks passed, but a second custody audit found seven claim-blocking failures: self-attesting manifests, job-only clean-code enforcement, selectable seeds/R5 input, rehashable score substitution, hash/read TOCTOU, incomplete batch/device/determinism identity, and source changes between admission identities. | **Dormant control; no score read; second audit NO-GO.** Preserve the mechanics and hardening as comparator evidence. Do not resume its score chain unless an R12 contract explicitly requires it. |
+| R11a causal mediator | V3 closes the v2 source/query sampling, cached-generation, common-evaluation, and confirmation-derivation contract defects on paper. Its six source-derived slots, tied recurrent writer, and query readers remain established recurrence/memory machinery rather than a new primitive. | **Dormant favorable control; no implementation, board, fit, score, or GPU job.** |
+| R12 uniform late-query causal composition | `R12_REASONING_INVENTION_CHARTER.md` defines causal equivalence, counterfactual residual derivatives, six state/update axioms, the `log2(N)` information bound, and an adjacent-transposition late-query witness whose `m=2` restriction separates from `AC0` via parity. It also records the finite-circuit collapse boundary and rejects product-tree and Schur-boundary proposals as inventions. | **Theory-only; no mechanism or capability result.** A theorem, equivalence dossier, exact collapse test, prior-art boundary, and CPU falsifier are mandatory before any implementation. |
+
+The research decision rule is stricter: infrastructure, training loss, local mechanics, and a
+decodable hidden state are not reasoning. R10 and R11 are dormant controls. R12 requires a uniform
+resource-scaled capability, future-equivalent state invariance, future-distinguishable state
+separation, causal necessity, and a comparator-relative theorem before implementation.
 
 ## Overnight Comparison Snapshot: 2026-07-13 11:36 EDT
 
@@ -417,13 +449,14 @@ This is data admission, not a score or SFT result.
 | 180k | Observed and hashed, then reaped by trainer retention | `best_step180000.pt` | `train/flagship_out/ckpt_0180000.pt` | `a592a8bd46163eb1427fe64460be0c6a` | Two durable verified copies |
 | 190k | `ckpt_0190000.pt` | `best_step190000.pt` | `train/flagship_out/ckpt_0190000.pt` | `3e195aaf44a14259797c49d7f80d9c7f` | Verified Newton + local |
 | 200k | `ckpt_0200000.pt` | `best_step200000.pt` | `train/flagship_out/ckpt_0200000.pt` | `510d57df578447986b40e20029511b9d` | Verified Newton + local |
+| 252.5k | `ckpt_0252500.pt` | `best_step252500.pt` | `train/flagship_out/ckpt_0252500.pt` | `1769bb0a8a06d4565df001f0521db99e` | Post-250k recovery point; verified Newton + local |
 
 All rows above are full optimizer checkpoints, not model-only exports. The next local DR
-target is 210k, or the newest clean checkpoint before any natural handoff.
+target is 260k, or the newest clean checkpoint before any natural handoff.
 
 ## Current Active Pretraining Corpus
 
-These are the exact current `SHARDS` inputs for `685084`, taken from their manifests.
+These are the exact current `SHARDS` inputs for `686732`, taken from their manifests.
 They are decontaminated against the project evaluation n-gram set at shard construction.
 
 | Source | Tokens | Shards | Documents seen | Documents kept | Eval-contamination drops |

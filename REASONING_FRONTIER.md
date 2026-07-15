@@ -3049,3 +3049,95 @@ hot evictions. No localized learned replay claim is available in R10 because a
 non-oracle second evidence source has not yet been frozen. A static pass could
 authorize a separate preregistration for that re-reader; it cannot establish
 broad language reasoning, internal thinking, or safe irreversible deletion.
+
+#### R10 v2 Finite-Board And Custody Amendment
+
+This amendment supersedes every conflicting R10 clause above before any R10
+probability was extracted. In particular, R10 makes **no population-reliability,
+simultaneous-confidence, Clopper-Pearson, Bonferroni, target-success-probability,
+or future-sample claim**. Calibration and confirmation are finite deterministic
+boards. Passing can describe only observed behavior of the one frozen score
+provider on those exact admitted rows.
+
+The canonical board contract is exactly:
+
+- calibration seed `2026071401`, exactly 800 rows, 80 exact
+  operation/query/depth cells, and exactly 10 rows per cell;
+- confirmation seed `2026071402`, exactly 1,840 rows, split into exactly 920
+  `language_ood` and 920 `full_ood` rows;
+- each confirmation partition has exactly 40 operation/query/depth cells and
+  exactly 23 rows per exact cell;
+- every exact confirmation cell must accept at least 10 rows, every partition
+  at least 400 rows, and every cell and partition must have zero false
+  certificates;
+- observed selective accuracy is at least 99% in each confirmation partition;
+  family, query, depth, and partition results are reported separately and may
+  not subsidize one another.
+
+The only novelty source is the already-frozen R5 board SHA-256
+`d85f16ff374b0c650cf3603826cc5f3b377842818db62bada3b84e71308b9473`.
+Counts, seeds, and that hash are code constants, not runtime choices. Any other
+seed, count, novelty source, or regenerated board is a different experiment
+and cannot inherit R10.
+
+A score-blind board gate is valid only when one exact committed source checkout
+independently regenerates or verifies the build manifest, structural and label
+admissions, board hashes, frozen code/runtime closure, and every finite-board
+cell. Boolean fields such as `all_checks_pass` are never evidence by themselves.
+The exact committed identity must be equal before and after admission, and a
+dirty, untracked, mutable, or revision-mismatched runtime tree fails closed.
+
+Probability extraction and the CPU decision form one frozen execution chain.
+No operator-supplied, rehashed score JSON may become decision input. Every
+artifact is loaded from one immutable byte snapshot, hashed and parsed from
+those same bytes, and either held through the decision or revalidated before
+atomic publication. The gate freezes batch size, deterministic-algorithm
+settings, Python/PyTorch/tokenizer/CUDA runtime identity, device identity,
+board name, seed, exact output namespace, and one allowed calibration plus one
+allowed confirmation invocation. A second output path, batch, runtime, device,
+seed, or report is not an R10 replicate and cannot be selected.
+
+Independent review found the pre-amendment implementation did not yet enforce
+all of this: self-attesting manifests, job-only clean-code checks, seed/input
+shopping, score substitution, TOCTOU, incomplete replay identity, and source
+mutation during admission were possible. That implementation is therefore
+NO-GO even though its mechanics tests passed. No R10 neural probability tensor
+was read. A new implementation must add adversarial regression tests for each
+attack and survive another independent review before any Stokes build or score
+access.
+
+## R12: Mathematical Invention Before Architecture
+
+The user has superseded architecture-first reasoning work. The detailed contract
+is frozen in `R12_REASONING_INVENTION_CHARTER.md`. R9, R10, and R11 remain
+negative evidence and matched controls; they are not templates to tune or rename.
+
+The first mathematical result is a no-go boundary: fixed context, finite
+precision, and bounded runtime make every deterministic classical mechanism
+extensionally equivalent to a finite acyclic circuit after unrolling and
+inlining. An absolute claim of non-equivalence to every static classifier is
+therefore impossible. R12 instead requires a uniform asymptotic family and an
+explicit resource-bounded comparator.
+
+The operational target is uniform late-query causal composition. Histories are
+equivalent only when every admissible continuation and every withheld query
+produce the same answer relation. The required abstract state is the
+counterfactual residual `rho_h(c, q) = R(hc, q)`, updated by residual derivatives
+that satisfy closure, composition, observation, extensionality, separation, and
+uniformity. If the causal quotient has `N` states, an exact query-oblivious state
+needs at least `log2(N)` history-dependent bits.
+
+The first theorem-backed witness uses adjacent transpositions and a late query
+for the image of one object. Once all permutations are reachable, the causal
+quotient contains exactly `m!` states. Its `m=2` restriction is parity and thus
+separates the target from polynomial-size constant-depth AND/OR/NOT circuits.
+This is deliberately not presented as a separation from arbitrary transformers
+or threshold circuits; the relevant stronger complexity separation is open.
+
+Architecture proposals based on path-ordered products, persistent product
+trees, or gauge-reduced Schur boundary actions were independently derived and
+rejected as inventions: they reduce to recurrence/fast weights or known dynamic
+data structures and differentiable algebra. They remain useful favorable
+controls. No R12 code, board, training data, fit, score, or GPU job is authorized
+until a candidate abstract operator survives the charter's mandatory theorem,
+equivalence dossier, exact collapse test, prior-art boundary, and CPU falsifier.

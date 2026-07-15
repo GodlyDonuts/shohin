@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-14 21:50 EDT (the protected two-H100 pretrain remains isolated. R9c is a closed neural and mathematical negative. R10 remains pre-score: exact version spaces plus Annihilator-Certified Ambiguity Workspace, now hardened to program-level operation-and-query calibration, rank-six affine invariants, reversible hot-context eviction, monotone exact replay, and fixed-size all-support commitments instead of linear opcode witnesses. Irreversible source deletion is forbidden. Preserve R9c; do not repair it by threshold, width, memory, or replay tuning.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-15 00:31 EDT (the protected two-H100 pretrain is healthy through 257.68k and the 252.5k recovery point is hash-mirrored locally. R9c is a closed neural and mathematical negative. R10 and R11 are now dormant controls rather than active mechanism templates. R12 is theory-only: `R12_REASONING_INVENTION_CHARTER.md` defines uniform late-query causal composition, a counterfactual residual algebra, a finite-circuit no-go boundary, and mandatory theorem/equivalence/CPU-falsifier gates. No R12 implementation, data, fit, score, or GPU job is authorized. Irreversible source deletion is forbidden.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -28,10 +28,16 @@ verified, concise-CoT.
 It authorizes the validated two-H100 path at a **natural** handoff and for isolated experiments; it does
 not authorize interrupting or modifying the running one-H100 writer.
 
+**Superseding reasoning-research directive (2026-07-15):** stop treating established methods as the
+frontier and derive the capability from mathematical theory before choosing an architecture. The enforceable
+contract is `R12_REASONING_INVENTION_CHARTER.md`: known methods remain matched controls, architecture-first
+proposals are rejected, and no implementation advances without a theorem, equivalence dossier, exact collapse
+test, and finite CPU falsifier. This does not authorize unsupported SoTA or world-first claims.
+
 What that means operationally, and is now settled — **do not relitigate:**
-- **Protected current writer; two-H100 successor allowed.** `685084` remains one H100 until it exits.
-  Its successor may use two H100s only with the same 524,288-token global update, fresh-optimizer
-  rewarmup, an actual DDP/CUDA health check, and single-writer safety. The 8xH100 path remains unavailable.
+- **Protected current writer is the validated two-H100 successor.** `685084` exited cleanly and
+  `686732` now runs two H100s with the same 524,288-token global update, fresh-optimizer rewarmup,
+  verified DDP/CUDA health, and single-writer safety. The 8xH100 path remains unavailable.
 - **Time is unlimited.** Weeks are fine. Optimize for final quality, not speed.
 - **The two levers that matter at 135M:** (1) more tokens through the model, (2) more/better data.
   Everything we do serves those two. (Architecture is frozen; see §7.)
@@ -58,7 +64,7 @@ Do not wait for permission to fix obvious data/training gaps.
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | `683715` and `685084` completed/timed out cleanly. Current protected continuation is **`686732`** on **evc34**: two H100s, `NG=2 BS=32 ACC=4 CKPT=250`, four CPUs, fresh optimizer rewarmup, and the same exact 524,288-token update. It uses the distinct post-handoff data-stream generation and the established compile/guard path. It is not an output path for any capability experiment. |
-| Extended pretrain status | **`685084` reached 200,000 cleanly** at loss **1.6200**, gnorm **0.11**, and **154.30k tok/s**; immutable Newton/local `best_step200000.pt` and `train/flagship_out/ckpt_0200000.pt` match at md5 **`510d57df578447986b40e20029511b9d`**. Two-H100 successor `686732` is healthy through observed step **234,420** at about **287.1k tok/s** after rewarmup. Its isolated guard skip at 234,419 recovered immediately at 234,420 into the normal band; there is no persistent instability. Numbered checkpoints extend beyond 234k; next local DR target is 240k. The exact 200k milestone is **104,857,600,000 nominal update tokens**; mounted corpus capacity is **57,826,022,271 manifest tokens**. These are intentionally separate metrics in `TRAINING_METRICS.md`. Do not integrate CUDA graphs into live training: the clean whole-update canary gained only ~1.8% while removing the established guard/observability path. |
+| Extended pretrain status | **`685084` reached 200,000 cleanly** at loss **1.6200**, gnorm **0.11**, and **154.30k tok/s**; immutable Newton/local `best_step200000.pt` and `train/flagship_out/ckpt_0200000.pt` match at md5 **`510d57df578447986b40e20029511b9d`**. Two-H100 successor `686732` is healthy through observed step **257,680** at about **285.21k tok/s**. Step 257,680 is **135,098,531,840 nominal update tokens**; latest loss/gnorm is **1.5544 / 0.10**. The numbered **252,500** checkpoint is preserved on Newton as `best_step252500.pt` and locally as `train/flagship_out/ckpt_0252500.pt`; all copies match md5 **`1769bb0a8a06d4565df001f0521db99e`**. The latest rolling checkpoint observed is `ckpt_0257500.pt`. Exact 250k had already aged out under rolling retention, so 252.5k is the durable post-250k recovery point; next local DR target is 260k. Mounted corpus capacity remains **57,826,022,271 manifest tokens** and is intentionally distinct from nominal update tokens in `TRAINING_METRICS.md`. Do not integrate CUDA graphs into live training: the clean whole-update canary gained only ~1.8% while removing the established guard/observability path. |
 | **SFT feedback job** | `681000`, name `shohin-sft`, **DONE**; wrote baseline `train/sft_out/sft_ep3.pt`. Isolated v2 pilot `685708` completed one epoch from `best_step120000.pt` to `train/sft_v2_120k/sft_ep1.pt`. It is a narrow arithmetic-format ablation, not a promoted broad-reasoning recipe. V4 `686323` was canceled before its first step after stale 40/35/15/10 weights; v4 `686324` was canceled before any artifact after a code-boundary audit found 461/3,542 legacy BPE prompt-prefix mismatches. Both are invalid and preserved. Corrected v4 pilot **`686326`** completed one epoch in 1,218s to `train/sft_v4_168750_r3/sft_ep1.pt`, with audited 40/47/8/5 weights and inference-aligned prompt/completion token construction. It is an unevaluated candidate, not promoted. |
 | **Behavior-preserving direct-skill SFT** | **Fit completed, isolated and unevaluated:** `688748` ran from immutable `best_step200000.pt` on evc25, completed one epoch / 4,511 updates in 1,766s, and wrote only `train/sft_retention_v1_200k_r1/sft_ep1.pt` (SHA-256 `46970cdc8692787fe78499bc4a8c7d8b7bd4f3a4b9d29408dd8a14a670f53404`). The candidate freezes the tied embedding/output matrix, trains on 72,161 packed sequences from frozen broad-v4 + verified primitives, and adds raw-logit KL on 4,096 answer-free prompts. Prompt replay was built CPU-only on Stokes job `738692`: SHA-256 `d9c3c355b5fba6b9643d052203ed5d3339dab67563bd8071ba11f12b31076b60`, zero exact overlap against primitive and RG held-out prompts, and no target answers. The corrected CUDA-only evidence chain is raw primitive `688768` (exact 100 rows in each of seven families) -> candidate primitive `688769`; raw balanced 800-case RG `688761` -> candidate `688762`; seven-case raw-vs-candidate interaction `688751` -> eight-case deep transcript `688763`; raw/candidate late-logit lens `688753/688754`; raw/candidate verified visible-thinking audits `688774/688775`; and CPU-only assessor `688776` after all evidence. The trace prompts are 0 exact/13-gram hits across broad-v4 643,595 rows (audit SHA-256 `a2d8e1750cd0e69df2032ff5407afc60a4c13a57bf967823cf98a7be8234b9a7`) and primitives 210,000 rows. Earlier primitive jobs `688749/688757/688759/688765`, RG `688758`, candidate RG `688750`, deep `688752`, and assessors `688764/688767/688770` were canceled or failed before producing a valid report due audited evaluator, balance, schema, or CUDA-fallback defects. Fit loss alone has no standing until the corrected outputs are read. |
 | **Retention result (supersedes the stale unevaluated label above)** | **Narrow real signal; reject as broad operator reasoning.** Balanced RG rises raw **31/800 = 3.875%** to retention **143/800 = 17.875%**. The decontaminated twelve-prompt visible-trace audit rises raw **0/12** to **3/12** trace-and-final pairs, and the post-freeze state OOD control rises **0/72 -> 6/72**, concentrated in subtract-multiply-add. But the exact family-balanced primitive gate is only **7/100 arithmetic** and **2/100 base conversion**, under immutable 10% floors; direct interaction remains only **2/7** initial and **0/7** compact reuse. Assessment `688776` correctly records `reject_retention_candidate`; this checkpoint is a behavior-preserving baseline, not a promotion. |
@@ -68,6 +74,10 @@ Do not wait for permission to fix obvious data/training gaps.
 | **Matched reflection/control data** | **CPU-ADMITTED BUT DORMANT; no SFT authorized.** Filtered Stokes r2 `738752` contains 57,015 matched rows per arm. Reflection SHA-256 is `627ecbd802a3c7f1cc50346a5871144e2a462f3f54e254ce6cc2c99e7d53616f`; neutral SHA-256 is `ee0816d86b758a4d42be473367b5c9097bfcc542a48a9ca69eead30514298c94`. Response token counts are exactly equal pairwise; prompt token delta is exactly -8 in every pair and is explicitly reported. Audits find zero malformed rows, duplicates, public consumed-field hits, fixed-trace hits, state-OOD hits, or factor-900 hits. The direct-only prerequisite failed, so preserve both arms and do not spend GPU time on them. |
 | **FQRB finite-query result** | **CLOSED NEGATIVE.** `688665` completed from raw-200k; its isolated checkpoint SHA-256 is `d732963dde59e224c6f494b503e54a57ec9a81d4b2b1b586a9d212a7095a1c6d`. Combined held-out has only normal/paraphrase/counterfactual **7/4/16** correct rows of 2,500 and **0** strict groups. Train diagnostic recreates normal answers with a zero tape **500/500** and shuffled tape **466/500**; core and magnitude factors likewise show zero strict transport and high zero/shuffle recreation. Direct raw-vs-FQRB is raw **1/7** initial versus FQRB **0/7**, while the eight-case FQRB interview is **0/8** throughout and emits repeated label fragments. The carrier is not causally read, does not preserve ordinary decoding, and cannot support PAAT, ECLI, CWR, CRCS, or a reasoning claim. |
 | **R9c bidirectional syndrome result** | **FORMALLY REJECTED; dynamic paths existed but learned syndrome exchange hurt transfer.** Four arms `689259--689262` shared initial adapter SHA-256 `712abd97d22a9a284cf0dbfbf7437cbe2d7bc0c292bdead621f442d7e9b3a9eb`, 328,502 trainable parameters, 4,092 groups / 24,552 examples / 1,023 updates, seed 20260714, and identical base, pointer, tokenizer, and data hashes. Eight frozen evaluations `689266--689273` and assessor `689274` reject treatment. Fresh OOD operation/answer accuracy is treatment **78.29% / 47.77%**, static **80.12% / 51.12%**, no-syndrome **81.14% / 51.79%**, and shuffled-goal **79.58% / 50.89%**. Treatment full-OOD answers are **30.21%**, below the 35% floor, and **88.83%** of wrong operations are agreed-wrong common-mode errors, above the 50% ceiling. Only exact contracts, fit/depth preservation, language floor, query bridge, and adaptive replay pass. Decision SHA-256 is `cb3013800daaeb95b0bc8b2d454b89cf177a4e2dc652633eb0392a625a87b012`; no full R9c fit is authorized. |
+| **R10 ACAW/VSPT control** | **DORMANT PRE-SCORE CONTROL; SECOND CUSTODY AUDIT NO-GO; no reasoning or context-scaling success claim.** Commit `a8af84b` implements exact noncommutative version-space composition, sound exact-rational affine ambiguity hulls, query-set annihilator certificates, fail-closed overflow, monotone leaf-local replay, fixed-size all-support commitments, and range-bound retrieval references. Operator/query parity, exhaustive ambiguity, alternate-derivation, overflow reconstruction, and 4,096-event mechanics pass. Canonical accounting separates active-hot, factorized-provenance, external-source, retrieval-reference, and integer-growth bytes. The finite-board replacement passes its local mechanics tests, but independent adversarial review found its evidence custody still forgeable: consumers trusted self-attesting booleans without replaying the build binding; clean committed code identity was enforced only by the optional job; caller-selectable seeds/R5 inputs allowed board shopping; score JSON could be altered and rehashed; several hash-then-reopen paths were TOCTOU-vulnerable; batch/device/determinism identity was incomplete; and source could change between initial and final admission identities. These are claim-blocking even if numerical scores are honest. No R10 probability tensor has been read. Preserve the completed hardening work as a control; do not resume its score chain unless R12 later requires it as a matched comparator. |
+| **R11 internal workspace control** | **DORMANT CONTROL; broad draft and v1/v2 were NO-GO; v3 remains an unimplemented preregistration, not a capability result.** The six-slot, 96-wide architecture remains technically feasible as an isolated wrapper with 1,607,334 trainable parameters. V1 failed on an incomplete generator/target contract, leakage and cache risks, ambiguous ledgers, and overclaiming. V2 SHA-256 `11ca769036b2bc85eebd47a950e51b2bc87158668e47ba3cc5e38e4fdae68408` closed many of those gaps but still failed final review: affine-answer/token/frequency rejection conditioned accepted sources on supposedly late-bound queries; the exact API omitted the cached decode session it later required; sham/control primary evaluation semantics were ambiguous; and a seed commitment could not prove confirmation secrecy. V3 closes those contract defects on paper, but its tied recurrence, source-derived slots, and query readers are established machinery rather than an R12 invention. Preserve it as a favorable matched control; no code, board, fit, score, or H100 job is authorized. |
+| **R12 mathematical invention frontier** | **THEORY-ONLY; no mechanism result.** `R12_REASONING_INVENTION_CHARTER.md` adopts uniform late-query causal composition as the operational target. It defines causal equivalence, counterfactual residual derivatives, closure/composition/extensionality/separation/uniformity axioms, an information lower bound, and a permutation/parity witness separating the target only from an explicit shallow-static comparator. It also proves why absolute non-equivalence to finite static circuits is impossible. R10/R11, recurrence, retrieval, fast weights, hypernetworks, product trees, boundary-action/Schur layers, and external executors are controls rather than invention starting points. No implementation may begin before a candidate operator survives theorem, equivalence, exact-collapse, prior-art, and CPU-falsifier gates. |
+| **Raw 200k vs 252.5k direct interaction** | **No demonstrated broad capability gain.** Local-MPS artifact `artifacts/eval_history/manual_raw_200k_vs_252500_local_mps.json` has SHA-256 `169564bde33eeb21a0f224147d38b7cc972cb8215e598627774e43aea111eed3`. Both checkpoints score 1/7 initial, 0/7 review, and 1/7 with a supplied verified fact; arithmetic, base conversion, sequential state, sorting, insertion, and Python all fail. The script marks 252.5k state reuse 1/7 only because its loose yes/no regex finds a repeated `No mar...` premise inside a malformed state loop; human transcript audit is 0/7 valid compact-state reuse. Cluster probes `689355` and `689364` never loaded a model because their torch/CUDA preflights timed out and produced no artifact; the second was canceled after the local read-only fallback was already progressing. |
 | **Eval board job** | Corrected CUDA-only v2 board **`686277` completed**: GSM8K maj@4 **6/100**, pass@1 **14/100**, MATH-500 **6/100**, HumanEval **6/164**, MBPP **0/100**. The v2 pilot is **rejected for promotion**. RG held-out `686278` is **90/800 = 11.25%** and in-training `686279` is **98/800 = 12.25%**: it learned a few routines that transfer but remains zero on most logic/transformation/cipher/geometry families. The corrected raw-base board **`686315`** pinned `best_step168750.pt` and completed: GSM8K maj@4 **5/100**, pass@1 **2/100**, MATH-500 **2/100**, HumanEval **7/164**, MBPP **0/100**. `686316` direct adaptive interaction was **1/6 initial, 1/6 after explicit self-review, 1/6 with a verified intermediate fact**; only the simple syllogism was correct. V4 r3 public board **`686336` completed and is rejected**: GSM8K maj@4 **5/100**, pass@1 **14/100**, MATH-500 **1/100**, HumanEval **2/164**, MBPP **0/100**. Its corrected held-out procedural result `686337` is **209/800 = 26.125%**, above V2's 90/800 on the same evaluator, but the later raw base means this is a useful diagnostic signal rather than clean data-only attribution. V4 remains a generator/verifier candidate, not a broad promotion. |
 | **V5 primitive board** | **`686401` completed; V5 is rejected for broad promotion.** From the raw-168.75k base it scored GSM8K maj@4 **10/100**, greedy **9/100**, MATH-500 **3/100**, HumanEval **2/164**, and MBPP **0/100**. It shows narrow arithmetic-format transfer but regresses code from raw's 7/164 HumanEval and does not establish broad math, code, or instruction-following transfer. |
 | **V6 contract SFT** | **`686413` completed cleanly** to `train/sft_v6_contracts_168750_r2/sft_ep1.pt` (4,535 updates, 1,388s). Its fresh 245-case contract holdout `686414` rises from raw **20/245 = 8.16%** to **142/245 = 57.96%**, especially review 28/35, scaffold 34/35, and reuse 34/35. This is deliberately not a latent-reasoning claim: independent deep audit `686415` is only **4/8 initial, 1/8 review, 1/8 scaffold, 0/8 compact reuse** and shows invalid compact calculations. Matched matrix `686438` completed at Q/A **4/48 -> 17/48**, direct **5/48 -> 10/48**, CoT **0/48 -> 21/48**, one-shot **7/48 -> 7/48**; it establishes contract transfer but not compact-state reasoning. No public board is justified. |
@@ -129,25 +139,19 @@ Do not wait for permission to fix obvious data/training gaps.
 extension resumes from `ckpt_0060000.pt` with fresh optimizer rewarmup, so no stale 59k momentum is used.
 `ckpt_0059000.pt` is the local full+optimizer emergency fallback if a fresh-optimizer resume proves bad.
 
-**Next actions in order:** (1) Watch `685084`: retain the normal ~154k tok/s band and expected 250-step
-checkpoints, preserve/download 200k, and never interrupt a recovered isolated gnorm skip. (2) Before `685084`
-exits, determine whether FineWeb r2 and DCLM 25B both have committed manifests, full machine-readable scans,
-and hash-bound approvals. If both pass, cancel fallback `686732` before its dependency releases and submit the
-language-balanced relaunch with `NG=2 BS=32 ACC=4`, an exact 524,288-token update, fresh optimizer, and the
-newest preserved numbered checkpoint. If either fails or is incomplete, let `686732` resume the old stream
-with `world=2`, a new data-stream generation, and no NCCL/CUDA failure rather than leaving the flagship idle.
-(3) Retain V7
-`686467` only as rejected constructed-contract evidence; its 73.10% generator holdout does not survive the
-two independent transfer interviews, so no V7 public board is justified. (3) Complete and independently scan
-the 25B DCLM replacement before it can enter any future relaunch. (4) Retain raw `686370`, V5 `686388`, V6
-`686415`, and V7 `686484` as negative compact-state evidence; do not mistake generated-contract performance
-for autonomous latent reasoning. (5) Improve the verifier separately: `686437` showed first-pass 7/100,
- oracle@16 36/100, verifier@16 9/100; the new cross-family rollout must pass a held-out selection gate before
- any promotion. (6) Let shuffled `686554 -> 686555` scale and fully replay TACO before considering an isolated
- algorithmic-code ablation. (7) At the next controlled/natural pretrain handoff only, use manifest-gated language,
-math/reasoning, and code sources with explicit, per-batch-safe domain weights; do not alter live SHARDS.
-The future relaunch target is **600k absolute steps**, not 300k: `train.py --steps` is absolute and the
-current phase already targets 300k, so a 300k relaunch would take zero updates.
+**Next actions in order:** (1) Protect `686732` passively: retain the normal ~285--287k tok/s two-H100 band and
+250-step checkpoint cadence, preserve/download 260k, and never let a capability experiment share its output.
+(2) Work only at R12 gates 1--2: derive a realizable counterfactual-residual operator from the axioms and state
+its comparator-relative resource theorem or explicit conjecture before naming neural components. (3) Subject
+that operator to an independent equivalence dossier and exact collapse test. Any reduction to SFT, recurrence,
+retrieval, fast weights, a hypernetwork, external execution, a product tree, or a Schur boundary action rejects
+the proposal. (4) Only a survivor may receive a frozen CPU falsifier; no neural implementation, Shohin fit, or
+H100 job is currently authorized. (5) Keep R10 and R11 score-blind and dormant as favorable controls. Preserve
+their completed mechanics and preregistrations, but do not continue hardening or implementation unless a later
+R12 contract explicitly needs a comparator. (6) At a controlled pretrain handoff only, use manifest-gated
+language, math/reasoning, and code sources with explicit per-batch-safe domain weights; do not alter live SHARDS.
+The future relaunch target is **600k absolute steps**, not 300k: `train.py --steps` is absolute and the current
+phase already targets 300k, so a 300k relaunch would take zero updates.
 
 ---
 
@@ -4501,3 +4505,93 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   and 4,096-event history all pass. This strengthens the context implementation without overstating
   it: unresolved factorized provenance and external source remain linear in the worst case, and no
   neural reasoning score has yet been read.
+
+- **2026-07-14 21:50--22:03** — **R10 mechanics are implemented and pushed before any probability
+  extraction; the live 252.5k recovery point is also protected.** Commit `a8af84b` adds the exact
+  noncommutative VSPT, ACAW exact-rational hull/certificate mechanics, and a provenance-bound probability
+  extractor. Canonical accounting separately measures active hot state, factorized provenance, external
+  source payloads, retrieval references, and exact-integer growth; 4,096-event/8,191-node mechanics pass.
+  Newton `ckpt_0252500.pt` was promoted to `best_step252500.pt` and downloaded locally; all copies match
+  md5 `1769bb0a8a06d4565df001f0521db99e`. No R10 score tensor was read.
+
+- **2026-07-14 22:03--22:18** — **Direct behavior remains negative, R10's first statistical contract is
+  rejected before score, and an internal R11 mechanism is preregistered.** Raw 200k and raw 252.5k are both
+  1/7 initial, 0/7 review, and 1/7 supplied-fact on the same seven fresh prompts. The apparent 252.5k reuse
+  1/7 is a scorer false positive caused by a repeated premise inside malformed state text; valid compact
+  reuse remains 0/7. Independent pre-score review found the first R10 boards/evaluator could erase required
+  OOD partitions, pass weaker accuracy gates, and support too few accepted cases. Scoring stays blocked while
+  an 800 calibration / 1,840 confirmation factorial v2 contract and stricter evaluator are built. Separately,
+  `R11_INTERNAL_WORKSPACE_PREREG.md` freezes a 1.61M-parameter internal source-write/recurrent-state/read
+  experiment with causal donor transplants, held-out consumer reuse, and strict matched controls. It is a
+  design only and cannot touch the flagship.
+
+- **2026-07-14 22:18--22:32** — **R11's first broad evidence contract is rejected before code and
+  narrowed to a causal-mediator canary.** Architecture review confirms a six-slot 96-wide writer/cell/reader
+  wrapper can fit the current 30-layer model, but corrects the tied base count to 125,081,664 because the
+  earlier draft omitted 3,840 learned QK-norm scales. Adversarial review finds the shared donor query could
+  collapse into the donor world's ordinary clean task, while answer-position readers could act as a late
+  motor corrector. R11a therefore uses crossed 2x2 affine queries whose coefficients appear only after the
+  source workspace is cached, a separate equal-answer collision query, source-free readout, readers active
+  only during query prefill, and a requirement that early/middle readers retain performance with block 24
+  removed. Query/answer invariance, zero query-to-workspace gradient, exact next-token target shifting,
+  no-zloss CE, per-arm compute ledgers, and whole-pair bootstrap gates are mandatory CPU contracts. No R11
+  code or GPU job is authorized yet.
+
+- **2026-07-14 22:32--23:39** — **R10's replacement evaluator is hardened without opening a score,
+  and raw-checkpoint interaction remains negative.** The first v2 draft was independently rejected because
+  extraction could begin before complete admission/code closure, confirmation partitions could collapse
+  operation families, finite-board results were wrapped in invalid population-confidence language, and some
+  cells could pass with too few accepted cases. The replacement validates the frozen gate, independent
+  admission, complete train-Python/runtime/Git identity, and all artifact hashes before CUDA, checkpoint load,
+  or probability access. It uses exact 800/1,840 board geometry, family/query/depth cells, at least ten accepted
+  rows per exact cell and 400 per confirmation partition, zero false certificates, and family-exact empirical
+  decisions. Local verification passes 14 generator/auditor tests, five extractor tests, 17 evaluator tests,
+  canonical-store accounting, strict transcript scoring, bytecode compilation, Ruff, and shell syntax. No
+  probability tensor has been read; the exact committed tree must still be frozen score-blind on Stokes.
+  Separately, verified local-MPS interaction shows raw 200k and raw 252.5k both at 1/7 initial, 0/7 review,
+  1/7 supplied-fact, and 0/7 valid compact-state reuse. More pretraining has not yet demonstrated broad reasoning.
+
+- **2026-07-14 22:32--23:39** — **R11a v1 is rejected and a narrower v2 is frozen for final contract
+  audit only.** V1 left the data/target generator underdefined, risked coefficient/answer leakage, referenced a
+  nonexistent source-visible path, duplicated q0 reads, lacked a valid sham-interchange definition, left hidden
+  source/KV-cache bypasses and ledgers ambiguous, exposed no sealed confirmation process, and overclaimed what
+  reader lesions could localize. V2 SHA-256 is
+  `11ca769036b2bc85eebd47a950e51b2bc87158668e47ba3cc5e38e4fdae68408`. It specifies a deterministic
+  counter-PRF board, coefficients fixed before worlds, syntax-defined q0 collision, source-only 576-scalar W,
+  fresh-cache source-free reads, crossed qA/qB whole-W swaps, query-prefill-only readers, exact call ledgers,
+  source-scratch clear/swap/poison/interleaving tests, whole-pair intervals, and a committed one-time confirmation
+  seed. Its claim explicitly allows blocks 12/18 to compute query-conditioned answer state after reading W and
+  is limited to mediation on one fixed artifact. No implementation, data, fit, score, or H100 job exists; final
+  independent audit and CPU/tiny mechanics are mandatory before any execution.
+
+- **2026-07-14 23:39--23:50** — **Independent custody review rejects the locally passing R10 evidence
+  chain before any score.** Seven attack surfaces survive the mechanics tests: manifests can self-attest
+  without consumers replaying the build binding; clean committed code is enforced only in the optional batch
+  wrapper; caller-selectable generator seeds and R5 novelty input permit board shopping; score JSON can be
+  altered and rehashed before CPU evaluation; hash-then-reopen paths permit TOCTOU; batch/device/determinism
+  identity is incomplete; and source can change between initial and final admission identities. These defects
+  invalidate evidentiary custody even if the math and probabilities are honest. No Stokes build or score was
+  run. Pipeline custody, the score-to-decision chain, and adversarial tests are now separate hardening workstreams.
+
+- **2026-07-14 23:39--23:50** — **Final contract audit rejects R11a v2 before implementation.** V2
+  improved the causal boundary but still regenerated accepted source worlds using affine-answer distinctness,
+  token-length, and frequency checks, allowing source distributions to encode supposedly late-bound query
+  information. Its declared API returned logits without the query-only decode session required by free
+  generation; sham/control evaluation did not state whether primary metrics used native or common crossed rows;
+  and a seed commitment could prove fixation but not secrecy. V3 must freeze source worlds before coefficients,
+  redraw only coefficients, define teacher/prefill/decode APIs exactly, evaluate all arms on one crossed matrix,
+  and replace secret-custody wording with a deterministic post-calibration derivation. V2 SHA-256 remains
+  `11ca769036b2bc85eebd47a950e51b2bc87158668e47ba3cc5e38e4fdae68408`; no code or GPU work exists.
+
+- **2026-07-15 00:00--00:31** — **Reasoning research moves from architecture-first iteration to a
+  mathematical invention charter.** Four independent theory/mechanism attacks rejected path-ordered products,
+  persistent product trees, and Schur boundary actions as new primitives because they collapse to recurrence,
+  fast weights, known dynamic data structures, or differentiable algebra. They also established the finite-
+  circuit boundary: every fixed-context, finite-precision, bounded classical mechanism can be unrolled, so
+  absolute non-equivalence to static computation is impossible. `R12_REASONING_INVENTION_CHARTER.md` now makes
+  uniform late-query causal composition the operational target and counterfactual residual derivatives the
+  required abstract object. It freezes closure, composition, observation, extensionality, separation, and
+  uniformity axioms; an information lower bound; a permutation/parity witness; and mandatory theorem,
+  equivalence, exact-collapse, prior-art, CPU-falsifier, matched-control, and score-blind gates. R10 and R11 are
+  dormant controls. No R12 code or GPU work is authorized. The protected flagship remained healthy through
+  step 257,680 at ~285.21k tok/s; latest rolling checkpoint was 257,500 and 260k remains the next DR target.
