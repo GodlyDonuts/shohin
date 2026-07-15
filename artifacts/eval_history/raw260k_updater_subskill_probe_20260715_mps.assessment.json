@@ -1,0 +1,39 @@
+{
+  "assessment_status": "posthoc_exploratory_diagnostic_only",
+  "checkpoint_step": 260000,
+  "criteria": {
+    "copy_state": "Response must state the observed integer as the new state without merely echoing the prompt.",
+    "delete_head": "Response must emit only the operations after the completed first operation, in the original order.",
+    "joint_natural": "Response must carry the observed integer as state and delete exactly the completed first operation.",
+    "joint_packet": "Response must be a canonical State/Plan packet with the observed integer and exactly the residual plan."
+  },
+  "interpretation": "Raw Shohin has a strong arithmetic-execution continuation bias but no demonstrated queue-consumption and state-transport updater. This diagnoses a controller target; it is not a reasoning, novelty, or training-success claim.",
+  "raw_artifact_sha256": "4505602994a0e337b99359e580a6f2f04fad4d365b2dac59f4c339fac13a7593",
+  "row_assessments": [
+    {"id": "copy_25", "strict_correct": false, "failure": "prompt echo without new-state emission"},
+    {"id": "copy_75", "strict_correct": false, "failure": "prompt echo without new-state emission"},
+    {"id": "copy_64", "strict_correct": false, "failure": "prompt echo without new-state emission"},
+    {"id": "delete_a", "strict_correct": false, "failure": "executes operand expression instead of deleting plan head"},
+    {"id": "delete_b", "strict_correct": false, "failure": "executes operand expression and repeats full plan"},
+    {"id": "delete_c", "strict_correct": false, "failure": "executes remaining arithmetic from an invented state instead of emitting residual plan"},
+    {"id": "joint_a", "strict_correct": false, "failure": "uses observed state but skips/reorders operations"},
+    {"id": "joint_b", "strict_correct": false, "failure": "ignores observed state and executes operands"},
+    {"id": "joint_c", "strict_correct": false, "failure": "continues two residual operations correctly, then replays consumed operation"},
+    {"id": "packet_a", "strict_correct": false, "failure": "repeats original plan and prompt fields"},
+    {"id": "packet_b", "strict_correct": false, "failure": "repeats original plan and prompt fields"},
+    {"id": "packet_c", "strict_correct": false, "failure": "executes consumed operation and emits arithmetic lines instead of packet"}
+  ],
+  "schema": "raw260k_updater_subskill_assessment_v1",
+  "summary": {
+    "copy_state_correct": 0,
+    "copy_state_total": 3,
+    "delete_head_correct": 0,
+    "delete_head_total": 3,
+    "joint_natural_correct": 0,
+    "joint_natural_total": 3,
+    "joint_packet_correct": 0,
+    "joint_packet_total": 3,
+    "strict_joint_correct": 0,
+    "strict_joint_total": 6
+  }
+}
