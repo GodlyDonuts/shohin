@@ -1,9 +1,9 @@
 {
   "all_checks_pass": true,
   "auditor_sha256": "c6f18bec2d4e93f34ea69f1236e856c178228374c66de6d764843695df6cadaa",
-  "canary_file_sha256": "4cfde9cce723bfffb4ce9bd1d47350da0136e7821a3a5ada575d851e41a14cec",
+  "canary_file_sha256": "baf985855c396f63dffba1e09733a7372bd8b29c852cb5b9f482b4d59de714a1",
   "canary_id": "ccaa-neural-canary-v1",
-  "canary_payload_sha256": "c4032cf3e2affc03befafe66064dd0066bf9dfccce9837ee01c7a2958b8b779e",
+  "canary_payload_sha256": "c5a8ad4653a72f11e74ccbf726f432e9e729fc9e6937be4e968b4a936d02ad81",
   "contract_sha256": "d767e2bf405364d929d6aab0b1e202d643b974e62e71adbddde012a09255a49b",
   "cross_split_13gram_counts": {
     "development__confirmation": 0,
@@ -24,8 +24,8 @@
       "train/counterfactual_cursor_action_objectives.py": "9559cab6d10322a977c595c67b980ada1cbe6559c1b43b98c36b92d72cd883a2",
       "train/counterfactual_cursor_action_training.py": "97d911ce2773d9085c33d529658e12063dbfb8e43b3950973ea1dea2abd98f87",
       "train/eval_counterfactual_cursor_action.py": "85098bd9e86a719ff36978e6724b404c19d169e2fee2f012e004c289d191db5f",
-      "train/jobs/counterfactual_cursor_action_canary.sbatch": "3563bb13fc4add4ba676478411547ac292f4fa3b0f218e4dc6b5afae6c7fd93b",
-      "train/jobs/eval_counterfactual_cursor_action.sbatch": "bccd31371e347b5ca395883dd6442d92689738e9215bb62d080a4081e9f08555",
+      "train/jobs/counterfactual_cursor_action_canary.sbatch": "4f286c96459068aee08c4eb5ca9b3b5b57c3ba7b3c54533c737f612f10a1dcea",
+      "train/jobs/eval_counterfactual_cursor_action.sbatch": "d2db91a6046cfa9e76c37dbd6fb1badec3a785c688179bb509ca312dffd0a2a5",
       "train/model.py": "45fc0dc46ceb0f91d08e3f671cbe9ef202ea212e72d5bba8b77356c3fb0983d4",
       "train/score_counterfactual_cursor_action.py": "6be08f00124cb85f5caad809d67141b71d16b72810b07ec009ece26a880ee9fa",
       "train/test_counterfactual_cursor_action.py": "685f70dfd7f4cd148df1963dc6d0dbb2998bac864fdece95b07238e0d8ab062c",
@@ -36,7 +36,7 @@
       "train/test_train_counterfactual_cursor_action.py": "53baeb506d0b20ce5a07194c67e335d85952ad75392dbf536bd559dde65e77fa",
       "train/train_counterfactual_cursor_action.py": "bad0008b7f1cfd3d6e20e9ad0e2e1e30e8ac4d5036082caca45c9b77c48e3bf2"
     },
-    "git_commit": "6aafefb2568bcb47e895c4846aeb2ad8f3e9498e"
+    "git_commit": "4dfcec195477c23d9e88276d58030d373bc2db6c"
   },
   "pretraining_corpus_overlap": {
     "claim_authorized": false,
