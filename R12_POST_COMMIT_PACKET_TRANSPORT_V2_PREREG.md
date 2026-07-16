@@ -1,8 +1,12 @@
 # R12 Post-Commit Packet Transport V2 Preregistration
 
-**Status:** exact CPU process/custody mechanics authorized. No neural fit,
-Shohin adapter, SFT, H100 job, workspace claim, or reasoning claim is
-authorized.
+**Status:** IMPLEMENTED; CANONICAL RUN PENDING A CLEAN SCIENTIFIC COMMIT. Two
+precommit engineering canaries passed but have no scientific standing because
+their implementation was not yet bound to a commit. The canonical artifact
+path remains `artifacts/r12/post_commit_packet_transport_v2.json`. No neural
+fit, Shohin adapter, SFT, H100 job, workspace claim, or reasoning claim is
+authorized until a post-commit canonical run and independent claim audit both
+close.
 
 ## 1. Question
 
@@ -33,7 +37,9 @@ Decisive challenges expose the missing hidden coordinates of the motor arm.
 ## 3. Four-role process contract
 
 The canonical runner must execute four explicit subprocess roles from a
-precommitted source tree:
+precommitted source tree. Their executable is physically separate from the
+orchestrator and contains no canonical/alternate challenge seed or import of
+the v1 challenge generator:
 
 1. **Writer:** consumes source vectors through standard input and emits packet
    JSONL. It receives no challenge seed, event, consumer, or codebook. It exits
@@ -56,6 +62,12 @@ Every subprocess invocation, role argument list, exit code, input hash, output
 hash, and source-tree hash must be included in the result. Environments are
 allowlisted and contain no project secrets.
 
+Every updater invocation directory contains exactly `packet_in.jsonl` before
+launch and exactly `packet_in.jsonl` plus its immutable `packet_out.jsonl`
+after exit. Every reader invocation directory contains exactly one immutable
+`terminal_packet.jsonl`. A previous or future packet may not coexist in either
+role's working directory.
+
 ## 4. Two-phase custody
 
 Before challenges are generated:
@@ -66,8 +78,10 @@ Before challenges are generated:
 4. terminate both writers;
 5. freeze an append-only phase-one manifest containing packet and code hashes.
 
-Only then generate the challenge seed, affine events, consumers, and independent
-output permutations. Changing only the phase-two seed must leave phase-one
+Only then derive the challenge seed from the immutable phase-one manifest hash
+and a precommitted domain separator, then generate affine events, consumers,
+and independent output permutations. No numeric canonical seed exists before
+the manifest freeze. Changing only the phase-two domain must leave phase-one
 packet bytes and hashes identical.
 
 For each challenge, copy the committed packet stream into an isolated working
@@ -104,8 +118,9 @@ Every decoy must run through the same role interface and write a scored row:
    fall below exact state accuracy;
 6. **shuffled packet:** a deterministic packet-row permutation must fail exact
    state accuracy;
-7. **horizon reader:** an actual reader exact through depth 8 and wrong at
-   depth 9 must be accepted through 8 and rejected at 9;
+7. **horizon reader:** the canonical reader interface is fed a packet from a
+   transport capped at eight events. It must remain exact for cells through
+   depth 8 and fall below exact at depth 9; the reader receives no depth field;
 8. **scorer-side recoding:** an unrecoded reader output file must fail schema or
    byte comparison rather than being transformed by the scorer.
 
@@ -113,8 +128,11 @@ Every decoy must run through the same role interface and write a scored row:
 
 The result passes only if all role/process, phase-order, exact-score,
 direct-versus-incremental, collision, decoy, deterministic replay, and
-seed-independence gates pass. One failure closes v2. Thresholds may not be
-relaxed after any result exists.
+seed-independence gates pass. The canonical command must build two complete
+core reports and require byte identity before it may set the replay gate or
+write an artifact. The verifier requires the exact frozen top-level and gate
+schemas. One failure closes v2. Thresholds may not be relaxed after any result
+exists.
 
 ## 8. Authorized files
 
@@ -122,6 +140,7 @@ Only these new scientific objects are authorized:
 
 ```text
 pipeline/post_commit_packet_transport_falsifier.py
+pipeline/post_commit_packet_transport_roles.py
 pipeline/test_post_commit_packet_transport_falsifier.py
 artifacts/r12/post_commit_packet_transport_v2.json
 R12_POST_COMMIT_PACKET_TRANSPORT_V2_RESULT.md
