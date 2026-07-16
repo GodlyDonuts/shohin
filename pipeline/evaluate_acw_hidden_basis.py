@@ -45,7 +45,7 @@ LITERAL_ARMS = {"acw", "dense_categorical", "packet_token_transformer"}
 
 def _load_manifest(root: Path) -> dict:
     manifest = json.loads((root / "manifest.json").read_text())
-    if manifest.get("protocol") != "R12-ACW-HIDDEN-BASIS-v2":
+    if manifest.get("protocol") != "R12-ACW-HIDDEN-BASIS-v3":
         raise ValueError("wrong ACW evaluation-domain manifest protocol")
     payload = dict(manifest)
     recorded = payload.pop("payload_sha256", None)

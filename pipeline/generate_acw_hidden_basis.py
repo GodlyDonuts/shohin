@@ -34,7 +34,7 @@ TRAIN_MAX_DEPTH = 8
 EVALUATION_DEPTHS = (8, 16, 32, 64, 65)
 PILOT_SEED = 2026071600
 DEVELOPMENT_SEEDS = (2026071601, 2026071602, 2026071603)
-GENERATOR_PROTOCOL = "R12-ACW-HIDDEN-BASIS-v2"
+GENERATOR_PROTOCOL = "R12-ACW-HIDDEN-BASIS-v3"
 CONFIRMATION_DOMAIN = b"R12-ACW-CONFIRM-v1\x00"
 # These commitments belong to the rejected Keychain design and are retained
 # only so historical artifacts fail with an explicit registry mismatch. No
@@ -135,16 +135,35 @@ def _normalized_projection(
     return projection / np.maximum(norms, np.float32(1e-12))
 
 
-def _typed_event_vector(event: np.ndarray) -> np.ndarray:
+def _ordered_projection_sum(
+    projection: np.ndarray,
+    row_indices: Iterable[int],
+) -> np.ndarray:
+    """Sum selected float32 rows in a fixed order without a BLAS reduction."""
+    if projection.ndim != 2 or projection.dtype != np.float32:
+        raise ValueError("projection must be a float32 matrix")
+    result = np.zeros(projection.shape[1], dtype=np.float32)
+    for row_index in row_indices:
+        np.add(result, projection[int(row_index)], out=result)
+    return result
+
+
+def _render_event_feature(
+    event: np.ndarray,
+    event_projection: np.ndarray,
+) -> np.ndarray:
     destination, source, alpha, beta, gamma = (int(value) for value in event)
-    vector = np.zeros(2 * DIMENSION + 3 * FIELD_SIZE, dtype=np.float32)
-    vector[destination] = 1
-    vector[DIMENSION + source] = 1
     offset = 2 * DIMENSION
-    for value in (alpha, beta, gamma):
-        vector[offset + value] = 1
-        offset += FIELD_SIZE
-    return vector
+    return _ordered_projection_sum(
+        event_projection,
+        (
+            destination,
+            DIMENSION + source,
+            offset + alpha,
+            offset + FIELD_SIZE + beta,
+            offset + 2 * FIELD_SIZE + gamma,
+        ),
+    )
 
 
 def _event_bank(rng: np.random.Generator) -> np.ndarray:
@@ -223,7 +242,7 @@ def build_domain(seed_material: bytes) -> Domain:
         EVENT_DIM,
     )
     event_features = np.stack(
-        [_typed_event_vector(event) @ event_projection for event in events],
+        [_render_event_feature(event, event_projection) for event in events],
     ).astype(np.float32)
     queries = _query_bank(_rng(seed_material, "public-queries"), PUBLIC_QUERIES)
     new_queries = _query_bank(
@@ -273,10 +292,13 @@ def split_name(bucket: int) -> str:
 
 def render_source(domain: Domain, state: np.ndarray) -> np.ndarray:
     hidden = (domain.basis.astype(np.int16) @ state.astype(np.int16)) % FIELD_SIZE
-    one_hot = np.zeros(DIMENSION * FIELD_SIZE, dtype=np.float32)
-    for coordinate, value in enumerate(hidden):
-        one_hot[coordinate * FIELD_SIZE + int(value)] = 1
-    return (one_hot @ domain.source_projection).astype(np.float32)
+    return _ordered_projection_sum(
+        domain.source_projection,
+        (
+            coordinate * FIELD_SIZE + int(value)
+            for coordinate, value in enumerate(hidden)
+        ),
+    )
 
 
 def query_answers(

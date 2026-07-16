@@ -756,7 +756,7 @@ class ACWHiddenBasisAdjudicatorTests(unittest.TestCase):
         self.assertEqual(decision["decision"], "GO")
         self.assertEqual(decision["protocol"], adjudicator.DECISION_PROTOCOL)
         self.assertTrue(adjudicator.EVALUATION_PROTOCOL.endswith("-v2"))
-        self.assertTrue(adjudicator.GENERATOR_PROTOCOL.endswith("-v2"))
+        self.assertTrue(adjudicator.GENERATOR_PROTOCOL.endswith("-v3"))
         self.assertEqual(len(decision["seed_results"]), 51)
         self.assertEqual(
             set(decision["confirmation_medians"]), set(adjudicator.SCORED_ARMS)

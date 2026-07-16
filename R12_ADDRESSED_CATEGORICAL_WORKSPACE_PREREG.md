@@ -322,6 +322,26 @@ controller, and filesystem during execution. The result's durable numerical
 standing comes from mandatory fresh deterministic recomputation by every
 canonical consumer, not from treating a historical receipt as a signature.
 
+### Cross-runtime byte portability amendment
+
+The first otherwise-complete public execution (`740053`, generator v2) is not a
+canonical pilot result. Independent replay on macOS reproduced all 59
+integer/state/query arrays exactly but found one-ULP differences in all eight
+float32 feature arrays. The random projection matrices were byte-identical;
+BLAS-dependent reduction order in one-hot matrix multiplication caused the
+drift. Same-runtime replay is insufficient for this protocol because canonical
+consumers must regenerate the dataset on an independent runtime.
+
+Generator v3 therefore constructs every event feature by adding its five
+selected projection rows in fixed semantic order, and every source feature by
+adding its three selected rows in coordinate order. Each addition is an
+explicit float32 elementwise operation; no BLAS reduction is permitted. Golden
+SHA-256 tests bind the complete 48-event bank and the source rendering of all
+`17^3 = 4,913` states. Any v2 dataset or report is diagnostic-only and cannot be
+anchored, consumed by a scored arm, or cited as learned evidence. Before the v3
+pilot runs, independently generated full Mac and Stokes manifests and all 67
+registered arrays must be byte-identical.
+
 The resulting ordered `(history_id, query_id)` curriculum is frozen and replayed
 identically to ACW, dense categorical, addressed continuous, GRU, packet-token,
 answer-motor, and source-retained scored arms. No scored arm has an arm-native

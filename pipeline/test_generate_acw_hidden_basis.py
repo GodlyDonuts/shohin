@@ -1,4 +1,5 @@
 import hashlib
+import itertools
 import tempfile
 import unittest
 from pathlib import Path
@@ -55,6 +56,22 @@ class HiddenBasisGeneratorTests(unittest.TestCase):
         self.assertTrue(np.array_equal(first, second))
         self.assertEqual(first.shape, (96,))
         self.assertEqual(first.dtype, np.float32)
+
+    def test_float_features_have_cross_runtime_golden_hashes(self):
+        self.assertEqual(
+            hashlib.sha256(self.domain.event_features.tobytes()).hexdigest(),
+            "74a5816300a6855cdea73ea9dd990b2b18ffe8a2f887cd568e19e12da0430900",
+        )
+        all_sources = np.stack(
+            [
+                render_source(self.domain, np.asarray(state, dtype=np.int8))
+                for state in itertools.product(range(17), repeat=3)
+            ]
+        ).astype(np.float32)
+        self.assertEqual(
+            hashlib.sha256(all_sources.tobytes()).hexdigest(),
+            "70acbc51b12d61bcaf6c654843e86efdfc39c39b931f986c548677ada4440991",
+        )
 
     def test_event_and_query_semantics(self):
         state = np.asarray([4, 5, 6], dtype=np.int8)
