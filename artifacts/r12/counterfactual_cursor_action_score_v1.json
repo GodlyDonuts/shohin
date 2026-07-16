@@ -1,0 +1,2753 @@
+{
+  "arms": {
+    "cursor_table": {
+      "arm_name": "cursor_table",
+      "full_vocab": {
+        "ablations": {
+          "clamped_zero": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 5,
+                "proportion": 0.0010416666666666667
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.2
+          },
+          "deranged_cycle": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 14,
+                "proportion": 0.002916666666666667
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.0
+          }
+        },
+        "canonical": {
+          "accuracy": {
+            "denominator": 4800,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "adjacent_equivariance": {
+            "affected_cross_position_relation": {
+              "denominator": 2880,
+              "numerator": 2279,
+              "proportion": 0.7913194444444445
+            },
+            "affected_cross_position_relation_and_correct": {
+              "denominator": 2880,
+              "numerator": 0,
+              "proportion": 0.0
+            },
+            "unaffected_same_position_invariance": {
+              "denominator": 4320,
+              "numerator": 3462,
+              "proportion": 0.8013888888888889
+            },
+            "unaffected_same_position_invariance_and_correct": {
+              "denominator": 4320,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "directed_cursor_switch": {
+            "donor_target": {
+              "denominator": 19200,
+              "numerator": 0,
+              "proportion": 0.0
+            },
+            "exact_source_to_donor_switch": {
+              "denominator": 19200,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "exact_five_action_groups": {
+            "denominator": 960,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "per_renderer": {
+            "10": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 2,
+                "proportion": 0.0020833333333333333
+              }
+            },
+            "11": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "12": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "8": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 1,
+                "proportion": 0.0010416666666666667
+              }
+            },
+            "9": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 11,
+                "proportion": 0.011458333333333333
+              }
+            }
+          },
+          "renderer_invariance": {
+            "prediction_invariance": {
+              "denominator": 9600,
+              "numerator": 269,
+              "proportion": 0.02802083333333333
+            },
+            "prediction_invariance_and_correct": {
+              "denominator": 9600,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "unique_top1_ties": {
+            "denominator": 4800,
+            "numerator": 14,
+            "proportion": 0.002916666666666667
+          }
+        }
+      },
+      "receipt_sha256": "34faca9df070a623335db1114a933289649354e8296f18b52a100026d1a10cec",
+      "restricted": {
+        "ablations": {
+          "clamped_zero": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 960,
+                "proportion": 0.2
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.2
+          },
+          "deranged_cycle": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 960,
+                "proportion": 0.2
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.0
+          }
+        },
+        "canonical": {
+          "accuracy": {
+            "denominator": 4800,
+            "numerator": 960,
+            "proportion": 0.2
+          },
+          "adjacent_equivariance": {
+            "affected_cross_position_relation": {
+              "denominator": 2880,
+              "numerator": 2752,
+              "proportion": 0.9555555555555556
+            },
+            "affected_cross_position_relation_and_correct": {
+              "denominator": 2880,
+              "numerator": 672,
+              "proportion": 0.23333333333333334
+            },
+            "unaffected_same_position_invariance": {
+              "denominator": 4320,
+              "numerator": 4128,
+              "proportion": 0.9555555555555556
+            },
+            "unaffected_same_position_invariance_and_correct": {
+              "denominator": 4320,
+              "numerator": 704,
+              "proportion": 0.16296296296296298
+            }
+          },
+          "directed_cursor_switch": {
+            "donor_target": {
+              "denominator": 19200,
+              "numerator": 3840,
+              "proportion": 0.2
+            },
+            "exact_source_to_donor_switch": {
+              "denominator": 19200,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "exact_five_action_groups": {
+            "denominator": 960,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "per_renderer": {
+            "10": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "11": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "12": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "8": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "9": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            }
+          },
+          "renderer_invariance": {
+            "prediction_invariance": {
+              "denominator": 9600,
+              "numerator": 4800,
+              "proportion": 0.5
+            },
+            "prediction_invariance_and_correct": {
+              "denominator": 9600,
+              "numerator": 960,
+              "proportion": 0.1
+            }
+          },
+          "unique_top1_ties": {
+            "denominator": 4800,
+            "numerator": 0,
+            "proportion": 0.0
+          }
+        }
+      }
+    },
+    "ordinary_loss": {
+      "arm_name": "ordinary_loss",
+      "full_vocab": {
+        "ablations": {
+          "clamped_zero": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 5,
+                "proportion": 0.0010416666666666667
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.2
+          },
+          "deranged_cycle": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 10,
+                "proportion": 0.0020833333333333333
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.0
+          }
+        },
+        "canonical": {
+          "accuracy": {
+            "denominator": 4800,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "adjacent_equivariance": {
+            "affected_cross_position_relation": {
+              "denominator": 2880,
+              "numerator": 2270,
+              "proportion": 0.7881944444444444
+            },
+            "affected_cross_position_relation_and_correct": {
+              "denominator": 2880,
+              "numerator": 0,
+              "proportion": 0.0
+            },
+            "unaffected_same_position_invariance": {
+              "denominator": 4320,
+              "numerator": 3474,
+              "proportion": 0.8041666666666667
+            },
+            "unaffected_same_position_invariance_and_correct": {
+              "denominator": 4320,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "directed_cursor_switch": {
+            "donor_target": {
+              "denominator": 19200,
+              "numerator": 0,
+              "proportion": 0.0
+            },
+            "exact_source_to_donor_switch": {
+              "denominator": 19200,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "exact_five_action_groups": {
+            "denominator": 960,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "per_renderer": {
+            "10": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 1,
+                "proportion": 0.0010416666666666667
+              }
+            },
+            "11": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "12": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "8": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 3,
+                "proportion": 0.003125
+              }
+            },
+            "9": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 6,
+                "proportion": 0.00625
+              }
+            }
+          },
+          "renderer_invariance": {
+            "prediction_invariance": {
+              "denominator": 9600,
+              "numerator": 293,
+              "proportion": 0.030520833333333334
+            },
+            "prediction_invariance_and_correct": {
+              "denominator": 9600,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "unique_top1_ties": {
+            "denominator": 4800,
+            "numerator": 10,
+            "proportion": 0.0020833333333333333
+          }
+        }
+      },
+      "receipt_sha256": "65bf741ab0eaf946f753a0ec51a686a68ad28a4039085a31bc018de43b689c05",
+      "restricted": {
+        "ablations": {
+          "clamped_zero": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 960,
+                "proportion": 0.2
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.2
+          },
+          "deranged_cycle": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 960,
+                "proportion": 0.2
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.0
+          }
+        },
+        "canonical": {
+          "accuracy": {
+            "denominator": 4800,
+            "numerator": 960,
+            "proportion": 0.2
+          },
+          "adjacent_equivariance": {
+            "affected_cross_position_relation": {
+              "denominator": 2880,
+              "numerator": 2752,
+              "proportion": 0.9555555555555556
+            },
+            "affected_cross_position_relation_and_correct": {
+              "denominator": 2880,
+              "numerator": 672,
+              "proportion": 0.23333333333333334
+            },
+            "unaffected_same_position_invariance": {
+              "denominator": 4320,
+              "numerator": 4128,
+              "proportion": 0.9555555555555556
+            },
+            "unaffected_same_position_invariance_and_correct": {
+              "denominator": 4320,
+              "numerator": 704,
+              "proportion": 0.16296296296296298
+            }
+          },
+          "directed_cursor_switch": {
+            "donor_target": {
+              "denominator": 19200,
+              "numerator": 3840,
+              "proportion": 0.2
+            },
+            "exact_source_to_donor_switch": {
+              "denominator": 19200,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "exact_five_action_groups": {
+            "denominator": 960,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "per_renderer": {
+            "10": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "11": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "12": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "8": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "9": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            }
+          },
+          "renderer_invariance": {
+            "prediction_invariance": {
+              "denominator": 9600,
+              "numerator": 4800,
+              "proportion": 0.5
+            },
+            "prediction_invariance_and_correct": {
+              "denominator": 9600,
+              "numerator": 960,
+              "proportion": 0.1
+            }
+          },
+          "unique_top1_ties": {
+            "denominator": 4800,
+            "numerator": 0,
+            "proportion": 0.0
+          }
+        }
+      }
+    },
+    "relation_sham": {
+      "arm_name": "relation_sham",
+      "full_vocab": {
+        "ablations": {
+          "clamped_zero": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 10,
+                "proportion": 0.0020833333333333333
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.2
+          },
+          "deranged_cycle": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 8,
+                "proportion": 0.0016666666666666668
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.0
+          }
+        },
+        "canonical": {
+          "accuracy": {
+            "denominator": 4800,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "adjacent_equivariance": {
+            "affected_cross_position_relation": {
+              "denominator": 2880,
+              "numerator": 2271,
+              "proportion": 0.7885416666666667
+            },
+            "affected_cross_position_relation_and_correct": {
+              "denominator": 2880,
+              "numerator": 0,
+              "proportion": 0.0
+            },
+            "unaffected_same_position_invariance": {
+              "denominator": 4320,
+              "numerator": 3482,
+              "proportion": 0.8060185185185185
+            },
+            "unaffected_same_position_invariance_and_correct": {
+              "denominator": 4320,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "directed_cursor_switch": {
+            "donor_target": {
+              "denominator": 19200,
+              "numerator": 0,
+              "proportion": 0.0
+            },
+            "exact_source_to_donor_switch": {
+              "denominator": 19200,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "exact_five_action_groups": {
+            "denominator": 960,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "per_renderer": {
+            "10": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "11": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "12": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "8": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 4,
+                "proportion": 0.004166666666666667
+              }
+            },
+            "9": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 4,
+                "proportion": 0.004166666666666667
+              }
+            }
+          },
+          "renderer_invariance": {
+            "prediction_invariance": {
+              "denominator": 9600,
+              "numerator": 265,
+              "proportion": 0.027604166666666666
+            },
+            "prediction_invariance_and_correct": {
+              "denominator": 9600,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "unique_top1_ties": {
+            "denominator": 4800,
+            "numerator": 8,
+            "proportion": 0.0016666666666666668
+          }
+        }
+      },
+      "receipt_sha256": "028f62c8b79517227f4451f85b63d87de7675e999785ea1f0af0ab332aef492c",
+      "restricted": {
+        "ablations": {
+          "clamped_zero": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 960,
+                "proportion": 0.2
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.2
+          },
+          "deranged_cycle": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 960,
+                "proportion": 0.2
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.0
+          }
+        },
+        "canonical": {
+          "accuracy": {
+            "denominator": 4800,
+            "numerator": 960,
+            "proportion": 0.2
+          },
+          "adjacent_equivariance": {
+            "affected_cross_position_relation": {
+              "denominator": 2880,
+              "numerator": 2752,
+              "proportion": 0.9555555555555556
+            },
+            "affected_cross_position_relation_and_correct": {
+              "denominator": 2880,
+              "numerator": 672,
+              "proportion": 0.23333333333333334
+            },
+            "unaffected_same_position_invariance": {
+              "denominator": 4320,
+              "numerator": 4128,
+              "proportion": 0.9555555555555556
+            },
+            "unaffected_same_position_invariance_and_correct": {
+              "denominator": 4320,
+              "numerator": 704,
+              "proportion": 0.16296296296296298
+            }
+          },
+          "directed_cursor_switch": {
+            "donor_target": {
+              "denominator": 19200,
+              "numerator": 3840,
+              "proportion": 0.2
+            },
+            "exact_source_to_donor_switch": {
+              "denominator": 19200,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "exact_five_action_groups": {
+            "denominator": 960,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "per_renderer": {
+            "10": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "11": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "12": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "8": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "9": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            }
+          },
+          "renderer_invariance": {
+            "prediction_invariance": {
+              "denominator": 9600,
+              "numerator": 4800,
+              "proportion": 0.5
+            },
+            "prediction_invariance_and_correct": {
+              "denominator": 9600,
+              "numerator": 960,
+              "proportion": 0.1
+            }
+          },
+          "unique_top1_ties": {
+            "denominator": 4800,
+            "numerator": 0,
+            "proportion": 0.0
+          }
+        }
+      }
+    },
+    "source_only": {
+      "arm_name": "source_only",
+      "full_vocab": {
+        "ablations": {
+          "clamped_zero": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.2
+          },
+          "deranged_cycle": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.0
+          }
+        },
+        "canonical": {
+          "accuracy": {
+            "denominator": 4800,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "adjacent_equivariance": {
+            "affected_cross_position_relation": {
+              "denominator": 2880,
+              "numerator": 2338,
+              "proportion": 0.8118055555555556
+            },
+            "affected_cross_position_relation_and_correct": {
+              "denominator": 2880,
+              "numerator": 0,
+              "proportion": 0.0
+            },
+            "unaffected_same_position_invariance": {
+              "denominator": 4320,
+              "numerator": 3507,
+              "proportion": 0.8118055555555556
+            },
+            "unaffected_same_position_invariance_and_correct": {
+              "denominator": 4320,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "directed_cursor_switch": {
+            "donor_target": {
+              "denominator": 19200,
+              "numerator": 0,
+              "proportion": 0.0
+            },
+            "exact_source_to_donor_switch": {
+              "denominator": 19200,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "exact_five_action_groups": {
+            "denominator": 960,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "per_renderer": {
+            "10": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "11": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "12": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "8": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "9": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            }
+          },
+          "renderer_invariance": {
+            "prediction_invariance": {
+              "denominator": 9600,
+              "numerator": 245,
+              "proportion": 0.025520833333333333
+            },
+            "prediction_invariance_and_correct": {
+              "denominator": 9600,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "unique_top1_ties": {
+            "denominator": 4800,
+            "numerator": 0,
+            "proportion": 0.0
+          }
+        }
+      },
+      "receipt_sha256": "bd34e9c9de01782d48004ef04e3ef143d0f8f36dfd17a83b6a0f54d5bbf80baf",
+      "restricted": {
+        "ablations": {
+          "clamped_zero": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 960,
+                "proportion": 0.2
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.2
+          },
+          "deranged_cycle": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 960,
+                "proportion": 0.2
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.0
+          }
+        },
+        "canonical": {
+          "accuracy": {
+            "denominator": 4800,
+            "numerator": 960,
+            "proportion": 0.2
+          },
+          "adjacent_equivariance": {
+            "affected_cross_position_relation": {
+              "denominator": 2880,
+              "numerator": 2752,
+              "proportion": 0.9555555555555556
+            },
+            "affected_cross_position_relation_and_correct": {
+              "denominator": 2880,
+              "numerator": 672,
+              "proportion": 0.23333333333333334
+            },
+            "unaffected_same_position_invariance": {
+              "denominator": 4320,
+              "numerator": 4128,
+              "proportion": 0.9555555555555556
+            },
+            "unaffected_same_position_invariance_and_correct": {
+              "denominator": 4320,
+              "numerator": 704,
+              "proportion": 0.16296296296296298
+            }
+          },
+          "directed_cursor_switch": {
+            "donor_target": {
+              "denominator": 19200,
+              "numerator": 3840,
+              "proportion": 0.2
+            },
+            "exact_source_to_donor_switch": {
+              "denominator": 19200,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "exact_five_action_groups": {
+            "denominator": 960,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "per_renderer": {
+            "10": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "11": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "12": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "8": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "9": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            }
+          },
+          "renderer_invariance": {
+            "prediction_invariance": {
+              "denominator": 9600,
+              "numerator": 4800,
+              "proportion": 0.5
+            },
+            "prediction_invariance_and_correct": {
+              "denominator": 9600,
+              "numerator": 960,
+              "proportion": 0.1
+            }
+          },
+          "unique_top1_ties": {
+            "denominator": 4800,
+            "numerator": 0,
+            "proportion": 0.0
+          }
+        }
+      }
+    },
+    "text_cursor_lora": {
+      "arm_name": "text_cursor_lora",
+      "full_vocab": {
+        "ablations": {
+          "clamped_zero": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 15,
+                "proportion": 0.003125
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.2
+          },
+          "deranged_cycle": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 14,
+                "proportion": 0.002916666666666667
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.0
+          }
+        },
+        "canonical": {
+          "accuracy": {
+            "denominator": 4800,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "adjacent_equivariance": {
+            "affected_cross_position_relation": {
+              "denominator": 2880,
+              "numerator": 2421,
+              "proportion": 0.840625
+            },
+            "affected_cross_position_relation_and_correct": {
+              "denominator": 2880,
+              "numerator": 0,
+              "proportion": 0.0
+            },
+            "unaffected_same_position_invariance": {
+              "denominator": 4320,
+              "numerator": 3943,
+              "proportion": 0.9127314814814815
+            },
+            "unaffected_same_position_invariance_and_correct": {
+              "denominator": 4320,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "directed_cursor_switch": {
+            "donor_target": {
+              "denominator": 19200,
+              "numerator": 0,
+              "proportion": 0.0
+            },
+            "exact_source_to_donor_switch": {
+              "denominator": 19200,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "exact_five_action_groups": {
+            "denominator": 960,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "per_renderer": {
+            "10": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 10,
+                "proportion": 0.010416666666666666
+              }
+            },
+            "11": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "12": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 2,
+                "proportion": 0.0020833333333333333
+              }
+            },
+            "8": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "9": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 2,
+                "proportion": 0.0020833333333333333
+              }
+            }
+          },
+          "renderer_invariance": {
+            "prediction_invariance": {
+              "denominator": 9600,
+              "numerator": 5405,
+              "proportion": 0.5630208333333333
+            },
+            "prediction_invariance_and_correct": {
+              "denominator": 9600,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "unique_top1_ties": {
+            "denominator": 4800,
+            "numerator": 14,
+            "proportion": 0.002916666666666667
+          }
+        }
+      },
+      "receipt_sha256": "d772a8120c9406f41b84d97c6339d76ce28aa8855dec87832ee70f8ec207d1cc",
+      "restricted": {
+        "ablations": {
+          "clamped_zero": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 959,
+                "proportion": 0.19979166666666667
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 5,
+                "proportion": 0.0010416666666666667
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.2
+          },
+          "deranged_cycle": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 946,
+                "proportion": 0.19708333333333333
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 44,
+                "proportion": 0.009166666666666667
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.0
+          }
+        },
+        "canonical": {
+          "accuracy": {
+            "denominator": 4800,
+            "numerator": 973,
+            "proportion": 0.20270833333333332
+          },
+          "adjacent_equivariance": {
+            "affected_cross_position_relation": {
+              "denominator": 2880,
+              "numerator": 2489,
+              "proportion": 0.8642361111111111
+            },
+            "affected_cross_position_relation_and_correct": {
+              "denominator": 2880,
+              "numerator": 636,
+              "proportion": 0.22083333333333333
+            },
+            "unaffected_same_position_invariance": {
+              "denominator": 4320,
+              "numerator": 3952,
+              "proportion": 0.9148148148148149
+            },
+            "unaffected_same_position_invariance_and_correct": {
+              "denominator": 4320,
+              "numerator": 677,
+              "proportion": 0.15671296296296297
+            }
+          },
+          "directed_cursor_switch": {
+            "donor_target": {
+              "denominator": 19200,
+              "numerator": 3892,
+              "proportion": 0.20270833333333332
+            },
+            "exact_source_to_donor_switch": {
+              "denominator": 19200,
+              "numerator": 88,
+              "proportion": 0.004583333333333333
+            }
+          },
+          "exact_five_action_groups": {
+            "denominator": 960,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "per_renderer": {
+            "10": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 189,
+                "proportion": 0.196875
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 26,
+                "proportion": 0.027083333333333334
+              }
+            },
+            "11": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "12": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 15,
+                "proportion": 0.015625
+              }
+            },
+            "8": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 208,
+                "proportion": 0.21666666666666667
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 3,
+                "proportion": 0.003125
+              }
+            },
+            "9": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            }
+          },
+          "renderer_invariance": {
+            "prediction_invariance": {
+              "denominator": 9600,
+              "numerator": 5081,
+              "proportion": 0.5292708333333334
+            },
+            "prediction_invariance_and_correct": {
+              "denominator": 9600,
+              "numerator": 938,
+              "proportion": 0.09770833333333333
+            }
+          },
+          "unique_top1_ties": {
+            "denominator": 4800,
+            "numerator": 44,
+            "proportion": 0.009166666666666667
+          }
+        }
+      }
+    },
+    "treatment": {
+      "arm_name": "orbit_interchange",
+      "full_vocab": {
+        "ablations": {
+          "clamped_zero": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.2
+          },
+          "deranged_cycle": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 10,
+                "proportion": 0.0020833333333333333
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.0
+          }
+        },
+        "canonical": {
+          "accuracy": {
+            "denominator": 4800,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "adjacent_equivariance": {
+            "affected_cross_position_relation": {
+              "denominator": 2880,
+              "numerator": 2255,
+              "proportion": 0.7829861111111112
+            },
+            "affected_cross_position_relation_and_correct": {
+              "denominator": 2880,
+              "numerator": 0,
+              "proportion": 0.0
+            },
+            "unaffected_same_position_invariance": {
+              "denominator": 4320,
+              "numerator": 3480,
+              "proportion": 0.8055555555555556
+            },
+            "unaffected_same_position_invariance_and_correct": {
+              "denominator": 4320,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "directed_cursor_switch": {
+            "donor_target": {
+              "denominator": 19200,
+              "numerator": 0,
+              "proportion": 0.0
+            },
+            "exact_source_to_donor_switch": {
+              "denominator": 19200,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "exact_five_action_groups": {
+            "denominator": 960,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "per_renderer": {
+            "10": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 1,
+                "proportion": 0.0010416666666666667
+              }
+            },
+            "11": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "12": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "8": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 2,
+                "proportion": 0.0020833333333333333
+              }
+            },
+            "9": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 7,
+                "proportion": 0.007291666666666667
+              }
+            }
+          },
+          "renderer_invariance": {
+            "prediction_invariance": {
+              "denominator": 9600,
+              "numerator": 271,
+              "proportion": 0.028229166666666666
+            },
+            "prediction_invariance_and_correct": {
+              "denominator": 9600,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "unique_top1_ties": {
+            "denominator": 4800,
+            "numerator": 10,
+            "proportion": 0.0020833333333333333
+          }
+        }
+      },
+      "receipt_sha256": "bf0ba2ff315e267c663874244ceef8519e488a986ea41e461686138d85314d6c",
+      "restricted": {
+        "ablations": {
+          "clamped_zero": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 960,
+                "proportion": 0.2
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.2
+          },
+          "deranged_cycle": {
+            "absolute_deviation_from_symbolic": null,
+            "all_cells": {
+              "accuracy": {
+                "denominator": 4800,
+                "numerator": 960,
+                "proportion": 0.2
+              },
+              "unique_top1_ties": {
+                "denominator": 4800,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "canonical_exact_group_count": 0,
+            "conditioned_on_canonical_exact_groups": {
+              "accuracy": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              },
+              "unique_top1_ties": {
+                "denominator": 0,
+                "numerator": 0,
+                "proportion": null
+              }
+            },
+            "symbolic_expected_proportion": 0.0
+          }
+        },
+        "canonical": {
+          "accuracy": {
+            "denominator": 4800,
+            "numerator": 960,
+            "proportion": 0.2
+          },
+          "adjacent_equivariance": {
+            "affected_cross_position_relation": {
+              "denominator": 2880,
+              "numerator": 2752,
+              "proportion": 0.9555555555555556
+            },
+            "affected_cross_position_relation_and_correct": {
+              "denominator": 2880,
+              "numerator": 672,
+              "proportion": 0.23333333333333334
+            },
+            "unaffected_same_position_invariance": {
+              "denominator": 4320,
+              "numerator": 4128,
+              "proportion": 0.9555555555555556
+            },
+            "unaffected_same_position_invariance_and_correct": {
+              "denominator": 4320,
+              "numerator": 704,
+              "proportion": 0.16296296296296298
+            }
+          },
+          "directed_cursor_switch": {
+            "donor_target": {
+              "denominator": 19200,
+              "numerator": 3840,
+              "proportion": 0.2
+            },
+            "exact_source_to_donor_switch": {
+              "denominator": 19200,
+              "numerator": 0,
+              "proportion": 0.0
+            }
+          },
+          "exact_five_action_groups": {
+            "denominator": 960,
+            "numerator": 0,
+            "proportion": 0.0
+          },
+          "per_renderer": {
+            "10": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "11": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "12": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "8": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            },
+            "9": {
+              "accuracy": {
+                "denominator": 960,
+                "numerator": 192,
+                "proportion": 0.2
+              },
+              "exact_five_action_groups": {
+                "denominator": 192,
+                "numerator": 0,
+                "proportion": 0.0
+              },
+              "unique_top1_ties": {
+                "denominator": 960,
+                "numerator": 0,
+                "proportion": 0.0
+              }
+            }
+          },
+          "renderer_invariance": {
+            "prediction_invariance": {
+              "denominator": 9600,
+              "numerator": 4800,
+              "proportion": 0.5
+            },
+            "prediction_invariance_and_correct": {
+              "denominator": 9600,
+              "numerator": 960,
+              "proportion": 0.1
+            }
+          },
+          "unique_top1_ties": {
+            "denominator": 4800,
+            "numerator": 0,
+            "proportion": 0.0
+          }
+        }
+      }
+    }
+  },
+  "bindings": {
+    "audit_sha256": "5deb9dc396e3c8d99f32b9f0e14482d288cff9d82145582665569c911a802e5d",
+    "base_sha256": "91d5288f184fc5230516add9851ac1a8815d3369ffd816cd7d0c03d8bafc741d",
+    "canary_payload_sha256": "c5a8ad4653a72f11e74ccbf726f432e9e729fc9e6937be4e968b4a936d02ad81",
+    "canary_sha256": "baf985855c396f63dffba1e09733a7372bd8b29c852cb5b9f482b4d59de714a1",
+    "control_receipt_sha256": {
+      "cursor_table": "34faca9df070a623335db1114a933289649354e8296f18b52a100026d1a10cec",
+      "ordinary_loss": "65bf741ab0eaf946f753a0ec51a686a68ad28a4039085a31bc018de43b689c05",
+      "relation_sham": "028f62c8b79517227f4451f85b63d87de7675e999785ea1f0af0ab332aef492c",
+      "source_only": "bd34e9c9de01782d48004ef04e3ef143d0f8f36dfd17a83b6a0f54d5bbf80baf",
+      "text_cursor_lora": "d772a8120c9406f41b84d97c6339d76ce28aa8855dec87832ee70f8ec207d1cc"
+    },
+    "scorer_sha256": "6be08f00124cb85f5caad809d67141b71d16b72810b07ec009ece26a880ee9fa",
+    "training_manifest_sha256": "8c499c215ade7be26ac75ea4e50cc5b335edd80f3bd5eb2225eb0166eb5bc13e",
+    "treatment_receipt_sha256": "bf0ba2ff315e267c663874244ceef8519e488a986ea41e461686138d85314d6c"
+  },
+  "label_order": [
+    "add",
+    "subtract",
+    "multiply",
+    "remainder",
+    "DONE"
+  ],
+  "label_token_ids": [
+    820,
+    5498,
+    4307,
+    7486,
+    2165
+  ],
+  "paired_bootstrap_comparisons": {
+    "full_vocab": {
+      "cluster_unit": "content_matched_pack_permutation_across_all_renderers",
+      "content_cluster_count": 192,
+      "controls": {
+        "ordinary_loss": {
+          "bonferroni_simultaneous_95_percent_lower_bound": 0.0,
+          "observed_difference": 0.0,
+          "one_sided_95_percent_lower_bound": 0.0
+        },
+        "relation_sham": {
+          "bonferroni_simultaneous_95_percent_lower_bound": 0.0,
+          "observed_difference": 0.0,
+          "one_sided_95_percent_lower_bound": 0.0
+        }
+      },
+      "interpretation": "finite_confirmation_board_cluster_stability_only;not_uncertainty_over_new_operands_or_renderers",
+      "joint_minimum_difference_one_sided_95_percent_lower_bound": 0.0,
+      "mode": "full_vocab",
+      "paired_within_content_cluster": true,
+      "replicates": 20000,
+      "seed": 2026071504,
+      "source_group_count": 960,
+      "unit": "exact_five_action_source_group"
+    },
+    "restricted": {
+      "cluster_unit": "content_matched_pack_permutation_across_all_renderers",
+      "content_cluster_count": 192,
+      "controls": {
+        "ordinary_loss": {
+          "bonferroni_simultaneous_95_percent_lower_bound": 0.0,
+          "observed_difference": 0.0,
+          "one_sided_95_percent_lower_bound": 0.0
+        },
+        "relation_sham": {
+          "bonferroni_simultaneous_95_percent_lower_bound": 0.0,
+          "observed_difference": 0.0,
+          "one_sided_95_percent_lower_bound": 0.0
+        }
+      },
+      "interpretation": "finite_confirmation_board_cluster_stability_only;not_uncertainty_over_new_operands_or_renderers",
+      "joint_minimum_difference_one_sided_95_percent_lower_bound": 0.0,
+      "mode": "restricted",
+      "paired_within_content_cluster": true,
+      "replicates": 20000,
+      "seed": 2026071504,
+      "source_group_count": 960,
+      "unit": "exact_five_action_source_group"
+    }
+  },
+  "schema": "counterfactual_cursor_action_independent_score_v1",
+  "scoring_contract": {
+    "affected_equivariance_rule": "cross_swapped_cursor_predictions_match",
+    "bootstrap_cluster": "content_matched_pack_permutation_across_renderers",
+    "bootstrap_replicates": 20000,
+    "bootstrap_seed": 2026071504,
+    "directed_switch_rule": "both_endpoints_correct_and_predictions_change",
+    "prediction_modes": [
+      "restricted",
+      "full_vocab"
+    ],
+    "renderer_invariance_rule": "content_matched_predictions_match",
+    "tie_rule": "non_unique_top1_is_incorrect",
+    "unaffected_equivariance_rule": "same_cursor_predictions_match"
+  },
+  "selector_gate": {
+    "atomic_executor_gate_pending": true,
+    "checks": {
+      "adjacent_equivariance": {
+        "observed": {
+          "affected": 0.0,
+          "unaffected": 0.0
+        },
+        "passed": false,
+        "threshold": 0.95
+      },
+      "directed_cursor_switch": {
+        "observed": 0.0,
+        "passed": false,
+        "threshold": 0.95
+      },
+      "exact_five_action_groups": {
+        "observed": 0.0,
+        "passed": false,
+        "threshold": 0.9
+      },
+      "matched_control_advantage": {
+        "observed": {
+          "ordinary_loss": {
+            "minimum_difference": 0.1,
+            "observed_difference": 0.0,
+            "passed": false,
+            "simultaneous_lower_bound": 0.0
+          },
+          "relation_sham": {
+            "minimum_difference": 0.1,
+            "observed_difference": 0.0,
+            "passed": false,
+            "simultaneous_lower_bound": 0.0
+          }
+        },
+        "passed": false
+      },
+      "per_renderer_cell_accuracy": {
+        "observed": {
+          "10": 0.0,
+          "11": 0.0,
+          "12": 0.0,
+          "8": 0.0,
+          "9": 0.0
+        },
+        "passed": false,
+        "threshold": 0.95
+      },
+      "renderer_invariance": {
+        "observed": 0.0,
+        "passed": false,
+        "threshold": 0.99
+      }
+    },
+    "decision": "neural_selector_no_go",
+    "diagnostics": {
+      "cursor_ablations": {
+        "interpretation": "deterministic_consistency_check_conditioned_on_exact_groups;not_independent_causal_evidence",
+        "observed": {
+          "clamped_zero": {
+            "absolute_deviation": null,
+            "canonical_exact_group_count": 0,
+            "expected": 0.2,
+            "maximum_absolute_deviation": 0.02,
+            "observed": null,
+            "passed": false
+          },
+          "deranged_cycle": {
+            "absolute_deviation": null,
+            "canonical_exact_group_count": 0,
+            "expected": 0.0,
+            "maximum_absolute_deviation": 0.02,
+            "observed": null,
+            "passed": false
+          }
+        },
+        "passed": false
+      }
+    },
+    "neural_selector_checks_passed": false,
+    "one_call_done_eos_gate_pending": true,
+    "overall_selector_go": false,
+    "primary_prediction_mode": "full_vocab",
+    "reasoning_claim_authorized": false
+  }
+}
