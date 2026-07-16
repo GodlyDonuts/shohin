@@ -1,9 +1,10 @@
 # R12 Raw-300k Future-Jacobian Workspace Longitudinal Preregistration
 
-**Status:** read-only diagnostic authorized. It may measure whether the exact
-raw-200k future-Jacobian semantic failure changed by raw 300k. It cannot train a
-model, select a new basis, tune a threshold, authorize a workspace mechanism,
-or support a reasoning claim by itself.
+**Status:** **COMPLETED, SEMANTIC GATE FAILED.** Jobs `690028`, `690030`, and
+`690031` executed the frozen repeat. The selected raw-300k future-Jacobian
+readout has zero top-10 and zero top-100 accuracy on all 2,304 language/full
+targets, so no coordinate swap or raw-workspace mechanism is authorized. See
+`R12_JACOBIAN_WORKSPACE_LONGITUDINAL_RESULT.md`.
 
 ## 1. Question
 
