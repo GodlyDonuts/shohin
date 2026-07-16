@@ -13,10 +13,10 @@ set -euo pipefail
 
 BASE=/lustre/fs1/home/sa305415/shohin_acw
 PY=${PY:-/lustre/fs1/home/sa305415/shohin/miniforge3/bin/python}
-DATA=$BASE/artifacts/r12/acw_pilot_domain_v2
-REPLAY_A=$BASE/artifacts/r12/acw_cgbr_pilot_v3_replay_a
-REPLAY_B=$BASE/artifacts/r12/acw_cgbr_pilot_v3_replay_b
-OUT=$BASE/artifacts/r12/acw_cgbr_pilot_v3
+DATA=$BASE/artifacts/r12/acw_pilot_domain_v3
+REPLAY_A=$BASE/artifacts/r12/acw_cgbr_pilot_v4_replay_a
+REPLAY_B=$BASE/artifacts/r12/acw_cgbr_pilot_v4_replay_b
+OUT=$BASE/artifacts/r12/acw_cgbr_pilot_v4
 
 export OPENBLAS_NUM_THREADS=1
 export MKL_NUM_THREADS=1

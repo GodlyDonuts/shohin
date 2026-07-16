@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-16 13:20 EDT (The protected 300k flagship remains immutable and hash-matched. Track S remains pre-result. Replacement Stokes pilot `740053` completed its tests, two held-live fits, parent recomputation, freeze, reopen, and separate verification under scientific commit `b517cf3`; 59 integer/state/query arrays replay byte-identically, and all remote/local transferred bytes match. However, a fresh Mac replay found one-ULP drift in all eight floating feature arrays because one-hot matrix multiplication used platform-dependent BLAS reduction order. This invalidates `740053` as a canonical cross-runtime pilot and blocks its Git anchor; it remains same-runtime process evidence only. Generator v3 replaces only those reductions with fixed-order float32 row accumulation, bumps every consumer protocol, and adds golden hashes over the complete 4,913-state source table and 48-event bank. The integrated 90-test suite, Ruff, and formatting pass locally. Commit/push these exact bytes, regenerate on Mac and Stokes, require identical 67-array manifests, then rerun the sole public pilot. Post-pilot training remains hard-blocked. Independent anchor review also proved the eventual lineage must be three commits `S -> A -> E`, not pilot/training scientific-identity equality. No scored development arm, confirmation opening, Shohin fit, H100 job, memory claim, or reasoning claim is authorized.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-16 13:28 EDT (The protected 300k flagship remains immutable and hash-matched. Track S remains pre-result. Stokes `740053` is retained only as same-runtime process evidence: independent Mac replay exposed one-ULP BLAS reduction drift in its eight float32 feature arrays. Generator v3 replaces those reductions with ordered float32 row sums, and the canonical result namespace advances to dataset v3 plus pilot/comparison v4. Independent full generation on Mac and Stokes job `740071` now matches across all 68 files and all 67 arrays at manifest payload SHA-256 `3294a0d12d277f46ea8c0cbf50142be14816447c15bc3792f6e4df7e77e2ba33`; no file differs. The integrated 90-test suite passes in 13.816 seconds with Ruff, formatting, shell syntax, compilation, and diff gates clean. Commit/push the fresh namespace bytes, install exact HEAD on Stokes, confirm every v3/v4 canonical path absent, and rerun one public pilot. Post-pilot training remains hard-blocked. The eventual Git trust chain must be separately pushed scientific `S`, registry-only `A`, then activation `E`; pilot/training identity equality is invalid. No scored development arm, confirmation opening, Shohin fit, H100 job, memory claim, or reasoning claim is authorized.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -5513,3 +5513,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   do not anchor or score it. Commit/push v3, independently compare complete Mac/Stokes regenerated manifests, then
   rerun the public pilot from absent paths. A separate audit also established the future anchor lineage must be
   scientific `S`, registry-only `A`, then activation `E`, each separately pushed and parent-bound.
+
+- **2026-07-16 13:20--13:28** — **Generator v3 passes the mandatory full cross-runtime preflight;
+  canonical pilot names advance so rejected artifacts cannot collide.** Scientific commit `f12e454` was pushed and
+  installed on Stokes. Isolated Stokes job `740071` generated the complete pilot domain under Python 3.13 / NumPy
+  2.5; the Mac independently generated it under Python 3.11 / NumPy 2.3.5. Both produce manifest payload SHA-256
+  `3294a0d12d277f46ea8c0cbf50142be14816447c15bc3792f6e4df7e77e2ba33`; all 68 files and all 67 arrays are
+  byte-identical. No tolerance is used. Before launch, the canonical paths advance from dataset v2/pilot v3 to
+  dataset v3/pilot v4, and the pilot/comparison protocol IDs advance to v4. This prevents the rejected `740053`
+  bytes from occupying an admissible namespace. The complete integrated suite remains 90/90 in 13.816 seconds;
+  Ruff, formatting, shell syntax, compilation, and diff checks pass. Commit/push this namespace boundary, install
+  exact HEAD, confirm all v3/v4 paths absent, and submit one public pilot only.

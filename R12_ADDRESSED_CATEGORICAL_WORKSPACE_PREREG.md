@@ -337,7 +337,9 @@ selected projection rows in fixed semantic order, and every source feature by
 adding its three selected rows in coordinate order. Each addition is an
 explicit float32 elementwise operation; no BLAS reduction is permitted. Golden
 SHA-256 tests bind the complete 48-event bank and the source rendering of all
-`17^3 = 4,913` states. Any v2 dataset or report is diagnostic-only and cannot be
+`17^3 = 4,913` states. The canonical output namespace advances to dataset v3
+and pilot/comparison v4 so rejected bytes cannot occupy an admissible path. Any
+v2 dataset or v3 pilot report is diagnostic-only and cannot be
 anchored, consumed by a scored arm, or cited as learned evidence. Before the v3
 pilot runs, independently generated full Mac and Stokes manifests and all 67
 registered arrays must be byte-identical.
