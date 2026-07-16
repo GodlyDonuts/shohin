@@ -1,11 +1,12 @@
 # R12 Post-Commit Packet Transport V2 Result
 
-**Decision:** NO CANONICAL RESULT YET. Two exhaustive precommit engineering
-canaries passed byte-identically, but they have no scientific standing because
-the implementation was not committed before execution. The first properly
-post-commit run from `7a0b98c` then failed closed before report assembly and
-wrote no artifact. This document will be replaced only after a clean
-post-commit canonical run and replay.
+**Decision:** POST-COMMIT CANONICAL NO-GO. The run from scientific commit
+`a9c1f53` passed its internal 33 gates and exact algebra, but an independent
+adversarial audit found that the verifier accepts forged invocation evidence,
+the role processes are not OS-confined from parent paths, and the deterministic
+manifest-derived challenge is predictable before phase one. The artifact is
+preserved byte-for-byte under a rejected filename and has no standing as a v2
+protocol pass. No neural fit is authorized.
 
 ## 1. Precommit canary custody
 
@@ -67,20 +68,48 @@ payload. The corrected local suite passes 13/13 tests. Because the scientific
 implementation and test changed, another clean commit is required before the
 next canonical attempt.
 
-## 3. Canonical result fields
-
-The following remain intentionally blank until execution from the clean
-scientific commit:
+## 3. Rejected post-commit artifact
 
 ```text
-scientific commit: PENDING
-artifact mode:     PENDING
-artifact bytes:    PENDING
-file SHA-256:      PENDING
-payload SHA-256:   PENDING
-canonical replay:  PENDING
-independent audit: PENDING
+scientific commit: a9c1f53c275927ef7955d9578b3f1e493a460426
+preserved path:    artifacts/r12/post_commit_packet_transport_v2_postcommit_no_go_a9c1f53.json
+artifact mode:     0444
+artifact bytes:    892632
+file MD5:          f7502dc0824bff212d4ffe1ebfa4e161
+file SHA-256:      4f63123028fe33717981d026ca4accc854943400a502e56698ff040145a2ab0d
+payload SHA-256:   9fa2a1fef402f4751a115f4597ff113f764b0654e19fc608bf93a64d2a2f3c59
+embedded replay:   byte-identical, 337 role records per core
+internal verifier: PASS, 33/33 asserted gates
+independent audit: NO-GO
 ```
 
+The five public cells are state/motor 83,521/83,521. Every one of the 15
+decisive cells is state 83,521/83,521 versus rank-two motor 4,913/83,521. The
+bounded horizon arm is exact through depth eight and falls to 4,913/83,521 at
+depth nine. These counts validate the inspected algebra only.
+
+## 4. Independent audit NO-GO
+
+The audit adds four claim-blocking defects:
+
+17. `verify_report` can accept an evidence-forged report after the attacker
+    mutates invocation exit codes, directory listings, hashes, or permutations
+    and consistently recomputes the self-hashes and embedded replay;
+18. fresh role directories are process-local conventions, not OS filesystem
+    isolation, because a role can traverse parent directories containing
+    phase-one packets and challenges;
+19. the challenge seed is deterministic from committed source and the
+    deterministic phase-one manifest, so it supplies ordering but no post-
+    phase-one unpredictability against a precomputed finite table; and
+20. the completed artifact/result custody had not yet been anchored in Git.
+
+Defect 20 is closed by this hash-bound rejection record; it does not rescue the
+protocol. A v3-quality repair must use an OS sandbox that denies every role
+access outside its executable and declared files, a parent-generated random
+nonce committed only after phase one, and a separately implemented verifier that
+recomputes every transport chain, score, witness, and invocation record rather
+than trusting self-attested booleans. The corrected artifact hash and completed
+result record must then be committed and independently audited.
+
 No neural fit, Shohin adapter, SFT, H100 job, workspace claim, or reasoning
-claim is authorized by a precommit canary.
+claim is authorized by this rejected result.

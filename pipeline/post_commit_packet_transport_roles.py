@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 
-PROTOCOL_ID = "R12-PCPT-F17x4-v2"
+PROTOCOL_ID = "R12-PCPT-F17x4-v3"
 MODULUS = 17
 DIMENSION = 4
 
@@ -97,7 +97,7 @@ def _invertible(matrix: Sequence[Sequence[int]]) -> bool:
             factor = work[row][column]
             work[row] = [
                 (left - factor * right) % MODULUS
-                for left, right in zip(work[row], work[rank], strict=True)
+                for left, right in zip(work[row], work[rank])
             ]
         rank += 1
     return rank == DIMENSION
@@ -129,9 +129,9 @@ def _apply(
 ) -> tuple[int, int, int, int]:
     matrix, offset = update
     return tuple(
-        (sum(left * right for left, right in zip(row, vector, strict=True)) + bias)
+        (sum(left * right for left, right in zip(row, vector)) + bias)
         % MODULUS
-        for row, bias in zip(matrix, offset, strict=True)
+        for row, bias in zip(matrix, offset)
     )  # type: ignore[return-value]
 
 
@@ -187,7 +187,7 @@ def _challenge(value: Mapping[str, Any]) -> dict[str, Any]:
 
 
 def _dot(left: Sequence[int], right: Sequence[int]) -> int:
-    return sum(a * b for a, b in zip(left, right, strict=True)) % MODULUS
+    return sum(a * b for a, b in zip(left, right)) % MODULUS
 
 
 def _packet_path(raw: str, *, must_exist: bool) -> Path:
