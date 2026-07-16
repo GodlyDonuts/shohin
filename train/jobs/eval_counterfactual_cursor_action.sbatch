@@ -12,13 +12,14 @@
 set -euo pipefail
 
 BASE=/lustre/fs1/home/sa305415/shohin
-PY=$BASE/miniforge3/bin/python
 CKPT=${CKPT:-$BASE/train/flagship_out/best_step260000.pt}
 CANARY=${CANARY:-$BASE/artifacts/r12/counterfactual_cursor_action_canary_v1.json}
 AUDIT=${AUDIT:-$BASE/artifacts/r12/counterfactual_cursor_action_canary_v1.audit.json}
 TRAIN_ROOT=${TRAIN_ROOT:-$BASE/train/r12_cursor_action_canary_v1}
 MANIFEST=${MANIFEST:-$TRAIN_ROOT/training_manifest.json}
 EVAL_ROOT=${EVAL_ROOT:-$BASE/artifacts/r12/cursor_action_eval_v1}
+RUNTIME_TAR=${RUNTIME_TAR:-$BASE/artifacts/runtime/miniforge-torch-runtime-v1.tar}
+RUNTIME_TAR_SHA256=af7da54fd23ac1f7a64766438ba72d14591ae96d495da2306cc535da875d7f7c
 
 ARMS=(
   orbit_interchange
@@ -43,12 +44,34 @@ for path in "$CKPT" "$CANARY" "$AUDIT" "$MANIFEST" "$ADAPTER"; do
   [ ! -L "$path" ] || { echo "[ccaa-eval-job] symlink input rejected: $path" >&2; exit 4; }
   [ ! -w "$path" ] || { echo "[ccaa-eval-job] writable input rejected: $path" >&2; exit 5; }
 done
+[ -s "$RUNTIME_TAR" ] || { echo "[ccaa-eval-job] missing runtime tar" >&2; exit 8; }
+[ ! -L "$RUNTIME_TAR" ] || { echo "[ccaa-eval-job] symlink runtime rejected" >&2; exit 9; }
+[ ! -w "$RUNTIME_TAR" ] || { echo "[ccaa-eval-job] writable runtime rejected" >&2; exit 10; }
+OBSERVED_RUNTIME_SHA256=$(sha256sum "$RUNTIME_TAR" | awk '{print $1}')
+[ "$OBSERVED_RUNTIME_SHA256" = "$RUNTIME_TAR_SHA256" ] || {
+  echo "[ccaa-eval-job] runtime SHA-256 mismatch" >&2
+  exit 11
+}
 [ ! -e "$RAW" ] || { echo "[ccaa-eval-job] refusing existing raw output: $RAW" >&2; exit 6; }
 [ ! -e "$RECEIPT" ] || {
   echo "[ccaa-eval-job] refusing existing receipt output: $RECEIPT" >&2
   exit 7
 }
 mkdir -p "$EVAL_ROOT"
+
+RUNTIME_PARENT=${SLURM_TMPDIR:-${TMPDIR:-/tmp}}
+RUNTIME_DIR=$(mktemp -d "$RUNTIME_PARENT/shohin_ccaa_eval_runtime.${SLURM_JOB_ID:-manual}.XXXXXX")
+chmod 0700 "$RUNTIME_DIR"
+cleanup_runtime() {
+  rm -rf -- "${RUNTIME_DIR:-}"
+}
+trap cleanup_runtime EXIT
+START=$(date +%s)
+tar -C "$RUNTIME_DIR" -xf "$RUNTIME_TAR"
+PY=$RUNTIME_DIR/miniforge3/bin/python
+[ -x "$PY" ] || { echo "[ccaa-eval-job] extracted Python missing" >&2; exit 12; }
+export PYTHONNOUSERSITE=1
+echo "[ccaa-eval-job] runtime staged sha256=$OBSERVED_RUNTIME_SHA256 seconds=$(( $(date +%s) - START ))"
 
 read -r BASE_SHA ADAPTER_SHA CANARY_SHA AUDIT_SHA MANIFEST_SHA < <(
   "$PY" - "$CKPT" "$ADAPTER" "$CANARY" "$AUDIT" "$MANIFEST" <<'PY'
@@ -70,7 +93,7 @@ PY
 )
 
 cd "$BASE/train"
-timeout --kill-after=10s 90s "$PY" - <<'PY'
+timeout --kill-after=10s 120s "$PY" - <<'PY'
 import sys
 import torch
 
