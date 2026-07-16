@@ -41,6 +41,7 @@ RUNTIME_PARENT=${SLURM_TMPDIR:-${TMPDIR:-/tmp}}
 STAGE_DIR=$(mktemp -d "$RUNTIME_PARENT/shohin_readout.${SLURM_JOB_ID:-manual}.XXXXXX")
 chmod 0700 "$STAGE_DIR"
 cleanup_runtime() {
+  chmod -R u+w "${STAGE_DIR:-}" 2>/dev/null || true
   rm -rf -- "${STAGE_DIR:-}"
 }
 trap cleanup_runtime EXIT
@@ -48,14 +49,16 @@ trap cleanup_runtime EXIT
 git -C "$BASE" cat-file -e "${IMPLEMENTATION_COMMIT}^{commit}"
 SOURCE_DIR=$STAGE_DIR/source
 mkdir -m 0700 "$SOURCE_DIR"
-git -C "$BASE" archive "$IMPLEMENTATION_COMMIT" -- \
+for relative in \
   R12_CURSOR_READOUT_ACTUATION_DIAGNOSTIC.md \
   train/model.py \
   train/counterfactual_cursor_action_dev_view.py \
   train/probe_counterfactual_cursor_readout.py \
   train/test_probe_counterfactual_cursor_readout.py \
-  train/jobs/probe_counterfactual_cursor_readout.sbatch \
-  | tar -C "$SOURCE_DIR" -xf -
+  train/jobs/probe_counterfactual_cursor_readout.sbatch; do
+  mkdir -p "$SOURCE_DIR/$(dirname "$relative")"
+  git -C "$BASE" show "${IMPLEMENTATION_COMMIT}:${relative}" > "$SOURCE_DIR/$relative"
+done
 printf '%s\n' "$IMPLEMENTATION_COMMIT" > "$SOURCE_DIR/.implementation_commit"
 chmod -R a-w "$SOURCE_DIR"
 

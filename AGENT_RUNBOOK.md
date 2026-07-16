@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-15 21:05 EDT (the protected two-H100 pretrain is healthy through step 296,850 at ~282.35k tok/s. Exact 290k remains durable and hash-matched locally/Newton; 300k is the next DR target. R12 cursor-action v1 completed its immutable six-arm fit, six score-blind evaluations, and independent 20,000-replicate release score. The result is a formal neural-selector NO-GO: treatment, ordinary loss, relation sham, source-only, and the favorable cursor table all score 20% restricted and 0% full-vocabulary with zero exact groups and zero directed cursor switches. Score SHA-256 is `88a5e0e86cd4228fe3dd82282efae910fb36634e097f7e4de599d7c008315cc0`. No reasoning claim or one-call gate is authorized. The next bounded work is a development-only source-by-cursor readout and action-write feasibility decomposition; v1 confirmation is closed and may not be tuned against. Never alter or delete the live flagship source/KV path.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-15 21:43 EDT (R12 cursor-action v1 remains a formal neural-selector NO-GO. The follow-up confirmation-free final-token readout diagnostic is also a NO-GO: pre/post joint train accuracy is 98.75%/97.43% but development is only 43.13%/41.67% versus the 40% cursor shortcut, with 0/192 exact groups. Direct calibration requires beta about +21 logits and median L-inf changes of 88.76/67.95 without repairing class selection. Immutable result SHA-256 is `fda4fc47f63ffae0f1b085e527230b3242d8899649dbefb8f8b50d72cbaae433`. This rules out a simple final-token linear code, not distributed token-level state. The next bounded work is cursor-conditioned token-tape retrieval with matched controls; fresh held-out permutations are mandatory before any score-bearing v2. Never alter or delete the live flagship source/KV path.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -5048,3 +5048,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   existing train/development split to separate joint representation availability from action-logit actuation;
   a fresh confirmation is required if both gates pass. Protected flagship `686732` remained untouched and was
   healthy through step 296,850 at ~282.35k tok/s; 300k remains the next DR target.
+
+- **2026-07-15 21:38--21:43** — **The confirmation-free final-token readout diagnostic closes with
+  a second bounded NO-GO.** A deterministic projection built 5,760 train and 960 development cells while
+  physically omitting confirmation; independent replay froze view/audit SHA-256 values
+  `24abd93737be57c6792a1d44c8f2e3a28d7c5fbc1666b083383350f410ce6ec9` and
+  `33fb4792ed0a8027d49de157c295cb9ba651cdd9c59ab5cfa04a71e99af8ea25`. Implementation commit
+  `e2e4bb703304ebe2ce11554c8b7c97ef0d3aa928` staged all inputs and an exported source tree node-locally.
+  Isolated H100 job `689952` completed the scientific program on evc30 in about one minute and atomically froze
+  result SHA-256 `fda4fc47f63ffae0f1b085e527230b3242d8899649dbefb8f8b50d72cbaae433`. Pre/post joint readouts reach
+  98.75%/97.43% on train but only 43.13%/41.67% on new operand/renderers, versus 40% cursor-only, and both have
+  0/192 exact groups. Two-scalar frozen-readout calibration needs beta about +21 and median L-infinity 88.76/67.95,
+  forces action-token wins, but cannot repair wrong class selection. This rejects a simple final-selector linear
+  code; it does not reject distributed token-level state. Slurm recorded FAILED only because the post-result
+  cleanup trap could not delete the deliberately read-only exported tree; the complete result was already
+  fsynced, read-only, hash-verified, and mirrored. Cleanup is repaired without rerunning the science. Next bounded
+  candidate is a cursor-conditioned token-tape retrieval probe with matched controls; any v2 must withhold
+  permutations and use fresh confirmation.
