@@ -2431,6 +2431,8 @@ def run_independent_publish(
     """Delegate canonical publication to the separately implemented verifier."""
 
     verify_report(report)
+    artifact_path = artifact_path.resolve()
+    receipt_path = receipt_path.resolve()
     with tempfile.TemporaryDirectory(prefix="pcpt-v3-independent-audit-") as directory:
         candidate = Path(directory) / "candidate.json"
         _immutable_write(candidate, canonical_json_bytes(report))
@@ -2500,8 +2502,6 @@ def run_independent_publish(
     identity = report["scientific_identity"]
     if not isinstance(summary, Mapping) or set(summary) != expected_fields:
         raise TransportError("independent publisher receipt schema is invalid")
-    artifact_path = artifact_path.resolve()
-    receipt_path = receipt_path.resolve()
     if not artifact_path.is_file() or not receipt_path.is_file():
         raise TransportError("independent verifier did not publish both outputs")
     artifact_bytes = artifact_path.read_bytes()

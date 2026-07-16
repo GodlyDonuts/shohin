@@ -38,6 +38,14 @@ the canonical CLI from that commit, require the separately implemented verifier
 to publish both a mode-0444 artifact and bound receipt, and audit those outputs
 before this status can become a protocol pass.
 
+The first commit-bound attempt from `5903fbf` completed both cores but failed
+closed before publication. The parent changed the verifier's cwd to a fresh
+audit directory while passing the artifact as a relative path, so the verifier
+correctly rejected it as noncanonical. Neither output was created. The repair
+resolves artifact and receipt paths before process launch, and the parent test
+now asserts that the independent process receives only absolute frozen paths.
+The complete 38-test suite passes after this defect-21 regression.
+
 V3 preserves the v2 algebra and freezes only the custody repairs in
 `R12_POST_COMMIT_PACKET_TRANSPORT_V3_PREREG.md`. No neural fit, Shohin adapter,
 SFT, H100 job, workspace claim, or reasoning claim is authorized.

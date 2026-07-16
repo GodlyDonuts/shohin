@@ -283,17 +283,21 @@ class ReportSchemaTests(unittest.TestCase):
         completed = mock.Mock(
             returncode=1, stdout=b"", stderr=b"FAIL: mutation detected\n"
         )
-        with tempfile.TemporaryDirectory() as directory, mock.patch.object(
+        with tempfile.TemporaryDirectory(), mock.patch.object(
             v2, "verify_report"
         ), mock.patch.object(v2.subprocess, "run", return_value=completed) as run:
-            artifact = Path(directory) / "artifact.json"
-            receipt = Path(directory) / "receipt.json"
+            artifact = Path("artifacts/r12/post_commit_packet_transport_v3.json")
+            receipt = Path(
+                "artifacts/r12/post_commit_packet_transport_v3.receipt.json"
+            )
             with self.assertRaises(v2.TransportError):
                 v2.run_independent_publish(report, artifact, receipt)
             command = run.call_args.args[0]
             self.assertIn("publish", command)
-            self.assertIn(str(artifact), command)
-            self.assertIn(str(receipt), command)
+            self.assertIn(str(artifact.resolve()), command)
+            self.assertIn(str(receipt.resolve()), command)
+            self.assertNotIn(str(artifact), command)
+            self.assertNotIn(str(receipt), command)
 
     def test_parent_has_no_receipt_acceptor_or_canonical_writer(self) -> None:
         self.assertFalse(hasattr(v2, "_validate_independent_receipt"))
