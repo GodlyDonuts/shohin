@@ -1,0 +1,35 @@
+{
+  "arm_name": "cursor_table",
+  "bindings": {
+    "adapter_implementation_commit": "4dfcec195477c23d9e88276d58030d373bc2db6c",
+    "adapter_sha256": "4a575a3a496414459a513f1df4a8a3df8a10a709cf03ca77c2ee567afbbff710",
+    "base_checkpoint_sha256": "91d5288f184fc5230516add9851ac1a8815d3369ffd816cd7d0c03d8bafc741d",
+    "base_checkpoint_step": 260000,
+    "canary_audit_file_sha256": "5deb9dc396e3c8d99f32b9f0e14482d288cff9d82145582665569c911a802e5d",
+    "canary_contract_sha256": "d767e2bf405364d929d6aab0b1e202d643b974e62e71adbddde012a09255a49b",
+    "canary_file_sha256": "baf985855c396f63dffba1e09733a7372bd8b29c852cb5b9f482b4d59de714a1",
+    "canary_payload_sha256": "c5a8ad4653a72f11e74ccbf726f432e9e729fc9e6937be4e968b4a936d02ad81",
+    "code_sha256": {
+      "adapter_factory": "97d911ce2773d9085c33d529658e12063dbfb8e43b3950973ea1dea2abd98f87",
+      "cursor_sidecar": "e9ffa29ef8802e9f7a62705f6e2b5307e072fa56075c566c582ac35af440f71e",
+      "evaluator": "85098bd9e86a719ff36978e6724b404c19d169e2fee2f012e004c289d191db5f",
+      "model": "45fc0dc46ceb0f91d08e3f671cbe9ef202ea212e72d5bba8b77356c3fb0983d4"
+    },
+    "confirmation_cells_sha256": "6ebcfea008eca62a93c1b4467c5236dfd592d6d133e86842bf53171aff1c39aa",
+    "confirmation_sources_sha256": "3d1e9d482a4022dcb5e21d55695fcb8de142f4914d1989c99fa6b87fca074fa8",
+    "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4",
+    "training_manifest_sha256": "8c499c215ade7be26ac75ea4e50cc5b335edd80f3bd5eb2225eb0166eb5bc13e"
+  },
+  "condition_count": 3,
+  "forward_count": 450,
+  "job_identity": {
+    "array_task_id": "4",
+    "attempt_id": "0",
+    "job_id": "689936",
+    "scheduler": "slurm"
+  },
+  "raw_result_bytes": 9442515,
+  "raw_result_sha256": "e73d5430d808941df957cbb63e5abe6450053658656c4cfe50bedb017d1884a9",
+  "row_count": 4800,
+  "schema": "counterfactual_cursor_action_inference_receipt_v1"
+}
