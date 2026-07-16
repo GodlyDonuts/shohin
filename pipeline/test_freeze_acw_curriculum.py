@@ -280,32 +280,35 @@ class FreezeCurriculumTests(unittest.TestCase):
         first = Path(self.temporary.name) / "replay_a"
         second = Path(self.temporary.name) / "replay_b"
         frozen = Path(self.temporary.name) / "frozen"
-        execute_pilot_replay(
-            self.root,
-            first,
-            replay_id="a",
-            canonical=False,
-            pilot_kwargs={
-                "refinement_rounds": 2,
-                "updates_per_round": 1,
-                "final_updates": 1,
-                "batch_size": 8,
-                "max_groups": 4,
-            },
-        )
-        execute_pilot_replay(
-            self.root,
-            second,
-            replay_id="b",
-            canonical=False,
-            pilot_kwargs={
-                "refinement_rounds": 2,
-                "updates_per_round": 1,
-                "final_updates": 1,
-                "batch_size": 8,
-                "max_groups": 4,
-            },
-        )
+        # This test deliberately creates non-Slurm receipts. Do not let a real
+        # scheduler allocation make the negative control environment-dependent.
+        with patch.dict(os.environ, {"SLURM_JOB_ID": ""}):
+            execute_pilot_replay(
+                self.root,
+                first,
+                replay_id="a",
+                canonical=False,
+                pilot_kwargs={
+                    "refinement_rounds": 2,
+                    "updates_per_round": 1,
+                    "final_updates": 1,
+                    "batch_size": 8,
+                    "max_groups": 4,
+                },
+            )
+            execute_pilot_replay(
+                self.root,
+                second,
+                replay_id="b",
+                canonical=False,
+                pilot_kwargs={
+                    "refinement_rounds": 2,
+                    "updates_per_round": 1,
+                    "final_updates": 1,
+                    "batch_size": 8,
+                    "max_groups": 4,
+                },
+            )
         comparison = freeze_pilot_replays(
             first,
             second,
