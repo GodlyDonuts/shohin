@@ -15,11 +15,11 @@ set -euo pipefail
 
 BASE=/lustre/fs1/home/sa305415/shohin_acw
 PY=/lustre/fs1/home/sa305415/shohin/miniforge3/bin/python3.13
-DATA=$BASE/artifacts/r12/acw_pilot_domain_v3_runtime_v1
-REPLAY_A=$BASE/artifacts/r12/acw_cgbr_pilot_v5_replay_a
-REPLAY_B=$BASE/artifacts/r12/acw_cgbr_pilot_v5_replay_b
-OUT=$BASE/artifacts/r12/acw_cgbr_pilot_v5
-VERIFY=$BASE/artifacts/r12/acw_cgbr_pilot_v5_independent_verification
+DATA=$BASE/artifacts/r12/acw_pilot_domain_v3_runtime_v2
+REPLAY_A=$BASE/artifacts/r12/acw_cgbr_pilot_v6_replay_a
+REPLAY_B=$BASE/artifacts/r12/acw_cgbr_pilot_v6_replay_b
+OUT=$BASE/artifacts/r12/acw_cgbr_pilot_v6
+VERIFY=$BASE/artifacts/r12/acw_cgbr_pilot_v6_independent_verification
 PYZIP=/lustre/fs1/home/sa305415/shohin/miniforge3/lib/python313.zip
 
 : "${SLURM_JOB_ID:?}"

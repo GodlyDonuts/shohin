@@ -14,9 +14,9 @@ set -euo pipefail
 
 BASE=/lustre/fs1/home/sa305415/shohin_acw
 PY=/lustre/fs1/home/sa305415/shohin/miniforge3/bin/python3.13
-PILOT=$BASE/artifacts/r12/acw_cgbr_pilot_v5
-VERIFY=$BASE/artifacts/r12/acw_cgbr_pilot_v5_independent_verification
-REGISTRY=$BASE/R12_ACW_PILOT_ARTIFACT_REGISTRY.json
+PILOT=$BASE/artifacts/r12/acw_cgbr_pilot_v6
+VERIFY=$BASE/artifacts/r12/acw_cgbr_pilot_v6_independent_verification
+REGISTRY=$BASE/R12_ACW_PILOT_ARTIFACT_REGISTRY_V2.json
 PYZIP=/lustre/fs1/home/sa305415/shohin/miniforge3/lib/python313.zip
 
 : "${SLURM_JOB_ID:?}"

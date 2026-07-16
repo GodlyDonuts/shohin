@@ -100,15 +100,15 @@ def _detach_torch_generated_import_path() -> dict[str, Path]:
 _DETACHED_TORCH_GENERATED_MODULES: dict[str, Path] = {}
 
 
-PILOT_PROTOCOL = "R12-ACW-CGBR-PILOT-v5"
+PILOT_PROTOCOL = "R12-ACW-CGBR-PILOT-v6"
 SCHEDULE_PROTOCOL = "R12-ACW-QUERY-SCHEDULE-v3"
 BUNDLE_PROTOCOL = "R12-ACW-TRAINER-BUNDLE-v4"
 DATA_REPLAY_PROTOCOL = "R12-ACW-DATA-REPLAY-v1"
-PILOT_EXECUTION_PROTOCOL = "R12-ACW-PILOT-REPLAY-EXECUTION-v5"
-PILOT_COMPARISON_PROTOCOL = "R12-ACW-PILOT-REPLAY-COMPARISON-v5"
-PILOT_ORCHESTRATION_PROTOCOL = "R12-ACW-PILOT-ORCHESTRATION-v2"
-PILOT_INDEPENDENT_VERIFICATION_PROTOCOL = "R12-ACW-PILOT-INDEPENDENT-VERIFICATION-v2"
-PILOT_ARTIFACT_REGISTRY_PROTOCOL = "R12-ACW-PILOT-ARTIFACT-REGISTRY-v1"
+PILOT_EXECUTION_PROTOCOL = "R12-ACW-PILOT-REPLAY-EXECUTION-v6"
+PILOT_COMPARISON_PROTOCOL = "R12-ACW-PILOT-REPLAY-COMPARISON-v6"
+PILOT_ORCHESTRATION_PROTOCOL = "R12-ACW-PILOT-ORCHESTRATION-v3"
+PILOT_INDEPENDENT_VERIFICATION_PROTOCOL = "R12-ACW-PILOT-INDEPENDENT-VERIFICATION-v3"
+PILOT_ARTIFACT_REGISTRY_PROTOCOL = "R12-ACW-PILOT-ARTIFACT-REGISTRY-v2"
 PILOT_SEED = 2026071600
 UNIFORM_SEED = 2026071604
 PUBLIC_QUERIES = 24
@@ -546,6 +546,10 @@ CANONICAL_PILOT_NATIVE_FILES = {
         "bytes": 1599096,
         "sha256": "e27d5b1be7b305214bc91e78d41c55964365cb9d06cec814e6a0b61c79d8ddba",
     },
+    "/usr/lib64/libnss_files-2.28.so": {
+        "bytes": 54360,
+        "sha256": "3505f4d12bb803562270855de55c49aee3f63e5bd33fcd458d365c5cc99e441b",
+    },
     "/usr/lib64/libpthread-2.28.so": {
         "bytes": 149936,
         "sha256": "0239064fff600cd4c9fe5bc8faaddfeb23dfd8444c8882ed0c95aa2edca5b985",
@@ -699,7 +703,7 @@ CANONICAL_PILOT_RUNTIME = {
     "libc": ["glibc", "2.28"],
     "machine": "x86_64",
     "native_files": CANONICAL_PILOT_NATIVE_FILES,
-    "native_files_payload_sha256": "13c265e3f116beee105c883e6384595e5759f96419e790c064cd94e77f20425c",
+    "native_files_payload_sha256": "2c0605b4e60ecaf3d1a708c7124954b6f3c8405b0b23e75d59839588b32c2585",
     "numpy_config_sha256": (
         "6a202deb5035843d719b04dbfca97b3fe4191603e5884fac2f9af5659555419b"
     ),
@@ -750,14 +754,14 @@ CANONICAL_PILOT_RUNTIME = {
     "torch_num_threads": 1,
     "torch_version": "2.6.0+cu124",
 }
-CANONICAL_PILOT_DATASET = "artifacts/r12/acw_pilot_domain_v3_runtime_v1"
-CANONICAL_PILOT_REPLAY_A = "artifacts/r12/acw_cgbr_pilot_v5_replay_a"
-CANONICAL_PILOT_REPLAY_B = "artifacts/r12/acw_cgbr_pilot_v5_replay_b"
-CANONICAL_PILOT_OUTPUT = "artifacts/r12/acw_cgbr_pilot_v5"
+CANONICAL_PILOT_DATASET = "artifacts/r12/acw_pilot_domain_v3_runtime_v2"
+CANONICAL_PILOT_REPLAY_A = "artifacts/r12/acw_cgbr_pilot_v6_replay_a"
+CANONICAL_PILOT_REPLAY_B = "artifacts/r12/acw_cgbr_pilot_v6_replay_b"
+CANONICAL_PILOT_OUTPUT = "artifacts/r12/acw_cgbr_pilot_v6"
 CANONICAL_PILOT_VERIFICATION = (
-    "artifacts/r12/acw_cgbr_pilot_v5_independent_verification"
+    "artifacts/r12/acw_cgbr_pilot_v6_independent_verification"
 )
-CANONICAL_PILOT_REGISTRY = "R12_ACW_PILOT_ARTIFACT_REGISTRY.json"
+CANONICAL_PILOT_REGISTRY = "R12_ACW_PILOT_ARTIFACT_REGISTRY_V2.json"
 CANONICAL_PILOT_ARTIFACT_FILES = 80
 CANONICAL_PILOT_ANCHORED_FILES = 81
 CANONICAL_PILOT_ACTIVATION_ALLOWLIST = (
@@ -808,7 +812,8 @@ def _pilot_cpu_identity() -> dict:
 
 
 def _warm_pilot_runtime() -> None:
-    """Load every numerical path used by the CPU pilot before fingerprinting."""
+    """Load every native path used by the CPU pilot before fingerprinting."""
+    socket.getfqdn()
     numpy_sample = np.arange(16, dtype=np.float32).reshape(4, 4)
     np.matmul(numpy_sample, numpy_sample)
     parameter = torch.nn.Parameter(torch.arange(8, dtype=torch.float32))
@@ -3620,7 +3625,7 @@ def _validate_independent_verifier_allocation(
 
 
 def verify_canonical_pilot_independently() -> dict:
-    """Recompute v5 in a separate Slurm allocation and freeze its receipt."""
+    """Recompute v6 in a separate Slurm allocation and freeze its receipt."""
     runtime = require_canonical_pilot_runtime()
     if _canonical_pilot_role() != "verifier":
         raise RuntimeError(

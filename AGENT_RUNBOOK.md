@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-16 17:17 EDT (The protected 300k flagship remains immutable and hash-matched. Track S remains pre-result. Generator v3 is genuinely cross-runtime: Mac and Stokes `740071` match over all 68 files / 67 arrays at manifest payload SHA-256 `3294a0d12d277f46ea8c0cbf50142be14816447c15bc3792f6e4df7e77e2ba33`. Pilot v4 job `740077` is diagnostic-only because Mac recomputation changed 43,451/57,344 CGB schedule positions and the model tensor hash. V5 now pins the exact dataset plus 92 executable mappings, three code trees, 599 imported external files, nine tools, one generated module, five `sys.path` entries, and native payload SHA-256 `13c265e3f116beee105c883e6384595e5759f96419e790c064cd94e77f20425c`. Fresh probes `740207/740208` on `ec51/ec52` and final pin validators `740209/740210` are byte-identical at log SHA-256 `d989bafc4b8637d63375bc6107e26064ac0f3e09461e96a328042fe8c7fbdbc5`. Adversarial review found separate-process receipt provenance and a noncanonical final registry reopen; both are repaired. The verifier now creates its receipt and registry in one process, carries the exact receipt object/bytes in memory, byte-compares both publications, strictly reopens both, and exposes no standalone registry builder command. The explicit trust boundary is reproducibility/custody under trusted committed process, Stokes kernel, Slurm, and filesystem, not remote attestation against a malicious same-UID runtime-restoring actor. The complete local warning-strict gate is 114/114, and the defect-finding adversarial reviewer returned GO with no remaining P0/P1 blocker in scope. Commit/push scientific candidate `S`, install exact HEAD, run one absent-path v5 pilot on `ec51`, then independently replay and build the candidate registry on `ec52`. Post-pilot training remains hard-blocked. The Git trust chain must be separately pushed `S`, registry-only `A`, then activation `E`; pilot/training identity equality is invalid. No scored development arm, confirmation opening, Shohin fit, H100 job, memory claim, or reasoning claim is authorized.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-16 18:12 EDT (The protected 300k flagship remains immutable and hash-matched. Track S remains pre-result. Scientific candidate `7110111` was pushed and installed exactly, but its sole v5 pilot `740215` failed closed during mandatory parent recomputation after the initial runtime fingerprint omitted the NSS library lazily loaded by later hostname validation. No final pilot output, independent verification, registry, score, or capability result exists. The 68-file dataset and two four-file held replays are quarantined under `artifacts/r12/rejected/740215`; all 76 bytesets verify against a mirrored manifest with SHA-256 `ebec7084fd14d382347786bc9d48a7cf55e8db5900357ece8c16a04107aae9f5`. V6 warms `socket.getfqdn()` before fingerprinting, pins `/usr/lib64/libnss_files-2.28.so`, advances every failed canonical namespace, and binds 93 executable mappings at native payload SHA-256 `2c0605b4e60ecaf3d1a708c7124954b6f3c8405b0b23e75d59839588b32c2585`. Fresh read-only probes `740225` on `ec51` and `740224` on `ec52` are byte-identical at structured identity SHA-256 `0e91de0e3dbca24ea4f04b9b03398a91486b93b31eff5a3ba4574dd43eaa677f` and log SHA-256 `708b7fc2165cf952389e4c9b07d1980c89af7cda3324995dcddd1035df81f7f9`. The complete local warning-strict gate is 115/115 with Ruff, formatting, compilation, shell syntax, and diff checks clean. A fresh defect-finding review returned GO with no P0/P1 finding after tracing warmup ordering, later runtime checks, all protocol bindings, and both absent-path jobs. Commit/push this exact replacement scientific candidate `S`, install exact HEAD, run final two-observation pin validators on both nodes, and only then submit one absent-path v6 pilot on `ec51` followed by independent verification/registry construction on `ec52`. The separate `S -> A -> E` Git trust chain remains mandatory. No scored development arm, confirmation opening, Shohin fit, H100 job, memory claim, or reasoning claim is authorized.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -5574,3 +5574,34 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   checks and returned **GO** with no remaining P0/P1 blocker inside that boundary. This authorizes only a clean
   pushed `S` and one non-scored v5 pilot/replay chain; no registry anchor, scored arm, H100 run, or capability claim
   exists yet.
+
+- **2026-07-16 17:15--18:01** — **The first v5 pilot fails closed on a real late native load;
+  v6 closes and re-probes the boundary, still pre-result.** Commit `7110111` was pushed, installed exactly on
+  Stokes, and launched once as job `740215` on `ec51`. Its 114-test gate passed in 85.586 seconds. It atomically
+  generated the registered 68-file dataset and two four-file held replays, then the parent rejected its own required
+  numerical recomputation before final freeze because the canonical runtime identity had changed. Accounting is
+  `FAILED 1:0`, elapsed 15:06, MaxRSS 1,230,136 KiB; the 2,229-byte log SHA-256 is
+  `91188af87a5ca5c7f3a5e44bfb6ef6d457d8429182859c95fcd49d52098a2653`. No final output, independent
+  verification, artifact registry, score, or capability result exists. Read-only staged probe `740216` showed no
+  mapping change through scientific identity, dataset verification, both replay validations, or replay byte
+  comparison. Probe `740218` isolated the change: the first `socket.getfqdn()` loads exactly
+  `/usr/lib64/libnss_files-2.28.so`, 54,360 bytes, SHA-256
+  `3505f4d12bb803562270855de55c49aee3f63e5bd33fcd458d365c5cc99e441b`. The failed 76-file tree is
+  quarantined intact at `artifacts/r12/rejected/740215`; every post-move hash verifies against a locally mirrored
+  76-line manifest whose SHA-256 is
+  `ebec7084fd14d382347786bc9d48a7cf55e8db5900357ece8c16a04107aae9f5`.
+
+  The v6 repair calls `socket.getfqdn()` during runtime warmup, pins the NSS library, advances the dataset to
+  `acw_pilot_domain_v3_runtime_v2`, advances pilot/execution/comparison to v6, orchestration and independent
+  verification to v3, and the registry protocol/file to v2 / `R12_ACW_PILOT_ARTIFACT_REGISTRY_V2.json`. The new
+  93-mapping native payload SHA-256 is
+  `2c0605b4e60ecaf3d1a708c7124954b6f3c8405b0b23e75d59839588b32c2585`. Fresh read-only probes `740225`
+  on `ec51` and `740224` on `ec52` both completed and produced byte-identical 23,901-byte logs, full structured
+  identity SHA-256 `0e91de0e3dbca24ea4f04b9b03398a91486b93b31eff5a3ba4574dd43eaa677f`, and log SHA-256
+  `708b7fc2165cf952389e4c9b07d1980c89af7cda3324995dcddd1035df81f7f9`. The local eight-module gate is
+  **115/115** with `ResourceWarning` fatal, and Ruff, formatting, compilation, shell syntax, and diff checks pass.
+  A fresh defect-finding review then traced warmup ordering, later runtime checks, all producer/consumer protocol
+  bindings, canonical path absence, and both node probes. It returned **GO** with no P0/P1 finding for committing this
+  exact replacement scientific candidate. Commit/push replacement `S`, install exact HEAD, run two-observation
+  validators from that clean identity on both nodes, and only then relaunch one v6 pilot. No downstream arm or claim
+  is open.

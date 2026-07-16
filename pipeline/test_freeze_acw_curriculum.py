@@ -825,30 +825,64 @@ class FreezeCurriculumTests(unittest.TestCase):
         )
         cleanup.assert_called_once_with(children)
 
+    def test_runtime_warmup_loads_hostname_resolver_before_fingerprinting(self):
+        with patch.object(
+            freezer.socket,
+            "getfqdn",
+            return_value="test.example",
+        ) as getfqdn:
+            freezer._warm_pilot_runtime()
+        getfqdn.assert_called_once_with()
+
     def test_canonical_runtime_and_namespace_are_literal_pins(self):
+        self.assertEqual(freezer.PILOT_PROTOCOL, "R12-ACW-CGBR-PILOT-v6")
+        self.assertEqual(
+            freezer.PILOT_EXECUTION_PROTOCOL,
+            "R12-ACW-PILOT-REPLAY-EXECUTION-v6",
+        )
+        self.assertEqual(
+            freezer.PILOT_COMPARISON_PROTOCOL,
+            "R12-ACW-PILOT-REPLAY-COMPARISON-v6",
+        )
+        self.assertEqual(
+            freezer.PILOT_ORCHESTRATION_PROTOCOL,
+            "R12-ACW-PILOT-ORCHESTRATION-v3",
+        )
+        self.assertEqual(
+            freezer.PILOT_INDEPENDENT_VERIFICATION_PROTOCOL,
+            "R12-ACW-PILOT-INDEPENDENT-VERIFICATION-v3",
+        )
+        self.assertEqual(
+            freezer.PILOT_ARTIFACT_REGISTRY_PROTOCOL,
+            "R12-ACW-PILOT-ARTIFACT-REGISTRY-v2",
+        )
         self.assertEqual(
             freezer.CANONICAL_PILOT_DATASET_PAYLOAD_SHA256,
             "3294a0d12d277f46ea8c0cbf50142be14816447c15bc3792f6e4df7e77e2ba33",
         )
         self.assertEqual(
             freezer.CANONICAL_PILOT_DATASET,
-            "artifacts/r12/acw_pilot_domain_v3_runtime_v1",
+            "artifacts/r12/acw_pilot_domain_v3_runtime_v2",
         )
         self.assertEqual(
             freezer.CANONICAL_PILOT_REPLAY_A,
-            "artifacts/r12/acw_cgbr_pilot_v5_replay_a",
+            "artifacts/r12/acw_cgbr_pilot_v6_replay_a",
         )
         self.assertEqual(
             freezer.CANONICAL_PILOT_REPLAY_B,
-            "artifacts/r12/acw_cgbr_pilot_v5_replay_b",
+            "artifacts/r12/acw_cgbr_pilot_v6_replay_b",
         )
         self.assertEqual(
             freezer.CANONICAL_PILOT_OUTPUT,
-            "artifacts/r12/acw_cgbr_pilot_v5",
+            "artifacts/r12/acw_cgbr_pilot_v6",
         )
         self.assertEqual(
             freezer.CANONICAL_PILOT_VERIFICATION,
-            "artifacts/r12/acw_cgbr_pilot_v5_independent_verification",
+            "artifacts/r12/acw_cgbr_pilot_v6_independent_verification",
+        )
+        self.assertEqual(
+            freezer.CANONICAL_PILOT_REGISTRY,
+            "R12_ACW_PILOT_ARTIFACT_REGISTRY_V2.json",
         )
         self.assertEqual(
             freezer.CANONICAL_PILOT_THREAD_ENV["ATEN_CPU_CAPABILITY"],
@@ -869,7 +903,7 @@ class FreezeCurriculumTests(unittest.TestCase):
             "python_startup",
         ):
             self.assertTrue(freezer.CANONICAL_PILOT_RUNTIME[key], key)
-        self.assertEqual(len(freezer.CANONICAL_PILOT_RUNTIME["native_files"]), 92)
+        self.assertEqual(len(freezer.CANONICAL_PILOT_RUNTIME["native_files"]), 93)
         self.assertEqual(
             hashlib.sha256(
                 freezer.canonical_json_bytes(
@@ -1671,6 +1705,8 @@ class FreezeCurriculumTests(unittest.TestCase):
         self.assertNotIn("acw_pilot_domain_v2", source)
         self.assertNotIn("acw_cgbr_pilot_v3", source)
         self.assertNotIn("acw_cgbr_pilot_v4", source)
+        self.assertNotIn("acw_cgbr_pilot_v5", source)
+        self.assertNotIn("acw_pilot_domain_v3_runtime_v1", source)
         commands = [
             line.strip()
             for line in source.splitlines()
@@ -1723,6 +1759,8 @@ class FreezeCurriculumTests(unittest.TestCase):
         )
         self.assertNotIn("build-pilot-artifact-registry", source)
         self.assertIn(freezer.CANONICAL_PILOT_REGISTRY, source)
+        self.assertNotIn("acw_cgbr_pilot_v5", source)
+        self.assertNotIn("R12_ACW_PILOT_ARTIFACT_REGISTRY.json", source)
         self.assertIn("env -i", source)
         self.assertIn('"$PY" -S -P "$@"', source)
         self.assertIn(

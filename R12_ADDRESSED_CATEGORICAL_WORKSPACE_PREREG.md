@@ -1,6 +1,6 @@
 # R12 Addressed Categorical Workspace Preregistration
 
-**Status:** REVISION 4 PREREGISTRATION; TRACK S PUBLIC PILOT V5 IS PRE-RESULT.
+**Status:** REVISION 5 PREREGISTRATION; TRACK S PUBLIC PILOT V6 IS PRE-RESULT.
 PCPT v3 is closed process/algebra evidence, while the learned ACW lane remains
 unscored. No Shohin fit, H100 job, capability claim, or novelty claim is
 authorized until the exact canonical-runtime pilot, its different-node replay,
@@ -363,45 +363,63 @@ that tolerance may repair. Pilot v4, including job `740077`, is therefore
 diagnostic-only and cannot be anchored, consumed by a scored arm, or cited as
 learned evidence.
 
-Pilot v5 separates the two contracts. The dataset remains independently
-cross-runtime reproducible and is additionally pinned to the exact payload hash
-above. Float training and all fresh numerical report replay are canonical only
-on the Stokes Xeon Gold 6130 compute class under glibc 2.28, Linux x86_64,
+Pilot v5 separated the two contracts. The dataset remained independently
+cross-runtime reproducible and was additionally pinned to the exact payload
+hash above. Float training and all fresh numerical report replay were canonical
+only on the Stokes Xeon Gold 6130 compute class under glibc 2.28, Linux x86_64,
 CPython 3.13.13, NumPy 2.5.0 with forced-runtime configuration SHA-256
 `6a202deb5035843d719b04dbfca97b3fe4191603e5884fac2f9af5659555419b`,
 and PyTorch 2.6.0+cu124 with forced-AVX2 configuration SHA-256
 `51bcbe59eb176362dc969b0341d85ca88416e37bd0f10de4b19350d07898e330`.
-The numerical process must have deterministic algorithms enabled, one Torch
-compute thread, 32 interop threads, no CUDA, and an exact environment that
-forces PyTorch, oneDNN, MKL, and OpenBLAS to AVX2/Haswell with one compute
-thread. The closure binds all 92 executable mappings, three complete code-tree
+The numerical process required deterministic algorithms, one Torch compute
+thread, 32 interop threads, no CUDA, and an exact environment that forced
+PyTorch, oneDNN, MKL, and OpenBLAS to AVX2/Haswell with one compute thread.
+
+The first v5 execution, job `740215` on `ec51`, passed all 114 warning-strict
+tests and generated the 68-file dataset plus two byte-identical four-file held
+replays. It then failed closed during the parent's mandatory numerical
+recomputation, before final publication, verification, or registry creation.
+The initial runtime fingerprint had 92 executable mappings; a later
+`socket.getfqdn()` call in hostname/Slurm validation lazily loaded
+`/usr/lib64/libnss_files-2.28.so`, so the next fingerprint correctly rejected
+the changed process. Job `740215` is therefore process-diagnostic evidence only,
+not a pilot result. Its 76 files are quarantined under `artifacts/r12/rejected/740215`
+and verify against a locally mirrored SHA-256 manifest whose own SHA-256 is
+`ebec7084fd14d382347786bc9d48a7cf55e8db5900357ece8c16a04107aae9f5`.
+
+Pilot v6 closes that discovered lazy-load boundary. Runtime warmup resolves the
+fully qualified hostname before any mapping fingerprint, and the exact
+54,360-byte NSS library is pinned at SHA-256
+`3505f4d12bb803562270855de55c49aee3f63e5bd33fcd458d365c5cc99e441b`.
+The closure now binds all 93 executable mappings, three complete code-tree
 summaries, 599 imported external files, nine external executable tools, one
 path-independent generated module, the exact five-entry `sys.path`, startup
 `.pth` files, and native payload SHA-256
-`13c265e3f116beee105c883e6384595e5759f96419e790c064cd94e77f20425c`.
-Fresh cross-node probes `740207` on `ec51` and `740208` on `ec52` produced
-byte-identical complete runtime identities and log SHA-256
-`d989bafc4b8637d63375bc6107e26064ac0f3e09461e96a328042fe8c7fbdbc5`.
-Final pin-validation jobs `740209` on `ec51` and `740210` on `ec52` each
-recomputed the structured identity twice, required exact equality to the
-compiled pin, and produced the same log hash. Any mismatch aborts before
-training.
+`2c0605b4e60ecaf3d1a708c7124954b6f3c8405b0b23e75d59839588b32c2585`.
+Fresh probes `740225` on `ec51` and `740224` on `ec52` produced byte-identical
+23,901-byte logs at SHA-256
+`708b7fc2165cf952389e4c9b07d1980c89af7cda3324995dcddd1035df81f7f9`
+and structured runtime identity SHA-256
+`0e91de0e3dbca24ea4f04b9b03398a91486b93b31eff5a3ba4574dd43eaa677f`.
+A clean pushed-candidate validator must still recompute this identity twice per
+node and require exact equality to the compiled pin before a replacement pilot.
 
-The admissible namespace advances again to dataset
-`acw_pilot_domain_v3_runtime_v1` and pilot/comparison v5, and canonical paths
-reject symlink components and symlink leaves. The first successful v5 pilot
-must be followed by a fresh full recomputation in a separate Slurm job on a
-different Stokes node with the same pinned runtime. Only then may the exact
-artifact registry be committed. The verifier writes its canonical receipt and
-builds the registry in one process; the registry loader must receive the exact
-receipt object and bytes still held in that process, and no standalone registry
-builder command exists. Both the receipt and registry are byte-compared and
-strict-canonical-JSON reopened after publication. The trust chain is three separately pushed
-commits: scientific result commit `S`, registry-only direct child `A`, then
-activation direct child `E`, where `E` literally pins `S`, `A`, and the raw
-registry hash. Pilot/training identity equality is forbidden. Cross-runtime
-consumers validate the anchored byte registry and structural bindings; they do
-not pretend that float optimization is portable.
+The admissible namespace advances to dataset
+`acw_pilot_domain_v3_runtime_v2`, pilot/comparison v6, independent verification
+v3, and registry `R12_ACW_PILOT_ARTIFACT_REGISTRY_V2.json`; canonical paths
+reject symlink components and symlink leaves. The first successful v6 pilot must
+be followed by a fresh full recomputation in a separate Slurm job on a different
+Stokes node with the same pinned runtime. Only then may the exact artifact
+registry be committed. The verifier writes its canonical receipt and builds the
+registry in one process; the registry loader must receive the exact receipt
+object and bytes still held in that process, and no standalone registry builder
+command exists. Both publications are byte-compared and strict-canonical-JSON
+reopened. The trust chain remains three separately pushed commits: scientific
+result commit `S`, registry-only direct child `A`, then activation direct child
+`E`, where `E` literally pins `S`, `A`, and the raw registry hash.
+Pilot/training identity equality is forbidden. Cross-runtime consumers validate
+the anchored byte registry and structural bindings; they do not pretend that
+float optimization is portable.
 
 The resulting ordered `(history_id, query_id)` curriculum is frozen and replayed
 identically to ACW, dense categorical, addressed continuous, GRU, packet-token,
