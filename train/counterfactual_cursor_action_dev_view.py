@@ -209,7 +209,10 @@ def load_development_view(
     payload = {key: value for key, value in document.items() if key != "payload_sha256"}
     if document["payload_sha256"] != sha256_bytes(canonical_json(payload)):
         raise ValueError("development view payload hash mismatch")
-    if not isinstance(document["splits"], dict) or tuple(document["splits"]) != SPLIT_NAMES:
+    if (
+        not isinstance(document["splits"], dict)
+        or set(document["splits"]) != set(SPLIT_NAMES)
+    ):
         raise ValueError("development view must contain only train and development")
     _exact_keys(
         audit,

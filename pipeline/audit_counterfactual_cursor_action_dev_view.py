@@ -83,7 +83,7 @@ def main() -> None:
         raise ValueError("tokenizer SHA-256 mismatch")
     source = json.loads(arguments.canary.read_bytes())
     view = json.loads(arguments.view.read_bytes())
-    if view["schema"] != SCHEMA or list(view["splits"]) != ["train", "development"]:
+    if view["schema"] != SCHEMA or set(view["splits"]) != {"train", "development"}:
         raise ValueError("view split boundary mismatch")
     for name in ("train", "development"):
         if view["splits"][name] != project(source, name):
