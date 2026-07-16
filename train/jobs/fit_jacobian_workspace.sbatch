@@ -17,8 +17,10 @@ PROMPTS=${PROMPTS:-$BASE/artifacts/monitors/wikitext103_test.jsonl}
 OUT=${OUT:?set a fresh Jacobian output}
 RUNTIME_TAR=${RUNTIME_TAR:-$BASE/artifacts/runtime/miniforge-torch-runtime-v1.tar}
 RUNTIME_TAR_SHA256=af7da54fd23ac1f7a64766438ba72d14591ae96d495da2306cc535da875d7f7c
+TOKENIZERS_PACKAGE=${TOKENIZERS_PACKAGE:-$BASE/miniforge3/lib/python3.13/site-packages/tokenizers}
+TOKENIZERS_PACKAGE_SHA256=4c8205d7a4df884790977308fb13a6490614bb54210d8e1d1470bd36d5cca00f
 
-for path in "$INIT" "$TOKENIZER" "$PROMPTS" "$RUNTIME_TAR"; do
+for path in "$INIT" "$TOKENIZER" "$PROMPTS" "$RUNTIME_TAR" "$TOKENIZERS_PACKAGE"; do
   [ -s "$path" ] || { echo "[jacobian-workspace] missing input: $path" >&2; exit 2; }
 done
 [ ! -e "$OUT" ] || { echo "[jacobian-workspace] refusing existing output" >&2; exit 3; }
@@ -43,8 +45,22 @@ START=$(date +%s)
 tar -C "$RUNTIME_DIR" -xf "$RUNTIME_TAR"
 PY=$RUNTIME_DIR/miniforge3/bin/python
 [ -x "$PY" ] || { echo "[jacobian-workspace] extracted Python missing" >&2; exit 6; }
+package_hash() {
+  (cd "$1" && find . -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
+}
+OBSERVED_TOKENIZERS_SHA256=$(package_hash "$TOKENIZERS_PACKAGE")
+[ "$OBSERVED_TOKENIZERS_SHA256" = "$TOKENIZERS_PACKAGE_SHA256" ] || {
+  echo "[jacobian-workspace] tokenizers package SHA-256 mismatch" >&2
+  exit 7
+}
+RUNTIME_SITE=$RUNTIME_DIR/miniforge3/lib/python3.13/site-packages
+cp -a "$TOKENIZERS_PACKAGE" "$RUNTIME_SITE/"
+[ "$(package_hash "$RUNTIME_SITE/tokenizers")" = "$TOKENIZERS_PACKAGE_SHA256" ] || {
+  echo "[jacobian-workspace] staged tokenizers package mismatch" >&2
+  exit 8
+}
 export PYTHONNOUSERSITE=1
-echo "[jacobian-workspace] runtime staged sha256=$OBSERVED_RUNTIME_SHA256 seconds=$(( $(date +%s) - START ))"
+echo "[jacobian-workspace] runtime staged sha256=$OBSERVED_RUNTIME_SHA256 tokenizers_sha256=$OBSERVED_TOKENIZERS_SHA256 seconds=$(( $(date +%s) - START ))"
 
 cd "$BASE/train"
 timeout --kill-after=10s 90s "$PY" - <<'PY'
