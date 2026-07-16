@@ -2,8 +2,10 @@
 
 **Decision:** NO CANONICAL RESULT YET. Two exhaustive precommit engineering
 canaries passed byte-identically, but they have no scientific standing because
-the implementation was not committed before execution. This document will be
-replaced only after a clean post-commit canonical run and replay.
+the implementation was not committed before execution. The first properly
+post-commit run from `7a0b98c` then failed closed before report assembly and
+wrote no artifact. This document will be replaced only after a clean
+post-commit canonical run and replay.
 
 ## 1. Precommit canary custody
 
@@ -43,6 +45,8 @@ first repair:
 13. retained only the first run's subprocess evidence after replay;
 14. still allowed evidence-empty reports with fabricated true gates; and
 15. defined the canonical challenge seed before the phase-one commitment.
+16. reread temporary phase-one packet paths while assembling the seed-
+    independence gate after the temporary directory had already been removed.
 
 The scientific harness now fails closed on committed source identity, moves
 packet state only through immutable files, uses the canonical reader interface
@@ -55,6 +59,13 @@ runs before `pass` can become true. The final artifact embeds the entire second
 core report, the verifier independently replays result layouts, scores, role
 cardinalities, manifest hashes, and post-commit seed derivation, and no numeric
 canonical seed exists before the phase-one manifest is frozen.
+
+The defect-16 repair compares the replayed writer payload hashes directly to
+the immutable phase-one manifest hashes. A cleanup regression proves the gate
+still works after the packet paths no longer exist and rejects a mutated replay
+payload. The corrected local suite passes 13/13 tests. Because the scientific
+implementation and test changed, another clean commit is required before the
+next canonical attempt.
 
 ## 3. Canonical result fields
 

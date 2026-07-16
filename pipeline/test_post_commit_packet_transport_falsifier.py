@@ -121,6 +121,39 @@ class RoleUnitTests(unittest.TestCase):
 
 
 class AlgebraAndChallengeTests(unittest.TestCase):
+    def test_seed_independence_uses_manifest_hashes_after_packet_cleanup(self) -> None:
+        state_payload = v2.canonical_json_bytes({"values": [1, 2, 3, 4]})
+        motor_payload = v2.canonical_json_bytes({"values": [1, 2, 0, 0]})
+        manifest = {
+            "state_packets_sha256": v2.sha256_bytes(state_payload),
+            "motor_packets_sha256": v2.sha256_bytes(motor_payload),
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            state_path = Path(directory) / "state.jsonl"
+            motor_path = Path(directory) / "motor.jsonl"
+            state_path.write_bytes(state_payload)
+            motor_path.write_bytes(motor_payload)
+        self.assertFalse(state_path.exists())
+        self.assertFalse(motor_path.exists())
+        self.assertTrue(
+            v2.phase_one_seed_independence(
+                state_payload,
+                motor_payload,
+                manifest,
+                "a" * 64,
+                "b" * 64,
+            )
+        )
+        self.assertFalse(
+            v2.phase_one_seed_independence(
+                state_payload + b"\n",
+                motor_payload,
+                manifest,
+                "a" * 64,
+                "b" * 64,
+            )
+        )
+
     def test_v2_challenges_are_deterministic_and_cell_recoded(self) -> None:
         primary_seed = v2._derive_post_commit_seed(
             "a" * 64, v2.PRIMARY_CHALLENGE_DOMAIN

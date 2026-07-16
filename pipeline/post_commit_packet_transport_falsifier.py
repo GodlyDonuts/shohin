@@ -519,6 +519,24 @@ def _derive_post_commit_seed(manifest_sha256: str, domain: str) -> int:
     return int.from_bytes(digest[:8], "big")
 
 
+def phase_one_seed_independence(
+    repeat_state_payload: bytes,
+    repeat_motor_payload: bytes,
+    phase_one_manifest: Mapping[str, Any],
+    primary_challenge_payload_sha256: str,
+    alternate_challenge_payload_sha256: str,
+) -> bool:
+    """Verify seed independence against committed hashes, not temporary paths."""
+    return (
+        sha256_bytes(repeat_state_payload)
+        == phase_one_manifest["state_packets_sha256"]
+        and sha256_bytes(repeat_motor_payload)
+        == phase_one_manifest["motor_packets_sha256"]
+        and primary_challenge_payload_sha256
+        != alternate_challenge_payload_sha256
+    )
+
+
 def generate_challenges_after_commit(
     phase_one: PhaseOneCommit,
     workdir: Path,
@@ -1171,6 +1189,8 @@ def build_report() -> dict[str, Any]:
             "motor",
         )
         invocations.extend([repeat_state.serialized(), repeat_motor.serialized()])
+        repeat_state_payload = require_success(repeat_state)
+        repeat_motor_payload = require_success(repeat_motor)
 
         public_results: list[dict[str, Any]] = []
         decisive_results: list[dict[str, Any]] = []
@@ -1269,10 +1289,12 @@ def build_report() -> dict[str, Any]:
             )
         ),
         "phase_one_writers_exit_cleanly": all(run["exit_code"] == 0 for run in phase_runs),
-        "phase_one_seed_independent": (
-            require_success(repeat_state) == state_initial.read_bytes()
-            and require_success(repeat_motor) == motor_initial.read_bytes()
-            and challenge_bundle["payload_sha256"] != alternate_bundle["payload_sha256"]
+        "phase_one_seed_independent": phase_one_seed_independence(
+            repeat_state_payload,
+            repeat_motor_payload,
+            phase_one,
+            challenge_bundle["payload_sha256"],
+            alternate_bundle["payload_sha256"],
         ),
         "same_seed_challenges_byte_identical": (
             canonical_json_bytes(challenge_bundle["serialized"])
