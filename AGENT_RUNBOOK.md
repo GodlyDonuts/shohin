@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-16 07:19 EDT (Protected two-H100 flagship `686732` completed cleanly at exactly 300,000 steps. Its immutable 500,448,522-byte model-only checkpoint remains hash-matched on Newton/Mac at MD5 `60de77c31b449060ff0417d8db16d3b0` and SHA-256 `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`. Raw-300k capability remains 1/7 strict initial and 1/6 semantic in a fresh interview, with no reliable update, source-deleted continuation, review, or reuse. The `a9c1f53` v2 artifact remains a preserved NO-GO. Commit-bound v3 is now an exact packet-transport protocol PASS: scientific commit `3690681` produced two byte-identical 337-role cores, 35/35 gates, 27/27 sandbox probes, exhaustive public state/motor 83,521/83,521, decisive state 83,521/83,521 versus motor 4,913/83,521, and independent evidence reconstruction/publication. The mode-0444 artifact SHA-256 is `6f3846d6a58bca7d61e753fe1297c9f7090c29ef44f7585716a206dca3bba685`; its bound receipt SHA-256 is `55de668bdf4f98b04ad0ce7d20b4e4b06baa53332f2e66b004076fe2b61d63f2`. This proves exact symbolic/process transport, not neural learning or reasoning. Freeze and independently audit the published evidence, then preregister the smallest learned discrete recurrent packet lane with matched controls and direct interaction. No learned reasoning exists yet. GPU use is unrestricted for isolated mechanism experiments.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-16 07:45 EDT (Protected two-H100 flagship `686732` completed cleanly at exactly 300,000 steps. Its immutable 500,448,522-byte model-only checkpoint remains hash-matched on Newton/Mac at MD5 `60de77c31b449060ff0417d8db16d3b0` and SHA-256 `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`. Raw-300k capability remains 1/7 strict initial and 1/6 semantic in a fresh interview, with no reliable update, source-deleted continuation, review, or reuse. Commit-bound PCPT v3 is an exact packet-transport protocol PASS: scientific commit `3690681` produced two byte-identical 337-role cores, 35/35 gates, 27/27 sandbox probes, exhaustive public state/motor 83,521/83,521, decisive state 83,521/83,521 versus motor 4,913/83,521, and independent evidence reconstruction/publication. The mode-0444 artifact SHA-256 is `6f3846d6a58bca7d61e753fe1297c9f7090c29ef44f7585716a206dca3bba685`; its receipt SHA-256 is `55de668bdf4f98b04ad0ce7d20b4e4b06baa53332f2e66b004076fe2b61d63f2`. A final read-only adversarial audit returned GO after 38 tests, Git-bound publication replay, and rejection of a self-consistent forged score. This proves exact symbolic/process transport, not neural learning or reasoning. The learned ACW architecture is now in preregistration/CPU-gate work; no neural result exists yet. GPU use is unrestricted for isolated mechanism experiments.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -5299,3 +5299,32 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   learning, language reasoning, or novelty. The next admissible work is a separately preregistered minimal learned
   categorical workspace with matched controls, followed only on transport success by autonomous operator/halting
   experiments and fresh researcher-written interaction.
+
+- **2026-07-16 07:19--07:45** — **A final read-only adversarial replay promotes PCPT v3 from an
+  internally consistent artifact to closed GO evidence.** The reviewer reran all 38 focused tests, replayed the
+  Git-bound `verify-publication` path, inspected both read-only files, and independently forged score cells in both
+  embedded cores while recomputing their local hashes. The verifier rejected the self-consistent forgery. The
+  artifact and receipt hashes remain unchanged. Git stores the files as mode 100644 even though the working-tree
+  copies are mode 0444, and historical wall-clock/entropy provenance is not attested; neither changes the bounded
+  algebra/process claim. PCPT proves that a complete reusable state packet can survive process-separated source
+  deletion and post-commit challenges while an equal-width answer motor collapses. It still proves no learnability,
+  autonomous control, language reasoning, or novelty.
+
+- **2026-07-16 07:45--08:40** — **The first architecture-changing learned lane is preregistered and
+  reaches a full precommit mechanics PASS; no neural result exists yet.** `R12_ADDRESSED_CATEGORICAL_WORKSPACE_PREREG.md`
+  freezes Track S Addressed Categorical Workspace (ACW): a three-symbol `F_17` packet, exact one-register writes,
+  source deletion, and collision-guided terminal supervision. The CPU treatment has 26,008 trainable parameters;
+  the eventual frozen-Shohin sidecar would add 92,953 parameters (0.07431% of the immutable base). Equal-label
+  controls include dense categorical recurrence, addressed continuous state, GRU, packet-token recurrence,
+  answer motor, uniform-query ACW, a 166,801-parameter source-retained upper bound, direct-state ACW, and exact
+  compiled sparse state. Three sealed confirmation seeds remain only in macOS Keychain behind published
+  commitments. Two review rounds returned GO on the theorem, confirmation custody, exact 57,344-label schedule,
+  and repaired edge cases. Implementation now enforces accepted-depth quotas, disjoint post-freeze consumers,
+  seed/domain/Git bindings, a one-use pilot ledger, oracle-free trainer bundles, direct trajectory supervision,
+  frozen donor/shuffle/event-word/new-reader evaluation, and explicit resource ledgers. All 49 focused tests, Ruff,
+  compilation, and diff checks pass. A full-field precommit canary and an independent implementation both reconstruct
+  222,917,549 state-event updates; precommit payload SHA-256 is
+  `5d71f31398a378ebb48fed7c094da243cac7c06e93a3a95b5e8d8cdf0e3c1413`, but it has no result standing. Commit the
+  scientific paths unchanged, rerun the exhaustive Git-bound publisher/auditor, then execute the single authorized
+  non-scored pilot. No scored CPU arm, confirmation opening, Shohin fit, H100 job, memory claim, or reasoning claim
+  is authorized before those gates.

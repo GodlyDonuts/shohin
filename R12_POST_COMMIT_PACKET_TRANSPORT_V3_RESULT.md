@@ -51,6 +51,24 @@ The independently committed verifier source SHA-256 is
 A fresh post-publication invocation of `verify-publication`, with Git
 verification required, also exited successfully.
 
+## Final Independent Audit
+
+A fresh read-only adversarial audit of committed publication commit `61c627f`
+returned **GO**. It verified `HEAD == origin/main`, checked every reviewed file
+against its Git blob, reran all 38 focused tests, reran `verify-publication`
+with Git verification required, reconstructed the role counts and score
+arithmetic, and confirmed the artifact/receipt hashes and local `0444` modes.
+The auditor also forged a score in both replay cores and recomputed every
+affected self-hash; independent semantic reconstruction rejected that
+self-consistent forgery.
+
+The audit records two non-blocking limitations. Git stores the blobs as `100644`,
+so a fresh clone does not preserve the local publication mode, and neither
+historical execution nor entropy provenance is cryptographically attested.
+Both are outside the frozen claim. Final authorization is GO for a separately
+preregistered learned architecture experiment and NO-GO for describing PCPT v3
+as learned reasoning, novelty evidence, or tamper-proof attestation.
+
 ## What Passed
 
 The protocol demonstrates an exact finite mechanism that writes a four-symbol
