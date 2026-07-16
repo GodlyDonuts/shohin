@@ -1,8 +1,10 @@
 # R12 Post-Commit Interface Falsifier Preregistration
 
-**Status:** CPU-only exact mechanics authorized. No neural fit, Shohin adapter,
+**Status:** COMPLETED PASS on 2026-07-16. The immutable result is
+`artifacts/r12/post_commit_interface_falsifier_v1.json`; the result boundary is
+frozen in `R12_POST_COMMIT_INTERFACE_FALSIFIER_RESULT.md`. No Shohin adapter,
 SFT, H100 job, workspace claim, or reasoning claim is authorized by this
-document.
+document or by the exact scorer pass.
 
 ## 1. Question
 
