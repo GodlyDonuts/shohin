@@ -1,0 +1,19 @@
+{
+  "confirmation_absent": true,
+  "schema": "counterfactual_cursor_action_dev_view_audit_v1",
+  "source_audit_sha256": "5deb9dc396e3c8d99f32b9f0e14482d288cff9d82145582665569c911a802e5d",
+  "source_canary_sha256": "baf985855c396f63dffba1e09733a7372bd8b29c852cb5b9f482b4d59de714a1",
+  "split_counts": {
+    "development": {
+      "cells": 960,
+      "sources": 192
+    },
+    "train": {
+      "cells": 5760,
+      "sources": 1152
+    }
+  },
+  "status": "pass",
+  "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4",
+  "view_sha256": "24abd93737be57c6792a1d44c8f2e3a28d7c5fbc1666b083383350f410ce6ec9"
+}
