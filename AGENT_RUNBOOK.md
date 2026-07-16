@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-16 07:45 EDT (Protected two-H100 flagship `686732` completed cleanly at exactly 300,000 steps. Its immutable 500,448,522-byte model-only checkpoint remains hash-matched on Newton/Mac at MD5 `60de77c31b449060ff0417d8db16d3b0` and SHA-256 `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`. Raw-300k capability remains 1/7 strict initial and 1/6 semantic in a fresh interview, with no reliable update, source-deleted continuation, review, or reuse. Commit-bound PCPT v3 is an exact packet-transport protocol PASS: scientific commit `3690681` produced two byte-identical 337-role cores, 35/35 gates, 27/27 sandbox probes, exhaustive public state/motor 83,521/83,521, decisive state 83,521/83,521 versus motor 4,913/83,521, and independent evidence reconstruction/publication. The mode-0444 artifact SHA-256 is `6f3846d6a58bca7d61e753fe1297c9f7090c29ef44f7585716a206dca3bba685`; its receipt SHA-256 is `55de668bdf4f98b04ad0ce7d20b4e4b06baa53332f2e66b004076fe2b61d63f2`. A final read-only adversarial audit returned GO after 38 tests, Git-bound publication replay, and rejection of a self-consistent forged score. This proves exact symbolic/process transport, not neural learning or reasoning. The learned ACW architecture is now in preregistration/CPU-gate work; no neural result exists yet. GPU use is unrestricted for isolated mechanism experiments.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-16 12:03 EDT (Protected two-H100 flagship `686732` completed cleanly at exactly 300,000 steps. Its immutable 500,448,522-byte model-only checkpoint remains hash-matched on Newton/Mac at MD5 `60de77c31b449060ff0417d8db16d3b0` and SHA-256 `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`. Raw-300k capability remains 1/7 strict initial and 1/6 semantic in a fresh interview, with no reliable update, source-deleted continuation, review, or reuse. Commit-bound PCPT v3 is an exact packet-transport protocol PASS, not a neural or reasoning result. Track S Addressed Categorical Workspace remains untrained. The canonical parent owns two held-live child fits, verifies real PID/PPID and Slurm allocation, independently reruns all 3,400 updates before release, and requires zero exits; canonical pilot consumers rerun the fit. Bundle v4 structurally opens the frozen report, comparison, and schedules and independently derives the consumed schedule, but a fifth review correctly showed that the entire bundle can still be replaced self-consistently while retaining code identity. Therefore every production canonical bundle builder, trainer, and adjudicator now fails closed until the verified pilot artifact registry is committed and pushed in a separate post-pilot Git anchor. Only the public pilot path remains executable. All 89 focused tests pass, including explicit anchor-required rejection, structural attack tests, and a Stokes-command allowlist proving the job invokes no bundle/trainer/adjudicator path. Two fresh adversarial reviews, including the reviewer who constructed the coordinated substitution, now return GO with no P0/P1 findings for committing/pushing and running exactly one non-scored public pilot. The exact current worktree must be staged, committed, pushed to origin/main, and rerun clean before Stokes launch. The pilot remains unrun. Track C remains the later autonomous-control falsifier, and a separate Track D theorem proposes hard reusable claim cuts with tree-vs-DAG proof-size separation; neither is implemented or authorized. No scored development arm, confirmation opening, Shohin fit, H100 job, memory claim, or reasoning claim is authorized.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -89,6 +89,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | **R11 internal workspace control** | **DORMANT CONTROL; broad draft and v1/v2 were NO-GO; v3 remains an unimplemented preregistration, not a capability result.** The six-slot, 96-wide architecture remains technically feasible as an isolated wrapper with 1,607,334 trainable parameters. V1 failed on an incomplete generator/target contract, leakage and cache risks, ambiguous ledgers, and overclaiming. V2 SHA-256 `11ca769036b2bc85eebd47a950e51b2bc87158668e47ba3cc5e38e4fdae68408` closed many of those gaps but still failed final review: affine-answer/token/frequency rejection conditioned accepted sources on supposedly late-bound queries; the exact API omitted the cached decode session it later required; sham/control primary evaluation semantics were ambiguous; and a seed commitment could not prove confirmation secrecy. V3 closes those contract defects on paper, but its tied recurrence, source-derived slots, and query readers are established machinery rather than an R12 invention. Preserve it as a favorable matched control; no code, board, fit, score, or H100 job is authorized. |
 | **R12 mathematical invention frontier** | **SEVEN BOUNDED NO-GOS; RAW VOCABULARY J-WORKSPACE AND MCBS CLOSED AT 300K.** Cursor-action v1 `689932/689936` failed source/cursor binding; final-token readout `689952` fit train but reached only 43.13%/41.67% development. Token-tape `689976` rejects only the frozen pre-final single-query/linear-decoder family. Additive forks and PCRT are theorem-rejected before code. The paired raw-300k future-Jacobian repeat is reproducible but has **0% top-10 and 0% top-100** on all 2,304 decisive targets, so no J-lens swap is authorized. MCBS is also theorem-rejected as a mechanism: for affine consumers it recovers only the observable quotient of the fitted consumers, and a finite answer-specific motor bundle passes projection/complement tests without reusable state. `R12_MINIMAX_CAUSAL_BROADCAST_SUBSPACE_NO_GO.md` freezes the theorem and counterexample. Any successor must be frozen before held-out consumers, held-out updates, and output recoding are revealed. `R12_CERTIFIED_LANGUAGE_BRIDGE_BOUNDARY.md` still blocks synthetic-to-language transfer without a future-reflecting certificate map. |
 | **Post-commit interface falsifier** | **V1 STATIC ALGEBRA PASS; V2 POST-COMMIT NO-GO; V3 COMMIT-BOUND PROTOCOL PASS; NO LEARNED-REASONING CLAIM.** Immutable v1 report SHA-256 is **`b7309987cb644bdf31273a07193df56226e35d3653257e239632d7bd837415b4`**. The exact rejected `a9c1f53` v2 artifact remains mode-0444 at SHA-256 **`4f63123028fe33717981d026ca4accc854943400a502e56698ff040145a2ab0d`**. Scientific commit **`36906818f17aa4f03b9f5622dbcb65110ae95abf`** passes all **35/35** frozen gates with two byte-identical **337-role** cores, **27/27** default-deny sandbox probes, exhaustive public state/motor **83,521/83,521**, decisive state **83,521/83,521** versus motor **4,913/83,521**, and depth-nine collapse to **4,913/83,521**. The independent implementation reconstructed all evidence, required Git verification, and alone published the mode-0444 artifact and receipt. Artifact SHA-256 is **`6f3846d6a58bca7d61e753fe1297c9f7090c29ef44f7585716a206dca3bba685`**; receipt SHA-256 is **`55de668bdf4f98b04ad0ce7d20b4e4b06baa53332f2e66b004076fe2b61d63f2`**. This authorizes only a separately preregistered learned packet-lane falsifier. No neural fit, language bridge, autonomous controller, or reasoning result exists. |
+| **Learned architecture frontier** | **TRACK S REPAIRED AFTER FIVE PUBLIC-PILOT NO-GOS; DUAL REVIEW GO FOR ONE PUBLIC PILOT; POST-PILOT BUNDLES HARD-BLOCKED; UNTRAINED.** `R12_ADDRESSED_CATEGORICAL_WORKSPACE_PREREG.md` revision 3 freezes a 26,008-parameter CPU treatment with a three-symbol `F_17` hard packet, exact one-register writes, source deletion, matched controls, 57,344 maximum labels, and thirteen label-efficiency checkpoints. The canonical public command owns data generation and two held-live child fits; the parent verifies OS PID/PPID and live Slurm identity, independently recomputes the full fit before releasing the children, and requires zero exits. Every pilot consumer recomputes tensor hash, losses, schedules, report, and arrays. Scientific identity binds exact HEAD blobs and pushed `origin/main`. Bundle v4's structural checks remain tested, but coordinated substitution proved that internal self-consistency is not external custody. Production canonical bundle construction, training, and adjudication all reject with `pilot_anchor_required` until the verified public artifact registry is committed to `origin/main` in a separate post-pilot anchor. **89** focused tests pass, including a Stokes command allowlist that excludes bundle/trainer/adjudicator execution. Both fresh reviewers return GO on this exact staged boundary: one non-scored public pilot now, no development/confirmation bundle afterward without the second Git commit. Static Keychain confirmation commitments remain retired and confirmation generation remains disabled pending a commit-bound future NIST Beacon protocol. No pilot has run and no learned result exists. `R12_GOAL_CONDITIONED_VERSION_SPACE_CONTROLLER_PREREG.md` separately freezes the later autonomous test: choose `PROBE`, write, and `HALT` before consequences, with no supplied action/address/schedule/state/halt labels. Fixed four-probe ceiling is **5/16 = 31.25%**, source-motor ceiling is **1/16 = 6.25%**, and adaptive target is **16/16 within four probes** plus causal interventions. A theoretical Track D Causal Cut Workspace additionally predicts reusable-claim advantage on Fibonacci proof DAGs and no advantage on linear chains; it is not yet a committed preregistration. Track C/D remain unimplemented and unauthorized unless prior gates pass. |
 | **Raw 200k / 252.5k / 260k interaction** | **No broad gain, but a source-free renderer-indexed executor is causally confirmed.** The sealed development board remains direct/worked 4/20 and 8/20; its fixed format matrix is `Problem/Work` 44/55 atomic and 10/20 externally scheduled model-carried chains, with crossed-state causality 6/6. Exact patched confirmation `689542` completed all 256 cases / 704 transitions: direct **16/256**, whole `Problem/Work` **9/256**, source-scheduled **115/256**, atomic **534/704**, scheduler-only 101 versus direct-only 2, exact McNemar p **1.05648e-27**. The locked sequential gate failed at **38/64** versus required 45/64; no internalization fit advanced. Whole decoding nevertheless reached the correct answer in **45/256**, lost 36 correct trajectories to continuation/parser behavior, looped/replayed in **214/256**, and all **1,920/1,920** calls hit their cap with zero EOS stops. The external scheduler owns operation selection, state carry, parse, calls, and truncation; this is not autonomous reasoning. Fixed-candidate updater likelihood is independently replayed negative: correct residual state/tail wins **0/6**, while natural prompts prefer arithmetic continuation and packet prompts prefer unchanged copying. Remainder remains a true executor gap at atomic 4/64 and scheduled-local 7/64. See `R12_SOURCE_SCHEDULED_REASONING_CONFIRMATION_RESULT.md`, `R12_SOURCE_SCHEDULED_FAILURE_TAXONOMY.md`, and `R12_UPDATER_CANDIDATE_LIKELIHOOD_RESULT.md`. |
 | **Eval board job** | Corrected CUDA-only v2 board **`686277` completed**: GSM8K maj@4 **6/100**, pass@1 **14/100**, MATH-500 **6/100**, HumanEval **6/164**, MBPP **0/100**. The v2 pilot is **rejected for promotion**. RG held-out `686278` is **90/800 = 11.25%** and in-training `686279` is **98/800 = 12.25%**: it learned a few routines that transfer but remains zero on most logic/transformation/cipher/geometry families. The corrected raw-base board **`686315`** pinned `best_step168750.pt` and completed: GSM8K maj@4 **5/100**, pass@1 **2/100**, MATH-500 **2/100**, HumanEval **7/164**, MBPP **0/100**. `686316` direct adaptive interaction was **1/6 initial, 1/6 after explicit self-review, 1/6 with a verified intermediate fact**; only the simple syllogism was correct. V4 r3 public board **`686336` completed and is rejected**: GSM8K maj@4 **5/100**, pass@1 **14/100**, MATH-500 **1/100**, HumanEval **2/164**, MBPP **0/100**. Its corrected held-out procedural result `686337` is **209/800 = 26.125%**, above V2's 90/800 on the same evaluator, but the later raw base means this is a useful diagnostic signal rather than clean data-only attribution. V4 remains a generator/verifier candidate, not a broad promotion. |
 | **V5 primitive board** | **`686401` completed; V5 is rejected for broad promotion.** From the raw-168.75k base it scored GSM8K maj@4 **10/100**, greedy **9/100**, MATH-500 **3/100**, HumanEval **2/164**, and MBPP **0/100**. It shows narrow arithmetic-format transfer but regresses code from raw's 7/164 HumanEval and does not establish broad math, code, or instruction-following transfer. |
@@ -5328,3 +5329,143 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   scientific paths unchanged, rerun the exhaustive Git-bound publisher/auditor, then execute the single authorized
   non-scored pilot. No scored CPU arm, confirmation opening, Shohin fit, H100 job, memory claim, or reasoning claim
   is authorized before those gates.
+
+- **2026-07-16 08:40--09:35** — **A third adversarial review blocks the pilot, and the entire
+  scientific path is revised before any learned execution.** The reviewer found seven claim-blocking defects:
+  canonical provenance could fail open, the compiled sparse comparator read final state rather than replaying
+  events, confirmation custody was not machine-enforced, the evaluator was not bound to its executing Git blobs,
+  resource accounting omitted complete update/inference measurements, no independent adjudicator existed, and
+  the uniform-query arm/state-split contract was inconsistent. The pilot remained unclaimed and no model was fit.
+  Revision 2 closes those boundaries: exact scientific-path Git verification plus pushed-HEAD admission; an
+  exclusive mode-0444 one-use pilot/confirmation ledger claimed before secret access; exact confirmation registry
+  and selection-hash validation; event-by-event compiled sparse replay; full optimizer-update and inference resource
+  profiles; thirteen label-efficiency checkpoints; deterministic byte-identical evaluator replay; and a separate
+  immutable adjudicator over the complete arm/seed matrix. State splits now use the preregistered
+  `SHA256(seed_material || canonical_state)` rule, and `uniform_query_acw` is one logical ID everywhere. All **66**
+  focused tests, Ruff, Python compilation, shell syntax, and diff checks pass. A new theorem document,
+  `R12_GOAL_CONDITIONED_VERSION_SPACE_CONTROLLER_PREREG.md`, proves why Track S transport cannot imply reasoning
+  and freezes the later Track C test: the controller itself must commit `PROBE`, write, and `HALT` choices before
+  receiving consequences. Its fixed-schedule and source-motor ceilings are exactly 5/16 and 1/16. A fresh read-only
+  GO/NO-GO review is now running; the non-scored Stokes pilot remains held until it returns GO and the repaired
+  scientific paths are committed and pushed. No learned result exists yet.
+
+- **2026-07-16 09:35--09:45** — **The promised fresh replay returns NO-GO and supersedes the
+  optimistic closure language above; the pilot remains unrun.** The reviewer constructed the decisive P0 attack:
+  the adjudicator's own synthetic fixture uses nonexistent one-byte arrays, invented scientific identities, and
+  invented scores yet reaches GO because the adjudicator never loads a checkpoint or dataset array and treats two
+  copied reports as independent evidence. It also confirmed that the freezer can accept a relabeled self-hashed
+  manifest, canonical pilot hyperparameters are caller-accessible, a mode-0444 ledger can be unlinked from its
+  writable parent, keychain retrieval can bypass `main()`, confirmation authorization does not parse selection or
+  fully replay training bindings, and zero resource measurements are accepted as complete. Event-by-event compiled
+  sparse replay, executing-file Git binding, exact state bucketing, `uniform_query_acw` naming, and the explicit
+  Track-S-not-reasoning boundary are closed. Stokes is reachable and idle at commit `b3aca2a`; no v2 pilot domain,
+  schedule, model, ledger, or scored artifact has been created there. Repair now requires actual checkpoint/array
+  replay in adjudication, deterministic generator replay rather than manifest trust, a reproducible fixed pilot
+  rather than a false one-use claim, future-public confirmation entropy or an explicit residual-trust boundary, and
+  fail-closed measured resource inventories. Do not commit or launch the current v2 lane.
+
+- **2026-07-16 09:45--10:12** — **The five pilot-custody blockers are repaired; a new pilot-only
+  adversarial review is running and no learned execution has occurred.** Canonical pilot and development domains
+  are regenerated from registered public seed material and every public/oracle array is byte-compared before use;
+  relabeled pilot data and self-hashed truth mutations reject. The pilot now consists of two isolated exact-config
+  replays whose reports and both schedules must be byte-identical before a v3 comparison artifact freezes; the false
+  unlinkable one-use ledger is gone. Adjudication v3 opens and hashes each actual dataset tree, trainer bundle, and
+  checkpoint, validates model tensors and transitive bindings, and launches a fresh evaluator process; the prior
+  one-byte-array / invented-score fixture no longer reaches GO. Train/inference profiles now include a complete
+  sorted operator inventory, reconciled profiler event counts, FLOPs, allocations, and explicit zero-FLOP operator
+  names. The static Keychain confirmation design is retired: both public generator entry points reject confirmation
+  identities until a commit-bound future NIST Beacon opener exists. A deployed-format Beacon verifier now checks an
+  archived signed pulse, certificate ID, output hash, previous link, and precommitment reveal, but it is only a
+  prerequisite and does not authorize confirmation. All 80 integrated focused tests, Ruff, Python compilation,
+  shell syntax, and diff checks pass. Await the independent verdict before commit or Stokes launch; even a GO would
+  authorize only the non-scored public pilot, not development scoring, confirmation, Shohin integration, memory, or
+  reasoning claims.
+
+- **2026-07-16 10:12--10:40** — **The fresh pilot review returns NO-GO on fabricated execution;
+  canonical execution ownership and independent recomputation are now implemented, pending rereview.** The reviewer
+  showed that `publish_pilot` plus two caller-supplied identical reports could manufacture valid execution receipts
+  without running data generation or training; the freezer checked internal hashes but did not reproduce the claimed
+  model fit. It also found that clean status did not prove working bytes equaled Git blobs or that HEAD was pushed,
+  and that canonical execution receipts did not require measured host/runtime/scheduler evidence. The repair removes
+  caller-owned canonical freeze from the CLI. `pilot-run` now starts only from absent canonical paths, generates and
+  replay-verifies the pilot dataset, launches replay A and B as distinct child processes, then reruns the entire
+  deterministic fit inside the freezer and byte-compares the model tensor hash, loss transcript, schedules, report,
+  and regenerated arrays before publication. Receipts require positive elapsed time/RSS, process and host identity,
+  Python/Torch/NumPy versions, allocated CPUs, numeric Slurm job ID, and a hash-bound live `scontrol show job`
+  snapshot. Scientific identity compares every working scientific file to `git show HEAD:<path>` and requires HEAD
+  equal `origin/main`. A latent trainer-bundle split is corrected from mixed v2/v3 to v3 everywhere. The exact
+  fabricated-without-training regression now rejects; 84 focused tests, Ruff, compilation, shell syntax, and diff
+  checks pass. This is still precommit and unreviewed. Do not commit or launch Stokes until a fresh adversarial GO.
+
+- **2026-07-16 10:40--11:18** — **The next reproducibility review finds two remaining P0s;
+  live-child custody and bundle-v3 parity are repaired, with a new rereview running.** The reviewer confirmed that
+  data/model/report recomputation is now strong, but demonstrated that `_validate_execution` still accepted a
+  fabricated historical PID, one-nanosecond runtime, one-KiB RSS, and self-hashed `scontrol` text. It also showed the
+  v3 bundle builder emitted `data_replay_verification` and two pilot-comparison hashes that the adjudicator's exact
+  schema rejected; all 84 tests had missed the real producer/consumer mismatch. The repair removes the public
+  `publish_pilot(... execution_context=...)` surface. The canonical parent now starts both child fits concurrently
+  behind inherited release pipes, waits for atomic output, and holds both processes alive. Before and after its own
+  full deterministic fit, the parent verifies each real PID and PPID through `/proc`/`ps`, matches the child's
+  execution file, re-queries the running Slurm job, parses `JobId`, `JobState`, `NumCPUs`, and `NodeList`, reconciles
+  wall and monotonic duration, and checks the exact Git identity. Only then does it release both children and require
+  zero exits. Historical execution receipts are explicitly operational provenance rather than remote attestation;
+  durable numerical standing comes from mandatory fresh consumer recomputation. Bundle v3 keys and data-replay
+  semantics now match across builder/trainer/adjudicator, and a real builder-produced manifest is schema-compared in
+  tests. The integrated suite is 87/87, including real live-child parentage, stale-Slurm rejection, full-bundle
+  validation, and canonical runner/reopen call-graph tests. No pilot, development score, or model fit has run.
+
+- **2026-07-16 11:18--11:29** — **Fresh adversarial rereview returns explicit GO for the non-scored
+  public Track S pilot only.** The reviewer found no P0/P1 defect under the revision-3 trust boundary. It independently
+  reran all 87 focused tests with `ResourceWarning` promoted to an error, exercised the real inherited-release-pipe
+  child lifecycle, confirmed bundle-v3 producer/validator parity, and passed `git diff --check`. The canonical parent
+  owns absent-path generation, launches both fits, binds each live PID/PPID and Slurm allocation, recomputes all 3,400
+  updates before release, requires zero child exits, and every consumer rederives the numerical result. Exact working
+  bytes are compared with `HEAD` blobs and `HEAD` must equal `origin/main`; therefore the current dirty checkout
+  correctly fails scientific identity. Authorization is narrowly staged: commit and push these exact reviewed bytes,
+  rerun the complete gate suite on that clean commit, then launch exactly one public Stokes pilot. This is not GO for
+  development scoring, confirmation opening, Shohin integration, H100 use, a memory result, or a reasoning claim.
+
+- **2026-07-16 11:29--11:42** — **A second independent reviewer supersedes that GO with a fourth
+  public-pilot NO-GO; trainer-bundle v4 closes the new schedule/artifact binding defect.** Although the actual pilot
+  execution/recomputation path remained sound, bundle v3 only syntax-checked its query-schedule and pilot digests.
+  The adjudicator did not derive the selected schedule from `curriculum.jsonl` or open the referenced pilot files,
+  and the trainer accepted only a subset of the v3 schema. A self-hashed replacement could therefore preserve local
+  consistency without proving it consumed the frozen pilot schedule. V4 is fail-closed: the bundle contains exact
+  copies of `report.json`, `replay_comparison.json`, `cgb_schedule.jsonl`, and `uniform_schedule.jsonl`; both trainer
+  and independent adjudicator open and hash all four, validate the two payload bindings and recomputation registry,
+  and derive `query_schedule_sha256` from every canonical consumed curriculum row. The trainer requires every v4 key
+  and full development replay binding before fitting. A canonical small builder-to-trainer round trip and a
+  self-consistently rehashed unbound-schedule attack are now regressions. All 88 focused tests pass. The pilot remains
+  held until a fresh adversarial review returns GO on these exact v4 bytes.
+
+- **2026-07-16 11:42--11:49** — **The reviewer who found the v3 defect returns GO on repaired v4,
+  with no P0/P1/P2 findings for the non-scored public pilot.** Its fresh stable run passes all 88 tests. It confirms
+  exact fifteen-field trainer schema enforcement, exact nested registries, complete development replay bindings,
+  zero oracle exports, four opened pilot artifacts, curriculum-derived schedule hashes in both trainer and independent
+  adjudicator, selected-schedule equality, pilot comparison/recomputation cross-binding, and scientific-identity
+  equality. This authorizes only staging, committing, and pushing the exact reviewed files, rerunning on a clean
+  pushed identity, then launching one public Stokes pilot. It does not authorize any scored arm or capability claim.
+
+- **2026-07-16 11:49--11:56** — **A coordinated-substitution attack supersedes that GO with the
+  fifth NO-GO; the phase boundary is narrowed and every post-pilot bundle path is now hard-blocked.** The reviewer
+  changed all round-12 queries, regenerated the curriculum, selected schedule, report, replay comparison, artifact
+  registry, and bundle hashes, retained the original scientific identity, and both trainer/adjudicator structural
+  validators accepted. This proves that copied self-consistent evidence is not an external commitment. The honest
+  public pilot itself is unaffected: it still generates, executes two held-live fits, independently recomputes, and
+  reopens from a clean pushed commit. Instead of fabricating a pre-result anchor, production `build_trainer_bundle`,
+  `load_public_training_data(..., reject_oracle=True)`, and adjudicator bundle validation now fail closed pending a
+  second Git commit that anchors the exact verified pilot artifact registry after the pilot exists. Structural v4
+  validation remains internal test machinery only. The full 89-test suite passes, including explicit production
+  `external anchor` / `pilot_anchor_required` rejection and a Stokes command allowlist that excludes all bundle,
+  trainer, and adjudicator invocations. Request a fresh verdict only for one public pilot with no
+  downstream bundle authorization.
+
+- **2026-07-16 11:56--12:03** — **Two fresh reviews return GO on the narrowed phase boundary,
+  including the reviewer who built the coordinated-substitution attack.** Both directly probed builder API/CLI,
+  trainer CLI, and adjudicator validation; every production route rejected before output with the external-anchor
+  guard. They confirmed that underscore-prefixed unanchored structural helpers have no production callers and that
+  the Stokes job executes only the 89-test gate, `pilot-run`, `verify-pilot`, and artifact-existence checks. The
+  canonical pilot still requires absent paths, a clean pushed scientific identity, registered data regeneration,
+  two parent-observed live children, live Slurm reconciliation, full pre-release recomputation, atomic freeze, final
+  reopening, and another independent recomputation. GO authorizes staging the exact current files, commit/push to
+  `origin/main`, a clean rerun, and one non-scored public pilot only. It grants no downstream training or claim.

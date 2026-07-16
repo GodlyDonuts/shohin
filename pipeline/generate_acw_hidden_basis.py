@@ -1,7 +1,7 @@
 """Generate hash-bound public/oracle data for the ACW hidden-basis falsifier.
 
-Development seeds are public.  Confirmation seed material is retrieved from a
-macOS keychain only after model freeze and is never printed or serialized.  The
+Development seeds are public. Confirmation generation is deliberately disabled
+until a commit-bound future NIST Beacon pulse has been opened and verified. The
 scored trainer must consume a separate bundle that excludes this module and all
 ``oracle`` arrays.
 """
@@ -13,7 +13,6 @@ import hashlib
 import json
 import secrets
 import shutil
-import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
@@ -34,20 +33,48 @@ EVALUATION_HISTORIES = 2048
 TRAIN_MAX_DEPTH = 8
 EVALUATION_DEPTHS = (8, 16, 32, 64, 65)
 PILOT_SEED = 2026071600
-GENERATOR_PROTOCOL = "R12-ACW-HIDDEN-BASIS-v1"
+DEVELOPMENT_SEEDS = (2026071601, 2026071602, 2026071603)
+GENERATOR_PROTOCOL = "R12-ACW-HIDDEN-BASIS-v2"
 CONFIRMATION_DOMAIN = b"R12-ACW-CONFIRM-v1\x00"
+# These commitments belong to the rejected Keychain design and are retained
+# only so historical artifacts fail with an explicit registry mismatch. No
+# current generator path accepts them.
 CONFIRMATION_COMMITMENTS = (
     "35102b3974877e8547b9b9c74156c63b71d467820f752301be21721b0f58e9a1",
     "737a6d6a76c3cdbfd07d84c83cfec5491cf13afeb8e077421af789cb652baa7f",
     "0e60eb70f2193ea57710db1f2cf9d6f93cf9b8e310b1b2cf5f4ea2694851854d",
 )
-KEYCHAIN_SERVICE = "shohin-acw-confirmation-v1"
-KEYCHAIN_ACCOUNT = "sairamen"
+CONFIRMATION_PROTOCOL_STATUS = "disabled_pending_future_nist_beacon_v2"
+ACW_SCIENTIFIC_PATHS = (
+    "R12_ADDRESSED_CATEGORICAL_WORKSPACE_PREREG.md",
+    "R12_GOAL_CONDITIONED_VERSION_SPACE_CONTROLLER_PREREG.md",
+    "pipeline/addressed_categorical_workspace.py",
+    "pipeline/audit_addressed_categorical_workspace_symbolic.py",
+    "pipeline/generate_acw_hidden_basis.py",
+    "pipeline/acw_nist_beacon.py",
+    "pipeline/acw_hidden_basis_training.py",
+    "pipeline/freeze_acw_curriculum.py",
+    "pipeline/evaluate_acw_hidden_basis.py",
+    "pipeline/adjudicate_acw_hidden_basis.py",
+    "pipeline/test_addressed_categorical_workspace.py",
+    "pipeline/test_audit_addressed_categorical_workspace_symbolic.py",
+    "pipeline/test_generate_acw_hidden_basis.py",
+    "pipeline/test_acw_nist_beacon.py",
+    "pipeline/testdata/acw_nist_beacon_snapshot.json",
+    "pipeline/test_acw_hidden_basis_training.py",
+    "pipeline/test_freeze_acw_curriculum.py",
+    "pipeline/test_evaluate_acw_hidden_basis.py",
+    "pipeline/test_adjudicate_acw_hidden_basis.py",
+    "pipeline/jobs/run_acw_pilot_stokes.sbatch",
+)
 
 
 def canonical_json_bytes(value: object) -> bytes:
     return json.dumps(
-        value, sort_keys=True, separators=(",", ":"), ensure_ascii=True,
+        value,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
     ).encode("ascii")
 
 
@@ -86,7 +113,9 @@ def determinant_mod17(matrix: np.ndarray) -> int:
     a, b, c = (int(value) for value in matrix[0])
     d, e, f = (int(value) for value in matrix[1])
     g, h, i = (int(value) for value in matrix[2])
-    return (a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g)) % FIELD_SIZE
+    return (
+        a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g)
+    ) % FIELD_SIZE
 
 
 def _invertible_matrix(rng: np.random.Generator) -> np.ndarray:
@@ -97,7 +126,9 @@ def _invertible_matrix(rng: np.random.Generator) -> np.ndarray:
 
 
 def _normalized_projection(
-    rng: np.random.Generator, rows: int, columns: int,
+    rng: np.random.Generator,
+    rows: int,
+    columns: int,
 ) -> np.ndarray:
     projection = rng.normal(size=(rows, columns)).astype(np.float32)
     norms = np.linalg.norm(projection, axis=1, keepdims=True)
@@ -141,7 +172,10 @@ def _query_bank(
     forbidden = {tuple(int(value) for value in row) for row in forbidden}
     while True:
         leading = rng.integers(
-            0, FIELD_SIZE, size=(DIMENSION, DIMENSION), dtype=np.int16,
+            0,
+            FIELD_SIZE,
+            size=(DIMENSION, DIMENSION),
+            dtype=np.int16,
         )
         leading_rows = [tuple(int(value) for value in row) for row in leading]
         if determinant_mod17(leading) != 0 and not (set(leading_rows) & forbidden):
@@ -149,9 +183,7 @@ def _query_bank(
     coefficients = leading_rows
     seen = forbidden | set(coefficients)
     while len(coefficients) < count:
-        row = tuple(
-            int(value) for value in rng.integers(0, FIELD_SIZE, size=DIMENSION)
-        )
+        row = tuple(int(value) for value in rng.integers(0, FIELD_SIZE, size=DIMENSION))
         if any(row) and row not in seen:
             coefficients.append(row)
             seen.add(row)
@@ -180,7 +212,9 @@ class Domain:
 def build_domain(seed_material: bytes) -> Domain:
     basis = _invertible_matrix(_rng(seed_material, "basis"))
     source_projection = _normalized_projection(
-        _rng(seed_material, "source-projection"), DIMENSION * FIELD_SIZE, SOURCE_DIM,
+        _rng(seed_material, "source-projection"),
+        DIMENSION * FIELD_SIZE,
+        SOURCE_DIM,
     )
     events = _event_bank(_rng(seed_material, "events"))
     event_projection = _normalized_projection(
@@ -223,7 +257,7 @@ def apply_event(state: np.ndarray, event: np.ndarray) -> np.ndarray:
 
 def state_bucket(seed_material: bytes, state: np.ndarray) -> int:
     canonical = bytes(int(value) for value in state)
-    digest = hashlib.sha256(seed_material + b"\x00state\x00" + canonical).digest()
+    digest = hashlib.sha256(seed_material + canonical).digest()
     return int.from_bytes(digest[:8], "big") % 100
 
 
@@ -307,7 +341,9 @@ def generate_histories(
     event_ids = np.full((count, max_depth), -1, dtype=np.int16)
     lengths = np.empty(count, dtype=np.int16)
     trajectory_states = np.full(
-        (count, max_depth + 1, DIMENSION), -1, dtype=np.int8,
+        (count, max_depth + 1, DIMENSION),
+        -1,
+        dtype=np.int8,
     )
     final_states = np.empty((count, DIMENSION), dtype=np.int8)
     public_answers = np.empty((count, PUBLIC_QUERIES), dtype=np.int8)
@@ -339,7 +375,8 @@ def generate_histories(
         lengths[accepted] = depth
         final_states[accepted] = state
         trajectory_states[accepted, : len(trajectory)] = np.asarray(
-            trajectory, dtype=np.int8,
+            trajectory,
+            dtype=np.int8,
         )
         public_answers[accepted] = query_answers(
             state,
@@ -367,7 +404,8 @@ def generate_histories(
         new_answers=new_answers,
         visited_buckets=visited,
         depth_counts={
-            str(depth): int(np.count_nonzero(depth_schedule == depth)) for depth in depths
+            str(depth): int(np.count_nonzero(depth_schedule == depth))
+            for depth in depths
         },
     )
 
@@ -377,33 +415,29 @@ def validate_seed_identity(seed_material: bytes, seed_identity: dict) -> None:
     if kind == "development":
         if set(seed_identity) != {"kind", "seed"}:
             raise ValueError("development seed identity has the wrong schema")
-        expected = development_seed_material(int(seed_identity["seed"]))
+        seed = int(seed_identity["seed"])
+        if seed not in DEVELOPMENT_SEEDS:
+            raise ValueError("development seed is outside the frozen seed registry")
+        expected = development_seed_material(seed)
         if not secrets.compare_digest(seed_material, expected):
             raise ValueError("development seed identity does not match seed material")
         return
     if kind == "pilot":
         if seed_identity != {"kind": "pilot", "seed": PILOT_SEED}:
             raise ValueError("pilot seed identity is not the frozen pilot seed")
-        if not secrets.compare_digest(seed_material, development_seed_material(PILOT_SEED)):
+        if not secrets.compare_digest(
+            seed_material, development_seed_material(PILOT_SEED)
+        ):
             raise ValueError("pilot seed material does not match the frozen pilot seed")
         return
     if kind == "confirmation":
-        if set(seed_identity) != {"kind", "index", "commitment"}:
-            raise ValueError("confirmation seed identity has the wrong schema")
-        index = int(seed_identity["index"])
-        if not 0 <= index < len(CONFIRMATION_COMMITMENTS):
-            raise ValueError("confirmation index is outside the frozen commitments")
-        commitment = seed_identity["commitment"]
-        if commitment != CONFIRMATION_COMMITMENTS[index]:
-            raise ValueError("confirmation identity uses the wrong commitment")
-        if not secrets.compare_digest(sha256_bytes(seed_material), commitment):
-            raise ValueError("confirmation commitment does not match seed material")
-        return
+        raise RuntimeError(CONFIRMATION_PROTOCOL_STATUS)
     raise ValueError("unknown seed identity kind")
 
 
 def initial_train_labels(
-    histories: HistorySet, seed_material: bytes,
+    histories: HistorySet,
+    seed_material: bytes,
 ) -> tuple[np.ndarray, np.ndarray]:
     rng = _rng(seed_material, "initial-labels")
     queries = np.empty((len(histories.lengths), 2), dtype=np.int8)
@@ -436,16 +470,25 @@ def _write_history_set(
     *,
     include_truth: bool,
 ) -> dict:
-    _write_array(root, f"{prefix}/source_features.npy", histories.source_features, arrays)
+    _write_array(
+        root, f"{prefix}/source_features.npy", histories.source_features, arrays
+    )
     _write_array(root, f"{prefix}/event_ids.npy", histories.event_ids, arrays)
     _write_array(root, f"{prefix}/lengths.npy", histories.lengths, arrays)
     if include_truth:
-        _write_array(root, f"{prefix}/source_states.npy", histories.source_states, arrays)
         _write_array(
-            root, f"{prefix}/trajectory_states.npy", histories.trajectory_states, arrays,
+            root, f"{prefix}/source_states.npy", histories.source_states, arrays
+        )
+        _write_array(
+            root,
+            f"{prefix}/trajectory_states.npy",
+            histories.trajectory_states,
+            arrays,
         )
         _write_array(root, f"{prefix}/final_states.npy", histories.final_states, arrays)
-        _write_array(root, f"{prefix}/public_answers.npy", histories.public_answers, arrays)
+        _write_array(
+            root, f"{prefix}/public_answers.npy", histories.public_answers, arrays
+        )
         _write_array(root, f"{prefix}/new_answers.npy", histories.new_answers, arrays)
     return histories.visited_buckets
 
@@ -471,7 +514,9 @@ def generate_dataset(
     domain = build_domain(seed_material)
     arrays: dict[str, dict] = {}
     try:
-        _write_array(partial, "public/event_features.npy", domain.event_features, arrays)
+        _write_array(
+            partial, "public/event_features.npy", domain.event_features, arrays
+        )
         _write_array(
             partial,
             "public/event_addresses.npy",
@@ -488,16 +533,33 @@ def generate_dataset(
         )
         initial_queries, initial_answers = initial_train_labels(train, seed_material)
         _write_history_set(
-            partial, "public/train", train, arrays, include_truth=False,
+            partial,
+            "public/train",
+            train,
+            arrays,
+            include_truth=False,
         )
-        _write_array(partial, "public/train/initial_queries.npy", initial_queries, arrays)
-        _write_array(partial, "public/train/initial_answers.npy", initial_answers, arrays)
-        _write_array(partial, "oracle/train/final_states.npy", train.final_states, arrays)
-        _write_array(partial, "oracle/train/source_states.npy", train.source_states, arrays)
         _write_array(
-            partial, "oracle/train/trajectory_states.npy", train.trajectory_states, arrays,
+            partial, "public/train/initial_queries.npy", initial_queries, arrays
         )
-        _write_array(partial, "oracle/train/public_answers.npy", train.public_answers, arrays)
+        _write_array(
+            partial, "public/train/initial_answers.npy", initial_answers, arrays
+        )
+        _write_array(
+            partial, "oracle/train/final_states.npy", train.final_states, arrays
+        )
+        _write_array(
+            partial, "oracle/train/source_states.npy", train.source_states, arrays
+        )
+        _write_array(
+            partial,
+            "oracle/train/trajectory_states.npy",
+            train.trajectory_states,
+            arrays,
+        )
+        _write_array(
+            partial, "oracle/train/public_answers.npy", train.public_answers, arrays
+        )
 
         adaptation = generate_histories(
             domain,
@@ -508,7 +570,11 @@ def generate_dataset(
             label="adaptation-histories",
         )
         _write_history_set(
-            partial, "oracle/adaptation", adaptation, arrays, include_truth=True,
+            partial,
+            "oracle/adaptation",
+            adaptation,
+            arrays,
+            include_truth=True,
         )
 
         evaluation_visits = {}
@@ -532,27 +598,40 @@ def generate_dataset(
         _write_array(partial, "oracle/domain/basis.npy", domain.basis, arrays)
         _write_array(partial, "oracle/domain/events.npy", domain.events, arrays)
         _write_array(
-            partial, "oracle/domain/query_coefficients.npy",
-            domain.query_coefficients, arrays,
+            partial,
+            "oracle/domain/query_coefficients.npy",
+            domain.query_coefficients,
+            arrays,
         )
         _write_array(
-            partial, "oracle/domain/query_offsets.npy", domain.query_offsets, arrays,
+            partial,
+            "oracle/domain/query_offsets.npy",
+            domain.query_offsets,
+            arrays,
         )
         _write_array(
-            partial, "oracle/domain/query_permutations.npy",
-            domain.query_permutations, arrays,
+            partial,
+            "oracle/domain/query_permutations.npy",
+            domain.query_permutations,
+            arrays,
         )
         _write_array(
-            partial, "oracle/domain/new_query_coefficients.npy",
-            domain.new_query_coefficients, arrays,
+            partial,
+            "oracle/domain/new_query_coefficients.npy",
+            domain.new_query_coefficients,
+            arrays,
         )
         _write_array(
-            partial, "oracle/domain/new_query_offsets.npy",
-            domain.new_query_offsets, arrays,
+            partial,
+            "oracle/domain/new_query_offsets.npy",
+            domain.new_query_offsets,
+            arrays,
         )
         _write_array(
-            partial, "oracle/domain/new_query_permutations.npy",
-            domain.new_query_permutations, arrays,
+            partial,
+            "oracle/domain/new_query_permutations.npy",
+            domain.new_query_permutations,
+            arrays,
         )
         manifest = {
             "protocol": GENERATOR_PROTOCOL,
@@ -596,28 +675,6 @@ def generate_dataset(
         raise
 
 
-def load_confirmation_seed(index: int) -> bytes:
-    if not 0 <= index < len(CONFIRMATION_COMMITMENTS):
-        raise ValueError("confirmation index is outside the frozen commitments")
-    result = subprocess.run(
-        [
-            "security", "find-generic-password", "-w",
-            "-a", KEYCHAIN_ACCOUNT, "-s", KEYCHAIN_SERVICE,
-        ],
-        check=True,
-        capture_output=True,
-        text=True,
-    )
-    encoded = json.loads(result.stdout)
-    if not isinstance(encoded, list) or len(encoded) != len(CONFIRMATION_COMMITMENTS):
-        raise RuntimeError("keychain confirmation payload has the wrong schema")
-    seed = bytes.fromhex(encoded[index])
-    observed = confirmation_commitment(seed)
-    if not secrets.compare_digest(observed, CONFIRMATION_COMMITMENTS[index]):
-        raise RuntimeError("confirmation seed does not match its commitment")
-    return seed
-
-
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", type=Path, required=True)
@@ -634,16 +691,12 @@ def main() -> None:
         seed_material = development_seed_material(PILOT_SEED)
         identity = {"kind": "pilot", "seed": PILOT_SEED}
     elif args.development_seed is not None:
+        if args.development_seed not in DEVELOPMENT_SEEDS:
+            raise ValueError("development seed is outside the frozen seed registry")
         seed_material = development_seed_material(args.development_seed)
         identity = {"kind": "development", "seed": args.development_seed}
     else:
-        seed = load_confirmation_seed(args.confirmation_index)
-        seed_material = CONFIRMATION_DOMAIN + seed
-        identity = {
-            "kind": "confirmation",
-            "index": args.confirmation_index,
-            "commitment": CONFIRMATION_COMMITMENTS[args.confirmation_index],
-        }
+        raise RuntimeError(CONFIRMATION_PROTOCOL_STATUS)
     manifest = generate_dataset(args.out, seed_material, seed_identity=identity)
     print(
         f"[acw-generator] kind={identity['kind']} "

@@ -1,3 +1,4 @@
+import hashlib
 import tempfile
 import unittest
 from pathlib import Path
@@ -6,6 +7,7 @@ import numpy as np
 
 from pipeline.generate_acw_hidden_basis import (
     CONFIRMATION_COMMITMENTS,
+    CONFIRMATION_PROTOCOL_STATUS,
     Domain,
     apply_event,
     build_domain,
@@ -37,8 +39,13 @@ class HiddenBasisGeneratorTests(unittest.TestCase):
             [16, 16, 16],
         )
         self.assertNotEqual(determinant_mod17(self.domain.query_coefficients[:3]), 0)
-        public = {tuple(int(value) for value in row) for row in self.domain.query_coefficients}
-        new = {tuple(int(value) for value in row) for row in self.domain.new_query_coefficients}
+        public = {
+            tuple(int(value) for value in row) for row in self.domain.query_coefficients
+        }
+        new = {
+            tuple(int(value) for value in row)
+            for row in self.domain.new_query_coefficients
+        }
         self.assertFalse(public & new)
 
     def test_source_rendering_hides_basis_but_is_deterministic(self):
@@ -78,12 +85,18 @@ class HiddenBasisGeneratorTests(unittest.TestCase):
         self.assertEqual(histories.trajectory_states.shape, (24, 9, 3))
         self.assertEqual(histories.public_answers.shape, (24, 24))
         for index, length in enumerate(histories.lengths):
-            self.assertTrue(np.array_equal(
-                histories.trajectory_states[index, 0], histories.source_states[index],
-            ))
-            self.assertTrue(np.array_equal(
-                histories.trajectory_states[index, int(length)], histories.final_states[index],
-            ))
+            self.assertTrue(
+                np.array_equal(
+                    histories.trajectory_states[index, 0],
+                    histories.source_states[index],
+                )
+            )
+            self.assertTrue(
+                np.array_equal(
+                    histories.trajectory_states[index, int(length)],
+                    histories.final_states[index],
+                )
+            )
         for state in histories.final_states:
             self.assertEqual(split_name(state_bucket(self.seed, state)), "evaluation")
         self.assertEqual(sum(histories.visited_buckets.values()), 24 * 9)
@@ -120,7 +133,9 @@ class HiddenBasisGeneratorTests(unittest.TestCase):
                 file_sha256(second / "manifest.json"),
             )
             self.assertNotIn(self.seed.hex(), (first / "manifest.json").read_text())
-            self.assertEqual(first_manifest["event_address_counts"], {"0": 16, "1": 16, "2": 16})
+            self.assertEqual(
+                first_manifest["event_address_counts"], {"0": 16, "1": 16, "2": 16}
+            )
 
     def test_confirmation_commitment_contract(self):
         seed = bytes(range(32))
@@ -130,14 +145,43 @@ class HiddenBasisGeneratorTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             confirmation_commitment(b"too short")
 
+    def test_confirmation_generation_is_disabled_until_future_beacon_opening(self):
+        seed = bytes(range(32))
+        identity = {
+            "kind": "confirmation",
+            "index": 0,
+            "commitment": confirmation_commitment(seed),
+        }
+        with self.assertRaisesRegex(RuntimeError, CONFIRMATION_PROTOCOL_STATUS):
+            validate_seed_identity(seed, identity)
+
     def test_seed_identity_must_match_seed_material(self):
         validate_seed_identity(
-            self.seed, {"kind": "development", "seed": 2026071601},
+            self.seed,
+            {"kind": "development", "seed": 2026071601},
         )
         with self.assertRaises(ValueError):
             validate_seed_identity(
-                self.seed, {"kind": "development", "seed": 2026071602},
+                self.seed,
+                {"kind": "development", "seed": 2026071602},
             )
+        unregistered = development_seed_material(123)
+        with self.assertRaises(ValueError):
+            validate_seed_identity(
+                unregistered,
+                {"kind": "development", "seed": 123},
+            )
+
+    def test_state_bucket_matches_frozen_seed_plus_state_contract(self):
+        state = np.asarray([3, 4, 5], dtype=np.int8)
+        expected = (
+            int.from_bytes(
+                hashlib.sha256(self.seed + bytes([3, 4, 5])).digest()[:8],
+                "big",
+            )
+            % 100
+        )
+        self.assertEqual(state_bucket(self.seed, state), expected)
 
     def test_domain_dataclass_is_not_public_seed_storage(self):
         self.assertIsInstance(self.domain, Domain)

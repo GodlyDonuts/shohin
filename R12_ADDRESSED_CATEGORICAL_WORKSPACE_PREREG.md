@@ -1,6 +1,6 @@
 # R12 Addressed Categorical Workspace Preregistration
 
-**Status:** REVISION 2 PREREGISTRATION; CPU SYMBOLIC/NEURAL FALSIFIER ONLY.
+**Status:** REVISION 3 PREREGISTRATION; CPU SYMBOLIC/NEURAL FALSIFIER ONLY.
 No Shohin fit, H100 job, capability claim, or novelty claim is authorized until
 the committed PCPT v3 evidence receives a final independent GO and the CPU gate
 below passes unchanged. A CPU pass establishes only the frozen empirical
@@ -191,7 +191,7 @@ whole state. The frozen generator contract is:
 | non-scored curriculum-pilot data/optimizer seed | `2026071600` |
 | development seeds | `2026071601`, `2026071602`, `2026071603` |
 | uniform-query control seed | `2026071604` |
-| sealed confirmation seed commitments | `35102b3974877e8547b9b9c74156c63b71d467820f752301be21721b0f58e9a1`, `737a6d6a76c3cdbfd07d84c83cfec5491cf13afeb8e077421af789cb652baa7f`, `0e60eb70f2193ea57710db1f2cf9d6f93cf9b8e310b1b2cf5f4ea2694851854d` |
+| confirmation entropy | three domain-separated seeds from one exact future NIST Beacon 2.0 pulse; the target pulse, complete code/checkpoint/selection identity, KDF, and failure policy must be committed and publicly timestamped before the pulse exists |
 | source/event feature dimensions | 96 / 96, IEEE float32 |
 | source rendering | latent state times seeded `GL(3,F_17)` matrix, then 51-dimensional coordinate one-hot times seeded normalized Gaussian `51 x 96` projection |
 | event rendering | typed one-hot `(dst,src,alpha,beta,gamma)` times seeded normalized Gaussian projection to 96 |
@@ -205,7 +205,7 @@ whole state. The frozen generator contract is:
 | evaluation histories | 2,048 at each exact depth `8,16,32,64,65`, source/endpoint in evaluation split |
 | state split | SHA-256 of `seed || canonical state`, buckets 0-69 train, 70-84 adaptation, 85-99 evaluation; intermediate visits unrestricted and counted by bucket |
 | optimizer | AdamW, LR `0.003`, weight decay `0.0001`, batch 256, float32 |
-| optimizer RNG | development/pilot use their public domain seed; confirmation uses the first 63 bits of `SHA256(ASCII("R12-ACW-OPT-v1") || 0x00 || ASCII(commitment))` |
+| optimizer RNG | development/pilot use their public domain seed; confirmation uses a separately domain-separated digest of the post-pulse seed commitment |
 | direct-state diagnostic | same ACW and schedule; final/source/every-active-transition packet supervision with `answer_CE + 4.0 * mean_wrong_register_MSE` |
 | refinement | 200-update initial warmup, 12 x 200 refinement/filler updates, then 800 final updates; 3,400 total |
 | new-reader adaptation | writer/updater frozen; 500 updates, LR `0.003`, batch 256 |
@@ -213,19 +213,42 @@ whole state. The frozen generator contract is:
 | maximum witness selections | 512 per round / 6,144 total |
 | maximum oracle candidate evaluations | 512 groups x 24 queries x 12 rounds = 147,456 |
 
-The generator, public records, seed commitments, and this table must each have a
-committed SHA-256 before a canonical neural run. The confirmation preimage is
-three independent 32-byte values committed as
-`SHA256(ASCII("R12-ACW-CONFIRM-v1") || 0x00 || seed)`. The raw values are stored only in the
-Mac keychain service `shohin-acw-confirmation-v1`; they are absent from Git,
-artifacts, environment files, and the Stokes trainer filesystem. Confirmation
-plaintext does not exist before model freeze. After every scored checkpoint and
-arm-selection SHA-256 is committed and pushed, the confirmer retrieves each
-preimage, verifies its commitment, and deterministically generates and scores
-that family exactly once. Any count/hash/commitment mismatch rejects the run.
-Every serialized seed identity is recomputed from the seed material before any
-array is written; a caller-supplied label cannot relabel a pilot, development,
-or confirmation domain.
+The static Keychain commitments in revision 1 are **retired**. They prove only
+that a value matches a digest, not that project operators lacked the value while
+developing the experiment. The generator now rejects every confirmation
+identity with `disabled_pending_future_nist_beacon_v2`; the old preimages cannot
+produce a canonical dataset through either the CLI or the public generation
+function. No scored confirmation run is authorized until the future-pulse
+opener below is implemented, reviewed, committed, and replay-tested.
+
+The replacement confirmation protocol is commit-then-reveal with public future
+entropy:
+
+1. After all development checkpoints and the exact arm-selection record freeze,
+   write one hash-bound authorization containing their complete file and
+   metadata bindings, every scientific/runtime path, the exact KDF, and one
+   canonical NIST Beacon chain/index/timestamp at least 48 hours in the future.
+2. Require the authorization commit to equal `origin/main`, not merely be its
+   ancestor. Publish a deterministic witness in a public transparency log before
+   the target pulse. The witness must bind the repository, exact commit,
+   authorization SHA-256, pulse URI, and target timestamp.
+3. After the target time, fetch only that committed URI. Verify the deployed
+   Beacon 2.0 cipher-suite-0 serialization, certificate identifier, RSA-4096 /
+   SHA-512 signature, recomputed `outputValue`, exact chain/index/timestamp,
+   previous-output link, and prior precommitment reveal. `pipeline/acw_nist_beacon.py`
+   and its archived pulse fixture are the minimum verifier regression.
+4. Derive three 32-byte seeds from the public `outputValue`, authorization hash,
+   exact commit, pulse URI, and domain index. Never seed from
+   `localRandomValue`. Serialize the authorization hash, pulse payload hash, and
+   seed commitment in every identity; do not accept a caller-supplied label.
+5. Generate and score all three domains. Network failure retries the same URI;
+   invalid cryptographic evidence aborts and publishes a failure receipt; a
+   valid poor result is final; code changes require a new future authorization.
+
+This protocol still trusts NIST's beacon operation, RSA/SHA-512, the public
+timestamp service, and the frozen local verifier. It does not claim that NIST
+itself lacked the beacon's internal randomness. Those residual assumptions must
+be reported with the result.
 
 Train on event depths `0..8`; test exact depths `8`, `16`, `32`, `64`, and the
 one-step-beyond horizon `65`. Freeze the writer/updater before the confirmer
@@ -254,8 +277,24 @@ does not contain confirmation preimages. The **confirmer** remains sealed until
 arm selection and model freeze; it permits no collision queries, architecture
 changes, checkpoint selection, or CGBR.
 
-The pilot implementation/configuration must be committed before its one
-authorized execution. After each 200-update curriculum-pilot round, the oracle receives only hard
+The pilot implementation and canonical configuration must be committed and
+pushed before execution. One canonical command owns the complete run: it starts
+from absent canonical paths, generates and byte-replays the public pilot domain,
+launches two distinct measured child processes with the exact frozen
+hyperparameters, and requires byte-identical schedules and reports. The freezer
+holds both children alive on inherited parent-release pipes after atomic output,
+reconciles their real PID/PPID identities with the live Slurm allocation, then
+independently reruns all 3,400 updates from the registered data while both
+children remain live. It compares the tensor-state hash, loss transcript,
+schedules, report, and regenerated arrays before releasing the children and
+requiring zero exits. Every later canonical report load repeats this
+recomputation; copied or locally rehashed reports therefore have no standing.
+Execution receipts bind positive wall time and peak RSS, process/host/runtime
+identity, allocated CPU count, numeric Slurm job ID, and a hash-bound live
+`scontrol show job` snapshot. Exact working scientific files must equal their
+`HEAD` blobs, and `HEAD` must equal `origin/main` before, during, and after the
+run. Any divergence blocks the lane; additional identical replays may audit but
+may not select among schedules. After each 200-update curriculum-pilot round, the oracle receives only hard
 packet tuples and history IDs for the public oracle pool. It groups in ascending packet order,
 keeps groups containing multiple residual states, and sorts them by decreasing
 number of residual classes then packet tuple then minimum history ID. For at
@@ -276,6 +315,12 @@ the two initial labels per history (8,192 total); rounds 1 through 12 contain
 exactly one new label per history (4,096 each).
 Every candidate `(collision group, query)` inspected during the scan is charged
 as an oracle candidate evaluation, whether selected or not.
+
+The PID/Slurm record is operational provenance, not cryptographic remote
+attestation. It trusts the committed parent process, Stokes kernel, Slurm
+controller, and filesystem during execution. The result's durable numerical
+standing comes from mandatory fresh deterministic recomputation by every
+canonical consumer, not from treating a historical receipt as a signature.
 
 The resulting ordered `(history_id, query_id)` curriculum is frozen and replayed
 identically to ACW, dense categorical, addressed continuous, GRU, packet-token,
@@ -367,6 +412,20 @@ symbols after every event. Its persistent state is therefore three `uint8`
 symbols; its seven 24-wide float32 packet/event/address tokens consume 672
 transient bytes before attention intermediates, which are measured at runtime.
 
+For every learned arm, the resource artifact contains a complete training-step
+and inference-batch record at batch 256: active event count, wall time, process
+peak RSS, PyTorch operator-reported FLOPs, largest runtime operator allocation,
+largest self-operator allocation, and total positive operator allocations.
+AdamW is included in the training measurement. Unsupported profiler operations
+are explicitly uncounted rather than imputed, so an operator-reported FLOP total
+is never represented as an exact hardware FLOP count. The packet transformer's
+runtime allocation record is the preregistered transient-attention measurement.
+The exact compiled sparse control separately reports event/query arithmetic,
+table bytes, and persistent bytes while replaying every source state and event
+ID; reading stored final state as its prediction is forbidden. It is not a
+learned arm, and fresh wall time is excluded from the score artifact so the
+required deterministic evaluator replay remains byte-identical.
+
 ## 7. Causal interventions
 
 The frozen evaluator reports two separate metrics. **Scalar accuracy** is the
@@ -439,6 +498,20 @@ allowed only if both CGBR and uniform-query ACW cross 90% depth-64 state
 exactness; the ratio uses the first frozen checkpoint crossing that threshold.
 Candidate oracle evaluations and witness selections are reported separately
 and are never treated as zero-cost labels.
+
+The trainer serializes a hash-bound model state immediately after each of the
+first 12 curriculum rounds at those exact cumulative label counts. The
+`r=12` / 57,344-label state is serialized after its 200 round updates and the
+frozen 800 final refinement updates, at 3,400 total updates, so it is the same
+model as the primary endpoint. The frozen
+evaluator rehashes and scores every state at depth 64. A separate committed
+adjudicator rejects missing/duplicate seeds, arms, reports, resource fields, or
+label checkpoints; enforces the direct-state gate, all-three-development and
+two-of-three-confirmation rules, every per-depth/causal/new-reader threshold,
+the confirmation median, and the strongest-control margin; and writes one
+immutable hash-bound decision. Historical Git blobs and the files actually
+executing must both match the checkpoint scientific identity, with all listed
+scientific paths clean.
 
 ## 9. Prior-art and equivalence boundary
 

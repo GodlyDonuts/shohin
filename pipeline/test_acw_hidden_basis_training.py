@@ -2,11 +2,15 @@ import inspect
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
 
 import torch
 
 from pipeline.acw_hidden_basis_training import (
+    ACW_SCIENTIFIC_PATHS,
     ARM_IDS,
+    CONFIRMATION_COMMITMENTS,
     EXPECTED_PARAMETERS,
     Curriculum,
     direct_state_forward,
@@ -17,11 +21,15 @@ from pipeline.acw_hidden_basis_training import (
     load_public_training_data,
     load_direct_state_truth,
     model_for_arm,
+    profile_answer_step_resources,
+    profile_inference_resources,
     recurrent_state,
+    scientific_identity,
     train_model,
     train_direct_state_model,
 )
 from pipeline.generate_acw_hidden_basis import (
+    ACW_SCIENTIFIC_PATHS as GENERATOR_SCIENTIFIC_PATHS,
     development_seed_material,
     generate_dataset,
 )
@@ -56,6 +64,44 @@ class PublicTrainerTests(unittest.TestCase):
         source = inspect.getsource(trainer)
         self.assertNotIn("import pipeline.generate_acw_hidden_basis", source)
         self.assertNotIn("from pipeline.generate_acw_hidden_basis", source)
+        self.assertEqual(set(ACW_SCIENTIFIC_PATHS), set(GENERATOR_SCIENTIFIC_PATHS))
+
+    def test_scientific_identity_rejects_blob_drift_even_if_status_claims_clean(self):
+        import pipeline.acw_hidden_basis_training as trainer
+
+        responses = [
+            SimpleNamespace(stdout="a" * 40),
+            SimpleNamespace(stdout=""),
+            SimpleNamespace(stdout=b"different committed bytes"),
+        ]
+        with (
+            patch.object(
+                trainer,
+                "ACW_SCIENTIFIC_PATHS",
+                ("pipeline/testdata/acw_nist_beacon_snapshot.json",),
+            ),
+            patch.object(trainer.subprocess, "run", side_effect=responses),
+            self.assertRaisesRegex(RuntimeError, "differs from HEAD"),
+        ):
+            scientific_identity(require_clean=True)
+
+    def test_scientific_identity_rejects_unpushed_head(self):
+        import pipeline.acw_hidden_basis_training as trainer
+
+        relative = "pipeline/testdata/acw_nist_beacon_snapshot.json"
+        payload = Path(relative).read_bytes()
+        responses = [
+            SimpleNamespace(stdout="a" * 40),
+            SimpleNamespace(stdout=""),
+            SimpleNamespace(stdout=payload),
+            SimpleNamespace(stdout=f"{'b' * 40}\trefs/heads/main\n"),
+        ]
+        with (
+            patch.object(trainer, "ACW_SCIENTIFIC_PATHS", (relative,)),
+            patch.object(trainer.subprocess, "run", side_effect=responses),
+            self.assertRaisesRegex(RuntimeError, "must equal pushed origin/main"),
+        ):
+            scientific_identity(require_clean=True)
 
     def test_canonical_loader_rejects_visible_oracle(self):
         with self.assertRaises(RuntimeError):
@@ -64,7 +110,8 @@ class PublicTrainerTests(unittest.TestCase):
     def test_initial_curriculum_is_two_labels_per_history(self):
         self.curriculum.validate(self.data.histories, canonical=False)
         counts = torch.bincount(
-            self.curriculum.history_ids, minlength=self.data.histories,
+            self.curriculum.history_ids,
+            minlength=self.data.histories,
         )
         self.assertTrue(torch.equal(counts, torch.full_like(counts, 2)))
 
@@ -73,7 +120,9 @@ class PublicTrainerTests(unittest.TestCase):
         queries = torch.tensor([0, 1, 2, 3])
         for arm in ARM_IDS:
             model = model_for_arm(arm)
-            self.assertEqual(sum(p.numel() for p in model.parameters()), EXPECTED_PARAMETERS[arm])
+            self.assertEqual(
+                sum(p.numel() for p in model.parameters()), EXPECTED_PARAMETERS[arm]
+            )
             logits = forward_logits(
                 model,
                 arm,
@@ -81,7 +130,8 @@ class PublicTrainerTests(unittest.TestCase):
                 histories,
                 queries,
                 training=False,
-                literal_symbols=arm in {"acw", "dense_categorical", "packet_token_transformer"},
+                literal_symbols=arm
+                in {"acw", "dense_categorical", "packet_token_transformer"},
             )
             self.assertEqual(logits.shape, (4, 17))
 
@@ -103,16 +153,31 @@ class PublicTrainerTests(unittest.TestCase):
             expected_optimizer_seed({"kind": "development", "seed": 2026071601}),
             2026071601,
         )
-        confirmation = expected_optimizer_seed({
-            "kind": "confirmation",
-            "index": 0,
-            "commitment": "a" * 64,
-        })
-        self.assertEqual(confirmation, expected_optimizer_seed({
-            "kind": "confirmation",
-            "index": 0,
-            "commitment": "a" * 64,
-        }))
+        confirmation = expected_optimizer_seed(
+            {
+                "kind": "confirmation",
+                "index": 0,
+                "commitment": CONFIRMATION_COMMITMENTS[0],
+            }
+        )
+        self.assertEqual(
+            confirmation,
+            expected_optimizer_seed(
+                {
+                    "kind": "confirmation",
+                    "index": 0,
+                    "commitment": CONFIRMATION_COMMITMENTS[0],
+                }
+            ),
+        )
+        with self.assertRaises(ValueError):
+            expected_optimizer_seed(
+                {
+                    "kind": "confirmation",
+                    "index": 999,
+                    "commitment": CONFIRMATION_COMMITMENTS[0],
+                }
+            )
         with self.assertRaises(ValueError):
             expected_optimizer_seed({"kind": "unknown"})
 
@@ -171,6 +236,43 @@ class PublicTrainerTests(unittest.TestCase):
         self.assertEqual(report["updates"], 15)
         self.assertEqual(report["labels"], 32)
         self.assertTrue(torch.isfinite(torch.tensor(report["loss_last"])))
+
+    def test_resource_profiles_cover_training_inference_flops_time_and_memory(self):
+        model = initialized_model_for_arm("packet_token_transformer", 19)
+        training = profile_answer_step_resources(
+            model,
+            "packet_token_transformer",
+            self.data,
+            self.curriculum,
+            batch_size=8,
+        )
+        inference = profile_inference_resources(
+            model,
+            "packet_token_transformer",
+            self.data,
+            self.curriculum,
+            batch_size=8,
+        )
+        for report in (training, inference):
+            self.assertGreater(report["wall_seconds"], 0)
+            self.assertGreater(report["profiler_event_count"], 0)
+            self.assertTrue(report["operator_inventory_complete"])
+            self.assertTrue(report["operator_inventory"])
+            self.assertEqual(
+                sum(row["calls"] for row in report["operator_inventory"]),
+                report["profiler_event_count"],
+            )
+            self.assertEqual(
+                [
+                    row["name"]
+                    for row in report["operator_inventory"]
+                    if row["operator_reported_flops"] == 0
+                ],
+                report["uncounted_operator_names"],
+            )
+            self.assertGreater(report["operator_reported_flops"], 0)
+            self.assertGreaterEqual(report["largest_operator_allocation_bytes"], 0)
+            self.assertGreater(report["process_peak_rss_bytes"], 0)
 
     def test_curriculum_rejects_duplicate_pair(self):
         bad = Curriculum(

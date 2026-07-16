@@ -29,10 +29,13 @@ from pipeline.acw_hidden_basis_training import (
     model_for_arm,
     recurrent_state,
 )
-from pipeline.addressed_categorical_workspace import symbols_to_packet, trainable_parameters
+from pipeline.addressed_categorical_workspace import (
+    symbols_to_packet,
+    trainable_parameters,
+)
 
 
-EVALUATION_PROTOCOL = "R12-ACW-CAUSAL-EVALUATION-v1"
+EVALUATION_PROTOCOL = "R12-ACW-CAUSAL-EVALUATION-v2"
 FIELD_SIZE = 17
 PUBLIC_QUERIES = 24
 NEW_QUERIES = 8
@@ -42,6 +45,8 @@ LITERAL_ARMS = {"acw", "dense_categorical", "packet_token_transformer"}
 
 def _load_manifest(root: Path) -> dict:
     manifest = json.loads((root / "manifest.json").read_text())
+    if manifest.get("protocol") != "R12-ACW-HIDDEN-BASIS-v2":
+        raise ValueError("wrong ACW evaluation-domain manifest protocol")
     payload = dict(manifest)
     recorded = payload.pop("payload_sha256", None)
     if hashlib.sha256(canonical_json_bytes(payload)).hexdigest() != recorded:
@@ -58,7 +63,9 @@ def _load_array(root: Path, manifest: dict, relative: str) -> np.ndarray:
         raise ValueError(f"evaluation array hash mismatch: {relative}")
     with path.open("rb") as handle:
         array = np.load(handle, allow_pickle=False)
-    if list(array.shape) != record.get("shape") or str(array.dtype) != record.get("dtype"):
+    if list(array.shape) != record.get("shape") or str(array.dtype) != record.get(
+        "dtype"
+    ):
         raise ValueError(f"evaluation array schema mismatch: {relative}")
     return array
 
@@ -94,6 +101,9 @@ def load_oracle_split(root: Path, prefix: str) -> OracleSplit:
         initial_queries=torch.empty((histories, 0), dtype=torch.long),
         initial_answers=torch.empty((histories, 0), dtype=torch.long),
         bound_curriculum_sha256=None,
+        query_schedule_sha256=None,
+        query_schedule_kind=None,
+        pilot_report_payload_sha256=None,
         source_manifest_payload_sha256=manifest["payload_sha256"],
         seed_identity=dict(manifest["seed_identity"]),
     )
@@ -107,7 +117,7 @@ def load_oracle_split(root: Path, prefix: str) -> OracleSplit:
 
 def load_checkpoint(path: Path) -> tuple[nn.Module, str, dict]:
     checkpoint = torch.load(path, map_location="cpu", weights_only=True)
-    if checkpoint.get("protocol") != "R12-ACW-TRAINER-v1":
+    if checkpoint.get("protocol") != "R12-ACW-TRAINER-v2":
         raise ValueError("wrong ACW checkpoint protocol")
     checkpoint_arm = checkpoint.get("arm")
     model_arm = "acw" if checkpoint_arm == "direct_state_acw" else checkpoint_arm
@@ -130,7 +140,9 @@ def verify_scientific_identity(identity: dict | None, *, allow_unbound: bool) ->
     root = Path(__file__).resolve().parents[1]
     commit = identity["scientific_commit"]
     subprocess.run(
-        ["git", "cat-file", "-e", f"{commit}^{{commit}}"], cwd=root, check=True,
+        ["git", "cat-file", "-e", f"{commit}^{{commit}}"],
+        cwd=root,
+        check=True,
     )
     for relative in ACW_SCIENTIFIC_PATHS:
         blob = subprocess.run(
@@ -141,6 +153,20 @@ def verify_scientific_identity(identity: dict | None, *, allow_unbound: bool) ->
         ).stdout
         if hashlib.sha256(blob).hexdigest() != hashes[relative]:
             raise ValueError(f"ACW scientific Git blob mismatch: {relative}")
+        current = root / relative
+        if not current.is_file() or file_sha256(current) != hashes[relative]:
+            raise ValueError(
+                f"executing ACW scientific file differs from checkpoint: {relative}"
+            )
+    status = subprocess.run(
+        ["git", "status", "--porcelain", "--", *ACW_SCIENTIFIC_PATHS],
+        cwd=root,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    if status:
+        raise ValueError("executing ACW scientific paths are dirty")
 
 
 def _state_logits(
@@ -155,7 +181,10 @@ def _state_logits(
         return model.read(state[0], state[1], queries)
     if arm == "acw" and state.dtype == torch.uint8:
         return model.reader(model.workspace.packet_delta_symbols(state), queries)
-    if arm in {"dense_categorical", "packet_token_transformer"} and state.dtype == torch.uint8:
+    if (
+        arm in {"dense_categorical", "packet_token_transformer"}
+        and state.dtype == torch.uint8
+    ):
         packet = symbols_to_packet(state, FIELD_SIZE, dtype=torch.float32)
         return model.read(packet, queries)
     return model.read(state, queries)
@@ -189,9 +218,14 @@ def predict_public_queries(
             )
             queries = torch.arange(PUBLIC_QUERIES).repeat(len(history_ids))
             logits = _state_logits(
-                model, arm, _repeat_state(state, PUBLIC_QUERIES), queries,
+                model,
+                arm,
+                _repeat_state(state, PUBLIC_QUERIES),
+                queries,
             )
-            predictions.append(logits.argmax(dim=-1).reshape(len(history_ids), PUBLIC_QUERIES))
+            predictions.append(
+                logits.argmax(dim=-1).reshape(len(history_ids), PUBLIC_QUERIES)
+            )
             persistent.append(state)
     if isinstance(persistent[0], tuple):
         combined = tuple(
@@ -227,12 +261,16 @@ def acw_packet_interventions(
     donor_answers = answers[donor_index]
     queries = torch.arange(PUBLIC_QUERIES).repeat(len(packets))
     with torch.no_grad():
-        donor_predictions = _state_logits(
-            model,
-            "acw",
-            donor_packets.repeat_interleave(PUBLIC_QUERIES, dim=0),
-            queries,
-        ).argmax(dim=-1).reshape(len(packets), PUBLIC_QUERIES)
+        donor_predictions = (
+            _state_logits(
+                model,
+                "acw",
+                donor_packets.repeat_interleave(PUBLIC_QUERIES, dim=0),
+                queries,
+            )
+            .argmax(dim=-1)
+            .reshape(len(packets), PUBLIC_QUERIES)
+        )
     return {
         "donor_following": accuracy_report(donor_predictions, donor_answers),
         "shuffled_against_original": accuracy_report(donor_predictions, answers),
@@ -248,14 +286,19 @@ def acw_packet_interventions(
 
 
 def count_illegal_acw_writes(
-    model: nn.Module, data: PublicTrainingData, *, batch_size: int = 256,
+    model: nn.Module,
+    data: PublicTrainingData,
+    *,
+    batch_size: int = 256,
 ) -> dict:
     illegal = 0
     checked = 0
     with torch.no_grad():
         for start in range(0, data.histories, batch_size):
             history_ids = torch.arange(start, min(start + batch_size, data.histories))
-            packet = model.workspace.encode_source_symbols(data.source_features[history_ids])
+            packet = model.workspace.encode_source_symbols(
+                data.source_features[history_ids]
+            )
             for step in range(data.event_ids.shape[1]):
                 ids = data.event_ids[history_ids, step]
                 active = step < data.lengths[history_ids]
@@ -265,7 +308,11 @@ def count_illegal_acw_writes(
                 updated = model.workspace.update_symbols(packet, event, address)
                 for register in range(3):
                     unchanged = active & (address != register)
-                    illegal += int((updated[unchanged, register] != packet[unchanged, register]).sum())
+                    illegal += int(
+                        (
+                            updated[unchanged, register] != packet[unchanged, register]
+                        ).sum()
+                    )
                     checked += int(unchanged.sum())
                 packet = torch.where(active.unsqueeze(1), updated, packet)
     return {"unaddressed_registers_checked": checked, "illegal_writes": illegal}
@@ -278,7 +325,10 @@ def _reader_representation(model: nn.Module, arm: str, state) -> torch.Tensor:
         return torch.cat(state, dim=-1)
     if arm == "acw" and state.dtype == torch.uint8:
         return model.workspace.packet_delta_symbols(state)
-    if arm in {"dense_categorical", "packet_token_transformer"} and state.dtype == torch.uint8:
+    if (
+        arm in {"dense_categorical", "packet_token_transformer"}
+        and state.dtype == torch.uint8
+    ):
         packet = symbols_to_packet(state, FIELD_SIZE, dtype=torch.float32)
         return model.bridge(packet.flatten(1))
     return model.bridge(state)
@@ -299,7 +349,11 @@ class FrozenWriterNewReader(nn.Module):
 
 
 def _frozen_representations(
-    model: nn.Module, arm: str, data: PublicTrainingData, *, batch_size: int,
+    model: nn.Module,
+    arm: str,
+    data: PublicTrainingData,
+    *,
+    batch_size: int,
 ) -> torch.Tensor:
     outputs = []
     with torch.no_grad():
@@ -328,7 +382,10 @@ def evaluate_new_reader(
     batch_size: int = 256,
 ) -> dict:
     train_state = _frozen_representations(
-        model, arm, adaptation.data, batch_size=batch_size,
+        model,
+        arm,
+        adaptation.data,
+        batch_size=batch_size,
     )
     torch.manual_seed(seed)
     reader = FrozenWriterNewReader(train_state.shape[1])
@@ -342,7 +399,9 @@ def evaluate_new_reader(
     reader.train()
     for _ in range(updates):
         selected = torch.randint(len(answers), (batch_size,), generator=generator)
-        loss = F.cross_entropy(reader(states[selected], queries[selected]), answers[selected])
+        loss = F.cross_entropy(
+            reader(states[selected], queries[selected]), answers[selected]
+        )
         optimizer.zero_grad(set_to_none=True)
         loss.backward()
         optimizer.step()
@@ -351,11 +410,18 @@ def evaluate_new_reader(
     depth_reports = {}
     with torch.no_grad():
         for depth, split in evaluations.items():
-            state = _frozen_representations(model, arm, split.data, batch_size=batch_size)
+            state = _frozen_representations(
+                model, arm, split.data, batch_size=batch_size
+            )
             query = torch.arange(NEW_QUERIES).repeat(len(state))
-            predictions = reader(
-                state.repeat_interleave(NEW_QUERIES, dim=0), query,
-            ).argmax(dim=-1).reshape(len(state), NEW_QUERIES)
+            predictions = (
+                reader(
+                    state.repeat_interleave(NEW_QUERIES, dim=0),
+                    query,
+                )
+                .argmax(dim=-1)
+                .reshape(len(state), NEW_QUERIES)
+            )
             depth_reports[str(depth)] = accuracy_report(predictions, split.new_answers)
     return {
         "updates": updates,
@@ -367,7 +433,9 @@ def evaluate_new_reader(
     }
 
 
-def _apply_event(state: tuple[int, int, int], event: np.ndarray) -> tuple[int, int, int]:
+def _apply_event(
+    state: tuple[int, int, int], event: np.ndarray
+) -> tuple[int, int, int]:
     destination, source, alpha, beta, gamma = (int(value) for value in event)
     output = list(state)
     output[destination] = (
@@ -393,27 +461,41 @@ def _answers_for_state(
 
 
 def _word_pairs(state: tuple[int, int, int], events: np.ndarray):
-    by_output = {}
-    for word in itertools.product(range(len(events)), repeat=2):
-        output = _apply_event(_apply_event(state, events[word[0]]), events[word[1]])
-        previous = by_output.get(output)
-        if previous is not None and previous != word:
-            equivalent = (previous, word, output)
+    words = list(itertools.product(range(len(events)), repeat=2))
+    outputs = {
+        word: _apply_event(_apply_event(state, events[word[0]]), events[word[1]])
+        for word in words
+    }
+    equivalent = None
+    non_equivalent = None
+    for first_index, first in enumerate(words):
+        for second in words[first_index + 1 :]:
+            if equivalent is None and outputs[first] == outputs[second]:
+                equivalent = (first, second, outputs[first])
+            if non_equivalent is None and outputs[first] != outputs[second]:
+                non_equivalent = (
+                    first,
+                    second,
+                    outputs[first],
+                    outputs[second],
+                )
+            if equivalent is not None and non_equivalent is not None:
+                break
+        if equivalent is not None and non_equivalent is not None:
             break
-        by_output[output] = word
-    else:
+    if equivalent is None:
         raise RuntimeError("event bank has no two-word equivalence witness")
-    outputs = sorted(by_output)
-    if len(outputs) < 2:
+    if non_equivalent is None:
         raise RuntimeError("event bank has no non-equivalent two-word witness")
-    non_equivalent = (by_output[outputs[0]], by_output[outputs[1]], outputs[0], outputs[1])
     return equivalent, non_equivalent
 
 
 def _append_words(data: PublicTrainingData, words: np.ndarray) -> PublicTrainingData:
     if words.shape != (data.histories, 2):
         raise ValueError("appended words must have shape [histories,2]")
-    event_ids = torch.cat((data.event_ids, torch.from_numpy(words.copy()).long()), dim=1)
+    event_ids = torch.cat(
+        (data.event_ids, torch.from_numpy(words.copy()).long()), dim=1
+    )
     return PublicTrainingData(
         root=data.root,
         manifest_payload_sha256=data.manifest_payload_sha256,
@@ -425,6 +507,9 @@ def _append_words(data: PublicTrainingData, words: np.ndarray) -> PublicTraining
         initial_queries=data.initial_queries,
         initial_answers=data.initial_answers,
         bound_curriculum_sha256=None,
+        query_schedule_sha256=None,
+        query_schedule_kind=None,
+        pilot_report_payload_sha256=None,
         source_manifest_payload_sha256=data.source_manifest_payload_sha256,
         seed_identity=dict(data.seed_identity),
     )
@@ -466,13 +551,22 @@ def evaluate_event_words(
         equivalent_a[index], equivalent_b[index] = equivalent[0], equivalent[1]
         non_a[index], non_b[index] = non_equivalent[0], non_equivalent[1]
         equiv_answers[index] = _answers_for_state(
-            equivalent[2], coefficients, offsets, permutations,
+            equivalent[2],
+            coefficients,
+            offsets,
+            permutations,
         )
         non_a_answers[index] = _answers_for_state(
-            non_equivalent[2], coefficients, offsets, permutations,
+            non_equivalent[2],
+            coefficients,
+            offsets,
+            permutations,
         )
         non_b_answers[index] = _answers_for_state(
-            non_equivalent[3], coefficients, offsets, permutations,
+            non_equivalent[3],
+            coefficients,
+            offsets,
+            permutations,
         )
     pred_ea, _ = predict_public_queries(model, "acw", _append_words(base, equivalent_a))
     pred_eb, _ = predict_public_queries(model, "acw", _append_words(base, equivalent_b))
@@ -489,7 +583,9 @@ def evaluate_event_words(
         ),
         "equivalent_a": accuracy_report(pred_ea, equiv_target),
         "equivalent_b": accuracy_report(pred_eb, equiv_target),
-        "non_equivalent_target_separator_rate": float(separators.any(dim=1).float().mean()),
+        "non_equivalent_target_separator_rate": float(
+            separators.any(dim=1).float().mean()
+        ),
         "non_equivalent_prediction_separator_rate": float(
             ((pred_na != pred_nb) & separators).any(dim=1).float().mean()
         ),
@@ -504,28 +600,145 @@ def compiled_sparse_report(root: Path, depths: tuple[int, ...]) -> dict:
     coefficients = _load_array(root, manifest, "oracle/domain/query_coefficients.npy")
     offsets = _load_array(root, manifest, "oracle/domain/query_offsets.npy")
     permutations = _load_array(root, manifest, "oracle/domain/query_permutations.npy")
+    events = _load_array(root, manifest, "oracle/domain/events.npy")
     reports = {}
     total_events = 0
     total_queries = 0
     for depth in depths:
         split = load_oracle_split(root, f"oracle/evaluation/depth_{depth:03d}")
-        predictions = np.stack([
-            _answers_for_state(tuple(int(value) for value in state), coefficients, offsets, permutations)
-            for state in split.final_states.numpy()
-        ])
-        reports[str(depth)] = accuracy_report(
-            torch.from_numpy(predictions), split.public_answers,
+        source_states = _load_array(
+            root,
+            manifest,
+            f"oracle/evaluation/depth_{depth:03d}/source_states.npy",
         )
+        reconstructed = np.empty_like(source_states)
+        for history_id in range(split.data.histories):
+            state = tuple(int(value) for value in source_states[history_id])
+            length = int(split.data.lengths[history_id])
+            for event_id in split.data.event_ids[history_id, :length].tolist():
+                state = _apply_event(state, events[int(event_id)])
+            reconstructed[history_id] = np.asarray(state, dtype=source_states.dtype)
+        predictions = np.stack(
+            [
+                _answers_for_state(
+                    tuple(int(value) for value in state),
+                    coefficients,
+                    offsets,
+                    permutations,
+                )
+                for state in reconstructed
+            ]
+        )
+        answer_report = accuracy_report(
+            torch.from_numpy(predictions),
+            split.public_answers,
+        )
+        state_correct = np.all(reconstructed == split.final_states.numpy(), axis=1)
+        answer_report["transition_state_exact"] = int(state_correct.sum())
+        answer_report["transition_state_total"] = len(state_correct)
+        answer_report["transition_state_exactness"] = float(state_correct.mean())
+        reports[str(depth)] = answer_report
         total_events += int(split.data.lengths.sum())
         total_queries += split.data.histories * PUBLIC_QUERIES
     return {
         "depths": reports,
         "external_event_updates": total_events,
-        "event_arithmetic": {"multiplications": 2 * total_events, "additions": 2 * total_events, "modulo": total_events},
+        "event_arithmetic": {
+            "multiplications": 2 * total_events,
+            "additions": 2 * total_events,
+            "modulo": total_events,
+        },
         "external_query_reads": total_queries,
-        "query_arithmetic": {"multiplications": 3 * total_queries, "additions": 3 * total_queries, "modulo": total_queries, "permutation_lookups": total_queries},
+        "query_arithmetic": {
+            "multiplications": 3 * total_queries,
+            "additions": 3 * total_queries,
+            "modulo": total_queries,
+            "permutation_lookups": total_queries,
+        },
+        "resource_ledger": {
+            "trainable_parameters": 0,
+            "persistent_state_bytes": 3,
+            "event_table_bytes": int(events.nbytes),
+            "query_table_bytes": int(
+                coefficients.nbytes + offsets.nbytes + permutations.nbytes
+            ),
+            "runtime": "NumPy/Python exact F_17 replay",
+        },
         "claim_boundary": "Known exact compilation; not neural learnability evidence.",
     }
+
+
+def _state_dict_sha256(state: dict[str, torch.Tensor]) -> str:
+    digest = hashlib.sha256()
+    for name, tensor in sorted(state.items()):
+        value = tensor.detach().cpu().contiguous()
+        metadata = canonical_json_bytes(
+            {
+                "name": name,
+                "dtype": str(value.dtype),
+                "shape": list(value.shape),
+            }
+        )
+        digest.update(len(metadata).to_bytes(8, "big"))
+        digest.update(metadata)
+        digest.update(value.numpy().tobytes(order="C"))
+    return digest.hexdigest()
+
+
+def evaluate_label_efficiency(
+    checkpoint: dict,
+    arm: str,
+    split: OracleSplit,
+    *,
+    batch_size: int,
+) -> list[dict]:
+    metadata = checkpoint.get("training_report", {}).get("label_efficiency")
+    states = checkpoint.get("label_efficiency_models")
+    expected_labels = [8192 + 4096 * round_index for round_index in range(13)]
+    if not isinstance(metadata, list) or not isinstance(states, list):
+        raise ValueError("canonical checkpoint lacks label-efficiency snapshots")
+    if len(metadata) != 13 or len(states) != 13:
+        raise ValueError(
+            "label-efficiency snapshot count differs from the frozen protocol"
+        )
+    if _state_dict_sha256(states[-1]) != _state_dict_sha256(checkpoint["model"]):
+        raise ValueError(
+            "final label-efficiency snapshot differs from the primary model"
+        )
+    reports = []
+    for round_index, (record, state) in enumerate(zip(metadata, states, strict=True)):
+        if set(record) != {
+            "round",
+            "labels",
+            "optimizer_updates",
+            "model_tensor_sha256",
+        }:
+            raise ValueError("label-efficiency metadata has the wrong schema")
+        if (
+            record["round"] != round_index
+            or record["labels"] != expected_labels[round_index]
+        ):
+            raise ValueError(
+                "label-efficiency checkpoint is at an unregistered label count"
+            )
+        if _state_dict_sha256(state) != record["model_tensor_sha256"]:
+            raise ValueError("label-efficiency model hash mismatch")
+        model = model_for_arm(arm)
+        model.load_state_dict(state, strict=True)
+        model.eval()
+        predictions, _ = predict_public_queries(
+            model,
+            arm,
+            split.data,
+            batch_size=batch_size,
+        )
+        reports.append(
+            {
+                **record,
+                "depth_64": accuracy_report(predictions, split.public_answers),
+            }
+        )
+    return reports
 
 
 def evaluate_checkpoint(
@@ -540,7 +753,8 @@ def evaluate_checkpoint(
 ) -> dict:
     model, arm, checkpoint = load_checkpoint(checkpoint_path)
     verify_scientific_identity(
-        checkpoint.get("scientific_identity"), allow_unbound=allow_unbound,
+        checkpoint.get("scientific_identity"),
+        allow_unbound=allow_unbound,
     )
     dataset_root = dataset_root.resolve()
     manifest = _load_manifest(dataset_root)
@@ -554,7 +768,10 @@ def evaluate_checkpoint(
     persistent_by_depth = {}
     for depth, split in evaluations.items():
         predictions, state = predict_public_queries(
-            model, arm, split.data, batch_size=batch_size,
+            model,
+            arm,
+            split.data,
+            batch_size=batch_size,
         )
         depth_reports[str(depth)] = accuracy_report(predictions, split.public_answers)
         persistent_by_depth[depth] = state
@@ -566,6 +783,25 @@ def evaluate_checkpoint(
         "model_arm": arm,
         "parameters": trainable_parameters(model),
         "dataset_manifest_payload_sha256": manifest["payload_sha256"],
+        "seed_identity": manifest["seed_identity"],
+        "optimizer_seed": checkpoint.get("seed"),
+        "query_schedule_kind": checkpoint.get("query_schedule_kind"),
+        "pilot_report_payload_sha256": checkpoint.get("pilot_report_payload_sha256"),
+        "training_evidence": {
+            "trainer_bundle_manifest_payload_sha256": checkpoint.get(
+                "dataset_manifest_payload_sha256"
+            ),
+            "curriculum_sha256": checkpoint.get("curriculum_sha256"),
+            "query_schedule_sha256": checkpoint.get("query_schedule_sha256"),
+            "updates": checkpoint.get("training_report", {}).get("updates"),
+            "labels": checkpoint.get("training_report", {}).get("labels"),
+            "resource_ledger": checkpoint.get("training_report", {}).get(
+                "resource_ledger"
+            ),
+            "resource_measurements": checkpoint.get("training_report", {}).get(
+                "resource_measurements"
+            ),
+        },
         "scientific_identity": checkpoint.get("scientific_identity"),
         "public_depths": depth_reports,
         "new_reader": evaluate_new_reader(
@@ -582,17 +818,37 @@ def evaluate_checkpoint(
             "controller, novelty, or reasoning claim."
         ),
     }
+    if 64 in evaluations:
+        if checkpoint.get("label_efficiency_models") is not None:
+            report["label_efficiency"] = evaluate_label_efficiency(
+                checkpoint,
+                arm,
+                evaluations[64],
+                batch_size=batch_size,
+            )
+        elif not allow_unbound and checkpoint.get("arm") != "direct_state_acw":
+            raise ValueError(
+                "canonical scored checkpoint lacks label-efficiency snapshots"
+            )
+    report["compiled_sparse_control"] = compiled_sparse_report(dataset_root, depths)
     if arm == "acw":
         intervention_depth = 64 if 64 in evaluations else max(depths)
         split = evaluations[intervention_depth]
         report["packet_interventions"] = acw_packet_interventions(
-            model, persistent_by_depth[intervention_depth], split.public_answers,
+            model,
+            persistent_by_depth[intervention_depth],
+            split.public_answers,
         )
         report["write_legality"] = count_illegal_acw_writes(
-            model, split.data, batch_size=batch_size,
+            model,
+            split.data,
+            batch_size=batch_size,
         )
         report["event_words"] = evaluate_event_words(
-            model, split, dataset_root, limit=event_word_limit,
+            model,
+            split,
+            dataset_root,
+            limit=event_word_limit,
         )
     report["payload_sha256"] = hashlib.sha256(canonical_json_bytes(report)).hexdigest()
     return report
