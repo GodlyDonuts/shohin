@@ -1,0 +1,17 @@
+[token-tape-job] runtime staged sha256=af7da54fd23ac1f7a64766438ba72d14591ae96d495da2306cc535da875d7f7c seconds=3
+[token-tape-job] CUDA preflight passed
+[token-tape] fitting pre_final_shared_seed0
+[token-tape] fitting pre_final_cursor_specific_seed0
+[token-tape] fitting pre_final_shared_seed1
+[token-tape] fitting pre_final_cursor_specific_seed1
+[token-tape] fitting pre_final_shared_seed2
+[token-tape] fitting pre_final_cursor_specific_seed2
+[token-tape] fitting embedding_shared
+[token-tape] fitting position_shared
+[token-tape] fitting source_deranged_shared
+[token-tape] fitting pre_final_raw_shared
+[token-tape] fitting pre_final_rms_shared
+[token-tape] fitting mean_joint
+[token-tape] fitting source_only_tape
+[token-tape] fitting cursor_only
+{"decision": "external_cursor_token_tape_no_go", "out": "/lustre/fs1/home/sa305415/shohin/artifacts/r12/cursor_token_tape_dev_v1.json", "sha256": "7065401b13fd83b8a5b514be9a9b2a8cd5158af39abfa5464df43b368bd825e1"}

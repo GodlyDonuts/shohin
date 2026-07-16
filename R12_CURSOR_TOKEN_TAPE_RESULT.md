@@ -2,12 +2,13 @@
 
 **Decision:** `external_cursor_token_tape_no_go`
 
-**Claim boundary:** The frozen raw-260k model does not expose operation order
-through the preregistered single-query token-tape readouts at the required
-renderer-invariant accuracy. This closes the external-cursor/token-tape branch.
-It does not show that all distributed sequence information is absent, and it
-does not authorize a reasoning, internal-cursor, retrieval, compositionality,
-actuation, or novelty claim.
+**Claim boundary:** At raw step 260k, pre-final token states are not
+renderer-invariantly readable by the frozen single-query attention plus linear
+decoder family under its specified optimization recipe. This does not close
+all token-tape or external-cursor mechanisms: post-final, multi-query,
+nonlinear, and order-level access were not tested. It does not authorize a
+reasoning, internal-cursor, retrieval, compositionality, actuation, or novelty
+claim.
 
 ## Custody
 
@@ -22,6 +23,9 @@ actuation, or novelty claim.
 - runtime SHA-256:
   `af7da54fd23ac1f7a64766438ba72d14591ae96d495da2306cc535da875d7f7c`;
 - Newton job `689976`, completed on `evc44` in 87 seconds with exit code 0;
+- preserved Slurm log: `logs/r12_cursor_token_tape_689976.out`, 964 bytes,
+  mode `0444`, SHA-256
+  `246976f5177e9e790ebf3e3208e9ad7aafb57c298a550e13b77bf379f0a58b42`;
 - immutable result:
   `artifacts/r12/cursor_token_tape_dev_v1.json`, 9,815,027 bytes, mode
   `0444`, SHA-256
@@ -59,46 +63,54 @@ optimization-inconclusive result. Its median development accuracy is 48.33%,
 only 8.33 percentage points above the best matched control and below the frozen
 10-point margin. No shared or cursor-specific replicate approaches the 95%
 cell, renderer, and per-cursor gates or the 90% exact-group gate. Source-only
-and cursor-only stay at their structural ceilings, while source derangement
-falls below the cursor shortcut. The controls therefore do not invalidate the
-experiment.
+and cursor-only stay at their nominal ceilings, while source derangement falls
+below the cursor shortcut.
+
+The source-only ceiling is not a valid leakage detector here. A
+cursor-independent unique prediction necessarily matches exactly one of five
+cells because every source contains each target once. Its 20% result is
+therefore mathematically automatic. Cursor-only and the parameter-matched
+embedding, position, and source-deranged shared arms remain informative, but
+the cursor-specific deep family lacks cursor-specific matched controls.
 
 ## Mechanistic diagnosis
 
-There is a small real deep-state signal, but it is not a usable order code.
-The favorable cursor-specific family reaches 56.98--57.81% overall while
-embedding, position, and deranged controls remain near 40%. That gain is
-concentrated in the first instruction and deterministic DONE: cursor-zero
+The cursor-specific family's descriptive 56.98--57.81% score is concentrated
+in the first instruction and deterministic DONE: cursor-zero
 accuracy is 72.40--81.25%, DONE is 100%, but cursor one is 36.46--37.50%, cursor
 two is 21.88--29.69%, and cursor three is 44.79--47.92%. Only 3--11 of 192
-sources recover the full four-operation order in any seed.
+sources recover the full four-operation order in any seed. Because the shared
+family misses its frozen ten-point matched-control margin and the
+cursor-specific family has no parameter-matched controls of its own, this lift
+is descriptive; it is not an authorized deep-representation finding.
 
-The readout can therefore recover some first-clause operation semantics from
-deep prompt states, including on two unseen renderers. It cannot transport an
-ordinal address across the remaining clauses. The 99% train fit and poor
-renderer-held-out development performance indicate surface/template binding,
-not a stable factorization of operation identity and sequence position. The
-cursor-specific upper bound improves diversity but still misses most later
-positions, so a larger cursor-indexed decoder is not the missing mechanism.
+The observed asymmetry is consistent with partial first-clause access and poor
+later-clause routing, but the present experiment cannot distinguish that story
+from unmeasured cursor-specific lexical or positional shortcuts. The 99% train
+fit and poor renderer-held-out development performance do reject a stable
+factorization through this exact probe family.
 
-Raw and per-token-RMS controls also fail. The primary effect is not an artifact
-of the train-derived scalar standardization, and the raw arm's very large loss
-and weak train fit show why raw scale is unsuitable rather than providing a
-counterexample.
+Raw and per-token-RMS controls reach only 58.07% and 96.30% train accuracy, so
+neither satisfies the 99% train-fit condition. They are optimization-
+inconclusive and do not resolve whether the standardized-arm behavior depends
+on train-derived feature scaling.
 
 ## Decision and next boundary
 
-Under the frozen preregistration, the external-cursor/token-tape branch stops.
-Do not tune attention heads, add capacity to the same oracle-cursor readout,
-reuse this development result as confirmation, or present its weak lift as a
-reasoning mechanism. Development includes all 24 permutations, so it cannot
+Under the frozen preregistration, this pre-final single-query probe family
+stops. Do not tune it on the exposed development result or present its lift as
+a reasoning mechanism. Development includes all 24 permutations, so it cannot
 support unseen-permutation extrapolation in any case.
 
-The next mechanism must create and causally update its own sequential state;
-it cannot assume an oracle cursor or a decoder that separately memorizes each
-cursor. Before architecture code or H100 training, the R12 invention charter
-requires an explicit state-transport theorem, an equivalence dossier against
-attention, pointers, recurrence, and state-space controls, an exact collapse
-test, and a finite synthetic falsifier with held-out operation permutations and
-fresh renderers. The observed first-position/later-position asymmetry is the
-specific failure that falsifier must reverse.
+A branch-wide representation conclusion would require a newly preregistered
+fresh-data diagnostic that includes post-final tapes, a 24-way order readout,
+cursor-specific embedding/position/deranged controls, and train-only renderer
+holdouts for optimization selection. Gold-span layerwise paired-transposition
+readout is the smallest diagnostic that can separate operation erasure from
+failed routing. It cannot reuse this development split as confirmation.
+
+Independently, any capability mechanism must create and causally update its own
+sequential state rather than assume an oracle cursor. Before architecture code
+or H100 training, the R12 invention charter still requires an explicit
+state-transport theorem, an equivalence dossier, an exact collapse test, and a
+finite synthetic falsifier with held-out permutations and fresh renderers.
