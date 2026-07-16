@@ -67,8 +67,8 @@ PUBLIC_ARRAYS = (
 TRAINING_PROTOCOL = "R12-ACW-TRAINER-v2"
 GENERATOR_PROTOCOL = "R12-ACW-HIDDEN-BASIS-v3"
 BUNDLE_PROTOCOL = "R12-ACW-TRAINER-BUNDLE-v4"
-PILOT_PROTOCOL = "R12-ACW-CGBR-PILOT-v4"
-PILOT_COMPARISON_PROTOCOL = "R12-ACW-PILOT-REPLAY-COMPARISON-v4"
+PILOT_PROTOCOL = "R12-ACW-CGBR-PILOT-v5"
+PILOT_COMPARISON_PROTOCOL = "R12-ACW-PILOT-REPLAY-COMPARISON-v5"
 BUNDLE_KEYS = {
     "protocol",
     "source_manifest_payload_sha256",
@@ -137,6 +137,7 @@ ACW_SCIENTIFIC_PATHS = (
     "pipeline/test_evaluate_acw_hidden_basis.py",
     "pipeline/test_adjudicate_acw_hidden_basis.py",
     "pipeline/jobs/run_acw_pilot_stokes.sbatch",
+    "pipeline/jobs/verify_acw_pilot_stokes.sbatch",
 )
 
 
@@ -472,15 +473,40 @@ def _validate_unanchored_trainer_bundle_structure(root: Path, manifest: dict) ->
 
 def scientific_identity(*, require_clean: bool) -> dict:
     root = Path(__file__).resolve().parents[1]
+    git = ["/usr/bin/git", "--no-replace-objects"]
+    replacement_refs = subprocess.run(
+        [
+            *git,
+            "for-each-ref",
+            "--format=%(refname)",
+            "refs/replace/",
+        ],
+        cwd=root,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    grafts_raw = subprocess.run(
+        [*git, "rev-parse", "--git-path", "info/grafts"],
+        cwd=root,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    grafts_path = Path(grafts_raw)
+    if not grafts_path.is_absolute():
+        grafts_path = root / grafts_path
+    if replacement_refs or grafts_path.exists():
+        raise RuntimeError("scientific identity forbids Git replacements and grafts")
     commit = subprocess.run(
-        ["git", "rev-parse", "HEAD"],
+        [*git, "rev-parse", "HEAD"],
         cwd=root,
         check=True,
         capture_output=True,
         text=True,
     ).stdout.strip()
     status = subprocess.run(
-        ["git", "status", "--porcelain", "--", *ACW_SCIENTIFIC_PATHS],
+        [*git, "status", "--porcelain", "--", *ACW_SCIENTIFIC_PATHS],
         cwd=root,
         check=True,
         capture_output=True,
@@ -495,7 +521,7 @@ def scientific_identity(*, require_clean: bool) -> dict:
             raise FileNotFoundError(relative)
         working_hash = hashlib.sha256(path.read_bytes()).hexdigest()
         committed = subprocess.run(
-            ["git", "show", f"HEAD:{relative}"],
+            [*git, "show", f"HEAD:{relative}"],
             cwd=root,
             check=True,
             capture_output=True,
@@ -508,7 +534,13 @@ def scientific_identity(*, require_clean: bool) -> dict:
         hashes[relative] = working_hash
     if require_clean:
         remote = subprocess.run(
-            ["git", "ls-remote", "--exit-code", "origin", "refs/heads/main"],
+            [
+                *git,
+                "ls-remote",
+                "--exit-code",
+                "origin",
+                "refs/heads/main",
+            ],
             cwd=root,
             check=True,
             capture_output=True,

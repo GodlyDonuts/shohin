@@ -1,4 +1,5 @@
 import inspect
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -70,6 +71,8 @@ class PublicTrainerTests(unittest.TestCase):
         import pipeline.acw_hidden_basis_training as trainer
 
         responses = [
+            SimpleNamespace(stdout=""),
+            SimpleNamespace(stdout="/definitely/missing/grafts\n"),
             SimpleNamespace(stdout="a" * 40),
             SimpleNamespace(stdout=""),
             SimpleNamespace(stdout=b"different committed bytes"),
@@ -91,6 +94,8 @@ class PublicTrainerTests(unittest.TestCase):
         relative = "pipeline/testdata/acw_nist_beacon_snapshot.json"
         payload = Path(relative).read_bytes()
         responses = [
+            SimpleNamespace(stdout=""),
+            SimpleNamespace(stdout="/definitely/missing/grafts\n"),
             SimpleNamespace(stdout="a" * 40),
             SimpleNamespace(stdout=""),
             SimpleNamespace(stdout=payload),
@@ -100,6 +105,80 @@ class PublicTrainerTests(unittest.TestCase):
             patch.object(trainer, "ACW_SCIENTIFIC_PATHS", (relative,)),
             patch.object(trainer.subprocess, "run", side_effect=responses),
             self.assertRaisesRegex(RuntimeError, "must equal pushed origin/main"),
+        ):
+            scientific_identity(require_clean=True)
+
+    def test_scientific_identity_uses_the_fingerprinted_git_executable(self):
+        import pipeline.acw_hidden_basis_training as trainer
+
+        relative = "pipeline/testdata/acw_nist_beacon_snapshot.json"
+        payload = Path(relative).read_bytes()
+        responses = [
+            SimpleNamespace(stdout=""),
+            SimpleNamespace(stdout="/definitely/missing/grafts\n"),
+            SimpleNamespace(stdout="a" * 40),
+            SimpleNamespace(stdout=""),
+            SimpleNamespace(stdout=payload),
+        ]
+        with (
+            patch.object(trainer, "ACW_SCIENTIFIC_PATHS", (relative,)),
+            patch.object(
+                trainer.subprocess, "run", side_effect=responses
+            ) as run_command,
+        ):
+            scientific_identity(require_clean=False)
+        self.assertTrue(run_command.call_args_list)
+        self.assertTrue(
+            all(
+                call.args[0][:2] == ["/usr/bin/git", "--no-replace-objects"]
+                for call in run_command.call_args_list
+            )
+        )
+
+    def test_scientific_identity_rejects_real_git_replacement_ref(self):
+        import pipeline.acw_hidden_basis_training as trainer
+
+        root = Path(self.temporary.name) / "git_replacement_repo"
+        remote = Path(self.temporary.name) / "git_replacement_remote.git"
+        pipeline = root / "pipeline"
+        pipeline.mkdir(parents=True)
+        scientific_file = pipeline / "scientific.py"
+
+        def git(cwd, *args):
+            return subprocess.run(
+                ["/usr/bin/git", "--no-replace-objects", *args],
+                cwd=cwd,
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+
+        git(root, "init", "-b", "main")
+        git(root, "config", "user.email", "acw-test@example.invalid")
+        git(root, "config", "user.name", "ACW Test")
+        scientific_file.write_text("VALUE = 'approved'\n")
+        git(root, "add", "pipeline/scientific.py")
+        git(root, "commit", "-m", "approved")
+        approved = git(root, "rev-parse", "HEAD").stdout.strip()
+        git(self.temporary.name, "init", "--bare", str(remote))
+        git(root, "remote", "add", "origin", str(remote))
+        git(root, "push", "-u", "origin", "main")
+
+        scientific_file.write_text("VALUE = 'substituted'\n")
+        git(root, "add", "pipeline/scientific.py")
+        git(root, "commit", "-m", "substituted")
+        replacement = git(root, "rev-parse", "HEAD").stdout.strip()
+        git(root, "reset", "--hard", approved)
+        git(root, "replace", approved, replacement)
+
+        with (
+            patch.object(trainer, "__file__", str(pipeline / "trainer.py")),
+            patch.object(
+                trainer,
+                "ACW_SCIENTIFIC_PATHS",
+                ("pipeline/scientific.py",),
+            ),
+            self.assertRaisesRegex(RuntimeError, "forbids Git replacements"),
         ):
             scientific_identity(require_clean=True)
 

@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-16 13:28 EDT (The protected 300k flagship remains immutable and hash-matched. Track S remains pre-result. Stokes `740053` is retained only as same-runtime process evidence: independent Mac replay exposed one-ULP BLAS reduction drift in its eight float32 feature arrays. Generator v3 replaces those reductions with ordered float32 row sums, and the canonical result namespace advances to dataset v3 plus pilot/comparison v4. Independent full generation on Mac and Stokes job `740071` now matches across all 68 files and all 67 arrays at manifest payload SHA-256 `3294a0d12d277f46ea8c0cbf50142be14816447c15bc3792f6e4df7e77e2ba33`; no file differs. The integrated 90-test suite passes in 13.816 seconds with Ruff, formatting, shell syntax, compilation, and diff gates clean. Commit/push the fresh namespace bytes, install exact HEAD on Stokes, confirm every v3/v4 canonical path absent, and rerun one public pilot. Post-pilot training remains hard-blocked. The eventual Git trust chain must be separately pushed scientific `S`, registry-only `A`, then activation `E`; pilot/training identity equality is invalid. No scored development arm, confirmation opening, Shohin fit, H100 job, memory claim, or reasoning claim is authorized.) Keep the "LIVE STATE" section current
+> **Last updated:** 2026-07-16 17:17 EDT (The protected 300k flagship remains immutable and hash-matched. Track S remains pre-result. Generator v3 is genuinely cross-runtime: Mac and Stokes `740071` match over all 68 files / 67 arrays at manifest payload SHA-256 `3294a0d12d277f46ea8c0cbf50142be14816447c15bc3792f6e4df7e77e2ba33`. Pilot v4 job `740077` is diagnostic-only because Mac recomputation changed 43,451/57,344 CGB schedule positions and the model tensor hash. V5 now pins the exact dataset plus 92 executable mappings, three code trees, 599 imported external files, nine tools, one generated module, five `sys.path` entries, and native payload SHA-256 `13c265e3f116beee105c883e6384595e5759f96419e790c064cd94e77f20425c`. Fresh probes `740207/740208` on `ec51/ec52` and final pin validators `740209/740210` are byte-identical at log SHA-256 `d989bafc4b8637d63375bc6107e26064ac0f3e09461e96a328042fe8c7fbdbc5`. Adversarial review found separate-process receipt provenance and a noncanonical final registry reopen; both are repaired. The verifier now creates its receipt and registry in one process, carries the exact receipt object/bytes in memory, byte-compares both publications, strictly reopens both, and exposes no standalone registry builder command. The explicit trust boundary is reproducibility/custody under trusted committed process, Stokes kernel, Slurm, and filesystem, not remote attestation against a malicious same-UID runtime-restoring actor. The complete local warning-strict gate is 114/114, and the defect-finding adversarial reviewer returned GO with no remaining P0/P1 blocker in scope. Commit/push scientific candidate `S`, install exact HEAD, run one absent-path v5 pilot on `ec51`, then independently replay and build the candidate registry on `ec52`. Post-pilot training remains hard-blocked. The Git trust chain must be separately pushed `S`, registry-only `A`, then activation `E`; pilot/training identity equality is invalid. No scored development arm, confirmation opening, Shohin fit, H100 job, memory claim, or reasoning claim is authorized.) Keep the "LIVE STATE" section current
 > every milestone — update it, don't let it rot.
 
 ---
@@ -5524,3 +5524,53 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   bytes from occupying an admissible namespace. The complete integrated suite remains 90/90 in 13.816 seconds;
   Ruff, formatting, shell syntax, compilation, and diff checks pass. Commit/push this namespace boundary, install
   exact HEAD, confirm all v3/v4 paths absent, and submit one public pilot only.
+
+- **2026-07-16 13:28--14:25** — **Pilot v4 executes honestly but fails the independent runtime
+  boundary; v5 is pre-result and no tolerance is permitted.** The first v4 submission `740074` failed safely in
+  the test gate because Stokes `origin` still named an old incremental bundle; no artifact was created. After the
+  canonical remote was repaired, `740077` completed on Stokes with 90 passing tests, two held child fits, parent
+  recomputation, atomic freeze/reopen, and same-runtime verification. Its 80 files mirror exactly to the Mac. The
+  report binds scientific commit `87ebf15`, dataset payload
+  `3294a0d12d277f46ea8c0cbf50142be14816447c15bc3792f6e4df7e77e2ba33`, model tensor SHA-256
+  `46e6f697f9938c089130b9251e8743d68ef98c38670bb3c484548f5f6c50ce4b`, CGB schedule SHA-256
+  `5ff0647c25b0c8944053c75eee8ff9ad531018b6056d3e01eb1877a3e66ff177`, and uniform schedule SHA-256
+  `d52578a8aca587c613f281e2f6c4aac847dbf297fb092d3d1d64c5a1f583e331`. Fresh Mac report replay then failed on
+  `cgb_schedule.jsonl`: the model tensor changed and 43,451/57,344 schedule positions differed, with only 24,726
+  rows common at the same positions; the uniform schedule remained byte-identical. This is material
+  runtime-dependent float optimization, not the earlier one-ULP data defect. V4 is diagnostic-only and cannot
+  become `S` or enter a scored arm. V5 now separates contracts: all dataset bytes retain cross-runtime exactness
+  and an exact payload pin, while float fitting and fresh report replay require the exact Stokes Xeon Gold 6130 /
+  glibc / interpreter / NumPy / Torch / native-library stack, deterministic algorithms, forced AVX2, one Torch
+  compute thread, 32 interop threads, and no CUDA. Canonical paths advance to dataset
+  `acw_pilot_domain_v3_runtime_v1` and pilot v5 and reject symlink components, symlink leaves, and every file or
+  directory outside the exact manifest tree. Full compute probes `740100` on `ec51` and `740104` on `ec52`
+  produced byte-identical pinned runtime identities; the complete local suite is 100/100. A separate verifier must
+  freeze a hash-bound receipt from a different live Slurm job and node, while exact comparison schemas reject
+  fabricated claims. Complete formatting, review, and clean pushed identity; run one v5 pilot on `ec51`, then
+  independently replay it on `ec52` before the registry-only `A` commit. No scored or H100 work is open.
+
+- **2026-07-16 14:25--17:15** — **V5 closes its runtime and receipt-custody boundary; still
+  pre-result.** The canonical closure now binds 92 executable mappings, three complete code-tree summaries, 599
+  imported external files, nine external tools, one path-independent generated PyTorch module, the exact five-entry
+  `sys.path`, startup files, and native payload SHA-256
+  `13c265e3f116beee105c883e6384595e5759f96419e790c064cd94e77f20425c`. Diagnostic probes `740196/740197`
+  exposed a random generated-module temp path; `740203/740204` then failed closed because detachment happened before
+  lazy module creation; `740205/740206` were canceled rather than misread after source placement changed. The
+  repaired fresh pair `740207` on `ec51` and `740208` on `ec52` completed with byte-identical full identities, and
+  final validators `740209/740210` each recomputed the identity twice and required exact equality to the compiled
+  pin. All four successful logs have SHA-256
+  `d989bafc4b8637d63375bc6107e26064ac0f3e09461e96a328042fe8c7fbdbc5`; stale or failed probes have no standing.
+  Adversarial review then found two in-boundary P1 custody defects: receipt provenance was lost between verifier and
+  registry processes, and the final registry reopen accepted noncanonical bytes. Both are repaired before `S`: the
+  independent verifier and registry builder now execute as one Python command/process, the builder requires the
+  exact receipt object and canonical bytes still held in memory, the standalone builder CLI and second batch command
+  are removed, receipt substitution fails before anchoring, and receipt/registry publications are exact-byte checked
+  and strict-canonical-JSON reopened. Regressions cover canonical substituted receipts, exact in-memory handoff,
+  exact registry bytes, removed CLI route, and the one-command Stokes allowlist. The warning-strict eight-module gate
+  is **114/114** in 13.391 seconds; Ruff, compilation, and verifier shell syntax are clean. The preregistration now
+  states the real boundary explicitly: it trusts the committed process, Stokes kernel, Slurm, and filesystem during
+  execution and makes no remote-attestation claim against a malicious same-UID actor that can execute substituted
+  bytes and restore them. The same defect-finding reviewer reran the warning-strict suite, shell syntax, and diff
+  checks and returned **GO** with no remaining P0/P1 blocker inside that boundary. This authorizes only a clean
+  pushed `S` and one non-scored v5 pilot/replay chain; no registry anchor, scored arm, H100 run, or capability claim
+  exists yet.

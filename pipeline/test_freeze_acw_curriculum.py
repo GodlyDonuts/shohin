@@ -9,6 +9,7 @@ import time
 import unittest
 from copy import deepcopy
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import patch
 
 import numpy as np
@@ -101,6 +102,63 @@ class FreezeCurriculumTests(unittest.TestCase):
             }
 
         cls._rewrite_manifest(root, mutate)
+
+    @staticmethod
+    def _canonical_environment(role: str, job_id: str) -> dict[str, str]:
+        expected = freezer.CANONICAL_PILOT_ROLES[role]
+        return {
+            **freezer.CANONICAL_PILOT_STATIC_ENV,
+            "SLURM_CPUS_PER_TASK": "4",
+            "SLURM_JOB_ID": job_id,
+            "SLURM_JOB_NAME": expected["job_name"],
+            "SLURM_JOB_NODELIST": expected["node_list"],
+            "SLURM_NODELIST": expected["node_list"],
+            "SLURM_SUBMIT_DIR": freezer.CANONICAL_PILOT_BASE,
+        }
+
+    @staticmethod
+    def _canonical_snapshot(role: str, job_id: str) -> dict:
+        expected = freezer.CANONICAL_PILOT_ROLES[role]
+        stdout_path = f"{expected['stdout_prefix']}{job_id}.out"
+        stdout = " ".join(
+            (
+                f"JobId={job_id}",
+                f"JobName={expected['job_name']}",
+                "JobState=RUNNING",
+                "NumCPUs=4",
+                "NumNodes=1",
+                f"NodeList={expected['node_list']}",
+                f"BatchHost={expected['node_list']}",
+                "Partition=normal",
+                f"Command={expected['command']}",
+                f"WorkDir={freezer.CANONICAL_PILOT_BASE}",
+                f"StdOut={stdout_path}",
+            )
+        )
+        return {
+            "command": [
+                freezer.CANONICAL_PILOT_SCONTROL,
+                "show",
+                "job",
+                "-o",
+                job_id,
+            ],
+            "stdout": stdout,
+            "stdout_sha256": hashlib.sha256(stdout.encode("utf-8")).hexdigest(),
+            "allocation": {
+                "batch_host": expected["node_list"],
+                "command": expected["command"],
+                "job_id": job_id,
+                "job_name": expected["job_name"],
+                "job_state": "RUNNING",
+                "node_list": expected["node_list"],
+                "num_cpus": 4,
+                "num_nodes": 1,
+                "partition": "normal",
+                "stdout": stdout_path,
+                "work_dir": freezer.CANONICAL_PILOT_BASE,
+            },
+        }
 
     def test_selection_uses_a_common_unused_separator(self):
         packets = np.zeros((4, 3), dtype=np.uint8)
@@ -652,19 +710,7 @@ class FreezeCurriculumTests(unittest.TestCase):
                     process.stdout.close()
 
     def test_canonical_execution_reconciles_live_slurm_allocation(self):
-        snapshot = {
-            "command": ["scontrol", "show", "job", "-o", "123"],
-            "stdout": "JobId=123 JobState=RUNNING NumCPUs=4 NodeList=n1",
-            "allocation": {
-                "job_id": "123",
-                "job_state": "RUNNING",
-                "num_cpus": 4,
-                "node_list": "n1",
-            },
-        }
-        snapshot["stdout_sha256"] = hashlib.sha256(
-            snapshot["stdout"].encode("utf-8")
-        ).hexdigest()
+        snapshot = self._canonical_snapshot("producer", "123")
         out = Path(self.temporary.name) / "live_slurm_replay"
         kwargs = {
             "refinement_rounds": 2,
@@ -673,14 +719,16 @@ class FreezeCurriculumTests(unittest.TestCase):
             "batch_size": 8,
             "max_groups": 4,
         }
-        environment = {
-            "SLURM_JOB_ID": "123",
-            "SLURM_CPUS_PER_TASK": "4",
-            "SLURM_JOB_NODELIST": "n1",
-        }
+        environment = self._canonical_environment("producer", "123")
         with (
-            patch.dict(os.environ, environment),
+            patch.dict(os.environ, environment, clear=True),
             patch.object(freezer, "_slurm_snapshot", return_value=snapshot),
+            patch.object(freezer, "CANONICAL_PILOT_RUNTIME", None),
+            patch.object(
+                freezer.socket,
+                "getfqdn",
+                return_value=freezer.CANONICAL_PILOT_ROLES["producer"]["hostname"],
+            ),
         ):
             execute_pilot_replay(
                 self.root,
@@ -702,8 +750,9 @@ class FreezeCurriculumTests(unittest.TestCase):
         stale = deepcopy(snapshot)
         stale["allocation"] = dict(snapshot["allocation"], job_id="999")
         with (
-            patch.dict(os.environ, environment),
+            patch.dict(os.environ, environment, clear=True),
             patch.object(freezer, "_slurm_snapshot", return_value=stale),
+            patch.object(freezer, "CANONICAL_PILOT_RUNTIME", None),
             self.assertRaisesRegex(ValueError, "live Slurm allocation"),
         ):
             freezer._validate_execution(
@@ -721,6 +770,7 @@ class FreezeCurriculumTests(unittest.TestCase):
             freezer.CANONICAL_PILOT_REPLAY_A: root / "replay_a",
             freezer.CANONICAL_PILOT_REPLAY_B: root / "replay_b",
             freezer.CANONICAL_PILOT_OUTPUT: root / "out",
+            freezer.CANONICAL_PILOT_VERIFICATION: root / "verification",
         }
         identity = {
             "scientific_commit": "a" * 40,
@@ -735,8 +785,23 @@ class FreezeCurriculumTests(unittest.TestCase):
             return paths[relative]
 
         with (
+            patch.dict(
+                os.environ,
+                self._canonical_environment("producer", "123"),
+                clear=True,
+            ),
+            patch.object(
+                freezer,
+                "require_canonical_pilot_runtime",
+                return_value=freezer.CANONICAL_PILOT_RUNTIME,
+            ),
             patch.object(freezer, "_canonical_path", side_effect=canonical_path),
             patch.object(freezer, "scientific_identity", return_value=identity),
+            patch.object(
+                freezer,
+                "_slurm_snapshot",
+                return_value=self._canonical_snapshot("producer", "123"),
+            ),
             patch.object(freezer, "_regenerate_registered_dataset"),
             patch.object(freezer, "verify_registered_dataset"),
             patch.object(freezer, "_launch_held_replay", side_effect=children),
@@ -759,6 +824,810 @@ class FreezeCurriculumTests(unittest.TestCase):
             paths[freezer.CANONICAL_PILOT_OUTPUT] / "report.json"
         )
         cleanup.assert_called_once_with(children)
+
+    def test_canonical_runtime_and_namespace_are_literal_pins(self):
+        self.assertEqual(
+            freezer.CANONICAL_PILOT_DATASET_PAYLOAD_SHA256,
+            "3294a0d12d277f46ea8c0cbf50142be14816447c15bc3792f6e4df7e77e2ba33",
+        )
+        self.assertEqual(
+            freezer.CANONICAL_PILOT_DATASET,
+            "artifacts/r12/acw_pilot_domain_v3_runtime_v1",
+        )
+        self.assertEqual(
+            freezer.CANONICAL_PILOT_REPLAY_A,
+            "artifacts/r12/acw_cgbr_pilot_v5_replay_a",
+        )
+        self.assertEqual(
+            freezer.CANONICAL_PILOT_REPLAY_B,
+            "artifacts/r12/acw_cgbr_pilot_v5_replay_b",
+        )
+        self.assertEqual(
+            freezer.CANONICAL_PILOT_OUTPUT,
+            "artifacts/r12/acw_cgbr_pilot_v5",
+        )
+        self.assertEqual(
+            freezer.CANONICAL_PILOT_VERIFICATION,
+            "artifacts/r12/acw_cgbr_pilot_v5_independent_verification",
+        )
+        self.assertEqual(
+            freezer.CANONICAL_PILOT_THREAD_ENV["ATEN_CPU_CAPABILITY"],
+            "avx2",
+        )
+        self.assertEqual(
+            freezer.CANONICAL_PILOT_THREAD_ENV["OPENBLAS_CORETYPE"],
+            "Haswell",
+        )
+        self.assertTrue(freezer.CANONICAL_PILOT_RUNTIME["python_no_site"])
+        self.assertTrue(freezer.CANONICAL_PILOT_RUNTIME["python_safe_path"])
+        for key in (
+            "code_trees",
+            "external_executables",
+            "generated_modules",
+            "imported_external_code",
+            "native_files",
+            "python_startup",
+        ):
+            self.assertTrue(freezer.CANONICAL_PILOT_RUNTIME[key], key)
+        self.assertEqual(len(freezer.CANONICAL_PILOT_RUNTIME["native_files"]), 92)
+        self.assertEqual(
+            hashlib.sha256(
+                freezer.canonical_json_bytes(
+                    freezer.CANONICAL_PILOT_RUNTIME["native_files"]
+                )
+            ).hexdigest(),
+            freezer.CANONICAL_PILOT_RUNTIME["native_files_payload_sha256"],
+        )
+        environment = self._canonical_environment("producer", "123")
+        with (
+            patch.dict(os.environ, environment, clear=True),
+            patch.object(
+                freezer, "_canonical_pilot_process_membership", return_value={}
+            ),
+            patch.object(
+                freezer,
+                "pilot_runtime_identity",
+                return_value=freezer.CANONICAL_PILOT_RUNTIME,
+            ) as runtime_identity,
+        ):
+            self.assertEqual(
+                freezer.require_canonical_pilot_runtime(),
+                freezer.CANONICAL_PILOT_RUNTIME,
+            )
+            self.assertEqual(
+                freezer.require_canonical_pilot_runtime(),
+                freezer.CANONICAL_PILOT_RUNTIME,
+            )
+            self.assertEqual(runtime_identity.call_count, 2)
+        with (
+            patch.dict(os.environ, environment, clear=True),
+            patch.object(
+                freezer, "_canonical_pilot_process_membership", return_value={}
+            ),
+            patch.object(freezer, "pilot_runtime_identity", return_value={}),
+            self.assertRaisesRegex(RuntimeError, "runtime identity mismatch"),
+        ):
+            freezer.require_canonical_pilot_runtime()
+        with (
+            patch.dict(os.environ, {}, clear=True),
+            self.assertRaisesRegex(RuntimeError, "environment allowlist mismatch"),
+        ):
+            freezer.require_canonical_pilot_runtime()
+        with (
+            patch.dict(
+                os.environ, {**environment, "LD_PRELOAD": "/tmp/inject.so"}, clear=True
+            ),
+            self.assertRaisesRegex(RuntimeError, "environment allowlist mismatch"),
+        ):
+            freezer.require_canonical_pilot_runtime()
+
+    def test_runtime_code_tree_fingerprint_covers_every_file(self):
+        root = Path(self.temporary.name) / "runtime_tree"
+        (root / "pkg").mkdir(parents=True)
+        (root / "pkg" / "module.py").write_text("VALUE = 1\n")
+        (root / "pkg" / "weights.bin").write_bytes(b"weights")
+        (root / "pkg" / "__pycache__").mkdir()
+        (root / "pkg" / "__pycache__" / "module.pyc").write_bytes(b"cache")
+        first = freezer._tree_payload_summary(root.resolve())
+        self.assertEqual(first["file_count"], 3)
+        reference = hashlib.sha256()
+        for path in sorted(path for path in root.rglob("*") if path.is_file()):
+            record = {
+                "bytes": path.stat().st_size,
+                "path": path.relative_to(root).as_posix(),
+                "sha256": file_sha256(path),
+            }
+            encoded = freezer.canonical_json_bytes(record)
+            reference.update(len(encoded).to_bytes(8, "big"))
+            reference.update(encoded)
+        self.assertEqual(first["payload_sha256"], reference.hexdigest())
+        (root / "pkg" / "module.py").write_text("VALUE = 2\n")
+        second = freezer._tree_payload_summary(root.resolve())
+        self.assertNotEqual(first["payload_sha256"], second["payload_sha256"])
+        link = root / "pkg" / "alias.py"
+        link.symlink_to(root / "pkg" / "module.py")
+        with self.assertRaisesRegex(RuntimeError, "contains a symlink"):
+            freezer._tree_payload_summary(root.resolve())
+
+    def test_runtime_code_tree_prunes_explicitly_excluded_top_level(self):
+        root = Path(self.temporary.name) / "pruned_runtime_tree"
+        root.mkdir()
+        (root / "module.py").write_bytes(b"included")
+        excluded = root / "site-packages"
+        excluded.mkdir()
+        (excluded / "large.bin").write_bytes(b"excluded")
+        pruned = freezer._tree_payload_summary(
+            root.resolve(),
+            excluded_top_levels={"site-packages"},
+        )
+        (excluded / "large.bin").write_bytes(b"changed but still excluded")
+        repeated = freezer._tree_payload_summary(
+            root.resolve(),
+            excluded_top_levels={"site-packages"},
+        )
+        self.assertEqual(pruned, repeated)
+        self.assertEqual(pruned["file_count"], 1)
+
+    def test_runtime_import_closure_does_not_hide_site_packages(self):
+        root = Path(self.temporary.name) / "import_closure"
+        stdlib = root / "python3.13"
+        site_packages = stdlib / "site-packages"
+        torch_root = site_packages / "torch"
+        numpy_root = site_packages / "numpy"
+        site_packages.mkdir(parents=True)
+        torch_root.mkdir()
+        numpy_root.mkdir()
+        stdlib_module = stdlib / "stdlib_module.py"
+        external_module = site_packages / "external_module.py"
+        stdlib_module.write_bytes(b"stdlib")
+        external_module.write_bytes(b"external")
+        modules = {
+            "stdlib_module": SimpleNamespace(__file__=str(stdlib_module)),
+            "external_module": SimpleNamespace(__file__=str(external_module)),
+        }
+        with (
+            patch.object(
+                freezer,
+                "CANONICAL_PILOT_CODE_TREES",
+                {
+                    "numpy": str(numpy_root),
+                    "python_stdlib": str(stdlib),
+                    "torch": str(torch_root),
+                },
+            ),
+            patch.object(freezer, "ACW_SCIENTIFIC_PATHS", ()),
+            patch.object(freezer.sys, "modules", modules),
+        ):
+            summary = freezer._pilot_imported_external_code_summary()
+        self.assertEqual(summary["file_count"], 1)
+        self.assertEqual(summary["total_bytes"], len(b"external"))
+
+    def test_runtime_startup_fingerprint_covers_pth_execution_files(self):
+        purelib = Path(self.temporary.name) / "startup_purelib"
+        purelib.mkdir()
+        startup = purelib / "runtime_hook.pth"
+        startup.write_text("import runtime_hook\n")
+        with (
+            patch.object(freezer.sysconfig, "get_path", return_value=str(purelib)),
+            patch.object(
+                freezer.sys,
+                "path",
+                [str(purelib), str(purelib / "python313.zip")],
+            ),
+            self.assertRaisesRegex(RuntimeError, "archive import paths are forbidden"),
+        ):
+            freezer._pilot_python_startup_identity()
+        with (
+            patch.object(freezer.sysconfig, "get_path", return_value=str(purelib)),
+            patch.object(freezer.sys, "path", [str(purelib)]),
+        ):
+            first = freezer._pilot_python_startup_identity()
+            startup.write_text("import different_runtime_hook\n")
+            second = freezer._pilot_python_startup_identity()
+        self.assertNotEqual(
+            first["startup_files_payload_sha256"],
+            second["startup_files_payload_sha256"],
+        )
+
+    def test_runtime_external_executable_registry_hashes_bytes(self):
+        self.assertIn("/usr/bin/git", freezer.CANONICAL_PILOT_EXTERNAL_EXECUTABLE_PATHS)
+        self.assertIn("/bin/ps", freezer.CANONICAL_PILOT_EXTERNAL_EXECUTABLE_PATHS)
+        executable = Path(self.temporary.name) / "runtime_tool"
+        executable.write_bytes(b"version-one")
+        with patch.object(
+            freezer,
+            "CANONICAL_PILOT_EXTERNAL_EXECUTABLE_PATHS",
+            (str(executable),),
+        ):
+            first = freezer._pilot_external_executable_registry()
+            executable.write_bytes(b"version-two")
+            second = freezer._pilot_external_executable_registry()
+        self.assertNotEqual(
+            first[str(executable)]["sha256"],
+            second[str(executable)]["sha256"],
+        )
+
+    def test_runtime_generated_module_is_path_independent_and_closed(self):
+        root = Path(self.temporary.name) / "generated_module_root"
+        root.mkdir()
+        module_path = root / "_remote_module_non_scriptable.py"
+        module_path.write_bytes(b"GENERATED = True\n")
+        with (
+            patch.object(
+                freezer,
+                "_DETACHED_TORCH_GENERATED_MODULES",
+                {"_remote_module_non_scriptable": module_path},
+            ),
+            patch.object(freezer.sys, "path", ["/fixed/import/root"]),
+        ):
+            summary = freezer._pilot_generated_module_summary()
+            self.assertEqual(
+                summary,
+                {
+                    "_remote_module_non_scriptable": {
+                        "bytes": module_path.stat().st_size,
+                        "filename": module_path.name,
+                        "sha256": file_sha256(module_path),
+                    }
+                },
+            )
+            (root / "injected.py").write_text("INJECTED = True\n")
+            with self.assertRaisesRegex(RuntimeError, "import root is open"):
+                freezer._pilot_generated_module_summary()
+
+    def test_runtime_process_membership_binds_the_live_slurm_cgroup(self):
+        job_id = "740149"
+        user_id = freezer.CANONICAL_PILOT_UID
+        task = f"/slurm/uid_{user_id}/job_{job_id}/step_batch/task_0"
+        step = f"/slurm/uid_{user_id}/job_{job_id}/step_batch"
+        cgroups = "\n".join(
+            (
+                f"9:memory:{task}",
+                f"6:freezer:{step}",
+                f"5:cpu,cpuacct:{task}",
+                f"3:cpuset:{task}",
+            )
+        )
+        status = "Cpus_allowed_list:\t9,11,15,19\nMems_allowed_list:\t0-1\n"
+        record = freezer._validate_canonical_pilot_process_membership(
+            cgroups,
+            status,
+            job_id=job_id,
+            user_id=user_id,
+        )
+        self.assertEqual(record["cpu_list"], "9,11,15,19")
+        with self.assertRaisesRegex(RuntimeError, "outside its Slurm cgroup"):
+            freezer._validate_canonical_pilot_process_membership(
+                cgroups.replace(f"job_{job_id}", "job_999999"),
+                status,
+                job_id=job_id,
+                user_id=user_id,
+            )
+        with self.assertRaisesRegex(RuntimeError, "allocation differs"):
+            freezer._validate_canonical_pilot_process_membership(
+                cgroups,
+                status.replace("9,11,15,19", "9,11,15"),
+                job_id=job_id,
+                user_id=user_id,
+            )
+        self.assertEqual(
+            freezer._validate_canonical_pilot_batch_script(b"exact", b"exact"),
+            hashlib.sha256(b"exact").hexdigest(),
+        )
+        with self.assertRaisesRegex(RuntimeError, "spooled batch script differs"):
+            freezer._validate_canonical_pilot_batch_script(b"modified", b"exact")
+
+    def test_canonical_path_rejects_dangling_symlink(self):
+        root = Path(self.temporary.name) / "symlink_repo"
+        pipeline = root / "pipeline"
+        parent = root / "artifacts" / "r12"
+        pipeline.mkdir(parents=True)
+        parent.mkdir(parents=True)
+        (parent / "redirect").symlink_to(
+            root / "missing-target", target_is_directory=True
+        )
+        with (
+            patch.object(freezer, "__file__", str(pipeline / "freeze.py")),
+            self.assertRaisesRegex(ValueError, "contains a symlink"),
+        ):
+            freezer._canonical_path("artifacts/r12/redirect/result")
+
+    def test_canonical_artifact_tree_rejects_leaf_symlink(self):
+        root = Path(self.temporary.name) / "symlink_tree"
+        root.mkdir()
+        target = Path(self.temporary.name) / "target.json"
+        target.write_text("{}")
+        (root / "report.json").symlink_to(target)
+        with self.assertRaisesRegex(ValueError, "tree contains a symlink"):
+            freezer._require_tree_without_symlinks(root)
+
+    def test_canonical_pilot_rejects_unpinned_dataset_payload(self):
+        with (
+            patch.object(
+                freezer,
+                "require_canonical_pilot_runtime",
+                return_value=freezer.CANONICAL_PILOT_RUNTIME,
+            ),
+            patch.object(freezer, "verify_registered_dataset", return_value={}),
+            self.assertRaisesRegex(ValueError, "cross-runtime pin"),
+        ):
+            run_pilot(self.root, canonical=True)
+
+    def test_registered_dataset_rejects_unmanifested_file(self):
+        root = self._copy_dataset("unmanifested_file_dataset")
+        extra = root / "notes.txt"
+        extra.write_text("not part of the generator contract")
+        with self.assertRaisesRegex(ValueError, "tree registry"):
+            self._verify_small_registered_dataset(
+                root,
+                allowed_kinds={"pilot"},
+            )
+
+    def test_pilot_comparison_rejects_unknown_claim(self):
+        first = Path(self.temporary.name) / "schema_first"
+        second = Path(self.temporary.name) / "schema_second"
+        frozen = Path(self.temporary.name) / "schema_frozen"
+        kwargs = {
+            "refinement_rounds": 2,
+            "updates_per_round": 1,
+            "final_updates": 1,
+            "batch_size": 8,
+            "max_groups": 4,
+        }
+        execute_pilot_replay(
+            self.root,
+            first,
+            replay_id="a",
+            canonical=False,
+            pilot_kwargs=kwargs,
+        )
+        execute_pilot_replay(
+            self.root,
+            second,
+            replay_id="b",
+            canonical=False,
+            pilot_kwargs=kwargs,
+        )
+        freezer.freeze_pilot_replays(
+            first,
+            second,
+            frozen,
+            dataset_root=self.root,
+            canonical=False,
+        )
+        comparison_path = frozen / "replay_comparison.json"
+        comparison = json.loads(comparison_path.read_text())
+        comparison["different_node_verified"] = True
+        comparison.pop("payload_sha256")
+        comparison["payload_sha256"] = hashlib.sha256(
+            freezer.canonical_json_bytes(comparison)
+        ).hexdigest()
+        comparison_path.chmod(0o644)
+        comparison_path.write_bytes(freezer.canonical_json_bytes(comparison) + b"\n")
+        report = json.loads((frozen / "report.json").read_text())
+        with (
+            patch.object(
+                freezer,
+                "_canonical_path",
+                side_effect=lambda relative: (
+                    frozen if relative == freezer.CANONICAL_PILOT_OUTPUT else self.root
+                ),
+            ),
+            patch.object(freezer, "_validate_replay_report", return_value=report),
+            self.assertRaisesRegex(ValueError, "comparison has the wrong schema"),
+        ):
+            freezer.load_pilot_report(frozen / "report.json")
+
+    def test_independent_verifier_requires_different_job_and_node(self):
+        producer = self._canonical_snapshot("producer", "10")
+        verifier = self._canonical_snapshot("verifier", "11")
+        producer_hostname = freezer.CANONICAL_PILOT_ROLES["producer"]["hostname"]
+        verifier_hostname = freezer.CANONICAL_PILOT_ROLES["verifier"]["hostname"]
+        with patch.dict(
+            os.environ,
+            self._canonical_environment("verifier", "11"),
+            clear=True,
+        ):
+            freezer._validate_independent_verifier_allocation(
+                producer,
+                verifier,
+                producer_hostname=producer_hostname,
+                verifier_hostname=verifier_hostname,
+            )
+            for key, value in (
+                ("job_id", "10"),
+                ("node_list", "ec10"),
+            ):
+                same = deepcopy(verifier)
+                same["allocation"][key] = value
+                with self.assertRaisesRegex(ValueError, "canonical producer"):
+                    freezer._validate_independent_verifier_allocation(
+                        producer,
+                        same,
+                        producer_hostname=producer_hostname,
+                        verifier_hostname=verifier_hostname,
+                    )
+            with self.assertRaisesRegex(ValueError, "canonical producer"):
+                freezer._validate_independent_verifier_allocation(
+                    producer,
+                    verifier,
+                    producer_hostname=producer_hostname,
+                    verifier_hostname=producer_hostname,
+                )
+
+    def test_slurm_role_binding_rejects_manual_module_invocation(self):
+        snapshot = self._canonical_snapshot("producer", "123")
+        expected_command = freezer.CANONICAL_PILOT_ROLES["producer"]["command"]
+        snapshot["stdout"] = snapshot["stdout"].replace(
+            f"Command={expected_command}",
+            "Command=/tmp/manual_probe.sh",
+        )
+        snapshot["stdout_sha256"] = hashlib.sha256(
+            snapshot["stdout"].encode("utf-8")
+        ).hexdigest()
+        snapshot["allocation"]["command"] = "/tmp/manual_probe.sh"
+        with self.assertRaisesRegex(ValueError, "differs from its role"):
+            freezer._validate_slurm_snapshot_record(snapshot, role="producer")
+
+    def test_independent_verifier_freezes_hash_bound_receipt(self):
+        root = Path(self.temporary.name) / "independent_verifier"
+        pilot = root / "pilot"
+        verification = root / "verification"
+        pilot.mkdir(parents=True)
+        report = {
+            "dataset_manifest_payload_sha256": "a" * 64,
+            "payload_sha256": "b" * 64,
+        }
+        report["payload_sha256"] = hashlib.sha256(
+            freezer.canonical_json_bytes(
+                {key: value for key, value in report.items() if key != "payload_sha256"}
+            )
+        ).hexdigest()
+        (pilot / "report.json").write_bytes(
+            freezer.canonical_json_bytes(report) + b"\n"
+        )
+        producer_snapshot = self._canonical_snapshot("producer", "10")
+        comparison = {
+            "orchestration": {
+                "hostname": freezer.CANONICAL_PILOT_ROLES["producer"]["hostname"],
+                "slurm_snapshot": producer_snapshot,
+            }
+        }
+        comparison["payload_sha256"] = hashlib.sha256(
+            freezer.canonical_json_bytes(comparison)
+        ).hexdigest()
+        (pilot / "replay_comparison.json").write_bytes(
+            freezer.canonical_json_bytes(comparison) + b"\n"
+        )
+        verifier_snapshot = self._canonical_snapshot("verifier", "11")
+        identity = {
+            "scientific_commit": "c" * 40,
+            "scientific_path_sha256": {"test": "d" * 64},
+        }
+        artifact_path = Path("pipeline/freeze_acw_curriculum.py")
+        artifacts = {
+            str(artifact_path): {
+                "bytes": artifact_path.stat().st_size,
+                "sha256": file_sha256(artifact_path),
+            }
+        }
+
+        def canonical_path(relative):
+            if relative == freezer.CANONICAL_PILOT_OUTPUT:
+                return pilot
+            if relative == freezer.CANONICAL_PILOT_VERIFICATION:
+                return verification
+            raise AssertionError(relative)
+
+        with (
+            patch.dict(
+                os.environ,
+                self._canonical_environment("verifier", "11"),
+                clear=True,
+            ),
+            patch.object(freezer, "_canonical_path", side_effect=canonical_path),
+            patch.object(
+                freezer,
+                "require_canonical_pilot_runtime",
+                return_value=freezer.CANONICAL_PILOT_RUNTIME,
+            ),
+            patch.object(freezer, "scientific_identity", return_value=identity),
+            patch.object(freezer, "_slurm_snapshot", return_value=verifier_snapshot),
+            patch.object(freezer, "load_pilot_report", return_value=report),
+            patch.object(
+                freezer,
+                "_canonical_pilot_artifact_registry",
+                return_value=artifacts,
+            ),
+            patch.object(
+                freezer.sys,
+                "executable",
+                freezer.CANONICAL_PILOT_RUNTIME["python_executable"],
+            ),
+            patch.object(
+                freezer.socket,
+                "getfqdn",
+                return_value=freezer.CANONICAL_PILOT_ROLES["verifier"]["hostname"],
+            ),
+        ):
+            receipt = freezer.verify_canonical_pilot_independently()
+            receipt_bytes = freezer.canonical_json_bytes(receipt) + b"\n"
+            (
+                loaded_receipt,
+                loaded_receipt_file,
+                loaded_report,
+                loaded_comparison,
+                loaded_artifacts,
+            ) = freezer.load_independent_pilot_verification(
+                expected_receipt=receipt,
+                expected_receipt_bytes=receipt_bytes,
+            )
+            substituted_receipt = {**receipt, "process_id": receipt["process_id"] + 1}
+            substituted_receipt.pop("payload_sha256")
+            substituted_receipt["payload_sha256"] = hashlib.sha256(
+                freezer.canonical_json_bytes(substituted_receipt)
+            ).hexdigest()
+            receipt_path = verification / "verification.json"
+            receipt_path.chmod(0o644)
+            receipt_path.write_bytes(
+                freezer.canonical_json_bytes(substituted_receipt) + b"\n"
+            )
+            with self.assertRaisesRegex(
+                RuntimeError,
+                "differs from verifier-process bytes",
+            ):
+                freezer.load_independent_pilot_verification(
+                    expected_receipt=receipt,
+                    expected_receipt_bytes=receipt_bytes,
+                )
+            receipt_path.write_bytes(receipt_bytes)
+            receipt_path.chmod(0o444)
+        frozen = json.loads((verification / "verification.json").read_text())
+        self.assertEqual(receipt, frozen)
+        self.assertEqual(loaded_receipt, receipt)
+        self.assertEqual(
+            loaded_receipt_file,
+            {
+                "bytes": (verification / "verification.json").stat().st_size,
+                "sha256": file_sha256(verification / "verification.json"),
+            },
+        )
+        self.assertEqual(loaded_report, report)
+        self.assertEqual(loaded_comparison, comparison)
+        self.assertEqual(loaded_artifacts, artifacts)
+        self.assertEqual(receipt["artifact_files"], artifacts)
+        self.assertTrue(receipt["fresh_recomputation_complete"])
+        self.assertEqual(
+            receipt["producer"]["hostname"],
+            freezer.CANONICAL_PILOT_ROLES["producer"]["hostname"],
+        )
+        self.assertEqual(
+            receipt["verifier_slurm_snapshot_finish"]["allocation"]["node_list"],
+            "ec52",
+        )
+        self.assertEqual(verification.stat().st_mode & 0o777, 0o555)
+        self.assertEqual(
+            (verification / "verification.json").stat().st_mode & 0o777,
+            0o444,
+        )
+
+    def test_independent_receipt_requires_unique_canonical_json_bytes(self):
+        payload = {"value": 1}
+        record = {
+            **payload,
+            "payload_sha256": hashlib.sha256(
+                freezer.canonical_json_bytes(payload)
+            ).hexdigest(),
+        }
+        canonical = freezer.canonical_json_bytes(record) + b"\n"
+        self.assertEqual(
+            freezer._load_hash_bound_json_bytes(
+                canonical,
+                label="receipt",
+                require_canonical_bytes=True,
+            ),
+            record,
+        )
+        duplicate = (
+            b'{"payload_sha256":"'
+            + record["payload_sha256"].encode("ascii")
+            + b'","value":0,"value":1}\n'
+        )
+        with self.assertRaisesRegex(ValueError, "duplicate key"):
+            freezer._load_hash_bound_json_bytes(
+                duplicate,
+                label="receipt",
+                require_canonical_bytes=True,
+            )
+        noncanonical = (
+            json.dumps(record, indent=2, sort_keys=True).encode("utf-8") + b"\n"
+        )
+        with self.assertRaisesRegex(ValueError, "not canonical JSON"):
+            freezer._load_hash_bound_json_bytes(
+                noncanonical,
+                label="receipt",
+                require_canonical_bytes=True,
+            )
+
+    def test_anchored_registry_adds_the_independent_receipt(self):
+        root = Path(self.temporary.name) / "anchored_registry"
+        pipeline = root / "pipeline"
+        verification = root / freezer.CANONICAL_PILOT_VERIFICATION
+        pipeline.mkdir(parents=True)
+        verification.mkdir(parents=True)
+        receipt_path = verification / "verification.json"
+        receipt_path.write_text("{}\n")
+        receipt_record = {
+            "bytes": receipt_path.stat().st_size,
+            "sha256": file_sha256(receipt_path),
+        }
+        base = {"artifacts/r12/base/file.bin": {"bytes": 1, "sha256": "a" * 64}}
+        with (
+            patch.object(freezer, "__file__", str(pipeline / "freeze.py")),
+            patch.object(
+                freezer,
+                "_canonical_pilot_artifact_registry",
+                return_value=base,
+            ),
+            patch.object(freezer, "CANONICAL_PILOT_ANCHORED_FILES", 2),
+        ):
+            anchored = freezer._canonical_pilot_anchored_artifact_registry(
+                base,
+                receipt_record,
+            )
+            with self.assertRaisesRegex(ValueError, "changed after receipt validation"):
+                freezer._canonical_pilot_anchored_artifact_registry(
+                    {
+                        **base,
+                        "artifacts/r12/injected.bin": {
+                            "bytes": 1,
+                            "sha256": "b" * 64,
+                        },
+                    },
+                    receipt_record,
+                )
+            with self.assertRaisesRegex(
+                ValueError,
+                "verification receipt changed after semantic validation",
+            ):
+                freezer._canonical_pilot_anchored_artifact_registry(
+                    base,
+                    {"bytes": 0, "sha256": "c" * 64},
+                )
+        relative = f"{freezer.CANONICAL_PILOT_VERIFICATION}/verification.json"
+        self.assertEqual(anchored[relative], receipt_record)
+        self.assertEqual(len(anchored), 2)
+
+    def test_registry_builder_is_receipt_gated_and_exact_schema(self):
+        with self.assertRaises(TypeError):
+            freezer.build_canonical_pilot_artifact_registry()
+        root = Path(self.temporary.name) / "registry_builder"
+        pilot = root / "pilot"
+        verification = root / "verification"
+        pilot.mkdir(parents=True)
+        verification.mkdir()
+        report = {
+            "dataset_manifest_payload_sha256": "a" * 64,
+            "payload_sha256": "b" * 64,
+        }
+        comparison = {"payload_sha256": "c" * 64}
+        receipt = {"test": "receipt"}
+        receipt["payload_sha256"] = hashlib.sha256(
+            freezer.canonical_json_bytes(receipt)
+        ).hexdigest()
+        receipt_bytes = freezer.canonical_json_bytes(receipt) + b"\n"
+        (pilot / "report.json").write_bytes(
+            freezer.canonical_json_bytes(report) + b"\n"
+        )
+        (pilot / "replay_comparison.json").write_bytes(
+            freezer.canonical_json_bytes(comparison) + b"\n"
+        )
+        (verification / "verification.json").write_bytes(
+            freezer.canonical_json_bytes(receipt) + b"\n"
+        )
+        receipt_file = {
+            "bytes": (verification / "verification.json").stat().st_size,
+            "sha256": file_sha256(verification / "verification.json"),
+        }
+        identity = {
+            "scientific_commit": "e" * 40,
+            "scientific_path_sha256": {"test": "f" * 64},
+        }
+        artifact_paths = (
+            Path("AGENT_RUNBOOK.md"),
+            Path("pipeline/freeze_acw_curriculum.py"),
+        )
+        anchored = {
+            str(path): {
+                "bytes": path.stat().st_size,
+                "sha256": file_sha256(path),
+            }
+            for path in artifact_paths
+        }
+        registry_path = root / freezer.CANONICAL_PILOT_REGISTRY
+
+        def canonical_path(relative):
+            return {
+                freezer.CANONICAL_PILOT_OUTPUT: pilot,
+                freezer.CANONICAL_PILOT_VERIFICATION: verification,
+                freezer.CANONICAL_PILOT_REGISTRY: registry_path,
+            }[relative]
+
+        with (
+            patch.object(freezer, "_canonical_path", side_effect=canonical_path),
+            patch.object(
+                freezer,
+                "load_independent_pilot_verification",
+                return_value=(receipt, receipt_file, report, comparison, {}),
+            ) as receipt_gate,
+            patch.object(freezer, "scientific_identity", return_value=identity),
+            patch.object(
+                freezer,
+                "_canonical_pilot_anchored_artifact_registry",
+                return_value=anchored,
+            ) as anchored_gate,
+        ):
+            registry = freezer.build_canonical_pilot_artifact_registry(
+                expected_receipt=receipt,
+                expected_receipt_bytes=receipt_bytes,
+            )
+            with self.assertRaisesRegex(ValueError, "differs from verified"):
+                freezer._validate_pilot_artifact_registry_record(
+                    {**registry, "unregistered_claim": True},
+                    identity=identity,
+                    receipt=receipt,
+                    report=report,
+                    comparison=comparison,
+                    artifact_files=anchored,
+                )
+        receipt_gate.assert_called_once_with(
+            expected_receipt=receipt,
+            expected_receipt_bytes=receipt_bytes,
+        )
+        self.assertEqual(anchored_gate.call_count, 2)
+        self.assertTrue(
+            all(
+                call.args == ({}, receipt_file) for call in anchored_gate.call_args_list
+            )
+        )
+        self.assertEqual(registry["artifact_file_count"], 2)
+        self.assertEqual(
+            registry["activation_allowlist"],
+            list(freezer.CANONICAL_PILOT_ACTIVATION_ALLOWLIST),
+        )
+        self.assertEqual(registry_path.stat().st_mode & 0o777, 0o444)
+        self.assertEqual(
+            registry_path.read_bytes(),
+            freezer.canonical_json_bytes(registry) + b"\n",
+        )
+
+    def test_verifier_and_registry_builder_share_in_memory_receipt(self):
+        receipt = {"payload_sha256": "a" * 64}
+        registry = {"artifact_file_count": 81, "payload_sha256": "b" * 64}
+        with (
+            patch.object(
+                freezer,
+                "verify_canonical_pilot_independently",
+                return_value=receipt,
+            ) as verifier,
+            patch.object(
+                freezer,
+                "build_canonical_pilot_artifact_registry",
+                return_value=registry,
+            ) as builder,
+        ):
+            actual_receipt, actual_registry = (
+                freezer.verify_and_build_canonical_pilot_artifact_registry()
+            )
+        verifier.assert_called_once_with()
+        builder.assert_called_once_with(
+            expected_receipt=receipt,
+            expected_receipt_bytes=freezer.canonical_json_bytes(receipt) + b"\n",
+        )
+        self.assertIs(actual_receipt, receipt)
+        self.assertIs(actual_registry, registry)
+        command_choices = freezer.build_parser()._subparsers._group_actions[0].choices
+        self.assertNotIn("build-pilot-artifact-registry", command_choices)
 
     def test_canonical_scored_bundle_rejects_pilot_domain_and_unbound_schedule(self):
         data = load_public_training_data(self.root, reject_oracle=False)
@@ -789,21 +1658,84 @@ class FreezeCurriculumTests(unittest.TestCase):
 
     def test_stokes_job_executes_only_the_public_pilot_phase(self):
         source = Path("pipeline/jobs/run_acw_pilot_stokes.sbatch").read_text()
+        self.assertIn("#SBATCH --nodelist=ec51", source)
+        self.assertIn("#SBATCH --export=NONE", source)
+        for canonical_path in (
+            freezer.CANONICAL_PILOT_DATASET,
+            freezer.CANONICAL_PILOT_REPLAY_A,
+            freezer.CANONICAL_PILOT_REPLAY_B,
+            freezer.CANONICAL_PILOT_OUTPUT,
+            freezer.CANONICAL_PILOT_VERIFICATION,
+        ):
+            self.assertIn(canonical_path, source)
+        self.assertNotIn("acw_pilot_domain_v2", source)
+        self.assertNotIn("acw_cgbr_pilot_v3", source)
+        self.assertNotIn("acw_cgbr_pilot_v4", source)
         commands = [
             line.strip()
             for line in source.splitlines()
-            if line.strip().startswith('"$PY" -m pipeline.')
+            if line.strip().startswith(
+                'run_python "$BASE/pipeline/freeze_acw_curriculum.py"'
+            )
         ]
         self.assertEqual(
             commands,
             [
-                '"$PY" -m pipeline.freeze_acw_curriculum pilot-run',
-                '"$PY" -m pipeline.freeze_acw_curriculum verify-pilot',
+                'run_python "$BASE/pipeline/freeze_acw_curriculum.py" pilot-run',
+                'run_python "$BASE/pipeline/freeze_acw_curriculum.py" verify-pilot',
             ],
         )
+        self.assertIn("env -i", source)
+        self.assertIn('"$PY" -S -P "$@"', source)
+        self.assertIn(
+            "PY=/lustre/fs1/home/sa305415/shohin/miniforge3/bin/python3.13",
+            source,
+        )
+        self.assertIn('[[ ! -e "$PYZIP" ]]', source)
+        self.assertNotIn("${PY:-", source)
+        for key, value in freezer.CANONICAL_PILOT_STATIC_ENV.items():
+            self.assertIn(f"{key}={value} \\", source)
+        for key in freezer.CANONICAL_PILOT_DYNAMIC_ENV_KEYS:
+            self.assertIn(f'{key}="${key}" \\', source)
         self.assertNotIn(" bundle", source)
         self.assertNotIn('"$PY" -m pipeline.acw_hidden_basis_training', source)
         self.assertNotIn('"$PY" -m pipeline.adjudicate_acw_hidden_basis', source)
+
+    def test_stokes_independent_verifier_has_one_fail_closed_command(self):
+        source = Path("pipeline/jobs/verify_acw_pilot_stokes.sbatch").read_text()
+        self.assertIn("#SBATCH --nodelist=ec52", source)
+        self.assertIn("#SBATCH --export=NONE", source)
+        self.assertIn(freezer.CANONICAL_PILOT_OUTPUT, source)
+        self.assertIn(freezer.CANONICAL_PILOT_VERIFICATION, source)
+        commands = [
+            line.strip()
+            for line in source.splitlines()
+            if line.strip().startswith(
+                'run_python "$BASE/pipeline/freeze_acw_curriculum.py"'
+            )
+        ]
+        self.assertEqual(
+            commands,
+            [
+                'run_python "$BASE/pipeline/freeze_acw_curriculum.py" '
+                "verify-pilot-independent",
+            ],
+        )
+        self.assertNotIn("build-pilot-artifact-registry", source)
+        self.assertIn(freezer.CANONICAL_PILOT_REGISTRY, source)
+        self.assertIn("env -i", source)
+        self.assertIn('"$PY" -S -P "$@"', source)
+        self.assertIn(
+            "PY=/lustre/fs1/home/sa305415/shohin/miniforge3/bin/python3.13",
+            source,
+        )
+        self.assertIn('[[ ! -e "$PYZIP" ]]', source)
+        for key, value in freezer.CANONICAL_PILOT_STATIC_ENV.items():
+            self.assertIn(f"{key}={value} \\", source)
+        for key in freezer.CANONICAL_PILOT_DYNAMIC_ENV_KEYS:
+            self.assertIn(f'{key}="${key}" \\', source)
+        self.assertNotIn(" pilot-run", source)
+        self.assertNotIn(" bundle", source)
 
 
 if __name__ == "__main__":

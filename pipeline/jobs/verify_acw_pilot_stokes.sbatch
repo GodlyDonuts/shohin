@@ -1,25 +1,22 @@
 #!/bin/bash
-#SBATCH -J shohin-acw-pilot
+#SBATCH -J shohin-acw-verify
 #SBATCH -p normal
-#SBATCH --nodelist=ec51
+#SBATCH --nodelist=ec52
 #SBATCH -c 4
 #SBATCH --mem=32G
-#SBATCH -t 24:00:00
-#SBATCH -o /lustre/fs1/home/sa305415/shohin_acw/logs/acw_pilot_%j.out
+#SBATCH -t 12:00:00
+#SBATCH -o /lustre/fs1/home/sa305415/shohin_acw/logs/acw_pilot_verify_%j.out
 #SBATCH --open-mode=append
 #SBATCH --export=NONE
-# Non-scored deterministic CPU pilot. One command owns data generation, two
-# isolated fits, independent recomputation, publication, and final reopening.
-# This cannot write a Shohin checkpoint or open a confirmation seed.
+# The verifier also rejects the same job ID, Slurm node, or hostname before
+# performing a fresh 3,400-update replay.
 set -euo pipefail
 
 BASE=/lustre/fs1/home/sa305415/shohin_acw
 PY=/lustre/fs1/home/sa305415/shohin/miniforge3/bin/python3.13
-DATA=$BASE/artifacts/r12/acw_pilot_domain_v3_runtime_v1
-REPLAY_A=$BASE/artifacts/r12/acw_cgbr_pilot_v5_replay_a
-REPLAY_B=$BASE/artifacts/r12/acw_cgbr_pilot_v5_replay_b
-OUT=$BASE/artifacts/r12/acw_cgbr_pilot_v5
+PILOT=$BASE/artifacts/r12/acw_cgbr_pilot_v5
 VERIFY=$BASE/artifacts/r12/acw_cgbr_pilot_v5_independent_verification
+REGISTRY=$BASE/R12_ACW_PILOT_ARTIFACT_REGISTRY.json
 PYZIP=/lustre/fs1/home/sa305415/shohin/miniforge3/lib/python313.zip
 
 : "${SLURM_JOB_ID:?}"
@@ -68,27 +65,24 @@ run_python() {
     "$PY" -S -P "$@"
 }
 
-/usr/bin/mkdir -p "$BASE/logs" "$BASE/artifacts/r12"
-test ! -e "$DATA"
-test ! -e "$REPLAY_A"
-test ! -e "$REPLAY_B"
-test ! -e "$OUT"
+test -s "$PILOT/report.json"
 test ! -e "$VERIFY"
+test ! -e "$REGISTRY"
+cleanup_on_failure() {
+  status=$?
+  if ((status != 0)); then
+    if [[ -e "$VERIFY" ]]; then
+      /usr/bin/chmod -R u+w "$VERIFY" || true
+      /usr/bin/rm -rf "$VERIFY"
+    fi
+    /usr/bin/rm -f "$REGISTRY" "$REGISTRY.partial"
+  fi
+  exit "$status"
+}
+trap cleanup_on_failure EXIT
 cd "$BASE"
-run_python -m unittest \
-  pipeline.test_addressed_categorical_workspace \
-  pipeline.test_audit_addressed_categorical_workspace_symbolic \
-  pipeline.test_generate_acw_hidden_basis \
-  pipeline.test_acw_nist_beacon \
-  pipeline.test_acw_hidden_basis_training \
-  pipeline.test_freeze_acw_curriculum \
-  pipeline.test_evaluate_acw_hidden_basis \
-  pipeline.test_adjudicate_acw_hidden_basis
-run_python "$BASE/pipeline/freeze_acw_curriculum.py" pilot-run
-run_python "$BASE/pipeline/freeze_acw_curriculum.py" verify-pilot
-test -s "$DATA/manifest.json"
-test -s "$OUT/report.json"
-test -s "$OUT/cgb_schedule.jsonl"
-test -s "$OUT/uniform_schedule.jsonl"
-test -s "$OUT/replay_comparison.json"
-echo "[acw-pilot-job] independently recomputed non-scored curriculum pilot"
+run_python "$BASE/pipeline/freeze_acw_curriculum.py" verify-pilot-independent
+test -s "$VERIFY/verification.json"
+test -s "$REGISTRY"
+trap - EXIT
+echo "[acw-pilot-independent-job] fresh different-node replay complete"

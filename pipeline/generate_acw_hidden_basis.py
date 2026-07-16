@@ -66,6 +66,7 @@ ACW_SCIENTIFIC_PATHS = (
     "pipeline/test_evaluate_acw_hidden_basis.py",
     "pipeline/test_adjudicate_acw_hidden_basis.py",
     "pipeline/jobs/run_acw_pilot_stokes.sbatch",
+    "pipeline/jobs/verify_acw_pilot_stokes.sbatch",
 )
 
 

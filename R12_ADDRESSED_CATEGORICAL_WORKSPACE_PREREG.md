@@ -1,10 +1,12 @@
 # R12 Addressed Categorical Workspace Preregistration
 
-**Status:** REVISION 3 PREREGISTRATION; CPU SYMBOLIC/NEURAL FALSIFIER ONLY.
-No Shohin fit, H100 job, capability claim, or novelty claim is authorized until
-the committed PCPT v3 evidence receives a final independent GO and the CPU gate
-below passes unchanged. A CPU pass establishes only the frozen empirical
-conjunction; any novelty claim requires a separate documented prior-art review.
+**Status:** REVISION 4 PREREGISTRATION; TRACK S PUBLIC PILOT V5 IS PRE-RESULT.
+PCPT v3 is closed process/algebra evidence, while the learned ACW lane remains
+unscored. No Shohin fit, H100 job, capability claim, or novelty claim is
+authorized until the exact canonical-runtime pilot, its different-node replay,
+the post-result Git artifact anchor, and the CPU gates below pass unchanged. A
+CPU pass establishes only the frozen empirical conjunction; any novelty claim
+requires a separate documented prior-art review.
 
 **Working name:** Addressed Categorical Workspace (ACW), trained with
 Counterexample-Guided Broadcast Refinement (CGBR).
@@ -287,8 +289,11 @@ reconciles their real PID/PPID identities with the live Slurm allocation, then
 independently reruns all 3,400 updates from the registered data while both
 children remain live. It compares the tensor-state hash, loss transcript,
 schedules, report, and regenerated arrays before releasing the children and
-requiring zero exits. Every later canonical report load repeats this
-recomputation; copied or locally rehashed reports therefore have no standing.
+requiring zero exits. Every later canonical report load **inside the exact
+pinned canonical runtime** repeats this recomputation; copied or locally
+rehashed reports therefore have no standing. Cross-runtime consumers must
+validate the separately committed artifact registry and may not claim to have
+independently reproduced the float training trajectory.
 Execution receipts bind positive wall time and peak RSS, process/host/runtime
 identity, allocated CPU count, numeric Slurm job ID, and a hash-bound live
 `scontrol show job` snapshot. Exact working scientific files must equal their
@@ -321,8 +326,12 @@ attestation. It trusts the committed parent process, Stokes kernel, Slurm
 controller, and filesystem during execution. The result's durable numerical
 standing comes from mandatory fresh deterministic recomputation by every
 canonical consumer, not from treating a historical receipt as a signature.
+A malicious same-UID process that can substitute executable or runtime bytes
+during a scientific process and restore them before the process rechecks those
+bytes is explicitly outside this trust boundary. No software-only receipt in
+that same account is represented as measured boot or remote attestation.
 
-### Cross-runtime byte portability amendment
+### Cross-runtime data portability and canonical float-runtime amendment
 
 The first otherwise-complete public execution (`740053`, generator v2) is not a
 canonical pilot result. Independent replay on macOS reproduced all 59
@@ -337,12 +346,62 @@ selected projection rows in fixed semantic order, and every source feature by
 adding its three selected rows in coordinate order. Each addition is an
 explicit float32 elementwise operation; no BLAS reduction is permitted. Golden
 SHA-256 tests bind the complete 48-event bank and the source rendering of all
-`17^3 = 4,913` states. The canonical output namespace advances to dataset v3
-and pilot/comparison v4 so rejected bytes cannot occupy an admissible path. Any
-v2 dataset or v3 pilot report is diagnostic-only and cannot be
-anchored, consumed by a scored arm, or cited as learned evidence. Before the v3
-pilot runs, independently generated full Mac and Stokes manifests and all 67
-registered arrays must be byte-identical.
+`17^3 = 4,913` states. Independent Mac generation and Stokes job `740071`
+produce the same 68 files, all 67 registered arrays, and manifest payload
+SHA-256
+`3294a0d12d277f46ea8c0cbf50142be14816447c15bc3792f6e4df7e77e2ba33`
+without tolerance.
+
+That data fix does **not** make float neural optimization cross-runtime.
+Stokes job `740077` completed pilot v4 from the exact portable dataset, with
+two byte-identical child fits and an independent parent recomputation. A fresh
+Mac recomputation nevertheless produced a different model tensor and changed
+43,451 of 57,344 ordered CGBR schedule positions; only 24,726 rows were common
+at the same positions. The uniform schedule stayed byte-identical. This is a
+material learned-trajectory difference, not a one-ULP artifact and not a result
+that tolerance may repair. Pilot v4, including job `740077`, is therefore
+diagnostic-only and cannot be anchored, consumed by a scored arm, or cited as
+learned evidence.
+
+Pilot v5 separates the two contracts. The dataset remains independently
+cross-runtime reproducible and is additionally pinned to the exact payload hash
+above. Float training and all fresh numerical report replay are canonical only
+on the Stokes Xeon Gold 6130 compute class under glibc 2.28, Linux x86_64,
+CPython 3.13.13, NumPy 2.5.0 with forced-runtime configuration SHA-256
+`6a202deb5035843d719b04dbfca97b3fe4191603e5884fac2f9af5659555419b`,
+and PyTorch 2.6.0+cu124 with forced-AVX2 configuration SHA-256
+`51bcbe59eb176362dc969b0341d85ca88416e37bd0f10de4b19350d07898e330`.
+The numerical process must have deterministic algorithms enabled, one Torch
+compute thread, 32 interop threads, no CUDA, and an exact environment that
+forces PyTorch, oneDNN, MKL, and OpenBLAS to AVX2/Haswell with one compute
+thread. The closure binds all 92 executable mappings, three complete code-tree
+summaries, 599 imported external files, nine external executable tools, one
+path-independent generated module, the exact five-entry `sys.path`, startup
+`.pth` files, and native payload SHA-256
+`13c265e3f116beee105c883e6384595e5759f96419e790c064cd94e77f20425c`.
+Fresh cross-node probes `740207` on `ec51` and `740208` on `ec52` produced
+byte-identical complete runtime identities and log SHA-256
+`d989bafc4b8637d63375bc6107e26064ac0f3e09461e96a328042fe8c7fbdbc5`.
+Final pin-validation jobs `740209` on `ec51` and `740210` on `ec52` each
+recomputed the structured identity twice, required exact equality to the
+compiled pin, and produced the same log hash. Any mismatch aborts before
+training.
+
+The admissible namespace advances again to dataset
+`acw_pilot_domain_v3_runtime_v1` and pilot/comparison v5, and canonical paths
+reject symlink components and symlink leaves. The first successful v5 pilot
+must be followed by a fresh full recomputation in a separate Slurm job on a
+different Stokes node with the same pinned runtime. Only then may the exact
+artifact registry be committed. The verifier writes its canonical receipt and
+builds the registry in one process; the registry loader must receive the exact
+receipt object and bytes still held in that process, and no standalone registry
+builder command exists. Both the receipt and registry are byte-compared and
+strict-canonical-JSON reopened after publication. The trust chain is three separately pushed
+commits: scientific result commit `S`, registry-only direct child `A`, then
+activation direct child `E`, where `E` literally pins `S`, `A`, and the raw
+registry hash. Pilot/training identity equality is forbidden. Cross-runtime
+consumers validate the anchored byte registry and structural bindings; they do
+not pretend that float optimization is portable.
 
 The resulting ordered `(history_id, query_id)` curriculum is frozen and replayed
 identically to ACW, dense categorical, addressed continuous, GRU, packet-token,

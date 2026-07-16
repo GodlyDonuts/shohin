@@ -10,6 +10,7 @@ from pipeline.generate_acw_hidden_basis import (
     CONFIRMATION_COMMITMENTS,
     CONFIRMATION_PROTOCOL_STATUS,
     Domain,
+    PILOT_SEED,
     apply_event,
     build_domain,
     confirmation_commitment,
@@ -71,6 +72,23 @@ class HiddenBasisGeneratorTests(unittest.TestCase):
         self.assertEqual(
             hashlib.sha256(all_sources.tobytes()).hexdigest(),
             "70acbc51b12d61bcaf6c654843e86efdfc39c39b931f986c548677ada4440991",
+        )
+
+    def test_pilot_float_features_have_cross_runtime_golden_hashes(self):
+        domain = build_domain(development_seed_material(PILOT_SEED))
+        self.assertEqual(
+            hashlib.sha256(domain.event_features.tobytes()).hexdigest(),
+            "a0c01650cc265c222cb1ebda480b9c91d2136eb2803a774db3aac346bca22f39",
+        )
+        all_sources = np.stack(
+            [
+                render_source(domain, np.asarray(state, dtype=np.int8))
+                for state in itertools.product(range(17), repeat=3)
+            ]
+        ).astype(np.float32)
+        self.assertEqual(
+            hashlib.sha256(all_sources.tobytes()).hexdigest(),
+            "f2065bd39f76b19b5b643bb42a79db724754c96bb61b0924ce66e77eccf4d29a",
         )
 
     def test_event_and_query_semantics(self):
