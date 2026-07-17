@@ -10,6 +10,7 @@ Digits in ``a``, ``b``, and ``r`` are serialized least-significant first.
 state.  This is deliberately a discrete, locally verifiable protocol rather
 than another continuous packet-memory interface.
 """
+
 from __future__ import annotations
 
 import re
@@ -27,13 +28,13 @@ PROMPT_STYLES = ("core", "heldout")
 def _digits_lsf(value, width):
     if not isinstance(value, int) or not isinstance(width, int) or width <= 0:
         raise ValueError("value and width must be positive integers")
-    if value < 0 or value >= 10 ** width:
+    if value < 0 or value >= 10**width:
         raise ValueError("value does not fit the requested width")
-    return "".join(str((value // (10 ** index)) % 10) for index in range(width))
+    return "".join(str((value // (10**index)) % 10) for index in range(width))
 
 
 def _value_lsf(digits):
-    return sum(int(digit) * (10 ** index) for index, digit in enumerate(str(digits)))
+    return sum(int(digit) * (10**index) for index, digit in enumerate(str(digits)))
 
 
 def _validate_state(state):
@@ -42,8 +43,16 @@ def _validate_state(state):
         raise ValueError("invalid state keys")
     if state["op"] not in OPERATIONS:
         raise ValueError("invalid operation")
-    width, position, carry, terminal = (int(state[name]) for name in ("w", "p", "c", "z"))
-    if width <= 0 or position < 0 or position > width or carry not in (0, 1) or terminal not in (0, 1):
+    width, position, carry, terminal = (
+        int(state[name]) for name in ("w", "p", "c", "z")
+    )
+    if (
+        width <= 0
+        or position < 0
+        or position > width
+        or carry not in (0, 1)
+        or terminal not in (0, 1)
+    ):
         raise ValueError("invalid scalar state field")
     if terminal != int(position == width):
         raise ValueError("terminal flag does not match position")
@@ -80,7 +89,9 @@ def parse_state(text):
     matches = STATE_RE.findall(str(text))
     if len(matches) != 1:
         return None
-    _, operation, width, position, carry, a_tape, b_tape, result_tape, terminal = matches[0]
+    _, operation, width, position, carry, a_tape, b_tape, result_tape, terminal = (
+        matches[0]
+    )
     state = {
         "op": operation,
         "w": int(width),
@@ -124,7 +135,11 @@ def apply_microstep(state):
     if state["z"]:
         raise ValueError("cannot step a terminal state")
     position = state["p"]
-    left, right, carry = int(state["a"][position]), int(state["b"][position]), int(state["c"])
+    left, right, carry = (
+        int(state["a"][position]),
+        int(state["b"][position]),
+        int(state["c"]),
+    )
     if state["op"] == "add":
         total = left + right + carry
         digit, next_carry = total % 10, total // 10
@@ -135,7 +150,14 @@ def apply_microstep(state):
     result[position] = str(digit)
     next_position = position + 1
     next_state = dict(state)
-    next_state.update({"p": next_position, "c": next_carry, "r": "".join(result), "z": int(next_position == state["w"])})
+    next_state.update(
+        {
+            "p": next_position,
+            "c": next_carry,
+            "r": "".join(result),
+            "z": int(next_position == state["w"]),
+        }
+    )
     canonical_state(next_state)
     return next_state
 
@@ -164,7 +186,7 @@ def state_digit(state, position):
 
 def parse_answer(text):
     matches = ANSWER_RE.findall(str(text))
-    return int(matches[-1]) if matches else None
+    return int(matches[0]) if len(matches) == 1 else None
 
 
 def parse_digit(text):

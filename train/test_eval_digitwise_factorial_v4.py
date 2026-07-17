@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import hashlib
 import json
 from pathlib import Path
@@ -167,6 +168,61 @@ def test_wrong_parseable_state_is_forwarded_without_solver_repair() -> None:
     assert result["final_prompt_issued"] is False
 
 
+def test_multiple_answer_lines_are_malformed_not_last_answer_wins() -> None:
+    branch = _branch("fit_w4-00000")
+    generations = iter(
+        [_generation(state) for state in branch["expected_states"]]
+        + [_generation("answer=999\nanswer=15")]
+    )
+
+    def ask(_prompt: str, _max_new: int, _kind: str) -> evaluator.Generation:
+        return next(generations)
+
+    result = evaluator.rollout_branch(branch, ask)
+    assert result["state_closed_loop_exact"] is True
+    assert result["emitted_answer"] is None
+    assert result["final_answer_correct"] is False
+    assert result["closed_loop_success"] is False
+    assert result["first_failure_reason"] == "malformed_answer"
+
+
+def test_intervention_credit_requires_both_states_correct(monkeypatch) -> None:
+    normal_branch = _branch("fit_w4-00000")
+    counterfactual_branch = _branch("fit_w4-00000-cf")
+    counterfactual_branch["expected_states"] = list(
+        counterfactual_branch["expected_states"]
+    )
+    counterfactual_branch["expected_states"][0] += ":counterfactual"
+    episode = {**normal_branch, "counterfactual": counterfactual_branch}
+    normal = _rollout_result(
+        "normal",
+        regime="fit_w4",
+        operation="add",
+        width=4,
+        carry_class="00",
+        success=False,
+        failure_position=0,
+    )
+    counterfactual = _rollout_result(
+        "counterfactual",
+        regime="fit_w4",
+        operation="add",
+        width=4,
+        carry_class="01",
+        success=False,
+        failure_position=0,
+    )
+    normal["rows"][0].update({"predicted_state": {"c": 0}, "correct": False})
+    counterfactual["rows"][0].update({"predicted_state": {"c": 1}, "correct": False})
+    results = iter((normal, counterfactual))
+    monkeypatch.setattr(
+        evaluator, "rollout_branch", lambda _branch, _ask: next(results)
+    )
+    scored = evaluator.evaluate_pair(episode, lambda *_args: _generation(""))
+    assert scored["prediction_diverged_at_expected_position"] is True
+    assert scored["state_intervention_at_expected_position"] is False
+
+
 def test_accounting_includes_all_groups_and_width_8_survival(monkeypatch) -> None:
     monkeypatch.setattr(
         evaluator,
@@ -215,6 +271,177 @@ def test_read_frozen_file_rejects_corruption_and_symlink(tmp_path: Path) -> None
     link.symlink_to(path)
     with pytest.raises(evaluator.ContractError, match="cannot open"):
         evaluator.read_frozen_file(link, hashlib.sha256(b"mutated").hexdigest())
+
+
+def test_source_binding_rejects_nonexecuting_root_and_forged_commit(
+    tmp_path: Path, monkeypatch
+) -> None:
+    empty_tree_payload = b""
+    empty_tree_id = evaluator.git_object_id("tree", empty_tree_payload, 40)
+    commit_payload = (
+        b"tree " + empty_tree_id.encode("ascii") + b"\n\nreviewed evaluator\n"
+    )
+    commit_id = evaluator.git_object_id("commit", commit_payload, 40)
+    contract = evaluator.ARM_CONTRACTS["iid"]
+    binding = {
+        "schema": "shohin-digitwise-factorial-v4-eval-source-binding-v2",
+        "eval_commit": commit_id,
+        "git_commit_object_b64": base64.b64encode(commit_payload).decode("ascii"),
+        "git_tree_objects_b64": {
+            empty_tree_id: base64.b64encode(empty_tree_payload).decode("ascii")
+        },
+        "reviewed_clean_checkout": True,
+        "executing_source_root": str(tmp_path.resolve()),
+        "sources": {
+            path: {
+                "sha256": "1" * 64,
+                "git_blob_id": "1" * 40,
+                "git_mode": "100644",
+            }
+            for path in evaluator.EVAL_SOURCE_PATHS
+        },
+        "spooled_wrapper_sha256": "1" * 64,
+        "slurm": {"job_id": 1, "array_task_id": 0, "restart_count": 0},
+        "scientific_inputs": {
+            "arm": contract.arm,
+            "checkpoint_origin": contract.checkpoint_origin,
+            "checkpoint_sha256": contract.checkpoint_sha256,
+            "heldout_sha256": evaluator.HELDOUT_SHA256,
+            "tokenizer_sha256": evaluator.TOKENIZER_SHA256,
+        },
+    }
+    binding["sources"]["train/jobs/eval_digitwise_factorial_v4.sbatch"]["sha256"] = (
+        binding["spooled_wrapper_sha256"]
+    )
+    payload = evaluator.canonical_json_bytes(binding)
+    frozen = evaluator.FrozenFile(
+        path=tmp_path / "binding.json",
+        payload=payload,
+        sha256=hashlib.sha256(payload).hexdigest(),
+        size=len(payload),
+        mode=0o400,
+    )
+    with pytest.raises(evaluator.ContractError, match="executing source tree"):
+        evaluator.validate_source_binding(frozen, tmp_path, contract)
+    binding["eval_commit"] = "0" * 40
+    payload = evaluator.canonical_json_bytes(binding)
+    frozen = evaluator.FrozenFile(
+        path=tmp_path / "binding.json",
+        payload=payload,
+        sha256=hashlib.sha256(payload).hexdigest(),
+        size=len(payload),
+        mode=0o400,
+    )
+    with pytest.raises(evaluator.ContractError, match="commit object"):
+        evaluator.validate_source_binding(frozen, tmp_path, contract)
+    binding["eval_commit"] = commit_id
+    binding["executing_source_root"] = str(tmp_path.resolve())
+    payload = evaluator.canonical_json_bytes(binding)
+    frozen = evaluator.FrozenFile(
+        path=tmp_path / "binding.json",
+        payload=payload,
+        sha256=hashlib.sha256(payload).hexdigest(),
+        size=len(payload),
+        mode=0o400,
+    )
+    monkeypatch.setattr(evaluator, "ROOT", tmp_path.resolve())
+    with pytest.raises(evaluator.ContractError, match="absent from commit tree"):
+        evaluator.validate_source_binding(frozen, tmp_path, contract)
+
+
+def test_source_binding_accepts_exact_commit_tree_blob_chain(
+    tmp_path: Path, monkeypatch
+) -> None:
+    payloads = {
+        path: (path + "\n").encode("ascii") for path in evaluator.EVAL_SOURCE_PATHS
+    }
+    for relative, payload in payloads.items():
+        target = tmp_path / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(payload)
+        target.chmod(0o400)
+
+    blob_ids = {
+        path: evaluator.git_object_id("blob", payload, 40)
+        for path, payload in payloads.items()
+    }
+
+    def tree_payload(entries: list[tuple[str, str, str]]) -> bytes:
+        return b"".join(
+            mode.encode("ascii")
+            + b" "
+            + name.encode("utf-8")
+            + b"\0"
+            + bytes.fromhex(object_id)
+            for mode, name, object_id in entries
+        )
+
+    jobs_payload = tree_payload(
+        [
+            (
+                "100644",
+                "eval_digitwise_factorial_v4.sbatch",
+                blob_ids["train/jobs/eval_digitwise_factorial_v4.sbatch"],
+            )
+        ]
+    )
+    jobs_id = evaluator.git_object_id("tree", jobs_payload, 40)
+    train_entries = [
+        ("100644", Path(path).name, blob_ids[path])
+        for path in evaluator.EVAL_SOURCE_PATHS
+        if not path.startswith("train/jobs/")
+    ] + [("40000", "jobs", jobs_id)]
+    train_payload = tree_payload(sorted(train_entries, key=lambda item: item[1]))
+    train_id = evaluator.git_object_id("tree", train_payload, 40)
+    root_payload = tree_payload([("40000", "train", train_id)])
+    root_id = evaluator.git_object_id("tree", root_payload, 40)
+    commit_payload = b"tree " + root_id.encode("ascii") + b"\n\nsynthetic proof\n"
+    commit_id = evaluator.git_object_id("commit", commit_payload, 40)
+    contract = evaluator.ARM_CONTRACTS["iid"]
+    sources = {
+        path: {
+            "sha256": hashlib.sha256(payloads[path]).hexdigest(),
+            "git_blob_id": blob_ids[path],
+            "git_mode": "100644",
+        }
+        for path in evaluator.EVAL_SOURCE_PATHS
+    }
+    wrapper_sha256 = sources["train/jobs/eval_digitwise_factorial_v4.sbatch"]["sha256"]
+    binding = {
+        "schema": "shohin-digitwise-factorial-v4-eval-source-binding-v2",
+        "eval_commit": commit_id,
+        "git_commit_object_b64": base64.b64encode(commit_payload).decode("ascii"),
+        "git_tree_objects_b64": {
+            object_id: base64.b64encode(payload).decode("ascii")
+            for object_id, payload in {
+                root_id: root_payload,
+                train_id: train_payload,
+                jobs_id: jobs_payload,
+            }.items()
+        },
+        "reviewed_clean_checkout": True,
+        "executing_source_root": str(tmp_path.resolve()),
+        "sources": sources,
+        "spooled_wrapper_sha256": wrapper_sha256,
+        "slurm": {"job_id": 1, "array_task_id": 0, "restart_count": 0},
+        "scientific_inputs": {
+            "arm": contract.arm,
+            "checkpoint_origin": contract.checkpoint_origin,
+            "checkpoint_sha256": contract.checkpoint_sha256,
+            "heldout_sha256": evaluator.HELDOUT_SHA256,
+            "tokenizer_sha256": evaluator.TOKENIZER_SHA256,
+        },
+    }
+    payload = evaluator.canonical_json_bytes(binding)
+    frozen = evaluator.FrozenFile(
+        path=tmp_path / "binding.json",
+        payload=payload,
+        sha256=hashlib.sha256(payload).hexdigest(),
+        size=len(payload),
+        mode=0o400,
+    )
+    monkeypatch.setattr(evaluator, "ROOT", tmp_path.resolve())
+    assert evaluator.validate_source_binding(frozen, tmp_path, contract) == binding
 
 
 def test_checkpoint_metadata_rejects_wrong_arm_and_preflight() -> None:
@@ -283,6 +510,21 @@ def test_one_purpose_publication_is_canonical_sealed_and_no_replace(
     assert stat.S_IMODE(target.stat().st_mode) == 0o400
     with pytest.raises(evaluator.ContractError, match="refusing existing"):
         evaluator.publish_one_report(output, {"different": True})
+
+
+def test_publication_failure_leaves_no_canonical_directory(
+    tmp_path: Path, monkeypatch
+) -> None:
+    output = tmp_path / "arm"
+
+    def fail_before_publish(_source: Path, _target: Path) -> None:
+        raise RuntimeError("simulated publication interruption")
+
+    monkeypatch.setattr(evaluator, "_rename_directory_no_replace", fail_before_publish)
+    with pytest.raises(RuntimeError, match="simulated publication interruption"):
+        evaluator.publish_one_report(output, {"a": 1})
+    assert not output.exists()
+    assert list(tmp_path.glob(".arm.staging.*")) == []
 
 
 # Imported late to keep the helper definitions visually separate from the test contract.

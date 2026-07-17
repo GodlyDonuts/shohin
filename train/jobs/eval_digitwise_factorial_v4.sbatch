@@ -7,14 +7,15 @@
 #SBATCH -c 4
 #SBATCH --mem=96G
 #SBATCH -t 12:00:00
-#SBATCH --array=0-3%1
+#SBATCH --array=0-3%4
 #SBATCH -o /lustre/fs1/home/sa305415/shohin/logs/factorial_v4_eval_%A_%a.site.log
 #SBATCH --open-mode=append
 #SBATCH --no-requeue
 set -euo pipefail
 
-BASE=${SHOHIN_BASE:-/lustre/fs1/home/sa305415/shohin}
-PY=$BASE/miniforge3/bin/python
+SOURCE_ROOT=${SOURCE_ROOT:?set SOURCE_ROOT to a clean exact-commit checkout}
+DATA_ROOT=${DATA_ROOT:-/lustre/fs1/home/sa305415/shohin}
+PY=${PY:-$DATA_ROOT/miniforge3/bin/python}
 JOB_ID=${SLURM_JOB_ID:?factorial evaluator must run under Slurm}
 TASK_ID=${SLURM_ARRAY_TASK_ID:?factorial evaluator requires array task 0-3}
 RESTART_COUNT=${SLURM_RESTART_COUNT:-0}
@@ -45,11 +46,11 @@ esac
 
 FACTORIAL_SOURCE=/lustre/fs1/home/sa305415/shohin_factorial_source_c24e16e_v3
 CHECKPOINT_ORIGIN=$FACTORIAL_SOURCE/train/sft_factorial_runs/job_${training_job}_attempt_0
-TOKENIZER_ORIGIN=$BASE/artifacts/shohin-tok-32k.json
-EPISODES_ORIGIN=$BASE/artifacts/evals/digitwise_recurrent_v2_heldout.jsonl
-OUTPUT_PARENT=$BASE/artifacts/evals/digitwise_factorial_v4_full_${EVAL_COMMIT}
+TOKENIZER_ORIGIN=$DATA_ROOT/artifacts/shohin-tok-32k.json
+EPISODES_ORIGIN=$DATA_ROOT/artifacts/evals/digitwise_recurrent_v2_heldout.jsonl
+OUTPUT_PARENT=$DATA_ROOT/artifacts/evals/digitwise_factorial_v4_full_${EVAL_COMMIT}
 OUTPUT_DIR=$OUTPUT_PARENT/$arm
-SNAP=$BASE/scratchpad/factorial_v4_eval_${JOB_ID}_${TASK_ID}_attempt_${RESTART_COUNT}
+SNAP=$DATA_ROOT/scratchpad/factorial_v4_eval_${JOB_ID}_${TASK_ID}_attempt_${RESTART_COUNT}
 
 sources=(
   train/eval_digitwise_factorial_v4.py
@@ -71,28 +72,42 @@ sha256_file() {
   sha256sum "$1" | awk '{print $1}'
 }
 
-git -C "$BASE" cat-file -e "${EVAL_COMMIT}^{commit}" || {
+for root in "$SOURCE_ROOT" "$DATA_ROOT"; do
+  [[ "$root" = /* ]] || {
+    echo "[factorial-eval] source and data roots must be absolute" >&2
+    exit 5
+  }
+done
+[ -x "$PY" ] || {
+  echo "[factorial-eval] Python runtime is unavailable: $PY" >&2
+  exit 5
+}
+git -C "$SOURCE_ROOT" cat-file -e "${EVAL_COMMIT}^{commit}" || {
   echo "[factorial-eval] reviewed evaluator commit is unavailable" >&2
   exit 5
 }
-[ "$(git -C "$BASE" rev-parse HEAD)" = "$EVAL_COMMIT" ] || {
+[ "$(git -C "$SOURCE_ROOT" rev-parse HEAD)" = "$EVAL_COMMIT" ] || {
   echo "[factorial-eval] checkout HEAD differs from reviewed evaluator commit" >&2
+  exit 5
+}
+[ -z "$(git -C "$SOURCE_ROOT" status --porcelain --untracked-files=all)" ] || {
+  echo "[factorial-eval] reviewed source checkout is not clean" >&2
   exit 5
 }
 
 declare -A expected_sources=()
 for relative in "${sources[@]}"; do
-  git -C "$BASE" ls-files --error-unmatch "$relative" >/dev/null || {
+  git -C "$SOURCE_ROOT" ls-files --error-unmatch "$relative" >/dev/null || {
     echo "[factorial-eval] untracked evaluator source: $relative" >&2
     exit 5
   }
-  git -C "$BASE" diff --quiet "$EVAL_COMMIT" -- "$relative" || {
+  git -C "$SOURCE_ROOT" diff --quiet "$EVAL_COMMIT" -- "$relative" || {
     echo "[factorial-eval] evaluator source differs from reviewed commit: $relative" >&2
     exit 5
   }
-  expected_sources[$relative]=$(git -C "$BASE" show "$EVAL_COMMIT:$relative" | sha256sum | awk '{print $1}')
-  check_regular "$BASE/$relative" "evaluator source $relative"
-  [ "$(sha256_file "$BASE/$relative")" = "${expected_sources[$relative]}" ] || {
+  expected_sources[$relative]=$(git -C "$SOURCE_ROOT" show "$EVAL_COMMIT:$relative" | sha256sum | awk '{print $1}')
+  check_regular "$SOURCE_ROOT/$relative" "evaluator source $relative"
+  [ "$(sha256_file "$SOURCE_ROOT/$relative")" = "${expected_sources[$relative]}" ] || {
     echo "[factorial-eval] live evaluator source hash mismatch: $relative" >&2
     exit 5
   }
@@ -161,7 +176,7 @@ fi
   exit 9
 }
 umask 077
-mkdir -p "$BASE/logs" "$OUTPUT_PARENT"
+mkdir -p "$DATA_ROOT/logs" "$OUTPUT_PARENT"
 mkdir -p "$SNAP/train/jobs" "$SNAP/input/checkpoint"
 
 cleanup() {
@@ -174,7 +189,7 @@ trap cleanup EXIT
 
 for relative in "${sources[@]}"; do
   mkdir -p "$SNAP/$(dirname "$relative")"
-  cp --reflink=auto -- "$BASE/$relative" "$SNAP/$relative"
+  cp --reflink=auto -- "$SOURCE_ROOT/$relative" "$SNAP/$relative"
   [ "$(sha256_file "$SNAP/$relative")" = "${expected_sources[$relative]}" ] || {
     echo "[factorial-eval] snapshot source hash mismatch: $relative" >&2
     exit 10
@@ -192,14 +207,18 @@ export JOB_FOR_BINDING=$JOB_ID
 export EVAL_COMMIT_FOR_BINDING=$EVAL_COMMIT
 export SPOOLED_WRAPPER_FOR_BINDING=$SPOOLED_WRAPPER_SHA256
 export CHECKPOINT_ORIGIN_FOR_BINDING=$CHECKPOINT_ORIGIN
+export SOURCE_ROOT_FOR_BINDING=$SOURCE_ROOT
+export SNAP_FOR_BINDING=$SNAP
 for relative in "${sources[@]}"; do
   key=$(printf '%s' "$relative" | tr '/.' '__')
   export "SOURCE_${key}=${expected_sources[$relative]}"
 done
 "$PY" - "$SNAP/input/source_binding.json" <<'PY'
 import json
+import base64
 import os
 import pathlib
+import subprocess
 import sys
 
 paths = (
@@ -215,11 +234,74 @@ def key(path):
     return "SOURCE_" + path.replace("/", "_").replace(".", "_")
 
 
+source_root = os.environ["SOURCE_ROOT_FOR_BINDING"]
+eval_commit = os.environ["EVAL_COMMIT_FOR_BINDING"]
+object_id_bytes = len(eval_commit) // 2
+commit_payload = subprocess.check_output(
+    ["git", "-C", source_root, "cat-file", "commit", eval_commit]
+)
+first_line = commit_payload.splitlines()[0].split()
+if len(first_line) != 2 or first_line[0] != b"tree":
+    raise SystemExit("reviewed commit does not declare one root tree")
+root_tree_id = first_line[1].decode("ascii")
+tree_payloads = {}
+
+
+def tree_entries(tree_id):
+    payload = subprocess.check_output(
+        ["git", "-C", source_root, "cat-file", "tree", tree_id]
+    )
+    tree_payloads[tree_id] = payload
+    entries = {}
+    cursor = 0
+    while cursor < len(payload):
+        space = payload.index(b" ", cursor)
+        nul = payload.index(b"\0", space + 1)
+        mode = payload[cursor:space].decode("ascii")
+        name = payload[space + 1 : nul].decode("utf-8")
+        object_start = nul + 1
+        object_end = object_start + object_id_bytes
+        if object_end > len(payload) or name in entries:
+            raise SystemExit("malformed reviewed Git tree")
+        entries[name] = (mode, payload[object_start:object_end].hex())
+        cursor = object_end
+    return entries
+
+
+source_receipts = {}
+for source_path in paths:
+    current_tree_id = root_tree_id
+    components = source_path.split("/")
+    for index, component in enumerate(components):
+        entries = tree_entries(current_tree_id)
+        if component not in entries:
+            raise SystemExit("reviewed source is absent from commit tree: " + source_path)
+        mode, object_id = entries[component]
+        if index < len(components) - 1:
+            if mode != "40000":
+                raise SystemExit("reviewed source parent is not a tree: " + source_path)
+            current_tree_id = object_id
+        else:
+            if mode not in {"100644", "100755"}:
+                raise SystemExit("reviewed source is not a regular blob: " + source_path)
+            source_receipts[source_path] = {
+                "sha256": os.environ[key(source_path)],
+                "git_blob_id": object_id,
+                "git_mode": mode,
+            }
+
+
 value = {
-    "schema": "shohin-digitwise-factorial-v4-eval-source-binding-v1",
-    "eval_commit": os.environ["EVAL_COMMIT_FOR_BINDING"],
-    "clean_source_tree": True,
-    "sources": {path: os.environ[key(path)] for path in paths},
+    "schema": "shohin-digitwise-factorial-v4-eval-source-binding-v2",
+    "eval_commit": eval_commit,
+    "git_commit_object_b64": base64.b64encode(commit_payload).decode("ascii"),
+    "git_tree_objects_b64": {
+        object_id: base64.b64encode(tree_payloads[object_id]).decode("ascii")
+        for object_id in sorted(tree_payloads)
+    },
+    "reviewed_clean_checkout": True,
+    "executing_source_root": str(pathlib.Path(os.environ["SNAP_FOR_BINDING"]).resolve()),
+    "sources": source_receipts,
     "spooled_wrapper_sha256": os.environ["SPOOLED_WRAPPER_FOR_BINDING"],
     "slurm": {
         "job_id": int(os.environ["JOB_FOR_BINDING"]),

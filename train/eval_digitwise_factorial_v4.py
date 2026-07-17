@@ -12,8 +12,11 @@ or transcript selection is available in this evaluator.
 from __future__ import annotations
 
 import argparse
+import base64
+import binascii
 from collections import Counter, defaultdict
 from dataclasses import dataclass
+import fcntl
 import gc
 import hashlib
 import io
@@ -22,6 +25,7 @@ import os
 from pathlib import Path
 import platform
 import re
+import shutil
 import stat
 import sys
 import tempfile
@@ -41,7 +45,7 @@ from digitwise_protocol import (  # noqa: E402
 )
 
 
-AUDIT = "shohin-digitwise-factorial-v4-full-eval-v1"
+AUDIT = "shohin-digitwise-factorial-v4-full-eval-v2"
 TRAINING_SOURCE_COMMIT = "8cafb9a1ff6c666721f7c5045b5bee2b7f550cc9"
 TRAINING_SOURCE_MANIFEST_SHA256 = (
     "3e29f0d3fc653550400b71f353f159d93683a88db9fb381ff9e9d37451b81508"
@@ -124,6 +128,62 @@ BRANCH_FIELDS = frozenset(
 TOP_LEVEL_FIELDS = BRANCH_FIELDS | {"counterfactual"}
 HEX64 = re.compile(r"^[0-9a-f]{64}$")
 GIT_OBJECT = re.compile(r"^[0-9a-f]{40,64}$")
+
+
+def git_object_id(kind: str, payload: bytes, hex_length: int) -> str:
+    """Recompute a Git object ID without trusting a caller-supplied commit label."""
+    if kind not in {"commit", "tree", "blob", "tag"}:
+        raise ContractError(f"unsupported Git object kind: {kind}")
+    if hex_length == 40:
+        digest = hashlib.sha1(usedforsecurity=False)
+    elif hex_length == 64:
+        digest = hashlib.sha256()
+    else:
+        raise ContractError("Git object ID must use 40 or 64 hexadecimal characters")
+    digest.update(f"{kind} {len(payload)}\0".encode("ascii"))
+    digest.update(payload)
+    return digest.hexdigest()
+
+
+def decode_base64(value: object, label: str) -> bytes:
+    try:
+        return base64.b64decode(str(value), validate=True)
+    except (binascii.Error, ValueError, TypeError) as error:
+        raise ContractError(f"malformed base64 payload: {label}") from error
+
+
+def parse_git_tree(payload: bytes, object_id_bytes: int) -> dict[str, tuple[str, str]]:
+    """Parse one raw Git tree object into name -> (mode, object ID)."""
+    entries: dict[str, tuple[str, str]] = {}
+    cursor = 0
+    while cursor < len(payload):
+        try:
+            space = payload.index(b" ", cursor)
+            nul = payload.index(b"\0", space + 1)
+        except ValueError as error:
+            raise ContractError("malformed Git tree framing") from error
+        mode_bytes = payload[cursor:space]
+        name_bytes = payload[space + 1 : nul]
+        object_start = nul + 1
+        object_end = object_start + object_id_bytes
+        if object_end > len(payload):
+            raise ContractError("truncated Git tree object ID")
+        try:
+            mode = mode_bytes.decode("ascii")
+            name = name_bytes.decode("utf-8")
+        except UnicodeDecodeError as error:
+            raise ContractError("Git tree entry is not UTF-8/ASCII") from error
+        if (
+            mode not in {"100644", "100755", "40000"}
+            or not name
+            or name in {".", ".."}
+            or "/" in name
+            or name in entries
+        ):
+            raise ContractError("Git tree entry contract mismatch")
+        entries[name] = (mode, payload[object_start:object_end].hex())
+        cursor = object_end
+    return entries
 
 
 @dataclass(frozen=True)
@@ -680,7 +740,10 @@ def validate_source_binding(
     expected_keys = {
         "schema",
         "eval_commit",
-        "clean_source_tree",
+        "git_commit_object_b64",
+        "git_tree_objects_b64",
+        "reviewed_clean_checkout",
+        "executing_source_root",
         "sources",
         "spooled_wrapper_sha256",
         "slurm",
@@ -688,29 +751,98 @@ def validate_source_binding(
     }
     _require_exact_keys(binding, expected_keys, "evaluation source binding")
     if (
-        binding["schema"] != "shohin-digitwise-factorial-v4-eval-source-binding-v1"
+        binding["schema"] != "shohin-digitwise-factorial-v4-eval-source-binding-v2"
         or not GIT_OBJECT.fullmatch(str(binding["eval_commit"]))
-        or binding["clean_source_tree"] is not True
+        or binding["reviewed_clean_checkout"] is not True
         or not HEX64.fullmatch(str(binding["spooled_wrapper_sha256"]))
     ):
         raise ContractError("evaluation source binding header mismatch")
+    commit_payload = decode_base64(
+        binding["git_commit_object_b64"], "Git commit object"
+    )
+    eval_commit = str(binding["eval_commit"])
+    if git_object_id("commit", commit_payload, len(eval_commit)) != eval_commit:
+        raise ContractError("evaluation commit object does not match eval_commit")
+    match = re.match(rb"^tree ([0-9a-f]+)\n", commit_payload)
+    if match is None or len(match.group(1)) != len(eval_commit):
+        raise ContractError("evaluation commit does not declare one matching tree")
+    root_tree_id = match.group(1).decode("ascii")
+    raw_tree_objects = binding["git_tree_objects_b64"]
+    if not isinstance(raw_tree_objects, dict) or not raw_tree_objects:
+        raise ContractError("Git tree proof is empty")
+    tree_objects: dict[str, bytes] = {}
+    for object_id, encoded in raw_tree_objects.items():
+        if not GIT_OBJECT.fullmatch(str(object_id)) or len(object_id) != len(
+            eval_commit
+        ):
+            raise ContractError("Git tree proof contains a malformed object ID")
+        payload = decode_base64(encoded, f"Git tree {object_id}")
+        if git_object_id("tree", payload, len(eval_commit)) != object_id:
+            raise ContractError("Git tree payload does not match its object ID")
+        tree_objects[object_id] = payload
     sources = binding["sources"]
     if not isinstance(sources, dict) or set(sources) != set(EVAL_SOURCE_PATHS):
         raise ContractError("evaluation source set mismatch")
-    if (
-        sources["train/jobs/eval_digitwise_factorial_v4.sbatch"]
-        != binding["spooled_wrapper_sha256"]
-    ):
-        raise ContractError("spooled evaluation wrapper is not source-bound")
-    source_root = Path(source_root)
-    for relative, expected_sha256 in sources.items():
-        if not HEX64.fullmatch(str(expected_sha256)):
-            raise ContractError(f"malformed source hash: {relative}")
-        read_frozen_file(
+    try:
+        source_root = Path(source_root).resolve(strict=True)
+    except OSError as error:
+        raise ContractError("executing source root cannot be resolved") from error
+    if source_root != ROOT or binding["executing_source_root"] != str(ROOT):
+        raise ContractError("source binding does not name the executing source tree")
+    required_tree_ids: set[str] = set()
+    object_id_bytes = len(eval_commit) // 2
+    for relative, source_receipt in sources.items():
+        _require_exact_keys(
+            source_receipt,
+            {"sha256", "git_blob_id", "git_mode"},
+            f"source receipt {relative}",
+        )
+        expected_sha256 = source_receipt["sha256"]
+        expected_blob_id = source_receipt["git_blob_id"]
+        expected_mode = source_receipt["git_mode"]
+        if (
+            not HEX64.fullmatch(str(expected_sha256))
+            or not GIT_OBJECT.fullmatch(str(expected_blob_id))
+            or len(expected_blob_id) != len(eval_commit)
+            or expected_mode not in {"100644", "100755"}
+        ):
+            raise ContractError(f"malformed source receipt: {relative}")
+        current_tree_id = root_tree_id
+        components = relative.split("/")
+        for index, component in enumerate(components):
+            if current_tree_id not in tree_objects:
+                raise ContractError(f"missing Git tree proof for source: {relative}")
+            required_tree_ids.add(current_tree_id)
+            entries = parse_git_tree(tree_objects[current_tree_id], object_id_bytes)
+            if component not in entries:
+                raise ContractError(
+                    f"source path is absent from commit tree: {relative}"
+                )
+            mode, object_id = entries[component]
+            if index < len(components) - 1:
+                if mode != "40000":
+                    raise ContractError(f"source parent is not a Git tree: {relative}")
+                current_tree_id = object_id
+                continue
+            if mode != expected_mode or object_id != expected_blob_id:
+                raise ContractError(f"source blob differs from commit tree: {relative}")
+        frozen_source = read_frozen_file(
             source_root / relative,
             expected_sha256,
             expected_mode=0o400,
         )
+        if (
+            git_object_id("blob", frozen_source.payload, len(eval_commit))
+            != expected_blob_id
+        ):
+            raise ContractError(
+                f"executing source blob differs from commit: {relative}"
+            )
+    if set(tree_objects) != required_tree_ids:
+        raise ContractError("Git tree proof contains unused or missing tree objects")
+    wrapper_receipt = sources["train/jobs/eval_digitwise_factorial_v4.sbatch"]
+    if wrapper_receipt["sha256"] != binding["spooled_wrapper_sha256"]:
+        raise ContractError("spooled evaluation wrapper is not source-bound")
     slurm = binding["slurm"]
     if (
         not isinstance(slurm, dict)
@@ -969,11 +1101,16 @@ def evaluate_pair(episode: Mapping[str, Any], ask: Ask) -> dict[str, Any]:
         and counterfactual["final_answer_correct"]
         and normal["emitted_answer"] != counterfactual["emitted_answer"]
     )
-    state_intervention_at_expected_position = (
+    prediction_diverged_at_expected_position = (
         expected_divergence is not None
         and expected_divergence < shared
         and predicted_normal[expected_divergence]
         != predicted_counterfactual[expected_divergence]
+    )
+    state_intervention_at_expected_position = (
+        prediction_diverged_at_expected_position
+        and bool(normal["rows"][expected_divergence]["correct"])
+        and bool(counterfactual["rows"][expected_divergence]["correct"])
     )
     return {
         "id": normal_branch["id"],
@@ -985,6 +1122,9 @@ def evaluate_pair(episode: Mapping[str, Any], ask: Ask) -> dict[str, Any]:
         "expected_answer_changed": expected_changed,
         "first_expected_state_divergence_position": expected_divergence,
         "first_predicted_state_divergence_position": predicted_divergence,
+        "prediction_diverged_at_expected_position": (
+            prediction_diverged_at_expected_position
+        ),
         "state_intervention_at_expected_position": (
             state_intervention_at_expected_position
         ),
@@ -1273,42 +1413,65 @@ def validate_accounting(
     }
 
 
+def _rename_directory_no_replace(source: Path, target: Path) -> None:
+    """Atomically publish under a cooperative lock without replacing a target."""
+    lock_path = target.parent / f".{target.name}.publish.lock"
+    flags = os.O_RDWR | os.O_CREAT | getattr(os, "O_CLOEXEC", 0)
+    if hasattr(os, "O_NOFOLLOW"):
+        flags |= os.O_NOFOLLOW
+    descriptor = os.open(lock_path, flags, 0o600)
+    try:
+        lock_identity = os.fstat(descriptor)
+        if not stat.S_ISREG(lock_identity.st_mode):
+            raise ContractError("publication lock is not a regular file")
+        fcntl.flock(descriptor, fcntl.LOCK_EX)
+        if os.path.lexists(target):
+            raise ContractError(f"refusing existing output directory: {target}")
+        os.rename(source, target)
+    finally:
+        try:
+            fcntl.flock(descriptor, fcntl.LOCK_UN)
+        finally:
+            os.close(descriptor)
+
+
 def publish_one_report(
     output_dir: str | Path, report: Mapping[str, Any]
 ) -> tuple[Path, str]:
-    """Publish one canonical report into a fresh, then sealed, directory."""
+    """Publish one canonical report by no-replace atomic directory rename."""
     output_dir = Path(output_dir)
     if os.path.lexists(output_dir):
         raise ContractError(f"refusing existing output directory: {output_dir}")
     parent = output_dir.parent
     if parent.is_symlink() or not parent.is_dir():
         raise ContractError("output parent must be an existing regular directory")
-    output_dir.mkdir(mode=0o700)
-    target = output_dir / "report.json"
     payload = canonical_json_bytes(report)
-    descriptor, temporary_name = tempfile.mkstemp(
-        prefix=".report.", suffix=".tmp", dir=output_dir
-    )
-    temporary = Path(temporary_name)
+    staging = Path(tempfile.mkdtemp(prefix=f".{output_dir.name}.staging.", dir=parent))
+    staged_target = staging / "report.json"
     try:
-        with os.fdopen(descriptor, "wb", closefd=True) as sink:
+        with staged_target.open("xb") as sink:
             sink.write(payload)
             sink.flush()
             os.fsync(sink.fileno())
-        os.chmod(temporary, 0o400)
-        os.link(temporary, target, follow_symlinks=False)
-        temporary.unlink()
-        directory_fd = os.open(output_dir, os.O_RDONLY | getattr(os, "O_DIRECTORY", 0))
+        os.chmod(staged_target, 0o400)
+        directory_fd = os.open(staging, os.O_RDONLY | getattr(os, "O_DIRECTORY", 0))
         try:
             os.fsync(directory_fd)
         finally:
             os.close(directory_fd)
-        os.chmod(output_dir, 0o500)
-    except Exception:
+        os.chmod(staging, 0o500)
+        _rename_directory_no_replace(staging, output_dir)
+        parent_fd = os.open(parent, os.O_RDONLY | getattr(os, "O_DIRECTORY", 0))
         try:
-            temporary.unlink(missing_ok=True)
+            os.fsync(parent_fd)
         finally:
-            raise
+            os.close(parent_fd)
+    except Exception:
+        if os.path.lexists(staging):
+            os.chmod(staging, 0o700)
+            shutil.rmtree(staging)
+        raise
+    target = output_dir / "report.json"
     if {path.name for path in output_dir.iterdir()} != {"report.json"}:
         raise ContractError("one-purpose publication contains extra files")
     frozen = read_frozen_file(
