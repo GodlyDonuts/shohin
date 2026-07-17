@@ -14,13 +14,14 @@
 
 set -euo pipefail
 
-BASE=/lustre/fs1/home/sa305415/shohin
-PY=${PY:-$BASE/.venv/bin/python}
+SOURCE_ROOT=${SOURCE_ROOT:?set SOURCE_ROOT to an isolated clean Git checkout}
+DATA_ROOT=${DATA_ROOT:-/lustre/fs1/home/sa305415/shohin}
+PY=${PY:-$DATA_ROOT/miniforge3/bin/python}
 MODE=${MODE:-train}
-CKPT=${CKPT:-$BASE/train/sft_digitwise_recurrent_v2_200k_r3/sft_ep1.pt}
-TOKENIZER=${TOKENIZER:-$BASE/artifacts/shohin-tok-32k.json}
-EPISODES=${EPISODES:-$BASE/artifacts/evals/digitwise_recurrent_v2_heldout.jsonl}
-CYCLE=${CYCLE:-$BASE/artifacts/evals/drs_causal_cycle_post_drs_r3.json}
+CKPT=${CKPT:-$DATA_ROOT/train/sft_digitwise_recurrent_v2_200k_r3/sft_ep1.pt}
+TOKENIZER=${TOKENIZER:-$DATA_ROOT/artifacts/shohin-tok-32k.json}
+EPISODES=${EPISODES:-$DATA_ROOT/artifacts/evals/digitwise_recurrent_v2_heldout.jsonl}
+CYCLE=${CYCLE:-$DATA_ROOT/artifacts/evals/drs_causal_cycle_post_drs_r3.json}
 OUT=${OUT:?set OUT to a new isolated artifact path}
 MOTOR=${MOTOR:-}
 MOTOR_SHA256=${MOTOR_SHA256:-}
@@ -36,6 +37,13 @@ SOURCE_FILES=(
   train/model.py
   train/probe_digitwise_workspace.py
 )
+
+for path in "$SOURCE_ROOT" "$DATA_ROOT" "$CKPT" "$TOKENIZER" "$EPISODES" "$CYCLE" "$OUT"; do
+  if [[ "$path" != /* ]]; then
+    echo "canonical paths must be absolute: $path" >&2
+    exit 2
+  fi
+done
 
 if [[ "${SLURM_RESTART_COUNT:-0}" != 0 ]]; then
   echo "refusing restarted carry-motor job" >&2
@@ -54,8 +62,12 @@ if [[ "$(nvidia-smi --query-gpu=name --format=csv,noheader | wc -l | tr -d ' ')"
   exit 2
 fi
 
-cd "$BASE"
-export PYTHONPATH="$BASE/train"
+if [[ ! -d "$SOURCE_ROOT/.git" ]]; then
+  echo "SOURCE_ROOT must be a Git checkout" >&2
+  exit 2
+fi
+cd "$SOURCE_ROOT"
+export PYTHONPATH="$SOURCE_ROOT/train"
 export CUBLAS_WORKSPACE_CONFIG=:4096:8
 
 if [[ "$(git rev-parse HEAD)" != "$SOURCE_COMMIT" ]]; then
