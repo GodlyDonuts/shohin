@@ -33,44 +33,62 @@ q_{in}(E(A(h_p))) = q_{out}(h_p),
 where `h_p` is the late residual, `A` emits the carry token, `E` embeds that
 token on the next call, and `q_in/q_out` recover its semantic value.
 
-## 2. Hypothesis
+## 2. Minimality and the C3-1 hypothesis
 
-Counterfactual Conjugate Commit (C3) represents carry as a two-element group
-action shared by the output and input interfaces, rather than as unrelated
-features learned at each boundary.
-
-Let `s(c)=2c-1`, and learn unit directions `v_o,v_i in R^576`. The output-side
-projection and carry-logit actuator are
+For each local symbol `x=(op,a_p,b_p)`, decimal execution is a two-state Mealy
+transducer:
 
 \[
-Pi_o(h)=h-v_o(v_o^T h)+rho STsign(v_o^T h)v_o,
+F_x(c_p)=(d_p,c_{p+1}).
 \]
+
+Carry zero and one are behaviorally distinguishable by a one-symbol
+continuation, while one bit realizes every local transition. The minimal
+arithmetic quotient therefore has exactly two states. The cursor and immutable
+tape remain visibly serialized; C3-1 is not allowed to add a hidden result
+tape, retry loop, solver, or extra transformer pass.
+
+Conditional on a successful frozen writer, learn one nonzero consumer direction
+`u in R^576` at one fixed result-digit site. Define
 
 \[
-Delta(l_1-l_0)=2 alpha v_o^T Pi_o(h).
+P_u={uu^T\over u^Tu},\qquad
+K_u(h,c)=(I-P_u)h+(2c-1)u.
 \]
 
-At one fixed consumer layer, the next-call carry token applies
+This is a hard one-bit clamp rather than an additive hint:
 
 \[
-h^{(k)} <- h^{(k)} + beta s(c)v_i.
+u^T K_u(h,c)=(2c-1)u^Tu.
 \]
 
-Carry-flip involutions
+The carry-flip map
 
 \[
-G_o(h)=h-2(v_o^T h)v_o,\qquad
-G_i(h)=h-2(v_i^T h)v_i
+G_u=I-2P_u
 \]
 
-are trained to commute with the external token swap `S`:
+is an exact involution and conjugates the committed token labels:
 
 \[
-A(G_o h)=S(A(h)),\qquad E(S(c)) \approx G_i E(c).
+G_u^2=I,\qquad K_u(h,1-c)=G_uK_u(h,c).
 \]
 
-A paired transition loss then requires counterfactual `c=0` and `c=1` inputs
-to produce their respective exact local transitions.
+The complete transaction is therefore
+
+\[
+h_p^{write}\to W_8\to token(c_{p+1})\to E(c_{p+1})
+\to K_u\to h_{p+1}^{consume}.
+\]
+
+Training must still establish all 400 `(op,a,b,c)` local cells. Flip
+equivariance alone is not evidence of arithmetic execution.
+
+For a tied optimization geometry, freeze a writer-side carry axis `v_o` from
+fit-only data and parameterize the consumer chart as a Householder transport of
+that axis. A single Householder reflection can map `v_o` to any consumer axis,
+so this tied arm and a freely learned `u` have the same hypothesis class. Any
+advantage is optimization geometry, not expressivity.
 
 ## 3. Equivalence boundary
 
@@ -81,20 +99,22 @@ useful contribution is the tied output/input group action, hard quotient
 projection, and counterfactual commutation objective. It changes optimization
 geometry, not expressivity.
 
-The smallest form adds 1,152 direction parameters, retains exactly one bit,
-uses no extra context token or transformer pass, and costs roughly `4*d`
-multiply-adds per transition.
+The frozen rank-8 writer has 4,634 parameters. C3-1 adds exactly 576, for 5,210
+total. With `(u^Tu)^-1` precomputed, the consumer costs one dot product, one
+scalar projection, and one vector update: 1,153 multiplies and 1,152
+adds/subtracts. It retains exactly one bit and adds no token, KV slot, hidden
+persistent state, or sequential step.
 
 ## 4. Required matched arms
 
 Only after a carry-writer result localizes a remaining reader failure:
 
 1. frozen base;
-2. equal-parameter conventional carry writer;
-3. untied writer plus reader;
-4. tied C3 treatment;
-5. C3 with counterfactual pairs shuffled inside identical nuisance strata;
-6. C3 without hard projection.
+2. equal-parameter additive consumer `h+(2c-1)u` with ordinary paired-row CE;
+3. untied hard clamp with freely parameterized `u`;
+4. tied C3-1 Householder transport from the frozen writer axis;
+5. C3-1 with counterfactual pairs shuffled inside identical nuisance strata;
+6. C3-1 without the `(I-P_u)` erase term.
 
 All learned arms must share base, data, initialization scale, optimizer update
 count, forward positions, and decoding. Primary endpoints are the frozen
@@ -105,28 +125,38 @@ and direct transcripts. Teacher-forced carry is secondary.
 
 1. Writer-only repair improves carry serialization; a true tied transaction
    gives additional integrated-cycle and full-episode gain.
-2. `G_o` selectively swaps carry logits, while `G_i` changes the next active
-   digit according to arithmetic. Random orthogonal directions do neither.
-3. Removing hard projection preserves one-step behavior but loses accuracy as
-   chain length grows.
+2. Literal carry-token flips and `G_u` interventions agree on the next active
+   digit. Donor carry interchange changes only the source case's local
+   transition; double reflection restores baseline. Random orthogonal and
+   irrelevant-result shams do neither.
+3. Removing hard projection may preserve one-step behavior but loses accuracy
+   as chain length grows.
 4. A genuine one-bit mechanism transfers to widths 8 and 10. Fit-width-only
    gain falsifies the state claim.
-5. Once writer and reader each exceed 95%, integrated success should approach
-   their conditional composition. A persistent low cycle score proves another
-   update/control map is missing.
+5. All 400 local cells must pass. A persistent low cycle score after local
+   success proves another cursor, tape, or control map is missing.
 
 ## 6. Kill criteria
 
-Reject C3 if any condition holds:
+Reject C3-1 mechanism support if any condition holds:
 
-- less than +10 percentage points over the untied arm on the frozen cycle or
-  less than +15 points on full episodes;
-- carry reaches 95% but the frozen cycle remains below 25/50;
-- shuffled pairing retains at least 80% of treatment gain;
-- unseen-width gain is below 10 points despite strong fit-width gain;
-- carry-flip interventions are not selective;
+- the frozen writer is below 99% carry accuracy on a fresh board;
+- local `(digit,next-carry)` exactness is below 99% overall or below 98% in any
+  width/style/operation/carry stratum;
+- the frozen cycle is below 45/50, fresh two-call exactness is below 90%, or
+  autonomous full-trace exactness is below 90% separately at widths 4/6/8/10;
+- tied C3-1 is less than +10 points over both additive and untied controls on
+  cycles or less than +15 points on width-8/10 full traces on any frozen seed;
+- shuffled pairing retains at least 50% of treatment gain;
+- carry-flip interventions are below 95% selective;
 - any non-DWS router fire or gate-off logit change occurs;
 - removing hard projection changes long-chain accuracy by less than 2 points.
 
-If the untied adapter matches C3, reject the novelty claim and retain the
-simpler interface repair.
+At 95% per-step reliability, a ten-step trace succeeds only `0.95^10 = 59.87%`
+under independent errors; width-10 reliability of 90% requires at least
+98.952% per step. Local accuracy alone is never the primary claim.
+
+If the additive or untied adapter matches C3-1, reject the coupling claim and
+retain the simpler interface repair. If every local gate passes but full traces
+fail, reject one-bit carry as sufficient and localize the remaining
+cursor/tape/control state instead of enlarging the packet speculatively.
