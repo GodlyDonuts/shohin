@@ -113,6 +113,7 @@ PILOT_ARTIFACT_REGISTRY_PROTOCOL = "R12-ACW-PILOT-ARTIFACT-REGISTRY-v2"
 PILOT_INDEPENDENT_VERIFICATION_PROTOCOL = "R12-ACW-PILOT-INDEPENDENT-VERIFICATION-v3"
 PILOT_SCIENTIFIC_COMMIT = "5f5e3cd0d69da67335ad1f1f485c6e3d8f00ff8e"
 PILOT_ANCHOR_COMMIT = "02c9d4ae57093b6c60d90580503e2a01c7c81619"
+PILOT_EXECUTION_COMMIT = "38ebad21cf9c4ef98b172394891c2a35ef671b12"
 PILOT_REGISTRY_RAW_SHA256 = (
     "66597cf5381fdc11d4ecd73a93d9bbd2fa68417a77b09c1330ecfeb73652451c"
 )
@@ -128,6 +129,13 @@ PILOT_ACTIVATION_ALLOWLIST = (
     "pipeline/test_acw_hidden_basis_training.py",
     "pipeline/test_adjudicate_acw_hidden_basis.py",
     "pipeline/test_freeze_acw_curriculum.py",
+)
+PILOT_CUSTODY_ALLOWLIST = (
+    "AGENT_RUNBOOK.md",
+    "pipeline/acw_hidden_basis_training.py",
+    "pipeline/adjudicate_acw_hidden_basis.py",
+    "pipeline/test_acw_hidden_basis_training.py",
+    "pipeline/test_adjudicate_acw_hidden_basis.py",
 )
 PILOT_CANONICAL_PATHS = {
     "dataset": "artifacts/r12/acw_pilot_domain_v3_runtime_v2",
@@ -298,8 +306,6 @@ def _require_activation_lineage(root: Path) -> str:
     activation_commit = _git_text(root, "rev-parse", "HEAD").stdout.strip()
     if activation_commit in {PILOT_SCIENTIFIC_COMMIT, PILOT_ANCHOR_COMMIT}:
         raise RuntimeError("pilot activation requires a distinct E commit")
-    if _commit_parents(root, activation_commit) != [PILOT_ANCHOR_COMMIT]:
-        raise RuntimeError("pilot activation E must have A as its sole parent")
     if _commit_parents(root, PILOT_ANCHOR_COMMIT) != [PILOT_SCIENTIFIC_COMMIT]:
         raise RuntimeError("pilot anchor A must have S as its sole parent")
     if _diff_name_status(
@@ -308,10 +314,19 @@ def _require_activation_lineage(root: Path) -> str:
         PILOT_ANCHOR_COMMIT,
     ) != [("A", PILOT_REGISTRY_PATH)]:
         raise RuntimeError("pilot anchor A must add only the registry")
-    if _diff_name_status(root, PILOT_ANCHOR_COMMIT, activation_commit) != [
+    if _commit_parents(root, PILOT_EXECUTION_COMMIT) != [PILOT_ANCHOR_COMMIT]:
+        raise RuntimeError("pilot activation E must have A as its sole parent")
+    if _diff_name_status(root, PILOT_ANCHOR_COMMIT, PILOT_EXECUTION_COMMIT) != [
         ("M", relative) for relative in sorted(PILOT_ACTIVATION_ALLOWLIST)
     ]:
         raise RuntimeError("pilot activation E differs from its exact allowlist")
+    if activation_commit != PILOT_EXECUTION_COMMIT:
+        if _commit_parents(root, activation_commit) != [PILOT_EXECUTION_COMMIT]:
+            raise RuntimeError("pilot custody F must have E as its sole parent")
+        if _diff_name_status(root, PILOT_EXECUTION_COMMIT, activation_commit) != [
+            ("M", relative) for relative in sorted(PILOT_CUSTODY_ALLOWLIST)
+        ]:
+            raise RuntimeError("pilot custody F differs from its exact allowlist")
     absent = _git_text(
         root,
         "cat-file",
@@ -367,6 +382,7 @@ def _require_activation_lineage(root: Path) -> str:
     protected_paths = sorted(
         set(ACW_SCIENTIFIC_PATHS)
         | set(PILOT_ACTIVATION_ALLOWLIST)
+        | set(PILOT_CUSTODY_ALLOWLIST)
         | {PILOT_REGISTRY_PATH}
     )
     status = _git_text(
@@ -384,7 +400,7 @@ def _require_activation_lineage(root: Path) -> str:
         if not path.is_file() or path.is_symlink():
             raise RuntimeError(f"pilot activation path is invalid: {relative}")
         if path.read_bytes() != _git_blob(root, activation_commit, relative):
-            raise RuntimeError(f"pilot activation path differs from E: {relative}")
+            raise RuntimeError(f"pilot activation path differs from HEAD: {relative}")
     return activation_commit
 
 

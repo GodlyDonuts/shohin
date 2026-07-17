@@ -4,9 +4,11 @@
 The input is a hash-bound manifest containing one record for every frozen run.
 Each record binds a real checkpoint, evaluation-domain root and manifest,
 trainer-bundle root and manifest, evaluator report, and second evaluator output.
-The adjudicator opens and hashes those artifacts, checks their transitive
-bindings, and executes a third evaluator replay in a fresh interpreter before
-it accepts any metric.
+Before any confirmation artifact is opened, the adjudicator independently
+replays an immutable development-only baseline and reconstructs its selection.
+The full manifest must bind those exact baseline bytes.  The adjudicator then
+opens and hashes all artifacts, checks their transitive bindings, and executes
+a third evaluator replay in a fresh interpreter before it accepts any metric.
 Confirmation records contain only their public commitment and index; this module
 never retrieves or accepts confirmation seed material.
 
@@ -36,14 +38,15 @@ from typing import Any
 import numpy as np
 import torch
 
-MANIFEST_SCHEMA = "r12_acw_adjudication_manifest_v3"
-MANIFEST_PROTOCOL = "R12-ACW-ADJUDICATION-MANIFEST-v3"
+MANIFEST_SCHEMA = "r12_acw_adjudication_manifest_v4"
+MANIFEST_PROTOCOL = "R12-ACW-ADJUDICATION-MANIFEST-v4"
 DEVELOPMENT_MANIFEST_SCHEMA = "r12_acw_development_baseline_manifest_v1"
 DEVELOPMENT_MANIFEST_PROTOCOL = "R12-ACW-DEVELOPMENT-BASELINE-MANIFEST-v1"
-DEVELOPMENT_BASELINE_SCHEMA = "r12_acw_development_baseline_v1"
-DEVELOPMENT_BASELINE_PROTOCOL = "R12-ACW-DEVELOPMENT-BASELINE-v1"
-DECISION_SCHEMA = "r12_acw_adjudication_decision_v3"
-DECISION_PROTOCOL = "R12-ACW-ADJUDICATION-DECISION-v3"
+DEVELOPMENT_BASELINE_SCHEMA = "r12_acw_development_baseline_v2"
+DEVELOPMENT_BASELINE_PROTOCOL = "R12-ACW-DEVELOPMENT-BASELINE-v2"
+CONFIRMATION_AUTHORIZATION_PROTOCOL = "R12-ACW-CONFIRMATION-AUTHORIZATION-v1"
+DECISION_SCHEMA = "r12_acw_adjudication_decision_v4"
+DECISION_PROTOCOL = "R12-ACW-ADJUDICATION-DECISION-v4"
 EVALUATION_PROTOCOL = "R12-ACW-CAUSAL-EVALUATION-v2"
 GENERATOR_PROTOCOL = "R12-ACW-HIDDEN-BASIS-v3"
 TRAINING_PROTOCOL = "R12-ACW-TRAINER-v2"
@@ -57,6 +60,7 @@ INFERENCE_LEDGER_PROTOCOL = "R12-ACW-INFERENCE-RESOURCE-LEDGER-v2"
 
 PILOT_SCIENTIFIC_COMMIT = "5f5e3cd0d69da67335ad1f1f485c6e3d8f00ff8e"
 PILOT_ANCHOR_COMMIT = "02c9d4ae57093b6c60d90580503e2a01c7c81619"
+PILOT_EXECUTION_COMMIT = "38ebad21cf9c4ef98b172394891c2a35ef671b12"
 PILOT_REGISTRY_RAW_SHA256 = (
     "66597cf5381fdc11d4ecd73a93d9bbd2fa68417a77b09c1330ecfeb73652451c"
 )
@@ -72,6 +76,13 @@ PILOT_ACTIVATION_ALLOWLIST = (
     "pipeline/test_acw_hidden_basis_training.py",
     "pipeline/test_adjudicate_acw_hidden_basis.py",
     "pipeline/test_freeze_acw_curriculum.py",
+)
+PILOT_CUSTODY_ALLOWLIST = (
+    "AGENT_RUNBOOK.md",
+    "pipeline/acw_hidden_basis_training.py",
+    "pipeline/adjudicate_acw_hidden_basis.py",
+    "pipeline/test_acw_hidden_basis_training.py",
+    "pipeline/test_adjudicate_acw_hidden_basis.py",
 )
 PILOT_CANONICAL_PATHS = {
     "dataset": "artifacts/r12/acw_pilot_domain_v3_runtime_v2",
@@ -621,7 +632,7 @@ def _verify_payload_hash(value: dict[str, Any], label: str) -> str:
     return recorded
 
 
-def _read_regular_file(path: Path) -> tuple[bytes, str]:
+def _read_regular_file_with_stat(path: Path) -> tuple[bytes, str, os.stat_result]:
     flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
     try:
         descriptor = os.open(path, flags)
@@ -650,14 +661,26 @@ def _read_regular_file(path: Path) -> tuple[bytes, str]:
             chunks.append(block)
             digest.update(block)
         after = os.fstat(descriptor)
-        stable = ("st_dev", "st_ino", "st_size", "st_mtime_ns", "st_ctime_ns")
+        stable = (
+            "st_dev",
+            "st_ino",
+            "st_mode",
+            "st_size",
+            "st_mtime_ns",
+            "st_ctime_ns",
+        )
         if any(getattr(before, field) != getattr(after, field) for field in stable):
             raise EvidenceError(
                 "artifact_changed_during_read", f"artifact changed: {path}"
             )
     finally:
         os.close(descriptor)
-    return b"".join(chunks), digest.hexdigest()
+    return b"".join(chunks), digest.hexdigest(), after
+
+
+def _read_regular_file(path: Path) -> tuple[bytes, str]:
+    raw, digest, _ = _read_regular_file_with_stat(path)
+    return raw, digest
 
 
 def sha256_file(path: str | Path) -> str:
@@ -854,11 +877,6 @@ def _adjudicator_activation_commit(root: Path) -> str:
             "pilot_anchor_invalid",
             "pilot activation requires a distinct E commit",
         )
-    if _anchor_commit_parents(root, activation_commit) != [PILOT_ANCHOR_COMMIT]:
-        raise EvidenceError(
-            "pilot_anchor_invalid",
-            "pilot activation E must have A as its sole parent",
-        )
     if _anchor_commit_parents(root, PILOT_ANCHOR_COMMIT) != [PILOT_SCIENTIFIC_COMMIT]:
         raise EvidenceError(
             "pilot_anchor_invalid",
@@ -871,13 +889,31 @@ def _adjudicator_activation_commit(root: Path) -> str:
             "pilot_anchor_invalid",
             "pilot anchor A must add only the registry",
         )
-    if _anchor_diff(root, PILOT_ANCHOR_COMMIT, activation_commit) != [
+    if _anchor_commit_parents(root, PILOT_EXECUTION_COMMIT) != [PILOT_ANCHOR_COMMIT]:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot activation E must have A as its sole parent",
+        )
+    if _anchor_diff(root, PILOT_ANCHOR_COMMIT, PILOT_EXECUTION_COMMIT) != [
         ("M", relative) for relative in sorted(PILOT_ACTIVATION_ALLOWLIST)
     ]:
         raise EvidenceError(
             "pilot_anchor_invalid",
             "pilot activation E differs from its exact allowlist",
         )
+    if activation_commit != PILOT_EXECUTION_COMMIT:
+        if _anchor_commit_parents(root, activation_commit) != [PILOT_EXECUTION_COMMIT]:
+            raise EvidenceError(
+                "pilot_anchor_invalid",
+                "pilot custody F must have E as its sole parent",
+            )
+        if _anchor_diff(root, PILOT_EXECUTION_COMMIT, activation_commit) != [
+            ("M", relative) for relative in sorted(PILOT_CUSTODY_ALLOWLIST)
+        ]:
+            raise EvidenceError(
+                "pilot_anchor_invalid",
+                "pilot custody F differs from its exact allowlist",
+            )
     absent = _anchor_git_text(
         root,
         "cat-file",
@@ -945,6 +981,7 @@ def _adjudicator_activation_commit(root: Path) -> str:
     protected = sorted(
         set(PILOT_SCIENTIFIC_PATHS)
         | set(PILOT_ACTIVATION_ALLOWLIST)
+        | set(PILOT_CUSTODY_ALLOWLIST)
         | {PILOT_REGISTRY_PATH}
     )
     status = _anchor_git_text(
@@ -966,7 +1003,7 @@ def _adjudicator_activation_commit(root: Path) -> str:
         if raw != _anchor_git_blob(root, activation_commit, relative):
             raise EvidenceError(
                 "pilot_anchor_invalid",
-                f"pilot activation path differs from E: {relative}",
+                f"pilot activation path differs from HEAD: {relative}",
             )
     return activation_commit
 
@@ -3829,11 +3866,16 @@ def _expected_run_keys(scope: str = "full") -> set[tuple[str, str, int]]:
 
 
 def verify_evidence(
-    manifest: dict[str, Any], base: Path, *, scope: str = "full"
+    manifest: dict[str, Any],
+    base: Path,
+    *,
+    scope: str = "full",
+    expected_development_baseline_record: dict[str, Any] | None = None,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
-    _expect_keys(
-        manifest, {"schema", "protocol", "reports", "payload_sha256"}, "manifest"
-    )
+    manifest_keys = {"schema", "protocol", "reports", "payload_sha256"}
+    if scope == "full":
+        manifest_keys.add("development_baseline")
+    _expect_keys(manifest, manifest_keys, "manifest")
     manifest_payload_sha256 = _verify_payload_hash(manifest, "manifest")
     expected_schema, expected_protocol = (
         (DEVELOPMENT_MANIFEST_SCHEMA, DEVELOPMENT_MANIFEST_PROTOCOL)
@@ -3849,6 +3891,49 @@ def verify_evidence(
             "manifest_protocol_mismatch",
             f"manifest protocol must be {expected_protocol}",
         )
+    development_baseline_binding = None
+    if scope == "full":
+        if expected_development_baseline_record is None:
+            raise EvidenceError(
+                "development_baseline_binding_required",
+                "full evidence cannot be opened without a validated baseline binding",
+            )
+        expected_record = _object(
+            expected_development_baseline_record,
+            "validated development baseline record",
+        )
+        _expect_keys(
+            expected_record,
+            {"path", "sha256", "payload_sha256"},
+            "validated development baseline record",
+        )
+        development_baseline_binding = _object(
+            manifest["development_baseline"], "manifest.development_baseline"
+        )
+        _expect_keys(
+            development_baseline_binding,
+            {"path", "sha256", "payload_sha256"},
+            "manifest.development_baseline",
+        )
+        if (
+            not isinstance(development_baseline_binding["path"], str)
+            or not development_baseline_binding["path"]
+            or _hash(
+                development_baseline_binding["sha256"],
+                "manifest.development_baseline.sha256",
+            )
+            != expected_record["sha256"]
+            or _hash(
+                development_baseline_binding["payload_sha256"],
+                "manifest.development_baseline.payload_sha256",
+            )
+            != expected_record["payload_sha256"]
+            or development_baseline_binding["path"] != expected_record["path"]
+        ):
+            raise EvidenceError(
+                "development_baseline_binding_mismatch",
+                "full manifest does not bind the independently validated baseline",
+            )
     reports = _list(manifest["reports"], "manifest.reports")
     expected_keys = _expected_run_keys(scope)
     if len(reports) != len(expected_keys):
@@ -4257,6 +4342,8 @@ def verify_evidence(
         "status": "verified",
         "scope": scope,
         "confirmation_evidence_opened": scope == "full",
+        "development_baseline_binding": development_baseline_binding,
+        "confirmation_artifacts_transitively_bound_to_baseline": scope == "full",
         "manifest_payload_sha256": manifest_payload_sha256,
         "exact_run_matrix": True,
         "scored_runs_verified": len(SCORED_ARMS) * (3 if scope == "development" else 6),
@@ -4679,6 +4766,21 @@ def _write_immutable_binary(path: str | Path, raw: bytes) -> dict[str, Any]:
     }
 
 
+def _confirmation_authorization() -> dict[str, Any]:
+    return {
+        "protocol": CONFIRMATION_AUTHORIZATION_PROTOCOL,
+        "authorized": True,
+        "full_manifest_schema": MANIFEST_SCHEMA,
+        "full_manifest_protocol": MANIFEST_PROTOCOL,
+        "scored_arms": list(SCORED_ARMS),
+        "confirmation_indices": [0, 1, 2],
+        "confirmation_commitments": list(CONFIRMATION_COMMITMENTS),
+        "direct_state_confirmation_authorized": False,
+        "immutable_baseline_required_before_confirmation": True,
+        "full_manifest_must_bind_baseline": True,
+    }
+
+
 def freeze_development_baseline(
     manifest_path: str | Path, checkpoint_out: str | Path
 ) -> dict[str, Any]:
@@ -4725,6 +4827,7 @@ def freeze_development_baseline(
             "source_checkpoint": selected_run["bindings"]["checkpoint"],
             "copied_checkpoint": copied,
             "activation_scientific_identity": verification["scientific_identity"],
+            "confirmation_authorization": _confirmation_authorization(),
             "confirmation_evidence_opened": False,
             "retention_independent_of_promotion": True,
             "can_override_promotion_gates": False,
@@ -4740,11 +4843,14 @@ def freeze_development_baseline(
 
 def _validate_frozen_development_baseline(
     baseline_path: str | Path,
-    runs: list[dict[str, Any]],
-    verification: dict[str, Any],
 ) -> dict[str, Any]:
     path = Path(baseline_path)
-    raw, file_sha256 = _read_regular_file(path)
+    raw, file_sha256, baseline_stat = _read_regular_file_with_stat(path)
+    if stat.S_IMODE(baseline_stat.st_mode) != 0o444:
+        raise EvidenceError(
+            "development_baseline_mutable",
+            "development baseline must be an immutable mode-0444 regular file",
+        )
     baseline = _parse_json(raw, "development baseline")
     if raw != canonical_json_bytes(baseline) + b"\n":
         raise EvidenceError(
@@ -4765,6 +4871,7 @@ def _validate_frozen_development_baseline(
             "source_checkpoint",
             "copied_checkpoint",
             "activation_scientific_identity",
+            "confirmation_authorization",
             "confirmation_evidence_opened",
             "retention_independent_of_promotion",
             "can_override_promotion_gates",
@@ -4782,6 +4889,7 @@ def _validate_frozen_development_baseline(
         or baseline["retention_independent_of_promotion"] is not True
         or baseline["can_override_promotion_gates"] is not False
         or baseline["claim_boundary"] != DEVELOPMENT_BASELINE_CLAIM
+        or baseline["confirmation_authorization"] != _confirmation_authorization()
         or baseline["output_contract"]
         != {"exclusive_create": True, "overwrite": False, "mode": "0444"}
     ):
@@ -4797,7 +4905,7 @@ def _validate_frozen_development_baseline(
         {"path", "sha256", "payload_sha256"},
         "development baseline manifest",
     )
-    frozen_manifest, _, _ = _verify_json_reference(
+    frozen_manifest, _, frozen_manifest_path = _verify_json_reference(
         {
             "path": development_manifest["path"],
             "sha256": development_manifest["sha256"],
@@ -4806,46 +4914,46 @@ def _validate_frozen_development_baseline(
         path.parent,
     )
     if (
-        frozen_manifest.get("schema") != DEVELOPMENT_MANIFEST_SCHEMA
-        or frozen_manifest.get("protocol") != DEVELOPMENT_MANIFEST_PROTOCOL
-        or _verify_payload_hash(frozen_manifest, "development baseline manifest")
+        _verify_payload_hash(frozen_manifest, "development baseline manifest")
         != development_manifest["payload_sha256"]
     ):
         raise EvidenceError(
             "development_baseline_manifest_mismatch",
             "frozen development manifest binding differs",
         )
+    development_runs, development_verification = verify_evidence(
+        frozen_manifest,
+        frozen_manifest_path.parent,
+        scope="development",
+    )
     baseline_verification = _object(
         baseline["verification"], "development baseline verification"
     )
     if (
-        baseline_verification.get("status") != "verified"
-        or baseline_verification.get("scope") != "development"
-        or baseline_verification.get("confirmation_evidence_opened") is not False
-        or baseline_verification.get("manifest_payload_sha256")
+        baseline_verification != development_verification
+        or development_verification.get("status") != "verified"
+        or development_verification.get("scope") != "development"
+        or development_verification.get("confirmation_evidence_opened") is not False
+        or development_verification.get("manifest_payload_sha256")
         != development_manifest["payload_sha256"]
-        or baseline_verification.get("scored_runs_verified") != len(SCORED_ARMS) * 3
-        or baseline_verification.get("direct_state_runs_verified") != 3
-        or baseline_verification.get("scientific_identity")
+        or development_verification.get("scientific_identity")
         != baseline["activation_scientific_identity"]
     ):
         raise EvidenceError(
             "development_baseline_verification_mismatch",
             "frozen development verification contract differs",
         )
-    expected_selection = _development_baseline(runs)
-    expected_bindings = _development_run_bindings(runs)
+    expected_selection = _development_baseline(development_runs)
+    expected_bindings = _development_run_bindings(development_runs)
     if (
         baseline["selection"] != expected_selection
         or baseline["development_run_bindings"] != expected_bindings
-        or baseline["activation_scientific_identity"]
-        != verification["scientific_identity"]
     ):
         raise EvidenceError(
             "development_baseline_evidence_mismatch",
             "frozen baseline differs from full manifest development evidence",
         )
-    selected_run = _selected_development_run(runs, expected_selection)
+    selected_run = _selected_development_run(development_runs, expected_selection)
     if baseline["source_checkpoint"] != selected_run["bindings"]["checkpoint"]:
         raise EvidenceError(
             "development_baseline_source_mismatch",
@@ -4883,11 +4991,17 @@ def _validate_frozen_development_baseline(
         )
     return {
         **expected_selection,
+        "selection": expected_selection,
         "record": {
             "path": str(path.resolve(strict=True)),
             "sha256": file_sha256,
             "payload_sha256": payload_sha256,
         },
+        "development_manifest": baseline["development_manifest"],
+        "development_verification": development_verification,
+        "development_run_bindings": expected_bindings,
+        "activation_scientific_identity": baseline["activation_scientific_identity"],
+        "confirmation_authorization": baseline["confirmation_authorization"],
         "source_checkpoint": baseline["source_checkpoint"],
         "copied_checkpoint": baseline["copied_checkpoint"],
         "confirmation_evidence_opened_when_frozen": False,
@@ -4895,6 +5009,27 @@ def _validate_frozen_development_baseline(
         "can_override_promotion_gates": False,
         "claim_boundary": DEVELOPMENT_BASELINE_CLAIM,
     }
+
+
+def _validate_full_evidence_against_development_baseline(
+    baseline: dict[str, Any],
+    runs: list[dict[str, Any]],
+    verification: dict[str, Any],
+) -> None:
+    expected_selection = _development_baseline(runs)
+    if (
+        baseline.get("selection") != expected_selection
+        or baseline.get("development_run_bindings") != _development_run_bindings(runs)
+        or baseline.get("activation_scientific_identity")
+        != verification.get("scientific_identity")
+        or verification.get("development_baseline_binding") != baseline.get("record")
+        or verification.get("confirmation_artifacts_transitively_bound_to_baseline")
+        is not True
+    ):
+        raise EvidenceError(
+            "development_baseline_evidence_mismatch",
+            "full evidence differs from the independently replayed development baseline",
+        )
 
 
 def _label_efficiency_summary(confirmation: dict[str, Any]) -> dict[str, Any]:
@@ -5002,9 +5137,6 @@ def adjudicate_manifest(
     path = Path(manifest_path)
     manifest_file_sha256: str | None = None
     try:
-        raw, manifest_file_sha256 = _read_regular_file(path)
-        manifest = _parse_json(raw, "manifest")
-        runs, verification = verify_evidence(manifest, path.parent)
         if development_baseline_path is None:
             raise EvidenceError(
                 "development_baseline_required",
@@ -5012,6 +5144,16 @@ def adjudicate_manifest(
             )
         development_baseline = _validate_frozen_development_baseline(
             development_baseline_path,
+        )
+        raw, manifest_file_sha256 = _read_regular_file(path)
+        manifest = _parse_json(raw, "manifest")
+        runs, verification = verify_evidence(
+            manifest,
+            path.parent,
+            expected_development_baseline_record=development_baseline["record"],
+        )
+        _validate_full_evidence_against_development_baseline(
+            development_baseline,
             runs,
             verification,
         )
@@ -5211,6 +5353,7 @@ def write_immutable_development_baseline(
         or baseline.get("retention_independent_of_promotion") is not True
         or baseline.get("can_override_promotion_gates") is not False
         or baseline.get("claim_boundary") != DEVELOPMENT_BASELINE_CLAIM
+        or baseline.get("confirmation_authorization") != _confirmation_authorization()
         or baseline.get("output_contract")
         != {"exclusive_create": True, "overwrite": False, "mode": "0444"}
     ):

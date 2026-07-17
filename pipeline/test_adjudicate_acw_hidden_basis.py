@@ -553,6 +553,11 @@ class SyntheticEvidence:
         self.manifest = {
             "schema": adjudicator.MANIFEST_SCHEMA,
             "protocol": adjudicator.MANIFEST_PROTOCOL,
+            "development_baseline": {
+                "path": "trusted-development-baseline.json",
+                "sha256": _digest("trusted-development-baseline-file"),
+                "payload_sha256": _digest("trusted-development-baseline-payload"),
+            },
             "reports": reports,
         }
         self.write_manifest()
@@ -714,17 +719,40 @@ def _trusted_independent_replay(
     }
 
 
-def _trusted_frozen_baseline(
-    _path: Path, runs: list[dict], _verification: dict
-) -> dict:
+def _trusted_frozen_baseline(path: Path) -> dict:
+    full_manifest = json.loads(Path(path).read_text())
+    development_manifest = adjudicator.with_payload_hash(
+        {
+            "schema": adjudicator.DEVELOPMENT_MANIFEST_SCHEMA,
+            "protocol": adjudicator.DEVELOPMENT_MANIFEST_PROTOCOL,
+            "reports": [
+                report
+                for report in full_manifest["reports"]
+                if "_development_" in report["evaluation_report"]["path"]
+            ],
+        }
+    )
+    runs, verification = adjudicator.verify_evidence(
+        development_manifest, Path(path).parent, scope="development"
+    )
     selection = adjudicator._development_baseline(runs)
     return {
         **selection,
+        "selection": selection,
         "record": {
             "path": "trusted-development-baseline.json",
             "sha256": _digest("trusted-development-baseline-file"),
             "payload_sha256": _digest("trusted-development-baseline-payload"),
         },
+        "development_manifest": {
+            "path": "trusted-development-manifest.json",
+            "sha256": _digest("trusted-development-manifest-file"),
+            "payload_sha256": development_manifest["payload_sha256"],
+        },
+        "development_verification": verification,
+        "development_run_bindings": adjudicator._development_run_bindings(runs),
+        "activation_scientific_identity": verification["scientific_identity"],
+        "confirmation_authorization": adjudicator._confirmation_authorization(),
         "source_checkpoint": selection["selected_checkpoint"]["checkpoint"],
         "copied_checkpoint": {
             **selection["selected_checkpoint"]["checkpoint"],
@@ -884,6 +912,52 @@ class ACWHiddenBasisAdjudicatorTests(unittest.TestCase):
         self.assertFalse(decision["go"])
         self.assertIn("development_baseline_required", decision["reasons"])
 
+    def test_baseline_is_validated_before_full_evidence_is_opened(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = self._fixture(temporary)
+            failure = adjudicator.EvidenceError(
+                "development_baseline_mutable", "baseline was not frozen"
+            )
+            with (
+                mock.patch.object(
+                    adjudicator,
+                    "_validate_frozen_development_baseline",
+                    side_effect=failure,
+                ),
+                mock.patch.object(
+                    adjudicator,
+                    "verify_evidence",
+                    wraps=adjudicator.verify_evidence,
+                ) as verify,
+                mock.patch.object(
+                    adjudicator,
+                    "_read_regular_file",
+                    wraps=adjudicator._read_regular_file,
+                ) as read_regular,
+            ):
+                decision = adjudicator.adjudicate_manifest(
+                    fixture.manifest_path, fixture.manifest_path
+                )
+
+        self.assertFalse(decision["go"])
+        self.assertIn("development_baseline_mutable", decision["reasons"])
+        verify.assert_not_called()
+        read_regular.assert_not_called()
+
+    def test_full_manifest_must_bind_the_exact_frozen_baseline(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = self._fixture(temporary)
+            fixture.manifest["development_baseline"]["sha256"] = _digest(
+                "different-baseline"
+            )
+            fixture.write_manifest()
+            decision = adjudicator.adjudicate_manifest(
+                fixture.manifest_path, fixture.manifest_path
+            )
+
+        self.assertFalse(decision["go"])
+        self.assertIn("development_baseline_binding_mismatch", decision["reasons"])
+
     def test_development_only_freeze_preserves_checkpoint_immutably(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             fixture = self._fixture(temporary)
@@ -920,18 +994,63 @@ class ACWHiddenBasisAdjudicatorTests(unittest.TestCase):
                 baseline["source_checkpoint"]["sha256"],
                 baseline["copied_checkpoint"]["sha256"],
             )
-            runs, verification = adjudicator.verify_evidence(
-                development_manifest, manifest_path.parent, scope="development"
-            )
-            reopened = _REAL_VALIDATE_FROZEN_DEVELOPMENT_BASELINE(
-                baseline_path, runs, verification
-            )
+            reopened = _REAL_VALIDATE_FROZEN_DEVELOPMENT_BASELINE(baseline_path)
             self.assertEqual(reopened["selected_arm"], "acw")
             self.assertFalse(reopened["confirmation_evidence_opened_when_frozen"])
             with self.assertRaises(FileExistsError):
                 adjudicator.write_immutable_development_baseline(
                     baseline_path, baseline
                 )
+            baseline_path.chmod(0o644)
+            with self.assertRaises(adjudicator.EvidenceError) as raised:
+                _REAL_VALIDATE_FROZEN_DEVELOPMENT_BASELINE(baseline_path)
+            self.assertEqual(raised.exception.code, "development_baseline_mutable")
+
+    def test_self_attested_empty_development_manifest_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = self._fixture(temporary)
+            development_reports = [
+                fixture.runs[key]
+                for key in sorted(fixture.runs)
+                if key[1] == "development"
+            ]
+            development_manifest = adjudicator.with_payload_hash(
+                {
+                    "schema": adjudicator.DEVELOPMENT_MANIFEST_SCHEMA,
+                    "protocol": adjudicator.DEVELOPMENT_MANIFEST_PROTOCOL,
+                    "reports": development_reports,
+                }
+            )
+            manifest_path = Path(temporary) / "development_manifest.json"
+            manifest_path.write_bytes(_encoded(development_manifest))
+            checkpoint_path = Path(temporary) / "retained" / "checkpoint.pt"
+            baseline = adjudicator.freeze_development_baseline(
+                manifest_path, checkpoint_path
+            )
+
+            empty_manifest = adjudicator.with_payload_hash(
+                {
+                    "schema": adjudicator.DEVELOPMENT_MANIFEST_SCHEMA,
+                    "protocol": adjudicator.DEVELOPMENT_MANIFEST_PROTOCOL,
+                    "reports": [],
+                }
+            )
+            empty_path = Path(temporary) / "empty_development_manifest.json"
+            empty_path.write_bytes(_encoded(empty_manifest))
+            forged = copy.deepcopy(baseline)
+            forged["development_manifest"] = {
+                "path": str(empty_path.resolve()),
+                "sha256": adjudicator.sha256_file(empty_path),
+                "payload_sha256": empty_manifest["payload_sha256"],
+            }
+            forged = adjudicator.with_payload_hash(forged)
+            forged_path = Path(temporary) / "retained" / "forged_baseline.json"
+            forged_path.write_bytes(_encoded(forged))
+            forged_path.chmod(0o444)
+
+            with self.assertRaises(adjudicator.EvidenceError) as raised:
+                _REAL_VALIDATE_FROZEN_DEVELOPMENT_BASELINE(forged_path)
+            self.assertEqual(raised.exception.code, "report_count_mismatch")
 
     def test_cli_requires_an_explicit_preconfirmation_baseline(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -1580,12 +1699,14 @@ class ACWAdjudicatorArtifactSecurityTests(unittest.TestCase):
             "PILOT_INDEPENDENT_VERIFICATION_PROTOCOL",
             "PILOT_SCIENTIFIC_COMMIT",
             "PILOT_ANCHOR_COMMIT",
+            "PILOT_EXECUTION_COMMIT",
             "PILOT_REGISTRY_RAW_SHA256",
             "PILOT_REGISTRY_PATH",
             "PILOT_ANCHORED_FILES",
             "PILOT_CANONICAL_REMOTE_URL",
             "PILOT_OFFLINE_BUNDLE_TEMPLATE",
             "PILOT_ACTIVATION_ALLOWLIST",
+            "PILOT_CUSTODY_ALLOWLIST",
             "PILOT_CANONICAL_PATHS",
             "PILOT_REGISTRY_CLAIM",
             "PILOT_INDEPENDENT_VERIFICATION_CLAIM",
@@ -1599,7 +1720,14 @@ class ACWAdjudicatorArtifactSecurityTests(unittest.TestCase):
     def test_one_byte_synthetic_arrays_cannot_yield_go(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             fixture = SyntheticEvidence(Path(temporary))
-            decision = adjudicator.adjudicate_manifest(fixture.manifest_path)
+            with mock.patch.object(
+                adjudicator,
+                "_validate_frozen_development_baseline",
+                return_value={"record": fixture.manifest["development_baseline"]},
+            ):
+                decision = adjudicator.adjudicate_manifest(
+                    fixture.manifest_path, fixture.manifest_path
+                )
 
         self.assertFalse(decision["go"])
         self.assertEqual(decision["decision"], "NO_GO")
