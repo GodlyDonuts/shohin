@@ -1,0 +1,475 @@
+{
+  "audit": "researcher_interview_bank_v1",
+  "schema_version": 1,
+  "frozen_date": "2026-07-17",
+  "quarantine": {
+    "training_use": "forbidden",
+    "held_out_evaluation_only": true,
+    "reason": "Researcher-authored capability interview frozen after checkpoint selection. Prompts and gold outputs must never enter pretraining, SFT, preference, replay, or teacher data."
+  },
+  "freshness_audit": {
+    "prompt_turns": 21,
+    "normalized_13_word_spans": 302,
+    "mounted_text_artifacts_scanned": 632,
+    "mounted_text_bytes_scanned": 3433827533,
+    "exact_normalized_13_word_hits": 0,
+    "boundary": "The text-level scan covered mounted project text artifacts. Binary pretraining shards could not be audited with the same text procedure, so this is a fresh held-out interface bank, not proof that its underlying concepts never occurred in pretraining."
+  },
+  "design": {
+    "odd_cases": "Local or one-transition controls.",
+    "even_cases": "Autonomous multi-step state replacement and composition.",
+    "riv20": "Two-turn source-deleted capsule test with separate writer, gold-capsule reader, and model-authored end-to-end scores.",
+    "claim_boundary": "The bank diagnoses local execution, composition, binding, state replacement, source-deleted reuse, exact interface control, and stopping. It is not a public benchmark or a proof of general intelligence."
+  },
+  "cases": [
+    {
+      "id": "RIV01",
+      "parity": "odd",
+      "class": "local_control",
+      "domain": "scalar_arithmetic",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV01 JUNIPER. Register quill holds 58. Replace quill with quill plus 27. Reply exactly quill=<integer>.",
+          "expected_output": "quill=85",
+          "semantic_pattern": "quill\\s*=\\s*(?P<quill>-?\\d+)",
+          "field_types": {"quill": "int"},
+          "expected_state": {"quill": 85},
+          "observable_transitions": [
+            {"name": "add_27", "fields": {"quill": 85}}
+          ],
+          "unchanged_constraints": []
+        }
+      ]
+    },
+    {
+      "id": "RIV02",
+      "parity": "even",
+      "class": "multi_step_composition",
+      "domain": "scalar_arithmetic",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV02 MARBLE. Register quill starts at 58. In order, add 27, multiply the updated value by 4, then subtract 33. Replace quill after every operation. Reply exactly q0=<integer>;q1=<integer>;q2=<integer>;q3=<integer>.",
+          "expected_output": "q0=58;q1=85;q2=340;q3=307",
+          "semantic_pattern": "q0\\s*=\\s*(?P<q0>-?\\d+)\\s*;\\s*q1\\s*=\\s*(?P<q1>-?\\d+)\\s*;\\s*q2\\s*=\\s*(?P<q2>-?\\d+)\\s*;\\s*q3\\s*=\\s*(?P<q3>-?\\d+)",
+          "field_types": {"q0": "int", "q1": "int", "q2": "int", "q3": "int"},
+          "expected_state": {"q0": 58, "q1": 85, "q2": 340, "q3": 307},
+          "observable_transitions": [
+            {"name": "initial", "fields": {"q0": 58}},
+            {"name": "add_27", "fields": {"q1": 85}},
+            {"name": "multiply_4", "fields": {"q2": 340}},
+            {"name": "subtract_33", "fields": {"q3": 307}}
+          ],
+          "unchanged_constraints": []
+        }
+      ]
+    },
+    {
+      "id": "RIV03",
+      "parity": "odd",
+      "class": "local_control",
+      "domain": "scalar_arithmetic",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV03 COPPER. Register ember holds 67. Replace ember with ember times 14. Reply exactly ember=<integer>.",
+          "expected_output": "ember=938",
+          "semantic_pattern": "ember\\s*=\\s*(?P<ember>-?\\d+)",
+          "field_types": {"ember": "int"},
+          "expected_state": {"ember": 938},
+          "observable_transitions": [
+            {"name": "multiply_14", "fields": {"ember": 938}}
+          ],
+          "unchanged_constraints": []
+        }
+      ]
+    },
+    {
+      "id": "RIV04",
+      "parity": "even",
+      "class": "multi_step_composition",
+      "domain": "scalar_arithmetic",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV04 LICHEN. Register ember starts at 67. Multiply by 14, subtract 39 from the updated value, then add 8. Reply exactly e1=<integer>;e2=<integer>;e3=<integer>.",
+          "expected_output": "e1=938;e2=899;e3=907",
+          "semantic_pattern": "e1\\s*=\\s*(?P<e1>-?\\d+)\\s*;\\s*e2\\s*=\\s*(?P<e2>-?\\d+)\\s*;\\s*e3\\s*=\\s*(?P<e3>-?\\d+)",
+          "field_types": {"e1": "int", "e2": "int", "e3": "int"},
+          "expected_state": {"e1": 938, "e2": 899, "e3": 907},
+          "observable_transitions": [
+            {"name": "multiply_14", "fields": {"e1": 938}},
+            {"name": "subtract_39", "fields": {"e2": 899}},
+            {"name": "add_8", "fields": {"e3": 907}}
+          ],
+          "unchanged_constraints": []
+        }
+      ]
+    },
+    {
+      "id": "RIV05",
+      "parity": "odd",
+      "class": "local_control",
+      "domain": "modular_arithmetic",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV05 SAFFRON. Register mote holds 143. Replace mote with the remainder after division by 17. Reply exactly mote=<integer>.",
+          "expected_output": "mote=7",
+          "semantic_pattern": "mote\\s*=\\s*(?P<mote>-?\\d+)",
+          "field_types": {"mote": "int"},
+          "expected_state": {"mote": 7},
+          "observable_transitions": [
+            {"name": "modulo_17", "fields": {"mote": 7}}
+          ],
+          "unchanged_constraints": []
+        }
+      ]
+    },
+    {
+      "id": "RIV06",
+      "parity": "even",
+      "class": "multi_step_composition",
+      "domain": "modular_arithmetic",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV06 TUNDRA. Register mote starts at 143. Take the remainder after division by 17, multiply the updated value by 9, then add 4. Reply exactly m1=<integer>;m2=<integer>;m3=<integer>.",
+          "expected_output": "m1=7;m2=63;m3=67",
+          "semantic_pattern": "m1\\s*=\\s*(?P<m1>-?\\d+)\\s*;\\s*m2\\s*=\\s*(?P<m2>-?\\d+)\\s*;\\s*m3\\s*=\\s*(?P<m3>-?\\d+)",
+          "field_types": {"m1": "int", "m2": "int", "m3": "int"},
+          "expected_state": {"m1": 7, "m2": 63, "m3": 67},
+          "observable_transitions": [
+            {"name": "modulo_17", "fields": {"m1": 7}},
+            {"name": "multiply_9", "fields": {"m2": 63}},
+            {"name": "add_4", "fields": {"m3": 67}}
+          ],
+          "unchanged_constraints": []
+        }
+      ]
+    },
+    {
+      "id": "RIV07",
+      "parity": "odd",
+      "class": "local_control",
+      "domain": "base_conversion",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV07 VELVET. A Horner accumulator is 23 in base 7 and the next digit is 5. Perform one Horner update. Reply exactly acc=<integer>.",
+          "expected_output": "acc=166",
+          "semantic_pattern": "acc\\s*=\\s*(?P<acc>-?\\d+)",
+          "field_types": {"acc": "int"},
+          "expected_state": {"acc": 166},
+          "observable_transitions": [
+            {"name": "horner_update", "fields": {"acc": 166}}
+          ],
+          "unchanged_constraints": []
+        }
+      ]
+    },
+    {
+      "id": "RIV08",
+      "parity": "even",
+      "class": "multi_step_composition",
+      "domain": "base_conversion",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV08 ORCHID. Read the base-7 numeral 325 from left to right using Horner updates. Reply exactly h1=<integer>;h2=<integer>;h3=<integer>.",
+          "expected_output": "h1=3;h2=23;h3=166",
+          "semantic_pattern": "h1\\s*=\\s*(?P<h1>-?\\d+)\\s*;\\s*h2\\s*=\\s*(?P<h2>-?\\d+)\\s*;\\s*h3\\s*=\\s*(?P<h3>-?\\d+)",
+          "field_types": {"h1": "int", "h2": "int", "h3": "int"},
+          "expected_state": {"h1": 3, "h2": 23, "h3": 166},
+          "observable_transitions": [
+            {"name": "read_3", "fields": {"h1": 3}},
+            {"name": "read_2", "fields": {"h2": 23}},
+            {"name": "read_5", "fields": {"h3": 166}}
+          ],
+          "unchanged_constraints": []
+        }
+      ]
+    },
+    {
+      "id": "RIV09",
+      "parity": "odd",
+      "class": "local_control",
+      "domain": "digitwise_arithmetic",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV09 ANVIL. Add the rightmost digits of 4786 and 5967 with incoming carry 0. Reply exactly digit=<integer>;carry=<integer>.",
+          "expected_output": "digit=3;carry=1",
+          "semantic_pattern": "digit\\s*=\\s*(?P<digit>-?\\d+)\\s*;\\s*carry\\s*=\\s*(?P<carry>-?\\d+)",
+          "field_types": {"digit": "int", "carry": "int"},
+          "expected_state": {"digit": 3, "carry": 1},
+          "observable_transitions": [
+            {"name": "rightmost_column", "fields": {"digit": 3, "carry": 1}}
+          ],
+          "unchanged_constraints": []
+        }
+      ]
+    },
+    {
+      "id": "RIV10",
+      "parity": "even",
+      "class": "multi_step_composition",
+      "domain": "digitwise_arithmetic",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV10 CEDAR. Add 4786 and 5967 from right to left. After each column record result-digit/incoming-to-next-column, then include the terminal carry. Reply exactly cells=<d>/<c>,<d>/<c>,<d>/<c>,<d>/<c>;sum=<integer>.",
+          "expected_output": "cells=3/1,5/1,7/1,0/1;sum=10753",
+          "semantic_pattern": "cells\\s*=\\s*(?P<cell1>\\d/\\d)\\s*,\\s*(?P<cell2>\\d/\\d)\\s*,\\s*(?P<cell3>\\d/\\d)\\s*,\\s*(?P<cell4>\\d/\\d)\\s*;\\s*sum\\s*=\\s*(?P<sum>-?\\d+)",
+          "field_types": {"cell1": "string", "cell2": "string", "cell3": "string", "cell4": "string", "sum": "int"},
+          "expected_state": {"cell1": "3/1", "cell2": "5/1", "cell3": "7/1", "cell4": "0/1", "sum": 10753},
+          "observable_transitions": [
+            {"name": "ones_column", "fields": {"cell1": "3/1"}},
+            {"name": "tens_column", "fields": {"cell2": "5/1"}},
+            {"name": "hundreds_column", "fields": {"cell3": "7/1"}},
+            {"name": "thousands_column", "fields": {"cell4": "0/1"}},
+            {"name": "terminal_carry_and_sum", "fields": {"sum": 10753}}
+          ],
+          "unchanged_constraints": []
+        }
+      ]
+    },
+    {
+      "id": "RIV11",
+      "parity": "odd",
+      "class": "local_control",
+      "domain": "symbolic_sequence",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV11 KESTREL. Tiles begin K,L,M,N,Q. Swap positions 2 and 4, counting from 1. Reply exactly tiles=<five letters without separators>.",
+          "expected_output": "tiles=KNMLQ",
+          "semantic_pattern": "tiles\\s*=\\s*(?P<tiles>[A-Za-z]{5})",
+          "field_types": {"tiles": "string"},
+          "expected_state": {"tiles": "KNMLQ"},
+          "observable_transitions": [
+            {"name": "swap_positions_2_4", "fields": {"tiles": "KNMLQ"}}
+          ],
+          "unchanged_constraints": [
+            {"field": "tiles", "index": 0, "expected": "K"},
+            {"field": "tiles", "index": 2, "expected": "M"},
+            {"field": "tiles", "index": 4, "expected": "Q"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RIV12",
+      "parity": "even",
+      "class": "multi_step_composition",
+      "domain": "symbolic_sequence",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV12 COBALT. Tiles begin K,L,M,N,Q. Swap positions 2 and 4, rotate the updated tiles left once, then swap positions 1 and 5. Reply exactly s1=<letters>;s2=<letters>;s3=<letters>.",
+          "expected_output": "s1=KNMLQ;s2=NMLQK;s3=KMLQN",
+          "semantic_pattern": "s1\\s*=\\s*(?P<s1>[A-Za-z]{5})\\s*;\\s*s2\\s*=\\s*(?P<s2>[A-Za-z]{5})\\s*;\\s*s3\\s*=\\s*(?P<s3>[A-Za-z]{5})",
+          "field_types": {"s1": "string", "s2": "string", "s3": "string"},
+          "expected_state": {"s1": "KNMLQ", "s2": "NMLQK", "s3": "KMLQN"},
+          "observable_transitions": [
+            {"name": "swap_positions_2_4", "fields": {"s1": "KNMLQ"}},
+            {"name": "rotate_left", "fields": {"s2": "NMLQK"}},
+            {"name": "swap_positions_1_5", "fields": {"s3": "KMLQN"}}
+          ],
+          "unchanged_constraints": []
+        }
+      ]
+    },
+    {
+      "id": "RIV13",
+      "parity": "odd",
+      "class": "local_control",
+      "domain": "string_edit",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV13 WILLOW. Insert uv immediately after the first three characters of cobalt. Reply exactly text=<string>.",
+          "expected_output": "text=cobuvalt",
+          "semantic_pattern": "text\\s*=\\s*(?P<text>[A-Za-z]+)",
+          "field_types": {"text": "string"},
+          "expected_state": {"text": "cobuvalt"},
+          "observable_transitions": [
+            {"name": "insert_uv", "fields": {"text": "cobuvalt"}}
+          ],
+          "unchanged_constraints": []
+        }
+      ]
+    },
+    {
+      "id": "RIV14",
+      "parity": "even",
+      "class": "multi_step_composition",
+      "domain": "string_edit",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV14 FLINT. Start with cobalt. Insert uv after the first three characters, replace the final two characters with RX, then reverse only the first three characters. Reply exactly s1=<string>;s2=<string>;s3=<string>.",
+          "expected_output": "s1=cobuvalt;s2=cobuvaRX;s3=bocuvaRX",
+          "semantic_pattern": "s1\\s*=\\s*(?P<s1>[A-Za-z]+)\\s*;\\s*s2\\s*=\\s*(?P<s2>[A-Za-z]+)\\s*;\\s*s3\\s*=\\s*(?P<s3>[A-Za-z]+)",
+          "field_types": {"s1": "string", "s2": "string", "s3": "string"},
+          "expected_state": {"s1": "cobuvalt", "s2": "cobuvaRX", "s3": "bocuvaRX"},
+          "observable_transitions": [
+            {"name": "insert_uv", "fields": {"s1": "cobuvalt"}},
+            {"name": "replace_suffix", "fields": {"s2": "cobuvaRX"}},
+            {"name": "reverse_prefix", "fields": {"s3": "bocuvaRX"}}
+          ],
+          "unchanged_constraints": []
+        }
+      ]
+    },
+    {
+      "id": "RIV15",
+      "parity": "odd",
+      "class": "local_control",
+      "domain": "bit_sequence",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV15 QUARTZ. Bits begin 10110. Flip bit 3, counting from the left starting at 1. Reply exactly bits=<five bits>.",
+          "expected_output": "bits=10010",
+          "semantic_pattern": "bits\\s*=\\s*(?P<bits>[01]{5})",
+          "field_types": {"bits": "string"},
+          "expected_state": {"bits": "10010"},
+          "observable_transitions": [
+            {"name": "flip_bit_3", "fields": {"bits": "10010"}}
+          ],
+          "unchanged_constraints": [
+            {"field": "bits", "index": 0, "expected": "1"},
+            {"field": "bits", "index": 1, "expected": "0"},
+            {"field": "bits", "index": 3, "expected": "1"},
+            {"field": "bits", "index": 4, "expected": "0"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RIV16",
+      "parity": "even",
+      "class": "multi_step_composition",
+      "domain": "bit_sequence",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV16 HARBOR. Bits begin 10110. Flip bit 3, rotate the updated five bits right once, then XOR with 00111. Reply exactly b1=<bits>;b2=<bits>;b3=<bits>.",
+          "expected_output": "b1=10010;b2=01001;b3=01110",
+          "semantic_pattern": "b1\\s*=\\s*(?P<b1>[01]{5})\\s*;\\s*b2\\s*=\\s*(?P<b2>[01]{5})\\s*;\\s*b3\\s*=\\s*(?P<b3>[01]{5})",
+          "field_types": {"b1": "string", "b2": "string", "b3": "string"},
+          "expected_state": {"b1": "10010", "b2": "01001", "b3": "01110"},
+          "observable_transitions": [
+            {"name": "flip_bit_3", "fields": {"b1": "10010"}},
+            {"name": "rotate_right", "fields": {"b2": "01001"}},
+            {"name": "xor_00111", "fields": {"b3": "01110"}}
+          ],
+          "unchanged_constraints": []
+        }
+      ]
+    },
+    {
+      "id": "RIV17",
+      "parity": "odd",
+      "class": "local_control",
+      "domain": "map_update",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV17 MAPLE. A map begins a=7,b=12,c=4. Replace b with a+c while leaving other fields unchanged. Reply exactly a=<integer>;b=<integer>;c=<integer>.",
+          "expected_output": "a=7;b=11;c=4",
+          "semantic_pattern": "a\\s*=\\s*(?P<a>-?\\d+)\\s*;\\s*b\\s*=\\s*(?P<b>-?\\d+)\\s*;\\s*c\\s*=\\s*(?P<c>-?\\d+)",
+          "field_types": {"a": "int", "b": "int", "c": "int"},
+          "expected_state": {"a": 7, "b": 11, "c": 4},
+          "observable_transitions": [
+            {"name": "replace_b", "fields": {"a": 7, "b": 11, "c": 4}}
+          ],
+          "unchanged_constraints": [
+            {"field": "a", "expected": 7},
+            {"field": "c", "expected": 4}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RIV18",
+      "parity": "even",
+      "class": "multi_step_composition",
+      "domain": "map_update",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV18 PEWTER. A map begins a=7,b=12,c=4. Replace b with a+c, then replace a with the updated b plus 2, then replace c with the updated a minus the updated b. Reply exactly a=<integer>;b=<integer>;c=<integer>.",
+          "expected_output": "a=13;b=11;c=2",
+          "semantic_pattern": "a\\s*=\\s*(?P<a>-?\\d+)\\s*;\\s*b\\s*=\\s*(?P<b>-?\\d+)\\s*;\\s*c\\s*=\\s*(?P<c>-?\\d+)",
+          "field_types": {"a": "int", "b": "int", "c": "int"},
+          "expected_state": {"a": 13, "b": 11, "c": 2},
+          "observable_transitions": [
+            {"name": "final_state_after_three_replacements", "fields": {"a": 13, "b": 11, "c": 2}}
+          ],
+          "unchanged_constraints": [],
+          "observability_boundary": "The prompt requests only the final map, so hidden per-operation divergence cannot be localized from this transcript."
+        }
+      ]
+    },
+    {
+      "id": "RIV19",
+      "parity": "odd",
+      "class": "local_control",
+      "domain": "source_deleted_state",
+      "turns": [
+        {
+          "id": "main",
+          "prompt": "RIV19 TOPAZ. The only available capsule is memo{r=225;seal=KITE}. Subtract 37 from r, then add 6 to the updated r. Reply exactly r=<integer>.",
+          "expected_output": "r=194",
+          "semantic_pattern": "r\\s*=\\s*(?P<r>-?\\d+)",
+          "field_types": {"r": "int"},
+          "expected_state": {"r": 194},
+          "observable_transitions": [
+            {"name": "final_state_after_two_updates", "fields": {"r": 194}}
+          ],
+          "unchanged_constraints": [],
+          "observability_boundary": "The prompt requests only final r, so the subtraction and addition cannot be separately localized from this transcript."
+        }
+      ]
+    },
+    {
+      "id": "RIV20",
+      "parity": "even",
+      "class": "source_deleted_composition",
+      "domain": "source_deleted_state",
+      "turns": [
+        {
+          "id": "writer",
+          "prompt": "RIV20-A BANYAN. Begin with r=31. Add 14, then multiply the updated r by 5. Emit exactly memo{r=<integer>;seal=KITE} and emit no source text.",
+          "expected_output": "memo{r=225;seal=KITE}",
+          "semantic_pattern": "memo\\s*\\{\\s*r\\s*=\\s*(?P<r>-?\\d+)\\s*;\\s*seal\\s*=\\s*(?P<seal>[A-Za-z]+)\\s*\\}",
+          "field_types": {"r": "int", "seal": "string"},
+          "expected_state": {"r": 225, "seal": "KITE"},
+          "observable_transitions": [
+            {"name": "commit_after_two_updates", "fields": {"r": 225, "seal": "KITE"}}
+          ],
+          "unchanged_constraints": [
+            {"field": "seal", "expected": "KITE"}
+          ]
+        },
+        {
+          "id": "reader",
+          "prompt": "RIV20-B BANYAN. The source is unavailable. Using only the preceding capsule, subtract 37 from r, then add 6 to the updated r. Reply exactly r=<integer>.",
+          "expected_output": "r=194",
+          "semantic_pattern": "r\\s*=\\s*(?P<r>-?\\d+)",
+          "field_types": {"r": "int"},
+          "expected_state": {"r": 194},
+          "observable_transitions": [
+            {"name": "source_deleted_read_and_update", "fields": {"r": 194}}
+          ],
+          "unchanged_constraints": [],
+          "source_deleted": true,
+          "gold_capsule": "memo{r=225;seal=KITE}"
+        }
+      ]
+    }
+  ]
+}
