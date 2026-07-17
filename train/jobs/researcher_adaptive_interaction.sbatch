@@ -2,7 +2,7 @@
 #SBATCH -J researcher-adaptive
 #SBATCH -p normal
 #SBATCH --gres=gpu:nvidia_h100_pcie:1
-#SBATCH --exclude=evc22,evc23,evc26,evc31,evc32,evc36,evc44,evc45,evc49,evc50
+#SBATCH --exclude=evc22,evc23,evc26,evc31,evc32,evc36,evc37,evc44,evc45,evc49,evc50
 #SBATCH -c 4
 #SBATCH --mem=48G
 #SBATCH -t 0:35:00
@@ -25,7 +25,8 @@ done
 [ ! -e "$OUT" ] || { echo "[adaptive-interaction] refusing existing output: $OUT" >&2; exit 2; }
 
 cd "$BASE/train"
-timeout --kill-after=10s 90s "$PY" - <<'PY'
+for attempt in 1 2 3; do
+  if timeout --kill-after=10s 90s "$PY" - <<'PY'
 import sys
 import torch
 
@@ -35,6 +36,16 @@ if not torch.cuda.is_available():
 torch.empty(1, device="cuda")
 print(torch.cuda.get_device_name(0), flush=True)
 PY
+  then
+    break
+  fi
+  status=$?
+  if [[ "$attempt" -eq 3 ]]; then
+    echo "[adaptive-interaction] CUDA preflight failed after three attempts" >&2
+    exit "$status"
+  fi
+  sleep 20
+done
 
 "$PY" researcher_adaptive_interaction.py \
   --model "raw200=$RAW200" \
