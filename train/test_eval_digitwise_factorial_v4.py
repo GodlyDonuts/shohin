@@ -444,6 +444,19 @@ def test_source_binding_accepts_exact_commit_tree_blob_chain(
     assert evaluator.validate_source_binding(frozen, tmp_path, contract) == binding
 
 
+def test_wrapper_clears_inherited_special_bits_before_snapshot_seal() -> None:
+    wrapper = (
+        Path(__file__).resolve().parent / "jobs" / "eval_digitwise_factorial_v4.sbatch"
+    ).read_text(encoding="utf-8")
+    clear_special = 'find "$SNAP" -exec chmod a-s {} +'
+    seal_files = 'find "$SNAP" -type f -exec chmod 0400 {} +'
+    seal_directories = 'find "$SNAP" -type d -exec chmod 0500 {} +'
+    assert wrapper.index(clear_special) < wrapper.index(seal_files)
+    assert wrapper.index(seal_files) < wrapper.index(seal_directories)
+    assert "snapshot file did not seal mode 0400" in wrapper
+    assert "snapshot directory did not seal mode 0500" in wrapper
+
+
 def test_checkpoint_metadata_rejects_wrong_arm_and_preflight() -> None:
     contract = evaluator.ARM_CONTRACTS["iid"]
     checkpoint = {

@@ -328,8 +328,23 @@ with path.open("xb") as sink:
 PY
 SOURCE_BINDING_SHA256=$(sha256_file "$SNAP/input/source_binding.json")
 
+# Lustre parents carry SGID. Coreutils chmod preserves that bit on directories,
+# so clear all special bits explicitly before applying the frozen modes.
+find "$SNAP" -exec chmod a-s {} +
 find "$SNAP" -type f -exec chmod 0400 {} +
 find "$SNAP" -type d -exec chmod 0500 {} +
+while IFS= read -r -d '' path; do
+  [ "$(stat -c %a "$path")" = 400 ] || {
+    echo "[factorial-eval] snapshot file did not seal mode 0400: $path" >&2
+    exit 10
+  }
+done < <(find "$SNAP" -type f -print0)
+while IFS= read -r -d '' path; do
+  [ "$(stat -c %a "$path")" = 500 ] || {
+    echo "[factorial-eval] snapshot directory did not seal mode 0500: $path" >&2
+    exit 10
+  }
+done < <(find "$SNAP" -type d -print0)
 
 export OPENBLAS_NUM_THREADS=1
 export MKL_NUM_THREADS=1
