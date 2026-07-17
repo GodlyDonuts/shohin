@@ -40,16 +40,24 @@ import torch
 
 MANIFEST_SCHEMA = "r12_acw_adjudication_manifest_v4"
 MANIFEST_PROTOCOL = "R12-ACW-ADJUDICATION-MANIFEST-v4"
-DEVELOPMENT_MANIFEST_SCHEMA = "r12_acw_development_baseline_manifest_v1"
-DEVELOPMENT_MANIFEST_PROTOCOL = "R12-ACW-DEVELOPMENT-BASELINE-MANIFEST-v1"
-DEVELOPMENT_BASELINE_SCHEMA = "r12_acw_development_baseline_v2"
-DEVELOPMENT_BASELINE_PROTOCOL = "R12-ACW-DEVELOPMENT-BASELINE-v2"
+DEVELOPMENT_MANIFEST_SCHEMA = "r12_acw_development_baseline_manifest_v2"
+DEVELOPMENT_MANIFEST_PROTOCOL = "R12-ACW-DEVELOPMENT-BASELINE-MANIFEST-v2"
+DIRECT_STATE_MANIFEST_SCHEMA = "r12_acw_direct_state_manifest_v1"
+DIRECT_STATE_MANIFEST_PROTOCOL = "R12-ACW-DIRECT-STATE-MANIFEST-v1"
+DIRECT_STATE_DECISION_SCHEMA = "r12_acw_direct_state_decision_v1"
+DIRECT_STATE_DECISION_PROTOCOL = "R12-ACW-DIRECT-STATE-DECISION-v1"
+PHASE2_AUTHORIZATION_SCHEMA = "r12_acw_phase2_authorization_v1"
+PHASE2_AUTHORIZATION_PROTOCOL = "R12-ACW-PHASE2-AUTHORIZATION-v1"
+ATTEMPT_START_SCHEMA = "r12_acw_development_attempt_start_v1"
+ATTEMPT_START_PROTOCOL = "R12-ACW-DEVELOPMENT-ATTEMPT-START-v1"
+DEVELOPMENT_BASELINE_SCHEMA = "r12_acw_development_baseline_v3"
+DEVELOPMENT_BASELINE_PROTOCOL = "R12-ACW-DEVELOPMENT-BASELINE-v3"
 CONFIRMATION_AUTHORIZATION_PROTOCOL = "R12-ACW-CONFIRMATION-AUTHORIZATION-v1"
 DECISION_SCHEMA = "r12_acw_adjudication_decision_v4"
 DECISION_PROTOCOL = "R12-ACW-ADJUDICATION-DECISION-v4"
 EVALUATION_PROTOCOL = "R12-ACW-CAUSAL-EVALUATION-v2"
 GENERATOR_PROTOCOL = "R12-ACW-HIDDEN-BASIS-v3"
-TRAINING_PROTOCOL = "R12-ACW-TRAINER-v2"
+TRAINING_PROTOCOL = "R12-ACW-TRAINER-v3"
 TRAINER_BUNDLE_PROTOCOL = "R12-ACW-TRAINER-BUNDLE-v4"
 PILOT_PROTOCOL = "R12-ACW-CGBR-PILOT-v6"
 PILOT_COMPARISON_PROTOCOL = "R12-ACW-PILOT-REPLAY-COMPARISON-v6"
@@ -61,6 +69,7 @@ INFERENCE_LEDGER_PROTOCOL = "R12-ACW-INFERENCE-RESOURCE-LEDGER-v2"
 PILOT_SCIENTIFIC_COMMIT = "5f5e3cd0d69da67335ad1f1f485c6e3d8f00ff8e"
 PILOT_ANCHOR_COMMIT = "02c9d4ae57093b6c60d90580503e2a01c7c81619"
 PILOT_EXECUTION_COMMIT = "38ebad21cf9c4ef98b172394891c2a35ef671b12"
+PILOT_CUSTODY_COMMIT = "7433062211c4ad0371a975019c37625f7d811b27"
 PILOT_REGISTRY_RAW_SHA256 = (
     "66597cf5381fdc11d4ecd73a93d9bbd2fa68417a77b09c1330ecfeb73652451c"
 )
@@ -83,6 +92,20 @@ PILOT_CUSTODY_ALLOWLIST = (
     "pipeline/adjudicate_acw_hidden_basis.py",
     "pipeline/test_acw_hidden_basis_training.py",
     "pipeline/test_adjudicate_acw_hidden_basis.py",
+)
+PILOT_DEVELOPMENT_ALLOWLIST = (
+    "AGENT_RUNBOOK.md",
+    "R12_ACW_DEVELOPMENT_PLAN_V1.json",
+    "pipeline/acw_hidden_basis_training.py",
+    "pipeline/adjudicate_acw_hidden_basis.py",
+    "pipeline/build_acw_development_manifest.py",
+    "pipeline/evaluate_acw_hidden_basis.py",
+    "pipeline/jobs/run_acw_development_stokes.sbatch",
+    "pipeline/jobs/run_acw_terminal_monitor_stokes.sbatch",
+    "pipeline/test_acw_hidden_basis_training.py",
+    "pipeline/test_adjudicate_acw_hidden_basis.py",
+    "pipeline/test_build_acw_development_manifest.py",
+    "pipeline/test_acw_g_custody.py",
 )
 PILOT_CANONICAL_PATHS = {
     "dataset": "artifacts/r12/acw_pilot_domain_v3_runtime_v2",
@@ -122,13 +145,23 @@ PILOT_SCIENTIFIC_PATHS = (
     "pipeline/jobs/run_acw_pilot_stokes.sbatch",
     "pipeline/jobs/verify_acw_pilot_stokes.sbatch",
 )
+DEVELOPMENT_PLAN_PATH = "R12_ACW_DEVELOPMENT_PLAN_V1.json"
+DEVELOPMENT_PLAN_RAW_SHA256 = (
+    "39f91a28f4ac0a593ecabd19942e598a4474d777baccb7367d0bbfd73128335d"
+)
+CANONICAL_DEVELOPMENT_RUNTIME_SHA256 = (
+    "0e91de0e3dbca24ea4f04b9b03398a91486b93b31eff5a3ba4574dd43eaa677f"
+)
+DEVELOPMENT_EXECUTION_PATHS = (
+    DEVELOPMENT_PLAN_PATH,
+    "pipeline/build_acw_development_manifest.py",
+    "pipeline/jobs/run_acw_development_stokes.sbatch",
+    "pipeline/jobs/run_acw_terminal_monitor_stokes.sbatch",
+)
+ACW_SCIENTIFIC_PATHS = (*PILOT_SCIENTIFIC_PATHS, *DEVELOPMENT_EXECUTION_PATHS)
 
 DEVELOPMENT_SEEDS = (2026071601, 2026071602, 2026071603)
-CONFIRMATION_COMMITMENTS = (
-    "35102b3974877e8547b9b9c74156c63b71d467820f752301be21721b0f58e9a1",
-    "737a6d6a76c3cdbfd07d84c83cfec5491cf13afeb8e077421af789cb652baa7f",
-    "0e60eb70f2193ea57710db1f2cf9d6f93cf9b8e310b1b2cf5f4ea2694851854d",
-)
+CONFIRMATION_COMMITMENTS: tuple[str, ...] = ()
 
 SCORED_ARMS = (
     "acw",
@@ -463,6 +496,9 @@ TRAINING_EVIDENCE_KEYS = {
     "labels",
     "resource_ledger",
     "resource_measurements",
+    "canonical_runtime_sha256",
+    "development_plan_sha256",
+    "execution_receipt",
 }
 NATIVE_RESOURCE_LEDGER_KEYS = {
     "trainable_parameters",
@@ -901,18 +937,44 @@ def _adjudicator_activation_commit(root: Path) -> str:
             "pilot_anchor_invalid",
             "pilot activation E differs from its exact allowlist",
         )
-    if activation_commit != PILOT_EXECUTION_COMMIT:
-        if _anchor_commit_parents(root, activation_commit) != [PILOT_EXECUTION_COMMIT]:
+    if _anchor_commit_parents(root, PILOT_CUSTODY_COMMIT) != [PILOT_EXECUTION_COMMIT]:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot custody F must have E as its sole parent",
+        )
+    if _anchor_diff(root, PILOT_EXECUTION_COMMIT, PILOT_CUSTODY_COMMIT) != [
+        ("M", relative) for relative in sorted(PILOT_CUSTODY_ALLOWLIST)
+    ]:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot custody F differs from its exact allowlist",
+        )
+    if activation_commit == PILOT_EXECUTION_COMMIT:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot activation requires custody successor F or G",
+        )
+    if activation_commit != PILOT_CUSTODY_COMMIT:
+        if _anchor_commit_parents(root, activation_commit) != [PILOT_CUSTODY_COMMIT]:
             raise EvidenceError(
                 "pilot_anchor_invalid",
-                "pilot custody F must have E as its sole parent",
+                "development custody G must have F as its sole parent",
             )
-        if _anchor_diff(root, PILOT_EXECUTION_COMMIT, activation_commit) != [
-            ("M", relative) for relative in sorted(PILOT_CUSTODY_ALLOWLIST)
-        ]:
+        added = {
+            DEVELOPMENT_PLAN_PATH,
+            "pipeline/build_acw_development_manifest.py",
+            "pipeline/jobs/run_acw_development_stokes.sbatch",
+            "pipeline/test_build_acw_development_manifest.py",
+            "pipeline/test_acw_g_custody.py",
+        }
+        expected = [
+            ("A" if relative in added else "M", relative)
+            for relative in sorted(PILOT_DEVELOPMENT_ALLOWLIST)
+        ]
+        if _anchor_diff(root, PILOT_CUSTODY_COMMIT, activation_commit) != expected:
             raise EvidenceError(
                 "pilot_anchor_invalid",
-                "pilot custody F differs from its exact allowlist",
+                "development custody G differs from its exact allowlist",
             )
     absent = _anchor_git_text(
         root,
@@ -982,6 +1044,7 @@ def _adjudicator_activation_commit(root: Path) -> str:
         set(PILOT_SCIENTIFIC_PATHS)
         | set(PILOT_ACTIVATION_ALLOWLIST)
         | set(PILOT_CUSTODY_ALLOWLIST)
+        | set(PILOT_DEVELOPMENT_ALLOWLIST)
         | {PILOT_REGISTRY_PATH}
     )
     status = _anchor_git_text(
@@ -1130,7 +1193,7 @@ def _load_adjudicator_pilot_anchor() -> dict[str, Any]:
             relative: hashlib.sha256(
                 _anchor_git_blob(root, activation_commit, relative)
             ).hexdigest()
-            for relative in PILOT_SCIENTIFIC_PATHS
+            for relative in ACW_SCIENTIFIC_PATHS
         },
     }
     artifact_files = _object(
@@ -1518,19 +1581,10 @@ def _registered_identity(identity: Any, label: str) -> tuple[str, int]:
             )
         return "development", DEVELOPMENT_SEEDS.index(seed)
     if kind == "confirmation":
-        _expect_keys(value, {"kind", "index", "commitment"}, label)
-        index = _integer(value["index"], f"{label}.index", minimum=0)
-        if index >= len(CONFIRMATION_COMMITMENTS):
-            raise EvidenceError(
-                "unregistered_seed_identity", f"{label} index is not registered"
-            )
-        commitment = _hash(value["commitment"], f"{label}.commitment")
-        if commitment != CONFIRMATION_COMMITMENTS[index]:
-            raise EvidenceError(
-                "confirmation_commitment_mismatch",
-                f"{label} commitment does not match registered index {index}",
-            )
-        return "confirmation", index
+        raise EvidenceError(
+            "confirmation_not_authorized",
+            f"{label} requires a future commit-bound beacon schema",
+        )
     raise EvidenceError(
         "unregistered_seed_identity", f"{label} has unknown kind {kind!r}"
     )
@@ -1550,7 +1604,19 @@ def _validate_dataset_manifest(
     identity_key = _registered_identity(
         manifest["seed_identity"], f"{label}.seed_identity"
     )
-    _hash(manifest["seed_fingerprint"], f"{label}.seed_fingerprint")
+    seed_fingerprint = _hash(manifest["seed_fingerprint"], f"{label}.seed_fingerprint")
+    if identity_key[0] == "development":
+        from pipeline.generate_acw_hidden_basis import development_seed_material
+
+        registered_seed = DEVELOPMENT_SEEDS[identity_key[1]]
+        expected_fingerprint = hashlib.sha256(
+            development_seed_material(registered_seed)
+        ).hexdigest()
+        if seed_fingerprint != expected_fingerprint:
+            raise EvidenceError(
+                "dataset_seed_fingerprint_mismatch",
+                f"{label} fingerprint is not derived from its registered seed",
+            )
     frozen_values = {
         "field_size": 17,
         "dimension": 3,
@@ -1912,12 +1978,207 @@ def _validate_dataset_tree(
     }
 
 
+def _freeze_private_tree(root: Path) -> None:
+    for path in sorted(root.rglob("*"), reverse=True):
+        if path.is_symlink():
+            raise EvidenceError(
+                "private_replay_tree_mismatch",
+                f"private regeneration contains symlink {path}",
+            )
+        if path.is_file():
+            path.chmod(0o444)
+        elif path.is_dir():
+            path.chmod(0o555)
+        else:
+            raise EvidenceError(
+                "private_replay_tree_mismatch",
+                f"private regeneration contains special entry {path}",
+            )
+    root.chmod(0o555)
+
+
+def _tree_bytes(
+    root: Path, label: str
+) -> tuple[dict[str, tuple[bytes, int]], dict[str, int]]:
+    """Read one regular, symlink-free artifact tree through stable file opens."""
+
+    if not root.is_dir() or root.is_symlink():
+        raise EvidenceError(
+            "private_replay_tree_mismatch", f"{label} is not a directory"
+        )
+    files: dict[str, tuple[bytes, int]] = {}
+    directories: dict[str, int] = {".": stat.S_IMODE(root.stat().st_mode)}
+    for path in sorted(root.rglob("*")):
+        relative = path.relative_to(root).as_posix()
+        if path.is_symlink():
+            raise EvidenceError(
+                "private_replay_tree_mismatch", f"{label} contains symlink {relative}"
+            )
+        if path.is_dir():
+            directories[relative] = stat.S_IMODE(path.stat().st_mode)
+            continue
+        if not path.is_file():
+            raise EvidenceError(
+                "private_replay_tree_mismatch",
+                f"{label} contains non-regular entry {relative}",
+            )
+        raw, _ = _read_binary_regular_file(path, f"{label}.{relative}")
+        metadata = path.stat()
+        if metadata.st_nlink != 1:
+            raise EvidenceError(
+                "private_replay_tree_mismatch",
+                f"{label} contains hard-linked file {relative}",
+            )
+        files[relative] = (raw, stat.S_IMODE(metadata.st_mode))
+    return files, directories
+
+
+def _require_byte_identical_tree(
+    submitted: Path,
+    regenerated: Path,
+    label: str,
+) -> dict[str, Any]:
+    """Require complete byte equality against a verifier-private regeneration."""
+
+    submitted_files, submitted_directories = _tree_bytes(
+        submitted, f"{label}.submitted"
+    )
+    regenerated_files, regenerated_directories = _tree_bytes(
+        regenerated, f"{label}.regenerated"
+    )
+    if (
+        set(submitted_files) != set(regenerated_files)
+        or submitted_directories != regenerated_directories
+    ):
+        raise EvidenceError(
+            "private_replay_tree_mismatch",
+            f"{label} submitted tree registry differs from private regeneration",
+        )
+    mismatches = [
+        relative
+        for relative in sorted(submitted_files)
+        if submitted_files[relative] != regenerated_files[relative]
+    ]
+    if mismatches:
+        raise EvidenceError(
+            "private_replay_byte_mismatch",
+            f"{label} differs from private regeneration at {mismatches[0]}",
+        )
+    digest = hashlib.sha256()
+    for relative, (raw, mode) in sorted(regenerated_files.items()):
+        record = canonical_json_bytes(
+            {
+                "path": relative,
+                "bytes": len(raw),
+                "mode": f"{mode:04o}",
+                "sha256": hashlib.sha256(raw).hexdigest(),
+            }
+        )
+        digest.update(len(record).to_bytes(8, "big"))
+        digest.update(record)
+    return {
+        "files": len(regenerated_files),
+        "directories": len(regenerated_directories),
+        "tree_sha256": digest.hexdigest(),
+        "byte_identical": True,
+    }
+
+
+def _regenerate_private_development_dataset(
+    destination: Path,
+    *,
+    identity_key: tuple[str, int],
+    submitted_root: Path,
+    label: str,
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    """Regenerate a registered public domain without consuming submitted bytes."""
+
+    if identity_key[0] != "development":
+        raise EvidenceError(
+            "private_replay_identity_mismatch",
+            f"{label} is not a registered development identity",
+        )
+    from pipeline.generate_acw_hidden_basis import (
+        development_seed_material,
+        generate_dataset,
+    )
+
+    seed = DEVELOPMENT_SEEDS[identity_key[1]]
+    seed_identity = {"kind": "development", "seed": seed}
+    manifest = generate_dataset(
+        destination,
+        development_seed_material(seed),
+        seed_identity=seed_identity,
+    )
+    _freeze_private_tree(destination)
+    tree = _require_byte_identical_tree(
+        submitted_root,
+        destination,
+        f"{label}.dataset",
+    )
+    regenerated_identity, summary = _validate_dataset_manifest(
+        manifest, f"{label}.private_dataset.manifest"
+    )
+    if regenerated_identity != identity_key:
+        raise EvidenceError(
+            "private_replay_identity_mismatch",
+            f"{label} private dataset identity differs",
+        )
+    _validate_dataset_tree(destination, manifest, f"{label}.private_dataset")
+    return manifest, summary, tree
+
+
+def _regenerate_private_trainer_bundle(
+    destination: Path,
+    *,
+    private_dataset_root: Path,
+    private_dataset_manifest: dict[str, Any],
+    private_dataset_summary: dict[str, Any],
+    submitted_root: Path,
+    schedule_kind: str,
+    label: str,
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    """Rebuild one trainer bundle from private truth and anchored schedule bytes."""
+
+    from pipeline.acw_hidden_basis_training import load_committed_pilot_anchor
+    from pipeline.freeze_acw_curriculum import build_trainer_bundle
+
+    anchor = load_committed_pilot_anchor(verify_all_artifacts=True)
+    schedule_key = f"pilot/{schedule_kind}"
+    schedule_path = Path(anchor["bundle_paths"][schedule_key])
+    pilot_report_path = Path(anchor["bundle_paths"]["pilot/report.json"])
+    manifest = build_trainer_bundle(
+        private_dataset_root,
+        schedule_path,
+        destination,
+        canonical=True,
+        pilot_report_path=pilot_report_path,
+    )
+    _freeze_private_tree(destination)
+    tree = _require_byte_identical_tree(
+        submitted_root,
+        destination,
+        f"{label}.trainer_bundle",
+    )
+    summary = _validate_trainer_bundle(
+        destination,
+        manifest,
+        private_dataset_manifest,
+        private_dataset_summary,
+        f"{label}.private_trainer_bundle.manifest",
+        dataset_root=private_dataset_root,
+    )
+    return manifest, summary, tree
+
+
 def _validate_curriculum(
     root: Path,
     files: dict[str, Any],
     initial_queries: np.ndarray,
     initial_answers: np.ndarray,
     label: str,
+    *,
+    oracle_answers: np.ndarray | None = None,
 ) -> tuple[str, str]:
     if set(files) != {"curriculum.jsonl"}:
         raise EvidenceError(
@@ -1952,6 +2213,11 @@ def _validate_curriculum(
     round_counts = np.zeros(13, dtype=np.int64)
     round_zero: list[list[tuple[int, int]]] = [[] for _ in range(4096)]
     schedule_digest = hashlib.sha256()
+    if oracle_answers is not None and oracle_answers.shape != (4096, 24):
+        raise EvidenceError(
+            "bundle_curriculum_mismatch",
+            f"{label} oracle answer bank has the wrong shape",
+        )
     for index, line in enumerate(lines):
         row = _parse_json(line, f"{label}.curriculum[{index}]")
         _expect_keys(
@@ -1990,6 +2256,13 @@ def _validate_curriculum(
             raise EvidenceError(
                 "bundle_curriculum_mismatch",
                 f"{label} curriculum value is out of range",
+            )
+        if oracle_answers is not None and answer != int(
+            oracle_answers[history_id, query_id]
+        ):
+            raise EvidenceError(
+                "bundle_curriculum_answer_mismatch",
+                f"{label} curriculum answer differs from replayed oracle truth",
             )
         pair = (history_id, query_id)
         if pair in pairs:
@@ -2230,6 +2503,8 @@ def _validate_trainer_bundle(
     dataset_manifest: dict[str, Any],
     dataset_summary: dict[str, Any],
     label: str,
+    *,
+    dataset_root: Path | None = None,
 ) -> dict[str, Any]:
     anchor = _load_adjudicator_pilot_anchor()
     summary = _validate_unanchored_trainer_bundle_structure(
@@ -2238,6 +2513,7 @@ def _validate_trainer_bundle(
         dataset_manifest,
         dataset_summary,
         label,
+        dataset_root=dataset_root,
     )
     if summary["pilot_scientific_identity"] != anchor["scientific_identity"]:
         raise EvidenceError(
@@ -2268,6 +2544,8 @@ def _validate_unanchored_trainer_bundle_structure(
     dataset_manifest: dict[str, Any],
     dataset_summary: dict[str, Any],
     label: str,
+    *,
+    dataset_root: Path | None = None,
 ) -> dict[str, Any]:
     _expect_keys(manifest, BUNDLE_KEYS, label)
     payload_hash = _verify_payload_hash(manifest, label)
@@ -2407,12 +2685,29 @@ def _validate_unanchored_trainer_bundle_structure(
         raise EvidenceError(
             "bundle_curriculum_mismatch", f"{label} repeats an initial query"
         )
+    oracle_answers = None
+    if dataset_root is not None:
+        oracle_record = _object(
+            dataset_manifest["arrays"].get("oracle/train/public_answers.npy"),
+            f"{label}.source_oracle_answers",
+        )
+        oracle_answers = np.asarray(
+            _load_bound_array(
+                dataset_root,
+                "oracle/train/public_answers.npy",
+                oracle_record,
+                f"{label}.source_oracle_answers",
+                expected_shape=(4096, 24),
+                expected_dtype="int8",
+            )
+        )
     curriculum_hash, derived_schedule_hash = _validate_curriculum(
         root,
         _object(manifest["files"], f"{label}.files"),
         initial_queries,
         initial_answers,
         label,
+        oracle_answers=oracle_answers,
     )
     if derived_schedule_hash != schedule_hash:
         raise EvidenceError(
@@ -2531,8 +2826,10 @@ def _checkpoint_arms(logical_arm: str) -> tuple[str, str]:
 def _expected_optimizer_seed(seed_identity: dict[str, Any]) -> int:
     if seed_identity["kind"] == "development":
         return seed_identity["seed"]
-    material = b"R12-ACW-OPT-v1\x00" + seed_identity["commitment"].encode("ascii")
-    return int.from_bytes(hashlib.sha256(material).digest()[:8], "big") % 2**63
+    raise EvidenceError(
+        "confirmation_not_authorized",
+        "confirmation optimizer derivation requires a future commit-bound beacon schema",
+    )
 
 
 def _validate_checkpoint_artifact(
@@ -2639,10 +2936,21 @@ def _validate_checkpoint_artifact(
             "labels": training_report.get("labels"),
             "resource_ledger": training_report.get("resource_ledger"),
             "resource_measurements": training_report.get("resource_measurements"),
+            "canonical_runtime_sha256": training_report.get("canonical_runtime_sha256"),
+            "development_plan_sha256": training_report.get("development_plan_sha256"),
+            "execution_receipt": training_report.get("execution_receipt"),
         },
         arm=logical_arm,
         label=f"{label}.training_evidence",
     )
+    if (
+        training_evidence["execution_receipt"]["scientific_commit"]
+        != scientific_identity["scientific_commit"]
+    ):
+        raise EvidenceError(
+            "training_execution_commit_mismatch",
+            f"{label} execution receipt and checkpoint identity differ",
+        )
     snapshots = checkpoint["label_efficiency_models"]
     if logical_arm == DIRECT_STATE_ARM:
         if snapshots is not None:
@@ -2780,20 +3088,7 @@ def _independent_evaluator_replay(
             "sys.path[:0]=list(dict.fromkeys(paths));"
             "runpy.run_path(script,run_name='__main__')"
         )
-        environment = {
-            "CUDA_VISIBLE_DEVICES": "",
-            "HOME": str(temporary_root),
-            "LANG": "C",
-            "LC_ALL": "C",
-            "MKL_NUM_THREADS": "1",
-            "OMP_NUM_THREADS": "1",
-            "OPENBLAS_NUM_THREADS": "1",
-            "PYTHONHASHSEED": "0",
-            "PYTHONNOUSERSITE": "1",
-            "PYTHONDONTWRITEBYTECODE": "1",
-            "PYTHONPYCACHEPREFIX": str(temporary_root / "pycache"),
-            "TZ": "UTC",
-        }
+        environment = _canonical_development_subprocess_environment()
         try:
             completed = subprocess.run(
                 [
@@ -2844,6 +3139,223 @@ def _independent_evaluator_replay(
             "byte_identical": True,
             "process_isolation": True,
         }
+
+
+def _canonical_development_subprocess_environment() -> dict[str, str]:
+    from pipeline.freeze_acw_curriculum import CANONICAL_PILOT_STATIC_ENV
+
+    dynamic_keys = (
+        "SLURM_CPUS_PER_TASK",
+        "SLURM_JOB_ID",
+        "SLURM_JOB_NAME",
+        "SLURM_JOB_NODELIST",
+        "SLURM_NODELIST",
+        "SLURM_SUBMIT_DIR",
+    )
+    missing = [key for key in dynamic_keys if not os.environ.get(key)]
+    if missing:
+        raise EvidenceError(
+            "training_runtime_mismatch",
+            f"canonical development Slurm environment is incomplete: {missing}",
+        )
+    environment = dict(CANONICAL_PILOT_STATIC_ENV)
+    environment.update({key: str(os.environ[key]) for key in dynamic_keys})
+    return environment
+
+
+def _tensor_state_sha256(state: dict[str, torch.Tensor], label: str) -> str:
+    digest = hashlib.sha256()
+    for name, tensor in sorted(state.items()):
+        if not isinstance(name, str) or not isinstance(tensor, torch.Tensor):
+            raise EvidenceError(
+                "trainer_replay_mismatch", f"{label} contains a non-tensor entry"
+            )
+        value = tensor.detach().cpu().contiguous()
+        metadata = canonical_json_bytes(
+            {"name": name, "dtype": str(value.dtype), "shape": list(value.shape)}
+        )
+        digest.update(len(metadata).to_bytes(8, "big"))
+        digest.update(metadata)
+        digest.update(value.numpy().tobytes(order="C"))
+    return digest.hexdigest()
+
+
+def _checkpoint_semantic_fingerprint(raw: bytes, label: str) -> dict[str, Any]:
+    try:
+        checkpoint = torch.load(io.BytesIO(raw), map_location="cpu", weights_only=True)
+    except Exception as exc:
+        raise EvidenceError(
+            "trainer_replay_mismatch",
+            f"{label} cannot be loaded: {type(exc).__name__}: {exc}",
+        ) from exc
+    checkpoint = _object(checkpoint, label)
+    _expect_keys(checkpoint, CHECKPOINT_KEYS, label)
+    report = dict(_object(checkpoint["training_report"], f"{label}.training_report"))
+    report.pop("wall_seconds", None)
+    report.pop("resource_measurements", None)
+    report.pop("execution_receipt", None)
+    snapshots = checkpoint["label_efficiency_models"]
+    if snapshots is None:
+        snapshot_hashes = None
+    else:
+        snapshot_hashes = [
+            _tensor_state_sha256(
+                _object(state, f"{label}.label_efficiency_models[{index}]"),
+                f"{label}.label_efficiency_models[{index}]",
+            )
+            for index, state in enumerate(_list(snapshots, f"{label}.snapshots"))
+        ]
+    return {
+        "protocol": checkpoint["protocol"],
+        "arm": checkpoint["arm"],
+        "seed": checkpoint["seed"],
+        "dataset_manifest_payload_sha256": checkpoint[
+            "dataset_manifest_payload_sha256"
+        ],
+        "source_manifest_payload_sha256": checkpoint["source_manifest_payload_sha256"],
+        "curriculum_sha256": checkpoint["curriculum_sha256"],
+        "query_schedule_sha256": checkpoint["query_schedule_sha256"],
+        "query_schedule_kind": checkpoint["query_schedule_kind"],
+        "pilot_report_payload_sha256": checkpoint["pilot_report_payload_sha256"],
+        "parameters": checkpoint["parameters"],
+        "training_report": report,
+        "label_efficiency_model_sha256": snapshot_hashes,
+        "scientific_identity": checkpoint["scientific_identity"],
+        "model_tensor_sha256": _tensor_state_sha256(
+            _object(checkpoint["model"], f"{label}.model"), f"{label}.model"
+        ),
+    }
+
+
+def _independent_trainer_replay(
+    checkpoint_bytes: bytes,
+    *,
+    logical_arm: str,
+    dataset_root: Path,
+    bundle_root: Path,
+    optimizer_seed: int,
+    dataset_summary: dict[str, Any],
+    bundle_summary: dict[str, Any],
+    label: str,
+) -> dict[str, Any]:
+    """Refit independently and require the submitted semantic checkpoint exactly."""
+
+    repository = Path(__file__).resolve().parents[1]
+    trainer = repository / "pipeline" / "acw_hidden_basis_training.py"
+    trainer_arm = "acw" if logical_arm == "uniform_query_acw" else logical_arm
+    try:
+        development_index = DEVELOPMENT_SEEDS.index(optimizer_seed)
+    except ValueError as exc:
+        raise EvidenceError(
+            "trainer_replay_mismatch", f"{label} optimizer seed is not registered"
+        ) from exc
+    private_name = (
+        "acw_development_g1_direct_verifier"
+        if logical_arm == DIRECT_STATE_ARM
+        else "acw_development_g1_final_verifier"
+    )
+    persistent = (
+        Path("/lustre/fs1/home/sa305415/shohin_acw/artifacts/r12")
+        / private_name
+        / "runs"
+        / f"{development_index:02d}_{logical_arm}"
+        / "checkpoint.pt"
+    )
+
+    if persistent.is_file() and not persistent.is_symlink():
+        output = persistent
+        replay_bytes, replay_sha256 = _read_binary_regular_file(
+            output, f"{label}.trainer_replay"
+        )
+        replay_source = "dedicated_verifier_job"
+    else:
+        with tempfile.TemporaryDirectory(
+            prefix="acw-adjudicator-trainer-"
+        ) as temporary:
+            output = Path(temporary) / "checkpoint.pt"
+            command = [
+                sys.executable,
+                "-P",
+                "-S",
+                str(trainer),
+                "--bundle",
+                str(bundle_root),
+                "--curriculum",
+                str(bundle_root / "curriculum.jsonl"),
+                "--arm",
+                trainer_arm,
+                "--seed",
+                str(optimizer_seed),
+                "--attempt-id",
+                f"{logical_arm}__{optimizer_seed}",
+                "--verification-replay",
+                "--out",
+                str(output),
+            ]
+            if logical_arm == DIRECT_STATE_ARM:
+                command.extend(("--oracle-dataset", str(dataset_root)))
+            try:
+                completed = subprocess.run(
+                    command,
+                    cwd=repository,
+                    env=_canonical_development_subprocess_environment(),
+                    check=False,
+                    capture_output=True,
+                    text=True,
+                    timeout=7_200,
+                )
+            except (OSError, subprocess.TimeoutExpired) as exc:
+                raise EvidenceError(
+                    "trainer_replay_failed",
+                    f"{label} canonical refit failed: {type(exc).__name__}: {exc}",
+                ) from exc
+            if completed.returncode != 0 or not output.is_file():
+                detail = (
+                    completed.stderr or completed.stdout or "no diagnostic"
+                ).strip()
+                raise EvidenceError(
+                    "trainer_replay_failed",
+                    f"{label} canonical refit exit {completed.returncode}: {detail[-2000:]}",
+                )
+            replay_bytes, replay_sha256 = _read_binary_regular_file(
+                output, f"{label}.trainer_replay"
+            )
+            replay_source = "ephemeral_verifier_refit"
+            _validate_checkpoint_artifact(
+                output,
+                replay_sha256,
+                logical_arm=logical_arm,
+                dataset_summary=dataset_summary,
+                bundle_summary=bundle_summary,
+                label=f"{label}.trainer_replay",
+                checkpoint_bytes=replay_bytes,
+            )
+    if replay_source == "dedicated_verifier_job":
+        _validate_checkpoint_artifact(
+            output,
+            replay_sha256,
+            logical_arm=logical_arm,
+            dataset_summary=dataset_summary,
+            bundle_summary=bundle_summary,
+            label=f"{label}.trainer_replay",
+            checkpoint_bytes=replay_bytes,
+        )
+    submitted = _checkpoint_semantic_fingerprint(checkpoint_bytes, f"{label}.submitted")
+    replayed = _checkpoint_semantic_fingerprint(replay_bytes, f"{label}.trainer_replay")
+    if submitted != replayed:
+        raise EvidenceError(
+            "trainer_replay_mismatch",
+            f"{label} checkpoint is not the exact canonical fit",
+        )
+    return {
+        "semantic_fingerprint_sha256": hashlib.sha256(
+            canonical_json_bytes(submitted)
+        ).hexdigest(),
+        "replay_checkpoint_sha256": replay_sha256,
+        "semantic_match": True,
+        "canonical_runtime_sha256": CANONICAL_DEVELOPMENT_RUNTIME_SHA256,
+        "source": replay_source,
+    }
 
 
 def _validate_native_resource_ledger(
@@ -3054,6 +3566,293 @@ def _validate_resource_profile(
     return profile
 
 
+def _validate_development_execution_receipt(
+    value: Any, *, label: str
+) -> dict[str, Any]:
+    receipt = _object(value, label)
+    _expect_keys(
+        receipt,
+        {
+            "schema",
+            "protocol",
+            "scientific_commit",
+            "canonical_runtime_sha256",
+            "development_plan_sha256",
+            "environment_sha256",
+            "batch_script_sha256",
+            "slurm",
+            "process_membership",
+            "role",
+            "attempt_id",
+            "verification_replay",
+        },
+        label,
+    )
+    scientific_commit = receipt["scientific_commit"]
+    runtime_sha256 = _hash(
+        receipt["canonical_runtime_sha256"], f"{label}.canonical_runtime_sha256"
+    )
+    plan_sha256 = _hash(
+        receipt["development_plan_sha256"], f"{label}.development_plan_sha256"
+    )
+    environment_sha256 = _hash(
+        receipt["environment_sha256"], f"{label}.environment_sha256"
+    )
+    batch_script_sha256 = _hash(
+        receipt["batch_script_sha256"], f"{label}.batch_script_sha256"
+    )
+    slurm = _object(receipt["slurm"], f"{label}.slurm")
+    _expect_keys(
+        slurm,
+        {"job_id", "job_name", "node_list", "cpus_per_task"},
+        f"{label}.slurm",
+    )
+    membership = _object(receipt["process_membership"], f"{label}.process_membership")
+    _expect_keys(
+        membership,
+        {"cpu_list", "memory_list", "task_cgroup"},
+        f"{label}.process_membership",
+    )
+    repository = Path(__file__).resolve().parents[1]
+    plan_path = repository / DEVELOPMENT_PLAN_PATH
+    plan_raw, observed_plan_sha256 = _read_regular_file(plan_path)
+    plan = _parse_json(plan_raw, "committed development plan")
+    job_id = str(slurm["job_id"])
+    stages = plan.get("custody_stages")
+    stage_matches = (
+        [
+            stage
+            for stage in stages
+            if isinstance(stage, dict) and str(stage.get("held_slurm_job_id")) == job_id
+        ]
+        if isinstance(stages, list)
+        else []
+    )
+    stage = stage_matches[0] if len(stage_matches) == 1 else None
+    role = receipt["role"]
+    attempt_id = receipt["attempt_id"]
+    attempts = plan.get("attempt_table")
+    attempt_matches = (
+        [
+            attempt
+            for attempt in attempts
+            if isinstance(attempt, dict) and attempt.get("attempt_id") == attempt_id
+        ]
+        if isinstance(attempts, list)
+        else []
+    )
+    attempt = attempt_matches[0] if len(attempt_matches) == 1 else None
+    side_roles = (
+        {
+            side.get("job_role")
+            for side in (attempt.get("producer"), attempt.get("verifier"))
+            if isinstance(side, dict)
+        }
+        if isinstance(attempt, dict)
+        else set()
+    )
+    from pipeline.freeze_acw_curriculum import (
+        CANONICAL_PILOT_STATIC_ENV,
+        CANONICAL_PILOT_UID,
+        _cpu_list_members,
+    )
+
+    expected_environment = dict(CANONICAL_PILOT_STATIC_ENV)
+    expected_environment.update(
+        {
+            "SLURM_CPUS_PER_TASK": str(slurm["cpus_per_task"]),
+            "SLURM_JOB_ID": job_id,
+            "SLURM_JOB_NAME": str(slurm["job_name"]),
+            "SLURM_JOB_NODELIST": str(slurm["node_list"]),
+            "SLURM_NODELIST": str(slurm["node_list"]),
+            "SLURM_SUBMIT_DIR": "/lustre/fs1/home/sa305415/shohin_acw",
+        }
+    )
+    try:
+        cpu_members = _cpu_list_members(str(membership["cpu_list"]))
+    except (TypeError, ValueError) as exc:
+        raise EvidenceError(
+            "training_runtime_mismatch", f"{label} CPU membership is malformed"
+        ) from exc
+    if (
+        receipt["schema"] != "r12_acw_development_execution_receipt_v1"
+        or receipt["protocol"] != "R12-ACW-DEVELOPMENT-EXECUTION-v1"
+        or not isinstance(scientific_commit, str)
+        or re.fullmatch(r"[0-9a-f]{40}", scientific_commit) is None
+        or runtime_sha256 != CANONICAL_DEVELOPMENT_RUNTIME_SHA256
+        or plan_sha256 != DEVELOPMENT_PLAN_RAW_SHA256
+        or observed_plan_sha256 != DEVELOPMENT_PLAN_RAW_SHA256
+        or stage is None
+        or role != stage.get("role")
+        or role not in side_roles
+        or attempt is None
+        or not isinstance(attempt_id, str)
+        or slurm["job_name"] != stage.get("job_name")
+        or slurm["node_list"] != stage.get("expected_node")
+        or not isinstance(slurm["node_list"], str)
+        or not slurm["node_list"]
+        or slurm["cpus_per_task"] != "4"
+        or environment_sha256
+        != hashlib.sha256(canonical_json_bytes(expected_environment)).hexdigest()
+        or batch_script_sha256
+        != sha256_file(repository / str(stage.get("script", {}).get("path")))
+        or len(cpu_members) != 4
+        or not str(membership["memory_list"])
+        or membership["task_cgroup"]
+        != (f"/slurm/uid_{CANONICAL_PILOT_UID}/job_{job_id}/step_batch/task_0")
+    ):
+        raise EvidenceError(
+            "training_runtime_mismatch",
+            f"{label} execution receipt differs from its top-level batch cgroup or held job",
+        )
+    return {
+        "schema": receipt["schema"],
+        "protocol": receipt["protocol"],
+        "scientific_commit": scientific_commit,
+        "canonical_runtime_sha256": runtime_sha256,
+        "development_plan_sha256": plan_sha256,
+        "environment_sha256": environment_sha256,
+        "batch_script_sha256": batch_script_sha256,
+        "slurm": dict(slurm),
+        "process_membership": dict(membership),
+        "role": role,
+        "attempt_id": attempt_id,
+        "verification_replay": _boolean(
+            receipt["verification_replay"], f"{label}.verification_replay"
+        ),
+    }
+
+
+def _validate_attempt_receipt_reference(
+    value: Any,
+    *,
+    base: Path,
+    arm: str,
+    index: int,
+    run: dict[str, Any],
+    label: str,
+) -> dict[str, Any]:
+    receipt, binding, path = _verify_json_reference(value, label, base)
+    if stat.S_IMODE(path.stat().st_mode) != 0o444:
+        raise EvidenceError(
+            "attempt_receipt_mutable", f"{label} must be a mode-0444 regular file"
+        )
+    _expect_keys(
+        receipt,
+        {
+            "schema",
+            "protocol",
+            "attempt_id",
+            "role",
+            "logical_arm",
+            "trainer_arm",
+            "seed",
+            "development_plan_sha256",
+            "artifact_root",
+            "task_root",
+            "slurm",
+            "outputs",
+            "completed_once",
+            "confirmation_authorized",
+            "payload_sha256",
+        },
+        label,
+    )
+    payload_sha256 = _verify_payload_hash(receipt, label)
+    attempt_id = f"{arm}__{DEVELOPMENT_SEEDS[index]}"
+    expected_role = "phase1_producer" if arm == DIRECT_STATE_ARM else "phase2_producer"
+    expected_trainer_arm = "acw" if arm == "uniform_query_acw" else arm
+    expected_task = f"runs/{index:02d}_{arm}"
+    if path != base / expected_task / "attempt.json":
+        raise EvidenceError(
+            "attempt_receipt_path_mismatch", f"{label} is outside its claimed task"
+        )
+    outputs = _object(receipt["outputs"], f"{label}.outputs")
+    _expect_keys(outputs, {"checkpoint", "evaluation", "replay"}, f"{label}.outputs")
+    expected_outputs = {
+        "checkpoint": run["checkpoint"],
+        "evaluation": run["evaluation_report"],
+        "replay": run["replay_report"],
+    }
+    for name, expected in expected_outputs.items():
+        observed = _object(outputs[name], f"{label}.outputs.{name}")
+        _expect_keys(observed, REFERENCE_KEYS, f"{label}.outputs.{name}")
+        if observed != expected:
+            raise EvidenceError(
+                "attempt_receipt_output_mismatch",
+                f"{label} does not bind the manifest {name} artifact",
+            )
+    slurm = _object(receipt["slurm"], f"{label}.slurm")
+    _expect_keys(
+        slurm,
+        {
+            "job_id",
+            "job_name",
+            "node",
+            "cpus_per_task",
+            "dependency",
+            "script",
+            "spool_script_sha256",
+            "scontrol_snapshot_sha256",
+            "process_membership",
+        },
+        f"{label}.slurm",
+    )
+    repository = Path(__file__).resolve().parents[1]
+    plan_raw, plan_sha256 = _read_regular_file(repository / DEVELOPMENT_PLAN_PATH)
+    plan = _parse_json(plan_raw, "committed development plan")
+    stages = plan.get("custody_stages")
+    stage_matches = (
+        [
+            stage
+            for stage in stages
+            if isinstance(stage, dict) and stage.get("role") == expected_role
+        ]
+        if isinstance(stages, list)
+        else []
+    )
+    stage = stage_matches[0] if len(stage_matches) == 1 else None
+    membership = _object(slurm["process_membership"], f"{label}.process_membership")
+    _expect_keys(
+        membership,
+        {"cpu_list", "memory_list", "task_cgroup"},
+        f"{label}.process_membership",
+    )
+    from pipeline.freeze_acw_curriculum import CANONICAL_PILOT_UID
+
+    if (
+        receipt["schema"] != "r12_acw_development_attempt_receipt_v1"
+        or receipt["protocol"] != "R12-ACW-DEVELOPMENT-ATTEMPT-v1"
+        or receipt["attempt_id"] != attempt_id
+        or receipt["logical_arm"] != arm
+        or receipt["trainer_arm"] != expected_trainer_arm
+        or receipt["seed"] != DEVELOPMENT_SEEDS[index]
+        or receipt["role"] != expected_role
+        or receipt["development_plan_sha256"] != DEVELOPMENT_PLAN_RAW_SHA256
+        or plan_sha256 != DEVELOPMENT_PLAN_RAW_SHA256
+        or receipt["artifact_root"] != str(base.resolve(strict=True))
+        or receipt["task_root"] != expected_task
+        or receipt["completed_once"] is not True
+        or receipt["confirmation_authorized"] is not False
+        or stage is None
+        or str(slurm["job_id"]) != str(stage.get("held_slurm_job_id"))
+        or slurm["job_name"] != stage.get("job_name")
+        or slurm["node"] != stage.get("expected_node")
+        or slurm["cpus_per_task"] != "4"
+        or slurm["script"] != stage.get("script")
+        or slurm["spool_script_sha256"] != stage.get("script", {}).get("sha256")
+        or membership["task_cgroup"]
+        != (
+            f"/slurm/uid_{CANONICAL_PILOT_UID}/job_{stage.get('held_slurm_job_id')}"
+            "/step_batch/task_0"
+        )
+    ):
+        raise EvidenceError(
+            "attempt_receipt_mismatch", f"{label} differs from the frozen attempt"
+        )
+    return {**binding, "payload_sha256": payload_sha256, "attempt_id": attempt_id}
+
+
 def _validate_training_evidence(
     value: Any,
     *,
@@ -3072,6 +3871,31 @@ def _validate_training_evidence(
     query_schedule_sha256 = _hash(
         evidence["query_schedule_sha256"], f"{label}.query_schedule_sha256"
     )
+    runtime_sha256 = _hash(
+        evidence["canonical_runtime_sha256"],
+        f"{label}.canonical_runtime_sha256",
+    )
+    plan_sha256 = _hash(
+        evidence["development_plan_sha256"],
+        f"{label}.development_plan_sha256",
+    )
+    if runtime_sha256 != CANONICAL_DEVELOPMENT_RUNTIME_SHA256:
+        raise EvidenceError(
+            "training_runtime_mismatch", f"{label} runtime identity differs"
+        )
+    if plan_sha256 != DEVELOPMENT_PLAN_RAW_SHA256:
+        raise EvidenceError(
+            "development_plan_mismatch", f"{label} development plan differs"
+        )
+    execution_receipt = _validate_development_execution_receipt(
+        evidence["execution_receipt"], label=f"{label}.execution_receipt"
+    )
+    receipt_attempt_id = execution_receipt.get("attempt_id")
+    if receipt_attempt_id is not None and receipt_attempt_id.rsplit("__", 1)[0] != arm:
+        raise EvidenceError(
+            "training_runtime_mismatch",
+            f"{label} attempt ID does not bind arm {arm}",
+        )
     if (
         len(
             {
@@ -3127,6 +3951,9 @@ def _validate_training_evidence(
             "training": training_profile,
             "inference": inference_profile,
         },
+        "canonical_runtime_sha256": runtime_sha256,
+        "development_plan_sha256": plan_sha256,
+        "execution_receipt": execution_receipt,
     }
 
 
@@ -3392,6 +4219,14 @@ def _validate_evaluation_report(
     scientific_identity = _validate_scientific_identity(
         report["scientific_identity"], f"{label}.scientific_identity"
     )
+    if (
+        training_evidence["execution_receipt"]["scientific_commit"]
+        != scientific_identity["scientific_commit"]
+    ):
+        raise EvidenceError(
+            "training_execution_commit_mismatch",
+            f"{label} execution receipt and evaluation identity differ",
+        )
     if report["claim_boundary"] != EVALUATOR_CLAIM_BOUNDARY:
         raise EvidenceError(
             "evaluation_claim_boundary_mismatch", f"{label} claim changed"
@@ -3845,8 +4680,10 @@ def _validate_label_efficiency(
 
 
 def _expected_run_keys(scope: str = "full") -> set[tuple[str, str, int]]:
-    if scope not in {"development", "full"}:
+    if scope not in {"direct_state", "development", "full"}:
         raise ValueError(f"unknown evidence scope: {scope}")
+    if scope == "direct_state":
+        return {(DIRECT_STATE_ARM, "development", index) for index in range(3)}
     splits = (
         ("development",)
         if scope == "development"
@@ -3865,23 +4702,45 @@ def _expected_run_keys(scope: str = "full") -> set[tuple[str, str, int]]:
     return expected
 
 
-def verify_evidence(
+def _verify_evidence_with_private_workspace(
     manifest: dict[str, Any],
     base: Path,
     *,
+    private_root: Path,
     scope: str = "full",
     expected_development_baseline_record: dict[str, Any] | None = None,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    if scope not in {"direct_state", "development", "full"}:
+        raise ValueError(f"unknown evidence scope: {scope}")
     manifest_keys = {"schema", "protocol", "reports", "payload_sha256"}
+    if scope in {"direct_state", "development"}:
+        manifest_keys.update(
+            {
+                "development_plan",
+                "attempt_claim",
+                "attempt_start",
+                "stage_receipts",
+            }
+        )
+    if scope == "direct_state":
+        manifest_keys.add("private_refit_verification")
+    if scope == "development":
+        manifest_keys.update(
+            {
+                "phase2_authorization",
+                "direct_refit_verification",
+                "private_refit_verification",
+            }
+        )
     if scope == "full":
         manifest_keys.add("development_baseline")
     _expect_keys(manifest, manifest_keys, "manifest")
     manifest_payload_sha256 = _verify_payload_hash(manifest, "manifest")
-    expected_schema, expected_protocol = (
-        (DEVELOPMENT_MANIFEST_SCHEMA, DEVELOPMENT_MANIFEST_PROTOCOL)
-        if scope == "development"
-        else (MANIFEST_SCHEMA, MANIFEST_PROTOCOL)
-    )
+    expected_schema, expected_protocol = {
+        "direct_state": (DIRECT_STATE_MANIFEST_SCHEMA, DIRECT_STATE_MANIFEST_PROTOCOL),
+        "development": (DEVELOPMENT_MANIFEST_SCHEMA, DEVELOPMENT_MANIFEST_PROTOCOL),
+        "full": (MANIFEST_SCHEMA, MANIFEST_PROTOCOL),
+    }[scope]
     if manifest["schema"] != expected_schema:
         raise EvidenceError(
             "manifest_schema_mismatch", f"manifest schema must be {expected_schema}"
@@ -3892,6 +4751,59 @@ def verify_evidence(
             f"manifest protocol must be {expected_protocol}",
         )
     development_baseline_binding = None
+    development_plan_binding = None
+    attempt_start_binding = None
+    attempt_claim_binding = None
+    stage_receipt_bindings = None
+    private_refit_bindings = None
+    phase2_authorization = None
+    if scope in {"direct_state", "development"}:
+        development_plan_binding = _validate_development_plan_reference(
+            manifest["development_plan"], base
+        )
+        attempt_start_binding = _validate_attempt_start_reference(
+            manifest["attempt_start"],
+            base,
+            expected_plan=development_plan_binding,
+        )
+        attempt_claim_binding = _validate_attempt_claim_reference(
+            manifest["attempt_claim"],
+            base,
+            expected_plan=development_plan_binding,
+        )
+        stage_receipt_bindings = _validate_stage_receipts(
+            manifest["stage_receipts"],
+            base,
+            scope=scope,
+            expected_plan=development_plan_binding,
+        )
+        private_refit_bindings = {
+            "direct": _validate_private_refit_verification_reference(
+                (
+                    manifest["private_refit_verification"]
+                    if scope == "direct_state"
+                    else manifest["direct_refit_verification"]
+                ),
+                base,
+                scope="direct",
+                expected_plan=development_plan_binding,
+            )
+        }
+        if scope == "development":
+            private_refit_bindings["final"] = (
+                _validate_private_refit_verification_reference(
+                    manifest["private_refit_verification"],
+                    base,
+                    scope="final",
+                    expected_plan=development_plan_binding,
+                )
+            )
+    if scope == "development":
+        phase2_authorization = _validate_phase2_authorization(
+            manifest["phase2_authorization"],
+            base,
+            expected_plan=development_plan_binding,
+        )
     if scope == "full":
         if expected_development_baseline_record is None:
             raise EvidenceError(
@@ -3941,12 +4853,31 @@ def verify_evidence(
             "report_count_mismatch",
             f"manifest must contain exactly {len(expected_keys)} reports, got {len(reports)}",
         )
+    ordered_expected = None
+    if scope == "direct_state":
+        ordered_expected = [
+            (DIRECT_STATE_ARM, "development", index) for index in range(3)
+        ]
+    elif scope == "development":
+        ordered_expected = [
+            (arm, "development", index)
+            for arm in (DIRECT_STATE_ARM, *SCORED_ARMS)
+            for index in range(3)
+        ]
 
     indexed: dict[tuple[str, str, int], dict[str, Any]] = {}
     dataset_by_identity: dict[tuple[str, int], tuple[str, str]] = {}
     identity_by_dataset: dict[str, tuple[str, int]] = {}
     dataset_cache: dict[tuple[Path, str], tuple[dict[str, Any], dict[str, Any]]] = {}
     bundle_cache: dict[tuple[Path, str], dict[str, Any]] = {}
+    private_dataset_cache: dict[
+        tuple[str, int],
+        tuple[Path, dict[str, Any], dict[str, Any], dict[str, Any]],
+    ] = {}
+    private_bundle_cache: dict[
+        tuple[tuple[str, int], str],
+        tuple[Path, dict[str, Any], dict[str, Any], dict[str, Any]],
+    ] = {}
     primary_report_hashes: set[str] = set()
     checkpoint_hashes: set[str] = set()
     checkpoint_paths: set[Path] = set()
@@ -3963,11 +4894,14 @@ def verify_evidence(
     group_by_trainer_bundle: dict[str, tuple[str, int, str]] = {}
     group_by_curriculum: dict[str, tuple[str, int, str]] = {}
     artifact_bindings = []
+    run_keys = RUN_KEYS
+    if scope in {"direct_state", "development"}:
+        run_keys = RUN_KEYS | {"attempt_id", "attempt_receipt"}
 
     for position, raw_run in enumerate(reports):
         label = f"manifest.reports[{position}]"
         run = _object(raw_run, label)
-        _expect_keys(run, RUN_KEYS, label)
+        _expect_keys(run, run_keys, label)
         arm = run["arm"]
         if not isinstance(arm, str) or arm not in (*SCORED_ARMS, DIRECT_STATE_ARM):
             raise EvidenceError("unknown_arm", f"{label}.arm is not frozen")
@@ -3996,7 +4930,59 @@ def verify_evidence(
                     f"{label} changes a previously opened dataset binding",
                 )
         split, index = identity_key
+        private_dataset = private_dataset_cache.get(identity_key)
+        if private_dataset is None:
+            private_dataset_root = private_root / f"dataset_{split}_{index}"
+            (
+                private_dataset_manifest,
+                private_dataset_summary,
+                private_dataset_tree,
+            ) = _regenerate_private_development_dataset(
+                private_dataset_root,
+                identity_key=identity_key,
+                submitted_root=dataset_root,
+                label=label,
+            )
+            if private_dataset_summary != dataset_summary:
+                raise EvidenceError(
+                    "private_replay_dataset_mismatch",
+                    f"{label} submitted dataset summary differs from regeneration",
+                )
+            private_dataset = (
+                private_dataset_root,
+                private_dataset_manifest,
+                private_dataset_summary,
+                private_dataset_tree,
+            )
+            private_dataset_cache[identity_key] = private_dataset
+        (
+            private_dataset_root,
+            private_dataset_manifest,
+            private_dataset_summary,
+            private_dataset_tree,
+        ) = private_dataset
         key = (arm, split, index)
+        if ordered_expected is not None and key != ordered_expected[position]:
+            raise EvidenceError(
+                "attempt_order_mismatch",
+                f"{label} is outside the frozen direct-first attempt order",
+            )
+        attempt_receipt_binding = None
+        if scope in {"direct_state", "development"}:
+            expected_attempt_id = f"{arm}__{DEVELOPMENT_SEEDS[index]}"
+            if run["attempt_id"] != expected_attempt_id:
+                raise EvidenceError(
+                    "attempt_id_mismatch",
+                    f"{label} attempt ID differs from its seed",
+                )
+            attempt_receipt_binding = _validate_attempt_receipt_reference(
+                run["attempt_receipt"],
+                base=base,
+                arm=arm,
+                index=index,
+                run=run,
+                label=f"{label}.attempt_receipt",
+            )
         if key in indexed:
             raise EvidenceError(
                 "duplicate_seed_identity", f"duplicate report for {key}"
@@ -4038,6 +5024,7 @@ def verify_evidence(
                 dataset,
                 dataset_summary,
                 f"{label}.trainer_bundle.manifest",
+                dataset_root=dataset_root,
             )
             bundle_cache[bundle_cache_key] = bundle_summary
         elif (
@@ -4058,6 +5045,43 @@ def verify_evidence(
                 "query_schedule_kind_mismatch",
                 f"{label} trainer bundle uses the wrong schedule family",
             )
+        private_bundle_key = (identity_key, expected_schedule_kind)
+        private_bundle = private_bundle_cache.get(private_bundle_key)
+        if private_bundle is None:
+            private_bundle_root = private_root / (
+                f"bundle_{split}_{index}_{expected_schedule_kind.removesuffix('.jsonl')}"
+            )
+            (
+                private_bundle_manifest,
+                private_bundle_summary,
+                private_bundle_tree,
+            ) = _regenerate_private_trainer_bundle(
+                private_bundle_root,
+                private_dataset_root=private_dataset_root,
+                private_dataset_manifest=private_dataset_manifest,
+                private_dataset_summary=private_dataset_summary,
+                submitted_root=bundle_root,
+                schedule_kind=expected_schedule_kind,
+                label=label,
+            )
+            if private_bundle_summary != bundle_summary:
+                raise EvidenceError(
+                    "private_replay_bundle_mismatch",
+                    f"{label} submitted bundle summary differs from regeneration",
+                )
+            private_bundle = (
+                private_bundle_root,
+                private_bundle_manifest,
+                private_bundle_summary,
+                private_bundle_tree,
+            )
+            private_bundle_cache[private_bundle_key] = private_bundle
+        (
+            private_bundle_root,
+            private_bundle_manifest,
+            private_bundle_summary,
+            private_bundle_tree,
+        ) = private_bundle
 
         checkpoint_binding, checkpoint_path, checkpoint_bytes = (
             _verify_binary_reference(run["checkpoint"], f"{label}.checkpoint", base)
@@ -4075,6 +5099,18 @@ def verify_evidence(
             bundle_summary=bundle_summary,
             label=f"{label}.checkpoint",
             checkpoint_bytes=checkpoint_bytes,
+        )
+        trainer_replay = _independent_trainer_replay(
+            checkpoint_bytes,
+            logical_arm=arm,
+            dataset_root=private_dataset_root,
+            bundle_root=private_bundle_root,
+            optimizer_seed=_expected_optimizer_seed(
+                private_dataset_summary["seed_identity"]
+            ),
+            dataset_summary=private_dataset_summary,
+            bundle_summary=private_bundle_summary,
+            label=label,
         )
 
         evaluation, evaluation_binding, evaluation_path = _verify_json_reference(
@@ -4145,11 +5181,11 @@ def verify_evidence(
             )
         independent_replay = _independent_evaluator_replay(
             checkpoint_path,
-            dataset_root,
+            private_dataset_root,
             evaluation_bytes,
             label,
             checkpoint_bytes=checkpoint_bytes,
-            dataset_manifest=dataset,
+            dataset_manifest=private_dataset_manifest,
         )
         if independent_replay["payload_sha256"] != parsed["payload_sha256"]:
             raise EvidenceError(
@@ -4277,46 +5313,60 @@ def verify_evidence(
                 "evaluation_report": evaluation_binding,
                 "replay_report": replay_binding,
                 "independent_evaluator_replay": independent_replay,
+                "independent_trainer_replay": trainer_replay,
+                "private_dataset_replay": private_dataset_tree,
+                "private_bundle_replay": private_bundle_tree,
             },
             "_checkpoint_path": checkpoint_path,
             "_checkpoint_bytes": checkpoint_bytes,
         }
-        artifact_bindings.append(
-            {
-                "arm": arm,
-                "seed_identity": dataset_summary["seed_identity"],
-                "dataset": {
-                    **dataset_binding,
-                    "arrays_hashed_and_opened": dataset_tree[
-                        "arrays_hashed_and_opened"
-                    ],
-                    "required_array_shapes_verified": dataset_tree[
-                        "required_array_shapes_verified"
-                    ],
-                },
-                "trainer_bundle": {
-                    **bundle_binding,
-                    "arrays_hashed_and_opened": bundle_summary[
-                        "arrays_hashed_and_opened"
-                    ],
-                    "curriculum_sha256": bundle_summary["curriculum_sha256"],
-                },
-                "checkpoint": checkpoint_binding,
-                "evaluation_report": evaluation_binding,
-                "replay_report": replay_binding,
-                "independent_evaluator_replay": independent_replay,
-            }
-        )
+        artifact_binding = {
+            "arm": arm,
+            "seed_identity": dataset_summary["seed_identity"],
+            "dataset": {
+                **dataset_binding,
+                "arrays_hashed_and_opened": dataset_tree["arrays_hashed_and_opened"],
+                "required_array_shapes_verified": dataset_tree[
+                    "required_array_shapes_verified"
+                ],
+            },
+            "trainer_bundle": {
+                **bundle_binding,
+                "arrays_hashed_and_opened": bundle_summary["arrays_hashed_and_opened"],
+                "curriculum_sha256": bundle_summary["curriculum_sha256"],
+            },
+            "checkpoint": checkpoint_binding,
+            "evaluation_report": evaluation_binding,
+            "replay_report": replay_binding,
+            "independent_evaluator_replay": independent_replay,
+            "independent_trainer_replay": trainer_replay,
+            "private_dataset_replay": private_dataset_tree,
+            "private_bundle_replay": private_bundle_tree,
+        }
+        if attempt_receipt_binding is not None:
+            artifact_binding["attempt_receipt"] = attempt_receipt_binding
+        artifact_bindings.append(artifact_binding)
 
-    if any(len(hashes) != 1 for hashes in query_schedule_hashes.values()):
+    required_schedule_kinds = (
+        {"cgb_schedule.jsonl"}
+        if scope == "direct_state"
+        else {"cgb_schedule.jsonl", "uniform_schedule.jsonl"}
+    )
+    if any(
+        len(query_schedule_hashes[kind]) != 1 for kind in required_schedule_kinds
+    ) or any(
+        query_schedule_hashes[kind]
+        for kind in set(query_schedule_hashes) - required_schedule_kinds
+    ):
         raise EvidenceError(
             "query_schedule_binding_fork",
             "all non-uniform runs must share one CGB schedule hash and all uniform-query runs one uniform schedule hash",
         )
     frozen_schedule_hashes = {
-        kind: next(iter(hashes)) for kind, hashes in query_schedule_hashes.items()
+        kind: next(iter(query_schedule_hashes[kind]))
+        for kind in sorted(required_schedule_kinds)
     }
-    if len(set(frozen_schedule_hashes.values())) != 2:
+    if scope != "direct_state" and len(set(frozen_schedule_hashes.values())) != 2:
         raise EvidenceError(
             "query_schedule_hash_reused",
             "CGB and uniform schedules must bind distinct artifacts",
@@ -4327,6 +5377,15 @@ def verify_evidence(
     if missing or extra:
         raise EvidenceError("run_matrix_mismatch", f"missing={missing}, extra={extra}")
     assert scientific_identity is not None
+    if (
+        attempt_start_binding is not None
+        and attempt_start_binding["scientific_commit"]
+        != scientific_identity["scientific_commit"]
+    ):
+        raise EvidenceError(
+            "attempt_start_commit_mismatch",
+            "attempt start and fitted checkpoints bind different G commits",
+        )
     ordered = [
         indexed[key]
         for key in sorted(
@@ -4343,14 +5402,27 @@ def verify_evidence(
         "scope": scope,
         "confirmation_evidence_opened": scope == "full",
         "development_baseline_binding": development_baseline_binding,
+        "development_plan_binding": development_plan_binding,
+        "attempt_start_binding": attempt_start_binding,
+        "attempt_claim_binding": attempt_claim_binding,
+        "stage_receipt_bindings": stage_receipt_bindings,
+        "private_refit_bindings": private_refit_bindings,
+        "phase2_authorization": phase2_authorization,
         "confirmation_artifacts_transitively_bound_to_baseline": scope == "full",
         "manifest_payload_sha256": manifest_payload_sha256,
         "exact_run_matrix": True,
-        "scored_runs_verified": len(SCORED_ARMS) * (3 if scope == "development" else 6),
+        "scored_runs_verified": (
+            0
+            if scope == "direct_state"
+            else len(SCORED_ARMS) * (3 if scope == "development" else 6)
+        ),
         "direct_state_runs_verified": 3,
         "evaluation_reports_verified": len(ordered),
         "byte_identical_replays_verified": len(ordered),
         "independent_evaluator_replays_verified": len(ordered),
+        "independent_trainer_replays_verified": len(ordered),
+        "private_dataset_replays_verified": len(private_dataset_cache),
+        "private_bundle_replays_verified": len(private_bundle_cache),
         "actual_checkpoints_opened_and_hashed": len(checkpoint_hashes),
         "unique_dataset_manifests_verified": len(identity_by_dataset),
         "unique_dataset_roots_opened": len(dataset_cache),
@@ -4388,6 +5460,25 @@ def verify_evidence(
         "artifact_bindings": artifact_bindings,
     }
     return ordered, verification
+
+
+def verify_evidence(
+    manifest: dict[str, Any],
+    base: Path,
+    *,
+    scope: str = "full",
+    expected_development_baseline_record: dict[str, Any] | None = None,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Verify evidence using inputs regenerated in an ephemeral private tree."""
+
+    with tempfile.TemporaryDirectory(prefix="acw-private-verifier-") as temporary:
+        return _verify_evidence_with_private_workspace(
+            manifest,
+            base,
+            private_root=Path(temporary),
+            scope=scope,
+            expected_development_baseline_record=(expected_development_baseline_record),
+        )
 
 
 def _acw_gate(run: dict[str, Any]) -> dict[str, Any]:
@@ -4434,6 +5525,1284 @@ def _direct_state_gate(run: dict[str, Any]) -> dict[str, Any]:
     if metric["state_exactness"] < DIRECT_STATE_STATE_FLOOR:
         failures.append("depth_8_state_below_0.95")
     return {"passed": not failures, "failures": failures}
+
+
+def _validate_development_plan_reference(value: Any, base: Path) -> dict[str, Any]:
+    plan, binding, path = _verify_json_reference(value, "development_plan", base)
+    if stat.S_IMODE(path.stat().st_mode) != 0o444:
+        raise EvidenceError(
+            "development_plan_mutable", "development plan must be mode 0444"
+        )
+    raw, digest = _read_regular_file(path)
+    if digest != DEVELOPMENT_PLAN_RAW_SHA256:
+        raise EvidenceError(
+            "development_plan_mismatch", "development plan raw bytes differ"
+        )
+    if raw != canonical_json_bytes(plan) + b"\n":
+        raise EvidenceError(
+            "development_plan_mismatch", "development plan is not canonical JSON"
+        )
+    payload_sha256 = _verify_payload_hash(plan, "development plan")
+    try:
+        from pipeline.build_acw_development_manifest import validate_plan
+
+        validate_plan(plan, require_ready=True)
+    except (ImportError, OSError, TypeError, ValueError) as exc:
+        raise EvidenceError(
+            "development_plan_mismatch",
+            f"development plan contract differs: {exc}",
+        ) from exc
+    return {
+        **binding,
+        "path": str(path.resolve(strict=True)),
+        "payload_sha256": payload_sha256,
+    }
+
+
+def _validate_attempt_start_reference(
+    value: Any,
+    base: Path,
+    *,
+    expected_plan: dict[str, Any] | None,
+) -> dict[str, Any]:
+    attempt, binding, path = _verify_json_reference(value, "attempt_start", base)
+    if stat.S_IMODE(path.stat().st_mode) != 0o444:
+        raise EvidenceError(
+            "attempt_start_mutable", "attempt start must be a mode-0444 regular file"
+        )
+    raw, _ = _read_regular_file(path)
+    if raw != canonical_json_bytes(attempt) + b"\n":
+        raise EvidenceError(
+            "attempt_start_noncanonical",
+            "attempt start is not canonical newline-framed JSON",
+        )
+    _expect_keys(
+        attempt,
+        {
+            "schema",
+            "protocol",
+            "scientific_commit",
+            "development_plan",
+            "artifact_root",
+            "slurm",
+            "created_before_scoring",
+            "checkpoint_count_at_creation",
+            "one_attempt",
+            "overwrite",
+            "attempt_ids",
+            "payload_sha256",
+        },
+        "attempt start",
+    )
+    payload_sha256 = _verify_payload_hash(attempt, "attempt start")
+    nested_plan = _validate_development_plan_reference(
+        attempt["development_plan"], base
+    )
+    slurm = _object(attempt["slurm"], "attempt start Slurm identity")
+    _expect_keys(
+        slurm,
+        {"job_id", "job_name", "node_list", "cpus_per_task"},
+        "attempt start Slurm identity",
+    )
+    plan, _, _ = _verify_json_reference(
+        attempt["development_plan"], "attempt start development plan", base
+    )
+    attempt_registry = _object(
+        plan.get("attempt_registry"), "development plan attempt registry"
+    )
+    stages = _list(plan.get("custody_stages"), "development plan custody stages")
+    phase1 = _object(stages[0], "development plan phase-1 stage")
+    held_job_id = str(phase1.get("held_slurm_job_id", ""))
+    scientific_commit = attempt["scientific_commit"]
+    if (
+        attempt["schema"] != ATTEMPT_START_SCHEMA
+        or attempt["protocol"] != ATTEMPT_START_PROTOCOL
+        or nested_plan != expected_plan
+        or not isinstance(scientific_commit, str)
+        or len(scientific_commit) != 40
+        or any(character not in "0123456789abcdef" for character in scientific_commit)
+        or attempt["artifact_root"] != str(base.resolve(strict=True))
+        or not held_job_id.isdigit()
+        or str(slurm["job_id"]) != held_job_id
+        or slurm["job_name"] != phase1.get("job_name")
+        or slurm["node_list"] != phase1.get("expected_node")
+        or not isinstance(slurm["node_list"], str)
+        or not slurm["node_list"]
+        or slurm["cpus_per_task"] != "4"
+        or attempt["created_before_scoring"] is not True
+        or attempt["checkpoint_count_at_creation"] != 0
+        or attempt["one_attempt"] is not True
+        or attempt["overwrite"] is not False
+        or attempt["attempt_ids"] != attempt_registry.get("attempt_ids")
+    ):
+        raise EvidenceError(
+            "attempt_start_mismatch", "attempt start differs from the committed plan"
+        )
+    return {
+        **binding,
+        "path": str(path.resolve(strict=True)),
+        "payload_sha256": payload_sha256,
+        "scientific_commit": scientific_commit,
+        "slurm": slurm,
+    }
+
+
+def _validate_attempt_claim_reference(
+    value: Any,
+    base: Path,
+    *,
+    expected_plan: dict[str, Any] | None,
+) -> dict[str, Any]:
+    claim, binding, path = _verify_json_reference(value, "attempt_claim", base)
+    if stat.S_IMODE(path.stat().st_mode) != 0o444:
+        raise EvidenceError(
+            "attempt_claim_mutable", "attempt claim must be a mode-0444 regular file"
+        )
+    _expect_keys(
+        claim,
+        {
+            "schema",
+            "protocol",
+            "development_plan",
+            "artifact_root",
+            "attempt_count",
+            "attempt_table_sha256",
+            "jobs_sha256",
+            "all_argv_and_paths_claimed_before_scoring",
+            "checkpoint_count_at_creation",
+            "confirmation_authorized",
+            "claim_boundary",
+            "payload_sha256",
+        },
+        "attempt claim",
+    )
+    payload_sha256 = _verify_payload_hash(claim, "attempt claim")
+    nested_plan = _validate_development_plan_reference(claim["development_plan"], base)
+    plan, _, _ = _verify_json_reference(
+        claim["development_plan"], "attempt claim development plan", base
+    )
+    if (
+        claim["schema"] != "r12_acw_development_attempt_claim_v1"
+        or claim["protocol"] != "R12-ACW-DEVELOPMENT-ATTEMPT-CLAIM-v1"
+        or nested_plan != expected_plan
+        or claim["artifact_root"] != str(base.resolve(strict=True))
+        or claim["attempt_count"] != 27
+        or claim["attempt_table_sha256"]
+        != hashlib.sha256(canonical_json_bytes(plan["attempt_table"])).hexdigest()
+        or claim["jobs_sha256"]
+        != hashlib.sha256(canonical_json_bytes(plan["custody_stages"])).hexdigest()
+        or claim["all_argv_and_paths_claimed_before_scoring"] is not True
+        or claim["checkpoint_count_at_creation"] != 0
+        or claim["confirmation_authorized"] is not False
+        or claim["claim_boundary"] != plan["claim_boundary"]
+    ):
+        raise EvidenceError(
+            "attempt_claim_mismatch", "attempt claim differs from the committed plan"
+        )
+    return {
+        **binding,
+        "path": str(path.resolve(strict=True)),
+        "payload_sha256": payload_sha256,
+    }
+
+
+def _validate_stage_job_binding(
+    value: Any,
+    *,
+    stage: dict[str, Any],
+    label: str,
+) -> dict[str, Any]:
+    slurm = _object(value, label)
+    _expect_keys(
+        slurm,
+        {
+            "job_id",
+            "job_name",
+            "node",
+            "cpus_per_task",
+            "dependency",
+            "script",
+            "spool_script_sha256",
+            "scontrol_snapshot_sha256",
+            "process_membership",
+        },
+        label,
+    )
+    membership = _object(slurm["process_membership"], f"{label}.process_membership")
+    _expect_keys(
+        membership,
+        {"cpu_list", "memory_list", "task_cgroup"},
+        f"{label}.process_membership",
+    )
+    from pipeline.freeze_acw_curriculum import CANONICAL_PILOT_UID, _cpu_list_members
+
+    try:
+        cpu_members = _cpu_list_members(str(membership["cpu_list"]))
+    except (TypeError, ValueError) as exc:
+        raise EvidenceError(
+            "stage_receipt_mismatch", f"{label} CPU membership is malformed"
+        ) from exc
+    job_id = str(stage["held_slurm_job_id"])
+    if (
+        str(slurm["job_id"]) != job_id
+        or slurm["job_name"] != stage["job_name"]
+        or slurm["node"] != stage["expected_node"]
+        or slurm["cpus_per_task"] != "4"
+        or slurm["dependency"] != stage["dependency"]
+        or slurm["script"] != stage["script"]
+        or slurm["spool_script_sha256"] != stage["script"]["sha256"]
+        or _hash(
+            slurm["scontrol_snapshot_sha256"],
+            f"{label}.scontrol_snapshot_sha256",
+        )
+        != slurm["scontrol_snapshot_sha256"]
+        or len(cpu_members) != 4
+        or not str(membership["memory_list"])
+        or membership["task_cgroup"]
+        != f"/slurm/uid_{CANONICAL_PILOT_UID}/job_{job_id}/step_batch/task_0"
+    ):
+        raise EvidenceError(
+            "stage_receipt_mismatch", f"{label} differs from the committed stage"
+        )
+    return dict(slurm)
+
+
+def _stable_stage_job_binding(value: dict[str, Any]) -> dict[str, Any]:
+    """Return only allocation identity fields that cannot drift during a job."""
+
+    return {
+        key: value[key]
+        for key in (
+            "job_id",
+            "job_name",
+            "node",
+            "cpus_per_task",
+            "dependency",
+            "script",
+            "spool_script_sha256",
+            "process_membership",
+        )
+    }
+
+
+def _registered_closed_world_tree_files(tree: Path, *, kind: str) -> set[Path]:
+    if not tree.is_dir() or tree.is_symlink():
+        raise EvidenceError(
+            "stage_receipt_mismatch", f"{kind} closed-world tree is unavailable"
+        )
+    manifest_path = tree / "manifest.json"
+    raw, _ = _read_regular_file(manifest_path)
+    manifest = _parse_json(raw, f"{kind} closed-world manifest")
+    registries = (
+        (manifest.get("arrays"),)
+        if kind == "dataset"
+        else (
+            manifest.get("arrays"),
+            manifest.get("files"),
+            manifest.get("pilot_artifacts"),
+        )
+    )
+    relatives = {"manifest.json"}
+    for registry in registries:
+        if not isinstance(registry, dict):
+            raise EvidenceError(
+                "stage_receipt_mismatch",
+                f"{kind} closed-world manifest registry is missing",
+            )
+        for raw_relative in registry:
+            relative = Path(str(raw_relative))
+            if relative.is_absolute() or ".." in relative.parts:
+                raise EvidenceError(
+                    "stage_receipt_mismatch",
+                    f"{kind} closed-world manifest path is unsafe",
+                )
+            relatives.add(relative.as_posix())
+    expected = {tree / relative for relative in relatives}
+    actual = {
+        path for path in tree.rglob("*") if path.is_file() and not path.is_symlink()
+    }
+    if actual != expected:
+        raise EvidenceError(
+            "stage_receipt_mismatch",
+            f"{kind} closed-world tree differs from its manifest registry",
+        )
+    return expected
+
+
+def _expected_stage_closed_world_inventory(
+    plan: dict[str, Any],
+    *,
+    attempt_root: Path,
+    scan_root: Path,
+    role: str,
+    include_current_terminal_receipts: bool = False,
+) -> tuple[list[str], int]:
+    roles = (
+        "phase1_producer",
+        "phase1_verifier",
+        "phase2_producer",
+        "phase2_verifier",
+    )
+    if role not in roles:
+        raise EvidenceError("stage_receipt_mismatch", "closed-world role is unknown")
+    current_ordinal = roles.index(role)
+    starts = {item: f"custody/stages/{item}_start.json" for item in roles}
+    completions = {item: f"custody/stages/{item}_completion.json" for item in roles}
+    accounting = {item: f"custody/stages/{item}_accounting.json" for item in roles}
+    outputs = {
+        "phase1_producer": ("direct_state_producer_manifest.json",),
+        "phase1_verifier": (
+            "direct_refit_verification.json",
+            "direct_state_manifest.json",
+            "direct_state_decision.json",
+            "phase2_authorization.json",
+        ),
+        "phase2_producer": ("development_producer_manifest.json",),
+        "phase2_verifier": (
+            "final_refit_verification.json",
+            "development_manifest.json",
+        ),
+    }
+    expected: set[Path] = set()
+    if scan_root == attempt_root:
+        expected.update(
+            attempt_root / name
+            for name in (
+                "development_plan.json",
+                "attempt_claim.json",
+                "attempt_start.json",
+            )
+        )
+        for ordinal, prior_role in enumerate(roles[: current_ordinal + 1]):
+            expected.add(attempt_root / starts[prior_role])
+            if ordinal < current_ordinal or include_current_terminal_receipts:
+                expected.add(attempt_root / completions[prior_role])
+                expected.add(attempt_root / accounting[prior_role])
+            expected.update(attempt_root / name for name in outputs[prior_role])
+
+    input_table = _list(plan.get("input_table"), "development plan input table")
+    for raw_record in input_table:
+        record = _object(raw_record, "development plan input record")
+        input_role = str(record.get("role"))
+        if input_role not in roles or roles.index(input_role) > current_ordinal:
+            continue
+        paths = _object(record.get("paths"), "development plan input paths")
+        for name, raw_path in paths.items():
+            tree = Path(str(raw_path))
+            if tree.is_relative_to(scan_root):
+                expected.update(
+                    _registered_closed_world_tree_files(
+                        tree, kind="dataset" if name == "dataset" else "bundle"
+                    )
+                )
+
+    attempt_table = _list(plan.get("attempt_table"), "development plan attempt table")
+    for raw_attempt in attempt_table:
+        attempt = _object(raw_attempt, "development plan attempt record")
+        for side_name in ("producer", "verifier"):
+            side = _object(attempt.get(side_name), f"attempt {side_name}")
+            side_role = str(side.get("job_role"))
+            if side_role not in roles or roles.index(side_role) > current_ordinal:
+                continue
+            paths = _object(side.get("paths"), f"attempt {side_name} paths")
+            task_root = Path(str(paths.get("task_root")))
+            if task_root.is_relative_to(scan_root):
+                task_files = {
+                    task_root / name
+                    for name in (
+                        "attempt.json",
+                        "checkpoint.pt",
+                        "evaluation.json",
+                        "replay.json",
+                    )
+                }
+                actual_task_files = {
+                    path
+                    for path in task_root.rglob("*")
+                    if path.is_file() and not path.is_symlink()
+                }
+                if actual_task_files != task_files:
+                    raise EvidenceError(
+                        "stage_receipt_mismatch",
+                        "attempt task differs from its exact four-file registry",
+                    )
+                expected.update(task_files)
+
+    relatives = sorted(path.relative_to(scan_root).as_posix() for path in expected)
+    directories = {scan_root}
+    for path in expected:
+        parent = path.parent
+        while parent != scan_root:
+            if not parent.is_relative_to(scan_root):
+                raise EvidenceError(
+                    "stage_receipt_mismatch", "closed-world file escapes its root"
+                )
+            directories.add(parent)
+            parent = parent.parent
+    return relatives, len(directories)
+
+
+def _validate_predecessor_handoff(
+    value: Any,
+    *,
+    plan: dict[str, Any],
+    base: Path,
+    role: str,
+) -> dict[str, Any] | None:
+    roles = (
+        "phase1_producer",
+        "phase1_verifier",
+        "phase2_producer",
+        "phase2_verifier",
+    )
+    ordinal = roles.index(role)
+    if ordinal == 0:
+        if value is not None:
+            raise EvidenceError(
+                "stage_receipt_mismatch", "first role has a predecessor handoff"
+            )
+        return None
+    handoff = _object(value, f"{role} predecessor handoff")
+    _expect_keys(
+        handoff,
+        {
+            "predecessor_role",
+            "predecessor_stage",
+            "predecessor_completion",
+            "predecessor_terminal_accounting",
+            "live_closed_world_before_consumer_scoring",
+            "consumer_observed_before_role_scoring",
+        },
+        f"{role} predecessor handoff",
+    )
+    predecessor = roles[ordinal - 1]
+    predecessor_stage = (
+        "phase1",
+        "direct_verified",
+        "phase2",
+        "final",
+    )[ordinal - 1]
+    completion_name = f"custody/stages/{predecessor}_completion.json"
+    accounting_name = f"custody/stages/{predecessor}_accounting.json"
+    _, completion_path = _verify_file_reference(
+        handoff["predecessor_completion"],
+        f"{role} predecessor completion",
+        base,
+    )
+    _, accounting_path = _verify_file_reference(
+        handoff["predecessor_terminal_accounting"],
+        f"{role} predecessor accounting",
+        base,
+    )
+    scans = _object(
+        handoff["live_closed_world_before_consumer_scoring"],
+        f"{role} predecessor handoff scans",
+    )
+    expected_scan_keys = {"main", "direct_verifier"} if ordinal >= 2 else {"main"}
+    _expect_keys(scans, expected_scan_keys, f"{role} predecessor handoff scans")
+    main_paths, main_directory_count = _expected_stage_closed_world_inventory(
+        plan,
+        attempt_root=base.resolve(strict=True),
+        scan_root=base.resolve(strict=True),
+        role=predecessor,
+        include_current_terminal_receipts=True,
+    )
+    _validate_closed_world_summary(
+        scans["main"],
+        expected_root=base.resolve(strict=True),
+        expected_stage=predecessor_stage,
+        expected_paths=main_paths,
+        expected_directory_count=main_directory_count,
+        label=f"{role} predecessor handoff scans.main",
+    )
+    if ordinal >= 2:
+        private_root = (base.parent / "acw_development_g1_direct_verifier").resolve(
+            strict=True
+        )
+        private_paths, private_directory_count = _expected_stage_closed_world_inventory(
+            plan,
+            attempt_root=base.resolve(strict=True),
+            scan_root=private_root,
+            role=predecessor,
+            include_current_terminal_receipts=True,
+        )
+        _validate_closed_world_summary(
+            scans["direct_verifier"],
+            expected_root=private_root,
+            expected_stage=predecessor_stage,
+            expected_paths=private_paths,
+            expected_directory_count=private_directory_count,
+            label=f"{role} predecessor handoff scans.direct_verifier",
+        )
+    if (
+        handoff["predecessor_role"] != predecessor
+        or handoff["predecessor_stage"] != predecessor_stage
+        or completion_path != (base / completion_name).resolve(strict=True)
+        or accounting_path != (base / accounting_name).resolve(strict=True)
+        or handoff["consumer_observed_before_role_scoring"] is not True
+    ):
+        raise EvidenceError(
+            "stage_receipt_mismatch", f"{role} predecessor handoff differs"
+        )
+    return dict(handoff)
+
+
+def _validate_closed_world_summary(
+    value: Any,
+    *,
+    expected_root: Path,
+    expected_stage: str,
+    expected_paths: list[str],
+    expected_directory_count: int,
+    label: str,
+) -> dict[str, Any]:
+    summary = _object(value, label)
+    if (
+        not expected_root.is_dir()
+        or expected_root.is_symlink()
+        or expected_root.resolve(strict=True) != expected_root
+    ):
+        raise EvidenceError("stage_receipt_mismatch", f"{label} root is not canonical")
+    _expect_keys(
+        summary,
+        {
+            "stage",
+            "root",
+            "file_count",
+            "directory_count",
+            "files",
+            "tree_sha256",
+            "exact_file_set",
+            "exact_directory_set",
+            "symlinks",
+            "special_files",
+        },
+        label,
+    )
+    files = _list(summary["files"], f"{label}.files")
+    digest = hashlib.sha256()
+    observed_paths: list[str] = []
+    for index, raw_record in enumerate(files):
+        record_label = f"{label}.files[{index}]"
+        record = _object(raw_record, record_label)
+        _expect_keys(record, {"path", "bytes", "mode", "sha256"}, record_label)
+        relative = record["path"]
+        if (
+            not isinstance(relative, str)
+            or not relative
+            or Path(relative).is_absolute()
+            or ".." in Path(relative).parts
+            or record["mode"] != "0444"
+            or _integer(record["bytes"], f"{record_label}.bytes") < 0
+            or _hash(record["sha256"], f"{record_label}.sha256") != record["sha256"]
+        ):
+            raise EvidenceError(
+                "stage_receipt_mismatch", f"{record_label} is malformed"
+            )
+        observed_paths.append(relative)
+        artifact = expected_root / relative
+        try:
+            resolved = artifact.resolve(strict=True)
+        except (OSError, RuntimeError) as exc:
+            raise EvidenceError(
+                "stage_receipt_mismatch", f"{record_label} is unavailable"
+            ) from exc
+        if (
+            artifact.is_symlink()
+            or not resolved.is_relative_to(expected_root)
+            or not resolved.is_file()
+            or stat.S_IMODE(resolved.stat().st_mode) != 0o444
+        ):
+            raise EvidenceError(
+                "stage_receipt_mismatch", f"{record_label} is not immutable and rooted"
+            )
+        size, observed_sha256 = _hash_regular_file(resolved, record_label)
+        if size != record["bytes"] or observed_sha256 != record["sha256"]:
+            raise EvidenceError(
+                "stage_receipt_mismatch", f"{record_label} bytes differ"
+            )
+        digest.update(canonical_json_bytes(record) + b"\n")
+    if (
+        summary["stage"] != expected_stage
+        or summary["root"] != str(expected_root)
+        or summary["file_count"] != len(files)
+        or summary["directory_count"] != expected_directory_count
+        or observed_paths != sorted(observed_paths)
+        or len(set(observed_paths)) != len(observed_paths)
+        or observed_paths != expected_paths
+        or _hash(summary["tree_sha256"], f"{label}.tree_sha256") != digest.hexdigest()
+        or summary["exact_file_set"] is not True
+        or summary["exact_directory_set"] is not True
+        or summary["symlinks"] != 0
+        or summary["special_files"] != 0
+    ):
+        raise EvidenceError(
+            "stage_receipt_mismatch", f"{label} closed-world scan differs"
+        )
+    return dict(summary)
+
+
+def _validate_stage_receipts(
+    value: Any,
+    base: Path,
+    *,
+    scope: str,
+    expected_plan: dict[str, Any] | None,
+    require_all_closed: bool = False,
+) -> dict[str, Any]:
+    receipts = _object(value, "stage receipts")
+    roles = (
+        ("phase1_producer", "phase1_verifier")
+        if scope == "direct_state"
+        else (
+            "phase1_producer",
+            "phase1_verifier",
+            "phase2_producer",
+            "phase2_verifier",
+        )
+    )
+    _expect_keys(receipts, set(roles), "stage receipts")
+    plan, _, _ = _verify_json_reference(
+        {"path": "development_plan.json", "sha256": DEVELOPMENT_PLAN_RAW_SHA256},
+        "stage receipt development plan",
+        base,
+    )
+    stages = {
+        stage["role"]: stage
+        for stage in _list(plan["custody_stages"], "custody stages")
+    }
+    bindings: dict[str, Any] = {}
+    for position, role in enumerate(roles):
+        stage = _object(stages.get(role), f"stage plan {role}")
+        record = _object(receipts[role], f"stage receipts.{role}")
+        open_role = position == len(roles) - 1 and not require_all_closed
+        expected_record_keys = (
+            {"start"} if open_role else {"start", "completion", "terminal_accounting"}
+        )
+        _expect_keys(record, expected_record_keys, f"stage receipts.{role}")
+        start, start_binding, start_path = _verify_json_reference(
+            record["start"], f"stage receipts.{role}.start", base
+        )
+        if stat.S_IMODE(start_path.stat().st_mode) != 0o444:
+            raise EvidenceError("stage_receipt_mutable", f"{role} start is mutable")
+        _expect_keys(
+            start,
+            {
+                "schema",
+                "protocol",
+                "role",
+                "development_plan",
+                "attempt_claim",
+                "scientific_commit",
+                "slurm",
+                "planned_work",
+                "predecessor_handoff",
+                "created_before_role_scoring",
+                "confirmation_authorized",
+                "payload_sha256",
+            },
+            f"{role} start",
+        )
+        start_payload = _verify_payload_hash(start, f"{role} start")
+        nested_plan = _validate_development_plan_reference(
+            start["development_plan"], base
+        )
+        _validate_attempt_claim_reference(
+            start["attempt_claim"], base, expected_plan=expected_plan
+        )
+        start_slurm = _validate_stage_job_binding(
+            start["slurm"], stage=stage, label=f"{role} start.slurm"
+        )
+        _validate_predecessor_handoff(
+            start["predecessor_handoff"], plan=plan, base=base, role=role
+        )
+        if (
+            start["schema"] != "r12_acw_development_stage_start_v1"
+            or start["protocol"] != "R12-ACW-DEVELOPMENT-STAGE-START-v1"
+            or start["role"] != role
+            or nested_plan != expected_plan
+            or re.fullmatch(r"[0-9a-f]{40}", str(start["scientific_commit"])) is None
+            or start["planned_work"] != stage["work"]
+            or start["created_before_role_scoring"] is not True
+            or start["confirmation_authorized"] is not False
+        ):
+            raise EvidenceError("stage_receipt_mismatch", f"{role} start differs")
+        role_binding: dict[str, Any] = {
+            "start": {**start_binding, "payload_sha256": start_payload},
+            "slurm": start_slurm,
+        }
+        if not open_role:
+            completion, completion_binding, completion_path = _verify_json_reference(
+                record["completion"], f"stage receipts.{role}.completion", base
+            )
+            if stat.S_IMODE(completion_path.stat().st_mode) != 0o444:
+                raise EvidenceError(
+                    "stage_receipt_mutable", f"{role} completion is mutable"
+                )
+            _expect_keys(
+                completion,
+                {
+                    "schema",
+                    "protocol",
+                    "role",
+                    "development_plan",
+                    "stage_start",
+                    "slurm",
+                    "completed_work",
+                    "outputs",
+                    "closed_world",
+                    "all_outputs_immutable",
+                    "normal_slurm_steps_used",
+                    "confirmation_authorized",
+                    "payload_sha256",
+                },
+                f"{role} completion",
+            )
+            completion_payload = _verify_payload_hash(completion, f"{role} completion")
+            completion_slurm = _validate_stage_job_binding(
+                completion["slurm"], stage=stage, label=f"{role} completion.slurm"
+            )
+            expected_output_names = {
+                "phase1_producer": ("direct_state_producer_manifest.json",),
+                "phase1_verifier": (
+                    "direct_refit_verification.json",
+                    "direct_state_manifest.json",
+                    "direct_state_decision.json",
+                    "phase2_authorization.json",
+                ),
+                "phase2_producer": ("development_producer_manifest.json",),
+                "phase2_verifier": (
+                    "final_refit_verification.json",
+                    "development_manifest.json",
+                ),
+            }[role]
+            outputs = _object(completion["outputs"], f"{role} completion.outputs")
+            _expect_keys(
+                outputs,
+                set(expected_output_names),
+                f"{role} completion.outputs",
+            )
+            for output_name in expected_output_names:
+                _, output_path = _verify_file_reference(
+                    outputs[output_name],
+                    f"{role} completion.outputs.{output_name}",
+                    base,
+                )
+                if (
+                    output_path != (base / output_name).resolve(strict=True)
+                    or stat.S_IMODE(output_path.stat().st_mode) != 0o444
+                ):
+                    raise EvidenceError(
+                        "stage_receipt_mismatch",
+                        f"{role} completion output differs: {output_name}",
+                    )
+            closed_world = _object(
+                completion["closed_world"], f"{role} completion.closed_world"
+            )
+            expected_closed_world_keys = (
+                {"main", "private"}
+                if role in {"phase1_verifier", "phase2_verifier"}
+                else {"main"}
+            )
+            _expect_keys(
+                closed_world,
+                expected_closed_world_keys,
+                f"{role} completion.closed_world",
+            )
+            expected_stage = {
+                "phase1_producer": "phase1",
+                "phase1_verifier": "direct_verified",
+                "phase2_producer": "phase2",
+                "phase2_verifier": "final",
+            }[role]
+            main_paths, main_directory_count = _expected_stage_closed_world_inventory(
+                plan,
+                attempt_root=base.resolve(strict=True),
+                scan_root=base.resolve(strict=True),
+                role=role,
+            )
+            _validate_closed_world_summary(
+                closed_world["main"],
+                expected_root=base.resolve(strict=True),
+                expected_stage=expected_stage,
+                expected_paths=main_paths,
+                expected_directory_count=main_directory_count,
+                label=f"{role} completion.closed_world.main",
+            )
+            if "private" in closed_world:
+                private_name = (
+                    "acw_development_g1_direct_verifier"
+                    if role == "phase1_verifier"
+                    else "acw_development_g1_final_verifier"
+                )
+                private_root = (base.parent / private_name).resolve(strict=True)
+                private_paths, private_directory_count = (
+                    _expected_stage_closed_world_inventory(
+                        plan,
+                        attempt_root=base.resolve(strict=True),
+                        scan_root=private_root,
+                        role=role,
+                    )
+                )
+                _validate_closed_world_summary(
+                    closed_world["private"],
+                    expected_root=private_root,
+                    expected_stage=expected_stage,
+                    expected_paths=private_paths,
+                    expected_directory_count=private_directory_count,
+                    label=f"{role} completion.closed_world.private",
+                )
+            if (
+                completion["schema"] != "r12_acw_development_stage_completion_v1"
+                or completion["protocol"] != "R12-ACW-DEVELOPMENT-STAGE-COMPLETION-v1"
+                or completion["role"] != role
+                or completion["development_plan"] != start["development_plan"]
+                or completion["stage_start"] != record["start"]
+                or _stable_stage_job_binding(completion_slurm)
+                != _stable_stage_job_binding(start_slurm)
+                or completion["completed_work"] != stage["work"]
+                or completion["all_outputs_immutable"] is not True
+                or completion["normal_slurm_steps_used"] != 0
+                or completion["confirmation_authorized"] is not False
+            ):
+                raise EvidenceError(
+                    "stage_receipt_mismatch", f"{role} completion differs"
+                )
+            accounting, accounting_binding, accounting_path = _verify_json_reference(
+                record["terminal_accounting"],
+                f"stage receipts.{role}.terminal_accounting",
+                base,
+            )
+            if stat.S_IMODE(accounting_path.stat().st_mode) != 0o444:
+                raise EvidenceError(
+                    "stage_receipt_mutable", f"{role} accounting is mutable"
+                )
+            _expect_keys(
+                accounting,
+                {
+                    "schema",
+                    "protocol",
+                    "role",
+                    "development_plan",
+                    "observed_by",
+                    "terminal_rows",
+                    "normal_slurm_steps",
+                    "terminal_completed",
+                    "resource_values_are_diagnostic_only",
+                    "confirmation_authorized",
+                    "payload_sha256",
+                },
+                f"{role} accounting",
+            )
+            _verify_payload_hash(accounting, f"{role} accounting")
+            accounting_plan = _validate_development_plan_reference(
+                accounting["development_plan"], base
+            )
+            if position + 1 < len(roles):
+                observer_role = roles[position + 1]
+                observer_stage = _object(
+                    stages.get(observer_role), f"stage plan {observer_role}"
+                )
+                _validate_stage_job_binding(
+                    accounting["observed_by"],
+                    stage=observer_stage,
+                    label=f"{role} accounting.observed_by",
+                )
+            else:
+                monitor_stage = _object(
+                    plan.get("accounting", {}).get("monitor_stage"),
+                    "terminal monitor stage",
+                )
+                _validate_stage_job_binding(
+                    accounting["observed_by"],
+                    stage=monitor_stage,
+                    label=f"{role} accounting.observed_by",
+                )
+            terminal_rows = _list(
+                accounting["terminal_rows"], f"{role} accounting.terminal_rows"
+            )
+            job_id = str(stage["held_slurm_job_id"])
+            expected_row_names = {
+                job_id: stage["job_name"],
+                f"{job_id}.batch": "batch",
+                f"{job_id}.extern": "extern",
+            }
+            observed_rows: dict[str, dict[str, Any]] = {}
+            for row_index, raw_row in enumerate(terminal_rows):
+                row_label = f"{role} accounting.terminal_rows[{row_index}]"
+                row = _object(raw_row, row_label)
+                _expect_keys(
+                    row,
+                    {
+                        "job_id_raw",
+                        "job_name",
+                        "state",
+                        "exit_code",
+                        "node_list",
+                        "cpus",
+                        "elapsed_raw",
+                        "max_rss",
+                    },
+                    row_label,
+                )
+                row_id = row["job_id_raw"]
+                if not isinstance(row_id, str) or row_id in observed_rows:
+                    raise EvidenceError(
+                        "stage_accounting_mismatch",
+                        f"{role} accounting rows are duplicated",
+                    )
+                observed_rows[row_id] = row
+            rows_valid = set(observed_rows) == set(expected_row_names)
+            if rows_valid:
+                for row_id, expected_name in expected_row_names.items():
+                    row = observed_rows[row_id]
+                    if (
+                        row["job_name"] != expected_name
+                        or row["state"] != "COMPLETED"
+                        or row["exit_code"] != "0:0"
+                        or row["node_list"] != stage["expected_node"]
+                        or row["cpus"] != "4"
+                        or not isinstance(row["elapsed_raw"], str)
+                        or not isinstance(row["max_rss"], str)
+                    ):
+                        rows_valid = False
+                        break
+            if (
+                accounting.get("schema") != "r12_acw_development_stage_accounting_v1"
+                or accounting.get("protocol")
+                != "R12-ACW-DEVELOPMENT-STAGE-ACCOUNTING-v1"
+                or accounting.get("role") != role
+                or accounting.get("terminal_completed") is not True
+                or accounting.get("normal_slurm_steps") != []
+                or accounting_plan != expected_plan
+                or not rows_valid
+                or accounting.get("resource_values_are_diagnostic_only") is not True
+                or accounting.get("confirmation_authorized") is not False
+            ):
+                raise EvidenceError(
+                    "stage_accounting_mismatch", f"{role} accounting differs"
+                )
+            role_binding["completion"] = {
+                **completion_binding,
+                "payload_sha256": completion_payload,
+            }
+            role_binding["terminal_accounting"] = accounting_binding
+        bindings[role] = role_binding
+    return bindings
+
+
+def _validate_private_refit_verification_reference(
+    value: Any,
+    base: Path,
+    *,
+    scope: str,
+    expected_plan: dict[str, Any] | None,
+) -> dict[str, Any]:
+    report, binding, path = _verify_json_reference(
+        value, f"{scope} private refit verification", base
+    )
+    if stat.S_IMODE(path.stat().st_mode) != 0o444:
+        raise EvidenceError(
+            "private_refit_verification_mutable",
+            f"{scope} private refit verification must be mode 0444",
+        )
+    _expect_keys(
+        report,
+        {
+            "schema",
+            "protocol",
+            "scope",
+            "development_plan",
+            "attempt_count",
+            "comparisons",
+            "datasets_regenerated_privately",
+            "curricula_regenerated_privately",
+            "models_refit_from_private_copies",
+            "model_tensors_byte_identical",
+            "normalized_evaluations_identical",
+            "confirmation_authorized",
+            "payload_sha256",
+        },
+        f"{scope} private refit verification",
+    )
+    payload_sha256 = _verify_payload_hash(report, f"{scope} private refit verification")
+    nested_plan = _validate_development_plan_reference(report["development_plan"], base)
+    expected_arms = (DIRECT_STATE_ARM,) if scope == "direct" else SCORED_ARMS
+    expected_attempt_ids = [
+        f"{arm}__{seed}" for arm in expected_arms for seed in DEVELOPMENT_SEEDS
+    ]
+    comparisons = _list(report["comparisons"], f"{scope} private refit comparisons")
+    observed_attempt_ids = []
+    for index, value in enumerate(comparisons):
+        comparison = _object(value, f"{scope} comparison[{index}]")
+        _expect_keys(
+            comparison,
+            {
+                "attempt_id",
+                "model_tensor_sha256",
+                "stable_checkpoint_payload_sha256",
+                "producer_checkpoint_sha256",
+                "verifier_checkpoint_sha256",
+                "producer_evaluation",
+                "verifier_evaluation",
+                "producer_stage",
+                "verifier_stage",
+            },
+            f"{scope} comparison[{index}]",
+        )
+        observed_attempt_ids.append(comparison["attempt_id"])
+        for key in (
+            "model_tensor_sha256",
+            "stable_checkpoint_payload_sha256",
+            "producer_checkpoint_sha256",
+            "verifier_checkpoint_sha256",
+        ):
+            _hash(comparison[key], f"{scope} comparison[{index}].{key}")
+        for side in ("producer_evaluation", "verifier_evaluation"):
+            evaluation = _object(
+                comparison[side], f"{scope} comparison[{index}].{side}"
+            )
+            _expect_keys(
+                evaluation,
+                {"raw_sha256", "normalized_payload_sha256"},
+                f"{scope} comparison[{index}].{side}",
+            )
+            _hash(
+                evaluation["raw_sha256"],
+                f"{scope} comparison[{index}].{side}.raw_sha256",
+            )
+            _hash(
+                evaluation["normalized_payload_sha256"],
+                f"{scope} comparison[{index}].{side}.normalized_payload_sha256",
+            )
+        if (
+            comparison["producer_evaluation"]["normalized_payload_sha256"]
+            != (comparison["verifier_evaluation"]["normalized_payload_sha256"])
+        ):
+            raise EvidenceError(
+                "private_refit_evaluation_mismatch",
+                f"{scope} comparison[{index}] evaluator semantics differ",
+            )
+    expected_roles = (
+        ("phase1_producer", "phase1_verifier")
+        if scope == "direct"
+        else ("phase2_producer", "phase2_verifier")
+    )
+    if (
+        report["schema"] != "r12_acw_development_private_refit_verification_v1"
+        or report["protocol"] != "R12-ACW-DEVELOPMENT-PRIVATE-REFIT-VERIFICATION-v1"
+        or report["scope"] != scope
+        or nested_plan != expected_plan
+        or report["attempt_count"] != len(expected_attempt_ids)
+        or observed_attempt_ids != expected_attempt_ids
+        or any(
+            (comparison["producer_stage"], comparison["verifier_stage"])
+            != expected_roles
+            for comparison in comparisons
+        )
+        or report["datasets_regenerated_privately"] is not True
+        or report["curricula_regenerated_privately"] is not True
+        or report["models_refit_from_private_copies"] is not True
+        or report["model_tensors_byte_identical"] is not True
+        or report["normalized_evaluations_identical"] is not True
+        or report["confirmation_authorized"] is not False
+    ):
+        raise EvidenceError(
+            "private_refit_verification_mismatch",
+            f"{scope} private refit verification differs from the frozen matrix",
+        )
+    return {
+        **binding,
+        "path": str(path.resolve(strict=True)),
+        "payload_sha256": payload_sha256,
+        "attempt_ids": observed_attempt_ids,
+    }
+
+
+def _direct_state_decision_payload(
+    manifest_path: Path,
+    manifest_sha256: str,
+    runs: list[dict[str, Any]],
+    verification: dict[str, Any],
+) -> dict[str, Any]:
+    gates = [
+        {"index": index, **_direct_state_gate(run)} for index, run in enumerate(runs)
+    ]
+    passed = len(gates) == 3 and all(gate["passed"] for gate in gates)
+    return with_payload_hash(
+        {
+            "schema": DIRECT_STATE_DECISION_SCHEMA,
+            "protocol": DIRECT_STATE_DECISION_PROTOCOL,
+            "decision": "PASS" if passed else "NO_GO",
+            "passed": passed,
+            "development_plan": verification["development_plan_binding"],
+            "direct_state_manifest": {
+                "path": str(manifest_path.resolve(strict=True)),
+                "sha256": manifest_sha256,
+                "payload_sha256": verification["manifest_payload_sha256"],
+            },
+            "seed_gates": gates,
+            "verification": verification,
+            "phase2_authorized": passed,
+            "claim_boundary": (
+                "Positive-control qualification only; this is not a scored "
+                "architecture or reasoning result."
+            ),
+            "output_contract": {
+                "exclusive_create": True,
+                "overwrite": False,
+                "mode": "0444",
+            },
+        }
+    )
+
+
+def qualify_direct_state(
+    manifest_path: str | Path,
+    decision_out: str | Path,
+    authorization_out: str | Path,
+) -> tuple[dict[str, Any], dict[str, Any] | None]:
+    path = Path(manifest_path)
+    raw, manifest_sha256, manifest_stat = _read_regular_file_with_stat(path)
+    if stat.S_IMODE(manifest_stat.st_mode) != 0o444:
+        raise EvidenceError(
+            "direct_state_manifest_mutable",
+            "direct-state manifest must be an immutable mode-0444 regular file",
+        )
+    manifest = _parse_json(raw, "direct-state manifest")
+    runs, verification = verify_evidence(manifest, path.parent, scope="direct_state")
+    decision = _direct_state_decision_payload(path, manifest_sha256, runs, verification)
+    decision_record = _write_immutable_binary(
+        decision_out, canonical_json_bytes(decision) + b"\n"
+    )
+    if not decision["passed"]:
+        return decision, None
+    authorization = with_payload_hash(
+        {
+            "schema": PHASE2_AUTHORIZATION_SCHEMA,
+            "protocol": PHASE2_AUTHORIZATION_PROTOCOL,
+            "authorized": True,
+            "development_plan": verification["development_plan_binding"],
+            "direct_state_manifest": decision["direct_state_manifest"],
+            "direct_state_decision": {
+                "path": str(Path(decision_record["path"]).resolve(strict=True)),
+                "sha256": decision_record["sha256"],
+                "payload_sha256": decision["payload_sha256"],
+            },
+            "scored_arms": list(SCORED_ARMS),
+            "development_seeds": list(DEVELOPMENT_SEEDS),
+            "one_attempt": True,
+            "confirmation_authorized": False,
+            "claim_boundary": (
+                "Authorization to execute only the fixed public development matrix; "
+                "confirmation and reasoning claims remain closed."
+            ),
+        }
+    )
+    _write_immutable_binary(
+        authorization_out, canonical_json_bytes(authorization) + b"\n"
+    )
+    return decision, authorization
+
+
+def _validate_phase2_authorization(
+    value: Any,
+    base: Path,
+    *,
+    expected_plan: dict[str, Any] | None,
+) -> dict[str, Any]:
+    authorization, binding, path = _verify_json_reference(
+        value, "phase2_authorization", base
+    )
+    if stat.S_IMODE(path.stat().st_mode) != 0o444:
+        raise EvidenceError(
+            "phase2_authorization_mutable", "phase-2 authorization must be mode 0444"
+        )
+    _expect_keys(
+        authorization,
+        {
+            "schema",
+            "protocol",
+            "authorized",
+            "development_plan",
+            "direct_state_manifest",
+            "direct_state_decision",
+            "scored_arms",
+            "development_seeds",
+            "one_attempt",
+            "confirmation_authorized",
+            "claim_boundary",
+            "payload_sha256",
+        },
+        "phase2 authorization",
+    )
+    payload_sha256 = _verify_payload_hash(authorization, "phase2 authorization")
+    if (
+        authorization["schema"] != PHASE2_AUTHORIZATION_SCHEMA
+        or authorization["protocol"] != PHASE2_AUTHORIZATION_PROTOCOL
+        or authorization["authorized"] is not True
+        or authorization["development_plan"] != expected_plan
+        or authorization["scored_arms"] != list(SCORED_ARMS)
+        or authorization["development_seeds"] != list(DEVELOPMENT_SEEDS)
+        or authorization["one_attempt"] is not True
+        or authorization["confirmation_authorized"] is not False
+        or authorization["claim_boundary"]
+        != (
+            "Authorization to execute only the fixed public development matrix; "
+            "confirmation and reasoning claims remain closed."
+        )
+    ):
+        raise EvidenceError(
+            "phase2_authorization_mismatch", "phase-2 authorization contract differs"
+        )
+    direct_manifest, direct_binding, direct_path = _verify_json_reference(
+        authorization["direct_state_manifest"],
+        "phase2_authorization.direct_state_manifest",
+        base,
+    )
+    direct_runs, direct_verification = verify_evidence(
+        direct_manifest, direct_path.parent, scope="direct_state"
+    )
+    direct_raw, direct_sha256 = _read_regular_file(direct_path)
+    del direct_raw
+    expected_decision = _direct_state_decision_payload(
+        direct_path, direct_sha256, direct_runs, direct_verification
+    )
+    if not expected_decision["passed"]:
+        raise EvidenceError(
+            "direct_state_gate_failed", "direct-state qualification did not pass"
+        )
+    decision, decision_binding, decision_path = _verify_json_reference(
+        authorization["direct_state_decision"],
+        "phase2_authorization.direct_state_decision",
+        base,
+    )
+    if (
+        stat.S_IMODE(decision_path.stat().st_mode) != 0o444
+        or decision != expected_decision
+        or authorization["direct_state_manifest"]
+        != {
+            "path": direct_binding["path"],
+            "sha256": direct_binding["sha256"],
+            "payload_sha256": direct_verification["manifest_payload_sha256"],
+        }
+        or authorization["direct_state_decision"]
+        != {
+            "path": decision_binding["path"],
+            "sha256": decision_binding["sha256"],
+            "payload_sha256": expected_decision["payload_sha256"],
+        }
+    ):
+        raise EvidenceError(
+            "phase2_authorization_mismatch",
+            "phase-2 authorization does not bind the independently replayed gate",
+        )
+    return {
+        **binding,
+        "path": str(path.resolve(strict=True)),
+        "payload_sha256": payload_sha256,
+        "direct_state_reverified": True,
+    }
 
 
 def _metric_summary(metric: dict[str, Any]) -> dict[str, float]:
@@ -4769,15 +7138,17 @@ def _write_immutable_binary(path: str | Path, raw: bytes) -> dict[str, Any]:
 def _confirmation_authorization() -> dict[str, Any]:
     return {
         "protocol": CONFIRMATION_AUTHORIZATION_PROTOCOL,
-        "authorized": True,
+        "authorized": False,
+        "status": "pending_future_nist_beacon",
         "full_manifest_schema": MANIFEST_SCHEMA,
         "full_manifest_protocol": MANIFEST_PROTOCOL,
         "scored_arms": list(SCORED_ARMS),
         "confirmation_indices": [0, 1, 2],
-        "confirmation_commitments": list(CONFIRMATION_COMMITMENTS),
+        "confirmation_commitments": [],
         "direct_state_confirmation_authorized": False,
         "immutable_baseline_required_before_confirmation": True,
         "full_manifest_must_bind_baseline": True,
+        "future_beacon_required": True,
     }
 
 
@@ -4787,7 +7158,12 @@ def freeze_development_baseline(
     """Verify development only and preserve its strongest deployable checkpoint."""
 
     path = Path(manifest_path)
-    manifest_raw, manifest_sha256 = _read_regular_file(path)
+    manifest_raw, manifest_sha256, manifest_stat = _read_regular_file_with_stat(path)
+    if stat.S_IMODE(manifest_stat.st_mode) != 0o444:
+        raise EvidenceError(
+            "development_manifest_mutable",
+            "development manifest must be an immutable mode-0444 regular file",
+        )
     manifest = _parse_json(manifest_raw, "development manifest")
     runs, verification = verify_evidence(manifest, path.parent, scope="development")
     selection = _development_baseline(runs)
@@ -5137,6 +7513,11 @@ def adjudicate_manifest(
     path = Path(manifest_path)
     manifest_file_sha256: str | None = None
     try:
+        if _confirmation_authorization()["authorized"] is not True:
+            raise EvidenceError(
+                "confirmation_not_authorized",
+                "full adjudication is closed pending a future commit-bound NIST Beacon pulse",
+            )
         if development_baseline_path is None:
             raise EvidenceError(
                 "development_baseline_required",
@@ -5406,6 +7787,15 @@ def build_parser() -> argparse.ArgumentParser:
         "--baseline-checkpoint-out",
         help="Freeze development-only evidence and copy the selected checkpoint here",
     )
+    parser.add_argument(
+        "--qualify-direct-state",
+        action="store_true",
+        help="Verify only the three direct-state diagnostics before scored fitting",
+    )
+    parser.add_argument(
+        "--phase2-authorization-out",
+        help="Immutable phase-2 authorization emitted only when all diagnostics pass",
+    )
     return parser
 
 
@@ -5413,7 +7803,40 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     if os.path.lexists(args.out):
         raise SystemExit(f"refusing to overwrite existing output: {args.out}")
+    if args.qualify_direct_state:
+        if (
+            not args.phase2_authorization_out
+            or args.baseline_checkpoint_out
+            or args.development_baseline
+        ):
+            raise SystemExit(
+                "--qualify-direct-state requires --phase2-authorization-out and "
+                "forbids baseline arguments"
+            )
+        if os.path.lexists(args.phase2_authorization_out):
+            raise SystemExit(
+                "refusing to overwrite existing phase-2 authorization: "
+                f"{args.phase2_authorization_out}"
+            )
+        decision, authorization = qualify_direct_state(
+            args.manifest, args.out, args.phase2_authorization_out
+        )
+        print(
+            json.dumps(
+                {
+                    "decision": decision["decision"],
+                    "decision_payload_sha256": decision["payload_sha256"],
+                    "phase2_authorized": authorization is not None,
+                },
+                sort_keys=True,
+            )
+        )
+        return 0 if authorization is not None else 2
     if args.baseline_checkpoint_out:
+        if args.phase2_authorization_out:
+            raise SystemExit(
+                "--phase2-authorization-out is valid only with --qualify-direct-state"
+            )
         if args.development_baseline:
             raise SystemExit(
                 "--development-baseline and --baseline-checkpoint-out are exclusive"

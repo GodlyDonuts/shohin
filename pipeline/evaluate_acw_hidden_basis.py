@@ -24,6 +24,7 @@ import torch.nn.functional as F
 from pipeline.acw_hidden_basis_training import (
     ACW_SCIENTIFIC_PATHS,
     PublicTrainingData,
+    TRAINING_PROTOCOL,
     canonical_json_bytes,
     file_sha256,
     model_for_arm,
@@ -117,7 +118,7 @@ def load_oracle_split(root: Path, prefix: str) -> OracleSplit:
 
 def load_checkpoint(path: Path) -> tuple[nn.Module, str, dict]:
     checkpoint = torch.load(path, map_location="cpu", weights_only=True)
-    if checkpoint.get("protocol") != "R12-ACW-TRAINER-v2":
+    if checkpoint.get("protocol") != TRAINING_PROTOCOL:
         raise ValueError("wrong ACW checkpoint protocol")
     checkpoint_arm = checkpoint.get("arm")
     model_arm = "acw" if checkpoint_arm == "direct_state_acw" else checkpoint_arm
@@ -800,6 +801,15 @@ def evaluate_checkpoint(
             ),
             "resource_measurements": checkpoint.get("training_report", {}).get(
                 "resource_measurements"
+            ),
+            "canonical_runtime_sha256": checkpoint.get("training_report", {}).get(
+                "canonical_runtime_sha256"
+            ),
+            "development_plan_sha256": checkpoint.get("training_report", {}).get(
+                "development_plan_sha256"
+            ),
+            "execution_receipt": checkpoint.get("training_report", {}).get(
+                "execution_receipt"
             ),
         },
         "scientific_identity": checkpoint.get("scientific_identity"),

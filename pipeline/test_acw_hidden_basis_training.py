@@ -11,8 +11,8 @@ import torch
 from pipeline.acw_hidden_basis_training import (
     ACW_SCIENTIFIC_PATHS,
     ARM_IDS,
-    CONFIRMATION_COMMITMENTS,
     EXPECTED_PARAMETERS,
+    PILOT_SCIENTIFIC_PATHS,
     Curriculum,
     direct_state_forward,
     forward_logits,
@@ -65,7 +65,8 @@ class PublicTrainerTests(unittest.TestCase):
         source = inspect.getsource(trainer)
         self.assertNotIn("import pipeline.generate_acw_hidden_basis", source)
         self.assertNotIn("from pipeline.generate_acw_hidden_basis", source)
-        self.assertEqual(set(ACW_SCIENTIFIC_PATHS), set(GENERATOR_SCIENTIFIC_PATHS))
+        self.assertEqual(set(PILOT_SCIENTIFIC_PATHS), set(GENERATOR_SCIENTIFIC_PATHS))
+        self.assertGreater(set(ACW_SCIENTIFIC_PATHS), set(PILOT_SCIENTIFIC_PATHS))
 
     def test_scientific_identity_rejects_blob_drift_even_if_status_claims_clean(self):
         import pipeline.acw_hidden_basis_training as trainer
@@ -182,7 +183,7 @@ class PublicTrainerTests(unittest.TestCase):
         ):
             scientific_identity(require_clean=True)
 
-    def test_activation_lineage_accepts_only_exact_s_a_e_f_chain(self):
+    def test_activation_lineage_accepts_only_exact_s_a_e_f_g_chain(self):
         import pipeline.acw_hidden_basis_training as trainer
 
         root = Path(self.temporary.name) / "activation_lineage_repo"
@@ -206,6 +207,8 @@ class PublicTrainerTests(unittest.TestCase):
         (root / "activation_b.txt").write_text("disabled-b\n")
         (root / "custody_a.txt").write_text("disabled-a\n")
         (root / "custody_b.txt").write_text("disabled-b\n")
+        (root / "development_a.txt").write_text("disabled-a\n")
+        (root / "development_b.txt").write_text("disabled-b\n")
         git(root, "add", ".")
         git(root, "commit", "-m", "S")
         scientific_commit = git(root, "rev-parse", "HEAD").stdout.strip()
@@ -220,10 +223,30 @@ class PublicTrainerTests(unittest.TestCase):
         git(root, "add", "activation_a.txt", "activation_b.txt")
         git(root, "commit", "-m", "E")
         activation_commit = git(root, "rev-parse", "HEAD").stdout.strip()
-        offline_template = str(
-            Path(self.temporary.name) / "activation_{commit8}.bundle"
+        (root / "custody_a.txt").write_text("enabled-a\n")
+        (root / "custody_b.txt").write_text("enabled-b\n")
+        git(root, "add", "custody_a.txt", "custody_b.txt")
+        git(root, "commit", "-m", "F")
+        custody_commit = git(root, "rev-parse", "HEAD").stdout.strip()
+
+        additions = (
+            "development_plan.json",
+            "pipeline/build_acw_development_manifest.py",
+            "pipeline/jobs/run_acw_development_stokes.sbatch",
+            "pipeline/test_build_acw_development_manifest.py",
         )
-        offline_bundle = Path(offline_template.format(commit8=activation_commit[:8]))
+        (root / "development_a.txt").write_text("enabled-a\n")
+        (root / "development_b.txt").write_text("enabled-b\n")
+        for relative in additions:
+            path = root / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(f"{relative}\n")
+        git(root, "add", "development_a.txt", "development_b.txt", *additions)
+        git(root, "commit", "-m", "G")
+        development_commit = git(root, "rev-parse", "HEAD").stdout.strip()
+
+        offline_template = str(Path(self.temporary.name) / "acw_{commit8}.bundle")
+        offline_bundle = Path(offline_template.format(commit8=development_commit[:8]))
         git(root, "bundle", "create", str(offline_bundle), "main")
         git(self.temporary.name, "init", "--bare", str(remote))
         git(root, "remote", "add", "origin", str(remote))
@@ -233,6 +256,7 @@ class PublicTrainerTests(unittest.TestCase):
             patch.object(trainer, "PILOT_SCIENTIFIC_COMMIT", scientific_commit),
             patch.object(trainer, "PILOT_ANCHOR_COMMIT", anchor_commit),
             patch.object(trainer, "PILOT_EXECUTION_COMMIT", activation_commit),
+            patch.object(trainer, "PILOT_CUSTODY_COMMIT", custody_commit),
             patch.object(trainer, "PILOT_REGISTRY_PATH", "registry.json"),
             patch.object(
                 trainer,
@@ -244,12 +268,22 @@ class PublicTrainerTests(unittest.TestCase):
                 "PILOT_CUSTODY_ALLOWLIST",
                 ("custody_a.txt", "custody_b.txt"),
             ),
+            patch.object(
+                trainer,
+                "PILOT_DEVELOPMENT_ALLOWLIST",
+                (
+                    "development_a.txt",
+                    "development_b.txt",
+                    *additions,
+                ),
+            ),
+            patch.object(trainer, "DEVELOPMENT_PLAN_PATH", "development_plan.json"),
             patch.object(trainer, "ACW_SCIENTIFIC_PATHS", ("scientific.txt",)),
             patch.object(trainer, "PILOT_CANONICAL_REMOTE_URL", str(remote)),
             patch.object(trainer, "PILOT_OFFLINE_BUNDLE_TEMPLATE", offline_template),
         ):
             self.assertEqual(
-                trainer._require_activation_lineage(root), activation_commit
+                trainer._require_activation_lineage(root), development_commit
             )
 
             git(root, "remote", "set-url", "origin", str(remote) + ".unapproved")
@@ -258,29 +292,27 @@ class PublicTrainerTests(unittest.TestCase):
 
             git(root, "remote", "set-url", "origin", str(offline_bundle))
             self.assertEqual(
-                trainer._require_activation_lineage(root), activation_commit
+                trainer._require_activation_lineage(root), development_commit
             )
             git(root, "remote", "set-url", "origin", str(remote))
 
-            (root / "custody_a.txt").write_text("enabled-a\n")
-            (root / "custody_b.txt").write_text("enabled-b\n")
-            git(root, "add", "custody_a.txt", "custody_b.txt")
-            git(root, "commit", "-m", "F")
-            custody_commit = git(root, "rev-parse", "HEAD").stdout.strip()
-            git(root, "push", "origin", "main")
-            custody_bundle = Path(offline_template.format(commit8=custody_commit[:8]))
-            git(root, "bundle", "create", str(custody_bundle), "main")
-            self.assertEqual(trainer._require_activation_lineage(root), custody_commit)
-            git(root, "remote", "set-url", "origin", str(custody_bundle))
-            self.assertEqual(trainer._require_activation_lineage(root), custody_commit)
-            git(root, "remote", "set-url", "origin", str(remote))
-
-            git(root, "checkout", "-B", "bad-activation", activation_commit)
-            (root / "custody_a.txt").write_text("bad-a\n")
-            (root / "custody_b.txt").write_text("bad-b\n")
+            git(root, "checkout", "-B", "bad-development", custody_commit)
+            (root / "development_a.txt").write_text("bad-a\n")
+            (root / "development_b.txt").write_text("bad-b\n")
+            for relative in additions:
+                path = root / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(f"bad {relative}\n")
             (root / "extra.txt").write_text("not allowed\n")
-            git(root, "add", "custody_a.txt", "custody_b.txt", "extra.txt")
-            git(root, "commit", "-m", "bad F")
+            git(
+                root,
+                "add",
+                "development_a.txt",
+                "development_b.txt",
+                *additions,
+                "extra.txt",
+            )
+            git(root, "commit", "-m", "bad G")
             git(root, "push", "--force", "origin", "HEAD:main")
             with self.assertRaisesRegex(RuntimeError, "exact allowlist"):
                 trainer._require_activation_lineage(root)
@@ -420,29 +452,12 @@ class PublicTrainerTests(unittest.TestCase):
             expected_optimizer_seed({"kind": "development", "seed": 2026071601}),
             2026071601,
         )
-        confirmation = expected_optimizer_seed(
-            {
-                "kind": "confirmation",
-                "index": 0,
-                "commitment": CONFIRMATION_COMMITMENTS[0],
-            }
-        )
-        self.assertEqual(
-            confirmation,
-            expected_optimizer_seed(
-                {
-                    "kind": "confirmation",
-                    "index": 0,
-                    "commitment": CONFIRMATION_COMMITMENTS[0],
-                }
-            ),
-        )
         with self.assertRaises(ValueError):
             expected_optimizer_seed(
                 {
                     "kind": "confirmation",
-                    "index": 999,
-                    "commitment": CONFIRMATION_COMMITMENTS[0],
+                    "index": 0,
+                    "commitment": "f" * 64,
                 }
             )
         with self.assertRaises(ValueError):
