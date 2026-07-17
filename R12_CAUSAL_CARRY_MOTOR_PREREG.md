@@ -162,6 +162,12 @@ prompt styles.  It rejects exact fit/development prompt and operand-pair hashes.
 
 All arms are evaluated with identical deterministic greedy decoding.
 
+The frozen H100 path emits bfloat16 base logits.  Motor deltas are computed in
+float32, cast to the base-logit dtype, and added in that dtype in fitting,
+teacher-forced scoring, and autonomous decoding.  Global top-one and rank use
+the decoder's deterministic lowest-token-ID tie break.  Float32 surrogate
+deltas or ranks are not admissible evidence.
+
 1. Teacher-forced next-carry accuracy, exact global-vocabulary top-one accuracy,
    and exact global rank on evaluation features.  Fit-time reports may omit rank
    to avoid retaining the full vocabulary matrix, but may not report a capped

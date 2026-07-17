@@ -112,18 +112,71 @@ def test_full_vocab_sufficient_loss_matches_dense_cross_entropy():
     torch.testing.assert_close(compact, expected)
 
 
+def test_bfloat16_loss_matches_deployed_quantized_dense_logits():
+    torch.manual_seed(44)
+    motor = CarryMotor(5, rank=3)
+    hidden = torch.randn(9, 5)
+    logits = torch.randn(9, 17).to(torch.bfloat16)
+    targets = torch.randint(0, 2, (9,))
+    zero_id, one_id = 3, 12
+    keep = torch.ones(logits.shape[-1], dtype=torch.bool)
+    keep[[zero_id, one_id]] = False
+    compact = full_vocab_motor_loss(
+        hidden,
+        logits[:, [zero_id, one_id]],
+        torch.logsumexp(logits[:, keep].float(), dim=-1),
+        targets,
+        motor,
+    )
+    dense = apply_motor_logits(logits, hidden, motor, zero_id, one_id, True)
+    dense_targets = torch.where(targets == 0, zero_id, one_id)
+    expected = torch.nn.functional.cross_entropy(dense.float(), dense_targets)
+    torch.testing.assert_close(compact, expected)
+
+
 def test_feature_accuracy_is_global_not_two_token_only():
     features = {
         "hidden": torch.zeros(1, 4),
         "base01": torch.tensor([[2.0, 1.0]]),
         "other_lse": torch.tensor([10.0]),
         "other_max": torch.tensor([10.0]),
+        "other_max_token_id": torch.tensor([2]),
         "other_logits": torch.tensor([[10.0, 0.0, -1.0]]),
+        "other_token_ids": torch.tensor([2, 3, 4]),
+        "zero_id": 0,
+        "one_id": 1,
     }
     metrics = feature_metrics(features, [0])
     assert metrics["carry_pair_correct"] == 1
     assert metrics["global_correct"] == 0
     assert metrics["mean_target_rank_global"] == 2.0
+
+
+def test_feature_metrics_match_bfloat16_decode_and_token_id_ties():
+    motor = CarryMotor(4, rank=2)
+    with torch.no_grad():
+        motor.up.bias.copy_(torch.tensor([0.001, 0.0]))
+    features = {
+        "hidden": torch.zeros(1, 4),
+        "base01": torch.tensor([[1.0, 1.0]], dtype=torch.bfloat16),
+        "other_lse": torch.tensor([-10.0]),
+        "other_max": torch.tensor([1.0]),
+        "other_max_token_id": torch.tensor([5]),
+        "other_logits": torch.tensor([[1.0, -2.0]], dtype=torch.bfloat16),
+        "other_token_ids": torch.tensor([5, 12]),
+        "zero_id": 10,
+        "one_id": 2,
+    }
+    metrics = feature_metrics(features, [0], motor)
+    assert metrics["carry_pair_correct"] == 0
+    assert metrics["global_correct"] == 0
+    assert metrics["mean_target_rank_global"] == 3.0
+    logits = torch.full((1, 13), -2.0, dtype=torch.bfloat16)
+    logits[:, 10] = 1.0
+    logits[:, 2] = 1.0
+    logits[:, 5] = 1.0
+    deployed = apply_motor_logits(logits, features["hidden"], motor, 10, 2, True)
+    assert int(deployed.argmax(dim=-1)) == 2
 
 
 def test_control_permutation_preserves_nuisance_counts():
@@ -370,16 +423,22 @@ def test_bundle_receipt_and_state_hash_corruption_fail_closed():
     sources = {"train/causal_carry_motor.py": "source"}
     source_contract = {"git_commit": "commit", "manifest_sha256": "manifest"}
     bundle = {
+        "audit": "causal_carry_motor_fit_v2",
         **bindings,
         "scientific_source_sha256": sources,
         "source_contract": source_contract,
         "extract_batch": CANONICAL_EXTRACT_BATCH,
+        "deployment_logit_dtype": "torch.bfloat16",
         "treatment": treatment,
         "shuffled": shuffled,
         "treatment_state_sha256": tensor_state_sha256(treatment),
         "shuffled_state_sha256": tensor_state_sha256(shuffled),
     }
     validate_motor_bundle(bundle, bindings, sources, source_contract)
+    bad_dtype = copy.deepcopy(bundle)
+    bad_dtype["deployment_logit_dtype"] = "torch.float64"
+    with pytest.raises(ValueError, match="deployment logit dtype"):
+        validate_motor_bundle(bad_dtype, bindings, sources, source_contract)
     for arm in ("treatment", "shuffled"):
         corrupted = copy.deepcopy(bundle)
         first = next(iter(corrupted[arm].values()))

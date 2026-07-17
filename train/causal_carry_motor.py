@@ -353,9 +353,9 @@ def apply_motor_logits(logits, hidden, motor, zero_id, one_id, active):
 
 
 def full_vocab_motor_loss(hidden, base01, other_lse, targets, motor):
-    """Exact full-vocabulary CE using sufficient frozen-logit statistics."""
-    delta = motor(hidden)
-    adjusted = base01.float() + delta
+    """Full-vocabulary CE after the exact deployed logit-dtype arithmetic."""
+    delta = motor(hidden).to(base01.dtype)
+    adjusted = (base01 + delta).float()
     carry_lse = torch.logsumexp(adjusted, dim=-1)
     total_lse = torch.logaddexp(other_lse.float(), carry_lse)
     target_logits = adjusted.gather(1, targets.long().unsqueeze(1)).squeeze(1)
@@ -614,10 +614,12 @@ def extract_frozen_features(
             raise ValueError("row does not have a valid prompt/prefix boundary")
         groups[(len(prompt_ids), len(prefix_ids))].append((index, row))
     hidden = torch.empty((len(rows), model.cfg.d_model), dtype=torch.float32)
-    base01 = torch.empty((len(rows), 2), dtype=torch.float32)
+    base01 = None
     other_lse = torch.empty(len(rows), dtype=torch.float32)
     other_max = torch.empty(len(rows), dtype=torch.float32)
+    other_max_token_id = torch.empty(len(rows), dtype=torch.long)
     other_logits = None
+    other_token_ids = None
     labels = torch.empty(len(rows), dtype=torch.long)
     for lengths, group in sorted(groups.items()):
         prompt_length, prefix_length = lengths
@@ -653,21 +655,42 @@ def extract_frozen_features(
                 handle.remove()
             if "hidden" not in captured:
                 raise RuntimeError("final residual hook did not fire")
-            last = logits[:, -1, :].float()
+            last = logits[:, -1, :]
+            expected_dtype = (
+                torch.bfloat16 if str(device).startswith("cuda") else torch.float32
+            )
+            if last.dtype != expected_dtype:
+                raise RuntimeError(
+                    "unexpected deployment logit dtype: {} != {}".format(
+                        last.dtype, expected_dtype
+                    )
+                )
+            if base01 is None:
+                base01 = torch.empty((len(rows), 2), dtype=last.dtype)
+            elif base01.dtype != last.dtype:
+                raise RuntimeError("deployment logit dtype changed during extraction")
             keep = torch.ones(last.shape[-1], dtype=torch.bool, device=last.device)
             keep[[zero_id, one_id]] = False
+            batch_other_ids = torch.arange(last.shape[-1], device=last.device)[keep]
+            if other_token_ids is None:
+                other_token_ids = batch_other_ids.cpu()
+            elif not torch.equal(other_token_ids, batch_other_ids.cpu()):
+                raise RuntimeError("other-token ordering changed during extraction")
             positions = [index for index, _ in batch]
             hidden[positions] = captured["hidden"].float().cpu()
             base01[positions] = last[:, [zero_id, one_id]].cpu()
             batch_other = last[:, keep]
-            other_lse[positions] = torch.logsumexp(batch_other, dim=-1).cpu()
-            other_max[positions] = batch_other.max(dim=-1).values.cpu()
+            batch_other_float = batch_other.float()
+            other_lse[positions] = torch.logsumexp(batch_other_float, dim=-1).cpu()
+            max_values, max_indices = batch_other.max(dim=-1)
+            other_max[positions] = max_values.float().cpu()
+            other_max_token_id[positions] = batch_other_ids[max_indices].cpu()
             if store_other_logits:
                 if other_logits is None:
                     other_logits = torch.empty(
-                        (len(rows), batch_other.shape[-1]), dtype=torch.bfloat16
+                        (len(rows), batch_other.shape[-1]), dtype=batch_other.dtype
                     )
-                other_logits[positions] = batch_other.to(torch.bfloat16).cpu()
+                other_logits[positions] = batch_other.cpu()
             labels[positions] = torch.tensor(
                 [int(row["target"]) for _, row in batch], dtype=torch.long
             )
@@ -677,12 +700,19 @@ def extract_frozen_features(
             ),
             flush=True,
         )
+    if base01 is None or other_token_ids is None:
+        raise RuntimeError("feature extraction produced no rows")
     return {
         "hidden": hidden,
         "base01": base01,
         "other_lse": other_lse,
         "other_max": other_max,
+        "other_max_token_id": other_max_token_id,
         "other_logits": other_logits,
+        "other_token_ids": other_token_ids,
+        "zero_id": int(zero_id),
+        "one_id": int(one_id),
+        "deployment_logit_dtype": str(base01.dtype),
         "labels": labels,
     }
 
@@ -755,15 +785,34 @@ def fit_motor(
 
 @torch.no_grad()
 def feature_metrics(features, labels, motor=None):
-    adjusted = features["base01"].float()
+    adjusted = features["base01"]
     if motor is not None:
-        adjusted = adjusted + motor(features["hidden"]).float()
-    carry_predictions = adjusted.argmax(dim=-1)
+        adjusted = adjusted + motor(features["hidden"]).to(adjusted.dtype)
+    zero_id = int(features["zero_id"])
+    one_id = int(features["one_id"])
+    zero_wins = (adjusted[:, 0] > adjusted[:, 1]) | (
+        (adjusted[:, 0] == adjusted[:, 1]) & (zero_id < one_id)
+    )
+    carry_predictions = torch.where(
+        zero_wins,
+        torch.zeros(len(adjusted), dtype=torch.long),
+        torch.ones(len(adjusted), dtype=torch.long),
+    )
     targets = torch.as_tensor(labels, dtype=torch.long)
     target_logits = adjusted.gather(1, targets[:, None]).squeeze(1)
     other_carry_logits = adjusted.gather(1, (1 - targets)[:, None]).squeeze(1)
-    other_max = features["other_max"].float()
-    global_correct = target_logits > torch.maximum(other_carry_logits, other_max)
+    target_token_ids = torch.where(targets == 0, zero_id, one_id)
+    other_carry_token_ids = torch.where(targets == 0, one_id, zero_id)
+    other_max = features["other_max"].to(target_logits.dtype)
+    other_max_token_ids = features["other_max_token_id"].long()
+    carry_beats_target = (other_carry_logits > target_logits) | (
+        (other_carry_logits == target_logits)
+        & (other_carry_token_ids < target_token_ids)
+    )
+    vocab_beats_target = (other_max > target_logits) | (
+        (other_max == target_logits) & (other_max_token_ids < target_token_ids)
+    )
+    global_correct = ~(carry_beats_target | vocab_beats_target)
     result = {
         "carry_pair_correct": int((carry_predictions == targets).sum()),
         "carry_pair_accuracy": float((carry_predictions == targets).float().mean()),
@@ -777,13 +826,25 @@ def feature_metrics(features, labels, motor=None):
         rank_sum = rank_max = 0
         rank_above_65 = 0
         other_logits = features["other_logits"]
+        other_token_ids = features["other_token_ids"].long()
         for start in range(0, len(targets), 256):
             stop = min(start + 256, len(targets))
+            target = target_logits[start:stop]
+            target_ids = target_token_ids[start:stop]
+            carry_logits = other_carry_logits[start:stop]
+            carry_ids = other_carry_token_ids[start:stop]
             ranks = (
                 1
-                + (other_carry_logits[start:stop] > target_logits[start:stop]).long()
                 + (
-                    other_logits[start:stop].float() > target_logits[start:stop, None]
+                    (carry_logits > target)
+                    | ((carry_logits == target) & (carry_ids < target_ids))
+                ).long()
+                + (
+                    (other_logits[start:stop] > target[:, None])
+                    | (
+                        (other_logits[start:stop] == target[:, None])
+                        & (other_token_ids[None, :] < target_ids[:, None])
+                    )
                 ).sum(dim=-1)
             )
             rank_sum += int(ranks.sum())
@@ -1195,6 +1256,13 @@ def validate_canonical_eval_args(args, canonical):
 
 
 def validate_motor_bundle(bundle, expected_bindings, current_sources, source_contract):
+    if bundle.get("audit") != "causal_carry_motor_fit_v2":
+        raise ValueError("unsupported carry-motor bundle audit version")
+    if bundle.get("deployment_logit_dtype") not in {
+        "torch.bfloat16",
+        "torch.float32",
+    }:
+        raise ValueError("invalid carry-motor deployment logit dtype")
     for name, expected in expected_bindings.items():
         if bundle.get(name) != expected:
             raise ValueError("motor bundle input mismatch: {}".format(name))
@@ -1289,7 +1357,7 @@ def _train(args):
             if name.startswith("source:")
         }
         bundle = {
-            "audit": "causal_carry_motor_fit_v1",
+            "audit": "causal_carry_motor_fit_v2",
             "base_checkpoint_sha256": frozen["checkpoint"],
             "tokenizer_sha256": frozen["tokenizer"],
             "episodes_sha256": frozen["episodes"],
@@ -1301,6 +1369,7 @@ def _train(args):
             "rank": RANK,
             "parameter_count": treatment.parameter_count(),
             "extract_batch": args.extract_batch,
+            "deployment_logit_dtype": features["deployment_logit_dtype"],
             "zero_id": int(zero_id),
             "one_id": int(one_id),
             "initial_state_sha256": initial_sha256,
@@ -1412,6 +1481,11 @@ def _eval(args):
             batch_size=args.extract_batch,
             store_other_logits=True,
         )
+        if (
+            bundle.get("deployment_logit_dtype")
+            != dev_features["deployment_logit_dtype"]
+        ):
+            raise RuntimeError("fit/evaluation deployment logit dtype mismatch")
         feature_results = {
             "base": feature_metrics(dev_features, dev_features["labels"]),
             "treatment": feature_metrics(
