@@ -24,20 +24,30 @@ TOKENIZER=${TOKENIZER:-$DATA_ROOT/artifacts/shohin-tok-32k.json}
 TOKENIZER_SHA256=${TOKENIZER_SHA256:?set TOKENIZER_SHA256 to the reviewed tokenizer digest}
 INTERVIEW=${INTERVIEW:-$SOURCE_ROOT/artifacts/evals/researcher_interview_v1.json}
 INTERVIEW_SHA256=${INTERVIEW_SHA256:?set INTERVIEW_SHA256 to the frozen interview digest}
+COMPARISON_MANIFEST=${COMPARISON_MANIFEST:-$SOURCE_ROOT/artifacts/evals/researcher_interview_comparison_v1.json}
+COMPARISON_MANIFEST_SHA256=${COMPARISON_MANIFEST_SHA256:?set the frozen comparison-manifest digest}
+COMPARISON_ROLE=${COMPARISON_ROLE:?set the hash-bound comparison role}
 SOURCE_COMMIT=${SOURCE_COMMIT:?set SOURCE_COMMIT to the reviewed clean commit}
 TAG=${TAG:-$(basename "$CKPT" .pt)}
 OUT=${OUT:-$DATA_ROOT/artifacts/eval_history/researcher_interview/${TAG}_${SLURM_JOB_ID}.json}
 MAX_NEW=${MAX_NEW:-128}
 SEED=${SEED:-20260717}
+PRESENTATION=${PRESENTATION:-qa}
 SOURCE_FILES=(
   artifacts/evals/researcher_interview_v1.json
+  artifacts/evals/researcher_interview_comparison_v1.json
   train/eval_researcher_interview.py
   train/jobs/eval_researcher_interview.sbatch
   train/eval_suite.py
   train/model.py
 )
 
-for path in "$SOURCE_ROOT" "$DATA_ROOT" "$CKPT" "$TOKENIZER" "$INTERVIEW" "$OUT"; do
+case "$PRESENTATION" in
+  raw|qa) ;;
+  *) echo "PRESENTATION must be raw or qa" >&2; exit 2 ;;
+esac
+
+for path in "$SOURCE_ROOT" "$DATA_ROOT" "$CKPT" "$TOKENIZER" "$INTERVIEW" "$COMPARISON_MANIFEST" "$OUT"; do
   if [[ "$path" != /* ]]; then
     echo "researcher-interview paths must be absolute: $path" >&2
     exit 2
@@ -51,7 +61,7 @@ if [[ -e "$OUT" ]]; then
   echo "refusing existing output: $OUT" >&2
   exit 2
 fi
-for pair in "$CKPT:$CKPT_SHA256" "$TOKENIZER:$TOKENIZER_SHA256" "$INTERVIEW:$INTERVIEW_SHA256"; do
+for pair in "$CKPT:$CKPT_SHA256" "$TOKENIZER:$TOKENIZER_SHA256" "$INTERVIEW:$INTERVIEW_SHA256" "$COMPARISON_MANIFEST:$COMPARISON_MANIFEST_SHA256"; do
   path=${pair%%:*}
   expected=${pair#*:}
   if [[ ! -f "$path" || ! "$expected" =~ ^[0-9a-f]{64}$ ]]; then
@@ -149,9 +159,13 @@ fi
   --tokenizer-sha256 "$TOKENIZER_SHA256" \
   --interview "$INTERVIEW" \
   --interview-sha256 "$INTERVIEW_SHA256" \
+  --comparison-manifest "$COMPARISON_MANIFEST" \
+  --comparison-manifest-sha256 "$COMPARISON_MANIFEST_SHA256" \
+  --comparison-role "$COMPARISON_ROLE" \
   --out "$OUT" \
   --source-commit "$SOURCE_COMMIT" \
   --source-manifest-sha256 "$SOURCE_MANIFEST_SHA256" \
+  --presentation "$PRESENTATION" \
   --device cuda \
   --max-new "$MAX_NEW" \
   --seed "$SEED"

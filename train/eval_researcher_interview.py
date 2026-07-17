@@ -22,6 +22,7 @@ from model import GPT, GPTConfig
 
 EXPECTED_IDS = [f"RIV{index:02d}" for index in range(1, 21)]
 HEX_SHA256 = re.compile(r"[0-9a-f]{64}")
+PRESENTATIONS = ("raw", "qa")
 
 
 def sha256_file(path: str | Path) -> str:
@@ -52,6 +53,15 @@ def normalize_exact(value: str) -> str:
         .replace("\r", "\n")
         .strip()
     )
+
+
+def present_prompt(prompt: str, presentation: str) -> str:
+    """Apply one frozen model-facing presentation without changing bank content."""
+    if presentation == "raw":
+        return prompt
+    if presentation == "qa":
+        return f"Question: {prompt}\nAnswer:"
+    raise ValueError(f"unsupported presentation: {presentation}")
 
 
 def _convert(value: str, kind: str) -> Any:
@@ -154,6 +164,44 @@ def load_bank(path: str | Path) -> dict[str, Any]:
     if turn_count != 21 or bank.get("freshness_audit", {}).get("prompt_turns") != 21:
         raise ValueError("Researcher Interview v1 must contain exactly 21 prompt turns")
     return bank
+
+
+def load_comparison_manifest(
+    path: str | Path,
+    *,
+    bank_sha256: str,
+    presentation: str,
+    role: str,
+    checkpoint_sha256: str,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    manifest = json.loads(Path(path).read_text())
+    if (
+        manifest.get("audit") != "researcher_interview_comparison_manifest_v1"
+        or manifest.get("schema_version") != 1
+    ):
+        raise ValueError("unsupported researcher interview comparison manifest")
+    if manifest.get("bank_sha256") != bank_sha256:
+        raise ValueError("comparison manifest bank SHA256 mismatch")
+    if manifest.get("presentation") != presentation:
+        raise ValueError("comparison manifest presentation mismatch")
+    entries = manifest.get("entries")
+    if not isinstance(entries, dict) or role not in entries:
+        raise ValueError("comparison role is absent from manifest")
+    entry = entries[role]
+    if entry.get("checkpoint_sha256") != checkpoint_sha256:
+        raise ValueError("comparison role checkpoint SHA256 mismatch")
+
+    matched = manifest.get("matched_pair", {})
+    matched_roles = {matched.get("control_role"), matched.get("treatment_role")}
+    if role in matched_roles:
+        parent = matched.get("common_parent_sha256")
+        if not HEX_SHA256.fullmatch(str(parent)):
+            raise ValueError("matched comparison parent SHA256 is invalid")
+        if entry.get("lineage_parent_sha256") != parent:
+            raise ValueError("matched comparison lineage parent mismatch")
+    elif entry.get("comparison_scope") != "descriptive_only":
+        raise ValueError("non-paired comparison role must be descriptive only")
+    return manifest, entry
 
 
 def _parse_turn(
@@ -286,36 +334,34 @@ def _score_riv20(case: Mapping[str, Any], ask: Callable[[str], str]) -> dict[str
     reader_gold["prompt"] = gold_prompt
     reader_gold["capsule_source"] = "gold_reader_control"
 
-    authored_capsule = writer["candidate"]
-    reader_self = None
-    if authored_capsule is not None:
-        self_prompt = _source_deleted_prompt(
-            str(authored_capsule), str(reader_turn["prompt"])
-        )
-        reader_self = score_turn(reader_turn, ask(self_prompt))
-        reader_self["prompt"] = self_prompt
-        reader_self["capsule_source"] = "model_authored_candidate"
+    # Reuse the complete model-authored transcript. Extracting only a parseable
+    # substring would silently repair prefixes, suffixes, or contradictory text.
+    authored_transcript = str(writer["raw_output"])
+    self_prompt = _source_deleted_prompt(
+        authored_transcript, str(reader_turn["prompt"])
+    )
+    reader_self = score_turn(reader_turn, ask(self_prompt))
+    reader_self["prompt"] = self_prompt
+    reader_self["capsule_source"] = "complete_model_authored_transcript"
 
+    writer_commit_valid = bool(writer["normalized_exact_syntax_correct"])
     end_to_end_semantic = bool(
-        writer["semantic_state_correct"]
-        and reader_self is not None
-        and reader_self["semantic_state_correct"]
+        writer_commit_valid and reader_self["semantic_state_correct"]
     )
     end_to_end_exact = bool(
         writer["normalized_exact_syntax_correct"]
-        and reader_self is not None
         and reader_self["normalized_exact_syntax_correct"]
     )
     first_divergence = None
     if not writer["semantic_state_correct"]:
         first_divergence = {"phase": "writer", **writer["first_divergent_transition"]}
-    elif reader_self is None:
+    elif not writer_commit_valid:
         first_divergence = {
-            "phase": "reader",
+            "phase": "writer_commit",
             "index": 0,
-            "name": "source_deleted_read_and_update",
-            "expected": reader_turn["expected_state"],
-            "observed": None,
+            "name": "exact_source_free_commit",
+            "expected": writer_turn["expected_output"],
+            "observed": writer["raw_output"],
             "correct": False,
         }
     elif not reader_self["semantic_state_correct"]:
@@ -324,8 +370,8 @@ def _score_riv20(case: Mapping[str, Any], ask: Callable[[str], str]) -> dict[str
             **reader_self["first_divergent_transition"],
         }
 
-    self_extra = bool(reader_self and reader_self["extra_token_termination_failure"])
-    self_unchanged = reader_self["unchanged_field_check"] if reader_self else None
+    self_extra = bool(reader_self["extra_token_termination_failure"])
+    self_unchanged = reader_self["unchanged_field_check"]
     return {
         "id": case["id"],
         "parity": case["parity"],
@@ -344,9 +390,11 @@ def _score_riv20(case: Mapping[str, Any], ask: Callable[[str], str]) -> dict[str
         "source_deleted_contract": {
             "writer_source_prompt_reused": False,
             "gold_reader_receives_only_gold_capsule_and_reader_prompt": True,
-            "end_to_end_reader_receives_only_model_capsule_candidate_and_reader_prompt": True,
-            "end_to_end_reader_skipped_without_parseable_capsule": reader_self is None,
-            "model_authored_capsule": authored_capsule,
+            "end_to_end_reader_receives_complete_model_transcript_and_reader_prompt": True,
+            "end_to_end_reader_skipped_without_parseable_capsule": False,
+            "parser_sanitized_model_transcript": False,
+            "writer_commit_valid": writer_commit_valid,
+            "model_authored_transcript": authored_transcript,
             "reader_unchanged_field_check": self_unchanged,
         },
     }
@@ -466,9 +514,13 @@ def main() -> None:
     parser.add_argument("--tokenizer-sha256", required=True)
     parser.add_argument("--interview", required=True)
     parser.add_argument("--interview-sha256", required=True)
+    parser.add_argument("--comparison-manifest", required=True)
+    parser.add_argument("--comparison-manifest-sha256", required=True)
+    parser.add_argument("--comparison-role", required=True)
     parser.add_argument("--out", required=True)
     parser.add_argument("--source-commit", required=True)
     parser.add_argument("--source-manifest-sha256", required=True)
+    parser.add_argument("--presentation", choices=PRESENTATIONS, default="raw")
     parser.add_argument(
         "--device", choices=("auto", "cuda", "mps", "cpu"), default="auto"
     )
@@ -484,8 +536,20 @@ def main() -> None:
         "checkpoint": verify_sha256(args.ckpt, args.checkpoint_sha256, "checkpoint"),
         "tokenizer": verify_sha256(args.tokenizer, args.tokenizer_sha256, "tokenizer"),
         "interview": verify_sha256(args.interview, args.interview_sha256, "interview"),
+        "comparison_manifest": verify_sha256(
+            args.comparison_manifest,
+            args.comparison_manifest_sha256,
+            "comparison manifest",
+        ),
     }
     bank = load_bank(args.interview)
+    comparison, comparison_entry = load_comparison_manifest(
+        args.comparison_manifest,
+        bank_sha256=hashes["interview"],
+        presentation=args.presentation,
+        role=args.comparison_role,
+        checkpoint_sha256=hashes["checkpoint"],
+    )
     device = resolve_device(args.device)
     torch.manual_seed(args.seed)
     if device == "cuda":
@@ -494,10 +558,11 @@ def main() -> None:
     checkpoint, model = load_model(args.ckpt, device)
 
     def ask(prompt: str) -> str:
+        model_prompt = present_prompt(prompt, args.presentation)
         return generate(
             model,
             tokenizer,
-            prompt,
+            model_prompt,
             device,
             max_new=args.max_new,
             temp=0.0,
@@ -506,11 +571,12 @@ def main() -> None:
 
     scored = evaluate_bank(bank, ask)
     result = {
-        "audit": "researcher_interview_eval_v1",
+        "audit": "researcher_interview_eval_v2",
         "checkpoint": str(Path(args.ckpt).resolve()),
         "checkpoint_step": checkpoint.get("step"),
         "tokenizer": str(Path(args.tokenizer).resolve()),
         "interview": str(Path(args.interview).resolve()),
+        "comparison_manifest": str(Path(args.comparison_manifest).resolve()),
         "input_sha256": hashes,
         "source_commit": args.source_commit,
         "source_manifest_sha256": args.source_manifest_sha256.lower(),
@@ -520,6 +586,20 @@ def main() -> None:
             "temperature": 0.0,
             "max_new_tokens": args.max_new,
             "samples": 1,
+        },
+        "presentation": {
+            "name": args.presentation,
+            "template": (
+                "{prompt}"
+                if args.presentation == "raw"
+                else "Question: {prompt}\nAnswer:"
+            ),
+        },
+        "comparison": {
+            "role": args.comparison_role,
+            "entry": comparison_entry,
+            "matched_pair": comparison["matched_pair"],
+            "claim_boundary": comparison["claim_boundary"],
         },
         "quarantine": bank["quarantine"],
         "claim_boundary": bank["design"]["claim_boundary"],

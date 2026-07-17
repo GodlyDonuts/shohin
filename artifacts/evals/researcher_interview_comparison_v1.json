@@ -1,0 +1,36 @@
+{
+  "audit": "researcher_interview_comparison_manifest_v1",
+  "schema_version": 1,
+  "frozen_date": "2026-07-17",
+  "bank_sha256": "a72387a0a72418f119bf35791032bb889266b3f9ba8a3b728fc7f6978c0d4f8d",
+  "presentation": "qa",
+  "matched_pair": {
+    "control_role": "raw200k_control",
+    "treatment_role": "drs_r3_treatment",
+    "common_parent_sha256": "675af7cffdc87ccd43c56a15f0616d368442aad56deb0df3fe11b5a5064aac2a",
+    "lineage_evidence": {
+      "control_checkpoint_is_parent": true,
+      "treatment_fit_job": "687459",
+      "checkpoint_self_attests_parent": false,
+      "operator_asserted_external_binding": true
+    }
+  },
+  "entries": {
+    "raw200k_control": {
+      "checkpoint_sha256": "675af7cffdc87ccd43c56a15f0616d368442aad56deb0df3fe11b5a5064aac2a",
+      "lineage_parent_sha256": "675af7cffdc87ccd43c56a15f0616d368442aad56deb0df3fe11b5a5064aac2a",
+      "comparison_scope": "matched_control"
+    },
+    "drs_r3_treatment": {
+      "checkpoint_sha256": "d79e9df26caecb9801118d1bf68bd7b85381a06b256f23478acffe40a2108459",
+      "lineage_parent_sha256": "675af7cffdc87ccd43c56a15f0616d368442aad56deb0df3fe11b5a5064aac2a",
+      "comparison_scope": "matched_treatment"
+    },
+    "raw300k_descriptive": {
+      "checkpoint_sha256": "211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6",
+      "lineage_parent_sha256": null,
+      "comparison_scope": "descriptive_only"
+    }
+  },
+  "claim_boundary": "The raw-200k and DRS roles are a matched descriptive treatment/control pair under an externally asserted common-parent binding; the DRS checkpoint does not self-attest its parent. Raw-300k is descriptive only. Twenty researcher-written cases localize behavior but cannot establish population benchmark accuracy, internal memory, or a novel reasoning primitive."
+}
