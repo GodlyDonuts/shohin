@@ -395,7 +395,7 @@ class FreezeCurriculumTests(unittest.TestCase):
             )
         self.assertTrue((frozen / "replay_comparison.json").is_file())
 
-    def test_v4_structure_is_exercised_but_canonical_use_requires_git_anchor(self):
+    def test_v4_structure_is_exercised_with_a_separate_git_anchor(self):
         import pipeline.acw_hidden_basis_training as trainer
 
         first = Path(self.temporary.name) / "bundle_replay_a"
@@ -482,14 +482,42 @@ class FreezeCurriculumTests(unittest.TestCase):
             "oracle_arrays_verified": len(source_manifest["arrays"]) - 7,
         }
         bundle = Path(self.temporary.name) / "canonical_v4_bundle"
-        with self.assertRaisesRegex(RuntimeError, "external anchor"):
-            build_trainer_bundle(
-                dataset,
-                frozen / "cgb_schedule.jsonl",
-                bundle,
-                canonical=True,
-                pilot_report_path=frozen / "report.json",
-            )
+        bundle_sources = {
+            "pilot/report.json": "anchor/report.json",
+            "pilot/replay_comparison.json": "anchor/replay_comparison.json",
+            "pilot/cgb_schedule.jsonl": "anchor/cgb_schedule.jsonl",
+            "pilot/uniform_schedule.jsonl": "anchor/uniform_schedule.jsonl",
+        }
+        bundle_paths = {
+            "pilot/report.json": report_path.resolve(),
+            "pilot/replay_comparison.json": comparison_path.resolve(),
+            "pilot/cgb_schedule.jsonl": (frozen / "cgb_schedule.jsonl").resolve(),
+            "pilot/uniform_schedule.jsonl": (
+                frozen / "uniform_schedule.jsonl"
+            ).resolve(),
+        }
+        artifact_files = {
+            source_relative: {
+                "bytes": bundle_paths[bundle_relative].stat().st_size,
+                "sha256": file_sha256(bundle_paths[bundle_relative]),
+            }
+            for bundle_relative, source_relative in bundle_sources.items()
+        }
+        anchor = {
+            "activation_commit": "c" * 40,
+            "anchor_commit": "d" * 40,
+            "scientific_identity": pilot_identity,
+            "activation_scientific_identity": {
+                "scientific_commit": "c" * 40,
+                "scientific_path_sha256": pilot_identity["scientific_path_sha256"],
+            },
+            "registry_raw_sha256": "e" * 64,
+            "artifact_files": artifact_files,
+            "bundle_sources": bundle_sources,
+            "bundle_paths": bundle_paths,
+            "pilot_report": pilot_report,
+            "pilot_comparison": comparison,
+        }
         with (
             patch.multiple(
                 freezer,
@@ -497,9 +525,12 @@ class FreezeCurriculumTests(unittest.TestCase):
                 CANONICAL_LABELS=64,
                 REFINEMENT_ROUNDS=2,
             ),
-            patch.object(freezer, "load_pilot_report", return_value=pilot_report),
             patch.object(freezer, "verify_registered_dataset", return_value=replay),
-            patch.object(freezer, "_require_committed_pilot_anchor", return_value=None),
+            patch.object(
+                freezer,
+                "_require_committed_pilot_anchor",
+                return_value=anchor,
+            ),
         ):
             manifest = build_trainer_bundle(
                 dataset,
@@ -508,8 +539,15 @@ class FreezeCurriculumTests(unittest.TestCase):
                 canonical=True,
                 pilot_report_path=frozen / "report.json",
             )
-        with self.assertRaisesRegex(RuntimeError, "external anchor"):
-            trainer.validate_trainer_bundle_contract(bundle, manifest)
+        with patch.object(
+            trainer,
+            "load_committed_pilot_anchor",
+            return_value=anchor,
+        ):
+            anchored_summary = trainer.validate_trainer_bundle_contract(
+                bundle, manifest
+            )
+        self.assertEqual(anchored_summary["pilot_anchor_commit"], "d" * 40)
         summary = trainer._validate_unanchored_trainer_bundle_structure(
             bundle, manifest
         )

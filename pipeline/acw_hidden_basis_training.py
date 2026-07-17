@@ -11,6 +11,7 @@ import argparse
 import copy
 import hashlib
 import json
+import os
 import random
 import resource
 import subprocess
@@ -108,6 +109,41 @@ CANONICAL_BUNDLE_BLOCK = (
     "canonical trainer bundles are disabled until the verified public pilot "
     "artifact registry is committed and pushed as an external anchor"
 )
+PILOT_ARTIFACT_REGISTRY_PROTOCOL = "R12-ACW-PILOT-ARTIFACT-REGISTRY-v2"
+PILOT_INDEPENDENT_VERIFICATION_PROTOCOL = "R12-ACW-PILOT-INDEPENDENT-VERIFICATION-v3"
+PILOT_SCIENTIFIC_COMMIT = "5f5e3cd0d69da67335ad1f1f485c6e3d8f00ff8e"
+PILOT_ANCHOR_COMMIT = "02c9d4ae57093b6c60d90580503e2a01c7c81619"
+PILOT_REGISTRY_RAW_SHA256 = (
+    "66597cf5381fdc11d4ecd73a93d9bbd2fa68417a77b09c1330ecfeb73652451c"
+)
+PILOT_REGISTRY_PATH = "R12_ACW_PILOT_ARTIFACT_REGISTRY_V2.json"
+PILOT_ANCHORED_FILES = 81
+PILOT_CANONICAL_REMOTE_URL = "https://github.com/GodlyDonuts/shohin.git"
+PILOT_OFFLINE_BUNDLE_TEMPLATE = "/home/sa305415/shohin_acw_{commit8}.bundle"
+PILOT_ACTIVATION_ALLOWLIST = (
+    "AGENT_RUNBOOK.md",
+    "pipeline/acw_hidden_basis_training.py",
+    "pipeline/adjudicate_acw_hidden_basis.py",
+    "pipeline/freeze_acw_curriculum.py",
+    "pipeline/test_acw_hidden_basis_training.py",
+    "pipeline/test_adjudicate_acw_hidden_basis.py",
+    "pipeline/test_freeze_acw_curriculum.py",
+)
+PILOT_CANONICAL_PATHS = {
+    "dataset": "artifacts/r12/acw_pilot_domain_v3_runtime_v2",
+    "pilot": "artifacts/r12/acw_cgbr_pilot_v6",
+    "replay_a": "artifacts/r12/acw_cgbr_pilot_v6_replay_a",
+    "replay_b": "artifacts/r12/acw_cgbr_pilot_v6_replay_b",
+    "verification": "artifacts/r12/acw_cgbr_pilot_v6_independent_verification",
+}
+PILOT_REGISTRY_CLAIM = (
+    "Byte registry for one non-scored Track S pilot and its independent replay. "
+    "It authorizes no scored arm, Shohin fit, or reasoning claim."
+)
+PILOT_INDEPENDENT_VERIFICATION_CLAIM = (
+    "Different-node deterministic replay of the non-scored Track S pilot. "
+    "This is not a scored architecture or reasoning result."
+)
 STATE_AUXILIARY_WEIGHT = 4.0
 PILOT_SEED = 2026071600
 DEVELOPMENT_SEEDS = (2026071601, 2026071602, 2026071603)
@@ -196,6 +232,431 @@ def _load_hash_bound_json(path: Path, label: str) -> tuple[dict, bytes]:
     return value, raw
 
 
+def _load_canonical_hash_bound_json(path: Path, label: str) -> tuple[dict, bytes]:
+    value, raw = _load_hash_bound_json(path, label)
+    if raw != canonical_json_bytes(value) + b"\n":
+        raise ValueError(f"{label} is not canonical newline-framed JSON")
+    return value, raw
+
+
+def _git_text(
+    root: Path, *arguments: str, check: bool = True
+) -> subprocess.CompletedProcess:
+    return subprocess.run(
+        ["/usr/bin/git", "--no-replace-objects", *arguments],
+        cwd=root,
+        check=check,
+        capture_output=True,
+        text=True,
+    )
+
+
+def _git_blob(root: Path, revision: str, relative: str) -> bytes:
+    return subprocess.run(
+        ["/usr/bin/git", "--no-replace-objects", "show", f"{revision}:{relative}"],
+        cwd=root,
+        check=True,
+        capture_output=True,
+    ).stdout
+
+
+def _commit_parents(root: Path, commit: str) -> list[str]:
+    return _git_text(root, "show", "-s", "--format=%P", commit).stdout.split()
+
+
+def _diff_name_status(root: Path, before: str, after: str) -> list[tuple[str, str]]:
+    records = []
+    for line in _git_text(
+        root,
+        "diff",
+        "--name-status",
+        "--no-renames",
+        before,
+        after,
+    ).stdout.splitlines():
+        status, relative = line.split("\t", 1)
+        records.append((status, relative))
+    return records
+
+
+def _require_activation_lineage(root: Path) -> str:
+    replacement_refs = _git_text(
+        root,
+        "for-each-ref",
+        "--format=%(refname)",
+        "refs/replace/",
+    ).stdout.strip()
+    grafts_raw = _git_text(
+        root, "rev-parse", "--git-path", "info/grafts"
+    ).stdout.strip()
+    grafts_path = Path(grafts_raw)
+    if not grafts_path.is_absolute():
+        grafts_path = root / grafts_path
+    if replacement_refs or grafts_path.exists():
+        raise RuntimeError("pilot activation forbids Git replacements and grafts")
+
+    activation_commit = _git_text(root, "rev-parse", "HEAD").stdout.strip()
+    if activation_commit in {PILOT_SCIENTIFIC_COMMIT, PILOT_ANCHOR_COMMIT}:
+        raise RuntimeError("pilot activation requires a distinct E commit")
+    if _commit_parents(root, activation_commit) != [PILOT_ANCHOR_COMMIT]:
+        raise RuntimeError("pilot activation E must have A as its sole parent")
+    if _commit_parents(root, PILOT_ANCHOR_COMMIT) != [PILOT_SCIENTIFIC_COMMIT]:
+        raise RuntimeError("pilot anchor A must have S as its sole parent")
+    if _diff_name_status(
+        root,
+        PILOT_SCIENTIFIC_COMMIT,
+        PILOT_ANCHOR_COMMIT,
+    ) != [("A", PILOT_REGISTRY_PATH)]:
+        raise RuntimeError("pilot anchor A must add only the registry")
+    if _diff_name_status(root, PILOT_ANCHOR_COMMIT, activation_commit) != [
+        ("M", relative) for relative in sorted(PILOT_ACTIVATION_ALLOWLIST)
+    ]:
+        raise RuntimeError("pilot activation E differs from its exact allowlist")
+    absent = _git_text(
+        root,
+        "cat-file",
+        "-e",
+        f"{PILOT_SCIENTIFIC_COMMIT}:{PILOT_REGISTRY_PATH}",
+        check=False,
+    )
+    if absent.returncode == 0:
+        raise RuntimeError("pilot registry already existed in S")
+
+    namespace_init = root / "pipeline" / "__init__.py"
+    committed_namespace_init = _git_text(
+        root,
+        "cat-file",
+        "-e",
+        f"{activation_commit}:pipeline/__init__.py",
+        check=False,
+    )
+    if os.path.lexists(namespace_init) or committed_namespace_init.returncode == 0:
+        raise RuntimeError("pilot activation requires an unshadowed pipeline namespace")
+
+    remote_url = _git_text(root, "remote", "get-url", "origin").stdout.strip()
+    expected_bundle = PILOT_OFFLINE_BUNDLE_TEMPLATE.format(
+        commit8=activation_commit[:8]
+    )
+    if remote_url == PILOT_CANONICAL_REMOTE_URL:
+        remote = _git_text(
+            root,
+            "ls-remote",
+            "--exit-code",
+            "origin",
+            "refs/heads/main",
+        ).stdout.split()
+    elif remote_url == expected_bundle:
+        bundle = Path(remote_url)
+        if not bundle.is_file() or bundle.is_symlink():
+            raise RuntimeError("pilot activation offline bundle is not a regular file")
+        _git_text(root, "bundle", "verify", remote_url)
+        remote = _git_text(
+            root,
+            "bundle",
+            "list-heads",
+            remote_url,
+            "refs/heads/main",
+        ).stdout.split()
+    else:
+        raise RuntimeError(
+            "pilot activation origin is not an approved publication route"
+        )
+    if not remote or remote[0] != activation_commit:
+        raise RuntimeError("pilot activation HEAD must equal pushed origin/main")
+
+    protected_paths = sorted(
+        set(ACW_SCIENTIFIC_PATHS)
+        | set(PILOT_ACTIVATION_ALLOWLIST)
+        | {PILOT_REGISTRY_PATH}
+    )
+    status = _git_text(
+        root,
+        "status",
+        "--porcelain",
+        "--untracked-files=all",
+        "--",
+        *protected_paths,
+    ).stdout.strip()
+    if status:
+        raise RuntimeError("pilot activation paths are not clean in Git")
+    for relative in protected_paths:
+        path = root / relative
+        if not path.is_file() or path.is_symlink():
+            raise RuntimeError(f"pilot activation path is invalid: {relative}")
+        if path.read_bytes() != _git_blob(root, activation_commit, relative):
+            raise RuntimeError(f"pilot activation path differs from E: {relative}")
+    return activation_commit
+
+
+def _validate_registry_artifact_record(record: object, label: str) -> dict:
+    if not isinstance(record, dict) or set(record) != {"bytes", "sha256"}:
+        raise ValueError(f"{label} has the wrong artifact schema")
+    size = record["bytes"]
+    if isinstance(size, bool) or not isinstance(size, int) or size < 0:
+        raise ValueError(f"{label} has an invalid byte count")
+    return {"bytes": size, "sha256": _sha256(record["sha256"], label)}
+
+
+def _registered_artifact_path(root: Path, relative: str) -> Path:
+    candidate = Path(relative)
+    if (
+        candidate.is_absolute()
+        or ".." in candidate.parts
+        or candidate.as_posix() != relative
+    ):
+        raise ValueError(f"unsafe registered pilot path: {relative}")
+    current = root
+    for part in candidate.parts:
+        current = current / part
+        if current.is_symlink():
+            raise ValueError(f"registered pilot path is a symlink: {relative}")
+    if not current.is_file():
+        raise FileNotFoundError(current)
+    return current
+
+
+def _verify_registered_artifact(root: Path, relative: str, record: object) -> Path:
+    checked = _validate_registry_artifact_record(record, relative)
+    path = _registered_artifact_path(root, relative)
+    if (
+        path.stat().st_size != checked["bytes"]
+        or file_sha256(path) != checked["sha256"]
+    ):
+        raise ValueError(f"registered pilot artifact differs: {relative}")
+    return path
+
+
+def load_committed_pilot_anchor(*, verify_all_artifacts: bool = False) -> dict:
+    """Validate the separately pushed S -> A -> E pilot trust chain."""
+
+    root = Path(__file__).resolve().parents[1]
+    activation_commit = _require_activation_lineage(root)
+    registry_path = root / PILOT_REGISTRY_PATH
+    registry, registry_raw = _load_canonical_hash_bound_json(
+        registry_path,
+        "pilot artifact registry",
+    )
+    if hashlib.sha256(registry_raw).hexdigest() != PILOT_REGISTRY_RAW_SHA256:
+        raise ValueError("pilot artifact registry raw hash differs")
+    anchor_blob = _git_blob(root, PILOT_ANCHOR_COMMIT, PILOT_REGISTRY_PATH)
+    activation_blob = _git_blob(root, activation_commit, PILOT_REGISTRY_PATH)
+    if registry_raw != anchor_blob or registry_raw != activation_blob:
+        raise RuntimeError(
+            "pilot registry bytes differ across A, E, and the working tree"
+        )
+
+    expected_registry_keys = {
+        "protocol",
+        "scientific_identity",
+        "canonical_paths",
+        "dataset_manifest_payload_sha256",
+        "pilot_report_payload_sha256",
+        "pilot_report_sha256",
+        "pilot_replay_comparison_payload_sha256",
+        "pilot_replay_comparison_sha256",
+        "independent_verification_payload_sha256",
+        "independent_verification_sha256",
+        "artifact_files",
+        "artifact_file_count",
+        "artifact_files_payload_sha256",
+        "activation_allowlist",
+        "claim_boundary",
+        "payload_sha256",
+    }
+    identity = registry.get("scientific_identity")
+    if (
+        set(registry) != expected_registry_keys
+        or registry.get("protocol") != PILOT_ARTIFACT_REGISTRY_PROTOCOL
+        or registry.get("canonical_paths") != PILOT_CANONICAL_PATHS
+        or registry.get("activation_allowlist") != list(PILOT_ACTIVATION_ALLOWLIST)
+        or registry.get("claim_boundary") != PILOT_REGISTRY_CLAIM
+        or not isinstance(identity, dict)
+        or set(identity) != {"scientific_commit", "scientific_path_sha256"}
+        or identity.get("scientific_commit") != PILOT_SCIENTIFIC_COMMIT
+        or activation_commit == PILOT_SCIENTIFIC_COMMIT
+    ):
+        raise ValueError("pilot artifact registry activation binding differs")
+    path_hashes = identity.get("scientific_path_sha256")
+    if not isinstance(path_hashes, dict) or set(path_hashes) != set(
+        ACW_SCIENTIFIC_PATHS
+    ):
+        raise ValueError("pilot registry scientific path set differs")
+    for relative in ACW_SCIENTIFIC_PATHS:
+        expected = hashlib.sha256(
+            _git_blob(root, PILOT_SCIENTIFIC_COMMIT, relative)
+        ).hexdigest()
+        if path_hashes.get(relative) != expected:
+            raise ValueError(f"pilot registry scientific hash differs: {relative}")
+    activation_identity = {
+        "scientific_commit": activation_commit,
+        "scientific_path_sha256": {
+            relative: hashlib.sha256(
+                _git_blob(root, activation_commit, relative)
+            ).hexdigest()
+            for relative in ACW_SCIENTIFIC_PATHS
+        },
+    }
+
+    artifact_files = registry.get("artifact_files")
+    if (
+        not isinstance(artifact_files, dict)
+        or len(artifact_files) != PILOT_ANCHORED_FILES
+        or registry.get("artifact_file_count") != PILOT_ANCHORED_FILES
+        or registry.get("artifact_files_payload_sha256")
+        != hashlib.sha256(canonical_json_bytes(artifact_files)).hexdigest()
+    ):
+        raise ValueError("pilot anchored artifact registry differs")
+    prefixes = tuple(f"{value}/" for value in PILOT_CANONICAL_PATHS.values())
+    for relative, record in artifact_files.items():
+        if not isinstance(relative, str) or not relative.startswith(prefixes):
+            raise ValueError("pilot registry contains an out-of-tree artifact")
+        _validate_registry_artifact_record(record, relative)
+
+    pilot_root = PILOT_CANONICAL_PATHS["pilot"]
+    bundle_sources = {
+        "pilot/report.json": f"{pilot_root}/report.json",
+        "pilot/replay_comparison.json": f"{pilot_root}/replay_comparison.json",
+        "pilot/cgb_schedule.jsonl": f"{pilot_root}/cgb_schedule.jsonl",
+        "pilot/uniform_schedule.jsonl": f"{pilot_root}/uniform_schedule.jsonl",
+    }
+    opened = {
+        bundle_relative: _verify_registered_artifact(
+            root,
+            source_relative,
+            artifact_files[source_relative],
+        )
+        for bundle_relative, source_relative in bundle_sources.items()
+    }
+    report, report_raw = _load_canonical_hash_bound_json(
+        opened["pilot/report.json"],
+        "anchored pilot report",
+    )
+    comparison, comparison_raw = _load_canonical_hash_bound_json(
+        opened["pilot/replay_comparison.json"],
+        "anchored pilot comparison",
+    )
+    if (
+        report.get("protocol") != PILOT_PROTOCOL
+        or comparison.get("protocol") != PILOT_COMPARISON_PROTOCOL
+        or report.get("scientific_identity") != identity
+        or comparison.get("scientific_identity") != identity
+        or registry.get("pilot_report_payload_sha256") != report.get("payload_sha256")
+        or registry.get("pilot_report_sha256") != hashlib.sha256(report_raw).hexdigest()
+        or registry.get("pilot_replay_comparison_payload_sha256")
+        != comparison.get("payload_sha256")
+        or registry.get("pilot_replay_comparison_sha256")
+        != hashlib.sha256(comparison_raw).hexdigest()
+    ):
+        raise ValueError("pilot registry differs from its frozen report or comparison")
+
+    if verify_all_artifacts:
+        actual = set()
+        for prefix in PILOT_CANONICAL_PATHS.values():
+            tree = root / prefix
+            if not tree.is_dir() or tree.is_symlink():
+                raise ValueError(f"pilot artifact tree is invalid: {prefix}")
+            for path in tree.rglob("*"):
+                if path.is_symlink():
+                    raise ValueError(f"pilot artifact tree contains a symlink: {path}")
+                if path.is_file():
+                    actual.add(str(path.relative_to(root)))
+                elif not path.is_dir():
+                    raise ValueError(
+                        f"pilot artifact tree contains a special file: {path}"
+                    )
+        if actual != set(artifact_files):
+            raise ValueError("pilot artifact tree differs from its exact registry")
+        for relative, record in artifact_files.items():
+            _verify_registered_artifact(root, relative, record)
+        verification_relative = (
+            f"{PILOT_CANONICAL_PATHS['verification']}/verification.json"
+        )
+        receipt, receipt_raw = _load_canonical_hash_bound_json(
+            root / verification_relative,
+            "independent pilot verification",
+        )
+        producer_files = {
+            relative: record
+            for relative, record in artifact_files.items()
+            if relative != verification_relative
+        }
+        producer = receipt.get("producer")
+        verifier_start = receipt.get("verifier_slurm_snapshot_start")
+        verifier_finish = receipt.get("verifier_slurm_snapshot_finish")
+        if not all(
+            isinstance(value, dict)
+            for value in (producer, verifier_start, verifier_finish)
+        ):
+            raise ValueError("independent pilot verification identity is invalid")
+        producer_snapshot = producer.get("slurm_snapshot")
+        producer_allocation = (
+            producer_snapshot.get("allocation")
+            if isinstance(producer_snapshot, dict)
+            else None
+        )
+        verifier_start_allocation = verifier_start.get("allocation")
+        verifier_finish_allocation = verifier_finish.get("allocation")
+        if not all(
+            isinstance(value, dict)
+            for value in (
+                producer_allocation,
+                verifier_start_allocation,
+                verifier_finish_allocation,
+            )
+        ):
+            raise ValueError("independent pilot verification allocation is invalid")
+        producer_job = str(producer_allocation.get("job_id", ""))
+        verifier_job = str(verifier_start_allocation.get("job_id", ""))
+        producer_node = str(producer_allocation.get("node_list", ""))
+        verifier_node = str(verifier_start_allocation.get("node_list", ""))
+        if (
+            receipt.get("protocol") != PILOT_INDEPENDENT_VERIFICATION_PROTOCOL
+            or receipt.get("claim_boundary") != PILOT_INDEPENDENT_VERIFICATION_CLAIM
+            or registry.get("independent_verification_payload_sha256")
+            != receipt.get("payload_sha256")
+            or registry.get("independent_verification_sha256")
+            != hashlib.sha256(receipt_raw).hexdigest()
+            or receipt.get("artifact_files") != producer_files
+            or receipt.get("artifact_file_count") != len(producer_files) == 80
+            or receipt.get("artifact_files_payload_sha256")
+            != hashlib.sha256(canonical_json_bytes(producer_files)).hexdigest()
+            or receipt.get("fresh_recomputation_complete") is not True
+            or receipt.get("scientific_identity") != identity
+            or receipt.get("dataset_manifest_payload_sha256")
+            != registry.get("dataset_manifest_payload_sha256")
+            or receipt.get("pilot_report_payload_sha256")
+            != report.get("payload_sha256")
+            or receipt.get("pilot_report_sha256")
+            != hashlib.sha256(report_raw).hexdigest()
+            or producer.get("comparison_payload_sha256")
+            != comparison.get("payload_sha256")
+            or verifier_start_allocation != verifier_finish_allocation
+            or not producer_job
+            or not verifier_job
+            or producer_job == verifier_job
+            or not producer_node
+            or not verifier_node
+            or producer_node == verifier_node
+            or str(producer.get("hostname", "")).split(".", 1)[0] != producer_node
+            or str(receipt.get("hostname", "")).split(".", 1)[0] != verifier_node
+        ):
+            raise ValueError("independent pilot verification differs from the anchor")
+
+    return {
+        "activation_commit": activation_commit,
+        "anchor_commit": PILOT_ANCHOR_COMMIT,
+        "scientific_identity": identity,
+        "activation_scientific_identity": activation_identity,
+        "registry": registry,
+        "registry_raw_sha256": PILOT_REGISTRY_RAW_SHA256,
+        "artifact_files": artifact_files,
+        "bundle_sources": bundle_sources,
+        "bundle_paths": opened,
+        "pilot_report": report,
+        "pilot_comparison": comparison,
+    }
+
+
 def curriculum_query_schedule_sha256(path: Path) -> str:
     """Derive the consumed query schedule from exact curriculum rows."""
 
@@ -240,10 +701,26 @@ def _validate_artifact_record(
 
 
 def validate_trainer_bundle_contract(root: Path, manifest: dict) -> dict:
-    """Fail closed until a post-pilot Git anchor exists."""
+    """Validate a canonical bundle against the separately committed pilot anchor."""
 
-    del root, manifest
-    raise RuntimeError(CANONICAL_BUNDLE_BLOCK)
+    anchor = load_committed_pilot_anchor(verify_all_artifacts=False)
+    summary = _validate_unanchored_trainer_bundle_structure(root, manifest)
+    if summary["pilot_scientific_identity"] != anchor["scientific_identity"]:
+        raise ValueError("trainer bundle pilot identity differs from anchored S")
+    for bundle_relative, source_relative in anchor["bundle_sources"].items():
+        if manifest["pilot_artifacts"].get(bundle_relative) != anchor[
+            "artifact_files"
+        ].get(source_relative):
+            raise ValueError(
+                f"trainer bundle artifact differs from pilot anchor: {bundle_relative}"
+            )
+    return {
+        **summary,
+        "pilot_anchor_commit": anchor["anchor_commit"],
+        "pilot_registry_raw_sha256": anchor["registry_raw_sha256"],
+        "activation_commit": anchor["activation_commit"],
+        "activation_scientific_identity": anchor["activation_scientific_identity"],
+    }
 
 
 def _validate_unanchored_trainer_bundle_structure(root: Path, manifest: dict) -> dict:
@@ -586,6 +1063,7 @@ class PublicTrainingData:
     pilot_report_payload_sha256: str | None
     source_manifest_payload_sha256: str
     seed_identity: dict
+    activation_scientific_identity: dict | None = None
 
     @property
     def histories(self) -> int:
@@ -662,6 +1140,11 @@ def load_public_training_data(
             recorded_payload,
         ),
         seed_identity=dict(manifest.get("seed_identity", {})),
+        activation_scientific_identity=(
+            bundle_contract["activation_scientific_identity"]
+            if bundle_contract is not None
+            else None
+        ),
     )
 
 
@@ -1520,9 +2003,10 @@ def write_checkpoint(
     training_report: dict,
     scientific_identity_record: dict | None = None,
 ) -> dict:
-    path = path.resolve()
-    if path.exists():
-        raise FileExistsError(path)
+    unresolved = path.expanduser().absolute()
+    if unresolved.exists() or unresolved.is_symlink():
+        raise FileExistsError(unresolved)
+    path = unresolved.resolve(strict=False)
     path.parent.mkdir(parents=True, exist_ok=True)
     training_report = dict(training_report)
     label_efficiency_models = training_report.pop("_label_efficiency_models", None)
@@ -1543,9 +2027,36 @@ def write_checkpoint(
         "model": model.state_dict(),
     }
     temporary = path.with_name(path.name + ".tmp")
-    torch.save(payload, temporary)
-    temporary.replace(path)
-    return {"bytes": path.stat().st_size, "sha256": file_sha256(path)}
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+    flags |= getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+    descriptor: int | None = None
+    created_temporary = False
+    try:
+        descriptor = os.open(temporary, flags, 0o600)
+        created_temporary = True
+        with os.fdopen(descriptor, "wb") as handle:
+            descriptor = None
+            torch.save(payload, handle)
+            handle.flush()
+            os.fsync(handle.fileno())
+        temporary.chmod(0o444)
+        os.link(temporary, path, follow_symlinks=False)
+        temporary.unlink()
+        directory = os.open(path.parent, os.O_RDONLY)
+        try:
+            os.fsync(directory)
+        finally:
+            os.close(directory)
+        record = {"bytes": path.stat().st_size, "sha256": file_sha256(path)}
+        if path.stat().st_mode & 0o777 != 0o444:
+            raise RuntimeError("published ACW checkpoint is not immutable")
+        return record
+    except BaseException:
+        if descriptor is not None:
+            os.close(descriptor)
+        if created_temporary:
+            temporary.unlink(missing_ok=True)
+        raise
 
 
 def main() -> None:
@@ -1593,6 +2104,12 @@ def main() -> None:
             seed=args.seed,
             canonical=True,
         )
+    final_identity = scientific_identity(require_clean=True)
+    if (
+        data.activation_scientific_identity is None
+        or final_identity != data.activation_scientific_identity
+    ):
+        raise RuntimeError("scientific identity changed during ACW training")
     checkpoint = write_checkpoint(
         args.out,
         model,
@@ -1601,7 +2118,7 @@ def main() -> None:
         data=data,
         curriculum_sha256=curriculum_hash,
         training_report=training_report,
-        scientific_identity_record=scientific_identity(require_clean=True),
+        scientific_identity_record=final_identity,
     )
     print(
         f"[acw-train] arm={args.arm} updates={training_report['updates']} "

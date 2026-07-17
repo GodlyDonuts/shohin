@@ -182,6 +182,173 @@ class PublicTrainerTests(unittest.TestCase):
         ):
             scientific_identity(require_clean=True)
 
+    def test_activation_lineage_accepts_only_exact_s_a_e_chain(self):
+        import pipeline.acw_hidden_basis_training as trainer
+
+        root = Path(self.temporary.name) / "activation_lineage_repo"
+        remote = Path(self.temporary.name) / "activation_lineage_remote.git"
+        root.mkdir()
+
+        def git(cwd, *args):
+            return subprocess.run(
+                ["/usr/bin/git", "--no-replace-objects", *args],
+                cwd=cwd,
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+
+        git(root, "init", "-b", "main")
+        git(root, "config", "user.email", "acw-test@example.invalid")
+        git(root, "config", "user.name", "ACW Test")
+        (root / "scientific.txt").write_text("scientific\n")
+        (root / "activation_a.txt").write_text("disabled-a\n")
+        (root / "activation_b.txt").write_text("disabled-b\n")
+        git(root, "add", ".")
+        git(root, "commit", "-m", "S")
+        scientific_commit = git(root, "rev-parse", "HEAD").stdout.strip()
+
+        (root / "registry.json").write_text("anchored\n")
+        git(root, "add", "registry.json")
+        git(root, "commit", "-m", "A")
+        anchor_commit = git(root, "rev-parse", "HEAD").stdout.strip()
+
+        (root / "activation_a.txt").write_text("enabled-a\n")
+        (root / "activation_b.txt").write_text("enabled-b\n")
+        git(root, "add", "activation_a.txt", "activation_b.txt")
+        git(root, "commit", "-m", "E")
+        activation_commit = git(root, "rev-parse", "HEAD").stdout.strip()
+        offline_template = str(
+            Path(self.temporary.name) / "activation_{commit8}.bundle"
+        )
+        offline_bundle = Path(offline_template.format(commit8=activation_commit[:8]))
+        git(root, "bundle", "create", str(offline_bundle), "main")
+        git(self.temporary.name, "init", "--bare", str(remote))
+        git(root, "remote", "add", "origin", str(remote))
+        git(root, "push", "-u", "origin", "main")
+
+        with (
+            patch.object(trainer, "PILOT_SCIENTIFIC_COMMIT", scientific_commit),
+            patch.object(trainer, "PILOT_ANCHOR_COMMIT", anchor_commit),
+            patch.object(trainer, "PILOT_REGISTRY_PATH", "registry.json"),
+            patch.object(
+                trainer,
+                "PILOT_ACTIVATION_ALLOWLIST",
+                ("activation_a.txt", "activation_b.txt"),
+            ),
+            patch.object(trainer, "ACW_SCIENTIFIC_PATHS", ("scientific.txt",)),
+            patch.object(trainer, "PILOT_CANONICAL_REMOTE_URL", str(remote)),
+            patch.object(trainer, "PILOT_OFFLINE_BUNDLE_TEMPLATE", offline_template),
+        ):
+            self.assertEqual(
+                trainer._require_activation_lineage(root), activation_commit
+            )
+
+            git(root, "remote", "set-url", "origin", str(remote) + ".unapproved")
+            with self.assertRaisesRegex(RuntimeError, "approved publication route"):
+                trainer._require_activation_lineage(root)
+
+            git(root, "remote", "set-url", "origin", str(offline_bundle))
+            self.assertEqual(
+                trainer._require_activation_lineage(root), activation_commit
+            )
+            git(root, "remote", "set-url", "origin", str(remote))
+
+            git(root, "checkout", "-B", "bad-activation", anchor_commit)
+            (root / "activation_a.txt").write_text("bad-a\n")
+            (root / "activation_b.txt").write_text("bad-b\n")
+            (root / "extra.txt").write_text("not allowed\n")
+            git(root, "add", "activation_a.txt", "activation_b.txt", "extra.txt")
+            git(root, "commit", "-m", "bad E")
+            git(root, "push", "--force", "origin", "HEAD:main")
+            with self.assertRaisesRegex(RuntimeError, "exact allowlist"):
+                trainer._require_activation_lineage(root)
+
+    def test_checkpoint_publication_is_immutable_and_refuses_symlinks(self):
+        import pipeline.acw_hidden_basis_training as trainer
+
+        root = Path(self.temporary.name) / "checkpoint_publication"
+        root.mkdir()
+        checkpoint = root / "candidate.pt"
+        record = trainer.write_checkpoint(
+            checkpoint,
+            model_for_arm("acw"),
+            arm="acw",
+            seed=7,
+            data=self.data,
+            curriculum_sha256="a" * 64,
+            training_report={"updates": 0},
+            scientific_identity_record={"scientific_commit": "b" * 40},
+        )
+        self.assertEqual(checkpoint.stat().st_mode & 0o777, 0o444)
+        self.assertEqual(record["bytes"], checkpoint.stat().st_size)
+        self.assertEqual(record["sha256"], trainer.file_sha256(checkpoint))
+        with self.assertRaises(FileExistsError):
+            trainer.write_checkpoint(
+                checkpoint,
+                model_for_arm("acw"),
+                arm="acw",
+                seed=7,
+                data=self.data,
+                curriculum_sha256="a" * 64,
+                training_report={"updates": 0},
+            )
+
+        dangling = root / "dangling.pt"
+        dangling.symlink_to(root / "missing.pt")
+        with self.assertRaises(FileExistsError):
+            trainer.write_checkpoint(
+                dangling,
+                model_for_arm("acw"),
+                arm="acw",
+                seed=7,
+                data=self.data,
+                curriculum_sha256="a" * 64,
+                training_report={"updates": 0},
+            )
+
+        raced = root / "raced.pt"
+        real_link = trainer.os.link
+
+        def publish_collision(source, destination, *, follow_symlinks=True):
+            Path(destination).write_bytes(b"concurrent-winner")
+            return real_link(
+                source,
+                destination,
+                follow_symlinks=follow_symlinks,
+            )
+
+        with (
+            patch.object(trainer.os, "link", side_effect=publish_collision),
+            self.assertRaises(FileExistsError),
+        ):
+            trainer.write_checkpoint(
+                raced,
+                model_for_arm("acw"),
+                arm="acw",
+                seed=7,
+                data=self.data,
+                curriculum_sha256="a" * 64,
+                training_report={"updates": 0},
+            )
+        self.assertEqual(raced.read_bytes(), b"concurrent-winner")
+        self.assertFalse((root / "raced.pt.tmp").exists())
+
+        foreign = root / "foreign.pt"
+        foreign_temporary = root / "foreign.pt.tmp"
+        foreign_temporary.write_bytes(b"another-writer")
+        with self.assertRaises(FileExistsError):
+            trainer.write_checkpoint(
+                foreign,
+                model_for_arm("acw"),
+                arm="acw",
+                seed=7,
+                data=self.data,
+                curriculum_sha256="a" * 64,
+                training_report={"updates": 0},
+            )
+        self.assertEqual(foreign_temporary.read_bytes(), b"another-writer")
+
     def test_canonical_loader_rejects_visible_oracle(self):
         with self.assertRaises(RuntimeError):
             load_public_training_data(self.root, reject_oracle=True)

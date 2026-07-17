@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import io
 import json
 import math
 import os
@@ -37,6 +38,10 @@ import torch
 
 MANIFEST_SCHEMA = "r12_acw_adjudication_manifest_v3"
 MANIFEST_PROTOCOL = "R12-ACW-ADJUDICATION-MANIFEST-v3"
+DEVELOPMENT_MANIFEST_SCHEMA = "r12_acw_development_baseline_manifest_v1"
+DEVELOPMENT_MANIFEST_PROTOCOL = "R12-ACW-DEVELOPMENT-BASELINE-MANIFEST-v1"
+DEVELOPMENT_BASELINE_SCHEMA = "r12_acw_development_baseline_v1"
+DEVELOPMENT_BASELINE_PROTOCOL = "R12-ACW-DEVELOPMENT-BASELINE-v1"
 DECISION_SCHEMA = "r12_acw_adjudication_decision_v3"
 DECISION_PROTOCOL = "R12-ACW-ADJUDICATION-DECISION-v3"
 EVALUATION_PROTOCOL = "R12-ACW-CAUSAL-EVALUATION-v2"
@@ -45,8 +50,67 @@ TRAINING_PROTOCOL = "R12-ACW-TRAINER-v2"
 TRAINER_BUNDLE_PROTOCOL = "R12-ACW-TRAINER-BUNDLE-v4"
 PILOT_PROTOCOL = "R12-ACW-CGBR-PILOT-v6"
 PILOT_COMPARISON_PROTOCOL = "R12-ACW-PILOT-REPLAY-COMPARISON-v6"
+PILOT_ARTIFACT_REGISTRY_PROTOCOL = "R12-ACW-PILOT-ARTIFACT-REGISTRY-v2"
+PILOT_INDEPENDENT_VERIFICATION_PROTOCOL = "R12-ACW-PILOT-INDEPENDENT-VERIFICATION-v3"
 TRAIN_LEDGER_PROTOCOL = "R12-ACW-TRAIN-RESOURCE-LEDGER-v2"
 INFERENCE_LEDGER_PROTOCOL = "R12-ACW-INFERENCE-RESOURCE-LEDGER-v2"
+
+PILOT_SCIENTIFIC_COMMIT = "5f5e3cd0d69da67335ad1f1f485c6e3d8f00ff8e"
+PILOT_ANCHOR_COMMIT = "02c9d4ae57093b6c60d90580503e2a01c7c81619"
+PILOT_REGISTRY_RAW_SHA256 = (
+    "66597cf5381fdc11d4ecd73a93d9bbd2fa68417a77b09c1330ecfeb73652451c"
+)
+PILOT_REGISTRY_PATH = "R12_ACW_PILOT_ARTIFACT_REGISTRY_V2.json"
+PILOT_ANCHORED_FILES = 81
+PILOT_CANONICAL_REMOTE_URL = "https://github.com/GodlyDonuts/shohin.git"
+PILOT_OFFLINE_BUNDLE_TEMPLATE = "/home/sa305415/shohin_acw_{commit8}.bundle"
+PILOT_ACTIVATION_ALLOWLIST = (
+    "AGENT_RUNBOOK.md",
+    "pipeline/acw_hidden_basis_training.py",
+    "pipeline/adjudicate_acw_hidden_basis.py",
+    "pipeline/freeze_acw_curriculum.py",
+    "pipeline/test_acw_hidden_basis_training.py",
+    "pipeline/test_adjudicate_acw_hidden_basis.py",
+    "pipeline/test_freeze_acw_curriculum.py",
+)
+PILOT_CANONICAL_PATHS = {
+    "dataset": "artifacts/r12/acw_pilot_domain_v3_runtime_v2",
+    "pilot": "artifacts/r12/acw_cgbr_pilot_v6",
+    "replay_a": "artifacts/r12/acw_cgbr_pilot_v6_replay_a",
+    "replay_b": "artifacts/r12/acw_cgbr_pilot_v6_replay_b",
+    "verification": "artifacts/r12/acw_cgbr_pilot_v6_independent_verification",
+}
+PILOT_REGISTRY_CLAIM = (
+    "Byte registry for one non-scored Track S pilot and its independent replay. "
+    "It authorizes no scored arm, Shohin fit, or reasoning claim."
+)
+PILOT_INDEPENDENT_VERIFICATION_CLAIM = (
+    "Different-node deterministic replay of the non-scored Track S pilot. "
+    "This is not a scored architecture or reasoning result."
+)
+PILOT_SCIENTIFIC_PATHS = (
+    "R12_ADDRESSED_CATEGORICAL_WORKSPACE_PREREG.md",
+    "R12_GOAL_CONDITIONED_VERSION_SPACE_CONTROLLER_PREREG.md",
+    "pipeline/addressed_categorical_workspace.py",
+    "pipeline/audit_addressed_categorical_workspace_symbolic.py",
+    "pipeline/generate_acw_hidden_basis.py",
+    "pipeline/acw_nist_beacon.py",
+    "pipeline/acw_hidden_basis_training.py",
+    "pipeline/freeze_acw_curriculum.py",
+    "pipeline/evaluate_acw_hidden_basis.py",
+    "pipeline/adjudicate_acw_hidden_basis.py",
+    "pipeline/test_addressed_categorical_workspace.py",
+    "pipeline/test_audit_addressed_categorical_workspace_symbolic.py",
+    "pipeline/test_generate_acw_hidden_basis.py",
+    "pipeline/test_acw_nist_beacon.py",
+    "pipeline/testdata/acw_nist_beacon_snapshot.json",
+    "pipeline/test_acw_hidden_basis_training.py",
+    "pipeline/test_freeze_acw_curriculum.py",
+    "pipeline/test_evaluate_acw_hidden_basis.py",
+    "pipeline/test_adjudicate_acw_hidden_basis.py",
+    "pipeline/jobs/run_acw_pilot_stokes.sbatch",
+    "pipeline/jobs/verify_acw_pilot_stokes.sbatch",
+)
 
 DEVELOPMENT_SEEDS = (2026071601, 2026071602, 2026071603)
 CONFIRMATION_COMMITMENTS = (
@@ -73,6 +137,7 @@ VALID_EQUAL_LABEL_ARCHITECTURE_CONTROLS = (
     "packet_token_transformer",
     "answer_motor",
 )
+BASELINE_ELIGIBLE_ARMS = tuple(arm for arm in SCORED_ARMS if arm != "source_retained")
 
 EVALUATION_DEPTHS = (8, 16, 32, 64, 65)
 LABEL_CHECKPOINTS = tuple(8192 + 4096 * round_index for round_index in range(13))
@@ -133,6 +198,11 @@ BOUNDED_CLAIM = (
     "frozen CPU family and clears the stated equal-label architecture controls. "
     "It is not evidence for an autonomous controller, language transfer, general "
     "reasoning, novelty, CGBR optimality, or a Shohin sidecar result."
+)
+DEVELOPMENT_BASELINE_CLAIM = (
+    "This is the strongest deployable checkpoint under the frozen development-only "
+    "R12 protocol. It is retained even when later adjudication is NO_GO, but it "
+    "cannot override promotion gates and is not a reasoning or generalization claim."
 )
 
 HASH_RE = re.compile(r"[0-9a-f]{64}\Z")
@@ -631,6 +701,45 @@ def _hash_regular_file(path: Path, label: str) -> tuple[int, str]:
     return size, digest.hexdigest()
 
 
+def _read_binary_regular_file(path: Path, label: str) -> tuple[bytes, str]:
+    """Read and hash one stable regular binary artifact through one descriptor."""
+
+    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+    try:
+        descriptor = os.open(path, flags)
+    except OSError as exc:
+        raise EvidenceError(
+            "artifact_unreadable", f"cannot open {label}: {exc}"
+        ) from exc
+    chunks: list[bytes] = []
+    digest = hashlib.sha256()
+    size = 0
+    try:
+        before = os.fstat(descriptor)
+        if not stat.S_ISREG(before.st_mode):
+            raise EvidenceError(
+                "artifact_not_regular", f"{label} is not a regular file"
+            )
+        while True:
+            block = os.read(descriptor, 1 << 20)
+            if not block:
+                break
+            size += len(block)
+            if size > MAX_BINARY_BYTES:
+                raise EvidenceError(
+                    "binary_artifact_too_large", f"{label} exceeds the limit"
+                )
+            chunks.append(block)
+            digest.update(block)
+        after = os.fstat(descriptor)
+        stable = ("st_dev", "st_ino", "st_size", "st_mtime_ns", "st_ctime_ns")
+        if any(getattr(before, field) != getattr(after, field) for field in stable):
+            raise EvidenceError("artifact_changed_during_read", f"{label} changed")
+    finally:
+        os.close(descriptor)
+    return b"".join(chunks), digest.hexdigest()
+
+
 def _parse_json(raw: bytes, label: str) -> dict[str, Any]:
     def pairs_hook(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
         result: dict[str, Any] = {}
@@ -656,6 +765,515 @@ def _parse_json(raw: bytes, label: str) -> dict[str, Any]:
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise EvidenceError("invalid_json", f"cannot parse {label}: {exc}") from exc
     return _object(parsed, label)
+
+
+def _anchor_git_text(
+    root: Path,
+    *arguments: str,
+    check: bool = True,
+) -> subprocess.CompletedProcess:
+    try:
+        return subprocess.run(
+            ["/usr/bin/git", "--no-replace-objects", *arguments],
+            cwd=root,
+            check=check,
+            capture_output=True,
+            text=True,
+        )
+    except subprocess.CalledProcessError as exc:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            f"pilot anchor Git command failed: {' '.join(arguments)}",
+        ) from exc
+
+
+def _anchor_git_blob(root: Path, revision: str, relative: str) -> bytes:
+    try:
+        return subprocess.run(
+            [
+                "/usr/bin/git",
+                "--no-replace-objects",
+                "show",
+                f"{revision}:{relative}",
+            ],
+            cwd=root,
+            check=True,
+            capture_output=True,
+        ).stdout
+    except subprocess.CalledProcessError as exc:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            f"pilot anchor lacks {relative} at {revision}",
+        ) from exc
+
+
+def _anchor_commit_parents(root: Path, commit: str) -> list[str]:
+    return _anchor_git_text(root, "show", "-s", "--format=%P", commit).stdout.split()
+
+
+def _anchor_diff(root: Path, before: str, after: str) -> list[tuple[str, str]]:
+    records = []
+    output = _anchor_git_text(
+        root,
+        "diff",
+        "--name-status",
+        "--no-renames",
+        before,
+        after,
+    ).stdout
+    for line in output.splitlines():
+        status, relative = line.split("\t", 1)
+        records.append((status, relative))
+    return records
+
+
+def _adjudicator_activation_commit(root: Path) -> str:
+    replacement_refs = _anchor_git_text(
+        root,
+        "for-each-ref",
+        "--format=%(refname)",
+        "refs/replace/",
+    ).stdout.strip()
+    grafts_raw = _anchor_git_text(
+        root,
+        "rev-parse",
+        "--git-path",
+        "info/grafts",
+    ).stdout.strip()
+    grafts_path = Path(grafts_raw)
+    if not grafts_path.is_absolute():
+        grafts_path = root / grafts_path
+    if replacement_refs or grafts_path.exists():
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot activation forbids Git replacements and grafts",
+        )
+    activation_commit = _anchor_git_text(root, "rev-parse", "HEAD").stdout.strip()
+    if activation_commit in {PILOT_SCIENTIFIC_COMMIT, PILOT_ANCHOR_COMMIT}:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot activation requires a distinct E commit",
+        )
+    if _anchor_commit_parents(root, activation_commit) != [PILOT_ANCHOR_COMMIT]:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot activation E must have A as its sole parent",
+        )
+    if _anchor_commit_parents(root, PILOT_ANCHOR_COMMIT) != [PILOT_SCIENTIFIC_COMMIT]:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot anchor A must have S as its sole parent",
+        )
+    if _anchor_diff(root, PILOT_SCIENTIFIC_COMMIT, PILOT_ANCHOR_COMMIT) != [
+        ("A", PILOT_REGISTRY_PATH)
+    ]:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot anchor A must add only the registry",
+        )
+    if _anchor_diff(root, PILOT_ANCHOR_COMMIT, activation_commit) != [
+        ("M", relative) for relative in sorted(PILOT_ACTIVATION_ALLOWLIST)
+    ]:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot activation E differs from its exact allowlist",
+        )
+    absent = _anchor_git_text(
+        root,
+        "cat-file",
+        "-e",
+        f"{PILOT_SCIENTIFIC_COMMIT}:{PILOT_REGISTRY_PATH}",
+        check=False,
+    )
+    if absent.returncode == 0:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot registry already existed in S",
+        )
+
+    namespace_init = root / "pipeline" / "__init__.py"
+    committed_namespace_init = _anchor_git_text(
+        root,
+        "cat-file",
+        "-e",
+        f"{activation_commit}:pipeline/__init__.py",
+        check=False,
+    )
+    if os.path.lexists(namespace_init) or committed_namespace_init.returncode == 0:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot activation requires an unshadowed pipeline namespace",
+        )
+
+    remote_url = _anchor_git_text(root, "remote", "get-url", "origin").stdout.strip()
+    expected_bundle = PILOT_OFFLINE_BUNDLE_TEMPLATE.format(
+        commit8=activation_commit[:8]
+    )
+    if remote_url == PILOT_CANONICAL_REMOTE_URL:
+        remote = _anchor_git_text(
+            root,
+            "ls-remote",
+            "--exit-code",
+            "origin",
+            "refs/heads/main",
+        ).stdout.split()
+    elif remote_url == expected_bundle:
+        bundle = Path(remote_url)
+        if not bundle.is_file() or bundle.is_symlink():
+            raise EvidenceError(
+                "pilot_anchor_invalid",
+                "pilot activation offline bundle is not a regular file",
+            )
+        _anchor_git_text(root, "bundle", "verify", remote_url)
+        remote = _anchor_git_text(
+            root,
+            "bundle",
+            "list-heads",
+            remote_url,
+            "refs/heads/main",
+        ).stdout.split()
+    else:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot activation origin is not an approved publication route",
+        )
+    if not remote or remote[0] != activation_commit:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot activation HEAD must equal pushed origin/main",
+        )
+    protected = sorted(
+        set(PILOT_SCIENTIFIC_PATHS)
+        | set(PILOT_ACTIVATION_ALLOWLIST)
+        | {PILOT_REGISTRY_PATH}
+    )
+    status = _anchor_git_text(
+        root,
+        "status",
+        "--porcelain",
+        "--untracked-files=all",
+        "--",
+        *protected,
+    ).stdout.strip()
+    if status:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot activation paths are not clean in Git",
+        )
+    for relative in protected:
+        path = root / relative
+        raw, _ = _read_regular_file(path)
+        if raw != _anchor_git_blob(root, activation_commit, relative):
+            raise EvidenceError(
+                "pilot_anchor_invalid",
+                f"pilot activation path differs from E: {relative}",
+            )
+    return activation_commit
+
+
+def _load_anchor_json(path: Path, label: str) -> tuple[dict[str, Any], bytes, str]:
+    raw, digest = _read_regular_file(path)
+    parsed = _parse_json(raw, label)
+    if raw != canonical_json_bytes(parsed) + b"\n":
+        raise EvidenceError(
+            "noncanonical_json",
+            f"{label} is not canonical newline-framed JSON",
+        )
+    _verify_payload_hash(parsed, label)
+    return parsed, raw, digest
+
+
+def _anchor_artifact_record(value: Any, label: str) -> dict[str, Any]:
+    record = _object(value, label)
+    _expect_keys(record, {"bytes", "sha256"}, label)
+    size = _integer(record["bytes"], f"{label}.bytes", minimum=0)
+    return {"bytes": size, "sha256": _hash(record["sha256"], f"{label}.sha256")}
+
+
+def _anchor_artifact_path(root: Path, relative: str, record: Any) -> Path:
+    relative_path = Path(relative)
+    if (
+        relative_path.is_absolute()
+        or ".." in relative_path.parts
+        or relative_path.as_posix() != relative
+    ):
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            f"unsafe registered pilot path: {relative}",
+        )
+    current = root
+    for part in relative_path.parts:
+        current = current / part
+        if current.is_symlink():
+            raise EvidenceError(
+                "pilot_anchor_invalid",
+                f"registered pilot path is a symlink: {relative}",
+            )
+    checked = _anchor_artifact_record(record, f"pilot_registry[{relative!r}]")
+    size, digest = _hash_regular_file(current, f"pilot_registry[{relative!r}]")
+    if size != checked["bytes"] or digest != checked["sha256"]:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            f"registered pilot artifact differs: {relative}",
+        )
+    return current
+
+
+def _load_adjudicator_pilot_anchor() -> dict[str, Any]:
+    root = Path(__file__).resolve().parents[1]
+    activation_commit = _adjudicator_activation_commit(root)
+    registry, registry_raw, registry_digest = _load_anchor_json(
+        root / PILOT_REGISTRY_PATH,
+        "pilot artifact registry",
+    )
+    if registry_digest != PILOT_REGISTRY_RAW_SHA256:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot artifact registry raw hash differs",
+        )
+    if registry_raw != _anchor_git_blob(
+        root, PILOT_ANCHOR_COMMIT, PILOT_REGISTRY_PATH
+    ) or registry_raw != _anchor_git_blob(root, activation_commit, PILOT_REGISTRY_PATH):
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot registry bytes differ across A, E, and the working tree",
+        )
+    expected_keys = {
+        "protocol",
+        "scientific_identity",
+        "canonical_paths",
+        "dataset_manifest_payload_sha256",
+        "pilot_report_payload_sha256",
+        "pilot_report_sha256",
+        "pilot_replay_comparison_payload_sha256",
+        "pilot_replay_comparison_sha256",
+        "independent_verification_payload_sha256",
+        "independent_verification_sha256",
+        "artifact_files",
+        "artifact_file_count",
+        "artifact_files_payload_sha256",
+        "activation_allowlist",
+        "claim_boundary",
+        "payload_sha256",
+    }
+    _expect_keys(registry, expected_keys, "pilot artifact registry")
+    identity = _validate_scientific_identity(
+        registry["scientific_identity"],
+        "pilot artifact registry scientific_identity",
+    )
+    if (
+        registry["protocol"] != PILOT_ARTIFACT_REGISTRY_PROTOCOL
+        or registry["canonical_paths"] != PILOT_CANONICAL_PATHS
+        or registry["activation_allowlist"] != list(PILOT_ACTIVATION_ALLOWLIST)
+        or registry["claim_boundary"] != PILOT_REGISTRY_CLAIM
+        or identity["scientific_commit"] != PILOT_SCIENTIFIC_COMMIT
+        or activation_commit == PILOT_SCIENTIFIC_COMMIT
+    ):
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot artifact registry activation binding differs",
+        )
+    if set(identity["scientific_path_sha256"]) != set(PILOT_SCIENTIFIC_PATHS):
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot registry scientific path set differs",
+        )
+    for relative in PILOT_SCIENTIFIC_PATHS:
+        expected = hashlib.sha256(
+            _anchor_git_blob(root, PILOT_SCIENTIFIC_COMMIT, relative)
+        ).hexdigest()
+        if identity["scientific_path_sha256"].get(relative) != expected:
+            raise EvidenceError(
+                "pilot_anchor_invalid",
+                f"pilot registry scientific hash differs: {relative}",
+            )
+    activation_identity = {
+        "scientific_commit": activation_commit,
+        "scientific_path_sha256": {
+            relative: hashlib.sha256(
+                _anchor_git_blob(root, activation_commit, relative)
+            ).hexdigest()
+            for relative in PILOT_SCIENTIFIC_PATHS
+        },
+    }
+    artifact_files = _object(
+        registry["artifact_files"],
+        "pilot artifact registry artifact_files",
+    )
+    if (
+        len(artifact_files) != PILOT_ANCHORED_FILES
+        or registry["artifact_file_count"] != PILOT_ANCHORED_FILES
+        or registry["artifact_files_payload_sha256"]
+        != hashlib.sha256(canonical_json_bytes(artifact_files)).hexdigest()
+    ):
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot anchored artifact registry differs",
+        )
+    prefixes = tuple(f"{value}/" for value in PILOT_CANONICAL_PATHS.values())
+    for relative, record in artifact_files.items():
+        if not isinstance(relative, str) or not relative.startswith(prefixes):
+            raise EvidenceError(
+                "pilot_anchor_invalid",
+                "pilot registry contains an out-of-tree artifact",
+            )
+        _anchor_artifact_record(record, f"pilot_registry[{relative!r}]")
+
+    pilot_root = PILOT_CANONICAL_PATHS["pilot"]
+    bundle_sources = {
+        "pilot/report.json": f"{pilot_root}/report.json",
+        "pilot/replay_comparison.json": f"{pilot_root}/replay_comparison.json",
+        "pilot/cgb_schedule.jsonl": f"{pilot_root}/cgb_schedule.jsonl",
+        "pilot/uniform_schedule.jsonl": f"{pilot_root}/uniform_schedule.jsonl",
+    }
+    bundle_paths = {
+        bundle_relative: _anchor_artifact_path(
+            root,
+            source_relative,
+            artifact_files[source_relative],
+        )
+        for bundle_relative, source_relative in bundle_sources.items()
+    }
+    report, report_raw, report_digest = _load_anchor_json(
+        bundle_paths["pilot/report.json"],
+        "anchored pilot report",
+    )
+    comparison, comparison_raw, comparison_digest = _load_anchor_json(
+        bundle_paths["pilot/replay_comparison.json"],
+        "anchored pilot comparison",
+    )
+    if (
+        report.get("protocol") != PILOT_PROTOCOL
+        or comparison.get("protocol") != PILOT_COMPARISON_PROTOCOL
+        or report.get("scientific_identity") != identity
+        or comparison.get("scientific_identity") != identity
+        or registry["pilot_report_payload_sha256"] != report.get("payload_sha256")
+        or registry["pilot_report_sha256"] != report_digest
+        or registry["pilot_replay_comparison_payload_sha256"]
+        != comparison.get("payload_sha256")
+        or registry["pilot_replay_comparison_sha256"] != comparison_digest
+        or hashlib.sha256(report_raw).hexdigest() != report_digest
+        or hashlib.sha256(comparison_raw).hexdigest() != comparison_digest
+    ):
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot registry differs from its frozen report or comparison",
+        )
+
+    actual = set()
+    for prefix in PILOT_CANONICAL_PATHS.values():
+        tree = root / prefix
+        if not tree.is_dir() or tree.is_symlink():
+            raise EvidenceError(
+                "pilot_anchor_invalid",
+                f"pilot artifact tree is invalid: {prefix}",
+            )
+        for path in tree.rglob("*"):
+            if path.is_symlink():
+                raise EvidenceError(
+                    "pilot_anchor_invalid",
+                    f"pilot artifact tree contains a symlink: {path}",
+                )
+            if path.is_file():
+                actual.add(str(path.relative_to(root)))
+            elif not path.is_dir():
+                raise EvidenceError(
+                    "pilot_anchor_invalid",
+                    f"pilot artifact tree contains a special file: {path}",
+                )
+    if actual != set(artifact_files):
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "pilot artifact tree differs from its exact registry",
+        )
+    for relative, record in artifact_files.items():
+        _anchor_artifact_path(root, relative, record)
+
+    verification_relative = f"{PILOT_CANONICAL_PATHS['verification']}/verification.json"
+    receipt, receipt_raw, receipt_digest = _load_anchor_json(
+        root / verification_relative,
+        "independent pilot verification",
+    )
+    producer_files = {
+        relative: record
+        for relative, record in artifact_files.items()
+        if relative != verification_relative
+    }
+    producer = receipt.get("producer")
+    verifier_start = receipt.get("verifier_slurm_snapshot_start")
+    verifier_finish = receipt.get("verifier_slurm_snapshot_finish")
+    if not all(
+        isinstance(value, dict) for value in (producer, verifier_start, verifier_finish)
+    ):
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "independent pilot verification identity is invalid",
+        )
+    producer_snapshot = producer.get("slurm_snapshot")
+    producer_allocation = (
+        producer_snapshot.get("allocation")
+        if isinstance(producer_snapshot, dict)
+        else None
+    )
+    verifier_start_allocation = verifier_start.get("allocation")
+    verifier_finish_allocation = verifier_finish.get("allocation")
+    if not all(
+        isinstance(value, dict)
+        for value in (
+            producer_allocation,
+            verifier_start_allocation,
+            verifier_finish_allocation,
+        )
+    ):
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "independent pilot verification allocation is invalid",
+        )
+    producer_job = str(producer_allocation.get("job_id", ""))
+    verifier_job = str(verifier_start_allocation.get("job_id", ""))
+    producer_node = str(producer_allocation.get("node_list", ""))
+    verifier_node = str(verifier_start_allocation.get("node_list", ""))
+    if (
+        receipt.get("protocol") != PILOT_INDEPENDENT_VERIFICATION_PROTOCOL
+        or receipt.get("claim_boundary") != PILOT_INDEPENDENT_VERIFICATION_CLAIM
+        or registry["independent_verification_payload_sha256"]
+        != receipt.get("payload_sha256")
+        or registry["independent_verification_sha256"] != receipt_digest
+        or hashlib.sha256(receipt_raw).hexdigest() != receipt_digest
+        or receipt.get("artifact_files") != producer_files
+        or receipt.get("artifact_file_count") != len(producer_files) == 80
+        or receipt.get("artifact_files_payload_sha256")
+        != hashlib.sha256(canonical_json_bytes(producer_files)).hexdigest()
+        or receipt.get("fresh_recomputation_complete") is not True
+        or receipt.get("scientific_identity") != identity
+        or receipt.get("dataset_manifest_payload_sha256")
+        != registry["dataset_manifest_payload_sha256"]
+        or receipt.get("pilot_report_payload_sha256") != report.get("payload_sha256")
+        or receipt.get("pilot_report_sha256") != report_digest
+        or producer.get("comparison_payload_sha256") != comparison.get("payload_sha256")
+        or verifier_start_allocation != verifier_finish_allocation
+        or not producer_job
+        or not verifier_job
+        or producer_job == verifier_job
+        or not producer_node
+        or not verifier_node
+        or producer_node == verifier_node
+        or str(producer.get("hostname", "")).split(".", 1)[0] != producer_node
+        or str(receipt.get("hostname", "")).split(".", 1)[0] != verifier_node
+    ):
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            "independent pilot verification differs from the anchor",
+        )
+    return {
+        "activation_commit": activation_commit,
+        "anchor_commit": PILOT_ANCHOR_COMMIT,
+        "scientific_identity": identity,
+        "activation_scientific_identity": activation_identity,
+        "registry_raw_sha256": PILOT_REGISTRY_RAW_SHA256,
+        "artifact_files": artifact_files,
+        "bundle_sources": bundle_sources,
+    }
 
 
 def _reference(value: Any, label: str) -> tuple[str, str]:
@@ -697,6 +1315,26 @@ def _verify_file_reference(
             f"{label} SHA-256 mismatch: expected {expected_hash}, got {actual_hash}",
         )
     return {"path": raw_path, "sha256": actual_hash, "bytes": size}, resolved
+
+
+def _verify_binary_reference(
+    value: Any,
+    label: str,
+    base: Path,
+) -> tuple[dict[str, str | int], Path, bytes]:
+    raw_path, expected_hash = _reference(value, label)
+    resolved = _resolve_artifact_path(raw_path, base, label)
+    raw, actual_hash = _read_binary_regular_file(resolved, label)
+    if actual_hash != expected_hash:
+        raise EvidenceError(
+            "artifact_hash_mismatch",
+            f"{label} SHA-256 mismatch: expected {expected_hash}, got {actual_hash}",
+        )
+    return (
+        {"path": raw_path, "sha256": actual_hash, "bytes": len(raw)},
+        resolved,
+        raw,
+    )
 
 
 def _verify_json_reference(
@@ -799,14 +1437,14 @@ def _load_bound_array(
     for dimension in recorded_shape:
         _integer(dimension, f"{label}.record.shape", minimum=1)
     path = _safe_child(root, relative, label)
-    observed_bytes, observed_hash = _hash_regular_file(path, label)
-    if observed_bytes != expected_bytes or observed_hash != recorded_hash:
+    raw, observed_hash = _read_binary_regular_file(path, label)
+    if len(raw) != expected_bytes or observed_hash != recorded_hash:
         raise EvidenceError(
             "array_artifact_mismatch",
             f"{label} bytes or SHA-256 differ from its manifest record",
         )
     try:
-        array = np.load(path, mmap_mode="r", allow_pickle=False)
+        array = np.load(io.BytesIO(raw), allow_pickle=False)
     except (OSError, ValueError) as exc:
         raise EvidenceError(
             "invalid_npy_artifact", f"cannot load {label}: {exc}"
@@ -1556,12 +2194,35 @@ def _validate_trainer_bundle(
     dataset_summary: dict[str, Any],
     label: str,
 ) -> dict[str, Any]:
-    del root, manifest, dataset_manifest, dataset_summary, label
-    raise EvidenceError(
-        "pilot_anchor_required",
-        "canonical trainer evidence is disabled until the verified public pilot "
-        "artifact registry is committed and pushed as an external anchor",
+    anchor = _load_adjudicator_pilot_anchor()
+    summary = _validate_unanchored_trainer_bundle_structure(
+        root,
+        manifest,
+        dataset_manifest,
+        dataset_summary,
+        label,
     )
+    if summary["pilot_scientific_identity"] != anchor["scientific_identity"]:
+        raise EvidenceError(
+            "pilot_anchor_invalid",
+            f"{label} pilot identity differs from anchored S",
+        )
+    pilot_artifacts = _object(manifest["pilot_artifacts"], f"{label}.pilot_artifacts")
+    for bundle_relative, source_relative in anchor["bundle_sources"].items():
+        if pilot_artifacts.get(bundle_relative) != anchor["artifact_files"].get(
+            source_relative
+        ):
+            raise EvidenceError(
+                "pilot_anchor_invalid",
+                f"{label} artifact differs from pilot anchor: {bundle_relative}",
+            )
+    return {
+        **summary,
+        "pilot_anchor_commit": anchor["anchor_commit"],
+        "pilot_registry_raw_sha256": anchor["registry_raw_sha256"],
+        "activation_commit": anchor["activation_commit"],
+        "activation_scientific_identity": anchor["activation_scientific_identity"],
+    }
 
 
 def _validate_unanchored_trainer_bundle_structure(
@@ -1845,11 +2506,25 @@ def _validate_checkpoint_artifact(
     dataset_summary: dict[str, Any],
     bundle_summary: dict[str, Any],
     label: str,
+    checkpoint_bytes: bytes | None = None,
 ) -> dict[str, Any]:
     """Load a real checkpoint and verify its model and artifact bindings."""
 
     try:
-        checkpoint = torch.load(path, map_location="cpu", weights_only=True)
+        if checkpoint_bytes is None:
+            checkpoint_bytes, observed = _read_binary_regular_file(path, label)
+            if observed != file_sha256:
+                raise EvidenceError(
+                    "artifact_hash_mismatch",
+                    f"{label} changed before checkpoint deserialization",
+                )
+        checkpoint = torch.load(
+            io.BytesIO(checkpoint_bytes),
+            map_location="cpu",
+            weights_only=True,
+        )
+    except EvidenceError:
+        raise
     except Exception as exc:
         raise EvidenceError(
             "checkpoint_unreadable",
@@ -1954,11 +2629,85 @@ def _validate_checkpoint_artifact(
     }
 
 
+def _write_snapshot_file(path: Path, raw: bytes) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+    flags |= getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(path, flags, 0o444)
+    try:
+        view = memoryview(raw)
+        while view:
+            written = os.write(descriptor, view)
+            if written <= 0:
+                raise OSError("short write while creating evidence snapshot")
+            view = view[written:]
+        os.fchmod(descriptor, 0o444)
+        os.fsync(descriptor)
+    finally:
+        os.close(descriptor)
+
+
+def _snapshot_dataset_tree(
+    source_root: Path,
+    manifest: dict[str, Any],
+    destination: Path,
+) -> None:
+    destination.mkdir(mode=0o700)
+    _write_snapshot_file(
+        destination / "manifest.json",
+        canonical_json_bytes(manifest) + b"\n",
+    )
+    arrays = _object(manifest.get("arrays"), "snapshot dataset arrays")
+    for relative, raw_record in arrays.items():
+        if not isinstance(relative, str):
+            raise EvidenceError(
+                "dataset_snapshot_failed", "dataset array path is not a string"
+            )
+        record = _object(raw_record, f"snapshot dataset arrays[{relative!r}]")
+        _expect_keys(
+            record,
+            ARRAY_RECORD_KEYS,
+            f"snapshot dataset arrays[{relative!r}]",
+        )
+        expected_bytes = _integer(
+            record["bytes"],
+            f"snapshot dataset arrays[{relative!r}].bytes",
+            minimum=1,
+        )
+        expected_hash = _hash(
+            record["sha256"],
+            f"snapshot dataset arrays[{relative!r}].sha256",
+        )
+        source = _safe_child(source_root, relative, f"snapshot dataset {relative}")
+        raw, digest = _read_binary_regular_file(source, f"snapshot dataset {relative}")
+        if len(raw) != expected_bytes or digest != expected_hash:
+            raise EvidenceError(
+                "dataset_snapshot_failed",
+                f"dataset array changed before snapshot: {relative}",
+            )
+        relative_path = Path(relative)
+        if relative_path.is_absolute() or ".." in relative_path.parts:
+            raise EvidenceError(
+                "dataset_snapshot_failed", f"unsafe dataset array path: {relative}"
+            )
+        _write_snapshot_file(destination / relative_path, raw)
+    for directory in sorted(
+        (path for path in destination.rglob("*") if path.is_dir()),
+        key=lambda path: len(path.parts),
+        reverse=True,
+    ):
+        directory.chmod(0o555)
+    destination.chmod(0o555)
+
+
 def _independent_evaluator_replay(
     checkpoint_path: Path,
     dataset_root: Path,
     expected_bytes: bytes,
     label: str,
+    *,
+    checkpoint_bytes: bytes | None = None,
+    dataset_manifest: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Execute the frozen evaluator in a new interpreter and compare raw bytes."""
 
@@ -1969,19 +2718,59 @@ def _independent_evaluator_replay(
             "independent_evaluator_missing", "frozen evaluator is absent"
         )
     with tempfile.TemporaryDirectory(prefix="acw-adjudicator-replay-") as temporary:
-        output = Path(temporary) / "evaluation.json"
-        environment = os.environ.copy()
-        environment["PYTHONHASHSEED"] = "0"
+        temporary_root = Path(temporary)
+        output = temporary_root / "evaluation.json"
+        checkpoint_snapshot = temporary_root / "checkpoint.pt"
+        dataset_snapshot = temporary_root / "dataset"
+        if checkpoint_bytes is None:
+            checkpoint_bytes, _ = _read_binary_regular_file(
+                checkpoint_path, f"{label}.checkpoint replay snapshot"
+            )
+        if dataset_manifest is None:
+            manifest_raw, _ = _read_regular_file(dataset_root / "manifest.json")
+            dataset_manifest = _parse_json(
+                manifest_raw, f"{label}.dataset replay manifest"
+            )
+        _write_snapshot_file(checkpoint_snapshot, checkpoint_bytes)
+        _snapshot_dataset_tree(dataset_root, dataset_manifest, dataset_snapshot)
+        bootstrap = (
+            "import os,runpy,sys,sysconfig;"
+            "repo,script=sys.argv[1:3];del sys.argv[1:3];"
+            "marker=os.path.join(repo,'pipeline','__init__.py');"
+            "assert not os.path.lexists(marker),marker;"
+            "paths=[repo,sysconfig.get_paths()['purelib'],"
+            "sysconfig.get_paths()['platlib']];"
+            "sys.path[:0]=list(dict.fromkeys(paths));"
+            "runpy.run_path(script,run_name='__main__')"
+        )
+        environment = {
+            "CUDA_VISIBLE_DEVICES": "",
+            "HOME": str(temporary_root),
+            "LANG": "C",
+            "LC_ALL": "C",
+            "MKL_NUM_THREADS": "1",
+            "OMP_NUM_THREADS": "1",
+            "OPENBLAS_NUM_THREADS": "1",
+            "PYTHONHASHSEED": "0",
+            "PYTHONNOUSERSITE": "1",
+            "PYTHONDONTWRITEBYTECODE": "1",
+            "PYTHONPYCACHEPREFIX": str(temporary_root / "pycache"),
+            "TZ": "UTC",
+        }
         try:
             completed = subprocess.run(
                 [
                     sys.executable,
-                    "-m",
-                    "pipeline.evaluate_acw_hidden_basis",
+                    "-P",
+                    "-S",
+                    "-c",
+                    bootstrap,
+                    str(repository),
+                    str(evaluator),
                     "--checkpoint",
-                    str(checkpoint_path),
+                    str(checkpoint_snapshot),
                     "--dataset",
-                    str(dataset_root),
+                    str(dataset_snapshot),
                     "--out",
                     str(output),
                 ],
@@ -3018,11 +3807,21 @@ def _validate_label_efficiency(
     return normalized
 
 
-def _expected_run_keys() -> set[tuple[str, str, int]]:
+def _expected_run_keys(scope: str = "full") -> set[tuple[str, str, int]]:
+    if scope not in {"development", "full"}:
+        raise ValueError(f"unknown evidence scope: {scope}")
+    splits = (
+        ("development",)
+        if scope == "development"
+        else (
+            "development",
+            "confirmation",
+        )
+    )
     expected = {
         (arm, split, index)
         for arm in SCORED_ARMS
-        for split in ("development", "confirmation")
+        for split in splits
         for index in range(3)
     }
     expected.update((DIRECT_STATE_ARM, "development", index) for index in range(3))
@@ -3030,23 +3829,28 @@ def _expected_run_keys() -> set[tuple[str, str, int]]:
 
 
 def verify_evidence(
-    manifest: dict[str, Any], base: Path
+    manifest: dict[str, Any], base: Path, *, scope: str = "full"
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     _expect_keys(
         manifest, {"schema", "protocol", "reports", "payload_sha256"}, "manifest"
     )
     manifest_payload_sha256 = _verify_payload_hash(manifest, "manifest")
-    if manifest["schema"] != MANIFEST_SCHEMA:
+    expected_schema, expected_protocol = (
+        (DEVELOPMENT_MANIFEST_SCHEMA, DEVELOPMENT_MANIFEST_PROTOCOL)
+        if scope == "development"
+        else (MANIFEST_SCHEMA, MANIFEST_PROTOCOL)
+    )
+    if manifest["schema"] != expected_schema:
         raise EvidenceError(
-            "manifest_schema_mismatch", f"manifest schema must be {MANIFEST_SCHEMA}"
+            "manifest_schema_mismatch", f"manifest schema must be {expected_schema}"
         )
-    if manifest["protocol"] != MANIFEST_PROTOCOL:
+    if manifest["protocol"] != expected_protocol:
         raise EvidenceError(
             "manifest_protocol_mismatch",
-            f"manifest protocol must be {MANIFEST_PROTOCOL}",
+            f"manifest protocol must be {expected_protocol}",
         )
     reports = _list(manifest["reports"], "manifest.reports")
-    expected_keys = _expected_run_keys()
+    expected_keys = _expected_run_keys(scope)
     if len(reports) != len(expected_keys):
         raise EvidenceError(
             "report_count_mismatch",
@@ -3170,8 +3974,8 @@ def verify_evidence(
                 f"{label} trainer bundle uses the wrong schedule family",
             )
 
-        checkpoint_binding, checkpoint_path = _verify_file_reference(
-            run["checkpoint"], f"{label}.checkpoint", base
+        checkpoint_binding, checkpoint_path, checkpoint_bytes = (
+            _verify_binary_reference(run["checkpoint"], f"{label}.checkpoint", base)
         )
         if checkpoint_path in checkpoint_paths:
             raise EvidenceError(
@@ -3185,6 +3989,7 @@ def verify_evidence(
             dataset_summary=dataset_summary,
             bundle_summary=bundle_summary,
             label=f"{label}.checkpoint",
+            checkpoint_bytes=checkpoint_bytes,
         )
 
         evaluation, evaluation_binding, evaluation_path = _verify_json_reference(
@@ -3258,6 +4063,8 @@ def verify_evidence(
             dataset_root,
             evaluation_bytes,
             label,
+            checkpoint_bytes=checkpoint_bytes,
+            dataset_manifest=dataset,
         )
         if independent_replay["payload_sha256"] != parsed["payload_sha256"]:
             raise EvidenceError(
@@ -3266,10 +4073,10 @@ def verify_evidence(
             )
 
         current_identity = parsed["scientific_identity"]
-        if bundle_summary["pilot_scientific_identity"] != current_identity:
+        if current_identity != bundle_summary["activation_scientific_identity"]:
             raise EvidenceError(
                 "pilot_scientific_identity_mismatch",
-                f"{label} pilot and trained evidence use different scientific code",
+                f"{label} must bind every scientific path to activation E",
             )
         if scientific_identity is None:
             scientific_identity = current_identity
@@ -3386,6 +4193,8 @@ def verify_evidence(
                 "replay_report": replay_binding,
                 "independent_evaluator_replay": independent_replay,
             },
+            "_checkpoint_path": checkpoint_path,
+            "_checkpoint_bytes": checkpoint_bytes,
         }
         artifact_bindings.append(
             {
@@ -3446,9 +4255,11 @@ def verify_evidence(
     ]
     verification = {
         "status": "verified",
+        "scope": scope,
+        "confirmation_evidence_opened": scope == "full",
         "manifest_payload_sha256": manifest_payload_sha256,
         "exact_run_matrix": True,
-        "scored_runs_verified": len(SCORED_ARMS) * 6,
+        "scored_runs_verified": len(SCORED_ARMS) * (3 if scope == "development" else 6),
         "direct_state_runs_verified": 3,
         "evaluation_reports_verified": len(ordered),
         "byte_identical_replays_verified": len(ordered),
@@ -3698,6 +4509,394 @@ def _confirmation_medians(runs: list[dict[str, Any]]) -> dict[str, Any]:
     return result
 
 
+def _development_baseline(runs: list[dict[str, Any]]) -> dict[str, Any]:
+    """Select and retain the strongest verified development checkpoint."""
+
+    candidates = []
+    arm_medians = {}
+    for arm in SCORED_ARMS:
+        selected = [
+            run for run in runs if run["arm"] == arm and run["split"] == "development"
+        ]
+        assert len(selected) == 3
+        state_median = float(
+            median(
+                run["evaluation"]["public_depths"][64]["state_exactness"]
+                for run in selected
+            )
+        )
+        scalar_median = float(
+            median(
+                run["evaluation"]["public_depths"][64]["scalar_accuracy"]
+                for run in selected
+            )
+        )
+        arm_medians[arm] = {
+            "depth_64_state_exactness": state_median,
+            "depth_64_scalar_accuracy": scalar_median,
+        }
+        for run in selected:
+            metric = run["evaluation"]["public_depths"][64]
+            candidates.append(
+                {
+                    "arm": arm,
+                    "index": run["index"],
+                    "seed_identity": run["seed_identity"],
+                    "checkpoint": run["bindings"]["checkpoint"],
+                    "depth_64_state_exactness": metric["state_exactness"],
+                    "depth_64_scalar_accuracy": metric["scalar_accuracy"],
+                }
+            )
+
+    ranked_arms = sorted(
+        BASELINE_ELIGIBLE_ARMS,
+        key=lambda arm: (
+            -arm_medians[arm]["depth_64_state_exactness"],
+            -arm_medians[arm]["depth_64_scalar_accuracy"],
+            arm,
+        ),
+    )
+    selected_arm = ranked_arms[0]
+    selected_checkpoint = sorted(
+        (row for row in candidates if row["arm"] == selected_arm),
+        key=lambda row: (
+            -row["depth_64_state_exactness"],
+            -row["depth_64_scalar_accuracy"],
+            row["index"],
+        ),
+    )[0]
+    return {
+        "status": "retained_baseline",
+        "scope": "verified_development_runs_only",
+        "eligible_arms": list(BASELINE_ELIGIBLE_ARMS),
+        "ineligible_upper_bound_controls": ["source_retained"],
+        "labels": FINAL_SCALAR_LABELS,
+        "optimizer_updates": OPTIMIZER_UPDATES,
+        "selection_order": [
+            "arm_median_depth_64_state_exactness_desc",
+            "arm_median_depth_64_scalar_accuracy_desc",
+            "arm_id_lexical_asc",
+            "checkpoint_state_exactness_desc",
+            "checkpoint_scalar_accuracy_desc",
+            "development_index_asc",
+        ],
+        "selected_arm": selected_arm,
+        "selected_arm_metrics": arm_medians[selected_arm],
+        "selected_checkpoint": selected_checkpoint,
+        "arm_medians": arm_medians,
+        "candidate_registry": candidates,
+        "candidate_count": len(candidates),
+        "retention_independent_of_promotion": True,
+        "can_override_promotion_gates": False,
+        "claim_boundary": (
+            "This records the strongest verified development baseline under the frozen "
+            "protocol; it does not authorize a reasoning or generalization claim."
+        ),
+    }
+
+
+def _development_run_bindings(runs: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [
+        {
+            "arm": run["arm"],
+            "index": run["index"],
+            "seed_identity": run["seed_identity"],
+            "bindings": run["bindings"],
+        }
+        for run in runs
+        if run["split"] == "development"
+    ]
+
+
+def _selected_development_run(
+    runs: list[dict[str, Any]], selection: dict[str, Any]
+) -> dict[str, Any]:
+    checkpoint = _object(selection["selected_checkpoint"], "selected checkpoint")
+    matches = [
+        run
+        for run in runs
+        if run["split"] == "development"
+        and run["arm"] == selection["selected_arm"]
+        and run["index"] == checkpoint["index"]
+    ]
+    if (
+        len(matches) != 1
+        or matches[0]["bindings"]["checkpoint"] != checkpoint["checkpoint"]
+    ):
+        raise EvidenceError(
+            "development_baseline_selection_mismatch",
+            "selected development checkpoint is not uniquely bound",
+        )
+    return matches[0]
+
+
+def _write_immutable_binary(path: str | Path, raw: bytes) -> dict[str, Any]:
+    destination = Path(path)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+    flags |= getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+    descriptor: int | None = None
+    created = False
+    try:
+        descriptor = os.open(destination, flags, 0o444)
+        created = True
+        view = memoryview(raw)
+        while view:
+            written = os.write(descriptor, view)
+            if written <= 0:
+                raise OSError("short write while preserving development checkpoint")
+            view = view[written:]
+        os.fchmod(descriptor, 0o444)
+        os.fsync(descriptor)
+    except BaseException:
+        if descriptor is not None:
+            os.close(descriptor)
+            descriptor = None
+        if created:
+            try:
+                destination.unlink()
+            except OSError:
+                pass
+        raise
+    finally:
+        if descriptor is not None:
+            os.close(descriptor)
+    try:
+        directory_fd = os.open(
+            destination.parent, os.O_RDONLY | getattr(os, "O_DIRECTORY", 0)
+        )
+        try:
+            os.fsync(directory_fd)
+        finally:
+            os.close(directory_fd)
+    except OSError:
+        pass
+    return {
+        "path": str(destination.resolve(strict=True)),
+        "sha256": hashlib.sha256(raw).hexdigest(),
+        "bytes": len(raw),
+        "mode": "0444",
+    }
+
+
+def freeze_development_baseline(
+    manifest_path: str | Path, checkpoint_out: str | Path
+) -> dict[str, Any]:
+    """Verify development only and preserve its strongest deployable checkpoint."""
+
+    path = Path(manifest_path)
+    manifest_raw, manifest_sha256 = _read_regular_file(path)
+    manifest = _parse_json(manifest_raw, "development manifest")
+    runs, verification = verify_evidence(manifest, path.parent, scope="development")
+    selection = _development_baseline(runs)
+    selected_run = _selected_development_run(runs, selection)
+    source_path = selected_run["_checkpoint_path"]
+    destination = Path(checkpoint_out)
+    try:
+        if source_path.resolve(strict=True) == destination.resolve(strict=False):
+            raise EvidenceError(
+                "development_baseline_output_reused",
+                "baseline copy must not reuse its source checkpoint path",
+            )
+    except OSError as exc:
+        raise EvidenceError(
+            "development_baseline_output_invalid",
+            f"cannot resolve baseline checkpoint output: {exc}",
+        ) from exc
+    copied = _write_immutable_binary(destination, selected_run["_checkpoint_bytes"])
+    if copied["sha256"] != selected_run["bindings"]["checkpoint"]["sha256"]:
+        raise EvidenceError(
+            "development_baseline_copy_mismatch",
+            "preserved checkpoint differs from selected source bytes",
+        )
+    return with_payload_hash(
+        {
+            "schema": DEVELOPMENT_BASELINE_SCHEMA,
+            "protocol": DEVELOPMENT_BASELINE_PROTOCOL,
+            "status": "retained_baseline",
+            "development_manifest": {
+                "path": str(path.resolve(strict=True)),
+                "sha256": manifest_sha256,
+                "payload_sha256": verification["manifest_payload_sha256"],
+            },
+            "verification": verification,
+            "selection": selection,
+            "development_run_bindings": _development_run_bindings(runs),
+            "source_checkpoint": selected_run["bindings"]["checkpoint"],
+            "copied_checkpoint": copied,
+            "activation_scientific_identity": verification["scientific_identity"],
+            "confirmation_evidence_opened": False,
+            "retention_independent_of_promotion": True,
+            "can_override_promotion_gates": False,
+            "claim_boundary": DEVELOPMENT_BASELINE_CLAIM,
+            "output_contract": {
+                "exclusive_create": True,
+                "overwrite": False,
+                "mode": "0444",
+            },
+        }
+    )
+
+
+def _validate_frozen_development_baseline(
+    baseline_path: str | Path,
+    runs: list[dict[str, Any]],
+    verification: dict[str, Any],
+) -> dict[str, Any]:
+    path = Path(baseline_path)
+    raw, file_sha256 = _read_regular_file(path)
+    baseline = _parse_json(raw, "development baseline")
+    if raw != canonical_json_bytes(baseline) + b"\n":
+        raise EvidenceError(
+            "development_baseline_noncanonical",
+            "development baseline is not canonical newline-framed JSON",
+        )
+    payload_sha256 = _verify_payload_hash(baseline, "development baseline")
+    _expect_keys(
+        baseline,
+        {
+            "schema",
+            "protocol",
+            "status",
+            "development_manifest",
+            "verification",
+            "selection",
+            "development_run_bindings",
+            "source_checkpoint",
+            "copied_checkpoint",
+            "activation_scientific_identity",
+            "confirmation_evidence_opened",
+            "retention_independent_of_promotion",
+            "can_override_promotion_gates",
+            "claim_boundary",
+            "output_contract",
+            "payload_sha256",
+        },
+        "development baseline",
+    )
+    if (
+        baseline["schema"] != DEVELOPMENT_BASELINE_SCHEMA
+        or baseline["protocol"] != DEVELOPMENT_BASELINE_PROTOCOL
+        or baseline["status"] != "retained_baseline"
+        or baseline["confirmation_evidence_opened"] is not False
+        or baseline["retention_independent_of_promotion"] is not True
+        or baseline["can_override_promotion_gates"] is not False
+        or baseline["claim_boundary"] != DEVELOPMENT_BASELINE_CLAIM
+        or baseline["output_contract"]
+        != {"exclusive_create": True, "overwrite": False, "mode": "0444"}
+    ):
+        raise EvidenceError(
+            "development_baseline_contract_mismatch",
+            "development baseline retention contract differs",
+        )
+    development_manifest = _object(
+        baseline["development_manifest"], "development baseline manifest"
+    )
+    _expect_keys(
+        development_manifest,
+        {"path", "sha256", "payload_sha256"},
+        "development baseline manifest",
+    )
+    frozen_manifest, _, _ = _verify_json_reference(
+        {
+            "path": development_manifest["path"],
+            "sha256": development_manifest["sha256"],
+        },
+        "development baseline manifest",
+        path.parent,
+    )
+    if (
+        frozen_manifest.get("schema") != DEVELOPMENT_MANIFEST_SCHEMA
+        or frozen_manifest.get("protocol") != DEVELOPMENT_MANIFEST_PROTOCOL
+        or _verify_payload_hash(frozen_manifest, "development baseline manifest")
+        != development_manifest["payload_sha256"]
+    ):
+        raise EvidenceError(
+            "development_baseline_manifest_mismatch",
+            "frozen development manifest binding differs",
+        )
+    baseline_verification = _object(
+        baseline["verification"], "development baseline verification"
+    )
+    if (
+        baseline_verification.get("status") != "verified"
+        or baseline_verification.get("scope") != "development"
+        or baseline_verification.get("confirmation_evidence_opened") is not False
+        or baseline_verification.get("manifest_payload_sha256")
+        != development_manifest["payload_sha256"]
+        or baseline_verification.get("scored_runs_verified") != len(SCORED_ARMS) * 3
+        or baseline_verification.get("direct_state_runs_verified") != 3
+        or baseline_verification.get("scientific_identity")
+        != baseline["activation_scientific_identity"]
+    ):
+        raise EvidenceError(
+            "development_baseline_verification_mismatch",
+            "frozen development verification contract differs",
+        )
+    expected_selection = _development_baseline(runs)
+    expected_bindings = _development_run_bindings(runs)
+    if (
+        baseline["selection"] != expected_selection
+        or baseline["development_run_bindings"] != expected_bindings
+        or baseline["activation_scientific_identity"]
+        != verification["scientific_identity"]
+    ):
+        raise EvidenceError(
+            "development_baseline_evidence_mismatch",
+            "frozen baseline differs from full manifest development evidence",
+        )
+    selected_run = _selected_development_run(runs, expected_selection)
+    if baseline["source_checkpoint"] != selected_run["bindings"]["checkpoint"]:
+        raise EvidenceError(
+            "development_baseline_source_mismatch",
+            "frozen baseline source checkpoint differs",
+        )
+    copied_record = _object(
+        baseline["copied_checkpoint"], "development baseline copied checkpoint"
+    )
+    _expect_keys(
+        copied_record,
+        {"path", "sha256", "bytes", "mode"},
+        "development baseline copied checkpoint",
+    )
+    copied_binding, copied_path, copied_bytes = _verify_binary_reference(
+        {"path": copied_record["path"], "sha256": copied_record["sha256"]},
+        "development baseline copied checkpoint",
+        path.parent,
+    )
+    copied_size = _integer(
+        copied_record["bytes"],
+        "development baseline copied checkpoint.bytes",
+        minimum=1,
+    )
+    if (
+        copied_record["mode"] != "0444"
+        or stat.S_IMODE(copied_path.stat().st_mode) != 0o444
+        or copied_binding["sha256"] != selected_run["bindings"]["checkpoint"]["sha256"]
+        or copied_binding["bytes"] != selected_run["bindings"]["checkpoint"]["bytes"]
+        or copied_size != copied_binding["bytes"]
+        or copied_bytes != selected_run["_checkpoint_bytes"]
+    ):
+        raise EvidenceError(
+            "development_baseline_copy_mismatch",
+            "frozen baseline checkpoint copy differs from selected bytes",
+        )
+    return {
+        **expected_selection,
+        "record": {
+            "path": str(path.resolve(strict=True)),
+            "sha256": file_sha256,
+            "payload_sha256": payload_sha256,
+        },
+        "source_checkpoint": baseline["source_checkpoint"],
+        "copied_checkpoint": baseline["copied_checkpoint"],
+        "confirmation_evidence_opened_when_frozen": False,
+        "retention_independent_of_promotion": True,
+        "can_override_promotion_gates": False,
+        "claim_boundary": DEVELOPMENT_BASELINE_CLAIM,
+    }
+
+
 def _label_efficiency_summary(confirmation: dict[str, Any]) -> dict[str, Any]:
     crossings: dict[str, int | None] = {}
     for arm in SCORED_ARMS:
@@ -3759,6 +4958,8 @@ def _requirements() -> dict[str, Any]:
         "primary_control_margin": CONTROL_MARGIN_FLOOR,
         "byte_identical_replay_required": True,
         "complete_train_and_inference_resource_ledgers_required": True,
+        "best_valid_development_baseline_retained_even_on_no_go": True,
+        "baseline_eligible_arms": list(BASELINE_ELIGIBLE_ARMS),
     }
 
 
@@ -3792,7 +4993,10 @@ def _evidence_rejection(
     )
 
 
-def adjudicate_manifest(manifest_path: str | Path) -> dict[str, Any]:
+def adjudicate_manifest(
+    manifest_path: str | Path,
+    development_baseline_path: str | Path | None = None,
+) -> dict[str, Any]:
     """Verify all evidence and return a payload-hashed GO/NO_GO decision."""
 
     path = Path(manifest_path)
@@ -3801,6 +5005,16 @@ def adjudicate_manifest(manifest_path: str | Path) -> dict[str, Any]:
         raw, manifest_file_sha256 = _read_regular_file(path)
         manifest = _parse_json(raw, "manifest")
         runs, verification = verify_evidence(manifest, path.parent)
+        if development_baseline_path is None:
+            raise EvidenceError(
+                "development_baseline_required",
+                "full adjudication requires a frozen development-only baseline",
+            )
+        development_baseline = _validate_frozen_development_baseline(
+            development_baseline_path,
+            runs,
+            verification,
+        )
     except EvidenceError as exc:
         return _evidence_rejection(path, manifest_file_sha256, exc)
     except Exception as exc:
@@ -3886,6 +5100,7 @@ def adjudicate_manifest(manifest_path: str | Path) -> dict[str, Any]:
                 "confirmation_required": 2,
             },
             "seed_results": seed_results,
+            "development_baseline": development_baseline,
             "confirmation_medians": confirmation,
             "primary_endpoint": {
                 "labels": FINAL_SCALAR_LABELS,
@@ -3983,20 +5198,110 @@ def write_immutable_json(path: str | Path, payload: dict[str, Any]) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
+def write_immutable_development_baseline(
+    path: str | Path, payload: dict[str, Any]
+) -> str:
+    baseline = _object(payload, "development baseline")
+    _verify_payload_hash(baseline, "development baseline")
+    if (
+        baseline.get("schema") != DEVELOPMENT_BASELINE_SCHEMA
+        or baseline.get("protocol") != DEVELOPMENT_BASELINE_PROTOCOL
+        or baseline.get("status") != "retained_baseline"
+        or baseline.get("confirmation_evidence_opened") is not False
+        or baseline.get("retention_independent_of_promotion") is not True
+        or baseline.get("can_override_promotion_gates") is not False
+        or baseline.get("claim_boundary") != DEVELOPMENT_BASELINE_CLAIM
+        or baseline.get("output_contract")
+        != {"exclusive_create": True, "overwrite": False, "mode": "0444"}
+    ):
+        raise EvidenceError(
+            "development_baseline_contract_mismatch",
+            "development baseline retention contract differs",
+        )
+    copied = _object(
+        baseline.get("copied_checkpoint"), "development baseline copied checkpoint"
+    )
+    _expect_keys(
+        copied,
+        {"path", "sha256", "bytes", "mode"},
+        "development baseline copied checkpoint",
+    )
+    copied_binding, copied_path, _ = _verify_binary_reference(
+        {"path": copied["path"], "sha256": copied["sha256"]},
+        "development baseline copied checkpoint",
+        Path(path).parent,
+    )
+    copied_size = _integer(
+        copied["bytes"],
+        "development baseline copied checkpoint.bytes",
+        minimum=1,
+    )
+    if (
+        copied["mode"] != "0444"
+        or copied_size != copied_binding["bytes"]
+        or stat.S_IMODE(copied_path.stat().st_mode) != 0o444
+    ):
+        raise EvidenceError(
+            "development_baseline_copy_mismatch",
+            "development baseline checkpoint copy differs",
+        )
+    encoded = canonical_json_bytes(baseline) + b"\n"
+    return str(_write_immutable_binary(path, encoded)["sha256"])
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--manifest", required=True, help="Frozen R12 ACW evidence manifest"
     )
     parser.add_argument("--out", required=True, help="New immutable decision JSON")
+    parser.add_argument(
+        "--development-baseline",
+        help="Frozen development baseline required for full adjudication",
+    )
+    parser.add_argument(
+        "--baseline-checkpoint-out",
+        help="Freeze development-only evidence and copy the selected checkpoint here",
+    )
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     if os.path.lexists(args.out):
-        raise SystemExit(f"refusing to overwrite existing decision: {args.out}")
-    decision = adjudicate_manifest(args.manifest)
+        raise SystemExit(f"refusing to overwrite existing output: {args.out}")
+    if args.baseline_checkpoint_out:
+        if args.development_baseline:
+            raise SystemExit(
+                "--development-baseline and --baseline-checkpoint-out are exclusive"
+            )
+        if os.path.lexists(args.baseline_checkpoint_out):
+            raise SystemExit(
+                "refusing to overwrite existing baseline checkpoint: "
+                f"{args.baseline_checkpoint_out}"
+            )
+        baseline = freeze_development_baseline(
+            args.manifest, args.baseline_checkpoint_out
+        )
+        file_sha256 = write_immutable_development_baseline(args.out, baseline)
+        print(
+            json.dumps(
+                {
+                    "status": baseline["status"],
+                    "selected_arm": baseline["selection"]["selected_arm"],
+                    "baseline_file_sha256": file_sha256,
+                    "baseline_payload_sha256": baseline["payload_sha256"],
+                    "checkpoint_sha256": baseline["copied_checkpoint"]["sha256"],
+                },
+                sort_keys=True,
+            )
+        )
+        return 0
+    if not args.development_baseline:
+        raise SystemExit(
+            "full adjudication requires --development-baseline frozen before confirmation"
+        )
+    decision = adjudicate_manifest(args.manifest, args.development_baseline)
     file_sha256 = write_immutable_json(args.out, decision)
     print(
         json.dumps(

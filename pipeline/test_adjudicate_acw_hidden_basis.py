@@ -13,6 +13,10 @@ import torch
 
 from pipeline import adjudicate_acw_hidden_basis as adjudicator
 
+_REAL_VALIDATE_FROZEN_DEVELOPMENT_BASELINE = (
+    adjudicator._validate_frozen_development_baseline
+)
+
 FINAL_STATE_EXACTNESS = {
     "acw": 0.96,
     "dense_categorical": 0.80,
@@ -178,7 +182,7 @@ def _evaluation_report(
         "pilot_report_payload_sha256": _digest("frozen-pilot-report-v2"),
         "training_evidence": _native_training_evidence(arm, split, index),
         "scientific_identity": {
-            "scientific_commit": "a" * 40,
+            "scientific_commit": "d" * 40,
             "scientific_path_sha256": {
                 "R12_ADDRESSED_CATEGORICAL_WORKSPACE_PREREG.md": "b" * 64,
                 "pipeline/evaluate_acw_hidden_basis.py": "c" * 64,
@@ -638,6 +642,14 @@ def _trusted_bundle_summary(
                 "pipeline/evaluate_acw_hidden_basis.py": "c" * 64,
             },
         },
+        "activation_commit": "d" * 40,
+        "activation_scientific_identity": {
+            "scientific_commit": "d" * 40,
+            "scientific_path_sha256": {
+                "R12_ADDRESSED_CATEGORICAL_WORKSPACE_PREREG.md": "b" * 64,
+                "pipeline/evaluate_acw_hidden_basis.py": "c" * 64,
+            },
+        },
         "curriculum_sha256": manifest["trusted_curriculum_sha256"],
         "arrays_hashed_and_opened": len(adjudicator.BUNDLE_ARRAYS),
         "pilot_artifacts_opened": len(adjudicator.BUNDLE_PILOT_ARTIFACTS),
@@ -652,6 +664,7 @@ def _trusted_checkpoint_summary(
     dataset_summary: dict,
     bundle_summary: dict,
     label: str,
+    **_kwargs,
 ) -> dict:
     del label
     identity = dataset_summary["seed_identity"]
@@ -669,7 +682,7 @@ def _trusted_checkpoint_summary(
         "model_arm": model_arm,
         "parameters": adjudicator.ARM_PARAMETERS[logical_arm],
         "scientific_identity": {
-            "scientific_commit": "a" * 40,
+            "scientific_commit": "d" * 40,
             "scientific_path_sha256": {
                 "R12_ADDRESSED_CATEGORICAL_WORKSPACE_PREREG.md": "b" * 64,
                 "pipeline/evaluate_acw_hidden_basis.py": "c" * 64,
@@ -690,6 +703,7 @@ def _trusted_independent_replay(
     _dataset: Path,
     expected_bytes: bytes,
     _label: str,
+    **_kwargs,
 ) -> dict:
     report = json.loads(expected_bytes)
     return {
@@ -697,6 +711,29 @@ def _trusted_independent_replay(
         "payload_sha256": report["payload_sha256"],
         "byte_identical": True,
         "process_isolation": True,
+    }
+
+
+def _trusted_frozen_baseline(
+    _path: Path, runs: list[dict], _verification: dict
+) -> dict:
+    selection = adjudicator._development_baseline(runs)
+    return {
+        **selection,
+        "record": {
+            "path": "trusted-development-baseline.json",
+            "sha256": _digest("trusted-development-baseline-file"),
+            "payload_sha256": _digest("trusted-development-baseline-payload"),
+        },
+        "source_checkpoint": selection["selected_checkpoint"]["checkpoint"],
+        "copied_checkpoint": {
+            **selection["selected_checkpoint"]["checkpoint"],
+            "mode": "0444",
+        },
+        "confirmation_evidence_opened_when_frozen": False,
+        "retention_independent_of_promotion": True,
+        "can_override_promotion_gates": False,
+        "claim_boundary": adjudicator.DEVELOPMENT_BASELINE_CLAIM,
     }
 
 
@@ -719,6 +756,11 @@ class ACWHiddenBasisAdjudicatorTests(unittest.TestCase):
                 "_independent_evaluator_replay",
                 _trusted_independent_replay,
             ),
+            mock.patch.object(
+                adjudicator,
+                "_validate_frozen_development_baseline",
+                _trusted_frozen_baseline,
+            ),
         )
         for patcher in patchers:
             patcher.start()
@@ -739,7 +781,9 @@ class ACWHiddenBasisAdjudicatorTests(unittest.TestCase):
     def _assert_no_go(
         self, fixture: SyntheticEvidence, code: str | None = None
     ) -> dict:
-        decision = adjudicator.adjudicate_manifest(fixture.manifest_path)
+        decision = adjudicator.adjudicate_manifest(
+            fixture.manifest_path, fixture.manifest_path
+        )
         self.assertFalse(decision["go"])
         self.assertEqual(decision["decision"], "NO_GO")
         if code is not None:
@@ -750,7 +794,9 @@ class ACWHiddenBasisAdjudicatorTests(unittest.TestCase):
     def test_all_pass_reports_every_seed_median_and_bounded_claim(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             fixture = self._fixture(temporary)
-            decision = adjudicator.adjudicate_manifest(fixture.manifest_path)
+            decision = adjudicator.adjudicate_manifest(
+                fixture.manifest_path, fixture.manifest_path
+            )
 
         self.assertTrue(decision["go"])
         self.assertEqual(decision["decision"], "GO")
@@ -803,7 +849,104 @@ class ACWHiddenBasisAdjudicatorTests(unittest.TestCase):
             set(decision["verification"]["query_schedule_sha256"]),
             {"cgb_schedule.jsonl", "uniform_schedule.jsonl"},
         )
+        baseline = decision["development_baseline"]
+        self.assertEqual(baseline["status"], "retained_baseline")
+        self.assertEqual(baseline["selected_arm"], "acw")
+        self.assertEqual(baseline["candidate_count"], len(adjudicator.SCORED_ARMS) * 3)
+        self.assertTrue(baseline["retention_independent_of_promotion"])
+        self.assertFalse(baseline["can_override_promotion_gates"])
         self._assert_payload_hash(decision)
+
+    def test_best_valid_development_checkpoint_is_retained_on_no_go(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = self._fixture(temporary)
+            for index in range(3):
+                fixture.set_depth_64_metric(("acw", "development", index), state=0.70)
+            decision = adjudicator.adjudicate_manifest(
+                fixture.manifest_path, fixture.manifest_path
+            )
+
+        self.assertFalse(decision["go"])
+        baseline = decision["development_baseline"]
+        self.assertEqual(baseline["status"], "retained_baseline")
+        self.assertEqual(baseline["selected_arm"], "uniform_query_acw")
+        self.assertEqual(baseline["selected_checkpoint"]["index"], 0)
+        self.assertEqual(baseline["candidate_count"], len(adjudicator.SCORED_ARMS) * 3)
+        self.assertTrue(baseline["retention_independent_of_promotion"])
+        self.assertIn("acw_all_development_seed_rule_failed", decision["reasons"])
+        self._assert_payload_hash(decision)
+
+    def test_full_adjudication_requires_a_preconfirmation_baseline(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = self._fixture(temporary)
+            decision = adjudicator.adjudicate_manifest(fixture.manifest_path)
+
+        self.assertFalse(decision["go"])
+        self.assertIn("development_baseline_required", decision["reasons"])
+
+    def test_development_only_freeze_preserves_checkpoint_immutably(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = self._fixture(temporary)
+            development_reports = [
+                fixture.runs[key]
+                for key in sorted(fixture.runs)
+                if key[1] == "development"
+            ]
+            development_manifest = adjudicator.with_payload_hash(
+                {
+                    "schema": adjudicator.DEVELOPMENT_MANIFEST_SCHEMA,
+                    "protocol": adjudicator.DEVELOPMENT_MANIFEST_PROTOCOL,
+                    "reports": development_reports,
+                }
+            )
+            manifest_path = Path(temporary) / "development_manifest.json"
+            manifest_path.write_bytes(_encoded(development_manifest))
+            checkpoint_path = Path(temporary) / "retained" / "checkpoint.pt"
+            baseline_path = Path(temporary) / "retained" / "baseline.json"
+
+            baseline = adjudicator.freeze_development_baseline(
+                manifest_path, checkpoint_path
+            )
+            file_sha256 = adjudicator.write_immutable_development_baseline(
+                baseline_path, baseline
+            )
+
+            self.assertEqual(baseline["selection"]["selected_arm"], "acw")
+            self.assertFalse(baseline["confirmation_evidence_opened"])
+            self.assertEqual(stat.S_IMODE(checkpoint_path.stat().st_mode), 0o444)
+            self.assertEqual(stat.S_IMODE(baseline_path.stat().st_mode), 0o444)
+            self.assertEqual(file_sha256, adjudicator.sha256_file(baseline_path))
+            self.assertEqual(
+                baseline["source_checkpoint"]["sha256"],
+                baseline["copied_checkpoint"]["sha256"],
+            )
+            runs, verification = adjudicator.verify_evidence(
+                development_manifest, manifest_path.parent, scope="development"
+            )
+            reopened = _REAL_VALIDATE_FROZEN_DEVELOPMENT_BASELINE(
+                baseline_path, runs, verification
+            )
+            self.assertEqual(reopened["selected_arm"], "acw")
+            self.assertFalse(reopened["confirmation_evidence_opened_when_frozen"])
+            with self.assertRaises(FileExistsError):
+                adjudicator.write_immutable_development_baseline(
+                    baseline_path, baseline
+                )
+
+    def test_cli_requires_an_explicit_preconfirmation_baseline(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            fixture = self._fixture(temporary)
+            output = Path(temporary) / "decision.json"
+            with self.assertRaisesRegex(SystemExit, "requires --development-baseline"):
+                adjudicator.main(
+                    [
+                        "--manifest",
+                        str(fixture.manifest_path),
+                        "--out",
+                        str(output),
+                    ]
+                )
+            self.assertFalse(output.exists())
 
     def test_hash_protocol_schema_and_replay_mutations_fail_closed(self) -> None:
         cases = []
@@ -968,7 +1111,9 @@ class ACWHiddenBasisAdjudicatorTests(unittest.TestCase):
                     report["packet_interventions"]["donor_following"], scalar=0.98
                 ),
             )
-            decision = adjudicator.adjudicate_manifest(fixture.manifest_path)
+            decision = adjudicator.adjudicate_manifest(
+                fixture.manifest_path, fixture.manifest_path
+            )
             self.assertTrue(decision["go"])
             self.assertEqual(decision["acw_seed_rule"]["confirmation_passes"], 2)
 
@@ -1407,7 +1552,9 @@ class ACWHiddenBasisAdjudicatorTests(unittest.TestCase):
     def test_immutable_hash_bound_decision_refuses_overwrite(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             fixture = self._fixture(temporary)
-            decision = adjudicator.adjudicate_manifest(fixture.manifest_path)
+            decision = adjudicator.adjudicate_manifest(
+                fixture.manifest_path, fixture.manifest_path
+            )
             destination = Path(temporary) / "decision.json"
             file_sha256 = adjudicator.write_immutable_json(destination, decision)
             self.assertEqual(file_sha256, adjudicator.sha256_file(destination))
@@ -1425,6 +1572,30 @@ class ACWHiddenBasisAdjudicatorTests(unittest.TestCase):
 
 
 class ACWAdjudicatorArtifactSecurityTests(unittest.TestCase):
+    def test_activation_constants_match_independent_trainer(self) -> None:
+        from pipeline import acw_hidden_basis_training as trainer
+
+        for name in (
+            "PILOT_ARTIFACT_REGISTRY_PROTOCOL",
+            "PILOT_INDEPENDENT_VERIFICATION_PROTOCOL",
+            "PILOT_SCIENTIFIC_COMMIT",
+            "PILOT_ANCHOR_COMMIT",
+            "PILOT_REGISTRY_RAW_SHA256",
+            "PILOT_REGISTRY_PATH",
+            "PILOT_ANCHORED_FILES",
+            "PILOT_CANONICAL_REMOTE_URL",
+            "PILOT_OFFLINE_BUNDLE_TEMPLATE",
+            "PILOT_ACTIVATION_ALLOWLIST",
+            "PILOT_CANONICAL_PATHS",
+            "PILOT_REGISTRY_CLAIM",
+            "PILOT_INDEPENDENT_VERIFICATION_CLAIM",
+        ):
+            self.assertEqual(getattr(adjudicator, name), getattr(trainer, name))
+        self.assertEqual(
+            adjudicator.PILOT_SCIENTIFIC_PATHS,
+            trainer.ACW_SCIENTIFIC_PATHS,
+        )
+
     def test_one_byte_synthetic_arrays_cannot_yield_go(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             fixture = SyntheticEvidence(Path(temporary))
@@ -1462,6 +1633,8 @@ class ACWAdjudicatorArtifactSecurityTests(unittest.TestCase):
                     Path(temporary) / "dataset",
                     forged_bytes,
                     "forged",
+                    checkpoint_bytes=b"checkpoint",
+                    dataset_manifest={"arrays": {}},
                 )
         self.assertEqual(raised.exception.code, "independent_evaluator_mismatch")
 
@@ -1735,8 +1908,39 @@ class ACWAdjudicatorArtifactSecurityTests(unittest.TestCase):
                     "oracle_paths_exported": 0,
                 }
             )
-            with self.assertRaises(adjudicator.EvidenceError) as anchor_error:
-                adjudicator._validate_trainer_bundle(
+            bundle_sources = {
+                "pilot/report.json": ("artifacts/r12/acw_cgbr_pilot_v6/report.json"),
+                "pilot/replay_comparison.json": (
+                    "artifacts/r12/acw_cgbr_pilot_v6/replay_comparison.json"
+                ),
+                "pilot/cgb_schedule.jsonl": (
+                    "artifacts/r12/acw_cgbr_pilot_v6/cgb_schedule.jsonl"
+                ),
+                "pilot/uniform_schedule.jsonl": (
+                    "artifacts/r12/acw_cgbr_pilot_v6/uniform_schedule.jsonl"
+                ),
+            }
+            anchor = {
+                "activation_commit": "d" * 40,
+                "anchor_commit": "e" * 40,
+                "scientific_identity": pilot_identity,
+                "activation_scientific_identity": {
+                    "scientific_commit": "d" * 40,
+                    "scientific_path_sha256": pilot_identity["scientific_path_sha256"],
+                },
+                "registry_raw_sha256": "f" * 64,
+                "artifact_files": {
+                    source: pilot_artifacts[bundle]
+                    for bundle, source in bundle_sources.items()
+                },
+                "bundle_sources": bundle_sources,
+            }
+            with mock.patch.object(
+                adjudicator,
+                "_load_adjudicator_pilot_anchor",
+                return_value=anchor,
+            ):
+                anchored_summary = adjudicator._validate_trainer_bundle(
                     root,
                     manifest,
                     {
@@ -1748,7 +1952,13 @@ class ACWAdjudicatorArtifactSecurityTests(unittest.TestCase):
                     dataset_summary,
                     "bundle",
                 )
-            self.assertEqual(anchor_error.exception.code, "pilot_anchor_required")
+            self.assertEqual(
+                anchored_summary["activation_commit"], anchor["activation_commit"]
+            )
+            self.assertEqual(
+                anchored_summary["pilot_registry_raw_sha256"],
+                anchor["registry_raw_sha256"],
+            )
 
             summary = adjudicator._validate_unanchored_trainer_bundle_structure(
                 root,

@@ -38,7 +38,6 @@ import torch.nn.functional as F
 
 from pipeline.acw_hidden_basis_training import (
     ACW_SCIENTIFIC_PATHS,
-    CANONICAL_BUNDLE_BLOCK,
     CONFIRMATION_COMMITMENTS,
     PUBLIC_ARRAYS,
     Curriculum,
@@ -48,6 +47,7 @@ from pipeline.acw_hidden_basis_training import (
     file_sha256,
     forward_logits,
     initialized_model_for_arm,
+    load_committed_pilot_anchor,
     load_public_training_data,
     recurrent_state,
     scientific_identity,
@@ -3787,8 +3787,8 @@ def _write_array(path: Path, array: np.ndarray) -> dict:
     }
 
 
-def _require_committed_pilot_anchor() -> None:
-    raise RuntimeError(CANONICAL_BUNDLE_BLOCK)
+def _require_committed_pilot_anchor() -> dict:
+    return load_committed_pilot_anchor(verify_all_artifacts=True)
 
 
 def build_trainer_bundle(
@@ -3804,8 +3804,9 @@ def build_trainer_bundle(
     out = out.resolve()
     if out.exists():
         raise FileExistsError(out)
+    anchor = None
     if canonical:
-        _require_committed_pilot_anchor()
+        anchor = _require_committed_pilot_anchor()
     source_manifest = _load_manifest(dataset_root)
     data_replay_verification = None
     if canonical:
@@ -3828,11 +3829,15 @@ def build_trainer_bundle(
                 "canonical trainer bundle requires the frozen pilot report"
             )
         pilot_report_path = pilot_report_path.resolve()
-        pilot_report = load_pilot_report(pilot_report_path)
-        pilot_comparison = _load_hash_bound_json(
-            pilot_report_path.parent / "replay_comparison.json",
-            label="pilot replay comparison",
-        )
+        if (
+            anchor is None
+            or pilot_report_path != anchor["bundle_paths"]["pilot/report.json"]
+        ):
+            raise ValueError(
+                "canonical trainer bundle requires the anchored pilot path"
+            )
+        pilot_report = anchor["pilot_report"]
+        pilot_comparison = anchor["pilot_comparison"]
         schedule_kind = schedule_path.name
         if schedule_kind not in {"cgb_schedule.jsonl", "uniform_schedule.jsonl"}:
             raise ValueError("canonical schedule has an unregistered filename")
@@ -3941,6 +3946,14 @@ def build_trainer_bundle(
                     "bytes": destination.stat().st_size,
                     "sha256": file_sha256(destination),
                 }
+                source_relative = anchor["bundle_sources"][relative]
+                if (
+                    pilot_artifacts[relative]
+                    != anchor["artifact_files"][source_relative]
+                ):
+                    raise RuntimeError(
+                        f"bundle pilot copy differs from anchor: {relative}"
+                    )
         manifest = {
             "protocol": BUNDLE_PROTOCOL,
             "source_manifest_payload_sha256": source_manifest["payload_sha256"],
