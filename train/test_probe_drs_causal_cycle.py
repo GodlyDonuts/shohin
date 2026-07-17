@@ -15,13 +15,14 @@ sys.path.insert(0, str(ROOT / "train"))
 from digitwise_protocol import apply_microstep, initial_state  # noqa: E402
 from eval_suite import generate  # noqa: E402
 from model import GPT, GPTConfig  # noqa: E402
-from probe_digitwise_workspace import collect_residuals  # noqa: E402
 from probe_drs_causal_cycle import (  # noqa: E402
     EXPECTED_REGIMES,
     active_digit,
     build_decision,
+    cached_prefix_logits,
     canonical_preflight,
     carry_counterfactual,
+    collect_cached_residuals,
     greedy_state,
     hybrid_next,
     irrelevant_history_counterfactual,
@@ -65,7 +66,7 @@ assert len({case["episode"]["id"] for case in cases}) == 50
 assert all(case["same_target_donor"]["episode"]["id"] != case["episode"]["id"] for case in cases)
 
 assert scientific_source_hashes() == {
-    "probe_drs_causal_cycle.py": "af1551723b9b056fbdb66f7fe1dece5819c7d6dcf887608299373ceff1a772e5",
+    "probe_drs_causal_cycle.py": "d81ff28db221e706d0b283fc933d718331a05a4a36a505d8b68898340679d82d",
     "digitwise_protocol.py": "708489d61c212c402e1533a1483e77bf3fd2d1a057ce924321bb19e4888461f6",
     "eval_suite.py": "d6f70b8828c967d7f59fae842f3320c6378ae42d5d8fa7b16e0e82ff5620e5e6",
     "model.py": "45fc0dc46ceb0f91d08e3f671cbe9ef202ea212e72d5bba8b77356c3fb0983d4",
@@ -78,7 +79,7 @@ try:
             per_regime=10,
             layer=29,
             max_new=96,
-            out="/lustre/fs1/home/sa305415/shohin/artifacts/evals/drs_causal_cycle_post_drs_r2.json",
+            out="/lustre/fs1/home/sa305415/shohin/artifacts/evals/drs_causal_cycle_post_drs_r3.json",
             ckpt="checkpoint",
             tokenizer="tokenizer",
             episodes="episodes",
@@ -119,7 +120,7 @@ plain = greedy_state(tiny, tiny_tokenizer, "prompt", "cpu", 3)
 assert plain["response"] == stable
 first_id = plain["token_ids"][0]
 prefix_ids = [1, 2, first_id]
-residuals, _ = collect_residuals(tiny, torch.tensor([prefix_ids], dtype=torch.long))
+residuals, cached_logits = collect_cached_residuals(tiny, [1, 2], prefix_ids, "cpu")
 site = {
     "field": "digit",
     "layer": 0,
@@ -129,9 +130,27 @@ site = {
     "target_digit": "0",
     "mode": "residual",
 }
+identity_logits = cached_prefix_logits(tiny, [1, 2], prefix_ids, "cpu", site)
+assert torch.equal(identity_logits, cached_logits)
 identity = greedy_state(tiny, tiny_tokenizer, "prompt", "cpu", 3, [site])
 assert identity["token_ids"] == plain["token_ids"]
 assert identity["fired"] == [{"field": "digit", "mode": "residual", "prefix_length": 3}]
+
+deep_prefix_ids = [1, 2, *plain["token_ids"][:2]]
+deep_residuals, deep_logits = collect_cached_residuals(tiny, [1, 2], deep_prefix_ids, "cpu")
+deep_site = {
+    **site,
+    "field": "carry",
+    "prefix_ids": tuple(deep_prefix_ids),
+    "source_residual": deep_residuals[0],
+}
+deep_identity_logits = cached_prefix_logits(tiny, [1, 2], deep_prefix_ids, "cpu", deep_site)
+assert torch.equal(deep_identity_logits, deep_logits)
+deep_identity = greedy_state(tiny, tiny_tokenizer, "prompt", "cpu", 3, [deep_site])
+assert deep_identity["token_ids"] == plain["token_ids"]
+assert deep_identity["fired"] == [
+    {"field": "carry", "mode": "residual", "prefix_length": len(deep_prefix_ids)}
+]
 
 
 def arm(exact=True, token=1, fields=("carry", "digit")):

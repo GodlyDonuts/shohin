@@ -16,7 +16,7 @@ from tokenizers import Tokenizer
 from digitwise_protocol import apply_microstep, canonical_state, microstep_prompt, parse_state
 from eval_suite import has_complete_final_answer
 from model import GPT, GPTConfig
-from probe_digitwise_workspace import collect_residuals, field_prefix, patched_logits, token_for_digit
+from probe_digitwise_workspace import field_prefix, token_for_digit
 
 
 EXPECTED_CHECKPOINT_SHA256 = "d79e9df26caecb9801118d1bf68bd7b85381a06b256f23478acffe40a2108459"
@@ -24,7 +24,7 @@ EXPECTED_EPISODES_SHA256 = "89ce11b36ff2f56e83cda72a1f07b1a90f4a3dc3803c69db2779
 EXPECTED_TOKENIZER_SHA256 = "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4"
 EXPECTED_REGIMES = ("fit_w4", "fit_w6", "value_ood_w4", "value_ood_w6", "width_ood_w8")
 EXPECTED_CANONICAL_OUTPUT = Path(
-    "/lustre/fs1/home/sa305415/shohin/artifacts/evals/drs_causal_cycle_post_drs_r2.json"
+    "/lustre/fs1/home/sa305415/shohin/artifacts/evals/drs_causal_cycle_post_drs_r3.json"
 )
 SCIENTIFIC_SOURCE_FILES = (
     "probe_drs_causal_cycle.py",
@@ -195,10 +195,11 @@ def hybrid_next(base_next, counterfactual_next, fields):
 def render_field(model, tokenizer, prompt, next_state, field, device):
     prefix, target = field_prefix(prompt, next_state, field)
     ids, target_id = token_for_digit(tokenizer, prefix, target)
-    tensor = torch.tensor([ids], dtype=torch.long, device=device)
-    residuals, logits = collect_residuals(model, tensor)
+    prompt_ids = tokenizer.encode(prompt).ids
+    residuals, logits = collect_cached_residuals(model, prompt_ids, ids, device)
     return {
         "prefix": prefix,
+        "prompt_ids": prompt_ids,
         "ids": ids,
         "target": target,
         "target_id": target_id,
@@ -263,6 +264,68 @@ def _forward_with_optional_patch(model, idx, cache, pos, site):
     finally:
         if handle is not None:
             handle.remove()
+
+
+def _validate_cached_prefix(model, prompt_ids, prefix_ids):
+    prompt_ids, prefix_ids = list(prompt_ids), list(prefix_ids)
+    if not prompt_ids:
+        raise ValueError("cached prefix requires a nonempty prompt")
+    if prefix_ids[:len(prompt_ids)] != prompt_ids:
+        raise ValueError("teacher-forced prefix does not preserve the prompt token boundary")
+    if len(prefix_ids) > int(model.cfg.seq_len):
+        raise ValueError("teacher-forced prefix exceeds model context")
+    return prompt_ids, prefix_ids
+
+
+@torch.no_grad()
+def cached_prefix_logits(model, prompt_ids, prefix_ids, device, site=None):
+    """Return next-token logits through the exact cached path used by greedy decoding."""
+    prompt_ids, prefix_ids = _validate_cached_prefix(model, prompt_ids, prefix_ids)
+    if site is not None:
+        if site["mode"] != "residual":
+            raise ValueError("cached-prefix patching supports residual sites only")
+        if tuple(prefix_ids) != tuple(site["prefix_ids"]):
+            raise ValueError("cached-prefix patch site does not match the evaluated prefix")
+    continuation = prefix_ids[len(prompt_ids):]
+    logits, cache = _forward_with_optional_patch(
+        model,
+        torch.tensor([prompt_ids], dtype=torch.long, device=device),
+        None,
+        0,
+        site if not continuation else None,
+    )
+    position = len(prompt_ids)
+    for index, token_id in enumerate(continuation):
+        final = index == len(continuation) - 1
+        logits, cache = _forward_with_optional_patch(
+            model,
+            torch.tensor([[token_id]], dtype=torch.long, device=device),
+            cache,
+            position,
+            site if final else None,
+        )
+        position += 1
+    return logits[:, -1, :].detach()
+
+
+@torch.no_grad()
+def collect_cached_residuals(model, prompt_ids, prefix_ids, device):
+    """Capture final-prefix residuals on the same cached graph used by interventions."""
+    captured, handles = {}, []
+    for index, block in enumerate(model.blocks):
+        def hook(_module, _inputs, output, index=index):
+            hidden, _ = output
+            captured[index] = hidden[:, -1, :].detach().clone()
+
+        handles.append(block.register_forward_hook(hook))
+    try:
+        logits = cached_prefix_logits(model, prompt_ids, prefix_ids, device)
+    finally:
+        for handle in handles:
+            handle.remove()
+    if set(captured) != set(range(len(model.blocks))):
+        raise RuntimeError("did not capture every transformer block on cached path")
+    return captured, logits
 
 
 @torch.no_grad()
@@ -382,12 +445,27 @@ def evaluate_record(model, tokenizer, case, layer, device, max_new):
     field_rows = {}
     identity_exact = True
     for field in ("carry", "digit"):
-        tensor = torch.tensor([base_fields[field]["ids"]], dtype=torch.long, device=device)
-        identity_logits = patched_logits(
-            model, tensor, layer, base_fields[field]["residuals"][layer], alpha=1.0
-        )
-        irrelevant_patch_logits = patched_logits(
-            model, tensor, layer, irrelevant_fields[field]["residuals"][layer], alpha=1.0
+        def cached_patch_logits(source_residual):
+            site = intervention_site(
+                base_prompt,
+                base_next,
+                field,
+                layer,
+                tokenizer,
+                "residual",
+                source_residual,
+            )
+            return cached_prefix_logits(
+                model,
+                base_fields[field]["prompt_ids"],
+                base_fields[field]["ids"],
+                device,
+                site,
+            )
+
+        identity_logits = cached_patch_logits(base_fields[field]["residuals"][layer])
+        irrelevant_patch_logits = cached_patch_logits(
+            irrelevant_fields[field]["residuals"][layer]
         )
         base_metrics = field_metrics(base_fields[field], tokenizer, identity_logits)
         donor_metrics = field_metrics(donor_fields[field], tokenizer)
@@ -784,7 +862,7 @@ def main():
     mechanically_valid = bool(canonical["canonical"] and aggregate["valid"])
     decision = build_decision(aggregate, mechanically_valid)
     result = {
-        "audit": "drs_causal_cycle_post_drs_v2",
+        "audit": "drs_causal_cycle_post_drs_v3",
         "checkpoint": args.ckpt,
         "checkpoint_step": checkpoint.get("step"),
         "episodes": args.episodes,

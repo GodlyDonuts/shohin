@@ -1,7 +1,28 @@
 # R12 DRS Causal Cycle Preregistration
 
-**Status:** frozen read-only diagnostic; no architecture, SFT, or reasoning
-claim is authorized by this document.
+**Status:** r3 frozen replacement diagnostic after the r2 computation-path
+identity failure; no architecture, SFT, or reasoning claim is authorized by
+this document.
+
+## Rejected r2 attempt and replacement boundary
+
+Canonical job `691838` completed, but its report is mechanically invalid and
+has no scientific standing. The immutable rejected report
+`artifacts/evals/drs_causal_cycle_post_drs_r2.json` has SHA-256
+`208b61c546f9a4a1aa7512c6ed86d00c7f142b7655732e2ac84f71b1d312cfab`.
+One of 50 identity generations changed a carry token, so
+`identity_token_mismatch=1` and `aggregate.valid=false`; every decision is
+therefore null.
+
+The cause was a mechanical graph mismatch. R2 collected donor and identity
+residuals with one full-sequence forward pass, then replayed them inside
+prompt-prefill plus incremental KV-cached decoding. Those paths are
+mathematically equivalent but not required to be bit-identical under BF16, and
+the mismatched record had a near-tied carry logit. R3 changes no scientific
+case, threshold, checkpoint, heldout data, layer, or intervention. It captures
+and replays every residual through the exact same prompt-prefill plus one-token
+cached path used by generation. The r2 observations must not be rescored or
+used as evidence.
 
 ## Question and exact boundary
 
@@ -42,12 +63,12 @@ The claim-bearing scientific source closure is also frozen:
 
 | Source | Frozen SHA-256 |
 |---|---|
-| `train/probe_drs_causal_cycle.py` | `af1551723b9b056fbdb66f7fe1dece5819c7d6dcf887608299373ceff1a772e5` |
+| `train/probe_drs_causal_cycle.py` | `d81ff28db221e706d0b283fc933d718331a05a4a36a505d8b68898340679d82d` |
 | `train/digitwise_protocol.py` | `708489d61c212c402e1533a1483e77bf3fd2d1a057ce924321bb19e4888461f6` |
 | `train/eval_suite.py` | `d6f70b8828c967d7f59fae842f3320c6378ae42d5d8fa7b16e0e82ff5620e5e6` |
 | `train/model.py` | `45fc0dc46ceb0f91d08e3f671cbe9ef202ea212e72d5bba8b77356c3fb0983d4` |
 | `train/probe_digitwise_workspace.py` | `fb545450a93bbc04aac1549efd0a70b863f50e458fd95993cf9935bbe4a53ace` |
-| `train/jobs/probe_drs_causal_cycle.sbatch` | `7fc09fa925fb725838ddbb3efac6f61d401cf7d02e07f1a64f2f0ce216d4122a` |
+| `train/jobs/probe_drs_causal_cycle.sbatch` | `0b7f175037944bf30de01b53f2257dd6d50ab60825a4c03c9c608360b7dea9d3` |
 
 The batch job copies exactly those five sources and all three frozen inputs to
 a fresh job-private snapshot, makes the snapshot read-only, verifies every
@@ -71,7 +92,7 @@ width, position, input carry, next carry, and next digit.
 
 The claim-bearing run is fixed at layer 29, greedy BF16-autocast cached decoding,
 96 new tokens, and fresh output
-`artifacts/evals/drs_causal_cycle_post_drs_r2.json`. Input hashes are checked
+`artifacts/evals/drs_causal_cycle_post_drs_r3.json`. Input hashes are checked
 before model loading. The job accepts no scientific override. Output uses
 exclusive same-directory publication and refuses existing files.
 Canonical mode additionally requires CUDA, the exact output path, a Slurm job
@@ -82,9 +103,14 @@ the explicit development-only flag; it reports all scientific decisions as
 ## Frozen interventions
 
 All generation uses the same KV-cached stopping contract as the public greedy
-evaluator. A residual hook applies only to the final current token at an exact
-token-prefix match. At layer 29 it can affect the next emitted token but cannot
-enter a later transformer block or survive as hidden state.
+evaluator. Every teacher-forced donor residual is captured by pre-filling the
+prompt and then feeding the teacher-forced continuation one token at a time.
+Every identity and sham logit comparison replays that exact cached prefix and
+patches only its final token. R3 fails closed unless the separately tokenized
+prompt is an exact prefix of the teacher-forced field prefix. A residual hook
+applies only to the final current token at an exact token-prefix match. At
+layer 29 it can affect the next emitted token but cannot enter a later
+transformer block or survive as hidden state.
 
 For each record run:
 
@@ -134,7 +160,8 @@ The report is invalid unless all conditions hold:
 - exactly 50 records, ten from each named regime;
 - every selected record satisfies the carry-boundary predicate;
 - checkpoint, heldout, and tokenizer hashes equal the frozen values;
-- every teacher-forced identity patch has zero max absolute logit delta;
+- every teacher-forced identity patch, captured and replayed through the exact
+  cached path, has zero max absolute logit delta;
 - every identity generated token sequence equals baseline exactly;
 - the output path was exclusively published.
 - execution is canonical CUDA BF16 from the verified private snapshot and the

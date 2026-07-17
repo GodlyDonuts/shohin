@@ -14,7 +14,7 @@ BASE=/lustre/fs1/home/sa305415/shohin
 PY=$BASE/miniforge3/bin/python
 CKPT=$BASE/train/sft_digitwise_recurrent_v2_200k_r3/sft_ep1.pt
 EPISODES=$BASE/artifacts/evals/digitwise_recurrent_v2_heldout.jsonl
-OUT=$BASE/artifacts/evals/drs_causal_cycle_post_drs_r2.json
+OUT=$BASE/artifacts/evals/drs_causal_cycle_post_drs_r3.json
 TOK=$BASE/artifacts/shohin-tok-32k.json
 SNAP=$BASE/scratchpad/drs_causal_cycle_snapshot_${SLURM_JOB_ID}
 
@@ -64,7 +64,7 @@ chmod -R a-w "$SNAP"
 (
   cd "$SNAP"
   sha256sum -c - <<'SHA256'
-af1551723b9b056fbdb66f7fe1dece5819c7d6dcf887608299373ceff1a772e5  train/probe_drs_causal_cycle.py
+d81ff28db221e706d0b283fc933d718331a05a4a36a505d8b68898340679d82d  train/probe_drs_causal_cycle.py
 708489d61c212c402e1533a1483e77bf3fd2d1a057ce924321bb19e4888461f6  train/digitwise_protocol.py
 d6f70b8828c967d7f59fae842f3320c6378ae42d5d8fa7b16e0e82ff5620e5e6  train/eval_suite.py
 45fc0dc46ceb0f91d08e3f671cbe9ef202ea212e72d5bba8b77356c3fb0983d4  train/model.py
