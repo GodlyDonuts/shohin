@@ -17,29 +17,39 @@ from __future__ import annotations
 import argparse
 from array import array
 from collections import Counter, defaultdict
+from dataclasses import dataclass
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
+import platform
 import re
+import stat
 import sys
 import tempfile
+import time
+import types
 
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "train"))
-from digitwise_protocol import (  # noqa: E402
-    apply_microstep,
-    canonical_state,
-    digit_prompt,
-    final_prompt,
-    initial_state,
-    microstep_prompt,
-    parse_state,
-    state_answer,
-    state_digit,
-)
-from sft_encoding import encode_supervised_example  # noqa: E402
+if "_FROZEN_PROTOCOL_EXPORTS" in globals():
+    globals().update(globals()["_FROZEN_PROTOCOL_EXPORTS"])
+    globals().update(globals()["_FROZEN_ENCODING_EXPORTS"])
+elif __name__ != "__main__":
+    sys.path.insert(0, str(ROOT / "train"))
+    from digitwise_protocol import (  # noqa: E402
+        apply_microstep,
+        canonical_state,
+        digit_prompt,
+        final_prompt,
+        initial_state,
+        microstep_prompt,
+        parse_state,
+        state_answer,
+        state_digit,
+    )
+    from sft_encoding import encode_supervised_example  # noqa: E402
 
 
 SCHEMA = "shohin-digitwise-factorial-v4"
@@ -146,6 +156,15 @@ FROZEN_HELDOUT_REGIMES = {
     "value_ood_w6": 300,
     "width_ood_w8": 300,
 }
+CANONICAL_EXACT_BUDGET = {
+    "optimizer_updates": 1_560,
+    "batch_size": 16,
+    "pack_len": 2_048,
+    "seed": 1_337,
+}
+CANONICAL_REQUIRED_PACKS = (
+    CANONICAL_EXACT_BUDGET["optimizer_updates"] * CANONICAL_EXACT_BUDGET["batch_size"]
+)
 HELDOUT_BRANCH_FIELDS = {
     "id",
     "split",
@@ -158,6 +177,32 @@ HELDOUT_BRANCH_FIELDS = {
     "expected_states",
     "expected_answer",
 }
+GENERATOR_SOURCE_PATHS = (
+    "pipeline/generate_digitwise_factorial_v4.py",
+    "pipeline/generate_digitwise_recurrent_v1.py",
+    "pipeline/test_generate_digitwise_factorial_v4.py",
+    "train/digitwise_protocol.py",
+)
+AUDITOR_RUNTIME_SOURCE_PATHS = (
+    "pipeline/audit_digitwise_factorial_v4.py",
+    "train/digitwise_protocol.py",
+    "train/sft.py",
+    "train/sft_encoding.py",
+)
+AUDITOR_VERIFICATION_SOURCE_PATHS = (
+    "pipeline/test_audit_digitwise_factorial_v4.py",
+    "train/test_sft_exact_budget.py",
+    "train/jobs/sft_factorial.sbatch",
+)
+ADMISSION_SOURCE_PATHS = tuple(
+    dict.fromkeys(
+        (
+            *GENERATOR_SOURCE_PATHS,
+            *AUDITOR_RUNTIME_SOURCE_PATHS,
+            *AUDITOR_VERIFICATION_SOURCE_PATHS,
+        )
+    )
+)
 
 
 class ContractError(ValueError):
@@ -304,14 +349,27 @@ def stratified_terminal_counts(
 
 def expected_control_terminal_counts(
     operations_by_width: dict[int, dict[str, int]],
+    board_terminal_counts_by_width: dict[int, dict[str, Counter]],
 ) -> dict[int, dict[str, Counter]]:
-    return {
-        width: {
+    """Independently project control targets from the stratified board contract."""
+    if set(board_terminal_counts_by_width) != set(operations_by_width):
+        raise AssertionError("control target board widths do not match allocations")
+    result = {}
+    for width, counts in operations_by_width.items():
+        board_operations = board_terminal_counts_by_width[width]
+        if set(board_operations) != {"add", "sub"}:
+            raise AssertionError("control target board operations are incomplete")
+        board_sub = Counter(board_operations["sub"])
+        if (
+            set(board_sub) - set(SUB_TERMINAL_CLASSES)
+            or sum(board_sub.values()) != counts["sub"]
+        ):
+            raise AssertionError("control subtraction target is not a board allocation")
+        result[width] = {
             "add": balanced_counter(CONTROL_ADD_TERMINAL_CLASSES, counts["add"]),
-            "sub": balanced_counter(SUB_TERMINAL_CLASSES, counts["sub"]),
+            "sub": board_sub,
         }
-        for width, counts in operations_by_width.items()
-    }
+    return result
 
 
 def pair_distribution_contract(counts: Counter) -> bool:
@@ -349,12 +407,199 @@ def required_control_contexts(
     }
 
 
-def sha256_file(path: str | Path) -> str:
-    digest = hashlib.sha256()
-    with open(path, "rb") as source:
-        for block in iter(lambda: source.read(1024 * 1024), b""):
+def sha256_bytes(payload: bytes) -> str:
+    return hashlib.sha256(payload).hexdigest()
+
+
+def _inode_identity(value: os.stat_result) -> tuple[int, int, int, int, int]:
+    return (
+        int(value.st_dev),
+        int(value.st_ino),
+        int(value.st_size),
+        int(value.st_mtime_ns),
+        stat.S_IMODE(value.st_mode),
+    )
+
+
+@dataclass(frozen=True)
+class ExactByteSnapshot:
+    logical_path: str
+    payload: bytes
+    sha256: str
+    binding: dict
+
+    def verify(self) -> str:
+        actual = sha256_bytes(self.payload)
+        if actual != self.sha256:
+            raise RuntimeError(
+                "captured bytes changed for {}: expected {}, got {}".format(
+                    self.logical_path, self.sha256, actual
+                )
+            )
+        return actual
+
+    def text(self) -> io.StringIO:
+        self.verify()
+        try:
+            return io.StringIO(self.payload.decode("utf-8", errors="strict"))
+        except UnicodeDecodeError as exc:
+            raise SystemExit(
+                "input is not UTF-8 text: {}".format(self.logical_path)
+            ) from exc
+
+
+def capture_exact_file(
+    path: Path, logical_path: str | None = None
+) -> ExactByteSnapshot:
+    """Capture one regular file once and sever all later audit path dependence."""
+    path = Path(path)
+    if path.is_symlink() or not path.is_file():
+        raise SystemExit("input is not a regular non-symlink file: {}".format(path))
+    resolved = path.resolve(strict=True)
+    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(resolved, flags)
+    try:
+        before = os.fstat(descriptor)
+        path_before = os.stat(resolved, follow_symlinks=False)
+        if not stat.S_ISREG(before.st_mode) or _inode_identity(
+            before
+        ) != _inode_identity(path_before):
+            raise SystemExit("input changed while opening: {}".format(path))
+        chunks = []
+        digest = hashlib.sha256()
+        while True:
+            block = os.read(descriptor, 1024 * 1024)
+            if not block:
+                break
+            chunks.append(block)
             digest.update(block)
-    return digest.hexdigest()
+        payload = b"".join(chunks)
+        after = os.fstat(descriptor)
+        path_after = os.stat(resolved, follow_symlinks=False)
+        if _inode_identity(after) != _inode_identity(before):
+            raise SystemExit("input changed while capturing: {}".format(path))
+        if _inode_identity(path_after) != _inode_identity(before):
+            raise SystemExit("input path changed while capturing: {}".format(path))
+        if len(payload) != int(before.st_size):
+            raise SystemExit("input size changed while capturing: {}".format(path))
+        snapshot = ExactByteSnapshot(
+            logical_path=logical_path or str(path.resolve()),
+            payload=bytes(payload),
+            sha256=digest.hexdigest(),
+            binding={
+                "bytes": len(payload),
+                "capture": "one_pass_stable_descriptor_to_immutable_bytes_v1",
+                "fd_identity": {
+                    "device": int(before.st_dev),
+                    "inode": int(before.st_ino),
+                    "mtime_ns": int(before.st_mtime_ns),
+                    "mode": "{:04o}".format(stat.S_IMODE(before.st_mode)),
+                    "size": int(before.st_size),
+                },
+                "path": logical_path or str(path.resolve()),
+                "sha256": digest.hexdigest(),
+            },
+        )
+        snapshot.verify()
+        return snapshot
+    finally:
+        os.close(descriptor)
+
+
+def capture_auditor_sources() -> dict[str, ExactByteSnapshot]:
+    bootstrap = globals().get("_BOOTSTRAP_SOURCE_SNAPSHOTS")
+    snapshots = (
+        dict(bootstrap)
+        if bootstrap is not None
+        else {
+            relative: capture_exact_file(ROOT / relative, relative)
+            for relative in ADMISSION_SOURCE_PATHS
+        }
+    )
+    if set(snapshots) != set(ADMISSION_SOURCE_PATHS):
+        raise RuntimeError("auditor scientific source snapshot set mismatch")
+    for snapshot in snapshots.values():
+        snapshot.verify()
+    return {key: snapshots[key] for key in ADMISSION_SOURCE_PATHS}
+
+
+def manifest_for_paths(
+    snapshots: dict[str, ExactByteSnapshot], paths: tuple[str, ...]
+) -> dict:
+    return {
+        "capture": "one_pass_exact_bytes_consumed_by_frozen_cli_v1",
+        "sources": {
+            relative: {
+                "bytes": snapshots[relative].binding["bytes"],
+                "sha256": snapshots[relative].sha256,
+            }
+            for relative in paths
+        },
+    }
+
+
+def validate_generator_report(
+    report_snapshot: ExactByteSnapshot,
+    data_snapshot: ExactByteSnapshot,
+    episodes_snapshot: ExactByteSnapshot,
+    heldout_snapshot: ExactByteSnapshot,
+    arm: str,
+    mode: str,
+    source_snapshots: dict[str, ExactByteSnapshot],
+) -> dict:
+    """Validate generator evidence without importing generator implementation code."""
+    try:
+        report = json.loads(report_snapshot.payload)
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ContractError("generator_report_json") from exc
+    require(isinstance(report, dict), "generator_report_object")
+    require(report.get("schema") == SCHEMA, "generator_report_schema")
+    require(report.get("arm") == arm, "generator_report_arm")
+    require(report.get("mode") == mode, "generator_report_mode")
+    require(report.get("data_sha256") == data_snapshot.sha256, "generator_report_data")
+    require(
+        report.get("episodes_sha256") == episodes_snapshot.sha256,
+        "generator_report_episodes",
+    )
+    heldout = report.get("heldout_binding")
+    require(isinstance(heldout, dict), "generator_report_heldout_binding")
+    require(
+        heldout.get("sha256") == heldout_snapshot.sha256,
+        "generator_report_heldout_sha256",
+    )
+    manifest = report.get("scientific_source_manifest")
+    require(isinstance(manifest, dict), "generator_report_source_manifest")
+    expected_manifest = manifest_for_paths(source_snapshots, GENERATOR_SOURCE_PATHS)
+    require(
+        manifest.get("sources") == expected_manifest["sources"],
+        "generator_report_source_bytes",
+    )
+    require(
+        manifest.get("runtime_sources")
+        == [
+            "pipeline/generate_digitwise_factorial_v4.py",
+            "pipeline/generate_digitwise_recurrent_v1.py",
+            "train/digitwise_protocol.py",
+        ],
+        "generator_report_runtime_sources",
+    )
+    runtime = report.get("runtime")
+    require(
+        isinstance(runtime, dict)
+        and isinstance(runtime.get("python"), str)
+        and bool(runtime["python"])
+        and isinstance(runtime.get("python_implementation"), str)
+        and bool(runtime["python_implementation"]),
+        "generator_report_runtime",
+    )
+    return {
+        "bytes": len(report_snapshot.payload),
+        "path": report_snapshot.logical_path,
+        "sha256": report_snapshot.sha256,
+        "runtime": runtime,
+        "validated": True,
+        "source_manifest": manifest,
+    }
 
 
 def record_failure(
@@ -400,8 +645,8 @@ def audit_heldout_branch(branch: dict) -> dict:
         state = parse_state(expected_line)
     require(state is not None and bool(state["z"]), "heldout_terminal_state")
     prompts.append(final_prompt(state, style="heldout"))
-    answer = exact_int(branch["expected_answer"], "heldout_answer_type")
-    require(answer == state_answer(state), "heldout_answer")
+    validation_only_answer = exact_int(branch["expected_answer"], "heldout_answer_type")
+    require(validation_only_answer == state_answer(state), "heldout_answer")
     return {
         "id": branch["id"],
         "split": branch["split"],
@@ -409,7 +654,7 @@ def audit_heldout_branch(branch: dict) -> dict:
         "width": width,
         "left": left,
         "right": right,
-        "answer": answer,
+        "_validation_only_answer": validation_only_answer,
         "signature": (width, left, right),
         "prompts": prompts,
     }
@@ -434,18 +679,24 @@ def audit_heldout_pair(document: dict) -> tuple[dict, dict]:
         base["right"] != counterfactual["right"]
     )
     require(changed == 1, "heldout_counterfactual_edit")
-    require(base["answer"] != counterfactual["answer"], "heldout_pair_answer")
+    require(
+        base["_validation_only_answer"] != counterfactual["_validation_only_answer"],
+        "heldout_pair_answer",
+    )
+    del base["_validation_only_answer"]
+    del counterfactual["_validation_only_answer"]
     return base, counterfactual
 
 
 def observe_heldout(
-    path: Path,
+    snapshot: ExactByteSnapshot,
     test_scale: int | None,
     failures: Counter,
     examples: list[dict],
 ) -> dict:
-    payload = path.read_bytes()
-    digest = hashlib.sha256(payload).hexdigest()
+    snapshot.verify()
+    payload = snapshot.payload
+    digest = snapshot.sha256
     try:
         text = payload.decode("utf-8")
     except UnicodeDecodeError as exc:
@@ -459,8 +710,10 @@ def observe_heldout(
     gram13 = set()
     regimes = Counter()
     controller_prompts = 0
+    blank_lines = 0
     for line_number, line in enumerate(text.splitlines(), 1):
         if not line.strip():
+            blank_lines += 1
             continue
         raw_top_level += 1
         try:
@@ -504,7 +757,9 @@ def observe_heldout(
             record_failure(failures, examples, "heldout", line_number, exc)
 
     return {
-        "path": str(path.resolve()),
+        "path": snapshot.logical_path,
+        "bytes": len(snapshot.payload),
+        "capture": snapshot.binding["capture"],
         "sha256": digest,
         "frozen_sha256_required": (
             FROZEN_HELDOUT_SHA256 if test_scale is None else None
@@ -517,6 +772,30 @@ def observe_heldout(
         "unique_signatures": len(signatures),
         "unique_normalized_prompts": len(prompt_keys),
         "regimes": dict(sorted(regimes.items())),
+        "blank_lines": blank_lines,
+        "identity_digests": {
+            "branch_ids_sha256": hashlib.sha256(
+                "".join(value + "\n" for value in sorted(branch_ids)).encode("utf-8")
+            ).hexdigest(),
+            "normalized_prompts_sha256": hashlib.sha256(
+                "".join(value + "\n" for value in sorted(prompt_keys)).encode("utf-8")
+            ).hexdigest(),
+            "reserved_signatures_sha256": hashlib.sha256(
+                json.dumps(
+                    [list(value) for value in sorted(signatures)],
+                    separators=(",", ":"),
+                ).encode("ascii")
+            ).hexdigest(),
+        },
+        "answer_boundary": {
+            "answer_fields_read_for": [
+                "solver_witness_validation",
+                "counterfactual_answer_change_validation",
+                "contamination_exclusion_identity_validation",
+            ],
+            "answer_values_retained_for_training": False,
+            "training_rows_constructed_by_auditor": False,
+        },
         "signatures": signatures,
         "prompt_keys": prompt_keys,
         "gram13": gram13,
@@ -841,17 +1120,22 @@ def audit_row(row: dict, arm: str, episode_record: dict) -> dict:
 
 
 class TokenAccounting:
-    def __init__(self, tokenizer_path: Path, pack_length: int):
+    def __init__(self, tokenizer_snapshot: ExactByteSnapshot, pack_length: int):
         try:
+            import tokenizers as tokenizers_package
             from tokenizers import Tokenizer
         except ImportError as exc:
             raise SystemExit(
                 "tokenizer accounting requires the repo tokenizers package"
             ) from exc
-        if not tokenizer_path.is_file():
-            raise SystemExit("missing tokenizer: {}".format(tokenizer_path))
-        self.path = tokenizer_path
-        self.tokenizer = Tokenizer.from_file(str(tokenizer_path))
+        tokenizer_snapshot.verify()
+        self.snapshot = tokenizer_snapshot
+        self.tokenizers_version = tokenizers_package.__version__
+        try:
+            tokenizer_text = tokenizer_snapshot.payload.decode("utf-8", errors="strict")
+        except UnicodeDecodeError as exc:
+            raise SystemExit("tokenizer is not UTF-8 JSON") from exc
+        self.tokenizer = Tokenizer.from_str(tokenizer_text)
         self.eos_id = self.tokenizer.token_to_id("<|endoftext|>")
         if self.eos_id is None:
             raise SystemExit("tokenizer has no <|endoftext|> token")
@@ -864,7 +1148,9 @@ class TokenAccounting:
         self.y_spool = tempfile.TemporaryFile()
         self.packed_sequences = 0
         self.packed_supervised_tokens = 0
+        self.supervised_per_pack: list[int] = []
         self.cached_report: dict | None = None
+        self.blank_lines = 0
 
     @staticmethod
     def _int64_bytes(values: list[int]) -> bytes:
@@ -884,8 +1170,10 @@ class TokenAccounting:
             ]
             self.x_spool.write(self._int64_bytes(x_values))
             self.y_spool.write(self._int64_bytes(y_values))
+            supervised_tokens = sum(value != -1 for value in y_values)
             self.packed_sequences += 1
-            self.packed_supervised_tokens += sum(value != -1 for value in y_values)
+            self.packed_supervised_tokens += supervised_tokens
+            self.supervised_per_pack.append(supervised_tokens)
             del self.token_buffer[: self.pack_length]
             del self.mask_buffer[: self.pack_length]
 
@@ -898,6 +1186,8 @@ class TokenAccounting:
         prompt_ids, token_ids, mask = encode_supervised_example(
             self.tokenizer, prompt, separator + response, self.eos_id
         )
+        if not token_ids or token_ids[-1] != self.eos_id or mask[-1] != 1:
+            raise RuntimeError("canonical completion/EOS supervision was not preserved")
         prompt_count = len(prompt_ids)
         response_count = len(token_ids) - prompt_count - 1
         full_count = len(token_ids)
@@ -920,6 +1210,11 @@ class TokenAccounting:
         self.mask_buffer.extend(mask)
         self._drain_packs()
 
+    def add_blank_line(self) -> None:
+        if self.cached_report is not None:
+            raise RuntimeError("token accounting was already finalized")
+        self.blank_lines += 1
+
     @staticmethod
     def _serialize(counter: Counter) -> dict[str, int]:
         return {
@@ -934,6 +1229,62 @@ class TokenAccounting:
             "over_pack_length_rows": counter["over_pack_length_rows"],
             "max_full_tokens": counter["max_full_tokens"],
         }
+
+    def _canonical_exact_budget_receipt(self) -> dict:
+        contract = dict(CANONICAL_EXACT_BUDGET)
+        available = len(self.supervised_per_pack)
+        receipt = {
+            **contract,
+            "available_packs": available,
+            "available_supervised_tokens": sum(self.supervised_per_pack),
+            "consumed_packs": CANONICAL_REQUIRED_PACKS,
+            "forward_token_positions": (
+                CANONICAL_REQUIRED_PACKS * CANONICAL_EXACT_BUDGET["pack_len"]
+            ),
+            "selection_algorithm": (
+                "sha256(seed_u64_le||pack_index_u64_le)_lexicographic_v1"
+            ),
+            "target_thinning": False,
+            "completion_and_eos_supervision_intact": True,
+            "admitted": False,
+        }
+        if (
+            self.pack_length != CANONICAL_EXACT_BUDGET["pack_len"]
+            or available < CANONICAL_REQUIRED_PACKS
+        ):
+            return receipt
+
+        seed_bytes = CANONICAL_EXACT_BUDGET["seed"].to_bytes(8, "little", signed=False)
+        order = sorted(
+            range(available),
+            key=lambda index: hashlib.sha256(
+                seed_bytes + index.to_bytes(8, "little", signed=False)
+            ).digest(),
+        )
+        consumed = order[:CANONICAL_REQUIRED_PACKS]
+        batch_size = CANONICAL_EXACT_BUDGET["batch_size"]
+        update_supervised = [
+            sum(
+                self.supervised_per_pack[index]
+                for index in consumed[offset : offset + batch_size]
+            )
+            for offset in range(0, len(consumed), batch_size)
+        ]
+        receipt.update(
+            {
+                "admitted": bool(update_supervised) and min(update_supervised) > 0,
+                "consumed_pack_order_sha256": hashlib.sha256(
+                    self._int64_bytes(consumed)
+                ).hexdigest(),
+                "consumed_supervised_tokens": sum(update_supervised),
+                "supervised_tokens_per_update_max": max(update_supervised),
+                "supervised_tokens_per_update_min": min(update_supervised),
+                "supervised_tokens_per_update_sha256": hashlib.sha256(
+                    self._int64_bytes(update_supervised)
+                ).hexdigest(),
+            }
+        )
+        return receipt
 
     def report(self) -> dict:
         if self.cached_report is not None:
@@ -979,15 +1330,18 @@ class TokenAccounting:
             "pack_len": self.pack_length,
             "packing_sha256": digest.hexdigest(),
             "skipped": {
-                "blank_lines": 0,
+                "blank_lines": self.blank_lines,
                 "invalid_fields": 0,
                 "too_long": self.total["over_pack_length_rows"],
             },
             "groups": {"default": group},
         }
         self.cached_report = {
-            "tokenizer": str(self.path.resolve()),
-            "tokenizer_sha256": sha256_file(self.path),
+            "tokenizer": self.snapshot.logical_path,
+            "tokenizer_bytes": len(self.snapshot.payload),
+            "tokenizer_capture": self.snapshot.binding["capture"],
+            "tokenizer_sha256": self.snapshot.sha256,
+            "tokenizers_version": self.tokenizers_version,
             "eos_id": self.eos_id,
             "pack_length": self.pack_length,
             "encoding_boundary": (
@@ -996,6 +1350,7 @@ class TokenAccounting:
                 "encoded with one inserted separator space; EOS is supervised."
             ),
             "production_build_packed": production_stats,
+            "canonical_exact_budget": self._canonical_exact_budget_receipt(),
             "packing_invariants": {
                 "x_spool_bytes": spool_sizes[0],
                 "y_spool_bytes": spool_sizes[1],
@@ -1036,21 +1391,78 @@ def ensure_pairwise_artifact_paths(paths: tuple[Path, ...]) -> None:
                 raise SystemExit("final and .partial paths must not alias")
 
 
-def write_report(path: Path, report: dict) -> None:
-    partial = partial_path(path)
-    if path.exists() or partial.exists():
-        raise SystemExit("refusing to overwrite an existing audit or partial")
+def publish_bytes_no_replace(path: Path, payload: bytes, before_link=None) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
+    directory = os.open(
+        path.parent,
+        os.O_RDONLY
+        | getattr(os, "O_CLOEXEC", 0)
+        | getattr(os, "O_DIRECTORY", 0)
+        | getattr(os, "O_NOFOLLOW", 0),
+    )
+    parent = os.fstat(directory)
+    path_parent = os.stat(path.parent, follow_symlinks=False)
+    if not stat.S_ISDIR(parent.st_mode) or (parent.st_dev, parent.st_ino) != (
+        path_parent.st_dev,
+        path_parent.st_ino,
+    ):
+        os.close(directory)
+        raise RuntimeError("audit parent changed while opening")
+    temporary = ".{}.private.{}.{}".format(path.name, os.getpid(), time.time_ns())
+    descriptor = -1
     try:
-        with partial.open("x", encoding="utf-8", newline="\n") as output:
-            output.write(json.dumps(report, indent=2, sort_keys=True) + "\n")
-            output.flush()
-            os.fsync(output.fileno())
-        os.replace(partial, path)
-    except BaseException:
-        if partial.exists():
-            partial.unlink()
-        raise
+        descriptor = os.open(
+            temporary,
+            os.O_RDWR | os.O_CREAT | os.O_EXCL,
+            0o600,
+            dir_fd=directory,
+        )
+        view = memoryview(payload)
+        written = 0
+        while written < len(view):
+            written += os.write(descriptor, view[written:])
+        os.fsync(descriptor)
+        os.fchmod(descriptor, 0o444)
+        os.fsync(descriptor)
+        identity = _inode_identity(os.fstat(descriptor))
+        digest = sha256_bytes(payload)
+        if before_link is not None:
+            before_link(path)
+        os.link(
+            temporary,
+            path.name,
+            src_dir_fd=directory,
+            dst_dir_fd=directory,
+            follow_symlinks=False,
+        )
+        os.fsync(directory)
+        published = os.stat(path.name, dir_fd=directory, follow_symlinks=False)
+        require(_inode_identity(published) == identity, "audit_publication_identity")
+        os.lseek(descriptor, 0, os.SEEK_SET)
+        captured = b""
+        while len(captured) < len(payload):
+            block = os.read(descriptor, min(1024 * 1024, len(payload) - len(captured)))
+            if not block:
+                break
+            captured += block
+        require(sha256_bytes(captured) == digest, "audit_publication_sha256")
+    finally:
+        try:
+            os.unlink(temporary, dir_fd=directory)
+        except FileNotFoundError:
+            pass
+        if descriptor >= 0:
+            os.close(descriptor)
+        os.close(directory)
+
+
+def write_report(path: Path, report: dict) -> bytes:
+    payload = (
+        json.dumps(report, ensure_ascii=True, sort_keys=True, separators=(",", ":"))
+        + "\n"
+    ).encode("ascii")
+    publish_bytes_no_replace(path, payload)
+    return payload
 
 
 def expected_per_width_rows(
@@ -1077,7 +1489,7 @@ def counter_sha256(counter: Counter) -> str:
 
 
 def observe_episode_board(
-    episodes_path: Path,
+    episodes_snapshot: ExactByteSnapshot,
     arm: str,
     heldout_signatures: set[tuple[int, int, int]],
     failures: Counter,
@@ -1110,10 +1522,12 @@ def observe_episode_board(
     terminal_pairs: defaultdict[tuple, Counter] = defaultdict(Counter)
     all_position_pairs = Counter()
     episode_ids = []
+    blank_lines = 0
 
-    with episodes_path.open(encoding="utf-8") as source:
+    with episodes_snapshot.text() as source:
         for line_number, line in enumerate(source, 1):
             if not line.strip():
+                blank_lines += 1
                 continue
             raw += 1
             try:
@@ -1199,11 +1613,12 @@ def observe_episode_board(
         "terminal_pairs": terminal_pairs,
         "all_position_pairs": all_position_pairs,
         "episode_ids": episode_ids,
+        "blank_lines": blank_lines,
     }
 
 
 def observe_rows(
-    data_path: Path,
+    data_snapshot: ExactByteSnapshot,
     arm: str,
     episode_records: dict[str, dict],
     heldout: dict,
@@ -1231,13 +1646,18 @@ def observe_rows(
     allocation_formats = Counter()
     visible_features = Counter()
     current_pair_contexts = Counter()
+    observed_arms = Counter()
     exact_heldout_hits = set()
     gram13_hits = set()
     contamination_examples = []
+    blank_lines = 0
 
-    with data_path.open(encoding="utf-8") as source:
+    with data_snapshot.text() as source:
         for line_number, line in enumerate(source, 1):
             if not line.strip():
+                blank_lines += 1
+                if token_accounting is not None:
+                    token_accounting.add_blank_line()
                 continue
             raw += 1
             try:
@@ -1279,6 +1699,7 @@ def observe_rows(
                     raise ContractError("duplicate_episode_row_slot")
                 row_slots[episode_id].add(result["slot"])
                 valid += 1
+                observed_arms[str(row["arm"])] += 1
                 kind_counts[result["kind"]] += 1
                 width_kind_counts[result["width"]][result["kind"]] += 1
                 allocation_formats[row["allocation_slot"]] += 1
@@ -1336,10 +1757,12 @@ def observe_rows(
         "allocation_formats": allocation_formats,
         "visible_features": visible_features,
         "current_pair_contexts": current_pair_contexts,
+        "observed_arms": observed_arms,
         "exact_heldout_hits": exact_heldout_hits,
         "gram13_hits": gram13_hits,
         "contamination_examples": contamination_examples,
         "incomplete": incomplete,
+        "blank_lines": blank_lines,
     }
 
 
@@ -1355,6 +1778,8 @@ def audit(
     test_scale: int | None = None,
     tokenizer_path: Path | None = None,
     pack_length: int = 2048,
+    generator_report_path: Path | None = None,
+    paired_generator_report_path: Path | None = None,
 ) -> dict:
     validate_mode(mode, test_scale)
     artifact_paths = (
@@ -1365,6 +1790,14 @@ def audit(
         heldout_path,
         out_path,
     ) + ((tokenizer_path,) if tokenizer_path is not None else ())
+    artifact_paths += (
+        (generator_report_path,) if generator_report_path is not None else ()
+    )
+    artifact_paths += (
+        (paired_generator_report_path,)
+        if paired_generator_report_path is not None
+        else ()
+    )
     ensure_pairwise_artifact_paths(artifact_paths)
     inputs = (
         data_path,
@@ -1377,12 +1810,41 @@ def audit(
         raise SystemExit(
             "missing data, paired data, episodes, paired episodes, or heldout"
         )
-    if out_path.exists() or partial_path(out_path).exists():
-        raise SystemExit("refusing to overwrite an existing audit or partial")
     if pack_length < 2:
         raise SystemExit("--pack-length must be at least 2")
     if mode == "production" and tokenizer_path is None:
         raise SystemExit("production audit requires --tokenizer accounting")
+    if mode == "production" and (
+        generator_report_path is None or paired_generator_report_path is None
+    ):
+        raise SystemExit("production audit requires both generator reports")
+
+    source_snapshots = capture_auditor_sources()
+    input_snapshots = {
+        "data": capture_exact_file(data_path, str(data_path.resolve())),
+        "episodes": capture_exact_file(episodes_path, str(episodes_path.resolve())),
+        "paired_data": capture_exact_file(
+            paired_data_path, str(paired_data_path.resolve())
+        ),
+        "paired_episodes": capture_exact_file(
+            paired_episodes_path, str(paired_episodes_path.resolve())
+        ),
+        "heldout": capture_exact_file(heldout_path, str(heldout_path.resolve())),
+    }
+    if tokenizer_path is not None:
+        input_snapshots["tokenizer"] = capture_exact_file(
+            tokenizer_path, str(tokenizer_path.resolve())
+        )
+    generator_report_snapshots = {}
+    if generator_report_path is not None:
+        generator_report_snapshots["primary"] = capture_exact_file(
+            generator_report_path, str(generator_report_path.resolve())
+        )
+    if paired_generator_report_path is not None:
+        generator_report_snapshots["counterpart"] = capture_exact_file(
+            paired_generator_report_path,
+            str(paired_generator_report_path.resolve()),
+        )
 
     allocations = allocations_for_arm(arm, test_scale)
     target = structural_counts(allocations)
@@ -1393,7 +1855,7 @@ def audit(
     expected_board_terminals = expected_terminal_counts(expected_operations)
     expected_board_by_width = stratified_terminal_counts(expected_operations_by_width)
     expected_control_by_width = expected_control_terminal_counts(
-        expected_operations_by_width
+        expected_operations_by_width, expected_board_by_width
     )
     expected_control = {"add": Counter(), "sub": Counter()}
     for operations in expected_control_by_width.values():
@@ -1432,21 +1894,23 @@ def audit(
 
     failures: Counter = Counter()
     examples: list[dict] = []
-    heldout = observe_heldout(heldout_path, test_scale, failures, examples)
+    heldout = observe_heldout(
+        input_snapshots["heldout"], test_scale, failures, examples
+    )
     board = observe_episode_board(
-        episodes_path,
+        input_snapshots["episodes"],
         arm,
         heldout["signatures"],
         failures,
         examples,
     )
     token_accounting = (
-        TokenAccounting(tokenizer_path, pack_length)
+        TokenAccounting(input_snapshots["tokenizer"], pack_length)
         if tokenizer_path is not None
         else None
     )
     primary = observe_rows(
-        data_path,
+        input_snapshots["data"],
         arm,
         board["records"],
         heldout,
@@ -1457,7 +1921,7 @@ def audit(
     )
     counterpart = paired_arm(arm)
     paired = observe_rows(
-        paired_data_path,
+        input_snapshots["paired_data"],
         counterpart,
         board["records"],
         heldout,
@@ -1466,6 +1930,25 @@ def audit(
         "paired_row",
     )
     token_report = token_accounting.report() if token_accounting is not None else None
+    generator_evidence = {}
+    if generator_report_snapshots:
+        for role, admitted_arm, data_name, episodes_name in (
+            ("primary", arm, "data", "episodes"),
+            ("counterpart", counterpart, "paired_data", "paired_episodes"),
+        ):
+            try:
+                generator_evidence[role] = validate_generator_report(
+                    generator_report_snapshots[role],
+                    input_snapshots[data_name],
+                    input_snapshots[episodes_name],
+                    input_snapshots["heldout"],
+                    admitted_arm,
+                    mode,
+                    source_snapshots,
+                )
+            except (ContractError, KeyError, TypeError, ValueError) as exc:
+                record_failure(failures, examples, "generator_report", 0, exc)
+    generator_reports_valid = set(generator_evidence) == {"primary", "counterpart"}
 
     actual_per_width_rows = {
         width: {
@@ -1485,8 +1968,9 @@ def audit(
         and heldout["unique_signatures"] == heldout["branches"]
         and heldout["unique_normalized_prompts"] == heldout["controller_prompts"]
     )
-    paired_board_hash_equal = sha256_file(episodes_path) == sha256_file(
-        paired_episodes_path
+    paired_board_hash_equal = (
+        input_snapshots["episodes"].payload
+        == input_snapshots["paired_episodes"].payload
     )
     pair_diversity = all(
         pair_distribution_contract(counts)
@@ -1506,9 +1990,19 @@ def audit(
         or all(token_report["packing_invariants"].values()),
         "tokenizer_all_rows_accepted": token_report is None
         or token_report["production_build_packed"]["examples"] == target["rows"],
+        "tokenizer_blank_line_parity": token_report is None
+        or token_report["production_build_packed"]["skipped"]["blank_lines"]
+        == primary["blank_lines"],
+        "tokenizer_no_blank_lines": token_report is None
+        or token_report["production_build_packed"]["skipped"]["blank_lines"] == 0,
+        "tokenizer_canonical_exact_budget": token_report is None
+        or mode == "test"
+        or token_report["canonical_exact_budget"]["admitted"],
     }
     checks = {
+        "generator_reports_exact_and_current": generator_reports_valid,
         "heldout_solver_valid": heldout_solver_valid,
+        "heldout_no_blank_lines": heldout["blank_lines"] == 0,
         "heldout_frozen_sha256": mode == "test"
         or heldout["sha256"] == FROZEN_HELDOUT_SHA256,
         "heldout_frozen_counts": mode == "test"
@@ -1523,6 +2017,7 @@ def audit(
         "zero_train_heldout_literal_13gram_hits": not primary["gram13_hits"]
         and not paired["gram13_hits"],
         "raw_episode_count": board["raw"] == target["episodes"],
+        "episode_no_blank_lines": board["blank_lines"] == 0,
         "valid_episode_count": len(board["records"]) == target["episodes"],
         "episode_ids": set(board["records"]) == expected_ids,
         "unique_episode_ids": board["duplicate_ids"] == 0,
@@ -1553,6 +2048,8 @@ def audit(
         <= board["controls"],
         "nonconcentrated_terminal_and_penultimate_pairs": pair_diversity,
         "raw_row_count": primary["raw"] == target["rows"],
+        "row_no_blank_lines": primary["blank_lines"] == 0,
+        "data_arm_identity": primary["observed_arms"] == Counter({arm: target["rows"]}),
         "valid_row_count": primary["valid"] == target["rows"],
         "row_kind_counts": primary["kind_counts"] == expected_row_kinds,
         "row_width_counts": actual_per_width_rows
@@ -1589,13 +2086,23 @@ def audit(
         == paired["allocation_formats"],
         "paired_row_count": paired["raw"] == target["rows"]
         and paired["valid"] == target["rows"],
+        "paired_row_no_blank_lines": paired["blank_lines"] == 0,
+        "paired_data_arm_identity": paired["observed_arms"]
+        == Counter({counterpart: target["rows"]}),
         "paired_unique_prompts_and_slots": paired["duplicate_prompts"] == 0
         and paired["duplicate_slots"] == 0
         and paired["incomplete"] == 0,
         **token_checks,
     }
     mechanical_pass = not failures and all(checks.values())
-    production_admission = mode == "production" and mechanical_pass
+    admitted_arm = (
+        next(iter(primary["observed_arms"]))
+        if primary["observed_arms"] == Counter({arm: target["rows"]})
+        else None
+    )
+    production_admission = (
+        mode == "production" and mechanical_pass and admitted_arm == arm
+    )
     local_keys = set(primary["current_pair_contexts"]) | set(
         paired["current_pair_contexts"]
     )
@@ -1610,8 +2117,10 @@ def audit(
     ).encode("ascii")
     report = {
         "audit": "digitwise_factorial_v4_admission",
+        "receipt_schema": "shohin-factorial-v4-production-admission-v1",
         "schema": SCHEMA,
         "declared_arm": arm,
+        "admitted_arm": admitted_arm,
         "paired_arm": counterpart,
         "declared_factors": {
             "term": has_term_factor(arm),
@@ -1624,6 +2133,13 @@ def audit(
         "production_contract": mode == "production",
         "test_scale": test_scale,
         "mechanical_pass": mechanical_pass,
+        "runtime": {
+            "python": platform.python_version(),
+            "python_implementation": platform.python_implementation(),
+            "tokenizers": (
+                token_report["tokenizers_version"] if token_report is not None else None
+            ),
+        },
         "test_mechanics_pass": mechanical_pass if mode == "test" else None,
         "production_admission": production_admission,
         "admission_pass": production_admission,
@@ -1631,10 +2147,46 @@ def audit(
         "failures": dict(sorted(failures.items())),
         "failure_examples": examples,
         "target": target,
-        "data": str(data_path.resolve()),
-        "data_sha256": sha256_file(data_path),
-        "episodes": str(episodes_path.resolve()),
-        "episodes_sha256": sha256_file(episodes_path),
+        "data": input_snapshots["data"].logical_path,
+        "data_sha256": input_snapshots["data"].sha256,
+        "episodes": input_snapshots["episodes"].logical_path,
+        "episodes_sha256": input_snapshots["episodes"].sha256,
+        "inputs": {
+            name: snapshot.binding for name, snapshot in input_snapshots.items()
+        },
+        "generator_reports": generator_evidence,
+        "independent_audit": {
+            "auditor_recomputed_solver_and_contract": True,
+            "expected_receipt_sha256_must_be_supplied_to_training": True,
+            "generator_implementation_imported": False,
+            "generator_reports_used_only_as_bound_provenance": True,
+            "remote_attestation": False,
+        },
+        "scientific_contract": {
+            "heldout_splits": sorted(heldout["regimes"]),
+            "row_sources": sorted(SOURCE_BY_KIND.values()),
+            "schema": SCHEMA,
+            "training_group": TRAINING_GROUP,
+            "training_split": "train",
+        },
+        "source_manifests": {
+            "generator": manifest_for_paths(source_snapshots, GENERATOR_SOURCE_PATHS),
+            "auditor": {
+                **manifest_for_paths(
+                    source_snapshots,
+                    tuple(
+                        dict.fromkeys(
+                            (
+                                *AUDITOR_RUNTIME_SOURCE_PATHS,
+                                *AUDITOR_VERIFICATION_SOURCE_PATHS,
+                            )
+                        )
+                    ),
+                ),
+                "runtime_sources": list(AUDITOR_RUNTIME_SOURCE_PATHS),
+                "verification_sources": list(AUDITOR_VERIFICATION_SOURCE_PATHS),
+            },
+        },
         "heldout": {
             key: value
             for key, value in heldout.items()
@@ -1650,15 +2202,28 @@ def audit(
             ),
             "examples": primary["contamination_examples"]
             + paired["contamination_examples"],
+            "gates": {
+                "exact_normalized_prompt_clear": checks[
+                    "zero_train_heldout_exact_normalized_prompt_hits"
+                ],
+                "literal_normalized_word_13gram_clear": checks[
+                    "zero_train_heldout_literal_13gram_hits"
+                ],
+                "reserved_signature_clear": checks[
+                    "zero_train_heldout_reserved_signature_hits"
+                ],
+            },
+            "heldout_answer_boundary": heldout["answer_boundary"],
             "semantics": (
                 "Heldout prompts are solver-recomputed v2 transition-plus-final controller "
                 "prompts; exact hits use normalized prompts and 13-grams are literal "
-                "contiguous normalized word sequences."
+                "contiguous normalized word sequences. Heldout answers are read only for "
+                "solver and exclusion-identity validation and never construct training rows."
             ),
         },
         "paired_board": {
-            "primary_episodes_sha256": sha256_file(episodes_path),
-            "counterpart_episodes_sha256": sha256_file(paired_episodes_path),
+            "primary_episodes_sha256": input_snapshots["episodes"].sha256,
+            "counterpart_episodes_sha256": input_snapshots["paired_episodes"].sha256,
             "literal_jsonl_equal": paired_board_hash_equal,
             "episode_ids_sha256": hashlib.sha256(episode_ids_payload).hexdigest(),
             "episode_count": len(board["episode_ids"]),
@@ -1684,6 +2249,7 @@ def audit(
             "current_position_context_l1_difference": local_l1,
         },
         "episodes_observed": {
+            "blank_lines": board["blank_lines"],
             "raw": board["raw"],
             "valid": len(board["records"]),
             "unique_ids": len(board["records"]),
@@ -1693,6 +2259,7 @@ def audit(
             "by_operation": dict(sorted(board["operations"].items())),
         },
         "rows_observed": {
+            "blank_lines": primary["blank_lines"],
             "raw": primary["raw"],
             "valid": primary["valid"],
             "unique_normalized_prompts": len(primary["seen_prompts"]),
@@ -1759,14 +2326,17 @@ def audit(
             "are equal."
         ),
         "claim_boundary": (
-            "Independent CPU-only data admission. The heldout board is reopened only to "
-            "recompute solver validity and contamination boundaries; no benchmark answer or "
-            "model-capability result is consumed."
+            "Independent CPU-only data admission from one-pass immutable byte snapshots. "
+            "Heldout answers are read only to validate solver witnesses, counterfactual "
+            "changes, and exclusion identities; they never construct training rows. This is "
+            "local process evidence, not remote attestation."
         ),
-        "auditor_sha256": sha256_file(__file__),
-        "protocol_sha256": sha256_file(ROOT / "train" / "digitwise_protocol.py"),
-        "sft_packing_sha256": sha256_file(ROOT / "train" / "sft.py"),
-        "sft_encoding_sha256": sha256_file(ROOT / "train" / "sft_encoding.py"),
+        "auditor_sha256": source_snapshots[
+            "pipeline/audit_digitwise_factorial_v4.py"
+        ].sha256,
+        "protocol_sha256": source_snapshots["train/digitwise_protocol.py"].sha256,
+        "sft_packing_sha256": source_snapshots["train/sft.py"].sha256,
+        "sft_encoding_sha256": source_snapshots["train/sft_encoding.py"].sha256,
     }
     write_report(out_path, report)
     print(json.dumps(report, sort_keys=True))
@@ -1784,6 +2354,8 @@ def main() -> None:
     parser.add_argument("--heldout", required=True, type=Path)
     parser.add_argument("--out", required=True, type=Path)
     parser.add_argument("--tokenizer", type=Path)
+    parser.add_argument("--generator-report", type=Path)
+    parser.add_argument("--paired-generator-report", type=Path)
     parser.add_argument("--pack-length", type=int, default=2048)
     parser.add_argument(
         "--test-scale",
@@ -1806,6 +2378,8 @@ def main() -> None:
         test_scale=args.test_scale,
         tokenizer_path=args.tokenizer,
         pack_length=args.pack_length,
+        generator_report_path=args.generator_report,
+        paired_generator_report_path=args.paired_generator_report,
     )
     if args.mode == "test":
         raise SystemExit("test-scale audit completed without production admission")
@@ -1813,5 +2387,57 @@ def main() -> None:
         raise SystemExit("digitwise factorial v4 admission failed")
 
 
+def _frozen_module(name: str, snapshot: ExactByteSnapshot) -> types.ModuleType:
+    module = types.ModuleType(name)
+    module.__file__ = str(ROOT / snapshot.logical_path)
+    module.__package__ = ""
+    module.__loader__ = None
+    module.__spec__ = None
+    sys.modules[name] = module
+    exec(compile(snapshot.payload, module.__file__, "exec"), module.__dict__)
+    return module
+
+
+def _run_frozen_cli() -> None:
+    """Execute auditor scientific code from one exact-byte source capture."""
+    snapshots = {
+        relative: capture_exact_file(ROOT / relative, relative)
+        for relative in ADMISSION_SOURCE_PATHS
+    }
+    protocol = _frozen_module(
+        "digitwise_protocol", snapshots["train/digitwise_protocol.py"]
+    )
+    encoding = _frozen_module("sft_encoding", snapshots["train/sft_encoding.py"])
+    protocol_names = (
+        "apply_microstep",
+        "canonical_state",
+        "digit_prompt",
+        "final_prompt",
+        "initial_state",
+        "microstep_prompt",
+        "parse_state",
+        "state_answer",
+        "state_digit",
+    )
+    namespace = {
+        "__name__": "__main__",
+        "__file__": str(ROOT / "pipeline/audit_digitwise_factorial_v4.py"),
+        "__package__": None,
+        "_BOOTSTRAP_ACTIVE": True,
+        "_BOOTSTRAP_SOURCE_SNAPSHOTS": snapshots,
+        "_FROZEN_PROTOCOL_EXPORTS": {
+            name: getattr(protocol, name) for name in protocol_names
+        },
+        "_FROZEN_ENCODING_EXPORTS": {
+            "encode_supervised_example": encoding.encode_supervised_example
+        },
+    }
+    auditor = snapshots["pipeline/audit_digitwise_factorial_v4.py"]
+    exec(compile(auditor.payload, namespace["__file__"], "exec"), namespace)
+
+
 if __name__ == "__main__":
-    main()
+    if globals().get("_BOOTSTRAP_ACTIVE"):
+        main()
+    else:
+        _run_frozen_cli()

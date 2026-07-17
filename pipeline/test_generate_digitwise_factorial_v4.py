@@ -5,9 +5,12 @@ from __future__ import annotations
 from collections import Counter
 import hashlib
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
+
+import pytest
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,7 +18,13 @@ GENERATOR = ROOT / "pipeline" / "generate_digitwise_factorial_v4.py"
 sys.path.insert(0, str(ROOT / "pipeline"))
 from generate_digitwise_factorial_v4 import (  # noqa: E402
     allocations_for_arm,
+    capture_exact_file,
+    expected_control_terminal_counts,
+    load_heldout_contract,
+    operation_allocations,
     pair_distribution_contract,
+    publish_bytes_no_replace,
+    stratified_terminal_counts,
     structural_counts,
 )
 from generate_digitwise_recurrent_v1 import (  # noqa: E402
@@ -150,6 +159,18 @@ def test_production_structural_contracts() -> None:
         }
 
 
+def test_wide_production_subtraction_control_inherits_global_stratification() -> None:
+    operations_by_width = operation_allocations(allocations_for_arm("width"))
+    board_by_width = stratified_terminal_counts(operations_by_width)
+    control_by_width = expected_control_terminal_counts(
+        operations_by_width, board_by_width
+    )
+
+    assert board_by_width[6]["sub"] == Counter({"00": 1_999, "10": 2_000})
+    assert control_by_width[6]["sub"] == board_by_width[6]["sub"]
+    assert sum(control_by_width[6]["sub"].values()) == 3_999
+
+
 def test_small_arms_share_frozen_boards_and_exact_visible_budgets(
     tmp_path: Path,
 ) -> None:
@@ -183,6 +204,19 @@ def test_small_arms_share_frozen_boards_and_exact_visible_budgets(
         assert sha256(data) == report["data_sha256"]
         assert sha256(episodes_path) == report["episodes_sha256"]
         assert report["heldout_binding"]["sha256"] == sha256(heldout)
+        assert report["heldout_binding"]["answer_boundary"] == {
+            "answer_fields_read_for": [
+                "solver_witness_validation",
+                "counterfactual_answer_change_validation",
+            ],
+            "answer_values_retained_for_training": False,
+            "training_constructor_receives": ["reserved_operand_signatures"],
+        }
+        sources = report["scientific_source_manifest"]["sources"]
+        assert "pipeline/generate_digitwise_recurrent_v1.py" in sources
+        assert sources["pipeline/generate_digitwise_factorial_v4.py"][
+            "sha256"
+        ] == sha256(GENERATOR)
         assert report["train_heldout_reserved_signature_hits"] == 0
 
     for control, treatment in PAIRS:
@@ -339,3 +373,40 @@ def test_heldout_reservation_corruption_modes_and_path_aliases(tmp_path: Path) -
     assert alias.returncode != 0
     assert "final and .partial paths must be pairwise distinct" in alias.stderr
     assert not any(alias_root.iterdir())
+
+
+def test_heldout_snapshot_defeats_mutate_consume_restore(tmp_path: Path) -> None:
+    heldout = make_heldout_fixture(tmp_path / "heldout.jsonl")
+    original = heldout.read_bytes()
+    snapshot = capture_exact_file(heldout, "heldout.jsonl")
+    before = heldout.stat()
+    altered = b"X" * len(original)
+    try:
+        heldout.write_bytes(altered)
+        signatures, summary = load_heldout_contract(snapshot, test_scale=1)
+        assert signatures
+        assert summary["sha256"] == hashlib.sha256(original).hexdigest()
+        assert (
+            summary["answer_boundary"]["answer_values_retained_for_training"] is False
+        )
+    finally:
+        heldout.write_bytes(original)
+        os.utime(heldout, ns=(before.st_atime_ns, before.st_mtime_ns))
+    assert heldout.read_bytes() == original
+    assert snapshot.payload == original
+    assert snapshot.verify() == hashlib.sha256(original).hexdigest()
+
+
+def test_generator_publication_race_is_atomic_no_replace(tmp_path: Path) -> None:
+    destination = tmp_path / "artifact.jsonl"
+    competing = b"competitor\n"
+
+    def publish_competitor(path: Path) -> None:
+        path.write_bytes(competing)
+
+    with pytest.raises(FileExistsError):
+        publish_bytes_no_replace(
+            destination, b"candidate\n", before_link=publish_competitor
+        )
+    assert destination.read_bytes() == competing
+    assert not list(tmp_path.glob(".artifact.jsonl.private.*"))

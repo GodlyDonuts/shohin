@@ -2,16 +2,25 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
+import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
+
+import pytest
 
 
 ROOT = Path(__file__).resolve().parents[1]
 GENERATOR = ROOT / "pipeline" / "generate_digitwise_factorial_v4.py"
 AUDITOR = ROOT / "pipeline" / "audit_digitwise_factorial_v4.py"
 TOKENIZER = ROOT / "artifacts" / "shohin-tok-32k.json"
+FROZEN_HELDOUT = ROOT / "artifacts" / "evals" / "digitwise_recurrent_v2_heldout.jsonl"
+RUN_PRODUCTION_REGRESSION = (
+    os.environ.get("SHOHIN_RUN_FACTORIAL_V4_PRODUCTION_REGRESSION") == "1"
+)
 ARMS = ("iid", "term", "width", "term_width")
 PAIRED = {
     "iid": "term",
@@ -60,6 +69,7 @@ CANONICAL_TEST_PACKING = {
 
 sys.path.insert(0, str(ROOT / "train"))
 sys.path.insert(0, str(ROOT / "pipeline"))
+import audit_digitwise_factorial_v4 as auditor  # noqa: E402
 from digitwise_protocol import (  # noqa: E402
     canonical_state,
     microstep_prompt,
@@ -111,6 +121,37 @@ def generate_all(root: Path, heldout: Path) -> dict[str, tuple[Path, Path]]:
     return {arm: generate(root, arm, heldout) for arm in ARMS}
 
 
+def generate_production(root: Path, arm: str, heldout: Path) -> tuple[Path, Path]:
+    directory = root / arm
+    directory.mkdir()
+    data = directory / "data.jsonl"
+    episodes = directory / "episodes.jsonl"
+    process = subprocess.run(
+        [
+            sys.executable,
+            str(GENERATOR),
+            "--mode",
+            "production",
+            "--arm",
+            arm,
+            "--heldout",
+            str(heldout),
+            "--data-out",
+            str(data),
+            "--episodes-out",
+            str(episodes),
+            "--report",
+            str(directory / "generated.json"),
+        ],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert process.returncode == 0, process.stderr
+    assert data.is_file() and episodes.is_file()
+    return data, episodes
+
+
 def run_audit(
     generated: dict[str, tuple[Path, Path]],
     heldout: Path,
@@ -144,6 +185,10 @@ def run_audit(
         str(paired_episodes or counterpart_episodes),
         "--heldout",
         str(heldout),
+        "--generator-report",
+        str(primary_data.parent / "generated.json"),
+        "--paired-generator-report",
+        str(counterpart_data.parent / "generated.json"),
         "--out",
         str(out),
         "--pack-length",
@@ -197,6 +242,17 @@ def test_all_declared_arms_pass_mechanics_but_test_mode_never_admits(
         )
         assert report["contamination"]["train_heldout_literal_13gram_hits"] == 0
         assert report["residual_bundle_confound"]
+        assert report["independent_audit"]["generator_implementation_imported"] is False
+        assert (
+            report["contamination"]["heldout_answer_boundary"][
+                "answer_values_retained_for_training"
+            ]
+            is False
+        )
+        assert (
+            "pipeline/generate_digitwise_recurrent_v1.py"
+            in report["source_manifests"]["generator"]["sources"]
+        )
 
 
 def test_token_accounting_matches_exact_production_build_packed(tmp_path: Path) -> None:
@@ -244,6 +300,97 @@ def test_token_accounting_matches_exact_production_build_packed(tmp_path: Path) 
     assert not short_report["checks"]["tokenizer_no_overlength_rows"]
     assert not short_report["checks"]["tokenizer_no_zero_pack"]
     assert not short_report["checks"]["tokenizer_all_rows_accepted"]
+
+
+def test_auditor_wide_subtraction_control_inherits_board_stratification() -> None:
+    operations_by_width = auditor.operation_allocations(
+        auditor.allocations_for_arm("width")
+    )
+    board_by_width = auditor.stratified_terminal_counts(operations_by_width)
+    control_by_width = auditor.expected_control_terminal_counts(
+        operations_by_width, board_by_width
+    )
+
+    assert dict(board_by_width[6]["sub"]) == {"00": 1_999, "10": 2_000}
+    assert control_by_width[6]["sub"] == board_by_width[6]["sub"]
+
+
+@pytest.mark.skipif(
+    not RUN_PRODUCTION_REGRESSION,
+    reason=(
+        "set SHOHIN_RUN_FACTORIAL_V4_PRODUCTION_REGRESSION=1 to run the "
+        "production-scale frozen-heldout regression"
+    ),
+)
+def test_production_wide_arms_publish_admit_and_cover_exact_budget(
+    tmp_path: Path,
+) -> None:
+    assert hashlib.sha256(FROZEN_HELDOUT.read_bytes()).hexdigest() == (
+        auditor.FROZEN_HELDOUT_SHA256
+    )
+    production_root = tmp_path / "wide-production"
+    production_root.mkdir()
+    try:
+        generated = {
+            arm: generate_production(production_root, arm, FROZEN_HELDOUT)
+            for arm in ("width", "term_width")
+        }
+        for arm, (data, episodes) in generated.items():
+            generator_report = json.loads((data.parent / "generated.json").read_text())
+            assert generator_report["mode"] == "production"
+            assert generator_report["production_eligible"] is True
+            assert generator_report["structural_target"] == {
+                "episodes": 39_985,
+                "transitions": 199_940,
+                "rows": 439_865,
+            }
+            assert generator_report["heldout_binding"]["sha256"] == (
+                auditor.FROZEN_HELDOUT_SHA256
+            )
+            assert generator_report["control_terminal_allocation_by_width"]["6"][
+                "sub"
+            ] == {"00": 1_999, "10": 2_000}
+            assert data.stat().st_size == generator_report["data_bytes"]
+            assert episodes.stat().st_size == generator_report["episodes_bytes"]
+
+        for arm in ("width", "term_width"):
+            process, report = run_audit(
+                generated,
+                FROZEN_HELDOUT,
+                production_root / "audit-{}.json".format(arm),
+                arm,
+                tokenizer=True,
+                mode="production",
+            )
+            assert process.returncode == 0, process.stderr
+            assert report["mechanical_pass"] is True
+            assert report["production_admission"] is True
+            assert report["admitted_arm"] == arm
+            assert report["failures"] == {}
+            assert all(report["checks"].values())
+            assert report["heldout"]["sha256"] == auditor.FROZEN_HELDOUT_SHA256
+            assert report["heldout"]["answer_boundary"] == {
+                "answer_fields_read_for": [
+                    "solver_witness_validation",
+                    "counterfactual_answer_change_validation",
+                    "contamination_exclusion_identity_validation",
+                ],
+                "answer_values_retained_for_training": False,
+                "training_rows_constructed_by_auditor": False,
+            }
+            exact = report["tokenizer_accounting"]["canonical_exact_budget"]
+            assert exact["admitted"] is True
+            assert exact["optimizer_updates"] == 1_560
+            assert exact["batch_size"] == 16
+            assert exact["consumed_packs"] == 24_960
+            assert exact["pack_len"] == 2_048
+            assert exact["forward_token_positions"] == 51_118_080
+            assert exact["available_packs"] >= exact["consumed_packs"]
+            assert exact["supervised_tokens_per_update_min"] > 0
+            assert exact["target_thinning"] is False
+            assert exact["completion_and_eos_supervision_intact"] is True
+    finally:
+        shutil.rmtree(production_root, ignore_errors=True)
 
 
 def test_wrong_arm_terminal_labels_and_paired_board_corruption_are_rejected(
@@ -444,3 +591,106 @@ def test_production_mode_and_all_final_partial_aliases_fail_closed(
     assert alias.returncode != 0
     assert "final and .partial paths must be pairwise distinct" in alias.stderr
     assert not alias_out.exists()
+
+
+def test_blank_lines_match_canonical_training_rejection(tmp_path: Path) -> None:
+    heldout = make_heldout_fixture(tmp_path / "heldout.jsonl")
+    generated = generate_all(tmp_path, heldout)
+    data_with_blank = tmp_path / "data-with-blank.jsonl"
+    data_with_blank.write_bytes(generated["iid"][0].read_bytes() + b"\n")
+    _, report = run_audit(
+        generated,
+        heldout,
+        tmp_path / "blank-line-audit.json",
+        "iid",
+        data=data_with_blank,
+        tokenizer=True,
+    )
+    assert report["mechanical_pass"] is False
+    assert report["rows_observed"]["raw"] == report["target"]["rows"]
+    assert (
+        report["tokenizer_accounting"]["production_build_packed"]["skipped"][
+            "blank_lines"
+        ]
+        == 1
+    )
+    assert not report["checks"]["row_no_blank_lines"]
+    assert not report["checks"]["tokenizer_no_blank_lines"]
+    assert report["checks"]["tokenizer_blank_line_parity"]
+
+
+def test_auditor_snapshots_defeat_mutate_consume_restore(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    heldout = make_heldout_fixture(tmp_path / "heldout.jsonl")
+    generated = generate_all(tmp_path, heldout)
+    data, episodes = generated["iid"]
+    paired_data, paired_episodes = generated["term"]
+    tokenizer_copy = tmp_path / "tokenizer.json"
+    tokenizer_copy.write_bytes(TOKENIZER.read_bytes())
+    originals = {
+        data: data.read_bytes(),
+        episodes: episodes.read_bytes(),
+        tokenizer_copy: tokenizer_copy.read_bytes(),
+    }
+    metadata = {path: path.stat() for path in originals}
+    captured = set()
+    real_capture = auditor.capture_exact_file
+
+    def capture_then_mutate(path: Path, logical_path: str | None = None):
+        snapshot = real_capture(path, logical_path)
+        candidate = Path(path)
+        if candidate in originals and candidate not in captured:
+            captured.add(candidate)
+            candidate.chmod(0o600)
+            candidate.write_bytes(b"X" * len(originals[candidate]))
+        return snapshot
+
+    monkeypatch.setattr(auditor, "capture_exact_file", capture_then_mutate)
+    try:
+        report = auditor.audit(
+            data,
+            episodes,
+            paired_data,
+            paired_episodes,
+            heldout,
+            tmp_path / "snapshot-audit.json",
+            "iid",
+            "test",
+            test_scale=1,
+            tokenizer_path=tokenizer_copy,
+            generator_report_path=data.parent / "generated.json",
+            paired_generator_report_path=paired_data.parent / "generated.json",
+        )
+        assert report["mechanical_pass"] is True
+        assert report["data_sha256"] == hashlib.sha256(originals[data]).hexdigest()
+        assert (
+            report["episodes_sha256"] == hashlib.sha256(originals[episodes]).hexdigest()
+        )
+        assert (
+            report["tokenizer_accounting"]["tokenizer_sha256"]
+            == hashlib.sha256(originals[tokenizer_copy]).hexdigest()
+        )
+    finally:
+        for path, payload in originals.items():
+            path.chmod(0o600)
+            path.write_bytes(payload)
+            before = metadata[path]
+            path.chmod(before.st_mode & 0o777)
+            os.utime(path, ns=(before.st_atime_ns, before.st_mtime_ns))
+    assert all(path.read_bytes() == payload for path, payload in originals.items())
+
+
+def test_auditor_publication_race_is_atomic_no_replace(tmp_path: Path) -> None:
+    destination = tmp_path / "audit.json"
+    competing = b'{"competitor":true}\n'
+
+    def publish_competitor(path: Path) -> None:
+        path.write_bytes(competing)
+
+    with pytest.raises(FileExistsError):
+        auditor.publish_bytes_no_replace(
+            destination, b'{"candidate":true}\n', before_link=publish_competitor
+        )
+    assert destination.read_bytes() == competing
+    assert not list(tmp_path.glob(".audit.json.private.*"))

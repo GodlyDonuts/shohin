@@ -21,31 +21,40 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
+from dataclasses import dataclass
 import hashlib
 import json
 import os
 from pathlib import Path
+import platform
 import random
+import stat
 import sys
+import time
+import types
 
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "train"))
-sys.path.insert(0, str(ROOT / "pipeline"))
-from digitwise_protocol import (  # noqa: E402
-    apply_microstep,
-    canonical_state,
-    final_prompt,
-    initial_state,
-    microstep_prompt,
-    parse_state,
-    state_answer,
-)
-from generate_digitwise_recurrent_v1 import (  # noqa: E402
-    episode_from_operands,
-    normalized,
-    rows_from_episode,
-)
+if "_FROZEN_PROTOCOL_EXPORTS" in globals():
+    globals().update(globals()["_FROZEN_PROTOCOL_EXPORTS"])
+    globals().update(globals()["_FROZEN_RECURRENT_EXPORTS"])
+elif __name__ != "__main__":
+    sys.path.insert(0, str(ROOT / "train"))
+    sys.path.insert(0, str(ROOT / "pipeline"))
+    from digitwise_protocol import (  # noqa: E402
+        apply_microstep,
+        canonical_state,
+        final_prompt,
+        initial_state,
+        microstep_prompt,
+        parse_state,
+        state_answer,
+    )
+    from generate_digitwise_recurrent_v1 import (  # noqa: E402
+        episode_from_operands,
+        normalized,
+        rows_from_episode,
+    )
 
 
 SCHEMA = "shohin-digitwise-factorial-v4"
@@ -111,6 +120,18 @@ HELDOUT_BRANCH_FIELDS = {
     "expected_states",
     "expected_answer",
 }
+GENERATOR_RUNTIME_SOURCE_PATHS = (
+    "pipeline/generate_digitwise_factorial_v4.py",
+    "pipeline/generate_digitwise_recurrent_v1.py",
+    "train/digitwise_protocol.py",
+)
+GENERATOR_VERIFICATION_SOURCE_PATHS = (
+    "pipeline/test_generate_digitwise_factorial_v4.py",
+)
+GENERATOR_SOURCE_PATHS = (
+    *GENERATOR_RUNTIME_SOURCE_PATHS,
+    *GENERATOR_VERIFICATION_SOURCE_PATHS,
+)
 
 
 def has_term_factor(arm: str) -> bool:
@@ -230,16 +251,29 @@ def stratified_terminal_counts(
 
 def expected_control_terminal_counts(
     operations_by_width: dict[int, dict[str, int]],
+    board_terminal_counts_by_width: dict[int, dict[str, Counter]],
 ) -> dict[int, dict[str, Counter]]:
-    return {
-        width: {
+    """Project control targets from the immutable stratified board allocation."""
+    if set(board_terminal_counts_by_width) != set(operations_by_width):
+        raise AssertionError("control target board widths do not match allocations")
+    result = {}
+    for width, counts in operations_by_width.items():
+        board_operations = board_terminal_counts_by_width[width]
+        if set(board_operations) != {"add", "sub"}:
+            raise AssertionError("control target board operations are incomplete")
+        board_sub = Counter(board_operations["sub"])
+        if (
+            set(board_sub) - set(SUB_TERMINAL_CLASSES)
+            or sum(board_sub.values()) != counts["sub"]
+        ):
+            raise AssertionError("control subtraction target is not a board allocation")
+        result[width] = {
             "add": Counter(
                 balanced_labels(CONTROL_ADD_TERMINAL_CLASSES, counts["add"])
             ),
-            "sub": Counter(balanced_labels(SUB_TERMINAL_CLASSES, counts["sub"])),
+            "sub": board_sub,
         }
-        for width, counts in operations_by_width.items()
-    }
+    return result
 
 
 def arithmetic_classes(operation: str | None = None) -> set[tuple[str, int, int, int]]:
@@ -273,6 +307,124 @@ def sha256_bytes(payload: bytes) -> str:
     return hashlib.sha256(payload).hexdigest()
 
 
+def _inode_identity(value: os.stat_result) -> tuple[int, int, int, int, int]:
+    return (
+        int(value.st_dev),
+        int(value.st_ino),
+        int(value.st_size),
+        int(value.st_mtime_ns),
+        stat.S_IMODE(value.st_mode),
+    )
+
+
+@dataclass(frozen=True)
+class ExactByteSnapshot:
+    logical_path: str
+    payload: bytes
+    sha256: str
+    binding: dict
+
+    def verify(self) -> str:
+        actual = sha256_bytes(self.payload)
+        if actual != self.sha256:
+            raise RuntimeError(
+                "captured bytes changed for {}: expected {}, got {}".format(
+                    self.logical_path, self.sha256, actual
+                )
+            )
+        return actual
+
+
+def capture_exact_file(
+    path: Path, logical_path: str | None = None
+) -> ExactByteSnapshot:
+    """Capture one regular file once and bind every later use to returned bytes."""
+    path = Path(path)
+    if path.is_symlink() or not path.is_file():
+        raise SystemExit("input is not a regular non-symlink file: {}".format(path))
+    resolved = path.resolve(strict=True)
+    flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(resolved, flags)
+    try:
+        before = os.fstat(descriptor)
+        path_before = os.stat(resolved, follow_symlinks=False)
+        if not stat.S_ISREG(before.st_mode) or _inode_identity(
+            before
+        ) != _inode_identity(path_before):
+            raise SystemExit("input changed while opening: {}".format(path))
+        chunks = []
+        digest = hashlib.sha256()
+        while True:
+            block = os.read(descriptor, 1024 * 1024)
+            if not block:
+                break
+            chunks.append(block)
+            digest.update(block)
+        payload = b"".join(chunks)
+        after = os.fstat(descriptor)
+        path_after = os.stat(resolved, follow_symlinks=False)
+        if _inode_identity(after) != _inode_identity(before):
+            raise SystemExit("input changed while capturing: {}".format(path))
+        if _inode_identity(path_after) != _inode_identity(before):
+            raise SystemExit("input path changed while capturing: {}".format(path))
+        if len(payload) != int(before.st_size):
+            raise SystemExit("input size changed while capturing: {}".format(path))
+        identity = {
+            "device": int(before.st_dev),
+            "inode": int(before.st_ino),
+            "mtime_ns": int(before.st_mtime_ns),
+            "mode": "{:04o}".format(stat.S_IMODE(before.st_mode)),
+            "size": int(before.st_size),
+        }
+        snapshot = ExactByteSnapshot(
+            logical_path=logical_path or str(path.resolve()),
+            payload=bytes(payload),
+            sha256=digest.hexdigest(),
+            binding={
+                "bytes": len(payload),
+                "capture": "one_pass_stable_descriptor_to_immutable_bytes_v1",
+                "fd_identity": identity,
+                "path": logical_path or str(path.resolve()),
+                "sha256": digest.hexdigest(),
+            },
+        )
+        snapshot.verify()
+        return snapshot
+    finally:
+        os.close(descriptor)
+
+
+def capture_generator_sources() -> dict[str, ExactByteSnapshot]:
+    bootstrap = globals().get("_BOOTSTRAP_SOURCE_SNAPSHOTS")
+    if bootstrap is not None:
+        snapshots = dict(bootstrap)
+    else:
+        snapshots = {
+            relative: capture_exact_file(ROOT / relative, relative)
+            for relative in GENERATOR_SOURCE_PATHS
+        }
+    if set(snapshots) != set(GENERATOR_SOURCE_PATHS):
+        raise RuntimeError("generator scientific source snapshot set mismatch")
+    for snapshot in snapshots.values():
+        snapshot.verify()
+    return {key: snapshots[key] for key in GENERATOR_SOURCE_PATHS}
+
+
+def source_manifest(snapshots: dict[str, ExactByteSnapshot]) -> dict:
+    return {
+        "capture": "one_pass_exact_bytes_consumed_by_frozen_cli_v1",
+        "runtime_sources": list(GENERATOR_RUNTIME_SOURCE_PATHS),
+        "verification_sources": list(GENERATOR_VERIFICATION_SOURCE_PATHS),
+        "sources": {
+            relative: {
+                "bytes": snapshots[relative].binding["bytes"],
+                "sha256": snapshots[relative].sha256,
+            }
+            for relative in GENERATOR_SOURCE_PATHS
+        },
+    }
+
+
 def heldout_branch_record(branch: dict) -> dict:
     if not isinstance(branch, dict) or set(branch) != HELDOUT_BRANCH_FIELDS:
         raise ValueError("invalid heldout branch fields")
@@ -301,7 +453,8 @@ def heldout_branch_record(branch: dict) -> dict:
     if state is None or not state["z"]:
         raise ValueError("heldout branch does not terminate")
     prompts.append(final_prompt(state, style="heldout"))
-    if int(branch["expected_answer"]) != state_answer(state):
+    validation_only_answer = int(branch["expected_answer"])
+    if validation_only_answer != state_answer(state):
         raise ValueError("invalid heldout answer")
     return {
         "id": str(branch["id"]),
@@ -310,7 +463,7 @@ def heldout_branch_record(branch: dict) -> dict:
         "width": width,
         "left": left,
         "right": right,
-        "answer": int(branch["expected_answer"]),
+        "_validation_only_answer": validation_only_answer,
         "signature": (width, left, right),
         "prompts": prompts,
     }
@@ -333,18 +486,27 @@ def heldout_pair_records(document: dict) -> tuple[dict, dict]:
     changed = int(base["left"] != counterfactual["left"]) + int(
         base["right"] != counterfactual["right"]
     )
-    if changed != 1 or base["answer"] == counterfactual["answer"]:
+    if (
+        changed != 1
+        or base["_validation_only_answer"] == counterfactual["_validation_only_answer"]
+    ):
         raise ValueError("invalid heldout counterfactual intervention")
+    del base["_validation_only_answer"]
+    del counterfactual["_validation_only_answer"]
     return base, counterfactual
 
 
 def load_heldout_contract(
-    path: Path, test_scale: int | None
+    source: ExactByteSnapshot | Path, test_scale: int | None
 ) -> tuple[set[tuple[int, int, int]], dict]:
-    if not path.is_file():
-        raise SystemExit("missing heldout board: {}".format(path))
-    payload = path.read_bytes()
-    digest = sha256_bytes(payload)
+    snapshot = (
+        source
+        if isinstance(source, ExactByteSnapshot)
+        else capture_exact_file(source, str(Path(source).resolve()))
+    )
+    snapshot.verify()
+    payload = snapshot.payload
+    digest = snapshot.sha256
     if test_scale is None and digest != FROZEN_HELDOUT_SHA256:
         raise SystemExit(
             "production heldout SHA-256 does not match frozen DRS v2 board"
@@ -389,7 +551,9 @@ def load_heldout_contract(
                 prompt_keys.add(key)
 
     summary = {
-        "path": str(path.resolve()),
+        "path": snapshot.logical_path,
+        "bytes": len(payload),
+        "capture": snapshot.binding["capture"],
         "sha256": digest,
         "frozen_sha256_required": (
             FROZEN_HELDOUT_SHA256 if test_scale is None else None
@@ -401,6 +565,14 @@ def load_heldout_contract(
         "unique_signatures": len(signatures),
         "unique_normalized_prompts": len(prompt_keys),
         "regimes": dict(sorted(regimes.items())),
+        "answer_boundary": {
+            "answer_fields_read_for": [
+                "solver_witness_validation",
+                "counterfactual_answer_change_validation",
+            ],
+            "answer_values_retained_for_training": False,
+            "training_constructor_receives": ["reserved_operand_signatures"],
+        },
     }
     if not top_level_episodes or branches != 2 * top_level_episodes:
         raise SystemExit("heldout board has no complete counterfactual pairs")
@@ -439,17 +611,20 @@ def build_slots(allocations: dict[int, int], rng: random.Random) -> list[dict]:
                 for label in labels
             )
     rng.shuffle(slots)
-    assign_control_allocation(slots, operations_by_width, rng)
+    assign_control_allocation(slots, operations_by_width, terminal_by_width, rng)
     return slots
 
 
 def assign_control_allocation(
     slots: list[dict],
     operations_by_width: dict[int, dict[str, int]],
+    board_terminal_counts_by_width: dict[int, dict[str, Counter]],
     rng: random.Random,
 ) -> None:
     """Predeclare the no-TERM terminal multiplicity and matched row budget."""
-    targets = expected_control_terminal_counts(operations_by_width)
+    targets = expected_control_terminal_counts(
+        operations_by_width, board_terminal_counts_by_width
+    )
     for slot in slots:
         slot["control_terminal_multiplicity"] = 1
         slot["budget_transition_positions"] = []
@@ -527,6 +702,25 @@ def assign_control_allocation(
             raise AssertionError("control terminal allocation missed its target")
         if sum(observed.values()) != operation_counts["add"]:
             raise AssertionError("control terminal position budget changed")
+
+        observed_sub = Counter(
+            {
+                terminal_class: sum(
+                    int(slots[index]["control_terminal_multiplicity"])
+                    for index, slot in enumerate(slots)
+                    if slot["width"] == width
+                    and slot["operation"] == "sub"
+                    and slot["terminal_class"] == terminal_class
+                )
+                for terminal_class in SUB_TERMINAL_CLASSES
+            }
+        )
+        if observed_sub != targets[width]["sub"]:
+            raise AssertionError(
+                "control subtraction allocation diverged from its board target"
+            )
+        if sum(observed_sub.values()) != operation_counts["sub"]:
+            raise AssertionError("control subtraction position budget changed")
 
 
 def assign_designated_classes(
@@ -948,7 +1142,7 @@ def verify_episode_population(
     if terminal_counts_by_width != expected_by_width:
         raise RuntimeError("board terminal classes are not width-stratified")
     expected_control_by_width = expected_control_terminal_counts(
-        operation_allocations(allocations)
+        operation_allocations(allocations), expected_by_width
     )
     expected_control = {"add": Counter(), "sub": Counter()}
     for operations in expected_control_by_width.values():
@@ -1120,14 +1314,6 @@ def rows_for_episode(episode: dict, arm: str) -> list[dict]:
     return rows
 
 
-def sha256_file(path: str | Path) -> str:
-    digest = hashlib.sha256()
-    with open(path, "rb") as source:
-        for block in iter(lambda: source.read(1024 * 1024), b""):
-            digest.update(block)
-    return digest.hexdigest()
-
-
 def partial_path(path: Path) -> Path:
     return path.with_name(path.name + ".partial")
 
@@ -1144,9 +1330,126 @@ def ensure_pairwise_artifact_paths(paths: tuple[Path, ...]) -> None:
                 raise SystemExit("final and .partial paths must not alias")
 
 
-def flush_and_sync(output) -> None:
-    output.flush()
-    os.fsync(output.fileno())
+def _fd_sha256(descriptor: int) -> str:
+    digest = hashlib.sha256()
+    offset = 0
+    while True:
+        block = os.pread(descriptor, 1024 * 1024, offset)
+        if not block:
+            return digest.hexdigest()
+        digest.update(block)
+        offset += len(block)
+
+
+@dataclass
+class PreparedArtifact:
+    path: Path
+    directory_fd: int
+    temporary_name: str
+    descriptor: int
+    identity: tuple[int, int, int, int, int]
+    sha256: str
+    bytes: int
+    published: bool = False
+
+    def publish(self, before_link=None) -> None:
+        if before_link is not None:
+            before_link(self.path)
+        os.link(
+            self.temporary_name,
+            self.path.name,
+            src_dir_fd=self.directory_fd,
+            dst_dir_fd=self.directory_fd,
+            follow_symlinks=False,
+        )
+        os.fsync(self.directory_fd)
+        published = os.stat(
+            self.path.name, dir_fd=self.directory_fd, follow_symlinks=False
+        )
+        if _inode_identity(published) != self.identity:
+            raise RuntimeError(
+                "published artifact identity mismatch: {}".format(self.path)
+            )
+        if _fd_sha256(self.descriptor) != self.sha256:
+            raise RuntimeError("published artifact bytes changed: {}".format(self.path))
+        self.published = True
+
+    def close(self) -> None:
+        try:
+            os.unlink(self.temporary_name, dir_fd=self.directory_fd)
+        except FileNotFoundError:
+            pass
+        os.close(self.descriptor)
+        os.close(self.directory_fd)
+
+
+def prepare_artifact(path: Path, writer, *, binary: bool = False) -> PreparedArtifact:
+    """Prepare one fsynced private inode; final publication is a no-replace link."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    directory_fd = os.open(
+        path.parent,
+        os.O_RDONLY
+        | getattr(os, "O_CLOEXEC", 0)
+        | getattr(os, "O_DIRECTORY", 0)
+        | getattr(os, "O_NOFOLLOW", 0),
+    )
+    parent_stat = os.fstat(directory_fd)
+    path_parent_stat = os.stat(path.parent, follow_symlinks=False)
+    if not stat.S_ISDIR(parent_stat.st_mode) or (
+        parent_stat.st_dev,
+        parent_stat.st_ino,
+    ) != (path_parent_stat.st_dev, path_parent_stat.st_ino):
+        os.close(directory_fd)
+        raise RuntimeError(
+            "artifact parent changed while opening: {}".format(path.parent)
+        )
+    temporary_name = ".{}.private.{}.{}".format(path.name, os.getpid(), time.time_ns())
+    descriptor = -1
+    try:
+        descriptor = os.open(
+            temporary_name,
+            os.O_RDWR | os.O_CREAT | os.O_EXCL,
+            0o600,
+            dir_fd=directory_fd,
+        )
+        mode = "wb" if binary else "w"
+        kwargs = {} if binary else {"encoding": "utf-8", "newline": "\n"}
+        with os.fdopen(os.dup(descriptor), mode, **kwargs) as output:
+            writer(output)
+            output.flush()
+            os.fsync(output.fileno())
+        file_stat = os.fstat(descriptor)
+        if file_stat.st_size <= 0:
+            raise RuntimeError("refusing empty artifact: {}".format(path))
+        os.fchmod(descriptor, 0o444)
+        os.fsync(descriptor)
+        return PreparedArtifact(
+            path=path,
+            directory_fd=directory_fd,
+            temporary_name=temporary_name,
+            descriptor=descriptor,
+            identity=_inode_identity(os.fstat(descriptor)),
+            sha256=_fd_sha256(descriptor),
+            bytes=int(file_stat.st_size),
+        )
+    except BaseException:
+        try:
+            os.unlink(temporary_name, dir_fd=directory_fd)
+        except FileNotFoundError:
+            pass
+        if descriptor >= 0:
+            os.close(descriptor)
+        os.close(directory_fd)
+        raise
+
+
+def publish_bytes_no_replace(path: Path, payload: bytes, before_link=None) -> None:
+    artifact = prepare_artifact(path, lambda output: output.write(payload), binary=True)
+    try:
+        artifact.publish(before_link=before_link)
+    finally:
+        artifact.close()
 
 
 def publish(
@@ -1159,31 +1462,27 @@ def publish(
     test_scale: int | None,
     population_stats: dict,
     heldout_summary: dict,
+    source_snapshots: dict[str, ExactByteSnapshot],
 ) -> dict:
     destinations = (data_path, episodes_path, report_path)
     ensure_pairwise_artifact_paths(destinations)
-    partials = tuple(partial_path(path) for path in destinations)
-    if any(path.exists() for path in destinations + partials):
-        raise SystemExit("refusing to overwrite an existing artifact or partial")
-    for path in destinations:
-        path.parent.mkdir(parents=True, exist_ok=True)
-
-    data_partial, episodes_partial, report_partial = partials
-    created = []
+    prepared: list[PreparedArtifact] = []
     try:
-        with episodes_partial.open("x", encoding="utf-8", newline="\n") as output:
-            created.append(episodes_partial)
+
+        def write_episodes(output) -> None:
             for episode in episodes:
                 output.write(json.dumps(episode, sort_keys=True) + "\n")
-            flush_and_sync(output)
+
+        episodes_artifact = prepare_artifact(episodes_path, write_episodes)
+        prepared.append(episodes_artifact)
 
         seen_prompts = set()
         row_counts = Counter()
         terminal_row_counts = {"add": Counter(), "sub": Counter()}
         allocation_roles = Counter()
         visible_features = Counter()
-        with data_partial.open("x", encoding="utf-8", newline="\n") as output:
-            created.append(data_partial)
+
+        def write_data(output) -> None:
             for episode in episodes:
                 for row in rows_for_episode(episode, arm):
                     prompt = normalized(row["completion_prompt"])
@@ -1209,7 +1508,9 @@ def publish(
                             row["terminal_class"]
                         ] += 1
                     output.write(json.dumps(row, sort_keys=True) + "\n")
-            flush_and_sync(output)
+
+        data_artifact = prepare_artifact(data_path, write_data)
+        prepared.append(data_artifact)
 
         allocations = allocations_for_arm(arm, test_scale)
         target = structural_counts(allocations)
@@ -1230,8 +1531,11 @@ def publish(
             else {operation: Counter() for operation in ("add", "sub")}
         )
         if not has_term_factor(arm):
-            for operations in expected_control_terminal_counts(
+            board_terminal_counts_by_width = stratified_terminal_counts(
                 operation_allocations(allocations)
+            )
+            for operations in expected_control_terminal_counts(
+                operation_allocations(allocations), board_terminal_counts_by_width
             ).values():
                 for operation, counts in operations.items():
                     expected_rows[operation].update(counts)
@@ -1281,10 +1585,12 @@ def publish(
             **population_stats,
             "data": str(data_path.resolve()),
             "episodes": str(episodes_path.resolve()),
-            "data_sha256": sha256_file(data_partial),
-            "episodes_sha256": sha256_file(episodes_partial),
+            "data_bytes": data_artifact.bytes,
+            "data_sha256": data_artifact.sha256,
+            "episodes_bytes": episodes_artifact.bytes,
+            "episodes_sha256": episodes_artifact.sha256,
             "paired_board": {
-                "literal_jsonl_sha256": sha256_file(episodes_partial),
+                "literal_jsonl_sha256": episodes_artifact.sha256,
                 "episode_ids_sha256": sha256_bytes(board_ids),
                 "episode_count": len(episodes),
                 "first_episode_id": episodes[0]["id"],
@@ -1294,8 +1600,18 @@ def publish(
                 ),
                 "required_counterpart_arm": paired_arm(arm),
             },
-            "generator_sha256": sha256_file(__file__),
-            "protocol_sha256": sha256_file(ROOT / "train" / "digitwise_protocol.py"),
+            "scientific_source_manifest": source_manifest(source_snapshots),
+            "runtime": {
+                "python": platform.python_version(),
+                "python_implementation": platform.python_implementation(),
+            },
+            "generator_sha256": source_snapshots[
+                "pipeline/generate_digitwise_factorial_v4.py"
+            ].sha256,
+            "recurrent_generator_sha256": source_snapshots[
+                "pipeline/generate_digitwise_recurrent_v1.py"
+            ].sha256,
+            "protocol_sha256": source_snapshots["train/digitwise_protocol.py"].sha256,
             "factorial_contract": (
                 "TERM changes terminal-transition supervision allocation on a byte-identical "
                 "paired episode board; WIDTH changes the width allocation; every arm retains "
@@ -1311,8 +1627,9 @@ def publish(
                 "Cartesian enumeration of every width/position/digit context."
             ),
             "claim_boundary": (
-                "CPU-only data construction and admission evidence; the heldout board is read only "
-                "for identity and contamination exclusion, and no model or capability result is read."
+                "CPU-only data construction evidence. Heldout answers are read only to validate "
+                "solver witnesses and counterfactual changes; only reserved operand signatures "
+                "reach training-board construction. No heldout answer constructs a training row."
             ),
             "residual_bundle_confound": (
                 "Digit-readout and final-answer rows remain common and expose the completed "
@@ -1323,20 +1640,18 @@ def publish(
                 "aggregate position budgets are paired exactly."
             ),
         }
-        with report_partial.open("x", encoding="utf-8", newline="\n") as output:
-            created.append(report_partial)
-            output.write(json.dumps(report, indent=2, sort_keys=True) + "\n")
-            flush_and_sync(output)
 
-        os.replace(data_partial, data_path)
-        os.replace(episodes_partial, episodes_path)
-        os.replace(report_partial, report_path)
+        def write_report(output) -> None:
+            output.write(json.dumps(report, indent=2, sort_keys=True) + "\n")
+
+        report_artifact = prepare_artifact(report_path, write_report)
+        prepared.append(report_artifact)
+        for artifact in prepared:
+            artifact.publish()
         return report
-    except BaseException:
-        for path in created:
-            if path.exists():
-                path.unlink()
-        raise
+    finally:
+        for artifact in prepared:
+            artifact.close()
 
 
 def main() -> None:
@@ -1360,8 +1675,10 @@ def main() -> None:
     ensure_pairwise_artifact_paths(
         (args.heldout, args.data_out, args.episodes_out, args.report)
     )
+    source_snapshots = capture_generator_sources()
+    heldout_snapshot = capture_exact_file(args.heldout, str(args.heldout.resolve()))
     reserved_signatures, heldout_summary = load_heldout_contract(
-        args.heldout, args.test_scale
+        heldout_snapshot, args.test_scale
     )
     episodes, stats = build_episodes(
         args.arm,
@@ -1378,9 +1695,64 @@ def main() -> None:
         args.test_scale,
         stats,
         heldout_summary,
+        source_snapshots,
     )
     print(json.dumps(report, sort_keys=True))
 
 
+def _frozen_module(name: str, snapshot: ExactByteSnapshot) -> types.ModuleType:
+    module = types.ModuleType(name)
+    module.__file__ = str(ROOT / snapshot.logical_path)
+    module.__package__ = ""
+    module.__loader__ = None
+    module.__spec__ = None
+    sys.modules[name] = module
+    exec(compile(snapshot.payload, module.__file__, "exec"), module.__dict__)
+    return module
+
+
+def _run_frozen_cli() -> None:
+    """Execute all scientific generator code from one exact-byte source capture."""
+    snapshots = {
+        relative: capture_exact_file(ROOT / relative, relative)
+        for relative in GENERATOR_SOURCE_PATHS
+    }
+    protocol = _frozen_module(
+        "digitwise_protocol", snapshots["train/digitwise_protocol.py"]
+    )
+    recurrent = _frozen_module(
+        "generate_digitwise_recurrent_v1",
+        snapshots["pipeline/generate_digitwise_recurrent_v1.py"],
+    )
+    protocol_names = (
+        "apply_microstep",
+        "canonical_state",
+        "final_prompt",
+        "initial_state",
+        "microstep_prompt",
+        "parse_state",
+        "state_answer",
+    )
+    recurrent_names = ("episode_from_operands", "normalized", "rows_from_episode")
+    namespace = {
+        "__name__": "__main__",
+        "__file__": str(ROOT / "pipeline/generate_digitwise_factorial_v4.py"),
+        "__package__": None,
+        "_BOOTSTRAP_ACTIVE": True,
+        "_BOOTSTRAP_SOURCE_SNAPSHOTS": snapshots,
+        "_FROZEN_PROTOCOL_EXPORTS": {
+            name: getattr(protocol, name) for name in protocol_names
+        },
+        "_FROZEN_RECURRENT_EXPORTS": {
+            name: getattr(recurrent, name) for name in recurrent_names
+        },
+    }
+    generator = snapshots["pipeline/generate_digitwise_factorial_v4.py"]
+    exec(compile(generator.payload, namespace["__file__"], "exec"), namespace)
+
+
 if __name__ == "__main__":
-    main()
+    if globals().get("_BOOTSTRAP_ACTIVE"):
+        main()
+    else:
+        _run_frozen_cli()
