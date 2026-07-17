@@ -496,3 +496,8 @@ def test_source_contract_and_slurm_allowlist_cover_every_scientific_file(monkeyp
     wrapper = (ROOT / "train" / "jobs" / "causal_carry_motor.sbatch").read_text()
     for path in SCIENTIFIC_SOURCE_PATHS:
         assert path in wrapper
+    assert "carry_motor_%j_%r.out" in wrapper
+    assert "carry_motor_%j_%r.err" in wrapper
+    assert 'scontrol show job -o "$SLURM_JOB_ID"' in wrapper
+    assert '" Requeue=0 "' in wrapper
+    assert "refusing restarted carry-motor job" in wrapper

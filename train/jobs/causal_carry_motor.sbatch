@@ -9,8 +9,8 @@
 #SBATCH --time=04:00:00
 #SBATCH --no-requeue
 #SBATCH --open-mode=truncate
-#SBATCH -o /lustre/fs1/home/sa305415/shohin/logs/carry_motor_%j.out
-#SBATCH -e /lustre/fs1/home/sa305415/shohin/logs/carry_motor_%j.err
+#SBATCH -o /lustre/fs1/home/sa305415/shohin/logs/carry_motor_%j_%r.out
+#SBATCH -e /lustre/fs1/home/sa305415/shohin/logs/carry_motor_%j_%r.err
 
 set -euo pipefail
 
@@ -45,10 +45,26 @@ for path in "$SOURCE_ROOT" "$DATA_ROOT" "$CKPT" "$TOKENIZER" "$EPISODES" "$CYCLE
   fi
 done
 
-if [[ "${SLURM_RESTART_COUNT:-0}" != 0 ]]; then
+RESTART_COUNT=${SLURM_RESTART_COUNT:-0}
+if [[ "$RESTART_COUNT" != 0 ]]; then
   echo "refusing restarted carry-motor job" >&2
   exit 2
 fi
+JOB_RECORD=$(scontrol show job -o "$SLURM_JOB_ID")
+if [[ "$JOB_RECORD" != *" Requeue=0 "* ]]; then
+  echo "live Slurm policy does not preserve --no-requeue" >&2
+  exit 2
+fi
+for spec in "StdOut=carry_motor_${SLURM_JOB_ID}_${RESTART_COUNT}.out" \
+            "StdErr=carry_motor_${SLURM_JOB_ID}_${RESTART_COUNT}.err"; do
+  key=${spec%%=*}
+  suffix=${spec#*=}
+  observed=$(sed -n "s/.* ${key}=\([^ ]*\).*/\1/p" <<<"$JOB_RECORD")
+  if [[ "$observed" != *"$suffix" ]]; then
+    echo "live Slurm $key path is not restart-distinguishing: $observed" >&2
+    exit 2
+  fi
+done
 if [[ -e "$OUT" || -e "$OUT.json" ]]; then
   echo "refusing existing output: $OUT" >&2
   exit 2
