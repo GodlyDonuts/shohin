@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 11:32 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 11:40 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -14,6 +14,9 @@
 > local effect (`+91/3000` terminal-exact branches versus WIDTH, exact McNemar
 > `p=0.00021883968181106602`) but no complete-execution gain: closed branches are only `250/3000`,
 > paired-both-closed remains `75/1500`, and state-exact branch flow has 249 gains versus 211 losses.
+> The new carry-conditioned replay shows that 179/249 state gains clear an active terminal
+> carry/borrow (`10`), while 200/211 state losses occur when no terminal carry/borrow should exist
+> (`00`); the treatment has learned a useful but overfiring carry-clear boundary.
 > OCSC and the six-case carry-recovery intervention are the strongest targeted next hypotheses. OCSC
 > has a fresh publication/runtime `NO-GO` and is under a second bounded repair; carry recovery remains
 > in fresh exact-byte review. Neither authorizes H100 work yet. Newton is idle. Stokes jobs
@@ -7072,3 +7075,25 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   scientific construction and deterministic publication gates, and return exact hashes plus a
   warning-strict verification result. CPU publication, Linux/Stokes qualification, trainer/evaluator
   work, and H100 execution remain `NO-GO` pending a successful repair and fresh independent review.
+
+- **2026-07-18 11:40** -- **A new immutable carry-conditioned replay turns the aggregate
+  TERM+WIDTH churn into a specific decision-boundary diagnosis.** Replay v2 independently rebuilds
+  the sealed four-arm reports and groups every paired WIDTH -> TERM+WIDTH branch by operation,
+  width, and the frozen carry/borrow transition on the final digit. Of the 249 branches that newly
+  become state-exact, **179 (71.89%)** are class `10`: an active carry/borrow before the final digit
+  that must be cleared afterward. Of the 211 branches that lose state exactness, **200 (94.79%)**
+  are class `00`: no carry/borrow before or after the final digit. Subtraction class `00` alone
+  accounts for **158/211 (74.88%)** losses. The largest cells are add-width4 `10` at `+65/-4`,
+  subtract-width4 `10` at `+94/-7`, and subtract-width4 `00` at `+36/-107`.
+
+  This rules out an undifferentiated-width explanation. TERM+WIDTH has learned a real terminal
+  carry-clear operation but applies the carry-related boundary too broadly, especially to
+  no-borrow subtraction. OCSC therefore has an exact causal target: retain the `10` gains while
+  preventing invented carry/borrow state on matched `00` cases; aggregate answer gains without that
+  dissociation are insufficient. The new read-only artifact is
+  `artifacts/eval_history/digitwise_factorial_v4_four_arm_replay_v2_de45ace_20260718.json`, 40,028
+  bytes, SHA-256 `b779f27a3f508a766965b05596e19b676f5d171156e40fa1184bc7a9ad4c2a80`.
+  Replay source SHA-256 is `b4fd30c91a7d5eff4f0a991d9e0e789db0c36b16fcfe995f7aa81c5aa1c0afba`;
+  test SHA-256 is `bec7e34dec04a6de563d2c872b4208dba77550a9e124d0f4134c9e3ba2200c30`.
+  Ten isolated tests pass in 23.83 seconds; Ruff, format, and isolated compilation pass. This is a
+  diagnosis and preregistration constraint, not a capability claim or execution authorization.

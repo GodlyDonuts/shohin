@@ -1149,6 +1149,117 @@ def compare_arms(left: Mapping[str, Any], right: Mapping[str, Any]) -> dict[str,
     }
 
 
+def carry_conditioned_branch_tradeoff(
+    left: Mapping[str, Any], right: Mapping[str, Any]
+) -> dict[str, Any]:
+    """Decompose paired branch changes by the frozen terminal carry transition."""
+    require(
+        left["heldout_identity"] == right["heldout_identity"],
+        "cross-arm heldout identity differs",
+    )
+    grouped: dict[str, tuple[list[Mapping[str, Any]], list[Mapping[str, Any]]]] = {}
+    left_rows = arm_rows(left, "branches")
+    right_rows = arm_rows(right, "branches")
+    require(len(left_rows) == len(right_rows), "paired arm lengths differ")
+    for left_row, right_row in zip(left_rows, right_rows, strict=True):
+        require(left_row["id"] == right_row["id"], "paired arm IDs differ")
+        identity = (
+            str(left_row["operation"]),
+            strict_int(left_row["width"], "left.width"),
+            str(left_row["terminal_carry_class"]),
+        )
+        require(
+            identity
+            == (
+                str(right_row["operation"]),
+                strict_int(right_row["width"], "right.width"),
+                str(right_row["terminal_carry_class"]),
+            ),
+            "paired branch carry identity differs",
+        )
+        operation, width, carry_class = identity
+        require(operation in {"add", "sub"}, "paired branch operation is invalid")
+        require(carry_class in {"00", "01", "10", "11"}, "carry class is invalid")
+        key = f"{operation}|w{width}|{carry_class}"
+        if key not in grouped:
+            grouped[key] = ([], [])
+        grouped[key][0].append(left_row)
+        grouped[key][1].append(right_row)
+
+    groups: dict[str, dict[str, Any]] = {}
+    for key, (left_group, right_group) in sorted(grouped.items()):
+        operation, width_text, carry_class = key.split("|")
+        groups[key] = {
+            "operation": operation,
+            "width": int(width_text[1:]),
+            "terminal_carry_class": carry_class,
+            "branches": len(left_group),
+            "state_closed_loop_exact": paired_boolean(
+                left_group, right_group, "state_closed_loop_exact"
+            ),
+            "closed_loop_success": paired_boolean(
+                left_group, right_group, "closed_loop_success"
+            ),
+        }
+
+    overall = compare_arms(left, right)["branches"]
+    state_gains = overall["state_closed_loop_exact"]["right_only_gains"]
+    state_losses = overall["state_closed_loop_exact"]["left_only_losses"]
+    class_10_gains = sum(
+        group["state_closed_loop_exact"]["right_only_gains"]
+        for group in groups.values()
+        if group["terminal_carry_class"] == "10"
+    )
+    class_00_losses = sum(
+        group["state_closed_loop_exact"]["left_only_losses"]
+        for group in groups.values()
+        if group["terminal_carry_class"] == "00"
+    )
+    sub_class_00_losses = sum(
+        group["state_closed_loop_exact"]["left_only_losses"]
+        for group in groups.values()
+        if group["operation"] == "sub" and group["terminal_carry_class"] == "00"
+    )
+    require(
+        sum(
+            group["state_closed_loop_exact"]["right_only_gains"]
+            for group in groups.values()
+        )
+        == state_gains,
+        "grouped state gains do not reconcile",
+    )
+    require(
+        sum(
+            group["state_closed_loop_exact"]["left_only_losses"]
+            for group in groups.values()
+        )
+        == state_losses,
+        "grouped state losses do not reconcile",
+    )
+    return {
+        "left_arm": str(left["arm"]),
+        "right_arm": str(right["arm"]),
+        "terminal_carry_class_semantics": "carry_or_borrow_before_final_digit->after_final_digit",
+        "groups": groups,
+        "state_change_concentration": {
+            "total_right_only_gains": state_gains,
+            "total_left_only_losses": state_losses,
+            "class_10_right_only_gains": class_10_gains,
+            "class_10_gain_share": (
+                class_10_gains / state_gains if state_gains else None
+            ),
+            "class_00_left_only_losses": class_00_losses,
+            "class_00_loss_share": (
+                class_00_losses / state_losses if state_losses else None
+            ),
+            "sub_class_00_left_only_losses": sub_class_00_losses,
+            "sub_class_00_loss_share": (
+                sub_class_00_losses / state_losses if state_losses else None
+            ),
+        },
+    }
+
+
 def factorial_analysis(
     results: Mapping[str, Mapping[str, Any]],
 ) -> dict[str, Any] | None:
@@ -1179,7 +1290,13 @@ def factorial_analysis(
                 field
             ]["absolute_rate_delta"]
             interaction[level][field] = term_with - term_without
-    return {"comparisons": comparisons, "term_by_width_interaction": interaction}
+    return {
+        "comparisons": comparisons,
+        "term_by_width_interaction": interaction,
+        "width_to_term_width_carry_conditioned_tradeoff": (
+            carry_conditioned_branch_tradeoff(results["width"], results["term_width"])
+        ),
+    }
 
 
 def parse_args() -> argparse.Namespace:
@@ -1196,7 +1313,7 @@ def main() -> None:
         require(result["arm"] not in replayed, f"duplicate arm: {result['arm']}")
         replayed[result["arm"]] = result
     summary = {
-        "audit": "shohin-digitwise-factorial-v4-independent-replay-v1",
+        "audit": "shohin-digitwise-factorial-v4-independent-replay-v2",
         "status": "complete",
         "arms": {
             arm: {

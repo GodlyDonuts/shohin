@@ -140,6 +140,44 @@ def test_locked_width_to_term_width_paired_contrast_when_present() -> None:
     )
 
 
+def test_locked_width_to_term_width_carry_tradeoff_when_present() -> None:
+    width_path = REPORT_ROOT / "width" / "report.json"
+    term_width_path = REPORT_ROOT / "term_width" / "report.json"
+    if not width_path.exists() or not term_width_path.exists():
+        pytest.skip("large immutable reports are not installed")
+    tradeoff = replay.carry_conditioned_branch_tradeoff(
+        replay.load_and_replay(width_path),
+        replay.load_and_replay(term_width_path),
+    )
+    concentration = tradeoff["state_change_concentration"]
+    assert concentration == {
+        "total_right_only_gains": 249,
+        "total_left_only_losses": 211,
+        "class_10_right_only_gains": 179,
+        "class_10_gain_share": pytest.approx(179 / 249),
+        "class_00_left_only_losses": 200,
+        "class_00_loss_share": pytest.approx(200 / 211),
+        "sub_class_00_left_only_losses": 158,
+        "sub_class_00_loss_share": pytest.approx(158 / 211),
+    }
+    assert (
+        tradeoff["groups"]["add|w4|10"]["state_closed_loop_exact"]["right_only_gains"]
+        == 65
+    )
+    assert (
+        tradeoff["groups"]["add|w4|10"]["state_closed_loop_exact"]["left_only_losses"]
+        == 4
+    )
+    assert (
+        tradeoff["groups"]["sub|w4|00"]["state_closed_loop_exact"]["right_only_gains"]
+        == 36
+    )
+    assert (
+        tradeoff["groups"]["sub|w4|00"]["state_closed_loop_exact"]["left_only_losses"]
+        == 107
+    )
+
+
 def test_locked_serializer_error_profile_when_reports_present() -> None:
     expected_profiles = {
         "iid": {
