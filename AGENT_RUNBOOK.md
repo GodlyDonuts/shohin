@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 13:44 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 14:04 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -7518,3 +7518,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   nonlinear reader will generalize, improve full-vocabulary decoding, or improve autonomous
   execution. The audit source, tests, and report remain uncommitted pending independent review, and
   the carry motor must beat this favorable null on every preregistered stratum.
+
+- **2026-07-18 14:00--14:04** -- **Restored VPN access is live with remote custody unchanged, and a
+  fit-only nuisance audit raises the carry-reader control bar.** Fresh authenticated checks reach
+  Newton login host `evuser2` with an empty queue and Stokes login host `euser1` with exactly jobs
+  `741065`--`741074`, all `PENDING (JobHeldUser)` at `0:00`. No job was released, submitted,
+  canceled, or modified.
+
+  On the immutable 40-direction layer-29 carry board, a global delta selected using only the 16
+  `fit_w4`/`fit_w6` directions scores **15/16 fit and 35/40 total**. An op-only fit reaches the same
+  **35/40**, including **7/8** width-8 OOD. More importantly, op-by-width deltas selected before any
+  OOD reveal fit all **16/16** training directions and score **15/16** on the same-width value-OOD
+  directions. A diagnostic linear extrapolation to width eight scores only 6/8 and is ineligible as
+  a scientific control unless preregistered. The active carry-recovery owner received these exact
+  results. Its repaired protocol must include a no-residual nuisance-calibration arm using only
+  preregistered metadata such as operation, width, cursor, and terminal status, freeze it before OOD
+  reveal, and require noncompensatory treatment-over-nuisance gains. Beating one global constant is
+  necessary but no longer sufficient evidence of feature-dependent reading.
