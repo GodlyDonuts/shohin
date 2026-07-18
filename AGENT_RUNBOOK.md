@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 14:20 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 14:29 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -7587,3 +7587,28 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   exact bytes and must adversarially replay every prior execution-boundary defect. EOS commit,
   Linux/Stokes qualification, Newton, CUDA, and H100 remain `NO-GO`; no remote or scientific state
   changed.
+
+- **2026-07-18 14:20--14:29** -- **Carry recovery completes its nuisance-control repair and enters
+  fresh independent review; a v3 deterministic audit exposes calibration instability instead of
+  hiding it behind one favorable point.** In the isolated carry worktree, the author reports
+  preregistration SHA-256 `e3ccedf389feca943462a772bad6cfe5c55ce3b1a851a4fe539131f0ceef9e0b`,
+  implementation `d639e48a5928f4dfadf5fa4a8f68983e2c6ff1e19e21f667f199ddb35904c662`, tests
+  `e2200b6903611a0b3640042ad7dc36d02945a4985d65cbd43b1f1c48db42978b`, and wrapper
+  `69f4460c9e04352d75f06aa7cbfb72db0e9331cf3da9e3c59ce9add476e18c42`. The claimed protocol now
+  adds a global `constant_bias` arm and a nine-parameter `nuisance_only` arm using only operation,
+  width, cursor, and terminal metadata, with the same true-label rows, full-vocabulary objective,
+  optimizer, batch schedule, seed, exclusions, and 2,000 updates as treatment. Its warning-strict
+  suite reports **157 passed in 92.71s**. Reviewer
+  `019f767c-919d-76b0-8715-dac5b97dd6e3` owns the exact-byte and scientific decision.
+
+  The local calibration audit is superseded again before review: source SHA-256 is now
+  `17a6e7b185714fb4e5c59a7642bce2ed01bd8311b8bccbf4b20c235468c888c5`, its 12-test suite SHA-256
+  is `abcabd91a88e2c7d4472b14aaeaab6e0802ec003f31447901403a135418cd08e`, and read-only v3 report
+  `artifacts/eval_history/drs_carry_nuisance_audit_20260718_v3.json` is 23,562 bytes, SHA-256
+  `ff75eb0db01037ec9cee9fb90459254875f41caeec70f8f789b53dffe3d092f4`. V3 preserves the
+  minimum-intervention op-by-width point (**16/16 fit, 15/16 value OOD**) but shows that equally
+  fit-perfect deltas span **11/16--16/16** value OOD; the fit-only cross-entropy solution is
+  **14/16**. Thus no single tie-broken delta is robust causal evidence. The trained nuisance arm,
+  frozen before confirmation reveal, is the decisive control. Carry commit, install, Stokes,
+  Newton, H100 fit, and any feature-use claim remain `NO-GO` pending review. V1/v2 reports remain
+  read-only evidence; v3 source, tests, and report remain uncommitted.
