@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 11:51 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 12:00 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -16,7 +16,8 @@
 > paired-both-closed remains `75/1500`, and state-exact branch flow has 249 gains versus 211 losses.
 > The new carry-conditioned replay shows that 179/249 state gains clear an active terminal
 > carry/borrow (`10`), while 200/211 state losses occur when no terminal carry/borrow should exist
-> (`00`); the treatment has learned a useful but overfiring carry-clear boundary.
+> (`00`); field-level replay confirms that 196/200 of those `00` losses first mismatch `c`. The
+> treatment has learned a useful but overfiring carry-clear boundary.
 > OCSC and the six-case carry-recovery intervention are the strongest targeted next hypotheses. OCSC
 > has a fresh publication/runtime `NO-GO` and is under a second bounded repair; carry recovery remains
 > in fresh exact-byte review. Neither authorizes H100 work yet. Newton is idle. Stokes jobs
@@ -7145,3 +7146,23 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   smoke, and a fully frozen downstream decision boundary. Preserve-as-rejected-evidence is `GO`;
   commit, installation, signing, Newton preflight, and H100 execution remain `NO-GO` pending repair
   and a new independent exact-byte review.
+
+- **2026-07-18 12:00** -- **Replay v3 confirms that the carry-conditioned regressions are actual
+  carry-bit errors, not merely branches belonging to a carry-labelled subgroup.** For each WIDTH ->
+  TERM+WIDTH state-exact loss, the independent verifier now reconstructs the first incorrect row and
+  records its exact differing state fields and position. The carry/borrow field `c` is involved in
+  **207/211 (98.10%)** regressions. Among expected class `00` branches, `c` is involved in
+  **196/200 (98.00%)** losses; among subtraction class `00`, it is involved in **155/158 (98.10%)**.
+  Subtract-width4 class `00` has 99 `c`-only, 7 `c+r`, and one `r`-only first mismatch; add-width4
+  class `00` has 23 `c`-only and one `r`-only mismatch. Many failures occur before the final digit,
+  so the mechanism is premature carry/borrow activation during the trajectory, not only malformed
+  final serialization.
+
+  The immutable read-only artifact is
+  `artifacts/eval_history/digitwise_factorial_v4_four_arm_replay_v3_de45ace_20260718.json`, 42,804
+  bytes, SHA-256 `a418a23370eabf5b4eb94c84c7779eb32e640de7a8f2e3b6169c1c07d86fea45`.
+  Replay source SHA-256 is `9ac53a4e1d715cfd7803a08d41c99e5a7947a41e265a95b3a60c2394e9dc973f`;
+  test SHA-256 is `864f168bc17618094f016db6ab8db66db4a44346ad58bb9d3df7794fb595298c`.
+  Ten isolated tests pass in 23.28 seconds; Ruff, format, and isolated compilation pass. OCSC's
+  causal gate is now explicit: retain class-`10` carry-clear gains while reducing class-`00`
+  carry-field regressions, with no aggregate score substitution and no H100 authorization implied.
