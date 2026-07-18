@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 12:00 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 12:06 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -17,7 +17,8 @@
 > The new carry-conditioned replay shows that 179/249 state gains clear an active terminal
 > carry/borrow (`10`), while 200/211 state losses occur when no terminal carry/borrow should exist
 > (`00`); field-level replay confirms that 196/200 of those `00` losses first mismatch `c`. The
-> treatment has learned a useful but overfiring carry-clear boundary.
+> treatment has learned a useful but overfiring carry-clear boundary: 247/249 gains and 207/211
+> losses involve `c` at the source arm's first mismatch.
 > OCSC and the six-case carry-recovery intervention are the strongest targeted next hypotheses. OCSC
 > has a fresh publication/runtime `NO-GO` and is under a second bounded repair; carry recovery remains
 > in fresh exact-byte review. Neither authorizes H100 work yet. Newton is idle. Stokes jobs
@@ -7166,3 +7167,21 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Ten isolated tests pass in 23.28 seconds; Ruff, format, and isolated compilation pass. OCSC's
   causal gate is now explicit: retain class-`10` carry-clear gains while reducing class-`00`
   carry-field regressions, with no aggregate score substitution and no H100 authorization implied.
+
+- **2026-07-18 12:06** -- **Symmetric replay v4 proves that TERM+WIDTH's gains and losses are both
+  almost entirely carry-policy changes.** The verifier now reconstructs the first mismatch in the
+  source arm for every right-only state gain as well as every left-only state loss. The carry/borrow
+  field is involved in **247/249 (99.20%)** gains and **207/211 (98.10%)** losses. For the dominant
+  class-`10` gains, `c` is involved in **177/179 (98.88%)**. Add-width4 class `10` contributes 65
+  gains, all `c`-only; subtract-width4 class `10` contributes 94 gains, of which 90 are `c`-only,
+  two `c+r`, and two `r`-only. Combined with v3's 196/200 class-`00` losses involving `c`, this
+  establishes a near-pure carry-decision tradeoff rather than generic representation churn.
+
+  The immutable artifact is
+  `artifacts/eval_history/digitwise_factorial_v4_four_arm_replay_v4_de45ace_20260718.json`, 45,733
+  bytes, SHA-256 `2bd15f5cab80fe2e91a1f6cba0f4dc5c1d8c5cd1b94d26ed304827676bf9c751`.
+  Replay source SHA-256 is `40a7d410154aa3b5081fcf6af2671210acf2d641895067dcd8675d321a51c1cc`;
+  test SHA-256 is `cb6be2edcdf8a6050abd74eacd612ac0a01f7a55ae7ad6ff86e6ff67306177a9`.
+  Ten isolated tests pass in 24.18 seconds; Ruff, format, and isolated compilation pass. Future
+  treatment must improve the carry-policy dissociation and the separately locked serializer gate;
+  success on only one axis is not complete reasoning recovery.

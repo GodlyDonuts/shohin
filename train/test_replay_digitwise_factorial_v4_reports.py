@@ -155,6 +155,10 @@ def test_locked_width_to_term_width_carry_tradeoff_when_present() -> None:
         "total_left_only_losses": 211,
         "class_10_right_only_gains": 179,
         "class_10_gain_share": pytest.approx(179 / 249),
+        "carry_field_involved_right_only_gains": 247,
+        "carry_field_involved_gain_share": pytest.approx(247 / 249),
+        "class_10_carry_field_involved_right_only_gains": 177,
+        "class_10_carry_field_involved_gain_share": pytest.approx(177 / 179),
         "class_00_left_only_losses": 200,
         "class_00_loss_share": pytest.approx(200 / 211),
         "sub_class_00_left_only_losses": 158,
@@ -182,19 +186,37 @@ def test_locked_width_to_term_width_carry_tradeoff_when_present() -> None:
         tradeoff["groups"]["sub|w4|00"]["state_closed_loop_exact"]["left_only_losses"]
         == 107
     )
-    assert tradeoff["groups"]["sub|w4|00"]["state_left_only_first_mismatch"] == {
+    assert tradeoff["groups"]["sub|w4|00"]["state_left_only_source_first_mismatch"] == {
         "count": 107,
         "carry_field_involved": 106,
         "carry_field_involved_rate": pytest.approx(106 / 107),
         "by_field_set": {"c": 99, "c+r": 7, "r": 1},
         "by_position": {"0": 47, "1": 35, "2": 24, "3": 1},
     }
-    assert tradeoff["groups"]["add|w4|00"]["state_left_only_first_mismatch"] == {
+    assert tradeoff["groups"]["add|w4|00"]["state_left_only_source_first_mismatch"] == {
         "count": 24,
         "carry_field_involved": 23,
         "carry_field_involved_rate": pytest.approx(23 / 24),
         "by_field_set": {"c": 23, "r": 1},
         "by_position": {"0": 1, "1": 4, "2": 19},
+    }
+    assert tradeoff["groups"]["add|w4|10"][
+        "state_right_only_source_first_mismatch"
+    ] == {
+        "count": 65,
+        "carry_field_involved": 65,
+        "carry_field_involved_rate": 1.0,
+        "by_field_set": {"c": 65},
+        "by_position": {"0": 27, "1": 6, "2": 32},
+    }
+    assert tradeoff["groups"]["sub|w4|10"][
+        "state_right_only_source_first_mismatch"
+    ] == {
+        "count": 94,
+        "carry_field_involved": 92,
+        "carry_field_involved_rate": pytest.approx(92 / 94),
+        "by_field_set": {"c": 90, "c+r": 2, "r": 2},
+        "by_position": {"0": 43, "1": 29, "2": 22},
     }
 
 

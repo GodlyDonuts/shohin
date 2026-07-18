@@ -1149,6 +1149,52 @@ def compare_arms(left: Mapping[str, Any], right: Mapping[str, Any]) -> dict[str,
     }
 
 
+def first_state_mismatch_profile(
+    branches: list[Mapping[str, Any]], *, label: str
+) -> dict[str, Any]:
+    field_sets: Counter[str] = Counter()
+    positions: Counter[str] = Counter()
+    carry_field_involved = 0
+    for branch in branches:
+        mismatch = next(
+            (
+                row
+                for row in branch["rows"]
+                if not strict_bool(row["correct"], f"{label}.row.correct")
+            ),
+            None,
+        )
+        require(mismatch is not None, f"{label} lacks a mismatched row")
+        position = strict_int(mismatch["position"], f"{label}.row.position")
+        predicted = mismatch["predicted_state"]
+        expected = mismatch["expected_state"]
+        require(type(expected) is dict, f"{label} lacks an expected state")
+        if predicted is None:
+            fields = ("malformed",)
+        else:
+            require(
+                type(predicted) is dict, f"{label} predicted state has invalid type"
+            )
+            fields = tuple(
+                sorted(
+                    field for field in STATE_KEYS if predicted[field] != expected[field]
+                )
+            )
+            require(fields, f"{label} incorrect row has no differing state field")
+        field_sets["+".join(fields)] += 1
+        positions[str(position)] += 1
+        carry_field_involved += int("c" in fields)
+    return {
+        "count": len(branches),
+        "carry_field_involved": carry_field_involved,
+        "carry_field_involved_rate": (
+            carry_field_involved / len(branches) if branches else None
+        ),
+        "by_field_set": dict(sorted(field_sets.items())),
+        "by_position": dict(sorted(positions.items(), key=lambda item: int(item[0]))),
+    }
+
+
 def carry_conditioned_branch_tradeoff(
     left: Mapping[str, Any], right: Mapping[str, Any]
 ) -> dict[str, Any]:
@@ -1189,54 +1235,36 @@ def carry_conditioned_branch_tradeoff(
     groups: dict[str, dict[str, Any]] = {}
     for key, (left_group, right_group) in sorted(grouped.items()):
         operation, width_text, carry_class = key.split("|")
-        loss_field_sets: Counter[str] = Counter()
-        loss_positions: Counter[str] = Counter()
-        carry_field_losses = 0
-        for left_row, right_row in zip(left_group, right_group, strict=True):
-            if not (
-                strict_bool(
-                    left_row["state_closed_loop_exact"],
-                    "left.state_closed_loop_exact",
-                )
-                and not strict_bool(
-                    right_row["state_closed_loop_exact"],
-                    "right.state_closed_loop_exact",
-                )
-            ):
-                continue
-            mismatch = next(
-                (
-                    row
-                    for row in right_row["rows"]
-                    if not strict_bool(row["correct"], "right.row.correct")
-                ),
-                None,
-            )
-            require(mismatch is not None, "state loss lacks a mismatched row")
-            position = strict_int(mismatch["position"], "right.row.position")
-            predicted = mismatch["predicted_state"]
-            expected = mismatch["expected_state"]
-            require(type(expected) is dict, "state loss lacks an expected state")
-            if predicted is None:
-                fields = ("malformed",)
-            else:
-                require(type(predicted) is dict, "predicted state has invalid type")
-                fields = tuple(
-                    sorted(
-                        field
-                        for field in STATE_KEYS
-                        if predicted[field] != expected[field]
-                    )
-                )
-                require(fields, "incorrect row has no differing state field")
-            loss_field_sets["+".join(fields)] += 1
-            loss_positions[str(position)] += 1
-            carry_field_losses += int("c" in fields)
         state_contrast = paired_boolean(
             left_group, right_group, "state_closed_loop_exact"
         )
+        gain_sources: list[Mapping[str, Any]] = []
+        loss_sources: list[Mapping[str, Any]] = []
+        for left_row, right_row in zip(left_group, right_group, strict=True):
+            left_exact = strict_bool(
+                left_row["state_closed_loop_exact"],
+                "left.state_closed_loop_exact",
+            )
+            right_exact = strict_bool(
+                right_row["state_closed_loop_exact"],
+                "right.state_closed_loop_exact",
+            )
+            if right_exact and not left_exact:
+                gain_sources.append(left_row)
+            elif left_exact and not right_exact:
+                loss_sources.append(right_row)
+        gain_profile = first_state_mismatch_profile(
+            gain_sources, label="right-only gain source"
+        )
+        loss_profile = first_state_mismatch_profile(
+            loss_sources, label="left-only loss source"
+        )
         require(
-            sum(loss_field_sets.values()) == state_contrast["left_only_losses"],
+            gain_profile["count"] == state_contrast["right_only_gains"],
+            "state-gain field decomposition does not reconcile",
+        )
+        require(
+            loss_profile["count"] == state_contrast["left_only_losses"],
             "state-loss field decomposition does not reconcile",
         )
         groups[key] = {
@@ -1248,19 +1276,8 @@ def carry_conditioned_branch_tradeoff(
             "closed_loop_success": paired_boolean(
                 left_group, right_group, "closed_loop_success"
             ),
-            "state_left_only_first_mismatch": {
-                "count": state_contrast["left_only_losses"],
-                "carry_field_involved": carry_field_losses,
-                "carry_field_involved_rate": (
-                    carry_field_losses / state_contrast["left_only_losses"]
-                    if state_contrast["left_only_losses"]
-                    else None
-                ),
-                "by_field_set": dict(sorted(loss_field_sets.items())),
-                "by_position": dict(
-                    sorted(loss_positions.items(), key=lambda item: int(item[0]))
-                ),
-            },
+            "state_right_only_source_first_mismatch": gain_profile,
+            "state_left_only_source_first_mismatch": loss_profile,
         }
 
     overall = compare_arms(left, right)["branches"]
@@ -1282,18 +1299,27 @@ def carry_conditioned_branch_tradeoff(
         if group["operation"] == "sub" and group["terminal_carry_class"] == "00"
     )
     carry_field_losses = sum(
-        group["state_left_only_first_mismatch"]["carry_field_involved"]
+        group["state_left_only_source_first_mismatch"]["carry_field_involved"]
         for group in groups.values()
     )
     class_00_carry_field_losses = sum(
-        group["state_left_only_first_mismatch"]["carry_field_involved"]
+        group["state_left_only_source_first_mismatch"]["carry_field_involved"]
         for group in groups.values()
         if group["terminal_carry_class"] == "00"
     )
     sub_class_00_carry_field_losses = sum(
-        group["state_left_only_first_mismatch"]["carry_field_involved"]
+        group["state_left_only_source_first_mismatch"]["carry_field_involved"]
         for group in groups.values()
         if group["operation"] == "sub" and group["terminal_carry_class"] == "00"
+    )
+    carry_field_gains = sum(
+        group["state_right_only_source_first_mismatch"]["carry_field_involved"]
+        for group in groups.values()
+    )
+    class_10_carry_field_gains = sum(
+        group["state_right_only_source_first_mismatch"]["carry_field_involved"]
+        for group in groups.values()
+        if group["terminal_carry_class"] == "10"
     )
     require(
         sum(
@@ -1322,6 +1348,16 @@ def carry_conditioned_branch_tradeoff(
             "class_10_right_only_gains": class_10_gains,
             "class_10_gain_share": (
                 class_10_gains / state_gains if state_gains else None
+            ),
+            "carry_field_involved_right_only_gains": carry_field_gains,
+            "carry_field_involved_gain_share": (
+                carry_field_gains / state_gains if state_gains else None
+            ),
+            "class_10_carry_field_involved_right_only_gains": (
+                class_10_carry_field_gains
+            ),
+            "class_10_carry_field_involved_gain_share": (
+                class_10_carry_field_gains / class_10_gains if class_10_gains else None
             ),
             "class_00_left_only_losses": class_00_losses,
             "class_00_loss_share": (
@@ -1408,7 +1444,7 @@ def main() -> None:
         require(result["arm"] not in replayed, f"duplicate arm: {result['arm']}")
         replayed[result["arm"]] = result
     summary = {
-        "audit": "shohin-digitwise-factorial-v4-independent-replay-v3",
+        "audit": "shohin-digitwise-factorial-v4-independent-replay-v4",
         "status": "complete",
         "arms": {
             arm: {
