@@ -6571,3 +6571,22 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   executable local Git config, descriptor-pin physical roots, bind exact H100 allocation, and require
   a production-key-signed review receipt. No commit, receipt, plan, install, fit, or capability claim
   is authorized for the reviewed bytes.
+
+- **2026-07-18 08:10** -- **EOS suppressed-trace receives CPU-mechanics GO but remains Linux,
+  Newton, and H100 NO-GO.** Neutral review confirms the prior report/marker ordering repair: a
+  canonical report has no completion authority, pre-marker crash states are rejected, EOS masking,
+  cache semantics, controls, denominators, Slurm TRES parsing, and frozen-input hashes survive.
+  Five in-scope custody defects and one qualification gap remain. The wrapper generates an
+  ephemeral signing key and embeds its public key in the bundle it signs, so a same-UID process can
+  forge a self-rooted report/marker pair. The visible H100 identity is not yet bound one-to-one to
+  Slurm's cgroup-allocated device. An unavailable field screen can be accepted without deriving
+  unavailability from ordinary decode, and prompt replay binds counts rather than exact token-ID
+  vectors. Recursive schemas still permit Python equality aliases such as `true == 1` and
+  `100 == 100.0`. Final success can use cached inode state after marker publication instead of
+  descriptor-reopening the canonical paths, leaving a same-UID replacement race. Finally, real
+  Linux `renameat2`, memfd seals, `prctl`, directory-fsync failures, and Lustre durability have not
+  been exercised. A four-file repair is active to require an externally pinned signer, bind cgroup/
+  PCI/UUID allocation identity, derive field-screen availability, hash exact token IDs, enforce
+  recursive type strictness, reopen canonical paths after marker publication, and expose a reviewed
+  CPU-only Linux/Lustre qualification command. No Newton preflight or H100 evaluation is authorized
+  before fresh rereview and a real Linux smoke pass.
