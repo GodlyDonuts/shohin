@@ -7797,3 +7797,30 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   held-descriptor and native-callback repair. No DWS qualification, Stokes, publication, fit, or
   accelerator work is authorized. One obsolete overlapping OCSC worker was also stopped; worker
   `019f76a2-383f-7970-af01-e1e959758a22` is now the sole writer for its four exact files.
+
+- **2026-07-18 15:55--16:54** -- **The missing final raw-300k public board completes and confirms
+  a low-single-digit capability plateau rather than broad improvement.** The first allocation,
+  job `692775` on `evc26`, failed safely at the CUDA preflight with exit `75:0` after 6m48s; it
+  never loaded the model and appended no metric rows. Replacement job `692787` completed on
+  `evc32` in 50m25s with exit `0:0`, run tag `pretrain_300000_final`, `N=100`, GSM8K `K=4`,
+  `MAX_NEW=256`, and seed `20260712`. It evaluated the protected step-300000 model, whose canonical
+  checkpoint remains SHA-256
+  `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`.
+
+  The final board is GSM8K maj@4 **4/100 (4.0%)**, GSM8K pass@1 **2/100 (2.0%)**,
+  MATH-500 pass@1 **2/100 (2.0%)**, HumanEval pass@1 **6/164 (3.66%)**, and MBPP pass@1
+  **0/100 (0.0%)**. Against the protocol-matched 120k board (`2/1/3/7/0`) and 168.75k board
+  (`5/2/2/7/0`), 300k moves only one or two examples in either direction: sampled GSM8K rises
+  from 120k but remains below 168.75k, greedy GSM8K and MATH are flat within noise, HumanEval
+  drops by one problem, and MBPP remains zero. Raw pretraining to 300k therefore did not produce
+  a broad benchmark breakthrough; preserve the final model as the immutable pretraining base, not
+  as evidence of instruction-following reasoning.
+
+  The authoritative 56-row metric history is mirrored locally at
+  `artifacts/eval_history/metrics.jsonl`, 25,698 bytes, SHA-256
+  `7c008215c7779e47609a0eaa88027c35be1f9c776352407d90ee9a0d58867689`; its first ten rows match
+  the prior local history exactly and it contains exactly five `pretrain_300000_final` rows from
+  job `692787`. The complete 57-line board log is mirrored at
+  `artifacts/eval_history/pretrain_300000_final_692787.log`, 2,549 bytes, SHA-256
+  `cb3e10be87ac3ef086fcb90bfd39fa1d505352ca3f8a5a6de35a1cec70e146a5`. Newton's queue is empty;
+  no training writer or evaluation job remains active.
