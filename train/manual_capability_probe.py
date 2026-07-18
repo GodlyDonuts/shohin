@@ -97,17 +97,17 @@ def response_mode(response):
 
 def score(case, response):
     if case["kind"] == "number":
-        values = re.findall(r"-?\d+", response)
-        return bool(values) and values[-1] == case["answer"]
+        value = re.match(r"\s*(-?\d+)\b", response)
+        return bool(value) and value.group(1) == case["answer"]
     if case["kind"] == "yesno":
-        values = re.findall(r"\b(?:yes|no)\b", response, flags=re.I)
-        return bool(values) and values[-1].lower() == case["answer"]
+        value = re.match(r"\s*(?:answer\s*:\s*)?(yes|no)\b", response, flags=re.I)
+        return bool(value) and value.group(1).lower() == case["answer"]
     if case["kind"] == "list":
-        values = re.findall(r"\[[^\]\n]{1,160}\]", response)
-        return bool(values) and normalized(values[-1]) == normalized(case["answer"])
+        value = re.match(r"\s*(\[[^\]\n]{1,160}\])", response)
+        return bool(value) and normalized(value.group(1)) == normalized(case["answer"])
     if case["kind"] == "string":
-        values = re.findall(r"[A-Za-z]+", response)
-        return bool(values) and normalized(values[-1]) == normalized(case["answer"])
+        value = re.match(r"\s*['\"]?([A-Za-z]+)['\"]?", response)
+        return bool(value) and normalized(value.group(1)) == normalized(case["answer"])
     if case["kind"] == "code":
         candidates = [response]
         candidates.extend(re.findall(r"```(?:[A-Za-z0-9_+-]+)?\n(.*?)```", response, flags=re.S))

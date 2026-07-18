@@ -104,7 +104,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | **R11 internal workspace control** | **DORMANT CONTROL; broad draft and v1/v2 were NO-GO; v3 remains an unimplemented preregistration, not a capability result.** The six-slot, 96-wide architecture remains technically feasible as an isolated wrapper with 1,607,334 trainable parameters. V1 failed on an incomplete generator/target contract, leakage and cache risks, ambiguous ledgers, and overclaiming. V2 SHA-256 `11ca769036b2bc85eebd47a950e51b2bc87158668e47ba3cc5e38e4fdae68408` closed many of those gaps but still failed final review: affine-answer/token/frequency rejection conditioned accepted sources on supposedly late-bound queries; the exact API omitted the cached decode session it later required; sham/control primary evaluation semantics were ambiguous; and a seed commitment could not prove confirmation secrecy. V3 closes those contract defects on paper, but its tied recurrence, source-derived slots, and query readers are established machinery rather than an R12 invention. Preserve it as a favorable matched control; no code, board, fit, score, or H100 job is authorized. |
 | **R12 mathematical invention frontier** | **SEVEN BOUNDED NO-GOS; RAW VOCABULARY J-WORKSPACE AND MCBS CLOSED AT 300K.** Cursor-action v1 `689932/689936` failed source/cursor binding; final-token readout `689952` fit train but reached only 43.13%/41.67% development. Token-tape `689976` rejects only the frozen pre-final single-query/linear-decoder family. Additive forks and PCRT are theorem-rejected before code. The paired raw-300k future-Jacobian repeat is reproducible but has **0% top-10 and 0% top-100** on all 2,304 decisive targets, so no J-lens swap is authorized. MCBS is also theorem-rejected as a mechanism: for affine consumers it recovers only the observable quotient of the fitted consumers, and a finite answer-specific motor bundle passes projection/complement tests without reusable state. `R12_MINIMAX_CAUSAL_BROADCAST_SUBSPACE_NO_GO.md` freezes the theorem and counterexample. Any successor must be frozen before held-out consumers, held-out updates, and output recoding are revealed. `R12_CERTIFIED_LANGUAGE_BRIDGE_BOUNDARY.md` still blocks synthetic-to-language transfer without a future-reflecting certificate map. |
 | **CDRL sample-allocation track** | **CLOSED NEGATIVE ON NEURAL BOARD `R12-CDRL-NEURAL-v1`.** CPU mechanics remain valid. Newton job **`691750`** completed on **evc22** in 3m25s (exit 0). Decision SHA-256 `ad94ac15ca17eaa2c5381aa0a3f94fc60a49dbbf2a528552a1212b3ecf1cabdb` records `advance=false`: median depth-OOD margins core−full **-0.776**, core−hard **-0.778**, core−rand **-0.021** vs required +0.05. Core exact OOD ≈0.04 while full/hard reach ≈0.70–0.92. Pure Nerode-core allocation fails when eval restores distractors. See `R12_CDRL_NEURAL_OPTIMIZATION_RESULT.md`. No Shohin/ACW path touched. Conjecture C closed; do not retune. |
-| **Typed controller internalization** | **CORRECTED RESCORE ACTIVE; NO VALID CAPABILITY SCORE YET.** Frozen training has about 54k rows from `best_step200000.pt`. The first completed evaluation `691778` taught the controller grammar and `done=1` behavior (reported done rate 86%), but its apparent final-answer score is invalid because the evaluator stopped at the first arrow and could truncate a multi-digit intermediate. Newton `691782` is rerunning the same isolated SFT checkpoint with fixed decoding and last-arrow fallback. Do not cite its first answer score or promote the checkpoint. Apply the locked ≥35% final, ≥+10pp raw delta, ≥30% SSC rerender, ≥70% atomic, and ≥80% done gates only to the completed hash-bound rescore. Prereg: `R12_TYPED_CONTROLLER_INTERNALIZATION_PREREG.md`. |
+| **Typed controller internalization** | **V1 RESCORED PARTIAL WIN; V2 HYBRID RUNNING.** Rescored decision SHA-256 `bd25abeac4cf775eeac96664f29200ccf05eee7e2e79eea0ad83f289e3271e69`: rollout **16.4%**, done **86.3% PASS**, atomic **27%**, direct 0%, typed−direct **+16pp PASS**. First eval `691778` answer score was invalid (mid-digit early-stop); `691782` fixed decode. Format/DONE internalized; multiply in typed registers remains weak vs SSC native atomic ~76%. V2 hybrid (native `Problem/Work` atomics + typed rollout) continues from v1 ckpt — Newton **`691785`**. See `R12_TYPED_CONTROLLER_V1_RESULT.md`. |
 | **Post-DRS workspace probe** | **POSITIVE DIAGNOSTIC.** Job **`691756`** completed on **evc33**. Late-layer digit residual swaps yield **10/10** positive directions with ~**+31** Δlogodds at layers 17–29 (raw baseline was ~0). Carry emerges at L29 (+2.96, 10/10). DRS induced an actionable workspace; compounding remains the failure mode. See `R12_DRS_WORKSPACE_PROBE_POST_RESULT.md`. |
 | **Track S ACW pilot and baseline custody** | **V6 EXECUTION BASELINE VERIFIED; SCORED REASONING BASELINE NOT YET RUN.** Scientific commit `S=5f5e3cd0d69da67335ad1f1f485c6e3d8f00ff8e` completed producer `740241` on `ec51`; independent verifier `740247` completed on `ec52`. The verifier records different job/node, fresh recomputation, 81 anchored files, receipt payload SHA-256 `f72a40fe2dd84701bfa3f0ea92e3c2b463304861a063507ffb30c7909a6cfca0`, and registry payload SHA-256 `47f233a11db876f6ff26c1b4589a59d31c57bf4b2326b9ac5ffba00b81276cc5`. Registry raw SHA-256 is `66597cf5381fdc11d4ecd73a93d9bbd2fa68417a77b09c1330ecfeb73652451c`; registry-only `A=02c9d4ae57093b6c60d90580503e2a01c7c81619` and execution activation `E=38ebad21cf9c4ef98b172394891c2a35ef671b12` are pushed and installed. E passed the Stokes full-anchor smoke over all 81 files. The pilot has 4,096 histories, 57,344 labels, 12 refinement rounds, 3,400 updates, batch 256, 43,853 candidate evaluations, final losses 2.806958 -> 2.828255, and model tensor SHA-256 `1acc80d4362849d951fb45db34fb5c40c2cbf44a3cce4b7b2fa308b1923a1b94`. These are execution facts only. Custody successor F closes a late review NO-GO without altering the pilot bytes: it replays exactly 24 scored development checkpoints plus three direct-state diagnostics before full confirmation evidence is opened, rejects writable or self-attested baseline JSON, requires the full manifest to bind the exact frozen baseline and authorization, copies the strongest deployable checkpoint mode 0444, excludes the source-retained upper bound from selection, ranks by median depth-64 state exactness then scalar accuracy, and retains the baseline on later NO_GO without overriding promotion gates. No scored development matrix exists yet, so there is not yet a capability-ranked reasoning checkpoint to name. |
 | **Track G scored-development custody** | **FROZEN AND SUBMITTED HELD; NO SCORE.** Plan raw SHA-256 `39f91a28f4ac0a593ecabd19942e598a4474d777baccb7367d0bbfd73128335d` binds four scientific jobs `740338` (phase-1 producer, ec51) -> `740339` (independent phase-1 verifier, ec52) -> `740340` (phase-2 producer, ec51) -> `740341` (independent phase-2 verifier, ec52), then step-free terminal monitor `740342` on ec51. Every job is `JobHeldUser`, 4 CPUs, 96 GiB, no requeue, and exact afterok dependencies. G independently replays the frozen development baseline before confirmation access, enforces exact closed-world inventories at every consumer handoff, publishes checkpoint/baseline/receipt bytes through retry-safe same-directory atomic no-replace links, polls exact terminal `.batch/.extern` accounting, and requires a post-J5 anchor-ready envelope plus an external Git/runbook hash anchor before any performance claim. The complete warning-strict suite is 143/143; two adversarial reviews are GO. Release only after exact G push/install/revalidation. |
@@ -5731,3 +5731,487 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Do not release any job until the exact G commit is pushed, installed cleanly on Stokes, and the
   complete suite/plan are revalidated there. These are custody facts only; no score or reasoning
   result exists.
+
+- **2026-07-17 05:29--06:01** — **The corrected DRS causal-cycle probe closes the
+  decode-only workspace hypothesis negative and localizes the next intervention.** Canonical r3 job
+  `691847` completed `0:0` on Newton `evc33` in 32:18 from its verified private snapshot. Its report
+  `artifacts/evals/drs_causal_cycle_post_drs_r3.json` is immutable mode `0444` on Newton and the Mac,
+  with matching SHA-256
+  `0b927fee009de5e5cf87971ecaf390c716d6d9acb5644cabe3c176f6da9d4e7a`. All 50 frozen cases are
+  present, every input/source hash matches the r3 preregistration, and cached-path identity is exact:
+  zero generated-token mismatches and zero teacher-forced identity failures. This supersedes only the
+  mechanically invalid r2 probe; r2 remains rejected and must never be rescored.
+
+  The direct two-token ceiling authored 50/50 exact first states, while counterfactual residual
+  replacement authored only 14/50 and failed the write/serialization gate; same-target residuals
+  reached 31/50, rescued only 5/12 baseline failures, and reduced exactness by 14 percentage points.
+  Irrelevant-transplant argmax invariance and sham-token equality were each 49/50, so the negative is
+  not explained by indiscriminate corruption. Paired next-call active-digit switching was 40/50, but
+  the preregistered consumer gate failed because teacher-forced carry accuracy was only 30/50 base and
+  25/50 counterfactual; digit accuracy was stronger at 45/50 and 44/50. Only 9/50 integrated
+  residual-authored two-call cycles were exact. The locked decisions are: mechanically valid, token
+  ceiling pass, irrelevant-history pass, write/serialization fail, consumer fail, and no native
+  residual rescue signal.
+
+  The admissible diagnosis is narrow: DRS learned a causally active late digit residual, but not a
+  reliable residual-to-token actuator or autonomous carry update/consumption cycle. Do not retune a
+  decode-only residual workspace. Advance the terminal-carry/width data-identifiability factorial and
+  admit a compact carry/cursor packet architecture only behind matched ordinary-SFT/recurrent controls,
+  explicit actuator supervision, autonomous unpatched multi-step gates, and a no-result-tape collapse
+  test. The complete result boundary is recorded in `R12_DRS_CAUSAL_CYCLE_RESULT.md`.
+
+- **2026-07-17 16:50--17:37** — **The terminal-carry factorial is in honest evaluation; one
+  architecture branch closes negative and the carry motor remains review-blocked.** Four frozen
+  factorial-v4 SFT arms completed cleanly: `692071` iid (`e2cfa811...`), `692073` terminal
+  (`1f730770...`), `692075` width (`f8f9a90c...`), and `692077` terminal+width (`06b5d9f2...`).
+  The full-board evaluator survived independent adversarial review and was pushed at `6af3849`.
+  Its first array `692120` failed closed before scoring because Lustre's inherited SGID made the
+  private checkpoint snapshot mode `2500`, not the required exact `0500`; it published no arm
+  report. Commit `de45ace` explicitly clears inherited special bits, verifies every snapshot file
+  is `0400` and every directory is `0500`, passes 13 focused tests plus a live Lustre mode probe,
+  and received independent GO. Its exact sparse source checkout is installed on Newton at
+  `/lustre/fs1/home/sa305415/shohin_eval_source_de45ace`. Width task `692127_2` is evaluating on
+  proven node `evc37`; iid task `692152_0` is evaluating on proven node `evc36`; terminal and
+  terminal+width are serialized behind iid in the same `692152` array. Bounded CUDA preflight
+  timeouts on `evc26`, `evc43`, `evc44`, and `evc47` produced no scientific output and are not
+  model results. Do not score until each immutable one-report arm directory exists and revalidates.
+
+  Packet-on-Lattice Carry Cell CPU mechanics pass all 18 finite gates, including 400/400 local
+  cells and 40,000/40,000 two-column trajectories, but are exactly equivalent to the favorable
+  explicit `(cursor, carry)` recurrent control. Commit `495d2db` records
+  `novel_reasoning_primitive_supported=false` and authorizes no neural or H100 pilot. This branch is
+  closed rather than promoted under a novelty label.
+
+  The amended causal carry motor still has **NO-GO** status. A fresh read-only review found three
+  remaining P1 scientific-integrity defects despite 35 passing tests: the 300/1,500 development
+  selection was not explicitly frozen in the preregistration, unsampled autonomous and cycle totals
+  could still be rewritten self-consistently without complete raw evidence, and canonical fit did
+  not require sealed one-link shard and plan inputs before loading. No canonical plan, shard, fit,
+  evaluation, or capability result is authorized until all three repairs pass the same reviewer.
+  Legacy monolithic extraction `691928` remains noncanonical and has produced no artifact.
+
+  The user explicitly raised the architecture ceiling to **strictly below 150,000,000 total
+  parameters**. Direct instantiation of the hash-preserved 300k checkpoint configuration gives
+  exactly 125,081,664 unique parameters with tied embeddings counted once, leaving at most
+  24,918,335 additional parameters under a strict `<150M` contract. Tiny motors remain useful
+  causal diagnostics; a promoted architecture may spend the larger budget only with an exact count,
+  a parameter-matched generic control, no host arithmetic, and unchanged autonomous causal gates.
+
+- **2026-07-17 18:05--18:23** -- **The parameter ceiling is now measured from the actual 300k
+  checkpoint, a bounded-depth carry hypothesis is CPU-only, and the canonical carry motor remains
+  NO-GO after a second hostile review.** Strict checkpoint loading produced no missing or unexpected
+  keys and counted 125,081,664 unique parameters with the tied token/head embedding counted once.
+  The result-digit draft's previous 125,149,440 constant was conservative but wrong by 67,776; its
+  local guard now uses the measured count and rejects totals equal to 150,000,000 as well as totals
+  above it. The current 576->4096->4096->10 digit motor has exactly 19,185,674 parameters, for
+  144,267,338 total and 5,732,661 parameters of remaining strict headroom. Its focused 10-test suite,
+  Ruff, formatting, compilation, and diff checks pass, but the draft remains exploratory and
+  noncanonical.
+
+  A hostile theory pass derived Last-Reset Witness Attention: learn local kill/propagate/generate
+  classes from source residuals, then retrieve the last reset witness with fixed in-model hard
+  attention instead of carrying mutable generated-token state. The proposed compiler
+  1153->4096->4096->4 has 21,524,484 parameters and the 1154->1024->12 motor has 1,195,020, for
+  22,719,504 added and 147,801,168 total. This is related to carry-lookahead and reset-monoid
+  retrieval, not yet a novel primitive. It has only a narrow GO to an isolated CPU falsifier with
+  exact-parameter recurrent and dense-attention controls; no H100 pilot is authorized. A direct
+  exhaustive mechanics check covered 1,860,042 last-reset/serial identities through length 10 with
+  zero mismatches.
+
+  The repaired canonical carry-motor bytes passed 42/42 warning-strict tests and all local hygiene
+  gates, but the same independent reviewer found three additional P1 validity defects: confirmation
+  generator hashes and the pre-fit secret commitment were not bound into the canonical plan; router
+  evidence did not retain generated-token boundaries even though generation observes only those
+  boundaries; and teacher-forced/direct aggregates still lacked complete row-level evidence for
+  independent recomputation. The reviewer also requested an independent shell shard preflight.
+  Repairs are in progress. Do not publish a plan, extract canonical shards, fit, evaluate, or claim a
+  carry result until these exact findings pass the same reviewer.
+
+  The Last-Reset Witness Attention CPU falsifier subsequently completed and rejected promotion.
+  Its immutable local report is
+  `artifacts/r12/last_reset_witness_attention_cpu_v1.json`, mode `0444`, SHA-256
+  `e8fc23aa5dcf49a6d49f1d54ba37490b0854f4b2eae13e488e05f66d3e457fb4`. Finite mechanics pass:
+  177,144 reset words, 1,860,042 query observations, and all 400 add/sub local cells are exact;
+  the toggle-event negative control caps the reset-only candidate at 50% while the four-function
+  recurrence reaches 100%. The matched scaled learning board is negative at width 32: witness
+  median 8.203125%, serial 7.8125%, and dense 7.8125%. Dense closes within the locked 2pp rejection
+  margin, so the decision is `REJECT_OR_RETAIN_AS_MECHANICS_ONLY`; H100 launch and architecture
+  promotion are false. The local report validator passes, its file hash matches the preserved copy,
+  and 15 warning-strict hostile tests pass. An independent read-only audit is pending before commit.
+
+  Legacy noncanonical monolithic carry extraction `691928` timed out at its 8-hour limit after only
+  the two previously recorded extraction milestones. It emitted no scientific artifact and is not a
+  result. The review-gated sharded implementation supersedes it.
+
+- **2026-07-17 18:23--19:39** -- **The `<150M` architecture ledger is enforced exactly; a
+  calibrated attention candidate closes negative while the wide digit actuator advances to
+  autonomous evaluation.** The loaded 300k base remains exactly 125,081,664 unique parameters, so
+  the strict maximum addition is 24,918,335. The exploratory 576->4096->4096->10 digit motor has
+  19,185,674 parameters, giving 144,267,338 total and 5,732,661 spare. Source guards reject totals
+  greater than or equal to 150,000,000 and focused regression coverage includes the exact ceiling.
+
+  Last-Reset Witness Attention is now preserved only as a **calibrated exploratory rejection**. The
+  retraining validator recomputes all nine CPU arms and all scientific fields rather than trusting a
+  report. The corrected immutable report is
+  `artifacts/r12/last_reset_witness_attention_calibrated_exploratory_rejection_v2.json`, SHA-256
+  `8e82ae954f194b236e29715ebc58dc7615d7a028369ca709eb58ffb4ba8cb102`; its internal content hash is
+  `143152e9c3ffa38b552812290839d8bc37abecb07bf2d3f117dab75ec1a2ad85`. Width-32 medians are
+  8.203125% witness, 7.8125% serial, and 7.8125% dense, so the dense control closes within 0.390625
+  percentage points and rejects a mechanism-specific advantage. A hostile independent review
+  authorized preservation of this exact mechanics/rejection artifact only. Commit `e6281c5` is
+  pushed. The earlier `last_reset_witness_attention_cpu_v1.json` is methodologically superseded and
+  noncanonical.
+
+  Exploratory wide result-digit motor fit `692100` completed cleanly on `evc37`; its 19,185,674-
+  parameter artifact is mirrored locally with SHA-256
+  `5b277e2797b9b4dee6bc0578e7891c5d0ae72d2217da74bf0fa1ab39df3b844a`. Fit-time top-1 digit
+  accuracy is 100% versus 94.2375% for the base teacher, while the shuffled-feature control reaches
+  61.65% on true labels and 10.8125% on control labels. These numbers establish only a
+  teacher-forced actuator ceiling, not autonomous arithmetic. Two evaluator attempts failed closed
+  before scoring: `692230` on an output-namespace collision and `692232` on a source-contract
+  mismatch. The evaluator now permits the exact disclosed noncanonical motor/evaluator patch pair,
+  records both source contracts separately, and keeps output in a distinct directory. Exploratory
+  autonomous job `692235` is running on `evc37`; at 19:38 EDT it had passed CUDA preflight, emitted
+  no stderr, and was extracting the frozen 200-row board. It cannot promote a canonical architecture
+  but can establish whether the fitted motor has any closed-loop causal value.
+
+  The canonical carry-motor branch remains **NO-GO** after its third hostile review. Newly exposed
+  defects were non-unique confirmation boards under caller-controlled exclusions, incomplete raw
+  evidence for teacher-rank claims, decoded-string rather than exact token/logit preservation, and
+  CUDA initialization before semantic source-contract validation. A fourth repair is in progress;
+  no plan, shard, fit, evaluation, or capability claim is authorized until the same reviewer returns
+  GO. The factorial-v4 width arm `692127_2` and iid arm `692152_0` remain healthy in full-board
+  evaluation; terminal and terminal+width stay serialized. Partial progress counters are not scores.
+
+- **2026-07-17 19:39--20:21** -- **The expanded parameter allowance is converted into a strict
+  deployment ledger and direct interaction localizes the active failure to carry, not result-digit
+  capacity.** Commit `b2f5acb` froze the exploratory result-digit interpretation contract before
+  job `692235` printed any score. It binds the exact spooled job, evaluator, motor, checkpoint,
+  tokenizer, episode, and cycle hashes and requires treatment-specific teacher-forced, first-step,
+  full-loop, and frozen-cycle gains over both base and shuffled controls. Even a pass can only open a
+  new paired-counterfactual evaluator with complete row evidence and exact token/logit preservation.
+  Local source now additionally verifies that the loaded checkpoint itself has exactly 125,081,664
+  unique parameters and records base, motor, total, strict cap, and maximum further addable count in
+  future reports; 14 focused tests and all hygiene gates pass. These local post-launch changes do not
+  alter the already running `692235` bytes.
+
+  A direct, non-benchmark interaction sample ran the frozen model and wide treatment locally on the
+  first transition of 50 held-out episodes, ten from each of `fit_w4`, `fit_w6`, `value_ood_w4`,
+  `value_ood_w6`, and `width_ood_w8`. Both base and treatment wrote the correct result digit in
+  **50/50**. Both emitted the exact complete next state in **39/50**. Every one of the 11 failures was
+  a wrong carry/borrow bit with the result digit still correct; the 19,185,674-parameter digit motor
+  rescued zero, harmed zero, and behaved identically on these cases. Representative width-8 addition
+  emitted `r=30000000` correctly but retained `c=0` instead of the required `c=1`. This is direct
+  qualitative evidence that more digit-only capacity is not the missing transition mechanism. It is
+  not a substitute for the still-running 250-episode-per-arm report.
+
+  A theory-only shared transition candidate uses one site-conditioned
+  `578->4096->4096->12` trunk: 19,202,060 added, 144,283,724 total, and 5,716,275 parameters still
+  addable under the strict cap. Its proposed pre-emission dual-view commit predicts digit and carry
+  from one residual, commits private carry/cursor state before serialization, and makes emissions
+  write-only. Independent hostile review correctly returned NO-GO on the first dossier: carry
+  provenance was not causally gated, control resources/objectives were not fully matched, site-code
+  and serializer claims overidentified the mechanism, and the fixed runtime performs essential FST
+  execution. The draft is uncommitted, authorizes no H100 work, and is being repaired with the honest
+  claim boundary that this is an RNN/FST interface hypothesis, not a new computational primitive.
+
+  The fourth carry-motor repair passes an independently rerun **58/58** warning-strict tests in
+  195.99 seconds plus Ruff, formatting, compilation, shell, and diff gates. Exact confirmation-board
+  derivation, complete teacher evidence, token-plus-full-logit preservation, and pre-CUDA semantic
+  validation are implemented. The exact bytes are back with the same hostile reviewer; no commit,
+  plan, shard, fit, or evaluation is authorized before that reviewer returns GO.
+
+- **2026-07-17 20:21--20:49** -- **Wide result-digit autonomous evaluation is nearing its
+  treatment boundary, while carry and shared-transition work remain explicitly gated.** Exploratory
+  job `692235` is still healthy on `evc37` with zero stderr. It completed all 250 base and 250 dead-
+  motor autonomous episodes and had reached 200/250 treatment episodes at 20:49 EDT; shuffled-arm,
+  frozen-cycle, preservation, and final report publication still remain. No partial counter is a
+  score. The pre-outcome contract in commit `b2f5acb` remains controlling, and direct interaction on
+  50 held-out first transitions remains unchanged at 50/50 result digits but 39/50 exact next states
+  for both base and treatment, with every failure localized to carry/borrow and zero motor rescues.
+
+  Factorial-v4 width `692127_2` and iid `692152_0` remain healthy at 1,175/1,500 and 1,125/1,500
+  pairs respectively; terminal and terminal+width remain serialized and no arm report exists yet.
+  Their live `both_success` counters are progress telemetry only and must not be interpreted until
+  all four immutable reports exist and pass the `de45ace` validator.
+
+  The fourth canonical carry-motor repair did **not** receive review GO. The same hostile reviewer
+  found three additional claim-blocking defects: the confirmation board was not uniquely bound to
+  the commitment/canonical inputs, treatment and shuffled adjusted logits could be rewritten without
+  derivation from exact motor state plus merged features, and the loader could consume shard zero
+  before proving every shard sealed. A fifth repair is active. No plan, extraction, fit, evaluation,
+  commit, or capability claim is authorized until the same reviewer returns GO on exact repaired
+  bytes.
+
+  `R12_SHARED_TRANSITION_CIRCUIT_THEORY.md` is repaired as theory schema
+  `R12-STC-THEORY-SCHEMA-v2`, SHA-256
+  `9ec12b938e7f9949d470620bdd2d9658928432cc302c65b0c441981f63b34339`. It now explicitly treats
+  the fixed runtime as essential ordinary FST/RNN execution, defines `q0=(e0,0)`, makes exact matched
+  `R-SEQ` the primary control, and freezes `C0-C17`, `A0-A16`, and `M1-M6` gates. Local ASCII,
+  newline, fence, gate-contiguity, and hash checks pass. It remains uncommitted, non-executable, and
+  authorizes neither CPU nor H100 work while the original hostile reviewer re-audits this exact hash.
+
+- **2026-07-17 20:49--21:13** -- **The wide result-digit motor closes negative under its frozen
+  contract; the fifth carry repair is independently clean and back under hostile review.** Newton
+  job `692235` completed on `evc37` in `02:00:54`, exit `0:0`, with zero stderr. Its report is
+  mirrored read-only at `artifacts/r12/result_digit_motor_r2_eval/eval.json`, 279,192 bytes, SHA-256
+  `a308d707cf9890aeb8f6a7706a104b6cb451a344afb24403e5f518ba1abd01d0`, matching Newton.
+  Mechanical and routing gates pass, but every capability gate in pre-outcome commit `b2f5acb`
+  fails. Held-out digit top-1 is base **90.8571%**, treatment **91.3571%**, shuffled **49.7500%**:
+  treatment gains only **0.5pp** over base and misses the absolute 99% floor. First autonomous
+  transition is exactly **203/250 = 81.2%** for both base and treatment. Full state loop is only
+  **61/250 = 24.4% -> 63/250 = 25.2%**, a **0.8pp** gain below the locked 2pp margin. Frozen-cycle
+  first transition is exactly **14/50 = 28.0%** for both base and treatment. Decision:
+  `REJECT_WIDE_RESULT_DIGIT_MOTOR_AS_AUTONOMOUS_ACTUATOR`; do not run hardened confirmation or scale
+  a result-digit-only motor.
+
+  Retained transcripts explain the negative. Across the 15 aligned autonomous transcript IDs,
+  treatment changes zero decoded rows and all seven retained wrong states differ only in carry. In
+  frozen-cycle case `fit_w4-00062`, treatment fixes `r=8000` to the expected `r=8090` but retains
+  `c=0` instead of expected `c=1`, so exact state remains wrong. The preserved result boundary is
+  documented in `R12_CAUSAL_RESULT_DIGIT_MOTOR_RESULT.md`.
+
+  The fifth canonical carry repair has exact SHA-256
+  `7f9b3efd43ac547fa176c70bf0d1458437fc90156b3fc6938b1c7458a14480ac` prereg,
+  `429dd9f4664cc37d21c90d11a3650a4b4ba56e29c325766bf93dcebb376c4e39` main,
+  `f092bce53562036430b134b2f0ce9e805d3d89a28dbbfc8a4a0ab4987fcb437b` tests,
+  `6c95d48bf33b68e38004b043e0d2b64880102d4cb189fc5f3a0a285143a1a649` H100 wrapper, and
+  `0688a5d1a423942463404c589fb1a6a5fd6bb85f8704bf86a8222aa20e6b358c` Stokes wrapper. An
+  independent hermetic warning-strict run passes **60/60** in 203.37s; Ruff, formatting,
+  compilation, both shell parsers, and diff checks pass. The exact bytes are with the same hostile
+  reviewer. No plan, extraction, fit, evaluation, commit, or capability claim is authorized before
+  that reviewer returns GO.
+
+  Shared-transition theory v2 received a second correct NO-GO because its R-SEQ floor and required
+  PEDC margin were mutually impossible and its selector-swap gate was behaviorally null under
+  perfect view agreement. Theory schema v3 removes that gate and defines independent prebound
+  R-SEQ integrity/nondegeneracy criteria that do not import PEDC confirmation floors. Exact v3
+  SHA-256 is `0ef13ec31677a2ef5b0db2a2a3de027a2f68d3787d8baadaa1787e808a9e84e8`; it remains
+  uncommitted and non-executable while the original reviewer re-audits it.
+
+- **2026-07-17 21:13--21:30** -- **Two exact negative/theory artifacts are preserved, while the
+  carry motor remains NO-GO after a sixth hostile boundary audit.** Independent recomputation of
+  the wide result-digit report returned GO to preserve the rejection only. It verified every pooled
+  numerator/denominator, exact routing, dead collapse, all frozen hashes, 46 aligned retained rows,
+  seven carry-only retained failures, and the `fit_w4-00062` digit-fixed/carry-wrong intervention.
+  Result document SHA-256 is
+  `38c30a2235dfed0aa1c31236ce019cda03734efdb6a5024298dd9a876780590c`; commit `30d3b02`
+  is pushed and the exact read-only document is mirrored to Newton.
+
+  The original hostile reviewer returned preservation-only GO for
+  `R12_SHARED_TRANSITION_CIRCUIT_THEORY.md` v3, exact SHA-256
+  `0ef13ec31677a2ef5b0db2a2a3de027a2f68d3787d8baadaa1787e808a9e84e8`. It confirms that
+  R-SEQ no longer imports impossible PEDC floors, the null selector-swap gate is removed, and the
+  dossier remains candid that fixed runtime is the essential executor and PEDC is an ordinary
+  FST/RNN interface hypothesis. Commit `6e06d64` is pushed and the exact read-only document is
+  mirrored to Newton. This authorizes preservation only, not CPU or H100 execution.
+
+  The fifth canonical carry-motor bytes remain **NO-GO** despite independently passing 60 tests.
+  The same reviewer found three additional S1 scientific-integrity defects: retained fit evidence
+  can be changed and internally rehashed without re-derivation from the eight sealed shard tensors;
+  teacher-forced treatment/shuffled scoring uses all-row CPU arithmetic rather than the exact
+  singleton H100 deployment path and can flip a threshold row; and the public confirmation
+  generator accepts syntactically valid caller-supplied plan path/hash fields without independently
+  binding the canonical plan bytes. A sixth repair is active. No carry plan, shard extraction, fit,
+  evaluation, commit, or capability claim is authorized until the same reviewer returns GO.
+
+- **2026-07-17 21:30--23:02** -- **The canonical carry protocol receives exact-byte GO and the
+  factorial exposes a width-induced carry collapse before its terminal controls finish.** The sixth
+  carry repair was correctly rejected because the canonical checkpoint records the exact JSON step
+  string `"sft_ep1"` while development publication still required an integer. The seventh repair
+  freezes that string through plan, shards, bundle, development, and confirmation and adds canonical
+  publication plus integer/alternate-string rewrite regressions. Exact SHA-256 is
+  `1f3cdc83aca275f887fc09ce68e60b281a9ef6cf1cd445814b31932fdb333b8a` prereg,
+  `2fd1e1a93c9c26a9b90406ce58944d877a7b8496114e51db4d511d60b08aec3c` main,
+  `cbd86e3b4b8cd1990d543c551eb96beaf1a3c7196d52888a364a54fb59fb123d` tests,
+  `6c95d48bf33b68e38004b043e0d2b64880102d4cb189fc5f3a0a285143a1a649` H100 wrapper, and
+  `0688a5d1a423942463404c589fb1a6a5fd6bb85f8704bf86a8222aa20e6b358c` Stokes wrapper. The
+  same hostile reviewer returned `GO`; an independent full run passed **64/64** warning-strict tests
+  in 256.03 seconds plus Ruff, formatting, compilation, both shell parsers, and whitespace gates.
+  Commit `1f29e4c` is pushed. Its exact commit is installed in isolated clean sparse checkouts at
+  `/lustre/fs1/home/sa305415/shohin_carry_source_1f29e4c` on both clusters using a hash-verified
+  Git delta bundle and required-object pack, without credentials or dirty-tree copying.
+
+  Factorial-v4 width job `692127_2` completed `0:0` on `evc37` in `05:00:41`; its immutable report
+  is mirrored locally with SHA-256
+  `5ca53f82af9d4ae4649dcb6380e33940003f20d19d97cbb323767a107ca61c59`. IID job `692152_0`
+  completed `0:0` on `evc36` in `04:55:19`; its mirrored report SHA-256 is
+  `8fa437564cacc2b14c81659d63932426fb4c2abaad86ad2e6c6d5233f409bd01`. Both reports
+  independently recompute from all 1,500 paired transcripts and tie at **239/3,000 = 7.9667%**
+  branch-level closed-loop success; paired both-branch success is IID **86/1,500 = 5.7333%** versus
+  width **75/1,500 = 5.0%**. First-step result tapes remain nearly perfect (IID 2,999/3,000;
+  width 2,993/3,000), but first-step carry falls from IID **2,862/3,000 = 95.4%** to width
+  **2,146/3,000 = 71.5333%**. Width changes expected-carry-1 false negatives from 45 to **850**,
+  direct evidence of carry-zero collapse rather than missing digit capacity. This is a provisional
+  two-arm diagnosis, not the factorial decision.
+
+  Terminal/terminal+width attempts `692152_1`, `692152_3`, `692398_1`, and `692399_3` failed
+  closed in the 90-second CUDA-import preflight with empty scientific logs and no outputs.
+  Cooldown retry `692406_1` also failed preflight, but it warmed the same GPU: terminal+width job
+  `692407_3` then passed H100 preflight on `evc36` and is evaluating; terminal job `692438_1` is
+  dependency-held immediately behind it. On Stokes, reviewed custody helper SHA-256
+  `1c3a4fde33d1220bfb9deea9917537983a61efcdade5ae27f5b4c79ff4c72787` is running as CPU job
+  `740965` on `ec78` to create the one-time 32-byte secret and sealed pre-fit commitment. It has not
+  yet published a commitment receipt; do not submit the canonical plan before that clean result.
+
+- **2026-07-17 23:02--23:15** -- **Canonical carry custody is sealed and sharded extraction has
+  started without revealing confirmation data.** Stokes helper `740965` failed closed before
+  commitment publication because Lustre inherited SGID on the private secret directory. The exact
+  one-time 32-byte secret had already been created with mode `0400`; it was not read, printed,
+  recreated, deleted, or exposed in a log. Only the inherited SGID directory bit was cleared.
+  Retry `740966` completed `0:0` in seven seconds and published immutable commitment
+  `commitment_1f29e4c05249730382cf2d3744aa1570fcf4cdc9/commitment.json`, SHA-256
+  `a58e6865e8616e0bd63b3e790de216011e95ab49b89c5f710eec4d2f960ed7a7`, mode `0444` under a
+  mode-`0555` root. Its source-manifest identity is
+  `9e31eade0d16627f01a04482f1c03958c7049fb1d275239ac8127242b13d1fd7` and exclusion identity is
+  `df2d7fc97f22b9bd8987141095f95ec2cf0240f4c4bf463f53996f82ef6c1f00`.
+
+  Canonical CPU planning job `740967` then completed `0:0` in `01:13`. Immutable `plan.json` is
+  10,682,585 bytes with SHA-256
+  `dd6e49c3646b260092a1751973597761d4379386c261312c34c663ef89b4f20a`; its root is mode `0555`,
+  while all eight shard namespaces plus fit, development, and confirmation namespaces were empty
+  mode-`0700` before execution. Newton independently sees the same commitment and plan hashes and
+  modes through the shared filesystem. No secret bytes were transferred to Newton.
+
+  Reviewed extraction jobs `692445`, `692446`, `692447`, `692448`, `692449`, `692450`, `692451`,
+  and `692452` bind shard indices zero through seven respectively, the exact source commit
+  `1f29e4c05249730382cf2d3744aa1570fcf4cdc9`, plan hash, commitment hash, one H100 PCIe, four CPUs,
+  separate shard outputs, and `Requeue=0`. At 23:15, shard zero `692445` was running on `evc47` in
+  pre-CUDA confirmation/source validation; the remaining shards were pending resources/priority.
+  Fit is deliberately unsubmitted until all eight sealed shard artifacts independently validate.
+  Factorial terminal+width `692407_3` remains healthy on warmed `evc36` at 150/1,500 pairs;
+  terminal-only `692438_1` remains dependency-held behind it. Partial counters are not scores.
+
+- **2026-07-17 23:15--23:25** -- **The first canonical extraction fails closed on a plan
+  serialization bug; no shard artifact or secret is exposed.** Shard-zero job `692445` passed the
+  CPU-only commitment/exclusion semantic preflight, then failed `1:0` before publication with
+  `ValueError: canonical plan content mismatch`. Shard-one `692446` reproduced the same exact
+  failure. Jobs `692447`--`692452` were canceled before they could repeat the deterministic defect.
+  All eight shard directories, fit, development, and confirmation remain empty mode `0700`; the
+  sealed plan and commitment are unchanged. This is an invalid execution attempt, not evidence for
+  or against carry information.
+
+  Read-only Stokes diagnostic `740970` completed `0:0` and recursively compared the sealed JSON to
+  an independently regenerated expected document using the reviewed source and frozen inputs. It
+  found exactly 17 representational differences: four prompt-length histogram keys and four token-
+  length histogram keys appear once as JSON strings versus Python integers, and
+  `runtime_contract.artifact_runtime.torch` appears as plain `str` versus PyTorch's `TorchVersion`
+  string subclass. Values and all other fields agree. The validator incorrectly compared the
+  JSON-loaded document to a pre-serialization Python object instead of its canonical JSON form.
+  A bounded eighth repair is under test/review; the invalid commit-bound root will not be reused and
+  no extraction retry is authorized until repaired exact bytes receive hostile review GO.
+
+- **2026-07-17 23:25--23:32** -- **Direct interaction shows that DRS can write and consume carry
+  inside its trained grammar; terminal serialization and natural-language compilation are the
+  sharper failures.** A fresh 12-call greedy diagnostic ran locally against frozen
+  `train/sft_digitwise_recurrent_v2_200k_r3/sft_ep1.pt` with no gold-answer stopping, host repair,
+  retries, or model-state injection. The model exactly executed all four first-column cases: add
+  with/without carry and subtract with/without borrow. It exactly consumed both a fixed `c=1` state
+  and its own verbatim self-written `c=1` response on the next call. Thus carry writing and immediate
+  carry consumption are demonstrably available in-distribution; the width-arm's 850 carry false
+  negatives are a robustness/generalization failure, not a universal absence of the local circuit.
+
+  Terminal serialization is asymmetric: the frozen completed tape with `c=0` correctly emitted
+  `answer=7593`, while the otherwise identical `c=1` tape incorrectly emitted the same `answer=7593`
+  instead of `answer=17593`. All three ordinary-language register probes failed (`answer=12`,
+  `answer=13`, and `answer=130` instead of the requested one- and two-operation state traces).
+  Overall exactness was **8/12**, diagnostic only. This localizes the next autonomous bottlenecks to
+  terminal-carry readout and semantic compilation/composition rather than basic local carry
+  arithmetic. Raw transcript JSON SHA-256 is
+  `8589e47a0f6684b6b51d2be76af685e92fb30cca87b8fc3bd5277558087a583f`; probe source SHA-256 is
+  `40a7a4b60fd6c1a02ae8fe4f850eb60760e76c56fb6233d31a0662f8bd82cab7`.
+
+  An immediate eight-pair follow-up changed only terminal `c=0` versus `c=1` across result tapes
+  `0000`, `1000`, `9999`, `1234`, `8090`, `3957`, `5555`, and `2468`. The model serialized every
+  zero-carry tape correctly (**8/8**) and emitted the identical answer for the paired one-carry state
+  (**0/8 response changes; 0/8 one-carry exact**). This invariance has a concrete data cause. A
+  read-only scan of all 439,865 immutable v2 DRS training rows found 39,985 final-answer rows and
+  **39,985/39,985 terminal `c=0`; zero terminal `c=1` examples**. The generator capped width-4
+  operands at 2,999 and width-6 operands at 299,999, so training additions could not overflow their
+  fixed width. Therefore terminal-carry readout is an untrained support cell, not evidence that the
+  architecture cannot represent carry. This independently validates the active factorial's terminal-
+  carry intervention as the correct data test. Terminal and terminal+width reports remain required
+  before choosing an architecture change.
+
+- **2026-07-17 23:32--23:48** -- **Direct factorial-arm interaction proves terminal data restores
+  carry sensitivity, but neither tested curriculum yields a clean autonomous transition.** Exact
+  frozen checkpoints were temporarily mirrored and hash-verified from completed SFT jobs: terminal
+  `692073` SHA-256 `1f7307705f632e9290e9f5c8580d8445981d5ffffc974a5f2854c5b93c4ad96d`
+  and terminal+width `692077` SHA-256
+  `06b5d9f2dc4a210fbc4fbe9f62fe036dca2a05598d5e463cf6a0e9133866779e`.
+  Temporary checkpoint copies were deleted after local MPS interaction; canonical remote artifacts
+  remain untouched.
+
+  On the same eight paired terminal tapes where original DRS changed **0/8** responses when only
+  `c` changed, the terminal arm changed **8/8** and emitted `17593` correctly for the frozen
+  `r=3957,c=1` case. It reached 10/16 exact paired serializations; remaining errors copied or
+  reordered some result digits. On the 12-call transition probe it preserved all four first local
+  carry/borrow writes and both final sample answers, but incorrectly retained `c=1` after the next
+  column for both fixed/self-written carry and even introduced `c=1` in the zero-carry case. It
+  scored 6/12 exact and failed all natural-language composition prompts.
+
+  Terminal+width changed **7/8** terminal pairs but reached only 4/16 exact paired serializations,
+  with more result-tape corruption. Its 12-call probe scored 8/12: all four first writes, fixed and
+  self-written carry-one consumption, and both final sample answers passed; the zero-carry second
+  transition incorrectly produced `r=5900,c=1`, and all natural-language composition prompts
+  failed. These are direct diagnostics, not factorial scores. They support the provisional model
+  that terminal support repairs carry readout while width oversampling introduces conflicting carry/
+  serialization shortcuts. Raw terminal-arm JSON hashes are
+  `93cd5083bc285ab8dfea8293b5a97dd0ddfd9bddd86d326142855f66a6ea8248` and
+  `0346fcf783b22f4afe61b06f3397fa4030e8e3ab1da5c4fb4d75eace7b795701`; terminal+width hashes are
+  `1936ddb24084c4f3c55c2d9f922f0f57456aa5c4b3d55a0b40f5dff5a23aec5c` and
+  `3a59254966944402b73d2ac19df72287b8d0ddd94c1dab4049cf51cf91720cfd`.
+
+- **2026-07-18 00:00--00:33** -- **The canonical carry protocol is repaired, sealed under a new
+  commit-bound root, and extraction has restarted; no carry capability claim is yet authorized.**
+  The prior `1f29e4c` extraction failed closed because JSON serialization changed histogram-key
+  types and PyTorch's `TorchVersion` string subclass before strict comparison. A first repair was
+  correctly rejected because Python equality conflated booleans, integers, and floats. The final
+  repair compares deterministic strict JSON payloads and includes sealed-validator regressions for
+  bool-to-int, int-to-float, and recomputed histogram rewrites. It passed 67/67 warning-strict tests,
+  Ruff, formatting, compilation, both shell parsers, and the same hostile reviewer returned GO.
+  Commit `a0c258e6709766c643cf127a429a7d6ef4a4211b` is pushed and installed in an isolated clean
+  checkout. The exact repaired source hashes are prereg
+  `ad53ce4f374f8e46a64423beafc328663a5cf77a1a1c62daccd8c846eb37ca73`, main
+  `a8d89b7324cebcc84c8bce89821a4746e842834d430d86ad3b729cf3e1142eb3`, and tests
+  `c020499a8f1491eb22a2f2fd03a5c4674c0dcad4894409681e3fc0e18cfd1047`.
+
+  Fresh sealed commitment SHA-256 is
+  `1ee32e4e2e8f9eb56026b7b8de1fdff207e9fd3694e0ae354f103d58ebb820da`; fresh immutable plan
+  SHA-256 is `1b845d47f6875df571169efb5adb0716dfbc5d266a2499e4a92451351a262b6d`. Newton independently
+  recomputes both hashes exactly. Canonical shard jobs `692473`--`692480` bind indices zero through
+  seven, one H100 PCIe, four CPUs, `Requeue=0`, the exact reviewed source, plan, and commitment.
+  At 00:33, `692473` is running on `evc33` inside the CPU-only confirmation validation and is
+  Lustre-I/O-bound while hashing immutable inputs; its scientific output and error logs remain empty.
+  The other seven jobs are pending resources/priority. Fit remains deliberately unsubmitted until
+  all eight shard artifacts seal and validate.
+
+  Capability ranking remains explicit: DRS is the strongest learned arithmetic-state primitive
+  (497/500 first transitions; 275/500 canonical final answers) but is externally clocked and drops
+  to 125/500 under held-out wording. Typed-controller v1 is the strongest measured autonomous
+  multi-operation model at 42/256 = 16.4%. SSC is the highest assisted system at 115/256 = 44.9%,
+  but the host supplies scheduling and is therefore not an autonomous reasoning result. The wide
+  result-digit motor is rejected as an autonomous actuator. The next data intervention is an
+  orthogonally balanced carry/serializer curriculum; it must remain CPU-only and preregistered until
+  the four-arm terminal/width factorial completes.
+
+- **2026-07-18 00:57** -- **The repaired carry protocol crosses the exact boundary that failed in
+  the prior execution.** Shard jobs `692473`, `692474`, and `692475` are running on `evc33`,
+  `evc24`, and `evc34`; all three independently printed the exact sealed confirmation/exclusion
+  preflight with zero stderr. Shard zero `692473` then passed H100 preflight, model/board rebuild,
+  and strict canonical-plan comparison and entered real feature extraction, printing its first
+  `rows=1564` progress record. Therefore the `canonical plan content mismatch` regression is
+  operationally repaired. This is a protocol result only: no shard is yet sealed, no fit is
+  submitted, and no carry or reasoning capability claim advances until all eight shards validate
+  and the preregistered autonomous gates run.
+
+- **2026-07-18 02:20** -- **The first repaired canonical carry shard seals and independently
+  validates; all eight shard indices have now received H100 execution.** Shard-zero job `692473`
+  completed `0:0` on `evc33` in `01:47:56` with zero stderr and published exactly 8,192 rows.
+  Its commit-bound `shard_00` directory is mode `0555`; its sole `features.pt` is 19,678,032 bytes,
+  mode `0444`, link count one, and independently recomputes SHA-256
+  `4affa12434513ebe9587464ff38656abaaf7e47904d9db6ced252c3adea52a96`, matching the sealed
+  publication log. Job `692480` immediately started shard seven on the freed `evc33`; jobs
+  `692474`--`692480` are now all running and retain zero observed stderr. Fit remains unsubmitted
+  until every remaining shard exits `0:0` and passes the same permission, link, row-count, and
+  digest checks.
