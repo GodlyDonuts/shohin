@@ -6215,3 +6215,359 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `692474`--`692480` are now all running and retain zero observed stderr. Fit remains unsubmitted
   until every remaining shard exits `0:0` and passes the same permission, link, row-count, and
   digest checks.
+
+- **2026-07-18 03:47--04:07** -- **Terminal+width completes reproducibly, all eight canonical
+  carry shards seal, and the reviewed carry fit starts.** Factorial job `692407_3` completed `0:0`
+  on `evc36` in `05:00:34`. Its 21,802,128-byte terminal+width report is mirrored locally as
+  read-only SHA-256 `45a4728a115e4532a5ad1d3a45bfe35389206e2954020f8d1ce4934ac70422d2`;
+  an independent replay of all 1,500 paired transcripts exactly reproduces every metric and the
+  transcript digest `5268b6b1f369e5edb93aa6aefc8652e3f22c2932570c7a54419296c58510b45f`.
+  Terminal+width reaches **75/1,500 = 5.0%** paired both-branch success and **250/3,000 = 8.3333%**
+  branch closed-loop success. It raises terminal-transition exactness to **481/3,000 = 16.0333%**
+  from IID 369/3,000 and width 390/3,000, but width-eight remains **0/300** paired and **0/600**
+  branch closed-loop. This is evidence that terminal support repairs part of serialization without
+  solving long-state transport; it is not the four-arm decision. Terminal-only successor `692438_1`
+  and direct retries `692551_1`, `692557_1`, `692558_1`, and `692559_1` all failed closed in the
+  bounded cold PyTorch-import gate with exit `124:0`, empty scientific logs, and no artifact.
+  Checkpoint-free warm job `692560` then completed a real BF16 H100 matmul on `evc39` in 44 seconds;
+  terminal-only job `692561_1` started immediately behind it, passed H100 preflight, and is the sole
+  terminal report writer.
+
+  Carry extraction jobs `692473`--`692480` all completed `0:0` with zero stderr and exactly 8,192
+  rows per shard. Every shard directory is mode `0555`; every sole `features.pt` is mode `0444`,
+  link count one, and 19,678,032 bytes. Independently recomputed shard SHA-256 values, indices zero
+  through seven, are `4affa12434513ebe9587464ff38656abaaf7e47904d9db6ced252c3adea52a96`,
+  `4731c1644703e26c1978ca1ec1ba80af7c173c5d9676ae68fbd04368f3b54c2c`,
+  `e81639e68a838bfa6695be92f7c1333d100b2317c48fb2cf0d995f22a6e50a43`,
+  `ae86ec1b70dca21d67849fc4be17ffec682472851735c3b9523292836a74e70f`,
+  `ce5a151f89e20e774c7d37afc446ea026ec14a587c70fa614414f060f10a2144`,
+  `f02d8221bf3a393566c279e27bf888fcbd1ef9ea17bdd33262472c898950ea83`,
+  `009b83f0c2a70362654e3e3e4cad27d30f79f93f3bdd32d6ce3064695dd2b9db`, and
+  `8214d356288c56a116a3de753a8948a35f731d52c520fa906f4e31c1b0f14fb4`;
+  each matches its sealed publication log. Fit, development, and confirmation namespaces were still
+  empty mode `0700` after this audit. Canonical fit job `692562` now runs on `evc24` from clean
+  commit `a0c258e6709766c643cf127a429a7d6ef4a4211b`, exact plan SHA-256
+  `1b845d47f6875df571169efb5adb0716dfbc5d266a2499e4a92451351a262b6d`, and commitment SHA-256
+  `1ee32e4e2e8f9eb56026b7b8de1fdff207e9fd3694e0ae354f103d58ebb820da` with `Requeue=0`, one
+  H100, four CPUs, and no confirmation secret supplied. A fit is not a reasoning result; only sealed
+  development evaluation may advance the claim.
+
+- **2026-07-18 04:07--04:40** -- **The first carry fit attempts fail closed on two runtime/
+  serialization defects; the sealed shards remain valid and the exact board mismatch is now
+  reproduced.** Job `692562` failed before fitting because PyTorch 2.6 defaulted `torch.load` to
+  `weights_only=True` and rejected the trusted bound `TorchVersion` checkpoint metadata. Retry
+  `692563` used the documented one-process compatibility setting only after exact path, mode, and
+  digest binding. It completed all 2,000 treatment and 2,000 shuffled updates, then failed before
+  publication with `ValueError: motor bundle differs from frozen plan`; the planned fit directory
+  remains empty mode `0700`, so no partial motor is being treated as evidence.
+
+  Independent reconstruction of all 65,536 public fit rows proves that the regenerated board and
+  sealed plan differ in exactly two representation fields: `prompt_length_histogram` and
+  `token_length_histogram` have integer keys before JSON publication and string keys after loading
+  the frozen plan. The row SHA-256 is
+  `6517b1ff3aa557e449a2eef9c5540c3d5f8699482d933d5c320b606adb4a0f1b`; after strict JSON
+  normalization both boards have SHA-256
+  `d6282610ba845b23ebe849efe574233bf657a50aea0a7edb901e9e1d95b24391`. A narrow local repair
+  canonicalizes the regenerated board and still requires exact equality to the frozen plan before
+  fitting. Exact provisional source hashes are
+  `1dcaf93c4bd5729820639762987e539f9b819aa89353794f3391862d5856432f` for the implementation and
+  `cadc896f97ff3703175eb6397788bf4176bb0b5a84698b086833526755ceb641` for its regression tests;
+  all 68 warning-strict tests pass in 252.63 seconds, with Ruff, compilation, and whitespace checks
+  also clean. A hostile reviewer returned GO for these exact bytes; commit `cec9355` is pushed.
+  This authorizes the narrow fix only, not an H100 migration. Because a patched executor cannot
+  honestly claim the original `a0c258e` source identity, the
+  preferred recovery is a separately reviewed dual-provenance lineage that leaves the original root
+  untouched and binds all eight old shard receipts plus the new executor. Full replanning and
+  re-extraction is the mandatory fallback if that recovery protocol does not receive exact-byte GO.
+
+  Terminal-only factorial job `692561_1` is healthy on `evc39`, passed H100 preflight, and reached
+  250/1,500 paired cases at 04:40 EDT. Its partial success counter is not a score and is not being
+  interpreted before the immutable final report exists.
+
+- **2026-07-18 04:47--04:52** -- **Stokes key access is restored and the stale Track-G chain is
+  closed as a custody failure, not a reasoning result.** The workstation's dedicated Stokes public
+  key is now installed; batch-mode access succeeds without storing a password in a command, file, or
+  log. The old held Track-G chain was not live work: phase-one producer `740338` had failed `1:0` on
+  `ec51` after 10:51, leaving verifier `740339` in `DependencyNeverSatisfied` and `740340`--`740342`
+  transitively blocked. Jobs `740339`--`740342` were canceled as dead dependency residue.
+
+  The exact phase-one failure is a source-custody classifier defect. Commit G added
+  `pipeline/jobs/run_acw_terminal_monitor_stokes.sbatch`, while `_require_activation_lineage`
+  incorrectly required that path to have Git status `M`; the actual direct F-to-G diff correctly
+  reports `A`. The job stopped while building input bundles, before any ACW arm fit, scored
+  checkpoint, development baseline, or performance report existed. The partial
+  `artifacts/r12/acw_development_g1` namespace is retained as failed-attempt evidence and must never
+  be resumed or overwritten. A retry requires a new preregistered G2 root, new held job IDs, exact
+  add/modify lineage repair, and fresh review before release. No ACW capability number changed.
+
+- **2026-07-18 05:10** -- **VPN recovery is verified end to end; no scientific state was changed
+  during the outage.** Batch-mode key authentication now succeeds to both Newton (`evuser2`) and
+  Stokes (`euser1`). Stokes has no queued or running jobs after the failed G1 dependency chain was
+  closed. Newton has exactly one live job: terminal-only factorial evaluator `692561_1` on `evc39`,
+  healthy at 375/1,500 paired cases with zero observed preflight error. Its partial counter remains
+  uninterpreted pending the immutable final report and independent transcript replay. The repaired
+  self-canonicalizing epoch-retirement theory now has SHA-256
+  `d315b107b6ce3d486a83e091168f027356007c41dd17dd0f8f2f9d7441281dc4`; it remains an unconditional
+  H100 NO-GO until a fresh hostile review. A separate hostile review of the exact two-file Track-G
+  classifier repair is active; neither the failed G1 namespace nor its canceled job identities will
+  be reused.
+
+- **2026-07-18 05:22--05:46** -- **Fresh Stokes G2 custody is allocated and held; carry recovery is
+  staged on the correct lineage; no new capability result exists.** The exact Track-G classifier
+  repair passed a hostile wrong-parent/path/status review, 30 focused tests, Ruff, compilation, and
+  whitespace checks, then was pushed on main as `585ac8266c427ea4ac2e98583662f2bb9c8d0b3e`.
+  A separate `codex/acw-g2` worktree is rooted directly at custody F
+  `7433062211c4ad0371a975019c37625f7d811b27`; it carries fresh G2 roots and a structured plan with
+  raw SHA-256 `0f3ac3f243096ec839ff34d1fe92086d4e15817cf7d4529022e593c8eacd53e3`
+  and payload SHA-256 `1604b3abfb87fa84b7b46e8343e017ac62f21fe7cebe7623d74ec926b91fec5d`.
+  Fresh Stokes jobs `741065 -> 741066 -> 741067 -> 741068 -> 741069` are all `JobHeldUser`, pinned
+  `ec51/ec52/ec51/ec52/ec51`, four CPUs and 96 GiB each, `Requeue=0`, with exact `afterok`
+  dependencies. All four scientific spool scripts match SHA-256
+  `0ee986d36872115649e9a88c0d62cb6c1924ffa68b050cf8e62aca353863fab2`; monitor spool SHA-256 is
+  `b08507def6e1748fc98599902bd425e04ee608819ddf559a2db43b98f81075d5`.
+  G2's eight-module warning-strict gate passes 143 tests plus 60 subtests; Ruff, format, compilation,
+  both shell parsers, plan validation, and diff checks pass. The failed G1 root still exists and the
+  fresh G2 root is absent. G2 remains uncommitted and held pending exact-byte hostile review; no job
+  may be released early.
+
+  Carry recovery now has four new dual-provenance files with source-manifest SHA-256
+  `27f40f08e058dfc9c29c4d2b5d2c42cde9757213bf2dccd98b430eff5cf8a252`; 27 warning-strict tests
+  pass with all static checks. Because current main contains the later canonicalization patch, the
+  only executable lineage is a separate direct child of upstream `a0c258e` containing those four
+  new files and no changes to the upstream dependency set. That worktree is prepared but remains
+  uncommitted pending hostile review. Any future artifact is recovery audit v9, never a relabeled v8.
+
+  The self-canonicalizing epoch-retirement theory passed hostile review at SHA-256
+  `d315b107b6ce3d486a83e091168f027356007c41dd17dd0f8f2f9d7441281dc4`: one post-motor EOS surface,
+  frozen 2,688-row boundary board, semantic disjointness, TS-C1M1 controls, and full stage-one
+  optimizer identity are coherent. H100 remains unconditional NO-GO until its separate executable
+  protocol is implemented and reviewed. The EOS/source-retirement implementation remains CPU/H100
+  NO-GO after a fresh review found pathname/inode races, no durable acceptance receipt, incomplete
+  Slurm/runtime sealing, and missing substitution/crash tests; repair is active. Terminal-only
+  factorial job `692561_1` remains healthy on `evc39`, most recently 550/1,500 pairs. Its partial
+  success counter remains uninterpreted until final immutable publication and replay.
+
+- **2026-07-18 05:49** -- **First dual-provenance carry recovery review is NO-GO; no fit was
+  launched.** Exact reviewed hashes matched and the 27-test gate was clean, but hostile execution
+  found five real defects: the code did not enforce recovery HEAD as the sole direct child of
+  `a0c258e` with exactly four added files; legacy pathname-based publication could crash with a
+  two-link `motor.pt` plus staging residue that the recovery path could not reopen; inherited fit
+  metadata validation accepted integer/float aliases; full upstream directory identity was not
+  rechecked after fitting; and the wrapper permitted a caller-selected Python interpreter. The
+  reviewer independently demonstrated acceptance of a grandchild commit and an unreviewed
+  `torch.py` shadow file, and reproduced the broken post-link crash state. The sound portions remain
+  normalization, exact shard receipts, confirmation-generator binding, weights-only loading, and the
+  v9-only claim boundary. The same worker is repairing these exact blockers. The prepared
+  `codex/carry-recovery-v9` worktree remains rooted at `a0c258e` and uncommitted; it is not an
+  authorization artifact. CPU commit and H100 fit both remain NO-GO.
+
+- **2026-07-18 05:57--06:09** -- **VPN recovery remains stable and all live/held state reconciles;
+  no scientific claim or release decision changed.** Batch-mode key authentication succeeds to
+  Newton and Stokes. Terminal-only factorial job `692561_1` remains the sole live H100 writer on
+  `evc39`; it advanced from 575 to 675 of 1,500 paired cases with zero observed stderr. Its partial
+  counter is still not a score. Fresh Stokes G2 jobs `741065 -> 741066 -> 741067 -> 741068 ->
+  741069` remain `JobHeldUser`, consume zero resources, retain the exact `afterok` chain, request
+  four CPUs and 96 GiB with `Requeue=0`, and target `ec51/ec52/ec51/ec52/ec51`.
+
+  The exact staged G2 tree remains a sole candidate child of custody F
+  `7433062211c4ad0371a975019c37625f7d811b27` with twelve expected paths and no unstaged drift.
+  Its raw plan SHA-256 remains
+  `0f3ac3f243096ec839ff34d1fe92086d4e15817cf7d4529022e593c8eacd53e3`; plan validation reports
+  `ready=1 attempts=27`. The warning-strict eight-module gate reran 143 tests successfully, and
+  Ruff, compilation, both shell parsers, and diff checks remain clean. An independent exact-byte
+  hostile review is active; the candidate remains uncommitted and every Stokes job remains held.
+  The local runbook SHA-256 before this entry was
+  `16c94e94490aba82d234dbe854d6c2a60a2db37319abe515030580319d2dc996`, and that exact prior ledger
+  was atomically installed and hash-verified on Newton after connectivity returned.
+
+- **2026-07-18 06:28--06:35** -- **SCERT becomes an executable CPU mechanics protocol, while
+  accelerator execution remains NO-GO; carry recovery v9 is repaired and staged for rereview.**
+  Commit `d4b8cfb9f27fce0760ba8e5e4289a5ccfdf15b7a` adds exactly the six SCERT protocol, generator,
+  trainer, test, and CPU-wrapper files and is pushed on GitHub `origin/main`. Its frozen public
+  mechanics surface contains 384 episodes and 2,688 rows: 2,304 COMMIT events plus 384 HALT events.
+  The intervention adds 5,788 parameters for a deployment total of 125,087,452 and implements the
+  preregistered post-motor `ell_eff`, TS-C1M1, and three controls. An independent local rerun passes
+  all 50 focused tests in 23.77 seconds; Ruff, compilation, shell parsing, commit diff, and exact
+  source hashes are clean. No SCERT artifact exists under the durable project artifact tree and no
+  SCERT Slurm job exists. These are CPU mechanics results only; external custody, independent
+  exact-byte review, and separate hardware authorization are still required before any H100 use.
+
+  Carry recovery v9 is now staged in the prepared `codex/carry-recovery-v9` worktree whose HEAD is
+  exactly upstream `a0c258e6709766c643cf127a429a7d6ef4a4211b`. The diff is exactly four added
+  files and no other path. Exact SHA-256 values are
+  `1c91ffa143ad61dfbcc846fa9484efcec15319f81e18b1d501468a55a3d32ad6` for the preregistration,
+  `27e45d7bf1db0441146f096f4f113fc952f26c6372760bb67062260f41836353` for the executor,
+  `504291d3a6c6a8f71fa5bee112e97db4b52e1c84b7083bf4d81a2d029a501212` for its tests, and
+  `49ba7a5873dcad27bce5abef2e5cf9ec69f37777c263b7fc3a3ff08ed02cb92a` for the wrapper; the
+  declared source-manifest SHA-256 is
+  `ea5def1c726940196a7405234d95641388ed988a2c4b277eafc0db5b5e910dbc`. The direct-child worktree
+  independently passes 37 warning-strict tests plus Ruff, format, compilation, shell, and diff
+  checks. Descriptor-bound exclusive publication, interrupted-state recovery, type-strict legacy
+  validation, fixed runtime identity, and complete upstream identity rechecks are implemented.
+  This remains uncommitted and CPU/H100 NO-GO pending a fresh exact-byte review.
+
+- **2026-07-18 06:45** -- **VPN recovery is reconfirmed; terminal evaluation advances, while
+  exact review keeps G2 and DWS single-completion fail-closed.** Batch-mode key authentication
+  succeeds to Newton and Stokes. Terminal-only factorial job `692561_1` remains the sole live
+  Newton H100 writer on `evc39`; it is healthy at 950/1,500 paired cases after 02:41 with the H100
+  preflight recorded and no observed failure. The partial counter is not a score and remains
+  uninterpreted until immutable final publication and independent replay. Stokes jobs `741065 ->
+  741066 -> 741067 -> 741068 -> 741069` remain `JobHeldUser`, consume zero resources, and retain
+  their exact `afterok` chain.
+
+  Exact-byte hostile review returned **COMMIT NO-GO / STOKES RELEASE NO-GO** for the current G2
+  candidate. The adjudicator omits the newly added terminal-monitor wrapper from its six-addition
+  lineage classifier and would reject the exact candidate during phase-one adjudication, despite
+  the trainer classifying it correctly. Separately, both wrappers permit mutable checkout paths to
+  precede the standard library, allowing an ignored top-level `secrets` package to shadow the
+  intended module before Git-clean validation. The existing 143-test gate did not cover those two
+  paths. A bounded repair is active; because wrapper and plan identities will change, the current
+  five held jobs must never be released and will be replaced only after corrected bytes, a fresh
+  plan, and a new held chain pass review.
+
+  Hostile review of DWS single-completion also returned CPU-publication and H100 **NO-GO**. Its
+  recursive perfect matcher exceeds Python recursion depth at the production donor count; runtime
+  modules are not identity-bound; dense positions required by the preregistration are absent from
+  the durable board; process death can leave a sealed staging directory that the verifier mistakes
+  for authoritative output; and cross-width gate thresholds are not encoded exactly. A bounded
+  three-file repair is active. No DWS artifact or job is authorized. The separately repaired EOS
+  suppressed-trace protocol now passes 28 focused tests plus static gates, but remains CPU/H100
+  NO-GO pending a fresh hostile review and real Linux custody validation.
+
+- **2026-07-18 06:57** -- **Direct transcript inspection separates arithmetic-state execution
+  from final serialization and identifies a reader boundary rather than a missing local rule.** On
+  the three immutable completed factorial arms, branches with an entirely exact model-authored
+  state loop but a wrong final answer number **17/3,000** for IID, **57/3,000** for WIDTH, and
+  **84/3,000** for TERM+WIDTH. In TERM+WIDTH, 28 of those 84 failures are an adjacent digit
+  transposition and 34 are a one-digit substitution; 34 preserve the exact target digit multiset.
+  A representative subtraction begins from
+  `dws:op=sub;w=4;p=0;c=0;a=5141;b=8730;r=0000;z=0`, authors all four exact transitions through
+  terminal state `r=7301;z=1`, then emits `1307` instead of the correct reverse-tape readout `1037`.
+  This is model interaction through retained greedy transcripts, not an inferred aggregate label.
+
+  The paired factorial evidence supports the same decomposition. Against WIDTH, TERM+WIDTH raises
+  terminal-transition exactness from 390 to 481 of 3,000 branches; the exact paired discordance is
+  252 losses versus 343 gains. Yet branch closed-loop success changes only 239 to 250 and paired
+  both-branch success remains exactly 75/1,500 in both arms. At width eight, first-transition
+  exactness is IID 556/600, WIDTH 430/600, and TERM+WIDTH 440/600, while every arm remains 0/600
+  branch closed-loop. Therefore terminal allocation repairs a real late local transition but does
+  not repair final tape consumption or length generalization; width allocation as currently
+  constructed actually degrades the first width-eight transition. This observation favors a
+  causally gated serializer/commit interface and orthogonally balanced position data over more of
+  the same arithmetic trace. The fourth-arm decision remains unopened until terminal-only publishes
+  and independently replays.
+
+  The six TERM+WIDTH width-eight branches that preserve an exact prefix through positions zero to
+  six make the target still narrower: all six author the correct final result digit, complete result
+  tape, `p=8`, and `z=1`, but emit terminal carry `c=0` where the oracle requires `c=1`. No other
+  field differs. Thus a reviewed carry-commit intervention has a concrete autonomous rescue set;
+  it must still beat its shuffled/dead controls and improve complete rollout rather than only a
+  teacher-forced carry label before any mechanism claim advances.
+
+- **2026-07-18 07:17** -- **VPN access is stable again; corrected G2 custody passes its local gate,
+  while SCERT, carry recovery, and EOS remain fail-closed under exact review.** Batch-mode key
+  authentication succeeds to Newton (`evuser2`) and Stokes (`euser1`). Terminal-only factorial job
+  `692561_1` remains the sole live Newton H100 writer on `evc39`; it is healthy at 1,075/1,500
+  paired cases after 03:10. Its partial counter remains uninterpreted. Both the obsolete Stokes G2
+  chain `741065 -> 741066 -> 741067 -> 741068 -> 741069` and replacement chain `741070 -> 741071
+  -> 741072 -> 741073 -> 741074` remain `JobHeldUser`, consume zero resources, request four CPUs
+  and 96 GiB, and retain their exact dependency order. The obsolete chain must never be released.
+
+  The corrected G2 staged tree is exactly twelve paths with no unstaged drift. Its replacement plan
+  payload SHA-256 is `71884a6745713bc77b60e008fe12f842095b196b1533ead5f301e2a66c894a2c`
+  and raw SHA-256 is `205c9d2d2fb595a93f07ee20d5791628c35fd7081e02d28e18d283654082d928`.
+  The four producer/verifier spool scripts match wrapper SHA-256
+  `c100eb57f37dcbdcf2fe871c5e6c7c09ea6049d0b6c7d029eaa17bff8946b2cf`; terminal monitor
+  `741074` matches
+  `6a4874fdaa127989dbb36cc1b57a2f26fed308b26c0eba2661374607453db49e`. The complete
+  warning-strict gate now passes 145 tests plus 60 subtests in 24.15 seconds; Ruff, format,
+  compilation, both shell parsers, diff checks, and plan validation (`ready=1 attempts=27`) pass.
+  A fresh exact-byte hostile review is active. No commit, install, or release is authorized yet.
+
+  SCERT review is **CPU/H100 NO-GO** despite passing local mechanics: caller-selected roots,
+  interpreter, and output can exit successfully without an authoritative report; source/runtime
+  identity is self-attested and incomplete; non-finite score values and a forgeable motor receipt
+  are accepted; dispatch remains host-selected; two preregistered controls are not executed;
+  optimizer/budget parity and denominators are declarative; and the external anchor can be
+  self-provisioned. Its 384-episode board also has only 96 distinct computations. Preserve SCERT as
+  a prototype, not a reasoning result, and spend no H100 time on it.
+
+  A second exact review keeps carry recovery v9 **COMMIT/H100 NO-GO**: the wrapper accepted an
+  unbound `TORCH_ALLOW_TF32_CUBLAS_OVERRIDE=1`; dependency identity omitted implementation modules
+  and native extensions; JSON parsing admitted non-finite values such as `1e999`; and inherited
+  umask plus an unbound recovery parent could leave an unrecoverable or unreceipted motor. A bounded
+  four-file repair is active; its direct-child topology and four-addition scope remain frozen.
+  EOS suppressed-trace likewise remains **CPU/H100 NO-GO** after review: completion authority can
+  predate final canonical publication/readback, and the scheduler/device receipt omits the exact
+  partition, CPU, memory, wall-time, GRES/TRES, GPU, and requeue contract while accepting any BF16
+  CUDA device. A bounded repair with interruption and H100-contract tests is active. No SCERT,
+  carry-recovery, or EOS durable artifact or accelerator job is authorized.
+
+- **2026-07-18 07:34** -- **Fresh G2 hostile review is NO-GO; both Stokes chains remain held and
+  the scored-development path remains score-blind.** The reviewer independently confirmed the
+  exact staged binary diff SHA-256
+  `3bad3a7ed6519944df348c38338b6c0b839506b8dfb25ea3d0baa1dd8e148598`, twelve staged paths,
+  zero unstaged paths, direct parent F, correct six-addition/six-modification classification,
+  standard-library shadowing guard, plan/job/spool binding, confirmation lockout, and terminal
+  accounting. It nevertheless returned **COMMIT / STOKES INSTALL / RELEASE NO-GO** on two defects.
+  First, final adjudication trusts digest strings and five independence booleans inside the refit
+  report instead of descriptor-safely reopening the private checkpoint, evaluation, dataset, and
+  bundle bytes and recomputing producer/verifier independence itself. A canonical read-only report
+  can therefore attest independence even when the actual private refits differ. Second, the plan
+  builder catches every directory-fsync `OSError`, so publication can report success after an I/O
+  durability failure. A bounded repair is active to replace report attestations with direct byte
+  recomputation and make unexpected fsync errors fatal with adversarial tests. Replacement jobs
+  `741070`--`741074` and obsolete jobs `741065`--`741069` remain `JobHeldUser`; no commit, install,
+  cancellation, release, score, or artifact is authorized before another exact review.
+
+  Separately, the repaired DWS single-completion source now uses iterative deterministic matching
+  on the full 2,048-donor production path, binds reviewed runtime/module bytes, serializes dense
+  positions, validates partial-recovery identity, and encodes exact rational cross-width gates.
+  Its owned three-file hashes are
+  `978a6935f550ee82c35686abec3cb250bebd2b052f825c3762e2c4b58f4252c2`,
+  `7ae2ad8cb23f2552d9ebecec516295372db437ea0f74a8c2e23c8def0049a371`, and
+  `92400bdedb1574ed43db690fbd0c5da57e5b327842d701ca6752dfcdf4acfde1` in preregistration,
+  generator, and test order. The focused gate is 21 tests and the production construction completes
+  in 8.780 seconds. This is a repair result only: CPU publication and H100 use remain NO-GO pending
+  the active independent exact-byte review.
+
+- **2026-07-18 07:36** -- **DWS single-completion rereview is CPU/H100 NO-GO; its deterministic
+  board logic survives, but runtime and publication identity do not.** Independent review matched
+  all three file hashes, reran all 21 tests, and compared 10,500 small random bipartite graphs to
+  brute-force existence without finding a matching defect. It found no recursion, permutation,
+  dense-position, inventory-overlap, or pack-reconstruction failure. It did find that the runtime
+  receipt hashes tokenizer module files and a class module name while execution still calls mutable
+  live class exports and `random.Random`; replacing either implementation leaves the approved
+  runtime hash unchanged. It also found that staging binds lexical absolute paths rather than the
+  resolved ancestor directory inode, so retargeting a higher path symlink can move later recovery,
+  writes, and rename away from the held lock tree. Finally, strict JSON rejects literal
+  `NaN`/`Infinity` but accepts overflow `1e999`, and H100 scoring/trainer consumption remain
+  intentionally absent. A bounded three-file repair is active to bind executed semantics, pin all
+  publication operations to one descriptor-held parent identity, and reject recursively non-finite
+  decoded values. A future separate evaluator must integer-cross-multiply rational gates and a
+  future trainer must prove metadata never enters model input. No CPU publication, H100 use,
+  artifact, job, commit, or push is authorized.
+
+- **2026-07-18 08:02** -- **Carry recovery remains PRECOMMIT/CPU/NEWTON/H100 NO-GO after a
+  third exact review; output consistency is not accepted as optimization provenance.** The review
+  reconfirmed parent `a0c258e6709766c643cf127a429a7d6ef4a4211b`, exact four-addition topology,
+  source-manifest SHA-256
+  `a7a28337fddac631b59160c133a63d84413a7834a4f55fb3d97c4fb59961f82f`, staged-diff SHA-256
+  `572c5c75ac29778223b26a9f9824e177fb1e8e780e5b7cb23f170b67a4ce219e`, and 62 passing
+  warning-strict tests. The previous JSON, numerical-control, dependency-file, umask, and parent-
+  receipt repairs are present. Six remaining defects are claim-blocking.
+
+  First, file hashing does not bind the live callable exports actually used; monkeypatching
+  `torch.optim.AdamW` leaves the runtime digest unchanged, and normal Python site startup still
+  permits `.pth`/`sitecustomize` injection. Second, a preexisting mode-`0444` motor in an unsealed
+  fit directory can be validated and sealed without independently replaying the claimed 2,000-step
+  treatment and shuffled trajectories; a hand-authored, internally consistent motor can therefore
+  impersonate training. Third, repository-local Git configuration can execute an unbound
+  `core.fsmonitor` before clean-tree validation. Fourth, symlinked ancestors and post-plan recovery-
+  root inode substitution are not fully pinned. Fifth, the wrapper under-binds live Slurm allocation,
+  typed GPU TRES, UUID, capability, memory, and MIG state. Sixth, the review receipt is procedural
+  path-plus-hash authorization rather than a signed external trust root. A bounded four-file repair
+  is active to isolate startup and callable semantics, replay every accepted trajectory, disable
+  executable local Git config, descriptor-pin physical roots, bind exact H100 allocation, and require
+  a production-key-signed review receipt. No commit, receipt, plan, install, fit, or capability claim
+  is authorized for the reviewed bytes.
