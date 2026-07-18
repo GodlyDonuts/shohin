@@ -6914,3 +6914,11 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `61b8e0b7e678df4125308a4347f88e8280b79cb3e4246dcd936ca1e392bd1117`.
   This prepares a reviewable runtime only. No OCSC/DWS/EOS source was copied there, no qualification
   test was run, no receipt was signed, and no CPU publication or accelerator action is authorized.
+
+- **2026-07-18 10:42** -- **User-confirmed VPN recovery is independently verified on both
+  clusters; remote custody remains unchanged.** Batch-mode multiplexed sessions reach Newton login
+  host `evuser2` and Stokes login host `euser2`. Newton has no queued jobs. Stokes contains exactly
+  jobs `741065`--`741074`; all ten remain `PENDING (JobHeldUser)` with zero runtime. No job was
+  released, canceled, modified, or submitted, and no remote artifact was changed. The prepared
+  Stokes CPU qualification runtime remains available, but candidate execution stays gated on the
+  active bounded repairs and fresh independent exact-byte reviews.
