@@ -6863,3 +6863,34 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   binding plus before/during-publication substitution regressions. It may not publish, commit,
   access clusters, or build accelerator consumers. Another independent review and real Linux
   qualification remain mandatory.
+
+- **2026-07-18 10:10--10:28** -- **EOS completes its second bounded repair, while a separate
+  OCSC consumer audit identifies six GPU-contract blockers before implementation.** EOS now treats
+  the report marker only as preacceptance evidence: ordinary replay requires a distinct externally
+  authorized post-fsync receipt created after reopening and fsyncing the report, marker, and parent,
+  with an injected pre-parent-fsync death pair rejected. Its GPU observation binds
+  `minor_number`, UUID, and PCI BDF in one `nvidia-smi` row and rejects extra concrete physical-GPU
+  cgroup permissions even when `/dev/nvidiaN` is absent. The repaired four-file hashes are prereg
+  `9a407c3f5d3e9f3edb4211f8a491ec198063ff2cf0f901d5a923490d955cd4bc`, evaluator
+  `f437eed310bead6f115450c2e78d1a8669be3f85470e10d7e9d3df6a2f112762`, tests
+  `23a02278b31015b6723eb46c3d09bf8a3529dd62ac5ac7dfb143cd8083025e03`, and wrapper
+  `5b19e88b961152112ce4e534612cb1593cb4b8c039d660bb0e58c9b452d3828f`; 49 tests plus all hygiene
+  gates pass. These are repair claims only. Fresh reviewer
+  `019f759e-7a4f-7923-818f-b1b995bcf98a` owns the current decision; Linux/Newton/H100 remain
+  `NO-GO`.
+
+  The OCSC parent checkpoint is present locally and on Newton at exact SHA-256
+  `d79e9df26caecb9801118d1bf68bd7b85381a06b256f23478acffe40a2108459`; the local
+  500,446,874-byte copy is now mode `0444`. No transfer or model mutation occurred. A read-only
+  consumer audit found that the CPU corpus contract is not yet an executable GPU numerical
+  contract: it ambiguously requests BF16 parameters with FP32 gradients; omits Muon's `1e-7`
+  normalization epsilon, matrix-size multiplier, optimizer flags/state dtypes/order, and exact
+  clipping; leaves LR endpoint indexing ambiguous; would accidentally include model z-loss if the
+  generic target-taking forward were used; does not fully define development scorer denominators;
+  and emits a nominal 99% per-slice hidden transition gate whose denominators make it exactly
+  **2100/2100**. The common rational schedule scale also cancels in per-update normalized CE, so
+  only relative raw units affect gradients unless a different operation order is explicitly
+  frozen. A future separate GPU preregistration must resolve these points, bind a literal hashed
+  5,120-entry LR vector, call the model without targets and compute shifted weighted CE explicitly,
+  freeze one-forward hidden-state capture, and define every integer scorer before any consumer code
+  or H100 request. No gate is relaxed.
