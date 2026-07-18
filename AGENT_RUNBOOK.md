@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 11:48 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 11:51 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -7120,3 +7120,28 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   closure, publisher-before-cleanup ownership, immutable child-byte execution, and exact node-
   identity cross-binding. It may not commit, publish, sign, access clusters, or launch work. Another
   fresh independent exact-byte review is mandatory after repair.
+
+- **2026-07-18 11:51** -- **Carry-recovery v9 review rejects promotion despite 138 passing tests;
+  a bounded repair now owns the actual frozen non-v9 topology.** The reviewer confirmed sole parent
+  `a0c258e6709766c643cf127a429a7d6ef4a4211b`, all four supplied hashes, source-manifest SHA-256
+  `69379c7060b63062943d68d63ede94dc00a83826c5c76d0df0f204f906022837`, matched treatment/control
+  initialization and 2,000-update schedules, canonical typed receipts, external-key authority,
+  descriptor-bound publication, and full readback. Warning-strict pytest is 138/138 in 93.79
+  seconds; Ruff, format, compilation, shell syntax, ASCII, whitespace, and staged-diff checks pass.
+
+  Promotion remains `NO-GO`. The Bash wrapper executes `compgen` only after startup imports could
+  already replace it, and `BASH_ENV` can run before line one. Receipt and `motor.pt` recovery cannot
+  distinguish live same-UID publishers from stale residue. PCI-form `CUDA_VISIBLE_DEVICES` is
+  accepted by the prereg/validator but rejected by live capture, whose real cgroup/sysfs/PCI path is
+  not exercised in tests. The formal suite also substitutes a payload builder rather than completing
+  a real production fit/replay smoke, and the fit-only prereg defers the six rescue cases,
+  development/confirmation denominators, preservation controls, and final decision rules.
+
+  The review request itself incorrectly named `_v9` paths, while the actual four staged additions,
+  source manifest, constants, and wrapper consistently use the non-v9 filenames. This is treated as
+  an instruction/topology mismatch, not a reason to opportunistically rename frozen source. Worker
+  `019f75ec-5d88-7e72-a1e5-f349c60b17c4` owns exactly those four actual files to bind a clean initial
+  interpreter, live-writer-safe recovery, consistent production GPU capture, a real bounded CPU fit
+  smoke, and a fully frozen downstream decision boundary. Preserve-as-rejected-evidence is `GO`;
+  commit, installation, signing, Newton preflight, and H100 execution remain `NO-GO` pending repair
+  and a new independent exact-byte review.
