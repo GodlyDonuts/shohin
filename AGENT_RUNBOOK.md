@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 13:09 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 13:27 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -7428,3 +7428,56 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Newton preflight, and H100 evaluation are all `NO-GO`. Worker
   `019f7633-6bb4-7190-9105-55ee2b9cccde` now owns exactly the four EOS files for repair. No remote
   access, signature, publication, commit, or job action followed the review.
+
+- **2026-07-18 13:09--13:26** -- **Fresh OCSC review returns publication/runtime NO-GO, a second
+  bounded repair owns the exact defects, and restored VPN access confirms remote custody is
+  unchanged.** The reviewer bound preregistration SHA-256
+  `46f53d145e8e0ad621690798f24d05d9e7e13180eb25dc53d8133eda3c51d4d4`, generator
+  `16baabd2fed94df86b0de3409521e9e064412815f804c9bbed5efc63c7676ba8`, and tests
+  `d7e36ff7f515c3c9fe80a0b38becb64744038197f13240ae9a79bae3500f2b12`. The narrow board idea may
+  remain a repair baseline, but the reviewed bytes cannot be committed, qualified, published, or
+  consumed.
+
+  Two critical defects block execution. First, machine-readable `evaluation_gate_contract()` omits
+  the three immutable evidence hashes and the exact noncompensatory gates, so downstream code cannot
+  replay the preregistered decision. Second, the receipt-bound source bytes need not be the bytes
+  executed: the implementation is reopened after binding and the consumed runtime closure is
+  incomplete. Three high-severity defects also remain: cleanup deletes partial writes despite the
+  preregistered manual-custody requirement; the Linux qualification substitutes a synthetic
+  tokenizer, direct calls, and a same-host fork for the real external bootstrap and cross-node
+  Lustre contract; and the trainer/evaluator consumer contract is unimplemented. Worker
+  `019f7643-079d-7920-8cb7-0d2f416c2f34` now owns exactly the OCSC preregistration, generator, tests,
+  and one external hash-verifying runner for a fail-closed source-only repair. OCSC commit,
+  publication, Linux/Stokes qualification, consumer execution, Newton, and H100 remain `NO-GO`.
+
+  After the user reported the VPN repaired, fresh authenticated checks reached Newton login host
+  `evuser2` and Stokes login host `euser1`. Newton's queue is empty. Stokes still contains exactly
+  jobs `741065`--`741074`, all `PENDING (JobHeldUser)` at `0:00`; they remain permanently
+  non-releasable. The prepared CPU runtime remains staged but unused. No job was submitted,
+  released, canceled, modified, or read for scientific output.
+
+- **2026-07-18 13:26--13:27** -- **Carry-recovery exact-byte review returns scientific, source,
+  Linux, and H100 NO-GO because the current controls cannot identify feature-dependent reading.**
+  The reviewer independently matched preregistration SHA-256
+  `6fe6b0d56d29a3ea02b65bffff9e4109750ec219d03be510c60f0d0a01be220e`, implementation
+  `bb75b9f425ebc51c18b1a5c5e677ede9393bfc23b62ed9748e836988dca92b60`, tests
+  `325c90e3775826f08287e27f4988f252fb9c977292be6d6b0fb8ff2c2accbb13`, wrapper
+  `0a0414536240b6cbcd3215064d6b244ee4e2f4bb001453e105c932627178058f`, and manifest
+  `8e540eb2c87fed1cc2a231a04f378f5309f6ee8f463b8a3d93dbe440e0a1ea09`. Byte identity passes;
+  the scientific design does not.
+
+  The reviewed protocol compares the unrestricted nonlinear motor only with base and shuffled-label
+  arms. That cannot distinguish residual-dependent carry reading from a favorable constant shift of
+  the two carry-token logits; the motor's jointly optimized internal biases are not a restricted
+  calibration null. For raw margin `m = logit(c1) - logit(c0)`, one constant delta can rescue all
+  positives while preserving all negatives whenever `-min(m_positive) < delta <
+  -max(m_negative)`. The protocol neither fits that favorable null nor tests the feasibility
+  interval. The 40/40 layer-29 swap result therefore remains strong directional intervention
+  evidence, but cannot establish deployed feature-dependent reading or autonomous reasoning.
+
+  Worker `019f7644-4b3b-77f0-8455-eca6e278b0de` now owns exactly the carry preregistration,
+  implementation, tests, and wrapper for a bounded source-only repair. It must add an independently
+  receipted grammar-gated `constant_bias` arm with the same rows, exclusions, full-vocabulary
+  objective, and favorable optimization access; exact gate-off identity; matched positive,
+  negative, development, and confirmation evaluations; and noncompensatory treatment-over-constant
+  decision gates. No cluster access, fit, commit, qualification, or H100 run is authorized.
