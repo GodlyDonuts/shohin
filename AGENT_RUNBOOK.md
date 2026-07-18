@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 15:25 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 15:55 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -28,6 +28,11 @@
 > `741065`--`741074` are all user-held at zero runtime and are permanently non-releasable because
 > they cannot execute the repaired bytes. Do not release any existing Stokes chain; a future run
 > requires a fresh reviewed commit, plan, allocation, and exact qualification evidence.
+> Final raw-300k benchmark job `692775` is isolated and running on `evc26`; it uses the immutable
+> checkpoint with `N=100`, GSM8K `K=4`, and `MAX_NEW=256`. No score exists yet and no partial log may
+> be reported as a result. Fresh compiler/executor/serializer interaction is also complete: natural-
+> language compilation is `0/6`, terminal serialization is `2/6`, and oracle-compiled frozen DRS
+> transitions are `28/34`, with width-five `13/15` and width-seven `15/19`.
 > Keep the "LIVE STATE" section current every milestone; do not let it rot.
 
 ---
@@ -7749,3 +7754,46 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   warning-strict tests and preserved 2,048 episodes / 18,432 rows, but the reviewer has not returned
   a verdict and is actively examining post-close publication identity. DWS commit, Stokes
   qualification, publication, fit, and accelerator work remain `NO-GO`.
+
+- **2026-07-18 15:25--15:55** -- **Fresh component interaction rejects the optimistic two-interface
+  story, the missing final raw-300k benchmark is now running, and DWS remains source NO-GO.** The
+  direct probe script `train/probe_drs_component_interfaces.py` has SHA-256
+  `831f8c128e6a8ec27dcdd3e7901cdf2c12470385255100351ebac4e9f43c74ab`; its immutable transcript
+  artifact `scratchpad/fresh_drs_component_interfaces_20260718.json` has SHA-256
+  `34447039b1a3374b7c38601b9e8d72b1297c1e186f77233268f9876707394b58`. It runs against exact DRS
+  checkpoint SHA-256 `d79e9df26caecb9801118d1bf68bd7b85381a06b256f23478acffe40a2108459`
+  and tokenizer SHA-256 `87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4`
+  with deterministic local MPS decoding. The host only parses, relays, and stops on model-authored
+  state; it performs no inference-time arithmetic, state repair, or state replacement.
+
+  Across six fresh width-five/width-seven add/subtract cases, ordinary-language exactness is `0/6`;
+  zero-shot, two-shot, and constrained two-shot compiler exactness are each `0/6`, with only one
+  compiler response parseable; native/rule/one-shot terminal serialization is `2/6`, `0/6`, and
+  `0/6`. Oracle-compiled DRS closes `5/6` chains and reaches exact terminal state on `2/6`.
+  Transition-level replay is stronger but not sufficient: `28/34` overall, `13/15` at interpolated
+  width five, and `15/19` at OOD width seven. Width-five no-carry add and subtraction are exact;
+  carry add overfires carry at position three before a wrong final digit, while width-seven failures
+  include missed first carry, off-by-one result writes, and terminal-digit loss. This is a sharper
+  three-gate diagnosis: language compilation, position-independent transition transport, and
+  terminal serialization are all independently missing. The existing result-digit motor addresses
+  none of the first and third interfaces and remains rejected as the solution.
+
+  Authenticated Newton verification reaches `evuser2`, finds no pre-existing queued job, and
+  revalidates the protected `ckpt_0300000.pt` at SHA-256
+  `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`. The local and remote
+  benchmark sources match exactly: `eval_all.sbatch`
+  `292ce779ec414c8e1db614409757c1695ec2e13ae1f61a7eeb7e8e01d088df53`, `eval_suite.py`
+  `d6f70b8828c967d7f59fae842f3320c6378ae42d5d8fa7b16e0e82ff5620e5e6`, and `eval_code.py`
+  `ba4cdd42395f1d4bb179fca884267618f4c27c96a2b0ff6864733ff42d700ecd`. Job `692775` is running
+  isolated on `evc26` with run tag `pretrain_300000_final`, `N=100`, GSM8K `K=4`, and
+  `MAX_NEW=256`. The last comparable standardized board remains 120k until this job completes:
+  GSM8K pass@1 `1/100`, GSM8K maj@4 `2/100`, MATH-500 `3/100`, HumanEval `7/164`, MBPP `0/100`.
+
+  Independent DWS rereview reproduced 83 warning-strict passing tests but returned source `NO-GO`.
+  It found that `_read_publication` releases publication descriptors before semantic replay and
+  final success, permitting stale in-memory verification after replacement, and that mutable
+  `ctypes` `errcheck` callback state is absent from the immediate native rename/unlink binding.
+  Worker `019f76ca-ced9-70e3-8c3c-24edebc73e1b` owns exactly the three stable DWS files for a bounded
+  held-descriptor and native-callback repair. No DWS qualification, Stokes, publication, fit, or
+  accelerator work is authorized. One obsolete overlapping OCSC worker was also stopped; worker
+  `019f76a2-383f-7970-af01-e1e959758a22` is now the sole writer for its four exact files.
