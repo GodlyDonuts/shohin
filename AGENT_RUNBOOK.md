@@ -7223,9 +7223,9 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Its claimed deterministic construction is 2,048 episodes / 18,432 rows with canonical data
   SHA-256 `1dd913b12d2ffb2201530997102ef50a1e2d581fe7595c4e9ad5ae8c9fe3f009`; 44 local tests,
   Ruff, format, and isolated compilation pass. These are repair-author claims, not independent
-  authorization. The first replacement reviewer was stopped by an automated tooling refusal and
+  authorization. Two replacement review channels were stopped by automated tooling refusals and
   returned no source finding or gate decision. Fresh read-only reviewer
-  `019f760e-e5bf-7073-b1b7-3cb41106dad7` now owns exact-byte correctness and reproducibility review.
+  `019f7617-42b2-70d0-b785-d926e1c052ee` now owns ordinary correctness and reproducibility review.
   DWS commit-as-reviewed-source, CPU publication, Linux/Stokes qualification, trainer/evaluator,
   Newton, and H100 remain `NO-GO`.
 
@@ -7258,3 +7258,29 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   SHA-256 `b1cafe345bad726517e4c426596c691bf3ae1133d93619af581927ca7a336806`.
   This is a twelve-case interaction diagnosis, not a benchmark or capability promotion. Its findings
   were delivered to the active OCSC and carry-recovery repair owners; no cluster action followed.
+
+- **2026-07-18 12:30--12:36** -- **A protocol-derived width sweep separates universal terminal-
+  carry omission from a reverse-readout length cliff.** For each width 2--10, the sweep constructs
+  one matched addition pair with identical lower-digit history and changes only the two final operand
+  digits. It asks DRS for the final transition and then separately supplies the oracle terminal state
+  for serialization. Every expected state and answer is independently recomputed from frozen
+  `train/digitwise_protocol.py`; all artifact, checkpoint, tokenizer, and source hashes validate.
+
+  The positive final-carry member is **0/9** exact transitions and **0/9** exact serializers. Its
+  carry bit is wrong in all nine transitions, and the serialized answer generally omits the leading
+  `1` (for example width two `183 -> 83`, width four `18123 -> 8123`, and width six
+  `1853123 -> 853123`). The negative member is transition-exact at widths 2--5 and 7, but not 6 or
+  8--10; its serializer is exactly correct at every width 2--6 and then **0/4** at widths 7--10.
+  Thus terminal-carry inclusion and length-generalized reverse readout are distinct failures. The
+  first is fully explained by the earlier immutable-data audit showing **0/39,985** DRS terminal
+  rows with `c=1`; the second cliff occurs immediately above the width-4/6 training support. The
+  nonmonotonic negative transition result (width seven succeeds while width six fails) also warns
+  against describing the state writer as a simple context-length capacity limit.
+
+  The read-only artifact is
+  `artifacts/eval_history/drs_terminal_width_sweep_w2_w10_20260718_mps.json`, 29,838 bytes,
+  SHA-256 `c9670853040349cce4eb4f89c5d5d8381d7b25494ff4428fd873fc2b7be6098d`.
+  It is a matched interaction sweep with one terminal pair per width, not a population benchmark.
+  OCSC and carry-recovery owners received the result. Success now requires separate, width-stratified
+  gates for terminal-carry inclusion, no-carry preservation, terminal result-digit writing, and
+  reverse serialization; no aggregate metric may substitute for those gates.
