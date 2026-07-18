@@ -565,6 +565,7 @@ def _require_activation_lineage(root: Path) -> str:
                     DEVELOPMENT_PLAN_PATH,
                     "pipeline/build_acw_development_manifest.py",
                     "pipeline/jobs/run_acw_development_stokes.sbatch",
+                    "pipeline/jobs/run_acw_terminal_monitor_stokes.sbatch",
                     "pipeline/test_build_acw_development_manifest.py",
                     "pipeline/test_acw_g_custody.py",
                 }

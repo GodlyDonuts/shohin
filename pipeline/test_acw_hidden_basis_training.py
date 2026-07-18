@@ -233,7 +233,9 @@ class PublicTrainerTests(unittest.TestCase):
             "development_plan.json",
             "pipeline/build_acw_development_manifest.py",
             "pipeline/jobs/run_acw_development_stokes.sbatch",
+            "pipeline/jobs/run_acw_terminal_monitor_stokes.sbatch",
             "pipeline/test_build_acw_development_manifest.py",
+            "pipeline/test_acw_g_custody.py",
         )
         (root / "development_a.txt").write_text("enabled-a\n")
         (root / "development_b.txt").write_text("enabled-b\n")
