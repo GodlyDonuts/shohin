@@ -6613,3 +6613,25 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   with explicit cross-contract, collision, interruption, and injected-I/O tests. Obsolete jobs
   `741065`--`741069` and replacement jobs `741070`--`741074` remain `JobHeldUser` at zero runtime;
   neither chain may be installed or released, and no score or G2 artifact exists.
+
+- **2026-07-18 08:47** -- **DWS single-completion remains CPU-mechanics, durable-publication,
+  Linux/Stokes, and H100 NO-GO after independent review of the 31-test repair.** The reviewer
+  matched the three supplied hashes, reran 31 warning-strict focused tests with external pytest
+  plugin autoload disabled, passed Ruff/format/isolated compilation, and rebuilt the full 2,048-row
+  board in 4.967 seconds. Dense positions, exact permutations, independent pack regeneration,
+  recursively finite JSON, and integer-rational gate metadata are real. Four custody defects still
+  block use.
+
+  The runtime receipt is identical under normal and isolated startup, omits `sys.flags`, the
+  executing generator and dependencies such as `struct`, and does not bind the live `struct.pack`
+  or `_pack_payload` callables; executable site/repository startup therefore remains possible.
+  Recovery identity rejects non-finite values but compares decoded dictionaries with Python
+  equality, allowing integer `128` and float `128.0` to impersonate the same marker. Publication
+  locks a staging descriptor but renames only its pathname without checking that the named
+  dev/inode is still the locked tree; an independently reproduced pathname substitution published
+  the replacement tree. Finally, files are fsynced before chmod but not after, so durable mode
+  `0444` is unproven across a power-loss boundary. A bounded three-file repair is active to bind
+  isolated executed semantics, enforce recursive type identity, compare the staging pathname to the
+  held descriptor immediately before and after no-replace publication, and fsync file metadata after
+  chmod. No CPU publication, Stokes qualification, trainer, evaluator, H100 job, artifact, commit,
+  or push is authorized before another independent review.
