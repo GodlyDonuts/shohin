@@ -6,22 +6,19 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-17 01:39 EDT (The protected 300k flagship remains immutable and
-> hash-matched. Track S has a verified **non-scored execution baseline**, not a reasoning result.
-> The protected lineage is `S=5f5e3cd0d69da67335ad1f1f485c6e3d8f00ff8e ->
-> A=02c9d4ae57093b6c60d90580503e2a01c7c81619 ->
-> E=38ebad21cf9c4ef98b172394891c2a35ef671b12 ->
-> F=7433062211c4ad0371a975019c37625f7d811b27`; Stokes is clean at F. This G commit freezes the
-> scored-development custody plan at raw SHA-256
-> `39f91a28f4ac0a593ecabd19942e598a4474d777baccb7367d0bbfd73128335d` and binds five held Stokes
-> jobs: `740338 -> 740339 -> 740340 -> 740341 -> 740342`. The first four are independent scientific
-> producer/verifier stages on pinned `ec51/ec52` nodes; the fifth is a step-free terminal-accounting
-> monitor. Stored batch scripts match the committed main/monitor SHA-256 values
-> `e75fb8c93c41d8fb6d0aae9e526d099bb130db6f0bfd6050034973dd06c3f087` and
-> `b67bf5f1deb04015394d80f40138ae57125b8a843ef2612c481bcad256b44987`. The warning-strict
-> eight-module gate is 143/143 after a producer/consumer handoff regression; two independent
-> adversarial reviews returned GO. Release the jobs only after this exact G commit is pushed,
-> installed cleanly on Stokes, and revalidated. No scored matrix or capability result exists yet.)
+> **Last updated:** 2026-07-18 11:17 EDT. The protected 300k flagship remains immutable and
+> hash-matched at SHA-256
+> `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
+> active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
+> `0a9a080b9320ca4c50a1d8e1d509e8b8407799a78986bd2580145a5579f33dc9`. TERM+WIDTH has one real
+> local effect (`+91/3000` terminal-exact branches versus WIDTH, exact McNemar
+> `p=0.00021883968181106602`) but no complete-execution gain: closed branches are only `250/3000`,
+> paired-both-closed remains `75/1500`, and state-exact branch flow has 249 gains versus 211 losses.
+> OCSC and the six-case carry-recovery intervention are the strongest targeted next hypotheses; both
+> are under bounded repair/review and authorize no H100 work yet. Newton is idle. Stokes jobs
+> `741065`--`741074` are all user-held at zero runtime and are permanently non-releasable because
+> they cannot execute the repaired bytes. Do not release any existing Stokes chain; a future run
+> requires a fresh reviewed commit, plan, allocation, and exact qualification evidence.
 > Keep the "LIVE STATE" section current every milestone; do not let it rot.
 
 ---
@@ -86,7 +83,7 @@ Do not wait for permission to fix obvious data/training gaps.
 
 ## 1. LIVE STATE  ← update this every milestone
 
-| Item | Value (as of 2026-07-15 current custody check) |
+| Item | Value (as of 2026-07-18 current custody check) |
 |---|---|
 | **60k pretrain job** | `680149`, name `shohin-flagship`, node **evc22**, **DONE** (`[done] 60000 steps in 112203s`) |
 | **Extended pretrain job** | `683715`, `685084`, and protected two-H100 continuation **`686732`** are complete. `686732` ran on **evc34** with `NG=2 BS=32 ACC=4 CKPT=250`, four CPUs, fresh optimizer rewarmup, the exact 524,288-token global update, distinct post-handoff data stream, and established compile/guard path. It completed 300,000 steps without sharing an output path with capability experiments. No flagship writer is active at this instant. |
@@ -6976,3 +6973,48 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   mechanics GO cannot create the deliberately absent production trust root or external signed
   receipt; no Stokes qualification, CPU publication, GPU consumer, Newton preflight, or H100 job is
   authorized until the corresponding independent gates exist.
+
+- **2026-07-18 11:12** -- **A separate theorem lane rejects a tempting reverse-stack architecture
+  as a reasoning mechanism and bounds its practical upside.** Atomic Reverse-Stack Commit (ARSC)
+  can make reverse-order tape readout and final-carry placement exact conditional on correct local
+  digit/carry states, but it is exactly conjugate, with zero resource overhead, to a typed flat
+  scratchpad and ordinary finite transducer. Neural stacks are also direct prior art. Under the
+  locked report, a perfect hard serializer can close at most the 84 TERM+WIDTH exact-state failures,
+  moving branch closure conditionally from `250/3000` to `334/3000`, only **+2.8 percentage
+  points**. It cannot repair the six width-eight branches because their authored carry bit is already
+  wrong, and it does nothing about the 249 state-exact gains versus 211 losses across arms. ARSC is
+  therefore an upper-bound diagnostic control only; no CPU implementation or H100 architecture run
+  is justified by the present evidence.
+
+  Numerical-contract reconnaissance pins the current local identities needed by any future OCSC
+  consumer: parent checkpoint
+  `d79e9df26caecb9801118d1bf68bd7b85381a06b256f23478acffe40a2108459`, tokenizer
+  `87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4`, model source
+  `45fc0dc46ceb0f91d08e3f671cbe9ef202ea212e72d5bba8b77356c3fb0983d4`, Muon source
+  `863e79aaaaebb681382f0c88078390b5683ab39be79ac7df60f26d1c04b21762`, and generic SFT source
+  `9caa62b38a36addda9eb667b72f74dedb7165062f98bef9e1bfe49102af71921`. Existing immutable H100
+  evidence binds Python 3.13.13, PyTorch 2.6.0+cu124, CUDA 12.4, tokenizers 0.23.1, and H100 PCIe.
+  The generic target-taking model forward adds z-loss and is incompatible with OCSC's frozen
+  weighted-CE-only objective. A future consumer must call the model without targets, capture the
+  one final-normalized hidden tensor from that same forward, compute every FP32 loss explicitly,
+  pin Muon's `1e-7` normalization and matrix scaling plus all AdamW flags/state dtypes/order, and
+  consume a literal hashed 5,120-entry LR vector. No consumer code exists yet.
+
+- **2026-07-18 11:17** -- **Carry recovery completes the six-group bounded repair and enters a
+  fresh independent exact-byte review; all execution gates remain closed.** In isolated worktree
+  `/Users/sairamen/projects/shohin-carry-recovery`, sole parent remains
+  `a0c258e6709766c643cf127a429a7d6ef4a4211b` and the index contains exactly four additions:
+  preregistration `d853c811e18715bba80bf882b53506ef11fb57408270dd21a69f4a089eb4f144`,
+  executor `05ebd47d3a2461a01dfbe655276f8c90e4767e528790a89e21ac64db4ed37ce9`, tests
+  `34c4c457720851ff0d9cde9922832c60c435c6cc92490209844bd6429a2a26b4`, and wrapper
+  `f9003577ae076646b1344d79bcbca606b3345f71dee17fc77f8fc3d5f89a23a4`. Source-manifest SHA-256
+  is `69379c7060b63062943d68d63ede94dc00a83826c5c76d0df0f204f906022837`.
+
+  The repair claims closure over transitive executed callables, pre-Bash environment isolation,
+  exact `skattel`/`normal` allocation and cgroup-to-PCI/UUID identity, non-executable Git
+  configuration closure, descriptor-relative reserved inode validation, and recursively exact
+  typed/canonical receipt encoding. Independent 2,000-update replay per arm and the locked six-case
+  rescue target remain unchanged. The warning-strict gate is 138/138 in 86.59 seconds; Ruff,
+  format, compilation, shell syntax, ASCII, whitespace, topology, and source-closure checks pass.
+  Fresh reviewer `019f75cd-1ccd-7ba1-8883-d5655df434fa` owns the decision. Commit, install,
+  production signing, Newton preflight, and H100 execution remain `NO-GO`.
