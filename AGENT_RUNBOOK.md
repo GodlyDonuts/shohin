@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 12:12 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 12:50 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -7266,16 +7266,21 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   for serialization. Every expected state and answer is independently recomputed from frozen
   `train/digitwise_protocol.py`; all artifact, checkpoint, tokenizer, and source hashes validate.
 
-  The positive final-carry member is **0/9** exact transitions and **0/9** exact serializers. Its
-  carry bit is wrong in all nine transitions, and the serialized answer generally omits the leading
-  `1` (for example width two `183 -> 83`, width four `18123 -> 8123`, and width six
-  `1853123 -> 853123`). The negative member is transition-exact at widths 2--5 and 7, but not 6 or
-  8--10; its serializer is exactly correct at every width 2--6 and then **0/4** at widths 7--10.
-  Thus terminal-carry inclusion and length-generalized reverse readout are distinct failures. The
-  first is fully explained by the earlier immutable-data audit showing **0/39,985** DRS terminal
-  rows with `c=1`; the second cliff occurs immediately above the width-4/6 training support. The
-  nonmonotonic negative transition result (width seven succeeds while width six fails) also warns
-  against describing the state writer as a simple context-length capacity limit.
+  The positive final-carry member is **0/9** exact transitions and **0/9** exact serializers. The
+  original strict-parser field counters in this v1 artifact incorrectly made every field look wrong
+  whenever any invalid field caused the whole state parser to return null. The raw-response
+  reanalysis recorded below supersedes that field-level interpretation: positive carry is actually
+  correct at widths two and three, while another field invalidates the state. The serialized answer
+  generally omits the leading `1` (for example width two `183 -> 83`, width four `18123 -> 8123`,
+  and width six `1853123 -> 853123`). The negative member is transition-exact at widths 2--5 and 7,
+  but not 6 or 8--10; its serializer is exactly correct at every width 2--6 and then **0/4** at
+  widths 7--10. Thus terminal-carry inclusion and length-generalized reverse readout are distinct
+  failures, but terminal carry is not universally absent. The earlier immutable-data audit showing
+  **0/39,985** DRS terminal rows with `c=1` remains a strong training-support diagnosis, not a proof
+  that every generated terminal carry is zero. The second cliff occurs immediately above the
+  width-4/6 training support. The nonmonotonic negative transition result (width seven succeeds while
+  width six fails) also warns against describing the state writer as a simple context-length
+  capacity limit.
 
   The read-only artifact is
   `artifacts/eval_history/drs_terminal_width_sweep_w2_w10_20260718_mps.json`, 29,838 bytes,
@@ -7284,3 +7289,60 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   OCSC and carry-recovery owners received the result. Success now requires separate, width-stratified
   gates for terminal-carry inclusion, no-carry preservation, terminal result-digit writing, and
   reverse serialization; no aggregate metric may substitute for those gates.
+
+- **2026-07-18 12:42--12:50** -- **A hash-bound raw-field reanalysis corrects the strict-parser
+  confound without regenerating model output.** V2 copies all 18 immutable transition and serializer
+  responses from the v1 width sweep, verifies the v1 artifact SHA-256, and reports strict canonical
+  state validity separately from lexical field correctness. Independent replay verifies all row,
+  summary, source, checkpoint, and tokenizer hashes.
+
+  Positive final-carry cases remain **0/9** strict transition exact and **0/9** serializer exact, but
+  their raw carry field is correct **2/9**, result tape **5/9**, and terminal flag **6/9**. Widths two
+  and three fail only `z`; widths four, five, and seven fail only `c`; widths six, eight, and nine fail
+  `c+r`; width ten fails `p+c+r+z`. Negative cases remain **5/9** strict transition exact and **5/9**
+  serializer exact, with raw carry correct **9/9**, result tape **5/9**, and terminal flag **8/9**.
+  Their nonexact failures are `r` only at widths six, eight, and nine, and `p+r+z` at width ten.
+  Therefore the corrected diagnosis is a width-dependent composition of terminal-flag, carry,
+  result-write, and long-width control failures, not universal carry omission.
+
+  The immutable reanalysis is
+  `artifacts/eval_history/drs_terminal_width_sweep_v2_w2_w10_20260718_mps.json`, 42,471 bytes,
+  SHA-256 `db6056e66310ed7d56509403d40f7549d016294a014c0c4527173b4005210520`.
+  It supersedes only v1's field-level counters; the original responses and strict exactness remain
+  valid raw evidence.
+
+- **2026-07-18 12:42--12:50** -- **A teacher-forced residual swap finds a late relative carry signal,
+  but no autonomous mechanism is promoted.** On one matched positive/negative terminal pair at each
+  width 2--10, layer-29 carry-slot swaps move target-token log odds toward the source in **16/18**
+  directions with mean delta **+2.028**. Positive-minus-negative carry-class separation is positive
+  at **8/9** widths and inverted only at width six: `+5.755`, `+9.342`, `+1.753`, `+0.052`, `-0.488`,
+  `+0.266`, `+0.812`, `+0.526`, and `+0.234` from widths two through ten. Yet the unpatched
+  teacher-forced `c=1` logit beats `c=0` only at widths two and three; from width four onward the
+  ordinary output remains biased toward `c=0`. Earlier layers are weak or inconsistent.
+
+  This supports a bounded hypothesis that late residuals often encode relative carry class while
+  output calibration/readout suppresses it. It does **not** establish population generality,
+  autonomous transition success, or reasoning: there is one pair per width, width six is a negative
+  control failure, and the probe teacher-forces the exact terminal carry-token prefix. The artifact
+  is
+  `artifacts/eval_history/drs_terminal_carry_residual_swap_w2_w10_20260718_mps.json`, 144,216 bytes,
+  SHA-256 `4183b8c381e559b23c41b88c8c8cc3b3d0e0b41c03b3dea4786df98a7676590f`.
+  Its 9 records, 126 swap directions, numeric aggregates, and all bound identities independently
+  validate. A future calibrated typed readout requires broader held-out matched controls and must
+  preserve no-carry cases; this probe alone authorizes no fit.
+
+- **2026-07-18 12:44--12:50** -- **EOS repair completes locally and enters fresh exact-byte review;
+  DWS review remains active, so every execution gate stays closed.** The EOS repair author reports
+  preregistration SHA-256 `b47763c7ff60e9ba01673297e456b4247ba4446880d4b62a3743e6cf7c6274fd`,
+  evaluator `00686d2c43592300171c732242afa5edf5882ad9d549300086df9fe29393e548`, tests
+  `0ac62beda22ee78e54ef55cb03821856dbd243bd89e0f36633d95abe57d0841d`, and wrapper
+  `931956c0c14e10e30ed5fae6b7a2e944921c80feb6d9d67e5da442fe81ea5326`, with 70 local tests and
+  static gates passing. These remain author claims pending reviewer
+  `019f761c-f92b-7e53-9ba0-81dc599efa0b`. DWS reviewer
+  `019f7617-42b2-70d0-b785-d926e1c052ee` also remains active. No candidate source or output was
+  copied to Stokes or Newton, and no job was released or submitted.
+
+- **2026-07-18 12:49--12:50** -- **VPN recovery is reconfirmed with remote custody unchanged.**
+  Newton is reachable and its queue is empty. The authenticated Stokes control connection reaches
+  `euser1`; jobs `741065`--`741074` remain exactly `PENDING (JobHeldUser)` at `0:00`. The repaired
+  CPU runtime remains staged but unused. No remote scientific state changed.
