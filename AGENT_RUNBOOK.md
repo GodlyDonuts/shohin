@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 14:29 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 14:37 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -7612,3 +7612,21 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   frozen before confirmation reveal, is the decisive control. Carry commit, install, Stokes,
   Newton, H100 fit, and any feature-use claim remain `NO-GO` pending review. V1/v2 reports remain
   read-only evidence; v3 source, tests, and report remain uncommitted.
+
+- **2026-07-18 14:29--14:37** -- **The carry audit is corrected to a binary-margin v4 boundary, and
+  the first EOS rereviewer produced no decision.** The frozen probe contains only the two carry-token
+  logits, so its convex calibration is binary margin cross-entropy, not the production arm's
+  full-vocabulary objective. V4 makes that distinction explicit while preserving the same scores
+  and interval sensitivity. Local source SHA-256 is
+  `1689e1cd2b3a3d29fc8bcf36a8759c6760935b44ae25108e7eb5dc03a22b1840`, tests SHA-256 is
+  `e72ddffbaf43f027c6de0b96a89633e9983134e27e32c03d022cc6613baf6abd`, and read-only report
+  `artifacts/eval_history/drs_carry_nuisance_audit_20260718_v4.json` is 23,704 bytes, SHA-256
+  `94bf0b4b61b239601a7677f7badca03ac9b507c3aad6616b80d37f11072c7f68`. The actual trained
+  full-vocabulary `nuisance_only` arm remains the only decisive calibration comparator. All audit
+  source/tests/reports remain uncommitted pending independent review.
+
+  EOS reviewer `019f7675-028d-76e0-8ddc-3930fd7d6f71` terminated under an automated content filter
+  before returning findings or a verdict; this has zero evidentiary standing. Replacement read-only
+  reviewer `019f7684-fabe-7641-b8cb-9fab1b3cb997` owns the same four immutable hashes under a
+  narrowly scoped software-correctness review. EOS commit, qualification, Stokes, Newton, and H100
+  remain `NO-GO`.
