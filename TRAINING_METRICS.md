@@ -689,6 +689,70 @@ locked preregistration therefore closes v1 before its planned 60 fits.
   plumbing. It is not a model score, not autonomous execution, and not a
   reasoning result. No H100 fit has been submitted.
 
+## Final 300k Flagship Ledger: 2026-07-18
+
+### Terminal training denominator and custody
+
+- The raw flagship completed exactly **300,000 / 300,000 steps**. No flagship
+  writer is active.
+- Unique trained parameters: **125,081,664**, with the tied embedding/output
+  matrix counted once.
+- Global tokens per optimizer update: **524,288**.
+- Nominal update-token exposures: **157,286,400,000**
+  (`300000 * 524288`). This includes replay and is not a unique-data claim.
+- Mounted decoded-token manifest capacity: **57,826,022,271**. Aggregate
+  nominal exposure/capacity is **2.7200x**, but the domain-round-robin loader
+  prevents interpreting this as equal per-source epochs.
+- Final logged state before terminal save: loss **1.6554**, gnorm **0.11**, LR
+  **0.0005**, throughput **281,959 tokens/s**. Total continuation wall time was
+  **153,869 seconds**.
+- Terminal model-only checkpoint: 500,448,522 bytes, MD5
+  `60de77c31b449060ff0417d8db16d3b0`, SHA-256
+  `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`.
+  Newton and local Mac copies are read-only and hash-matched. Any continuation
+  must intentionally use a fresh optimizer rewarmup.
+- Terminal log: 498,688 bytes, SHA-256
+  `f359671e256fea784c063747a9d76641384dad8762e4bfae5bf6177fa308669e`.
+
+### Final raw public board
+
+Job `692787` evaluated the preserved raw-300k model on `evc32` with run tag
+`pretrain_300000_final`, `N=100`, GSM8K `K=4`, `MAX_NEW=256`, and seed
+`20260712`.
+
+| Benchmark | Final raw 300k | Protocol-matched raw 120k | Raw 168.75k |
+|---|---:|---:|---:|
+| GSM8K majority | **4/100** | 2/100 | 5/100 |
+| GSM8K pass@1 | **2/100** | 1/100 | 2/100 |
+| MATH-500 pass@1 | **2/100** | 3/100 | 2/100 |
+| HumanEval pass@1 | **6/164** | 7/164 | 7/164 |
+| MBPP pass@1 | **0/100** | 0/100 | 0/100 |
+
+The movements are one or two examples in either direction. They do not show a
+broad 120k-to-300k reasoning gain. The authoritative 56-row metric history is
+`artifacts/eval_history/metrics.jsonl`, 25,698 bytes, SHA-256
+`7c008215c7779e47609a0eaa88027c35be1f9c776352407d90ee9a0d58867689`.
+The complete final-board log is
+`artifacts/eval_history/pretrain_300000_final_692787.log`, 2,549 bytes,
+SHA-256
+`cb3e10be87ac3ef086fcb90bfd39fa1d505352ca3f8a5a6de35a1cec70e146a5`.
+
+### Final direct-interaction result
+
+The fixed seven-case, five-turn manual protocol scores raw 300k at **1/7
+initial**, **0/7 review**, **1/7 with a verified intermediate fact**, and **0/7
+compact-state reuse**, exactly tied with raw 200k and raw 260k on these strict
+aggregates. One sequential arithmetic transcript correctly generated
+`14 + 9 = 23`, `23 * 3 = 69`, `69 - 20 = 49`, but failed the strict answer
+format and was not a monotonic discovery: raw 190k had previously emitted the
+same trajectory before looping.
+
+The raw checkpoint remains a durable pretraining base, not a promoted reasoner.
+Its stable empirical diagnosis is local/fragile operation competence without
+reliable natural-language compilation, correction, halting, serialization, or
+state reuse. Full transcript custody and interpretation are in
+`RAW300K_INTERACTION_RESULT.md`.
+
 ## Update Protocol
 
 At each 10k checkpoint milestone:
