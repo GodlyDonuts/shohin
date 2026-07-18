@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 12:50 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 13:02 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -109,7 +109,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | **R12 mathematical invention frontier** | **SEVEN BOUNDED NO-GOS; RAW VOCABULARY J-WORKSPACE AND MCBS CLOSED AT 300K.** Cursor-action v1 `689932/689936` failed source/cursor binding; final-token readout `689952` fit train but reached only 43.13%/41.67% development. Token-tape `689976` rejects only the frozen pre-final single-query/linear-decoder family. Additive forks and PCRT are theorem-rejected before code. The paired raw-300k future-Jacobian repeat is reproducible but has **0% top-10 and 0% top-100** on all 2,304 decisive targets, so no J-lens swap is authorized. MCBS is also theorem-rejected as a mechanism: for affine consumers it recovers only the observable quotient of the fitted consumers, and a finite answer-specific motor bundle passes projection/complement tests without reusable state. `R12_MINIMAX_CAUSAL_BROADCAST_SUBSPACE_NO_GO.md` freezes the theorem and counterexample. Any successor must be frozen before held-out consumers, held-out updates, and output recoding are revealed. `R12_CERTIFIED_LANGUAGE_BRIDGE_BOUNDARY.md` still blocks synthetic-to-language transfer without a future-reflecting certificate map. |
 | **CDRL sample-allocation track** | **CLOSED NEGATIVE ON NEURAL BOARD `R12-CDRL-NEURAL-v1`.** CPU mechanics remain valid. Newton job **`691750`** completed on **evc22** in 3m25s (exit 0). Decision SHA-256 `ad94ac15ca17eaa2c5381aa0a3f94fc60a49dbbf2a528552a1212b3ecf1cabdb` records `advance=false`: median depth-OOD margins core−full **-0.776**, core−hard **-0.778**, core−rand **-0.021** vs required +0.05. Core exact OOD ≈0.04 while full/hard reach ≈0.70–0.92. Pure Nerode-core allocation fails when eval restores distractors. See `R12_CDRL_NEURAL_OPTIMIZATION_RESULT.md`. No Shohin/ACW path touched. Conjecture C closed; do not retune. |
 | **Typed controller internalization** | **V1 RESCORED PARTIAL WIN; V2 HYBRID RUNNING.** Rescored decision SHA-256 `bd25abeac4cf775eeac96664f29200ccf05eee7e2e79eea0ad83f289e3271e69`: rollout **16.4%**, done **86.3% PASS**, atomic **27%**, direct 0%, typed−direct **+16pp PASS**. First eval `691778` answer score was invalid (mid-digit early-stop); `691782` fixed decode. Format/DONE internalized; multiply in typed registers remains weak vs SSC native atomic ~76%. V2 hybrid (native `Problem/Work` atomics + typed rollout) continues from v1 ckpt — Newton **`691785`**. See `R12_TYPED_CONTROLLER_V1_RESULT.md`. |
-| **Post-DRS workspace probe** | **POSITIVE DIAGNOSTIC.** Job **`691756`** completed on **evc33**. Late-layer digit residual swaps yield **10/10** positive directions with ~**+31** Δlogodds at layers 17–29 (raw baseline was ~0). Carry emerges at L29 (+2.96, 10/10). DRS induced an actionable workspace; compounding remains the failure mode. See `R12_DRS_WORKSPACE_PROBE_POST_RESULT.md`. |
+| **Post-DRS workspace probe** | **POSITIVE LOCAL DIAGNOSTIC, NOT AUTONOMOUS REASONING.** Job **`691756`** first showed late-layer digit swaps **10/10** positive at ~**+31** delta-logodds and carry **10/10** at layer 29. A matched local-MPS expansion now uses the exact raw-200k 40-direction board: DRS digit swaps are **40/40** positive at every layer 17--29 (means **+35.59 to +35.68**) versus raw means near zero, while layer-29 carry is **40/40**, mean **+3.147**, versus raw **20/40**, mean **+0.014**. Every fit/value-OOD/width-8-OOD regime is 8/8 at layer 29. DRS induced an actionable local residual representation; multi-step update/consumption and autonomous terminal execution remain unsolved. See `R12_DRS_WORKSPACE_PROBE_POST_RESULT.md` and the 13:02 journal entry. |
 | **Track S ACW pilot and baseline custody** | **V6 EXECUTION BASELINE VERIFIED; SCORED REASONING BASELINE NOT YET RUN.** Scientific commit `S=5f5e3cd0d69da67335ad1f1f485c6e3d8f00ff8e` completed producer `740241` on `ec51`; independent verifier `740247` completed on `ec52`. The verifier records different job/node, fresh recomputation, 81 anchored files, receipt payload SHA-256 `f72a40fe2dd84701bfa3f0ea92e3c2b463304861a063507ffb30c7909a6cfca0`, and registry payload SHA-256 `47f233a11db876f6ff26c1b4589a59d31c57bf4b2326b9ac5ffba00b81276cc5`. Registry raw SHA-256 is `66597cf5381fdc11d4ecd73a93d9bbd2fa68417a77b09c1330ecfeb73652451c`; registry-only `A=02c9d4ae57093b6c60d90580503e2a01c7c81619` and execution activation `E=38ebad21cf9c4ef98b172394891c2a35ef671b12` are pushed and installed. E passed the Stokes full-anchor smoke over all 81 files. The pilot has 4,096 histories, 57,344 labels, 12 refinement rounds, 3,400 updates, batch 256, 43,853 candidate evaluations, final losses 2.806958 -> 2.828255, and model tensor SHA-256 `1acc80d4362849d951fb45db34fb5c40c2cbf44a3cce4b7b2fa308b1923a1b94`. These are execution facts only. Custody successor F closes a late review NO-GO without altering the pilot bytes: it replays exactly 24 scored development checkpoints plus three direct-state diagnostics before full confirmation evidence is opened, rejects writable or self-attested baseline JSON, requires the full manifest to bind the exact frozen baseline and authorization, copies the strongest deployable checkpoint mode 0444, excludes the source-retained upper bound from selection, ranks by median depth-64 state exactness then scalar accuracy, and retains the baseline on later NO_GO without overriding promotion gates. No scored development matrix exists yet, so there is not yet a capability-ranked reasoning checkpoint to name. |
 | **Track G scored-development custody** | **FROZEN AND SUBMITTED HELD; NO SCORE.** Plan raw SHA-256 `39f91a28f4ac0a593ecabd19942e598a4474d777baccb7367d0bbfd73128335d` binds four scientific jobs `740338` (phase-1 producer, ec51) -> `740339` (independent phase-1 verifier, ec52) -> `740340` (phase-2 producer, ec51) -> `740341` (independent phase-2 verifier, ec52), then step-free terminal monitor `740342` on ec51. Every job is `JobHeldUser`, 4 CPUs, 96 GiB, no requeue, and exact afterok dependencies. G independently replays the frozen development baseline before confirmation access, enforces exact closed-world inventories at every consumer handoff, publishes checkpoint/baseline/receipt bytes through retry-safe same-directory atomic no-replace links, polls exact terminal `.batch/.extern` accounting, and requires a post-J5 anchor-ready envelope plus an external Git/runbook hash anchor before any performance claim. The complete warning-strict suite is 143/143; two adversarial reviews are GO. Release only after exact G push/install/revalidation. |
 | **Post-commit interface falsifier** | **V1 STATIC ALGEBRA PASS; V2 POST-COMMIT NO-GO; V3 COMMIT-BOUND PROTOCOL PASS; NO LEARNED-REASONING CLAIM.** Immutable v1 report SHA-256 is **`b7309987cb644bdf31273a07193df56226e35d3653257e239632d7bd837415b4`**. The exact rejected `a9c1f53` v2 artifact remains mode-0444 at SHA-256 **`4f63123028fe33717981d026ca4accc854943400a502e56698ff040145a2ab0d`**. Scientific commit **`36906818f17aa4f03b9f5622dbcb65110ae95abf`** passes all **35/35** frozen gates with two byte-identical **337-role** cores, **27/27** default-deny sandbox probes, exhaustive public state/motor **83,521/83,521**, decisive state **83,521/83,521** versus motor **4,913/83,521**, and depth-nine collapse to **4,913/83,521**. The independent implementation reconstructed all evidence, required Git verification, and alone published the mode-0444 artifact and receipt. Artifact SHA-256 is **`6f3846d6a58bca7d61e753fe1297c9f7090c29ef44f7585716a206dca3bba685`**; receipt SHA-256 is **`55de668bdf4f98b04ad0ce7d20b4e4b06baa53332f2e66b004076fe2b61d63f2`**. This authorizes only a separately preregistered learned packet-lane falsifier. No neural fit, language bridge, autonomous controller, or reasoning result exists. |
@@ -7346,3 +7346,63 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Newton is reachable and its queue is empty. The authenticated Stokes control connection reaches
   `euser1`; jobs `741065`--`741074` remain exactly `PENDING (JobHeldUser)` at `0:00`. The repaired
   CPU runtime remains staged but unused. No remote scientific state changed.
+
+- **2026-07-18 12:51--12:58** -- **Fresh DWS review returns source and Linux qualification NO-GO;
+  a bounded repair owns all six concrete defects.** The reviewer independently reproduced 44 passing
+  tests and the 2,048-episode / 18,432-row deterministic board, but found that the real public CLI
+  fails because `__main__.__spec__.origin` is absent. It also demonstrated that replacing the live
+  consumed `json.dumps` leaves the runtime binding unchanged and that executed JSON/importlib
+  submodules are unreceipted. Four additional blockers remain: tokenizer/replication paths conflict
+  with the preregistered path-plus-hash contract; death after destination rename but before the
+  external receipt is not restartable; float-valued production counts pass equality checks; and no
+  true two-process publication contention test exists. Exact reviewed source hashes remain
+  `76f067c0de90fcd99099a29142665e6a3b8bc80d0752e098d296255310add50f`,
+  `84b6b1bd187765845d2f8249fa595ad35399b021ca26ae6f9e9ced9d24003869`, and
+  `0c9baa5513e64ffbdce4e41a17ead5a485ac9f9a4db117460ccdbc7d16d021ff`.
+  Worker `019f7629-aa73-7723-a13b-0e2bb953e8bf` now owns exactly those three files. DWS commit,
+  publication, Stokes/Linux qualification, trainer/evaluator, Newton, and H100 remain `NO-GO`.
+
+- **2026-07-18 12:51--12:58** -- **OCSC and carry recovery complete bounded source repairs and enter
+  separate fresh exact-byte review; author tests do not promote either candidate.** OCSC reports 34
+  warning-strict tests and exact hashes preregistration
+  `46f53d145e8e0ad621690798f24d05d9e7e13180eb25dc53d8133eda3c51d4d4`, generator
+  `16baabd2fed94df86b0de3409521e9e064412815f804c9bbed5efc63c7676ba8`, and tests
+  `d7e36ff7f515c3c9fe80a0b38becb64744038197f13240ae9a79bae3500f2b12`; reviewer
+  `019f7628-b72a-7302-99ec-cca94e23c81b` owns the fresh decision. Carry recovery reports 148
+  warning-strict tests and manifest SHA-256
+  `8e540eb2c87fed1cc2a231a04f378f5309f6ee8f463b8a3d93dbe440e0a1ea09` over preregistration
+  `6fe6b0d56d29a3ea02b65bffff9e4109750ec219d03be510c60f0d0a01be220e`, implementation
+  `bb75b9f425ebc51c18b1a5c5e677ede9393bfc23b62ed9748e836988dca92b60`, tests
+  `325c90e3775826f08287e27f4988f252fb9c977292be6d6b0fb8ff2c2accbb13`, and wrapper
+  `0a0414536240b6cbcd3215064d6b244ee4e2f4bb001453e105c932627178058f`; reviewer
+  `019f7628-09d8-73d2-9252-c71c839bd45b` owns that fresh decision. Neither snapshot may be
+  committed, installed, qualified, signed, published, or run pending review.
+
+- **2026-07-18 12:58--13:02** -- **The post-DRS actionable residual survives the full matched
+  40-direction board, sharply separating it from raw 200k.** The existing probe is rerun locally on
+  MPS with four matched pairs in each of five regimes (`fit_w4`, `fit_w6`, `value_ood_w4`,
+  `value_ood_w6`, and `width_ood_w8`), transition index two, both swap directions, and layers
+  5/9/13/17/21/25/29. Pair identities exactly match the raw-200k p4 control SHA-256
+  `78b5efa4f3f7fe3ef10104de8d02fdee67f253c805c58f214a4cd1985c495875`.
+
+  DRS carry swaps at layer 29 are **40/40** toward-source with mean delta-logodds **+3.147395**;
+  raw is **20/40**, mean **+0.014188**. Every DRS regime is independently 8/8 at layer 29, with
+  means `+4.709`, `+3.471`, `+2.748`, `+1.653`, and `+3.156`. Result-digit swaps are **40/40**
+  at every layer 17--29 with means `+35.587`, `+35.604`, `+35.654`, and `+35.685`; raw means are
+  `-0.015`, `-0.016`, `-0.010`, and `-0.006`, with only 18/40, 16/40, 16/40, and 14/40 positive.
+  Independent validation reconstructs all 80 teacher-forced prefixes from the source episodes,
+  verifies exact pair parity with raw, checks every transition/target/prefix hash, and recomputes all
+  14 aggregate buckets.
+
+  The read-only artifact is
+  `artifacts/eval_history/drs_workspace_probe_post_p4_20260718_mps.json`, 524,897 bytes, SHA-256
+  `c3c2d0b037852cb57d54e1f147d445d27093a8548b965c41466e81bcc1a27778`. It binds held-out
+  episodes SHA-256 `89ce11b36ff2f56e83cda72a1f07b1a90f4a3dc3803c69db2779a27219712646`;
+  the DRS checkpoint, tokenizer, and probe source independently match `d79e9df26caecb9801118d1bf68bd7b85381a06b256f23478acffe40a2108459`,
+  `87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4`, and
+  `fb545450a93bbc04aac1549efd0a70b863f50e458fd95993cf9935bbe4a53ace`.
+  This is strong evidence for a causally actionable **local** DRS representation, not autonomous
+  reasoning: the probe teacher-forces the completion prefix, swaps a full residual vector, and tests
+  one microstep rather than multi-step state update/consumption or terminal rollout. It strengthens
+  the case for a calibrated typed reader/updater control, while leaving promotion dependent on
+  autonomous held-out execution and preservation gates.
