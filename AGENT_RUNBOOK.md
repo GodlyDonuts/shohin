@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 14:50 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 15:11 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -7662,3 +7662,48 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   tests SHA-256 `e72ddffbaf43f027c6de0b96a89633e9983134e27e32c03d022cc6613baf6abd`, and read-only report
   SHA-256 `94bf0b4b61b239601a7677f7badca03ac9b507c3aad6616b80d37f11072c7f68`. These checks preserve a
   diagnostic boundary only; they do not rescue the rejected trained comparator.
+
+- **2026-07-18 14:50--15:11** -- **OCSC loses its claimed reviewed snapshot and returns complete
+  NO-GO; EOS also remains NO-GO after a reproduced canonical-signature defect.** The OCSC author
+  reported a four-file tuple, but every file changed in place while its fresh reviewer was reading
+  it. The initially requested hashes were preregistration `f626fa0771af32b939bb6a989327dc8ed1d6d1c08e84756c4b2d4f11dc228c8e`,
+  generator `87a30a26933754151114267905c4c512ab1e23e75dc60e8059843832205c4d55`, tests
+  `9a3224736f1066900b3fd634dc5be3afdf9dcc669b530bd70eb5036a5bd5d0f6`, and runner
+  `498bdc469d86a25d694da161558a734aac3573ef07d6f4e2728a8ede262fa347`. The replacement tuple
+  eventually stabilized at preregistration `c6db57919771c3d6c8fcba0f916c148fedf34cdaee25e1540184b97de8c166ee`,
+  generator `3f738ed4b318a3ab01cd6d3cb2acb18cf170cdd263a58f3716794a874076c4a4`, tests
+  `66960c8c7bfd05670096ecad005c80c892ea6c9d6882c340ccdf99e166fe2321`, and runner
+  `1696d0377b7b88a4f8820e3ffcc18d185f492bcde3d313aba7eb7129e90e16e2`; no authority transfers
+  from the lost tuple to these later bytes.
+
+  The independent OCSC review also demonstrated six source defects in the initially requested
+  stable files: caller-constructed context could stand in for the actual launcher bytes; mutable
+  runtime imports and `hashlib.sha256` were consumed before attestation; `resolve()` before
+  `O_NOFOLLOW` accepted pre-existing symlink aliases; qualification was an unexecuted contract with
+  caller-supplied `True` checks rather than signed raw events; custody prose simultaneously required
+  retention and cleanup; and no real consumer, trainer, evaluator, metric producer, report
+  validator, or checkpoint writer existed. Every OCSC gate is `NO-GO`. Worker
+  `019f76a2-383f-7970-af01-e1e959758a22` now has exclusive ownership of the stable replacement tuple
+  for a qualification-only repair: actual external bootstrap attestation, pre-import runtime
+  pinning, descriptor-relative component walks, zero-authority production-path two-host Lustre
+  mechanics, and permanent evidence retention. Even a successful repair may authorize only fresh
+  exact-byte rereview and qualification-source review; publication, consumer integration, fit,
+  H100, and scientific claims remain `NO-GO`.
+
+  The second EOS reviewer was also stopped by an automated content filter before a formal final
+  report, but first independently matched all four requested hashes, ran the full warning-strict
+  suite (**77 passed**) plus Ruff/format/compile/shell gates, and reproduced a decisive omitted
+  defensive case: the verifier accepted an alternate noncanonical encoding of the Ed25519 identity
+  point. It separately found descriptor-policy/exact-inode revalidation gaps and confirmed that
+  `linux-smoke` does not exercise broker transfer or the production report/marker/receipt publisher.
+  These concrete observations are sufficient to keep EOS source, qualification, Stokes, Newton,
+  CUDA, H100, and claims `NO-GO`; they are not a reviewer GO. Worker
+  `019f769a-a5c7-7a32-907a-765c107efb8f` owns exactly the EOS preregistration, evaluator, tests, and
+  wrapper for strict canonical point/scalar validation, exact descriptor policy, real inert
+  production-path qualification mechanics, restart/quarantine discovery, and prose/count repair.
+  Fresh independent review remains mandatory.
+
+  Stokes connectivity itself remains healthy through the interactive authentication path. The
+  service did not offer public-key authentication; one attempted installation of the existing
+  dedicated local public key was immediately removed after key-only verification failed. The remote
+  authorization file no longer contains that added key, and scheduler/project state was untouched.
