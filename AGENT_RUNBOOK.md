@@ -6590,3 +6590,26 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   recursive type strictness, reopen canonical paths after marker publication, and expose a reviewed
   CPU-only Linux/Lustre qualification command. No Newton preflight or H100 evaluation is authorized
   before fresh rereview and a real Linux smoke pass.
+
+- **2026-07-18 08:37** -- **G2 scored-development custody remains COMMIT / STOKES INSTALL /
+  RELEASE NO-GO after a fresh exact-byte review; all ten held jobs remain inert.** The reviewer
+  independently matched the twelve staged paths, zero unstaged paths, parent F, all file hashes,
+  staged binary diff SHA-256
+  `c18db969a0159611364e495440f0e377d70db55011166196a10927a33aa39970`, replacement plan,
+  stored wrapper identities, and Stokes job state. It reran 149 warning-strict tests with 67
+  subtests plus static and plan gates. Those green gates still missed four release blockers.
+
+  First, both verifier role commands omit `--verification-replay`, so the trainer records a false
+  replay receipt while the repaired adjudicator requires true; the held chain would fail before a
+  score could acquire standing. Second, the plan requires a direct child of F to equal the current
+  `origin/main`, but main is now 39 ordinary custody commits beyond F. Satisfying that condition
+  would require destructive history rewriting, which is forbidden. The repair must instead bind
+  the direct-child candidate to one fixed dedicated remote branch such as
+  `origin/codex/acw-g2`, plus its reviewed offline bundle. Third, two adjudicator decision and
+  authorization writers still swallow parent-directory fsync errors. Fourth, evaluator reports,
+  generated dataset arrays/directories, and curriculum bundles/directories used by the release
+  still have replacing rename or missing file/directory fsync paths, so a successful return does
+  not prove durable no-replace evidence publication. A bounded isolated-worktree repair is active
+  with explicit cross-contract, collision, interruption, and injected-I/O tests. Obsolete jobs
+  `741065`--`741069` and replacement jobs `741070`--`741074` remain `JobHeldUser` at zero runtime;
+  neither chain may be installed or released, and no score or G2 artifact exists.
