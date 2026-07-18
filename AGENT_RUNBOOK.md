@@ -6635,3 +6635,113 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   held descriptor immediately before and after no-replace publication, and fsync file metadata after
   chmod. No CPU publication, Stokes qualification, trainer, evaluator, H100 job, artifact, commit,
   or push is authorized before another independent review.
+
+- **2026-07-18 09:15--09:34** -- **VPN transport is restored and the terminal-only factorial closes
+  the four-arm experiment: a real local TERM-by-WIDTH interaction does not become autonomous
+  reasoning.** Newton and Stokes both resolve and accept interactive account authentication again;
+  the current login hosts are Newton `evuser2` and Stokes `euser2`. Key-only `BatchMode=yes`
+  authentication is still refused, so unattended access is not restored even though the VPN path is.
+  Newton has no active Slurm job. Terminal-only job `692561_1` completed `0:0` on `evc39` after
+  `05:06:11`; all ten Stokes G2 jobs `741065`--`741074` remain `JobHeldUser` at exactly zero runtime.
+
+  The immutable terminal report is
+  `artifacts/evals/digitwise_factorial_v4_full_de45ace58b5cf1f1490adb11fcbf18524aeb0cb7/term/report.json`:
+  21,766,822 bytes, report SHA-256
+  `0a9a080b9320ca4c50a1d8e1d509e8b8407799a78986bd2580145a5579f33dc9`, and transcript SHA-256
+  `8a0c465cd48fbff5ae9f5a838578994d9ebb87a94f31445e4ab5d037c9c7d068`. The Newton source remains
+  mode `0400` under a mode-`0500` parent; the atomically mirrored Mac copy is mode `0444` under a
+  mode-`0555` parent and hash-matches. A fresh independent run of
+  `train/replay_digitwise_factorial_v4_reports.py` over all four sealed arms is byte-identical to
+  `artifacts/eval_history/digitwise_factorial_v4_four_arm_replay_de45ace_20260718.json`, SHA-256
+  `17cededad7fbd9d85aad008cb115d6b9a1fdceb41dc7eae0133c3d3b0dde21f0`; all seven replay tests pass.
+
+  Exact branch results out of 3,000 are IID **239 closed / 256 state-exact / 369 terminal-exact /
+  334 final-correct**, TERM **231 / 252 / 376 / 321**, WIDTH **239 / 296 / 390 / 321**, and
+  TERM+WIDTH **250 / 334 / 481 / 361**. Exact pair-both-closed counts out of 1,500 are respectively
+  **86, 76, 75, 75**. TERM alone is null: IID -> TERM terminal exact has 222 losses versus 229 gains
+  (`p=0.7775748960`), state exact 153/149 (`p=0.8629783035`), branch closed 148/140
+  (`p=0.6800614269`), and pair both closed 54/44 (`p=0.3633541877`). WIDTH alone is also null for
+  complete execution. TERM on top of WIDTH does produce a local effect: terminal exact has 252
+  losses versus 343 gains, delta `+91/3000`, exact McNemar
+  `p=0.00021883968181106602`; state exact rises 296 -> 334 but is not conventionally significant
+  (`p=0.0843920051`). Branch closed changes only 239 -> 250 (`p=0.6007399787`), and pair both closed
+  is exactly unchanged at 75 -> 75 (`p=1.0`). The branch terminal-exact interaction is `+0.028`; the
+  branch state-exact interaction is `+0.014`.
+
+  Direct retained transcripts show why the aggregate gain does not compose. Under TERM, exact
+  model-authored four-step tapes can still serialize incorrectly: `r=3720` emits `372` instead of
+  `273`; `r=7720` emits `727` instead of `277`; and `r=1994` emits `9991` instead of `4991`.
+  Exact-state/wrong-final counts are IID 17, TERM 21, WIDTH 57, and TERM+WIDTH 84, so the serializer
+  gap expands as local state execution improves. In TERM+WIDTH case `fit_w4-00010`, WIDTH was exact
+  for one transition, while TERM+WIDTH authors all four exact transitions through `r=7301;z=1` but
+  emits `1307` rather than `1037`; its paired counterfactual authors `r=8301;z=1` then emits `138`
+  rather than `1038`. In `fit_w4-00005`, TERM+WIDTH repairs the final transition and emits the right
+  final answer, but an earlier carry field is wrong, so full state execution still fails.
+
+  Width-eight exact-prefix survival through transitions one to eight is IID
+  `[556,352,160,44,6,1,0,0]`, TERM `[401,272,126,51,14,3,0,0]`, WIDTH
+  `[430,225,98,51,19,2,0,0]`, and TERM+WIDTH `[440,292,181,75,41,17,6,0]`, each over 600
+  branches. No arm completes a width-eight branch. The six TERM+WIDTH branches surviving seven
+  transitions all fail only by emitting final carry `c=0` where the oracle requires `c=1`.
+
+  **Decision:** terminal-only and width-only are closed as promotion hypotheses; the factorial is
+  scientifically complete. TERM+WIDTH demonstrates a causally real late-transition interaction,
+  not a reasoning win. The next intervention must jointly identify orthogonal local state coverage
+  and the tape-to-answer relation, or rescue the six exact-prefix carry-commit cases under shuffled
+  and dead controls, and must improve autonomous full rollout. OCSC and carry recovery remain the
+  best targeted candidates but stay CPU/H100 NO-GO until their independent reviews and external
+  custody gates pass. Repaired DWS and EOS candidates have been handed to fresh independent
+  reviewers; no accelerator job or durable publication is authorized yet.
+
+- **2026-07-18 09:35** -- **Bounded DWS and EOS repairs complete locally; both remain fail-closed
+  under new independent exact-byte review.** DWS single-completion now enforces isolated
+  `-I -S -B` startup with an empty subprocess environment, binds `sys.flags`, the executing
+  generator, Python/runtime/native modules, tokenizer, RNG, hashing, `struct` packing, and the
+  captured payload function, compares recovery identity recursively by exact type, verifies the
+  held staging device/inode immediately before and after no-replace publication, and fsyncs each
+  sealed file after mode `0444`. Its three exact SHA-256 values are preregistration
+  `edc7c8076ec65600d4d82a12eacd036556422b1a74e3299da78879154efbcecf`, generator
+  `0b3bef10324f285f2eeaacaea481c84033a942c949c4e62cc0983c3dcff39036`, and tests
+  `16e4f258ed7796e11e0691f5bcbbb0b99a9517034c89d26be3f2cb9bc7d51be6`. The isolated gate is
+  38 tests; the production path constructs 2,048 episodes and 2,048 sham rows in 8.038 seconds.
+  These are repair mechanics only; fresh independent reviewer `019f7563-4912-7553-9071-16e5f4cdb9b8`
+  owns the current GO/NO-GO.
+
+  EOS suppressed-trace now requires the externally pinned production authorization key, binds
+  allocation/cgroup/PCI/GPU identity, derives field-screen availability, commits exact prompt token
+  vectors, enforces recursively strict schemas, and reopens canonical report and marker paths after
+  publication. Its exact hashes are preregistration
+  `f2ff6e91bab7187c67687238e3f62e46da21684a359d01c7f12a742d875e064c`, evaluator
+  `37600bc6dd4759316e473fc84c8a86db39f566e85b2274ad2bf1aebe74d9911e`, tests
+  `e32d671e4dc9e53ac178e72bec0b6e90a255ce808b262d45baedcc1878468bdf`, and Slurm wrapper
+  `de8b8ff1f2b141f77717fb8733a025c50c9eb40c4f8d6b06a0eb6a3fb0e6a32c`; its warning-strict gate
+  is 48 tests. Reviewer `019f7563-4e9f-7700-b6ef-9efc6e70365c` is independently checking these
+  bytes. A real Stokes Lustre/Linux qualification and external authorization still do not exist.
+  Therefore DWS publication, EOS Newton preflight, both H100 paths, and every capability claim
+  remain NO-GO. No job, artifact publication, stage, commit, or push was performed for either
+  candidate.
+
+- **2026-07-18 09:38** -- **OCSC receives scientific CPU-mechanics GO but durable publication,
+  Linux/Stokes, and H100 remain NO-GO.** Independent review matched the three frozen file hashes,
+  passed 24 warning-strict tests in 242.78 seconds with third-party pytest plugins disabled, passed
+  Ruff/format/compilation, and performed a separate in-memory production construction using the
+  exact 2,309,567-byte tokenizer. It independently replayed all 48,000 arithmetic rows and verified
+  4,500 complete basis cells, 10,500 relations, 46,500 training receipts, 9,375 packs, and 92,160
+  schedule rows. Both arms contain exactly 24,000 rows; OCSC/IID completion indices, token counts,
+  supervised positions, and per-update resources match. Serializer rows are byte-shared,
+  reversal-aligned, noncollapsed, and retain active counterfactual margins. All three seed cycle,
+  repeat-set, and RNG identities are distinct. No corpus, arithmetic, packing, schedule,
+  contamination, schema, tokenizer, source-binding, or matched-resource defect was found.
+
+  Publication still has three blockers. `publish_bundle()` can accept ten arbitrary `b"x"`
+  payloads, does not mandatorily run complete strict verification before rename, and rereads only
+  inventory/manifest data after publication rather than the full canonical bundle. Randomized
+  `.partial` trees are removed on caught exceptions but lack authenticated restart-time recovery
+  after process/host death. Finally, no externally signed independent review receipt, production
+  registry/hidden commitment/prepublication receipt, Linux `renameat2`/Lustre qualification,
+  source-bound GPU preregistration, or tested GPU consumer exists. Worker
+  `019f7567-6bd5-7b53-86ca-d99a7a8c582d` owns a three-file repair for mandatory full readback,
+  fail-closed crash recovery, an external review trust root, and a future Linux qualification
+  contract. It may not publish, stage, commit, access clusters, or submit jobs. OCSC remains the
+  strongest data-side next hypothesis, but no H100 time is authorized until fresh review and the
+  real external/Linux/GPU receipts exist.
