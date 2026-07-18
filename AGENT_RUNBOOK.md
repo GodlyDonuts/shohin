@@ -6,33 +6,28 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 15:55 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 17:46 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
-> active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
-> `0a9a080b9320ca4c50a1d8e1d509e8b8407799a78986bd2580145a5579f33dc9`. TERM+WIDTH has one real
-> local effect (`+91/3000` terminal-exact branches versus WIDTH, exact McNemar
-> `p=0.00021883968181106602`) but no complete-execution gain: closed branches are only `250/3000`,
-> paired-both-closed remains `75/1500`, and state-exact branch flow has 249 gains versus 211 losses.
-> The new carry-conditioned replay shows that 179/249 state gains clear an active terminal
-> carry/borrow (`10`), while 200/211 state losses occur when no terminal carry/borrow should exist
-> (`00`); field-level replay confirms that 196/200 of those `00` losses first mismatch `c`. The
-> treatment has learned a useful but overfiring carry-clear boundary: 247/249 gains and 207/211
-> losses involve `c` at the source arm's first mismatch; 239 gains repair `1->0` underprediction,
-> while 196 losses introduce `0->1` overprediction.
-> OCSC and the six-case carry-recovery intervention are the strongest targeted next hypotheses. Both
-> have fresh source/scientific `NO-GO` decisions and are under bounded repair. A deterministic audit
-> of the 40-pair probe finds raw pairwise carry choice `32/40` and the best state-independent constant
-> delta only `35/40`; no global delta perfectly separates the frozen positive and negative margins.
-> Neither repair authorizes H100 work yet. Newton is idle. Stokes jobs
-> `741065`--`741074` are all user-held at zero runtime and are permanently non-releasable because
-> they cannot execute the repaired bytes. Do not release any existing Stokes chain; a future run
-> requires a fresh reviewed commit, plan, allocation, and exact qualification evidence.
-> Final raw-300k benchmark job `692775` is isolated and running on `evc26`; it uses the immutable
-> checkpoint with `N=100`, GSM8K `K=4`, and `MAX_NEW=256`. No score exists yet and no partial log may
-> be reported as a result. Fresh compiler/executor/serializer interaction is also complete: natural-
-> language compilation is `0/6`, terminal serialization is `2/6`, and oracle-compiled frozen DRS
-> transitions are `28/34`, with width-five `13/15` and width-seven `15/19`.
+> active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
+> GSM8K pass@1 `2/100`, MATH-500 `2/100`, HumanEval `6/164`, and MBPP `0/100`. This confirms a
+> low-single-digit plateau rather than a broad 120k-to-300k capability gain.
+>
+> Fresh compiler/executor/serializer interaction is complete: natural-language compilation is
+> `0/6`, terminal serialization is `2/6`, and oracle-compiled frozen DRS transitions are `28/34`
+> (`13/15` at width five, `15/19` at width seven). VAMT schema v1 was independently rejected.
+> Repaired schema v2 theory SHA-256
+> `69d736c6a6f8e5504e0b11674ffc2b46dc1664901418660aec3936f7ab583e06` has now also been
+> independently rejected: theory `NO-GO`, CPU `RESTRICTED GO` for local counterexample work only,
+> and neural preregistration/fitting `NO-GO`. Its 15 passing tests do not execute the declared full
+> program machine. Review result SHA-256 is
+> `169b9755daceee83ae6ed9e214765bf3838c88f7e664360d9c4c3d3f5e336e4d`. No neural implementation,
+> fit, H100, novelty, or reasoning claim is authorized.
+>
+> Carry recovery, OCSC, EOS, and DWS remain source/scientific `NO-GO` unless a fresh exact-byte
+> review says otherwise; bounded repair workers may change only their assigned source files. Newton
+> is idle. Stokes jobs `741065`--`741074` remain user-held at zero runtime and are permanently
+> non-releasable because they cannot execute repaired bytes. Do not release an existing chain.
 > Keep the "LIVE STATE" section current every milestone; do not let it rot.
 
 ---
@@ -7824,3 +7819,57 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `artifacts/eval_history/pretrain_300000_final_692787.log`, 2,549 bytes, SHA-256
   `cb3e10be87ac3ef086fcb90bfd39fa1d505352ca3f8a5a6de35a1cec70e146a5`. Newton's queue is empty;
   no training writer or evaluation job remains active.
+
+- **2026-07-18 16:54--17:50** -- **VAMT schema v1 is rejected, schema v2 repairs the formal
+  boundary and passes CPU mechanics only, and no neural fit is authorized.** Independent review of
+  VAMT v1 returned theory `NO-GO`, CPU `RESTRICTED GO` for counterexample discovery only, and neural
+  implementation `NO-GO`. It found ten material defects: unsupported signed subtraction,
+  underspecified operand boundaries, incomplete serializer state, an open host-interpreter boundary,
+  incomplete parameter/state/FLOP accounting, supervision-confounded controls, missing pointer
+  assumptions, an invalid in-subspace rotation control, an overstated Nerode claim, and
+  nonexecutable collapse requirements. No authority transfers from v1 SHA-256
+  `55206f603101e982cb91b81a675ef11143dc0b9fc82af0129cc45e298c802ef9`.
+
+  Repair candidate `R12_VOCABULARY_ALIGNED_MICROCODE_TRANSDUCER_THEORY.md` now uses protocol
+  `R12-VAMT-THEORY-v2`, restricts the first family to `LOAD`, `ADD`, nonnegative `SUB`, and `HALT`,
+  defines inclusive operand start/end pointers and fixed in-graph pointer/cursor/write mechanics,
+  completes serializer state, charges structured target information, supplies favorable matched
+  controls, and denies primitive novelty. Exact theory SHA-256 is
+  `69d736c6a6f8e5504e0b11674ffc2b46dc1664901418660aec3936f7ab583e06`.
+
+  CPU source SHA-256 `37c0b6610ef70cf430dd62d205da0f9b367f7167b10b1cd4b5b462f49abf3c38`
+  and tests SHA-256 `537b719104546491ce99390167a23565f0c5ce65115dfcbae2ec4ce60b93e6cf`
+  pass **15/15** tests, `py_compile`, and Ruff. Frozen report
+  `scratchpad/vamt_symbolic_falsifier_v2.json` has SHA-256
+  `28364d691a34425ec29de8ae8e9da4623c962a941602b2546761b3858b299e15` and embedded payload
+  SHA-256 `28a31ada9a2ead122fd5d9dc3557dbd6be52c53a593efb6c252a2a7fc6fd6225`.
+  It records 400/400 local contexts, 15,205 admitted width-one/two replays, 4,995 rejected negative
+  subtraction cases, 832,000 position/context induction checks through width 64, all 40 serializer
+  contexts, 11,110 exhaustive serializer replays, a 434,077-parameter minimal sidecar, 67 retained
+  program/private bytes, 51 output bytes, and 128 fixed executor cycles. Every Python transition
+  lookup is counted as external symbolic execution. The report explicitly proves no neural host
+  boundary, reasoning, novelty, fit, or accelerator claim.
+
+  Fresh hostile exact-byte review matched every hash, regenerated the report byte for byte, and
+  returned theory `NO-GO`, CPU `RESTRICTED GO`, neural preregistration `NO-GO`, and fitting
+  `NO-GO`. It proved that the CPU artifact never executes the declared full program, skips rather
+  than rejects negative subtraction, mishandles carry-slot recurrence across chained operations,
+  permits circular jointly poisoned reference tables, supplies pointer relocation manually, and
+  omits mutable state and declared operations from its collapse/FLOP certificates. Review result
+  `R12_VAMT_V2_REVIEW_RESULT.md` has SHA-256
+  `169b9755daceee83ae6ed9e214765bf3838c88f7e664360d9c4c3d3f5e336e4d`. A separate mathematical
+  audit is deriving the smallest complete replacement machine. Neural source, data generation,
+  fitting, and H100 remain `NO-GO`.
+
+  A separate EOS exact-byte rereview returned source/qualification/H100 `NO-GO`: candidate
+  descriptor custody ended before pathname reopen, symlinked Python identities diverged, real
+  `linux-smoke` omitted the substitution callback exercised by tests, qualification was not
+  report-bound, and unlink-versus-rename quarantine semantics disagreed across preregistration,
+  schema, implementation, and tests. A new bounded worker owns only the four EOS source files for
+  those repairs. Carry and OCSC repair workers remain active in their disjoint scopes; DWS remains
+  source `NO-GO`.
+
+  At 17:48 EDT, authenticated Newton verification again found an empty queue and remote
+  `train/flagship_out/ckpt_0300000.pt` still matched protected SHA-256
+  `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`. No remote file or job was
+  changed.
