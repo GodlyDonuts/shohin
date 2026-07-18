@@ -6822,6 +6822,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `756911f568c12093f3a303a42525a2519c38187c8eac71f5da3ca06ac1ce3b20`; all scoring metrics and
   paired decisions are unchanged.
 
+  A same-branch four-category replay (`closed`, `exact-state/serializer-fail`,
+  `answer-only`, `neither`) confirms that the local gain is high-churn rather than monotone. From
+  WIDTH to TERM+WIDTH, **249** branches newly become state-exact: **183** close and **66** fail only
+  at serialization. In the opposite direction, **211** previously state-exact branches are lost:
+  **167** had been closed and **44** had been serializer failures. The full transition matrix moves
+  closed `239 -> 250`, serializer-fail `57 -> 84`, answer-only `82 -> 111`, and neither
+  `2622 -> 2555`. Therefore the intervention creates partial capability in several dimensions but
+  does not stabilize one reusable algorithm. A promotion candidate must reduce this cross-arm
+  churn while separately improving reverse-order tape readout and width-eight carry commit.
+
 - **2026-07-18 09:50** -- **Fresh G2 rereview remains COMMIT / INSTALL / RELEASE NO-GO and found
   three durability defects after all 172 tests passed.** The release wrapper copies its consumed
   plan with `/usr/bin/install` rather than the shared no-replace publication primitive; generated
