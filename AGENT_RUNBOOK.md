@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 14:37 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 14:50 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -7630,3 +7630,35 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   reviewer `019f7684-fabe-7641-b8cb-9fab1b3cb997` owns the same four immutable hashes under a
   narrowly scoped software-correctness review. EOS commit, qualification, Stokes, Newton, and H100
   remain `NO-GO`.
+
+- **2026-07-18 14:40--14:50** -- **The repaired VPN restores both clusters without changing remote
+  state, while the carry-recovery rereview returns a decisive second NO-GO.** Authenticated Newton
+  access reaches login host `evuser2`; its queue is empty. The read-only Newton runbook is mode
+  `0444`, 752,788 bytes, and exact SHA-256
+  `b253affece2ff4abfab2ebd7570c083aec83b76eeb626338e5f2a6ea840da928`. Authenticated Stokes access
+  reaches login host `euser2`; jobs `741065`--`741074` remain exactly `PENDING (JobHeldUser)` at
+  `0:00`. The unused qualification runtime remains Python 3.13.13 with interpreter SHA-256
+  `240cfc8e48be6935d99b4abcfd951a18a46c888e1647cdc551d3d648788f9e46`. No job, allocation,
+  scientific artifact, or checkpoint was submitted, released, canceled, modified, or read.
+
+  The carry reviewer independently preserved exact hashes preregistration
+  `e3ccedf389feca943462a772bad6cfe5c55ce3b1a851a4fe539131f0ceef9e0b`, implementation
+  `d639e48a5928f4dfadf5fa4a8f68983e2c6ff1e19e21f667f199ddb35904c662`, tests
+  `e2200b6903611a0b3640042ad7dc36d02945a4985d65cbd43b1f1c48db42978b`, and wrapper
+  `69f4460c9e04352d75f06aa7cbfb72db0e9331cf3da9e3c59ce9add476e18c42`, but returned source,
+  scientific, qualification, and H100 `NO-GO`. Four defects are claim-blocking: caller-supplied
+  coverage and equal arbitrary receipts can forge a pass; the nuisance basis has rank only 9 over
+  20 fit metadata cells; the final AdamW iterate lacks full-board objective/convergence/selection
+  evidence; and required per-stratum preservation, serializer, fit-width, and gate-off gates are
+  absent. Exact adversarial review accepted impossible `10000/50` and `10000/12` counts plus one
+  transition and one episode stratum, confirming this is an evidence-binding failure rather than a
+  documentation concern. Worker `019f768f-1724-7262-a501-4336b9e55935` now owns exactly the same
+  four files for a source-only repair with a saturated or capacity-matched metadata null, frozen
+  full-board selection, canonical per-case receipts, and noncompensatory treatment-over-null gates.
+  No cluster, fit, commit, or installation is authorized.
+
+  Separately, local v4 audit bytes remain stable and warning-clean: 12 tests plus five subtests and
+  Ruff pass; source SHA-256 `1689e1cd2b3a3d29fc8bcf36a8759c6760935b44ae25108e7eb5dc03a22b1840`,
+  tests SHA-256 `e72ddffbaf43f027c6de0b96a89633e9983134e27e32c03d022cc6613baf6abd`, and read-only report
+  SHA-256 `94bf0b4b61b239601a7677f7badca03ac9b507c3aad6616b80d37f11072c7f68`. These checks preserve a
+  diagnostic boundary only; they do not rescue the rejected trained comparator.
