@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 11:40 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 11:48 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -7097,3 +7097,26 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   test SHA-256 is `bec7e34dec04a6de563d2c872b4208dba77550a9e124d0f4134c9e3ba2200c30`.
   Ten isolated tests pass in 23.83 seconds; Ruff, format, and isolated compilation pass. This is a
   diagnosis and preregistration constraint, not a capability claim or execution authorization.
+
+- **2026-07-18 11:48** -- **Fresh EOS exact-byte review verifies the alias and receipt repairs but
+  rejects execution on one P0, two P1s, and an incomplete node-accounting bind.** The 56-test gate,
+  all four supplied hashes, all NVIDIA control-name versus physical-device alias checks, and the
+  actual `O_SYNC` empty/partial/complete subprocess crash protocol reproduce. Selection and
+  carry-clock denominators remain fixed at all 100 episodes, and unsigned Linux mechanics evidence
+  cannot directly authorize production execution.
+
+  Execution is nevertheless `NO-GO`. Package identity hashes only `__init__.py` and `RECORD`, not
+  every transitive Python/native file the verifier imports before checking authorization; a changed
+  package member could therefore alter the authority decision without changing the current package
+  receipt. Startup cleanup also runs before exclusive publisher ownership and can unlink another
+  live same-UID run's candidate/temp file. Linux qualification children execute the evaluator by a
+  mutable pathname, so a swap-run-restore window can execute different child bytes while both parent
+  pathname hashes remain valid. Finally, `sacct NodeList` is not cross-bound to `scontrol BatchHost`,
+  `scontrol NodeList`, and the observed hostname.
+
+  Preserve-as-rejected-evidence is `GO`; commit-as-reviewed-source, Linux/Stokes qualification,
+  Newton preflight, and H100 execution are `NO-GO`. Worker
+  `019f75e9-0667-78f2-a61f-73043096ed64` owns exactly the four EOS files for full distribution/runtime
+  closure, publisher-before-cleanup ownership, immutable child-byte execution, and exact node-
+  identity cross-binding. It may not commit, publish, sign, access clusters, or launch work. Another
+  fresh independent exact-byte review is mandatory after repair.
