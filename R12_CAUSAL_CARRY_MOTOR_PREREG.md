@@ -158,7 +158,13 @@ modulo-shard membership and fixed artifact path, sentinel identities, tokenizer/
 dimensions, exact PyTorch/CUDA/H100 runtime, fit schedule, shuffled-label
 assignment, the seed-derived initial motor state hash, and the complete frozen
 development-selection contract in Section 7. It also freezes the exact teacher
-scoring contract `h100_bfloat16_batch1_apply_motor_logits_v1`. The plan root is an exact
+scoring contract `h100_bfloat16_batch1_apply_motor_logits_v1`. Before publication
+or validation comparison, Python normalizes the complete expected plan through
+strict finite JSON serialization and duplicate-key-rejecting parsing. Thus JSON
+object keys are strings and serializable scalar subclasses become primitive JSON
+values in both memory and the sealed bytes. Validation compares those normalized
+strict JSON payloads rather than Python object equality, so JSON booleans,
+integers, and floats are never interchangeable. The plan root is an exact
 non-symlink mode-`0555` directory; `plan.json` is a regular non-symlink
 mode-`0444` file with `st_nlink == 1`; its eight shard, fit, development
 evaluation, and confirmation evaluation directories are empty mode `0700`

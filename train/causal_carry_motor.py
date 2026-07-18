@@ -795,6 +795,24 @@ def _load_exact_json(text, label):
         raise ValueError("{} is not valid JSON".format(label)) from exc
 
 
+def _canonical_json_payload(value, label):
+    """Serialize a value with the one strict representation used for identity."""
+    try:
+        return json.dumps(
+            value,
+            sort_keys=True,
+            separators=(",", ":"),
+            allow_nan=False,
+        )
+    except (TypeError, ValueError) as exc:
+        raise ValueError("{} is not strict JSON".format(label)) from exc
+
+
+def _canonical_json_document(value, label):
+    """Return the exact primitive document represented by strict JSON bytes."""
+    return _load_exact_json(_canonical_json_payload(value, label), label)
+
+
 def tensor_state_sha256(state):
     digest = hashlib.sha256()
     for name in sorted(state):
@@ -5777,7 +5795,7 @@ def _expected_plan(
     _, development_selection = canonical_development_selection(bound["episodes"].text())
     board = dict(board)
     board["rows_sha256"] = stable_json_sha256(rows)
-    return {
+    plan = {
         "audit": CANONICAL_PLAN_AUDIT,
         "canonical": True,
         "source_contract": source_contract,
@@ -5845,6 +5863,7 @@ def _expected_plan(
             "It establishes no feature, motor, evaluation, or reasoning result."
         ),
     }
+    return _canonical_json_document(plan, "canonical expected plan")
 
 
 def _plan(args):
@@ -5950,7 +5969,9 @@ def _load_validated_plan(
             board,
             tokenizer,
         )
-        if plan != expected:
+        if _canonical_json_payload(plan, "canonical plan") != _canonical_json_payload(
+            expected, "canonical expected plan"
+        ):
             raise ValueError("canonical plan content mismatch")
         if plan_bound.path != Path(expected["plan_path"]):
             raise ValueError("canonical plan path mismatch")

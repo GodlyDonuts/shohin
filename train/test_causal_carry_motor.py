@@ -131,7 +131,9 @@ from causal_carry_motor import (  # noqa: E402
     _eval,
     _confirmation_eval,
     _extract_shard,
+    _expected_plan,
     _fit_from_shards,
+    _load_validated_plan,
     _validate_confirmation_preflight,
     _plan,
     _validate_preservation_trace_identity,
@@ -828,6 +830,174 @@ def _create_empty_canonical_plan_tree(parent, commit):
     os.chmod(plan, 0o444)
     os.chmod(root, 0o555)
     return root, plan
+
+
+@pytest.mark.parametrize(
+    "rewrite",
+    ("canonical_bool_to_int", "updates_int_to_float", "histogram_count"),
+)
+def test_expected_plan_json_normalization_survives_real_publication_and_load(
+    monkeypatch, rewrite
+):
+    class RawTorchVersion(str):
+        pass
+
+    class PlanInput:
+        def __init__(self, path, text=""):
+            self.path = Path(path)
+            self._text = text
+
+        def text(self):
+            return self._text
+
+    raw_version = RawTorchVersion("2.7.1+cu128")
+    prompt_histogram = {97: 16, 99: 16, 103: 16, 105: 16}
+    token_histogram = {114: 16, 116: 16, 120: 16, 122: 16}
+    rows = _synthetic_feature_rows(64)
+    board = {
+        "seed": 20260717,
+        "rows": len(rows),
+        "prompt_length_histogram": prompt_histogram,
+        "token_length_histogram": token_histogram,
+    }
+    commit = "c" * 40
+    source_contract = {"git_commit": commit, "manifest_sha256": "1" * 64}
+    confirmation_commitment = {"exclusion_contract": {"identity_sha256": "2" * 64}}
+    bound = {
+        "checkpoint": PlanInput("/frozen/checkpoint.pt"),
+        "tokenizer": PlanInput("/frozen/tokenizer.json"),
+        "episodes": PlanInput("/frozen/episodes.jsonl", "frozen episodes"),
+        "cycle": PlanInput("/frozen/cycle.json"),
+        "confirmation_commitment": PlanInput("/frozen/commitment.json"),
+    }
+    frozen = {
+        "checkpoint": "3" * 64,
+        "tokenizer": "4" * 64,
+        "episodes": "5" * 64,
+        "cycle": "6" * 64,
+        "confirmation_commitment": "7" * 64,
+        "source:train/causal_carry_motor.py": "8" * 64,
+    }
+    tokenizer = Tokenizer.from_file(str(FROZEN_TOKENIZER_PATH))
+    checkpoint = {
+        "step": CANONICAL_CHECKPOINT_STEP,
+        "cfg": {
+            "n_loop": 1,
+            "d_model": 2,
+            "vocab_size": tokenizer.get_vocab_size(),
+        },
+    }
+
+    monkeypatch.setattr(torch, "__version__", raw_version)
+    monkeypatch.setattr(torch.version, "cuda", "12.8")
+    monkeypatch.setattr(
+        "causal_carry_motor.canonical_development_selection",
+        lambda _text: ([], {"audit": "synthetic-development-selection"}),
+    )
+    monkeypatch.setattr(
+        "causal_carry_motor.permuted_control_labels",
+        lambda selected: (
+            [int(row["target"]) for row in selected],
+            {
+                "seed": 20260718,
+                "changed": 32,
+                "changed_rate": 0.5,
+                "labels_sha256": "9" * 64,
+            },
+        ),
+    )
+    monkeypatch.setattr(
+        "causal_carry_motor._batch_schedule",
+        lambda *_args: ([], "a" * 64),
+    )
+
+    with tempfile.TemporaryDirectory() as directory:
+        parent = Path(directory).resolve() / "carry_motor"
+        parent.mkdir()
+        monkeypatch.setattr("causal_carry_motor.CANONICAL_PLAN_PARENT", parent)
+        root = canonical_plan_root(commit)
+        expected = _expected_plan(
+            root,
+            bound,
+            frozen,
+            source_contract,
+            confirmation_commitment,
+            checkpoint,
+            rows,
+            board,
+            tokenizer,
+        )
+        assert type(raw_version) is RawTorchVersion
+        assert type(expected["runtime_contract"]["artifact_runtime"]["torch"]) is str
+        assert expected["board"]["prompt_length_histogram"] == {
+            str(key): value for key, value in prompt_histogram.items()
+        }
+        assert expected["board"]["token_length_histogram"] == {
+            str(key): value for key, value in token_histogram.items()
+        }
+
+        root.mkdir(mode=0o700)
+        for index in range(CANONICAL_FEATURE_SHARDS):
+            (root / "shard_{:02d}".format(index)).mkdir(mode=0o700)
+        (root / "fit").mkdir(mode=0o700)
+        (root / "development_eval").mkdir(mode=0o700)
+        (root / "confirmation_eval").mkdir(mode=0o700)
+        plan_path = root / "plan.json"
+        atomic_json(plan_path, expected)
+        os.chmod(root, 0o555)
+        args = SimpleNamespace(
+            plan=str(plan_path),
+            plan_sha256=hashlib.sha256(plan_path.read_bytes()).hexdigest(),
+        )
+        try:
+            plan_bound, loaded = _load_validated_plan(
+                args,
+                bound,
+                frozen,
+                source_contract,
+                confirmation_commitment,
+                checkpoint,
+                rows,
+                board,
+                tokenizer,
+            )
+            try:
+                assert loaded == expected
+            finally:
+                plan_bound.close()
+
+            rewritten = copy.deepcopy(expected)
+            if rewrite == "canonical_bool_to_int":
+                rewritten["canonical"] = 1
+                assert rewritten == expected
+            elif rewrite == "updates_int_to_float":
+                rewritten["fit_budget"]["updates"] = float(
+                    rewritten["fit_budget"]["updates"]
+                )
+                assert rewritten == expected
+            else:
+                rewritten["board"]["prompt_length_histogram"]["97"] += 1
+                assert rewritten != expected
+            os.chmod(root, 0o700)
+            os.chmod(plan_path, 0o644)
+            plan_path.write_text(json.dumps(rewritten, indent=2, sort_keys=True) + "\n")
+            os.chmod(plan_path, 0o444)
+            os.chmod(root, 0o555)
+            args.plan_sha256 = hashlib.sha256(plan_path.read_bytes()).hexdigest()
+            with pytest.raises(ValueError, match="canonical plan content mismatch"):
+                _load_validated_plan(
+                    args,
+                    bound,
+                    frozen,
+                    source_contract,
+                    confirmation_commitment,
+                    checkpoint,
+                    rows,
+                    board,
+                    tokenizer,
+                )
+        finally:
+            os.chmod(root, 0o700)
 
 
 _CONFIRMATION_INPUT_CACHE = None
