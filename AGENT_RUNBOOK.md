@@ -6795,3 +6795,61 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   encoding. It may not commit, push, sign, access clusters, operate jobs, or publish artifacts.
   The six TERM+WIDTH width-eight carry-commit failures remain the preregistered autonomous rescue
   set; no accelerator fit may begin until fresh review and a real external production receipt pass.
+
+- **2026-07-18 09:47--09:53** -- **Restored VPN access is stable, remote custody is unchanged, and
+  the terminal-factorial serializer gap is now independently classified and locked.** Fresh
+  authenticated sessions reached Newton login host `evuser2` and Stokes login host `euser2`.
+  Newton remains idle; terminal job `692561_1` still records `COMPLETED|0:0|05:06:11|evc39`, and
+  its mode-`0400` 21,766,822-byte report still has SHA-256
+  `0a9a080b9320ca4c50a1d8e1d509e8b8407799a78986bd2580145a5579f33dc9`. All ten Stokes G2 jobs
+  `741065`--`741074` remain `JobHeldUser` at zero runtime. Key-only unattended authentication is
+  still unavailable; the restored path is interactive-password plus multiplexed-session access.
+
+  The independent factorial replay now partitions every exact-state/wrong-final branch by decimal
+  error mechanism. Counts remain IID **17**, TERM **21**, WIDTH **57**, TERM+WIDTH **84**. The
+  exclusive TERM+WIDTH classes are **30** one-digit substitutions, **20** adjacent
+  transpositions, **7** exact reversals, **3** other same-multiset permutations, **11** other
+  single-edit errors, and **13** other errors. All **84/84** answers are parseable; **69/84** retain
+  the correct decimal length, edit distance is exactly one for **41** and two for **43**, and there
+  are **zero** simple omitted-final-carry or extra-final-carry cases. Thus the strongest arm's
+  widening state-to-answer gap is predominantly an ordering/indexing/readout failure, not a final
+  carry insertion failure. The six width-eight prefix survivors remain a separate state-level
+  carry-commit target.
+
+  The zero-inclusive taxonomy is covered by nine warning-strict replay tests and passes Ruff,
+  format, and isolated compilation. Regenerated read-only artifact
+  `artifacts/eval_history/digitwise_factorial_v4_four_arm_replay_de45ace_20260718.json` has SHA-256
+  `756911f568c12093f3a303a42525a2519c38187c8eac71f5da3ca06ac1ce3b20`; all scoring metrics and
+  paired decisions are unchanged.
+
+- **2026-07-18 09:50** -- **Fresh G2 rereview remains COMMIT / INSTALL / RELEASE NO-GO and found
+  three durability defects after all 172 tests passed.** The release wrapper copies its consumed
+  plan with `/usr/bin/install` rather than the shared no-replace publication primitive; generated
+  trees are chmod-sealed only after the durable fsync/readback boundary; and descriptor readback
+  omits device/inode identity, allowing byte-identical inode substitution. Both old held chains
+  remain permanently non-releasable. Worker `019f757e-ce33-7b61-86fd-d04ff70647c8` owns a bounded
+  five-file repair and may not commit, push, access clusters, operate jobs, or read scores.
+
+- **2026-07-18 09:51** -- **EOS suppressed-trace remains Linux/Newton/H100 NO-GO after fresh
+  review despite 48 passing tests.** A crash after marker rename but before parent-directory fsync
+  leaves a visible pair that ordinary replay incorrectly accepts without a durable post-fsync
+  witness. GPU binding also assumes `nvidia-smi` index equals `/dev/nvidiaN` minor and can miss an
+  extra cgroup-authorized physical GPU minor when its device node is absent. Worker
+  `019f757c-360e-72b2-8601-8d762b12288e` owns the exact four-file repair: fail-closed durability
+  acceptance, one-observation minor/UUID/PCI binding, complete physical-GPU cgroup enumeration,
+  and injected crash/absent-node tests. No publication, cluster action, or accelerator use is
+  authorized before another independent exact-byte review.
+
+- **2026-07-18 09:55** -- **DWS single-completion remains CPU publication, Linux/Stokes,
+  trainer/evaluator, and H100 NO-GO after the replacement independent review exposed an executed-
+  semantics hole.** All 38 warning-strict tests, exact 2,048-episode production reconstruction,
+  strict schema/recovery checks, matched token/resource accounting, no-replace staging identity,
+  and post-chmod mode checks passed. Those tests did not authenticate mutable live callables.
+  Replacing `os.fsync` with a no-op or replacing `rows_from_episode.__code__` retained the same
+  runtime receipt; a publication with all 42 fsync calls intercepted still returned `verified=true`.
+  Thus the current runtime hash authenticates names/objects but not the semantics actually executed,
+  and the durable-publication claim is not trustworthy. Worker
+  `019f7582-3965-7ea3-bda3-e659ddcd07e9` owns a three-file repair for exact live callable/code
+  binding plus before/during-publication substitution regressions. It may not publish, commit,
+  access clusters, or build accelerator consumers. Another independent review and real Linux
+  qualification remain mandatory.

@@ -84,6 +84,16 @@ def test_exact_mcnemar_matches_locked_paired_result() -> None:
     assert replay.exact_mcnemar(0, 0) == 1.0
 
 
+def test_serializer_error_helpers_are_exact() -> None:
+    assert replay.decimal_edit_distance("372", "273") == 2
+    assert replay.decimal_edit_distance("727", "277") == 2
+    assert replay.decimal_edit_distance("9991", "4991") == 1
+    assert replay.decimal_edit_distance("123", "1234") == 1
+    assert replay.is_adjacent_transposition("727", "277")
+    assert not replay.is_adjacent_transposition("372", "273")
+    assert not replay.is_adjacent_transposition("9991", "4991")
+
+
 @pytest.mark.parametrize("arm", tuple(KNOWN_REPORT_SHA256))
 def test_existing_sealed_report_replays_exactly_when_present(arm: str) -> None:
     path = REPORT_ROOT / arm / "report.json"
@@ -128,3 +138,78 @@ def test_locked_width_to_term_width_paired_contrast_when_present() -> None:
     assert terminal["mcnemar_exact_two_sided_p"] == pytest.approx(
         0.00021883968181106602, rel=0.0, abs=1e-18
     )
+
+
+def test_locked_serializer_error_profile_when_reports_present() -> None:
+    expected_profiles = {
+        "iid": {
+            "count": 17,
+            "exclusive_class_counts": {
+                "unparseable": 0,
+                "omitted_final_carry": 0,
+                "extra_final_carry": 0,
+                "exact_digit_reversal": 1,
+                "stored_tape_order_value": 0,
+                "adjacent_transposition": 3,
+                "one_digit_substitution": 6,
+                "same_digit_multiset_other": 0,
+                "single_edit_other": 6,
+                "other": 1,
+            },
+        },
+        "term": {
+            "count": 21,
+            "exclusive_class_counts": {
+                "unparseable": 0,
+                "omitted_final_carry": 0,
+                "extra_final_carry": 0,
+                "exact_digit_reversal": 6,
+                "stored_tape_order_value": 2,
+                "adjacent_transposition": 4,
+                "one_digit_substitution": 6,
+                "same_digit_multiset_other": 0,
+                "single_edit_other": 2,
+                "other": 1,
+            },
+        },
+        "width": {
+            "count": 57,
+            "exclusive_class_counts": {
+                "unparseable": 0,
+                "omitted_final_carry": 0,
+                "extra_final_carry": 0,
+                "exact_digit_reversal": 4,
+                "stored_tape_order_value": 1,
+                "adjacent_transposition": 11,
+                "one_digit_substitution": 11,
+                "same_digit_multiset_other": 5,
+                "single_edit_other": 11,
+                "other": 14,
+            },
+        },
+        "term_width": {
+            "count": 84,
+            "exclusive_class_counts": {
+                "unparseable": 0,
+                "omitted_final_carry": 0,
+                "extra_final_carry": 0,
+                "exact_digit_reversal": 7,
+                "stored_tape_order_value": 0,
+                "adjacent_transposition": 20,
+                "one_digit_substitution": 30,
+                "same_digit_multiset_other": 3,
+                "single_edit_other": 11,
+                "other": 13,
+            },
+        },
+    }
+    for arm, expected in expected_profiles.items():
+        path = REPORT_ROOT / arm / "report.json"
+        if not path.exists():
+            pytest.skip("large immutable reports are not installed")
+        profile = replay.load_and_replay(path)["diagnostics"][
+            "exact_state_wrong_final"
+        ]["error_profile"]
+        assert profile["count"] == expected["count"]
+        assert profile["exclusive_class_counts"] == expected["exclusive_class_counts"]
+        assert sum(profile["exclusive_class_counts"].values()) == expected["count"]

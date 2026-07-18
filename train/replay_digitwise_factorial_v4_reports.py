@@ -119,6 +119,29 @@ BRANCH_METRICS = (
     "closed_loop_success",
 )
 PAIR_METRICS = ("both_state_closed_loop_exact", "both_closed_loop_success")
+SERIALIZER_FLAG_NAMES = (
+    "unparseable",
+    "same_length",
+    "one_digit_substitution",
+    "adjacent_transposition",
+    "exact_digit_reversal",
+    "same_digit_multiset",
+    "stored_tape_order_value",
+    "omitted_final_carry",
+    "extra_final_carry",
+)
+SERIALIZER_EXCLUSIVE_CLASSES = (
+    "unparseable",
+    "omitted_final_carry",
+    "extra_final_carry",
+    "exact_digit_reversal",
+    "stored_tape_order_value",
+    "adjacent_transposition",
+    "one_digit_substitution",
+    "same_digit_multiset_other",
+    "single_edit_other",
+    "other",
+)
 
 
 class ReplayError(ValueError):
@@ -777,6 +800,130 @@ def build_accounting(
     }
 
 
+def decimal_edit_distance(left: str, right: str) -> int:
+    """Return exact Levenshtein distance for two short decimal renderings."""
+    previous = list(range(len(right) + 1))
+    for left_index, left_char in enumerate(left, start=1):
+        current = [left_index]
+        for right_index, right_char in enumerate(right, start=1):
+            current.append(
+                min(
+                    previous[right_index] + 1,
+                    current[right_index - 1] + 1,
+                    previous[right_index - 1] + (left_char != right_char),
+                )
+            )
+        previous = current
+    return previous[-1]
+
+
+def is_adjacent_transposition(left: str, right: str) -> bool:
+    if len(left) != len(right):
+        return False
+    mismatches = [
+        index for index, pair in enumerate(zip(left, right)) if pair[0] != pair[1]
+    ]
+    if len(mismatches) != 2 or mismatches[1] != mismatches[0] + 1:
+        return False
+    first, second = mismatches
+    return left[first] == right[second] and left[second] == right[first]
+
+
+def serializer_error_profile(branches: list[Mapping[str, Any]]) -> dict[str, Any]:
+    flag_counts: Counter[str] = Counter()
+    exclusive_counts: Counter[str] = Counter()
+    edit_distances: Counter[str] = Counter()
+    length_deltas: Counter[str] = Counter()
+    examples: defaultdict[str, list[str]] = defaultdict(list)
+
+    for branch in branches:
+        emitted = branch["emitted_answer"]
+        expected = branch["expected_answer"]
+        require(type(expected) is int, "serializer expected answer is not an integer")
+        if emitted is None:
+            flags = {"unparseable": True}
+            exclusive = "unparseable"
+            edit_distance = None
+            length_delta = None
+        else:
+            require(type(emitted) is int, "serializer emitted answer is not an integer")
+            expected_text = str(expected)
+            emitted_text = str(emitted)
+            final_state = branch["rows"][-1]["expected_state"]
+            require(final_state is not None, "exact-state branch lacks terminal state")
+            tape = str(final_state["r"])
+            reverse_without_carry = int(tape[::-1])
+            stored_order_values = {int(tape), int(tape.rstrip("0") or "0")}
+            flags = {
+                "unparseable": False,
+                "same_length": len(emitted_text) == len(expected_text),
+                "one_digit_substitution": len(emitted_text) == len(expected_text)
+                and sum(a != b for a, b in zip(emitted_text, expected_text)) == 1,
+                "adjacent_transposition": is_adjacent_transposition(
+                    emitted_text, expected_text
+                ),
+                "exact_digit_reversal": emitted_text == expected_text[::-1],
+                "same_digit_multiset": Counter(emitted_text) == Counter(expected_text),
+                "stored_tape_order_value": emitted in stored_order_values,
+                "omitted_final_carry": branch["operation"] == "add"
+                and final_state["c"] == 1
+                and emitted == reverse_without_carry,
+                "extra_final_carry": branch["operation"] == "add"
+                and final_state["c"] == 0
+                and emitted == 10 ** int(final_state["w"]) + reverse_without_carry,
+            }
+            edit_distance = decimal_edit_distance(emitted_text, expected_text)
+            length_delta = len(emitted_text) - len(expected_text)
+            if flags["omitted_final_carry"]:
+                exclusive = "omitted_final_carry"
+            elif flags["extra_final_carry"]:
+                exclusive = "extra_final_carry"
+            elif flags["exact_digit_reversal"]:
+                exclusive = "exact_digit_reversal"
+            elif flags["stored_tape_order_value"]:
+                exclusive = "stored_tape_order_value"
+            elif flags["adjacent_transposition"]:
+                exclusive = "adjacent_transposition"
+            elif flags["one_digit_substitution"]:
+                exclusive = "one_digit_substitution"
+            elif flags["same_digit_multiset"]:
+                exclusive = "same_digit_multiset_other"
+            elif edit_distance == 1:
+                exclusive = "single_edit_other"
+            else:
+                exclusive = "other"
+
+        for name, active in flags.items():
+            if active:
+                flag_counts[name] += 1
+        exclusive_counts[exclusive] += 1
+        if len(examples[exclusive]) < 5:
+            examples[exclusive].append(str(branch["id"]))
+        if edit_distance is not None:
+            edit_distances[str(edit_distance)] += 1
+        if length_delta is not None:
+            length_deltas[str(length_delta)] += 1
+
+    require(
+        sum(exclusive_counts.values()) == len(branches),
+        "serializer exclusive classes do not partition failures",
+    )
+    return {
+        "count": len(branches),
+        "flag_counts": {name: flag_counts[name] for name in SERIALIZER_FLAG_NAMES},
+        "exclusive_class_counts": {
+            name: exclusive_counts[name] for name in SERIALIZER_EXCLUSIVE_CLASSES
+        },
+        "decimal_edit_distance": dict(
+            sorted(edit_distances.items(), key=lambda item: int(item[0]))
+        ),
+        "decimal_length_delta": dict(
+            sorted(length_deltas.items(), key=lambda item: int(item[0]))
+        ),
+        "examples_by_exclusive_class": {key: examples[key] for key in sorted(examples)},
+    }
+
+
 def branch_diagnostics(records: list[Mapping[str, Any]]) -> dict[str, Any]:
     branches = [pair[name] for pair in records for name in ("normal", "counterfactual")]
     serializer = [
@@ -830,6 +977,7 @@ def branch_diagnostics(records: list[Mapping[str, Any]]) -> dict[str, Any]:
                     ).items()
                 )
             ),
+            "error_profile": serializer_error_profile(serializer),
         },
         "width_8_exact_through_position_6_wrong_position_7": late_width_8,
     }
