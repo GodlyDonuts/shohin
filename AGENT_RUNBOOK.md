@@ -6745,3 +6745,53 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   contract. It may not publish, stage, commit, access clusters, or submit jobs. OCSC remains the
   strongest data-side next hypothesis, but no H100 time is authorized until fresh review and the
   real external/Linux/GPU receipts exist.
+
+- **2026-07-18 09:42** -- **G2 closes its four reviewed code defects, but both existing held chains
+  are now permanently non-releasable and all release gates remain NO-GO.** The isolated
+  `/Users/sairamen/projects/shohin-acw-g2` repair is staged as exactly 18 paths, seven additions and
+  eleven modifications, with no unstaged or untracked residue. Both verifier commands now pass
+  `--verification-replay`, and tests construct receipts from both verifier roles that adjudication
+  accepts. The impossible `origin/main` equality is replaced by a fixed dedicated `codex/acw-g2`
+  local/tracking/remote/offline-bundle contract while retaining sole parent F. One shared immutable
+  publication path now covers adjudication records, evaluation JSON, generated datasets,
+  curriculum bundles, checkpoints, plans, manifests, and custody records, with unique staging,
+  native no-replace rename, complete file/tree fsync, descriptor readback, and injected collision,
+  interruption, and I/O failure tests.
+
+  The complete warning-strict gate is 172/172 in 25.008 seconds; Ruff, format, compilation, both
+  shell parsers, and cached diff checks pass. Frozen plan raw SHA-256 is
+  `70eafa2de29f62ef6840764207440c8dde90f917cd7917f2613eaadd5081a430`; payload SHA-256 is
+  `af9ffe97c15534971c6ee584af42d432e1ff7ab5c29fe380cd1e74065cd2d926`. It deliberately records
+  `ready_for_g_commit=false`; validation reports `ready=0 attempts=27`, and `--require-ready` fails.
+  Jobs `741065`--`741074` cannot execute these repaired bytes and must never be released. A future
+  path requires independent exact-byte review, a reviewed dedicated-ref commit, a fresh held
+  allocation, and a newly frozen plan. Reviewer `019f756a-2829-7a83-b814-1a5cbaee65e2` owns the
+  current independent decision. No commit, push, Stokes install, job operation, score read, or
+  scored artifact read has occurred in this lane.
+
+- **2026-07-18 09:46** -- **Carry recovery remains COMMIT / INSTALL / SIGNATURE / H100 NO-GO
+  after exact review; the six-case rescue target survives, but the implementation trust boundary
+  does not.** The reviewer reproduced sole parent `a0c258e6709766c643cf127a429a7d6ef4a4211b`, the
+  exact four-addition topology, all supplied file hashes, source manifest, and staged binary diff.
+  Eighty warning-strict tests plus Ruff, format, in-memory compilation, shell parsing, whitespace,
+  and diff checks pass. Strict finite JSON, direct `O_EXCL` publication, interrupted-state routing,
+  exact 2,000-update assertions per arm, and the Ed25519 primitive are present.
+
+  Six blockers remain. Callable receipts omit live transitive semantics: exact isolated
+  monkeypatches of AdamW's functional kernel, inherited `Module.load_state_dict`, upstream
+  `rollout_episode`, and `torch.serialization._load` all pass the current gate, so fit and replay can
+  share altered semantics. Slurm's default environment permits `BASH_ENV` execution before the
+  first in-script guard, and a repository path is inserted before closed-world validation. The
+  allocation contract omits account and a Slurm-cgroup-to-PCI/GPU-UUID proof; the actual completed
+  factorial account is `skattel` on partition `normal`. Git safety does not exclude local
+  clean/process filters, includes, or `.git/info/attributes` before a `git status` call. Reserved
+  directory identity omits mode/link count from the accepted opened baseline and is not required
+  before every mutation. Finally, mapping equality aliases Boolean/integer/float keys, while base64
+  verification accepts noncanonical encodings and does not bind one canonical outer receipt.
+
+  Worker `019f756d-13b4-7f02-83d7-a78d04bca26e` owns a bounded four-file repair for transitive
+  semantics, pre-Bash environment isolation, exact `skattel` allocation/cgroup/device identity,
+  non-executable Git closure, descriptor-relative reserved inodes, and canonical type/signature
+  encoding. It may not commit, push, sign, access clusters, operate jobs, or publish artifacts.
+  The six TERM+WIDTH width-eight carry-commit failures remain the preregistered autonomous rescue
+  set; no accelerator fit may begin until fresh review and a real external production receipt pass.
