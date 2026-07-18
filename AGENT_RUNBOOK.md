@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 13:27 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 13:44 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -20,9 +20,11 @@
 > treatment has learned a useful but overfiring carry-clear boundary: 247/249 gains and 207/211
 > losses involve `c` at the source arm's first mismatch; 239 gains repair `1->0` underprediction,
 > while 196 losses introduce `0->1` overprediction.
-> OCSC and the six-case carry-recovery intervention are the strongest targeted next hypotheses. OCSC
-> has a fresh publication/runtime `NO-GO` and is under a second bounded repair; carry recovery remains
-> in fresh exact-byte review. Neither authorizes H100 work yet. Newton is idle. Stokes jobs
+> OCSC and the six-case carry-recovery intervention are the strongest targeted next hypotheses. Both
+> have fresh source/scientific `NO-GO` decisions and are under bounded repair. A deterministic audit
+> of the 40-pair probe finds raw pairwise carry choice `32/40` and the best state-independent constant
+> delta only `35/40`; no global delta perfectly separates the frozen positive and negative margins.
+> Neither repair authorizes H100 work yet. Newton is idle. Stokes jobs
 > `741065`--`741074` are all user-held at zero runtime and are permanently non-releasable because
 > they cannot execute the repaired bytes. Do not release any existing Stokes chain; a future run
 > requires a fresh reviewed commit, plan, allocation, and exact qualification evidence.
@@ -7481,3 +7483,38 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   objective, and favorable optimization access; exact gate-off identity; matched positive,
   negative, development, and confirmation evaluations; and noncompensatory treatment-over-constant
   decision gates. No cluster access, fit, commit, qualification, or H100 run is authorized.
+
+- **2026-07-18 13:27--13:44** -- **The repaired DWS generator enters fresh independent rereview;
+  its author suite is not an execution authorization.** The repair reports exact hashes
+  preregistration `297e11054962aa207914bd1eebfb67e4d31d9921a79ee290b2a1043971f6b641`,
+  generator `e72ce8ae19d6533a27143b9b3b80d7b7aff443c409d4bcb78bdf03cae8cb9b50`, and tests
+  `5def28bffa6b4430fe9d0cfd1f6357a12cb97d9a4ef38d98573097c21af1636b`. It claims to close the
+  direct-CLI import-spec failure, bind the live JSON/importlib runtime closure, authenticate
+  tokenizer/replication relocation, make post-rename/pre-receipt death idempotently replayable,
+  reject bool/float production counts, and exercise a true two-process publication race. The
+  canonical 2,048 episodes / 18,432 rows and episode-list SHA-256
+  `1dd913b12d2ffb2201530997102ef50a1e2d581fe7595c4e9ad5ae8c9fe3f009` are reported unchanged;
+  61 warning-strict tests plus static gates pass locally. These are author claims. Read-only reviewer
+  `019f7653-4716-7673-a8e2-b2fa24cf9191` owns the exact-byte decision. DWS commit, Linux/Stokes
+  qualification, publication, trainer/evaluator, Newton, and H100 remain `NO-GO`.
+
+- **2026-07-18 13:27--13:44** -- **A deterministic frozen-probe audit quantifies the strongest
+  state-independent carry calibration null before any motor fit.** New local source
+  `pipeline/audit_drs_carry_constant_bias.py` (SHA-256
+  `25c3d2aac6b884129dd791a3badb1d16c5a550b180cdc5c3eefbdb6b9571c60e`) reads only immutable
+  post-DRS probe SHA-256 `c3c2d0b037852cb57d54e1f147d445d27093a8548b965c41466e81bcc1a27778`, verifies all carry-pair
+  identities and layer-29 baseline margins, and enumerates every open decision interval for one
+  global delta added to `logit(c=1)-logit(c=0)`. Its ten-test adversarial suite SHA-256 is
+  `ad81b8c3ff505421462bea0f3f49e6ca70a4347e0c622acf05ba0262ed5d2ec8`; tests and Ruff pass.
+
+  Raw delta zero is **32/40** pairwise-correct (target zero 13/20, target one 19/20). The favorable
+  constant null reaches only **35/40**, selecting representative delta `-0.7841806411743164` with
+  target zero 18/20 and target one 17/20. Perfect separation is impossible on this board: the open
+  lower bound required by the hardest positive is `+0.6561751365661621`, while the open upper bound
+  required by the hardest negative is `-1.1492173671722412`. The read-only canonical report is
+  `artifacts/eval_history/drs_carry_constant_bias_audit_20260718.json`, 7,390 bytes, SHA-256
+  `7f2eef8843eb686c2b63683ab7f11a248b5e1b8c8a4358c936a6c2d49326b7b3`. This proves only that a
+  single grammar-gated constant cannot solve the frozen pairwise board; it does not establish that a
+  nonlinear reader will generalize, improve full-vocabulary decoding, or improve autonomous
+  execution. The audit source, tests, and report remain uncommitted pending independent review, and
+  the carry motor must beat this favorable null on every preregistered stratum.
