@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 14:14 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 14:20 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -7552,3 +7552,38 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   pairwise calibration evidence only. It is not a trained nuisance arm, full-vocabulary result,
   autonomous execution result, or reasoning claim. Source, tests, and v2 report remain outside Git
   until a fresh independent exact-byte and scientific review returns GO.
+
+- **2026-07-18 14:14--14:18** -- **Fresh DWS rereview returns a second source and Linux NO-GO;
+  passing tests did not cover four hostile-publication defects.** The reviewer independently kept
+  exact hashes preregistration `297e11054962aa207914bd1eebfb67e4d31d9921a79ee290b2a1043971f6b641`,
+  generator `e72ce8ae19d6533a27143b9b3b80d7b7aff443c409d4bcb78bdf03cae8cb9b50`, and tests
+  `5def28bffa6b4430fe9d0cfd1f6357a12cb97d9a4ef38d98573097c21af1636b`, reproduced **61 passing
+  warning-strict tests**, and then demonstrated two P1 and two P2 gaps.
+
+  First, mutable consumed callables such as `platform.python_implementation()` can be replaced and
+  executed without changing the runtime receipt. Second, `_write_sealed_file_at` closes the
+  original descriptor before pathname validation, allowing a byte-identical replacement inode to
+  be accepted. Third, an ordinary exception after destination rename deletes the completed
+  publication instead of retaining it for restart/manual custody. Fourth, the concurrency test
+  starts its contender only after rename, so it never proves true atomic no-overwrite contention.
+  Worker `019f7673-63ff-7db0-a84d-88c3fdb24d34` owns exactly the DWS preregistration, generator, and
+  tests for a bounded repair with callable-substitution, original-descriptor, post-rename-retention,
+  and immediately-before-rename foreign-destination regressions. DWS commit, publication,
+  Linux/Stokes qualification, trainer/evaluator, Newton, and H100 remain `NO-GO` pending another
+  exact-byte independent review.
+
+- **2026-07-18 14:18--14:20** -- **EOS bounded repair completes locally and enters a new independent
+  exact-byte review; author verification is not execution authorization.** The author reports
+  preregistration SHA-256 `0b7d430f02261b7cfcf957b8de899194446639eea6be5942d8c3a002a61735af`,
+  evaluator `c477da243626b13b7a1e13f4f770919b49b65b27977a05d5910dcbfbe2515309`, tests
+  `e0231144ae4bafcfd29dec6e915d5fda60154ef9283557e3190c76386d8d823c`, and wrapper
+  `d3d83e06b8b3725bf417cfcd3c75fa84c38034f9f1cca67ac4cf644c8ba84fa1`. Its warning-strict suite
+  reports **77 passed in 107.08s**; Ruff, isolated no-bytecode compilation, `bash -n`, and text gates
+  pass. The claimed repair covers delegated-key startup, `-I -S -B` closure, mapped device/inode
+  identity, rename-only stale cleanup, pre-cleanup cross-binding, small-order Ed25519 rejection,
+  neutralized Git execution surfaces, and production-path Linux-smoke mechanics.
+
+  These remain author claims. Read-only reviewer `019f7675-028d-76e0-8ddc-3930fd7d6f71` owns the
+  exact bytes and must adversarially replay every prior execution-boundary defect. EOS commit,
+  Linux/Stokes qualification, Newton, CUDA, and H100 remain `NO-GO`; no remote or scientific state
+  changed.
