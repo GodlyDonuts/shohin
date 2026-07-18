@@ -6922,3 +6922,57 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   released, canceled, modified, or submitted, and no remote artifact was changed. The prepared
   Stokes CPU qualification runtime remains available, but candidate execution stays gated on the
   active bounded repairs and fresh independent exact-byte reviews.
+
+- **2026-07-18 10:46** -- **Fresh EOS exact-byte rereview rejects the repaired snapshot on two
+  remaining execution-boundary defects; all EOS execution gates remain closed.** The reviewer
+  reproduced all four supplied hashes and the full 49-test/hygiene gate, but showed that a hostile
+  named NVIDIA control path can alias an extra physical-GPU device number and thereby hide that
+  grant from the concrete-physical-permission rejection. It also found that the Linux/Lustre
+  qualification exercises generic rename/fsync behavior but not the actual acceptance protocol:
+  preflushed `O_SYNC` receipt creation, hard death before parent fsync, partial receipt write,
+  complete receipt write, and independent reopen/replay.
+
+  No false-accept path was found in ordinary report/marker/receipt replay, and the scientific result
+  remains development-only. Nevertheless commit-as-execution-revision, Linux qualification,
+  Newton preflight, and H100 execution are all `NO-GO`. Worker
+  `019f75b1-0031-7ab0-834a-1a1f9bb42102` owns only the exact four EOS files for control/physical
+  alias rejection and real receipt-protocol crash qualification. It may not commit, push, access
+  clusters, sign receipts, publish artifacts, or launch accelerator work; another fresh independent
+  review is mandatory after repair.
+
+- **2026-07-18 10:52** -- **Manual transcript inspection confirms two separable bottlenecks:
+  exact local computation can coexist with corrupted deterministic readout, while width-eight
+  failure can be a single final carry bit.** Representative TERM+WIDTH branches were read directly
+  from the preserved report rather than inferred from aggregate scores. In `fit_w4-00010`, the
+  closed-loop state ends exactly at least-significant-first tape `r=7301`, whose answer is `1037`,
+  but the model emits `1307` (an adjacent transposition). In `fit_w4-00125`, exact tape `r=1115`
+  should serialize as `5111`, but the model emits the stored tape order `1115`. In
+  `fit_w4-00019`, exact tape `r=7473` should emit `3747`, but the model emits `3749` (one digit
+  substituted). In held-out `value_ood_w6-00001`, exact tape `r=296920` should reverse and discard
+  the leading zero to `29692`, while the model emits the same-multiset permutation `22969`.
+
+  The separate width-eight branch `width_ood_w8-00175-cf` is exact through positions 0--6. At the
+  eighth transition every field except carry remains exact: expected `c=1`, predicted `c=0`, with
+  tape `r=32135477`; the final answer correspondingly omits the leading carry (`177453123` expected,
+  `77453123` emitted). These examples rule out the coarse explanation that the model simply cannot
+  perform any local arithmetic. A successor must causally improve both position-invariant carry
+  commitment and reverse-order serialization, and must reduce the already locked cross-arm state
+  churn; answer-only score gains are insufficient.
+
+- **2026-07-18 10:54** -- **OCSC finishes its bounded CPU custody repair and enters a fresh
+  hostile exact-byte review; publication, Linux, and GPU remain `NO-GO`.** Frozen source hashes are
+  preregistration `34c7cf3cbe0b3b2c7ac9da07500cfa3174a80fd26eba86256b14300fcf33229d`,
+  generator `83c0ca8907f756d505284f5080d1260ccf420ba77df6952e1610038c5fbedc83`, tests
+  `6e5962c9867dfc2f90bbba97220448719ee55a283bbb57b2fb27a2cd977d1968`, and frozen oracle
+  `37cd76751eb4146f85268d6c0e44d946eb353ee03605ceb25f4bda97e4c00813`. The repair claims mandatory
+  descriptor-pinned full regeneration/verification before and after no-replace rename, final
+  canonical readback, authenticated restart recovery, and rejection of arbitrary ten-file payloads.
+  Thirty-one warning-strict tests pass in 336.96 seconds; Ruff, format, isolated compilation, and a
+  targeted post-rename substitution regression also pass.
+
+  The in-memory scientific reconstruction remains exactly balanced at 24,000 rows per arm, 9,375
+  packs, 92,160 schedule rows, and 5,120 updates per arm. It created no production publication or
+  receipt. Fresh reviewer `019f75b8-41fd-73d1-a607-1b398ca7e2b5` now owns the decision. Even a
+  mechanics GO cannot create the deliberately absent production trust root or external signed
+  receipt; no Stokes qualification, CPU publication, GPU consumer, Newton preflight, or H100 job is
+  authorized until the corresponding independent gates exist.
