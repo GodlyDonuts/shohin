@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 11:30 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 11:32 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -7061,3 +7061,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   made no changes; replacement reviewer `019f75d9-8c9d-7862-ad58-5c449c999602` now owns that same
   read-only decision. Neither repair claim authorizes commit-as-execution-source, qualification,
   installation, Newton preflight, or H100 execution.
+
+- **2026-07-18 11:32** -- **The active DWS repair lane is preserved through a tooling refusal and
+  reassigned without changing its execution gates.** The prior worker's review channel stopped
+  before returning a decision; this was not a scientific result, test failure, cluster event, or
+  authorization. It made no commit, publication, or remote change. Replacement worker
+  `019f75db-6c30-7cf0-a865-c31725a92ab3` owns exactly the current DWS preregistration, generator,
+  and tests. It must treat the live bytes as authoritative, complete exact executed-callable binding
+  and protection against transient substitution during publication, preserve the 2,048-episode
+  scientific construction and deterministic publication gates, and return exact hashes plus a
+  warning-strict verification result. CPU publication, Linux/Stokes qualification, trainer/evaluator
+  work, and H100 execution remain `NO-GO` pending a successful repair and fresh independent review.
