@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 13:02 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 13:09 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -7406,3 +7406,25 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   one microstep rather than multi-step state update/consumption or terminal rollout. It strengthens
   the case for a calibrated typed reader/updater control, while leaving promotion dependent on
   autonomous held-out execution and preservation gates.
+
+- **2026-07-18 13:03--13:09** -- **Fresh EOS review returns commit, Linux, Newton, and H100 NO-GO;
+  the exact failed snapshot is preserved only as review evidence and re-enters bounded repair.** All
+  four reviewed hashes matched the 12:50 author manifest before and after review, and the reviewer
+  independently reproduced 70 tests plus static gates. Those passing tests do not cover eight
+  remaining execution-boundary defects.
+
+  The P0 defect is that the delegated marker/receipt key exists before Bash startup hardening, so an
+  unsealed `BASH_ENV`/startup surface or dumpable parent can acquire authority before the Python
+  child calls `PR_SET_DUMPABLE=0`. P1 defects are incomplete preauthorization Python closure (`-I -B`
+  still loads site/path hooks), pathname-only rather than mapped device/inode binding for
+  `/proc/self/maps`, stale cleanup that can unlink a substituted foreign inode and cannot recover a
+  death after quarantine rename, and a `linux-smoke` path that does not actually exercise publisher
+  lease, concurrent `flock`, signed stale cleanup, or foreign-inode substitution. P2 defects are
+  destructive cleanup before complete authorization cross-binding, acceptance of the Ed25519
+  identity-key / identity-`R` / `S=0` trivial forgery, and Git clean-state validation that inherits
+  unbound configuration capable of executing `core.fsmonitor`.
+
+  Preserve-as-failed-review-evidence is `GO`; commit-as-reviewed-source, Linux/Lustre qualification,
+  Newton preflight, and H100 evaluation are all `NO-GO`. Worker
+  `019f7633-6bb4-7190-9105-55ee2b9cccde` now owns exactly the four EOS files for repair. No remote
+  access, signature, publication, commit, or job action followed the review.
