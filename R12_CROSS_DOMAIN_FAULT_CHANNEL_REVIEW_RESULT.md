@@ -76,4 +76,3 @@ independent review.
 | New resource-counted relation hypothesis | theory/CPU repair only |
 | Neural source / data / fitting / H100 | `NO-GO` |
 | Shohin reasoning or novelty claim | `NO-GO` |
-

@@ -177,4 +177,3 @@ finite-state recurrence. No primitive-novelty claim is allowed. The potentially
 new contribution is only a rigorously controlled training protocol for a tiny
 language model whose supervision is allocated through global algebraic defect.
 That delta requires a dedicated prior-art review after the CPU object is frozen.
-

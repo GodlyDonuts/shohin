@@ -108,4 +108,3 @@ scaling result and has no capability priority.
 The highest-leverage Shohin frontier remains natural-language compilation,
 common-mode operation-selection errors, internal state actuation, recurrent
 consumption, and termination.
-

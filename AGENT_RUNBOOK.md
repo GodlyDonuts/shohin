@@ -7959,6 +7959,6 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   factorial enforcement cost. `R12_RELATION_COMPLETE_TRANSPORT_REVIEW_RESULT.md` preserves the
   gate: finite `S_3` mechanics `GO`; uniform reasoning primitive, neural preregistration, fitting,
   H100, and Shohin reasoning/novelty `NO-GO`. Its SHA-256 is
-  `da559c41289f9d990d321ed542ba233e97d056d0617cda4994c1454eab442717`. Preserve the CPU artifact
+  `7b4d6b8fcf9e8b6ccfed3ae46af782eb04b6b6505d29961d8fc7a8b2fcd7833a`. Preserve the CPU artifact
   only as an exact finite certificate or possible regularizer. The associated pytest board remains
   green at `5 passed`.

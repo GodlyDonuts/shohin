@@ -64,4 +64,3 @@ pass.
 | Neural implementation | `NO-GO` |
 | Data generation / fitting / H100 | `NO-GO` |
 | Autonomous reasoning or novelty | `NO-GO` |
-
