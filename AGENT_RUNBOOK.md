@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 11:27 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 11:30 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -7041,3 +7041,23 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   publish, sign, access clusters, or launch jobs. A fresh independent exact-byte review remains
   mandatory. The same custody check confirmed Newton is empty and Stokes jobs `741065`--`741074`
   remain user-held at zero runtime; none was modified.
+
+- **2026-07-18 11:30** -- **EOS completes the narrowly scoped control-alias and receipt-crash
+  repair and enters a new independent exact-byte review; Linux and accelerator gates remain
+  closed.** Frozen hashes are preregistration
+  `4a04c86e96e4965104ceccf599379501a7134aa0754c59dafb293e189cd796b1`, evaluator
+  `aca41c1390061570d5ebc850ada42aa8262e27aac391929becd33f6ed93ffd3a`, tests
+  `811c45fcaf16342d00b91763c253edd44128a9a515739559bc1d740cbd11a5c5`, and unchanged wrapper
+  `5b19e88b961152112ce4e534612cb1593cb4b8c039d660bb0e58c9b452d3828f`. The repair adds
+  end-to-end named-control-path versus physical-GPU alias coverage for all four control names and
+  deterministic subprocess deaths through the production `O_SYNC` receipt helpers. Independent
+  replay rejects empty and partial receipts and accepts only the complete post-fsync receipt.
+  Existing index, absent-node, duplicate-rule, MIG, minor, UUID, and PCI coverage remains present.
+
+  Fifty-six warning-strict tests pass in 78.70 seconds; Ruff, format, isolated compilation, and shell
+  syntax checks pass. No Linux/Lustre smoke run, signature, publication, cluster action, or GPU use
+  occurred. Fresh reviewer `019f75d8-b4c0-7253-b668-8d8da22a737e` owns the exact-byte decision.
+  The earlier carry reviewer encountered an automated tooling refusal before returning a review and
+  made no changes; replacement reviewer `019f75d9-8c9d-7862-ad58-5c449c999602` now owns that same
+  read-only decision. Neither repair claim authorizes commit-as-execution-source, qualification,
+  installation, Newton preflight, or H100 execution.
