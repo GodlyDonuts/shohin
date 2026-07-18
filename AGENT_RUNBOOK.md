@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 11:17 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 11:27 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -14,8 +14,9 @@
 > local effect (`+91/3000` terminal-exact branches versus WIDTH, exact McNemar
 > `p=0.00021883968181106602`) but no complete-execution gain: closed branches are only `250/3000`,
 > paired-both-closed remains `75/1500`, and state-exact branch flow has 249 gains versus 211 losses.
-> OCSC and the six-case carry-recovery intervention are the strongest targeted next hypotheses; both
-> are under bounded repair/review and authorize no H100 work yet. Newton is idle. Stokes jobs
+> OCSC and the six-case carry-recovery intervention are the strongest targeted next hypotheses. OCSC
+> has a fresh publication/runtime `NO-GO` and is under a second bounded repair; carry recovery remains
+> in fresh exact-byte review. Neither authorizes H100 work yet. Newton is idle. Stokes jobs
 > `741065`--`741074` are all user-held at zero runtime and are permanently non-releasable because
 > they cannot execute the repaired bytes. Do not release any existing Stokes chain; a future run
 > requires a fresh reviewed commit, plan, allocation, and exact qualification evidence.
@@ -7018,3 +7019,25 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   format, compilation, shell syntax, ASCII, whitespace, topology, and source-closure checks pass.
   Fresh reviewer `019f75cd-1ccd-7ba1-8883-d5655df434fa` owns the decision. Commit, install,
   production signing, Newton preflight, and H100 execution remain `NO-GO`.
+
+- **2026-07-18 11:27** -- **Fresh OCSC hostile review rejects the repaired snapshot on two P1
+  publication-safety defects and one incomplete runtime boundary; every execution gate remains
+  closed.** The reviewer reproduced all supplied hashes and the 31-test scientific/mechanics gate,
+  but demonstrated that the unkeyed recovery journal authenticates stage device/inode values taken
+  from that same journal. A coherent same-UID forgery can therefore authorize cleanup of a foreign
+  allowed-name child. A second publisher can also classify a live publisher's just-journaled stage
+  as interrupted and delete it because no lock, lease, boot/PID identity, or liveness protocol
+  distinguishes live ownership from stale recovery. The current four-file source manifest is also
+  not a complete executable trust boundary: ordinary dynamic import can admit an adjacent shadow
+  `pipeline/tokenizers.py`, while Python, stdlib, package/native-library, libc, and kernel identities
+  are not fully bound.
+
+  Preservation as rejected-candidate evidence is `GO`; commit-as-reviewed-source, CPU publication,
+  Linux/Stokes qualification, GPU preregistration, Newton preflight, and H100 execution are all
+  `NO-GO`. Worker `019f75d6-177a-7483-9776-99ed59f68b0d` owns exactly the preregistration,
+  generator, and tests for a bounded second repair. It must add externally grounded stage ownership,
+  coherent-forgery/foreign-child coverage, a live-publisher-safe lock/lease and stale-recovery
+  protocol, and an isolated source/runtime closure that rejects shadow imports. It may not commit,
+  publish, sign, access clusters, or launch jobs. A fresh independent exact-byte review remains
+  mandatory. The same custody check confirmed Newton is empty and Stokes jobs `741065`--`741074`
+  remain user-held at zero runtime; none was modified.
