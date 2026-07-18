@@ -1,0 +1,6 @@
+{
+  "audit": "isolated_fqrb_checkpoint_mirror_v1",
+  "local_checkpoint": "/Users/sairamen/projects/shohin/train/fqrb_200k_l19_r1/cra_ep1.pt",
+  "remote_checkpoint": "/lustre/fs1/home/sa305415/shohin/train/fqrb_200k_l19_r1/cra_ep1.pt",
+  "sha256": "d732963dde59e224c6f494b503e54a57ec9a81d4b2b1b586a9d212a7095a1c6d"
+}

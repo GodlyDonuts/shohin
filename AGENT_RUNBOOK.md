@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 17:46 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 19:25 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -81,6 +81,14 @@ What that means operationally, and is now settled — **do not relitigate:**
 → This runbook is that documentation. Keep it detailed and current. **Priority #1 is keeping the
 pretrain ALIVE**; priority #2 is executing the milestone transitions in §4 correctly; priority #3 is
 keeping this doc accurate.
+
+**Native-reasoning master ledger (2026-07-18):** Every reasoning experiment must also update
+`SHOHIN_NATIVE_REASONING_MASTER.md` before closeout. That file is the theory-facing inventory of
+Shohin's architecture, data, raw baseline, every major reasoning lane, exact claim boundaries,
+surviving discoveries, closed hypotheses, and the template for proposed new theories. Read it
+immediately after this runbook. A score, review, or falsifier is not fully documented until its
+result and consequence are represented in both the dedicated evidence file/runbook and the master
+ledger.
 
 **2026-07-07 executive-director directive:** the user gave Codex full authority to do whatever is
 needed to achieve the project goal. Operationally, this means: protect the live run first; make
@@ -7873,3 +7881,84 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `train/flagship_out/ckpt_0300000.pt` still matched protected SHA-256
   `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`. No remote file or job was
   changed.
+
+- **2026-07-18 17:50--19:13** -- **Final flagship metrics are committed, VAMT v3 closes as bounded
+  mechanics rather than reasoning, and a hostile cross-domain review reopens one algebraic
+  learnability question.** `TRAINING_METRICS.md` now records the immutable 300k denominator,
+  125,081,664-parameter model, final loss `1.6554`, final gnorm `0.11`, LR `0.0005`, nominal
+  157,286,400,000 update-token exposures, 57,826,022,271 mounted manifest tokens, final throughput
+  `281.959k tok/s`, protected checkpoint SHA-256
+  `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`, and final public scores
+  `4/100` GSM8K maj@4, `2/100` GSM8K pass@1, `2/100` MATH-500, `6/164` HumanEval, and `0/100`
+  MBPP. Commit `55d2161` was pushed to `main` with only that metrics document.
+
+  VAMT v3 exact-byte mechanics review found no blocking, high, or medium source defect: 17 tests,
+  deterministic report regeneration, all 152 full programs, 20,672 executor cycles, 2,584
+  serializer cycles, all 400 executor and 40 serializer contexts, and the 187,332-parameter / 246
+  state-bit / 20,402,304-MAC ledgers pass. The separate theory review remains decisive `NO-GO`:
+  programs are host-constructed, no uniform late-query object or complete compiler board is
+  supplied, source length and several declared boundaries are absent, and the full training/oracle
+  resource vector is incomplete. `R12_VAMT_V3_REVIEW_RESULT.md` preserves the combined decision:
+  bounded external-symbolic mechanics `GO`; neural preregistration from v3 alone, source, fitting,
+  H100, autonomous reasoning, and novelty `NO-GO`.
+
+  The first cross-domain `0/3` report is scientifically rejected after exact-byte review. Triadic
+  replication retains only the narrow fact that one-lane bit faults are corrected while a shared
+  wrong semantic action is not. Pure invertible transport retains only the narrow fact that a
+  bijection cannot collapse a state error without a decoder or provenance. The relation-atlas
+  no-go was wrong: its bad patch passes relators only from identity and violates five globally
+  applied relations. Independent enumeration shows only the canonical successor completes the
+  missing edge under global `s^2`, `t^2`, and `sts=tst`. Review result
+  `R12_CROSS_DOMAIN_FAULT_CHANNEL_REVIEW_RESULT.md` therefore reopens only a resource-counted
+  relation-syndrome learnability conjecture.
+
+  New frozen review candidate `R12_RELATION_COMPLETE_TRANSPORT_HYPOTHESIS.md` and CPU source/tests
+  derive 76 involutions on six labels, 120 globally relation-complete transitive actions, equality
+  to all regular-action relabelings, unique completion of one erased edge, and a four-edge minimum
+  identifying set across all 4,096 edge-observation subsets. The exact resource ledger is 36 full
+  atlas target bits versus 12 minimum anchor bits, plus a 126-byte presentation, 18 endpoint
+  equations, and 60 transition applications per global relation check. Five tests, Ruff,
+  formatting, and `py_compile` pass. Frozen SHA-256 values are theory
+  `c47f52acdb7058f2bbee64bc57c87a19c154f9075ce2660c0509664d66d5a91d`, source
+  `2a2e0155ad906fb74eb863061949638406fb790c88b1c0e05605662c998ce825`, tests
+  `ba51d9b262f8af6b7c4ff0a7769bdbb1205733f5aa26219438218113a5031d9b`, and report
+  `e7dedee87a611c3b4c7f0448249ed9460b7833a343a0d568d1c96fae37b82522`; embedded payload SHA-256
+  is `2c2cb3c071134c2a3baadbe83cc2cc9a75be0df466006f4c15f398373afa556c`. Independent hostile
+  exact-byte and uniform-`S_m` mathematical reviews are active. Neural code, data, fitting, H100,
+  and capability claims remain `NO-GO` pending those reviews.
+
+  Three repaired source lanes also fail downstream authority. Carry recovery remains complete
+  `NO-GO` because its public digest reconstructs the supposedly blind confirmation board,
+  recovered final weights do not prove the frozen optimization trajectory ran, Python imports
+  precede closed-world validation, and confirmation is not proven disjoint from fit. OCSC source is
+  narrow read-only `GO` but qualification is `NO-GO`: events self-attest remote facts, the bootstrap
+  hashes caller-controlled `argv[0]`, executed bytecode is not retained, and no authoritative raw
+  evidence producer or consumer exists. EOS local mechanics pass 92 tests, but source and
+  qualification remain `NO-GO`: replay trusts `signature_verified=true` without reconstructing or
+  verifying the signed payload, and durable receipts falsely attest pathname reopen operations
+  where retained descriptors were actually used. None of these lanes may fit or allocate an H100.
+
+- **2026-07-18 19:13--19:25** -- **A permanent native-reasoning master ledger is created, and the
+  relation-complete transport lane closes as a uniform scaling no-go.**
+  `SHOHIN_NATIVE_REASONING_MASTER.md` now records the native-reasoning contract, exact 125,081,664-
+  parameter architecture, 300k/157,286,400,000-exposure training denominator, 57,826,022,271-token
+  mounted corpus, immutable checkpoint identity, final public/raw-interaction baselines, and the
+  experiment program from broad SFT and source scheduling through DRS, residual motors,
+  compiler/cursor probes, recurrent controls, packet transport, R9-R11 architectures, VAMT, CDRL,
+  and the R12 no-go theory program. It explicitly separates external-control ceilings from native
+  reasoning and makes a ledger update mandatory at every future experiment closeout. The 981-line
+  master SHA-256 is `bd65123c43704d86066b14cf5fb02cc097474efbba28e52587a6f8d56d237cd9`.
+
+  Independent uniform `S_m` review accepts the finite `S_3` enumeration but rejects the neural
+  resource claim. A transitive action of `S_m` on exactly `m!` states is regular and unique up to
+  conjugacy; semantic labels therefore cost zero anchors when labels do not matter, but fixed
+  labeled-carrier identification remains `Theta(m!)`. The apparent reduction survives only against
+  an untied atlas and disappears against the required favorable permutation-coordinate recurrence
+  with `O(m log m)` state bits and a shared adjacent-swap rule. The original ledger also omitted
+  anchor selection, semantic decoding, presentation semantics, relation-oracle generation, and
+  factorial enforcement cost. `R12_RELATION_COMPLETE_TRANSPORT_REVIEW_RESULT.md` preserves the
+  gate: finite `S_3` mechanics `GO`; uniform reasoning primitive, neural preregistration, fitting,
+  H100, and Shohin reasoning/novelty `NO-GO`. Its SHA-256 is
+  `da559c41289f9d990d321ed542ba233e97d056d0617cda4994c1454eab442717`. Preserve the CPU artifact
+  only as an exact finite certificate or possible regularizer. The associated pytest board remains
+  green at `5 passed`.
