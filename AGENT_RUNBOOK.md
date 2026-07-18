@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 15:11 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 15:25 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -7707,3 +7707,45 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   service did not offer public-key authentication; one attempted installation of the existing
   dedicated local public key was immediately removed after key-only verification failed. The remote
   authorization file no longer contains that added key, and scheduler/project state was untouched.
+
+- **2026-07-18 15:11--15:25** -- **Fresh VPN verification preserves both clusters, and direct DRS
+  interaction localizes the remaining mechanism gap more sharply than the existing digit motor.**
+  Batch-mode Newton access reaches `evuser2`; the queue is empty. The protected 300k checkpoint
+  remains exact at SHA-256
+  `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`. Newton's read-only
+  runbook is mode `0444` and matches the local pre-entry bytes at SHA-256
+  `f1d82cbd73f18e78532533696d9d70bf93fe88304ca85a488ab8246df458d67d`. Interactive Stokes access
+  reaches `euser2`; jobs `741065`--`741074` remain exactly `PENDING (JobHeldUser)` at `0:00`, and
+  the unused Python 3.13.13 qualification runtime remains exact at SHA-256
+  `240cfc8e48be6935d99b4abcfd951a18a46c888e1647cdc551d3d648788f9e46`. No job or remote artifact
+  changed.
+
+  A fresh researcher-written width-five interaction against immutable DRS checkpoint SHA-256
+  `d79e9df26caecb9801118d1bf68bd7b85381a06b256f23478acffe40a2108459` scores **7/10**. It is exact
+  on unseen-width local addition, carry creation and clearing, subtraction borrow propagation,
+  carry-zero serialization, and one dynamic self-written-state reuse. It fails both ordinary-language
+  operation-order tasks and terminal-carry serialization, dropping the leading carry in
+  `answer=107593`. Artifact `scratchpad/fresh_direct_drs_width5_20260718.json` has SHA-256
+  `a970ff1b1fbf4d7731d5be8377a571c936057d60e177ee4f37ca97855ef1505d`. This is diagnostic direct
+  interaction, not a benchmark or promotion gate. It supports a narrower decomposition: an internal
+  language-to-machine compiler, the already generalizing frozen DRS transition executor, and a
+  terminal serializer, with no host arithmetic.
+
+  The existing 19.2M-parameter result-digit motor does not supply that serializer. On its already
+  inspected 250-episode development board, autonomous final exactness moves only **57/250 base ->
+  59/250 treatment**; state-closed episodes move **61 -> 63**, transition correctness **623/812 ->
+  628/815**, first-transition exactness is unchanged at **203/250**, and width-eight final exactness
+  remains **0/50**. The dead arm is identical to base; shuffled labels collapse final exactness to
+  **4/250**. Evaluation SHA-256 is
+  `a308d707cf9890aeb8f6a7706a104b6cb451a344afb24403e5f518ba1abd01d0`. Because that motor is routed
+  only at canonical `;r=` digit-write sites, the result is not evidence for terminal-carry
+  serialization or language compilation. Preserve it as a weak development-only component result,
+  not the compiler/executor/serializer solution.
+
+  The repaired DWS source tuple is now under fresh independent exact-byte review at hashes
+  preregistration `dd44608d45183dadb08b6c8ed010a308a4f09570d359839a2e040a50b9edac63`, generator
+  `62dde7b09dc52842266615caab043b66b85f83e04f761601d203381a0e1062bb`, and tests
+  `d819a03d103f332e0b555a79e802844e8e4a19f9d1984800cca4c55c380669eb`. Its author reports 83
+  warning-strict tests and preserved 2,048 episodes / 18,432 rows, but the reviewer has not returned
+  a verdict and is actively examining post-close publication identity. DWS commit, Stokes
+  qualification, publication, fit, and accelerator work remain `NO-GO`.
