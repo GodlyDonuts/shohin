@@ -6894,3 +6894,23 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   5,120-entry LR vector, call the model without targets and compute shifted weighted CE explicitly,
   freeze one-forward hidden-state capture, and define every integer scorer before any consumer code
   or H100 request. No gate is relaxed.
+
+- **2026-07-18 10:15--10:36** -- **The restored VPN is converted into a clean Stokes CPU
+  qualification runtime, without executing any candidate.** A login-shell `venv` preflight exposed
+  that CPython `-I -S` ignores `pyvenv.cfg`; the resulting `sysconfig` path could not see its
+  packages. A first Conda clone was also discarded because a disconnected retry briefly created two
+  writers to one prefix. Both assistant-created contaminated prefixes and only their setup
+  processes were removed. No research data, teacher, training, or held job was touched.
+
+  Replacement CPU-only Slurm job **`741075`** ran as the sole writer on Stokes node `ec78` and
+  completed `0:0` in `00:10:37`. Its isolated prefix is
+  `/lustre/fs1/home/sa305415/shohin_qualification_conda_py313_v2`; under exact `-I -S -B`,
+  `sys.prefix` and `sysconfig` resolve to that prefix and import Python **3.13.13**, pytest **9.0.3**,
+  cryptography **46.0.3**, and tokenizers **0.22.2**. `pip check` reports no broken requirements.
+  Interpreter SHA-256 is `240cfc8e48be6935d99b4abcfd951a18a46c888e1647cdc551d3d648788f9e46`;
+  package `RECORD` SHA-256 values are pytest
+  `eecf05f2e8333639f21c38a74d988eed1d47175e940d2169f787e7a5a620ff8b`, cryptography
+  `9fbe8a555dc8624a99df8c5b6df5f820897afe266443c6207fda0dce235c088c`, and tokenizers
+  `61b8e0b7e678df4125308a4347f88e8280b79cb3e4246dcd936ca1e392bd1117`.
+  This prepares a reviewable runtime only. No OCSC/DWS/EOS source was copied there, no qualification
+  test was run, no receipt was signed, and no CPU publication or accelerator action is authorized.
