@@ -813,6 +813,16 @@ def _canonical_json_document(value, label):
     return _load_exact_json(_canonical_json_payload(value, label), label)
 
 
+def _canonical_fit_board(board, rows, plan):
+    """Bind a regenerated fit board to the JSON representation frozen in the plan."""
+    candidate = dict(board)
+    candidate["rows_sha256"] = stable_json_sha256(rows)
+    candidate = _canonical_json_document(candidate, "regenerated fit board")
+    if not isinstance(plan, dict) or candidate != plan.get("board"):
+        raise ValueError("regenerated fit board differs from frozen plan")
+    return candidate
+
+
 def tensor_state_sha256(state):
     digest = hashlib.sha256()
     for name in sorted(state):
@@ -6238,7 +6248,7 @@ def _fit_from_shards(args):
             board,
             tokenizer,
         )
-        board["rows_sha256"] = stable_json_sha256(rows)
+        board = _canonical_fit_board(board, rows, plan)
         control_labels, control = permuted_control_labels(rows)
         if control != plan["fit_budget"]["control"]:
             raise RuntimeError("shuffled-label control differs from frozen plan")

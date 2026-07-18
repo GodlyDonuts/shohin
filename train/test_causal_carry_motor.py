@@ -52,6 +52,7 @@ from causal_carry_motor import (  # noqa: E402
     CANONICAL_TEACHER_SCORING_CONTRACT,
     CANONICAL_UPDATES,
     CANONICAL_WEIGHT_DECAY,
+    FIT_SEED,
     FIT_QUOTA,
     EXPECTED_CONFIRMATION_EXCLUSION_SHA256,
     EXPECTED_CONFIRMATION_OPERAND_EXCLUSIONS,
@@ -130,6 +131,8 @@ from causal_carry_motor import (  # noqa: E402
     _derive_top1_tensor_evidence,
     _eval,
     _confirmation_eval,
+    _canonical_fit_board,
+    _canonical_json_document,
     _extract_shard,
     _expected_plan,
     _fit_from_shards,
@@ -998,6 +1001,32 @@ def test_expected_plan_json_normalization_survives_real_publication_and_load(
                 )
         finally:
             os.chmod(root, 0o700)
+
+
+def test_fit_board_uses_the_frozen_json_representation():
+    rows = _synthetic_feature_rows(64)
+    generated = {
+        "seed": FIT_SEED,
+        "rows": len(rows),
+        "prompt_length_histogram": {97: 16, 99: 48},
+        "token_length_histogram": {114: 32, 116: 32},
+    }
+    frozen = dict(generated)
+    frozen["rows_sha256"] = stable_json_sha256(rows)
+    plan = {
+        "board": _canonical_json_document(frozen, "synthetic frozen fit board")
+    }
+
+    observed = _canonical_fit_board(generated, rows, plan)
+
+    assert observed == plan["board"]
+    assert observed["prompt_length_histogram"] == {"97": 16, "99": 48}
+    assert observed["token_length_histogram"] == {"114": 32, "116": 32}
+
+    tampered = copy.deepcopy(plan)
+    tampered["board"]["rows_sha256"] = "0" * 64
+    with pytest.raises(ValueError, match="regenerated fit board differs"):
+        _canonical_fit_board(generated, rows, tampered)
 
 
 _CONFIRMATION_INPUT_CACHE = None
