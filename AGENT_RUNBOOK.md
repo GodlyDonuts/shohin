@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 12:06 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 12:12 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -18,7 +18,8 @@
 > carry/borrow (`10`), while 200/211 state losses occur when no terminal carry/borrow should exist
 > (`00`); field-level replay confirms that 196/200 of those `00` losses first mismatch `c`. The
 > treatment has learned a useful but overfiring carry-clear boundary: 247/249 gains and 207/211
-> losses involve `c` at the source arm's first mismatch.
+> losses involve `c` at the source arm's first mismatch; 239 gains repair `1->0` underprediction,
+> while 196 losses introduce `0->1` overprediction.
 > OCSC and the six-case carry-recovery intervention are the strongest targeted next hypotheses. OCSC
 > has a fresh publication/runtime `NO-GO` and is under a second bounded repair; carry recovery remains
 > in fresh exact-byte review. Neither authorizes H100 work yet. Newton is idle. Stokes jobs
@@ -7185,3 +7186,22 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Ten isolated tests pass in 24.18 seconds; Ruff, format, and isolated compilation pass. Future
   treatment must improve the carry-policy dissociation and the separately locked serializer gate;
   success on only one axis is not complete reasoning recovery.
+
+- **2026-07-18 12:12** -- **Directional replay v5 identifies TERM+WIDTH as a carry-threshold shift
+  through the optimum.** On the WIDTH source branches that TERM+WIDTH repairs, the first mismatch is
+  expected-carry `1` but predicted `0` in **239/249** cases; only eight are `0->1` and two keep the
+  same carry while another field differs. On the TERM+WIDTH branches that WIDTH previously solved,
+  the first mismatch is expected `0` but predicted `1` in **196/211** cases; eleven are `1->0` and
+  four keep the same carry. TERM+WIDTH therefore fixes systematic carry underprediction by shifting
+  the carry boundary, but overshoots into systematic carry overprediction. A successor should not
+  merely add more positive-carry supervision; it must calibrate matched positive and negative carry
+  contexts while independently repairing deterministic serialization.
+
+  The final immutable diagnostic artifact is
+  `artifacts/eval_history/digitwise_factorial_v4_four_arm_replay_v5_de45ace_20260718.json`, 46,880
+  bytes, SHA-256 `d08b17a4fdaf031205ca445bb01f72a2983010e5eb929e6f13ab46409fa5c42f`.
+  Replay source SHA-256 is `f3d2fde074a02f11a8f053f1039acdbb3361387133ca71fde38018dc0ec123c7`;
+  test SHA-256 is `3ab0559138685347e86849c3f85010363e68e06c5db6a0d72b9ed13a248b98b2`.
+  Ten isolated tests pass in 24.50 seconds; Ruff, format, and isolated compilation pass. This v5
+  directional result supersedes v2--v4 for scientific interpretation while preserving every prior
+  artifact as immutable evidence.

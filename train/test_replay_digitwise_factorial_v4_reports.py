@@ -159,6 +159,7 @@ def test_locked_width_to_term_width_carry_tradeoff_when_present() -> None:
         "carry_field_involved_gain_share": pytest.approx(247 / 249),
         "class_10_carry_field_involved_right_only_gains": 177,
         "class_10_carry_field_involved_gain_share": pytest.approx(177 / 179),
+        "right_only_source_carry_direction": {"0->1": 8, "1->0": 239, "same": 2},
         "class_00_left_only_losses": 200,
         "class_00_loss_share": pytest.approx(200 / 211),
         "sub_class_00_left_only_losses": 158,
@@ -169,6 +170,7 @@ def test_locked_width_to_term_width_carry_tradeoff_when_present() -> None:
         "class_00_carry_field_involved_loss_share": pytest.approx(196 / 200),
         "sub_class_00_carry_field_involved_left_only_losses": 155,
         "sub_class_00_carry_field_involved_loss_share": pytest.approx(155 / 158),
+        "left_only_source_carry_direction": {"0->1": 196, "1->0": 11, "same": 4},
     }
     assert (
         tradeoff["groups"]["add|w4|10"]["state_closed_loop_exact"]["right_only_gains"]
@@ -191,6 +193,7 @@ def test_locked_width_to_term_width_carry_tradeoff_when_present() -> None:
         "carry_field_involved": 106,
         "carry_field_involved_rate": pytest.approx(106 / 107),
         "by_field_set": {"c": 99, "c+r": 7, "r": 1},
+        "by_carry_direction": {"0->1": 102, "1->0": 4, "same": 1},
         "by_position": {"0": 47, "1": 35, "2": 24, "3": 1},
     }
     assert tradeoff["groups"]["add|w4|00"]["state_left_only_source_first_mismatch"] == {
@@ -198,6 +201,7 @@ def test_locked_width_to_term_width_carry_tradeoff_when_present() -> None:
         "carry_field_involved": 23,
         "carry_field_involved_rate": pytest.approx(23 / 24),
         "by_field_set": {"c": 23, "r": 1},
+        "by_carry_direction": {"0->1": 23, "same": 1},
         "by_position": {"0": 1, "1": 4, "2": 19},
     }
     assert tradeoff["groups"]["add|w4|10"][
@@ -207,6 +211,7 @@ def test_locked_width_to_term_width_carry_tradeoff_when_present() -> None:
         "carry_field_involved": 65,
         "carry_field_involved_rate": 1.0,
         "by_field_set": {"c": 65},
+        "by_carry_direction": {"1->0": 65},
         "by_position": {"0": 27, "1": 6, "2": 32},
     }
     assert tradeoff["groups"]["sub|w4|10"][
@@ -216,6 +221,7 @@ def test_locked_width_to_term_width_carry_tradeoff_when_present() -> None:
         "carry_field_involved": 92,
         "carry_field_involved_rate": pytest.approx(92 / 94),
         "by_field_set": {"c": 90, "c+r": 2, "r": 2},
+        "by_carry_direction": {"0->1": 2, "1->0": 90, "same": 2},
         "by_position": {"0": 43, "1": 29, "2": 22},
     }
 
