@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 14:04 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 14:14 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Terminal factorial job `692561_1` completed cleanly and its immutable report SHA-256 is
@@ -7535,3 +7535,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   preregistered metadata such as operation, width, cursor, and terminal status, freeze it before OOD
   reveal, and require noncompensatory treatment-over-nuisance gains. Beating one global constant is
   necessary but no longer sufficient evidence of feature-dependent reading.
+
+- **2026-07-18 14:04--14:14** -- **A separate v2 carry-null artifact makes the fit-only nuisance
+  controls machine-readable; it remains unreviewed and uncommitted.** The original read-only v1
+  report remains unchanged. Local v2 source
+  `pipeline/audit_drs_carry_constant_bias.py` now has SHA-256
+  `71d3cbbd01f415a7929e9ee3b77e9e21ef1a038806c817d273bdba2a36798be9`; its 12-test suite has
+  SHA-256 `4cdac9276ec93758f1280a1c4b312b8f32ecf1e89e3dee04847e073a4f71053e`. Tests and Ruff pass.
+  Read-only report `artifacts/eval_history/drs_carry_nuisance_audit_20260718_v2.json` is 19,182
+  bytes, SHA-256 `5645f9b910c3be4020fa776795685a63f9f2cb0130a0a9e9e4c6957ea8d0dd1b`.
+
+  The v2 report binds the immutable source, canonical DWS operation/width/cursor transition, and
+  layer-29 margins. Its minimum-intervention fit-only global and operation-only rules each score
+  **15/16 fit and 35/40 total**. The operation-by-width rule scores **16/16 fit**, **15/16** frozen
+  same-width value OOD, and deliberately has no eligible width-8 rule. This is deterministic
+  pairwise calibration evidence only. It is not a trained nuisance arm, full-vocabulary result,
+  autonomous execution result, or reasoning claim. Source, tests, and v2 report remain outside Git
+  until a fresh independent exact-byte and scientific review returns GO.
