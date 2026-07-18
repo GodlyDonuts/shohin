@@ -1,0 +1,190 @@
+{
+  "audit": "manual_drs_carry_serializer_probe_v2",
+  "checkpoint": {
+    "path": "train/sft_digitwise_recurrent_v2_200k_r3/sft_ep1.pt",
+    "sha256": "d79e9df26caecb9801118d1bf68bd7b85381a06b256f23478acffe40a2108459",
+    "step": "sft_ep1"
+  },
+  "claim_boundary": "Hand-authored deterministic interaction diagnosis with frozen-protocol oracles only; not a benchmark, training result, or capability promotion.",
+  "decode": {
+    "max_new_tokens": 80,
+    "special_tokens_retained": true,
+    "temperature": 0.0
+  },
+  "device": "mps",
+  "rows": [
+    {
+      "axis": "carry_policy",
+      "exact": false,
+      "expected": "dws:op=add;w=8;p=8;c=1;a=67909319;b=74126068;r=32135477;z=1",
+      "expected_carry_class": "01",
+      "id": "terminal_add_w8_carry_positive",
+      "input_state": "dws:op=add;w=8;p=7;c=0;a=67909319;b=74126068;r=32135470;z=0",
+      "normalized_response": "dws:op=add;w=8;p=8;c=0;a=67909319;b=74126068;r=32135470;z=1",
+      "prompt": "Replay one local decimal rewrite. The retained machine record uses position zero for the least-significant digit; c is the carry or borrow. Change one r digit and the control fields.\nMachine record: dws:op=add;w=8;p=7;c=0;a=67909319;b=74126068;r=32135470;z=0\nEmit only the next canonical dws line.\nResult:",
+      "response": "dws:op=add;w=8;p=8;c=0;a=67909319;b=74126068;r=32135470;z=1"
+    },
+    {
+      "axis": "carry_policy",
+      "exact": false,
+      "expected": "dws:op=add;w=8;p=8;c=0;a=67909312;b=74126063;r=32135475;z=1",
+      "expected_carry_class": "00",
+      "id": "terminal_add_w8_carry_negative",
+      "input_state": "dws:op=add;w=8;p=7;c=0;a=67909312;b=74126063;r=32135470;z=0",
+      "normalized_response": "dws:op=add;w=8;p=8;c=0;a=67909312;b=74126063;r=32135470;z=1",
+      "prompt": "Replay one local decimal rewrite. The retained machine record uses position zero for the least-significant digit; c is the carry or borrow. Change one r digit and the control fields.\nMachine record: dws:op=add;w=8;p=7;c=0;a=67909312;b=74126063;r=32135470;z=0\nEmit only the next canonical dws line.\nResult:",
+      "response": "dws:op=add;w=8;p=8;c=0;a=67909312;b=74126063;r=32135470;z=1"
+    },
+    {
+      "axis": "carry_policy",
+      "exact": false,
+      "expected": "dws:op=add;w=4;p=4;c=1;a=6789;b=7418;r=3208;z=1",
+      "expected_carry_class": "11",
+      "id": "terminal_add_w4_carry_positive",
+      "input_state": "dws:op=add;w=4;p=3;c=1;a=6789;b=7418;r=3200;z=0",
+      "normalized_response": "dws:op=add;w=4;p=4;c=0;a=6789;b=7418;r=3208;z=1",
+      "prompt": "Replay one local decimal rewrite. The retained machine record uses position zero for the least-significant digit; c is the carry or borrow. Change one r digit and the control fields.\nMachine record: dws:op=add;w=4;p=3;c=1;a=6789;b=7418;r=3200;z=0\nEmit only the next canonical dws line.\nResult:",
+      "response": "dws:op=add;w=4;p=4;c=0;a=6789;b=7418;r=3208;z=1"
+    },
+    {
+      "axis": "carry_policy",
+      "exact": true,
+      "expected": "dws:op=add;w=4;p=4;c=0;a=6782;b=7413;r=3206;z=1",
+      "expected_carry_class": "10",
+      "id": "terminal_add_w4_carry_negative",
+      "input_state": "dws:op=add;w=4;p=3;c=1;a=6782;b=7413;r=3200;z=0",
+      "normalized_response": "dws:op=add;w=4;p=4;c=0;a=6782;b=7413;r=3206;z=1",
+      "prompt": "Replay one local decimal rewrite. The retained machine record uses position zero for the least-significant digit; c is the carry or borrow. Change one r digit and the control fields.\nMachine record: dws:op=add;w=4;p=3;c=1;a=6782;b=7413;r=3200;z=0\nEmit only the next canonical dws line.\nResult:",
+      "response": "dws:op=add;w=4;p=4;c=0;a=6782;b=7413;r=3206;z=1"
+    },
+    {
+      "axis": "carry_policy",
+      "exact": true,
+      "expected": "dws:op=sub;w=4;p=4;c=0;a=1415;b=8730;r=3674;z=1",
+      "expected_carry_class": "10",
+      "id": "terminal_sub_w4_clear_borrow",
+      "input_state": "dws:op=sub;w=4;p=3;c=1;a=1415;b=8730;r=3670;z=0",
+      "normalized_response": "dws:op=sub;w=4;p=4;c=0;a=1415;b=8730;r=3674;z=1",
+      "prompt": "Replay one local decimal rewrite. The retained machine record uses position zero for the least-significant digit; c is the carry or borrow. Change one r digit and the control fields.\nMachine record: dws:op=sub;w=4;p=3;c=1;a=1415;b=8730;r=3670;z=0\nEmit only the next canonical dws line.\nResult:",
+      "response": "dws:op=sub;w=4;p=4;c=0;a=1415;b=8730;r=3674;z=1"
+    },
+    {
+      "axis": "carry_policy",
+      "exact": true,
+      "expected": "dws:op=sub;w=4;p=4;c=0;a=4578;b=1231;r=3347;z=1",
+      "expected_carry_class": "00",
+      "id": "terminal_sub_w4_no_borrow",
+      "input_state": "dws:op=sub;w=4;p=3;c=0;a=4578;b=1231;r=3340;z=0",
+      "normalized_response": "dws:op=sub;w=4;p=4;c=0;a=4578;b=1231;r=3347;z=1",
+      "prompt": "Replay one local decimal rewrite. The retained machine record uses position zero for the least-significant digit; c is the carry or borrow. Change one r digit and the control fields.\nMachine record: dws:op=sub;w=4;p=3;c=0;a=4578;b=1231;r=3340;z=0\nEmit only the next canonical dws line.\nResult:",
+      "response": "dws:op=sub;w=4;p=4;c=0;a=4578;b=1231;r=3347;z=1"
+    },
+    {
+      "axis": "serializer",
+      "exact": true,
+      "expected": "answer=1037",
+      "expected_carry_class": null,
+      "id": "serialize_w4_transposition",
+      "input_state": "dws:op=sub;w=4;p=4;c=0;a=5141;b=8730;r=7301;z=1",
+      "normalized_response": "answer=1037",
+      "prompt": "Convert this finished local-rewrite record into its ordinary decimal result. The r tape is least-significant first and addition may have a final carry.\nMachine record: dws:op=sub;w=4;p=4;c=0;a=5141;b=8730;r=7301;z=1\nEmit only answer=<integer>.\nResult:",
+      "response": "answer=1037"
+    },
+    {
+      "axis": "serializer",
+      "exact": true,
+      "expected": "answer=5111",
+      "expected_carry_class": null,
+      "id": "serialize_w4_palindrome_like",
+      "input_state": "dws:op=add;w=4;p=4;c=0;a=4062;b=7052;r=1115;z=1",
+      "normalized_response": "answer=5111",
+      "prompt": "Convert this finished local-rewrite record into its ordinary decimal result. The r tape is least-significant first and addition may have a final carry.\nMachine record: dws:op=add;w=4;p=4;c=0;a=4062;b=7052;r=1115;z=1\nEmit only answer=<integer>.\nResult:",
+      "response": "answer=5111"
+    },
+    {
+      "axis": "serializer",
+      "exact": true,
+      "expected": "answer=3747",
+      "expected_carry_class": null,
+      "id": "serialize_w4_substitution",
+      "input_state": "dws:op=add;w=4;p=4;c=0;a=3782;b=4780;r=7473;z=1",
+      "normalized_response": "answer=3747",
+      "prompt": "Convert this finished local-rewrite record into its ordinary decimal result. The r tape is least-significant first and addition may have a final carry.\nMachine record: dws:op=add;w=4;p=4;c=0;a=3782;b=4780;r=7473;z=1\nEmit only answer=<integer>.\nResult:",
+      "response": "answer=3747"
+    },
+    {
+      "axis": "serializer",
+      "exact": true,
+      "expected": "answer=29692",
+      "expected_carry_class": null,
+      "id": "serialize_w6_leading_zero",
+      "input_state": "dws:op=sub;w=6;p=6;c=0;a=000000;b=000000;r=296920;z=1",
+      "normalized_response": "answer=29692",
+      "prompt": "Convert this finished local-rewrite record into its ordinary decimal result. The r tape is least-significant first and addition may have a final carry.\nMachine record: dws:op=sub;w=6;p=6;c=0;a=000000;b=000000;r=296920;z=1\nEmit only answer=<integer>.\nResult:",
+      "response": "answer=29692"
+    },
+    {
+      "axis": "serializer",
+      "exact": false,
+      "expected": "answer=177453123",
+      "expected_carry_class": null,
+      "id": "serialize_w8_terminal_carry_positive",
+      "input_state": "dws:op=add;w=8;p=8;c=1;a=67909319;b=74126068;r=32135477;z=1",
+      "normalized_response": "answer=74312523",
+      "prompt": "Convert this finished local-rewrite record into its ordinary decimal result. The r tape is least-significant first and addition may have a final carry.\nMachine record: dws:op=add;w=8;p=8;c=1;a=67909319;b=74126068;r=32135477;z=1\nEmit only answer=<integer>.\nResult:",
+      "response": "answer=74312523"
+    },
+    {
+      "axis": "serializer",
+      "exact": false,
+      "expected": "answer=57453123",
+      "expected_carry_class": null,
+      "id": "serialize_w8_terminal_carry_negative",
+      "input_state": "dws:op=add;w=8;p=8;c=0;a=67909312;b=74126063;r=32135475;z=1",
+      "normalized_response": "answer=74532123",
+      "prompt": "Convert this finished local-rewrite record into its ordinary decimal result. The r tape is least-significant first and addition may have a final carry.\nMachine record: dws:op=add;w=8;p=8;c=0;a=67909312;b=74126063;r=32135475;z=1\nEmit only answer=<integer>.\nResult:",
+      "response": "answer=74532123"
+    }
+  ],
+  "sources": {
+    "train/digitwise_protocol.py": "37cd76751eb4146f85268d6c0e44d946eb353ee03605ceb25f4bda97e4c00813",
+    "train/eval_suite.py": "d6f70b8828c967d7f59fae842f3320c6378ae42d5d8fa7b16e0e82ff5620e5e6",
+    "train/model.py": "45fc0dc46ceb0f91d08e3f671cbe9ef202ea212e72d5bba8b77356c3fb0983d4"
+  },
+  "summary": {
+    "carry_class": {
+      "00": {
+        "cases": 2,
+        "exact": 1
+      },
+      "01": {
+        "cases": 1,
+        "exact": 0
+      },
+      "10": {
+        "cases": 2,
+        "exact": 2
+      },
+      "11": {
+        "cases": 1,
+        "exact": 0
+      }
+    },
+    "carry_policy": {
+      "cases": 6,
+      "exact": 3
+    },
+    "overall": {
+      "cases": 12,
+      "exact": 7
+    },
+    "serializer": {
+      "cases": 6,
+      "exact": 4
+    }
+  },
+  "tokenizer": {
+    "path": "artifacts/shohin-tok-32k.json",
+    "sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4"
+  }
+}

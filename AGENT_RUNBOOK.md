@@ -7205,3 +7205,56 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Ten isolated tests pass in 24.50 seconds; Ruff, format, and isolated compilation pass. This v5
   directional result supersedes v2--v4 for scientific interpretation while preserving every prior
   artifact as immutable evidence.
+
+- **2026-07-18 12:18--12:22** -- **User-reported VPN recovery is verified without changing remote
+  custody.** Batch-mode access reaches Newton login host `evuser2`; its Slurm queue is empty. An
+  authenticated multiplexed session reaches Stokes login host `euser1`; its queue contains exactly
+  jobs `741065`--`741074`, all `PENDING (JobHeldUser)` at `0:00`. The Stokes control connection is
+  reusable without placing account credentials in a command line. No job was submitted, released,
+  canceled, modified, or read for scientific output. The prepared CPU qualification runtime remains
+  available, but no candidate is authorized to use it yet.
+
+- **2026-07-18 12:19--12:28** -- **The bounded DWS single-completion repair finishes, but its first
+  attempted independent review channel fails before a scientific decision and all execution gates
+  remain closed.** The repair reports exact hashes preregistration
+  `76f067c0de90fcd99099a29142665e6a3b8bc80d0752e098d296255310add50f`, generator
+  `84b6b1bd187765845d2f8249fa595ad35399b021ca26ae6f9e9ced9d24003869`, and tests
+  `0c9baa5513e64ffbdce4e41a17ead5a485ac9f9a4db117460ccdbc7d16d021ff`.
+  Its claimed deterministic construction is 2,048 episodes / 18,432 rows with canonical data
+  SHA-256 `1dd913b12d2ffb2201530997102ef50a1e2d581fe7595c4e9ad5ae8c9fe3f009`; 44 local tests,
+  Ruff, format, and isolated compilation pass. These are repair-author claims, not independent
+  authorization. The first replacement reviewer was stopped by an automated tooling refusal and
+  returned no source finding or gate decision. Fresh read-only reviewer
+  `019f760e-e5bf-7073-b1b7-3cb41106dad7` now owns exact-byte correctness and reproducibility review.
+  DWS commit-as-reviewed-source, CPU publication, Linux/Stokes qualification, trainer/evaluator,
+  Newton, and H100 remain `NO-GO`.
+
+- **2026-07-18 12:22--12:29** -- **Direct interaction with the immutable DRS parent localizes the
+  remaining arithmetic failure to width-dependent terminal write/readout plus later-curriculum
+  interference.** A first unpreserved pilot contained two hand-authored oracle mistakes; it was
+  deleted before interpretation or commit. Corrected v2 derives every expected transition and
+  answer from frozen `train/digitwise_protocol.py` and independently revalidates every oracle,
+  response comparison, checkpoint/tokenizer identity, and source hash. It runs greedy MPS decoding
+  against DRS checkpoint SHA-256
+  `d79e9df26caecb9801118d1bf68bd7b85381a06b256f23478acffe40a2108459` and tokenizer SHA-256
+  `87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4`.
+
+  The model is exact on **3/6** terminal transitions: carry classes `00` 1/2, `01` 0/1, `10` 2/2,
+  and `11` 0/1. At width four it correctly clears carry/borrow for addition and subtraction and
+  preserves a no-borrow subtraction; for a positive final carry it writes the correct result digit
+  but emits `c=0`. At width eight, both matched positive and negative cases advance `p` and `z` while
+  leaving the final result digit unwritten; the positive case also omits carry. Serializer readout is
+  exact on **4/6** selected records: the three width-four tapes that TERM+WIDTH emitted as `1307`,
+  `1115`, and `3749` are correctly returned as `1037`, `5111`, and `3747`, and a source-deleted
+  width-six tape `296920` is correctly returned as `29692`. Both width-eight serializers fail.
+  Therefore base DRS has real local transition and reverse-tape competence, but it does not transport
+  that competence across the width-eight terminal boundary; TERM+WIDTH additionally interferes with
+  already available short-width serialization. OCSC/carry successors must preserve the parent
+  serializer, improve matched positive/negative carry calibration, and separately rescue width-eight
+  terminal write/readout. Aggregate score alone cannot pass.
+
+  The immutable diagnostic is
+  `artifacts/eval_history/manual_drs_carry_serializer_probe_v2_20260718_mps.json`, 9,792 bytes,
+  SHA-256 `b1cafe345bad726517e4c426596c691bf3ae1133d93619af581927ca7a336806`.
+  This is a twelve-case interaction diagnosis, not a benchmark or capability promotion. Its findings
+  were delivered to the active OCSC and carry-recovery repair owners; no cluster action followed.
