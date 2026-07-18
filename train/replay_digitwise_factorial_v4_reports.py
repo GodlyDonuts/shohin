@@ -888,12 +888,37 @@ def load_and_replay(path: Path) -> dict[str, Any]:
         heldout.get("regime_budgets") == REGIME_BUDGETS,
         f"heldout regime budget differs: {path}",
     )
+    selected_ids = [pair["id"] for pair in verified]
+    require(len(set(selected_ids)) == len(selected_ids), f"duplicate pair IDs: {path}")
+    require(
+        heldout.get("selected_ids_sha256")
+        == sha256_bytes(canonical_json_bytes(selected_ids)),
+        f"selected ID commitment differs: {path}",
+    )
+    training = report.get("training")
+    require(type(training) is dict, f"training contract is missing: {path}")
+    require(training.get("arm") == arm, f"training arm differs: {path}")
+    heldout_identity = {
+        key: heldout.get(key)
+        for key in (
+            "episodes_sha256",
+            "tokenizer_sha256",
+            "tokenizer_bytes",
+            "tokenizer_vocab_size",
+            "pair_count",
+            "branch_count",
+            "regime_budgets",
+            "selected_ids_sha256",
+            "selection",
+        )
+    }
     return {
         "arm": arm,
         "path": str(path.resolve()),
         "mode": format(mode, "04o"),
         "report_sha256": sha256_bytes(payload),
         "transcripts_sha256": report["transcripts_sha256"],
+        "heldout_identity": heldout_identity,
         "records": verified,
         "metrics": metrics,
         "accounting": accounting,
@@ -949,6 +974,10 @@ def arm_rows(result: Mapping[str, Any], level: str) -> list[Mapping[str, Any]]:
 
 
 def compare_arms(left: Mapping[str, Any], right: Mapping[str, Any]) -> dict[str, Any]:
+    require(
+        left["heldout_identity"] == right["heldout_identity"],
+        "cross-arm heldout identity differs",
+    )
     return {
         "branches": {
             field: paired_boolean(
