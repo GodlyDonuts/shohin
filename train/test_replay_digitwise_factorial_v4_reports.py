@@ -109,3 +109,22 @@ def test_canonical_metric_tamper_is_rejected_when_report_present(
     os.chmod(target, 0o400)
     with pytest.raises(replay.ReplayError, match="metrics do not replay"):
         replay.load_and_replay(target)
+
+
+def test_locked_width_to_term_width_paired_contrast_when_present() -> None:
+    width_path = REPORT_ROOT / "width" / "report.json"
+    term_width_path = REPORT_ROOT / "term_width" / "report.json"
+    if not width_path.exists() or not term_width_path.exists():
+        pytest.skip("large immutable reports are not installed")
+    comparison = replay.compare_arms(
+        replay.load_and_replay(width_path),
+        replay.load_and_replay(term_width_path),
+    )
+    terminal = comparison["branches"]["terminal_transition_exact"]
+    assert terminal["left_success"] == 390
+    assert terminal["right_success"] == 481
+    assert terminal["left_only_losses"] == 252
+    assert terminal["right_only_gains"] == 343
+    assert terminal["mcnemar_exact_two_sided_p"] == pytest.approx(
+        0.00021883968181106602, rel=0.0, abs=1e-18
+    )
