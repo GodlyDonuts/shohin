@@ -922,6 +922,13 @@ def load_and_replay(path: Path) -> dict[str, Any]:
         "records": verified,
         "metrics": metrics,
         "accounting": accounting,
+        "headline": {
+            "branch_counts": metrics["branches"]["overall"]["counts"],
+            "branch_rates": metrics["branches"]["overall"]["rates"],
+            "pair_counts": metrics["pairs"]["overall"]["counts"],
+            "pair_rates": metrics["pairs"]["overall"]["rates"],
+            "width_8_survival": metrics["branches"]["width_8_survival"],
+        },
         "diagnostics": branch_diagnostics(verified),
     }
 
