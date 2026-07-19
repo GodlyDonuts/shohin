@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 03:17 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 03:25 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8414,3 +8414,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   cycles required query position 0/1/2 within each depth, and resamples semantics until that position
   separates both twins. Existing generator callers retain old behavior; only the S3 confirmation
   opts in. Run a scoreless validation, commit corrected source/prereg, then draw a new seed.
+
+- **2026-07-19 03:17--03:25** -- **The fresh lexical-S3 board nearly confirms, but the strict
+  gold-exact gate rejects it; do not rerun or relax.** Corrected seed `3664953321459551042` passes
+  every 2,048-row board gate (SHA `9b389563...`). Job `693138` completes once on `evc25`, exit
+  `0:0`. Ordered primary is **99.121% answers / 99.268% state / 98.682% chains**; mean is 95.215% /
+  93.652% / 88.818%. Operation derangement collapses to 35.010% / 17.871%; query derangement to
+  0.439% answers while state remains 99.268%. All those gates pass. Gold is 99.609% answers /
+  **99.951% state / 99.902% chains**, missing exactness because direction is 11,246/11,248 rather
+  than 100%. Assessment `8d69dd5d...` records `reject_lexical_closed_s3_confirmation`. Seal the
+  board. The lawful repair returns to public development and replaces the arbitrary 0.5 mass gate
+  with a structural pointer-anchor rule (global pointer maximum inside exact known pattern), then
+  must qualify for a wholly new confirmation.

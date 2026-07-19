@@ -1,6 +1,7 @@
 # R12 S3 Lexical Closed-Action Confirmation Preregistration
 
-**Status:** frozen before production seed, board generation, or score.
+**Status:** closed after one scored production board; strict gold-exact gate
+failed, so the confirmation is rejected and the board is sealed.
 
 A scoreless 512-group mechanics validation used seed `1`, passed every data
 and derangement gate, and was deleted before this freeze. Seed `1` is retired
@@ -67,3 +68,13 @@ A pass confirms known-atom source-deleted recurrent execution through depth
 eight with externally supplied schedule/halt. It does not establish unseen-
 phrase semantics, plan induction, learned halt, free-form language reasoning,
 or novelty.
+
+## Closure
+
+Corrected production seed `3664953321459551042` passed every board gate. Job
+`693138` completed once on `evc25`, exit `0:0`. Ordered primary reached 99.121%
+answers / 99.268% state / 98.682% chains and all non-gold gates passed. Gold
+reached 99.609% answers / 99.951% state / 99.902% chains because two of 11,248
+direction decisions were wrong. The frozen 100% state/chains requirement fails;
+assessment `8d69dd5d...` records rejection. No rerun or threshold relaxation is
+allowed. See `R12_S3_LEXICAL_CONFIRMATION_RESULT.md`.

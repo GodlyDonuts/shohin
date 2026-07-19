@@ -25830,6 +25830,17 @@ cycles query positions within each depth and resamples only the semantic tuple
 until that requested position separates both twins. Model, evaluator, gates,
 board size, exclusions, and causal controls do not change.
 
+The corrected one-shot board strongly reproduces but formally rejects the
+candidate. Ordered primary reaches 99.121% answers / 99.268% state / 98.682%
+chains; mean reaches 95.215% / 93.652% / 88.818%. Operation derangement drops
+to 35.010% answers / 17.871% state, and query derangement to 0.439% answers with
+unchanged state, so the complete system is causally field-dependent. Gold
+identity is 99.609% answers / 99.951% state / 99.902% chains rather than the
+frozen exact 100% because two of 11,248 directions are wrong. Assessment
+`8d69dd5d...` therefore rejects confirmation. No threshold relaxation or board
+rerun is allowed. A fresh public repair may replace the 0.5 lexical mass floor
+with a threshold-free structural pointer-anchor rule, then seek a new board.
+
 The matched result reproduces the loss but rejects single-comparator
 localization. Untouched execution reaches 77.393% answers / 70.312% exact
 state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /
