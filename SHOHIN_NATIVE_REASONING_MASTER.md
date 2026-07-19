@@ -25677,6 +25677,22 @@ known-atom factor combinations with order/binding twins. The host still supplies
 the operation count and halt point, so a pass would confirm recurrent native
 state execution through depth eight, not solve autonomous planning or stopping.
 
+The one-shot depth board rejects the end-to-end predicted packet but strongly
+confirms the executor. Predicted packets reach 76.318% answers / 69.238% exact
+state overall and fall to 67.059% / 55.294% at depth eight because novel paired
+names reduce entity matching to 77.952%. In contrast, the exact same frozen
+cell with gold packet roles reaches **99.707% answers, 100% exact final state,
+and 99.072% all-transition exactness overall**; depth-eight answers remain
+99.118% and transitions 98.824%. Operation derangement lowers answers to
+32.275% and exact state to 13.428%.
+
+This changes the research diagnosis. Tied recurrent state is no longer the
+active bottleneck through depth eight. Stage A must learn or compute a bounded
+relation between token sets for compositionally novel names. The failed board
+is sealed and cannot become training data. The next lawful move is a disjoint
+paired-name development board plus a no-fit relational carrier, followed only
+later by an independently seeded confirmation.
+
 ## Update Protocol
 
 At each 10k checkpoint milestone:

@@ -8232,3 +8232,17 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Operation count and halt remain explicitly host-scheduled. Generator/evaluator/assessor/job
   SHA-256 prefixes are `790279d9` / `6e6a8211` / `125eef0f` / `1b311def`. Seventeen CPU tests plus
   static gates pass. No production seed, board, score, retry, fit, or old-confirmation access exists.
+
+- **2026-07-19 01:35--01:44** -- **The one-shot recurrent-depth confirmation rejects the predicted
+  interface but confirms the tied executor through depth eight.** Commit `85ead2e` precedes seed
+  `11772835344958352982`; the 2,048-row / 6,136-card / 798,346-token board SHA-256 is
+  `74289990...` with every CPU/data gate passing and zero old-confirmation access. Job `693124` on
+  `evc29` scores predicted packets at 76.318% answers / 69.238% exact final state / 44.238% all
+  transitions because unseen paired names reduce entity match to 77.952%. Gold packets score
+  **99.707% / 100% / 99.072% overall**, and depth eight remains 99.118% answers / 100% state /
+  98.824% transitions. Operation derangement drops to 32.275% answers / 13.428% state. The job then
+  exits `1:0` when the predeclared within-depth query derangement is mathematically impossible for
+  an imbalanced query stratum; no retry occurs, and gate 10 plus primary gates fail regardless.
+  Evidence archive SHA-256 is `ec795b89...`. Seal this board as a compiler-interface negative.
+  Recurrent state is not the active bottleneck through depth eight; next use a disjoint public
+  paired-name board to develop a bounded relational token-set carrier without fitting confirmation.

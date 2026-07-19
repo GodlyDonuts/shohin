@@ -1,6 +1,7 @@
 # R12 RGDE Recurrent-Depth Confirmation Preregistration
 
-**Status:** source frozen before production seed selection
+**Status:** closed negative after one-shot job `693124`. See
+`R12_RGDE_DEPTH_CONFIRMATION_RESULT.md`.
 
 **Claim class:** confirmation of a source-deleted recurrent execution component
 at depths three through eight. Operation count and halt remain externally
