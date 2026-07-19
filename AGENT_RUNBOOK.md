@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 16:14 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 16:22 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -24,19 +24,18 @@
 > `fbf7004e...`. This confirms model-owned finite transition semantics in the bounded known-action
 > domain, not unseen semantics, open planning, learned halt, or broad native reasoning.
 >
-> **Active next phase:** S6 contextual affine law induction is theory/CPU-admitted, with no neural
-> score yet. The exhaustive mechanics pass over 328 laws at moduli 5/7/11/13: unique two-witness
-> identification, exact one-witness ambiguity, 3,748/3,748 destination and pop-insert cells,
-> noncommutative late-query witnesses, disjoint law splits, and a clean treatment schema. Report
-> SHA-256 is `a31a232c83a53d0b7aff87b4a495abd6740d98589059325951e2e4688e2bded6`.
-> Post-commit board seed `4930377975126057597` freezes 961 train atoms, 2,048 primary development
-> programs, and 512 modulus-13 diagnostic programs; primary data SHA-256 is
-> `8fd78f761207e8446562c75e1816d1a0821d90ecd64fcb6b837f7a92fe808047`. Training seed
-> `412095620685111169` is also frozen. Job `693291` failed before Python initialization because the
-> 64-bit training seed exceeded CPython's 32-bit `PYTHONHASHSEED` range. It created only an empty
-> output directory and read neither model nor board, so a launcher-only retry is permitted after
-> commit. S6 tests operation laws absent from training; confirmation remains forbidden until all
-> frozen development and causal gates pass.
+> **Active next phase:** S6 contextual affine law induction is **formally rejected**; confirmation
+> remains forbidden and was never generated. Sole scientific job `693293` fits all 961 atomic
+> training cells in both the 4,753,677-parameter treatment and favorable law-ID control, then reaches
+> only **78/318 = 24.528% held-out atomic destinations, 8.154% recurrent exact state, and 30.908%
+> answers** on disjoint laws. State decays 15.497% -> 4.985% from depth three to eight. Deranged-card,
+> one-witness, reset, law-ID, and unseen-modulus state are 1.270%, 1.123%, 2.832%, 0.684%, and
+> 0.781%. The cards are weakly causal, but the generic transformer memorizes atomic cells instead of
+> inducing the identified algebra. Preserve checkpoint SHA `a440e867...`, evaluation `1cfd88a8...`,
+> and assessment `e9f0f6a1...`; do not widen, add epochs, or tune this arm on the closed board. The
+> next lawful phase must preregister a compositional representation/group-action compiler on a fresh
+> board with structure-breaking controls, or attack model-owned active-step/halt. S5 remains the
+> strongest confirmed bounded baseline.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -8755,3 +8754,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   score exists. Derive only the interpreter seed modulo 2^32 while retaining the full frozen model
   seed, commit that launcher repair, and use a distinct `retry1` output path. No scientific rerun or
   post-score tuning is authorized.
+
+- **2026-07-19 16:15--16:22** -- **S6 is formally rejected after its sole valid development read.**
+  Launcher-only commit `676af2c` preserves the full frozen RNG seed while mapping only
+  `PYTHONHASHSEED` into its legal unsigned 32-bit range. Job `693293` completes on `evc25` in 3m42s.
+  Both arms fit 961/961 train cells, but treatment reaches only 78/318 = 24.528% held-out atomic
+  destinations, 167/2048 = 8.154% recurrent exact states, and 633/2048 = 30.908% answers. Exact
+  state falls from 15.497% at depth three to 4.985% at depth eight. Deranged two-witness cards,
+  one-witness input, state reset, favorable OOV law ID, and unseen modulus 13 score 1.270%, 1.123%,
+  2.832%, 0.684%, and 0.781% state. The card signal is causal but does not become the affine
+  algorithm. Assessment SHA `e9f0f6a1...` records
+  `reject_s6_contextual_affine_law_development`; development access is one and confirmation access
+  zero. Close the generic-transformer mechanism. Any successor must use a fresh board and a
+  materially different compositional representation, not more width/updates on S6.

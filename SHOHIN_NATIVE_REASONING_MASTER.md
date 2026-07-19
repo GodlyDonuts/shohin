@@ -258,6 +258,7 @@ loop.
 |---|---:|---|---|
 | Source-scheduled continuation (SSC) | **115/256 = 44.92%** | Host supplies source and operation cursor; model executes local steps | External-control ceiling |
 | **S4 v5 + S5 learned generator confirmation** | **96.924% programs / 97.607% exact state / 98.096% answers** | Frozen Shohin parser discovers events; a 4,934-parameter learned generator owns the finite transition law and recurrent categorical state; structural runtime owns bounded invocation | **Confirmed strongest bounded reasoning baseline; not unrestricted native reasoning** |
+| S6 generic contextual-law transformer | **24.528% held-out atomic / 8.154% exact recurrent state / 30.908% answers** | A 4.75M transformer receives two identifying examples of an unseen affine law, then the host invokes its predicted destinations | **Rejected algorithmic generalization mechanism; no confirmation** |
 | S3 v1.4 pointer-anchor confirmation | **98.242% answers / 99.658% exact state / 98.975% chains** | Model consumes known-atom packets through a categorical register; host supplies chunks and stop | Confirmed bounded execution component, not autonomous reasoning |
 | RGDE v1.1 development | **99.707% answers / 99.902% exact state** on two-step composition | Model-owned tied source-deleted update from atomic training; packet/compiler boundary is fixed | Qualified execution component, fresh depth confirmation pending |
 | Conventional complete compiler qualification | **8,187/8,192 answers; 8,186/8,192 programs** | Frozen parser selects source spans for known-atom language | Qualified compiler infrastructure, not execution |
@@ -873,9 +874,18 @@ law into training before any model or board exists. The unchanged exhaustive
 falsifier then passes all 328 laws over moduli 5, 7, 11, and diagnostic 13,
 including 3,748/3,748 destinations, 3,748/3,748 pop-insert cells, exact
 one-witness ambiguity, and an order-sensitive late-query witness at every scale.
-This authorizes an isolated card-conditioned neural development fit after the
-mechanics commit. It is not yet a learned result, natural-language semantic
-claim, or confirmation.
+
+The sole neural development run is now closed negative. Both the 4,753,677-
+parameter treatment and favorable law-ID memorizer fit 961/961 atomic training
+cells, but treatment reaches only **78/318 = 24.528%** on atomic cells from
+unseen laws, **167/2048 = 8.154%** recurrent exact state, and **633/2048 =
+30.908%** answers. Exact state decays from 15.497% at depth three to 4.985% at
+depth eight. Deranged cards, one witness, reset state, OOV law ID, and unseen
+modulus 13 score 1.270%, 1.123%, 2.832%, 0.684%, and 0.781% state. Thus the two
+demonstrations are weakly causal, but a generic categorical transformer learns
+a lookup surface rather than the uniquely identified algebra. S6 is rejected;
+confirmation access is zero. Reopening it with width, epochs, or tuning on the
+closed board is forbidden.
 
 ---
 
@@ -923,6 +933,10 @@ Do not reopen these without a materially different causal prediction:
 17. **The promoted bounded loop requires a hand-authored action table.** S5
     learns six primitive generators and exactly matches host execution on two
     disjoint boards, including 36/36 amount-two transitions absent from fit.
+18. **A generic transformer will infer a finite affine algorithm merely because
+    two examples identify it.** S6 fits every atomic train cell but reaches only
+    24.528% held-out atomic destinations and 8.154% recurrent state. Identifiability
+    of the target does not supply the representation bias needed to learn it.
 
 ---
 
@@ -969,10 +983,11 @@ recoding and paraphrase.
 
 ### 9.6 Architecture changes under the 150M cap
 
-Architecture changes are explicitly allowed. Up to about 24.9M parameters may
-be added if the total remains below 150M. Parameter count alone is not the
-constraint. A proposal must state why its mechanism should outperform a
-matched recurrent or static control and which current failure it changes.
+Architecture changes are explicitly allowed. The promoted bounded S5 stack
+leaves roughly 16.3M parameters below the strict 150M total; rejected S6's
+4.75M parameters are not part of the promoted stack. Parameter count alone is
+not the constraint. A proposal must state why its mechanism should outperform
+a matched recurrent or static control and which current failure it changes.
 
 ### 9.7 External frontier-plan synthesis
 
@@ -1076,6 +1091,25 @@ execution. The open schedule/halt problem is therefore narrower: event count is
 model-derived, but deterministic assembly and fixed one/two-step invocation
 still define the runtime. Future work must internalize active-step/termination
 or induce unseen laws without modifying these closed boards.
+
+### 9.10 Compositional representation is the next unseen-law gate
+
+S6 separates target identifiability from learnability. Two demonstrations
+mathematically determine every law, and the host theorem reaches 100%, yet a
+generic 4.75M transformer memorizes the training laws. The next lawful test is
+not a larger card encoder. It must compile demonstrations into a reusable
+algebraic action whose composition is enforced by architecture, while learning
+the representation or interface that connects observed symbols to that action.
+
+A candidate must include at least: a fresh law split with no S6 development
+reuse; an ordinary-transformer control bound to the closed S6 score; a
+structure-breaking label or composition control; an ambiguous one-witness arm;
+held-out-law atomic and recurrent evaluation; and a scale diagnostic that
+cannot be solved by a per-law table. Any fixed group arithmetic performed by
+the host must be counted explicitly as architectural prior rather than claimed
+as learned reasoning. The scientific question is whether a learned symbol-to-
+action representation plus forced composition transfers, not whether an exact
+host formula can replay the board.
 
 ---
 
@@ -1355,6 +1389,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Recorded S4 v1 at 2048/2048 event counts and 1932/2048 exact programs, rejected its pointer v1.1 collapse, and narrowed the next architecture to learned event-relative start/end pointers on a fresh board. |
 | 2026-07-19 | Confirmed S4 v5 hard-island/soft-interface parsing, then confirmed S5 learned generator-factored execution at 96.924% programs / 97.607% state / 98.096% answers with exact unseen amount-two closure and matched causal controls. |
 | 2026-07-19 | Froze S6 unseen affine-law induction, recorded a scoreless modulus-5 split-coverage failure, repaired only that admission defect in v1.1, and passed exhaustive identifiability/composition mechanics over 328 laws. No neural score or confirmation exists yet. |
+| 2026-07-19 | Rejected S6 after its sole valid development run: exact train fit but 24.528% held-out atomic destinations, 8.154% recurrent state, and 30.908% answers. Cards are weakly causal; the generic transformer does not induce the algebra. No confirmation was generated. |
 
 ---
 
