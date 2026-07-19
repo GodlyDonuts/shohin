@@ -1,6 +1,7 @@
 # R12 Factorized-Language Complete-Compiler Board Preregistration
 
-**Status:** design frozen before seeds; corpus CPU-admitted; matched development arms running
+**Status:** development closed; primary gates pass; islands attribution fails;
+confirmation sealed
 
 ## 1. Question
 
@@ -95,3 +96,15 @@ semantic-program exact or be treated as an implementation choice rather than a m
 - Primary pass without attribution: retain as a conventional compiler baseline only.
 - Primary and attribution pass: freeze arm identity and run confirmation once.
 - No outcome authorizes executor/halt integration until complete compilation survives confirmation.
+
+## 7. Frozen outcome
+
+Parameter islands and the favorable ordinary tagger both reach 100% exact
+semantic programs, full pointers, answers, and quartet consistency on the
+2,048-row compositional development split. The islands advantage is therefore
+0.0 points rather than the required +5. Free slots reach 98.242% exact programs,
+structured parsing reaches 100%, and shuffled-label islands reach 0.146%.
+
+The absolute gate passes, the attribution gate fails, and the decision is to
+retain a conventional compiler baseline while leaving confirmation sealed.
+See `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_DEVELOPMENT_RESULT.md`.

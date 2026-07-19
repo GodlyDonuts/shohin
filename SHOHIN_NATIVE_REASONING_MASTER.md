@@ -25517,11 +25517,44 @@ The first attribution comparison is equal-budget. V1.3 parameter islands use
 five-layer bidirectional token tagger uses 8,607,886 / 133,689,550, a 0.587%
 adapter-budget difference. It directly labels source tokens and pools kind
 classes at predicted direction spans; it has no learned program slots or
-parameter islands. Newton jobs `693048` (islands) and `693049` (ordinary) share
-the immutable raw-300k base, 96,000 examples, 1,517 updates, seed `2026071810`,
-and evaluator. Both are running. Confirmation bytes remain local only and are
-absent from Newton. The exact custody record is
-`R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_CORPUS_ADMISSION.md`.
+parameter islands. All five Newton arms share the immutable raw-300k base,
+96,000 examples, 1,517 updates, seed `2026071810`, evaluator, and zero
+confirmation access.
+
+### Factorized-language development result
+
+Jobs `693048/693049/693098/693101/693102` all completed cleanly. The primary
+known-atom compositional result is:
+
+| Arm | Answers | Programs | Full pointers | All-four exact |
+|---|---:|---:|---:|---:|
+| free slots | 98.340% | 98.242% | 98.242% | 496/512 |
+| structured | 100.000% | 100.000% | 100.000% | 512/512 |
+| parameter islands | 100.000% | 100.000% | 100.000% | 512/512 |
+| ordinary tagger | 100.000% | 100.000% | 100.000% | 512/512 |
+| shuffled islands | 0.488% | 0.146% | 0.000% | 0/512 |
+
+Every absolute v1.3 gate passes. The frozen attribution gate fails because
+islands' exact-program advantage over the favorable ordinary parser is 0.0
+percentage points rather than at least +5. The data factorization, not the
+islands architecture, is the durable result.
+
+Lexical-OOD exact programs are free slots **85.010%**, islands **77.881%**,
+structured **72.852%**, ordinary **63.721%**, and shuffled **0.049%**. Oracle
+localization is decisive: gold operation kinds raise islands and ordinary to
+**99.316%** and **98.975%** exact programs, whereas gold structural pointers
+reach only 78.516% and 64.307%. Initial, entity, literal, and query bindings are
+already about 99--100% exact. The residual OOD error is unseen-word polarity,
+not source-role binding.
+
+Assessment SHA-256
+`ca8cab2ef9dbaa9d894857438e72193476259fd659e8423b85af47e13e37fc0d`
+records `retain_as_conventional_compiler_baseline_confirmation_sealed`.
+Confirmation bytes remain local only and absent from Newton. Retain the
+ordinary parser as conventional infrastructure and require a fresh untouched
+qualification board before connecting any compiler to a source-deleted
+executor, consumer, or halt policy. The authoritative score and custody record
+is `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_DEVELOPMENT_RESULT.md`.
 
 ## Update Protocol
 

@@ -1,6 +1,7 @@
 # R12 Factorized-Language Complete-Compiler Corpus Admission
 
-**Status:** CPU-admitted; matched development arms running; confirmation sealed
+**Status:** development matrix complete; absolute gates pass; attribution fails;
+confirmation sealed
 
 ## Frozen identity
 
@@ -77,13 +78,19 @@ The adapter-budget difference is 50,815 parameters, or 0.587% of the islands
 adapter. The ordinary control directly labels source tokens with five
 bidirectional Transformer encoder layers and pools direction classes at the
 predicted kind spans. It receives no learned program slots or parameter
-islands. Both jobs are currently running; no score or promotion claim exists
-until both compositional and lexical-OOD outputs complete.
+islands. Both jobs completed cleanly. Parameter islands and the ordinary tagger
+each reach 100% exact programs and full pointers on compositional development,
+so the absolute compiler gates pass but the required +5-point islands advantage
+is 0. The free-slot and structured controls reach 98.242% and 100% exact
+programs; shuffled-label islands reach 0.146%. The committed assessor returns
+`retain_as_conventional_compiler_baseline_confirmation_sealed`. Full results
+and oracle localization are in
+`R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_DEVELOPMENT_RESULT.md`.
 
 ## Decision boundary
 
-Do not open confirmation unless v1.3 passes every frozen primary development
-gate and beats the favorable ordinary parser by at least five percentage
-points in exact semantic programs. Lexical OOD is diagnostic and must never be
-pooled into the compositional score. No result on this board alone establishes
-state transition, halting, autonomous rollout, or native reasoning.
+V1.3 passes every frozen primary development gate but ties the favorable
+ordinary parser at 100% exact semantic programs. The attribution gate therefore
+fails and confirmation must remain sealed. Lexical OOD is diagnostic and must
+never be pooled into the compositional score. No result on this board alone
+establishes state transition, halting, autonomous rollout, or native reasoning.

@@ -1,0 +1,617 @@
+{
+  "absolute_gates_pass": true,
+  "arms": {
+    "free_slots": {
+      "adapter_parameters": 3241091,
+      "compositional_groups": {
+        "all_four_answers_correct": 497,
+        "all_four_full_pointer_exact": 496,
+        "all_four_semantic_program_exact": 496,
+        "canonical_paraphrase_both_exact": 496,
+        "canonical_paraphrase_both_semantic_exact": 496,
+        "groups": 512
+      },
+      "compositional_overall": {
+        "answer_accuracy": 0.9833984375,
+        "full_pointer_exact": 0.982421875,
+        "initial_joint": 0.9833984375,
+        "kind_accuracy": 1.0,
+        "operation0_joint": 0.9990234375,
+        "operation1_joint": 1.0,
+        "pointer_accuracy": {
+          "intro.entity0": 0.99951171875,
+          "intro.entity1": 0.98388671875,
+          "intro.entity2": 1.0,
+          "op0.entity": 0.9990234375,
+          "op0.kind": 1.0,
+          "op0.literal": 1.0,
+          "op1.entity": 1.0,
+          "op1.kind": 1.0,
+          "op1.literal": 1.0,
+          "query.position": 1.0
+        },
+        "rows": 2048,
+        "semantic_program_exact": 0.982421875
+      },
+      "lexical_ood_groups": {
+        "all_four_answers_correct": 345,
+        "all_four_full_pointer_exact": 249,
+        "all_four_semantic_program_exact": 312,
+        "canonical_paraphrase_both_exact": 262,
+        "canonical_paraphrase_both_semantic_exact": 368,
+        "groups": 512
+      },
+      "lexical_ood_overall": {
+        "answer_accuracy": 0.89306640625,
+        "full_pointer_exact": 0.7177734375,
+        "initial_joint": 0.986328125,
+        "kind_accuracy": 0.8662109375,
+        "operation0_joint": 0.72900390625,
+        "operation1_joint": 0.86083984375,
+        "pointer_accuracy": {
+          "intro.entity0": 0.99951171875,
+          "intro.entity1": 0.98779296875,
+          "intro.entity2": 0.9990234375,
+          "op0.entity": 0.99853515625,
+          "op0.kind": 0.74853515625,
+          "op0.literal": 1.0,
+          "op1.entity": 1.0,
+          "op1.kind": 0.97705078125,
+          "op1.literal": 1.0,
+          "query.position": 1.0
+        },
+        "rows": 2048,
+        "semantic_program_exact": 0.85009765625
+      },
+      "protocol": "r12_referential_literal_pointer_compiler_v1_1_factorized_development",
+      "total_parameters": 128322755
+    },
+    "islands": {
+      "adapter_parameters": 8658701,
+      "compositional_groups": {
+        "all_four_answers_correct": 512,
+        "all_four_full_pointer_exact": 512,
+        "all_four_semantic_program_exact": 512,
+        "canonical_paraphrase_both_exact": 512,
+        "canonical_paraphrase_both_semantic_exact": 512,
+        "groups": 512
+      },
+      "compositional_overall": {
+        "answer_accuracy": 1.0,
+        "full_pointer_exact": 1.0,
+        "initial_joint": 1.0,
+        "kind_accuracy": 1.0,
+        "operation0_joint": 1.0,
+        "operation1_joint": 1.0,
+        "pointer_accuracy": {
+          "intro.entity0": 1.0,
+          "intro.entity1": 1.0,
+          "intro.entity2": 1.0,
+          "op0.entity": 1.0,
+          "op0.kind": 1.0,
+          "op0.literal": 1.0,
+          "op1.entity": 1.0,
+          "op1.kind": 1.0,
+          "op1.literal": 1.0,
+          "query.position": 1.0
+        },
+        "rows": 2048,
+        "semantic_program_exact": 1.0
+      },
+      "lexical_ood_groups": {
+        "all_four_answers_correct": 292,
+        "all_four_full_pointer_exact": 231,
+        "all_four_semantic_program_exact": 231,
+        "canonical_paraphrase_both_exact": 318,
+        "canonical_paraphrase_both_semantic_exact": 318,
+        "groups": 512
+      },
+      "lexical_ood_overall": {
+        "answer_accuracy": 0.853515625,
+        "full_pointer_exact": 0.77880859375,
+        "initial_joint": 0.998046875,
+        "kind_accuracy": 0.789794921875,
+        "operation0_joint": 0.78564453125,
+        "operation1_joint": 0.7890625,
+        "pointer_accuracy": {
+          "intro.entity0": 1.0,
+          "intro.entity1": 0.99853515625,
+          "intro.entity2": 0.99951171875,
+          "op0.entity": 0.9951171875,
+          "op0.kind": 1.0,
+          "op0.literal": 1.0,
+          "op1.entity": 1.0,
+          "op1.kind": 1.0,
+          "op1.literal": 1.0,
+          "query.position": 1.0
+        },
+        "rows": 2048,
+        "semantic_program_exact": 0.77880859375
+      },
+      "protocol": "r12_referential_literal_pointer_compiler_v1_3_islands_factorized_development",
+      "total_parameters": 133740365
+    },
+    "ordinary": {
+      "adapter_parameters": 8607886,
+      "compositional_groups": {
+        "all_four_answers_correct": 512,
+        "all_four_full_pointer_exact": 512,
+        "all_four_semantic_program_exact": 512,
+        "canonical_paraphrase_both_exact": 512,
+        "canonical_paraphrase_both_semantic_exact": 512,
+        "groups": 512
+      },
+      "compositional_overall": {
+        "answer_accuracy": 1.0,
+        "full_pointer_exact": 1.0,
+        "initial_joint": 1.0,
+        "kind_accuracy": 1.0,
+        "operation0_joint": 1.0,
+        "operation1_joint": 1.0,
+        "pointer_accuracy": {
+          "intro.entity0": 1.0,
+          "intro.entity1": 1.0,
+          "intro.entity2": 1.0,
+          "op0.entity": 1.0,
+          "op0.kind": 1.0,
+          "op0.literal": 1.0,
+          "op1.entity": 1.0,
+          "op1.kind": 1.0,
+          "op1.literal": 1.0,
+          "query.position": 1.0
+        },
+        "rows": 2048,
+        "semantic_program_exact": 1.0
+      },
+      "lexical_ood_groups": {
+        "all_four_answers_correct": 215,
+        "all_four_full_pointer_exact": 163,
+        "all_four_semantic_program_exact": 163,
+        "canonical_paraphrase_both_exact": 212,
+        "canonical_paraphrase_both_semantic_exact": 212,
+        "groups": 512
+      },
+      "lexical_ood_overall": {
+        "answer_accuracy": 0.763671875,
+        "full_pointer_exact": 0.63720703125,
+        "initial_joint": 0.998046875,
+        "kind_accuracy": 0.707763671875,
+        "operation0_joint": 0.69189453125,
+        "operation1_joint": 0.7177734375,
+        "pointer_accuracy": {
+          "intro.entity0": 1.0,
+          "intro.entity1": 0.99853515625,
+          "intro.entity2": 0.99951171875,
+          "op0.entity": 0.99169921875,
+          "op0.kind": 1.0,
+          "op0.literal": 1.0,
+          "op1.entity": 1.0,
+          "op1.kind": 1.0,
+          "op1.literal": 1.0,
+          "query.position": 1.0
+        },
+        "rows": 2048,
+        "semantic_program_exact": 0.63720703125
+      },
+      "protocol": "r12_referential_literal_pointer_compiler_ordinary_tagger_factorized_development",
+      "total_parameters": 133689550
+    },
+    "shuffled_islands": {
+      "adapter_parameters": 8658701,
+      "compositional_groups": {
+        "all_four_answers_correct": 0,
+        "all_four_full_pointer_exact": 0,
+        "all_four_semantic_program_exact": 0,
+        "canonical_paraphrase_both_exact": 0,
+        "canonical_paraphrase_both_semantic_exact": 0,
+        "groups": 512
+      },
+      "compositional_overall": {
+        "answer_accuracy": 0.0048828125,
+        "full_pointer_exact": 0.0,
+        "initial_joint": 0.59228515625,
+        "kind_accuracy": 0.49755859375,
+        "operation0_joint": 0.0224609375,
+        "operation1_joint": 0.021484375,
+        "pointer_accuracy": {
+          "intro.entity0": 0.7890625,
+          "intro.entity1": 0.794921875,
+          "intro.entity2": 0.705078125,
+          "op0.entity": 0.37451171875,
+          "op0.kind": 0.3486328125,
+          "op0.literal": 0.1416015625,
+          "op1.entity": 0.322265625,
+          "op1.kind": 0.31201171875,
+          "op1.literal": 0.150390625,
+          "query.position": 0.61962890625
+        },
+        "rows": 2048,
+        "semantic_program_exact": 0.00146484375
+      },
+      "lexical_ood_groups": {
+        "all_four_answers_correct": 0,
+        "all_four_full_pointer_exact": 0,
+        "all_four_semantic_program_exact": 0,
+        "canonical_paraphrase_both_exact": 0,
+        "canonical_paraphrase_both_semantic_exact": 0,
+        "groups": 512
+      },
+      "lexical_ood_overall": {
+        "answer_accuracy": 0.00390625,
+        "full_pointer_exact": 0.0,
+        "initial_joint": 0.54931640625,
+        "kind_accuracy": 0.47998046875,
+        "operation0_joint": 0.01416015625,
+        "operation1_joint": 0.0126953125,
+        "pointer_accuracy": {
+          "intro.entity0": 0.7509765625,
+          "intro.entity1": 0.77685546875,
+          "intro.entity2": 0.68505859375,
+          "op0.entity": 0.32421875,
+          "op0.kind": 0.3466796875,
+          "op0.literal": 0.11962890625,
+          "op1.entity": 0.306640625,
+          "op1.kind": 0.36767578125,
+          "op1.literal": 0.16650390625,
+          "query.position": 0.65673828125
+        },
+        "rows": 2048,
+        "semantic_program_exact": 0.00048828125
+      },
+      "protocol": "r12_referential_literal_pointer_compiler_shuffled_islands_factorized_development",
+      "total_parameters": 133740365
+    },
+    "structured": {
+      "adapter_parameters": 6402701,
+      "compositional_groups": {
+        "all_four_answers_correct": 512,
+        "all_four_full_pointer_exact": 512,
+        "all_four_semantic_program_exact": 512,
+        "canonical_paraphrase_both_exact": 512,
+        "canonical_paraphrase_both_semantic_exact": 512,
+        "groups": 512
+      },
+      "compositional_overall": {
+        "answer_accuracy": 1.0,
+        "full_pointer_exact": 1.0,
+        "initial_joint": 1.0,
+        "kind_accuracy": 1.0,
+        "operation0_joint": 1.0,
+        "operation1_joint": 1.0,
+        "pointer_accuracy": {
+          "intro.entity0": 1.0,
+          "intro.entity1": 1.0,
+          "intro.entity2": 1.0,
+          "op0.entity": 1.0,
+          "op0.kind": 1.0,
+          "op0.literal": 1.0,
+          "op1.entity": 1.0,
+          "op1.kind": 1.0,
+          "op1.literal": 1.0,
+          "query.position": 1.0
+        },
+        "rows": 2048,
+        "semantic_program_exact": 1.0
+      },
+      "lexical_ood_groups": {
+        "all_four_answers_correct": 251,
+        "all_four_full_pointer_exact": 190,
+        "all_four_semantic_program_exact": 190,
+        "canonical_paraphrase_both_exact": 279,
+        "canonical_paraphrase_both_semantic_exact": 279,
+        "groups": 512
+      },
+      "lexical_ood_overall": {
+        "answer_accuracy": 0.82373046875,
+        "full_pointer_exact": 0.728515625,
+        "initial_joint": 0.99853515625,
+        "kind_accuracy": 0.74072265625,
+        "operation0_joint": 0.73193359375,
+        "operation1_joint": 0.74658203125,
+        "pointer_accuracy": {
+          "intro.entity0": 1.0,
+          "intro.entity1": 0.99853515625,
+          "intro.entity2": 1.0,
+          "op0.entity": 0.9970703125,
+          "op0.kind": 1.0,
+          "op0.literal": 1.0,
+          "op1.entity": 1.0,
+          "op1.kind": 1.0,
+          "op1.literal": 1.0,
+          "query.position": 1.0
+        },
+        "rows": 2048,
+        "semantic_program_exact": 0.728515625
+      },
+      "protocol": "r12_referential_literal_pointer_compiler_v1_2_structured_factorized_development",
+      "total_parameters": 131484365
+    }
+  },
+  "artifact_hashes": {
+    "free_slots": {
+      "adapter": "54147ccd7d8a25abe4fbf846d8fc899f0eef8555ba72fa2562ad5214989cc248",
+      "compositional": "80ff02fd7b752cfe94f62ee1a8e8a44e1ad22d8cf6dee20519afbbd638a911cf",
+      "lexical_ood": "d081609fcb7bcf7b69f409189586dd4293302d5e917888b9b69824ca389224d5"
+    },
+    "islands": {
+      "adapter": "e1d0dbcc385996f7576cb51fdb2204601dbb198028583dbf67c90772375e7acf",
+      "compositional": "5809f1e5bf80683478aec1c7cb5b09d2d243b38e26f18ef59c87d3e984d3df95",
+      "lexical_ood": "08e2314172f64e0aa462d03bb9adc107db079cbdb87f9c06e5eebb02988b843b"
+    },
+    "ordinary": {
+      "adapter": "747a559b827c6d114943c091b9dea5b4b90cef7af13aa5003b8435c092d24991",
+      "compositional": "8128d0ed621cd132908a26a5f95b8c543ba948edcb15c8b65128611128924b9b",
+      "lexical_ood": "54fec7184c5c450caee261d920cb098ace58873c7df2ce00f7a7ac19ca36a334"
+    },
+    "shuffled_islands": {
+      "adapter": "9d772b5de25daa1f85e0cc7041e4c6fc5d196c9255d5b84a62f08af58c11146b",
+      "compositional": "f495ec57bbb1b8cf578f62420d0e88c5d3cc89ae9664fb111e67855a0f7a584e",
+      "lexical_ood": "4a0cf76fc206b678ea2941930d670e6b163492ac51fed3b9fe647670faaee6ab"
+    },
+    "structured": {
+      "adapter": "b5756095630830f1c258c1a66976d77919493eeb843d9f864d6321c34e9cbbef",
+      "compositional": "d66fd6de3b63f97b3c2d7c6e554050c6cdc9b99a7d396ffc66e258489107a9ad",
+      "lexical_ood": "f50d6146d9b889975a8afdd3e6dbd349ca2d653697f68369b7288e54433ca888"
+    }
+  },
+  "attribution_pass": false,
+  "claim_boundary": "Development-only source compiler assessment. Oracle rows are explicit host ceilings. No confirmation, executor, halt, autonomous-rollout, or native-reasoning claim.",
+  "confirmation_authorized": false,
+  "decision": "retain_as_conventional_compiler_baseline_confirmation_sealed",
+  "oracles": {
+    "islands": {
+      "full": {
+        "group_summary": {
+          "all_four_answers_correct": 512,
+          "all_four_full_pointer_exact": 512,
+          "all_four_semantic_program_exact": 512,
+          "canonical_paraphrase_both_exact": 512,
+          "canonical_paraphrase_both_semantic_exact": 512,
+          "groups": 512
+        },
+        "overall": {
+          "answer_accuracy": 1.0,
+          "full_pointer_exact": 1.0,
+          "initial_joint": 1.0,
+          "kind_accuracy": 1.0,
+          "operation0_joint": 1.0,
+          "operation1_joint": 1.0,
+          "pointer_accuracy": {
+            "intro.entity0": 1.0,
+            "intro.entity1": 1.0,
+            "intro.entity2": 1.0,
+            "op0.entity": 1.0,
+            "op0.kind": 1.0,
+            "op0.literal": 1.0,
+            "op1.entity": 1.0,
+            "op1.kind": 1.0,
+            "op1.literal": 1.0,
+            "query.position": 1.0
+          },
+          "rows": 2048,
+          "semantic_program_exact": 1.0
+        },
+        "sha256": "87032062d66eadea7d5174d34748f34e038380190fd301b8ce0700bce8565865"
+      },
+      "lexical": {
+        "group_summary": {
+          "all_four_answers_correct": 507,
+          "all_four_full_pointer_exact": 505,
+          "all_four_semantic_program_exact": 505,
+          "canonical_paraphrase_both_exact": 506,
+          "canonical_paraphrase_both_semantic_exact": 506,
+          "groups": 512
+        },
+        "overall": {
+          "answer_accuracy": 0.99462890625,
+          "full_pointer_exact": 0.9931640625,
+          "initial_joint": 0.998046875,
+          "kind_accuracy": 1.0,
+          "operation0_joint": 0.9951171875,
+          "operation1_joint": 1.0,
+          "pointer_accuracy": {
+            "intro.entity0": 1.0,
+            "intro.entity1": 0.99853515625,
+            "intro.entity2": 0.99951171875,
+            "op0.entity": 0.9951171875,
+            "op0.kind": 1.0,
+            "op0.literal": 1.0,
+            "op1.entity": 1.0,
+            "op1.kind": 1.0,
+            "op1.literal": 1.0,
+            "query.position": 1.0
+          },
+          "rows": 2048,
+          "semantic_program_exact": 0.9931640625
+        },
+        "sha256": "00ba7ea390eb249839681ccf677507279b7f3bc75e213a5f8263a53c76e53810"
+      },
+      "structure": {
+        "group_summary": {
+          "all_four_answers_correct": 295,
+          "all_four_full_pointer_exact": 234,
+          "all_four_semantic_program_exact": 234,
+          "canonical_paraphrase_both_exact": 323,
+          "canonical_paraphrase_both_semantic_exact": 323,
+          "groups": 512
+        },
+        "overall": {
+          "answer_accuracy": 0.8583984375,
+          "full_pointer_exact": 0.78515625,
+          "initial_joint": 1.0,
+          "kind_accuracy": 0.789794921875,
+          "operation0_joint": 0.79052734375,
+          "operation1_joint": 0.7890625,
+          "pointer_accuracy": {
+            "intro.entity0": 1.0,
+            "intro.entity1": 1.0,
+            "intro.entity2": 1.0,
+            "op0.entity": 1.0,
+            "op0.kind": 1.0,
+            "op0.literal": 1.0,
+            "op1.entity": 1.0,
+            "op1.kind": 1.0,
+            "op1.literal": 1.0,
+            "query.position": 1.0
+          },
+          "rows": 2048,
+          "semantic_program_exact": 0.78515625
+        },
+        "sha256": "4c1efa0301e3a09f584227b3c269f9a8330f9ff1bea85c749b1336b1a6fb8706"
+      }
+    },
+    "ordinary": {
+      "full": {
+        "group_summary": {
+          "all_four_answers_correct": 512,
+          "all_four_full_pointer_exact": 512,
+          "all_four_semantic_program_exact": 512,
+          "canonical_paraphrase_both_exact": 512,
+          "canonical_paraphrase_both_semantic_exact": 512,
+          "groups": 512
+        },
+        "overall": {
+          "answer_accuracy": 1.0,
+          "full_pointer_exact": 1.0,
+          "initial_joint": 1.0,
+          "kind_accuracy": 1.0,
+          "operation0_joint": 1.0,
+          "operation1_joint": 1.0,
+          "pointer_accuracy": {
+            "intro.entity0": 1.0,
+            "intro.entity1": 1.0,
+            "intro.entity2": 1.0,
+            "op0.entity": 1.0,
+            "op0.kind": 1.0,
+            "op0.literal": 1.0,
+            "op1.entity": 1.0,
+            "op1.kind": 1.0,
+            "op1.literal": 1.0,
+            "query.position": 1.0
+          },
+          "rows": 2048,
+          "semantic_program_exact": 1.0
+        },
+        "sha256": "d99b3ff091501491edccc2071870198d7f18328672c41374102cdfabf38774b4"
+      },
+      "lexical": {
+        "group_summary": {
+          "all_four_answers_correct": 503,
+          "all_four_full_pointer_exact": 501,
+          "all_four_semantic_program_exact": 501,
+          "canonical_paraphrase_both_exact": 504,
+          "canonical_paraphrase_both_semantic_exact": 504,
+          "groups": 512
+        },
+        "overall": {
+          "answer_accuracy": 0.9921875,
+          "full_pointer_exact": 0.98974609375,
+          "initial_joint": 0.998046875,
+          "kind_accuracy": 1.0,
+          "operation0_joint": 0.99169921875,
+          "operation1_joint": 1.0,
+          "pointer_accuracy": {
+            "intro.entity0": 1.0,
+            "intro.entity1": 0.99853515625,
+            "intro.entity2": 0.99951171875,
+            "op0.entity": 0.99169921875,
+            "op0.kind": 1.0,
+            "op0.literal": 1.0,
+            "op1.entity": 1.0,
+            "op1.kind": 1.0,
+            "op1.literal": 1.0,
+            "query.position": 1.0
+          },
+          "rows": 2048,
+          "semantic_program_exact": 0.98974609375
+        },
+        "sha256": "b196a05b5b77bc3bdb4fe961932319353820484749614ed543c56ff98737eeb8"
+      },
+      "structure": {
+        "group_summary": {
+          "all_four_answers_correct": 217,
+          "all_four_full_pointer_exact": 165,
+          "all_four_semantic_program_exact": 165,
+          "canonical_paraphrase_both_exact": 214,
+          "canonical_paraphrase_both_semantic_exact": 214,
+          "groups": 512
+        },
+        "overall": {
+          "answer_accuracy": 0.76904296875,
+          "full_pointer_exact": 0.64306640625,
+          "initial_joint": 1.0,
+          "kind_accuracy": 0.707763671875,
+          "operation0_joint": 0.69775390625,
+          "operation1_joint": 0.7177734375,
+          "pointer_accuracy": {
+            "intro.entity0": 1.0,
+            "intro.entity1": 1.0,
+            "intro.entity2": 1.0,
+            "op0.entity": 1.0,
+            "op0.kind": 1.0,
+            "op0.literal": 1.0,
+            "op1.entity": 1.0,
+            "op1.kind": 1.0,
+            "op1.literal": 1.0,
+            "query.position": 1.0
+          },
+          "rows": 2048,
+          "semantic_program_exact": 0.64306640625
+        },
+        "sha256": "456a8f9463ec90eb77be7c9fb55a4cf038c79ce07fa66e5a96c3c5fe34ad8b87"
+      }
+    }
+  },
+  "primary_gates": {
+    "all_four_exact": {
+      "floor": 96,
+      "pass": true,
+      "value": 512
+    },
+    "answer_accuracy": {
+      "floor": 0.85,
+      "pass": true,
+      "value": 1.0
+    },
+    "canonical_paraphrase_both_exact": {
+      "floor": 192,
+      "pass": true,
+      "value": 512
+    },
+    "full_pointer_exact": {
+      "floor": 0.65,
+      "pass": true,
+      "value": 1.0
+    },
+    "initial_joint": {
+      "floor": 0.8,
+      "pass": true,
+      "value": 1.0
+    },
+    "islands_program_advantage_over_ordinary": {
+      "floor": 0.05,
+      "pass": false,
+      "value": 0.0
+    },
+    "kind_accuracy": {
+      "floor": 0.95,
+      "pass": true,
+      "value": 1.0
+    },
+    "semantic_program_exact": {
+      "floor": 0.75,
+      "pass": true,
+      "value": 1.0
+    }
+  },
+  "schema": "r12_referential_literal_pointer_factorized_assessment_v1",
+  "shared_metadata": {
+    "base_sha256": "211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6",
+    "data_sha256": "e6feb311c37f34a88ce7bda59ebb4f968c9ce3b4052cb5c0f6c2ef2e3fca44a8",
+    "examples": 96000,
+    "report_sha256": "d481114232e438294bd1ea7f5b739f6068c2bf10fe02c1ee3c216c2e56aa3be3",
+    "seed": 2026071810,
+    "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4",
+    "updates": 1517
+  }
+}
