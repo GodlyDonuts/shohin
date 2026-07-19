@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 02:31 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 02:36 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8342,3 +8342,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   continuous action channel. Preserve the exact S3 register; replace only learned transition
   selection with a closed action table driven by discretized model-predicted direction/amount.
   External schedule/halt and compiler/query errors remain explicit boundaries.
+
+- **2026-07-19 02:31--02:36** -- **A zero-fit closure-complete S3 action arm is frozen before
+  score access.** V1.1's amount head remains 100% accurate at depth while its continuous action
+  MLP drifts. V1.2 therefore changes only transition selection: exact current location, frozen
+  compiler direction argmax, and frozen amount-head argmax index an exhaustive 3x2x2 pop-insert
+  table of six S3 matrices. The v1.1 checkpoint, compiler, identity arms, query consumer, public
+  boards, source deletion, schedule, and halt are unchanged; no optimizer, fit, new parameter,
+  seed, or confirmation access exists. Seven focused tests exhaust all 12 actions and recurrent
+  composition from non-identity state; Ruff, `py_compile`, shell syntax, and diff gates pass.
+  Prereg/source/evaluator/assessor/job SHA-256 prefixes are `5656ddfc` / `44e1af8c` / `b1489e4e`
+  / `7c6753f4` / `d423fecd`. One public H100 evaluation may run only after this source/prereg is
+  committed. A pass can authorize one fresh confirmation; it cannot establish planning, learned
+  halt, free-form reasoning, or novelty.

@@ -4,9 +4,11 @@ from categorical_permutation_executor import (
     EquivariantCategoricalUpdateCell,
     PERMUTATIONS,
     S3CategoricalPermutationExecutor,
+    S3ClosedActionPermutationExecutor,
     S3EquivariantPermutationExecutor,
     categorical_executor_loss,
     permutation_matrices,
+    local_action_ids,
     straight_through_permutation,
 )
 from referential_gather_delete_executor import ExecutionTargets
@@ -93,3 +95,47 @@ def test_equivariant_executor_is_smaller_than_v1():
     v1 = S3CategoricalPermutationExecutor(576, 384, width=192)
     v11 = S3EquivariantPermutationExecutor(576, 384, width=192)
     assert v11.num_params() < v1.num_params()
+
+
+def test_closed_local_action_table_matches_pop_insert_semantics():
+    table = local_action_ids()
+    matrices = permutation_matrices()
+    for source in range(3):
+        for kind in range(2):
+            for amount_id in range(2):
+                destination = (
+                    max(0, source - amount_id - 1)
+                    if kind == 0 else
+                    min(2, source + amount_id + 1)
+                )
+                expected = list(range(3))
+                expected.insert(destination, expected.pop(source))
+                actual = matrices[table[source, kind, amount_id]].argmax(-1).tolist()
+                assert actual == expected
+
+
+def test_closed_action_composes_exactly_from_nonidentity_state():
+    executor = S3ClosedActionPermutationExecutor(8, 6, width=12)
+    with torch.no_grad():
+        executor.amount_head.weight.zero_()
+        executor.amount_head.bias[:] = torch.tensor([10.0, -10.0])
+    packet = {
+        "operations": (
+            {
+                "identity_probabilities": torch.tensor([[1.0, 0.0, 0.0]]),
+                "kind_context": torch.randn(1, 6),
+                "literal": torch.randn(1, 8),
+                "kind_probabilities": torch.tensor([[0.0, 1.0]]),
+            },
+            {
+                "identity_probabilities": torch.tensor([[0.0, 1.0, 0.0]]),
+                "kind_context": torch.randn(1, 6),
+                "literal": torch.randn(1, 8),
+                "kind_probabilities": torch.tensor([[1.0, 0.0]]),
+            },
+        ),
+        "query": torch.randn(1, 6),
+    }
+    outputs = executor(packet)
+    assert outputs["assignment"].argmax(-1).tolist() == [[1, 0, 2]]
+    assert [value.tolist() for value in outputs["kind_predictions"]] == [[1], [0]]

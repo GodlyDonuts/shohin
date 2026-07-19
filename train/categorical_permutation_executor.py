@@ -26,6 +26,24 @@ def permutation_matrices(device=None, dtype=torch.float32):
     return matrices
 
 
+def local_action_ids(device=None):
+    """Return the closed pop-insert action table [location, kind, amount]."""
+    actions = torch.empty((3, len(KIND_TO_ID), 2), dtype=torch.long, device=device)
+    for source in range(3):
+        for kind_name, kind_id in KIND_TO_ID.items():
+            for amount_id in range(2):
+                amount = amount_id + 1
+                destination = (
+                    max(0, source - amount)
+                    if kind_name == "left" else
+                    min(2, source + amount)
+                )
+                order = list(range(3))
+                order.insert(destination, order.pop(source))
+                actions[source, kind_id, amount_id] = PERMUTATION_TO_ID[tuple(order)]
+    return actions
+
+
 def module_state_hash(module):
     digest = hashlib.sha256()
     for name, tensor in sorted(module.state_dict().items()):
@@ -251,6 +269,69 @@ class S3EquivariantPermutationExecutor(S3CategoricalPermutationExecutor):
     def __init__(self, identity_context_width, context_width, width=192):
         super().__init__(identity_context_width, context_width, width)
         self.cell = EquivariantCategoricalUpdateCell(width)
+
+
+class S3ClosedActionPermutationExecutor(S3EquivariantPermutationExecutor):
+    """Exact finite S3 action driven by model-predicted categorical fields."""
+
+    def __init__(self, identity_context_width, context_width, width=192):
+        super().__init__(identity_context_width, context_width, width)
+        self.register_buffer("local_actions", local_action_ids(), persistent=False)
+
+    def forward(self, packet):
+        operations = packet.get("operations")
+        query = packet.get("query")
+        if not operations or query is None or query.ndim != 2:
+            raise ValueError("categorical executor packet is incomplete")
+        batch = query.shape[0]
+        assignment = torch.eye(
+            3, device=query.device, dtype=query.dtype,
+        ).unsqueeze(0).expand(batch, -1, -1).clone()
+        permutation_logits = []
+        transition_matrices = []
+        entity_match_logits = []
+        amount_logits = []
+        kind_predictions = []
+        for operation in operations:
+            identity = operation["identity_probabilities"].to(assignment.dtype)
+            if identity.shape != (batch, 3):
+                raise ValueError("categorical operation identity must have shape [batch,3]")
+            location = torch.bmm(assignment, identity.unsqueeze(-1)).squeeze(-1)
+            literal = self.literal_encoder(operation["literal"])
+            current_amount_logits = self.amount_head(literal)
+            current_kind = operation["kind_probabilities"].float().argmax(-1)
+            current_amount = current_amount_logits.argmax(-1)
+            current_location = location.argmax(-1)
+            action_ids = self.local_actions[
+                current_location, current_kind, current_amount,
+            ]
+            matrix = self.permutations.index_select(0, action_ids).to(assignment.dtype)
+            assignment = torch.bmm(matrix, assignment)
+            logits = torch.full(
+                (batch, len(PERMUTATIONS)), -1e4,
+                dtype=assignment.dtype, device=assignment.device,
+            )
+            logits.scatter_(1, action_ids.unsqueeze(1), 0.0)
+            permutation_logits.append(logits)
+            transition_matrices.append(matrix)
+            entity_match_logits.append(torch.log(location.float().clamp_min(1e-8)))
+            amount_logits.append(current_amount_logits)
+            kind_predictions.append(current_kind)
+        query_logits = self.query_head(self.query_encoder(query))
+        query_probabilities = F.softmax(query_logits.float(), dim=-1).to(assignment.dtype)
+        answer_probabilities = torch.bmm(
+            query_probabilities.unsqueeze(1), assignment,
+        ).squeeze(1).float()
+        return {
+            "permutation_logits": tuple(permutation_logits),
+            "transition_matrices": tuple(transition_matrices),
+            "entity_match_logits": tuple(entity_match_logits),
+            "amount_logits": tuple(amount_logits),
+            "kind_predictions": tuple(kind_predictions),
+            "assignment": assignment,
+            "query_logits": query_logits,
+            "answer_probabilities": answer_probabilities,
+        }
 
 
 def categorical_executor_loss(

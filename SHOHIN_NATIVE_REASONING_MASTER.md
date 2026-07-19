@@ -25766,6 +25766,17 @@ bounded test is closure by construction: discretize model-predicted direction
 and amount and apply their exact local S3 action, keeping compilation, source
 deletion, query consumption, schedule, and halt boundaries explicit.
 
+That zero-fit v1.2 test is now frozen before score access. Its only intervention
+is a complete 3-location x 2-direction x 2-amount action table stored inside
+the executor and returning one of the exact six S3 matrices. Direction remains
+the frozen compiler prediction; amount remains the frozen v1.1 amount-head
+prediction; identity and query remain their existing model-owned channels.
+Seven tests exhaust the table and recurrent non-identity composition. The
+frozen gates require near-exact gold depth execution plus end-to-end mean and
+ordered floors. This can distinguish a continuous-action transport failure
+from compiler direction/amount error without fitting another model. External
+operation count and halt remain outside the model.
+
 The matched result reproduces the loss but rejects single-comparator
 localization. Untouched execution reaches 77.393% answers / 70.312% exact
 state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /

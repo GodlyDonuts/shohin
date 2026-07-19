@@ -13,6 +13,7 @@ from tokenizers import Tokenizer
 
 from categorical_permutation_executor import (
     S3CategoricalPermutationExecutor,
+    S3ClosedActionPermutationExecutor,
     S3EquivariantPermutationExecutor,
     categorical_identity_packet,
     module_state_hash,
@@ -52,6 +53,7 @@ def main():
     parser.add_argument("--identity-mode", choices=("mean", "ordered", "gold"), required=True)
     parser.add_argument("--out", required=True)
     parser.add_argument("--batch-size", type=int, default=64)
+    parser.add_argument("--closed-action", action="store_true")
     args = parser.parse_args()
     if not torch.cuda.is_available():
         raise SystemExit("S3 evaluation requires CUDA")
@@ -79,11 +81,16 @@ def main():
     examples = load_examples(
         args.data, tokenizer, args.split, cfg.seq_len, keep_evidence=True,
     )
-    executor_class = (
-        S3EquivariantPermutationExecutor
-        if metadata["protocol"] == "r12_s3_equivariant_permutation_executor_v1_1"
-        else S3CategoricalPermutationExecutor
-    )
+    if args.closed_action:
+        if metadata["protocol"] != "r12_s3_equivariant_permutation_executor_v1_1":
+            raise SystemExit("closed action requires the frozen equivariant v1.1 state")
+        executor_class = S3ClosedActionPermutationExecutor
+    else:
+        executor_class = (
+            S3EquivariantPermutationExecutor
+            if metadata["protocol"] == "r12_s3_equivariant_permutation_executor_v1_1"
+            else S3CategoricalPermutationExecutor
+        )
     executor = executor_class(
         identity_context_width=int(metadata["identity_context_width"]),
         context_width=int(metadata["context_width"]),
@@ -109,6 +116,7 @@ def main():
             answers = outputs["answer_probabilities"].argmax(-1).tolist()
             entities = [logits.argmax(-1).tolist() for logits in outputs["entity_match_logits"]]
             amounts = [logits.argmax(-1).tolist() for logits in outputs["amount_logits"]]
+            kinds = [prediction.tolist() for prediction in outputs.get("kind_predictions", ())]
             targets = [execution_targets(example) for example in selected]
             for local, global_index in enumerate(indices):
                 target = targets[local]
@@ -132,6 +140,10 @@ def main():
                         int(amounts[step][local]) == target.amounts[step]
                         for step in range(2)
                     ],
+                    "kind_correct": [
+                        int(kinds[step][local]) == selected[local].kind_targets[step]
+                        for step in range(2)
+                    ] if kinds else [],
                 }
     groups = collections.defaultdict(list)
     for record in records:
@@ -140,6 +152,7 @@ def main():
         "schema": "r12_s3_categorical_permutation_eval_v1",
         "split": args.split,
         "identity_mode": args.identity_mode,
+        "action_protocol": "closed_s3_v1_2" if args.closed_action else "learned",
         "base_sha256": sha256_file(args.base),
         "compiler_sha256": sha256_file(args.compiler),
         "compiler_adapter_sha256": compiler_metadata["final_adapter_sha256"],
@@ -173,6 +186,10 @@ def main():
             "confirmation, autonomous reasoning, or novelty claim."
         ),
     }
+    if args.closed_action:
+        result["overall"]["kind_accuracy"] = (
+            sum(sum(row["kind_correct"]) for row in records) / (2 * len(records))
+        )
     Path(args.out).write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
     print(json.dumps({
         "identity_mode": args.identity_mode,
