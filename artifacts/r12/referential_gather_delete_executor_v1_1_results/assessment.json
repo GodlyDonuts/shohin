@@ -1,0 +1,124 @@
+{
+  "all_gates_pass": true,
+  "assessment_sha256": "60ec1bb3794c123595801f24f14c431d63fc9eabbf5616e1c9825ee556f30f20",
+  "claim_boundary": "Development-only source-deleted list executor. Qualification permits a fresh longer-depth board, not a broad language-reasoning or novelty claim.",
+  "decision": "qualify_rgde_v1_1_for_fresh_depth_confirmation",
+  "gates": {
+    "g10_custody_and_interventions": {
+      "confirmation_access": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "jobs_clean": true,
+      "operation_interventions": 2048,
+      "pass": true,
+      "query_interventions": 2048
+    },
+    "g1_identity_carrier_at_least_99pct": {
+      "pass": true,
+      "value": 0.99853515625
+    },
+    "g2_composed_supervision_ceiling": {
+      "answer": 0.99609375,
+      "final": 0.99755859375,
+      "pass": true,
+      "transitions": 0.9970703125
+    },
+    "g3_gold_atomic": {
+      "answer": 0.9990234375,
+      "final": 1.0,
+      "pass": true,
+      "query": 0.9990234375,
+      "transitions": 1.0
+    },
+    "g4_tied_predicted_atomic": {
+      "answer": 0.9970703125,
+      "final": 0.9990234375,
+      "pass": true,
+      "query": 0.998046875,
+      "transitions": 0.99755859375
+    },
+    "g5_surfaces_and_quartets": {
+      "all_four_answers": 507,
+      "minimum_surface_answer": 0.99609375,
+      "pass": true
+    },
+    "g6_gold_rescore_gap": {
+      "answer_gap": 0.0009765625,
+      "final_gap": 0.0009765625,
+      "pass": true
+    },
+    "g7_operation_causality": {
+      "answer": 0.36962890625,
+      "answer_drop": 0.62744140625,
+      "final": 0.24365234375,
+      "final_drop": 0.75537109375,
+      "pass": true
+    },
+    "g8_query_causality": {
+      "answer": 0.00146484375,
+      "answer_drop": 0.99560546875,
+      "pass": true
+    },
+    "g9_tied_vs_untied": {
+      "answer_advantage": 0.001953125,
+      "final_advantage": 0.0029296875,
+      "pass": true
+    }
+  },
+  "input_sha256": {
+    "carrier": "dcc16fa3101e403a5cd2452171511fe9f4497c5c879ca1fa65da0e31ba615f60",
+    "gold_rescore": "9f99d769c4e72daf80e2321cb176702b59bd80c6e3823aa1916b642bc8c0a404",
+    "operation_derangement": "c22ff26a486644a87227c6e97e7bf8ccb19e5248aa7ed0240e01333eb28ac53c",
+    "query_derangement": "46d00ae844c557bd3964eb9aba1cebba05d144c2ca1f162564bc75ca6a8b5d50",
+    "sacct": "11e18f1226d1f16597f0519729c1e3b53537ea5a826fff8cad251eae71cbed40",
+    "tied": "c9677fa1003d014063ee453ddd6843a537528ef784c5c9b53c2426f100e15800",
+    "tied_composed": "0ca529c525a28a8e8ac2d9d3328f6ac9b94a750915b430e7271699df26a956b6",
+    "tied_gold": "18de3cd18e748362e98107cb5b1a4e79fbf238e010a20fd841ea805440243ca3",
+    "untied": "ccfa33f2931d2a8bf066377549b3f3361323d175688d31a28c33e32a717052b3"
+  },
+  "jobs": {
+    "693118": {
+      "elapsed": "00:02:44",
+      "exit_code": "0:0",
+      "name": "shohin-rgde11",
+      "node": "evc29",
+      "state": "COMPLETED"
+    },
+    "693119": {
+      "elapsed": "00:02:06",
+      "exit_code": "0:0",
+      "name": "shohin-rgde11",
+      "node": "evc33",
+      "state": "COMPLETED"
+    },
+    "693120": {
+      "elapsed": "00:02:44",
+      "exit_code": "0:0",
+      "name": "shohin-rgde11",
+      "node": "evc33",
+      "state": "COMPLETED"
+    },
+    "693121": {
+      "elapsed": "00:02:50",
+      "exit_code": "0:0",
+      "name": "shohin-rgde11",
+      "node": "evc34",
+      "state": "COMPLETED"
+    },
+    "693122": {
+      "elapsed": "00:00:28",
+      "exit_code": "0:0",
+      "name": "shohin-rgde11-ctl",
+      "node": "evc29",
+      "state": "COMPLETED"
+    }
+  },
+  "schema": "r12_referential_gather_delete_executor_v1_1_assessment"
+}

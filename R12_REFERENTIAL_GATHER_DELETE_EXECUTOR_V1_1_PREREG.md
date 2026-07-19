@@ -1,6 +1,7 @@
 # R12 Referential Gather-Delete Executor v1.1 Preregistration
 
-**Status:** frozen before fit
+**Status:** closed positive; all ten gates pass. See
+`R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_V1_1_RESULT.md`.
 
 **Claim class:** isolated source-deleted execution component. Passing this
 board is not natural-language reasoning, autonomous rollout, halting, broad

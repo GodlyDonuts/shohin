@@ -25651,6 +25651,23 @@ as an architecture ceiling, alongside gold-packet, untied, operation-shuffle,
 and query-shuffle controls. Only a full frozen development pass can authorize a
 fresh longer-depth board; old confirmation remains sealed.
 
+The frozen v1.1 development run passes that gate. Tied atomic training reaches
+**99.707% answers, 99.902% exact final state, and 99.756% both-transition
+exactness** on two-step composition. Gold atomic reaches 99.902% / 100% / 100%;
+the larger untied arm is slightly worse at 99.512% / 99.609% / 99.414%; and
+direct composed supervision is also slightly worse. All four surfaces exceed
+99.6% answers and 507/512 semantic quartets are entirely correct.
+
+Repaired, globally deranged controls establish field causality. Replacing every
+operation program with a different program lowers answers to 36.963% and exact
+state to 24.365%. Replacing every query with a different requested position
+lowers answers to 0.146% while leaving exact state at 99.902%. All ten frozen
+gates pass; assessment `60ec1bb3...` records
+`qualify_rgde_v1_1_for_fresh_depth_confirmation`. This is the strongest current
+native execution result: a shared model-owned update rule learned from atomic
+examples composes under source deletion. Its next required test is a fresh
+three-to-eight-operation depth board, not another two-step fit.
+
 ## Update Protocol
 
 At each 10k checkpoint milestone:
