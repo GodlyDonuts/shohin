@@ -8477,3 +8477,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   discard the 201 MB rejected JSONLs. The mechanical repair inserts the existing split-specific
   nonce context anchor after every event, changing no semantics or labels. Re-run CPU tests, commit
   corrected generator bytes, then draw wholly new production seeds.
+
+- **2026-07-19 04:31--04:38** -- The second S4 build at post-commit seeds
+  `14462077877284659533` / `10104469042439589396` is also rejected before model access. The event
+  nonce repair works, but the same 13-gram gate finds generic windows crossing from a distractor
+  into an event or query after the distractor entity has left the window. All other gates pass; no
+  fit or score exists. Retire both seeds, preserve only the report, and discard rejected JSONLs.
+  The second mechanical repair adds the same split-specific nonce anchor after every distractor.
+  Before another production draw, run a scoreless small cross-split mechanics build and require all
+  gates to pass; then commit the exact corrected bytes.

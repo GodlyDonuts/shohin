@@ -8,6 +8,7 @@ from tokenizers import Tokenizer
 from build_referential_literal_pointer_factorized_corpus import factor_catalogue
 from build_s4_self_delimiting_event_tape import (
     DEVELOPMENT_SPLIT,
+    audit,
     build_development,
     build_train,
     gold_events,
@@ -45,6 +46,28 @@ class SelfDelimitingEventTapeTest(unittest.TestCase):
             self.assertEqual(canonical["token_bag"], binding["token_bag"])
             self.assertNotEqual(canonical["answer"], order["answer"])
             self.assertNotEqual(canonical["answer"], binding["answer"])
+
+    def test_small_cross_split_mechanics_board_passes_every_gate(self):
+        train_factors = list(factor_catalogue("known"))[:48]
+        development_factors = list(factor_catalogue("known"))[-48:]
+        train = build_train(48, 17, self.tokenizer, self.names[:20], train_factors)
+        development = build_development(
+            24, 19, self.tokenizer, self.names[20:], development_factors,
+        )
+        report = audit(
+            train,
+            development,
+            {
+                "rows": 0,
+                "questions": set(),
+                "grams": set(),
+                "names": set(),
+                "factors": set(),
+            },
+            "artifacts/shohin-tok-32k.json",
+            "pipeline/build_s4_self_delimiting_event_tape.py",
+        )
+        self.assertTrue(report["all_gates_pass"], report["gates"])
 
 
 if __name__ == "__main__":
