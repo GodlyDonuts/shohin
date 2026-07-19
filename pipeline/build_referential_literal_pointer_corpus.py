@@ -496,12 +496,12 @@ def main():
         raise SystemExit("refusing to overwrite corpus output")
     tokenizer_path = Path(args.tokenizer)
     tokenizer = Tokenizer.from_file(str(tokenizer_path))
-    required_names = 4200
+    required_names = 4100
     names, nonce_width = candidate_names(tokenizer, required_names)
     name_pools = {
-        "train": names[:3200],
-        "development": names[3200:3600],
-        "confirmation": names[3600:4200],
+        "train": names[:3100],
+        "development": names[3100:3500],
+        "confirmation": names[3500:4100],
     }
     seeds = {
         "train": args.train_seed,
