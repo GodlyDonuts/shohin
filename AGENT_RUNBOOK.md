@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 01:57 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 02:00 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8285,3 +8285,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   failure. Twenty focused tests, Ruff, `py_compile`, shell syntax, and diff checks pass. The exact
   public board is `ba2b0d48...` and executor state is `d31fd3e6...`. No fit, score, confirmation
   access, carrier promotion, or reasoning claim exists yet.
+
+- **2026-07-19 01:57--02:00** -- **The public board reproduces transport failure, but gold identity
+  proves the loss extends beyond the comparator.** Job `693126` completes once on `evc29` in 26
+  seconds, exit `0:0`, with zero fit/confirmation. Untouched execution is 77.393% answers / 70.312%
+  exact state / 79.979% entity match. Mean rebinding reaches 85.645% / 81.543%, ordered rebinding
+  88.281% / 85.400%, and gold identity only 88.672% / 85.840%. Mean gains 11.230 state points but
+  only 8.252 answer points, missing the frozen ten-point diagnosis threshold; gold also misses both
+  99% ceilings. Result SHA-256 is `d7822b39...`; decision is
+  `transport_failure_not_localized`. Identity comparison is one contributor, but continuous entity
+  encoding and soft recurrent state also drift. The next architecture should use categorical
+  identity and a three-slot permutation register rather than continuous entity rematching.

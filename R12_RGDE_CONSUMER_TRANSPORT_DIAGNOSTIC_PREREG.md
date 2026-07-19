@@ -1,6 +1,7 @@
 # R12 RGDE Consumer Transport Diagnostic Preregistration
 
-**Status:** frozen before executor-level score access.
+**Status:** closed negative after job `693126`. See
+`R12_RGDE_CONSUMER_TRANSPORT_DIAGNOSTIC_RESULT.md`.
 
 **Claim class:** no-fit public matched-consumer diagnosis. This cannot promote
 the rejected relational carrier and does not read confirmation.

@@ -25724,6 +25724,17 @@ untouched matcher is below 90%; otherwise the failure remains unlocalized or
 the public board is declared non-reproducing. No arm trains or sees the sealed
 confirmation.
 
+The matched result reproduces the loss but rejects single-comparator
+localization. Untouched execution reaches 77.393% answers / 70.312% exact
+state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /
+85.400%; even gold identity stops at 88.672% / 85.840%. Thus exact referent
+selection does not restore the executor's gold-packet ceiling. Continuous
+entity encoding, soft permutation mixing, and repeated learned rematching form
+the remaining coupled failure. The next architecture must carry categorical
+identity in a three-slot permutation register and remove semantic matching from
+the recurrent loop; it must still learn the update from atomic public examples
+and face favorable ordered/gold controls.
+
 ## Update Protocol
 
 At each 10k checkpoint milestone:
