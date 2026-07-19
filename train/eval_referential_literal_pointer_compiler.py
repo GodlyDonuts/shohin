@@ -17,6 +17,7 @@ from referential_literal_pointer_compiler import (
     CompletePointerCompiler,
     OrdinaryTokenTaggerCompiler,
     TARGET_LABELS,
+    apply_oracle_predictions,
     execute_prediction,
     load_examples,
     make_batches,
@@ -47,6 +48,9 @@ def main():
     parser.add_argument("--out", required=True)
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--limit", type=int, default=0)
+    parser.add_argument(
+        "--oracle", choices=("none", "lexical", "structure", "full"), default="none",
+    )
     args = parser.parse_args()
     if not torch.cuda.is_available():
         raise SystemExit("complete compiler evaluation requires CUDA")
@@ -69,6 +73,7 @@ def main():
         "r12_referential_literal_pointer_compiler_v1_2_structured_factorized_development",
         "r12_referential_literal_pointer_compiler_v1_3_islands_factorized_development",
         "r12_referential_literal_pointer_compiler_ordinary_tagger_factorized_development",
+        "r12_referential_literal_pointer_compiler_shuffled_islands_factorized_development",
     }:
         raise SystemExit("invalid compiler bundle protocol")
     if metadata.get("confirmation_access") != 0:
@@ -127,6 +132,11 @@ def main():
                     label: int(pointer_predictions[label][local]) for label in TARGET_LABELS
                 }
                 kinds = tuple(map(int, kind_predictions[local]))
+                model_pointers = dict(pointers)
+                model_kinds = tuple(kinds)
+                pointers, kinds = apply_oracle_predictions(
+                    example, pointers, kinds, args.oracle,
+                )
                 hits = {
                     label: pointers[label] in set(example.target_positions[label])
                     for label in TARGET_LABELS
@@ -143,8 +153,10 @@ def main():
                     "surface_type": example.surface_type,
                     "factors": dict(example.factors),
                     "pointer_predictions": pointers,
+                    "model_pointer_predictions": model_pointers,
                     "pointer_hits": hits,
                     "kind_predictions": list(kinds),
+                    "model_kind_predictions": list(model_kinds),
                     "kind_hits": list(kind_hits),
                     "initial_joint": all(hits["intro.entity{}".format(index)] for index in range(3)),
                     "operation0_joint": (
@@ -234,6 +246,11 @@ def main():
         "report_sha256": sha256_file(args.report),
         "tokenizer_sha256": sha256_file(args.tokenizer),
         "confirmation_access": int(args.split == "confirmation") * len(examples),
+        "oracle": args.oracle,
+        "host_supplied_fields": {
+            "operation_classes": args.oracle in {"lexical", "full"},
+            "source_role_positions": args.oracle in {"structure", "full"},
+        },
         "overall": summarize(records),
         "by_surface": by_surface,
         "by_factor": by_factor,

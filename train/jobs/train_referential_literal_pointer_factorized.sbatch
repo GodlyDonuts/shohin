@@ -16,7 +16,7 @@ export OMP_NUM_THREADS=4
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 cd "$BASE"
 
-ARM=${ARM:?set ARM to islands, ordinary, structured, or free_slots}
+ARM=${ARM:?set ARM to islands, ordinary, structured, free_slots, or shuffled_islands}
 SEED=${SEED:-2026071810}
 CKPT=${CKPT:-$BASE/train/flagship_out/ckpt_0300000.pt}
 DATA_DIR=${DATA_DIR:-$BASE/artifacts/r12/referential_literal_pointer_factorized_v1}
@@ -43,6 +43,13 @@ case "$ARM" in
       --layer 19 --width 256 --heads 8 --decoder-layers 2 --ff 1024
       --encoder-layers 4 --role-supervision --role-weight 0.5
       --separate-kind-decoder
+    )
+    ;;
+  shuffled_islands)
+    ARM_ARGS=(
+      --layer 19 --width 256 --heads 8 --decoder-layers 2 --ff 1024
+      --encoder-layers 4 --role-supervision --role-weight 0.5
+      --separate-kind-decoder --shuffle-supervision
     )
     ;;
   ordinary)

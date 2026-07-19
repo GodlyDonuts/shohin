@@ -26,6 +26,7 @@ from referential_literal_pointer_compiler import (
     pad_batch,
     role_supervision_loss,
     sha256_file,
+    shuffle_supervision_within_length,
 )
 
 
@@ -59,6 +60,7 @@ def main():
     parser.add_argument("--role-weight", type=float, default=0.0)
     parser.add_argument("--separate-kind-decoder", action="store_true")
     parser.add_argument("--ordinary-tagger", action="store_true")
+    parser.add_argument("--shuffle-supervision", action="store_true")
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--epochs", type=int, default=1)
     parser.add_argument("--max-examples", type=int, default=0)
@@ -113,6 +115,8 @@ def main():
         args.data, tokenizer, "train", cfg.seq_len, keep_evidence=False,
         limit=args.max_examples,
     )
+    if args.shuffle_supervision:
+        examples = shuffle_supervision_within_length(examples, args.seed ^ 0xBAD5EED)
     model = GPT(cfg).to("cuda").eval()
     model.load_state_dict(checkpoint["model"])
     if args.ordinary_tagger:
@@ -146,6 +150,8 @@ def main():
     epoch_batches = [make_batches(examples, args.batch_size, args.seed + epoch) for epoch in range(args.epochs)]
     total_steps = sum(len(batches) for batches in epoch_batches)
     protocol = (
+            "r12_referential_literal_pointer_compiler_shuffled_islands_development"
+            if args.shuffle_supervision else
             "r12_referential_literal_pointer_compiler_ordinary_tagger_development"
             if args.ordinary_tagger else
             "r12_referential_literal_pointer_compiler_v1_3_islands_development"
@@ -180,6 +186,12 @@ def main():
         "role_weight": args.role_weight,
         "separate_kind_decoder": args.separate_kind_decoder,
         "ordinary_tagger": args.ordinary_tagger,
+        "shuffle_supervision": args.shuffle_supervision,
+        "shuffle_contract": (
+            "pointer targets independently permuted per label within equal-token-length buckets; "
+            "kind pairs independently permuted within the same buckets"
+            if args.shuffle_supervision else None
+        ),
         "batch_size": args.batch_size,
         "epochs": args.epochs,
         "examples": len(examples),

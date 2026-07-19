@@ -122,6 +122,41 @@ class ReferentialLiteralPointerCompilerTest(unittest.TestCase):
         self.assertTrue(torch.isfinite(loss + role))
         (loss + role).backward()
 
+    def test_shuffled_supervision_preserves_shapes_and_length_buckets(self):
+        examples = [
+            compiler_module.compile_row(self.row, self.tokenizer, keep_evidence=True)
+            for _ in range(4)
+        ]
+        shuffled = compiler_module.shuffle_supervision_within_length(examples, seed=7)
+        self.assertEqual([len(example.ids) for example in shuffled],
+                         [len(example.ids) for example in examples])
+        self.assertEqual(len(shuffled), len(examples))
+        for example in shuffled:
+            self.assertEqual(set(example.target_positions), set(compiler_module.TARGET_LABELS))
+
+    def test_oracle_modes_override_only_declared_fields(self):
+        example = compiler_module.compile_row(self.row, self.tokenizer, keep_evidence=True)
+        pointers = {label: 0 for label in compiler_module.TARGET_LABELS}
+        kinds = (1 - example.kind_targets[0], 1 - example.kind_targets[1])
+        lexical_pointers, lexical_kinds = compiler_module.apply_oracle_predictions(
+            example, pointers, kinds, "lexical",
+        )
+        structure_pointers, structure_kinds = compiler_module.apply_oracle_predictions(
+            example, pointers, kinds, "structure",
+        )
+        full_pointers, full_kinds = compiler_module.apply_oracle_predictions(
+            example, pointers, kinds, "full",
+        )
+        self.assertEqual(lexical_pointers, pointers)
+        self.assertEqual(lexical_kinds, example.kind_targets)
+        self.assertEqual(structure_kinds, kinds)
+        self.assertTrue(all(
+            structure_pointers[label] in example.target_positions[label]
+            for label in compiler_module.TARGET_LABELS
+        ))
+        self.assertEqual(full_pointers, structure_pointers)
+        self.assertEqual(full_kinds, example.kind_targets)
+
 
 if __name__ == "__main__":
     unittest.main()

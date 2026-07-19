@@ -13,7 +13,7 @@ import json
 import math
 import random
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 import torch
 import torch.nn as nn
@@ -153,6 +153,50 @@ def load_examples(path, tokenizer, expected_split, seq_len, keep_evidence=False,
     if not examples:
         raise ValueError("no compiler examples loaded")
     return examples
+
+
+def shuffle_supervision_within_length(examples, seed):
+    """Destroy source/target association while preserving length-conditioned marginals."""
+    rng = random.Random(seed)
+    buckets = collections.defaultdict(list)
+    for index, example in enumerate(examples):
+        buckets[len(example.ids)].append(index)
+    replacements = [None] * len(examples)
+    for indices in buckets.values():
+        label_sources = {}
+        for label in TARGET_LABELS:
+            sources = list(indices)
+            rng.shuffle(sources)
+            label_sources[label] = sources
+        kind_sources = list(indices)
+        rng.shuffle(kind_sources)
+        for offset, destination in enumerate(indices):
+            target_positions = {
+                label: examples[label_sources[label][offset]].target_positions[label]
+                for label in TARGET_LABELS
+            }
+            replacements[destination] = replace(
+                examples[destination],
+                target_positions=target_positions,
+                kind_targets=examples[kind_sources[offset]].kind_targets,
+            )
+    if any(example is None for example in replacements):
+        raise RuntimeError("shuffled supervision did not cover every example")
+    return replacements
+
+
+def apply_oracle_predictions(example, pointers, kinds, oracle):
+    if oracle not in {"none", "lexical", "structure", "full"}:
+        raise ValueError("unknown compiler oracle {}".format(oracle))
+    selected_pointers = dict(pointers)
+    selected_kinds = tuple(kinds)
+    if oracle in {"structure", "full"}:
+        selected_pointers = {
+            label: int(example.target_positions[label][0]) for label in TARGET_LABELS
+        }
+    if oracle in {"lexical", "full"}:
+        selected_kinds = tuple(example.kind_targets)
+    return selected_pointers, selected_kinds
 
 
 def make_batches(examples, batch_size, seed, shuffle=True):
