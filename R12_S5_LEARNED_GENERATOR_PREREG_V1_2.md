@@ -16,3 +16,16 @@ same deterministic 512-group builder against the same source/public/development
 exclusions. Never open prior confirmation bytes. The board must pass every
 existing gate before the sole matched fit and serial H100 evaluation. Failure
 closes S5.2; passing uses the original frozen assessor without repair or rescore.
+
+## Frozen Development Board
+
+Replacement seed `1639560669058669827` yields 2,048 rows / 512 groups over
+depths three through eight, with maximum length 345 tokens. Every corpus gate
+passes, including zero exact-prompt, 13-gram, factor, nonce-name, and roster
+token-multiset overlap against the admitted source/public/development inputs.
+Confirmation access is zero. Development data SHA-256 is
+`5d58f97f6763ac4b6550b4b2aeb959993537c185994b0ed49ac4b102c568582f`;
+report SHA-256 is
+`7e667a519f7cb7f3462edd51f75279bfc66260a34baa7414f06424be6cd71dd9`.
+Both Newton and local copies are read-only. Commit this receipt and aggregate
+report before the sole fit/evaluation job; no further seed or board is allowed.
