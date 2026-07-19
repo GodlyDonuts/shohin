@@ -29558,7 +29558,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-19 06:13 EDT
+**Last refreshed:** 2026-07-19 07:14 EDT
 **Flagship source of truth:** Newton Slurm job `686732`,
 `/lustre/fs1/home/sa305415/shohin/logs/flagship2_686732.out`
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -30344,6 +30344,28 @@ experiment, not a broad reasoning or novelty claim.
 Primary evidence: `R12_S4_EVENT_RELATIVE_POINTER_RESULT.md`, treatment report SHA-256
 `12005bd33248d7467036fb462a2e535866db29522bea2632dff0b2e24c7f58fe`, shuffled report SHA-256
 `409aa8b18ad8efd077c0ebd6ad3ccc14f053341fc9459c5082bced928c44d2d4`.
+
+### S4 v3 set-identity result
+
+S4 v3 removes absolute boundaries. It represents each lexical mention as a normalized sparse
+vocabulary histogram over a model-owned soft token set and matches event carriers to three roster
+carriers. The raw model and all v1 parser weights are frozen; only 589,824 event-membership
+parameters train, for 134,279,759 total parameters.
+
+On a new 2,048-row board with zero prompt/13-gram/name/factor/token-multiset overlap, v3 reaches
+**100% event count, 99.46% roster recovery, and 100% query recovery**. The identity channel is real:
+program exactness is 9.33% versus 0.10% under shuffled membership and exactly 0% after cyclic roster
+derangement; state drops 33.45% -> 11.82% under that intervention. But exact programs decay from
+35.76% at depth three to 0% at depth eight, far below frozen v1's 93.41% overall. The assessor
+therefore records `reject_s4_v3_fresh_development` at SHA-256
+`1b6cb30e5a75fd0e3315ccb369d0131aaa381c208a4c8a8e6627851510511b71`.
+
+The surviving decomposition is now precise: event count, roster identity, terminal query, and S3
+execution are solved at this bounded scale; event-local argument pairing is not. Learned global
+attention is the wrong interface. The next fresh-board test may combine frozen v1 role evidence with
+the causal roster carrier inside monotone regions induced only by model-discovered kind anchors. It
+is a deterministic structured decoder/control, not a new reasoning primitive or broad capability
+claim.
 
 ## Update Protocol
 

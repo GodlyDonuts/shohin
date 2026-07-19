@@ -2,7 +2,14 @@
 
 ## Status
 
-**Frozen before production seed selection, fresh-board generation, training, or score access.**
+**Closed negative on 2026-07-19.** The frozen assessor records
+`reject_s4_v3_fresh_development`. The treatment recovered 99.46% of roster carriers, 100% of event
+counts and queries, and a causally used identity channel, but only 9.33% exact programs versus
+93.41% for frozen v1. Confirmation was never generated or read. Full evidence is in
+`R12_S4_SET_IDENTITY_EVENT_BUS_RESULT.md`.
+
+The protocol was frozen before production seed selection, fresh-board generation, training, or
+score access.
 Three set-bus tests, one assessor test, one fresh-board mechanics test, `py_compile`, Ruff, Slurm
 syntax, and an actual raw-300k/v1 finite-backward construction pass. No production board, H100 fit,
 development score, or confirmation access exists at freeze.

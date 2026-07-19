@@ -1,0 +1,1771 @@
+{
+  "base_sha256": "211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6",
+  "claim_boundary": "Public autonomous event-count/program parsing with locked exact S3 action. No confirmation, unseen semantics, planning, broad reasoning, or novelty claim.",
+  "confirmation_access": 0,
+  "data_sha256": "b49ddbbfad3da04181d6ec5401f8412b2953185e5e91e344208c8b6b0c5ba1e8",
+  "development_access": 1,
+  "execution_protocol": "locked_s3_v1_4_exact_local_action_table",
+  "failure_reasons": {
+    "entity_identity": 3,
+    "event_component_cardinality": 88,
+    "intro_cardinality": 44
+  },
+  "failures": [
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 6,
+      "failure_reason": "intro_cardinality",
+      "id": "S4-DEV-000021-canonical",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        2
+      ],
+      "predicted_event_count": 6,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        6,
+        6,
+        6
+      ],
+      "state_exact": false,
+      "surface_type": "canonical",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 6,
+      "failure_reason": "intro_cardinality",
+      "id": "S4-DEV-000021-order_twin",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        2
+      ],
+      "predicted_event_count": 6,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        6,
+        6,
+        6
+      ],
+      "state_exact": false,
+      "surface_type": "order_twin",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 6,
+      "failure_reason": "intro_cardinality",
+      "id": "S4-DEV-000021-binding_twin",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        2
+      ],
+      "predicted_event_count": 6,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        6,
+        6,
+        6
+      ],
+      "state_exact": false,
+      "surface_type": "binding_twin",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 3,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000024-canonical",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 3,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        3,
+        4,
+        3
+      ],
+      "state_exact": false,
+      "surface_type": "canonical",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 4,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000025-binding_twin",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 4,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        4,
+        5,
+        4
+      ],
+      "state_exact": false,
+      "surface_type": "binding_twin",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 3,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000030-canonical",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 3,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        3,
+        4,
+        3
+      ],
+      "state_exact": false,
+      "surface_type": "canonical",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 3,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000030-binding_twin",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 3,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        3,
+        4,
+        3
+      ],
+      "state_exact": false,
+      "surface_type": "binding_twin",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 5,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000032-canonical",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 5,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        5,
+        6,
+        5
+      ],
+      "state_exact": false,
+      "surface_type": "canonical",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 6,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000033-canonical",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 6,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        6,
+        7,
+        6
+      ],
+      "state_exact": false,
+      "surface_type": "canonical",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 6,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000033-paraphrase",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 6,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        6,
+        7,
+        6
+      ],
+      "state_exact": false,
+      "surface_type": "paraphrase",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 6,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000033-binding_twin",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 6,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        6,
+        7,
+        6
+      ],
+      "state_exact": false,
+      "surface_type": "binding_twin",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 4,
+      "failure_reason": "intro_cardinality",
+      "id": "S4-DEV-000037-canonical",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        2
+      ],
+      "predicted_event_count": 4,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        4,
+        4,
+        4
+      ],
+      "state_exact": false,
+      "surface_type": "canonical",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 4,
+      "failure_reason": "intro_cardinality",
+      "id": "S4-DEV-000037-paraphrase",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        2
+      ],
+      "predicted_event_count": 4,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        4,
+        4,
+        4
+      ],
+      "state_exact": false,
+      "surface_type": "paraphrase",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 4,
+      "failure_reason": "intro_cardinality",
+      "id": "S4-DEV-000037-order_twin",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        2
+      ],
+      "predicted_event_count": 4,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        4,
+        4,
+        4
+      ],
+      "state_exact": false,
+      "surface_type": "order_twin",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 4,
+      "failure_reason": "intro_cardinality",
+      "id": "S4-DEV-000037-binding_twin",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        2
+      ],
+      "predicted_event_count": 4,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        4,
+        4,
+        4
+      ],
+      "state_exact": false,
+      "surface_type": "binding_twin",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 4,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000043-order_twin",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 4,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        4,
+        5,
+        4
+      ],
+      "state_exact": false,
+      "surface_type": "order_twin",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 4,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000043-binding_twin",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 4,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        4,
+        5,
+        4
+      ],
+      "state_exact": false,
+      "surface_type": "binding_twin",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 8,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000047-order_twin",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 8,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        8,
+        9,
+        8
+      ],
+      "state_exact": false,
+      "surface_type": "order_twin",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 7,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000052-paraphrase",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 7,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        7,
+        8,
+        7
+      ],
+      "state_exact": false,
+      "surface_type": "paraphrase",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 8,
+      "failure_reason": "intro_cardinality",
+      "id": "S4-DEV-000059-canonical",
+      "initial_exact": false,
+      "intro_run_counts": [
+        2,
+        2,
+        1
+      ],
+      "predicted_event_count": 8,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        8,
+        8,
+        8
+      ],
+      "state_exact": false,
+      "surface_type": "canonical",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 8,
+      "failure_reason": "intro_cardinality",
+      "id": "S4-DEV-000059-paraphrase",
+      "initial_exact": false,
+      "intro_run_counts": [
+        2,
+        2,
+        1
+      ],
+      "predicted_event_count": 8,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        8,
+        9,
+        8
+      ],
+      "state_exact": false,
+      "surface_type": "paraphrase",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 8,
+      "failure_reason": "intro_cardinality",
+      "id": "S4-DEV-000059-order_twin",
+      "initial_exact": false,
+      "intro_run_counts": [
+        2,
+        2,
+        1
+      ],
+      "predicted_event_count": 8,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        8,
+        8,
+        8
+      ],
+      "state_exact": false,
+      "surface_type": "order_twin",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 8,
+      "failure_reason": "intro_cardinality",
+      "id": "S4-DEV-000059-binding_twin",
+      "initial_exact": false,
+      "intro_run_counts": [
+        2,
+        2,
+        1
+      ],
+      "predicted_event_count": 8,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        8,
+        8,
+        8
+      ],
+      "state_exact": false,
+      "surface_type": "binding_twin",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 5,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000062-order_twin",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 5,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        5,
+        6,
+        5
+      ],
+      "state_exact": false,
+      "surface_type": "order_twin",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 8,
+      "failure_reason": "intro_cardinality",
+      "id": "S4-DEV-000065-canonical",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        2,
+        1
+      ],
+      "predicted_event_count": 8,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        8,
+        9,
+        8
+      ],
+      "state_exact": false,
+      "surface_type": "canonical",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 8,
+      "failure_reason": "intro_cardinality",
+      "id": "S4-DEV-000065-order_twin",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        2,
+        1
+      ],
+      "predicted_event_count": 8,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        8,
+        8,
+        8
+      ],
+      "state_exact": false,
+      "surface_type": "order_twin",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 8,
+      "failure_reason": "intro_cardinality",
+      "id": "S4-DEV-000065-binding_twin",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        2,
+        1
+      ],
+      "predicted_event_count": 8,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        8,
+        9,
+        8
+      ],
+      "state_exact": false,
+      "surface_type": "binding_twin",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 3,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000066-paraphrase",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 3,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        3,
+        4,
+        3
+      ],
+      "state_exact": false,
+      "surface_type": "paraphrase",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 8,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000113-canonical",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 8,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        8,
+        9,
+        8
+      ],
+      "state_exact": false,
+      "surface_type": "canonical",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 8,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000113-order_twin",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 8,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        8,
+        9,
+        8
+      ],
+      "state_exact": false,
+      "surface_type": "order_twin",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 8,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000113-binding_twin",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 8,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        8,
+        9,
+        8
+      ],
+      "state_exact": false,
+      "surface_type": "binding_twin",
+      "valid": false
+    },
+    {
+      "all_kind_lexical_matched": false,
+      "answer_correct": false,
+      "count_exact": true,
+      "depth": 5,
+      "failure_reason": "event_component_cardinality",
+      "id": "S4-DEV-000134-canonical",
+      "initial_exact": false,
+      "intro_run_counts": [
+        1,
+        1,
+        1
+      ],
+      "predicted_event_count": 5,
+      "program_exact": false,
+      "query_exact": false,
+      "query_run_count": 1,
+      "raw_component_counts": [
+        5,
+        6,
+        5
+      ],
+      "state_exact": false,
+      "surface_type": "canonical",
+      "valid": false
+    }
+  ],
+  "gold_count_control": {
+    "by_depth": {
+      "3": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.9622093023255814,
+          "correct": 331
+        },
+        "answer_correct": {
+          "accuracy": 0.9622093023255814,
+          "correct": 331
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 344
+        },
+        "initial_exact": {
+          "accuracy": 0.9622093023255814,
+          "correct": 331
+        },
+        "mean_predicted_event_count": 3.0,
+        "program_exact": {
+          "accuracy": 0.9622093023255814,
+          "correct": 331
+        },
+        "query_exact": {
+          "accuracy": 0.9622093023255814,
+          "correct": 331
+        },
+        "rows": 344,
+        "state_exact": {
+          "accuracy": 0.9622093023255814,
+          "correct": 331
+        },
+        "valid": {
+          "accuracy": 0.9622093023255814,
+          "correct": 331
+        }
+      },
+      "4": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.9186046511627907,
+          "correct": 316
+        },
+        "answer_correct": {
+          "accuracy": 0.9186046511627907,
+          "correct": 316
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 344
+        },
+        "initial_exact": {
+          "accuracy": 0.9186046511627907,
+          "correct": 316
+        },
+        "mean_predicted_event_count": 4.0,
+        "program_exact": {
+          "accuracy": 0.9186046511627907,
+          "correct": 316
+        },
+        "query_exact": {
+          "accuracy": 0.9186046511627907,
+          "correct": 316
+        },
+        "rows": 344,
+        "state_exact": {
+          "accuracy": 0.9186046511627907,
+          "correct": 316
+        },
+        "valid": {
+          "accuracy": 0.9186046511627907,
+          "correct": 316
+        }
+      },
+      "5": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.9529411764705882,
+          "correct": 324
+        },
+        "answer_correct": {
+          "accuracy": 0.9529411764705882,
+          "correct": 324
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 340
+        },
+        "initial_exact": {
+          "accuracy": 0.9529411764705882,
+          "correct": 324
+        },
+        "mean_predicted_event_count": 5.0,
+        "program_exact": {
+          "accuracy": 0.9529411764705882,
+          "correct": 324
+        },
+        "query_exact": {
+          "accuracy": 0.9529411764705882,
+          "correct": 324
+        },
+        "rows": 340,
+        "state_exact": {
+          "accuracy": 0.9529411764705882,
+          "correct": 324
+        },
+        "valid": {
+          "accuracy": 0.9529411764705882,
+          "correct": 324
+        }
+      },
+      "6": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.9558823529411765,
+          "correct": 325
+        },
+        "answer_correct": {
+          "accuracy": 0.9558823529411765,
+          "correct": 325
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 340
+        },
+        "initial_exact": {
+          "accuracy": 0.9558823529411765,
+          "correct": 325
+        },
+        "mean_predicted_event_count": 6.0,
+        "program_exact": {
+          "accuracy": 0.9558823529411765,
+          "correct": 325
+        },
+        "query_exact": {
+          "accuracy": 0.9558823529411765,
+          "correct": 325
+        },
+        "rows": 340,
+        "state_exact": {
+          "accuracy": 0.9558823529411765,
+          "correct": 325
+        },
+        "valid": {
+          "accuracy": 0.9558823529411765,
+          "correct": 325
+        }
+      },
+      "7": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.9411764705882353,
+          "correct": 320
+        },
+        "answer_correct": {
+          "accuracy": 0.9411764705882353,
+          "correct": 320
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 340
+        },
+        "initial_exact": {
+          "accuracy": 0.9411764705882353,
+          "correct": 320
+        },
+        "mean_predicted_event_count": 7.0,
+        "program_exact": {
+          "accuracy": 0.9411764705882353,
+          "correct": 320
+        },
+        "query_exact": {
+          "accuracy": 0.9411764705882353,
+          "correct": 320
+        },
+        "rows": 340,
+        "state_exact": {
+          "accuracy": 0.9411764705882353,
+          "correct": 320
+        },
+        "valid": {
+          "accuracy": 0.9411764705882353,
+          "correct": 320
+        }
+      },
+      "8": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.9147058823529411,
+          "correct": 311
+        },
+        "answer_correct": {
+          "accuracy": 0.9147058823529411,
+          "correct": 311
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 340
+        },
+        "initial_exact": {
+          "accuracy": 0.9147058823529411,
+          "correct": 311
+        },
+        "mean_predicted_event_count": 8.0,
+        "program_exact": {
+          "accuracy": 0.9147058823529411,
+          "correct": 311
+        },
+        "query_exact": {
+          "accuracy": 0.9147058823529411,
+          "correct": 311
+        },
+        "rows": 340,
+        "state_exact": {
+          "accuracy": 0.9147058823529411,
+          "correct": 311
+        },
+        "valid": {
+          "accuracy": 0.9147058823529411,
+          "correct": 311
+        }
+      }
+    },
+    "overall": {
+      "all_kind_lexical_matched": {
+        "accuracy": 0.94091796875,
+        "correct": 1927
+      },
+      "answer_correct": {
+        "accuracy": 0.94091796875,
+        "correct": 1927
+      },
+      "count_exact": {
+        "accuracy": 1.0,
+        "correct": 2048
+      },
+      "initial_exact": {
+        "accuracy": 0.94091796875,
+        "correct": 1927
+      },
+      "mean_predicted_event_count": 5.4921875,
+      "program_exact": {
+        "accuracy": 0.94091796875,
+        "correct": 1927
+      },
+      "query_exact": {
+        "accuracy": 0.94091796875,
+        "correct": 1927
+      },
+      "rows": 2048,
+      "state_exact": {
+        "accuracy": 0.94091796875,
+        "correct": 1927
+      },
+      "valid": {
+        "accuracy": 0.94091796875,
+        "correct": 1927
+      }
+    }
+  },
+  "gold_event_s3_sanity": true,
+  "gold_intro_query_control": {
+    "by_depth": {
+      "3": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.9593023255813954,
+          "correct": 330
+        },
+        "answer_correct": {
+          "accuracy": 0.9593023255813954,
+          "correct": 330
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 344
+        },
+        "initial_exact": {
+          "accuracy": 0.9593023255813954,
+          "correct": 330
+        },
+        "mean_predicted_event_count": 3.0,
+        "program_exact": {
+          "accuracy": 0.9593023255813954,
+          "correct": 330
+        },
+        "query_exact": {
+          "accuracy": 0.9593023255813954,
+          "correct": 330
+        },
+        "rows": 344,
+        "state_exact": {
+          "accuracy": 0.9593023255813954,
+          "correct": 330
+        },
+        "valid": {
+          "accuracy": 0.9593023255813954,
+          "correct": 330
+        }
+      },
+      "4": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.936046511627907,
+          "correct": 322
+        },
+        "answer_correct": {
+          "accuracy": 0.936046511627907,
+          "correct": 322
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 344
+        },
+        "initial_exact": {
+          "accuracy": 0.936046511627907,
+          "correct": 322
+        },
+        "mean_predicted_event_count": 4.0,
+        "program_exact": {
+          "accuracy": 0.936046511627907,
+          "correct": 322
+        },
+        "query_exact": {
+          "accuracy": 0.936046511627907,
+          "correct": 322
+        },
+        "rows": 344,
+        "state_exact": {
+          "accuracy": 0.936046511627907,
+          "correct": 322
+        },
+        "valid": {
+          "accuracy": 0.936046511627907,
+          "correct": 322
+        }
+      },
+      "5": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.961764705882353,
+          "correct": 327
+        },
+        "answer_correct": {
+          "accuracy": 0.961764705882353,
+          "correct": 327
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 340
+        },
+        "initial_exact": {
+          "accuracy": 0.961764705882353,
+          "correct": 327
+        },
+        "mean_predicted_event_count": 5.0,
+        "program_exact": {
+          "accuracy": 0.961764705882353,
+          "correct": 327
+        },
+        "query_exact": {
+          "accuracy": 0.961764705882353,
+          "correct": 327
+        },
+        "rows": 340,
+        "state_exact": {
+          "accuracy": 0.961764705882353,
+          "correct": 327
+        },
+        "valid": {
+          "accuracy": 0.961764705882353,
+          "correct": 327
+        }
+      },
+      "6": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.9735294117647059,
+          "correct": 331
+        },
+        "answer_correct": {
+          "accuracy": 0.9735294117647059,
+          "correct": 331
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 340
+        },
+        "initial_exact": {
+          "accuracy": 0.9735294117647059,
+          "correct": 331
+        },
+        "mean_predicted_event_count": 6.0,
+        "program_exact": {
+          "accuracy": 0.9735294117647059,
+          "correct": 331
+        },
+        "query_exact": {
+          "accuracy": 0.9735294117647059,
+          "correct": 331
+        },
+        "rows": 340,
+        "state_exact": {
+          "accuracy": 0.9735294117647059,
+          "correct": 331
+        },
+        "valid": {
+          "accuracy": 0.9735294117647059,
+          "correct": 331
+        }
+      },
+      "7": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.95,
+          "correct": 323
+        },
+        "answer_correct": {
+          "accuracy": 0.95,
+          "correct": 323
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 340
+        },
+        "initial_exact": {
+          "accuracy": 0.95,
+          "correct": 323
+        },
+        "mean_predicted_event_count": 7.0,
+        "program_exact": {
+          "accuracy": 0.95,
+          "correct": 323
+        },
+        "query_exact": {
+          "accuracy": 0.95,
+          "correct": 323
+        },
+        "rows": 340,
+        "state_exact": {
+          "accuracy": 0.95,
+          "correct": 323
+        },
+        "valid": {
+          "accuracy": 0.95,
+          "correct": 323
+        }
+      },
+      "8": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.9382352941176471,
+          "correct": 319
+        },
+        "answer_correct": {
+          "accuracy": 0.9382352941176471,
+          "correct": 319
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 340
+        },
+        "initial_exact": {
+          "accuracy": 0.9382352941176471,
+          "correct": 319
+        },
+        "mean_predicted_event_count": 8.0,
+        "program_exact": {
+          "accuracy": 0.9382352941176471,
+          "correct": 319
+        },
+        "query_exact": {
+          "accuracy": 0.9382352941176471,
+          "correct": 319
+        },
+        "rows": 340,
+        "state_exact": {
+          "accuracy": 0.9382352941176471,
+          "correct": 319
+        },
+        "valid": {
+          "accuracy": 0.9382352941176471,
+          "correct": 319
+        }
+      }
+    },
+    "overall": {
+      "all_kind_lexical_matched": {
+        "accuracy": 0.953125,
+        "correct": 1952
+      },
+      "answer_correct": {
+        "accuracy": 0.953125,
+        "correct": 1952
+      },
+      "count_exact": {
+        "accuracy": 1.0,
+        "correct": 2048
+      },
+      "initial_exact": {
+        "accuracy": 0.953125,
+        "correct": 1952
+      },
+      "mean_predicted_event_count": 5.4921875,
+      "program_exact": {
+        "accuracy": 0.953125,
+        "correct": 1952
+      },
+      "query_exact": {
+        "accuracy": 0.953125,
+        "correct": 1952
+      },
+      "rows": 2048,
+      "state_exact": {
+        "accuracy": 0.953125,
+        "correct": 1952
+      },
+      "valid": {
+        "accuracy": 0.953125,
+        "correct": 1952
+      }
+    }
+  },
+  "parameter_count": 133689935,
+  "parser_adapter_sha256": "a064b03a6052c52c27e5468976af84bf09204de5efb85b5f78b66924974e70df",
+  "parser_protocol": "r12_s4_self_delimiting_event_parser_treatment_v1",
+  "parser_sha256": "0f9e9bb54b419507f7788055f5c975e30444eb584d7f22cd4ce3ec27ec9b96de",
+  "report_sha256": "808b0e0287e53576ffb234a5ea855943552ef3e60b2d3d20847b79f7254d692c",
+  "s3_executor_sha256": "39e77e4355b31314de1be5c8349d029c8d25027f29f4607da2b98672683e9830",
+  "s3_executor_state_sha256": "15f640d7482de592ed8394335c8e755c61ac9917cc916e680a83946ead93ace2",
+  "schema": "r12_s4_self_delimiting_event_tape_eval_v1",
+  "strict_autonomous": {
+    "by_depth": {
+      "3": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.9593023255813954,
+          "correct": 330
+        },
+        "answer_correct": {
+          "accuracy": 0.9593023255813954,
+          "correct": 330
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 344
+        },
+        "initial_exact": {
+          "accuracy": 0.9593023255813954,
+          "correct": 330
+        },
+        "mean_predicted_event_count": 3.0,
+        "program_exact": {
+          "accuracy": 0.9593023255813954,
+          "correct": 330
+        },
+        "query_exact": {
+          "accuracy": 0.9593023255813954,
+          "correct": 330
+        },
+        "rows": 344,
+        "state_exact": {
+          "accuracy": 0.9593023255813954,
+          "correct": 330
+        },
+        "valid": {
+          "accuracy": 0.9593023255813954,
+          "correct": 330
+        }
+      },
+      "4": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.9069767441860465,
+          "correct": 312
+        },
+        "answer_correct": {
+          "accuracy": 0.9069767441860465,
+          "correct": 312
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 344
+        },
+        "initial_exact": {
+          "accuracy": 0.9069767441860465,
+          "correct": 312
+        },
+        "mean_predicted_event_count": 4.0,
+        "program_exact": {
+          "accuracy": 0.9069767441860465,
+          "correct": 312
+        },
+        "query_exact": {
+          "accuracy": 0.9069767441860465,
+          "correct": 312
+        },
+        "rows": 344,
+        "state_exact": {
+          "accuracy": 0.9069767441860465,
+          "correct": 312
+        },
+        "valid": {
+          "accuracy": 0.9069767441860465,
+          "correct": 312
+        }
+      },
+      "5": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.9529411764705882,
+          "correct": 324
+        },
+        "answer_correct": {
+          "accuracy": 0.9529411764705882,
+          "correct": 324
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 340
+        },
+        "initial_exact": {
+          "accuracy": 0.9529411764705882,
+          "correct": 324
+        },
+        "mean_predicted_event_count": 5.0,
+        "program_exact": {
+          "accuracy": 0.9529411764705882,
+          "correct": 324
+        },
+        "query_exact": {
+          "accuracy": 0.9529411764705882,
+          "correct": 324
+        },
+        "rows": 340,
+        "state_exact": {
+          "accuracy": 0.9529411764705882,
+          "correct": 324
+        },
+        "valid": {
+          "accuracy": 0.9529411764705882,
+          "correct": 324
+        }
+      },
+      "6": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.9441176470588235,
+          "correct": 321
+        },
+        "answer_correct": {
+          "accuracy": 0.9441176470588235,
+          "correct": 321
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 340
+        },
+        "initial_exact": {
+          "accuracy": 0.9441176470588235,
+          "correct": 321
+        },
+        "mean_predicted_event_count": 6.0,
+        "program_exact": {
+          "accuracy": 0.9441176470588235,
+          "correct": 321
+        },
+        "query_exact": {
+          "accuracy": 0.9441176470588235,
+          "correct": 321
+        },
+        "rows": 340,
+        "state_exact": {
+          "accuracy": 0.9441176470588235,
+          "correct": 321
+        },
+        "valid": {
+          "accuracy": 0.9441176470588235,
+          "correct": 321
+        }
+      },
+      "7": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.9264705882352942,
+          "correct": 315
+        },
+        "answer_correct": {
+          "accuracy": 0.9264705882352942,
+          "correct": 315
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 340
+        },
+        "initial_exact": {
+          "accuracy": 0.9264705882352942,
+          "correct": 315
+        },
+        "mean_predicted_event_count": 7.0,
+        "program_exact": {
+          "accuracy": 0.9264705882352942,
+          "correct": 315
+        },
+        "query_exact": {
+          "accuracy": 0.9264705882352942,
+          "correct": 315
+        },
+        "rows": 340,
+        "state_exact": {
+          "accuracy": 0.9264705882352942,
+          "correct": 315
+        },
+        "valid": {
+          "accuracy": 0.9264705882352942,
+          "correct": 315
+        }
+      },
+      "8": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.9147058823529411,
+          "correct": 311
+        },
+        "answer_correct": {
+          "accuracy": 0.9147058823529411,
+          "correct": 311
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 340
+        },
+        "initial_exact": {
+          "accuracy": 0.9147058823529411,
+          "correct": 311
+        },
+        "mean_predicted_event_count": 8.0,
+        "program_exact": {
+          "accuracy": 0.9147058823529411,
+          "correct": 311
+        },
+        "query_exact": {
+          "accuracy": 0.9147058823529411,
+          "correct": 311
+        },
+        "rows": 340,
+        "state_exact": {
+          "accuracy": 0.9147058823529411,
+          "correct": 311
+        },
+        "valid": {
+          "accuracy": 0.9147058823529411,
+          "correct": 311
+        }
+      }
+    },
+    "by_surface": {
+      "binding_twin": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.931640625,
+          "correct": 477
+        },
+        "answer_correct": {
+          "accuracy": 0.931640625,
+          "correct": 477
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 512
+        },
+        "initial_exact": {
+          "accuracy": 0.931640625,
+          "correct": 477
+        },
+        "mean_predicted_event_count": 5.4921875,
+        "program_exact": {
+          "accuracy": 0.931640625,
+          "correct": 477
+        },
+        "query_exact": {
+          "accuracy": 0.931640625,
+          "correct": 477
+        },
+        "rows": 512,
+        "state_exact": {
+          "accuracy": 0.931640625,
+          "correct": 477
+        },
+        "valid": {
+          "accuracy": 0.931640625,
+          "correct": 477
+        }
+      },
+      "canonical": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.93359375,
+          "correct": 478
+        },
+        "answer_correct": {
+          "accuracy": 0.93359375,
+          "correct": 478
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 512
+        },
+        "initial_exact": {
+          "accuracy": 0.93359375,
+          "correct": 478
+        },
+        "mean_predicted_event_count": 5.4921875,
+        "program_exact": {
+          "accuracy": 0.93359375,
+          "correct": 478
+        },
+        "query_exact": {
+          "accuracy": 0.93359375,
+          "correct": 478
+        },
+        "rows": 512,
+        "state_exact": {
+          "accuracy": 0.93359375,
+          "correct": 478
+        },
+        "valid": {
+          "accuracy": 0.93359375,
+          "correct": 478
+        }
+      },
+      "order_twin": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.931640625,
+          "correct": 477
+        },
+        "answer_correct": {
+          "accuracy": 0.931640625,
+          "correct": 477
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 512
+        },
+        "initial_exact": {
+          "accuracy": 0.931640625,
+          "correct": 477
+        },
+        "mean_predicted_event_count": 5.4921875,
+        "program_exact": {
+          "accuracy": 0.931640625,
+          "correct": 477
+        },
+        "query_exact": {
+          "accuracy": 0.931640625,
+          "correct": 477
+        },
+        "rows": 512,
+        "state_exact": {
+          "accuracy": 0.931640625,
+          "correct": 477
+        },
+        "valid": {
+          "accuracy": 0.931640625,
+          "correct": 477
+        }
+      },
+      "paraphrase": {
+        "all_kind_lexical_matched": {
+          "accuracy": 0.939453125,
+          "correct": 481
+        },
+        "answer_correct": {
+          "accuracy": 0.939453125,
+          "correct": 481
+        },
+        "count_exact": {
+          "accuracy": 1.0,
+          "correct": 512
+        },
+        "initial_exact": {
+          "accuracy": 0.939453125,
+          "correct": 481
+        },
+        "mean_predicted_event_count": 5.4921875,
+        "program_exact": {
+          "accuracy": 0.939453125,
+          "correct": 481
+        },
+        "query_exact": {
+          "accuracy": 0.939453125,
+          "correct": 481
+        },
+        "rows": 512,
+        "state_exact": {
+          "accuracy": 0.939453125,
+          "correct": 481
+        },
+        "valid": {
+          "accuracy": 0.939453125,
+          "correct": 481
+        }
+      }
+    },
+    "overall": {
+      "all_kind_lexical_matched": {
+        "accuracy": 0.93408203125,
+        "correct": 1913
+      },
+      "answer_correct": {
+        "accuracy": 0.93408203125,
+        "correct": 1913
+      },
+      "count_exact": {
+        "accuracy": 1.0,
+        "correct": 2048
+      },
+      "initial_exact": {
+        "accuracy": 0.93408203125,
+        "correct": 1913
+      },
+      "mean_predicted_event_count": 5.4921875,
+      "program_exact": {
+        "accuracy": 0.93408203125,
+        "correct": 1913
+      },
+      "query_exact": {
+        "accuracy": 0.93408203125,
+        "correct": 1913
+      },
+      "rows": 2048,
+      "state_exact": {
+        "accuracy": 0.93408203125,
+        "correct": 1913
+      },
+      "valid": {
+        "accuracy": 0.93408203125,
+        "correct": 1913
+      }
+    }
+  },
+  "structural_lexicon_sha256": null
+}

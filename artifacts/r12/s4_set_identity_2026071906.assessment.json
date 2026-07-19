@@ -1,0 +1,36 @@
+{
+  "all_gates_pass": false,
+  "assessor_sha256": "e88a83a54dee0071ab738da8484482790b06fed8242c245d25a67e3cf9cb14cc",
+  "baseline_program_accuracy": 0.93408203125,
+  "baseline_report_sha256": "c2236edc9da3ee68e8bb1a7e96a33194cfcff44bd7b642e8787c143a03b04bca",
+  "claim_boundary": "Fresh-development known-atom set-identity parsing only. No confirmation, unseen semantics, planning, learned halt, free-form reasoning, benchmark, or novelty claim.",
+  "decision": "reject_s4_v3_fresh_development",
+  "gates": {
+    "answer_overall_at_least_95pct": false,
+    "confirmation_access_zero": true,
+    "count_every_depth_at_least_95pct": true,
+    "count_overall_at_least_98pct": true,
+    "development_access_exactly_one": true,
+    "gold_s3_sanity": true,
+    "initial_roster_at_least_95pct": true,
+    "program_at_least_v1_plus_1pp": false,
+    "program_depths_5_to_8_at_least_90pct": false,
+    "program_overall_at_least_95pct": false,
+    "roster_deranged_program_at_most_40pct": true,
+    "shuffled_program_at_most_40pct": true,
+    "state_overall_at_least_95pct": false,
+    "total_parameters_below_150m": true
+  },
+  "roster_deranged_program_accuracy": 0.0,
+  "schema": "r12_s4_set_identity_event_bus_assessment_v3",
+  "shuffled_program_accuracy": 0.0009765625,
+  "shuffled_report_sha256": "f96b5164eec7694e04a25ca07465c48ae7ebcc10614397b56615be617610c1fc",
+  "treatment": {
+    "answer_correct": 0.46337890625,
+    "count_exact": 1.0,
+    "initial_exact": 0.99462890625,
+    "program_exact": 0.09326171875,
+    "state_exact": 0.33447265625
+  },
+  "treatment_report_sha256": "3677c08c3e5402d61c8d40159c1d92a205d65df1f8913087c54a2e20767b98ce"
+}

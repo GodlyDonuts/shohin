@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 07:00 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 07:14 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8597,3 +8597,17 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   regression test, rerun finite backward/static gates, commit, and resubmit both arms unchanged on
   the already frozen board. This repair has no treatment loss trajectory or development score to
   tune against.
+
+- **2026-07-19 07:00--07:14** -- **S4 v3 is rejected, while the set-valued roster carrier is
+  retained as a real causal component.** Corrected matched fits `693170/693171` complete exactly
+  750 updates; one-shot evaluations `693172/693173` and assessor `693174` complete cleanly. Frozen
+  v1 remains **1913/2048 = 93.408% exact programs**. Treatment is **2048/2048 event count,
+  2037/2048 = 99.463% roster recovery, 2048/2048 query**, but only **191/2048 = 9.326% programs,
+  685/2048 = 33.447% state, and 949/2048 = 46.338% answers**. Shuffled membership has 2/2048
+  programs; cyclic roster derangement gives 0/2048 and drops treatment state/answer to 11.816% /
+  27.734%. Thus lexical set identity is causally read, but learned global event-to-argument pairing
+  decays from 35.8% programs at depth three to zero at depth eight. Assessment SHA `1b6cb30e...`
+  records `reject_s4_v3_fresh_development`; no confirmation exists. Preserve roster/query soft sets;
+  close learned global event attention. The next bounded source must use model-discovered kind
+  anchors to impose monotone event-local regions over frozen v1 role evidence, add no gold depth or
+  learned lexical table, and require fresh event-region/roster derangement controls.
