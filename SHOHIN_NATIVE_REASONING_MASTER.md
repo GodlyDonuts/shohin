@@ -29558,7 +29558,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-19 07:14 EDT
+**Last refreshed:** 2026-07-19 07:25 EDT
 **Flagship source of truth:** Newton Slurm job `686732`,
 `/lustre/fs1/home/sa305415/shohin/logs/flagship2_686732.out`
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -30366,6 +30366,21 @@ attention is the wrong interface. The next fresh-board test may combine frozen v
 the causal roster carrier inside monotone regions induced only by model-discovered kind anchors. It
 is a deterministic structured decoder/control, not a new reasoning primitive or broad capability
 claim.
+
+### S4 v4 monotone locality result
+
+S4 v4 adds no weights. Frozen kind anchors partition the source into ordered regions; frozen role
+evidence is normalized only inside each region, and v3's causal set carrier resolves identity. On a
+new disjoint 2,048-row board it reaches **100% count, 97.95% roster, 100% query, 70.46% exact
+programs, 83.15% state, and 87.06% answers**. Rotating either roster carriers or event regions
+drives exact programs to zero, proving both interfaces are used. But frozen v1 remains stronger at
+93.21% programs, and v4 decays from 85.76% at depth three to 58.82% at depth eight.
+
+This negative identifies the representation error: regional locality is right, but a diffuse
+softmax over the entire region destroys the hard contiguous event islands already learned by v1.
+Frozen v1 reaches 95.70% when only intro/query boundaries are supplied. The next lawful decoder
+therefore combines hard model-owned entity/literal islands inside monotone regions with soft
+roster/query carriers; it must not fit new weights or tune on the closed v4 board.
 
 ## Update Protocol
 

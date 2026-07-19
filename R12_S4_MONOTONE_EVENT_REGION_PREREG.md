@@ -2,9 +2,14 @@
 
 ## Status
 
-**Source frozen at commit `0c8aa8c` before production seed selection, board generation, model
-evaluation, or score access. The sole fresh-development board is now admitted and frozen; no model
-has accessed it.**
+**Closed negative on 2026-07-19.** The frozen assessor records
+`reject_s4_v4_fresh_development`: 70.46% exact programs versus 93.21% for frozen v1. Both roster
+and event-region derangements fall to zero programs, so locality is causal but the diffuse regional
+softmax is insufficiently precise. Confirmation was never generated or read. Full evidence is in
+`R12_S4_MONOTONE_EVENT_REGION_RESULT.md`.
+
+Source was frozen at commit `0c8aa8c` before production seed selection, board generation, model
+evaluation, or score access.
 
 Production seed `3847103809226516730` generated exactly 2,048 rows / 512 matched groups after the
 source freeze. All declared overlap and mechanics gates pass. Data, report, and read-only safe

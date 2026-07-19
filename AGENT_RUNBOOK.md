@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 07:14 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 07:25 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8632,3 +8632,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `train/s4_event_tape_treatment_2026071904/parser.pt`. Change only those literal job paths, verify
   every required remote file scorelessly, commit the receipt, and resubmit the identical decoder,
   board, controls, and assessor.
+
+- **2026-07-19 07:18--07:25** -- **S4 v4 is causally positive but rejected.** Serial job `693176`
+  completes on `evc24`. Frozen v1 scores 1909/2048 = **93.21% programs**; v4 recovers 100% count,
+  97.95% roster, and 100% query, but only 1443/2048 = **70.46% programs**, 83.15% state, and
+  87.06% answers. Roster rotation and event-region rotation each give exactly zero programs,
+  establishing causal use of both interfaces. Program exactness declines from 85.76% at depth
+  three to 58.82% at depth eight. The regression is mechanistic: frozen v1 reaches 95.70% when only
+  intro/query boundaries are supplied, while v4 replaced its sharp contiguous event islands with
+  diffuse regional distributions. Assessment SHA `63f9d5db...` records
+  `reject_s4_v4_fresh_development`; no confirmation exists. Preserve monotone regions plus soft
+  roster/query, restore hard frozen event.entity/event.literal islands, and require a new frozen
+  board for any v5 test.

@@ -1,0 +1,37 @@
+{
+  "all_gates_pass": false,
+  "assessor_sha256": "aa883148ea4d6193dd93e626d6792e4ff6a6406856a1b9c97dd69334995ba739",
+  "baseline_program_accuracy": 0.93212890625,
+  "baseline_report_sha256": "df4b0ddbc20c77efd5d39bb0f2fe3286245d1c68d38bec9c642d49f346daa44e",
+  "claim_boundary": "Fresh-development known-atom zero-fit locality parsing only. No confirmation, unseen semantics, planning, learned halt, free-form reasoning, benchmark, or novelty claim.",
+  "decision": "reject_s4_v4_fresh_development",
+  "event_deranged_program_accuracy": 0.0,
+  "gates": {
+    "answer_overall_at_least_95pct": false,
+    "confirmation_access_zero": true,
+    "count_every_depth_at_least_95pct": true,
+    "count_overall_at_least_98pct": true,
+    "development_access_exactly_one": true,
+    "event_deranged_program_at_most_40pct": true,
+    "gold_s3_sanity": true,
+    "initial_roster_at_least_95pct": true,
+    "program_at_least_v1_plus_1pp": false,
+    "program_depths_5_to_8_at_least_90pct": false,
+    "program_overall_at_least_95pct": false,
+    "query_overall_at_least_98pct": true,
+    "roster_deranged_program_at_most_40pct": true,
+    "state_overall_at_least_95pct": false,
+    "total_parameters_below_150m": true,
+    "zero_new_trainable_parameters": true
+  },
+  "roster_deranged_program_accuracy": 0.0,
+  "schema": "r12_s4_monotone_event_region_assessment_v4",
+  "treatment": {
+    "answer_correct": 0.87060546875,
+    "count_exact": 1.0,
+    "initial_exact": 0.9794921875,
+    "program_exact": 0.70458984375,
+    "state_exact": 0.83154296875
+  },
+  "treatment_report_sha256": "47604341285fb63a4fb2abce3c6db7859fa227eaef796858387c2d3ad5145985"
+}
