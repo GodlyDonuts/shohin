@@ -70,6 +70,7 @@ class CompilerExample:
     program: tuple = ()
     query_position: int = -1
     answer: str | None = None
+    factors: tuple = ()
 
 
 def sha256_file(path):
@@ -130,6 +131,7 @@ def compile_row(row, tokenizer, keep_evidence=False):
         ) if keep_evidence else (),
         query_position=int(row["query"]["position"]) if keep_evidence else -1,
         answer=str(row["answer"]) if keep_evidence else None,
+        factors=tuple(sorted(row.get("factors", {}).items())) if keep_evidence else (),
     )
 
 

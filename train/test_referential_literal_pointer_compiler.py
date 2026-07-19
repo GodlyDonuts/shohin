@@ -44,6 +44,14 @@ class ReferentialLiteralPointerCompilerTest(unittest.TestCase):
         self.assertEqual(set(example.target_positions), set(compiler_module.TARGET_LABELS))
         self.assertEqual(len(example.target_positions), 10)
 
+    def test_compile_row_retains_factor_evidence_only_when_requested(self):
+        row = dict(self.row)
+        row["factors"] = {"argument_order": 2, "lexicon": "known"}
+        retained = compiler_module.compile_row(row, self.tokenizer, keep_evidence=True)
+        hidden = compiler_module.compile_row(row, self.tokenizer, keep_evidence=False)
+        self.assertEqual(dict(retained.factors), row["factors"])
+        self.assertEqual(hidden.factors, ())
+
     def test_model_forward_and_loss_are_finite(self):
         example = compiler_module.compile_row(self.row, self.tokenizer, keep_evidence=True)
         model = compiler_module.CompletePointerCompiler(

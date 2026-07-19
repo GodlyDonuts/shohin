@@ -16,6 +16,7 @@ from tokenizers import Tokenizer
 from model import GPT, GPTConfig
 from referential_literal_pointer_compiler import (
     CompletePointerCompiler,
+    TARGET_LABELS,
     adapter_hash,
     adapter_state,
     compiler_loss,
@@ -25,6 +26,12 @@ from referential_literal_pointer_compiler import (
     role_supervision_loss,
     sha256_file,
 )
+
+
+CORPUS_SCHEMAS = {
+    "r12_referential_literal_pointer_corpus_v1": "",
+    "r12_referential_literal_pointer_factorized_corpus_v1": "_factorized",
+}
 
 
 def lr_scale(step, total, warmup):
@@ -83,8 +90,15 @@ def main():
         raise SystemExit("corpus report does not bind training bytes")
     if report.get("tokenizer_sha256") != tokenizer_sha256:
         raise SystemExit("corpus report does not bind tokenizer")
-    if report.get("acquisition_ledger", {}).get("target_pointer_labels") != 1021440:
-        raise SystemExit("v1.1 complete-pointer label count is missing")
+    corpus_schema = report.get("schema")
+    if corpus_schema not in CORPUS_SCHEMAS:
+        raise SystemExit("unsupported complete-pointer corpus schema")
+    split_rows = report.get("splits", {})
+    expected_pointer_labels = sum(
+        int(split.get("rows", 0)) for split in split_rows.values()
+    ) * len(TARGET_LABELS)
+    if report.get("acquisition_ledger", {}).get("target_pointer_labels") != expected_pointer_labels:
+        raise SystemExit("complete-pointer label ledger does not match split rows")
 
     tokenizer = Tokenizer.from_file(args.tokenizer)
     checkpoint = torch.load(args.base, map_location="cpu")
@@ -115,14 +129,20 @@ def main():
     )
     epoch_batches = [make_batches(examples, args.batch_size, args.seed + epoch) for epoch in range(args.epochs)]
     total_steps = sum(len(batches) for batches in epoch_batches)
-    metadata = {
-        "protocol": (
+    protocol = (
             "r12_referential_literal_pointer_compiler_v1_3_islands_development"
             if args.separate_kind_decoder else
             "r12_referential_literal_pointer_compiler_v1_2_structured_development"
             if args.encoder_layers or args.role_supervision else
             "r12_referential_literal_pointer_compiler_v1_1_development"
-        ),
+        )
+    if CORPUS_SCHEMAS[corpus_schema]:
+        protocol = protocol.replace(
+            "_development", CORPUS_SCHEMAS[corpus_schema] + "_development",
+        )
+    metadata = {
+        "protocol": protocol,
+        "corpus_schema": corpus_schema,
         "base": os.path.realpath(args.base),
         "base_sha256": sha256_file(args.base),
         "base_step": checkpoint.get("step"),
@@ -158,6 +178,7 @@ def main():
         "base_parameters_trainable": 0,
         "initial_adapter_sha256": initial_adapter_sha256,
         "confirmation_access": 0,
+        "development_evaluation_access": 0,
         "inference_inputs": "source token IDs and source-length mask only",
         "claim_boundary": (
             "Development-only complete pointer-compiler feasibility pilot. No confirmation, "

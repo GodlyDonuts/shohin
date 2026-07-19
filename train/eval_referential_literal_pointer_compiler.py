@@ -33,7 +33,16 @@ def main():
     parser.add_argument("--data", required=True)
     parser.add_argument("--report", required=True)
     parser.add_argument("--tokenizer", required=True)
-    parser.add_argument("--split", choices=("development", "confirmation"), required=True)
+    parser.add_argument(
+        "--split",
+        choices=(
+            "development",
+            "development_compositional",
+            "development_lexical_ood",
+            "confirmation",
+        ),
+        required=True,
+    )
     parser.add_argument("--out", required=True)
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--limit", type=int, default=0)
@@ -55,6 +64,9 @@ def main():
         "r12_referential_literal_pointer_compiler_v1_1_development",
         "r12_referential_literal_pointer_compiler_v1_2_structured_development",
         "r12_referential_literal_pointer_compiler_v1_3_islands_development",
+        "r12_referential_literal_pointer_compiler_v1_1_factorized_development",
+        "r12_referential_literal_pointer_compiler_v1_2_structured_factorized_development",
+        "r12_referential_literal_pointer_compiler_v1_3_islands_factorized_development",
     }:
         raise SystemExit("invalid compiler bundle protocol")
     if metadata.get("confirmation_access") != 0:
@@ -117,6 +129,7 @@ def main():
                     "id": example.row_id,
                     "group": example.group,
                     "surface_type": example.surface_type,
+                    "factors": dict(example.factors),
                     "pointer_predictions": pointers,
                     "pointer_hits": hits,
                     "kind_predictions": list(kinds),
@@ -160,6 +173,18 @@ def main():
         surface: summarize([record for record in records if record["surface_type"] == surface])
         for surface in sorted({record["surface_type"] for record in records})
     }
+    factor_fields = sorted({
+        field for record in records for field in record["factors"]
+    })
+    by_factor = {
+        field: {
+            value: summarize([
+                record for record in records if str(record["factors"].get(field)) == value
+            ])
+            for value in sorted({str(record["factors"][field]) for record in records})
+        }
+        for field in factor_fields
+    }
     groups = collections.defaultdict(dict)
     for record in records:
         groups[record["group"]][record["surface_type"]] = record
@@ -173,13 +198,22 @@ def main():
             group["canonical"]["full_pointer_exact"] and group["paraphrase"]["full_pointer_exact"]
             for group in groups.values()
         ),
+        "all_four_semantic_program_exact": sum(
+            all(record["semantic_program_exact"] for record in group.values())
+            for group in groups.values()
+        ),
+        "canonical_paraphrase_both_semantic_exact": sum(
+            group["canonical"]["semantic_program_exact"]
+            and group["paraphrase"]["semantic_program_exact"]
+            for group in groups.values()
+        ),
         "all_four_answers_correct": sum(
             all(record["answer_correct"] for record in group.values())
             for group in groups.values()
         ),
     }
     result = {
-        "schema": "r12_referential_literal_pointer_compiler_eval_v1_1",
+        "schema": "r12_referential_literal_pointer_compiler_eval_v1_2",
         "split": args.split,
         "base_sha256": sha256_file(args.base),
         "adapter": os.path.realpath(args.adapter),
@@ -190,6 +224,7 @@ def main():
         "confirmation_access": int(args.split == "confirmation") * len(examples),
         "overall": summarize(records),
         "by_surface": by_surface,
+        "by_factor": by_factor,
         "group_summary": group_summary,
         "records": records,
         "claim_boundary": (
