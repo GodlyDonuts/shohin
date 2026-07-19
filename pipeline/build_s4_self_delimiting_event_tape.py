@@ -221,6 +221,7 @@ def render_source(initial, program, query_position, factors, distractor_entity,
         writer.add(styled(distractor, lower_lead))
     for index, operation in enumerate(program):
         add_event(writer, operation, index, factors)
+        writer.add("Context anchor {}.\n".format(neutral_anchor))
         if boundary == index + 1:
             writer.add(styled(distractor, lower_lead))
     writer.add(styled(QUERY_FRAMES[factors["query_frame"]], lower_lead))

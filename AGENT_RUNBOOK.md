@@ -8468,3 +8468,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Sequence tagging/FSM equivalence is explicit, so this is an autonomous-interface test, not a
   novelty claim. Two focused tests, Ruff, `py_compile`, and the production CPU receipt pass. No
   corpus, model fit, H100, sealed-confirmation access, or S4 score exists yet.
+
+- **2026-07-19 04:24--04:31** -- The first S4 production build at train/development seeds
+  `9005582213359012856` / `78591302403227330` is rejected before model access. All source,
+  executor, count, depth, context, public-overlap, name, factor, and exact-prompt gates pass, but
+  train/development word-13-gram overlap is nonzero because adjacent generic event sentences can
+  form a split-shared window. No score or fit exists. Retire both seeds and preserve the report;
+  discard the 201 MB rejected JSONLs. The mechanical repair inserts the existing split-specific
+  nonce context anchor after every event, changing no semantics or labels. Re-run CPU tests, commit
+  corrected generator bytes, then draw wholly new production seeds.
