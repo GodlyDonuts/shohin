@@ -877,7 +877,9 @@ HALT remain later independent gates.
 
 The larger compiler corpus is now frozen: 96,000 train, 2,048 development, and
 4,096 confirmation rows over 24,000 / 512 / 1,024 semantic quartets. It contains
-8,538,572 source tokens and 715,008 exact pointer labels. Split renderer and
+8,538,572 source tokens and 1,021,440 exact pointer labels. A pre-fit v1.1
+amendment adds three model-owned initial-order pointers, raising each row from
+seven to ten required bindings; every JSONL byte is unchanged. Split renderer and
 nonce-name sets are disjoint; exact prompts and normalized word 13-grams have
 zero overlap between every split pair. Confirmation SHA-256 is
 `84005921b5fca93f9c2567655c4345bced78fc74ed7f49c8f72189b9f87fbf03`.
@@ -1132,6 +1134,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-18 | Preserved and reviewed the multi-model frontier plans. Admitted pointer-grounded compiler/executor/halt separation for preregistration, retained several mechanisms as ablations, and rejected the bundled stacks as underidentified. |
 | 2026-07-18 | Froze and passed the 32-quartet complete referential compiler CPU falsifier; authorized one isolated neural compiler pilot while keeping executor, halt, and reasoning claims blocked. |
 | 2026-07-18 | Froze the 102,144-row complete-compiler corpus with disjoint names/renderers, zero cross-split exact or 13-gram overlap, documented pre-score build repairs, and a sealed 4,096-row confirmation split. |
+| 2026-07-18 | Added the pre-fit v1.1 completeness amendment: three initial-order pointers are now model-owned, all 1,021,440 pointer labels pass audit, and the frozen JSONL bytes remain unchanged. |
 
 ---
 

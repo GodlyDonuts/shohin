@@ -10,10 +10,11 @@
     "uncompressed_bytes": 5123378,
     "uncompressed_sha256": "20611bf4ddbdb42d7e2f9dd76759b86f3f4dd16d5942f207bf7b325984da5ad6"
   },
-  "generator_commit": "b064ce1",
-  "generator_sha256": "50123e84f049e1e85dcbdf002bb6035a54d3d08e503e319dbab74d4ee7fb620a",
-  "report_sha256": "9f3bd01f4a144fd52f362a032dd4d8fa7c40c8fccfad608e9f63d74a028137cc",
-  "schema": "r12_referential_literal_pointer_corpus_v1_compression_manifest",
+  "generator_commit": "1ad2baa",
+  "generator_sha256": "fd211d6c31be6440a1ef3451632f17c5a3af89781af088fb0caffc8b26d6561f",
+  "prereg_amendment_sha256": "f7d8f6f23ceb2f91d33c8a46340e10e298a2b1aa39ca6b1b5e6264d80bbcd72a",
+  "report_sha256": "176435d8c544948468f81cb23dc65ff51bf8010af212fb737984bbed1d1265cc",
+  "schema": "r12_referential_literal_pointer_corpus_v1_1_compression_manifest",
   "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4",
   "train": {
     "compressed_sha256": "4ef7a4b2b73d07c99bd19effb832fa4897bf60c90b5e044691aadaff6b2d0fd9",

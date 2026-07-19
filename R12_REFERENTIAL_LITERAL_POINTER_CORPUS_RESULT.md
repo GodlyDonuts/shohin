@@ -34,16 +34,17 @@ level confirmation inspection occurred before either repair.
 | confirmation | 1,024 | 4,096 | `docket`, `procession` | `84005921b5fca93f9c2567655c4345bced78fc74ed7f49c8f72189b9f87fbf03` |
 
 Every group contains canonical, independent paraphrase, token-bag-matched order
-twin, and token-bag-matched binding twin surfaces. Every row has seven exact
-source targets: two operation kinds, two entity pointers, two literal pointers,
-and one query pointer.
+twin, and token-bag-matched binding twin surfaces. The pre-fit v1.1 amendment
+requires ten exact source targets per row: three initial-order entity pointers,
+two operation kinds, two operation entity pointers, two literal pointers, and
+one query pointer.
 
 Aggregate acquisition ledger:
 
 - 102,144 rows;
 - 8,538,572 source tokens;
 - 30,870,736 UTF-8 source bytes;
-- 715,008 target pointer labels;
+- 1,021,440 target pointer labels;
 - zero teacher calls;
 - zero checkpoint reads;
 - zero production-evaluation answer reads.
@@ -73,16 +74,18 @@ gates does not certify natural-language semantics outside this bounded machine.
 
 | Artifact | SHA-256 |
 |---|---|
-| final generator | `50123e84f049e1e85dcbdf002bb6035a54d3d08e503e319dbab74d4ee7fb620a` |
+| v1.1 amendment | `f7d8f6f23ceb2f91d33c8a46340e10e298a2b1aa39ca6b1b5e6264d80bbcd72a` |
+| final generator | `fd211d6c31be6440a1ef3451632f17c5a3af89781af088fb0caffc8b26d6561f` |
 | tokenizer | `87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4` |
-| report | `9f3bd01f4a144fd52f362a032dd4d8fa7c40c8fccfad608e9f63d74a028137cc` |
+| v1.1 report | `176435d8c544948468f81cb23dc65ff51bf8010af212fb737984bbed1d1265cc` |
 | train gzip (`gzip -9 -n`) | `4ef7a4b2b73d07c99bd19effb832fa4897bf60c90b5e044691aadaff6b2d0fd9` |
 | development gzip (`gzip -9 -n`) | `abc991626545aa0fab6d3419e0689d5475a5052fa05a9a664cf1cbff7a8cda30` |
 | confirmation gzip (`gzip -9 -n`) | `70db90f5ac3b6a8d5ebdc77ade90301d9c64043122734e9ab4c2861f1c80cc18` |
 
-The compressed archives and report are the GitHub backup. The uncompressed
-files remain local working copies. Decompression must reproduce the exact
-uncompressed hashes above before any fit or score.
+The compressed archives and v1.1 report are the GitHub backup. The uncompressed
+files remain local working copies. The v1.1 JSONL files are byte-identical to
+v1; only the audit and model obligations changed. Decompression must reproduce
+the exact uncompressed hashes above before any fit or score.
 
 ## 5. Authorization
 

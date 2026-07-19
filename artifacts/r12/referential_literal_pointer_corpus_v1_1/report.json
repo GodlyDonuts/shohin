@@ -1,0 +1,213 @@
+{
+  "acquisition_ledger": {
+    "checkpoint_reads": 0,
+    "external_execution": "two exact CPU list-machine evaluators during generation",
+    "production_eval_answer_reads": 0,
+    "rows": 102144,
+    "source_tokens": 8538572,
+    "source_utf8_bytes": 30870736,
+    "target_pointer_labels": 1021440,
+    "teacher_model_calls": 0
+  },
+  "all_gates_pass": true,
+  "artifacts": {
+    "confirmation": {
+      "bytes": 10544318,
+      "sha256": "84005921b5fca93f9c2567655c4345bced78fc74ed7f49c8f72189b9f87fbf03"
+    },
+    "development": {
+      "bytes": 5123378,
+      "sha256": "20611bf4ddbdb42d7e2f9dd76759b86f3f4dd16d5942f207bf7b325984da5ad6"
+    },
+    "train": {
+      "bytes": 237074855,
+      "sha256": "f47c6d6ce316be6765641f61a294481605fa53c7b12388741fb753c238b2f36e"
+    }
+  },
+  "claim_boundary": "Frozen synthetic semantic-compiler supervision. Structured programs and answers are labels/audit data only and are forbidden at inference.",
+  "generator_sha256": "fd211d6c31be6440a1ef3451632f17c5a3af89781af088fb0caffc8b26d6561f",
+  "groups": {
+    "confirmation": 1024,
+    "development": 512,
+    "train": 24000
+  },
+  "nonce_token_width": 2,
+  "pairwise_split_audits": {
+    "development__confirmation": {
+      "entity_name_overlap": 0,
+      "exact_prompt_overlap": 0,
+      "renderer_overlap": 0,
+      "word_13gram_overlap": 0
+    },
+    "train__confirmation": {
+      "entity_name_overlap": 0,
+      "exact_prompt_overlap": 0,
+      "renderer_overlap": 0,
+      "word_13gram_overlap": 0
+    },
+    "train__development": {
+      "entity_name_overlap": 0,
+      "exact_prompt_overlap": 0,
+      "renderer_overlap": 0,
+      "word_13gram_overlap": 0
+    }
+  },
+  "schema": "r12_referential_literal_pointer_corpus_v1",
+  "seeds": {
+    "confirmation": 3072310916827575206,
+    "development": 2026071802,
+    "train": 2026071801
+  },
+  "splits": {
+    "confirmation": {
+      "amounts": {
+        "1": 5472,
+        "2": 2720
+      },
+      "duplicate_questions": 0,
+      "entity_names": 596,
+      "group_gates_passed": 1024,
+      "groups": 1024,
+      "operation_kinds": {
+        "left": 4096,
+        "right": 4096
+      },
+      "queries": {
+        "0": 1104,
+        "1": 1996,
+        "2": 996
+      },
+      "renderers": [
+        "docket",
+        "procession"
+      ],
+      "rows": 4096,
+      "shortcut_ceilings": {
+        "absolute_pointer_positions": {
+          "accuracy": 0.0390625,
+          "correct": 120,
+          "total": 3072
+        },
+        "renderer": {
+          "accuracy": 0.0009765625,
+          "correct": 3,
+          "total": 3072
+        },
+        "source_token_length": {
+          "accuracy": 0.006184895833333333,
+          "correct": 19,
+          "total": 3072
+        },
+        "token_bag": {
+          "accuracy": 0.3333333333333333,
+          "correct": 1024,
+          "total": 3072
+        }
+      }
+    },
+    "development": {
+      "amounts": {
+        "1": 2700,
+        "2": 1396
+      },
+      "duplicate_questions": 0,
+      "entity_names": 394,
+      "group_gates_passed": 512,
+      "groups": 512,
+      "operation_kinds": {
+        "left": 2048,
+        "right": 2048
+      },
+      "queries": {
+        "0": 468,
+        "1": 1076,
+        "2": 504
+      },
+      "renderers": [
+        "archive",
+        "tableau"
+      ],
+      "rows": 2048,
+      "shortcut_ceilings": {
+        "absolute_pointer_positions": {
+          "accuracy": 0.046223958333333336,
+          "correct": 71,
+          "total": 1536
+        },
+        "renderer": {
+          "accuracy": 0.001953125,
+          "correct": 3,
+          "total": 1536
+        },
+        "source_token_length": {
+          "accuracy": 0.009114583333333334,
+          "correct": 14,
+          "total": 1536
+        },
+        "token_bag": {
+          "accuracy": 0.3333333333333333,
+          "correct": 512,
+          "total": 1536
+        }
+      }
+    },
+    "train": {
+      "amounts": {
+        "1": 127828,
+        "2": 64172
+      },
+      "duplicate_questions": 0,
+      "entity_names": 3100,
+      "group_gates_passed": 24000,
+      "groups": 24000,
+      "operation_kinds": {
+        "left": 96000,
+        "right": 96000
+      },
+      "queries": {
+        "0": 24132,
+        "1": 48060,
+        "2": 23808
+      },
+      "renderers": [
+        "forge",
+        "route"
+      ],
+      "rows": 96000,
+      "shortcut_ceilings": {
+        "absolute_pointer_positions": {
+          "accuracy": 0.0042361111111111115,
+          "correct": 305,
+          "total": 72000
+        },
+        "renderer": {
+          "accuracy": 0.0001388888888888889,
+          "correct": 10,
+          "total": 72000
+        },
+        "source_token_length": {
+          "accuracy": 0.0006527777777777777,
+          "correct": 47,
+          "total": 72000
+        },
+        "token_bag": {
+          "accuracy": 0.3333333333333333,
+          "correct": 24000,
+          "total": 72000
+        }
+      }
+    }
+  },
+  "structural_gates": {
+    "all_group_gates_pass": true,
+    "all_ids_unique": true,
+    "all_shortcut_ceilings_at_most_one_third": true,
+    "all_spans_nonempty": true,
+    "all_spans_present": true,
+    "cross_split_13gram_overlap_zero": true,
+    "cross_split_entity_overlap_zero": true,
+    "cross_split_exact_overlap_zero": true,
+    "cross_split_renderer_overlap_zero": true
+  },
+  "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4"
+}
