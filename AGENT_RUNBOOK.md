@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 06:47 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 06:51 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8575,3 +8575,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   actual `source_rows`, add a regression test, rerun all CPU gates, commit corrected bytes, and draw
   a new seed. Model, trainer, evaluator, assessor, data semantics, and frozen score gates do not
   change.
+
+- **2026-07-19 06:48--06:51** -- **The sole S4 v3 production board is admitted and frozen before
+  model access.** Post-audit commit `3019ba8` precedes replacement seed `11437896185638727043`.
+  The board has 2,048 rows / 512 matched groups, depths 3--8 with 340--344 rows each, and maximum
+  344 tokens. Every whole source is unpadded, event count equals depth, CPU executors agree, and all
+  exact-prompt, word-13-gram, nonce/name, factor, per-row roster-multiset uniqueness, and public
+  roster-token-multiset gates pass with zero overlap. Development access is zero at build and
+  confirmation access is zero. Data SHA is `b49ddbbf...`, report `808b0e02...`, and read-only safe
+  archive `28302861...`; report/archive are hash-matched on Newton and Mac. Commit these custody
+  artifacts before training. Then run exactly one matched 48,000-row / 750-update treatment and
+  shuffled arm, plus frozen v1 baseline, each reading this board once; do not tune or rescore.

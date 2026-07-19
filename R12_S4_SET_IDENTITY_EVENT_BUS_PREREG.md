@@ -7,6 +7,15 @@ Three set-bus tests, one assessor test, one fresh-board mechanics test, `py_comp
 syntax, and an actual raw-300k/v1 finite-backward construction pass. No production board, H100 fit,
 development score, or confirmation access exists at freeze.
 
+Post-freeze custody: seeds `14970823073944690832`, `939143060519850990`, and
+`15848092346808854751` were retired before board creation for recorded remote dependency/invocation/
+audit failures. Replacement seed `11437896185638727043` is the sole production board. It has 2,048
+rows / 512 matched groups, passes every frozen gate, and is read-only before model access. Data,
+report, and safe-archive SHA-256 values are respectively
+`b49ddbbfad3da04181d6ec5401f8412b2953185e5e91e344208c8b6b0c5ba1e8`,
+`808b0e0287e53576ffb234a5ea855943552ef3e60b2d3d20847b79f7254d692c`, and
+`28302861b383fbdc8e5056e25bbd98b188487e87b241d25d2ef5ac82cebd43ae`.
+
 ## Causal diagnosis
 
 On a wholly fresh board the frozen S4 v1 parser recovers 2,048/2,048 event counts and 1,914/2,048
