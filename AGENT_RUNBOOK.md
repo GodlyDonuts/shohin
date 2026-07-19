@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 02:19 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 02:22 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8320,3 +8320,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `c9c7b545...` rejects v1. The sole bounded v1.1 repair removes assignment and immutable identity
   from the MLP; current location, direction, and amount alone define an equivariant local group
   action. No extra data, epoch, width, confirmation, or threshold change is admissible.
+
+- **2026-07-19 02:19--02:22** -- **S3 v1.1 equivariant local action is frozen before fit.** The
+  update MLP no longer receives global assignment or immutable identity; it receives only current
+  location, operation kind, and amount, which form a complete 3x2x2 atomic action table. A direct
+  invariance test proves bit-identical logits under different global assignments/identities with
+  matched local inputs. All other state machinery, data, seed, optimizer, 1,517 updates, identity
+  arms, and v1 score gates remain exact. The smaller executor has 710,411 parameters / 134,399,961
+  total. Five focused tests, Ruff, `py_compile`, shell syntax, exact S3 closure, finite gradients,
+  and diff checks pass. No H100, fit, score, confirmation, reasoning, or novelty claim exists.

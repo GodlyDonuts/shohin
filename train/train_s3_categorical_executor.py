@@ -15,6 +15,7 @@ from tokenizers import Tokenizer
 
 from categorical_permutation_executor import (
     S3CategoricalPermutationExecutor,
+    S3EquivariantPermutationExecutor,
     categorical_executor_loss,
     categorical_identity_packet,
     module_state_hash,
@@ -43,6 +44,7 @@ def main():
     parser.add_argument("--clip", type=float, default=1.0)
     parser.add_argument("--seed", type=int, default=2026071903)
     parser.add_argument("--log-every", type=int, default=25)
+    parser.add_argument("--equivariant", action="store_true")
     args = parser.parse_args()
     if not torch.cuda.is_available():
         raise SystemExit("S3 categorical executor training requires CUDA")
@@ -68,7 +70,11 @@ def main():
     examples = load_examples(
         args.data, tokenizer, "train", cfg.seq_len, keep_evidence=True,
     )
-    executor = S3CategoricalPermutationExecutor(
+    executor_class = (
+        S3EquivariantPermutationExecutor if args.equivariant
+        else S3CategoricalPermutationExecutor
+    )
+    executor = executor_class(
         identity_context_width=int(cfg.d_model),
         context_width=int(compiler_metadata["width"]),
         width=args.width,
@@ -89,7 +95,12 @@ def main():
     ]
     total_steps = sum(len(batches) for batches in epoch_batches)
     metadata = {
-        "protocol": "r12_s3_categorical_permutation_executor_v1",
+        "protocol": (
+            "r12_s3_equivariant_permutation_executor_v1_1"
+            if args.equivariant else
+            "r12_s3_categorical_permutation_executor_v1"
+        ),
+        "equivariant_local_action": bool(args.equivariant),
         "training_identity_mode": "gold",
         "training_contract": (
             "independent atomic op0/op1 updates from identity state; no composed or "

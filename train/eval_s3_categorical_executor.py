@@ -13,6 +13,7 @@ from tokenizers import Tokenizer
 
 from categorical_permutation_executor import (
     S3CategoricalPermutationExecutor,
+    S3EquivariantPermutationExecutor,
     categorical_identity_packet,
     module_state_hash,
 )
@@ -63,7 +64,10 @@ def main():
         raise SystemExit("factorized report does not bind S3 evaluation data")
     bundle = torch.load(args.executor, map_location="cpu")
     metadata = bundle.get("executor", {})
-    if metadata.get("protocol") != "r12_s3_categorical_permutation_executor_v1":
+    if metadata.get("protocol") not in {
+        "r12_s3_categorical_permutation_executor_v1",
+        "r12_s3_equivariant_permutation_executor_v1_1",
+    }:
         raise SystemExit("invalid S3 executor protocol")
     if metadata.get("confirmation_access") != 0:
         raise SystemExit("S3 executor records confirmation access")
@@ -75,7 +79,12 @@ def main():
     examples = load_examples(
         args.data, tokenizer, args.split, cfg.seq_len, keep_evidence=True,
     )
-    executor = S3CategoricalPermutationExecutor(
+    executor_class = (
+        S3EquivariantPermutationExecutor
+        if metadata["protocol"] == "r12_s3_equivariant_permutation_executor_v1_1"
+        else S3CategoricalPermutationExecutor
+    )
+    executor = executor_class(
         identity_context_width=int(metadata["identity_context_width"]),
         context_width=int(metadata["context_width"]),
         width=int(metadata["executor_width"]),

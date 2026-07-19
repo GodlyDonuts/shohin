@@ -13,6 +13,7 @@ from tokenizers import Tokenizer
 
 from categorical_permutation_executor import (
     S3CategoricalPermutationExecutor,
+    S3EquivariantPermutationExecutor,
     categorical_identity_packet,
     module_state_hash,
 )
@@ -108,7 +109,10 @@ def main():
         raise SystemExit("S3 report does not bind depth board")
     bundle = torch.load(args.executor, map_location="cpu")
     metadata = bundle.get("executor", {})
-    if metadata.get("protocol") != "r12_s3_categorical_permutation_executor_v1":
+    if metadata.get("protocol") not in {
+        "r12_s3_categorical_permutation_executor_v1",
+        "r12_s3_equivariant_permutation_executor_v1_1",
+    }:
         raise SystemExit("invalid S3 depth executor protocol")
     checkpoint, compiler, compiler_metadata = load_frozen_compiler(
         args.base, args.compiler, args.tokenizer, "cuda",
@@ -119,7 +123,12 @@ def main():
     packets, chunks = compile_packets(
         rows, tokenizer, compiler, cfg, args.identity_mode, "cuda", args.batch_size,
     )
-    executor = S3CategoricalPermutationExecutor(
+    executor_class = (
+        S3EquivariantPermutationExecutor
+        if metadata["protocol"] == "r12_s3_equivariant_permutation_executor_v1_1"
+        else S3CategoricalPermutationExecutor
+    )
+    executor = executor_class(
         identity_context_width=int(metadata["identity_context_width"]),
         context_width=int(metadata["context_width"]),
         width=int(metadata["executor_width"]),

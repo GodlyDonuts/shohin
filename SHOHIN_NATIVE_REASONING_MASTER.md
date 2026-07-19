@@ -25745,6 +25745,13 @@ repair removes both assignment and immutable identity from the transition MLP:
 only current location, direction, and amount remain. Those variables determine
 the local S3 action and are fully covered by atomic training.
 
+S3 v1.1 freezes exactly that repair. Its transition function is invariant to
+global identity labels and assignment coordinates by construction; only exact
+current location and operation features survive. The 3x2x2 local action table
+is fully supported by atomic training. All v1 data, seed, optimizer, and gates
+remain unchanged so any recovery is attributable to equivariance rather than
+compute or supervision.
+
 The matched result reproduces the loss but rejects single-comparator
 localization. Untouched execution reaches 77.393% answers / 70.312% exact
 state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /

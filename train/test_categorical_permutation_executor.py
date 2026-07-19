@@ -1,8 +1,10 @@
 import torch
 
 from categorical_permutation_executor import (
+    EquivariantCategoricalUpdateCell,
     PERMUTATIONS,
     S3CategoricalPermutationExecutor,
+    S3EquivariantPermutationExecutor,
     categorical_executor_loss,
     permutation_matrices,
     straight_through_permutation,
@@ -66,3 +68,28 @@ def test_executor_keeps_exact_permutation_state_and_loss_backpropagates():
         parameter.grad is None or torch.isfinite(parameter.grad).all()
         for parameter in executor.parameters()
     )
+
+
+def test_equivariant_cell_ignores_global_assignment_and_identity():
+    cell = EquivariantCategoricalUpdateCell(width=8)
+    location = torch.tensor([[0.0, 1.0, 0.0]])
+    operation = torch.randn(1, 8)
+    literal = torch.randn(1, 8)
+    kind = torch.tensor([[1.0, 0.0]])
+    first = cell(
+        torch.eye(3).unsqueeze(0),
+        torch.tensor([[1.0, 0.0, 0.0]]),
+        location, operation, literal, kind,
+    )
+    second = cell(
+        permutation_matrices()[4].unsqueeze(0),
+        torch.tensor([[0.0, 0.0, 1.0]]),
+        location, operation, literal, kind,
+    )
+    assert torch.equal(first, second)
+
+
+def test_equivariant_executor_is_smaller_than_v1():
+    v1 = S3CategoricalPermutationExecutor(576, 384, width=192)
+    v11 = S3EquivariantPermutationExecutor(576, 384, width=192)
+    assert v11.num_params() < v1.num_params()

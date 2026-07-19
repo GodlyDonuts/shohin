@@ -136,6 +136,26 @@ class CategoricalUpdateCell(nn.Module):
         return self.network(features)
 
 
+class EquivariantCategoricalUpdateCell(nn.Module):
+    """Predict a local S3 action without access to the global coordinate frame."""
+
+    def __init__(self, width):
+        super().__init__()
+        self.network = nn.Sequential(
+            nn.Linear(2 * width + 5, 3 * width),
+            nn.GELU(),
+            nn.Linear(3 * width, width),
+            nn.GELU(),
+            nn.Linear(width, len(PERMUTATIONS)),
+        )
+
+    def forward(self, assignment, identity, location, operation, literal, kind):
+        del assignment, identity
+        return self.network(torch.cat((
+            location.float(), kind.float(), operation, literal,
+        ), dim=-1))
+
+
 class S3CategoricalPermutationExecutor(nn.Module):
     """Tied neural update over an exactly categorical S3 state register."""
 
@@ -223,6 +243,14 @@ class S3CategoricalPermutationExecutor(nn.Module):
             "query_logits": query_logits,
             "answer_probabilities": answer_probabilities,
         }
+
+
+class S3EquivariantPermutationExecutor(S3CategoricalPermutationExecutor):
+    """S3 register whose transition law is invariant to global identity labels."""
+
+    def __init__(self, identity_context_width, context_width, width=192):
+        super().__init__(identity_context_width, context_width, width)
+        self.cell = EquivariantCategoricalUpdateCell(width)
 
 
 def categorical_executor_loss(
