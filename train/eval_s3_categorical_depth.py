@@ -36,7 +36,10 @@ def extract_operation(operation, index):
     return {name: value[index].float().cpu() for name, value in operation.items()}
 
 
-def compile_packets(rows, tokenizer, compiler, cfg, mode, device, batch_size, lexicon=None):
+def compile_packets(
+    rows, tokenizer, compiler, cfg, mode, device, batch_size, lexicon=None,
+    kind_decoder="mass",
+):
     examples = []
     mapping = []
     active_counts = []
@@ -60,7 +63,7 @@ def compile_packets(rows, tokenizer, compiler, cfg, mode, device, batch_size, le
             packet = categorical_identity_packet(outputs, selected, ids, valid, mode=mode)
             if lexicon is not None:
                 packet = apply_lexical_kind_override(
-                    packet, outputs, ids, valid, lexicon,
+                    packet, outputs, ids, valid, lexicon, decoder=kind_decoder,
                 )
             for local, global_index in enumerate(indices):
                 flat[global_index] = {
@@ -105,6 +108,7 @@ def main():
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--closed-action", action="store_true")
     parser.add_argument("--kind-lexicon")
+    parser.add_argument("--kind-decoder", choices=("mass", "pointer_anchor"), default="mass")
     args = parser.parse_args()
     if not torch.cuda.is_available():
         raise SystemExit("S3 depth evaluation requires CUDA")
@@ -136,6 +140,7 @@ def main():
     packets, chunks = compile_packets(
         rows, tokenizer, compiler, cfg, args.identity_mode, "cuda", args.batch_size,
         lexicon=lexicon,
+        kind_decoder=args.kind_decoder,
     )
     if args.closed_action:
         if metadata["protocol"] != "r12_s3_equivariant_permutation_executor_v1_1":
@@ -211,7 +216,11 @@ def main():
         "schema": "r12_s3_categorical_depth_eval_v1",
         "identity_mode": args.identity_mode,
         "action_protocol": "closed_s3_v1_2" if args.closed_action else "learned",
-        "kind_protocol": "training_lexicon_v1" if lexicon is not None else "neural",
+        "kind_protocol": (
+            "training_lexicon_pointer_anchor_v1"
+            if lexicon is not None and args.kind_decoder == "pointer_anchor"
+            else "training_lexicon_v1" if lexicon is not None else "neural"
+        ),
         "base_sha256": sha256_file(args.base),
         "compiler_sha256": sha256_file(args.compiler),
         "compiler_adapter_sha256": compiler_metadata["final_adapter_sha256"],

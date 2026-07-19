@@ -8,6 +8,7 @@ from categorical_permutation_executor import (
     S3EquivariantPermutationExecutor,
     categorical_executor_loss,
     lexical_kind_predictions,
+    pointer_anchored_kind_predictions,
     permutation_matrices,
     local_action_ids,
     straight_through_permutation,
@@ -161,3 +162,44 @@ def test_lexical_kind_decoder_uses_pointer_mass_and_has_explicit_fallback():
     assert predictions.tolist() == [1, 0]
     assert matched.tolist() == [True, False]
     assert scores[0, 1] > scores[0, 0]
+
+
+def test_pointer_anchor_decoder_uses_containing_pattern_and_falls_back():
+    ids = torch.tensor([
+        [9, 10, 11, 30, 20, 21, 0],
+        [9, 10, 11, 30, 40, 41, 0],
+        [9, 10, 11, 30, 20, 21, 0],
+    ])
+    logits = torch.tensor([
+        [0.0, 0.0, 0.0, 0.0, 9.0, 1.0, -1.0],
+        [0.0, 0.0, 0.0, 0.0, 9.0, 1.0, -1.0],
+        [0.0, 8.0, 0.0, 0.0, 9.0, 1.0, -1.0],
+    ])
+    valid = torch.tensor([
+        [True, True, True, True, True, True, False],
+        [True, True, True, True, True, True, False],
+        [True, True, True, True, True, True, False],
+    ])
+    lexicon = {"patterns": [
+        {"kind": "left", "token_ids": [9, 10, 11]},
+        {"kind": "right", "token_ids": [20, 21]},
+    ]}
+    predictions, matched, scores = pointer_anchored_kind_predictions(
+        ids, logits, valid, lexicon,
+    )
+    assert predictions.tolist() == [1, 0, 1]
+    assert matched.tolist() == [True, False, True]
+    assert scores[0, 1] > scores[0, 0]
+
+
+def test_pointer_anchor_decoder_rejects_cross_class_overlap():
+    ids = torch.tensor([[9, 10, 11]])
+    logits = torch.tensor([[0.0, 5.0, 0.0]])
+    valid = torch.ones_like(ids, dtype=torch.bool)
+    lexicon = {"patterns": [
+        {"kind": "left", "token_ids": [9, 10]},
+        {"kind": "right", "token_ids": [10, 11]},
+    ]}
+    _, matched, scores = pointer_anchored_kind_predictions(ids, logits, valid, lexicon)
+    assert matched.tolist() == [False]
+    assert torch.isfinite(scores).all()

@@ -142,20 +142,61 @@ def lexical_kind_predictions(ids, weights, lexicon, minimum_mass=0.5):
     return predictions, values >= float(minimum_mass), scores
 
 
+def pointer_anchored_kind_predictions(ids, pointer_logits, valid, lexicon):
+    """Decode the exact lexicon pattern containing the global pointer anchor."""
+    if ids.ndim != 2 or pointer_logits.shape != ids.shape or valid.shape != ids.shape:
+        raise ValueError("pointer-anchor decoder expects matching [batch,length] tensors")
+    if not valid.bool().any(-1).all():
+        raise ValueError("pointer-anchor decoder requires a valid token in every row")
+    masked_logits = pointer_logits.float().masked_fill(~valid.bool(), float("-inf"))
+    anchors = masked_logits.argmax(-1)
+    scores = torch.full(
+        (ids.shape[0], len(KIND_TO_ID)), float("-inf"),
+        device=ids.device, dtype=torch.float32,
+    )
+    for record in lexicon["patterns"]:
+        pattern = torch.tensor(record["token_ids"], device=ids.device, dtype=ids.dtype)
+        width = pattern.numel()
+        if width < 1 or width > ids.shape[1]:
+            continue
+        token_windows = ids.unfold(1, width, 1)
+        valid_windows = valid.bool().unfold(1, width, 1)
+        matches = token_windows.eq(pattern.view(1, 1, -1)).all(-1)
+        matches &= valid_windows.all(-1)
+        starts = torch.arange(
+            matches.shape[1], device=ids.device, dtype=anchors.dtype,
+        ).view(1, -1)
+        contains_anchor = matches & (starts <= anchors[:, None])
+        contains_anchor &= anchors[:, None] < starts + width
+        candidate = masked_logits.gather(1, anchors[:, None]).squeeze(1)
+        candidate = candidate.masked_fill(~contains_anchor.any(-1), float("-inf"))
+        kind_id = KIND_TO_ID[record["kind"]]
+        scores[:, kind_id] = torch.maximum(scores[:, kind_id], candidate)
+    matched_classes = torch.isfinite(scores)
+    unambiguous = matched_classes.sum(-1) == 1
+    predictions = scores.argmax(-1)
+    return predictions, unambiguous, scores
+
+
 def apply_lexical_kind_override(
     packet, compiler_outputs, ids, valid, lexicon, temperature=0.5, minimum_mass=0.5,
+    decoder="mass",
 ):
     """Replace matched direction fields while retaining neural fallback."""
+    if decoder not in {"mass", "pointer_anchor"}:
+        raise ValueError("unknown lexical kind decoder {}".format(decoder))
     operations = []
     for index, operation in enumerate(packet["operations"]):
-        weights = role_weights(
-            compiler_outputs["pointer_logits"]["op{}.kind".format(index)],
-            valid,
-            temperature,
-        )
-        lexical, matched, scores = lexical_kind_predictions(
-            ids, weights, lexicon, minimum_mass=minimum_mass,
-        )
+        pointer_logits = compiler_outputs["pointer_logits"]["op{}.kind".format(index)]
+        if decoder == "mass":
+            weights = role_weights(pointer_logits, valid, temperature)
+            lexical, matched, scores = lexical_kind_predictions(
+                ids, weights, lexicon, minimum_mass=minimum_mass,
+            )
+        else:
+            lexical, matched, scores = pointer_anchored_kind_predictions(
+                ids, pointer_logits, valid, lexicon,
+            )
         neural = operation["kind_probabilities"].float().argmax(-1)
         selected = torch.where(matched, lexical, neural)
         updated = dict(operation)

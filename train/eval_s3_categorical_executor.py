@@ -56,6 +56,7 @@ def main():
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--closed-action", action="store_true")
     parser.add_argument("--kind-lexicon")
+    parser.add_argument("--kind-decoder", choices=("mass", "pointer_anchor"), default="mass")
     args = parser.parse_args()
     if not torch.cuda.is_available():
         raise SystemExit("S3 evaluation requires CUDA")
@@ -119,6 +120,7 @@ def main():
             if lexicon is not None:
                 packet = apply_lexical_kind_override(
                     packet, compiler_outputs, ids, valid, lexicon,
+                    decoder=args.kind_decoder,
                 )
             outputs = executor(packet)
             transitions = [matrix.argmax(-1).tolist() for matrix in outputs["transition_matrices"]]
@@ -168,7 +170,11 @@ def main():
         "split": args.split,
         "identity_mode": args.identity_mode,
         "action_protocol": "closed_s3_v1_2" if args.closed_action else "learned",
-        "kind_protocol": "training_lexicon_v1" if lexicon is not None else "neural",
+        "kind_protocol": (
+            "training_lexicon_pointer_anchor_v1"
+            if lexicon is not None and args.kind_decoder == "pointer_anchor"
+            else "training_lexicon_v1" if lexicon is not None else "neural"
+        ),
         "base_sha256": sha256_file(args.base),
         "compiler_sha256": sha256_file(args.compiler),
         "compiler_adapter_sha256": compiler_metadata["final_adapter_sha256"],

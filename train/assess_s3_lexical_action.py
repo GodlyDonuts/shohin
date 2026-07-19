@@ -10,11 +10,11 @@ from pathlib import Path
 from referential_literal_pointer_compiler import sha256_file
 
 
-def load(path):
+def load(path, kind_protocol):
     value = json.load(open(path))
     if value.get("action_protocol") != "closed_s3_v1_2":
         raise SystemExit("lexical S3 assessment requires closed action")
-    if value.get("kind_protocol") != "training_lexicon_v1":
+    if value.get("kind_protocol") != kind_protocol:
         raise SystemExit("lexical S3 assessment requires training lexicon")
     return value
 
@@ -31,6 +31,11 @@ def main():
     parser.add_argument("--depth-ordered", required=True)
     parser.add_argument("--depth-gold", required=True)
     parser.add_argument("--out", required=True)
+    parser.add_argument(
+        "--kind-protocol",
+        choices=("training_lexicon_v1", "training_lexicon_pointer_anchor_v1"),
+        default="training_lexicon_v1",
+    )
     args = parser.parse_args()
     if Path(args.out).exists():
         raise SystemExit("refusing existing lexical-S3 assessment")
@@ -46,7 +51,7 @@ def main():
         "depth_gold": args.depth_gold,
     }
     values = {
-        name: load(path) for name, path in paths.items()
+        name: load(path, args.kind_protocol) for name, path in paths.items()
         if name not in {"executor", "lexicon"}
     }
     lexicon = json.load(open(args.lexicon))
@@ -107,10 +112,15 @@ def main():
             for row in values.values()
         ),
     }
+    candidate = (
+        "pointer_anchor_s3_v1_4"
+        if args.kind_protocol == "training_lexicon_pointer_anchor_v1"
+        else "lexical_closed_s3_v1_3"
+    )
     decision = (
-        "qualify_lexical_closed_s3_v1_3_for_fresh_confirmation"
+        "qualify_{}_for_fresh_confirmation".format(candidate)
         if all(gates.values()) else
-        "reject_lexical_closed_s3_v1_3_for_confirmation"
+        "reject_{}_for_confirmation".format(candidate)
     )
     result = {
         "schema": "r12_s3_lexical_closed_action_assessment_v1",
