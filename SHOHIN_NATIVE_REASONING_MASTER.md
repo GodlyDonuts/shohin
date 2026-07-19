@@ -9,7 +9,7 @@ runbook and result files.
 **Status:** Living document. The protected raw-pretraining anchor is complete
 at 300,000 steps. Native multi-step reasoning is not yet established.
 
-**Last updated:** 2026-07-18 20:44 EDT.
+**Last updated:** 2026-07-18 23:22 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -25500,6 +25500,28 @@ unseen lexemes; and requires an ordinary parser plus lexical, structure, full,
 and shuffled controls. Repeating seeds or tuning against v1.1 development is
 closed. Confirmation remains sealed until a fresh board and matched attribution
 gate pass.
+
+### Factorized-language board admission
+
+The fresh board is now built and CPU-admitted. Its generator/tests were
+committed at `e6d957e` before any production seed existed. It contains 96,000
+train rows, 2,048 known-atom compositional development rows, 2,048
+unseen-direction-lexeme development rows, and 8,192 sealed confirmation rows:
+108,288 total rows, 10,858,878 source tokens, and 1,082,880 model-owned pointer
+labels. Every exact prompt, word-13-gram, nonce name, and full factor combination
+is split-disjoint; every ten-span target is nonempty; two CPU executors agree on
+every row; and all quartet/token-bag gates pass.
+
+The first attribution comparison is equal-budget. V1.3 parameter islands use
+8,658,701 adapter parameters / 133,740,365 total. The favorable conventional
+five-layer bidirectional token tagger uses 8,607,886 / 133,689,550, a 0.587%
+adapter-budget difference. It directly labels source tokens and pools kind
+classes at predicted direction spans; it has no learned program slots or
+parameter islands. Newton jobs `693048` (islands) and `693049` (ordinary) share
+the immutable raw-300k base, 96,000 examples, 1,517 updates, seed `2026071810`,
+and evaluator. Both are running. Confirmation bytes remain local only and are
+absent from Newton. The exact custody record is
+`R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_CORPUS_ADMISSION.md`.
 
 ## Update Protocol
 

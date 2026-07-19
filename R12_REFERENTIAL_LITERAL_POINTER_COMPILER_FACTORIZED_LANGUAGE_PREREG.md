@@ -1,6 +1,6 @@
 # R12 Factorized-Language Complete-Compiler Board Preregistration
 
-**Status:** design frozen before generator implementation and before fresh development/confirmation seeds
+**Status:** design frozen before seeds; corpus CPU-admitted; matched development arms running
 
 ## 1. Question
 

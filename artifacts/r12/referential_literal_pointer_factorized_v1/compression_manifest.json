@@ -1,0 +1,41 @@
+{
+  "artifacts": {
+    "development_compositional.jsonl": {
+      "bytes": 6482982,
+      "sha256": "e69fb70bddfb827a428c297352a72e45612ff3528a9fa107dec38c04189e1922"
+    },
+    "development_compositional.jsonl.gz": {
+      "bytes": 527373,
+      "sha256": "d13894a6342928bca2acf8f61e64aed07b5380dccf5c403ce59f72d586abe5a1"
+    },
+    "development_lexical_ood.jsonl": {
+      "bytes": 6587453,
+      "sha256": "40a059024770d3785ac27f7b02365d7741f631f7413aa5e69631efbc3af73dc0"
+    },
+    "development_lexical_ood.jsonl.gz": {
+      "bytes": 525303,
+      "sha256": "b8594cc75ae8436880a27d0382efd664bbbf41cfa99bfd2bb309b36f857b314c"
+    },
+    "development_report.json": {
+      "bytes": 9832,
+      "sha256": "d481114232e438294bd1ea7f5b739f6068c2bf10fe02c1ee3c216c2e56aa3be3"
+    },
+    "train.jsonl": {
+      "bytes": 300885140,
+      "sha256": "e6feb311c37f34a88ce7bda59ebb4f968c9ce3b4052cb5c0f6c2ef2e3fca44a8"
+    },
+    "train.jsonl.gz": {
+      "bytes": 24948188,
+      "sha256": "b1b9735866b035be31d6dc9383430c5872295c21d9c63fd67153d949fd0e38da"
+    }
+  },
+  "confirmation": {
+    "artifact_entry_omitted_from_development_report": true,
+    "local_only": true,
+    "seed_omitted": true,
+    "sha256": "e2bc25d8d95bb48c8d2915e6b966f3b96a01d3726177e6469f7824d0cf4b1a0f"
+  },
+  "development_stack_commit": "9b85463",
+  "generator_commit": "e6d957e",
+  "schema": "r12_referential_literal_pointer_factorized_compression_manifest_v1"
+}

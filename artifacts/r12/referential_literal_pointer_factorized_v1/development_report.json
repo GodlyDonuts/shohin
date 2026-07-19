@@ -1,0 +1,444 @@
+{
+  "acquisition_ledger": {
+    "checkpoint_reads": 0,
+    "external_execution": "two exact CPU list-machine evaluators during generation",
+    "production_eval_answer_reads": 0,
+    "rows": 108288,
+    "source_tokens": 10858878,
+    "source_utf8_bytes": 38214563,
+    "target_pointer_labels": 1082880,
+    "teacher_model_calls": 0
+  },
+  "all_gates_pass": true,
+  "artifacts": {
+    "development_compositional": {
+      "bytes": 6482982,
+      "sha256": "e69fb70bddfb827a428c297352a72e45612ff3528a9fa107dec38c04189e1922"
+    },
+    "development_lexical_ood": {
+      "bytes": 6587453,
+      "sha256": "40a059024770d3785ac27f7b02365d7741f631f7413aa5e69631efbc3af73dc0"
+    },
+    "train": {
+      "bytes": 300885140,
+      "sha256": "e6feb311c37f34a88ce7bda59ebb4f968c9ce3b4052cb5c0f6c2ef2e3fca44a8"
+    }
+  },
+  "claim_boundary": "Frozen synthetic complete-compiler supervision. Programs and answers are labels/audit data only and are forbidden at inference.",
+  "generator_sha256": "c71553b83c17db28d89f78f9979719f459f5e3c6902b2312f3ed491091eaeaae",
+  "groups": {
+    "confirmation": 2048,
+    "development_compositional": 512,
+    "development_lexical_ood": 512,
+    "train": 24000
+  },
+  "nonce_token_width": 2,
+  "pairwise_split_audits": {
+    "development_compositional__confirmation": {
+      "entity_name_overlap": 0,
+      "exact_prompt_overlap": 0,
+      "factor_combination_overlap": 0,
+      "word_13gram_overlap": 0
+    },
+    "development_compositional__development_lexical_ood": {
+      "entity_name_overlap": 0,
+      "exact_prompt_overlap": 0,
+      "factor_combination_overlap": 0,
+      "word_13gram_overlap": 0
+    },
+    "development_lexical_ood__confirmation": {
+      "entity_name_overlap": 0,
+      "exact_prompt_overlap": 0,
+      "factor_combination_overlap": 0,
+      "word_13gram_overlap": 0
+    },
+    "train__confirmation": {
+      "entity_name_overlap": 0,
+      "exact_prompt_overlap": 0,
+      "factor_combination_overlap": 0,
+      "word_13gram_overlap": 0
+    },
+    "train__development_compositional": {
+      "entity_name_overlap": 0,
+      "exact_prompt_overlap": 0,
+      "factor_combination_overlap": 0,
+      "word_13gram_overlap": 0
+    },
+    "train__development_lexical_ood": {
+      "entity_name_overlap": 0,
+      "exact_prompt_overlap": 0,
+      "factor_combination_overlap": 0,
+      "word_13gram_overlap": 0
+    }
+  },
+  "schema": "r12_referential_literal_pointer_factorized_corpus_v1",
+  "seeds": {
+    "development_compositional": 4135880065347703586,
+    "development_lexical_ood": 7765413350095210082,
+    "train": 2514093889146710784
+  },
+  "splits": {
+    "confirmation": {
+      "duplicate_questions": 0,
+      "entity_names": 600,
+      "factor_combinations": 4096,
+      "factor_vocabulary": {
+        "argument_order": [
+          "0",
+          "1",
+          "2"
+        ],
+        "direction_pair": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "distractor_frame": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "distractor_location": [
+          "0",
+          "1",
+          "2"
+        ],
+        "intro_frame": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "lexicon": [
+          "known"
+        ],
+        "list_style": [
+          "0",
+          "1",
+          "2"
+        ],
+        "op_frame": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "ordinal_vocab": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "query_frame": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "style": [
+          "0",
+          "1"
+        ]
+      },
+      "group_gates_passed": 2048,
+      "groups": 2048,
+      "rows": 8192,
+      "shortcut_ceilings": {
+        "absolute_pointer_positions": {
+          "accuracy": 0.228515625,
+          "correct": 1404,
+          "total": 6144
+        },
+        "source_token_length": {
+          "accuracy": 0.005533854166666667,
+          "correct": 34,
+          "total": 6144
+        },
+        "token_bag": {
+          "accuracy": 0.3333333333333333,
+          "correct": 2048,
+          "total": 6144
+        }
+      }
+    },
+    "development_compositional": {
+      "duplicate_questions": 0,
+      "entity_names": 447,
+      "factor_combinations": 1024,
+      "factor_vocabulary": {
+        "argument_order": [
+          "0",
+          "1",
+          "2"
+        ],
+        "direction_pair": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "distractor_frame": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "distractor_location": [
+          "0",
+          "1",
+          "2"
+        ],
+        "intro_frame": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "lexicon": [
+          "known"
+        ],
+        "list_style": [
+          "0",
+          "1",
+          "2"
+        ],
+        "op_frame": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "ordinal_vocab": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "query_frame": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "style": [
+          "0",
+          "1"
+        ]
+      },
+      "group_gates_passed": 512,
+      "groups": 512,
+      "rows": 2048,
+      "shortcut_ceilings": {
+        "absolute_pointer_positions": {
+          "accuracy": 0.294921875,
+          "correct": 453,
+          "total": 1536
+        },
+        "source_token_length": {
+          "accuracy": 0.013020833333333334,
+          "correct": 20,
+          "total": 1536
+        },
+        "token_bag": {
+          "accuracy": 0.3333333333333333,
+          "correct": 512,
+          "total": 1536
+        }
+      }
+    },
+    "development_lexical_ood": {
+      "duplicate_questions": 0,
+      "entity_names": 449,
+      "factor_combinations": 1024,
+      "factor_vocabulary": {
+        "argument_order": [
+          "0",
+          "1",
+          "2"
+        ],
+        "direction_pair": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "distractor_frame": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "distractor_location": [
+          "0",
+          "1",
+          "2"
+        ],
+        "intro_frame": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "lexicon": [
+          "lexical_ood"
+        ],
+        "list_style": [
+          "0",
+          "1",
+          "2"
+        ],
+        "op_frame": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "ordinal_vocab": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "query_frame": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "style": [
+          "0",
+          "1"
+        ]
+      },
+      "group_gates_passed": 512,
+      "groups": 512,
+      "rows": 2048,
+      "shortcut_ceilings": {
+        "absolute_pointer_positions": {
+          "accuracy": 0.236328125,
+          "correct": 363,
+          "total": 1536
+        },
+        "source_token_length": {
+          "accuracy": 0.013020833333333334,
+          "correct": 20,
+          "total": 1536
+        },
+        "token_bag": {
+          "accuracy": 0.3333333333333333,
+          "correct": 512,
+          "total": 1536
+        }
+      }
+    },
+    "train": {
+      "duplicate_questions": 0,
+      "entity_names": 2600,
+      "factor_combinations": 48000,
+      "factor_vocabulary": {
+        "argument_order": [
+          "0",
+          "1",
+          "2"
+        ],
+        "direction_pair": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "distractor_frame": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "distractor_location": [
+          "0",
+          "1",
+          "2"
+        ],
+        "intro_frame": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "lexicon": [
+          "known"
+        ],
+        "list_style": [
+          "0",
+          "1",
+          "2"
+        ],
+        "op_frame": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "ordinal_vocab": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "query_frame": [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+        "style": [
+          "0",
+          "1"
+        ]
+      },
+      "group_gates_passed": 24000,
+      "groups": 24000,
+      "rows": 96000,
+      "shortcut_ceilings": {
+        "absolute_pointer_positions": {
+          "accuracy": 0.086125,
+          "correct": 6201,
+          "total": 72000
+        },
+        "source_token_length": {
+          "accuracy": 0.0008472222222222222,
+          "correct": 61,
+          "total": 72000
+        },
+        "token_bag": {
+          "accuracy": 0.3333333333333333,
+          "correct": 24000,
+          "total": 72000
+        }
+      }
+    }
+  },
+  "structural_gates": {
+    "all_group_gates_pass": true,
+    "all_ids_unique": true,
+    "all_shortcut_ceilings_at_chance_plus_one_example": true,
+    "all_spans_nonempty": true,
+    "all_spans_present": true,
+    "compositional_atoms_seen_in_train": true,
+    "cross_split_13gram_overlap_zero": true,
+    "cross_split_entity_overlap_zero": true,
+    "cross_split_exact_overlap_zero": true,
+    "cross_split_factor_combination_overlap_zero": true,
+    "lexical_direction_vocabulary_disjoint": true,
+    "training_covers_all_known_atoms": true,
+    "two_executors_agree": true
+  },
+  "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4"
+}
