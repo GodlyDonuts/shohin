@@ -8455,3 +8455,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   execution with external schedule/halt. It does **not** confirm autonomous planning, learned halt,
   unseen semantics, or free-form reasoning. Lock v1.4 as the execution baseline; attack those open
   interfaces without reopening this board.
+
+- **2026-07-19 04:00--04:24** -- **The old chunk schedule is formally unusable as a semantic halt
+  target; S4 self-delimiting event tape is frozen before data or fit.** CPU audit over the public
+  2,048-row / 6,136-chunk depth board finds 1,024 hidden padding labels and 395 legitimate second
+  updates with the identical equivariant signature `(left, initial_entity_0, 1)`. Thus the minimum
+  signature-classifier error is 395/6,136. Dropping that signature reaches 95.313% answers but only
+  81.592% exact programs; keeping all reaches 76.904% answers / 50% exact programs. Do not train a
+  halt head on `active_operations`: the label is external metadata, not source semantics. S4 instead
+  preregisters one unpadded whole-source tape whose token parser emits a variable number of complete
+  operation triples and halts when no later triple exists; frozen S3 v1.4 consumes the result.
+  Sequence tagging/FSM equivalence is explicit, so this is an autonomous-interface test, not a
+  novelty claim. Two focused tests, Ruff, `py_compile`, and the production CPU receipt pass. No
+  corpus, model fit, H100, sealed-confirmation access, or S4 score exists yet.

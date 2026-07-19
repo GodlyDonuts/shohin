@@ -1,0 +1,63 @@
+{
+  "active_count_histogram": {
+    "1": 1024,
+    "2": 5112
+  },
+  "all_gates_pass": true,
+  "board": {
+    "path": "artifacts/r12/rgde_relational_development_18136108174735860272/development_relational.jsonl",
+    "sha256": "ba2b0d4817ffe68f004978b6a403aba893db17aa49878afb6548a71b9219b596"
+  },
+  "chunks": 6136,
+  "claim_boundary": "The active/padding label is not a function of the second operation's equivariant semantic signature. This does not prove arbitrary text memorization impossible; it rejects a semantic learned-halt claim on this corpus and requires a self-delimiting replacement.",
+  "conflicting_signature_count": 1,
+  "conflicting_signatures": {
+    "[\"left\",0,1]": {
+      "1": 1024,
+      "2": 395
+    }
+  },
+  "filler_signature": [
+    "left",
+    0,
+    1
+  ],
+  "filler_signature_label_histogram": {
+    "1": 1024,
+    "2": 395
+  },
+  "minimum_equivariant_signature_classifier_error_rate": 0.06437418513689701,
+  "minimum_equivariant_signature_classifier_errors": 395,
+  "policies": {
+    "drop_filler_signature": {
+      "answer_accuracy": 0.953125,
+      "correct_answers": 1952,
+      "exact_program_accuracy": 0.81591796875,
+      "exact_programs": 1671,
+      "exact_state_accuracy": 0.939453125,
+      "exact_states": 1924,
+      "rows": 2048
+    },
+    "keep_all": {
+      "answer_accuracy": 0.76904296875,
+      "correct_answers": 1575,
+      "exact_program_accuracy": 0.5,
+      "exact_programs": 1024,
+      "exact_state_accuracy": 0.68212890625,
+      "exact_states": 1397,
+      "rows": 2048
+    },
+    "oracle": {
+      "answer_accuracy": 1.0,
+      "correct_answers": 2048,
+      "exact_program_accuracy": 1.0,
+      "exact_programs": 2048,
+      "exact_state_accuracy": 1.0,
+      "exact_states": 2048,
+      "rows": 2048
+    }
+  },
+  "rows": 2048,
+  "schema": "r12_s3_schedule_identifiability_audit_v1",
+  "semantic_signature_count": 12
+}

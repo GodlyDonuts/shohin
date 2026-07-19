@@ -25879,6 +25879,28 @@ localized to model-owned packet scheduling/halt and unseen action semantics,
 not recurrence or state update. V1.4 is the locked execution baseline; the
 sealed board cannot be reused for development.
 
+The original chunked depth interface cannot legitimately train that missing
+halt boundary. Its odd final chunks render a normal second operation but mark
+it inactive only in `active_operations`. Across the public board, 1,024 hidden
+padding instances and 395 legitimate updates share the exact equivariant
+semantic signature `(left, initial_entity_0, 1)`. The best deterministic
+signature classifier therefore makes at least 395/6,136 errors. Dropping every
+such event reaches 95.313% answers but only 81.592% exact programs; keeping all
+events reaches 76.904% answers and 50% exact programs. This is a corpus no-go,
+not evidence that Shohin cannot learn halt. Fitting a head would reward nonce or
+metadata leakage rather than semantic termination.
+
+S4 is preregistered as the lawful replacement: one unpadded whole-source event
+tape, a model-owned variable-length token parser, monotone grouping of complete
+`(direction, entity, amount)` events, and the locked S3 v1.4 consumer. The tape
+halts after the final complete parsed event, so no host count, chunk index,
+filler, fixed operation slot, or `active_operations` label enters inference.
+The parser is explicitly equivalent to conventional semantic-role labeling plus
+a finite-state transducer; no architectural novelty claim is authorized. Its
+bounded target is autonomous schedule extraction through held-out depth eight,
+with gold, host-count, fixed-slot, and shuffled-supervision controls and a strict
+sub-150M parameter cap.
+
 The matched result reproduces the loss but rejects single-comparator
 localization. Untouched execution reaches 77.393% answers / 70.312% exact
 state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /
