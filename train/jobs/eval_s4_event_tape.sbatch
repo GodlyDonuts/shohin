@@ -12,7 +12,7 @@
 set -euo pipefail
 BASE=${BASE:-/lustre/fs1/home/sa305415/shohin}
 PYTHON=$BASE/miniforge3/bin/python
-DATA=$BASE/artifacts/r12/s4_self_delimiting_event_tape_10818821031317486155
+DATA=${DATA:-$BASE/artifacts/r12/s4_self_delimiting_event_tape_10818821031317486155}
 ARM=${ARM:-treatment}
 PARSER=${PARSER:-$BASE/train/s4_event_tape_${ARM}_2026071904/parser.pt}
 OUT=${OUT:-$BASE/artifacts/r12/s4_event_tape_${ARM}_2026071904.eval.json}
