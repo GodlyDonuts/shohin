@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 18:12 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 18:42 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -26,7 +26,7 @@
 > dynamics, contextual unseen-law compilation, and exact recurrent reuse. It does not establish
 > natural-language grounding, arbitrary algebra, learned active-step/halt, or broad native reasoning.
 >
-> **Active next phase:** S8 nil-linked law graphs are CPU-admitted after source/preregistration commit
+> **Retained execution baseline:** S8 nil-linked law graphs are CPU-admitted after source/preregistration commit
 > `81fb6b0`. S8 replaces S7's structured card/event list and host `for` loop with a model-emitted graph:
 > initial state, cards, entity/card bindings, entry, next-event links, nil, and query are model-owned;
 > node records are randomly stored and only predicted links determine order/halt. Frozen seed
@@ -57,8 +57,31 @@
 > rows; every original and source-level nonce-recoded source compiles; 9,018 rows change token
 > count; recoded maximum is 457/512; overlap is zero; access is zero/zero. Report SHA
 > `1dcd576d...`, train `9e917ae5...`, development `d16a1a8f...`, sealed confirmation
-> `e951ac17...`. Commit/sync exact bytes, then run one unchanged serial development job on a
-> CUDA-preflighted node.
+> `e951ac17...`. Sole score-bearing S8.1 job `693529` completed cleanly on preflighted `evc39`.
+> S8.1 is **rejected end to end** at 514/2,048 = **25.098%** exact graphs, states, and answers,
+> versus 205/2,048 = 10.010% state for the favorable ordinary sequence parser. The important
+> decomposition is exact: all 514 valid graphs are semantic-exact and all 514 execute to exact
+> recurrent states and answers; there are zero valid-but-wrong graphs. Gold graphs are 2,048/2,048,
+> shuffled labels emit zero exact graphs, and every causal corruption collapses state below 4.1%.
+> Thus S7/S8 execution, order, nil halt, and recurrent reuse remain the retained substrate, while
+> unseen-language graph extraction is the isolated failure. Checkpoint SHA `44b32915...`, evaluation
+> `74a391f3...`, assessment `d6aaa221...`; local mirrors hash-match; development/confirmation access
+> is one/zero. Never open S8.1 confirmation.
+>
+> **Active next phase:** S9 Occurrence-Quotient Relational Compilation (OQRC) attacks only that
+> grounding bottleneck. It must make nonce-span boundaries and sentence-level semantic relations
+> model-owned, then use exact equality only to quotient repeated emitted surface spans into shared
+> classes before reconstructing the unchanged S8 graph. It may not receive gold names, spans,
+> relation tuples, state, answer, event order, or halt at inference. A fresh neural board is forbidden
+> until CPU sufficiency, occurrence/storage permutation, free-word negative control, relation
+> ablation, information-flow, and host-resource gates are preregistered and pass. Those representation
+> gates now pass on 2,048/2,048 closed S8.1 sources: oracle-emitted quotients reconstruct exact graph,
+> state, and answer; class/relation-storage reindexing is exact; split, merge, free-word, relation-kind,
+> and slot corruptions reject 2,048/2,048; swapped witnesses and reversed links leave only 1.465% and
+> 7.520% exact state. Report SHA `f77dce82...`. This admits theory only. Freeze a model-owned bounded
+> span proposer, class-aware relation decoder, equal-budget no-class-message/shuffled controls, and
+> evaluator before drawing any board seed. No broad novelty or native-language reasoning claim is
+> authorized yet.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -8886,3 +8909,31 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   executors agree; access remains zero/zero. Report SHA `1dcd576d...`; train `9e917ae5...`;
   development `d16a1a8f...`; sealed confirmation `e951ac17...`. Commit and hash-match exact bytes
   before the sole unchanged development job.
+
+- **2026-07-19 18:12--18:29** -- **S8.1 rejects the end-to-end compiler but proves exact
+  conditional graph execution.** bf16 preflight `693527` passes on `evc39`; sole development job
+  `693529` then completes both 750-update arms and the frozen evaluator/assessor on the same node in
+  4m25s, exit `0:0`. Treatment emits 514/2,048 valid graphs, and those same 514 are exact graphs,
+  exact recurrent states, exact answers, and exact node-count/nil-halt traces: zero valid-but-wrong
+  graphs. The favorable ordinary sequence parser reaches only 205/2,048 state; gold reaches
+  2,048/2,048; shuffled labels emit zero exact graphs. Storage order, reversed links, deranged cards,
+  one witness, reset, and early nil score 4.004%, 1.953%, 0.293%, 1.270%, 0.928%, and 1.074% state.
+  Reindexing is invariant 514/514. Source-level operation recoding is invariant on all 422 mutually
+  valid cases, but invalidates 92 originally valid parses, so its all-valid eligibility gate fails.
+  Reject S8.1 at 25.098% against its 90%/95% graph gates; retain the exact S7/S8 executor and localize
+  the next attack wholly to relational grounding. Checkpoint SHA `44b32915...`, evaluation
+  `74a391f3...`, assessment `d6aaa221...`; local mirrors hash-match; access is one/zero and sealed
+  confirmation remains unopened. Preregister S9 occurrence-quotient relation extraction before any
+  fresh neural board.
+
+- **2026-07-19 18:29--18:42** -- **S9 occurrence-quotient relations pass the CPU representation
+  theorem without earning a neural claim.** The compiler reads only source bytes plus oracle-emitted
+  spans/relations, quotients exact repeated surfaces into identity classes, and reconstructs the
+  unchanged S8 graph. Across all 2,048 closed S8.1 development sources, graph/state/answer are
+  2,048/2,048; class-ID and relation-storage reindexing remain 2,048/2,048. Swapped witnesses and
+  reversed links fall to 30/2,048 and 154/2,048 state. Splitting a reference, merging entities,
+  replacing every occurrence with a unique free word, corrupting a relation kind, or swapping event
+  slots rejects 2,048/2,048 rather than repairing. All 13 gates pass; report SHA `f77dce82...`
+  records `admit_s9_occurrence_quotient_theory_only`. The free-word result is an explicit alias
+  boundary. Neural source must make span selection and relation slots model-owned and beat both S8.1
+  and an equal-budget no-class-message control before any confirmation access.

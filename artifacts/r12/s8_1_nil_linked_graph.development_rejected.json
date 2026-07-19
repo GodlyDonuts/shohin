@@ -1,0 +1,48 @@
+{
+  "assessment_sha256": "d6aaa221c58387010e79ee65ccfc9087c3073ed488d86bf9b932599c7f6eb119",
+  "board_report_sha256": "1dcd576d9706c011ff8164994f0424f4bdc96a16525cdda400559b255b3aa831",
+  "board_seed": 5943437777437228096,
+  "checkpoint_sha256": "44b3291555047085257cfb1c4ec03dd6e5485ce83e134a5200d8ea0055614585",
+  "confirmation_accesses": 0,
+  "confirmation_sha256": "e951ac173135ee7791528ae78206cb48900865dbeade65085fcf948a2da2977d",
+  "decision": "reject_s8_1_end_to_end_compiler_retain_exact_conditional_executor",
+  "development_accesses": 1,
+  "development_sha256": "d16a1a8f773ff627b5f47ebd06b2344cad67a6473c431d78d79a5ef41f360d54",
+  "evaluation_sha256": "74a391f3fd3f123da13007ad19cad8bf9075aa0809df3561a122f65c04267600",
+  "job": 693529,
+  "parameters": {
+    "base": 125081664,
+    "complete_system": 133692848,
+    "generator": 218,
+    "graph_compiler": 8610966
+  },
+  "schema": "r12_s8_1_nil_linked_graph_development_decision_v1",
+  "scores": {
+    "favorable_ordinary_state": {
+      "correct": 205,
+      "total": 2048
+    },
+    "gold_state": {
+      "correct": 2048,
+      "total": 2048
+    },
+    "graph_exact": {
+      "correct": 514,
+      "total": 2048
+    },
+    "graph_valid": {
+      "correct": 514,
+      "total": 2048
+    },
+    "treatment_answer": {
+      "correct": 514,
+      "total": 2048
+    },
+    "treatment_state": {
+      "correct": 514,
+      "total": 2048
+    },
+    "valid_but_wrong": 0
+  },
+  "training_seed": 8354164228219389085
+}

@@ -8,11 +8,13 @@ runbook and result files.
 
 **Status:** Living document. The protected raw-pretraining anchor is complete
 at 300,000 steps. S7 confirms bounded native contextual law compilation and
-recurrent execution. S8 v1 is closed as an evaluator non-result; S8.1's fresh
-whole-source board is frozen but unevaluated. Broad language-grounded,
-self-directed reasoning is not yet established.
+recurrent execution. S8.1 is rejected end to end at 25.098%, but its conditional
+decomposition is exact: every valid predicted graph executes correctly. The
+active S9 target is therefore class-level relational grounding, not a new
+arithmetic runtime. Broad language-grounded, self-directed reasoning is not yet
+established.
 
-**Last updated:** 2026-07-19 18:12 EDT.
+**Last updated:** 2026-07-19 18:42 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -991,8 +993,32 @@ split overlap and score access remain zero. This is still an unevaluated board.
 
 The hard boundary remains graph validation/traversal, categorical equality,
 the node-count safety bound, S7's cyclic compiler, and pop-insert state mutation.
-S8 is designed to remove source grounding, event order, and halt from the host;
-it does not remove the finite algebraic runtime.
+Sole S8.1 job `693529` rejects the end-to-end compiler at 514/2,048 = 25.098%
+exact graphs, states, and answers. The favorable ordinary sequence parser
+reaches 205/2,048 = 10.010% state, while gold graphs reach 2,048/2,048 and
+shuffled supervision produces zero exact graphs. The decisive decomposition is
+that all 514 valid treatment graphs are semantic-exact and all 514 yield exact
+recurrent state and answer. There are no valid-but-wrong graphs. Causal controls
+collapse to 0.293%-4.004% state, and graph reindexing is invariant on 514/514.
+The result therefore localizes the failure to source grounding: typical invalid
+outputs have roster/state cardinality errors, missing or duplicate card
+witnesses, or non-unique repeated-name matches. S8.1 is not promoted and its
+confirmation remains unopened.
+
+S9 retains the complete S7/S8 executor and proposes an occurrence-quotient
+relational compiler. Instead of assigning semantic roles independently to each
+BPE subtoken, a model must emit nonce-span boundaries and sentence relations;
+exact emitted-surface equality then groups repeated occurrences into identity
+classes, and the model decodes class-level tuples. Equality is an architectural
+prior, but gold spans, names, relations, order, state, answers, and halt are not
+available at inference. This is a project hypothesis, not a literature novelty
+claim, and it must pass CPU information-flow and negative-control gates before
+any neural board.
+
+The hard boundary remains graph validation/traversal, categorical equality,
+the node-count safety bound, S7's cyclic compiler, and pop-insert state mutation.
+S8/S9 are designed to remove source grounding, event order, and halt from the
+host; they do not remove the finite algebraic runtime.
 
 ---
 
@@ -1254,7 +1280,7 @@ learned generator/compiler mechanism, not natural-language semantics, learned
 halt, open-ended planning, or unrestricted native reasoning. Both score-bearing
 boards are permanently closed.
 
-### 9.12 S8 nil-linked law graph (v1 evaluator non-result; S8.1 preregistered)
+### 9.12 S8 nil-linked law graph (S8.1 rejected end to end; exact conditional execution retained)
 
 Source/preregistration commit `81fb6b0` freezes the post-S7 integration contract
 before full CPU seed `4822478724546321200`. The model must emit a nil-terminated
@@ -1288,6 +1314,54 @@ confirmation rows. Report SHA-256 is
 `1dcd576d9706c011ff8164994f0424f4bdc96a16525cdda400559b255b3aa831`.
 All 52,096 source-level nonce interventions recompile before sealing; 9,018
 change token count; access remains zero/zero.
+
+Sole development job `693529` completes cleanly after bf16 preflight `693527`.
+Treatment reaches 514/2,048 = 25.098% valid graph, exact graph, exact recurrent
+state, and exact answer. All four counts identify the same cases, so there are
+zero valid-but-wrong graphs. Gold is 2,048/2,048; the favorable ordinary parser
+is 205/2,048 state; shuffled supervision emits zero exact graphs. Reversed
+links, deranged cards, one witness, reset, and early nil all destroy the result.
+Reject the compiler against its frozen graph gates while retaining the exact
+conditional executor. Checkpoint SHA-256 is
+`44b3291555047085257cfb1c4ec03dd6e5485ce83e134a5200d8ea0055614585`;
+evaluation SHA-256 is
+`74a391f3fd3f123da13007ad19cad8bf9075aa0809df3561a122f65c04267600`;
+assessment SHA-256 is
+`d6aaa221c58387010e79ee65ccfc9087c3073ed488d86bf9b932599c7f6eb119`.
+Development/confirmation access is one/zero. The sealed confirmation is never
+opened.
+
+### 9.13 S9 occurrence-quotient relational compilation (CPU-admitted theory)
+
+S8.1's failures arise before graph validation because independent token-role
+decisions fragment repeated nonce identities and sentence relations under
+unseen renderers. S9 tests a different factorization. The model emits candidate
+surface-island boundaries, sentence relation types, and argument slots. An
+exact architectural equality operator quotients byte-identical emitted islands
+into shared identity classes. A small class/relation graph network then emits
+the unchanged S8 graph. This can exploit the invariant that a nonce repeated in
+the roster, state, cards, events, links, and query denotes one object without
+letting the host identify the nonce or its role.
+
+The proposal is not admitted merely because gold spans suffice. Before a board,
+CPU mechanics must prove lossless reconstruction from the quotient relation
+object and fail when occurrence identity, relation labels, argument slots,
+next-links, or nil are deranged. A free-word negative control must preserve
+histories where exact surface equality is absent, preventing the mechanism from
+silently assuming that all language references are string-identical. Host input
+at inference is limited to tokenization, decoded boundary bits, exact equality
+over model-emitted spans, categorical graph validation, and the already
+disclosed S7/S8 runtime. Gold spans or candidate-name dictionaries are forbidden.
+
+The CPU representation now passes all 13 gates over 2,048 closed S8.1 sources.
+Oracle-emitted quotients reconstruct 2,048/2,048 exact graphs, states, and
+answers; class-ID and relation-storage permutations remain exact. Swapped card
+witnesses and reversed links leave 30/2,048 and 154/2,048 exact states. Split
+references, merged entities, unique free words, corrupted relation types, and
+swapped event slots all reject 2,048/2,048. Report SHA-256 is
+`f77dce825314cc38b0630cd574b450284c00fc8afa23dc0ab39cfc5be8ef2c94`.
+This admits only the representation. Neural source must still learn bounded span
+selection and class-aware relations from source with no gold dictionary.
 
 ---
 
@@ -1604,6 +1678,8 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Froze S8 neural source at `598e405`, then generated its sole board from seed `4026952256631032219`: 48,000 graph-only train, 2,048 development, and 2,048 sealed-confirmation sources with zero cross-split overlap and zero score access. The 8,610,966-parameter compiler keeps the complete system at 133,692,848 parameters. |
 | 2026-07-19 | Closed S8 v1 as an evaluator non-result after the fit completed but source nonce recoding failed on unequal contextual BPE widths before scoring. Development is spent; confirmation remains sealed. Preregistered S8.1 source-level rotation/retokenization with all scientific settings unchanged and a fresh-board requirement. |
 | 2026-07-19 | Froze the fresh S8.1 board after repair commit `ce2a5e4`: 48,000 graph-only train, 2,048 development, and 2,048 sealed-confirmation rows. All 52,096 original/recoded sources compile, 9,018 exercise changed token counts, and score access remains zero/zero. |
+| 2026-07-19 | Rejected S8.1 end to end at 514/2,048 = 25.098% exact graph/state/answer, but retained its decisive conditional result: all 514 valid graphs are exact and execute exactly, versus 205/2,048 state for the favorable ordinary parser and zero exact graphs for shuffled labels. Confirmation remains sealed. Activated S9 occurrence-quotient relational grounding. |
+| 2026-07-19 | Admitted the S9 occurrence-quotient representation on CPU: 2,048/2,048 exact graph/state/answer from oracle-emitted relations, exact class/relation-storage reindexing, causal witness/link collapse, and 2,048/2,048 rejection for split, merge, free-word, kind, and slot corruptions. This is a mechanics result only; neural grounding remains unproven. |
 | 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 

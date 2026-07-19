@@ -1,0 +1,160 @@
+{
+  "decision": "admit_s9_occurrence_quotient_theory_only",
+  "gates": {
+    "class_reindex_exact": true,
+    "compiler_input_excludes_structured_row_fields": true,
+    "corrupt_relation_kind_rejected": true,
+    "free_word_singletons_rejected_without_merge": true,
+    "merged_entities_rejected": true,
+    "oracle_emitted_quotient_answer_exact": true,
+    "oracle_emitted_quotient_graph_exact": true,
+    "oracle_emitted_quotient_state_exact": true,
+    "relation_storage_reindex_exact": true,
+    "reversed_link_state_below_40pct": true,
+    "slot_derangement_rejected": true,
+    "split_reference_rejected": true,
+    "swapped_witness_state_below_40pct": true
+  },
+  "rejected": {
+    "corrupt_relation_kind": 2048,
+    "free_word_singletons": 2048,
+    "merged_entities": 2048,
+    "slot_derangement": 2048,
+    "split_reference": 2048
+  },
+  "resource_boundary": {
+    "architectural": [
+      "exact equality over model-emitted nonempty surface spans",
+      "class and relation validation",
+      "unchanged S8 graph traversal and S7 cyclic runtime"
+    ],
+    "cpu_oracle_only": "frozen labeled spans stand in for future neural emissions",
+    "forbidden_at_inference": [
+      "gold spans or candidate-name dictionaries",
+      "gold relation tuples",
+      "source event order or depth",
+      "gold state, answer, or repaired graph"
+    ],
+    "future_model_owned": [
+      "surface-island boundaries",
+      "relation kinds",
+      "argument slots",
+      "entry, next, nil, and query relations"
+    ]
+  },
+  "rows": 2048,
+  "schema": "r12_s9_occurrence_quotient_cpu_falsifier_v1",
+  "scores": {
+    "class_reindex": {
+      "answer": 2048,
+      "answer_accuracy": 1.0,
+      "graph": 2048,
+      "graph_accuracy": 1.0,
+      "state": 2048,
+      "state_accuracy": 1.0,
+      "total": 2048,
+      "valid": 2048,
+      "valid_accuracy": 1.0
+    },
+    "corrupt_relation_kind": {
+      "answer": 0,
+      "answer_accuracy": 0.0,
+      "graph": 0,
+      "graph_accuracy": 0.0,
+      "state": 0,
+      "state_accuracy": 0.0,
+      "total": 2048,
+      "valid": 0,
+      "valid_accuracy": 0.0
+    },
+    "free_word_singletons": {
+      "answer": 0,
+      "answer_accuracy": 0.0,
+      "graph": 0,
+      "graph_accuracy": 0.0,
+      "state": 0,
+      "state_accuracy": 0.0,
+      "total": 2048,
+      "valid": 0,
+      "valid_accuracy": 0.0
+    },
+    "merged_entities": {
+      "answer": 0,
+      "answer_accuracy": 0.0,
+      "graph": 0,
+      "graph_accuracy": 0.0,
+      "state": 0,
+      "state_accuracy": 0.0,
+      "total": 2048,
+      "valid": 0,
+      "valid_accuracy": 0.0
+    },
+    "relation_storage_reindex": {
+      "answer": 2048,
+      "answer_accuracy": 1.0,
+      "graph": 2048,
+      "graph_accuracy": 1.0,
+      "state": 2048,
+      "state_accuracy": 1.0,
+      "total": 2048,
+      "valid": 2048,
+      "valid_accuracy": 1.0
+    },
+    "reversed_links": {
+      "answer": 657,
+      "answer_accuracy": 0.32080078125,
+      "graph": 0,
+      "graph_accuracy": 0.0,
+      "state": 154,
+      "state_accuracy": 0.0751953125,
+      "total": 2048,
+      "valid": 2048,
+      "valid_accuracy": 1.0
+    },
+    "slot_derangement": {
+      "answer": 0,
+      "answer_accuracy": 0.0,
+      "graph": 0,
+      "graph_accuracy": 0.0,
+      "state": 0,
+      "state_accuracy": 0.0,
+      "total": 2048,
+      "valid": 0,
+      "valid_accuracy": 0.0
+    },
+    "split_reference": {
+      "answer": 0,
+      "answer_accuracy": 0.0,
+      "graph": 0,
+      "graph_accuracy": 0.0,
+      "state": 0,
+      "state_accuracy": 0.0,
+      "total": 2048,
+      "valid": 0,
+      "valid_accuracy": 0.0
+    },
+    "swapped_card_witnesses": {
+      "answer": 533,
+      "answer_accuracy": 0.26025390625,
+      "graph": 0,
+      "graph_accuracy": 0.0,
+      "state": 30,
+      "state_accuracy": 0.0146484375,
+      "total": 2048,
+      "valid": 2048,
+      "valid_accuracy": 1.0
+    },
+    "treatment": {
+      "answer": 2048,
+      "answer_accuracy": 1.0,
+      "graph": 2048,
+      "graph_accuracy": 1.0,
+      "state": 2048,
+      "state_accuracy": 1.0,
+      "total": 2048,
+      "valid": 2048,
+      "valid_accuracy": 1.0
+    }
+  },
+  "seed": 792451398761220486
+}
