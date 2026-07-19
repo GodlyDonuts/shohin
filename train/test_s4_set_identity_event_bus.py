@@ -11,6 +11,7 @@ from s4_set_identity_event_bus import (
     carrier_logits,
     decode_set_identity_example,
     masked_distribution,
+    roster_distributions,
     roster_recovery_exact,
     vocabulary_carrier,
 )
@@ -61,6 +62,13 @@ class SetIdentityEventBusTest(unittest.TestCase):
         )
         self.assertAlmostEqual(float(weights.sum()), 1.0, places=6)
         self.assertEqual(float(weights[-1]), 0.0)
+
+    def test_roster_distributions_slice_batch_padding(self):
+        outputs = {"role_logits": torch.zeros((1, 5, len(ROLE_INDEX)))}
+        distributions = roster_distributions(
+            outputs, 0, torch.tensor([True, True, True]),
+        )
+        self.assertEqual(tuple(value.shape for value in distributions), ((3,), (3,), (3,)))
 
     def test_perfect_soft_sets_decode_without_boundaries_or_depth(self):
         tokenizer = Tokenizer.from_file("artifacts/shohin-tok-32k.json")

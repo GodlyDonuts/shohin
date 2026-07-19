@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 06:51 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 07:00 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8586,3 +8586,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   archive `28302861...`; report/archive are hash-matched on Newton and Mac. Commit these custody
   artifacts before training. Then run exactly one matched 48,000-row / 750-update treatment and
   shuffled arm, plus frozen v1 baseline, each reading this board once; do not tune or rescore.
+
+- **2026-07-19 06:52--07:00** -- Frozen v1 baseline `693169` reads the S4 v3 board once and
+  completes cleanly: **2048/2048 count and 1913/2048 = 93.408% strict programs/state/answers**;
+  gold-count programs are 1927/2048. Treatment `693167` and shuffled `693168` both fail before
+  their first optimizer update or development access on the same deterministic shape error:
+  per-row valid masks were sliced to source length while frozen roster role logits retained padded
+  batch length. Both logs terminate at `masked_distribution`; neither parser artifact exists.
+  Repair only `roster_distributions` to slice logits to `valid.numel()`, add a mixed-length
+  regression test, rerun finite backward/static gates, commit, and resubmit both arms unchanged on
+  the already frozen board. This repair has no treatment loss trajectory or development score to
+  tune against.

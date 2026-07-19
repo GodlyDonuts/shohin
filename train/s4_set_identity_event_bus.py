@@ -126,9 +126,12 @@ class SetIdentityEventBus(SelfDelimitingEventTapeParser):
 
 
 def roster_distributions(outputs, row, valid):
+    length = valid.numel()
     return tuple(
         masked_distribution(
-            outputs["role_logits"][row, :, ROLE_INDEX["intro.entity{}".format(identity)]],
+            outputs["role_logits"][
+                row, :length, ROLE_INDEX["intro.entity{}".format(identity)]
+            ],
             valid,
         )
         for identity in range(3)
