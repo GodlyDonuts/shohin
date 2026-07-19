@@ -50,8 +50,8 @@ def main():
     parser.add_argument("--groups", type=int, default=512)
     parser.add_argument("--seed", type=int, required=True)
     args = parser.parse_args()
-    if args.groups < 24 or args.groups % 6:
-        raise SystemExit("relational development groups must be a multiple of six")
+    if args.groups < 24:
+        raise SystemExit("relational development requires at least 24 groups")
     if any("confirmation" in Path(path).name.lower() for path in args.public_data):
         raise SystemExit("confirmation input is forbidden")
 
@@ -87,7 +87,10 @@ def main():
         ),
         "two_cpu_executors_agree": all(row["executor_agreement"] for row in rows),
         "all_quartets_complete": len(rows) == 4 * args.groups,
-        "depths_three_through_eight_balanced": len(set(depth_counts.values())) == 1,
+        "depths_three_through_eight_within_one_quartet": (
+            set(depth_counts) == set(range(3, 9))
+            and max(depth_counts.values()) - min(depth_counts.values()) <= 4
+        ),
         "known_factor_atoms_covered": used_atoms == expected_atoms,
         "confirmation_access_zero": True,
     }

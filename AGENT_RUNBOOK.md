@@ -8258,3 +8258,8 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   failed mean interface, and a 0:0 no-fit H100 receipt. Nine focused tests, Ruff, `py_compile`,
   shell syntax, and diff checks pass. No production seed, board, fit, score, executor change, or
   confirmation access exists yet.
+
+- **2026-07-19 01:56** -- The first development-generation command was rejected before output:
+  the builder incorrectly required 512 groups to divide exactly by six. No board, example, or
+  score was written. The unused seed `9306354405723368031` is retired. The correction freezes the
+  intended maximum one-quartet depth imbalance before a new production seed is selected.
