@@ -34,7 +34,7 @@ class SpanCandidate:
 class S9Example:
     ids: tuple[int, ...]
     offsets: tuple[tuple[int, int], ...]
-    candidates: tuple[SpanCandidate, ...]
+    gold: tuple[tuple[int, int, int], ...]
     row: dict[str, object]
 
 
@@ -88,38 +88,45 @@ def compile_row(row: dict[str, object], tokenizer) -> S9Example:
             raise ValueError("S9 gold spans collide")
         gold[key] = ROLE_INDEX[_role_for_label(str(label))]
 
+    return S9Example(
+        ids=tuple(int(value) for value in encoding.ids),
+        offsets=tuple((int(start), int(end)) for start, end in encoding.offsets),
+        gold=tuple(
+            (positions[0], positions[-1], target)
+            for positions, target in sorted(gold.items())
+        ),
+        row=row,
+    )
+
+
+def all_candidates(example: S9Example) -> tuple[SpanCandidate, ...]:
+    question = str(example.row["question"])
+    gold = {(start, end): target for start, end, target in example.gold}
     candidates = []
-    for start in range(len(encoding.ids)):
+    for start in range(len(example.ids)):
         for width in range(1, MAX_SPAN_WIDTH + 1):
             end = start + width - 1
-            if end >= len(encoding.ids):
+            if end >= len(example.ids):
                 break
             text, char_start, char_end = _trimmed_source_span(
-                question, encoding.offsets, start, end
+                question, example.offsets, start, end
             )
-            if not text:
-                continue
-            positions = tuple(range(start, end + 1))
-            candidates.append(SpanCandidate(
-                start=start,
-                end=end,
-                text=text,
-                char_start=char_start,
-                char_end=char_end,
-                target=gold.get(positions, ROLE_INDEX["none"]),
-            ))
+            if text:
+                candidates.append(SpanCandidate(
+                    start=start,
+                    end=end,
+                    text=text,
+                    char_start=char_start,
+                    char_end=char_end,
+                    target=gold.get((start, end), ROLE_INDEX["none"]),
+                ))
     covered = {
-        tuple(range(candidate.start, candidate.end + 1))
+        (candidate.start, candidate.end)
         for candidate in candidates if candidate.target != ROLE_INDEX["none"]
     }
     if covered != set(gold):
         raise ValueError("S9 proposal enumeration missed a gold span")
-    return S9Example(
-        ids=tuple(int(value) for value in encoding.ids),
-        offsets=tuple((int(start), int(end)) for start, end in encoding.offsets),
-        candidates=tuple(candidates),
-        row=row,
-    )
+    return tuple(candidates)
 
 
 def load_examples(path: Path, tokenizer, expected_split: str, seq_len: int) -> list[S9Example]:
@@ -144,21 +151,15 @@ def shuffle_relation_supervision(examples: Sequence[S9Example], seed: int) -> li
     rng = random.Random(seed)
     result = []
     for example in examples:
-        labels = [
-            candidate.target
-            for candidate in example.candidates
-            if candidate.target != ROLE_INDEX["none"]
-        ]
+        labels = [target for _, _, target in example.gold]
         rng.shuffle(labels)
-        cursor = 0
-        candidates = []
-        for candidate in example.candidates:
-            if candidate.target == ROLE_INDEX["none"]:
-                candidates.append(candidate)
-            else:
-                candidates.append(replace(candidate, target=labels[cursor]))
-                cursor += 1
-        result.append(replace(example, candidates=tuple(candidates)))
+        result.append(replace(
+            example,
+            gold=tuple(
+                (start, end, labels[index])
+                for index, (start, end, _) in enumerate(example.gold)
+            ),
+        ))
     return result
 
 
@@ -171,10 +172,11 @@ def make_batches(examples: Sequence[S9Example], batch_size: int, seed: int) -> l
 def _sample_candidates(
     example: S9Example, negative_limit: int | None, rng: random.Random
 ) -> tuple[SpanCandidate, ...]:
+    candidates = all_candidates(example)
     if negative_limit is None:
-        return example.candidates
-    positive = [value for value in example.candidates if value.target != ROLE_INDEX["none"]]
-    negative = [value for value in example.candidates if value.target == ROLE_INDEX["none"]]
+        return candidates
+    positive = [value for value in candidates if value.target != ROLE_INDEX["none"]]
+    negative = [value for value in candidates if value.target == ROLE_INDEX["none"]]
     if len(negative) > negative_limit:
         negative = rng.sample(negative, negative_limit)
     return tuple(sorted(positive + negative, key=lambda value: (value.start, value.end)))
@@ -483,6 +485,7 @@ __all__ = [
     "SpanCandidate",
     "adapter_hash",
     "adapter_state",
+    "all_candidates",
     "compile_row",
     "compiler_loss",
     "decode_graph",
