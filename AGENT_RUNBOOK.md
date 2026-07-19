@@ -7962,3 +7962,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `7b4d6b8fcf9e8b6ccfed3ae46af782eb04b6b6505d29961d8fc7a8b2fcd7833a`. Preserve the CPU artifact
   only as an exact finite certificate or possible regularizer. The associated pytest board remains
   green at `5 passed`.
+
+- **2026-07-18 20:44** -- **External frontier plans are preserved and reduced to a bounded research
+  direction.** `FRONTIER_AGENT_PLANS.md` stores the supplied Gemini/Grok/Meta/ChatGPT plans; the
+  original download SHA-256 is `3d82ece081a899750c64a5a63df50e7b0405b2621f7cfd98b3e84c8ab4d942fc`.
+  Meta and ChatGPT are near-exact duplicates, leaving three distinct proposals. The Shohin-specific
+  review in `FRONTIER_AGENT_PLANS_ANALYSIS.md` accepts the shared compiler/executor/halt diagnosis but
+  rejects every full submitted stack as underidentified or boundary-confounded. The only admitted
+  next direction is a formal preregistration for a pointer-grounded compiler, separately
+  parameterized source-deleted recurrent executor, and independent state-consumer/halt policy.
+  Predictive error, VQ state, denoising, ACT, and read/write separation remain isolated ablations.
+  Analysis SHA-256 is `52f83c828b79b9cfcb6d75396030bd82c8533856a2c0060771974eb8fb40346d`.
+  This review launches no fit, H100 job, novelty claim, or reasoning claim.

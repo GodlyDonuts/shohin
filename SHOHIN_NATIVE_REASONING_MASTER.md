@@ -9,7 +9,7 @@ runbook and result files.
 **Status:** Living document. The protected raw-pretraining anchor is complete
 at 300,000 steps. Native multi-step reasoning is not yet established.
 
-**Last updated:** 2026-07-18 19:25 EDT.
+**Last updated:** 2026-07-18 20:44 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -818,6 +818,28 @@ be added if the total remains below 150M. Parameter count alone is not the
 constraint. A proposal must state why its mechanism should outperform a
 matched recurrent or static control and which current failure it changes.
 
+### 9.7 External frontier-plan synthesis
+
+`FRONTIER_AGENT_PLANS.md` preserves four labeled submissions from Gemini Deep
+Research, Grok, Meta AI, and ChatGPT Deep Research; the Meta and ChatGPT plans
+are duplicates except for Meta's final two sentences, so they count as three
+distinct proposals rather than four independent endorsements.
+
+The review in `FRONTIER_AGENT_PLANS_ANALYSIS.md` accepts their common diagnosis
+but rejects every integrated stack as scientifically underidentified. The
+admitted direction is narrower: formally preregister a pointer-grounded
+natural-language compiler, a separately parameterized source-deleted recurrent
+executor, and an independently trained state-consumer/halt policy. Predictive
+error, denoising, VQ state, ACT initialization, read/write parameter separation,
+and hard-negative program discrimination remain individual matched ablations.
+Host FSA repair, fixed carry propagation, unchecked readiness scheduling,
+rolling-hash claims, and wholesale attention-to-SSM replacement are not
+admitted as native-reasoning mechanisms.
+
+This is a design review, not an experiment result. It authorizes preparation of
+a preregistration only; no neural fit, H100 run, novelty claim, or reasoning
+claim follows from external-model agreement.
+
 ---
 
 ## 10. Template For A New Theory
@@ -1014,6 +1036,15 @@ that is not part of the research evidence needed by a theory reviewer.
 - `R12_VOCABULARY_ALIGNED_MICROCODE_TRANSDUCER_THEORY.md` — embedded in Appendix A
 - `R12_WGRQ_CPU_PREREG.md` — embedded in Appendix A
 
+### External planning inputs
+
+- `FRONTIER_AGENT_PLANS.md` — preserved external submissions; not experimental
+  evidence and not embedded in this upload dossier; original source SHA-256
+  `3d82ece081a899750c64a5a63df50e7b0405b2621f7cfd98b3e84c8ab4d942fc`
+- `FRONTIER_AGENT_PLANS_ANALYSIS.md` — Shohin-specific review and advancement
+  boundary; not an experiment result; SHA-256
+  `52f83c828b79b9cfcb6d75396030bd82c8533856a2c0060771974eb8fb40346d`
+
 
 ## 12. Mandatory Maintenance Protocol
 
@@ -1048,6 +1079,7 @@ proposing or launching a reasoning experiment.
 |---|---|
 | 2026-07-18 | Created the master native-reasoning ledger from the immutable 300k flagship, public boards, direct interactions, SFT history, DRS/controller/workspace experiments, R9-R12 mechanism studies, and the latest VAMT/relation reviews. |
 | 2026-07-18 | Converted the ledger into a self-contained upload dossier: embedded the complete research markdown closure, replaced invisible local links with in-dossier references, and distilled the operational runbook boundary. |
+| 2026-07-18 | Preserved and reviewed the multi-model frontier plans. Admitted pointer-grounded compiler/executor/halt separation for preregistration, retained several mechanisms as ablations, and rejected the bundled stacks as underidentified. |
 
 ---
 
