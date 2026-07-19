@@ -25724,6 +25724,18 @@ untouched matcher is below 90%; otherwise the failure remains unlocalized or
 the public board is declared non-reproducing. No arm trains or sees the sealed
 confirmation.
 
+The resulting architecture proposal is the **S3 categorical permutation
+register**. It discards continuous entity vectors after compilation. Persistent
+state is exactly one of six permutations; categorical identity multiplied by
+that register yields exact current location; and a tied neural cell predicts a
+relative group element from state, location, operation kind, and amount. A
+straight-through gate is hard in the forward pass, so invalid or fractional
+identity states cannot accumulate. The 717,323-parameter executor trains only
+on independent atomic public updates with gold identity and is evaluated with
+mean identity as primary plus ordered/gold ceilings. A long-program gain of ten
+points over the continuous executor and near-exact ceilings are required before
+any new confirmation.
+
 The matched result reproduces the loss but rejects single-comparator
 localization. Untouched execution reaches 77.393% answers / 70.312% exact
 state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /

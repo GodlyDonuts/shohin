@@ -1,0 +1,176 @@
+#!/usr/bin/env python3
+"""Evaluate an atomic-trained S3 executor on public two-step composition."""
+
+from __future__ import annotations
+
+import argparse
+import collections
+import json
+from pathlib import Path
+
+import torch
+from tokenizers import Tokenizer
+
+from categorical_permutation_executor import (
+    S3CategoricalPermutationExecutor,
+    categorical_identity_packet,
+    module_state_hash,
+)
+from model import GPTConfig
+from referential_gather_delete_executor import execution_targets
+from referential_literal_pointer_compiler import load_examples, make_batches, pad_batch, sha256_file
+from train_referential_gather_delete_executor import load_frozen_compiler
+
+
+def summarize(records):
+    total = len(records)
+    return {
+        "rows": total,
+        "answer_accuracy": sum(row["answer_correct"] for row in records) / total,
+        "final_assignment_exact": sum(row["final_exact"] for row in records) / total,
+        "all_transitions_exact": sum(row["all_transitions_exact"] for row in records) / total,
+        "query_accuracy": sum(row["query_correct"] for row in records) / total,
+        "entity_match_accuracy": sum(
+            sum(row["entity_correct"]) for row in records
+        ) / (2 * total),
+        "amount_accuracy": sum(sum(row["amount_correct"]) for row in records) / (2 * total),
+    }
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--base", required=True)
+    parser.add_argument("--compiler", required=True)
+    parser.add_argument("--executor", required=True)
+    parser.add_argument("--data", required=True)
+    parser.add_argument("--report", required=True)
+    parser.add_argument("--tokenizer", required=True)
+    parser.add_argument("--split", choices=(
+        "development_compositional", "development_lexical_ood",
+    ), required=True)
+    parser.add_argument("--identity-mode", choices=("mean", "ordered", "gold"), required=True)
+    parser.add_argument("--out", required=True)
+    parser.add_argument("--batch-size", type=int, default=64)
+    args = parser.parse_args()
+    if not torch.cuda.is_available():
+        raise SystemExit("S3 evaluation requires CUDA")
+    if Path(args.out).exists():
+        raise SystemExit("refusing existing S3 evaluation")
+    report = json.load(open(args.report))
+    if not report.get("all_gates_pass"):
+        raise SystemExit("factorized report is not admitted")
+    if report["artifacts"][args.split]["sha256"] != sha256_file(args.data):
+        raise SystemExit("factorized report does not bind S3 evaluation data")
+    bundle = torch.load(args.executor, map_location="cpu")
+    metadata = bundle.get("executor", {})
+    if metadata.get("protocol") != "r12_s3_categorical_permutation_executor_v1":
+        raise SystemExit("invalid S3 executor protocol")
+    if metadata.get("confirmation_access") != 0:
+        raise SystemExit("S3 executor records confirmation access")
+    checkpoint, compiler, compiler_metadata = load_frozen_compiler(
+        args.base, args.compiler, args.tokenizer, "cuda",
+    )
+    cfg = GPTConfig(**checkpoint["cfg"])
+    tokenizer = Tokenizer.from_file(args.tokenizer)
+    examples = load_examples(
+        args.data, tokenizer, args.split, cfg.seq_len, keep_evidence=True,
+    )
+    executor = S3CategoricalPermutationExecutor(
+        identity_context_width=int(metadata["identity_context_width"]),
+        context_width=int(metadata["context_width"]),
+        width=int(metadata["executor_width"]),
+    ).to("cuda").eval()
+    executor.load_state_dict(bundle["executor_state"], strict=True)
+    if module_state_hash(executor) != metadata["final_executor_sha256"]:
+        raise SystemExit("S3 executor state mismatch")
+
+    records = [None] * len(examples)
+    batches = make_batches(examples, args.batch_size, seed=0, shuffle=False)
+    with torch.inference_mode(), torch.autocast("cuda", dtype=torch.bfloat16):
+        for indices in batches:
+            selected, ids, valid = pad_batch(examples, indices, "cuda")
+            compiler_outputs = compiler(ids, valid)
+            packet = categorical_identity_packet(
+                compiler_outputs, selected, ids, valid, mode=args.identity_mode,
+            )
+            outputs = executor(packet)
+            transitions = [matrix.argmax(-1).tolist() for matrix in outputs["transition_matrices"]]
+            final = outputs["assignment"].argmax(-1).tolist()
+            query = outputs["query_logits"].argmax(-1).tolist()
+            answers = outputs["answer_probabilities"].argmax(-1).tolist()
+            entities = [logits.argmax(-1).tolist() for logits in outputs["entity_match_logits"]]
+            amounts = [logits.argmax(-1).tolist() for logits in outputs["amount_logits"]]
+            targets = [execution_targets(example) for example in selected]
+            for local, global_index in enumerate(indices):
+                target = targets[local]
+                transition_exact = [
+                    tuple(transitions[step][local]) == target.transition_sources[step]
+                    for step in range(2)
+                ]
+                records[global_index] = {
+                    "id": selected[local].row_id,
+                    "group": selected[local].group,
+                    "surface_type": selected[local].surface_type,
+                    "answer_correct": int(answers[local]) == target.answer_identity,
+                    "final_exact": tuple(final[local]) == target.final_identities,
+                    "all_transitions_exact": all(transition_exact),
+                    "query_correct": int(query[local]) == target.query_position,
+                    "entity_correct": [
+                        int(entities[step][local]) == target.entity_locations[step]
+                        for step in range(2)
+                    ],
+                    "amount_correct": [
+                        int(amounts[step][local]) == target.amounts[step]
+                        for step in range(2)
+                    ],
+                }
+    groups = collections.defaultdict(list)
+    for record in records:
+        groups[record["group"]].append(record)
+    result = {
+        "schema": "r12_s3_categorical_permutation_eval_v1",
+        "split": args.split,
+        "identity_mode": args.identity_mode,
+        "base_sha256": sha256_file(args.base),
+        "compiler_sha256": sha256_file(args.compiler),
+        "compiler_adapter_sha256": compiler_metadata["final_adapter_sha256"],
+        "executor_sha256": sha256_file(args.executor),
+        "executor_state_sha256": metadata["final_executor_sha256"],
+        "data_sha256": sha256_file(args.data),
+        "report_sha256": sha256_file(args.report),
+        "tokenizer_sha256": sha256_file(args.tokenizer),
+        "evaluator_sha256": sha256_file(__file__),
+        "overall": summarize(records),
+        "by_surface": {
+            surface: summarize([row for row in records if row["surface_type"] == surface])
+            for surface in sorted({row["surface_type"] for row in records})
+        },
+        "group_summary": {
+            "groups": len(groups),
+            "all_four_answers_correct": sum(
+                len(group) == 4 and all(row["answer_correct"] for row in group)
+                for group in groups.values()
+            ),
+            "all_four_state_exact": sum(
+                len(group) == 4 and all(row["final_exact"] for row in group)
+                for group in groups.values()
+            ),
+        },
+        "fit_updates": 0,
+        "confirmation_access": 0,
+        "records": records,
+        "claim_boundary": (
+            "Public two-step S3 component development. External schedule/halt; no "
+            "confirmation, autonomous reasoning, or novelty claim."
+        ),
+    }
+    Path(args.out).write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+    print(json.dumps({
+        "identity_mode": args.identity_mode,
+        "out": str(Path(args.out).resolve()),
+        "overall": result["overall"],
+    }, sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()

@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 02:00 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 02:10 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8296,3 +8296,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `transport_failure_not_localized`. Identity comparison is one contributor, but continuous entity
   encoding and soft recurrent state also drift. The next architecture should use categorical
   identity and a three-slot permutation register rather than continuous entity rematching.
+
+- **2026-07-19 02:00--02:10** -- **The S3 categorical register is executable and frozen before
+  fit.** Its forward state is exactly one of six 3x3 permutation matrices; a tied neural cell sees
+  categorical identity, exact current location, direction, amount, and state, then selects a group
+  element with a hard-forward/soft-gradient gate. Semantic equality and fractional entity state
+  are absent from recurrence. The executor has 717,323 parameters and the full system 134,406,873.
+  One public epoch uses only 192,000 independent atomic targets with gold categorical identity;
+  no composition or long program is trained. Mean identity is the primary evaluation, with
+  ordered/gold ceilings. Long mean must gain ten answer points over the 77.393% continuous arm,
+  retain >=85% state and >=80% depth-eight answers; ordered/gold must approach exactness. Eight
+  focused tests, Ruff, `py_compile`, Slurm syntax, finite gradients, exact S3 closure, and diff
+  checks pass. Source/prereg SHA-256 values are `e4aa81eb...` and `19d1dab1...`. No H100, fit,
+  score, confirmation access, reasoning, or novelty claim exists yet.
