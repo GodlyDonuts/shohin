@@ -1,0 +1,153 @@
+{
+  "all_gates_pass": false,
+  "amount_patterns": [
+    {
+      "token_ids": [
+        29
+      ],
+      "value": 1
+    },
+    {
+      "token_ids": [
+        30
+      ],
+      "value": 2
+    }
+  ],
+  "builder_sha256": "e023d0745005d8ad4120506ab3c4b792feed652f30bacc2648cf49af987abfeb",
+  "confirmation_access": 0,
+  "data_sha256": "317e3132e85c9bf524977cdaee608d22c69d3720a04b13b1db03ab1ce24614e7",
+  "development_access": 0,
+  "entity_width_histogram": {
+    "4": 3061,
+    "5": 130847,
+    "6": 10092
+  },
+  "entity_widths": [
+    4,
+    5,
+    6
+  ],
+  "event_references": 120000,
+  "gates": {
+    "all_events_accounted": true,
+    "all_query_positions": true,
+    "both_amounts": true,
+    "both_direction_classes": true,
+    "confirmation_access_zero": true,
+    "development_access_zero": true,
+    "exactly_twelve_direction_patterns": true,
+    "one_entity_token_width": false,
+    "training_rows_only": true
+  },
+  "kind_patterns": [
+    {
+      "token_ids": [
+        1012
+      ],
+      "value": "right"
+    },
+    {
+      "token_ids": [
+        1060,
+        25,
+        1147
+      ],
+      "value": "right"
+    },
+    {
+      "token_ids": [
+        1702,
+        1147
+      ],
+      "value": "left"
+    },
+    {
+      "token_ids": [
+        1714
+      ],
+      "value": "left"
+    },
+    {
+      "token_ids": [
+        2091
+      ],
+      "value": "right"
+    },
+    {
+      "token_ids": [
+        2260,
+        25,
+        2757
+      ],
+      "value": "right"
+    },
+    {
+      "token_ids": [
+        2330,
+        25,
+        2757
+      ],
+      "value": "left"
+    },
+    {
+      "token_ids": [
+        3590,
+        1147
+      ],
+      "value": "left"
+    },
+    {
+      "token_ids": [
+        3805,
+        25,
+        1147
+      ],
+      "value": "left"
+    },
+    {
+      "token_ids": [
+        4505
+      ],
+      "value": "left"
+    },
+    {
+      "token_ids": [
+        6812,
+        1147
+      ],
+      "value": "right"
+    },
+    {
+      "token_ids": [
+        13917,
+        1147
+      ],
+      "value": "right"
+    }
+  ],
+  "query_patterns": [
+    {
+      "token_ids": [
+        29
+      ],
+      "value": 0
+    },
+    {
+      "token_ids": [
+        30
+      ],
+      "value": 1
+    },
+    {
+      "token_ids": [
+        31
+      ],
+      "value": 2
+    }
+  ],
+  "report_sha256": "777c5723c157149bb731dec1bb94bca9dc5a5bc41b65c957f52afd6ba5b8efda",
+  "schema": "r12_s4_pointer_anchored_structural_lexicon_v1",
+  "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4",
+  "training_rows": 48000
+}

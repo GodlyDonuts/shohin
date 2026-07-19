@@ -89,7 +89,12 @@ def main():
         "both_direction_classes": {record["value"] for record in values["kind_patterns"]} == {"left", "right"},
         "both_amounts": {record["value"] for record in values["amount_patterns"]} == {1, 2},
         "all_query_positions": {record["value"] for record in values["query_patterns"]} == {0, 1, 2},
-        "one_entity_token_width": len(values["entity_widths"]) == 1,
+        "entity_token_widths_nonempty_and_bounded": (
+            bool(values["entity_widths"])
+            and min(values["entity_widths"]) >= 1
+            and max(values["entity_widths"]) <= 16
+        ),
+        "all_intro_spans_accounted": sum(values["entity_width_histogram"].values()) == 3 * len(rows),
         "all_events_accounted": values["event_references"] == sum(len(row["program"]) for row in rows),
         "development_access_zero": True,
         "confirmation_access_zero": True,

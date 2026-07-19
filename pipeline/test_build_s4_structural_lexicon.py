@@ -11,8 +11,8 @@ class S4StructuralLexiconTest(unittest.TestCase):
             "split": "s4_event_tape_train",
             "spans": {
                 "intro.entity0": {"token_ids": [10, 11]},
-                "intro.entity1": {"token_ids": [12, 13]},
-                "intro.entity2": {"token_ids": [14, 15]},
+                "intro.entity1": {"token_ids": [12, 13, 14]},
+                "intro.entity2": {"token_ids": [15, 16]},
                 "op0.kind": {"token_ids": [20]},
                 "op0.literal": {"token_ids": [30]},
                 "op1.kind": {"token_ids": [21]},
@@ -26,7 +26,8 @@ class S4StructuralLexiconTest(unittest.TestCase):
             "query": {"position": 0},
         }
         result = build([row])
-        self.assertEqual(result["entity_widths"], [2])
+        self.assertEqual(result["entity_widths"], [2, 3])
+        self.assertEqual(sum(result["entity_width_histogram"].values()), 3)
         self.assertEqual(result["event_references"], 2)
         self.assertEqual({record["value"] for record in result["kind_patterns"]}, {"left", "right"})
 

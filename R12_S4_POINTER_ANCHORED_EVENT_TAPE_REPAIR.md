@@ -47,3 +47,14 @@ gold sanity; total parameters below 150M; zero confirmation access.
 
 V1.1 may run once on the same public development rows after source, lexicon builder, evaluator, and
 this repair are committed. A pass authorizes only a separately frozen fresh confirmation protocol.
+
+## Pre-evaluation builder receipt
+
+The first post-commit training-only lexicon build failed closed at SHA-256
+`f487d1cb98bebd84137c1b0b7839e2241603cc4f920f4f1a09205f502e9015e6`. Its sole failed gate
+incorrectly required one entity token width. The admitted training spans contain 3,061 width-four,
+130,847 width-five, and 10,092 width-six occurrences because contextual BPE boundaries vary. The
+frozen repair above already specified the *set* of training entity-span widths, and the decoder was
+implemented to accept that set. Before any development score, the builder gate is therefore
+repaired to require a nonempty bounded width set and exact accounting of all 144,000 training intro
+spans. The failed receipt is retained as `s4_structural_lexicon_v1.failed_one_width.json`.
