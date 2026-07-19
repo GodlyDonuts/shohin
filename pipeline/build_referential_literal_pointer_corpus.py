@@ -349,6 +349,7 @@ def pointer_positions(row):
 
 def audit_splits(split_rows, tokenizer_path, generator_path):
     expected_labels = {
+        "intro.entity0", "intro.entity1", "intro.entity2",
         "op0.kind", "op0.entity", "op0.literal",
         "op1.kind", "op1.entity", "op1.literal", "query.position",
     }

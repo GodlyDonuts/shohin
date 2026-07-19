@@ -51,6 +51,7 @@ class ReferentialLiteralPointerCorpusTest(unittest.TestCase):
 
     def test_every_target_span_is_nonempty(self):
         required = {
+            "intro.entity0", "intro.entity1", "intro.entity2",
             "op0.kind", "op0.entity", "op0.literal",
             "op1.kind", "op1.entity", "op1.literal", "query.position",
         }
