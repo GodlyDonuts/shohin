@@ -25693,6 +25693,17 @@ is sealed and cannot become training data. The next lawful move is a disjoint
 paired-name development board plus a no-fit relational carrier, followed only
 later by an independently seeded confirmation.
 
+The next frozen mechanism is an **ordered relational identity carrier**, not a
+wider name embedding. It keeps the compiler's normalized soft role masks and,
+while source tokens still exist, computes a translation-invariant weighted
+sequence match between each operation referent and the three introduced
+referents. The result is only a bounded three-way relation; full source states
+are still deleted. An unordered vocabulary-mass cosine is a matched control
+because it cannot distinguish reversed names. A new public paired-name board,
+whose seed is chosen only after source/prereg commit, must first show at least
+99% no-fit identity and a 15-point gain over the old mean-vector carrier. The
+failed confirmation is not an input and remains sealed.
+
 ## Update Protocol
 
 At each 10k checkpoint milestone:

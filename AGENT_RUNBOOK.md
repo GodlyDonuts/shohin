@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 00:49 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 01:55 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8246,3 +8246,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Evidence archive SHA-256 is `ec795b89...`. Seal this board as a compiler-interface negative.
   Recurrent state is not the active bottleneck through depth eight; next use a disjoint public
   paired-name board to develop a bounded relational token-set carrier without fitting confirmation.
+
+- **2026-07-19 01:44--01:55** -- **An ordered relational identity carrier is frozen before board
+  seed or H100 score.** The prior failure is now durable in commit `293ec58` with safe archive
+  SHA-256 `ec795b89...`. The new public-development mechanism retains the frozen compiler's soft
+  role masks but compares operation and introduction spans through a translation-invariant exact-
+  token sequence kernel before source deletion. Unlike an unordered vocabulary bag, the kernel
+  distinguishes reversed composed names. Its sole primary is temperature 0.5; mean-vector,
+  unordered-bag, alternate-temperature, and gold-span methods are fixed controls. Advancement
+  requires at least 99% overall identity, 98.5% at every depth/surface, a 15-point gain over the
+  failed mean interface, and a 0:0 no-fit H100 receipt. Nine focused tests, Ruff, `py_compile`,
+  shell syntax, and diff checks pass. No production seed, board, fit, score, executor change, or
+  confirmation access exists yet.
