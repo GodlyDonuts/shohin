@@ -875,6 +875,21 @@ text-AST, joint, shuffled, and oracle controls. Executor integration remains
 blocked until untouched confirmation passes. Source-deleted recurrence and
 HALT remain later independent gates.
 
+The larger compiler corpus is now frozen: 96,000 train, 2,048 development, and
+4,096 confirmation rows over 24,000 / 512 / 1,024 semantic quartets. It contains
+8,538,572 source tokens and 715,008 exact pointer labels. Split renderer and
+nonce-name sets are disjoint; exact prompts and normalized word 13-grams have
+zero overlap between every split pair. Confirmation SHA-256 is
+`84005921b5fca93f9c2567655c4345bced78fc74ed7f49c8f72189b9f87fbf03`.
+The confirmation seed is `3072310916827575206`. Its rows remain sealed until
+all neural arm identities and development-only selection rules are frozen.
+
+Corpus custody includes two pre-score defects rather than erasing them. A
+nonce-capacity request failed before creating rows. The next build passed in
+memory but used a literal `{}.jsonl` output path; its retained confirmation file
+is byte-identical to the repaired final confirmation. Neither repair followed a
+model fit, score, or row-level confirmation inspection.
+
 ---
 
 ## 10. Template For A New Theory
@@ -1116,6 +1131,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-18 | Converted the ledger into a self-contained upload dossier: embedded the complete research markdown closure, replaced invisible local links with in-dossier references, and distilled the operational runbook boundary. |
 | 2026-07-18 | Preserved and reviewed the multi-model frontier plans. Admitted pointer-grounded compiler/executor/halt separation for preregistration, retained several mechanisms as ablations, and rejected the bundled stacks as underidentified. |
 | 2026-07-18 | Froze and passed the 32-quartet complete referential compiler CPU falsifier; authorized one isolated neural compiler pilot while keeping executor, halt, and reasoning claims blocked. |
+| 2026-07-18 | Froze the 102,144-row complete-compiler corpus with disjoint names/renderers, zero cross-split exact or 13-gram overlap, documented pre-score build repairs, and a sealed 4,096-row confirmation split. |
 
 ---
 

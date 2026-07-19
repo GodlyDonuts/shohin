@@ -1,0 +1,23 @@
+{
+  "compression": "gzip -9 -n",
+  "confirmation": {
+    "compressed_sha256": "70db90f5ac3b6a8d5ebdc77ade90301d9c64043122734e9ab4c2861f1c80cc18",
+    "uncompressed_bytes": 10544318,
+    "uncompressed_sha256": "84005921b5fca93f9c2567655c4345bced78fc74ed7f49c8f72189b9f87fbf03"
+  },
+  "development": {
+    "compressed_sha256": "abc991626545aa0fab6d3419e0689d5475a5052fa05a9a664cf1cbff7a8cda30",
+    "uncompressed_bytes": 5123378,
+    "uncompressed_sha256": "20611bf4ddbdb42d7e2f9dd76759b86f3f4dd16d5942f207bf7b325984da5ad6"
+  },
+  "generator_commit": "b064ce1",
+  "generator_sha256": "50123e84f049e1e85dcbdf002bb6035a54d3d08e503e319dbab74d4ee7fb620a",
+  "report_sha256": "9f3bd01f4a144fd52f362a032dd4d8fa7c40c8fccfad608e9f63d74a028137cc",
+  "schema": "r12_referential_literal_pointer_corpus_v1_compression_manifest",
+  "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4",
+  "train": {
+    "compressed_sha256": "4ef7a4b2b73d07c99bd19effb832fa4897bf60c90b5e044691aadaff6b2d0fd9",
+    "uncompressed_bytes": 237074855,
+    "uncompressed_sha256": "f47c6d6ce316be6765641f61a294481605fa53c7b12388741fb753c238b2f36e"
+  }
+}
