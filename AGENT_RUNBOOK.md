@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 03:00 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 03:11 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8393,3 +8393,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   independently seeded known-atom confirmation with ordered identity primary, mean control, gold
   ceiling, and causal operation/query interventions. It does not authorize an unseen-phrase,
   planning, learned-halt, broad reasoning, or novelty claim.
+
+- **2026-07-19 03:00--03:11** -- **The one-shot lexical-S3 confirmation protocol is executable
+  and frozen before production seed.** It excludes factorized train/development plus the public
+  relational board at exact-prompt, word-13-gram, name, and factor-combination levels; requires
+  fresh paired nonces, complete known-atom direction coverage, balanced depths, CPU executor
+  agreement, and feasible global operation/query derangements within every depth. Ordered identity
+  is primary, mean is conventional control, gold is ceiling, and operation/query interventions are
+  causal controls. A scoreless 512-group mechanics board at retired seed `1` passed every gate and
+  was deleted. Nine focused tests, Ruff, `py_compile`, Slurm syntax, and diff checks pass. Prereg/
+  generator/evaluator/assessor/job hash prefixes are `977e3954` / `50f2005d` / `262aafe8` /
+  `d5c92062` / `9486ad5c`. Commit these bytes before drawing one production seed. No score,
+  production board, fit, old-confirmation access, or confirmation claim exists yet.

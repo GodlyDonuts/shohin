@@ -25813,6 +25813,16 @@ updates only. It now requires one fresh seed-after-commit confirmation and
 causal action/query controls. Schedule, halt, unseen-phrase semantics, and open
 language planning remain unsolved boundaries.
 
+The authorized confirmation is now protocol-frozen before its production
+seed. It will generate 512 fresh quartets across depths 3--8 while excluding
+all public factorized and relational-development prompts, 13-grams, names, and
+factor combinations. Every direction must remain a training lexicon atom, and
+operation/query strata must support global semantic derangements. Ordered
+identity is the complete-system primary; mean and gold are fixed controls.
+Operation and query interventions must causally collapse their respective
+outputs. A scoreless seed-1 mechanics board passed and was deleted; that seed
+is retired. No production confirmation score exists yet.
+
 The matched result reproduces the loss but rejects single-comparator
 localization. Untouched execution reaches 77.393% answers / 70.312% exact
 state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /
