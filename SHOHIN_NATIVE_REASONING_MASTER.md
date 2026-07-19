@@ -25456,6 +25456,51 @@ ordinary tagger/pointer, lexical-oracle, structure-oracle, and full-oracle
 controls. The authoritative closeout is
 `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_DEVELOPMENT_RESULT.md`.
 
+### Structured parsing and parameter islands
+
+V1.2 adds four bidirectional source-encoder layers and per-token supervision for
+all ten roles. It is a real structural intervention, not more examples. Job
+`692983` raises ordered initial-state joint exact from 18.848% to **48.340%**,
+including 60.547% on the failed paraphrase renderer. But its role head can solve
+location without teaching the free operation slot to consume the selected token.
+Operation-kind loss remains at chance, exact programs fall to 0/2,048, and
+answers fall to 18.994%.
+
+A no-fit diagnostic then composes v1.2 pointers with v1.1 operation classes. It
+recovers **987/2,048 = 48.193% answers** and **691/2,048 = 33.740% exact
+programs**. That composition is external and cannot count as a compiler, but it
+shows that the two partial capabilities coexist when their parameters do not
+interfere.
+
+V1.3 makes that separation architectural. The structural role parser and
+operation-semantic reader receive independent memory projections and decoders
+over the same frozen layer-19 source states. Job `692992` fits 8,658,701 compiler
+parameters, 133,740,365 total. It restores semantic optimization and reaches:
+
+| Metric | V1.3 |
+|---|---:|
+| answer accuracy | **887/2,048 = 43.311%** |
+| semantic-program exact | **480/2,048 = 23.438%** |
+| full ten-binding pointer exact | **218/2,048 = 10.645%** |
+| initial-state joint exact | **942/2,048 = 45.996%** |
+| all-four answers correct | **46/512 quartets** |
+
+This is a partial mechanism win but not a promotion. On the unseen paraphrase
+renderer, V1.3 reaches 59.766% answers, 42.773% programs, and 99.023% operation
+kind. On the other unseen renderer it reaches only 32.422% answers, 15.820%
+programs, and 46.289% kind. Separate educational paths repair destructive
+interference, but 96,000 repetitions from only two renderer families do not
+identify language-invariant lexical grounding.
+
+The next board is frozen in
+`R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_LANGUAGE_PREREG.md`. It
+factorizes intro frames, argument order, direction lexemes, ordinals,
+distractors, and queries; separates known-atom unseen combinations from truly
+unseen lexemes; and requires an ordinary parser plus lexical, structure, full,
+and shuffled controls. Repeating seeds or tuning against v1.1 development is
+closed. Confirmation remains sealed until a fresh board and matched attribution
+gate pass.
+
 ## Update Protocol
 
 At each 10k checkpoint milestone:

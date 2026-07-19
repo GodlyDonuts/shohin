@@ -6,21 +6,23 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 21:56 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-18 22:37 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
 > GSM8K pass@1 `2/100`, MATH-500 `2/100`, HumanEval `6/164`, and MBPP `0/100`. This confirms a
 > low-single-digit plateau rather than a broad 120k-to-300k capability gain.
 >
-> The first complete source-pointer compiler realization is now **rejected on frozen
-> development**. Valid H100 job `692966` completed unchanged on `evc28`; full ten-binding pointer
-> exact is `45/2048 = 2.197%`, semantic-program exact is `313/2048 = 15.283%`, and executed-answer
-> accuracy is `602/2048 = 29.395%`. All 512 canonical/paraphrase pairs fail joint exactness. The
-> unseen paraphrase renderer collapses to `1/512` answers and systematically selects renderer
-> coordinate words such as `unaffected` and `travel`. Confirmation remains sealed and absent from
-> Newton. This rejects six free slot queries over projected frozen causal states after two-renderer
-> training; it does not reject complete source-pointer compilation.
+> Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
+> Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
+> role parsing `692983` lifts initial binding 18.8% -> 48.3% but disconnects operation semantics,
+> leaving kind classification at chance and programs at 0%. Parameter islands `692992` repair that
+> optimization failure and reach **43.3% answers / 23.4% programs / 10.6% full pointers**, with
+> 59.8% answers / 42.8% programs on the unseen paraphrase renderer, but only 32.4% / 15.8% on the
+> other unseen lexical renderer. The mechanism is partially real; the two-renderer curriculum is
+> underidentified. Confirmation remains sealed and absent from Newton. Next build a fresh
+> factorized-language board with known-atom compositional and unseen-lexeme strata plus favorable
+> ordinary-parser/oracle controls; do not tune another seed against exposed v1.1 development.
 >
 > Fresh compiler/executor/serializer interaction is complete: natural-language compilation is
 > `0/6`, terminal serialization is `2/6`, and oracle-compiled frozen DRS transitions are `28/34`
@@ -126,7 +128,7 @@ Do not wait for permission to fix obvious data/training gaps.
 | **R10 ACAW/VSPT control** | **DORMANT PRE-SCORE CONTROL; SECOND CUSTODY AUDIT NO-GO; no reasoning or context-scaling success claim.** Commit `a8af84b` implements exact noncommutative version-space composition, sound exact-rational affine ambiguity hulls, query-set annihilator certificates, fail-closed overflow, monotone leaf-local replay, fixed-size all-support commitments, and range-bound retrieval references. Operator/query parity, exhaustive ambiguity, alternate-derivation, overflow reconstruction, and 4,096-event mechanics pass. Canonical accounting separates active-hot, factorized-provenance, external-source, retrieval-reference, and integer-growth bytes. The finite-board replacement passes its local mechanics tests, but independent adversarial review found its evidence custody still forgeable: consumers trusted self-attesting booleans without replaying the build binding; clean committed code identity was enforced only by the optional job; caller-selectable seeds/R5 inputs allowed board shopping; score JSON could be altered and rehashed; several hash-then-reopen paths were TOCTOU-vulnerable; batch/device/determinism identity was incomplete; and source could change between initial and final admission identities. These are claim-blocking even if numerical scores are honest. No R10 probability tensor has been read. Preserve the completed hardening work as a control; do not resume its score chain unless R12 later requires it as a matched comparator. |
 | **R11 internal workspace control** | **DORMANT CONTROL; broad draft and v1/v2 were NO-GO; v3 remains an unimplemented preregistration, not a capability result.** The six-slot, 96-wide architecture remains technically feasible as an isolated wrapper with 1,607,334 trainable parameters. V1 failed on an incomplete generator/target contract, leakage and cache risks, ambiguous ledgers, and overclaiming. V2 SHA-256 `11ca769036b2bc85eebd47a950e51b2bc87158668e47ba3cc5e38e4fdae68408` closed many of those gaps but still failed final review: affine-answer/token/frequency rejection conditioned accepted sources on supposedly late-bound queries; the exact API omitted the cached decode session it later required; sham/control primary evaluation semantics were ambiguous; and a seed commitment could not prove confirmation secrecy. V3 closes those contract defects on paper, but its tied recurrence, source-derived slots, and query readers are established machinery rather than an R12 invention. Preserve it as a favorable matched control; no code, board, fit, score, or H100 job is authorized. |
 | **R12 mathematical invention frontier** | **SEVEN BOUNDED NO-GOS; RAW VOCABULARY J-WORKSPACE AND MCBS CLOSED AT 300K.** Cursor-action v1 `689932/689936` failed source/cursor binding; final-token readout `689952` fit train but reached only 43.13%/41.67% development. Token-tape `689976` rejects only the frozen pre-final single-query/linear-decoder family. Additive forks and PCRT are theorem-rejected before code. The paired raw-300k future-Jacobian repeat is reproducible but has **0% top-10 and 0% top-100** on all 2,304 decisive targets, so no J-lens swap is authorized. MCBS is also theorem-rejected as a mechanism: for affine consumers it recovers only the observable quotient of the fitted consumers, and a finite answer-specific motor bundle passes projection/complement tests without reusable state. `R12_MINIMAX_CAUSAL_BROADCAST_SUBSPACE_NO_GO.md` freezes the theorem and counterexample. Any successor must be frozen before held-out consumers, held-out updates, and output recoding are revealed. `R12_CERTIFIED_LANGUAGE_BRIDGE_BOUNDARY.md` still blocks synthetic-to-language transfer without a future-reflecting certificate map. |
-| **R12 complete compiler frontier** | **CPU BOARD/CORPUS PASS; FIRST NEURAL REALIZATION REJECTED ON DEVELOPMENT.** Code inspection proved R4's `program_exact` excluded initial and event quantities: a perfect deterministic lexer supplied them to `safe_execute`. The 32-quartet CPU falsifier passes all 14 gates. The corpus has **96,000 train / 2,048 development / 4,096 sealed confirmation rows**, ten model-owned source bindings per row, and zero exact, word-13-gram, entity-name, or renderer overlap across splits. Development-only job `692966` trained a 3,241,091-parameter six-slot compiler over the frozen 300k base for 1,514 updates on `evc28`; total parameters were 128,322,755. Near-zero train loss did not transfer: full pointer exact **45/2,048**, semantic-program exact **313/2,048**, answers **602/2,048**, canonical+paraphrase both exact **0/512**, all four exact **0/512**. The paraphrase renderer scored only **1/512** answers and exposed learned renderer-coordinate shortcuts. Adapter/result/log SHA-256 values are `6815f2fb...`, `070d148c...`, and `277e22e0...`, hash-matched locally/Newton. Confirmation was never copied to Newton and remains sealed. Reject this free-slot/projected-causal-state realization. A successor must use a fresh unseen language board and separately identify lexical grounding, structural parsing, and execution with favorable sequence-tagger/pointer and lexical/structure oracle controls. |
+| **R12 complete compiler frontier** | **PARTIAL MECHANISM WIN; FRESH FACTORIZED-LANGUAGE BOARD NEXT.** The corpus has 96,000 train / 2,048 exposed development / 4,096 sealed confirmation rows and ten model-owned source bindings per row. Free-slot `692966` reaches **29.4% answers / 15.3% programs** and exposes coordinate shortcuts. Structured `692983` raises initial binding **18.8% -> 48.3%** but its disconnected kind head stays at chance, producing **0% programs**. A zero-fit composition of v1.2 pointers and v1.1 kinds reaches **48.2% answers / 33.7% programs**, motivating physically separate educational paths. Islands job `692992` then trains 8,658,701 compiler parameters / 133,740,365 total and reaches **43.3% answers, 23.4% programs, 10.6% full pointers, 46 all-four-answer quartets**. Its unseen paraphrase renderer reaches **59.8% answers / 42.8% programs / 99.0% kind**, while the other unseen renderer reaches only **32.4% / 15.8% / 46.3% kind**. Thus islands fix gradient interference but two renderer families do not identify language-invariant grounding. Confirmation remains absent from Newton and sealed. Build the preregistered factorized board with separate known-atom compositional and lexical-OOD strata, then compare free slots, structured, islands, a favorable ordinary parser, lexical/structure/full oracles, and shuffled labels. No executor/halt connection is authorized. |
 | **CDRL sample-allocation track** | **CLOSED NEGATIVE ON NEURAL BOARD `R12-CDRL-NEURAL-v1`.** CPU mechanics remain valid. Newton job **`691750`** completed on **evc22** in 3m25s (exit 0). Decision SHA-256 `ad94ac15ca17eaa2c5381aa0a3f94fc60a49dbbf2a528552a1212b3ecf1cabdb` records `advance=false`: median depth-OOD margins core−full **-0.776**, core−hard **-0.778**, core−rand **-0.021** vs required +0.05. Core exact OOD ≈0.04 while full/hard reach ≈0.70–0.92. Pure Nerode-core allocation fails when eval restores distractors. See `R12_CDRL_NEURAL_OPTIMIZATION_RESULT.md`. No Shohin/ACW path touched. Conjecture C closed; do not retune. |
 | **Typed controller internalization** | **V1 RESCORED PARTIAL WIN; V2 HYBRID RUNNING.** Rescored decision SHA-256 `bd25abeac4cf775eeac96664f29200ccf05eee7e2e79eea0ad83f289e3271e69`: rollout **16.4%**, done **86.3% PASS**, atomic **27%**, direct 0%, typed−direct **+16pp PASS**. First eval `691778` answer score was invalid (mid-digit early-stop); `691782` fixed decode. Format/DONE internalized; multiply in typed registers remains weak vs SSC native atomic ~76%. V2 hybrid (native `Problem/Work` atomics + typed rollout) continues from v1 ckpt — Newton **`691785`**. See `R12_TYPED_CONTROLLER_V1_RESULT.md`. |
 | **Post-DRS workspace probe** | **POSITIVE LOCAL DIAGNOSTIC, NOT AUTONOMOUS REASONING.** Job **`691756`** first showed late-layer digit swaps **10/10** positive at ~**+31** delta-logodds and carry **10/10** at layer 29. A matched local-MPS expansion now uses the exact raw-200k 40-direction board: DRS digit swaps are **40/40** positive at every layer 17--29 (means **+35.59 to +35.68**) versus raw means near zero, while layer-29 carry is **40/40**, mean **+3.147**, versus raw **20/40**, mean **+0.014**. Every fit/value-OOD/width-8-OOD regime is 8/8 at layer 29. DRS induced an actionable local residual representation; multi-step update/consumption and autonomous terminal execution remain unsolved. See `R12_DRS_WORKSPACE_PROBE_POST_RESULT.md` and the 13:02 journal entry. |
@@ -219,11 +221,12 @@ localization, not a substitute for a causal update mechanism. Remainder and DONE
 and may not rescue a failed transition gate. Any controlled future pretrain handoff must use manifest-gated
 language, math/reasoning, and code sources; the target is **600k absolute steps**.
 
-The separate compiler Stage A has passed CPU admission but its first neural realization failed frozen development.
-Keep v1.1 confirmation sealed. Any successor must freeze a fresh unseen language board because v1.1 development is
-now exposed, and must decompose broad renderer coverage, bidirectional structural parsing, lexical grounding, and
-execution using favorable ordinary sequence-tagger/pointer, lexical-oracle, structure-oracle, and full-oracle
-controls. Do not connect a compiler to PCPT or HALT until it passes an untouched confirmation threshold.
+The separate compiler Stage A has passed CPU admission and three exposed-development realizations now localize the
+failure to language support after parameter islands repaired structural/semantic interference. Keep v1.1
+confirmation sealed. Implement `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_LANGUAGE_PREREG.md`: commit
+the generator/tests before development or confirmation seeds, keep compositional known-atom and lexical-OOD strata
+separate, and run favorable ordinary parser, lexical-oracle, structure-oracle, full-oracle, and shuffled controls.
+Do not connect a compiler to PCPT or HALT until it passes an untouched confirmation threshold.
 
 ---
 
@@ -8041,3 +8044,29 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   and Newton at SHA-256 `6815f2fb68e94701630eaece6fff740e54a6f69d2fb226468bbcc1989b7e3cfa`,
   `070d148c9d0031fea83218f4a941ecbc4a50c00f0961fcf7f0f8435bdc2a4a25`, and
   `277e22e0e24bc8270f29edcea42272990fdcbee2f6bfee7a29867732627ceeb4`.
+
+- **2026-07-18 22:00--22:15** -- **Bidirectional structural parsing finds a binding signal but
+  disconnects operation semantics.** Commit `c3f26a0` froze v1.2 before score. Job `692983`
+  completed on verified H100 `evc25` in 13m28s with 6,402,701 trainable / 131,484,365 total
+  parameters. Initial-state joint exact rises **18.848% -> 48.340%**, and paraphrase initial/op0/op1
+  joints reach **60.547% / 40.625% / 38.672%**. But operation-kind loss remains at chance throughout
+  fit; held-out kind is **49.927%**, semantic programs **0/2,048**, and answers **389/2,048 =
+  18.994%**. A post-hoc no-fit diagnostic combining v1.2 pointers with v1.1 kind predictions reaches
+  **987/2,048 = 48.193% answers** and **691/2,048 = 33.740% programs**. This is not an autonomous
+  compiler, but it supports physically separated structural and semantic educational paths.
+  Adapter/result/log SHA-256 values are `8d2278c3...`, `0f237c05...`, and `822c646f...`.
+
+- **2026-07-18 22:17--22:37** -- **Parameter islands repair optimization interference and expose
+  lexical support as the next bottleneck.** Commit `d55536f` froze v1.3 before score. Job `692992`
+  completed on verified H100 `evc28` in 10m10s with 8,658,701 trainable / 133,740,365 total
+  parameters. Separate semantic memory/decoder drives training kind loss to zero while the
+  structural field trains independently. Exposed-development scores are **887/2,048 = 43.311%
+  answers**, **480/2,048 = 23.438% programs**, **218/2,048 = 10.645% full pointers**, **942/2,048 =
+  45.996% initial joint**, and **46/512 all-four-answer quartets**. The unseen paraphrase renderer
+  reaches **59.766% answers / 42.773% programs / 99.023% kind**, but canonical reaches only
+  **32.422% / 15.820% / 46.289% kind**. Three of eight frozen gates pass, so v1.3 is not promoted.
+  The educational mechanism is partially real; two training renderers do not identify invariant
+  lexical grounding. Adapter/result/log SHA-256 values are `63f735d7...`, `873254e5...`, and
+  `d017fbd9...`. A fresh factorized-language prereg now separates known-atom compositional transfer
+  from unseen-lexeme transfer and requires favorable parser/oracle controls. Confirmation remains
+  sealed and absent from Newton.
