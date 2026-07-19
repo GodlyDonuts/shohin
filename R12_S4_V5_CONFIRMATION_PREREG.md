@@ -2,7 +2,15 @@
 
 ## Status
 
-**Frozen before confirmation seed selection, board generation, or confirmation access.**
+**Protocol frozen at commit `6731743` before confirmation seed selection, board generation, or
+confirmation access. The sole confirmation board is admitted and frozen; no model has accessed
+it.**
+
+Seed `14809014609581254328` generated 2,048 rows / 512 groups with every declared gate passing.
+Confirmation data, report, and read-only archive SHA-256 values are respectively
+`b16534b3c41d21737370f0eb852cb6c53d75e81d661d6d9592927709551a08cf`,
+`ce0e2671c8dcd07b5b789798da0325b94066087ce4222082267919f57afdb261`, and
+`af94e855ba81905c3fed18ef8f4764e16574afc2bfd29a4f13247f9af5df337f`.
 
 Development assessor SHA `41a2dd2eab37c1976803d49e36f1a4ae35b62e8568ebefc3159c118383ab2eb5`
 qualified the unchanged hard-island/soft-interface mechanism at 96.92% exact programs. This

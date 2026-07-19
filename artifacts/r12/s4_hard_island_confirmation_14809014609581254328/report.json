@@ -1,0 +1,63 @@
+{
+  "all_gates_pass": true,
+  "artifacts": {
+    "confirmation": {
+      "bytes": 12098813,
+      "sha256": "b16534b3c41d21737370f0eb852cb6c53d75e81d661d6d9592927709551a08cf"
+    },
+    "development": {
+      "bytes": 12098813,
+      "sha256": "b16534b3c41d21737370f0eb852cb6c53d75e81d661d6d9592927709551a08cf"
+    }
+  },
+  "board_role": "confirmation",
+  "builder_sha256": "82b50642f3b1ff4db479f2534ca078556555cd9c08bd8bb2833a96082e3392ec",
+  "confirmation_access": 0,
+  "depth_counts": {
+    "3": 344,
+    "4": 344,
+    "5": 340,
+    "6": 340,
+    "7": 340,
+    "8": 340
+  },
+  "development_access": 0,
+  "development_artifact_is_confirmation_compatibility_alias": true,
+  "gates": {
+    "all_sources_fit_context": true,
+    "all_unpadded_whole_sources": true,
+    "confirmation_access_zero": true,
+    "depths_three_through_eight": true,
+    "development_access_zero_at_build": true,
+    "development_qualified_before_confirmation": true,
+    "each_depth_at_least_300_rows": true,
+    "event_count_equals_depth": true,
+    "exactly_2048_rows": true,
+    "exactly_512_matched_groups": true,
+    "independent_executors_agree": true,
+    "no_internal_duplicate_questions": true,
+    "no_public_13gram_overlap": true,
+    "no_public_exact_prompt_overlap": true,
+    "no_public_factor_overlap": true,
+    "no_public_nonce_name_overlap": true,
+    "no_public_roster_token_multiset_overlap": true,
+    "source_report_is_hash_bound": true,
+    "source_training_is_hash_bound": true,
+    "three_unique_roster_token_multisets_per_row": true
+  },
+  "groups": 512,
+  "max_tokens": 345,
+  "public_13gram_rows": 0,
+  "public_exact_prompt_overlaps": 0,
+  "public_factor_rows": 0,
+  "public_nonce_name_rows": 0,
+  "public_roster_token_multiset_rows": 0,
+  "qualification_sha256": "41a2dd2eab37c1976803d49e36f1a4ae35b62e8568ebefc3159c118383ab2eb5",
+  "row_split_label": "s4_event_tape_development",
+  "rows": 2048,
+  "schema": "r12_s4_hard_island_confirmation_report_v1",
+  "seed": 14809014609581254328,
+  "source_report_sha256": "777c5723c157149bb731dec1bb94bca9dc5a5bc41b65c957f52afd6ba5b8efda",
+  "source_training_sha256": "317e3132e85c9bf524977cdaee608d22c69d3720a04b13b1db03ab1ce24614e7",
+  "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4"
+}

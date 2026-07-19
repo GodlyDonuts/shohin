@@ -8665,3 +8665,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `qualify_s4_v5_for_fresh_confirmation`. Preserve mechanism bytes unchanged. Commit raw reports and
   result, then create confirmation-only plumbing and exactly one newly seeded board disjoint from
   all source/v2--v5 development; no post-development tuning or confirmation reuse.
+
+- **2026-07-19 07:42--07:50** -- **The sole S4 v5 confirmation protocol and board are frozen before
+  confirmation access.** Commit `6731743` adds only board-role/access-accounting/assessor plumbing
+  and imports the unchanged v5 decoder. Seed `14809014609581254328` yields 2,048 rows / 512 groups,
+  depths 3--8, max 345 tokens. All exact/13-gram/name/factor/roster-multiset gates pass against
+  source and every v2--v5 development board. Data SHA `b16534b3...`, report `ce0e2671...`, and safe
+  archive `af94e855...` are hash-matched on Newton/Mac. Commit these receipts before exactly one
+  serial confirmation job. No second board, repair, rescore, or mechanism change is permitted after
+  confirmation access.
