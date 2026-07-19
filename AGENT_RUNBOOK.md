@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 00:46 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 00:49 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8176,3 +8176,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Preserve v1 as a conventional negative. The next bounded repair must preserve the compiler's
   set-valued role span and use frozen vocabulary embeddings as the identity channel; no old
   confirmation, broader fit, or reasoning claim is authorized.
+
+- **2026-07-19 00:46--00:49** -- **A score-blind identity-carrier probe is frozen before the v1.1
+  repair is allowed to fit.** It compares contextual-softmax, lexical-softmax, lexical-sigmoid-
+  span, and gold-lexical-span entity matching on the same frozen compiler and 2,048 public
+  compositional rows. It performs no fit, state update, answer prediction, confirmation access, or
+  arm selection. Three CPU tests plus Ruff, `py_compile`, and shell syntax pass. Source/test/job
+  SHA-256 values are `6f266e92...`, `93fbcaa0...`, and `6e58911c...`. The lexical repair may
+  proceed only if the measured set-valued vocabulary carrier materially exceeds v1's contextual
+  identity. No executor or reasoning claim can come from this probe.
