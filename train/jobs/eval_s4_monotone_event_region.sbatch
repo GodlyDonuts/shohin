@@ -19,7 +19,7 @@ TREATMENT=$BASE/artifacts/r12/s4_monotone_event_region_${TAG}.eval.json
 ASSESSMENT=$BASE/artifacts/r12/s4_monotone_event_region_${TAG}.assessment.json
 for path in \
   "$BASE/train/flagship_out/ckpt_0300000.pt" \
-  "$BASE/train/s4_event_tape_treatment_2026071806/parser.pt" \
+  "$BASE/train/s4_event_tape_treatment_2026071904/parser.pt" \
   "$BASE/train/s3_equivariant_executor_2026071903/executor.pt" \
   "$DATA/development.jsonl" "$DATA/report.json" \
   "$BASE/artifacts/shohin-tok-32k.json"; do
@@ -32,13 +32,13 @@ mkdir -p "$BASE/artifacts/r12" "$BASE/logs"
 cd "$BASE"
 "$PYTHON" train/eval_s4_event_tape.py \
   --base train/flagship_out/ckpt_0300000.pt \
-  --parser train/s4_event_tape_treatment_2026071806/parser.pt \
+  --parser train/s4_event_tape_treatment_2026071904/parser.pt \
   --s3-executor train/s3_equivariant_executor_2026071903/executor.pt \
   --data "$DATA/development.jsonl" --report "$DATA/report.json" \
   --tokenizer artifacts/shohin-tok-32k.json --out "$BASELINE" --batch-size 64
 "$PYTHON" train/eval_s4_monotone_event_region.py \
   --base train/flagship_out/ckpt_0300000.pt \
-  --parser train/s4_event_tape_treatment_2026071806/parser.pt \
+  --parser train/s4_event_tape_treatment_2026071904/parser.pt \
   --s3-executor train/s3_equivariant_executor_2026071903/executor.pt \
   --data "$DATA/development.jsonl" --report "$DATA/report.json" \
   --tokenizer artifacts/shohin-tok-32k.json --out "$TREATMENT" --batch-size 64

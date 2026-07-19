@@ -13,6 +13,11 @@ archive SHA-256 values are respectively
 `27b795d1eedbba65d3697d50ab8eaec5175616e4743a573c5ca5419c21aea0f4`, and
 `7443f4962f19c5a3740b85ccf0a2d38bfa52adbf5cc1ab8a08df8e69fd8bddf2`.
 
+First submission `693175` failed closed during shell preflight, before model or development-board
+access, because the job named a nonexistent frozen-v1 parser directory. The only repair replaces
+that literal with the preserved `train/s4_event_tape_treatment_2026071904/parser.pt`; mechanism,
+board, controls, evaluator, assessor, and gates are unchanged.
+
 ## Measured motivation
 
 S4 v3 recovered event count (100%), roster carriers (99.46%), and query (100%), and its identity

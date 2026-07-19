@@ -8624,3 +8624,11 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   hash-matched on Newton and Mac. Commit these custody artifacts before one serial job runs frozen
   v1 baseline, v4 treatment, roster rotation, event-region rotation, and the frozen assessor. Do
   not change the source or read confirmation after the score.
+
+- **2026-07-19 07:18** -- S4 v4 submission `693175` failed closed in two seconds during shell
+  preflight because the job referenced nonexistent
+  `train/s4_event_tape_treatment_2026071806/parser.pt`. It did not load a model, open development
+  data, or write an evaluation artifact. The preserved v1 parser is
+  `train/s4_event_tape_treatment_2026071904/parser.pt`. Change only those literal job paths, verify
+  every required remote file scorelessly, commit the receipt, and resubmit the identical decoder,
+  board, controls, and assessor.
