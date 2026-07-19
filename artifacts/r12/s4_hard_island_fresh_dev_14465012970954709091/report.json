@@ -1,0 +1,54 @@
+{
+  "all_gates_pass": true,
+  "artifacts": {
+    "development": {
+      "bytes": 12093414,
+      "sha256": "4d43b050892fc26a712e2c97414e84da3721c7949b98d8862b239e6b2f051c7a"
+    }
+  },
+  "builder_sha256": "42d5f857dc9025a56f6f58eefdf2c56453bf664bb75a17d8acb0dc93d2b29824",
+  "confirmation_access": 0,
+  "depth_counts": {
+    "3": 344,
+    "4": 344,
+    "5": 340,
+    "6": 340,
+    "7": 340,
+    "8": 340
+  },
+  "development_access": 0,
+  "gates": {
+    "all_sources_fit_context": true,
+    "all_unpadded_whole_sources": true,
+    "confirmation_access_zero": true,
+    "depths_three_through_eight": true,
+    "development_access_zero_at_build": true,
+    "each_depth_at_least_300_rows": true,
+    "event_count_equals_depth": true,
+    "exactly_2048_rows": true,
+    "exactly_512_matched_groups": true,
+    "independent_executors_agree": true,
+    "no_internal_duplicate_questions": true,
+    "no_public_13gram_overlap": true,
+    "no_public_exact_prompt_overlap": true,
+    "no_public_factor_overlap": true,
+    "no_public_nonce_name_overlap": true,
+    "no_public_roster_token_multiset_overlap": true,
+    "source_report_is_hash_bound": true,
+    "source_training_is_hash_bound": true,
+    "three_unique_roster_token_multisets_per_row": true
+  },
+  "groups": 512,
+  "max_tokens": 340,
+  "public_13gram_rows": 0,
+  "public_exact_prompt_overlaps": 0,
+  "public_factor_rows": 0,
+  "public_nonce_name_rows": 0,
+  "public_roster_token_multiset_rows": 0,
+  "rows": 2048,
+  "schema": "r12_s4_hard_island_fresh_development_report_v1",
+  "seed": 14465012970954709091,
+  "source_report_sha256": "777c5723c157149bb731dec1bb94bca9dc5a5bc41b65c957f52afd6ba5b8efda",
+  "source_training_sha256": "317e3132e85c9bf524977cdaee608d22c69d3720a04b13b1db03ab1ce24614e7",
+  "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4"
+}

@@ -8644,3 +8644,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `reject_s4_v4_fresh_development`; no confirmation exists. Preserve monotone regions plus soft
   roster/query, restore hard frozen event.entity/event.literal islands, and require a new frozen
   board for any v5 test.
+
+- **2026-07-19 07:25--07:34** -- **S4 v5 hard-island/soft-interface source and its sole board are
+  frozen before model access.** Commit `e9a962b` preserves monotone kind-local regions, restores
+  complete contiguous frozen event.entity/event.literal argmax islands, resolves duplicate local
+  islands only by summed frozen target-vs-other role margin, and retains soft roster/query carriers.
+  It adds zero trainable parameters and has no threshold, fallback, gold depth/span, or lexical
+  entity table. Production seed `14465012970954709091` yields 2,048 rows / 512 groups, depths 3--8,
+  max 340 tokens, with zero exact/13-gram/name/factor/roster-multiset overlap against source data and
+  closed v2--v4 boards. Data SHA `4d43b050...`, report `8b9461bc...`, and safe archive
+  `eec8ec5e...` are matched on Newton and Mac. Commit these bytes before one serial frozen-v1,
+  treatment, roster-rotation, region-rotation, and assessor job; no post-score repair or rescore.
