@@ -25715,6 +25715,15 @@ no-fit consumer diagnostic must test whether the learned executor matcher
 causes that transport loss. No carrier integration or confirmation reread is
 authorized.
 
+The matched consumer diagnostic now freezes that exact question. The same
+executor will receive the untouched packet, a packet rebound by ordinary mean
+identity, a packet rebound by the rejected ordered kernel strictly as a
+diagnostic oracle, and a gold-identity rebound packet. A consumer diagnosis
+requires a ten-point answer and state recovery from mean rebinding while the
+untouched matcher is below 90%; otherwise the failure remains unlocalized or
+the public board is declared non-reproducing. No arm trains or sees the sealed
+confirmation.
+
 ## Update Protocol
 
 At each 10k checkpoint milestone:

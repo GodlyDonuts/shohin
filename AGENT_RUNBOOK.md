@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 01:53 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 01:57 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8274,3 +8274,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   only 2.240 points versus the frozen 15-point requirement. Reject and do not integrate. The gap
   between this raw mean score and the prior executor matcher at 77.952% motivates only a new no-fit
   public matched-consumer diagnostic; the failed depth confirmation remains sealed.
+
+- **2026-07-19 01:53--01:57** -- **A no-fit matched consumer-transport diagnostic is frozen before
+  executor-level score access.** It holds the tied executor, operation semantics, literals, query,
+  schedule, and state fixed across four arms: untouched packet, mean-selected identity rebinding,
+  rejected ordered-kernel rebinding as a diagnostic oracle, and gold identity rebinding. Source
+  states remain deleted and no weight changes. Consumer loss is localized only if untouched entity
+  match is below 90% and mean rebinding gains at least ten points in both answers and exact state;
+  a >=95% untouched answer/state result instead means the public board does not reproduce the old
+  failure. Twenty focused tests, Ruff, `py_compile`, shell syntax, and diff checks pass. The exact
+  public board is `ba2b0d48...` and executor state is `d31fd3e6...`. No fit, score, confirmation
+  access, carrier promotion, or reasoning claim exists yet.
