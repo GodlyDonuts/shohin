@@ -25858,6 +25858,27 @@ creating the output directory because two tracked generator dependencies were
 missing from its working copy. The seed is retired; syncing those unchanged
 files does not alter the hypothesis or gates.
 
+Pointer-anchor S3 v1.4 is now independently confirmed. Replacement seed
+`8548551866585932338` creates a wholly new 2,048-row board at SHA
+`9fc73f98...`; one-shot job `693145` completes `0:0`. Ordered identity reaches
+**98.242% answers / 99.658% exact state / 98.975% complete chains**. Mean
+identity reaches 92.773% / 92.920% / 88.086%. Gold identity reaches 98.535%
+answers with **100% exact state, chains, direction, and amount**. Replacing every
+operation stream collapses answers/state to 35.059% / 17.578%; replacing only
+the query collapses answers to 0.586% while state remains 99.658%. Every frozen
+overall, depth, causal, exact-gold, and custody gate passes; assessment
+`cc1458f...` records confirmation.
+
+This establishes a real but bounded mechanism: Shohin-owned source compilation,
+ordered categorical identity, known-atom direction decoding, closure-complete
+S3 action, and source-deleted recurrent state execute fresh programs through
+depth eight and causally consume both schedule and query. The system still uses
+external chunk boundaries and stop, and its exact direction interface does not
+generalize beyond 12 training atoms. Thus the next frontier is sharply
+localized to model-owned packet scheduling/halt and unseen action semantics,
+not recurrence or state update. V1.4 is the locked execution baseline; the
+sealed board cannot be reused for development.
+
 The matched result reproduces the loss but rejects single-comparator
 localization. Untouched execution reaches 77.393% answers / 70.312% exact
 state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /

@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 03:34 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 03:55 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8441,3 +8441,17 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   with **no board and no score**. Newton failed import before creating the output directory because
   two tracked generator dependencies were absent from its working copy. Sync the unchanged files,
   commit this receipt, and only then draw a replacement seed. No model, board, arm, or gate changes.
+
+- **2026-07-19 03:34--03:55** -- **CONFIRMED: pointer-anchor S3 v1.4 passes a wholly new strict
+  board.** Replacement seed `8548551866585932338` passes every corpus gate and yields 2,048 rows /
+  6,136 chunks / 799,011 source tokens, board SHA `9fc73f98...`. Job `693145` completes once on
+  `evc28` in 84s, exit `0:0`. Ordered primary is **98.242% answers / 99.658% state / 98.975%
+  chains**; mean is 92.773% / 92.920% / 88.086%; gold is 98.535% answers with **100% exact
+  state/chains, direction, and amount**. Operation derangement collapses to 35.059% answers /
+  17.578% state; query derangement to 0.586% answers with state unchanged. Every depth and receipt
+  gate passes. Assessment `cc1458f...` records
+  `confirm_pointer_anchor_s3_v1_4_execution_through_depth_8`. Board copies are read-only and sealed;
+  Git receives aggregate evidence only. This confirms bounded known-atom source-deleted recurrent
+  execution with external schedule/halt. It does **not** confirm autonomous planning, learned halt,
+  unseen semantics, or free-form reasoning. Lock v1.4 as the execution baseline; attack those open
+  interfaces without reopening this board.

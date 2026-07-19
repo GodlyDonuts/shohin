@@ -1,6 +1,6 @@
 # R12 S3 Structural Pointer-Anchor Confirmation Preregistration
 
-**Status:** frozen before production seed, board generation, or score.
+**Status:** completed once; every frozen gate passes and the board is sealed.
 
 Infrastructure attempt seed `223317486517061319` is retired without a board or
 score. Newton lacked two already-tracked generator dependencies, so Python
@@ -54,3 +54,14 @@ after score. A pass confirms known-atom source-deleted recurrent execution
 through depth eight with externally supplied schedule/halt. It does not establish
 unseen-phrase semantics, plan induction, learned halt, free-form language
 reasoning, or novelty.
+
+## Closure
+
+Replacement production seed `8548551866585932338` passed every corpus gate and
+created 2,048 rows / 6,136 chunks / 799,011 source tokens at board SHA-256
+`9fc73f9881a38d6fcd4624d411f34c6e1f7b8e879e0fef92405a7219ba481420`.
+Job `693145` completed once on `evc28`, exit `0:0`. Assessment SHA-256
+`cc1458f9962f4cda7cac5ea43555a3f8980e3adf24936b513ca3deb707d6e7f5`
+passes every frozen gate and records
+`confirm_pointer_anchor_s3_v1_4_execution_through_depth_8`. No rerun occurred.
+The local and Newton board copies are read-only and sealed.
