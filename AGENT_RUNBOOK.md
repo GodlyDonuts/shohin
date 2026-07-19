@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 02:45 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 02:52 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8367,3 +8367,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   collision. The next bounded repair must derive a direction lexicon from training spans only,
   decode it through the frozen operation-kind pointer, fall back to the neural head for unmatched
   phrases, and reuse the exact S3 action. No development labels or confirmation may build it.
+
+- **2026-07-19 02:45--02:52** -- **Training-lexicon direction transport is executable and frozen
+  before score.** A deterministic builder reads only the admitted 96,000-row training split and
+  emits exactly six left plus six right token sequences from 192,000 gold operation-kind spans;
+  all build gates pass with zero class collision and zero development/confirmation access. At
+  evaluation, the frozen compiler's normalized operation-kind pointer must place >=0.5 mass on an
+  exact training pattern before that class overrides the neural kind head; unmatched phrases use
+  the old prediction. The exact S3 action, amount/query heads, identity arms, weights, public boards,
+  source deletion, schedule, and halt do not change. Eight tests, Ruff, `py_compile`, shell syntax,
+  local builder execution, and diff checks pass. Prereg/builder/executor/evaluators/assessor/job hash
+  prefixes are `529704aa` / `9d31da47` / `001123ae` / `9f568d90,02239e27` / `a11c5aae` /
+  `a5bfba00`. One zero-fit public H100 run may start only after commit. Passing can authorize one
+  fresh known-atom confirmation, not unseen-phrase generalization, planning, or learned halt.

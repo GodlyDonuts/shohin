@@ -16,6 +16,7 @@ from categorical_permutation_executor import (
     S3ClosedActionPermutationExecutor,
     S3EquivariantPermutationExecutor,
     categorical_identity_packet,
+    apply_lexical_kind_override,
     module_state_hash,
 )
 from eval_rgde_depth_confirmation import long_targets, summarize
@@ -35,7 +36,7 @@ def extract_operation(operation, index):
     return {name: value[index].float().cpu() for name, value in operation.items()}
 
 
-def compile_packets(rows, tokenizer, compiler, cfg, mode, device, batch_size):
+def compile_packets(rows, tokenizer, compiler, cfg, mode, device, batch_size, lexicon=None):
     examples = []
     mapping = []
     active_counts = []
@@ -57,6 +58,10 @@ def compile_packets(rows, tokenizer, compiler, cfg, mode, device, batch_size):
                 raise ValueError("S3 depth chunk exceeds sequence length")
             outputs = compiler(ids, valid)
             packet = categorical_identity_packet(outputs, selected, ids, valid, mode=mode)
+            if lexicon is not None:
+                packet = apply_lexical_kind_override(
+                    packet, outputs, ids, valid, lexicon,
+                )
             for local, global_index in enumerate(indices):
                 flat[global_index] = {
                     "operations": tuple(
@@ -99,6 +104,7 @@ def main():
     parser.add_argument("--out", required=True)
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--closed-action", action="store_true")
+    parser.add_argument("--kind-lexicon")
     args = parser.parse_args()
     if not torch.cuda.is_available():
         raise SystemExit("S3 depth evaluation requires CUDA")
@@ -121,9 +127,15 @@ def main():
     )
     cfg = GPTConfig(**checkpoint["cfg"])
     tokenizer = Tokenizer.from_file(args.tokenizer)
+    lexicon = None
+    if args.kind_lexicon:
+        lexicon = json.load(open(args.kind_lexicon))
+        if not lexicon.get("all_gates_pass") or lexicon.get("development_access") != 0:
+            raise SystemExit("kind lexicon is not admitted")
     rows = load_board(args.board)
     packets, chunks = compile_packets(
         rows, tokenizer, compiler, cfg, args.identity_mode, "cuda", args.batch_size,
+        lexicon=lexicon,
     )
     if args.closed_action:
         if metadata["protocol"] != "r12_s3_equivariant_permutation_executor_v1_1":
@@ -190,11 +202,16 @@ def main():
                             int(kinds[step][local]) == (0 if rows[index]["program"][step]["kind"] == "left" else 1)
                             for step in range(depth)
                         ] if kinds else [],
+                        "kind_lexical_matched": [
+                            bool(packets[index]["operations"][step]["kind_lexical_matched"])
+                            for step in range(depth)
+                        ] if lexicon is not None else [],
                     }
     result = {
         "schema": "r12_s3_categorical_depth_eval_v1",
         "identity_mode": args.identity_mode,
         "action_protocol": "closed_s3_v1_2" if args.closed_action else "learned",
+        "kind_protocol": "training_lexicon_v1" if lexicon is not None else "neural",
         "base_sha256": sha256_file(args.base),
         "compiler_sha256": sha256_file(args.compiler),
         "compiler_adapter_sha256": compiler_metadata["final_adapter_sha256"],
@@ -203,6 +220,7 @@ def main():
         "board_sha256": sha256_file(args.board),
         "report_sha256": sha256_file(args.report),
         "tokenizer_sha256": sha256_file(args.tokenizer),
+        "kind_lexicon_sha256": sha256_file(args.kind_lexicon) if lexicon is not None else None,
         "evaluator_sha256": sha256_file(__file__),
         "rows": len(rows),
         "chunks": chunks,
@@ -233,6 +251,17 @@ def main():
             result["by_depth"][str(depth)]["kind_accuracy"] = (
                 sum(sum(row["kind_correct"]) for row in selected)
                 / sum(len(row["kind_correct"]) for row in selected)
+            )
+    if lexicon is not None:
+        result["overall"]["kind_lexical_coverage"] = (
+            sum(sum(row["kind_lexical_matched"]) for row in records)
+            / sum(len(row["kind_lexical_matched"]) for row in records)
+        )
+        for depth in range(3, 9):
+            selected = [row for row in records if row["depth"] == depth]
+            result["by_depth"][str(depth)]["kind_lexical_coverage"] = (
+                sum(sum(row["kind_lexical_matched"]) for row in selected)
+                / sum(len(row["kind_lexical_matched"]) for row in selected)
             )
     Path(args.out).write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
     print(json.dumps({

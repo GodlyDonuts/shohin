@@ -120,6 +120,58 @@ def categorical_identity_packet(
     }
 
 
+def lexical_kind_predictions(ids, weights, lexicon, minimum_mass=0.5):
+    """Decode a pointed kind span against training-only exact-token patterns."""
+    if ids.ndim != 2 or weights.shape != ids.shape:
+        raise ValueError("lexical kind decoder expects matching [batch,length] tensors")
+    scores = torch.full(
+        (ids.shape[0], len(KIND_TO_ID)), -1.0,
+        device=ids.device, dtype=torch.float32,
+    )
+    for record in lexicon["patterns"]:
+        pattern = torch.tensor(record["token_ids"], device=ids.device, dtype=ids.dtype)
+        width = pattern.numel()
+        if width < 1 or width > ids.shape[1]:
+            continue
+        matches = ids.unfold(1, width, 1).eq(pattern.view(1, 1, -1)).all(-1)
+        mass = weights.float().unfold(1, width, 1).sum(-1)
+        candidate = mass.masked_fill(~matches, -1.0).amax(-1)
+        kind_id = KIND_TO_ID[record["kind"]]
+        scores[:, kind_id] = torch.maximum(scores[:, kind_id], candidate)
+    values, predictions = scores.max(-1)
+    return predictions, values >= float(minimum_mass), scores
+
+
+def apply_lexical_kind_override(
+    packet, compiler_outputs, ids, valid, lexicon, temperature=0.5, minimum_mass=0.5,
+):
+    """Replace matched direction fields while retaining neural fallback."""
+    operations = []
+    for index, operation in enumerate(packet["operations"]):
+        weights = role_weights(
+            compiler_outputs["pointer_logits"]["op{}.kind".format(index)],
+            valid,
+            temperature,
+        )
+        lexical, matched, scores = lexical_kind_predictions(
+            ids, weights, lexicon, minimum_mass=minimum_mass,
+        )
+        neural = operation["kind_probabilities"].float().argmax(-1)
+        selected = torch.where(matched, lexical, neural)
+        updated = dict(operation)
+        updated["kind_probabilities"] = F.one_hot(
+            selected, num_classes=len(KIND_TO_ID),
+        ).to(operation["kind_probabilities"].dtype)
+        updated["kind_lexical_matched"] = matched
+        updated["kind_lexical_scores"] = scores
+        operations.append(updated)
+    return {
+        "operations": tuple(operations),
+        "query": packet["query"],
+        "identity_mode": packet.get("identity_mode", "unknown"),
+    }
+
+
 def select_categorical_operations(packet, indices):
     indices = tuple(map(int, indices))
     if any(index not in (0, 1) for index in indices):

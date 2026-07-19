@@ -16,6 +16,7 @@ from categorical_permutation_executor import (
     S3ClosedActionPermutationExecutor,
     S3EquivariantPermutationExecutor,
     categorical_identity_packet,
+    apply_lexical_kind_override,
     module_state_hash,
 )
 from model import GPTConfig
@@ -54,6 +55,7 @@ def main():
     parser.add_argument("--out", required=True)
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--closed-action", action="store_true")
+    parser.add_argument("--kind-lexicon")
     args = parser.parse_args()
     if not torch.cuda.is_available():
         raise SystemExit("S3 evaluation requires CUDA")
@@ -78,6 +80,11 @@ def main():
     )
     cfg = GPTConfig(**checkpoint["cfg"])
     tokenizer = Tokenizer.from_file(args.tokenizer)
+    lexicon = None
+    if args.kind_lexicon:
+        lexicon = json.load(open(args.kind_lexicon))
+        if not lexicon.get("all_gates_pass") or lexicon.get("development_access") != 0:
+            raise SystemExit("kind lexicon is not admitted")
     examples = load_examples(
         args.data, tokenizer, args.split, cfg.seq_len, keep_evidence=True,
     )
@@ -109,6 +116,10 @@ def main():
             packet = categorical_identity_packet(
                 compiler_outputs, selected, ids, valid, mode=args.identity_mode,
             )
+            if lexicon is not None:
+                packet = apply_lexical_kind_override(
+                    packet, compiler_outputs, ids, valid, lexicon,
+                )
             outputs = executor(packet)
             transitions = [matrix.argmax(-1).tolist() for matrix in outputs["transition_matrices"]]
             final = outputs["assignment"].argmax(-1).tolist()
@@ -144,6 +155,10 @@ def main():
                         int(kinds[step][local]) == selected[local].kind_targets[step]
                         for step in range(2)
                     ] if kinds else [],
+                    "kind_lexical_matched": [
+                        bool(packet["operations"][step]["kind_lexical_matched"][local])
+                        for step in range(2)
+                    ] if lexicon is not None else [],
                 }
     groups = collections.defaultdict(list)
     for record in records:
@@ -153,6 +168,7 @@ def main():
         "split": args.split,
         "identity_mode": args.identity_mode,
         "action_protocol": "closed_s3_v1_2" if args.closed_action else "learned",
+        "kind_protocol": "training_lexicon_v1" if lexicon is not None else "neural",
         "base_sha256": sha256_file(args.base),
         "compiler_sha256": sha256_file(args.compiler),
         "compiler_adapter_sha256": compiler_metadata["final_adapter_sha256"],
@@ -161,6 +177,7 @@ def main():
         "data_sha256": sha256_file(args.data),
         "report_sha256": sha256_file(args.report),
         "tokenizer_sha256": sha256_file(args.tokenizer),
+        "kind_lexicon_sha256": sha256_file(args.kind_lexicon) if lexicon is not None else None,
         "evaluator_sha256": sha256_file(__file__),
         "overall": summarize(records),
         "by_surface": {
@@ -189,6 +206,10 @@ def main():
     if args.closed_action:
         result["overall"]["kind_accuracy"] = (
             sum(sum(row["kind_correct"]) for row in records) / (2 * len(records))
+        )
+    if lexicon is not None:
+        result["overall"]["kind_lexical_coverage"] = (
+            sum(sum(row["kind_lexical_matched"]) for row in records) / (2 * len(records))
         )
     Path(args.out).write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
     print(json.dumps({

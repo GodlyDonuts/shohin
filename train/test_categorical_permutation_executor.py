@@ -7,6 +7,7 @@ from categorical_permutation_executor import (
     S3ClosedActionPermutationExecutor,
     S3EquivariantPermutationExecutor,
     categorical_executor_loss,
+    lexical_kind_predictions,
     permutation_matrices,
     local_action_ids,
     straight_through_permutation,
@@ -139,3 +140,24 @@ def test_closed_action_composes_exactly_from_nonidentity_state():
     outputs = executor(packet)
     assert outputs["assignment"].argmax(-1).tolist() == [[1, 0, 2]]
     assert [value.tolist() for value in outputs["kind_predictions"]] == [[1], [0]]
+
+
+def test_lexical_kind_decoder_uses_pointer_mass_and_has_explicit_fallback():
+    ids = torch.tensor([
+        [9, 10, 11, 20, 21, 0],
+        [9, 10, 11, 20, 21, 0],
+    ])
+    weights = torch.tensor([
+        [0.01, 0.01, 0.01, 0.49, 0.49, 0.0],
+        [0.10, 0.10, 0.10, 0.10, 0.10, 0.50],
+    ])
+    lexicon = {"patterns": [
+        {"kind": "left", "token_ids": [9, 10, 11]},
+        {"kind": "right", "token_ids": [20, 21]},
+    ]}
+    predictions, matched, scores = lexical_kind_predictions(
+        ids, weights, lexicon, minimum_mass=0.5,
+    )
+    assert predictions.tolist() == [1, 0]
+    assert matched.tolist() == [True, False]
+    assert scores[0, 1] > scores[0, 0]

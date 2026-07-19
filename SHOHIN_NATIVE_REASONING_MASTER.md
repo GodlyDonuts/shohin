@@ -25788,6 +25788,18 @@ the contextual kind head is losing known lexical polarity. The next bounded
 interface is a training-span-derived lexical relation decoder behind the
 compiler's operation-kind pointer, with neural fallback for unseen phrases.
 
+That training-lexicon interface is now frozen before score. Its deterministic
+builder extracts exactly six left and six right token sequences from 192,000
+training-only direction spans and refuses any cross-class collision. The
+runtime decoder aligns the frozen compiler's soft operation-kind pointer to
+those patterns and overrides the contextual kind head only above a fixed 0.5
+pointer-mass floor; unmatched phrases retain neural fallback. No weight, fit,
+development label, or confirmation is involved. Frozen gates require >=99.5%
+known-atom direction, exact gold state/chains across depth 3--8, strong ordered
+composition, and <=5% lexical-OOD pattern coverage to rule out distractor
+capture. A pass would remain a bounded known-lexeme compiler/executor, with
+external schedule and halt.
+
 The matched result reproduces the loss but rejects single-comparator
 localization. Untouched execution reaches 77.393% answers / 70.312% exact
 state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /
