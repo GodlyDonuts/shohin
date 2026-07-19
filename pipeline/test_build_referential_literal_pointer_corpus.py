@@ -59,6 +59,13 @@ class ReferentialLiteralPointerCorpusTest(unittest.TestCase):
                 self.assertTrue(required.issubset(row["spans"]))
                 self.assertTrue(all(row["spans"][label]["token_positions"] for label in required))
 
+    def test_split_artifact_paths_are_distinct(self):
+        paths = corpus.artifact_paths(Path("/tmp/rlpc"))
+        self.assertEqual(len(set(paths.values())), 3)
+        self.assertEqual(paths["train"].name, "train.jsonl")
+        self.assertEqual(paths["development"].name, "development.jsonl")
+        self.assertEqual(paths["confirmation"].name, "confirmation.jsonl")
+
 
 if __name__ == "__main__":
     unittest.main()

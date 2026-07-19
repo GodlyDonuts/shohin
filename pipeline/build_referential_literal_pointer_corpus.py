@@ -476,6 +476,11 @@ def write_jsonl(path, rows):
     return {"bytes": len(payload), "sha256": sha256_bytes(payload)}
 
 
+def artifact_paths(out_dir):
+    out_dir = Path(out_dir)
+    return {split: out_dir / "{}.jsonl".format(split) for split in SPLIT_RENDERERS}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--tokenizer", default="artifacts/shohin-tok-32k.json")
@@ -488,9 +493,7 @@ def main():
     parser.add_argument("--confirmation-seed", type=int, required=True)
     args = parser.parse_args()
     out_dir = Path(args.out_dir)
-    targets = {
-        split: out_dir / "{}.jsonl" for split in SPLIT_RENDERERS
-    }
+    targets = artifact_paths(out_dir)
     report_path = out_dir / "report.json"
     if any(path.exists() for path in (*targets.values(), report_path)):
         raise SystemExit("refusing to overwrite corpus output")
