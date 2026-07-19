@@ -1,0 +1,38 @@
+{
+  "all_gates_pass": false,
+  "assessor_sha256": "1c8f2062ead541be9e5785b69ffc80f0c15800b5ce5c3874036988fa8f93f067",
+  "claim_boundary": "Public known-atom variable-length event parsing into a locked categorical executor. No fresh confirmation, unseen semantics, planning, open-language halt, broad reasoning, novelty, or benchmark claim.",
+  "decision": "reject_s4_v1_1_public_development",
+  "gates": {
+    "confirmation_access_zero": true,
+    "development_access_exactly_one": true,
+    "gold_count_rescue_below_2_points": true,
+    "locked_s3_gold_sanity": true,
+    "shuffled_program_at_most_40pct": true,
+    "total_parameters_below_150m": true,
+    "treatment_answer_depth8_at_least_90pct": false,
+    "treatment_answer_overall_at_least_95pct": false,
+    "treatment_count_every_depth_at_least_95pct": true,
+    "treatment_count_overall_at_least_98pct": true,
+    "treatment_program_heldout_depths_at_least_90pct": false,
+    "treatment_program_overall_at_least_95pct": false
+  },
+  "gold_count_rescue_points": 0.29296875,
+  "schema": "r12_s4_pointer_anchored_assessment_v1",
+  "shuffled_program_accuracy": 0.0,
+  "shuffled_report_sha256": "0e8065f4f2270696dc096a20c0aee3333b2e96104eda3cc73620b3c35e1f74b2",
+  "treatment": {
+    "answer_accuracy": 0.146484375,
+    "count_accuracy": 1.0,
+    "program_accuracy": 0.01220703125,
+    "program_by_depth": {
+      "3": 0.0377906976744186,
+      "4": 0.014534883720930232,
+      "5": 0.01764705882352941,
+      "6": 0.0,
+      "7": 0.0,
+      "8": 0.0029411764705882353
+    }
+  },
+  "treatment_report_sha256": "8a1ee0259dc808c0ba4c16e2712ba927738b4c0284d9b68388d8859d9df56804"
+}

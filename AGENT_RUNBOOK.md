@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 03:55 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 05:40 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8503,3 +8503,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   focused tests, perfect-logit source-only decode, Ruff, `py_compile`, Slurm syntax, parameter/hash checks,
   and diff gates pass. No H100, fit, development score, confirmation access, planning, broad
   reasoning, or novelty claim exists yet.
+
+- **2026-07-19 05:15--05:40** -- **S4 v1 and its sole zero-fit v1.1 repair are formally rejected,
+  with exact model-owned event count retained as a causal discovery.** Treatment `693152` and
+  shuffled control `693154` trained once on 48,000 rows / 120,000 events; evaluations
+  `693153/693155` show treatment count **2048/2048**, strict programs/state/answers
+  **1932/2048 = 94.336%**, and shuffled programs **0/2048**. Every valid treatment tape is wholly
+  exact, and gold intro/query boundaries lift programs to **97.217%**, localizing the 14-row gate
+  miss to token-span fragmentation. The preregistered training-only pointer repair was committed
+  before score. Its first lexicon failed closed on a mistaken one-width builder gate; the preserved
+  receipt SHA is `f487d1cb...`. The corrected training span set is widths 4/5/6 and passes at lexicon
+  SHA `eb49f75d...`. Read-only jobs `693160/693161` then reject the repair: treatment keeps exact
+  count but falls to **25/2048 programs / 300/2048 answers**, while shuffled remains zero programs.
+  Assessment SHA `fd0479b...` records `reject_s4_v1_1_public_development`. No confirmation exists.
+  Do not tune v1/v1.1 on this board. Next lawful work is a fresh-board S4 v2 with learned roster
+  start/end pointers and event-relative argument pointers; keep the locked S3 executor unchanged.

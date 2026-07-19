@@ -9,7 +9,7 @@ runbook and result files.
 **Status:** Living document. The protected raw-pretraining anchor is complete
 at 300,000 steps. Native multi-step reasoning is not yet established.
 
-**Last updated:** 2026-07-18 23:22 EDT.
+**Last updated:** 2026-07-19 05:40 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -257,6 +257,10 @@ loop.
 | System | Exact score | What owns the computation | Scientific class |
 |---|---:|---|---|
 | Source-scheduled continuation (SSC) | **115/256 = 44.92%** | Host supplies source and operation cursor; model executes local steps | External-control ceiling |
+| S3 v1.4 pointer-anchor confirmation | **98.242% answers / 99.658% exact state / 98.975% chains** | Model consumes known-atom packets through a categorical register; host supplies chunks and stop | Confirmed bounded execution component, not autonomous reasoning |
+| RGDE v1.1 development | **99.707% answers / 99.902% exact state** on two-step composition | Model-owned tied source-deleted update from atomic training; packet/compiler boundary is fixed | Qualified execution component, fresh depth confirmation pending |
+| Conventional complete compiler qualification | **8,187/8,192 answers; 8,186/8,192 programs** | Frozen parser selects source spans for known-atom language | Qualified compiler infrastructure, not execution |
+| S4 whole-source event tape v1 | **2048/2048 exact event counts; 1932/2048 = 94.336% programs/state/answers** | Model parses an unpadded source; locked S3 consumes every valid tape | Near-gate autonomous schedule component; formally rejected at 95% program floor |
 | SCEB typed closed loop | **65/256 = 25.39%** | Small controller heads plus host arithmetic/register bus | Architectural control, not native |
 | Halt-first decoding | **61/256 = 23.83%** | Model weights unchanged; decoder stops at first valid answer | Decode-policy control |
 | Typed controller v1 | **42/256 = 16.41%** | Model emits typed operations and DONE | Weak autonomous joint emission |
@@ -279,15 +283,20 @@ The present evidence decomposes the missing capability as follows:
 | Component | Best direct evidence | Current conclusion |
 |---|---|---|
 | Natural-language compiler | Fresh component probe: **0/6** parseable compiled programs | Missing |
+| Known-atom source compiler | Fresh ordinary-parser qualification: **99.939% answers, 99.927% programs, 100% operation kinds** | Strong bounded compiler baseline; unseen lexical semantics remain open |
 | Local arithmetic executor | Oracle-compiled frozen DRS: **28/34** transitions; SSC local add/multiply often above 79% | Real but narrow |
+| Source-deleted recurrent executor | RGDE/S3: **99.707% two-step**, then **98.242% ordered answers / 99.658% state / 98.975% chains through depth 8** | Confirmed for correctly grounded known-atom packets |
 | Persistent state representation | DRS post-training digit swaps: **10/10** positive at layers 17, 21, 25, 29 with about **+31 delta log-odds** | Real late-layer signal |
+| Categorical identity transport | S3 v1.4 operation derangement collapses to **35.059% answers / 17.578% state**; query derangement leaves state intact | Causally consumed categorical register |
 | Carry representation | Layer 29: **10/10**, mean **+2.96 delta log-odds** | Present but weaker |
 | State actuator/serializer | Result motor adds only **0.8 points** to full loop; terminal component probe **2/6** | Missing/reliably weak |
+| Referential identity packet | Set-valued frozen lexical carrier: **99.854%** no-fit identity versus v1 one-token gather **59.326%** cross-occurrence agreement | One-token contextual gather is rejected; categorical/set-valued transport is the lawful repair |
 | Cursor/operation selection | Full source+cursor likelihood **80/176**, controls **64/176**, but cursor changes only 1/112 relevant choices and predicts no multiply/remainder | Lexical cue, not scheduler |
 | Recurrent consumption | DRS first state 497/500 but final 275/500; complete basis 63/900 finals | Compounding transport failure |
 | Halt/DONE | Raw runs hit caps; typed v1 learns DONE but not arithmetic; typed v2 destroys DONE | Missing and entangled |
 | Self-review | Fixed raw probes remain 0/7 | Missing |
 | Broad transfer | Raw/SFT/code boards remain low; width-8 DRS is zero | Missing |
+| Autonomous schedule/halt | S4 v1 finds **2048/2048** event counts and exact programs on every valid tape, but strict validity/programs are **1932/2048 = 94.336%** | Count is learned; variable-width span binding and per-event argument pairing remain open |
 
 This diagnosis rules out the simplest stories:
 
@@ -581,6 +590,43 @@ Evidence:
 | ACW/packet-memory Track S | Discrete workspace mechanics explored | No autonomous result that beats matched recurrence/host controls |
 | Addressed Categorical Workspace (ACW) fit | 4,096 histories, 57,344 labels, 3,400 updates; loss 2.806958 to 2.828255 | Execution/custody pipeline ran, but no scored development matrix or capability-ranked checkpoint |
 
+### 5.14 Referential compiler, RGDE, S3, and S4 frontier (2026-07-19)
+
+This is the most important new result family. It separates compilation,
+referential identity, recurrent state transition, action selection, and halt
+instead of treating a single end-to-end score as one capability.
+
+| Stage | Fresh evidence | Decision and boundary |
+|---|---|---|
+| Complete compiler CPU falsifier | 32 quartets / 128 surfaces; all 14 gates pass; independent executors agree 128/128; named shortcut ceilings stay at or below 1/3 | CPU board pass; one isolated compiler pilot authorized, not a neural or reasoning result |
+| First complete compiler fit | Free-slot parser: 29.395% answers / 15.283% programs; unseen paraphrase answers 0.195% | Rejected; renderer-coordinate shortcut and missing structural invariance |
+| Structured parser diagnostic | Initial binding rises to 48.340%, but kind classification falls to chance; post-hoc hybrid reaches 48.193% answers | Integrated parser rejected; structural and semantic paths can coexist, but the hybrid is external diagnostic only |
+| Parameter-islands parser | Exposed development partial win: 43.311% answers / 23.438% programs; paraphrase 59.766% | Partial mechanism support; failed frozen gates and renderer attribution |
+| Factorized-language compiler matrix | Islands, ordinary tagger, and structured parser each reach 100% exact compositional programs; free slots 98.242%; shuffled labels 0.146% | Durable discovery is broad factorized language coverage; islands do not beat the favorable ordinary parser |
+| Fresh conventional compiler qualification | 8,187/8,192 answers, 8,186/8,192 programs/full pointers, 8,192/8,192 kinds | Stage-A compiler qualified for isolated Stage B; known-atom parser only |
+| RGDE v1 | 48.340% answers / 18.701% exact final state; query/amount about 99.7%; entity matching 51.294% | Rejected; one-token contextual gather loses multi-token identity |
+| Set-valued identity repair | Frozen lexical embedding plus normalized sigmoid span role reaches 99.854% identity | Admitted as the only bounded v1.1 repair; no-fit carrier result |
+| RGDE v1.1 | 99.707% answers / 99.902% final state / 99.756% both transitions on two operations; operation derangement collapses to 36.963% answers | Qualified development component; same tied cell composes atomic updates under source deletion |
+| RGDE depth confirmation | Predicted packet falls to 76.318% answers at depth 3-8, but gold packets reach 99.707% answers / 100% state / 99.072% transitions, including 99.118% answers at depth 8 | Confirmation rejected because packet grounding fails; recurrent state transport itself is not the depth bottleneck |
+| S3 categorical register and closure | Equivariant repair improves long mean execution to 84.180%; exact action table to 85.303%; training-only lexical decoder to 94.434% mean and 98.340% ordered development | Intermediate arms rejected or only qualified; continuous action and direction transport remain failure modes |
+| S3 v1.4 pointer-anchor confirmation | Ordered primary 98.242% answers / 99.658% state / 98.975% chains; operation derangement 35.059% / 17.578%; query derangement 0.586% answers with state unchanged | First strict independent confirmation of bounded known-atom, source-deleted categorical execution through depth 8 |
+| Halt-boundary audit and S4 v1 | Chunk board has 395 legitimate events sharing the exact signature of 1,024 hidden padding labels. S4 treatment finds 2048/2048 counts and 1932/2048 programs/state/answers; shuffled programs are 0/2048. Pointer v1.1 collapses to 25/2048 programs. | Count signal is real, but v1 misses the 95% program gate by 14 rows and v1.1 is rejected. Move to event-relative learned span pointers on a fresh board. |
+
+The implementation gates were also independently exercised before the model
+claims were read: RGDE v1.1 passed its 19 CPU tests, Ruff, `py_compile`, shell
+syntax, and finite-gradient checks; the S3 closure and pointer-anchor boards
+passed their focused mechanics and custody checks; and S4 passed its generator
+tests, Ruff, `py_compile`, and production CPU receipt checks. These are
+reproducibility gates, not capability scores.
+
+The correct scientific interpretation is not that Shohin now performs general
+reasoning. A previously blended failure has been decomposed: a known-atom
+compiler is qualified, a model-owned categorical executor carries state through
+depth eight when its packet is correct, and S4 extracts the exact number of
+events from every held-out whole source. Its remaining errors are variable-width
+span boundaries and event-relative argument binding, followed by unseen action
+semantics and open-language termination.
+
 ---
 
 ## 6. Mathematical And Theoretical Work Completed
@@ -736,6 +782,50 @@ Several curricula improve one narrow surface while degrading code, arithmetic,
 DONE, source-deleted transfer, or direct interaction. A new method must report
 full preservation and transfer, not only its trained grammar.
 
+### 7.9 Source-deleted recurrent state can genuinely compose through depth eight
+
+RGDE v1.1 and the independently confirmed S3 v1.4 component establish a real
+bounded result: one tied neural update cell trained only on atomic operations
+can update a model-owned state repeatedly after source deletion. With correct
+packets, S3 reaches 98.242% answers, 99.658% exact state, and 98.975% complete
+chains on a fresh depth-3-to-8 board. Operation and query interventions show
+that the state is causally used rather than ignored.
+
+### 7.10 The major remaining failure moved upstream of recurrence
+
+The RGDE depth board's predicted packet reaches only 76.318% answers while its
+gold-packet ceiling reaches 99.707% answers, 100% state, and 99.072% transition
+exactness. The gap is referential packet grounding on compositionally novel
+names, not an inability of the recurrent cell to preserve state through depth
+eight.
+
+### 7.11 Stable identity requires a set-valued or categorical interface
+
+The failed one-token contextual gather agrees across repeated multi-token
+referents only 59.326% of the time despite pointing inside the correct spans
+99.982% of the time. A zero-parameter set-valued lexical carrier reaches
+99.854% no-fit identity. The confirmed S3 register then removes continuous
+identity rematching from the recurrent loop and supplies a causal three-way
+permutation state.
+
+### 7.12 Known-atom direction transport is separable from state update
+
+The exact S3 action table is correct, and the training-only pointer-anchor
+decoder restores known direction atoms without changing weights. This raises
+ordered depth execution to 98.340% in development and yields 98.242% on fresh
+confirmation. It does not solve unseen direction phrases: lexical-OOD coverage
+is exactly zero and unseen semantics remain a separate problem.
+
+### 7.13 The old halt board is scientifically invalid, not merely difficult
+
+The public chunk format puts hidden padding and legitimate final operations
+under the same semantic signature. A halt classifier trained on
+`active_operations` would learn external metadata or nonce correlations. The
+lawful next test is S4: one unpadded source, a variable-length event tape, and
+a parser that stops when no complete later event exists. S4 v1 finds the exact
+count on 2048/2048 held-out sources but reaches only 1932/2048 exact programs;
+the frozen pointer v1.1 repair is rejected at 25/2048 programs.
+
 ---
 
 ## 8. Hypotheses That Are Closed Or Strongly Disfavored
@@ -767,6 +857,18 @@ Do not reopen these without a materially different causal prediction:
     points to full/hard curricula.
 12. **A finite consumer motor proves universal state.** It can fit an
     answer-specific observable quotient without reusable computation.
+13. **The RGDE depth failure proves recurrent state transport is impossible.**
+    Gold-packet depth-eight execution is near exact; the failure is packet
+    grounding and continuous identity transport.
+14. **Parameter islands caused the complete-compiler gain.** The factorized
+    matrix ties islands with the favorable ordinary parser; broad factor
+    coverage is the durable cause.
+15. **Known-atom S3 confirmation is native open-language reasoning.** It still
+    receives externally segmented packets and an external stop, and only has
+    twelve known direction atoms.
+16. **The chunked `active_operations` label is a valid halt target.** Its
+    semantic signature is shared by padding and legitimate updates; S4 replaces
+    the invalid corpus boundary.
 
 ---
 
@@ -823,7 +925,9 @@ matched recurrent or static control and which current failure it changes.
 `FRONTIER_AGENT_PLANS.md` preserves four labeled submissions from Gemini Deep
 Research, Grok, Meta AI, and ChatGPT Deep Research; the Meta and ChatGPT plans
 are duplicates except for Meta's final two sentences, so they count as three
-distinct proposals rather than four independent endorsements.
+distinct proposals rather than four independent endorsements. The full plan
+and review texts are embedded in Appendix A, but remain design input rather
+than experiment evidence.
 
 The review in `FRONTIER_AGENT_PLANS_ANALYSIS.md` accepts their common diagnosis
 but rejects every integrated stack as scientifically underidentified. The
@@ -891,6 +995,24 @@ nonce-capacity request failed before creating rows. The next build passed in
 memory but used a literal `{}.jsonl` output path; its retained confirmation file
 is byte-identical to the repaired final confirmation. Neither repair followed a
 model fit, score, or row-level confirmation inspection.
+
+### 9.9 Model-owned schedule and halt through a whole-source event tape
+
+The confirmed S3 executor is now the frozen consumer baseline. The highest-
+leverage next experiment is S4: train a source-only variable-length parser to
+emit complete `(direction, entity, amount)` events from one unpadded source,
+then feed that tape into the locked S3 consumer. It must compare against gold
+tape, fixed-slot, host-count, and shuffled-supervision controls, and report
+strict autonomous parsing separately from favorable gold-count rescue.
+
+Two earlier S4 corpus builds were correctly retired for cross-split 13-gram
+leakage. The corrected corpus has 48,000 train rows at depths 1-4, 2,048
+development rows at depths 3-8, and maximum source length 343. S4 v1 treatment
+learns 2048/2048 event counts and 1932/2048 exact programs/state/answers; shuffled
+supervision yields zero programs. It is rejected because the immutable program
+floor is 95%. Gold intro/query boundaries reach 97.217%, while the zero-fit
+variable-width repair collapses, proving that v2 must learn event-relative
+start/end pointers rather than add another deterministic decoder heuristic.
 
 ---
 
@@ -972,62 +1094,69 @@ Before investing in implementation, ask:
 ## 11. Embedded Source Index
 
 This upload edition embeds the complete text of every research markdown
-used directly or transitively by this ledger. The source records begin
-after the maintenance protocol below and are labeled with stable filenames.
-The original local links have been converted to explicit in-dossier labels.
+used directly, transitively, or newly added in the current frontier run.
+The source records begin after the maintenance protocol and are labeled by
+stable filenames. Local links are converted to portable in-dossier labels.
 
-Embedded research sources: 95 files, 1,135,221 source bytes.
+Embedded research sources: 139 files, 1,379,325 source bytes.
 
-Operational boundary: The full operational runbook is intentionally not
-copied verbatim. Its current custody, checkpoint, training, and isolation
-facts required for scientific judgment are stated in Sections 2-5. The
-runbook also contains operational history and credential-handling guidance
-that is not part of the research evidence needed by a theory reviewer.
+Operational boundary: the full operational runbook remains intentionally
+distilled rather than copied verbatim. Its custody, checkpoint, training,
+and isolation facts required for scientific judgment are stated in the main
+ledger; credential-handling and live-operational instructions are excluded.
 
-### Core model and baseline evidence
+### New frontier records included in this update
 
-- `TRAINING_METRICS.md` — embedded in Appendix A
-- `REASONING_FRONTIER.md` — embedded in Appendix A
-- `REASONING_ATTACK_PLAN.md` — embedded in Appendix A
-- `RAW300K_INTERACTION_RESULT.md` — embedded in Appendix A
-- `RAW300K_FREEFORM_INTERACTION_RESULT.md` — embedded in Appendix A
-
-### Experiment and evaluation records
-
-- `R12_CAUSAL_RESULT_DIGIT_MOTOR_PREREG.md` — embedded in Appendix A
-- `R12_CAUSAL_RESULT_DIGIT_MOTOR_RESULT.md` — embedded in Appendix A
-- `R12_CDRL_NEURAL_OPTIMIZATION_RESULT.md` — embedded in Appendix A
-- `R12_COUNTERFACTUAL_CURSOR_ACTION_NEURAL_RESULT.md` — embedded in Appendix A
+- `FRONTIER_AGENT_PLANS.md` — embedded in Appendix A
+- `FRONTIER_AGENT_PLANS_ANALYSIS.md` — embedded in Appendix A
 - `R12_CROSS_DOMAIN_FAULT_CHANNEL_REVIEW_RESULT.md` — embedded in Appendix A
-- `R12_CURSOR_READOUT_ACTUATION_RESULT.md` — embedded in Appendix A
-- `R12_CURSOR_TOKEN_TAPE_RESULT.md` — embedded in Appendix A
-- `R12_DRS_CAUSAL_CYCLE_RESULT.md` — embedded in Appendix A
-- `R12_DRS_WORKSPACE_PROBE_POST_RESULT.md` — embedded in Appendix A
-- `R12_JACOBIAN_WORKSPACE_LONGITUDINAL_RESULT.md` — embedded in Appendix A
-- `R12_OPERATION_CURSOR_RESULT.md` — embedded in Appendix A
-- `R12_OPERATION_SELECTION_LIKELIHOOD_RESULT.md` — embedded in Appendix A
-- `R12_OPERATION_WORKSPACE_JACOBIAN_RESULT.md` — embedded in Appendix A
-- `R12_POST_COMMIT_INTERFACE_FALSIFIER_RESULT.md` — embedded in Appendix A
-- `R12_POST_COMMIT_PACKET_TRANSPORT_V2_RESULT.md` — embedded in Appendix A
-- `R12_POST_COMMIT_PACKET_TRANSPORT_V3_RESULT.md` — embedded in Appendix A
-- `R12_RECURRENT_CONTROLS_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_V1_1_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_V1_1_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_IDENTITY_PACKET_PROBE_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_CPU_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_CORPUS_ADMISSION.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_LANGUAGE_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_ISLANDS_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_ISLANDS_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_PILOT_MANIFEST.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_PREREG_AMENDMENT_V1_1.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_QUALIFICATION_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_QUALIFICATION_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_STRUCTURED_DIAGNOSTIC_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_STRUCTURED_DIAGNOSTIC_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_CORPUS_RESULT.md` — embedded in Appendix A
+- `R12_RELATION_COMPLETE_TRANSPORT_HYPOTHESIS.md` — embedded in Appendix A
 - `R12_RELATION_COMPLETE_TRANSPORT_REVIEW_RESULT.md` — embedded in Appendix A
-- `R12_RESEARCHER_ADAPTIVE_INTERACTION_RESULT.md` — embedded in Appendix A
-- `R12_RESEARCHER_INTERVIEW_RESULT.md` — embedded in Appendix A
-- `R12_RESIDUAL_PACKET_C2_REPRO_AUDIT_RESULT.md` — embedded in Appendix A
-- `R12_SCEB_RESULTS.md` — embedded in Appendix A
-- `R12_SOURCE_SCHEDULED_FAILURE_TAXONOMY.md` — embedded in Appendix A
-- `R12_SOURCE_SCHEDULED_REASONING_CONFIRMATION.md` — embedded in Appendix A
-- `R12_SOURCE_SCHEDULED_REASONING_CONFIRMATION_RESULT.md` — embedded in Appendix A
-- `R12_SSC_FIRST_INTEGER_OFFLINE_RESULT.md` — embedded in Appendix A
-- `R12_SSC_HALT_FIRST_LIVE_RESULT.md` — embedded in Appendix A
-- `R12_TYPED_CONTROLLER_V1_RESULT.md` — embedded in Appendix A
-- `R12_TYPED_CONTROLLER_V2_RESULT.md` — embedded in Appendix A
-- `R12_UPDATER_CANDIDATE_LIKELIHOOD_RESULT.md` — embedded in Appendix A
-- `R12_VAMT_V2_REVIEW_RESULT.md` — embedded in Appendix A
+- `R12_RGDE_CONSUMER_TRANSPORT_DIAGNOSTIC_PREREG.md` — embedded in Appendix A
+- `R12_RGDE_CONSUMER_TRANSPORT_DIAGNOSTIC_RESULT.md` — embedded in Appendix A
+- `R12_RGDE_DEPTH_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_RGDE_DEPTH_CONFIRMATION_RESULT.md` — embedded in Appendix A
+- `R12_RGDE_RELATIONAL_IDENTITY_PREREG.md` — embedded in Appendix A
+- `R12_RGDE_RELATIONAL_IDENTITY_RESULT.md` — embedded in Appendix A
+- `R12_RGDE_V1_1_CAUSAL_CONTROL_AMENDMENT.md` — embedded in Appendix A
+- `R12_S3_CATEGORICAL_REGISTER_PREREG.md` — embedded in Appendix A
+- `R12_S3_CATEGORICAL_REGISTER_RESULT.md` — embedded in Appendix A
+- `R12_S3_CLOSED_ACTION_PREREG.md` — embedded in Appendix A
+- `R12_S3_CLOSED_ACTION_RESULT.md` — embedded in Appendix A
+- `R12_S3_EQUIVARIANT_LOCAL_ACTION_PREREG.md` — embedded in Appendix A
+- `R12_S3_EQUIVARIANT_LOCAL_ACTION_RESULT.md` — embedded in Appendix A
+- `R12_S3_LEXICAL_ACTION_PREREG.md` — embedded in Appendix A
+- `R12_S3_LEXICAL_ACTION_RESULT.md` — embedded in Appendix A
+- `R12_S3_LEXICAL_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_S3_LEXICAL_CONFIRMATION_RESULT.md` — embedded in Appendix A
+- `R12_S3_POINTER_ANCHOR_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_S3_POINTER_ANCHOR_CONFIRMATION_RESULT.md` — embedded in Appendix A
+- `R12_S3_POINTER_ANCHOR_PREREG.md` — embedded in Appendix A
+- `R12_S3_POINTER_ANCHOR_RESULT.md` — embedded in Appendix A
+- `R12_S4_SELF_DELIMITING_EVENT_TAPE_PREREG.md` — embedded in Appendix A
 - `R12_VAMT_V3_REVIEW_RESULT.md` — embedded in Appendix A
 
-### Theory, preregistration, and control records
+### Prior core and control records
 
 - `R12_ACTIVE_VERIFIER_QUERY_NO_GO.md` — embedded in Appendix A
 - `R12_ACTIVE_WITNESS_ALLOCATION_NO_GO.md` — embedded in Appendix A
@@ -1037,6 +1166,9 @@ that is not part of the research evidence needed by a theory reviewer.
 - `R12_CAUSAL_ADDRESS_REVELATION.md` — embedded in Appendix A
 - `R12_CAUSAL_CARRY_MOTOR_PREREG.md` — embedded in Appendix A
 - `R12_CAUSAL_CARRY_MOTOR_RECOVERY_PREREG.md` — embedded in Appendix A
+- `R12_CAUSAL_RESULT_DIGIT_MOTOR_PREREG.md` — embedded in Appendix A
+- `R12_CAUSAL_RESULT_DIGIT_MOTOR_RESULT.md` — embedded in Appendix A
+- `R12_CDRL_NEURAL_OPTIMIZATION_RESULT.md` — embedded in Appendix A
 - `R12_CERTIFIED_LANGUAGE_BRIDGE_BOUNDARY.md` — embedded in Appendix A
 - `R12_CLOSED_DELIBERATION_NO_GO.md` — embedded in Appendix A
 - `R12_CLOSED_LATE_QUERY_NO_GO.md` — embedded in Appendix A
@@ -1047,8 +1179,13 @@ that is not part of the research evidence needed by a theory reviewer.
 - `R12_CONTRACTIVE_PACKET_RECURRENCE_PREREG.md` — embedded in Appendix A
 - `R12_COUNTERFACTUAL_CONJUGATE_COMMIT_HYPOTHESIS.md` — embedded in Appendix A
 - `R12_COUNTERFACTUAL_CURSOR_ACTION_CPU_PREREG.md` — embedded in Appendix A
+- `R12_COUNTERFACTUAL_CURSOR_ACTION_NEURAL_RESULT.md` — embedded in Appendix A
 - `R12_COUNTERFACTUAL_CURSOR_ACTION_THEORY.md` — embedded in Appendix A
 - `R12_CROSS_DOMAIN_FAULT_CHANNEL_NO_GO.md` — embedded in Appendix A
+- `R12_CURSOR_READOUT_ACTUATION_RESULT.md` — embedded in Appendix A
+- `R12_CURSOR_TOKEN_TAPE_RESULT.md` — embedded in Appendix A
+- `R12_DRS_CAUSAL_CYCLE_RESULT.md` — embedded in Appendix A
+- `R12_DRS_WORKSPACE_PROBE_POST_RESULT.md` — embedded in Appendix A
 - `R12_DYNAMIC_FRONTIER_NO_GO.md` — embedded in Appendix A
 - `R12_FACTORIZED_COUNTERFACTUAL_RESIDUAL_CYCLE_PREREG.md` — embedded in Appendix A
 - `R12_FINITE_STATE_VS_MOTOR_NO_GO.md` — embedded in Appendix A
@@ -1058,6 +1195,7 @@ that is not part of the research evidence needed by a theory reviewer.
 - `R12_GATE_VACUITY_AND_WGRQ_PREREG.md` — embedded in Appendix A
 - `R12_HIDDEN_COORDINATE_IDENTIFIABILITY_NO_GO.md` — embedded in Appendix A
 - `R12_HOLONOMY_STATE_NO_GO.md` — embedded in Appendix A
+- `R12_JACOBIAN_WORKSPACE_LONGITUDINAL_RESULT.md` — embedded in Appendix A
 - `R12_LAST_RESET_WITNESS_ATTENTION_PREREG.md` — embedded in Appendix A
 - `R12_LOCAL_REVERSIBLE_RULE_CONTROL.md` — embedded in Appendix A
 - `R12_MATROID_CLOSURE_TARGET.md` — embedded in Appendix A
@@ -1065,16 +1203,26 @@ that is not part of the research evidence needed by a theory reviewer.
 - `R12_MINIMAX_CAUSAL_BROADCAST_SUBSPACE_NO_GO.md` — embedded in Appendix A
 - `R12_MIXED_DIFFERENCE_RESIDUAL_TRANSDUCER_PREREG.md` — embedded in Appendix A
 - `R12_NOISE_STABLE_ACTION_NO_GO.md` — embedded in Appendix A
+- `R12_OPERATION_CURSOR_RESULT.md` — embedded in Appendix A
+- `R12_OPERATION_SELECTION_LIKELIHOOD_RESULT.md` — embedded in Appendix A
+- `R12_OPERATION_WORKSPACE_JACOBIAN_RESULT.md` — embedded in Appendix A
 - `R12_OPERATOR_BALANCED_COMMIT_BISIMULATION_PREREG.md` — embedded in Appendix A
 - `R12_PACKET_ON_LATTICE_CARRY_CELL_PREREG.md` — embedded in Appendix A
 - `R12_PCFT_ADVERSARIAL_AUDIT.md` — embedded in Appendix A
 - `R12_POLYNOMIAL_CODED_ACTION_NO_GO.md` — embedded in Appendix A
 - `R12_POST_COMMIT_INTERFACE_FALSIFIER_PREREG.md` — embedded in Appendix A
+- `R12_POST_COMMIT_INTERFACE_FALSIFIER_RESULT.md` — embedded in Appendix A
+- `R12_POST_COMMIT_PACKET_TRANSPORT_V2_RESULT.md` — embedded in Appendix A
+- `R12_POST_COMMIT_PACKET_TRANSPORT_V3_RESULT.md` — embedded in Appendix A
 - `R12_PRESENTATION_CLOSED_RESIDUAL_TRANSPORT_PREREG.md` — embedded in Appendix A
 - `R12_QUERY_DISTRIBUTIONAL_CONTEXT_NO_GO.md` — embedded in Appendix A
 - `R12_QUERY_KERNEL_FACTORIZATION_NO_GO.md` — embedded in Appendix A
 - `R12_REASONING_INVENTION_CHARTER.md` — embedded in Appendix A
-- `R12_RELATION_COMPLETE_TRANSPORT_HYPOTHESIS.md` — embedded in Appendix A
+- `R12_RECURRENT_CONTROLS_RESULT.md` — embedded in Appendix A
+- `R12_RESEARCHER_ADAPTIVE_INTERACTION_RESULT.md` — embedded in Appendix A
+- `R12_RESEARCHER_INTERVIEW_RESULT.md` — embedded in Appendix A
+- `R12_RESIDUAL_PACKET_C2_REPRO_AUDIT_RESULT.md` — embedded in Appendix A
+- `R12_SCEB_RESULTS.md` — embedded in Appendix A
 - `R12_SECRET_SHARED_CAUSAL_BOOTSTRAP_NO_GO.md` — embedded in Appendix A
 - `R12_SELF_AUTHENTICATING_STATE_NO_GO.md` — embedded in Appendix A
 - `R12_SELF_CANONICALIZING_EPOCH_RETIREMENT_THEORY.md` — embedded in Appendix A
@@ -1082,20 +1230,25 @@ that is not part of the research evidence needed by a theory reviewer.
 - `R12_SHARED_TRANSITION_CIRCUIT_THEORY.md` — embedded in Appendix A
 - `R12_SOURCE_DELETED_RESIDUAL_PACKET_C1_CLOSURE.md` — embedded in Appendix A
 - `R12_SOURCE_DELETED_RESIDUAL_PACKET_PREREG.md` — embedded in Appendix A
+- `R12_SOURCE_SCHEDULED_FAILURE_TAXONOMY.md` — embedded in Appendix A
+- `R12_SOURCE_SCHEDULED_REASONING_CONFIRMATION.md` — embedded in Appendix A
+- `R12_SOURCE_SCHEDULED_REASONING_CONFIRMATION_RESULT.md` — embedded in Appendix A
+- `R12_SSC_FIRST_INTEGER_OFFLINE_RESULT.md` — embedded in Appendix A
+- `R12_SSC_HALT_FIRST_LIVE_RESULT.md` — embedded in Appendix A
 - `R12_STRUCTURED_RESIDUAL_RESOURCE_LAW.md` — embedded in Appendix A
 - `R12_TASK_QUOTIENT_LIFTING_PREREG.md` — embedded in Appendix A
+- `R12_TYPED_CONTROLLER_V1_RESULT.md` — embedded in Appendix A
+- `R12_TYPED_CONTROLLER_V2_RESULT.md` — embedded in Appendix A
+- `R12_UPDATER_CANDIDATE_LIKELIHOOD_RESULT.md` — embedded in Appendix A
+- `R12_VAMT_V2_REVIEW_RESULT.md` — embedded in Appendix A
 - `R12_VAMT_V3_BOUNDED_MACHINE_THEORY.md` — embedded in Appendix A
 - `R12_VOCABULARY_ALIGNED_MICROCODE_TRANSDUCER_THEORY.md` — embedded in Appendix A
 - `R12_WGRQ_CPU_PREREG.md` — embedded in Appendix A
-
-### External planning inputs
-
-- `FRONTIER_AGENT_PLANS.md` — preserved external submissions; not experimental
-  evidence and not embedded in this upload dossier; original source SHA-256
-  `3d82ece081a899750c64a5a63df50e7b0405b2621f7cfd98b3e84c8ab4d942fc`
-- `FRONTIER_AGENT_PLANS_ANALYSIS.md` — Shohin-specific review and advancement
-  boundary; not an experiment result; SHA-256
-  `52f83c828b79b9cfcb6d75396030bd82c8533856a2c0060771974eb8fb40346d`
+- `RAW300K_FREEFORM_INTERACTION_RESULT.md` — embedded in Appendix A
+- `RAW300K_INTERACTION_RESULT.md` — embedded in Appendix A
+- `REASONING_ATTACK_PLAN.md` — embedded in Appendix A
+- `REASONING_FRONTIER.md` — embedded in Appendix A
+- `TRAINING_METRICS.md` — embedded in Appendix A
 
 
 ## 12. Mandatory Maintenance Protocol
@@ -1135,20 +1288,790 @@ proposing or launching a reasoning experiment.
 | 2026-07-18 | Froze and passed the 32-quartet complete referential compiler CPU falsifier; authorized one isolated neural compiler pilot while keeping executor, halt, and reasoning claims blocked. |
 | 2026-07-18 | Froze the 102,144-row complete-compiler corpus with disjoint names/renderers, zero cross-split exact or 13-gram overlap, documented pre-score build repairs, and a sealed 4,096-row confirmation split. |
 | 2026-07-18 | Added the pre-fit v1.1 completeness amendment: three initial-order pointers are now model-owned, all 1,021,440 pointer labels pass audit, and the frozen JSONL bytes remain unchanged. |
+| 2026-07-19 | Added the complete compiler qualification, RGDE identity/depth diagnostics, S3 v1.4 depth-eight confirmation, the invalid halt-target audit, and the preregistered S4 event-tape frontier; refreshed the upload appendix with the new source records. |
+| 2026-07-19 | Recorded S4 v1 at 2048/2048 event counts and 1932/2048 exact programs, rejected its pointer v1.1 collapse, and narrowed the next architecture to learned event-relative start/end pointers on a fresh board. |
 
 ---
 
 # Appendix A. Embedded Research Source Records
 
-The following records are the source markdowns available to the original
-ledger. They are included here so a second document is not required to
-inspect the evidence, results, preregistrations, and theory reviews.
-Records are preserved in source-file order; local markdown links are rendered
-as labels because the original filesystem is not present to the reviewer.
+The following records are the source markdowns available to this ledger.
+They are included so a reviewer does not need access to the local checkout.
+Source text is preserved except that local markdown links are rendered as
+portable labels; the operational runbook is intentionally distilled above.
 
 ---
 
-## Embedded source 01: `R12_ACTIVE_VERIFIER_QUERY_NO_GO.md`
+## Embedded source 01: `FRONTIER_AGENT_PLANS.md`
+
+Original source path: `FRONTIER_AGENT_PLANS.md`
+Original source size: 55,142 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+Gemini Deep Research:
+"Cross-Disciplinary Cognitive Architectures: Directing the Path to Native Reasoning for the Shohin 125M ModelThe development of native reasoning capabilities within language models constrained to sub-150 million parameters represents an architectural frontier where traditional scaling laws no longer offer a viable path. Standard paradigms rely on massive parameter scaling to naturally prompt the emergence of systematic, multi-step problem-solving capabilities. When these same behaviors are sought in small models, such as the Shohin flagship model, the system routinely fails to transition from local, token-level competence to global, composition-level execution control.To bridge this operational deficit while staying strictly within the remaining parameter headroom of 24.9 million parameters, this report proposes an interdisciplinary architectural framework. By drawing structural and mechanistic concepts from completely diverse fields—including civil and environmental systems engineering, evolutionary biology, physical electronics, and classical control theory—we can construct a unified cognitive model. This approach equips the Shohin 125M model with a decentralized, state-controlled, and self-correcting reasoning engine capable of satisfying the complete five-step native reasoning contract.Technical Specifications and Baseline Deficits of the Shohin Flagship ModelTo design a highly expressive reasoning engine within the mandated 150-million-parameter ceiling, we must first establish the exact physical boundary and performance profile of the immutable pre-trained Shohin checkpoint. The model, configured as a decoder-only architecture, is frozen at step 300,000.Base Physical ConfigurationThe structural parameters of the flagship Shohin model are detailed below:Architectural AttributeConfiguration ValueUnique Trained Parameters125,081,664 Target Parameter Limit< 150,000,000 Remaining Nominal Headroom24,918,335 Vocabulary Size32,768 Transformer Layers30 Model Dimension ($d_{model}$)576 Feed-Forward Hidden Dimension1,536 (SwiGLU Activation) Query / Key-Value Heads9 / 3 (Grouped-Query Attention with QK Normalization) Context Window Length2,048 Tokens Positional EmbeddingRotary Position Encodings (RoPE, $\theta=50,000$) Weight TyingInput and Output Embeddings Tied Auxiliary Lossz-loss = 0.0001 Base Recurrent Loops$n_{loop}=1$ This raw model was pre-trained on a curated mathematical, web-math, and Python code corpus designed to foster foundational symbolic reasoning. The specific data allocation is outlined below:Pretraining Corpus SourceDecoded TokensActive ShardsRoleFineMath4+2,000,001,108 10 Curated mathematical text OpenWebMath14,063,689,153 71 Web-scraped mathematical discourse CodeParrot Clean Python16,762,327,600 84 Structured algorithmic logic FineMath3+25,000,004,410 125 Expanded general mathematics Total Active Pretraining Stream57,826,022,271 290 Joint Exposure Capacity (Ratio 2.72x) Baseline Performance and the Compilation GapDespite a final pretraining loss of 1.6554 and clean convergence metrics over 300,000 optimization steps, the raw model exhibits a profound reasoning plateau. Evaluated across standard algorithmic and math benchmarks, Shohin fails to achieve viable autonomous scores:Evaluation CheckpointGSM8K Majority @ 4GSM8K Pass @ 1MATH-500HumanEval (Pass @ 1)MBPPRaw 120k Checkpoint2 / 100 1 / 100 3 / 100 7 / 164 0 / 100 Raw 168.75k Checkpoint5 / 100 2 / 100 2 / 100 7 / 164 0 / 100 Raw 300k Checkpoint4 / 100 2 / 100 2 / 100 6 / 164 0 / 100 This performance ceiling is explained by a deep gap in execution control. During a fixed-protocol interaction test across seven diverse cases, the raw model achieved only 1 out of 7 correct answers, collapsing entirely on requested output contracts and state-reuse trials. When analyzed through mechanistic probing, a distinct dichotomy emerges:The Local Execution Competence: The model possesses high local math accuracy. If provided with an externally generated execution schedule—where a host program manages the intermediate calculations and state registers—the model achieves a Source-Scheduled Continuation (SSC) score of 44.92%. Local additions and multiplications yield accuracy rates exceeding 79%.The Compilation Deficit: When the model must reason autonomously, performance drops to a baseline of 3.52%. The model's internal natural-language compiler is completely inactive, scoring 0 out of 6 parseable programs during autonomous rollout.The Persistent State Attractor: Causal layer-swapping interventions demonstrate that a persistent state representation exists as a late-layer signal (especially at layers 17, 21, 25, and 29) with a delta log-odds of +31. However, the model lacks the control mechanisms needed to access, modify, and pass this state autonomously across sequential steps.To understand how to program this latent capacity, we can look to other engineering disciplines.Interdisciplinary Insights: Mapping External Domains to Latent Reasoning ControlTo construct a robust reasoning controller under a 150M parameter limit, we must move beyond the standard autoregressive paradigm. We can design a state-routing system by drawing on four distinct physical and industrial domains:Source DomainArchitectural Translation in ShohinCivil Systems Engineering (Sustainable Facade Design)Multi-Fidelity Reduced-Order Modeling (ROM) that balances computational energy (ponder steps) with exact accuracy.VLSI / PCB Design (Component Placement/Routing)Spatial attention-routing optimization, treating memory registers as physically routed hardware channels.Ecology & Evolutionary Biology (Neuro-Genesis Dynamics)Dynamic quantized neuro-genesis, allocating transient neural codes to prevent catastrophic forgetting in noisy states.Classical Control Theory (Cruise Control Systems)State Space Models (SSMs) acting as continuous, sliding filters that compress fading contexts into stable vectors.Civil Systems Engineering: Multi-Fidelity Resource AllocationIn sustainable structural engineering, community-scale optimization requires coordinating interdependent building components, material lifecycles, embodied energy, and water indices. Because evaluating high-fidelity, physics-based simulations of complete building systems is computationally expensive, engineers use multi-fidelity approaches. In these systems, fast, low-fidelity reduced-order models (ROMs) guide early exploration, and high-fidelity solvers are reserved for critical design check-points.This principle can be applied directly to a 125M parameter transformer. Instead of routing every token through 30 deep layers of attention, we can treat the model's computational steps as a multi-fidelity building envelope. Standard tokens are processed using cheap, low-fidelity recurrent approximations, while the heavy, multi-head attention layers are reserved for complex, high-uncertainty concepts. This approach frames resource management as a multi-criteria decision-making (MCDM) problem, balancing the model's "computational lifecycle indicators" (such as energy, sequential depth, and token-level confusion) with structural correctness.VLSI and Printed Circuit Board Design: Spatial Memory RoutingElectronic hardware engineering uses automated layout design to place and route thousands of microscopic transistors or components on physical substrates. Algorithms like simulated annealing, Genetic Algorithms, and reinforcement learning are used to optimize spatial layouts, ensuring that signal transmission pathways are as short as possible to avoid cross-talk, heat buildup, and coordinate conflicts.When a small transformer runs recursive steps, its high-dimensional activations can easily conflict, causing the model to lose track of intermediate states. By framing the model's learned memory registers as physical pins on a PCB layout, we can optimize attention-routing using spatial layout heuristics. The model is trained to organize information blocks in memory space, dynamically positioning and rotating activation vectors to avoid signal conflicts. This prevents the model from settling into the false local minima that cause repeating generation loops.Evolutionary Biology: Neuro-Genesis and Sparse QuantizationBiological brains must continuously learn new motor skills and process noisy environments without experiencing catastrophic forgetting. They achieve this through neuro-genesis (the birth and integration of new neurons in the hippocampus), which introduces sparse neural codes to represent novel patterns. The Sparse Quantized Hopfield Network (SQHN) mimics this biological mechanism by mapping continuous inputs to a finite, discrete set of quantized states, using local learning rules to dynamically grow memory capacity as noise levels rise.For the Shohin model, the primary failure mode during mathematical planning is representation degradation: intermediate numbers and carry values drift as they pass through recurrent layers. By introducing a biologically inspired, quantized neuro-genesis layer, we can map noisy, continuous latent states to discrete, error-corrected symbolic keys. This step ensures that a digit remains a stable mathematical entity throughout long-horizon calculations, preventing representation drift.Classical Control Theory: Sliding Filters and Fading MemoryIn industrial mechanical systems, a car's cruise control or a guidance system tracks its position using a state space model (SSM). The system maintains a compact, evolving state vector that acts as a continuous "memory" of past changes. It updates this vector dynamically using a linear transition matrix that acts as a sliding filter, deciding what to remember and what to let fade based on new sensor inputs.Transformers traditionally store their entire history verbatim in a growing key-value (KV) cache, which scales quadratically and demands significant memory. By integrating the sliding-filter principles of selective State Space Models (such as Mamba), we can replace Shohin's attention mechanisms with fading memory layers. These layers compress historical contexts into constant-sized state vectors, maintaining constant memory overhead during long reasoning tasks.The GWT-NSR Interface: Attentional Bottlenecks and Neuro-Symbolic CompilersThe raw Shohin model's primary deficit is its complete lack of a symbolic compiler: it cannot convert natural-language problems into structured operational steps. To resolve this, we can integrate Global Workspace Theory (GWT) with Neuro-Symbolic Reasoning (NSR).In GWT, multiple parallel, specialized modules compete to write to a narrow, shared central workspace. The winning state is then broadcast system-wide to coordinate the active processors. In our architecture, the Middle J-space (Joint-Workspace) is implemented at the layer 29 boundary, where Shohin's natural arithmetic representations are concentrated.                          COMPETE & BROADCAST FLOW
+
+   +--------------------+  +--------------------+  +--------------------+
+   |  Local Arithmetic  |  |  Syntax & Grammar  |  |   Memory Register  |
+   |   Module State     |  |   Module State     |  |     State Vector   |
+   +--------------------+  +--------------------+  +--------------------+
+             |                       |                       |
+             +-----------+           |           +-----------+
+                         |           |           |
+                         v           v           v
+                     +-------------------------------+
+                     |  Central Selection Gating     |  <-- Competition Bottleneck
+                     |  (Attention-Style GWT Router) |      (s_i = u_i^T * c_i)
+                     +-------------------------------+
+                                     |
+                                     v (Broadcast Winner: w_t)
+                     +-------------------------------+
+                     |  Late-Layer J-Space Hub       |  --> Overwrites All Modules
+                     |  (Layer 29 Attractor State)   |      For Next Sequence Step
+                     +-------------------------------+
+The selection process is governed by attention-style gating scores :$$s_i(t)=\mathbf{u}_i^\top\mathbf{c}_i(t)$$Where $\mathbf{u}_i$ is a learnable query vector representing the model's active reasoning state, and $\mathbf{c}_i(t)$ represents the candidate outputs generated by the parallel modules. The winning vector is selected via a softmax distribution, producing the central workspace state:$$\alpha_i(t)=\frac{\exp(s_i(t))}{\sum_j\exp(s_j(t))}$$$$\mathbf{w}(t)=\sum_i\alpha_i(t)\mathbf{c}_i(t)$$This winning state vector $\mathbf{w}(t)$ is then broadcast across all layers, establishing a unified plan.To bridge the compilation gap, we couple this GWT bottleneck with a Neuro-Symbolic Reasoning (NSR) compiler inspired by digital-twin assembly systems. In complex industrial maintenance systems, an NSR framework maps natural-language queries to discrete, 3D structural assembly operations (such as installing or removing physical components).We can map Shohin's abstract reasoning tokens to a discrete set of "information assembly" steps :$$\text{Operation}\in\{\text{Read\_Source},\text{Push\_Carry},\text{Execute\_Arithmetic},\text{Write\_Register},\text{Halt}\}$$This approach transforms abstract, unconstrained language generation into a structured sequence of discrete state operations, allowing the model to satisfy the compilation requirements of the native reasoning contract.Energy-Based Latent Stabilization: Modern Hopfield NetworksRecurrent architectures often get trapped in false attractors—local energy minima where the model loops on incorrect intermediate representations. To prevent this, we introduce continuous Modern Hopfield Networks (MHNs) to act as energy-based stabilizers in the model's latent space.Modern Hopfield Networks store patterns as local minima of a continuous energy function, achieving exponential storage capacity relative to the feature dimension. We represent the model's vocabulary of mathematical templates, carry rules, and operational constraints as a memory matrix $\mathbf{X}=[\mathbf{x}_1,\dots,\mathbf{x}_N]^\top\in\mathbb{R}^{N\times576}$. The continuous energy landscape $E$ over the latent state vector $\boldsymbol{\xi}\in\mathbb{R}^{576}$ is formulated as:$$E=-\beta^{-1}\log\sum_{i=1}^N\exp(\beta\mathbf{x}_i^\top\boldsymbol{\xi})+\frac{1}{2}\Vert{}\boldsymbol{\xi}\Vert{}^2$$Minimizing this energy function yields a fast, single-step update rule that is mathematically equivalent to self-attention, where the active query retrieves and reconstructs a stable pattern :$$\boldsymbol{\xi}^{\text{new}}=\mathbf{X}^\top\text{softmax}(\beta\mathbf{X}\boldsymbol{\xi})$$By embedding continuous Hopfield layers immediately after Shohin's late-stage J-space, we create an error-correcting pipeline. If the model's latent state drifts due to accumulated numerical errors during a multi-step calculation, the Hopfield layer pulls the vector back to its nearest mathematically valid state. This stabilizes the reasoning path and prevents the model from settling into the false local attractors that cause recursive reasoning failures.Universal Looped Memory and the ACT Initialization SolutionSmall, non-recursive models are structurally limited to a fixed number of layers, performing the same amount of computation for simple and complex inputs alike. Universal Transformers address this by applying a single, highly optimized transformer block recursively across time, scaling computational depth dynamically through recurrent weight sharing.However, complexity theory shows that recursive models with compressed latent loops—where only a single, low-dimensional vector is passed between steps—lack the working memory required to solve P-complete sequence tasks. To move into a memory-rich regime, the model must carry a sequence-state loop or incorporate a dedicated, mutable scratchpad.We implement this in the Shohin model by prepending $T=16$ learned Universal Memory Tokens (or registers) to the input sequence :$$\mathbf{H}^{(0)}=[\mathbf{m}_1,\dots,\mathbf{m}_{16},\mathbf{s}_1,\dots,\mathbf{s}_L]+\mathbf{P}^{(t)}$$Where $\mathbf{m}_j\in\mathbb{R}^{576}$ represent the learned memory tokens, $\mathbf{s}_k$ are the sequence tokens, and $\mathbf{P}^{(t)}$ is a dynamic, step-dependent position embedding. As the shared block runs recursively, the sequence tokens remain fixed, while the memory tokens act as a parallel read-write scratchpad. Under this setup, attention heads specialize dynamically: some act as memory readers, while others function as constraint propagators that update the memory states across deep iterations.To control recursion depth, we employ an Adaptive Computation Time (ACT) halting router. At each step $n$, a sigmoidal halting node computes a halting probability $h^n\in(0,1)$ based on the active memory state :$$h^n=\sigma\left(\mathbf{w}_h^\top\mathbf{m}_{\text{avg}}^{(n)}+b_h\right)$$The model accumulates these probabilities until a threshold is met, weight-blending the intermediate states to produce the final output.                     THE ROUTER INITIALIZATION TRAP
+
+   +-------------------------------------------------------------+
+   |   Default / Positive Bias Initialization (b >= 0)           |
+   |   Halting Probability p >= 0.5 to 0.73                      |
+   |   * TRAP: Halts immediately after ~2 steps.  |
+   +-------------------------------------------------------------+
+                                 |
+                                 | (Resolve with Deep-Start)
+                                 v
+   +-------------------------------------------------------------+
+   |   Inverted "Deep-Start" Halting Bias (b = -3)               |
+   |   Initial Halting Probability p ≈ 0.05                      |
+   |   * SOLUTION: Explores deep latent paths (15-18 steps)      |
+   |     before optimizing the halting policy.    |
+   +-------------------------------------------------------------+
+Under standard frameworks, zero-bias ($b_h=0$, $p\approx0.5$) or positive-bias ($b_h=1$, $p\approx0.73$) initializations cause the model to halt after only 1 or 2 steps. Because over 70% of training runs settle into this shallow-halt equilibrium, the model never learns to navigate deep reasoning paths.We resolve this initialization trap by inverting the halting bias:$$b_h=-3$$This forces an initial halting probability of $p\approx0.05$, requiring the model to run for 15 to 18 steps at the start of training. This allows the network to explore deep computational trajectories before the halting policy is optimized. Under a regularized "ponder cost" warmup, the model learns to adapt its computational depth to the task's difficulty, achieving matched accuracy while saving 34% of the required compute steps.Hybrid Sequence-State Mixing: Priming Attention into State-Space ModelsWhile self-attention is highly effective at precise, token-to-token coordinate mapping, its quadratic $O(L^2)$ scaling makes long-context modeling computationally expensive. To optimize Shohin's efficiency, we must decouple local coordinate tracking from global historical context processing.State Space Models (SSMs), such as Mamba, update a constant-sized hidden state linearly $O(L)$, acting as a sliding filter that compresses historical contexts. However, because this compression is lossy, pure SSMs struggle with precise, verbatim retrieval—tasks where attention's quadratic "eidetic" memory excels.Instead of training a hybrid model from scratch, we employ "Priming". This methodology allows us to initialize a hybrid state-space model directly from pre-trained transformer weights, using less than 0.5% of the original pretraining compute budget.Because attention and state-space layers share an algebraic structure as sequence mixers, we can mathematically project attention weights into SSM matrices. We select 10 of Shohin's 30 attention layers—focusing on those with diffuse attention patterns—and replace them with Gated Kalman Filter (GKA) or DeltaNet SSM layers, leaving the remaining 20 layers to function as high-precision attention buffers.This hybrid configuration delivers significant performance and efficiency advantages:                  KV CACHE MEMORY ACCORDING TO CONTEXT LENGTH
+
+  Cache Memory
+     (GB)
+      |
+  2.0 +                                             / (Pure Transformer: O(L)) [36]
+      |                                            /
+  1.5 +                                           /
+      |                                          /
+  1.0 +                                         /-- (Primed Hybrid Model: O(1) SSMs)
+      |                                        /
+  0.5 +                                       /
+      |                                      /
+  0.0 +-----+-----+-----+-----+-----+-----+-----+
+      0    16k   32k   48k   64k   80k   96k   128k   Context Length
+By replacing 10 attention layers with Gated Kalman Filter SSMs, we halve the model's KV cache footprint, enabling up to 2.3x higher decode throughput while preserving precise, multi-hop reasoning capabilities.Finite State Automata Gating and Denoising Recursion TrainingAutoregressive models used as planning agents are prone to Infinite Agentic Loops (IALs), repeatedly triggering model calls or tool handoffs without hitting a termination condition. To ensure safety, we separate semantic generation from deterministic execution control by embedding the model's output projection within a programmatic Finite State Automata (FSA) wrapper.We define five discrete operational states that map directly to the native reasoning contract :                     FSA TRANSITION LOGIC GRAPH
+
+                 +-------------------------------+
+                 |       State 1: COMPILE        |
+                 +-------------------------------+
+                                 |  <Compile_Finished> Event
+                                 v
+                 +-------------------------------+
+                 |     State 2: STATE_CREATE     |
+                 +-------------------------------+
+                                 |  <State_Initialized> Event
+                                 v
+   +---------->  +-------------------------------+
+   |             |     State 3: STATE_TRANSITION |
+   |             +-------------------------------+
+   |                             |  <Step_Executed> Event
+   |                             v
+   |             +-------------------------------+
+   |             |  State 4: STATE_REUSE/CONTROL |
+   +----------   +-------------------------------+
+   |  <Loop>                     |  <Halt_Verified> Event
+   |                             v
+   |             +-------------------------------+
+   |             |      State 5: SERIALIZE       |
+   +----------   +-------------------------------+
+Transitions are triggered by validated token events generated by the model. If the model attempts an invalid transition or runs into an execution loop, the FSA layer intercepts the generation, prunes the invalid tokens, and programmatically guides the state transition to force completion.To train this recurrent, state-controlled architecture, standard Backpropagation Through Time (BPTT) and fixed-point gradient approximations are highly unstable. If the model is only exposed to clean, perfect historical states during training, it quickly degrades at test time when forced to iterate on its own noisy, imperfect predictions.We address this by training the model using a Denoising Recursion Model (DRM) objective. We inject varying levels of Gaussian noise into the target representation during training:$$\mathbf{y}_t=\sqrt{\bar{\alpha}_t}\mathbf{y}_0+\sqrt{1-\bar{\alpha}_t}\boldsymbol{\epsilon}$$Where $\mathbf{y}_0$ is the clean target representation, $\boldsymbol{\epsilon}\sim\mathcal{N}(\mathbf{0},\mathbf{I})$ is the noise vector, and $\bar{\alpha}_t$ controls the noise magnitude. The shared universal transformer block is then trained to reverse this corruption over $K$ recursive steps :$$\mathbf{h}^{(k)}=\text{Step}_{\theta}\left(\mathbf{h}^{(k-1)},\mathbf{x},t\right)$$This training paradigm provides several key benefits:Automatic Training Curriculum: Varying the noise level provides an automatic, progressive curriculum that simplifies the complex optimization landscape of multi-step reasoning.Robust Representation Alignment: Training the model to denoise corrupted states ensures that it can gracefully handle and correct its own generation errors during autonomous rollout, preventing error accumulation.No Deep Supervision Required: DRM stabilizes the model's recurrent training trajectories without needing step-by-step intermediate labels or gradient truncation, outperforming standard recursive models on complex spatial and mathematical reasoning tasks.Actionable Integration Roadmap and Parameters BudgetTo transform the Shohin 125M flagship checkpoint into a state-controlled reasoning model, we must carefully manage our remaining parameter budget. The parameter allocation for the new architectural components is outlined below:Structural ComponentParameter CostMathematical RoleParameter SourceGWT Gating Router1,327,104Coordinates attentional selection and system-wide broadcast.Headroom allocation ($4\times{d_{model}}\times{d_{model}}$) Universal Memory Tokens9,216Serves as a parallel, mutable scratchpad.Newly initialized register embeddings ($16\times576$) Modern Hopfield Layer4,608,000Stabilizes latent states and corrects mathematical representation drift.Headroom allocation ($256\times576\times32$ continuous keys) FSA Controller Gating1,536,000Coordinates deterministic execution transitions and prevents infinite loops.Headroom allocation ($5\times{d_{model}}\times{d_{model}}$) SSM Priming Replacement-11,812,608 (Savings)Halves the KV cache footprint and speeds up context updates.Replaced 10 attention layers with GGK/Mamba-2 layers Total Modified Footprint120,669,376Joint autonomous reasoning execution engine29,330,624 Parameters Remaining This configuration achieves a net parameter reduction, leaving over 29 million parameters of nominal headroom under the 150M parameter limit.Implementation and Deployment ScheduleThe engineering team will execute the deployment across three progressive 15-day phases:        Phase 1: Hybridization and Priming (Days 1 - 15)
+        * Map and replace 10 attention layers with GGK SSM modules.
+        * Initialize the 16 Universal Memory Tokens with dynamic RoPE scaling.
+
+                                |
+                                v
+
+        Phase 2: Cognitive Integration (Days 16 - 30)
+        * Implement the GWT routing hub and initialize the Modern Hopfield memory matrix.[22, 28]
+        * Configure the ACT halting router using the deep-start bias (b = -3).
+
+                                |
+                                v
+
+        Phase 3: Denoising Training and Gating (Days 31 - 45)
+        * Execute DRM training on mathematical and Python code datasets.
+        * Mount and validate the FSA neuro-symbolic runtime controller.
+During each computational step $t$, the unified forward pass of the modified Shohin model is governed by the following mathematical sequence:State Injection: Input sequence tokens are combined with the active Universal Memory Tokens $\mathbf{M}^{(t)}\in\mathbb{R}^{16\times576}$ :
+$$\mathbf{H}^{(t)}_0=[\mathbf{M}^{(t)},\text{Embed}(\mathbf{s})]+\mathbf{P}^{(t)}$$Gated Hybrid Mixing: Activations pass through the alternating State-Space and Attention layers. For each SSM layer, the continuous fading state $\mathbf{h}_k$ updates linearly :
+$$\mathbf{h}_k=\mathbf{A}\mathbf{h}_{k-1}+\mathbf{B}\mathbf{H}^{(t)}_{k-1}$$$$\mathbf{O}^{\text{SSM}}_k=\mathbf{C}\mathbf{h}_k+\mathbf{D}\mathbf{H}^{(t)}_{k-1}$$Global Workspace Selection: At the Layer 29 boundary, candidate states compete within the J-space, and the GWT router selects and broadcasts the winning coordination vector :
+$$\mathbf{w}(t)=\text{GWT-Router}\left(\mathbf{O}^{\text{SSM}}_{29}\right)$$Energy-Based Stabilization: The broadcast vector $\mathbf{w}(t)$ is projected through the Modern Hopfield memory bank, pulling any drifted representations back to the nearest mathematically valid attractor state :
+$$\mathbf{w}^*(t)=\mathbf{X}^\top\text{softmax}(\beta\mathbf{X}\mathbf{w}(t))$$Deterministic FSA Gating: The stabilized representation $\mathbf{w}^*(t)$ is mapped to the output projection, where the FSA runtime validates the transition event, ensuring safe and reliable multi-step execution.Architectural ConclusionsBy integrating structural principles from civil engineering, evolutionary biology, hardware routing, and classical control theory, we can establish a robust pathway to native reasoning for the Shohin model. This interdisciplinary framework addresses the base model's baseline planning and compilation deficits without exceeding the strict 150-million-parameter limit.Replacing quadratic attention buffers with continuous, primed state space filters significantly reduces memory overhead , while continuous Hopfield memory matrices and Universal Memory registers stabilize latent representations across deep recurrent steps. Guided by a deterministic, state-controlled execution layer and trained via a robust denoising recursion objective, the modified Shohin model transitions from a local token-association generator into a reliable, self-governing reasoning system."
+
+Grok:
+"**The core diagnosis from the ledger is clear and persistent:** Shohin has strong *local* competence (e.g., DRS first-state 497/500, SSC local steps ~45-75%, late-layer residual digit/carry signals) but collapses on *composition*, autonomous control, state transport across steps, natural-language compilation to programs, reliable actuation/serialization, and termination. SFT gains are template-local and often destructive elsewhere. Raw scaling and most architectural add-ons (within ~25M param headroom) haven't closed the loop.
+
+This matches a classic gap in small models: fragments of executors and readable state, but no robust, model-owned controller that compiles, updates, consumes, reuses, and halts. The native reasoning contract (model owns all five interfaces) remains unmet.
+
+### Cross-Field Inspirations for a Compact Breakthrough
+Drawing from neuroscience, control theory, biology, dynamical systems, and modular/compositional learning (without violating the <150M cap or requiring massive external oracles):
+
+1. **Neuroscience / Predictive Coding & Active Inference (Brain as Hierarchical Error Minimizer)**: The brain isn't a pure feedforward transformer; it uses **predictive coding** (PC) where higher layers predict lower-layer activity, and only prediction errors propagate upward. This enables efficient state maintenance, surprise-driven attention, and hierarchical planning with modest resources.
+
+   - **Proposal**: Add a lightweight **PC sidecar** (~5-10M params) that runs in parallel or interleaved. It maintains a compact latent state (building on your DRS residual signals) and generates top-down predictions for the next "microstep" or operation. Training minimizes prediction error + task loss. This naturally supports **state reuse** (predictions conditioned on prior latents) and **error-driven correction** (common-mode semantic errors become high-surprise signals that trigger re-planning).
+   - Why compact? PC can use sparse, asynchronous updates and shared hierarchical latents. It explains why DRS installed a workspace but didn't close the loop: missing top-down prediction/actuation.
+   - Test: Causal interventions swapping predicted vs. actual next-state residuals; source-deleted rollout where only the PC latent is carried forward.
+
+2. **Control Theory / Dynamical Systems (Feedback, Optimal Control, Linear Approximations)**: Transformers show local linearity in activations; model inference as a **linear time-varying dynamical system** with feedback controllers (e.g., LQR-style).
+
+   - **Proposal**: A tiny **discrete controller head** (or recurrent cell, ~2-5M params) that treats late-layer residuals (your digit/carry workspace) as observable states. Use Jacobian-based or learned linear approximations for next-state prediction and optimal action selection (operation choice + halt). Add a small bistable or liquid-like recurrent cell for long-lasting cellular memory without full network recurrence.
+   - This directly targets your decomposition: compiler (map NL to control setpoint), updater/actuator (feedback to residuals), consumer (state in controller), halt (when error below threshold or goal reached).
+   - Matches VAMT/relation work but makes it *learned and closed-loop* rather than host-symbolic. Resource accounting stays low via sparsity or low-rank approximations.
+
+3. **Modularity & Compositionality (Reusable Blocks + Routing)**: Brains use modular organization; small RNNs or hypernetworks discover interpretable, compositional solutions.
+
+   - **Proposal**: **Parameter-efficient modules** (e.g., small LoRA-style adapters or hypernetwork-routed MLPs, total <15M new params) for primitives (add, multiply, etc., building on DRS executor). A learned router (tiny transformer or categorical controller) selects/invokes/composes them based on compiled NL intent. This separates *what* (modules) from *when/how* (controller), reducing gradient conflict seen in typed controllers.
+   - Inspired by evolutionary self-organization and Neural Cellular Automata: modules "communicate" via compact state packets.
+   - Generalization via recombination: train on sparse combinations, test on novel order/widths (your held-out regimes).
+
+4. **Biology / Self-Organization & Emergence (Decentralized, Robust Computation)**: Cellular automata, bistability, and replay-like mechanisms for durable state without central orchestration.
+
+   - **Proposal**: Extend DRS with **bistable recurrent cells** or a small Neural CA-style layer for the workspace. Each "digit position" or register maintains local stability; global state emerges from local rules + controller orchestration. Add "replay" during thinking (internal simulation loops) for planning without full unrolling.
+   - Addresses transport collapse and common-mode errors via redundancy and local correction.
+
+5. **Hybrid Neuro-Symbolic with Minimal Overhead**: Leverage your VAMT/S3 work. A compact "microcode" interface where the model emits/uses a very small internal program token stream, executed via a differentiable interpreter (few params). But make compilation *emergent* via PC or controller, not host-supplied.
+
+### Concrete Path Forward (Theory + Experiment Template)
+Use your **new theory template** rigorously. Target the highest-leverage gaps: **NL compiler + self-updating actuator/consumer + termination**.
+
+- **Theory Name**: Predictive-Control Modular Workspace (PCMW) or similar.
+- **Target Failure**: State transport/actuation + compilation + common-mode errors.
+- **Capability Object**: Model compiles NL to internal control signals + latent packets; updates/resuses packets autonomously; halts on low error/goal match.
+- **State/Update**: DRS-style residuals + PC latents + modular routing. Updates via local feedback + global controller.
+- **Causal Prediction**: Packet swaps, prediction-error ablations, donor residuals, source-deleted rollouts all move scores predictably.
+- **Native Boundary**: Host only tokenizes/decodes; no schedule, ALU, or verifier repair.
+- **Controls**: Matched recurrence (STRR), typed controller, SSC ceiling, static SFT, parameter-matched dense baseline.
+- **Resources**: Stay <150M total (sidecar <25M); count bits, FLOPs, depth explicitly.
+- **CPU Falsifier**: Small affine/register board + NL paraphrase transfer; test bistability/PC dynamics.
+- **Gates**: Fresh transfer (paraphrases, OOD widths), causal necessity, preservation of code/math, direct transcripts showing no loops/host dependence.
+- **Data**: Extend DRS v3 complete-basis with PC objectives, modular routing labels (sparse), predictive error signals. Use CGBR-style refinement for hard cases.
+
+**Implementation Sketch** (fits headroom):
+- Freeze 300k base.
+- Add: Small PC hierarchy (2-3 layers, low-dim latents), modular adapters (routed by controller), bistable cells in workspace, learned halt signal tied to error/state.
+- Training: Mixed loss (task + prediction error + routing sparsity). Curriculum: start with oracle schedules → autonomous.
+- Eval: Your full suite + new PC-specific interventions (e.g., disrupt top-down predictions).
+
+**Why This Could Work at Scale**:
+- Exploits existing workspace signal.
+- PC/control theory provides *causal necessity* for state (errors must propagate).
+- Modularity reduces interference, enables composition.
+- Biologically plausible → likely data-efficient and generalizable.
+- Outside-box: Treat reasoning as **error-minimizing control in a modular dynamical system** rather than pure sequence prediction or symbolic engine.
+
+This isn't guaranteed, but it preserves surviving discoveries (local executor, late residuals) while targeting the diagnosed gaps with mechanisms proven in other domains. It stays strictly neural-native and resource-bounded. Update the master ledger with any run, including NO-GO learnings. The 300k anchor is solid—now install the missing controller elegantly."
+
+Meta AI:
+"This is a 125,081,664 parameter model that learned to *do* but not to *decide to do*. The ledger tells the story clearly:
+
+* **Local executor exists:** 497/500 first DRS states correct, oracle-compiled DRS 28/34 transitions, SSC with external schedule 44.92% vs 3.52% whole-problem autonomous.
+* **Workspace exists:** post-DRS residual swaps give +31 delta log-odds for digit at layers 17/21/25/29, carry at layer 29 is 10/10 positive.
+* **Compilation missing:** 0/6 parseable programs on fresh probes. Operation likelihood 80/176 vs 64/176 controls, but 0/176 multiply/remainder - it's a lexical cue, not a scheduler.
+* **Actuator missing:** wide digit motor fits 100% teacher-forced, but only +0.8 points autonomous.
+* **Controller missing:** 214/256 SSC traces have loop signatures, 71 loop/replay failures, 96 wrong first operation, halt-first decoding alone jumps 23.83% -> 44.92%. Typed v1 learns DONE 86.3% but loses arithmetic, typed v2 destroys DONE.
+
+You've closed the obvious: more tokens, longer CoT, hidden digit alone, probe = workspace, host execution, replication for common-mode errors, pure reversibility, VAMT as new primitive.
+
+The gap is not capacity. A fly navigates with 100k neurons. The gap is organization. Here are four bets from completely different fields that directly map to your five-part native reasoning contract:
+
+### Bet 1: Genetics + Embryology — The Codon Compiler with Temporal Differentiation
+
+**Inspiration:** DNA doesn't use 1 base = 1 amino acid. It uses redundant 3-base codons with wobble error-correction. Embryos use the *same* genome but differentiate via time-switched gene expression.
+
+**Mechanism for Shohin:**
+You have 24.9M headroom. Don't add layers in parallel. Add **two temporal LoRAs** on the same 30 layers:
+
+* **Compiler phase (0-0.5T):** Layers 0-12 with LoRA-C, trained to emit not natural language, but a 3-token codon: `[OP_SLOT | SRC_A_PTR | SRC_B_PTR]`. SRCs are *pointers* to input numbers via copy attention, not generated digits. This directly solves your R4 binding win (29/256 -> 139/256) - pointer binding is what worked.
+* **Executor phase (0.5T-1.0T):** Same base, LoRA-E active, stop-gradient from codon. Takes codon + quantized state.
+
+Why codons? Your operation probe fails on paraphrase. A redundant codon `ADD = {add, plus, sum}` mapped to same embedding via VQ codebook gives you genetic redundancy. If paraphrase changes one token, the other two correct it - like error-correcting code in biology.
+
+**Cost:** 2x LoRA rank 32 on 30 layers = ~4.5M params. Pointer head = 0.3M. VQ codebook 512 x 576 = 0.3M. Total <6M.
+
+**Causal test:** Source deletion after codon formation. If you zero the original NL but keep codon, execution should stay 28/34. Shuffled codon should destroy it. Matched control: same params as ordinary recurrence `n_loop=2` which you already showed loses (2.4899 vs 2.4890, 286k tok/s). This should beat it by >15 points on fresh order-twins.
+
+### Bet 2: Computer Architecture — Tomasulo Reservation Stations + Dual-Rail Abacus
+
+**Inspiration:** Your 71 loop/replay errors are classic data hazards. Modern CPUs solved this in 1967 with Tomasulo: don't execute in program order, execute when operands are ready. Asynchronous circuits solve interference with dual-rail: separate read and write wires.
+
+**Mechanism:**
+Replace the continuous residual digit with a **Quantized Abacus**:
+
+* 10 slots x 10 values, implemented as VQ-VAE with straight-through estimator. Not "write 7 to residual", but "increment slot 3". Actuator becomes *selection*, not generation.
+* Two residual buses: even layers are READ bus, odd layers are WRITE bus, with a latch (small GRU, 1M params) between them. You tried `n_loop=2` synchronous - this is asynchronous. This breaks the interference that killed typed v2 where DONE and arithmetic fought in same residual.
+
+Reservation station (3M params, 2 layers) holds emitted codons until their source slots are marked ready. Controller doesn't need to schedule perfectly; the station does.
+
+**Why this matters:** Your ledger: "Readable state is not sufficient. Needs actuator, carry logic, recurrent consumer." Abacus makes carry trivial: overflow slot 3 -> increment slot 4, learned as a fixed rule, not as token prediction.
+
+**Cost:** VQ abacus 0.5M, latch GRU 1.2M, reservation station 3M = 4.7M.
+
+**Falsifier:** Width-8 zero in DRS. Abacus width is explicit slots, should get >30/100 on width-8 with 0/100 STRR control.
+
+### Bet 3: Neuroscience + Physics — Basal Ganglia Controller with Conservation Law Halt
+
+**Inspiration:** Cortex doesn't decide to halt. Basal ganglia does via inhibitory gating. Physics doesn't trust computation without conservation laws.
+
+**Mechanism:**
+
+* **Controller:** Tiny 2-layer LSTM (1.5M params) separate from LM, input is abacus state entropy. Trained with REINFORCE, not cross-entropy. Reward = final answer correct -0.1*steps. This is why typed controllers failed: they were trained with SFT, same loss as executor. Biology separates dopamine (RL) from cortical supervised learning.
+* **Halt as attractor:** Define Energy E = uncertainty of abacus + distance to "closed form". Train energy network to be low at terminal states. DONE is emitted only when E < threshold and stays low for 2 steps (like Hopfield attractor).
+* **Checksum invariant:** For every problem, require model to also maintain mod-97 hash of (inputs, ops, intermediate). Sum mod 9 is invariant under add/sub reorder? No, but you can teach it: `hash_next = (hash_prev * p + op_code + digit) % 97`. If common-mode error picks wrong op, hash violates. This is cheap, not answer-leaking, and gives you pre-selection error correction. Your R9c showed 88.83% agreed-wrong operations - replication can't fix it. An invariant can.
+
+**Cost:** Controller LSTM 1.5M + energy head 0.5M + checksum head 0.2M = 2.2M.
+
+**Causal test:** Zero/shuffle checksum should hurt >10 points if it is causally used. Halt-first decoding gain (23% -> 44%) should be internalized: autonomous halt accuracy should approach halt-first.
+
+### Bet 4: Immunology + Economics — Negative Selection Market for Common-Mode Errors
+
+**Inspiration:** Immune system doesn't fix wrong cells by copying them 3 times. It kills self-reactive cells in thymus (negative selection). Markets don't fix bubbles by replication, they fix by short sellers.
+
+**Mechanism for your biggest finding: 7.6 Most current errors are common-mode.**
+
+* Train two independent compiler views: left-to-right and right-to-left (or with different BPE dropout). This is stereoscopic vision - same scene, different retinal projection. Lexical cue errors will disagree.
+* **Market:** Each view bids operation with confidence. Executor only runs if both agree OR if disagreement triggers a third "uncertainty head" that requests re-read with source-dropped packet (your CPR failed because packet wasn't causally read; here disagreement forces re-read).
+* Negative selection data: generate 100k wrong programs for same problems (easy), train discriminator to kill them *before* execution. This discriminator is tiny (2M params) and runs on codon, not on final answer.
+
+This directly attacks your 96 wrong-first-op failures. Wrong first op is semantic selection error, not execution error.
+
+**Cost:** Siamese view = same weights, just 2 forwards. Discriminator 2M.
+
+**Falsifier:** On order-twins (a+b vs b+a) where lexical cue fails, dual-view agreement should be <40% for wrong op vs >80% for correct.
+
+### What I would actually run first under 150M
+
+Total budget used: ~14.9M, leaving you at ~140M.
+
+**Phase 0 (CPU, 1 day):** Freeze the 152 VAMT programs. Convert them to pointer-codon form. Measure compilation 0/6 baseline. If pointer-codon + VQ abacus gets >3/6 on same 6 probes with zero GPU training, you have signal.
+
+**Phase 1 (GPU, 1xH100, 10k steps):** DRS v4 but with abacus + dual-rail + reservation station. Same 439k rows. Gate: final exact 275/500 -> must beat 400/500 AND width-4 value OOD 34/100 -> must beat 60/100. If not, abort.
+
+**Phase 2 (GPU, 5k steps RL):** Freeze executor, train basal ganglia controller with REINFORCE on halt + checksum. Gate: autonomous rollout on 256 SSC problems must beat 16.4% typed v1 with DONE preserved >70%. Your halt-first is 23.8% without new weights - this must beat 30% with weights.
+
+If Phase 1 and 2 pass, you have satisfied: compilation (pointer codon), state creation (abacus VQ), transition (reservation station), reuse (dual-rail), serialization (energy halt) - all model-owned, all causally tested with source deletion and shuffled swaps.
+
+Stop trying to make a single decoder learn to be a compiler, ALU, scheduler, and halting oracle in the same residual stream with the same loss. Biology, CPUs, and economies never did that. They split the bus."
+
+ChatGPT Deep Research:
+"This is a 125,081,664 parameter model that learned to *do* but not to *decide to do*. The ledger tells the story clearly:
+
+* **Local executor exists:** 497/500 first DRS states correct, oracle-compiled DRS 28/34 transitions, SSC with external schedule 44.92% vs 3.52% whole-problem autonomous.
+* **Workspace exists:** post-DRS residual swaps give +31 delta log-odds for digit at layers 17/21/25/29, carry at layer 29 is 10/10 positive.
+* **Compilation missing:** 0/6 parseable programs on fresh probes. Operation likelihood 80/176 vs 64/176 controls, but 0/176 multiply/remainder - it's a lexical cue, not a scheduler.
+* **Actuator missing:** wide digit motor fits 100% teacher-forced, but only +0.8 points autonomous.
+* **Controller missing:** 214/256 SSC traces have loop signatures, 71 loop/replay failures, 96 wrong first operation, halt-first decoding alone jumps 23.83% -> 44.92%. Typed v1 learns DONE 86.3% but loses arithmetic, typed v2 destroys DONE.
+
+You've closed the obvious: more tokens, longer CoT, hidden digit alone, probe = workspace, host execution, replication for common-mode errors, pure reversibility, VAMT as new primitive.
+
+The gap is not capacity. A fly navigates with 100k neurons. The gap is organization. Here are four bets from completely different fields that directly map to your five-part native reasoning contract:
+
+### Bet 1: Genetics + Embryology — The Codon Compiler with Temporal Differentiation
+
+**Inspiration:** DNA doesn't use 1 base = 1 amino acid. It uses redundant 3-base codons with wobble error-correction. Embryos use the *same* genome but differentiate via time-switched gene expression.
+
+**Mechanism for Shohin:**
+You have 24.9M headroom. Don't add layers in parallel. Add **two temporal LoRAs** on the same 30 layers:
+
+* **Compiler phase (0-0.5T):** Layers 0-12 with LoRA-C, trained to emit not natural language, but a 3-token codon: `[OP_SLOT | SRC_A_PTR | SRC_B_PTR]`. SRCs are *pointers* to input numbers via copy attention, not generated digits. This directly solves your R4 binding win (29/256 -> 139/256) - pointer binding is what worked.
+* **Executor phase (0.5T-1.0T):** Same base, LoRA-E active, stop-gradient from codon. Takes codon + quantized state.
+
+Why codons? Your operation probe fails on paraphrase. A redundant codon `ADD = {add, plus, sum}` mapped to same embedding via VQ codebook gives you genetic redundancy. If paraphrase changes one token, the other two correct it - like error-correcting code in biology.
+
+**Cost:** 2x LoRA rank 32 on 30 layers = ~4.5M params. Pointer head = 0.3M. VQ codebook 512 x 576 = 0.3M. Total <6M.
+
+**Causal test:** Source deletion after codon formation. If you zero the original NL but keep codon, execution should stay 28/34. Shuffled codon should destroy it. Matched control: same params as ordinary recurrence `n_loop=2` which you already showed loses (2.4899 vs 2.4890, 286k tok/s). This should beat it by >15 points on fresh order-twins.
+
+### Bet 2: Computer Architecture — Tomasulo Reservation Stations + Dual-Rail Abacus
+
+**Inspiration:** Your 71 loop/replay errors are classic data hazards. Modern CPUs solved this in 1967 with Tomasulo: don't execute in program order, execute when operands are ready. Asynchronous circuits solve interference with dual-rail: separate read and write wires.
+
+**Mechanism:**
+Replace the continuous residual digit with a **Quantized Abacus**:
+
+* 10 slots x 10 values, implemented as VQ-VAE with straight-through estimator. Not "write 7 to residual", but "increment slot 3". Actuator becomes *selection*, not generation.
+* Two residual buses: even layers are READ bus, odd layers are WRITE bus, with a latch (small GRU, 1M params) between them. You tried `n_loop=2` synchronous - this is asynchronous. This breaks the interference that killed typed v2 where DONE and arithmetic fought in same residual.
+
+Reservation station (3M params, 2 layers) holds emitted codons until their source slots are marked ready. Controller doesn't need to schedule perfectly; the station does.
+
+**Why this matters:** Your ledger: "Readable state is not sufficient. Needs actuator, carry logic, recurrent consumer." Abacus makes carry trivial: overflow slot 3 -> increment slot 4, learned as a fixed rule, not as token prediction.
+
+**Cost:** VQ abacus 0.5M, latch GRU 1.2M, reservation station 3M = 4.7M.
+
+**Falsifier:** Width-8 zero in DRS. Abacus width is explicit slots, should get >30/100 on width-8 with 0/100 STRR control.
+
+### Bet 3: Neuroscience + Physics — Basal Ganglia Controller with Conservation Law Halt
+
+**Inspiration:** Cortex doesn't decide to halt. Basal ganglia does via inhibitory gating. Physics doesn't trust computation without conservation laws.
+
+**Mechanism:**
+
+* **Controller:** Tiny 2-layer LSTM (1.5M params) separate from LM, input is abacus state entropy. Trained with REINFORCE, not cross-entropy. Reward = final answer correct -0.1*steps. This is why typed controllers failed: they were trained with SFT, same loss as executor. Biology separates dopamine (RL) from cortical supervised learning.
+* **Halt as attractor:** Define Energy E = uncertainty of abacus + distance to "closed form". Train energy network to be low at terminal states. DONE is emitted only when E < threshold and stays low for 2 steps (like Hopfield attractor).
+* **Checksum invariant:** For every problem, require model to also maintain mod-97 hash of (inputs, ops, intermediate). Sum mod 9 is invariant under add/sub reorder? No, but you can teach it: `hash_next = (hash_prev * p + op_code + digit) % 97`. If common-mode error picks wrong op, hash violates. This is cheap, not answer-leaking, and gives you pre-selection error correction. Your R9c showed 88.83% agreed-wrong operations - replication can't fix it. An invariant can.
+
+**Cost:** Controller LSTM 1.5M + energy head 0.5M + checksum head 0.2M = 2.2M.
+
+**Causal test:** Zero/shuffle checksum should hurt >10 points if it is causally used. Halt-first decoding gain (23% -> 44%) should be internalized: autonomous halt accuracy should approach halt-first.
+
+### Bet 4: Immunology + Economics — Negative Selection Market for Common-Mode Errors
+
+**Inspiration:** Immune system doesn't fix wrong cells by copying them 3 times. It kills self-reactive cells in thymus (negative selection). Markets don't fix bubbles by replication, they fix by short sellers.
+
+**Mechanism for your biggest finding: 7.6 Most current errors are common-mode.**
+
+* Train two independent compiler views: left-to-right and right-to-left (or with different BPE dropout). This is stereoscopic vision - same scene, different retinal projection. Lexical cue errors will disagree.
+* **Market:** Each view bids operation with confidence. Executor only runs if both agree OR if disagreement triggers a third "uncertainty head" that requests re-read with source-dropped packet (your CPR failed because packet wasn't causally read; here disagreement forces re-read).
+* Negative selection data: generate 100k wrong programs for same problems (easy), train discriminator to kill them *before* execution. This discriminator is tiny (2M params) and runs on codon, not on final answer.
+
+This directly attacks your 96 wrong-first-op failures. Wrong first op is semantic selection error, not execution error.
+
+**Cost:** Siamese view = same weights, just 2 forwards. Discriminator 2M.
+
+**Falsifier:** On order-twins (a+b vs b+a) where lexical cue fails, dual-view agreement should be <40% for wrong op vs >80% for correct.
+
+### What I would actually run first under 150M
+
+Total budget used: ~14.9M, leaving you at ~140M.
+
+**Phase 0 (CPU, 1 day):** Freeze the 152 VAMT programs. Convert them to pointer-codon form. Measure compilation 0/6 baseline. If pointer-codon + VQ abacus gets >3/6 on same 6 probes with zero GPU training, you have signal.
+
+**Phase 1 (GPU, 1xH100, 10k steps):** DRS v4 but with abacus + dual-rail + reservation station. Same 439k rows. Gate: final exact 275/500 -> must beat 400/500 AND width-4 value OOD 34/100 -> must beat 60/100. If not, abort.
+
+**Phase 2 (GPU, 5k steps RL):** Freeze executor, train basal ganglia controller with REINFORCE on halt + checksum. Gate: autonomous rollout on 256 SSC problems must beat 16.4% typed v1 with DONE preserved >70%. Your halt-first is 23.8% without new weights - this must beat 30% with weights.
+
+If Phase 1 and 2 pass, you have satisfied: compilation (pointer codon), state creation (abacus VQ), transition (reservation station), reuse (dual-rail), serialization (energy halt) - all model-owned, all causally tested with source deletion and shuffled swaps.
+
+Stop trying to make a single decoder learn to be a compiler, ALU, scheduler, and halting oracle in the same residual stream with the same loss. Biology, CPUs, and economies never did that. They split the bus."
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 02: `FRONTIER_AGENT_PLANS_ANALYSIS.md`
+
+Original source path: `FRONTIER_AGENT_PLANS_ANALYSIS.md`
+Original source size: 18,803 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# Frontier Agent Plans: Shohin Evidence Review
+
+**Status:** external-plan analysis complete; no neural run authorized by this
+review alone.
+
+**Reviewed source:** `FRONTIER_AGENT_PLANS.md`
+
+**Original download SHA-256:**
+`3d82ece081a899750c64a5a63df50e7b0405b2621f7cfd98b3e84c8ab4d942fc`
+
+**Workspace copy SHA-256:**
+`2d18b364cbad8999eaac8c30b373d4aebd4d858b8608fb33e6868c433f7124d3`
+
+The workspace copy is content-identical to the download with one normalized
+terminal newline added. The download contains 343 lines, 7,070 words, and
+55,141 bytes. It contains four labeled submissions but only three distinct
+plans: the Meta AI and ChatGPT Deep Research sections are identical except
+that the ChatGPT copy omits Meta's final two sentences.
+
+## 1. Executive Verdict
+
+The plans are valuable as a design-space survey, but none is ready to launch
+as written.
+
+All three distinct plans correctly identify Shohin's central failure:
+
+> The base has useful local execution and a real late residual signal, but it
+> does not reliably compile language into operations, update and consume state,
+> or halt autonomously.
+
+Their strongest shared recommendation is also sound: stop forcing compilation,
+execution, state transport, correction, and halting to share one undifferentiated
+language-model loss and residual stream. Separate those interfaces physically
+and educationally, then test their integration.
+
+The plans become weaker when they move from diagnosis to mechanism. Several
+components are analogies rather than update laws; several reintroduce a host
+executor or fixed scheduler; and most bundles change too many variables at
+once. Predictive coding, Hopfield attraction, vector quantization, an SSM,
+LoRA, a reservation station, RL, and a checksum do not become a reasoner merely
+by being assembled together.
+
+The best actionable synthesis is therefore not any complete submitted stack.
+It is a staged **compiler-to-state-machine post-training program**:
+
+1. Train and independently gate a pointer-grounded natural-language compiler.
+2. Train a source-deleted recurrent executor with an explicit state interface.
+3. Train state consumption and halting as separate objectives and parameter
+   islands.
+4. Integrate only components that pass their own fresh-transfer and causal
+   gates.
+5. Compare every architectural addition with a favorable equal-resource
+   recurrent control.
+
+This direction is compatible with the immutable 300k base and the less-than
+150M total parameter ceiling. It is a post-training protocol first, not an
+immediate claim of a new computational primitive.
+
+## 2. What The Plans Got Right
+
+### 2.1 They used the correct empirical diagnosis
+
+The plans are grounded in the most important Shohin results:
+
+- DRS first-state accuracy is 497/500 while complete final accuracy is only
+  275/500.
+- Source-scheduled execution reaches 115/256 while autonomous whole generation
+  reaches 9/256.
+- Oracle-compiled frozen DRS transitions are 28/34, while fresh natural-language
+  compilation is 0/6.
+- A late digit residual is causally strong, but the wide digit motor changes
+  autonomous accuracy only from 61/250 to 63/250.
+- Typed controller v1 learns DONE but not reliable arithmetic; mixing formats in
+  v2 destroys DONE.
+- R9c shows that 88.83% of wrong operation decisions are agreed-wrong
+  common-mode errors.
+
+That evidence does support decomposition into compiler, executor, state,
+consumer, and halt interfaces.
+
+### 2.2 They recognized that final pretraining is a substrate, not a reasoner
+
+None of the plans argues that another undifferentiated raw-token extension is
+the main answer. That agrees with the 120k, 168.75k, and 300k plateau. The
+important next educational phase is controlled post-training on the immutable
+300k checkpoint.
+
+### 2.3 They focused on organization rather than parameter count alone
+
+Shohin has 24,918,335 parameters of nominal room below the strict 150M ceiling.
+The proposals use that room for interfaces, state, and control rather than a
+generic width increase. That is directionally appropriate, provided the added
+mechanism earns its cost against a parameter-matched dense or recurrent arm.
+
+## 3. Source-By-Source Review
+
+### 3.1 Gemini Deep Research
+
+**Proposed stack:** a Global Workspace router, 16 memory tokens, a Modern
+Hopfield layer, adaptive recurrence, partial attention-to-SSM conversion, a
+programmatic finite-state controller, and denoising recursion training.
+
+**Useful elements:**
+
+- Deep-start halting initialization is a concrete, testable ACT control.
+- Memory tokens plus tied recurrence define a clear state carrier.
+- Denoising self-generated state is a legitimate robustness objective.
+- The proposal explicitly budgets components under the parameter ceiling.
+
+**Scientific problems:**
+
+1. **It is an architecture bundle, not one hypothesis.** A positive result
+   could not be attributed to workspace routing, recurrence, denoising,
+   memory, the SSM conversion, or deterministic gating.
+2. **The FSA violates the native boundary as written.** It intercepts invalid
+   tokens, prunes them, and programmatically forces transitions and completion.
+   That is an external scheduler/repair controller, so it can be a ceiling or
+   safety wrapper but not evidence that Shohin owns control and halt.
+3. **Hopfield attraction does not define mathematical validity.** The proposed
+   update is attention-like retrieval. Without a learned and independently
+   verified codebook, the nearest attractor may simply be the nearest common
+   mistake. Shohin's dominant errors are semantic and common-mode, not merely
+   small metric perturbations.
+4. **The SSM conversion addresses efficiency more directly than reasoning.**
+   Replacing ten pretrained attention layers is a high-risk representation
+   surgery, and no distinguishing prediction connects constant-size fading
+   memory to correct operation selection.
+5. **The parameter ledger is internally inconsistent.** `256 * 576 * 32` is
+   4,718,592, not 4,608,000. `5 * 576 * 576` is 1,658,880, not 1,536,000. Even
+   using the proposal's own row values gives a modified footprint of
+   120,749,376, not 120,669,376, before accounting for the replacement SSM
+   parameters. The budget must be rebuilt from actual modules.
+6. **Several numerical claims are not supported inside the supplied file.**
+   The stated shallow-halt frequency, 34% compute saving, 2.3x decode speedup,
+   and sub-0.5% priming cost are not tied to reproducible Shohin evidence here.
+
+**Verdict:** `NO-GO_AS_BUNDLED`. Retain deep-start ACT and denoising as ordinary
+matched controls. Do not replace attention layers or install the host FSA as a
+reasoning mechanism.
+
+### 3.2 Grok
+
+**Proposed stack:** a predictive-coding sidecar, a learned dynamical controller,
+modular primitive adapters, bistable or cellular state, and a compact microcode
+interface.
+
+**Useful elements:**
+
+- It correctly treats the post-DRS residual as a possible actuator aperture,
+  not proof of a complete workspace.
+- It emphasizes source-deleted rollout and counterfactual state swaps.
+- It proposes physically separated modules and losses, directly addressing
+  the typed-v1/v2 gradient-conflict result.
+- It keeps the host boundary explicit in its proposed tests.
+
+**Scientific problems:**
+
+1. **Prediction error is not automatically a controller.** A sidecar trained
+   to predict the next state can collapse to an auxiliary recurrent adapter.
+   It must show that its state is both causally necessary and more useful than
+   an equal-resource next-state model without the predictive-coding framing.
+2. **The compiler remains underspecified.** A setpoint or latent goal does not
+   explain how unseen paraphrases become exact ordered operations and operand
+   bindings.
+3. **The modular proposal risks importing the operation ontology.** If the
+   router is handed named add/multiply modules or a gold schedule, the hard
+   part has moved into supervision rather than been solved.
+4. **Bistability protects a selected state but cannot correct a wrong semantic
+   selection.** This is the same distinction exposed by the common-mode error
+   result and the noise-stable-action no-go.
+5. **PCMW still combines several hypotheses.** Predictive coding, modular
+   routing, bistability, recurrence, and learned halt need individual ablations
+   before a combined run has scientific meaning.
+
+**Verdict:** `PROMISING_DECOMPOSITION`, but not a frozen experiment. The most
+valuable extract is phase-separated parameter islands plus a source-deleted
+state interface. Predictive error should enter as one ablation, not as the
+unquestioned foundation.
+
+### 3.3 Meta AI and ChatGPT Deep Research
+
+These are one distinct submission, not two independent votes.
+
+**Proposed stack:** temporal compiler/executor LoRAs, a three-field pointer
+codon, a quantized abacus, read/write buses, a reservation station, an
+RL-trained halt controller, a trajectory checksum, dual compiler views, and a
+negative-program discriminator.
+
+#### Pointer codon and temporal differentiation
+
+This is the strongest component. An explicit
+`[operation, source-A pointer, source-B pointer]` interface directly targets
+the observed binding and compilation failures. Separating compiler and
+executor parameters and stopping gradients at the interface could prevent the
+response-mode interference seen in typed v2.
+
+The biological error-correction argument is not valid as stated. The three
+fields are different semantic fields, not three redundant transmissions of the
+same symbol, and mapping `add`, `plus`, and `sum` to one embedding is canonical
+classification rather than an error-correcting code. The mechanism can still
+be useful without that analogy.
+
+The proposed LoRA count is not auditable until the exact target matrices,
+ranks, biases, and shared parameters are listed. The phase notation also must
+state whether compiler and executor are separate forward calls, depth phases
+inside one call, or training phases.
+
+#### Quantized abacus and reservation station
+
+Explicit categorical state is testable, but categorical representation alone
+has already proved insufficient in packet/tape controls. The required new
+evidence is an autonomous source-deleted transition law that consumes its own
+previous state.
+
+The sentence "carry becomes trivial" hides the central problem. If overflow
+and carry propagation are fixed rules, the architecture contains an arithmetic
+executor. If they are learned, then carry is not trivial and must pass the same
+width/value/order transfer gates as any other updater. Likewise, a reservation
+station that decides readiness and execution order is a scheduler whose state,
+logic, and supervision must be counted.
+
+Read/write parameter separation is a plausible treatment for destructive
+interference. It should be compared against an equally large ordinary recurrent
+adapter with the same state bits and sequential depth.
+
+#### RL halt and checksum
+
+Training a separate halt policy with a different objective is worth testing.
+The typed-controller evidence makes loss separation more plausible than merely
+adding another DONE token.
+
+The checksum does not detect the proposed common-mode semantic error. A rolling
+hash of the chosen operations and intermediate digits can be perfectly
+consistent with a completely wrong operation sequence. It only detects
+corruption relative to that wrong trajectory unless there is an independent,
+source-derived expected invariant. If an external process supplies that
+expected invariant, its information and computation must be counted.
+
+"Distance to closed form" is also undefined. If computing it requires knowing
+the correct terminal state, it is an answer oracle. A valid halt energy must be
+computed only from model-owned state and must be tested against premature and
+late halt twins.
+
+#### Dual views and negative selection
+
+Two tokenizations or reading directions are not guaranteed to be independently
+grounded; they may reproduce the same lexical error. This proposal is closely
+related to the existing pre-emission dual-view commit lane and therefore cannot
+be treated as unexplored merely because it uses immunology or market language.
+
+A wrong-program discriminator is potentially useful for compiler post-training,
+but it must be trained on source-preserving hard minimal pairs. Randomly wrong
+programs are usually easy negatives and may teach formatting artifacts rather
+than semantic rejection. The discriminator may reject or abstain; it may not
+search for and install a corrected program without that repair work being
+counted.
+
+#### Proposed phase gates
+
+The numerical gates are directionally useful, but Phase 0 is ill-defined: an
+untrained pointer-codon/VQ architecture cannot be expected to improve a 0/6
+compiler "with zero GPU training." CPU training would still be training and
+must be specified. Phase 1 changes abacus state, bus separation, scheduling,
+and training together. Phase 2 changes optimizer, controller, halt, checksum,
+and reward together. Both need factorial ablations or a narrower first run.
+
+**Verdict:** `EXTRACT_AND_REWRITE`. Preserve the pointer-grounded compiler,
+parameter/loss separation, and explicit halt policy. Reject the biological
+coding claim, fixed carry shortcut, unchecked reservation station, and checksum
+claim as written.
+
+## 4. Consensus Does Not Equal Evidence
+
+The submissions converge on four themes:
+
+| Theme | Evidence status in Shohin |
+|---|---|
+| Separate compiler from executor | Strongly motivated by compiler 0/6 and typed-v2 interference |
+| Use explicit mutable state | Necessary but already known insufficient by itself |
+| Add recurrent or adaptive compute | Ordinary strong control; prior recurrence alone did not win |
+| Train halt separately | Strongly motivated by halt-first and typed-controller results |
+
+This consensus is useful for prioritization. It is not a mechanism proof. The
+plans were given the same ledger and therefore inherit the same diagnosis. The
+Meta and ChatGPT sections are duplicates, further reducing the apparent number
+of independent endorsements.
+
+## 5. Highest-Value Components
+
+### Tier A: worth formal preregistration
+
+1. **Pointer-grounded compiler.** Train exact operation and source-span
+   binding on frozen natural-language families. Score exact AST/program
+   equality on unseen paraphrases, role names, values, operation orders, and
+   distractors. Compare with a parameter-matched ordinary sequence classifier.
+2. **Phase-separated compiler/executor parameters.** Use separate adapters or
+   modules and an explicit stop-gradient interface. Compare with one jointly
+   trained adapter using the same total parameters, examples, updates, and
+   inference depth.
+3. **Source-deleted recurrent state executor.** After compilation, remove the
+   natural-language source and require the model to update, retain, and consume
+   its own state. Compare categorical, continuous, and favorable recurrent
+   controls under equal state bits.
+4. **Independent halt policy.** Train halt/continue on prefix twins where the
+   same local answer token appears in nonterminal and terminal contexts. Test
+   premature halt, late halt, output recoding, and state swaps.
+
+### Tier B: useful ablations, not foundations
+
+- predictive-error auxiliary loss;
+- denoising of self-generated state;
+- VQ state versus continuous state;
+- deep-start ACT bias;
+- read/write parameter separation;
+- hard-negative program discrimination.
+
+### Tier C: reject or retain only as ceilings
+
+- host FSA token pruning or forced completion;
+- fixed carry propagation or host readiness scheduling;
+- an unchecked rolling checksum as semantic correction;
+- wholesale attention-to-SSM replacement as a reasoning intervention;
+- a full multi-component architecture launch without component gates;
+- claims that Hopfield attraction, quantization, or bistability alone creates
+  valid mathematical state.
+
+## 6. Recommended First Program
+
+The first experiment should test education and interface separation before
+installing a large cognitive architecture.
+
+### Stage A: 300k compiler post-training
+
+Freeze the 300k checkpoint and train only a small compiler island. Its output
+is a typed operation with source-span pointers and an explicit terminal marker.
+No arithmetic target or answer token is included in this stage.
+
+Primary gate:
+
+- exact full program on a frozen, family-balanced board;
+- per-field operation and pointer accuracy;
+- order-twin and renamed-role accuracy;
+- zero source/target leakage;
+- no score based only on parseability.
+
+Controls:
+
+- equal-parameter plain classifier;
+- text-token program SFT without pointers;
+- shuffled-pointer control;
+- source-only lexical-family control.
+
+### Stage B: isolated state transition post-training
+
+Train an executor island from exact compiled programs and explicit previous
+state. Remove the natural-language source after state creation. The model must
+produce the next internal state without host arithmetic.
+
+Primary gate:
+
+- width/value/order transfer;
+- complete multi-step trajectory exactness, not only first state;
+- donor-state following;
+- zero/shuffled/complement state degradation;
+- improvement over a favorable equal-resource tied recurrent control.
+
+### Stage C: state consumption and halt
+
+Freeze the compiler and executor before generating this board. Train a separate
+consumer/halt island on terminal/nonterminal twins and state reuse. The same
+answer-like local configuration must sometimes continue and sometimes halt.
+
+Primary gate:
+
+- exact halt location;
+- no cap-hit or post-answer replay;
+- source-deleted reuse;
+- output-recoding stability;
+- causal dependence on the committed state.
+
+### Stage D: autonomous integration
+
+Only after A-C pass individually, compose the islands and allow limited joint
+calibration. Evaluate full natural-language-to-answer rollout with no oracle
+program, schedule, arithmetic, repair, or result selection. Report both the
+product of component accuracies and observed end-to-end exactness; a large gap
+is itself an integration failure.
+
+## 7. Decision
+
+The external plans materially improve our hypothesis inventory, especially by
+reinforcing staged compiler/executor/halt separation. They do not overturn the
+existing Shohin diagnosis and do not justify an immediate H100 architecture
+run.
+
+The research decision is:
+
+> **ADMIT the pointer-grounded, phase-separated post-training program for
+> formal preregistration. Keep predictive coding, VQ state, denoising, ACT, and
+> read/write buses as individually matched ablations. Reject the submitted
+> integrated stacks as scientifically underidentified.**
+
+No claim in this review establishes native reasoning, novelty, or expected
+benchmark gain. It identifies the smallest experiments that can convert the
+plans from analogies into causal evidence.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 03: `R12_ACTIVE_VERIFIER_QUERY_NO_GO.md`
 
 Original source path: `R12_ACTIVE_VERIFIER_QUERY_NO_GO.md`
 Original source size: 3,556 bytes
@@ -1248,7 +2171,7 @@ exponential separation from matched active-automata and synthesis controls.
 
 ---
 
-## Embedded source 02: `R12_ACTIVE_WITNESS_ALLOCATION_NO_GO.md`
+## Embedded source 04: `R12_ACTIVE_WITNESS_ALLOCATION_NO_GO.md`
 
 Original source path: `R12_ACTIVE_WITNESS_ALLOCATION_NO_GO.md`
 Original source size: 3,024 bytes
@@ -1333,7 +2256,7 @@ and a complete information ledger.
 
 ---
 
-## Embedded source 03: `R12_ADDRESSED_CATEGORICAL_WORKSPACE_PREREG.md`
+## Embedded source 05: `R12_ADDRESSED_CATEGORICAL_WORKSPACE_PREREG.md`
 
 Original source path: `R12_ADDRESSED_CATEGORICAL_WORKSPACE_PREREG.md`
 Original source size: 38,019 bytes
@@ -1992,7 +2915,7 @@ learned memory, not reasoning.
 
 ---
 
-## Embedded source 04: `R12_AXIOMATIC_PRESENTATION_NO_GO.md`
+## Embedded source 06: `R12_AXIOMATIC_PRESENTATION_NO_GO.md`
 
 Original source path: `R12_AXIOMATIC_PRESENTATION_NO_GO.md`
 Original source size: 7,766 bytes
@@ -2195,7 +3118,7 @@ guarantee.
 
 ---
 
-## Embedded source 05: `R12_CANONICAL_RESIDUAL_NAMING_CONTROL.md`
+## Embedded source 07: `R12_CANONICAL_RESIDUAL_NAMING_CONTROL.md`
 
 Original source path: `R12_CANONICAL_RESIDUAL_NAMING_CONTROL.md`
 Original source size: 4,282 bytes
@@ -2304,7 +3227,7 @@ set.
 
 ---
 
-## Embedded source 06: `R12_CAUSAL_ADDRESS_REVELATION.md`
+## Embedded source 08: `R12_CAUSAL_ADDRESS_REVELATION.md`
 
 Original source path: `R12_CAUSAL_ADDRESS_REVELATION.md`
 Original source size: 8,839 bytes
@@ -2552,7 +3475,7 @@ the cell-probe model.
 
 ---
 
-## Embedded source 07: `R12_CAUSAL_CARRY_MOTOR_PREREG.md`
+## Embedded source 09: `R12_CAUSAL_CARRY_MOTOR_PREREG.md`
 
 Original source path: `R12_CAUSAL_CARRY_MOTOR_PREREG.md`
 Original source size: 36,717 bytes
@@ -3165,7 +4088,7 @@ loss or development score.
 
 ---
 
-## Embedded source 08: `R12_CAUSAL_CARRY_MOTOR_RECOVERY_PREREG.md`
+## Embedded source 10: `R12_CAUSAL_CARRY_MOTOR_RECOVERY_PREREG.md`
 
 Original source path: `R12_CAUSAL_CARRY_MOTOR_RECOVERY_PREREG.md`
 Original source size: 16,438 bytes
@@ -3487,7 +4410,7 @@ NO-GO to eligible.
 
 ---
 
-## Embedded source 09: `R12_CAUSAL_RESULT_DIGIT_MOTOR_PREREG.md`
+## Embedded source 11: `R12_CAUSAL_RESULT_DIGIT_MOTOR_PREREG.md`
 
 Original source path: `R12_CAUSAL_RESULT_DIGIT_MOTOR_PREREG.md`
 Original source size: 3,264 bytes
@@ -3568,7 +4491,7 @@ Neither motor may be advertised as a new computational class.
 
 ---
 
-## Embedded source 10: `R12_CAUSAL_RESULT_DIGIT_MOTOR_RESULT.md`
+## Embedded source 12: `R12_CAUSAL_RESULT_DIGIT_MOTOR_RESULT.md`
 
 Original source path: `R12_CAUSAL_RESULT_DIGIT_MOTOR_RESULT.md`
 Original source size: 4,947 bytes
@@ -3673,7 +4596,7 @@ missing reasoning mechanism.
 
 ---
 
-## Embedded source 11: `R12_CDRL_NEURAL_OPTIMIZATION_RESULT.md`
+## Embedded source 13: `R12_CDRL_NEURAL_OPTIMIZATION_RESULT.md`
 
 Original source path: `R12_CDRL_NEURAL_OPTIMIZATION_RESULT.md`
 Original source size: 1,830 bytes
@@ -3733,7 +4656,7 @@ mixture `core∪full` arm with matched label budget).
 
 ---
 
-## Embedded source 12: `R12_CERTIFIED_LANGUAGE_BRIDGE_BOUNDARY.md`
+## Embedded source 14: `R12_CERTIFIED_LANGUAGE_BRIDGE_BOUNDARY.md`
 
 Original source path: `R12_CERTIFIED_LANGUAGE_BRIDGE_BOUNDARY.md`
 Original source size: 4,230 bytes
@@ -3845,7 +4768,7 @@ language claim.
 
 ---
 
-## Embedded source 13: `R12_CLOSED_DELIBERATION_NO_GO.md`
+## Embedded source 15: `R12_CLOSED_DELIBERATION_NO_GO.md`
 
 Original source path: `R12_CLOSED_DELIBERATION_NO_GO.md`
 Original source size: 4,784 bytes
@@ -3972,7 +4895,7 @@ Primary references:
 
 ---
 
-## Embedded source 14: `R12_CLOSED_LATE_QUERY_NO_GO.md`
+## Embedded source 16: `R12_CLOSED_LATE_QUERY_NO_GO.md`
 
 Original source path: `R12_CLOSED_LATE_QUERY_NO_GO.md`
 Original source size: 5,071 bytes
@@ -4122,7 +5045,7 @@ arbitrary adversarial late queries is rejected before implementation.
 
 ---
 
-## Embedded source 15: `R12_COHERENT_ACTION_THEORY.md`
+## Embedded source 17: `R12_COHERENT_ACTION_THEORY.md`
 
 Original source path: `R12_COHERENT_ACTION_THEORY.md`
 Original source size: 7,542 bytes
@@ -4347,7 +5270,7 @@ substitution internal reasoning.
 
 ---
 
-## Embedded source 16: `R12_COMMUTATOR_FACTORIZATION_NO_GO.md`
+## Embedded source 18: `R12_COMMUTATOR_FACTORIZATION_NO_GO.md`
 
 Original source path: `R12_COMMUTATOR_FACTORIZATION_NO_GO.md`
 Original source size: 4,284 bytes
@@ -4496,7 +5419,7 @@ decomposition algorithms. Pairwise commutators do not.
 
 ---
 
-## Embedded source 17: `R12_COMPILER_PRIOR_NO_GO.md`
+## Embedded source 19: `R12_COMPILER_PRIOR_NO_GO.md`
 
 Original source path: `R12_COMPILER_PRIOR_NO_GO.md`
 Original source size: 3,140 bytes
@@ -4583,7 +5506,7 @@ resources.
 
 ---
 
-## Embedded source 18: `R12_CONFLICT_DRIVEN_RESIDUAL_LOCALIZATION.md`
+## Embedded source 20: `R12_CONFLICT_DRIVEN_RESIDUAL_LOCALIZATION.md`
 
 Original source path: `R12_CONFLICT_DRIVEN_RESIDUAL_LOCALIZATION.md`
 Original source size: 14,679 bytes
@@ -4897,7 +5820,7 @@ sample-allocation axis that the residual-ontology chain has not yet tested.
 
 ---
 
-## Embedded source 19: `R12_CONTRACTIVE_PACKET_RECURRENCE_PREREG.md`
+## Embedded source 21: `R12_CONTRACTIVE_PACKET_RECURRENCE_PREREG.md`
 
 Original source path: `R12_CONTRACTIVE_PACKET_RECURRENCE_PREREG.md`
 Original source size: 16,318 bytes
@@ -5320,7 +6243,7 @@ future neural packet redundancy is worth a bounded canary.
 
 ---
 
-## Embedded source 20: `R12_COUNTERFACTUAL_CONJUGATE_COMMIT_HYPOTHESIS.md`
+## Embedded source 22: `R12_COUNTERFACTUAL_CONJUGATE_COMMIT_HYPOTHESIS.md`
 
 Original source path: `R12_COUNTERFACTUAL_CONJUGATE_COMMIT_HYPOTHESIS.md`
 Original source size: 6,434 bytes
@@ -5492,7 +6415,7 @@ cursor/tape/control state instead of enlarging the packet speculatively.
 
 ---
 
-## Embedded source 21: `R12_COUNTERFACTUAL_CURSOR_ACTION_CPU_PREREG.md`
+## Embedded source 23: `R12_COUNTERFACTUAL_CURSOR_ACTION_CPU_PREREG.md`
 
 Original source path: `R12_COUNTERFACTUAL_CURSOR_ACTION_CPU_PREREG.md`
 Original source size: 16,709 bytes
@@ -5822,7 +6745,7 @@ inadmissible.
 
 ---
 
-## Embedded source 22: `R12_COUNTERFACTUAL_CURSOR_ACTION_NEURAL_RESULT.md`
+## Embedded source 24: `R12_COUNTERFACTUAL_CURSOR_ACTION_NEURAL_RESULT.md`
 
 Original source path: `R12_COUNTERFACTUAL_CURSOR_ACTION_NEURAL_RESULT.md`
 Original source size: 6,640 bytes
@@ -5949,7 +6872,7 @@ training-protocol track is still viable.
 
 ---
 
-## Embedded source 23: `R12_COUNTERFACTUAL_CURSOR_ACTION_THEORY.md`
+## Embedded source 25: `R12_COUNTERFACTUAL_CURSOR_ACTION_THEORY.md`
 
 Original source path: `R12_COUNTERFACTUAL_CURSOR_ACTION_THEORY.md`
 Original source size: 13,797 bytes
@@ -6249,7 +7172,7 @@ reasoning.
 
 ---
 
-## Embedded source 24: `R12_CROSS_DOMAIN_FAULT_CHANNEL_NO_GO.md`
+## Embedded source 26: `R12_CROSS_DOMAIN_FAULT_CHANNEL_NO_GO.md`
 
 Original source path: `R12_CROSS_DOMAIN_FAULT_CHANNEL_NO_GO.md`
 Original source size: 9,370 bytes
@@ -6508,7 +7431,7 @@ Novelty/reasoning claim:     NO-GO
 
 ---
 
-## Embedded source 25: `R12_CROSS_DOMAIN_FAULT_CHANNEL_REVIEW_RESULT.md`
+## Embedded source 27: `R12_CROSS_DOMAIN_FAULT_CHANNEL_REVIEW_RESULT.md`
 
 Original source path: `R12_CROSS_DOMAIN_FAULT_CHANNEL_REVIEW_RESULT.md`
 Original source size: 3,854 bytes
@@ -6596,7 +7519,7 @@ independent review.
 
 ---
 
-## Embedded source 26: `R12_CURSOR_READOUT_ACTUATION_RESULT.md`
+## Embedded source 28: `R12_CURSOR_READOUT_ACTUATION_RESULT.md`
 
 Original source path: `R12_CURSOR_READOUT_ACTUATION_RESULT.md`
 Original source size: 4,438 bytes
@@ -6685,7 +7608,7 @@ complete, hash-verified, and mirrored before that post-result cleanup error.
 
 ---
 
-## Embedded source 27: `R12_CURSOR_TOKEN_TAPE_RESULT.md`
+## Embedded source 29: `R12_CURSOR_TOKEN_TAPE_RESULT.md`
 
 Original source path: `R12_CURSOR_TOKEN_TAPE_RESULT.md`
 Original source size: 6,533 bytes
@@ -6811,7 +7734,7 @@ finite synthetic falsifier with held-out permutations and fresh renderers.
 
 ---
 
-## Embedded source 28: `R12_DRS_CAUSAL_CYCLE_RESULT.md`
+## Embedded source 30: `R12_DRS_CAUSAL_CYCLE_RESULT.md`
 
 Original source path: `R12_DRS_CAUSAL_CYCLE_RESULT.md`
 Original source size: 3,914 bytes
@@ -6901,7 +7824,7 @@ reasoning claim.
 
 ---
 
-## Embedded source 29: `R12_DRS_WORKSPACE_PROBE_POST_RESULT.md`
+## Embedded source 31: `R12_DRS_WORKSPACE_PROBE_POST_RESULT.md`
 
 Original source path: `R12_DRS_WORKSPACE_PROBE_POST_RESULT.md`
 Original source size: 1,507 bytes
@@ -6950,7 +7873,7 @@ digit. The closed-loop failure is therefore not "no workspace exists" but
 
 ---
 
-## Embedded source 30: `R12_DYNAMIC_FRONTIER_NO_GO.md`
+## Embedded source 32: `R12_DYNAMIC_FRONTIER_NO_GO.md`
 
 Original source path: `R12_DYNAMIC_FRONTIER_NO_GO.md`
 Original source size: 3,344 bytes
@@ -7046,7 +7969,7 @@ survives runtime noise, and beats a matched structure-aware recurrent model.
 
 ---
 
-## Embedded source 31: `R12_FACTORIZED_COUNTERFACTUAL_RESIDUAL_CYCLE_PREREG.md`
+## Embedded source 33: `R12_FACTORIZED_COUNTERFACTUAL_RESIDUAL_CYCLE_PREREG.md`
 
 Original source path: `R12_FACTORIZED_COUNTERFACTUAL_RESIDUAL_CYCLE_PREREG.md`
 Original source size: 26,652 bytes
@@ -7624,7 +8547,7 @@ novelty claim.
 
 ---
 
-## Embedded source 32: `R12_FINITE_STATE_VS_MOTOR_NO_GO.md`
+## Embedded source 34: `R12_FINITE_STATE_VS_MOTOR_NO_GO.md`
 
 Original source path: `R12_FINITE_STATE_VS_MOTOR_NO_GO.md`
 Original source size: 5,207 bytes
@@ -7768,7 +8691,7 @@ CPU scorer correctly separates the declared complete-state and motor controls.
 
 ---
 
-## Embedded source 33: `R12_FORKED_STATE_TRANSPORT_PREREG.md`
+## Embedded source 35: `R12_FORKED_STATE_TRANSPORT_PREREG.md`
 
 Original source path: `R12_FORKED_STATE_TRANSPORT_PREREG.md`
 Original source size: 17,073 bytes
@@ -8173,7 +9096,7 @@ certificate map under `R12_CERTIFIED_LANGUAGE_BRIDGE_BOUNDARY.md`.
 
 ---
 
-## Embedded source 34: `R12_FORK_CORE_THEORY.md`
+## Embedded source 36: `R12_FORK_CORE_THEORY.md`
 
 Original source path: `R12_FORK_CORE_THEORY.md`
 Original source size: 8,798 bytes
@@ -8419,7 +9342,7 @@ a uniform learned realization with a measured advantage over AIS/PSR controls.
 
 ---
 
-## Embedded source 35: `R12_FORMAT_CONJUGACY_AND_SSC.md`
+## Embedded source 37: `R12_FORMAT_CONJUGACY_AND_SSC.md`
 
 Original source path: `R12_FORMAT_CONJUGACY_AND_SSC.md`
 Original source size: 8,254 bytes
@@ -8603,7 +9526,7 @@ latent reasoning.
 
 ---
 
-## Embedded source 36: `R12_GATE_VACUITY_AND_WGRQ_PREREG.md`
+## Embedded source 38: `R12_GATE_VACUITY_AND_WGRQ_PREREG.md`
 
 Original source path: `R12_GATE_VACUITY_AND_WGRQ_PREREG.md`
 Original source size: 8,033 bytes
@@ -8784,7 +9707,7 @@ that bounded falsifier. A pass would not restore any rejected novelty claim.
 
 ---
 
-## Embedded source 37: `R12_HIDDEN_COORDINATE_IDENTIFIABILITY_NO_GO.md`
+## Embedded source 39: `R12_HIDDEN_COORDINATE_IDENTIFIABILITY_NO_GO.md`
 
 Original source path: `R12_HIDDEN_COORDINATE_IDENTIFIABILITY_NO_GO.md`
 Original source size: 4,745 bytes
@@ -8913,7 +9836,7 @@ known identification effect under assumptions that already expose the axes.
 
 ---
 
-## Embedded source 38: `R12_HOLONOMY_STATE_NO_GO.md`
+## Embedded source 40: `R12_HOLONOMY_STATE_NO_GO.md`
 
 Original source path: `R12_HOLONOMY_STATE_NO_GO.md`
 Original source size: 4,564 bytes
@@ -9051,7 +9974,7 @@ PSR, synchronization, and ECC controls.
 
 ---
 
-## Embedded source 39: `R12_JACOBIAN_WORKSPACE_LONGITUDINAL_RESULT.md`
+## Embedded source 41: `R12_JACOBIAN_WORKSPACE_LONGITUDINAL_RESULT.md`
 
 Original source path: `R12_JACOBIAN_WORKSPACE_LONGITUDINAL_RESULT.md`
 Original source size: 5,179 bytes
@@ -9169,7 +10092,7 @@ longitudinal result supplies Shohin's answer at 125.1M parameters through raw
 
 ---
 
-## Embedded source 40: `R12_LAST_RESET_WITNESS_ATTENTION_PREREG.md`
+## Embedded source 42: `R12_LAST_RESET_WITNESS_ATTENTION_PREREG.md`
 
 Original source path: `R12_LAST_RESET_WITNESS_ATTENTION_PREREG.md`
 Original source size: 16,216 bytes
@@ -9185,7 +10108,7 @@ contract was frozen. The mechanics and negative learning outcome are retained
 only as an exploratory audit. They must never be represented as preregistered,
 canonical, prospectively frozen, promotion-grade, or independent evidence.
 
-The legacy filename ends in `_PREREG.md`; that filename is not evidence of
+The legacy filename carries the `_PREREG` suffix; that filename is not evidence of
 preregistration and confers no timestamp, immutability, or prospective status.
 This calibrated contract authorizes only deterministic local CPU replay and
 hostile validation. It authorizes no H100 job, Shohin checkpoint mutation,
@@ -9613,7 +10536,7 @@ No H100 launch is part of this protocol.
 
 ---
 
-## Embedded source 41: `R12_LOCAL_REVERSIBLE_RULE_CONTROL.md`
+## Embedded source 43: `R12_LOCAL_REVERSIBLE_RULE_CONTROL.md`
 
 Original source path: `R12_LOCAL_REVERSIBLE_RULE_CONTROL.md`
 Original source size: 3,846 bytes
@@ -9722,7 +10645,7 @@ missing steps, no Shohin fit or H100 job is authorized.
 
 ---
 
-## Embedded source 42: `R12_MATROID_CLOSURE_TARGET.md`
+## Embedded source 44: `R12_MATROID_CLOSURE_TARGET.md`
 
 Original source path: `R12_MATROID_CLOSURE_TARGET.md`
 Original source size: 6,741 bytes
@@ -9929,7 +10852,7 @@ runtime noise correction without supplied coordinates or oracle access.
 
 ---
 
-## Embedded source 43: `R12_MDL_IDENTIFIABILITY_NO_GO.md`
+## Embedded source 45: `R12_MDL_IDENTIFIABILITY_NO_GO.md`
 
 Original source path: `R12_MDL_IDENTIFIABILITY_NO_GO.md`
 Original source size: 4,086 bytes
@@ -10037,7 +10960,7 @@ class or prove reasoning by itself.
 
 ---
 
-## Embedded source 44: `R12_MINIMAX_CAUSAL_BROADCAST_SUBSPACE_NO_GO.md`
+## Embedded source 46: `R12_MINIMAX_CAUSAL_BROADCAST_SUBSPACE_NO_GO.md`
 
 Original source path: `R12_MINIMAX_CAUSAL_BROADCAST_SUBSPACE_NO_GO.md`
 Original source size: 3,406 bytes
@@ -10133,7 +11056,7 @@ projection preservation, and complement ablation alone are insufficient.
 
 ---
 
-## Embedded source 45: `R12_MIXED_DIFFERENCE_RESIDUAL_TRANSDUCER_PREREG.md`
+## Embedded source 47: `R12_MIXED_DIFFERENCE_RESIDUAL_TRANSDUCER_PREREG.md`
 
 Original source path: `R12_MIXED_DIFFERENCE_RESIDUAL_TRANSDUCER_PREREG.md`
 Original source size: 12,470 bytes
@@ -10410,7 +11333,7 @@ capability claim.
 
 ---
 
-## Embedded source 46: `R12_NOISE_STABLE_ACTION_NO_GO.md`
+## Embedded source 48: `R12_NOISE_STABLE_ACTION_NO_GO.md`
 
 Original source path: `R12_NOISE_STABLE_ACTION_NO_GO.md`
 Original source size: 4,475 bytes
@@ -10548,7 +11471,7 @@ family does not.
 
 ---
 
-## Embedded source 47: `R12_OPERATION_CURSOR_RESULT.md`
+## Embedded source 49: `R12_OPERATION_CURSOR_RESULT.md`
 
 Original source path: `R12_OPERATION_CURSOR_RESULT.md`
 Original source size: 2,536 bytes
@@ -10611,7 +11534,7 @@ is incomplete; it was not run or submitted during this result.
 
 ---
 
-## Embedded source 48: `R12_OPERATION_SELECTION_LIKELIHOOD_RESULT.md`
+## Embedded source 50: `R12_OPERATION_SELECTION_LIKELIHOOD_RESULT.md`
 
 Original source path: `R12_OPERATION_SELECTION_LIKELIHOOD_RESULT.md`
 Original source size: 6,131 bytes
@@ -10739,7 +11662,7 @@ scheduler, parser, repair loop, or verifier.
 
 ---
 
-## Embedded source 49: `R12_OPERATION_WORKSPACE_JACOBIAN_RESULT.md`
+## Embedded source 51: `R12_OPERATION_WORKSPACE_JACOBIAN_RESULT.md`
 
 Original source path: `R12_OPERATION_WORKSPACE_JACOBIAN_RESULT.md`
 Original source size: 1,810 bytes
@@ -10794,7 +11717,7 @@ zero-signal branch and an immutable result for every valid execution path.
 
 ---
 
-## Embedded source 50: `R12_OPERATOR_BALANCED_COMMIT_BISIMULATION_PREREG.md`
+## Embedded source 52: `R12_OPERATOR_BALANCED_COMMIT_BISIMULATION_PREREG.md`
 
 Original source path: `R12_OPERATOR_BALANCED_COMMIT_BISIMULATION_PREREG.md`
 Original source size: 11,064 bytes
@@ -11074,7 +11997,7 @@ ties OBCB, retain the simpler method and reject any OBCB-specific advantage.
 
 ---
 
-## Embedded source 51: `R12_PACKET_ON_LATTICE_CARRY_CELL_PREREG.md`
+## Embedded source 53: `R12_PACKET_ON_LATTICE_CARRY_CELL_PREREG.md`
 
 Original source path: `R12_PACKET_ON_LATTICE_CARRY_CELL_PREREG.md`
 Original source size: 12,958 bytes
@@ -11470,7 +12393,7 @@ network can learn the mechanism.
 
 ---
 
-## Embedded source 52: `R12_PCFT_ADVERSARIAL_AUDIT.md`
+## Embedded source 54: `R12_PCFT_ADVERSARIAL_AUDIT.md`
 
 Original source path: `R12_PCFT_ADVERSARIAL_AUDIT.md`
 Original source size: 5,820 bytes
@@ -11585,7 +12508,7 @@ transport/custody harness. No Shohin adapter, SFT, or H100 job is authorized.
 
 ---
 
-## Embedded source 53: `R12_POLYNOMIAL_CODED_ACTION_NO_GO.md`
+## Embedded source 55: `R12_POLYNOMIAL_CODED_ACTION_NO_GO.md`
 
 Original source path: `R12_POLYNOMIAL_CODED_ACTION_NO_GO.md`
 Original source size: 4,182 bytes
@@ -11711,7 +12634,7 @@ Primary references:
 
 ---
 
-## Embedded source 54: `R12_POST_COMMIT_INTERFACE_FALSIFIER_PREREG.md`
+## Embedded source 56: `R12_POST_COMMIT_INTERFACE_FALSIFIER_PREREG.md`
 
 Original source path: `R12_POST_COMMIT_INTERFACE_FALSIFIER_PREREG.md`
 Original source size: 6,261 bytes
@@ -11895,7 +12818,7 @@ evaluation protocol, not a new state ontology.
 
 ---
 
-## Embedded source 55: `R12_POST_COMMIT_INTERFACE_FALSIFIER_RESULT.md`
+## Embedded source 57: `R12_POST_COMMIT_INTERFACE_FALSIFIER_RESULT.md`
 
 Original source path: `R12_POST_COMMIT_INTERFACE_FALSIFIER_RESULT.md`
 Original source size: 4,093 bytes
@@ -11995,7 +12918,7 @@ No neural, Shohin, or H100 fit is authorized by this result.
 
 ---
 
-## Embedded source 56: `R12_POST_COMMIT_PACKET_TRANSPORT_V2_RESULT.md`
+## Embedded source 58: `R12_POST_COMMIT_PACKET_TRANSPORT_V2_RESULT.md`
 
 Original source path: `R12_POST_COMMIT_PACKET_TRANSPORT_V2_RESULT.md`
 Original source size: 6,104 bytes
@@ -12120,7 +13043,7 @@ claim is authorized by this rejected result.
 
 ---
 
-## Embedded source 57: `R12_POST_COMMIT_PACKET_TRANSPORT_V3_RESULT.md`
+## Embedded source 59: `R12_POST_COMMIT_PACKET_TRANSPORT_V3_RESULT.md`
 
 Original source path: `R12_POST_COMMIT_PACKET_TRANSPORT_V3_RESULT.md`
 Original source size: 5,548 bytes
@@ -12237,7 +13160,7 @@ successful canonical run.
 
 ---
 
-## Embedded source 58: `R12_PRESENTATION_CLOSED_RESIDUAL_TRANSPORT_PREREG.md`
+## Embedded source 60: `R12_PRESENTATION_CLOSED_RESIDUAL_TRANSPORT_PREREG.md`
 
 Original source path: `R12_PRESENTATION_CLOSED_RESIDUAL_TRANSPORT_PREREG.md`
 Original source size: 17,062 bytes
@@ -12671,7 +13594,7 @@ forward path. A CPU failure closes PCRT at the tested resource budget.
 
 ---
 
-## Embedded source 59: `R12_QUERY_DISTRIBUTIONAL_CONTEXT_NO_GO.md`
+## Embedded source 61: `R12_QUERY_DISTRIBUTIONAL_CONTEXT_NO_GO.md`
 
 Original source path: `R12_QUERY_DISTRIBUTIONAL_CONTEXT_NO_GO.md`
 Original source size: 2,675 bytes
@@ -12766,7 +13689,7 @@ comparator. No CPU falsifier or Shohin fit is authorized.
 
 ---
 
-## Embedded source 60: `R12_QUERY_KERNEL_FACTORIZATION_NO_GO.md`
+## Embedded source 62: `R12_QUERY_KERNEL_FACTORIZATION_NO_GO.md`
 
 Original source path: `R12_QUERY_KERNEL_FACTORIZATION_NO_GO.md`
 Original source size: 4,143 bytes
@@ -12888,7 +13811,7 @@ tensor-factor models, and congruence decomposition under matched information.
 
 ---
 
-## Embedded source 61: `R12_REASONING_INVENTION_CHARTER.md`
+## Embedded source 63: `R12_REASONING_INVENTION_CHARTER.md`
 
 Original source path: `R12_REASONING_INVENTION_CHARTER.md`
 Original source size: 12,933 bytes
@@ -13186,7 +14109,7 @@ falsifier be implemented.
 
 ---
 
-## Embedded source 62: `R12_RECURRENT_CONTROLS_RESULT.md`
+## Embedded source 64: `R12_RECURRENT_CONTROLS_RESULT.md`
 
 Original source path: `R12_RECURRENT_CONTROLS_RESULT.md`
 Original source size: 4,057 bytes
@@ -13268,7 +14191,2299 @@ canonical formatting, a recurrent register, or immutable source access.
 
 ---
 
-## Embedded source 63: `R12_RELATION_COMPLETE_TRANSPORT_HYPOTHESIS.md`
+## Embedded source 65: `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_PREREG.md`
+
+Original source path: `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_PREREG.md`
+Original source size: 8,592 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Referential Gather-Delete Permutation Executor Preregistration
+
+**Status:** closed negative after jobs `693111--693114`; exact result is frozen
+in `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_RESULT.md`
+
+**Claim class:** isolated source-deleted execution component. A pass does not
+establish natural-language reasoning, autonomous rollout, halting, broad
+generalization, or architectural novelty.
+
+## Question
+
+The conventional complete compiler is now independently qualified at more than
+99.9% exactness on a fresh known-atom board. The next unresolved interface is
+not parsing:
+
+> Can a separately parameterized model-owned state updater learn atomic list
+> transitions, reuse the same weights to compose two operations after the
+> source is deleted, and expose the final identity to an independent query
+> consumer?
+
+This experiment deliberately trains the treatment on one operation at a time.
+The two-operation answer and state are never treatment training targets. Full
+two-step execution appears only in development evaluation.
+
+## Frozen upstream identities
+
+| Object | SHA-256 |
+|---|---|
+| raw Shohin 300k | `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6` |
+| qualified ordinary compiler file | `747a559b827c6d114943c091b9dea5b4b90cef7af13aa5003b8435c092d24991` |
+| factorized train, 96,000 rows | `e6feb311c37f34a88ce7bda59ebb4f968c9ce3b4052cb5c0f6c2ef2e3fca44a8` |
+| compositional development, 2,048 rows | `e69fb70bddfb827a428c297352a72e45612ff3528a9fa107dec38c04189e1922` |
+| factorized report | `d481114232e438294bd1ea7f5b739f6068c2bf10fe02c1ee3c216c2e56aa3be3` |
+| tokenizer | `87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4` |
+
+The old factorized confirmation and the one-shot qualification board are not
+training or evaluation inputs. Confirmation access remains zero.
+
+## Architecture and hard source boundary
+
+The raw base and complete compiler are frozen. The compiler emits ten pointer
+distributions, two operation-kind distributions, and 384-dimensional contextual
+token states. A zero-parameter differentiable gather produces exactly:
+
+- three initial-entity vectors;
+- for each of two operations, one operation-kind context, entity vector,
+  literal vector, and two-class kind distribution;
+- one query-position vector.
+
+No token IDs, source mask, pointer logits, or full source memory are arguments
+to the treatment executor. Its `forward(packet)` API is the deletion boundary.
+Host code may invoke the frozen compiler and perform the declared weighted
+tensor gather. It may not decode entity strings, operation polarity, amounts,
+query positions, current state, or answers, and it may not apply a list move.
+
+The mutable state is a differentiable `3 x 3` assignment matrix in the Birkhoff
+polytope. Rows are current positions and columns are initial entity identities.
+It starts as identity. A neural cell compares the operation entity with current
+entity states, consumes literal and kind representations, and predicts a `3 x
+3` destination-to-source transition. Six alternating row/column log
+normalizations make it doubly stochastic. Matrix composition updates the state.
+The same cell instance is called twice. A separate query head predicts one of
+three positions; multiplying that distribution by the final assignment returns
+an identity distribution.
+
+The fixed matrix multiplication and Sinkhorn normalization enforce only the
+state type. They do not encode left/right, amount, entity binding, destination,
+or query semantics. All those choices are learned. This is a typed
+neuro-symbolic inductive bias closely related to learned permutation networks
+and recurrent program executors, not a new computational class.
+
+## Training contract
+
+The treatment and untied comparator each receive one epoch, seed `2026071901`,
+batch size 64, AdamW learning rate `0.001`, 50-update warmup, clip 1.0, and
+1,517 optimizer updates. Each source batch supplies two independent atomic
+examples:
+
+1. operation 0 applied from identity state;
+2. operation 1 applied independently from identity state.
+
+Thus each epoch contains 192,000 atomic transition targets. Neither cell sees a
+two-step transition target, final two-step assignment, or full-program answer
+during training. Atomic losses supervise transition rows, moved-entity
+location, amount, query position, and the one-step answer identity. Base and
+compiler trainable parameters are exactly zero.
+
+## Frozen arms and interventions
+
+1. **Primary tied/predicted:** frozen compiler packet; one shared update cell.
+2. **Favorable untied/predicted:** two independent update cells, one per source
+   operation slot; more parameters and the same atomic supervision.
+3. **Gold-packet tied ceiling:** gold source spans and operation kinds in both
+   fit and evaluation; still no host state update or answer.
+4. **Source-retained upper bound:** two-layer cross-attention decoder receives
+   the entire frozen compiler memory and is favorably trained on full
+   two-operation answer identities. It is not a source-deleted positive.
+5. **No-fit operation shuffle:** the trained treatment receives another
+   equal-length row's two operation packets while initial/query packets stay
+   fixed.
+6. **No-fit query shuffle:** the trained treatment receives another
+   equal-length row's query packet while initial/operation packets stay fixed.
+7. **No-fit gold packet:** the trained predicted-packet treatment is rescored
+   with gold spans/kinds to measure the compiler-interface ceiling.
+
+All arms use width 192. Instantiated parameter counts are:
+
+| Arm | Executor/control | Base + compiler + arm |
+|---|---:|---:|
+| tied | 1,416,783 | 135,106,333 |
+| untied | 2,384,665 | 136,074,215 |
+| source-retained | 1,262,787 | 134,952,337 |
+
+Every arm remains below the strict 150,000,000-parameter ceiling. The gold arm
+has the tied count. Unused parameter padding is forbidden.
+
+## Development metrics
+
+The evaluator scores exact destination-to-source transition rows at both
+steps, final three-identity assignment, query position, answer identity,
+operation-entity matching, amount, every surface separately, and all-four
+quartets. The scorer may derive gold permutations from structured rows only
+after inference; those labels never enter a positive forward pass.
+
+## Frozen advancement gates
+
+The primary mechanism advances to one fresh confirmation design only if all are
+true:
+
+1. source-retained full-answer accuracy is at least 95%, proving the board and
+   frozen representation permit a favorable solution;
+2. gold-packet tied training reaches at least 98% two-step answer accuracy,
+   98% final-assignment exact, 95% both-transitions exact, and 99% query
+   accuracy;
+3. predicted-packet tied treatment reaches at least 90% answers, 90% exact
+   final assignments, 85% both-transitions exact, and 99% query accuracy;
+4. every canonical/paraphrase/order-twin/binding-twin surface is at least 85%
+   answer-accurate and at least 400/512 quartets have all four answers correct;
+5. treatment answer and final-assignment accuracy are each no more than five
+   percentage points below its no-fit gold-packet rescore;
+6. operation-shuffled answer and final-assignment accuracy are each at most
+   45%, and treatment exceeds each by at least 40 percentage points;
+7. query-shuffled answer accuracy is at most 45%, and treatment exceeds it by
+   at least 40 percentage points;
+8. at least 99% of rows receive each requested packet intervention;
+9. tied answer and final-assignment accuracy are each within two percentage
+   points of the favorable untied arm while using fewer parameters;
+10. every artifact binds base, compiler, data, report, tokenizer, initialized
+    state, final state, arm, source boundary, and zero confirmation access.
+
+If the tied arm solves the board but loses the untied comparison, retain it only
+as a conventional source-deleted executor baseline; do not attribute an
+advantage to tying. If shuffles remain high, reject causal packet use. If gold
+passes and predicted fails, return to Stage A packet quality. If both fail, the
+typed updater/consumer is inadequate.
+
+## Promotion boundary
+
+A development pass permits a new, commit-before-seed confirmation corpus with
+longer three-to-eight-operation programs and fresh language/name/factor
+combinations. It does not permit opening any old confirmation. Only a later
+depth-extrapolation and packet-causality pass could justify connecting the
+executor to a model-owned serializer or natural-language answer path.
+
+No outcome from this development board alone may be called general reasoning
+or a state-of-the-art result.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 66: `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_RESULT.md`
+
+Original source path: `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_RESULT.md`
+Original source size: 4,733 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Referential Gather-Delete Permutation Executor Result
+
+**Decision:** reject v1; do not generate confirmation
+
+## Bottom line
+
+The typed permutation state, source-deletion boundary, and recurrent call are
+mechanically sound, but the v1 packet does not carry stable entity identity.
+The primary tied treatment reaches only **48.340% answers**, **18.701% exact
+final assignments**, and **17.236% both-transition exact**. A favorable untied
+cell is tied at 48.438% answers, and a gold-pointer/kind training arm remains at
+49.170%. No Stage-B promotion gate is close.
+
+The failure is localized. Query and amount classification are 99.707% and
+99.780%, respectively, while operation-entity matching is only 51.294%. The
+compiler almost always points inside the correct multi-token span, but v1
+softmax gathering collapses each span to one contextual subtoken. Across the
+16,384 operation-entity references on the fresh qualification board:
+
+- both selected positions lie inside their correct spans in 16,381/16,384 =
+  **99.9817%**;
+- selected operation/intro token IDs agree in only 9,720/16,384 = **59.3262%**;
+- the complete operation/intro token-ID sequences agree in
+  16,384/16,384 = **100%**.
+
+Thus the next bounded repair is not more recurrence or capacity. It is a
+set-valued, vocabulary-aligned identity packet that preserves the entire
+selected span instead of sampling one contextual coordinate.
+
+## Frozen execution
+
+All four jobs used commit `d69250f`, raw-300k, the qualified ordinary compiler,
+factorized train/development, seed `2026071901`, one epoch, and zero
+confirmation access.
+
+| Job | Arm | Node | Elapsed | Exit |
+|---|---|---|---:|---:|
+| `693111` | tied predicted packet | `evc28` | 2m17s | `0:0` |
+| `693112` | untied predicted packet | `evc29` | 4m05s | `0:0` |
+| `693113` | tied gold packet | `evc33` GPU 0 | 4m36s | `0:0` |
+| `693114` | source-retained direct control | `evc33` GPU 1 | 3m50s | `0:0` |
+
+The two `evc33` jobs used distinct H100 UUIDs. Base and compiler had zero
+trainable parameters. Treatment training contained 192,000 atomic operation
+targets and no full two-step state or answer target.
+
+## Development scores
+
+| Arm/intervention | Answer | Final assignment | Both transitions | Query | Entity match |
+|---|---:|---:|---:|---:|---:|
+| tied predicted | **48.340%** | **18.701%** | **17.236%** | 99.707% | 51.294% |
+| untied predicted | 48.438% | 17.480% | 16.113% | 99.707% | 51.221% |
+| tied, no-fit gold rescore | 45.508% | 19.727% | 15.625% | 99.707% | 46.582% |
+| tied trained/evaluated gold | 49.170% | 20.166% | 19.385% | 99.902% | 53.760% |
+| tied operation shuffle | 31.104% | 11.084% | 5.078% | 99.707% | 36.157% |
+| tied query shuffle | 43.066% | 18.701% | 17.236% | 67.188% | 51.294% |
+| source-retained direct | 37.988% | n/a | n/a | n/a | n/a |
+
+Tied per-surface answer accuracy is binding twin 56.836%, canonical 46.289%,
+order twin 41.602%, and paraphrase 48.633%. Only 24/512 quartets have all four
+answers correct; one quartet has all four final assignments exact and none has
+all four complete transition traces exact.
+
+## Frozen-gate assessment
+
+The source-retained 95% ceiling fails. Every gold/treatment capability floor
+fails. Every per-surface/all-four floor fails. The operation and query shuffles
+fall below their 45% ceilings, but treatment margins are only 17.236 and 5.273
+percentage points, not the required 40. The 2,047/2,048 intervention coverage
+passes. Tied remains within two points of untied and uses fewer parameters, but
+both are weak. Identity/custody gates pass.
+
+The failure is downstream of pointer accuracy because gold packet training and
+rescoring do not rescue it. It is not caused by lack of a second cell because
+untied does not improve it. The source-retained decoder also fails its ceiling,
+so it is not a useful positive model for this representation.
+
+## Consequence
+
+V1 is preserved as a conventional negative baseline. Do not tune it, add
+epochs, increase width, generate confirmation, or claim source-deleted
+reasoning. The one admissible repair changes only the packet identity channel:
+
+1. expose frozen vocabulary embedding states alongside contextual compiler
+   memory;
+2. use normalized sigmoid role masks, which preserve all tokens selected by
+   the compiler's existing multi-token role supervision;
+3. encode entity/literal/query identity from the complete vocabulary-aligned
+   span, while retaining contextual operation-kind information separately;
+4. repeat the same atomic-only training, two-step evaluation, favorable arms,
+   and causal shuffles under a new preregistration.
+
+This repair is inspired by the measured failure, not a post-hoc rescue of v1's
+claim. It must freeze new source and gates before fitting.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 67: `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_V1_1_PREREG.md`
+
+Original source path: `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_V1_1_PREREG.md`
+Original source size: 6,702 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Referential Gather-Delete Executor v1.1 Preregistration
+
+**Status:** closed positive; all ten gates pass. See
+`R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_V1_1_RESULT.md`.
+
+**Claim class:** isolated source-deleted execution component. Passing this
+board is not natural-language reasoning, autonomous rollout, halting, broad
+generalization, or architectural novelty.
+
+## Falsifiable question
+
+RGDE v1 failed because categorical pointer softmax collapsed a multi-token
+referent to an unstable subtoken. The committed no-fit probe recovers entity
+identity at 4,090/4,096 = 99.854% using a set-valued lexical span. The v1.1
+question is therefore narrow:
+
+> When source text is deleted, can a tied neural permutation updater compose
+> two operations learned only as independent atomic updates when identity is
+> carried by complete lexical spans and control semantics remain contextual?
+
+## Immutable upstream evidence
+
+| Object | SHA-256 |
+|---|---|
+| raw Shohin 300k | `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6` |
+| qualified ordinary compiler file | `747a559b827c6d114943c091b9dea5b4b90cef7af13aa5003b8435c092d24991` |
+| factorized train, 96,000 rows | `e6feb311c37f34a88ce7bda59ebb4f968c9ce3b4052cb5c0f6c2ef2e3fca44a8` |
+| compositional development, 2,048 rows | `e69fb70bddfb827a428c297352a72e45612ff3528a9fa107dec38c04189e1922` |
+| factorized report | `d481114232e438294bd1ea7f5b739f6068c2bf10fe02c1ee3c216c2e56aa3be3` |
+| tokenizer | `87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4` |
+| no-fit identity result | `dcc16fa3101e403a5cd2452171511fe9f4497c5c879ca1fa65da0e31ba615f60` |
+
+The frozen implementation identities are compiler
+`debf439a61dfb33efe1c863c2d0df3ec2e049f7c4178ef41e6b500d3a8975d23`,
+packet/executor
+`d7496f1969eebc494186a1984f45617310ba4fe90c17e0472b461b13c12a0ee4`,
+trainer `e0ab2110119bf50a3d918850f54d4077bfc9f030f7f894c55e2af0502148e999`,
+evaluator `8b2883c1a8195b5dc27f6e6b9c25ba441e387ed90c3f557bb29902945cbf1d92`,
+test `fa24d5a4d4b545bd00699b8f406ffd77c1f9a33216635b607fdd65c123c2d0eb`,
+and Slurm job
+`0d06071e4ee3bb9e43808ffa932bb2926bec17f6cf2de5c66fbf920d53c6b6bb`.
+
+Old factorized confirmation and the one-shot compiler qualification board are
+not fit or evaluation inputs. Confirmation access is zero.
+
+## Dual-channel packet and deletion boundary
+
+The frozen ordinary compiler produces role logits, operation-kind logits,
+384-dimensional contextual token states, and the base model's frozen
+576-dimensional vocabulary embeddings. The gather has zero parameters.
+
+For every predicted role, it computes `sigmoid(role_logit) * valid_mask` and
+normalizes the result to sum to one. It gathers:
+
+- three initial-entity vectors from frozen lexical embeddings;
+- each operation entity and literal from frozen lexical embeddings;
+- each operation-kind context and the query position from contextual states;
+- each operation's two-class compiler-owned kind distribution.
+
+The treatment executor receives no token IDs, valid mask, role logits, full
+lexical memory, full contextual memory, strings, source positions, decoded
+entities, host state, or host answer. The bounded packet is the only executor
+argument. Both source memories are discarded before its forward call.
+
+The mutable state remains a differentiable `3 x 3` destination-to-source
+assignment matrix. One 192-wide neural cell is called twice. Sinkhorn
+normalization enforces only the matrix type; operation direction, amount,
+entity match, destination, and query semantics are learned. A separately
+parameterized query consumer reads the final assignment.
+
+## Frozen training arms
+
+All arms use one epoch, seed `2026071902`, batch size 64, AdamW `0.001`, 50
+warmup updates, clip 1.0, and the same frozen base/compiler.
+
+1. **Tied predicted treatment:** 192,000 independent atomic examples. Op0 and
+   op1 each start from identity. No composed transition, final state, or full
+   two-step answer is a training target.
+2. **Untied predicted comparator:** identical atomic examples, but separate
+   cells for source slots 0 and 1. It is more parameterized and favorable.
+3. **Tied gold-packet ceiling:** identical atomic objective with gold source
+   roles and gold operation kinds. State update and answer remain neural.
+4. **Tied composed-supervision ceiling:** identical predicted packet and tied
+   architecture, but the complete two-update transition/final-answer objective
+   is supplied during training. This tests architecture learnability; it is
+   not a promotion arm.
+5. **No-fit operation shuffle:** rotate both operation packets across rows.
+6. **No-fit query shuffle:** rotate the query packet across rows.
+7. **No-fit gold rescore:** rescore the tied predicted treatment with gold
+   roles/kinds.
+
+No unused parameter padding or seed sweep is allowed.
+
+## Parameter ledger
+
+| Arm | Executor | Total system |
+|---|---:|---:|
+| tied predicted / tied gold / tied composed | 1,491,279 | 135,180,829 |
+| untied predicted | 2,459,161 | 136,148,711 |
+
+The ledger includes 125,081,664 frozen base parameters and 8,607,886 frozen
+compiler parameters. Every arm remains below 150,000,000 parameters.
+
+## Advancement gates
+
+The atomic tied mechanism advances to a fresh, commit-before-seed depth board
+only if every gate passes:
+
+1. the no-fit lexical carrier remains at least 99% entity identity;
+2. the composed-supervision ceiling reaches at least 99% answer accuracy, 98%
+   exact final assignment, and 98% both-transition exactness;
+3. tied gold atomic reaches at least 98% answers/final assignment, 95% both
+   transitions, and 99% query accuracy;
+4. tied predicted atomic reaches at least 95% answers/final assignment, 90%
+   both transitions, and 99% query accuracy;
+5. every surface reaches 90% answers and at least 450/512 quartets have all
+   four answers correct;
+6. treatment is within two points of its gold rescore on answers and final
+   assignment;
+7. operation shuffle is at most 40% answers/final assignment and loses at
+   least 50 points to treatment;
+8. query shuffle is at most 45% answers and loses at least 45 points;
+9. tied answers/final assignment are within two points of untied while using
+   fewer parameters;
+10. all runs complete `0:0`, bind every upstream/source/state hash, record zero
+    confirmation access, and apply at least 99% of requested interventions.
+
+If composed supervision fails, reject the updater architecture. If composed
+passes but gold atomic fails, reject atomic transfer. If gold passes but
+predicted fails, reject the packet. If shuffles remain high, reject causal use.
+Passing development authorizes only a new three-to-eight-operation source-
+deleted confirmation board. It never opens old confirmation by itself.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 68: `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_V1_1_RESULT.md`
+
+Original source path: `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_V1_1_RESULT.md`
+Original source size: 4,886 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Referential Gather-Delete Executor v1.1 Result
+
+**Decision:** `qualify_rgde_v1_1_for_fresh_depth_confirmation`
+
+**Boundary:** this is a passed development component: a model-owned,
+source-deleted, tied atomic update rule composes two list operations. It is not
+yet broad natural-language reasoning, autonomous rollout, halting, or a
+state-of-the-art claim.
+
+## Run custody
+
+The source/preregistration commit `ac03e46` preceded every fit. Jobs
+`693118--693121` completed `0:0` on H100 nodes `evc29`, `evc33`, and `evc34`.
+The no-refit repaired control job `693122` completed `0:0` on `evc29` after
+control-amendment commit `3b718d4`.
+
+| Arm | Job | Elapsed | Executor SHA-256 |
+|---|---:|---:|---|
+| tied predicted atomic | 693118 | 2m44s | `adb6323202f6d25280f3a1cfd34a5b88fbc876331643726e38db389ead746b74` |
+| untied predicted atomic | 693119 | 2m06s | `29b00408c369135fd94154b6521d0b30f13e10e2dd70db7f018fd80c9f18ed48` |
+| tied gold atomic | 693120 | 2m44s | `bb238a69fc2cb1aafeba5ba55473e2b1abe11f07172c4085d0aade93ec445d51` |
+| tied composed supervision | 693121 | 2m50s | `43a6fd11d8cec76d09096a8112c452695053e700aa7cf6f91143838692cd2843` |
+
+All local executor and log hashes match Newton. Base and compiler were frozen;
+only the 1,491,279-parameter tied or 2,459,161-parameter untied executor was
+trainable. Each system remains below 150M total parameters. Confirmation access
+is zero.
+
+## Primary results
+
+| Arm | Answers | Exact final state | Both transitions | Query | All-four answers |
+|---|---:|---:|---:|---:|---:|
+| **tied predicted atomic** | **99.707%** | **99.902%** | **99.756%** | **99.805%** | **507/512** |
+| tied predicted, gold rescore | 99.805% | 100.000% | 100.000% | 99.805% | 509/512 |
+| untied predicted atomic | 99.512% | 99.609% | 99.414% | 99.805% | 506/512 |
+| tied gold atomic | 99.902% | 100.000% | 100.000% | 99.902% | 510/512 |
+| tied predicted, composed supervision | 99.609% | 99.756% | 99.707% | 99.805% | 507/512 |
+
+The treatment saw 192,000 independent one-operation examples. Op0 and op1
+each started from identity; no two-step state, transition, or full answer was a
+treatment training target. At evaluation, the same neural cell was applied
+twice. Its minimum answer accuracy across canonical, paraphrase, order-twin,
+and binding-twin surfaces is 99.609%.
+
+The tied arm is 0.195 points better than untied on answers and 0.293 points
+better on exact final state while using 967,882 fewer parameters. The fully
+composed training ceiling does not improve it. This is evidence for transfer of
+the shared atomic rule rather than slot-specific memorization or missing
+two-step supervision.
+
+## Causal interventions
+
+The first within-batch row rotation was invalid because surface quartets often
+share the same semantic field. It is retained but excluded. The committed
+no-refit amendment globally deranges semantic keys and replaces only one
+bounded packet field. All 2,048 requested fields actually change.
+
+| Evaluation | Answers | Exact final state | Both transitions | Query |
+|---|---:|---:|---:|---:|
+| treatment | 99.707% | 99.902% | 99.756% | 99.805% |
+| operation-program derangement | 36.963% | 24.365% | 10.156% | 99.805% |
+| query-position derangement | 0.146% | 99.902% | 99.756% | 0.049% |
+
+Operations reduce answers by 62.744 points and final state by 75.537 points.
+Query replacement destroys answer selection while leaving the state unchanged.
+This factorization is the expected causal signature: operation packets update
+state; the query packet consumes it.
+
+## What changed from v1
+
+RGDE v1 gathered one contextual token with pointer softmax and achieved only
+48.340% answers / 18.701% final state. Its compiler pointed inside the correct
+multi-token span 99.982% of the time, but selected the same subtoken across
+occurrences only 59.326% of the time. The no-fit v1.1 carrier treats each role
+as a set and averages frozen lexical embeddings with normalized sigmoid role
+weights, recovering entity identity at 99.854%.
+
+That zero-parameter interface repair raises two-step answers by 51.367 points
+and exact final state by 81.201 points. Contextual features still carry
+operation and query semantics; lexical spans carry stable referential identity;
+both source memories are deleted before execution.
+
+## Frozen assessment
+
+All ten preregistered gates pass. Canonical assessment SHA-256 is
+`60ec1bb3794c123595801f24f14c431d63fc9eabbf5616e1c9825ee556f30f20`;
+assessment file SHA-256 is
+`b1c9e348ee558fa78785d6211b27b0516ce284b7cf7b8b101d1fbb1a3a258654`.
+The safe evidence archive SHA-256 is
+`aca02c1661b0c62ca90affddbda4aa65fd979c61c6805ca3e1fd3cdcb1e48930`.
+
+This authorizes one fresh commit-before-seed confirmation board with
+three-to-eight operations, unseen names, new factor combinations, source
+deletion, and the frozen tied executor. It does not authorize opening any old
+confirmation or claiming general reasoning.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 69: `R12_REFERENTIAL_IDENTITY_PACKET_PROBE_RESULT.md`
+
+Original source path: `R12_REFERENTIAL_IDENTITY_PACKET_PROBE_RESULT.md`
+Original source size: 2,183 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Referential Identity Packet Probe Result
+
+**Decision:** admit the lexical set-valued packet as the only bounded RGDE v1.1
+repair. This is a no-fit carrier result, not an executor or reasoning result.
+
+## Frozen run
+
+- Job `693117` completed `0:0` on H100 `evc29` in 14 seconds.
+- It used the frozen raw-300k base, qualified ordinary compiler, and 2,048-row
+  public compositional development split.
+- It performed no optimizer update, state transition, answer prediction,
+  confirmation access, retry, or arm selection.
+- Result SHA-256:
+  `dcc16fa3101e403a5cd2452171511fe9f4497c5c879ca1fa65da0e31ba615f60`.
+- Log SHA-256:
+  `9eefc04dfedfe65b9e4d221c85a4ae041bcede71dc8654041c293ffef3cccd55`.
+
+## Result
+
+The probe asks whether each operation entity is nearest to the matching one of
+the three initial entities, using only the gathered vectors.
+
+| Carrier | Correct | Accuracy |
+|---|---:|---:|
+| contextual state + pointer softmax (RGDE v1) | 1,312/4,096 | 32.031% |
+| frozen token embedding + pointer softmax | 2,966/4,096 | 72.412% |
+| **frozen token embedding + normalized sigmoid role span** | **4,090/4,096** | **99.854%** |
+| frozen token embedding + gold span | 4,096/4,096 | 100.000% |
+
+The admitted carrier scores 99.805% on canonical, binding-twin, and order-twin
+surfaces and 100% on paraphrase. The v1 compiler had already selected a token
+inside the correct span 99.982% of the time, but softmax chose the same single
+subtoken across the two entity occurrences only 59.326% of the time. The new
+carrier interprets a role as a set: sigmoid each role logit, mask invalid
+tokens, normalize over the set, and average the frozen vocabulary embeddings.
+
+## Interpretation
+
+The failed RGDE v1 did not establish that source deletion destroys entity
+identity. It established that a categorical one-token gather is the wrong
+interface for multi-token referents. A zero-parameter set-valued lexical
+channel nearly saturates the no-fit identity test while leaving operation
+semantics in the contextual channel.
+
+This authorizes one frozen v1.1 executor experiment. It does not authorize old
+confirmation access, broader fitting, a natural-language claim, or a novelty
+claim.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 70: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_CPU_RESULT.md`
+
+Original source path: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_CPU_RESULT.md`
+Original source size: 4,626 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Referential Literal-Pointer Compiler CPU Result
+
+**Decision:** **CPU BOARD PASS; ONE ISOLATED COMPILER PILOT AUTHORIZED.**
+
+**Claim boundary:** this is a deterministic bounded-language and leakage result.
+It is not a Shohin score, neural result, native-reasoning result, arithmetic
+result, source-deleted executor result, halt result, or novelty claim.
+
+## 1. Question tested
+
+R4's binding-first compiler improved held-out exact programs from `469/896` to
+`624/896`, but its exact-program metric omitted initial quantities and event
+values. A deterministic host lexer supplied those values to execution. The
+new preregistration asks whether a future neural compiler can own the complete
+typed interface:
+
+```text
+[operation kind, entity token-span pointer, literal token-span pointer]
+```
+
+plus query and STOP, with no structured value supplied at inference.
+
+Before fitting, the CPU falsifier had to establish that its board is
+semantically well-defined and not directly solved by the named lexical,
+position, or template features.
+
+## 2. Frozen command
+
+```bash
+python3 pipeline/semantic_compiler_falsifier.py \
+  --tokenizer artifacts/shohin-tok-32k.json \
+  --out artifacts/r12/semantic_compiler_falsifier_v1.dev.json \
+  --receipt artifacts/r12/semantic_compiler_falsifier_v1.dev.receipt.json
+```
+
+The development seed is `20260718`. No confirmation seed exists.
+
+## 3. Exact result
+
+All 14 frozen gates pass:
+
+| Gate | Result |
+|---|---:|
+| Quartets / surfaces | **32 / 128** |
+| Typed-AST round trips | **128/128** |
+| Independent executor agreement | **128/128** |
+| Equivalent canonical/paraphrase groups | **32/32** |
+| Noncommuting order twins separated | **32/32** |
+| Argument-binding twins separated | **32/32** |
+| Canonical/order/binding token bags equal | **32/32** |
+| Nonempty exact kind/entity/literal/query token spans | **128/128** |
+| Disjoint nonce-name quartets | **32/32** |
+| Named shortcut features at or below `1/3` | **7/7** |
+| Teacher/model/checkpoint/production-answer reads | **0** |
+| Confirmation seed present | **no** |
+
+The matched-surface Bayes-optimal exact-program shortcut ceilings are:
+
+| Feature available to shortcut | Best possible exact programs |
+|---|---:|
+| exact Shohin-tokenizer bag | **32/96 = 33.33%** |
+| entity/literal bag | **32/96 = 33.33%** |
+| absolute pointer positions | **7/96 = 7.29%** |
+| span widths | **5/96 = 5.21%** |
+| source token length | **4/96 = 4.17%** |
+| operation bag | **3/96 = 3.13%** |
+| renderer identity | **1/96 = 1.04%** |
+
+The two `33.33%` ceilings are the intended chance ceiling for each matched
+canonical/order/binding triple. They do not establish that an unlisted neural
+shortcut is impossible. They establish only that the named direct leaks do not
+solve the board.
+
+## 4. Acquisition and execution ledger
+
+| Resource | Count |
+|---|---:|
+| UTF-8 source bytes | 34,144 |
+| source tokens | 10,116 |
+| target pointer labels | 896 |
+| typed-program oracle calls | 128 |
+| separator-oracle calls | 96 |
+| executor A calls | 128 |
+| executor B calls | 128 |
+| teacher-model calls | 0 |
+| checkpoint reads | 0 |
+| production-evaluation answer reads | 0 |
+| training examples / FLOPs | 0 / 0 |
+| sequential instruction depth | 2 |
+
+Executor A uses remove/reinsert semantics. Executor B uses repeated adjacent
+swaps. They agree on every surface.
+
+## 5. Evidence identity
+
+| Artifact | SHA-256 |
+|---|---|
+| preregistration | `96deb2da5a2e63fab124e5d34219dd2e0ebba934120aae0c87bf89f71dbdcb6a` |
+| generator/falsifier | `400cdfb23b8bc49a3ad23c4a4b5374a54656fadef982d2c8bc732d073e20d10f` |
+| tests | `59855a26af7682ee7860a7abfa203386986bd4814240f2877448f02436898a24` |
+| Shohin tokenizer | `87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4` |
+| development artifact | `a13bee354d847844ba6db27a65a68a8f7ce540f1558692fa06f31be9919193c1` |
+| receipt | `52e66e2d96f19e30bb49f85f1a3e0c6336c4e9c184199bc58432b8eeb9df3ea4` |
+
+Verification passes `py_compile`, four unit tests, and `git diff --check`.
+
+## 6. Consequence
+
+The result authorizes exactly one next stage: freeze a fresh
+train/development/confirmation corpus and fit the preregistered complete
+compiler against R4, absolute-role, ordinary pointer-network, text-AST, joint,
+shuffled, and oracle controls. The immutable 300k base must remain frozen.
+
+Executor integration remains blocked. A compiler that parses a two-step list
+machine is still a semantic parser, not a reasoner. Only after the compiler
+passes its untouched confirmation gate may it be connected to a separately
+preregistered learned source-deleted packet updater. HALT remains a third
+independent gate.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 71: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_DEVELOPMENT_RESULT.md`
+
+Original source path: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_DEVELOPMENT_RESULT.md`
+Original source size: 6,783 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Referential Literal-Pointer Compiler Development Result
+
+**Protocol:** `r12_referential_literal_pointer_compiler_v1_1_development`
+**Decision:** **REJECT THIS REALIZATION**
+**Claim boundary:** development-only complete compiler feasibility; no confirmation, executor,
+halt, native-reasoning, or novelty claim
+
+## 1. Immutable identities
+
+| Item | Value |
+|---|---|
+| Scientific source commit | `51a5a6410b93ec277bc0d0adc0821f0a3674283f` |
+| Frozen pilot manifest commit | `a1a6af0` |
+| Base checkpoint step | 300,000 |
+| Base SHA-256 | `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6` |
+| Train JSONL SHA-256 | `f47c6d6ce316be6765641f61a294481605fa53c7b12388741fb753c238b2f36e` |
+| Development JSONL SHA-256 | `20611bf4ddbdb42d7e2f9dd76759b86f3f4dd16d5942f207bf7b325984da5ad6` |
+| Corpus report SHA-256 | `176435d8c544948468f81cb23dc65ff51bf8010af212fb737984bbed1d1265cc` |
+| Tokenizer SHA-256 | `87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4` |
+| Initial adapter-state SHA-256 | `0ec56b21df404be2a7cbd73765d8ec64a58474de919d01b76ee29d56b7b2c38d` |
+| Final adapter-state SHA-256 | `ad52a12239d1d00b1877a505cb12b73c4803f2b0b763b3bf94d8bab6abf8f8c2` |
+| Final adapter file SHA-256 | `6815f2fb68e94701630eaece6fff740e54a6f69d2fb226468bbcc1989b7e3cfa` |
+| Development result SHA-256 | `070d148c9d0031fea83218f4a941ecbc4a50c00f0961fcf7f0f8435bdc2a4a25` |
+| Slurm log SHA-256 | `277e22e0e24bc8270f29edcea42272990fdcbee2f6bfee7a29867732627ceeb4` |
+
+The adapter, full development record, and Slurm log are hash-matched between Newton and the Mac.
+The confirmation JSONL was not copied to Newton. Evaluation metadata records
+`confirmation_access = 0`.
+
+## 2. Execution record
+
+The first allocation, job `692965` on `evc26`, exposed no CUDA device. It was canceled before an
+update or artifact. This is a hardware-allocation invalidation, not a model result.
+
+Job `692966` ran unchanged on a verified NVIDIA H100 PCIe on `evc28` and completed with exit code
+zero in 8 minutes 22 seconds. The fit used:
+
+- 96,000 examples, one epoch, 1,514 updates;
+- batch 64, AdamW, peak LR `0.001`, 50-update warmup, cosine decay;
+- frozen Shohin through layer 19;
+- 125,081,664 frozen base parameters plus 3,241,091 trainable compiler parameters;
+- 128,322,755 total parameters, below the strict 150M cap;
+- source token IDs and a source-length mask as the only neural inference inputs.
+
+Fit elapsed time was 304.965 seconds. Training loss fell from `4.6947` at update zero to
+`0.0000018793` at update 1,500. This is fit evidence only.
+
+## 3. Frozen development gate
+
+The development set contains 2,048 rows in 512 semantic quartets. All names and renderer templates
+are disjoint from training.
+
+| Metric | Frozen gate | Result | Count | Pass |
+|---|---:|---:|---:|---:|
+| Full ten-binding pointer exact | >=40% | **2.197%** | 45/2,048 | no |
+| Semantic program exact | >=50% | **15.283%** | 313/2,048 | no |
+| Executed answer accuracy | >=50% | **29.395%** | 602/2,048 | no |
+| Initial-state joint exact | >=70% | **18.848%** | 386/2,048 | no |
+| Operation-0 joint exact | >=60% | **38.086%** | 780/2,048 | no |
+| Operation-1 joint exact | >=60% | **61.426%** | 1,258/2,048 | yes |
+| Canonical + paraphrase both pointer-exact | >=128/512 | **0/512** | 0 | no |
+| All four surfaces pointer-exact | >=64/512 | **0/512** | 0 | no |
+
+Only one of eight frozen gates passes. The treatment is rejected before confirmation.
+
+## 4. Failure localization
+
+### 4.1 Surface decomposition
+
+| Surface | Initial joint | Op-0 joint | Op-1 joint | Program exact | Answer |
+|---|---:|---:|---:|---:|---:|
+| canonical | 24.414% | 18.359% | 79.883% | 20.508% | 41.992% |
+| order twin | 23.438% | 19.336% | 82.422% | 20.508% | 38.281% |
+| binding twin | 24.219% | 16.602% | 82.617% | 20.117% | 37.109% |
+| paraphrase | **3.320%** | **98.047%** | **0.781%** | **0%** | **0.195%** |
+
+The paraphrase renderer is the decisive collapse. The model nearly always locates operation zero
+but nearly never locates operation one. Inspection of predictions shows systematic selection of
+renderer-position words such as `unaffected` for `intro.entity1` and `travel` for `op1.entity`.
+This is not random uncertainty; it is a learned coordinate shortcut.
+
+### 4.2 Target decomposition
+
+| Target | Accuracy |
+|---|---:|
+| intro entity 0 | 52.637% |
+| intro entity 1 | 45.947% |
+| intro entity 2 | 96.094% |
+| operation-0 kind pointer | 41.113% |
+| operation-0 entity pointer | 94.873% |
+| operation-0 literal pointer | 100% |
+| operation-1 kind pointer | 89.160% |
+| operation-1 entity pointer | 74.756% |
+| operation-1 literal pointer | 100% |
+| query-position pointer | 100% |
+| operation-kind class | 96.265% |
+
+Literal values, query position, operation-kind class, and most entity copying are learnable. The
+failure is primarily renderer-invariant role assignment, especially ordered initial bindings and
+the second operation under an unseen paraphrase grammar.
+
+## 5. Scientific consequence
+
+This experiment rejects the specific architecture of six free learned slot queries directly
+cross-attending to linearly projected frozen causal states after training on two renderer families.
+It does **not** reject source-pointer compilation, the compiler/executor decomposition, or the
+possibility of a complete learned compiler under 150M parameters.
+
+The result identifies three factors that the first pilot conflated:
+
+1. **Lexical grounding:** map words such as `front`, `rear`, `earlier`, and `later` to operation
+   classes.
+2. **Structural role parsing:** distinguish intro entity order, operation index, entity argument,
+   literal argument, and query argument without absolute renderer coordinates.
+3. **Program execution:** consume the compiled bindings and apply transitions.
+
+The current host executor tests factor 3 only after factors 1 and 2. A repair must measure those
+factors separately and must not compensate for parser failure with host-provided spans or values.
+
+## 6. Authorized next work
+
+Confirmation remains sealed. No control suite or confirmation evaluation is authorized for this
+failed arm.
+
+A successor may proceed only after it freezes a fresh language board and separates the following
+causes:
+
+- same architecture with broad factorized renderer coverage;
+- a bidirectional structured token parser with the original training budget;
+- a favorable ordinary sequence tagger / pointer-network control;
+- a lexical-oracle control that supplies operation-class grounding but no entity, literal, or
+  query bindings;
+- a structure-oracle control that supplies role boundaries but no selected source values;
+- a full oracle ceiling.
+
+Any successor development language observed during this experiment is contaminated for model
+selection and may not serve as its untouched gate.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 72: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_CORPUS_ADMISSION.md`
+
+Original source path: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_CORPUS_ADMISSION.md`
+Original source size: 4,771 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Factorized-Language Complete-Compiler Corpus Admission
+
+**Status:** development matrix complete; absolute gates pass; attribution fails;
+confirmation sealed
+
+## Frozen identity
+
+The generator and tests were committed as `e6d957e` before any production seed
+existed. The schema-aware compiler evaluator was committed as `6c416cb`, and
+the matched ordinary-parser control plus common Slurm contract were committed
+as `9b85463`. Production seeds were chosen only after the generator commit.
+
+| Split | Rows | Quartets | Source SHA-256 |
+|---|---:|---:|---|
+| train | 96,000 | 24,000 | `e6feb311c37f34a88ce7bda59ebb4f968c9ce3b4052cb5c0f6c2ef2e3fca44a8` |
+| development compositional | 2,048 | 512 | `e69fb70bddfb827a428c297352a72e45612ff3528a9fa107dec38c04189e1922` |
+| development lexical OOD | 2,048 | 512 | `40a059024770d3785ac27f7b02365d7741f631f7413aa5e69631efbc3af73dc0` |
+| confirmation | 8,192 | 2,048 | `e2bc25d8d95bb48c8d2915e6b966f3b96a01d3726177e6469f7824d0cf4b1a0f` |
+
+The full local report SHA-256 is
+`fd2c26580a1b164ad1095e0ad7940ffc2420c16f4882cbb0372c923c32bdc8f7`.
+The Newton/GitHub development report removes both the confirmation seed and
+the confirmation artifact entry; its SHA-256 is
+`d481114232e438294bd1ea7f5b739f6068c2bf10fe02c1ee3c216c2e56aa3be3`.
+Confirmation JSONL remains local only and is absent from Newton.
+
+## Accounting
+
+| Quantity | Value |
+|---|---:|
+| Total rows | 108,288 |
+| Source tokens | 10,858,878 |
+| Source UTF-8 bytes | 38,214,563 |
+| Model-owned pointer labels | 1,082,880 |
+| Teacher/model calls during generation | 0 |
+| Checkpoint reads during generation | 0 |
+| Production evaluation answer reads | 0 |
+
+All rows contain ten nonempty source-owned spans: three initial entities, two
+operation kind/entity/literal triples, and one query position. Independent
+pop/insert and adjacent-swap CPU executors agree on every row.
+
+## Structural gates
+
+Every frozen CPU gate passes:
+
+- all IDs are unique;
+- every semantic quartet preserves canonical/paraphrase behavior and separates
+  both order and binding twins;
+- canonical/order/binding token bags are identical;
+- train covers every known atomic language factor;
+- compositional development uses only known atoms in unseen combinations;
+- lexical OOD direction words are absent from all known-lexicon strata;
+- exact prompt, word-13-gram, nonce-name, and full factor-combination overlap
+  are zero across every split pair;
+- token-bag shortcut accuracy is exactly chance at 1/3; absolute-position and
+  source-length shortcut ceilings remain below the admitted chance tolerance.
+
+The factor cross-product independently varies intro frame, list style,
+operation ordinal vocabulary, operation frame, argument order, direction
+lexicon, distractor frame/location, query frame, and punctuation/case style.
+A split-disjoint neutral nonce anchor prevents shared generic prose from
+creating cross-split 13-grams; it is sampled independently of every semantic
+label and is included in the name-overlap audit.
+
+## Matched development arms
+
+Both initial arms use immutable raw Shohin 300k, 96,000 examples, one epoch,
+1,517 optimizer updates, seed `2026071810`, source token IDs plus length mask as
+their only inference inputs, and the same evaluator.
+
+| Arm | Adapter parameters | Total parameters | Newton job |
+|---|---:|---:|---|
+| v1.3 parameter islands | 8,658,701 | 133,740,365 | `693048` on `evc25` |
+| favorable ordinary bidirectional tagger | 8,607,886 | 133,689,550 | `693049` on `evc28` |
+
+The adapter-budget difference is 50,815 parameters, or 0.587% of the islands
+adapter. The ordinary control directly labels source tokens with five
+bidirectional Transformer encoder layers and pools direction classes at the
+predicted kind spans. It receives no learned program slots or parameter
+islands. Both jobs completed cleanly. Parameter islands and the ordinary tagger
+each reach 100% exact programs and full pointers on compositional development,
+so the absolute compiler gates pass but the required +5-point islands advantage
+is 0. The free-slot and structured controls reach 98.242% and 100% exact
+programs; shuffled-label islands reach 0.146%. The committed assessor returns
+`retain_as_conventional_compiler_baseline_confirmation_sealed`. Full results
+and oracle localization are in
+`R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_DEVELOPMENT_RESULT.md`.
+
+## Decision boundary
+
+V1.3 passes every frozen primary development gate but ties the favorable
+ordinary parser at 100% exact semantic programs. The attribution gate therefore
+fails and confirmation must remain sealed. Lexical OOD is diagnostic and must
+never be pooled into the compositional score. No result on this board alone
+establishes state transition, halting, autonomous rollout, or native reasoning.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 73: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_DEVELOPMENT_RESULT.md`
+
+Original source path: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_DEVELOPMENT_RESULT.md`
+Original source size: 7,238 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Factorized-Language Complete-Compiler Development Result
+
+**Status:** absolute compiler gates pass; parameter-islands attribution fails;
+confirmation remains sealed
+
+## Bottom line
+
+Broad factorized language supervision changed the source-pointer compiler from a
+renderer-indexed partial parser into a nearly or fully exact known-atom
+compiler. The preregistered parameter-islands mechanism did not earn credit for
+that improvement:
+
+- parameter islands: **2,048/2,048 exact compositional programs**;
+- favorable ordinary tagger: **2,048/2,048**;
+- structured parser: **2,048/2,048**;
+- free learned slots: **2,012/2,048 = 98.242%**;
+- shuffled-label islands: **3/2,048 = 0.146%**.
+
+Every absolute v1.3 primary gate passes, but its exact-program advantage over
+the ordinary parser is **0.0 percentage points**, below the frozen +5-point
+attribution gate. The committed assessor therefore returns:
+
+```text
+retain_as_conventional_compiler_baseline_confirmation_sealed
+```
+
+This is a strong **data-identifiability result** and a useful conventional
+compiler baseline. It is not evidence that parameter islands are necessary,
+not a sealed-confirmation pass, and not an executor, halt, autonomous rollout,
+or native-reasoning result.
+
+## Frozen contract
+
+All five neural arms use:
+
+- immutable raw-300k Shohin, SHA-256
+  `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`;
+- the same 96,000 training rows and 1,517 optimizer updates;
+- seed `2026071810`;
+- source token IDs and a source-length mask as their only inference inputs;
+- the same 2,048-row compositional and 2,048-row lexical-OOD evaluators;
+- zero confirmation access.
+
+The corpus generator was committed before production seeds. Train,
+compositional-development, and lexical-OOD SHA-256 values are respectively
+`e6feb311c37f34a88ce7bda59ebb4f968c9ce3b4052cb5c0f6c2ef2e3fca44a8`,
+`e69fb70bddfb827a428c297352a72e45612ff3528a9fa107dec38c04189e1922`,
+and `40a059024770d3785ac27f7b02365d7741f631f7413aa5e69631efbc3af73dc0`.
+Confirmation bytes were never copied to Newton or read by training,
+evaluation, or assessment.
+
+## Jobs and resources
+
+| Arm | Job | Node | Adapter parameters | Total parameters | Elapsed |
+|---|---:|---|---:|---:|---:|
+| parameter islands | `693048` | `evc25` | 8,658,701 | 133,740,365 | 12:04 |
+| ordinary token tagger | `693049` | `evc28` | 8,607,886 | 133,689,550 | 11:17 |
+| shuffled-label islands | `693098` | `evc25` | 8,658,701 | 133,740,365 | 10:02 |
+| free learned slots | `693101` | `evc28` | 3,241,091 | 128,322,755 | 5:46 |
+| structured parser | `693102` | `evc28` | 6,402,701 | 131,484,365 | 9:50 |
+
+All jobs exited `0:0`. Oracle jobs `693099` and `693100` each completed in 45
+seconds on `evc28`.
+
+## Primary compositional development
+
+| Arm | Answer | Program | Full ten-pointer | Kind | Initial | Canonical+paraphrase | All-four |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| free slots | 98.340% | 98.242% | 98.242% | 100.000% | 98.340% | 496/512 | 496/512 |
+| structured | 100.000% | 100.000% | 100.000% | 100.000% | 100.000% | 512/512 | 512/512 |
+| parameter islands | **100.000%** | **100.000%** | **100.000%** | **100.000%** | **100.000%** | **512/512** | **512/512** |
+| ordinary tagger | **100.000%** | **100.000%** | **100.000%** | **100.000%** | **100.000%** | **512/512** | **512/512** |
+| shuffled islands | 0.488% | 0.146% | 0.000% | 49.756% | 59.229% | 0/512 | 0/512 |
+
+The shuffled arm's chance-level operation loss and near-zero exact program and
+answer scores rule out evaluator leakage, a label-free answer shortcut, or a
+base-only solution. The three exact supervised architectures and the 98.2%
+free-slot arm show that broad factor coverage, not specialized parameter
+separation, produced the main gain.
+
+## Lexical-OOD diagnostic
+
+The lexical-OOD split replaces all trained direction words with unseen
+direction pairs. It is diagnostic and was never pooled into the primary score.
+
+| Arm | Answer | Program | Full ten-pointer | Kind | Initial | Canonical+paraphrase | All-four |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| free slots | **89.307%** | **85.010%** | 71.777% | **86.621%** | 98.633% | 262/512 | 249/512 |
+| structured | 82.373% | 72.852% | 72.852% | 74.072% | 99.854% | 279/512 | 190/512 |
+| parameter islands | 85.352% | 77.881% | **77.881%** | 78.979% | **99.805%** | **318/512** | **231/512** |
+| ordinary tagger | 76.367% | 63.721% | 63.721% | 70.776% | **99.805%** | 212/512 | 163/512 |
+| shuffled islands | 0.391% | 0.049% | 0.000% | 47.998% | 54.932% | 0/512 | 0/512 |
+
+No one architecture dominates every lexical metric. Free slots have the best
+row-level answer/program/kind scores; islands have the best full-pointer and
+quartet consistency. This is secondary evidence only because the lexemes were
+absent from training and no architecture received definitions for them.
+
+## Oracle localization
+
+| Arm | Oracle | Answer | Exact program/full pointer | All-four exact |
+|---|---|---:|---:|---:|
+| islands | none | 85.352% | 77.881% | 231/512 |
+| islands | gold operation kinds | **99.463%** | **99.316%** | **505/512** |
+| islands | gold structural pointers | 85.840% | 78.516% | 234/512 |
+| islands | full | 100.000% | 100.000% | 512/512 |
+| ordinary | none | 76.367% | 63.721% | 163/512 |
+| ordinary | gold operation kinds | **99.219%** | **98.975%** | **501/512** |
+| ordinary | gold structural pointers | 76.904% | 64.307% | 165/512 |
+| ordinary | full | 100.000% | 100.000% | 512/512 |
+
+Supplying only operation polarity closes almost the entire lexical-OOD gap;
+supplying every structural pointer barely changes it. Initial, entity, literal,
+and query pointers are already about 99--100% exact. The residual failure is
+therefore unseen-word semantic polarity, not role binding or execution.
+
+## Frozen gate outcome
+
+| Gate | Floor | Result | Pass |
+|---|---:|---:|---|
+| answer accuracy | 85% | 100% | yes |
+| semantic-program exact | 75% | 100% | yes |
+| full ten-pointer exact | 65% | 100% | yes |
+| operation-kind accuracy | 95% | 100% | yes |
+| initial-state joint exact | 80% | 100% | yes |
+| canonical+paraphrase both exact | 192/512 | 512/512 | yes |
+| all-four exact | 96/512 | 512/512 | yes |
+| islands program advantage over ordinary | +5 points | +0.0 points | **no** |
+
+The assessment SHA-256 is
+`ca8cab2ef9dbaa9d894857438e72193476259fd659e8423b85af47e13e37fc0d`.
+
+## Decision and next use
+
+1. Keep confirmation sealed. The preregistered attribution condition failed.
+2. Retain the ordinary tagger as the favorable conventional compiler baseline.
+3. Treat factorized language generation as the durable discovery: it supplies
+   the coverage that all supervised parsers previously lacked.
+4. Build the next source-deleted transition/consumer experiment against this
+   conventional compiler, with a fresh untouched qualification board and no
+   current-confirmation reuse.
+5. Keep unseen-lexeme semantics separate. Definitions, contrastive lexical
+   grounding, or pretrained-language support may be tested as explicit
+   resources; they may not be disguised as an executor improvement.
+
+No result here authorizes reporting Shohin as a native reasoner. The compiler is
+one independently gated component of the larger compiler/executor/state/
+consumer/halt program.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 74: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_LANGUAGE_PREREG.md`
+
+Original source path: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_LANGUAGE_PREREG.md`
+Original source size: 4,780 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Factorized-Language Complete-Compiler Board Preregistration
+
+**Status:** development closed; primary gates pass; islands attribution fails;
+confirmation sealed
+
+## 1. Question
+
+The first compiler overfit renderer coordinates. Bidirectional role supervision improved binding but
+disconnected operation semantics. Separate parameter islands restored composition and reached 59.8%
+answers / 42.8% exact programs on one unseen paraphrase grammar, but failed another unseen lexical
+grammar. The next question is:
+
+> Does broad factorized language supervision teach a complete source-pointer compiler to compose
+> known lexical and syntactic atoms in unseen combinations, and what remains when the operation
+> lexemes themselves are unseen?
+
+This is a data-identifiability experiment over the admitted v1.3 architecture, not a new reasoning
+primitive.
+
+## 2. Renderer factorization
+
+Do not define a renderer as one monolithic template. Generate each source by independently sampling:
+
+1. intro frame;
+2. list separator and conjunction style;
+3. operation ordinal vocabulary;
+4. operation clause frame;
+5. entity/kind/literal argument order;
+6. left/right lexical pair;
+7. distractor frame and insertion location;
+8. query frame;
+9. harmless punctuation/case variation.
+
+Every atomic factor used by the primary compositional development stratum must appear in training,
+but its exact cross-product combination must not. A separate lexical-OOD stratum uses direction
+lexemes absent from training. Do not merge these two scores.
+
+## 3. Fresh splits
+
+- train: 96,000 rows / 24,000 semantic quartets;
+- development-compositional: 2,048 rows / 512 quartets, unseen factor combinations with known atoms;
+- development-lexical-OOD: 2,048 rows / 512 quartets, unseen direction lexemes and combinations;
+- confirmation: 8,192 rows / 2,048 quartets, sealed;
+- disjoint nonce-name pools across all splits;
+- zero exact and word-13-gram overlap;
+- token-bag-matched order and binding twins in every quartet;
+- all ten model-owned source targets present and nonempty;
+- two independent CPU executors agree on every row.
+
+The generator and tests must be committed before any confirmation seed exists. Development seeds are
+also generated only after source commit. The v1.1 confirmation seed and bytes remain permanently
+unread for this lane.
+
+## 4. Arms
+
+Run equal examples, optimizer updates, seed families, and inference inputs:
+
+1. v1.1 free-slot pointer compiler;
+2. v1.2 bidirectional structured compiler;
+3. v1.3 structural/semantic parameter islands;
+4. favorable ordinary bidirectional sequence-tagger/pointer control with matched parameter budget;
+5. lexical oracle: operation class supplied, all source roles model-owned;
+6. structure oracle: target role masks supplied, selected values and operation classes model-owned;
+7. full source-span oracle ceiling;
+8. shuffled role-label negative control.
+
+Oracle information and host computation must be reported explicitly and may establish ceilings only.
+
+## 5. Development gates for v1.3
+
+### Primary compositional stratum
+
+- >=85% answer accuracy;
+- >=75% semantic-program exact;
+- >=65% full ten-binding pointer exact;
+- >=95% operation-kind accuracy;
+- >=80% initial-state joint exact;
+- >=192/512 canonical+paraphrase both exact;
+- >=96/512 all-four exact.
+
+### Lexical-OOD diagnostic
+
+- report every metric without a promotion floor;
+- compare against the frozen base's lexical-oracle gap;
+- no lexical-OOD result may be pooled into the primary score.
+
+### Attribution
+
+The islands arm must exceed the favorable ordinary parser by at least 5 percentage points in
+semantic-program exact or be treated as an implementation choice rather than a mechanism win.
+
+## 6. Decisions
+
+- CPU board failure: repair or reject before neural code.
+- Primary development failure: reject the curriculum/architecture pair; do not open confirmation.
+- Primary pass without attribution: retain as a conventional compiler baseline only.
+- Primary and attribution pass: freeze arm identity and run confirmation once.
+- No outcome authorizes executor/halt integration until complete compilation survives confirmation.
+
+## 7. Frozen outcome
+
+Parameter islands and the favorable ordinary tagger both reach 100% exact
+semantic programs, full pointers, answers, and quartet consistency on the
+2,048-row compositional development split. The islands advantage is therefore
+0.0 points rather than the required +5. Free slots reach 98.242% exact programs,
+structured parsing reaches 100%, and shuffled-label islands reach 0.146%.
+
+The absolute gate passes, the attribution gate fails, and the decision is to
+retain a conventional compiler baseline while leaving confirmation sealed.
+See `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_DEVELOPMENT_RESULT.md`.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 75: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_ISLANDS_PREREG.md`
+
+Original source path: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_ISLANDS_PREREG.md`
+Original source size: 2,383 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Complete-Compiler Parameter-Islands Preregistration
+
+**Protocol:** `r12_referential_literal_pointer_compiler_v1_3_islands_development`
+**Status:** frozen before v1.3 fitting or scoring
+**Selection boundary:** exposed-development mechanism diagnostic only
+
+## Hypothesis
+
+The v1.2 structural parser learned substantially better ordered bindings, but its operation-kind
+head stayed at chance because token-role supervision bypassed the free semantic slot. The zero-fit
+hybrid of v1.2 structure and v1.1 operation classes recovered 48.193% answers and 33.740% semantic
+programs. Therefore:
+
+> A physically separate semantic reader over the original frozen causal states can preserve
+> operation meaning while a bidirectional structural reader learns source roles.
+
+## Single treatment change from v1.2
+
+Keep v1.2 unchanged. Add a separate two-layer semantic slot decoder with its own layer norm and
+576-to-256 memory projection over frozen layer-19 states. Only the operation-kind classifier reads
+this island. The structural encoder, role head, ten pointers, role loss, data, optimizer, and host
+executor remain unchanged.
+
+No island receives line spans, structured values, operation labels, renderer IDs, or answers at
+inference. The only inference inputs remain source token IDs and the source-length mask.
+
+## Resource and fit ledger
+
+| Component | Parameters |
+|---|---:|
+| immutable Shohin | 125,081,664 |
+| complete compiler islands | 8,658,701 |
+| total | 133,740,365 |
+
+- v1.1 train SHA-256 `f47c6d6ce316be6765641f61a294481605fa53c7b12388741fb753c238b2f36e`;
+- 96,000 examples, one epoch, batch 64, 1,514 expected updates;
+- same AdamW, LR, warmup, cosine, clip, and loss weights as v1.2;
+- seed `2026071805`;
+- one H100, four CPUs;
+- distinct output `train/referential_literal_pointer_compiler_v1_3_islands/`.
+
+## Frozen gates
+
+| Metric | Gate |
+|---|---:|
+| operation-kind accuracy | >=90% |
+| initial-state joint exact | >=45% |
+| answer accuracy | >=45% |
+| semantic-program exact | >=30% |
+| full pointer exact | >=10% |
+| paraphrase answer accuracy | >=45% |
+| canonical answer accuracy | >=35% |
+| canonical + paraphrase both pointer-exact | >=1/512 |
+
+Passing all gates authorizes a new untouched factorized-language board and favorable controls only.
+It does not authorize v1.1 confirmation, an executor connection, a native-reasoning claim, or a
+novelty claim.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 76: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_ISLANDS_RESULT.md`
+
+Original source path: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_ISLANDS_RESULT.md`
+Original source size: 3,340 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Complete-Compiler Parameter-Islands Result
+
+**Protocol:** `r12_referential_literal_pointer_compiler_v1_3_islands_development`
+**Decision:** **PARTIAL MECHANISM WIN; FAIL FROZEN PROMOTION GATE**
+
+## Run and custody
+
+Job `692992` completed on a verified H100 PCIe on `evc28` with exit code zero in 10m10s. It used
+the frozen one-epoch / 1,514-update v1.1 training schedule, seed `2026071805`, 8,658,701 trainable
+compiler parameters, and 133,740,365 total parameters. Shohin remained frozen.
+
+| Item | SHA-256 |
+|---|---|
+| initial adapter state | `1e9301b55eecf1b1be4598a2e0e3a25bb09d989c2a8d7f37fc09dc310d599abc` |
+| final adapter state | `93d3aef45e818c61f9bb7857df45cb3086ba1b7e2b4d6478049913f3dc0516b3` |
+| adapter file | `63f735d7fa275b8347e25d3645914fc24d08e24b0c412f27c292a561ebb65af2` |
+| development result | `873254e5dde203ea89f2b55b68948ec64f13a3e0536e9d38281f88ad0539205d` |
+| Slurm log | `d017fbd983100d37303f5dfb5d05d9d84693501644379b114af43f4cb8564d99` |
+
+The adapter, result, and log are hash-matched between Newton and the Mac. Confirmation remained
+absent from Newton and access is zero.
+
+## Frozen gates
+
+| Metric | Gate | Result | Pass |
+|---|---:|---:|---:|
+| operation-kind accuracy | >=90% | **61.328%** | no |
+| initial-state joint exact | >=45% | **45.996%** | yes |
+| answer accuracy | >=45% | **43.311%** | no |
+| semantic-program exact | >=30% | **23.438%** | no |
+| full pointer exact | >=10% | **10.645%** | yes |
+| paraphrase answer | >=45% | **59.766%** | yes |
+| canonical answer | >=35% | **32.422%** | no |
+| canonical + paraphrase both pointer-exact | >=1/512 | **0/512** | no |
+
+Three of eight gates pass. The arm is not promoted and v1.1 confirmation remains sealed.
+
+## Surface result
+
+| Surface | Kind | Initial joint | Program exact | Answer |
+|---|---:|---:|---:|---:|
+| canonical | 46.289% | 45.508% | 15.820% | 32.422% |
+| order twin | 53.711% | 44.336% | 19.336% | 41.016% |
+| binding twin | 46.289% | 44.922% | 15.820% | 40.039% |
+| paraphrase | **99.023%** | **49.219%** | **42.773%** | **59.766%** |
+
+The separate semantic island fixes v1.2's optimization collapse: training kind loss reaches zero,
+and exposed-development answer accuracy rises from 18.994% to 43.311%. It also exceeds the v1.1
+answer result by 13.916 percentage points and lifts initial-state joint exact by 27.148 points.
+
+The failure is now lexical and surface-specific. The island transfers almost perfectly to the
+unseen `front/rear` paraphrase renderer but not to the unseen `earlier/later` canonical renderer.
+Two fixed training renderer families do not identify renderer-invariant lexical semantics, even
+with 96,000 examples.
+
+## Scientific consequence
+
+Parameter islands are supported as an optimization mechanism: structural and semantic paths can
+learn concurrently without the v1.2 chance-classifier collapse. They are not yet a complete
+compiler result. Repeating seeds or tuning against this exposed development split is unauthorized.
+
+The next experiment must change the educational support, not the H100 budget: train on many
+factorized combinations of intro frames, argument orders, direction lexemes, operation ordinals,
+distractor placements, and query frames; evaluate unseen combinations separately from truly unseen
+lexemes; and compare v1.3 against favorable ordinary parser and oracle controls.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 77: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_PILOT_MANIFEST.md`
+
+Original source path: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_PILOT_MANIFEST.md`
+Original source size: 6,121 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Complete Pointer Compiler Development Pilot Manifest
+
+**Status:** **FROZEN BEFORE GPU FIT OR DEVELOPMENT SCORE.**
+
+**Scientific commit:** `51a5a6410b93ec277bc0d0adc0821f0a3674283f`
+
+**Authorization:** one treatment-only development feasibility fit. Confirmation
+access is forbidden. A development pass authorizes implementation and matched
+development selection of the full control suite; it does not authorize direct
+confirmation scoring.
+
+## 1. Hypothesis
+
+A small learned slot decoder over frozen Shohin token states can compile the
+complete bounded program interface without structured inference inputs:
+
+```text
+three initial-order entity pointers
+two [operation-kind grounding, operation class, entity pointer, literal pointer] codons
+one late-query pointer
+fixed STOP after two operations
+```
+
+The model receives only source token IDs and a source-length mask. It receives
+no line boundaries, target spans, entity list, initial order, values, typed
+program, query, answer, renderer ID, or semantic state.
+
+This is a learnability hypothesis for a supervised semantic parser. It is not a
+new reasoning primitive.
+
+## 2. Frozen implementation
+
+The immutable 300k Shohin base is frozen through layer 19. Six learned slot
+queries cross-attend over all source-token states through a two-layer,
+256-wide, eight-head decoder with a 1,024-wide feed-forward block. Ten
+independent pointer projections score every valid source token. Two operation
+slots also classify `LEFT` versus `RIGHT`.
+
+| Component | Parameters |
+|---|---:|
+| immutable Shohin base | 125,081,664 |
+| complete pointer compiler | 3,241,091 |
+| strict total | **128,322,755** |
+| remaining below 150M | 21,677,245 |
+
+Pointer loss is the negative log probability mass assigned to every token in
+the gold source span, averaged across ten targets. Operation-kind
+cross-entropy has weight 1.0. The base receives no gradients.
+
+At evaluation, the host expands each model-selected token to its containing
+source word, then applies the frozen list-machine semantics. It may not select,
+repair, reorder, or infer an operand. Full pointer exactness requires all ten
+pointers and both operation classes. Fixed STOP is not a halt result.
+
+## 3. Frozen inputs
+
+| Input | SHA-256 |
+|---|---|
+| base 300k checkpoint | `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6` |
+| train, 96,000 rows | `f47c6d6ce316be6765641f61a294481605fa53c7b12388741fb753c238b2f36e` |
+| development, 2,048 rows | `20611bf4ddbdb42d7e2f9dd76759b86f3f4dd16d5942f207bf7b325984da5ad6` |
+| v1.1 corpus report | `176435d8c544948468f81cb23dc65ff51bf8010af212fb737984bbed1d1265cc` |
+| tokenizer | `87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4` |
+| v1.1 amendment | `f7d8f6f23ceb2f91d33c8a46340e10e298a2b1aa39ca6b1b5e6264d80bbcd72a` |
+
+Confirmation SHA-256
+`84005921b5fca93f9c2567655c4345bced78fc74ed7f49c8f72189b9f87fbf03`
+is recorded for custody but its bytes must not be copied into the pilot runtime
+or read by any pilot process.
+
+## 4. Frozen source identities
+
+| Source | SHA-256 |
+|---|---|
+| architecture/data helpers | `080f1bf22eb5fe62d7e9aecec0fc7d351110b549d264f9381fc0158e7666437f` |
+| trainer | `3fcc1f4574b61c29ff14df4462c8e939ee30e90ee6aa6ee484996854435ded91` |
+| evaluator | `b52962333126f2a10232811755e35843fe6afaad3252aafd14dca6c02020b004` |
+| Slurm job | `cb733cb8650cd450a491a21fea1b10a5d5cb7e428c346e0b7c24cbaf325c7cc7` |
+| unit tests | `0120ae49a9a19c6fec76443deea2d827566bfabde12d280bb164d6d8b2ee73c0` |
+
+Local verification before freeze:
+
+- three architecture tests pass;
+- five corpus tests pass;
+- `py_compile`, Ruff, Bash syntax, and `git diff --check` pass;
+- a real CPU forward from the immutable 300k checkpoint produces ten pointer
+  distributions of shape `[1,81]` and operation logits `[1,2,2]`;
+- gold-pointer dereference reconstructs the answer without structured values;
+- strict total parameters are below 150M.
+
+## 5. Frozen optimization
+
+| Setting | Value |
+|---|---:|
+| training examples | 96,000 |
+| epochs | 1 |
+| batch size | 64 |
+| nominal updates | approximately 1,500, subject only to exact length buckets |
+| optimizer | AdamW, betas `(0.9,0.95)`, weight decay `0.01` |
+| peak LR | `0.001` |
+| warmup | 50 updates |
+| schedule | cosine to 10% of peak |
+| gradient clip | 1.0 |
+| seed | `2026071803` |
+| precision | frozen base/adapter forward under BF16 autocast; losses in FP32 |
+| accelerator | one H100; four CPUs; 96 GiB host memory |
+
+No checkpoint, epoch, layer, width, loss weight, or seed selection is permitted
+after viewing development. This pilot has one artifact and one development
+score.
+
+## 6. Frozen development gate
+
+The slot-decoder realization advances to a matched-control build only if all
+floors pass on the untouched development split:
+
+| Metric | Floor |
+|---|---:|
+| all ten pointers + both operation classes exact | **40%** |
+| host-dereferenced semantic program exact | **50%** |
+| answer accuracy from predicted program | **50%** |
+| joint three-pointer initial order | **70%** |
+| operation-0 joint kind/pointers | **60%** |
+| operation-1 joint kind/pointers | **60%** |
+| canonical/paraphrase both fully exact | **128/512 groups** |
+| all four surfaces fully exact | **64/512 groups** |
+
+If any floor fails, this exact slot-decoder realization is rejected. The
+failure does not reject complete pointer compilation in general, but no
+confirmation access or executor integration follows.
+
+If every floor passes, the next required work is to implement and freeze the
+R4 privileged-lexer baseline, absolute-role compiler, ordinary pointer network,
+text-AST decoder, joint adapter, shuffled-pointer sanity control, and oracle
+ceiling under matched development budgets. Arm identities and the selection
+rule must be committed before confirmation is copied into the runtime.
+
+## 7. Claim boundary
+
+A development pass establishes only that the complete source-pointer interface
+can be learned on the bounded synthetic machine. It does not establish natural-
+language reasoning, arithmetic, source-deleted execution, autonomous state
+update, serialization, halt, scale transfer, or novelty.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 78: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_PREREG.md`
+
+Original source path: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_PREREG.md`
+Original source size: 9,848 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Referential Literal-Pointer Compiler Preregistration
+
+**Status:** **FROZEN 2026-07-18 before any neural fit, GPU job, confirmation
+seed, or Shohin score.** This document authorizes only the deterministic CPU
+semantic-compiler falsifier in `pipeline/semantic_compiler_falsifier.py`.
+
+**Decision boundary:** the proposed compiler is not a new reasoning primitive.
+It is a bounded text-to-program interface whose only admissible first claim is
+improved exact compilation under controlled paraphrase, order, binding, and
+distractor transfer. Execution, source-deleted state, autonomous recurrence,
+serialization, and halt remain separate blocked stages.
+
+## 1. Why this experiment exists
+
+R4 established a real but incomplete result. A frozen Shohin base with dynamic
+entity pointers improved exact programs from `469/896` to `624/896` and full
+OOD answers from `2/192` to `51/192`. However, its evaluator did not require the
+model to bind all operands:
+
+```text
+question text -> deterministic host lexer -> initial_values, operation_values
+question text -> neural compiler          -> opcode, entity role, query
+```
+
+`safe_execute` then combined the neural opcode/query with the perfect lexical
+values. R4's `program_exact` metric counted only opcode and query correctness.
+This is an honest prior result, but it leaves a specific open interface: can a
+model select every semantic operand from source text rather than receiving
+numeric or referential values from a privileged lexer?
+
+The frontier-plan proposal is therefore reduced to its smallest testable unit:
+a **referential codon**
+
+```text
+[operation kind, entity-source pointer, literal-source pointer]
+```
+
+plus a query pointer. Pointers name token spans in the source. The host may
+dereference a model-selected span exactly, but may not choose, repair, reorder,
+or infer a span. Every dereference is charged as interface work.
+
+## 2. Capability statement and no-go theorem
+
+Let `x` be a source surface and let `P(x)` be its complete typed program,
+including operation kinds, entity references, literal references, order, query,
+and STOP. Let `E(P,q)` be an independently specified executor.
+
+The compiler capability is
+
+```text
+C(x) = P(x)
+```
+
+under held-out renderer, entity, order, binding, and distractor combinations.
+Exact-program accuracy is the primary metric. Answer accuracy is secondary and
+must be reported both with the predicted compiler and an oracle compiler.
+
+### Language-bridge collision no-go
+
+If two surfaces are identical to the compiler but require distinct programs
+whose complete future-query behavior differs, no deterministic compiler can be
+exact on both. Under a balanced pair its maximum exact accuracy is `1/2`.
+
+More generally, for an observable feature map `f`, the Bayes-optimal shortcut
+ceiling on a finite board is
+
+```text
+sum_z max_p count(f(x)=z and P(x)=p) / number_of_examples.
+```
+
+The CPU falsifier computes this ceiling for token bags, operation bags,
+entity/literal bags, absolute pointer positions, span widths, source length,
+and renderer identity. A feature ceiling above `1/3` rejects the board before
+training because the matched canonical/order/binding triples would be
+shortcut-solvable.
+
+This theorem does not make the compiler novel. It only certifies that the
+frozen board does not contain the named direct leaks.
+
+## 3. Exact CPU board
+
+The development falsifier is a deterministic three-entity list machine. A
+state is an ordered permutation of three nonce entities. An instruction is
+
+```text
+LEFT(entity_pointer, literal_pointer)
+RIGHT(entity_pointer, literal_pointer)
+```
+
+where the literal is one or two positions. Movement is implemented by repeated
+adjacent swaps with boundary clamping. A program contains exactly two
+instructions followed by STOP. A late query asks for the entity at one of the
+three positions.
+
+The board contains 32 quartets, 128 surfaces total:
+
+1. canonical rendering of a typed program;
+2. independently rendered paraphrase of the same program;
+3. token-multiset-matched operation-order twin with different behavior;
+4. token-multiset-matched argument-binding twin with different behavior.
+
+The canonical and both counterfactual twins have exactly equal Shohin-tokenizer
+multisets. The query is selected mechanically so the canonical answer differs
+from both twins. Each quartet uses three fresh nonce names with equal tokenizer
+width. Distractor lines repeat a real entity and a real numeric literal but are
+outside the instruction spans. Distractor position and introductory order vary
+factorially.
+
+Two independent executors must agree:
+
+- executor A removes and reinserts the selected entity;
+- executor B performs the specified number of adjacent swaps.
+
+This finite board is deliberately favorable and bounded. Passing it says
+nothing about arithmetic, free-form language, unbounded composition, or Shohin
+trainability.
+
+## 4. Frozen CPU gates
+
+Every gate is mandatory:
+
+1. exactly 32 quartets and 128 surfaces;
+2. `128/128` typed-AST round trips;
+3. `128/128` agreement between the two independent executors;
+4. all canonical/paraphrase pairs have identical programs, terminal states,
+   and complete three-query behavior;
+5. every order twin and every binding twin has a distinct typed program,
+   distinct terminal behavior, and the frozen query is a valid separator;
+6. canonical/order/binding token multisets match in all 32 quartets after the
+   immutable Shohin tokenizer;
+7. every operation kind, entity argument, numeric argument, and query has a
+   nonempty exact character span and nonempty tokenizer span;
+8. nonce names are disjoint across quartets and have equal token width within a
+   quartet;
+9. every named shortcut feature has Bayes-optimal exact-program accuracy at or
+   below `1/3` on the 96 matched surfaces;
+10. no teacher model, answer model, remote service, model checkpoint, or
+    production evaluation answer is read;
+11. the report includes exact source-token, target-pointer, executor-call,
+    oracle-call, and external-execution counts;
+12. generator, test, preregistration, tokenizer hash, seed, and report hashes
+    are recorded before any confirmation board exists.
+
+One failed gate rejects the board. It is not repaired after viewing a model
+score. The first confirmation seed is forbidden until the development report
+and code are committed.
+
+## 5. Neural pilot authorized only after a CPU pass
+
+A CPU pass authorizes one isolated compiler pilot from the immutable 300k base.
+It does not authorize executor integration. The pilot must freeze a fresh
+train/development/confirmation corpus before fitting and compare:
+
+1. **full referential codon:** operation, entity, literal, query pointers;
+2. **R4 pointer baseline:** same base/budget, with privileged literal lexer;
+3. **absolute-role control:** no dynamic entity matching;
+4. **ordinary biaffine pointer network:** identical supervision and budget;
+5. **text AST decoder:** canonical program tokens, same trainable parameters,
+   examples, updates, and inference FLOPs;
+6. **joint adapter control:** same total parameters without separated heads;
+7. **shuffled-pointer sanity control;**
+8. **oracle compiler ceiling.**
+
+All arms receive identical source strings, AST labels, pointer labels, examples,
+optimizer steps, and confirmation access. Parameter equality must be exact or
+the larger control must be reported as favorable. No arm may receive structured
+operations, entities, literals, state, answer, or renderer ID at inference.
+
+Promotion requires, on the untouched confirmation board:
+
+- full exact-program accuracy at least `60%`;
+- at least `+10` percentage points over the strongest matched non-oracle
+  control;
+- order-twin and binding-twin exactness each at least `55%`;
+- paraphrase consistency at least `90%` among correctly compiled anchors;
+- answer accuracy with predicted programs at least `55%`;
+- donor pointer interventions change the execution result in the predicted
+  direction at least `90%` of eligible cases;
+- all named shortcut-only classifiers remain below the preregistered ceiling.
+
+These thresholds are intentionally demanding because R4 already produced a
+large binding gain. A new pilot must improve the missing complete interface,
+not merely repeat noun binding.
+
+## 6. Resource vector and collapse dossier
+
+The CPU falsifier's resource vector is recorded exactly in its report:
+
+```text
+(parameters=0,
+ retained_bits=serialized typed AST and board rows,
+ precision=exact integers and byte strings,
+ source_bytes=all UTF-8 source bytes read,
+ training_examples=0,
+ oracle_calls=typed-program construction and separator selection,
+ training_FLOPs=0,
+ inference_work=tokenization plus two exact executors,
+ sequential_depth=2 instructions,
+ external_memory=report bytes,
+ external_execution=two CPU list-machine evaluators)
+```
+
+Known collapses:
+
+- the compiler is supervised semantic parsing, not representation discovery;
+- pointer dereference is an external read interface;
+- the bounded list machine is a finite transducer;
+- phase separation can be unrolled into an acyclic evaluator;
+- exact symbolic execution is a favorable oracle, not neural reasoning;
+- fixed two-instruction length does not test learned halt;
+- typed slots supply an ontology and do not solve hidden-coordinate
+  identifiability.
+
+The only open empirical question is learnability under controlled transfer.
+
+## 7. Stage boundaries
+
+Stage A is this compiler falsifier and, only after a pass, its isolated neural
+pilot. Stage B is a separately preregistered learned source-deleted packet
+executor with no source/KV path. Stage C is a separately trained controller and
+halt policy with terminal/nonterminal twins. End-to-end native reasoning is not
+claimed until one uninterrupted model-owned rollout compiles, updates, reuses,
+queries, serializes, and halts without host semantic repair.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 79: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_PREREG_AMENDMENT_V1_1.md`
+
+Original source path: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_PREREG_AMENDMENT_V1_1.md`
+Original source size: 2,624 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Referential Literal-Pointer Compiler Preregistration Amendment v1.1
+
+**Status:** **FROZEN BEFORE ANY NEURAL FIT, MODEL SCORE, OR CONFIRMATION
+OPENING.** This amendment supersedes only the pointer-output inventory in
+`R12_REFERENTIAL_LITERAL_POINTER_COMPILER_PREREG.md`. All thresholds, controls,
+stage boundaries, and claim restrictions remain unchanged.
+
+## Defect found
+
+The v1 preregistration required two operation codons and one query pointer but
+did not explicitly require the compiler to bind the initial ordered entity
+state. A host parser could therefore provide the executor's initial order while
+the model predicted only updates. That would repeat the R4 boundary defect in a
+different field.
+
+The already frozen corpus rows contain exact tokenizer spans for
+`intro.entity0`, `intro.entity1`, and `intro.entity2`. No row regeneration or
+semantic change is required. The v1 acquisition ledger undercounted pointer
+labels because it did not charge these existing spans.
+
+## Corrected complete interface
+
+Every neural arm must now own ten source bindings per row:
+
+```text
+initial state:
+  intro.entity0 pointer
+  intro.entity1 pointer
+  intro.entity2 pointer
+
+operation 0:
+  kind grounding pointer/class
+  entity pointer
+  literal pointer
+
+operation 1:
+  kind grounding pointer/class
+  entity pointer
+  literal pointer
+
+late query:
+  query-position pointer
+```
+
+The compiler output is therefore
+
+```text
+[(initial entity pointer) x 3,
+ (kind, entity pointer, literal pointer) x 2,
+ query pointer,
+ STOP]
+```
+
+At inference, no structured initial order, entity name, operation, literal,
+query, answer, renderer, or target span may be provided. The host may only
+dereference model-selected source spans and apply the independently frozen
+machine semantics. A wrong initial pointer makes the full program wrong.
+
+## Amended gates
+
+Before fit:
+
+- all 102,144 corpus rows must contain nonempty tokenizer spans for all ten
+  targets;
+- the acquisition ledger must count `1,021,440` pointer labels, not `715,008`;
+- regenerated v1.1 JSONL files must be byte-identical to the frozen v1 files,
+  proving this amendment changes only auditing and model obligations;
+- the three initial-pointer exact accuracies and joint initial-order exactness
+  must be reported separately on development and confirmation;
+- full exact-program accuracy requires all three initial pointers, both
+  operation kinds, both entity pointers, both literal pointers, query pointer,
+  and STOP.
+
+This repair narrows the claim and makes the pilot harder. It does not authorize
+executor or HALT integration and does not create a reasoning result.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 80: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_QUALIFICATION_PREREG.md`
+
+Original source path: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_QUALIFICATION_PREREG.md`
+Original source size: 3,186 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Conventional Complete-Compiler One-Shot Qualification Preregistration
+
+**Status:** completed and passed once; exact result is frozen in
+`R12_REFERENTIAL_LITERAL_POINTER_COMPILER_QUALIFICATION_RESULT.md`
+
+## Question
+
+The factorized development matrix showed that broad language coverage, not
+parameter islands, is sufficient for exact known-atom source compilation. The
+current sealed confirmation cannot be opened because the islands attribution
+gate failed. This board asks a narrower operational question without touching
+those bytes:
+
+> Does the already-selected favorable ordinary parser reproduce exact complete
+> compilation once on a fresh, untouched known-atom board?
+
+## Frozen arm
+
+- base: raw Shohin 300k, SHA-256
+  `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`;
+- adapter: ordinary token tagger from job `693049`, SHA-256
+  `747a559b827c6d114943c091b9dea5b4b90cef7af13aa5003b8435c092d24991`;
+- adapter parameters: 8,607,886; total parameters: 133,689,550;
+- no training, tuning, seed sweep, oracle, retry, or alternative arm selection;
+- one evaluation only.
+
+## Board
+
+- 2,048 semantic quartets / 8,192 rows;
+- all language atoms occur in the public factorized training corpus;
+- every complete factor combination is absent from public train,
+  compositional-development, and lexical-OOD data;
+- all entity and neutral-anchor names are absent from those public splits;
+- zero exact-prompt and word-13-gram overlap against all public factorized data;
+- canonical/paraphrase/order-twin/binding-twin and token-bag gates are unchanged;
+- all ten source spans and both independent CPU executors must pass;
+- the generator has no sealed-confirmation input or path.
+
+The generator and this preregistration must be committed before the
+qualification seed is chosen. The report may expose counts and hashes before
+evaluation, but no row answer or model score may be read manually.
+
+## Gates
+
+- answer accuracy >=99%;
+- semantic-program exact >=99%;
+- full ten-pointer exact >=99%;
+- operation-kind accuracy >=99.9%;
+- initial-state joint exact >=99%;
+- at least 2,000/2,048 all-four exact quartets;
+- zero confirmation access and every board structural gate passes.
+
+Pass qualifies this exact conventional parser only as Stage-A infrastructure
+for a separately preregistered source-deleted executor/consumer development
+experiment. Failure rejects integration and requires diagnosis on this
+qualification board. Neither outcome establishes execution, halting,
+autonomous rollout, native reasoning, or architectural novelty.
+
+## Frozen outcome
+
+The generator and this preregistration were committed at `e7fa112` before seed
+`1218705082397710755` was selected. Job `693105` completed once on `evc25` and
+passed every preregistered gate: answer accuracy `8187/8192`, semantic-program
+and full-pointer exact `8186/8192`, operation-kind accuracy `8192/8192`, and
+`2045/2048` all-four exact quartets. The committed-before-score assessor records
+`qualify_conventional_compiler_for_isolated_stage_b_development`. This result
+does not authorize opening the old sealed confirmation or claiming execution,
+halting, autonomous rollout, native reasoning, or novelty.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 81: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_QUALIFICATION_RESULT.md`
+
+Original source path: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_QUALIFICATION_RESULT.md`
+Original source size: 3,917 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Conventional Compiler One-Shot Qualification Result
+
+**Decision:** `qualify_conventional_compiler_for_isolated_stage_b_development`
+
+## Purpose
+
+The factorized development matrix established that a conventional complete
+source parser can solve known-atom compositional compilation, but its favorable
+ordinary arm had been selected on development data. The old factorized
+confirmation remained sealed because the parameter-islands attribution gate
+failed. This one-shot qualification asked whether the already-selected ordinary
+parser reproduces exact compilation on a fresh untouched board without using
+those confirmation bytes.
+
+Passing qualifies only Stage-A parsing infrastructure for one separately
+preregistered source-deleted executor/consumer experiment. It is not evidence
+of execution, recurrence, halting, autonomous rollout, native reasoning, or
+architectural novelty.
+
+## Frozen identities and custody
+
+| Object | Frozen identity |
+|---|---|
+| raw Shohin 300k base | `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6` |
+| ordinary adapter from `693049` | `747a559b827c6d114943c091b9dea5b4b90cef7af13aa5003b8435c092d24991` |
+| adapter / total parameters | 8,607,886 / 133,689,550 |
+| generator/prereg commit before seed | `e7fa112` |
+| assessor commit before score | `3b3e7e9` |
+| qualification seed | `1218705082397710755` |
+| board JSONL | `06deeb39ac8c6ceb74003f6e503361401c58ead445558485e30a51d8c6d9358e` |
+| board report | `1467b089f964b5078f444f5d1c91228dcd3ee0a40792987b319f62dc7e98023d` |
+| raw result | `05c50c79672cf1b07a42fd02c48b5df84e4d4de87a36dfa637730ac600deccba` |
+| assessment | `35278899fdbcdf801838c414adf860d59a255ecb4de5a44b3acf072248fa6cc7` |
+| job log | `81f80a6ab545520771ce093032a502ebde4b0b9982b728ba2614f776af1320ba` |
+
+The fresh board contains 2,048 semantic quartets / 8,192 rows, 4,096 factor
+combinations, and 639 source names. All language atoms were known from public
+factorized training, while exact prompts, word 13-grams, entity names, and full
+factor combinations had zero overlap with public train, compositional
+development, and lexical-OOD splits. Every ten-span, two-executor, quartet,
+token-bag, and shortcut gate passed. The generator accepts no path to the sealed
+confirmation and reports `confirmation_access=0`.
+
+## Execution
+
+Slurm job `693105` completed once on `evc25` in 20 seconds with exit code `0:0`.
+It used the frozen raw-300k base and frozen ordinary adapter with no fitting,
+oracle, retry, seed sweep, or alternative arm. The result and report identities
+were checked by the assessor committed before the score was read.
+
+## Result
+
+| Frozen gate | Result | Floor | Pass |
+|---|---:|---:|---:|
+| answer accuracy | **8187/8192 = 99.938965%** | 99% | yes |
+| semantic-program exact | **8186/8192 = 99.926758%** | 99% | yes |
+| full ten-pointer exact | **8186/8192 = 99.926758%** | 99% | yes |
+| operation-kind accuracy | **8192/8192 = 100%** | 99.9% | yes |
+| initial-state joint exact | **8186/8192 = 99.926758%** | 99% | yes |
+| all-four exact quartets | **2045/2048** | 2000 | yes |
+
+Operation-0 and operation-1 joints were both 100%. All-four answers were exact
+for 2,046/2,048 quartets. The three program failures are consistent with the
+remaining initial-binding errors; no operation, literal, query, or kind error
+was observed.
+
+## Consequence
+
+The conventional complete compiler is now qualified as frozen Stage-A
+infrastructure. The next admissible experiment must keep the compiler and base
+frozen, gather a bounded model-owned packet, remove source states before any
+update, and train a separately parameterized recurrent executor and consumer.
+Gold packets may be diagnostic ceilings only. Host code may route tensor
+positions but may not decode, correct, or execute semantic fields.
+
+The old factorized confirmation remains sealed/local-only. This qualification
+does not reopen it and does not establish reasoning.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 82: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_STRUCTURED_DIAGNOSTIC_PREREG.md`
+
+Original source path: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_STRUCTURED_DIAGNOSTIC_PREREG.md`
+Original source size: 3,599 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Structured Complete-Compiler Diagnostic Preregistration
+
+**Protocol:** `r12_referential_literal_pointer_compiler_v1_2_structured_development`
+**Status:** frozen before v1.2 fitting or scoring
+**Selection boundary:** the v1.1 development set is exposed; this is a mechanism-repair diagnostic,
+not an untouched generalization result
+
+## 1. Failed parent
+
+The v1.1 six-slot compiler fit its two training renderers to near-zero loss but reached only
+45/2,048 full-pointer exact, 313/2,048 semantic-program exact, and 602/2,048 answers on frozen
+development. Its unseen paraphrase renderer scored 1/512 answers and systematically selected
+renderer-coordinate words such as `unaffected` and `travel`.
+
+The parent result is immutable in
+`R12_REFERENTIAL_LITERAL_POINTER_COMPILER_DEVELOPMENT_RESULT.md`. Confirmation remains sealed.
+
+## 2. Single treatment change
+
+Keep the exact parent base, train/development bytes, examples, update count, batch size, optimizer,
+schedule, six program slots, ten pointer targets, two kind classifiers, and host dereference/executor.
+Change only the source parser:
+
+1. Project frozen layer-19 token states to width 256 as before.
+2. Apply four bidirectional Transformer encoder layers, width 256, eight heads, FF 1,024.
+3. Predict ten token-role logits at every source position.
+4. Add each role logit to its corresponding pointer score.
+5. Train a balanced binary role-label objective at weight `0.5` using the same gold source spans as
+   the pointer objective.
+
+No line boundary, renderer identifier, structured program, initial value, event value, answer,
+gold span, or role label is supplied at inference. The model input remains source token IDs and a
+source-length mask only.
+
+## 3. Resource ledger
+
+| Component | Parameters |
+|---|---:|
+| immutable Shohin base | 125,081,664 |
+| structured compiler adapter | 6,402,701 |
+| total | 131,484,365 |
+
+The total remains below 150M. The base is frozen. The treatment uses one H100 and four CPUs.
+
+## 4. Frozen fit
+
+- train bytes: v1.1 `train.jsonl`, SHA-256
+  `f47c6d6ce316be6765641f61a294481605fa53c7b12388741fb753c238b2f36e`;
+- 96,000 examples, one epoch, batch 64, 1,514 expected updates;
+- AdamW, betas `(0.9, 0.95)`, weight decay `0.01`;
+- peak LR `0.001`, 50-update warmup, cosine decay to 10%;
+- gradient clip 1.0;
+- role loss weight 0.5;
+- seed `2026071804`;
+- distinct output `train/referential_literal_pointer_compiler_v1_2_structured/`.
+
+## 5. Frozen diagnostic gates
+
+The v1.1 development set is intentionally reused only to answer whether the structural field repairs
+the observed renderer-coordinate failure. It cannot authorize confirmation.
+
+| Metric | Gate |
+|---|---:|
+| overall answer accuracy | >=50% and >=15 percentage points above v1.1 |
+| semantic-program exact | >=40% and >=20 percentage points above v1.1 |
+| full ten-binding pointer exact | >=20% and >=15 percentage points above v1.1 |
+| paraphrase answer accuracy | >=25% |
+| paraphrase semantic-program exact | >=20% |
+| canonical answer accuracy | no more than 5 percentage points below v1.1 |
+| canonical + paraphrase both pointer-exact | >=64/512 |
+| all four surfaces pointer-exact | >=32/512 |
+
+## 6. Decisions
+
+- **Fails:** reject bidirectional role supervision as an adequate repair under two-renderer training.
+- **Passes:** authorize construction of a fresh factorized-language board and favorable matched
+  controls. Do not read v1.1 confirmation.
+- **Regardless of result:** no compiler/executor integration, native-reasoning claim, novelty claim,
+  or production promotion follows from this exposed-development diagnostic.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 83: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_STRUCTURED_DIAGNOSTIC_RESULT.md`
+
+Original source path: `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_STRUCTURED_DIAGNOSTIC_RESULT.md`
+Original source size: 3,240 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Structured Complete-Compiler Diagnostic Result
+
+**Protocol:** `r12_referential_literal_pointer_compiler_v1_2_structured_development`
+**Decision:** **REJECT AS AN INTEGRATED COMPILER; RETAIN STRUCTURAL EFFECT**
+
+## Run identity
+
+Job `692983` completed on a verified H100 PCIe on `evc25` with exit code zero in 13m28s. The fit
+used the frozen v1.1 train/development bytes, one epoch, 1,514 updates, seed `2026071804`, and the
+frozen optimizer schedule. Shohin remained frozen.
+
+| Item | Value |
+|---|---|
+| adapter parameters | 6,402,701 |
+| total parameters | 131,484,365 |
+| fit elapsed | 555.566 seconds |
+| initial adapter-state SHA-256 | `78add721586562cac4418fc539d8495737d772260354532a7f59f8b467ecfe15` |
+| final adapter-state SHA-256 | `dd5d5b6a8c7d300c3fe4016098795a8caa9d671ed72a1a25a148e8f51de6be5c` |
+| adapter file SHA-256 | `8d2278c369ead039a48bc39d8f9effab7198a5cecfabaf01e3724eec4ec3aa11` |
+| development result SHA-256 | `0f237c052102955c26cc14340d16fe2139a020cac959ac27720f2faf22121d03` |
+| log SHA-256 | `822c646fd55abaecbe80bb805bee8c6eb99dfcfeb309e15a23aa28e359985293` |
+
+All three artifacts are hash-matched between Newton and the Mac. Confirmation access is zero.
+
+## Frozen result
+
+| Metric | v1.1 free slots | v1.2 structured | Change |
+|---|---:|---:|---:|
+| initial-state joint exact | 18.848% | **48.340%** | **+29.492pp** |
+| full pointer exact | 2.197% | **0%** | -2.197pp |
+| semantic-program exact | 15.283% | **0%** | -15.283pp |
+| answer accuracy | 29.395% | **18.994%** | -10.401pp |
+| operation-kind accuracy | 96.265% | **49.927%** | -46.338pp |
+| canonical + paraphrase both exact | 0/512 | **0/512** | 0 |
+
+The structural field improves ordered initial binding materially. On the paraphrase renderer,
+initial-state joint rises to 60.547%, operation-0 joint to 40.625%, and operation-1 joint to 38.672%.
+But the operation-kind loss remains at chance throughout training, so no semantic program is exact.
+
+## Mechanism diagnosis
+
+The role head can minimize pointer and role losses without forcing the free operation slot to read
+the selected kind token. Structural location and semantic classification became disconnected
+parameter paths. This is a wiring failure, not evidence against bidirectional parsing.
+
+A post-hoc diagnostic composes v1.2 pointer predictions with the independently trained v1.1 kind
+predictions, without fitting new weights. It reaches:
+
+| Hybrid metric | Result |
+|---|---:|
+| answers | **987/2,048 = 48.193%** |
+| semantic programs | **691/2,048 = 33.740%** |
+| full pointer exact | **224/2,048 = 10.938%** |
+| paraphrase answers | **270/512 = 52.734%** |
+| paraphrase semantic programs | **224/512 = 43.750%** |
+| all-four answers correct | **114/512** |
+
+This hybrid is an external diagnostic, not an autonomous compiler. It supplies evidence that the
+structural and semantic gains coexist when their parameter paths are isolated.
+
+## Consequence
+
+Reject v1.2 as an integrated compiler. A minimal successor may give structural roles and operation
+semantics independent memory projections/decoders while retaining the same source-only inference
+boundary. Passing exposed development can authorize only a fresh board and matched controls; v1.1
+confirmation remains sealed.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 84: `R12_REFERENTIAL_LITERAL_POINTER_CORPUS_RESULT.md`
+
+Original source path: `R12_REFERENTIAL_LITERAL_POINTER_CORPUS_RESULT.md`
+Original source size: 4,868 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Referential Literal-Pointer Corpus Result
+
+**Decision:** **FROZEN DATA PASS; NEURAL COMPILER FIT MAY PROCEED.**
+
+**Claim boundary:** this is a synthetic data-custody and leakage-audit result.
+It is not a model score, compiler result, native-reasoning result, executor
+result, halt result, or novelty claim.
+
+## 1. Build chronology
+
+The corpus generator was committed before the confirmation seed was opened:
+
+| Event | Result |
+|---|---|
+| generator freeze `aad5ecf` | source/tests committed and pushed; no confirmation seed or row existed |
+| confirmation seed opened | `3072310916827575206` |
+| first invocation | aborted before creating a row or directory because 4,200 equal-width nonce names were requested but only 4,135 exist |
+| capacity repair `ae01b54` | pools reduced to 3,100 train + 400 development + 600 confirmation names; semantics unchanged |
+| second invocation | all in-memory semantic/audit gates passed, but a literal `{}.jsonl` path caused sequential split writes to retain only the final confirmation file |
+| output-path repair `b064ce1` | distinct-path test added; source committed and pushed before retry |
+| final invocation | all three splits written under the same fixed seeds; all gates passed |
+
+The malformed-run final `{}.jsonl` is byte-identical to the repaired
+`confirmation.jsonl`. Therefore the output-path repair changed only artifact
+placement, not confirmation content. No model score, fit, checkpoint, or row-
+level confirmation inspection occurred before either repair.
+
+## 2. Frozen corpus
+
+| Split | Groups | Rows | Renderer families | Uncompressed SHA-256 |
+|---|---:|---:|---|---|
+| train | 24,000 | 96,000 | `forge`, `route` | `f47c6d6ce316be6765641f61a294481605fa53c7b12388741fb753c238b2f36e` |
+| development | 512 | 2,048 | `archive`, `tableau` | `20611bf4ddbdb42d7e2f9dd76759b86f3f4dd16d5942f207bf7b325984da5ad6` |
+| confirmation | 1,024 | 4,096 | `docket`, `procession` | `84005921b5fca93f9c2567655c4345bced78fc74ed7f49c8f72189b9f87fbf03` |
+
+Every group contains canonical, independent paraphrase, token-bag-matched order
+twin, and token-bag-matched binding twin surfaces. The pre-fit v1.1 amendment
+requires ten exact source targets per row: three initial-order entity pointers,
+two operation kinds, two operation entity pointers, two literal pointers, and
+one query pointer.
+
+Aggregate acquisition ledger:
+
+- 102,144 rows;
+- 8,538,572 source tokens;
+- 30,870,736 UTF-8 source bytes;
+- 1,021,440 target pointer labels;
+- zero teacher calls;
+- zero checkpoint reads;
+- zero production-evaluation answer reads.
+
+## 3. Leakage and structural gates
+
+All gates pass:
+
+- no duplicate source in any split;
+- every group passes paraphrase, order, binding, answer-separation, and exact
+  token-bag checks;
+- every expected pointer span exists and has at least one Shohin token;
+- train/development/confirmation have zero exact-prompt overlap;
+- every split pair has zero normalized word 13-gram overlap;
+- every split pair has zero entity-name overlap;
+- every split pair has zero renderer overlap;
+- named shortcut Bayes ceilings are at or below `1/3` in every split.
+
+Confirmation matched-surface ceilings are token bag `1024/3072 = 33.33%`,
+absolute pointer positions `120/3072 = 3.91%`, source token length `19/3072 =
+0.62%`, and renderer identity `3/3072 = 0.10%`.
+
+The corpus is still synthetic and supplies a typed ontology. Passing these
+gates does not certify natural-language semantics outside this bounded machine.
+
+## 4. Evidence identity and backup
+
+| Artifact | SHA-256 |
+|---|---|
+| v1.1 amendment | `f7d8f6f23ceb2f91d33c8a46340e10e298a2b1aa39ca6b1b5e6264d80bbcd72a` |
+| final generator | `fd211d6c31be6440a1ef3451632f17c5a3af89781af088fb0caffc8b26d6561f` |
+| tokenizer | `87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4` |
+| v1.1 report | `176435d8c544948468f81cb23dc65ff51bf8010af212fb737984bbed1d1265cc` |
+| train gzip (`gzip -9 -n`) | `4ef7a4b2b73d07c99bd19effb832fa4897bf60c90b5e044691aadaff6b2d0fd9` |
+| development gzip (`gzip -9 -n`) | `abc991626545aa0fab6d3419e0689d5475a5052fa05a9a664cf1cbff7a8cda30` |
+| confirmation gzip (`gzip -9 -n`) | `70db90f5ac3b6a8d5ebdc77ade90301d9c64043122734e9ab4c2861f1c80cc18` |
+
+The compressed archives and v1.1 report are the GitHub backup. The uncompressed
+files remain local working copies. The v1.1 JSONL files are byte-identical to
+v1; only the audit and model obligations changed. Decompression must reproduce
+the exact uncompressed hashes above before any fit or score.
+
+## 5. Authorization
+
+The isolated compiler pilot may now train on `train` and select only on
+`development`. Confirmation stays sealed until all arm weights, hyperparameters,
+selection rules, and deployment identities are frozen. The first confirmation
+opening must score every preregistered arm once. No executor or HALT integration
+is authorized by this data result.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 85: `R12_RELATION_COMPLETE_TRANSPORT_HYPOTHESIS.md`
 
 Original source path: `R12_RELATION_COMPLETE_TRANSPORT_HYPOTHESIS.md`
 Original source size: 8,036 bytes
@@ -13457,7 +16672,7 @@ That delta requires a dedicated prior-art review after the CPU object is frozen.
 
 ---
 
-## Embedded source 64: `R12_RELATION_COMPLETE_TRANSPORT_REVIEW_RESULT.md`
+## Embedded source 86: `R12_RELATION_COMPLETE_TRANSPORT_REVIEW_RESULT.md`
 
 Original source path: `R12_RELATION_COMPLETE_TRANSPORT_REVIEW_RESULT.md`
 Original source size: 4,528 bytes
@@ -13577,7 +16792,7 @@ consumption, and termination.
 
 ---
 
-## Embedded source 65: `R12_RESEARCHER_ADAPTIVE_INTERACTION_RESULT.md`
+## Embedded source 87: `R12_RESEARCHER_ADAPTIVE_INTERACTION_RESULT.md`
 
 Original source path: `R12_RESEARCHER_ADAPTIVE_INTERACTION_RESULT.md`
 Original source size: 6,044 bytes
@@ -13697,7 +16912,7 @@ through a preserved natural-language interface.
 
 ---
 
-## Embedded source 66: `R12_RESEARCHER_INTERVIEW_RESULT.md`
+## Embedded source 88: `R12_RESEARCHER_INTERVIEW_RESULT.md`
 
 Original source path: `R12_RESEARCHER_INTERVIEW_RESULT.md`
 Original source size: 3,868 bytes
@@ -13779,7 +16994,7 @@ residual patch, or result tape.
 
 ---
 
-## Embedded source 67: `R12_RESIDUAL_PACKET_C2_REPRO_AUDIT_RESULT.md`
+## Embedded source 89: `R12_RESIDUAL_PACKET_C2_REPRO_AUDIT_RESULT.md`
 
 Original source path: `R12_RESIDUAL_PACKET_C2_REPRO_AUDIT_RESULT.md`
 Original source size: 2,588 bytes
@@ -13839,7 +17054,1686 @@ genuinely independent implementation with adversarial golden vectors.
 
 ---
 
-## Embedded source 68: `R12_SCEB_RESULTS.md`
+## Embedded source 90: `R12_RGDE_CONSUMER_TRANSPORT_DIAGNOSTIC_PREREG.md`
+
+Original source path: `R12_RGDE_CONSUMER_TRANSPORT_DIAGNOSTIC_PREREG.md`
+Original source size: 2,332 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 RGDE Consumer Transport Diagnostic Preregistration
+
+**Status:** closed negative after job `693126`. See
+`R12_RGDE_CONSUMER_TRANSPORT_DIAGNOSTIC_RESULT.md`.
+
+**Claim class:** no-fit public matched-consumer diagnosis. This cannot promote
+the rejected relational carrier and does not read confirmation.
+
+## Question
+
+The public relational probe found 97.413% raw lexical-mean identity, whereas
+the frozen executor's learned matcher reached only 77.952% on the closed depth
+board. Does the learned consumer interface destroy identity that is present in
+the packet, or does this public board fail to reproduce the end-to-end problem?
+
+## Frozen arms
+
+All arms use the exact tied RGDE v1.1 executor state
+`d31fd3e6150dd352cd0eea5063f960393e9017ac3ab729b5c536fd1f1c432184`
+and the admitted public board
+`ba2b0d4817ffe68f004978b6a403aba893db17aa49878afb6548a71b9219b596`.
+There is no fit.
+
+1. `current`: exact existing packet and executor.
+2. `mean_rebound`: choose one of the three introduced identities by existing
+   lexical-mean cosine, then replace only the operation entity vector with the
+   corresponding introduced vector.
+3. `ordered_rebound`: same replacement using the rejected ordered kernel as a
+   diagnostic oracle, not a promotion path.
+4. `gold_rebound`: same replacement using the true introduced identity.
+
+Every operation context, kind, literal, query, state, cell, and weight is
+otherwise byte-identical. Full source memories are deleted before execution.
+
+## Frozen interpretation
+
+- Localize transport loss to the learned consumer matcher only if current
+  entity match is below 90% and mean rebinding gains at least 10 points on both
+  answers and exact final state.
+- If current answers and exact state are both at least 95%, record that the
+  public board does not reproduce the failure.
+- Otherwise record `transport_failure_not_localized`.
+- Ordered rebinding adds independent evidence only if it gains at least one
+  answer point over mean rebinding. Gold answer/state ceilings are recorded
+  against 99% but do not alter the primary diagnosis.
+
+One H100 job must exit `0:0`, hash every input and this evaluator, record zero
+fit updates and zero confirmation access, and write all four depth/surface
+tables. No threshold changes, retry, confirmation read, reasoning, halt, or
+novelty claim is permitted.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 91: `R12_RGDE_CONSUMER_TRANSPORT_DIAGNOSTIC_RESULT.md`
+
+Original source path: `R12_RGDE_CONSUMER_TRANSPORT_DIAGNOSTIC_RESULT.md`
+Original source size: 3,028 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 RGDE Consumer Transport Diagnostic Result
+
+**Decision:** `transport_failure_not_localized`
+
+The public board reproduces the end-to-end degradation, and identity rebinding
+helps materially, but even gold identity cannot recover the frozen executor's
+gold-packet ceiling. The failure is distributed across identity transport and
+continuous recurrent consumption rather than one bad comparator.
+
+## Custody
+
+- Preregister/source commit `fba4be0` preceded executor-level score access.
+- Board SHA-256:
+  `ba2b0d4817ffe68f004978b6a403aba893db17aa49878afb6548a71b9219b596`.
+- Frozen executor file SHA-256:
+  `adb6323202f6d25280f3a1cfd34a5b88fbc876331643726e38db389ead746b74`.
+- Frozen executor state SHA-256:
+  `d31fd3e6150dd352cd0eea5063f960393e9017ac3ab729b5c536fd1f1c432184`.
+- Job `693126` completed once on H100 `evc29` in 26 seconds, exit `0:0`,
+  with zero fit updates and zero confirmation access.
+- Result SHA-256:
+  `d7822b395069569e43aa9d591bfc30769ed32c7be61140f71e37ff5c63b8201a`.
+
+## Matched results
+
+| Arm | Answers | Exact state | All transitions | Entity match |
+|---|---:|---:|---:|---:|
+| Untouched packet | 77.393% | 70.312% | 46.045% | 79.979% |
+| Mean-selected rebound | 85.645% | 81.543% | 62.012% | 86.691% |
+| Ordered-selected rebound | 88.281% | 85.400% | 68.311% | 89.989% |
+| Gold-identity rebound | 88.672% | 85.840% | 68.994% | 90.478% |
+
+Amount is 100% and query is 99.609% in every arm. Identity selection itself is
+97.413% for mean, 99.653% for ordered, and 100% for gold.
+
+The untouched arm clearly reproduces the prior transport failure. Mean
+rebinding gains 8.252 answer points and 11.230 state points: it misses the
+predeclared ten-point answer threshold, so consumer-matcher localization is
+not authorized. Ordered rebinding adds 2.637 answer points over mean and gold
+adds only another 0.391 points. Most importantly, gold identity remains far
+below the 99% answer/state ceilings.
+
+## Mechanistic consequence
+
+The executor does not merely fail to decide which introduced name an operation
+mentions. It re-encodes identity into continuous entity vectors, compares those
+vectors after soft permutation mixing, and repeatedly feeds the resulting
+distributed state back into the next match. Exact rebinding removes the first
+comparison error but not state-representation drift.
+
+The next admissible architecture should therefore remove continuous entity
+embeddings from the recurrent loop. A categorical identity packet can address
+one of three immutable identities directly; recurrent state can be only a
+three-by-three permutation register; and a tied neural update cell can consume
+current location, kind, and amount without relearning semantic equality at
+every step. Mean-selected identity is the primary conventional compiler;
+ordered and gold identity remain favorable ceilings. This requires a new
+preregistration and fit on public atomic data before any fresh confirmation.
+
+No autonomous planning, learned halt, language reasoning, or novelty claim is
+authorized by this diagnostic.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 92: `R12_RGDE_DEPTH_CONFIRMATION_PREREG.md`
+
+Original source path: `R12_RGDE_DEPTH_CONFIRMATION_PREREG.md`
+Original source size: 5,299 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 RGDE Recurrent-Depth Confirmation Preregistration
+
+**Status:** closed negative after one-shot job `693124`. See
+`R12_RGDE_DEPTH_CONFIRMATION_RESULT.md`.
+
+**Claim class:** confirmation of a source-deleted recurrent execution component
+at depths three through eight. Operation count and halt remain externally
+scheduled. A pass is not autonomous language reasoning or learned halting.
+
+## Question
+
+RGDE v1.1 learned one shared update cell only from independent atomic examples
+and composed it twice at 99.707% answer accuracy. The fresh question is:
+
+> Does that exact frozen cell preserve model-owned permutation state when it is
+> reused three to eight times on unseen entity names, unseen language-factor
+> combinations, and semantically matched long-program twins?
+
+No fit, calibration, retry, seed sweep, or checkpoint selection is permitted.
+
+## Commit-before-seed board
+
+The production seed has no source-code default and must be generated only after
+this preregistration, generator, evaluator, tests, assessor, and Slurm job are
+committed and pushed. The board contains 512 semantic quartets / 2,048 rows,
+balanced across depths 3--8. Every row has:
+
+- three fresh paired nonce names absent from all public factorized data;
+- a long program and exact terminal state agreed by two CPU executors;
+- canonical/paraphrase surfaces with identical semantics;
+- an operation-order twin and entity-binding twin with the same normalized word
+  bag but a different answer at the fixed query;
+- only known language atoms, but factor combinations absent from public train
+  and development;
+- zero exact-prompt, word-13-gram, entity-name, and factor-combination overlap
+  against public train/compositional/lexical-OOD data.
+
+The old factorized confirmation is neither an input nor an audit source. The
+generator rejects any public path whose filename contains `confirmation`.
+
+## Packet-stream boundary
+
+Each long program is rendered as a stream of ordinary two-operation source
+cards. The already qualified compiler processes one card at a time. Its
+set-valued lexical/contextual packet is gathered and both source memories are
+deleted. The frozen tied executor then applies the packet's active operations
+to one persistent `3 x 3` state. An odd final card contains an ignored filler
+operation; the host supplies only the declared active count. The final card's
+model-owned query packet consumes the final state.
+
+Host code supplies card order, active operation count, and `halt_after=depth`.
+It does not decode operation direction, entity, amount, query, state,
+transition, or answer. This isolates recurrence depth; halting is explicitly
+out of scope.
+
+## Immutable system
+
+- tied atomic executor file SHA-256:
+  `adb6323202f6d25280f3a1cfd34a5b88fbc876331643726e38db389ead746b74`;
+- tied state SHA-256:
+  `d31fd3e6150dd352cd0eea5063f960393e9017ac3ab729b5c536fd1f1c432184`;
+- raw-300k base, ordinary compiler, tokenizer, packet mode, widths, and every
+  parameter are unchanged from the passed v1.1 development run;
+- total system parameters remain 135,180,829; trainable parameters are zero.
+
+Frozen source SHA-256 values are generator `790279d9...`, generator tests
+`51852281...`, evaluator `6e6a8211...`, assessor `125eef0f...`, and Slurm job
+`1b311def...`. Seventeen focused CPU tests plus Ruff, `py_compile`, shell
+syntax, and `git diff --check` pass before production seed selection.
+
+## One-shot evaluations
+
+One Slurm job serially writes four immutable outputs:
+
+1. predicted packet, no intervention;
+2. gold packet diagnostic rescore;
+3. globally deranged operation stream within the same depth;
+4. globally deranged query within the same depth.
+
+Every intervention changes all 2,048 semantic keys and swaps only the declared
+bounded field. Gold roles/kinds never enter the primary result.
+
+## Frozen gates
+
+The depth mechanism passes only if all are true:
+
+1. every board CPU/data/custody gate passes with zero old-confirmation access;
+2. depths 3--4 each reach at least 95% answers, 95% exact final state, and 90%
+   all-transition exactness;
+3. depths 5--6 each reach at least 90% answers, 90% final state, and 80%
+   all-transition exactness;
+4. depths 7--8 each reach at least 85% answers, 85% final state, and 70%
+   all-transition exactness;
+5. every surface reaches at least 85% answers and 400/512 quartets have all
+   four answers correct;
+6. overall predicted answers/final state are within three points of gold;
+7. entity-match and amount accuracy are each at least 98%;
+8. operation derangement is at most 40% answers/final state and loses at least
+   50 points on each relative to primary;
+9. query derangement is at most 5% answers, loses at least 90 points, and
+   changes exact final state by at most one point;
+10. one job completes `0:0`; every output binds board/report/evaluator/base/
+    compiler/executor/tokenizer, records 2,048 effective interventions where
+    requested, and records zero old-confirmation access.
+
+Failure at shallow depth rejects packet-stream confirmation. A monotonic depth
+collapse localizes recurrent-state drift. Gold-only success localizes compiler
+transfer. A clean pass establishes reusable bounded state updates to depth
+eight, but still does not establish free-form planning, learned stopping, or
+natural-language chain-of-thought.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 93: `R12_RGDE_DEPTH_CONFIRMATION_RESULT.md`
+
+Original source path: `R12_RGDE_DEPTH_CONFIRMATION_RESULT.md`
+Original source size: 4,146 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 RGDE Recurrent-Depth Confirmation Result
+
+**Decision:** `reject_rgde_depth_confirmation`
+
+**Strong diagnostic:** the frozen recurrent executor itself confirms through
+depth eight under gold packets; the primary predicted packet fails on unseen
+paired-name grounding. Do not refit or rerun this confirmation board.
+
+## Custody
+
+- Source/preregistration commit `85ead2e` preceded production seed
+  `11772835344958352982`.
+- The 2,048-row / 6,136-card / 798,346-token board passed every CPU/data gate.
+- Board SHA-256:
+  `742899905a39c0afc4575e94ff533d489aaf42992c248ddf4668f44609eab2d0`.
+- Job `693124` ran once on H100 `evc29`. It wrote primary, gold, and operation
+  control outputs, then exited `1:0` because the depth-stratified query labels
+  made a full within-depth derangement impossible. There was no fit, retry,
+  alternate seed, or old-confirmation access.
+- Safe evidence archive SHA-256:
+  `ec795b89683451e1f495e902a9db3fc8b736f23f4d4076ee7cbdcc1db7a20663`.
+
+The missing query control and failed Slurm receipt independently fail gate 10.
+The primary scores already fail gates 2--7, so no replacement control can
+change the rejection decision.
+
+## Primary predicted packet
+
+| Depth | Answers | Exact final state | All transitions | Entity match |
+|---:|---:|---:|---:|---:|
+| 3 | 79.651% | 76.453% | 61.337% | 82.752% |
+| 4 | 78.779% | 73.256% | 56.395% | 82.922% |
+| 5 | 81.471% | 72.059% | 46.471% | 79.118% |
+| 6 | 72.059% | 65.294% | 35.294% | 76.765% |
+| 7 | 78.824% | 72.941% | 41.765% | 77.647% |
+| 8 | 67.059% | 55.294% | 23.824% | 74.044% |
+| **overall** | **76.318%** | **69.238%** | **44.238%** | **77.952%** |
+
+Amount is 100% and query is 99.707%. Every surface lies between 75.000% and
+78.516% answers; only 243/512 quartets have all four answers correct. The error
+accumulates with depth because operation-to-initial entity identity is already
+wrong on roughly 22% of atomic packets.
+
+## Gold-packet localization
+
+| Depth | Answers | Exact final state | All transitions | Entity match |
+|---:|---:|---:|---:|---:|
+| 3 | 99.419% | 100.000% | 99.419% | 100.000% |
+| 4 | 99.709% | 100.000% | 97.965% | 100.000% |
+| 5 | 100.000% | 100.000% | 99.412% | 100.000% |
+| 6 | 100.000% | 100.000% | 99.706% | 100.000% |
+| 7 | 100.000% | 100.000% | 99.118% | 100.000% |
+| 8 | 99.118% | 100.000% | 98.824% | 100.000% |
+| **overall** | **99.707%** | **100.000%** | **99.072%** | **100.000%** |
+
+This is the main scientific result. The same 1,491,279-parameter cell was
+trained only on independent atomic updates and never on depth 3--8. With the
+compiler interface repaired by gold role spans/kinds, it maintains exact state
+through eight recurrent calls. There is no intrinsic recurrent-state collapse
+at this depth.
+
+The 23.389-point answer gap and 30.762-point final-state gap between predicted
+and gold localize the failure to Stage A packet grounding on the new hyphenated
+paired names. Those names are compositionally novel relative to the compiler's
+single nonce-name training distribution.
+
+## Causal operation control
+
+Replacing every operation stream with a different same-depth program reduces
+answers to 32.275%, exact final state to 13.428%, and all-transition exactness
+to 0.244%, while query remains 99.707%. The executor is consuming operation
+packets causally; its positive gold depth score is not an inert-state shortcut.
+
+## Next admissible move
+
+Preserve this board as a sealed negative and never fit on it. The next
+development experiment must target compositional referent grounding on a new,
+disjoint public paired-name board. A no-fit relational carrier should compare
+role-weighted token sets before source deletion rather than compressing each
+referent independently to one mean vector. Only after that interface passes a
+new development board may a second, independently seeded depth confirmation be
+designed.
+
+The confirmed current capability is therefore precise: **the native tied
+executor generalizes its atomic update rule through depth eight when supplied
+correct bounded packets; the ordinary compiler does not yet ground novel
+composed entity names reliably enough for end-to-end confirmation.**
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 94: `R12_RGDE_RELATIONAL_IDENTITY_PREREG.md`
+
+Original source path: `R12_RGDE_RELATIONAL_IDENTITY_PREREG.md`
+Original source size: 3,143 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 RGDE Relational Identity Carrier Preregistration
+
+**Status:** closed negative after job `693125`. See
+`R12_RGDE_RELATIONAL_IDENTITY_RESULT.md`.
+
+**Claim class:** public no-fit compiler-interface development. This is not an
+executor, sealed confirmation, autonomous reasoning, or novelty claim.
+
+## Failure being tested
+
+The one-shot recurrent-depth board localized end-to-end failure to composed
+referent grounding: predicted entity matching was 77.952%, while the same
+frozen recurrent cell with gold packets was 100% exact in final state and
+99.072% exact across all transitions through depth eight. The current packet
+compresses every role occurrence independently to one mean lexical vector.
+That operation discards the discrete relation that two spans contain the same
+ordered token sequence.
+
+## Proposed bounded carrier
+
+Before source deletion, preserve each compiler role as normalized sigmoid token
+weights. Compare an operation role to each of the three introduction roles with
+a fixed translation-invariant sequence kernel:
+
+1. form the weighted equality matrix between source token IDs;
+2. sum weighted matches along every relative-position diagonal;
+3. retain the maximum diagonal mass; and
+4. normalize by the two role-weight norms.
+
+This produces one bounded three-way identity relation per operation. It uses
+the frozen model's learned role masks and exact vocabulary identity, but no
+string parser, answer, state transition, optimizer, executor, or retained full
+source tensor. Ordered comparison is essential: an unordered bag cannot
+distinguish `A-B` from `B-A`.
+
+## Fresh public board
+
+The builder is committed before choosing its production seed. It will generate
+512 semantic quartets / 2,048 rows balanced over depths three through eight,
+with fresh paired nonce names, unseen known-atom factor combinations, matched
+order/binding twins, two agreeing CPU executors, and zero overlap with public
+factorized train/development data. No confirmation artifact is an input.
+
+## Frozen methods
+
+- existing normalized-sigmoid lexical mean at temperature 1.0;
+- unordered vocabulary-mass cosine at temperature 0.5;
+- ordered sequence kernels at temperatures 1.0, 0.5 (primary), and 0.25;
+- gold-span ordered sequence ceiling.
+
+There is no learned parameter, sweep-selected score, retry, or seed selection.
+Temperature 0.5 is the sole primary before score access; the others are
+mechanistic controls.
+
+## Gates
+
+The primary ordered carrier advances only if all are true:
+
+1. at least 99% identity overall;
+2. at least 98.5% at every depth and on every surface;
+3. at least a 15-point gain over the existing lexical mean;
+4. no worse than unordered vocabulary-mass cosine;
+5. gold ordered-span ceiling at least 99.9%;
+6. one H100 job exits `0:0`, hashes the exact board/report/base/compiler/
+   tokenizer/probe, records zero fit updates and zero confirmation access.
+
+Failure closes this carrier. Passing authorizes only a separately frozen
+source-deleted executor interface on public development data. It cannot reopen
+or reread the failed depth confirmation; a later confirmation must use a new
+independent seed and board.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 95: `R12_RGDE_RELATIONAL_IDENTITY_RESULT.md`
+
+Original source path: `R12_RGDE_RELATIONAL_IDENTITY_RESULT.md`
+Original source size: 2,993 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 RGDE Relational Identity Carrier Result
+
+**Decision:** `reject_rgde_relational_identity_carrier`
+
+The ordered carrier is highly accurate in absolute terms but fails its frozen
+attribution gate. Do not promote or integrate it from this result.
+
+## Custody
+
+- Source/prereg commit `7392002` preceded the first production seed attempt.
+- That attempt wrote no board and retired seed `9306354405723368031` after a
+  static 512-groups-versus-six-depths validation defect.
+- Correction commit `94f8d1b` preceded production seed
+  `18136108174735860272`.
+- The admitted public board has 512 semantic quartets / 2,048 rows, 6,136
+  source cards, 800,803 source tokens, and 1,536 fresh paired names.
+- Every overlap, span, factor, executor, quartet, and depth-balance gate passes.
+- Board SHA-256:
+  `ba2b0d4817ffe68f004978b6a403aba893db17aa49878afb6548a71b9219b596`.
+- Job `693125` completed once on H100 `evc29` in 75 seconds, exit `0:0`, with
+  zero fit updates and zero confirmation access.
+- Result SHA-256:
+  `138b855e253f2d6faf415d36522dab60ad38f1172d66cece1677a6f785703a6e`.
+
+## Scores
+
+There are 11,248 active operation-to-introduction identity references.
+
+| Method | Correct | Accuracy |
+|---|---:|---:|
+| Existing lexical mean, T=1 | 10,957 | 97.413% |
+| Unordered vocabulary mass, T=0.5 | 11,169 | 99.298% |
+| Ordered sequence, T=1 | 11,214 | 99.698% |
+| **Ordered sequence, T=0.5 primary** | **11,209** | **99.653%** |
+| Ordered sequence, T=0.25 | 11,208 | 99.644% |
+| Gold-span ordered ceiling | 11,248 | 100.000% |
+
+The primary is at least 99.346% at every depth and 99.573% on every surface.
+It exceeds the unordered bag and proves that ordered role-token identity is
+recoverable without fitting. However, the existing mean control is also much
+stronger on this board than the frozen end-to-end depth result suggested. The
+primary gain is only **2.240 points**, not the required 15 points. Five of six
+gates pass; the attribution gate fails.
+
+## Interpretation
+
+This experiment does not establish that mean-vector compression is the causal
+end-to-end bottleneck. It establishes a narrower fact: the frozen compiler's
+soft role masks contain enough information for a fixed ordered kernel to
+recover composed identity almost perfectly on a disjoint public board. The
+large discrepancy between raw mean-cosine identity here (97.413%) and the
+frozen executor's learned entity-match head on the failed depth board (77.952%)
+now points at the **consumer interface** as a plausible failure source.
+
+The next admissible experiment is a no-fit matched executor diagnostic on this
+public board: compare the exact frozen packet/executor against the same packet
+whose operation identity is rebound to one of its three initial-entity vectors
+by the ordered relation. That test may localize transport loss, but this failed
+carrier cannot be promoted from it and the sealed depth board may not be read.
+
+No autonomous planning, learned halt, language reasoning, or novelty claim is
+authorized.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 96: `R12_RGDE_V1_1_CAUSAL_CONTROL_AMENDMENT.md`
+
+Original source path: `R12_RGDE_V1_1_CAUSAL_CONTROL_AMENDMENT.md`
+Original source size: 2,545 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 RGDE v1.1 Causal-Control Mechanics Amendment
+
+**Status:** frozen after positive-arm evaluation and before any replacement
+control score. No model is refit by this amendment.
+
+## Defect
+
+Jobs `693118--693121` completed cleanly, but inspection of the preregistered
+row-rotation intervention exposed a scorer defect. The factorized development
+file is organized in four-surface semantic quartets and `make_batches` also
+forms small length buckets. Rotating one row inside a batch therefore often
+selected another surface with the same operation program or query position.
+The old `intervention_rows` counter measured a changed row index, not a changed
+semantic field.
+
+The original `development_predicted_shuffled.json` and
+`development_query_shuffled.json` are retained as mechanical diagnostics but
+are inadmissible for gates 7--8. The treatment, gold, untied, and composed-arm
+scores are unaffected. No weights, packet, targets, positive evaluator, data,
+seed, or advancement threshold changes.
+
+## Frozen repair
+
+The evaluator constructs one deterministic global permutation before batch
+inference. It groups rows by the declared intervention key, rotates the sorted
+groups by the largest group size, and asserts that every destination key
+differs from its source key. For operation intervention the key is the complete
+two-operation structured program. For query intervention it is the requested
+position. It then compiles destination and source rows independently and
+replaces only the bounded operation tuple or query vector.
+
+On all 2,048 development rows, both global permutations are bijections and all
+2,048 semantic keys differ. Structured keys select a causal control source
+only; no gold state, transition, or answer enters the executor.
+
+The replacement control job uses the already frozen tied executor state
+`d31fd3e6150dd352cd0eea5063f960393e9017ac3ab729b5c536fd1f1c432184`.
+It writes new filenames and refuses overwrite. It does not train or modify any
+parameter.
+
+Frozen source SHA-256 values are:
+
+| Object | SHA-256 |
+|---|---|
+| packet/derangement helper | `5ec8666047666a7e5c4124f31a390c9e05160381e80b1e60911b40d35fd908c3` |
+| evaluator | `e54721ff84b3d8ccecb4f8bd963ce19fdaf7e85de635d75599907d2667ac8c65` |
+| tests | `3677e23a9b3f1e9bbaf145336f24dacfb88fd59b3e18fbf040b6eaed38dc0bb3` |
+| Slurm control job | `3b1cde695ca538ac8a9482b6b3b4281d675563620ef3042433ca48f21d725cd5` |
+
+Fifteen focused CPU tests, a full 2,048-row derangement audit for each key,
+Ruff, `py_compile`, shell syntax, and `git diff --check` pass.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 97: `R12_S3_CATEGORICAL_REGISTER_PREREG.md`
+
+Original source path: `R12_S3_CATEGORICAL_REGISTER_PREREG.md`
+Original source size: 3,103 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S3 Categorical Permutation Register Preregistration
+
+**Status:** closed negative after job `693127`. See
+`R12_S3_CATEGORICAL_REGISTER_RESULT.md`.
+
+**Claim class:** public source-deleted execution-component development under an
+external operation schedule and halt. A pass authorizes only a new independent
+confirmation board.
+
+## Theory
+
+The prior matched diagnostic shows that exact referent rebinding is
+insufficient: gold identity still reaches only 88.672% answers / 85.840% exact
+state because the old executor repeatedly re-encodes semantic identity into
+continuous vectors and mixes those vectors through a soft assignment.
+
+The new state space is the finite group S3. The persistent register is always
+one of the six valid three-item permutation matrices. For each atomic update:
+
+1. the compiler emits a categorical identity among the three introduced
+   referents;
+2. multiplying the S3 register by that one-hot identity gives its exact current
+   location;
+3. one tied neural cell predicts one of the six relative S3 permutations from
+   current register, identity, location, operation kind, and amount;
+4. a straight-through six-way gate is hard in the forward pass and soft only
+   for gradients; and
+5. exact group multiplication updates the persistent register.
+
+Semantic equality is never relearned inside the recurrent loop, and an invalid
+or fractional state is structurally impossible in forward execution.
+
+## Frozen training
+
+- immutable raw-300k base and qualified ordinary compiler;
+- one 717,323-parameter tied executor, total system 134,406,873 parameters;
+- one epoch / 1,517 updates / batch 64 / seed `2026071903`;
+- 96,000 public rows supply op0 and op1 independently from identity state,
+  192,000 atomic targets per epoch;
+- gold categorical identity during training isolates state-update learning;
+- no composed, long-program, confirmation, answer-only, or halt supervision.
+
+## Frozen evaluation
+
+Two-step compositional development is scored with mean identity as primary and
+ordered/gold identity as favorable ceilings. Mean identity is also scored on
+lexical OOD. The existing 2,048-row public paired-name board is scored at depths
+three through eight with all three identity modes. The rejected ordered kernel
+remains a ceiling, not a promotion path.
+
+## Gates
+
+All must pass:
+
+1. two-step mean: at least 95% answers/state, 90% both transitions, and 94%
+   answers on every surface;
+2. lexical-OOD mean answers at least 60%;
+3. long mean answers at least 87.3926% (ten points above continuous), state at
+   least 85%, all transitions at least 65%, and depth-eight answers at least
+   80%;
+4. long ordered answers/state at least 98%;
+5. long gold answers/state at least 99%;
+6. every evaluation records zero fit updates and zero confirmation access;
+7. one job exits `0:0`, hashes every source/input/output, and stays below 150M
+   total parameters.
+
+Failure rejects this register. Passing does not establish autonomous planning,
+learned halt, free-form language reasoning, or novelty; it only authorizes a
+fresh independently seeded source-deleted confirmation.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 98: `R12_S3_CATEGORICAL_REGISTER_RESULT.md`
+
+Original source path: `R12_S3_CATEGORICAL_REGISTER_RESULT.md`
+Original source size: 2,725 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S3 Categorical Permutation Register Result
+
+**Decision:** `reject_s3_categorical_register`
+
+The exact categorical state representation is valid, but v1's neural update
+cell is not permutation-equivariant and fails immediately outside the identity
+state seen during atomic training.
+
+## Custody
+
+- Source/prereg commit `dc7c13e` preceded fit and every S3 score.
+- Job `693127` completed once on H100 `evc29` in 5m39s, exit `0:0`.
+- Training used 96,000 public rows / 192,000 independent atomic targets / 1,517
+  updates / one epoch / seed `2026071903`.
+- The 717,323-parameter executor kept the full system at 134,406,873
+  parameters and recorded zero confirmation access.
+- Training completed in 56.15 seconds; final executor state SHA-256:
+  `8f043863138d32a89089ceaf029f89e2806d1f1c2df4c2735bf8bb1fb491b161`.
+- Assessment SHA-256:
+  `c9c7b545dfc85d614faaf1e943fb7932c6e54c80679bdb3ad735a09825418fdf`.
+
+## Results
+
+| Evaluation | Answers | Exact state | All transitions | Entity match |
+|---|---:|---:|---:|---:|
+| Two-step mean | 79.590% | 66.211% | 66.211% | 99.927% |
+| Two-step ordered | 79.541% | 66.260% | 66.260% | 100.000% |
+| Two-step gold | 79.541% | 66.260% | 66.260% | 100.000% |
+| Lexical-OOD mean | 58.984% | 48.730% | 42.236% | 86.377% |
+| Depth 3--8 mean | 53.906% | 41.260% | 17.627% | 71.879% |
+| Depth 3--8 ordered | 54.834% | 42.285% | 18.750% | 73.551% |
+| Depth 3--8 gold | 54.932% | 42.432% | 18.896% | 73.871% |
+
+Depth-eight mean answers are 48.529%. Every substantive promotion gate fails.
+
+## Mechanistic diagnosis
+
+Atomic transition loss reaches effectively zero and the forward register is
+always a valid S3 element. Identity is also not the problem: ordered and gold
+are indistinguishable at two steps, while entity match is exact. The defect is
+the update cell's input contract. It receives the complete assignment matrix
+and immutable identity vector. Atomic training presents only the identity
+assignment; the second recurrent call presents a non-identity assignment that
+is out of distribution. The unrestricted MLP therefore memorizes the initial
+coordinate frame rather than a local group action.
+
+The only bounded repair is **equivariant local action**: compute current
+location by multiplying register and categorical identity, then let the tied
+cell depend only on location, operation kind, and amount. Those variables
+fully determine the relative move permutation and have complete atomic support.
+The raw assignment and immutable identity must not enter the transition MLP.
+This is a separately preregistered architecture version, not a retry or width/
+epoch/data change.
+
+No confirmation, autonomous planning, learned halt, language reasoning, or
+novelty claim is authorized.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 99: `R12_S3_CLOSED_ACTION_PREREG.md`
+
+Original source path: `R12_S3_CLOSED_ACTION_PREREG.md`
+Original source size: 3,254 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S3 Closure-Complete Local Action Preregistration
+
+**Status:** closed after one zero-fit public run; gates failed and no
+confirmation is authorized.
+
+**Claim class:** bounded neural-symbolic repair on public source-deleted
+execution development. External schedule and halt remain.
+
+## Falsified interface
+
+S3 v1.1 proves that categorical state plus a globally equivariant update input
+can solve two-step composition, but long gold execution remains only 87.109%
+answers / 84.912% exact state / 66.895% complete chains. At the same time its
+separate amount head is 100% accurate. The exact state is stable; the learned
+transition MLP still consumes continuous `kind_context` and literal features
+that vary under longer source surfaces after their finite semantics are known.
+
+## Sole intervention
+
+The v1.2 action selector is the complete finite pop-insert algebra over:
+
+- three exact current locations;
+- two model-predicted directions (`left`, `right`); and
+- two model-predicted amounts (`1`, `2`).
+
+These 12 inputs map to one of the six exact S3 permutation matrices by a fixed
+internal lookup buffer. Direction is the frozen compiler kind argmax. Amount is
+the frozen v1.1 amount-head argmax. Identity remains mean/ordered/gold according
+to the evaluation arm. The query remains the frozen learned consumer. No
+source token state reaches the action or register after packet compilation.
+
+There is no optimizer, gradient update, new parameter, data fit, seed, retry,
+or threshold adaptation. The exact v1.1 checkpoint, public two-step/lexical/
+depth boards, compiler, packet, identity arms, and query consumer are reused.
+The action table is verified exhaustively against pop-insert semantics and on a
+non-identity recurrent state before any H100 score.
+
+## Frozen gates
+
+One zero-fit H100 evaluation must satisfy all of:
+
+1. two-step mean answer, state, and all-transition exactness each >=95%;
+2. every two-step mean surface answer >=94%;
+3. lexical-OOD mean answer >=75%;
+4. depth mean answer >=87.3926% (ten points over untouched continuous RGDE);
+5. depth mean state >=85% and complete chains >=65%;
+6. depth-eight mean answer >=80%;
+7. depth ordered answer and state each >=90%;
+8. depth gold answer >=98%, state >=99%, and complete chains >=98%;
+9. depth gold direction and amount accuracy each >=99.5%; and
+10. every output records zero fit updates and zero confirmation access.
+
+Passing authorizes one fresh seed-after-commit confirmation of the complete
+compiler/register/consumer system with causal action and query interventions.
+Failure rejects v1.2 for confirmation and localizes whether direction, amount,
+identity, query, or the closed algebra remains responsible. A pass is still an
+externally scheduled execution component, not free-form reasoning, autonomous
+planning, learned halt, or a novelty claim.
+
+## Closure
+
+Job `693134` completed once on H100 `evc25` in 2m01s, exit `0:0`, with zero
+fit and zero confirmation access. Two-step behavior remained exact, but depth
+mean reached only 85.303% answers / 82.031% state / 63.281% complete chains;
+gold reached 88.379% / 86.328% / 70.508%. Direction accuracy was only 93.403%
+while amount remained 100%. See `R12_S3_CLOSED_ACTION_RESULT.md`. V1.2 is
+rejected for confirmation.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 100: `R12_S3_CLOSED_ACTION_RESULT.md`
+
+Original source path: `R12_S3_CLOSED_ACTION_RESULT.md`
+Original source size: 3,258 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S3 Closure-Complete Local Action Result
+
+**Decision:** `reject_closed_s3_v1_2_for_confirmation`
+
+Exact finite action closure is mechanically correct but does not rescue the
+end-to-end long program. The remaining dominant error is the frozen compiler's
+direction prediction under long source surfaces, not state recurrence, amount,
+or the S3 action algebra.
+
+## Custody
+
+- Source/prereg commit `82e92d5` preceded every v1.2 score.
+- Job `693134` completed once on H100 `evc25` in 2m01s, exit `0:0`.
+- The arm reused the exact v1.1 checkpoint and performed zero optimizer updates,
+  zero data fit, and zero confirmation access.
+- The action table adds no parameter; the full system remains 134,399,961
+  parameters including the frozen, unused v1.1 transition MLP.
+- Assessment SHA-256 is
+  `603ec1ffad20325061a9ac7f1cb7cf9e1995f64314517fd04898448497bc27b2`.
+
+## Results
+
+| Evaluation | Answers | Exact state | All transitions | Direction | Amount |
+|---|---:|---:|---:|---:|---:|
+| Two-step mean | 99.463% | 99.854% | 99.854% | 100.000% | 100.000% |
+| Two-step ordered | 99.512% | 100.000% | 100.000% | 100.000% | 100.000% |
+| Two-step gold | 99.512% | 100.000% | 100.000% | 100.000% | 100.000% |
+| Lexical-OOD mean | 75.195% | 73.242% | 63.086% | 70.776% | 100.000% |
+| Depth 3--8 mean | 85.303% | 82.031% | 63.281% | 93.403% | 100.000% |
+| Depth 3--8 ordered | 87.939% | 85.840% | 69.775% | 93.403% | 100.000% |
+| Depth 3--8 gold | 88.379% | 86.328% | 70.508% | 93.403% | 100.000% |
+
+Depth-eight mean is 83.824% answers / 79.706% state / 51.471% complete chains.
+Gold identity is 83.529% / 80.294% / 55.000%. Short and lexical gates pass;
+the frozen mean attribution/state/chain, ordered, gold, and direction gates
+fail.
+
+Relative to learned equivariant v1.1, closed action raises long mean answers
+84.180% -> 85.303%, exact state 80.713% -> 82.031%, and complete chains
+60.059% -> 63.281%. Gold improves by 1.270 / 1.416 / 3.613 points. These modest
+gains show that continuous transition selection contributed error but was not
+the principal long-context failure.
+
+## Mechanistic diagnosis
+
+The action table itself is exhaustive and exact. The frozen amount classifier
+is 100% accurate on every evaluated arm. Direction is also 100% on the short
+compositional board, but falls to 93.403% on the known-atom depth board and
+70.776% on lexical OOD. Because one wrong direction changes the exact state,
+later entity-location measurements and complete-chain accuracy compound that
+upstream compiler error even under gold identity.
+
+A corpus audit finds that all 12 direction token sequences on the depth board
+are exact training atoms: six left and six right forms, with zero cross-class
+collisions. The contextual kind head is therefore discarding a relation that
+the source-pointer channel can in principle retain. The next bounded arm may
+decode the frozen operation-kind pointer through a lexicon built only from
+training spans, fall back to the neural kind head for unmatched sequences, and
+feed that categorical direction into the same exact action table. No
+development labels, executor fit, or confirmation may enter that lexicon.
+
+V1.2 does not authorize confirmation, autonomous planning, learned halt,
+free-form language reasoning, or novelty.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 101: `R12_S3_EQUIVARIANT_LOCAL_ACTION_PREREG.md`
+
+Original source path: `R12_S3_EQUIVARIANT_LOCAL_ACTION_PREREG.md`
+Original source size: 2,807 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S3 Equivariant Local Action Preregistration
+
+**Status:** closed after the one-shot v1.1 development run; partial recovery,
+frozen gates failed, no confirmation authorized.
+
+**Claim class:** bounded architectural repair of rejected S3 v1 on public
+source-deleted execution development. External schedule and halt remain.
+
+## Falsified v1 contract
+
+S3 v1 had exact categorical state and 100% gold identity match but only 66.260%
+two-step transitions. Its unrestricted transition MLP received the complete
+assignment matrix and immutable identity. Atomic training showed that MLP only
+the identity assignment, so the second recurrent call was a coordinate-frame
+OOD input.
+
+## Sole repair
+
+The v1.1 transition law receives only:
+
+- the categorical entity's exact current location, computed as register times
+  immutable identity;
+- operation kind features; and
+- amount features.
+
+It cannot access the full assignment or immutable identity. Therefore two
+globally different assignments that place their respective target entities at
+the same location and have the same operation must produce bit-identical
+transition logits. The six-state hard-forward S3 register, compiler, packet,
+query consumer, training data, seed, updates, width, optimizer, and every score
+gate remain unchanged.
+
+The local variables cover the complete finite action table: three locations x
+two directions x two amounts. Atomic training contains every cell. Recurrent
+composition is now a repeated equivariant group action rather than an OOD
+matrix input.
+
+## Frozen custody and gates
+
+- 710,411 executor parameters / 134,399,961 total parameters;
+- 96,000 public rows / 192,000 independent atomic targets / one epoch / 1,517
+  updates / batch 64 / seed `2026071903`;
+- gold categorical identity only during training;
+- mean identity primary; ordered/gold favorable ceilings;
+- exact same two-step, lexical-OOD, depth-3--8 data and thresholds in
+  `R12_S3_CATEGORICAL_REGISTER_PREREG.md`;
+- one H100 job, one fit, no retry, sweep, extra epoch, width, data, composed
+  supervision, confirmation access, or threshold change.
+
+Failure rejects equivariant S3. Passing authorizes only a fresh independently
+seeded confirmation. It does not establish autonomous planning, learned halt,
+free-form language reasoning, or novelty.
+
+## Closure
+
+Job `693131` completed once on H100 `evc25`, exit `0:0`. Two-step mean
+execution recovered to 99.463% answers, 99.854% exact state, and 99.854% all
+transitions. On depth 3--8, however, mean identity reached only 84.180%
+answers / 80.713% exact state / 60.059% all transitions; even gold identity
+reached only 87.109% / 84.912% / 66.895%. The frozen long-state, long-chain,
+gold-ceiling, and attribution gates fail. See
+`R12_S3_EQUIVARIANT_LOCAL_ACTION_RESULT.md`. No confirmation is authorized.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 102: `R12_S3_EQUIVARIANT_LOCAL_ACTION_RESULT.md`
+
+Original source path: `R12_S3_EQUIVARIANT_LOCAL_ACTION_RESULT.md`
+Original source size: 3,708 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S3 Equivariant Local Action Result
+
+**Decision:** `reject_s3_equivariant_v1_1_for_confirmation`
+
+The equivariant input contract repairs the coordinate-frame failure of S3 v1
+and makes two-step execution almost exact. It does not make the learned local
+action stable under long-context operation transport, so the frozen depth
+gates fail and confirmation remains unauthorized.
+
+## Custody
+
+- Source/prereg commit `b6dc983` preceded fit and every v1.1 score.
+- Job `693131` completed once on H100 `evc25` in 5m33s, exit `0:0`.
+- Training used the unchanged 96,000 public rows / 192,000 independent atomic
+  targets / 1,517 updates / one epoch / seed `2026071903`.
+- The 710,411-parameter executor kept the full system at 134,399,961
+  parameters and recorded zero confirmation access.
+- Training took 71.18 seconds. Final executor-state SHA-256 is
+  `15f640d7482de592ed8394335c8e755c61ac9917cc916e680a83946ead93ace2`.
+- Assessment SHA-256 is
+  `3c9ed4f0891f7afbe2f8f2fc64c2685d8ed6b2073942fca798067be15c4d2fb2`.
+- The local checkpoint mirror is SHA-256
+  `39e77e4355b31314de1be5c8349d029c8d25027f29f4607da2b98672683e9830`;
+  it remains ignored and is not committed.
+
+## Results
+
+| Evaluation | Answers | Exact state | All transitions | Entity match |
+|---|---:|---:|---:|---:|
+| Two-step mean | 99.463% | 99.854% | 99.854% | 99.927% |
+| Two-step ordered | 99.512% | 100.000% | 100.000% | 100.000% |
+| Two-step gold | 99.512% | 100.000% | 100.000% | 100.000% |
+| Lexical-OOD mean | 74.512% | 72.705% | 63.086% | 85.522% |
+| Depth 3--8 mean | 84.180% | 80.713% | 60.059% | 86.051% |
+| Depth 3--8 ordered | 86.719% | 84.473% | 66.211% | 89.331% |
+| Depth 3--8 gold | 87.109% | 84.912% | 66.895% | 89.829% |
+
+Depth-eight mean answers are 82.941%, but exact state is 78.235% and complete
+transition chains are 47.353%. Gold identity changes those depth-eight values
+only to 82.647%, 78.824%, and 50.882%. The two-step gates and the depth-eight
+answer floor pass. The frozen mean-state, mean-chain, ordered/gold ceiling, and
+ten-point attribution gates fail.
+
+Relative to S3 v1, this is a large architectural recovery: long mean answers
+rise 53.906% -> 84.180%, exact state 41.260% -> 80.713%, and complete chains
+17.627% -> 60.059%. Relative to the continuous RGDE public-board comparator,
+mean answers fall 1.465 points below its 85.645% rebound rather than exceeding
+it by the required ten points. The result is therefore evidence for local
+equivariance, not a promoted executor.
+
+## Mechanistic diagnosis
+
+The exact S3 state no longer drifts, and the cell can execute the public
+two-step distribution. The remaining transition inputs are still continuous:
+`kind_context`, soft kind probabilities, and a literal embedding. The separate
+amount head is 100% accurate at depth, while the same learned local action
+misclassifies transitions. Gold identity does not repair the gap. This
+localizes the remaining failure to action transport: continuous encodings of
+the same finite `(direction, amount)` action move under long-context surfaces,
+and the MLP uses nuisance variation that the discrete amount classifier has
+already discarded.
+
+The next bounded arm may therefore replace only the learned transition MLP
+with a closed S3 action table driven by model-predicted categorical direction
+and amount. It must retain the frozen language compiler, query consumer,
+source deletion, register, boards, and favorable identity ceilings. That arm
+tests closure by construction; it is an internal neural-symbolic execution
+component with an externally supplied schedule and halt, not autonomous
+reasoning.
+
+No confirmation, free-form language reasoning, planning, learned halt, or
+novelty claim is authorized by v1.1.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 103: `R12_S3_LEXICAL_ACTION_PREREG.md`
+
+Original source path: `R12_S3_LEXICAL_ACTION_PREREG.md`
+Original source size: 3,109 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S3 Training-Lexicon Action Preregistration
+
+**Status:** public development passed all frozen gates; one fresh confirmation
+is authorized and not yet scored.
+
+**Claim class:** bounded known-atom compiler repair plus exact source-deleted S3
+execution. External schedule and halt remain.
+
+## Falsified interface
+
+Closure-complete S3 v1.2 leaves amount at 100% but direction at 93.403% across
+the public depth board. A score-blind CPU audit shows all depth direction spans
+are exact training atoms: six left sequences and six right sequences, with no
+cross-class collision. The contextual kind head has lost a finite relation
+already present in the compiler's operation-kind pointer channel.
+
+## Sole intervention
+
+A deterministic builder reads only the frozen 96,000-row training split and
+its gold operation-kind spans. It emits the 12 exact token sequences, their
+left/right class, and counts, refusing any class collision or non-training row.
+It records zero development and confirmation access.
+
+At evaluation, the frozen compiler's normalized operation-kind pointer is
+aligned against those sequences. If one class receives at least 0.5 total
+pointer mass on an exact occurrence, that categorical class replaces the
+contextual kind argmax. Otherwise the original neural kind prediction is used.
+The override cannot inspect development labels, program fields, or answers.
+Identity, amount, query, exact S3 action, base/compiler/executor weights, boards,
+and all source-deletion boundaries remain unchanged. No optimizer or parameter
+is added.
+
+## Frozen gates
+
+One zero-fit H100 run must satisfy all of:
+
+1. the lexicon is training-only, collision-free, 6+6 patterns, and zero-fit;
+2. two-step mean answer/state/chains each >=95%, every surface answer >=94%;
+3. lexical-OOD match coverage <=5% and answer >=75%, proving fallback rather
+   than distractor capture;
+4. depth lexical coverage >=99.5%, direction >=99.5%, and amount >=99.5%;
+5. depth mean answer >=90%, state >=88%, and complete chains >=80%;
+6. depth-eight mean answer >=85%;
+7. depth ordered answer/state/chains each >=98%;
+8. depth gold answer >=98.5%, exact state =100%, and exact chains =100%; and
+9. every output records zero fit updates and zero confirmation access.
+
+Passing authorizes one fresh seed-after-commit confirmation with unseen nonce
+names, unseen known-atom factor combinations, and causal action/query controls.
+It would establish only a known-lexeme neural-symbolic execution component. It
+would not establish unseen-phrase generalization, autonomous planning, learned
+halt, free-form reasoning, or novelty.
+
+## Public closure
+
+Zero-fit job `693136` completed once on H100 `evc25` in 2m15s, exit `0:0`.
+Depth mean reaches 94.434% answers / 94.336% state / 89.453% complete chains;
+ordered reaches 98.340% / 99.463% / 98.730%; gold reaches 98.779% answers and
+100% exact state/chains. Direction and amount are 100%. Lexical OOD uses 0%
+lexicon coverage and preserves the fallback baseline. Assessment
+`41102547...` passes every frozen gate and authorizes one fresh confirmation.
+See `R12_S3_LEXICAL_ACTION_RESULT.md`.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 104: `R12_S3_LEXICAL_ACTION_RESULT.md`
+
+Original source path: `R12_S3_LEXICAL_ACTION_RESULT.md`
+Original source size: 3,446 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S3 Training-Lexicon Action Development Result
+
+**Decision:** `qualify_lexical_closed_s3_v1_3_for_fresh_confirmation`
+
+The training-only lexical relation decoder closes the known-atom direction
+interface. Combined with ordered referential identity and exact S3 action, the
+source-deleted system executes three-to-eight-step programs at near-exact
+accuracy without training on composed or long programs.
+
+## Custody
+
+- Source/prereg commit `a2fc8da` preceded lexicon construction and every score.
+- Job `693136` completed once on H100 `evc25` in 2m15s, exit `0:0`.
+- The lexicon contains exactly 12 collision-free training patterns from
+  192,000 operation references: six left and six right.
+- The arm performed zero optimizer updates, added zero parameters, and recorded
+  zero development-label and confirmation access during construction.
+- Lexicon SHA-256 is
+  `dda061ccc4e3ba5ba4d0df0186fae01e3ab09b1feaa319701e320533b7ac3189`.
+- Assessment SHA-256 is
+  `41102547acd8755661192b43473b8dbddf291cb8f3fc223d8b93ccc883266f39`.
+
+## Results
+
+| Evaluation | Answers | Exact state | All transitions | Direction | Amount | Lexicon coverage |
+|---|---:|---:|---:|---:|---:|---:|
+| Two-step mean | 99.463% | 99.854% | 99.854% | 100.000% | 100.000% | 100.000% |
+| Two-step ordered | 99.512% | 100.000% | 100.000% | 100.000% | 100.000% | 100.000% |
+| Two-step gold | 99.512% | 100.000% | 100.000% | 100.000% | 100.000% | 100.000% |
+| Lexical-OOD mean | 75.195% | 73.242% | 63.086% | 70.776% | 100.000% | 0.000% |
+| Depth 3--8 mean | 94.434% | 94.336% | 89.453% | 100.000% | 100.000% | 99.982% |
+| Depth 3--8 ordered | 98.340% | 99.463% | 98.730% | 100.000% | 100.000% | 99.982% |
+| Depth 3--8 gold | 98.779% | 100.000% | 100.000% | 100.000% | 100.000% | 99.982% |
+
+Ordered depth-eight is 98.529% answers / 100% state / 98.824% complete chains.
+Mean depth-eight is 96.176% / 96.176% / 90.882%. Every frozen public gate
+passes.
+
+## Causal interpretation
+
+The v1.2-to-v1.3 intervention changes no weight, state register, identity arm,
+amount head, query head, board, or executor. Restoring known direction atoms
+raises mean depth answers 85.303% -> 94.434%, state 82.031% -> 94.336%, and
+complete chains 63.281% -> 89.453%. Gold state/chains rise 86.328% / 70.508%
+to exactly 100% / 100%. This is the predicted signature of an upstream
+direction-transport failure.
+
+The lexical-OOD control is equally important. None of its unseen direction
+phrases crosses the 0.5 training-pattern mass threshold, so coverage is 0% and
+scores remain byte-for-byte at the closed-action fallback baseline. The gain is
+not caused by matching known distractors or reading development labels.
+
+The strongest complete arm is ordered identity plus lexical direction plus
+model-predicted amount and query plus exact S3 state/action. It receives source
+text only through frozen compiler pointers, deletes source states, and carries
+one categorical register through repeated calls. It was trained only on
+independent atomic updates; no composed or depth supervision fits any weight.
+
+## Boundary
+
+This public development pass authorizes one independently seeded confirmation.
+It does not yet confirm the score. It handles known direction atoms, three
+referential identities, two bounded amounts, and externally supplied operation
+count/halt. It does not establish unseen direction semantics, autonomous plan
+induction, learned stopping, free-form language reasoning, or novelty.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 105: `R12_S3_LEXICAL_CONFIRMATION_PREREG.md`
+
+Original source path: `R12_S3_LEXICAL_CONFIRMATION_PREREG.md`
+Original source size: 3,931 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S3 Lexical Closed-Action Confirmation Preregistration
+
+**Status:** closed after one scored production board; strict gold-exact gate
+failed, so the confirmation is rejected and the board is sealed.
+
+A scoreless 512-group mechanics validation used seed `1`, passed every data
+and derangement gate, and was deleted before this freeze. Seed `1` is retired
+and cannot be the production seed.
+
+The first production-generation attempt at seed `3906227011763392781` was
+rejected before model access because query derangement was infeasible at depths
+3 and 6. No score exists. That seed is retired. The sole mechanical correction
+cycles required query positions 0/1/2 within every depth and resamples semantics
+until the requested position separates both twins. It changes no row count,
+factor/name policy, evaluator, score gate, model, or intervention.
+Corrected scoreless validation seed `2` passed every gate and was deleted; it
+is also retired from production use.
+
+## Confirmed object
+
+The candidate is the exact public-development system from commit `a2fc8da` and
+assessment `41102547...`: frozen ordinary source compiler, training-only
+12-pattern direction lexicon, ordered relational identity primary, frozen
+amount/query heads, and closure-complete categorical S3 action/state. No weight
+will fit the confirmation board.
+
+## Fresh board
+
+After this source/prereg is committed, one unpredictable production seed may
+create 512 new semantic quartets / 2,048 rows balanced across depths 3--8. The
+generator excludes every factorized train/development and relational-public
+prompt, word 13-gram, entity name, and factor combination. All names are fresh
+paired nonces. Every active direction span must be one of the 12 training
+lexicon atoms. CPU pop-insert and adjacent-swap executors must agree. Operation
+and query strata must each admit a semantic derangement within every depth.
+Any generation failure retires its seed before score.
+
+The earlier failed RGDE confirmation is forbidden as an input and remains
+sealed. Only public data and the committed training lexicon may define the new
+board.
+
+## Frozen arms and gates
+
+One H100 job evaluates, in order:
+
+1. ordered identity primary;
+2. mean-vector identity conventional control;
+3. gold identity ceiling;
+4. globally different operation streams with ordered identity; and
+5. globally different query fields with ordered identity.
+
+Confirmation requires all of:
+
+- ordered overall answer/state/chains >=97% / 97% / 95%;
+- every ordered depth answer/state/chains >=95% / 97% / 93%;
+- mean overall answer/state/chains >=90% / 90% / 82%;
+- gold answer >=98%, exact state =100%, exact chains =100%, direction=100%,
+  amount=100%;
+- operation intervention covers every row, scores <=45% answers and <=35%
+  state, and drops primary by >=50 / >=60 points;
+- query intervention covers every row, scores <=5% answers, drops >=90 points,
+  and changes state accuracy by <=0.1 point; and
+- completed `0:0` receipt, zero fit updates, zero old-confirmation access, and
+  identical board/executor/lexicon hashes in every arm.
+
+No threshold, arm, seed, state, lexicon, or evaluator may change after score.
+A pass confirms known-atom source-deleted recurrent execution through depth
+eight with externally supplied schedule/halt. It does not establish unseen-
+phrase semantics, plan induction, learned halt, free-form language reasoning,
+or novelty.
+
+## Closure
+
+Corrected production seed `3664953321459551042` passed every board gate. Job
+`693138` completed once on `evc25`, exit `0:0`. Ordered primary reached 99.121%
+answers / 99.268% state / 98.682% chains and all non-gold gates passed. Gold
+reached 99.609% answers / 99.951% state / 99.902% chains because two of 11,248
+direction decisions were wrong. The frozen 100% state/chains requirement fails;
+assessment `8d69dd5d...` records rejection. No rerun or threshold relaxation is
+allowed. See `R12_S3_LEXICAL_CONFIRMATION_RESULT.md`.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 106: `R12_S3_LEXICAL_CONFIRMATION_RESULT.md`
+
+Original source path: `R12_S3_LEXICAL_CONFIRMATION_RESULT.md`
+Original source size: 2,928 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S3 Lexical Closed-Action Confirmation Result
+
+**Decision:** `reject_lexical_closed_s3_confirmation`
+
+The fresh board strongly reproduces the public score and passes both causal
+controls, but it misses the preregistered perfect gold execution gate by two
+direction decisions out of 11,248. The result is a near-confirmation, not a
+confirmed claim.
+
+## Custody
+
+- Confirmation source/prereg commit `29c7607` preceded the first production
+  seed. Mechanical balance correction commit `9a37b22` preceded the scored seed.
+- Seed `3906227011763392781` was rejected before model access for infeasible
+  query derangement. Seed `3664953321459551042` is the sole scored board.
+- The scored board has 512 quartets / 2,048 rows / 6,136 cards / 798,115 source
+  tokens. Board SHA-256 is
+  `9b3895639cd74c2abd24309c795d403934f675c535aac0acbf4a3d4b19f8c180`.
+- Job `693138` completed once on H100 `evc25`, exit `0:0`.
+- Assessment SHA-256 is
+  `8d69dd5d4461e07f7ad2530cc31d92776d162e4fa9ddccef73b3457b661239bc`.
+- No weight fit, old-confirmation access, threshold change, or rerun occurred.
+
+## Scores
+
+| Arm | Answers | Exact state | All transitions | Direction | Amount |
+|---|---:|---:|---:|---:|---:|
+| Ordered primary | 99.121% | 99.268% | 98.682% | 99.982% | 100.000% |
+| Mean identity | 95.215% | 93.652% | 88.818% | 99.982% | 100.000% |
+| Gold identity | 99.609% | 99.951% | 99.902% | 99.982% | 100.000% |
+| Operation derangement | 35.010% | 17.871% | 1.221% | 65.203% | 59.122% |
+| Query derangement | 0.439% | 99.268% | 98.682% | 99.982% | 100.000% |
+
+Ordered scores clear the overall and every-depth gates. Mean clears 90% /
+90% / 82%. Operation replacement changes all 2,048 rows and drops answers by
+64.111 points and state by 81.396 points. Query replacement changes all rows,
+drops answers by 98.682 points, and leaves state exactly unchanged. Receipts
+and hashes pass.
+
+The sole failed gate is gold exact execution. Lexicon coverage is 99.813%; the
+neural fallback repairs most unmatched references, but two direction decisions
+remain wrong. Gold therefore has one incorrect final state and two rows with a
+non-exact full chain. The frozen gate required exactly 100% state and chains.
+
+## Consequence
+
+Do not relax the 0.5 threshold or rerun this board. Seal it. Return to public
+development with a structural decoder that asks whether the compiler pointer's
+global maximum lies inside a known exact token pattern. That rule has no tuned
+mass threshold: known pointed atoms use their class, while an unseen pointed
+phrase falls back to the neural kind head. It must pass public lexical-OOD
+fallback and exact-depth gates before a wholly new independent confirmation.
+
+This result supports a strong known-atom source-deleted execution component but
+does not confirm it under the locked contract. It does not establish unseen-
+phrase semantics, autonomous planning, learned halt, free-form language
+reasoning, or novelty.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 107: `R12_S3_POINTER_ANCHOR_CONFIRMATION_PREREG.md`
+
+Original source path: `R12_S3_POINTER_ANCHOR_CONFIRMATION_PREREG.md`
+Original source size: 3,414 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S3 Structural Pointer-Anchor Confirmation Preregistration
+
+**Status:** completed once; every frozen gate passes and the board is sealed.
+
+Infrastructure attempt seed `223317486517061319` is retired without a board or
+score. Newton lacked two already-tracked generator dependencies, so Python
+failed at import before output-directory creation. Syncing those unchanged
+repository files is the sole correction; candidate, generator, evaluator,
+board contract, arms, and gates do not change.
+
+## Confirmed Object
+
+The candidate is commit `51ed8fc` and public assessment
+`a73b0915bebb91845415630072422c08747f70a94dc7cae98befd7b22ed52568`:
+frozen ordinary source compiler, training-only 12-pattern lexicon, structural
+global pointer-anchor decoder with neural fallback, ordered relational identity,
+frozen amount/query heads, and closure-complete categorical S3 action/state.
+No weight may fit the confirmation board.
+
+## Fresh Board
+
+After this protocol is committed, one unpredictable production seed may create
+512 new semantic quartets / 2,048 rows balanced across depths 3--8. The existing
+generator excludes every factorized train/development and relational-public
+prompt, word 13-gram, entity name, and factor combination. Every direction is a
+training lexicon atom. CPU pop-insert and adjacent-swap executors must agree.
+Operation and query strata must admit semantic derangements within every depth.
+
+All earlier confirmation boards and failures remain sealed and forbidden as
+inputs. A corpus-gate failure before model access retires that seed and records
+no score; no scored-board rerun is allowed.
+
+## Frozen Arms and Gates
+
+One H100 job evaluates ordered primary, mean identity, gold identity, a globally
+different operation stream, and a globally different query field. Confirmation
+requires all of:
+
+- ordered overall answer/state/chains >=97% / 97% / 95%;
+- every ordered depth answer/state/chains >=95% / 97% / 93%;
+- mean overall answer/state/chains >=90% / 90% / 82%;
+- gold answer >=98%, exact state =100%, exact chains =100%, direction=100%,
+  amount=100%;
+- operation intervention covers every row, scores <=45% answers and <=35%
+  state, and drops primary by >=50 / >=60 points;
+- query intervention covers every row, scores <=5% answers, drops >=90 points,
+  and changes state accuracy by <=0.1 point; and
+- completed `0:0` receipt, zero fit updates, zero old-confirmation access, the
+  exact `training_lexicon_pointer_anchor_v1` protocol, and identical board,
+  executor, and lexicon hashes in every arm.
+
+No decoder, threshold, arm, seed, state, lexicon, evaluator, or gate may change
+after score. A pass confirms known-atom source-deleted recurrent execution
+through depth eight with externally supplied schedule/halt. It does not establish
+unseen-phrase semantics, plan induction, learned halt, free-form language
+reasoning, or novelty.
+
+## Closure
+
+Replacement production seed `8548551866585932338` passed every corpus gate and
+created 2,048 rows / 6,136 chunks / 799,011 source tokens at board SHA-256
+`9fc73f9881a38d6fcd4624d411f34c6e1f7b8e879e0fef92405a7219ba481420`.
+Job `693145` completed once on `evc28`, exit `0:0`. Assessment SHA-256
+`cc1458f9962f4cda7cac5ea43555a3f8980e3adf24936b513ca3deb707d6e7f5`
+passes every frozen gate and records
+`confirm_pointer_anchor_s3_v1_4_execution_through_depth_8`. No rerun occurred.
+The local and Newton board copies are read-only and sealed.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 108: `R12_S3_POINTER_ANCHOR_CONFIRMATION_RESULT.md`
+
+Original source path: `R12_S3_POINTER_ANCHOR_CONFIRMATION_RESULT.md`
+Original source size: 3,233 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S3 Structural Pointer-Anchor Confirmation Result
+
+**Decision:** `confirm_pointer_anchor_s3_v1_4_execution_through_depth_8`
+
+This is the first strict independent confirmation of Shohin's bounded
+known-atom, source-deleted categorical execution component. It is not a
+confirmation of autonomous open-language reasoning.
+
+## Custody
+
+- Candidate source commit `51ed8fc`, public qualification commit `656f9b0`,
+  and zero-score infrastructure receipt `ff553c1` all preceded the scored seed.
+- Seed `223317486517061319` retired before board creation due missing remote
+  imports. It has no score.
+- Replacement seed `8548551866585932338` produced the sole scored board:
+  512 quartets / 2,048 rows / 6,136 chunks / 799,011 source tokens.
+- Board SHA-256 is
+  `9fc73f9881a38d6fcd4624d411f34c6e1f7b8e879e0fef92405a7219ba481420`.
+- Job `693145` completed once on H100 `evc28` in 84 seconds, exit `0:0`.
+- Assessment SHA-256 is
+  `cc1458f9962f4cda7cac5ea43555a3f8980e3adf24936b513ca3deb707d6e7f5`.
+- Safe evidence archive SHA-256 is
+  `1a65c5488de712d2ec235888249dee4bede089ab247f6f467546049c447eecdb`.
+- No parameter fit, old-board access, decoder/gate change, or scored rerun
+  occurred. Board copies are sealed read-only and are not in Git.
+
+## Scores
+
+| Arm | Answers | Exact state | All transitions | Direction | Amount |
+|---|---:|---:|---:|---:|---:|
+| Ordered primary | 98.242% | 99.658% | 98.975% | 100.000% | 100.000% |
+| Mean identity | 92.773% | 92.920% | 88.086% | 100.000% | 100.000% |
+| Gold identity | 98.535% | 100.000% | 100.000% | 100.000% | 100.000% |
+| Operation derangement | 35.059% | 17.578% | 1.074% | 66.287% | 58.766% |
+| Query derangement | 0.586% | 99.658% | 98.975% | 100.000% | 100.000% |
+
+Every ordered depth passes independently. Depth-three is the minimum answer
+cell at 97.384%; depth-eight is 98.235% answers / 99.412% state / 97.647%
+chains. Operation replacement changes every row and drops primary by 63.184
+answer points and 82.080 state points. Query replacement changes every row,
+drops answers by 97.656 points, and leaves state exactly unchanged.
+
+## Established Claim
+
+On fresh known-atom referential programs through depth eight, the frozen source
+compiler plus ordered categorical identity, threshold-free pointer-anchor
+direction interface, closure-complete S3 action, and source-deleted recurrent
+state produce causally field-dependent exact execution. The recurrence is not
+recreating answers from an ignored schedule: replacing operations collapses
+state and answers, while replacing only the query collapses answers without
+changing state.
+
+## Boundary and Next Bottleneck
+
+The system still receives externally segmented operation chunks and an
+externally determined stop. Its direction semantics cover the 12 exact training
+atoms; unseen phrases fall back to a weaker neural head. Therefore it does not
+yet establish autonomous decomposition, schedule induction, learned halt,
+unseen-language generalization, or free-form reasoning.
+
+Retain v1.4 as the locked execution baseline. Future work should attack
+model-owned packet scheduling/halt and unseen action semantics on public data,
+with this confirmed executor frozen. Do not reopen the sealed board or weaken
+its claim boundary.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 109: `R12_S3_POINTER_ANCHOR_PREREG.md`
+
+Original source path: `R12_S3_POINTER_ANCHOR_PREREG.md`
+Original source size: 2,057 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S3 Structural Pointer-Anchor Preregistration
+
+**Status:** frozen before public score.
+
+## Hypothesis
+
+The rejected lexical confirmation missed two of 11,248 direction decisions
+because its 0.5 soft-pointer-mass threshold sometimes declined to use an exact
+known direction atom. The repair is threshold-free: take the frozen compiler's
+global operation-kind pointer argmax and use a training-lexicon class exactly
+when that token lies inside one unambiguous exact pattern. If no pattern contains
+the anchor, or opposite classes overlap at the anchor, retain the neural kind
+head. No weight is fitted and no confirmation board is read.
+
+This is a structural interface repair, not a claim that unseen direction
+semantics, schedules, halt, or open-language planning are solved.
+
+## Frozen Inputs
+
+- immutable 300k base and ordinary source compiler;
+- frozen equivariant v1.1 executor state plus closure-complete S3 action;
+- the exact 12-pattern training-only lexicon already qualified in v1.3;
+- public compositional, lexical-OOD, and depth-3--8 development boards only.
+
+The historical mass decoder remains unchanged and is not rescored. This arm
+writes a new output directory and records `fit_updates=0` and
+`confirmation_access=0`.
+
+## Gates
+
+The existing v1.3 public gates remain frozen without relaxation:
+
+- compositional mean answer/state/transitions >=95%, every surface answer >=94%;
+- lexical-OOD lexicon coverage <=5% and answer accuracy >=75%;
+- depth lexicon coverage, direction, and amount each >=99.5%;
+- depth mean answer/state/transitions >=90% / 88% / 80%, depth-eight answer >=85%;
+- depth ordered answer/state/transitions each >=98%;
+- depth gold answer >=98.5%, with exact 100% state and transition chains; and
+- every output has zero fit and zero confirmation access.
+
+A pass authorizes one wholly new seed-after-commit confirmation with the same
+strict causal and exact-gold philosophy. A failure closes this repair. The
+rejected confirmation board remains sealed and cannot be used for diagnosis,
+threshold selection, or scoring.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 110: `R12_S3_POINTER_ANCHOR_RESULT.md`
+
+Original source path: `R12_S3_POINTER_ANCHOR_RESULT.md`
+Original source size: 1,555 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S3 Structural Pointer-Anchor Public Result
+
+**Decision:** `qualify_pointer_anchor_s3_v1_4_for_fresh_confirmation`
+
+Zero-fit public job `693142` completed on H100 `evc28`, exit `0:0`. It used
+only the frozen 300k base, ordinary source compiler, equivariant v1.1 executor,
+closure-complete S3 action, and the existing training-only 12-pattern lexicon.
+Assessment SHA-256 is
+`a73b0915bebb91845415630072422c08747f70a94dc7cae98befd7b22ed52568`.
+Safe evidence archive SHA-256 is
+`cb127ddaf14215588122fbfb623f091c3bc744d9317746c362db469a8992a142`.
+
+## Scores
+
+| Board / identity | Answers | Exact state | All transitions | Direction | Coverage |
+|---|---:|---:|---:|---:|---:|
+| Two-step mean | 99.463% | 99.854% | 99.854% | 100.000% | 100.000% |
+| Two-step ordered | 99.512% | 100.000% | 100.000% | 100.000% | 100.000% |
+| Depth mean | 94.434% | 94.336% | 89.453% | 100.000% | 100.000% |
+| Depth ordered | 98.340% | 99.463% | 98.730% | 100.000% | 100.000% |
+| Depth gold | 98.779% | 100.000% | 100.000% | 100.000% | 100.000% |
+| Lexical OOD mean | 75.195% | 73.242% | 63.086% | 70.776% | 0.000% |
+
+Amount is 100% on every listed board. All frozen gates pass. The structural
+rule fixes the mass-threshold miss on known atoms while preserving an exact
+zero-coverage fallback on unseen lexical renderers. No confirmation data was
+read and no parameter was fitted.
+
+This qualifies one wholly new independent confirmation. It does not establish
+unseen-phrase semantics, schedule induction, learned halt, free-form language
+reasoning, or architectural novelty.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 111: `R12_S4_SELF_DELIMITING_EVENT_TAPE_PREREG.md`
+
+Original source path: `R12_S4_SELF_DELIMITING_EVENT_TAPE_PREREG.md`
+Original source size: 5,725 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S4 Self-Delimiting Event Tape Preregistration
+
+## Status
+
+Frozen theory and interface specification before corpus generation, neural fit, or score access.
+This lane follows the confirmed pointer-anchor S3 v1.4 executor and must not read any sealed S3
+confirmation board.
+
+## 1. Capability theorem
+
+For a source containing an initial three-entity roster, a finite ordered sequence of complete
+movement clauses, and one terminal position query, define an **event tape** as the ordered list of
+complete triples `(direction, entity, amount)` recovered from the source. If a source-only parser
+recovers every triple and the query, the frozen S3 v1.4 transition table returns the exact terminal
+state and answer for any finite tape length. No external operation count is required: the event
+sequence terminates after the final complete recovered triple.
+
+The bounded empirical claim is therefore:
+
+> A frozen-Shohin token parser can recover a variable-length event tape from one unpadded source,
+> and the already confirmed S3 executor can consume that model-owned tape through held-out depths.
+
+This is not a claim of planning, free-form language reasoning, unseen action semantics, or a novel
+reasoning primitive.
+
+## 2. Axiomatic primitive
+
+An event is valid iff the parser emits one contiguous `kind` span, one contiguous `entity` span,
+and one contiguous `literal` span whose source intervals belong to the same movement clause. Events
+are ordered by source position. The tape halts when no later complete event exists. The query is a
+separate terminal span.
+
+No `active_operations`, chunk index, fixed operation slot, filler operation, depth label, or host
+slice may enter inference. Source deletion occurs after the event tape and query packet are built.
+
+## 3. Equivalence dossier
+
+The event parser is a conventional bidirectional token tagger plus deterministic span grouping. It
+is equivalent in representational class to semantic-role labeling followed by a finite-state
+transducer. The S3 consumer is the already confirmed exact categorical register. This lane tests an
+autonomous interface boundary; it does not claim a new computational primitive.
+
+Favorable controls:
+
+1. **Gold event tape:** exact spans and semantics; ceiling for the frozen S3 consumer.
+2. **Fixed eight-slot parser:** favorable externally sized parser with one slot per maximum depth.
+3. **Host-count parser:** token predictions grouped using gold operation count; isolates counting.
+4. **Shuffled role supervision:** equal architecture and budget with source/role association broken.
+
+## 4. Exact collapse test
+
+If the model-owned variable-length parser does not beat shuffled supervision, or if host-count
+grouping materially rescues it, the autonomous schedule claim collapses. If gold events fail, the
+failure is downstream of parsing and S3 v1.4 must not be blamed without a new causal audit.
+
+The architecture novelty claim is rejected in advance because sequence tagging and finite-state
+grouping are established methods. Only the bounded removal of the source-external schedule oracle
+can pass.
+
+## 5. Prior-art boundary
+
+Known semantic-role labeling, token classification, pointer parsing, monotone alignment, finite-
+state transduction, and exact symbolic execution are controls or implementation tools. No result may
+be described as a new reasoning architecture solely because these components are connected.
+
+## 6. Finite CPU falsifiers
+
+Before a neural fit:
+
+1. Audit the old chunked board and prove that the padding label conflicts with a legitimate event
+   under the same equivariant semantic signature.
+2. Build unpadded whole-source rows at depths 1--8 and prove exact dual-executor agreement.
+3. Recover every event with a gold-span finite-state parser and prove that event count equals depth.
+4. Prove that deleting or duplicating one recovered event changes the semantic program and that
+   matched order/binding twins remain behaviorally separated.
+5. Prove the longest tokenized source fits Shohin's 2,048-token context.
+
+## 7. Frozen controls and development gates
+
+Train only on depths 1--4. Evaluate without refitting on depths 3--8, reporting depths 5--8
+separately. Development advances only if:
+
+- model-owned event count is exact on at least 98% overall and 95% at every depth;
+- exact event programs are at least 95% overall and 90% at every held-out depth;
+- frozen-S3 answers are at least 95% overall and 90% at depth eight;
+- host-count grouping improves exact programs by less than two points;
+- shuffled supervision is at most 40% exact programs;
+- gold events retain at least 99% exact state and answer;
+- total parameters remain strictly below 150,000,000;
+- no sealed confirmation bytes are read.
+
+These are public-development gates. They authorize at most a separately frozen, freshly seeded
+confirmation protocol.
+
+## 8. Score-blind confirmation rule
+
+No confirmation corpus exists at preregistration. If every development gate passes, source,
+generator, evaluator, assessor, and job bytes must be committed before drawing one production seed.
+That seed may be used once. A failure is sealed; thresholds cannot be relaxed and the board cannot
+be rerun.
+
+## Existing-board no-go
+
+The old depth board renders every chunk with exactly two normal-looking operations and stores the
+true count in `active_operations`. Odd final chunks pad with `(left, initial_entity_0, 1)`, while
+the same semantic operation can be a legitimate second update. Therefore a semantic equivariant
+halt classifier cannot recover the hidden label exactly from that board. Training a halt head on it
+would at best exploit incidental source identities or metadata. S4 replaces the corpus rather than
+fitting that invalid target.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 112: `R12_SCEB_RESULTS.md`
 
 Original source path: `R12_SCEB_RESULTS.md`
 Original source size: 1,455 bytes
@@ -13892,7 +18786,7 @@ threshold shopping.
 
 ---
 
-## Embedded source 69: `R12_SECRET_SHARED_CAUSAL_BOOTSTRAP_NO_GO.md`
+## Embedded source 113: `R12_SECRET_SHARED_CAUSAL_BOOTSTRAP_NO_GO.md`
 
 Original source path: `R12_SECRET_SHARED_CAUSAL_BOOTSTRAP_NO_GO.md`
 Original source size: 6,396 bytes
@@ -14076,7 +18970,7 @@ not train Shohin on it and do not claim masked decryption as reasoning.
 
 ---
 
-## Embedded source 70: `R12_SELF_AUTHENTICATING_STATE_NO_GO.md`
+## Embedded source 114: `R12_SELF_AUTHENTICATING_STATE_NO_GO.md`
 
 Original source path: `R12_SELF_AUTHENTICATING_STATE_NO_GO.md`
 Original source size: 2,788 bytes
@@ -14142,7 +19036,7 @@ falsifier, Shohin fit, or H100 job is authorized.
 
 ---
 
-## Embedded source 71: `R12_SELF_CANONICALIZING_EPOCH_RETIREMENT_THEORY.md`
+## Embedded source 115: `R12_SELF_CANONICALIZING_EPOCH_RETIREMENT_THEORY.md`
 
 Original source path: `R12_SELF_CANONICALIZING_EPOCH_RETIREMENT_THEORY.md`
 Original source size: 81,894 bytes
@@ -15732,7 +20626,7 @@ instantiated and independently accepted.
 
 ---
 
-## Embedded source 72: `R12_SEPARATING_QUERY_BASIS_THEORY.md`
+## Embedded source 116: `R12_SEPARATING_QUERY_BASIS_THEORY.md`
 
 Original source path: `R12_SEPARATING_QUERY_BASIS_THEORY.md`
 Original source size: 22,477 bytes
@@ -16270,7 +21164,7 @@ reuse remain unsolved.
 
 ---
 
-## Embedded source 73: `R12_SHARED_TRANSITION_CIRCUIT_THEORY.md`
+## Embedded source 117: `R12_SHARED_TRANSITION_CIRCUIT_THEORY.md`
 
 Original source path: `R12_SHARED_TRANSITION_CIRCUIT_THEORY.md`
 Original source size: 65,956 bytes
@@ -17584,7 +22478,7 @@ ANY OTHER OUTCOME:
 
 ---
 
-## Embedded source 74: `R12_SOURCE_DELETED_RESIDUAL_PACKET_C1_CLOSURE.md`
+## Embedded source 118: `R12_SOURCE_DELETED_RESIDUAL_PACKET_C1_CLOSURE.md`
 
 Original source path: `R12_SOURCE_DELETED_RESIDUAL_PACKET_C1_CLOSURE.md`
 Original source size: 3,767 bytes
@@ -17678,7 +22572,7 @@ prerequisite pass cannot reopen C1.
 
 ---
 
-## Embedded source 75: `R12_SOURCE_DELETED_RESIDUAL_PACKET_PREREG.md`
+## Embedded source 119: `R12_SOURCE_DELETED_RESIDUAL_PACKET_PREREG.md`
 
 Original source path: `R12_SOURCE_DELETED_RESIDUAL_PACKET_PREREG.md`
 Original source size: 15,317 bytes
@@ -18072,7 +22966,7 @@ and exact plan/equation/answer gates before training.
 
 ---
 
-## Embedded source 76: `R12_SOURCE_SCHEDULED_FAILURE_TAXONOMY.md`
+## Embedded source 120: `R12_SOURCE_SCHEDULED_FAILURE_TAXONOMY.md`
 
 Original source path: `R12_SOURCE_SCHEDULED_FAILURE_TAXONOMY.md`
 Original source size: 4,181 bytes
@@ -18173,7 +23067,7 @@ executor intervention and cannot be used to rescue a failed controller gate.
 
 ---
 
-## Embedded source 77: `R12_SOURCE_SCHEDULED_REASONING_CONFIRMATION.md`
+## Embedded source 121: `R12_SOURCE_SCHEDULED_REASONING_CONFIRMATION.md`
 
 Original source path: `R12_SOURCE_SCHEDULED_REASONING_CONFIRMATION.md`
 Original source size: 4,745 bytes
@@ -18285,7 +23179,7 @@ the favorable control and matched total calls/tokens/FLOPs.
 
 ---
 
-## Embedded source 78: `R12_SOURCE_SCHEDULED_REASONING_CONFIRMATION_RESULT.md`
+## Embedded source 122: `R12_SOURCE_SCHEDULED_REASONING_CONFIRMATION_RESULT.md`
 
 Original source path: `R12_SOURCE_SCHEDULED_REASONING_CONFIRMATION_RESULT.md`
 Original source size: 5,341 bytes
@@ -18423,7 +23317,7 @@ miss as a pass.
 
 ---
 
-## Embedded source 79: `R12_SSC_FIRST_INTEGER_OFFLINE_RESULT.md`
+## Embedded source 123: `R12_SSC_FIRST_INTEGER_OFFLINE_RESULT.md`
 
 Original source path: `R12_SSC_FIRST_INTEGER_OFFLINE_RESULT.md`
 Original source size: 1,276 bytes
@@ -18467,7 +23361,7 @@ correct final and emit EOS, rather than last-integer under loop tails.
 
 ---
 
-## Embedded source 80: `R12_SSC_HALT_FIRST_LIVE_RESULT.md`
+## Embedded source 124: `R12_SSC_HALT_FIRST_LIVE_RESULT.md`
 
 Original source path: `R12_SSC_HALT_FIRST_LIVE_RESULT.md`
 Original source size: 865 bytes
@@ -18504,7 +23398,7 @@ protocol `R12-SSC-HALT-FIRST-LIVE`.
 
 ---
 
-## Embedded source 81: `R12_STRUCTURED_RESIDUAL_RESOURCE_LAW.md`
+## Embedded source 125: `R12_STRUCTURED_RESIDUAL_RESOURCE_LAW.md`
 
 Original source path: `R12_STRUCTURED_RESIDUAL_RESOURCE_LAW.md`
 Original source size: 7,886 bytes
@@ -18720,7 +23614,7 @@ equivalence and prior-art gates, no Shohin fit is authorized.
 
 ---
 
-## Embedded source 82: `R12_TASK_QUOTIENT_LIFTING_PREREG.md`
+## Embedded source 126: `R12_TASK_QUOTIENT_LIFTING_PREREG.md`
 
 Original source path: `R12_TASK_QUOTIENT_LIFTING_PREREG.md`
 Original source size: 10,330 bytes
@@ -18996,7 +23890,7 @@ reasoning or context-scaling capability.
 
 ---
 
-## Embedded source 83: `R12_TYPED_CONTROLLER_V1_RESULT.md`
+## Embedded source 127: `R12_TYPED_CONTROLLER_V1_RESULT.md`
 
 Original source path: `R12_TYPED_CONTROLLER_V1_RESULT.md`
 Original source size: 1,590 bytes
@@ -19048,7 +23942,7 @@ continue from v1 checkpoint, 2 epochs, raise atomic/native weight.
 
 ---
 
-## Embedded source 84: `R12_TYPED_CONTROLLER_V2_RESULT.md`
+## Embedded source 128: `R12_TYPED_CONTROLLER_V2_RESULT.md`
 
 Original source path: `R12_TYPED_CONTROLLER_V2_RESULT.md`
 Original source size: 1,393 bytes
@@ -19093,7 +23987,7 @@ dual head), not through more SFT mixture weight.
 
 ---
 
-## Embedded source 85: `R12_UPDATER_CANDIDATE_LIKELIHOOD_RESULT.md`
+## Embedded source 129: `R12_UPDATER_CANDIDATE_LIKELIHOOD_RESULT.md`
 
 Original source path: `R12_UPDATER_CANDIDATE_LIKELIHOOD_RESULT.md`
 Original source size: 3,502 bytes
@@ -19175,7 +24069,7 @@ cross-candidate KV state.
 
 ---
 
-## Embedded source 86: `R12_VAMT_V2_REVIEW_RESULT.md`
+## Embedded source 130: `R12_VAMT_V2_REVIEW_RESULT.md`
 
 Original source path: `R12_VAMT_V2_REVIEW_RESULT.md`
 Original source size: 4,768 bytes
@@ -19277,7 +24171,7 @@ is authorized by this document.
 
 ---
 
-## Embedded source 87: `R12_VAMT_V3_BOUNDED_MACHINE_THEORY.md`
+## Embedded source 131: `R12_VAMT_V3_BOUNDED_MACHINE_THEORY.md`
 
 Original source path: `R12_VAMT_V3_BOUNDED_MACHINE_THEORY.md`
 Original source size: 14,222 bytes
@@ -19680,7 +24574,7 @@ Novel primitive claim:       rejected by matched-control isomorphism
 
 ---
 
-## Embedded source 88: `R12_VAMT_V3_REVIEW_RESULT.md`
+## Embedded source 132: `R12_VAMT_V3_REVIEW_RESULT.md`
 
 Original source path: `R12_VAMT_V3_REVIEW_RESULT.md`
 Original source size: 3,041 bytes
@@ -19756,7 +24650,7 @@ pass.
 
 ---
 
-## Embedded source 89: `R12_VOCABULARY_ALIGNED_MICROCODE_TRANSDUCER_THEORY.md`
+## Embedded source 133: `R12_VOCABULARY_ALIGNED_MICROCODE_TRANSDUCER_THEORY.md`
 
 Original source path: `R12_VOCABULARY_ALIGNED_MICROCODE_TRANSDUCER_THEORY.md`
 Original source size: 33,448 bytes
@@ -20447,7 +25341,7 @@ is authorized by this document.
 
 ---
 
-## Embedded source 90: `R12_WGRQ_CPU_PREREG.md`
+## Embedded source 134: `R12_WGRQ_CPU_PREREG.md`
 
 Original source path: `R12_WGRQ_CPU_PREREG.md`
 Original source size: 13,289 bytes
@@ -20780,7 +25674,7 @@ end-to-end adversarial negative tests frozen before acquisition.
 
 ---
 
-## Embedded source 91: `RAW300K_FREEFORM_INTERACTION_RESULT.md`
+## Embedded source 135: `RAW300K_FREEFORM_INTERACTION_RESULT.md`
 
 Original source path: `RAW300K_FREEFORM_INTERACTION_RESULT.md`
 Original source size: 2,776 bytes
@@ -20840,7 +25734,7 @@ accuracy and must not be compared numerically with a frozen public board.
 
 ---
 
-## Embedded source 92: `RAW300K_INTERACTION_RESULT.md`
+## Embedded source 136: `RAW300K_INTERACTION_RESULT.md`
 
 Original source path: `RAW300K_INTERACTION_RESULT.md`
 Original source size: 4,984 bytes
@@ -20966,7 +25860,7 @@ templates rather than controlled deliberation.
 
 ---
 
-## Embedded source 93: `REASONING_ATTACK_PLAN.md`
+## Embedded source 137: `REASONING_ATTACK_PLAN.md`
 
 Original source path: `REASONING_ATTACK_PLAN.md`
 Original source size: 1,973 bytes
@@ -21022,7 +25916,7 @@ external arithmetic.
 
 ---
 
-## Embedded source 94: `REASONING_FRONTIER.md`
+## Embedded source 138: `REASONING_FRONTIER.md`
 
 Original source path: `REASONING_FRONTIER.md`
 Original source size: 218,863 bytes
@@ -24651,7 +29545,7 @@ This is a curriculum specification, not an R12 invention.
 
 ---
 
-## Embedded source 95: `TRAINING_METRICS.md`
+## Embedded source 139: `TRAINING_METRICS.md`
 
 Original source path: `TRAINING_METRICS.md`
 Original source size: 59,242 bytes
@@ -25411,530 +30305,6 @@ Its stable empirical diagnosis is local/fragile operation competence without
 reliable natural-language compilation, correction, halting, serialization, or
 state reuse. Full transcript custody and interpretation are in
 `RAW300K_INTERACTION_RESULT.md`.
-
-## Complete Source-Pointer Compiler v1.1: Development Rejection
-
-The external frontier plans converged on a compiler/executor/halt decomposition.
-Before accepting that stack, exact inspection found that Shohin's strongest R4
-compiler result was not complete: deterministic host code supplied initial values
-and event quantities, while `program_exact` omitted those fields. The v1.1 board
-therefore requires the model to select ten bindings directly from source tokens:
-three ordered initial entities, operation kind/entity/literal for two operations,
-and one query position.
-
-The finite CPU board and frozen corpus pass their custody gates. The corpus has
-96,000 train, 2,048 development, and 4,096 sealed confirmation rows; 1,021,440
-pointer labels; disjoint nonce names and renderer templates; and zero exact or
-word-13-gram overlap across splits. The first neural realization used six free
-learned slot queries over linearly projected frozen layer-19 causal states. It fit
-3,241,091 parameters while freezing Shohin, for 128,322,755 total parameters.
-
-Valid H100 job `692966` completed one epoch / 1,514 updates on `evc28`. Training
-loss reached `0.0000018793`, but frozen development rejected the realization:
-
-| Metric | Result |
-|---|---:|
-| full ten-binding pointer exact | **45/2,048 = 2.197%** |
-| semantic-program exact | **313/2,048 = 15.283%** |
-| executed answer accuracy | **602/2,048 = 29.395%** |
-| ordered initial-state joint exact | **386/2,048 = 18.848%** |
-| canonical + paraphrase both exact | **0/512** |
-| all four quartet surfaces exact | **0/512** |
-
-The unseen canonical renderer retains 41.992% answer accuracy, but the unseen
-paraphrase renderer falls to 1/512. Predicted pointers repeatedly land on words
-such as `unaffected` and `travel` at renderer-relative positions. The learned
-object is therefore a template coordinate system, not a renderer-invariant
-program. Literal pointers, query pointers, and operation-kind classes do
-transfer; structural role parsing and initial ordering do not.
-
-This closes the six-free-slot/projected-causal-state realization only. It does
-not close source-pointer compilation. Confirmation remains sealed and was never
-copied to Newton. A valid successor needs a fresh unseen language board and must
-separate lexical grounding, structural parsing, and execution with favorable
-ordinary tagger/pointer, lexical-oracle, structure-oracle, and full-oracle
-controls. The authoritative closeout is
-`R12_REFERENTIAL_LITERAL_POINTER_COMPILER_DEVELOPMENT_RESULT.md`.
-
-### Structured parsing and parameter islands
-
-V1.2 adds four bidirectional source-encoder layers and per-token supervision for
-all ten roles. It is a real structural intervention, not more examples. Job
-`692983` raises ordered initial-state joint exact from 18.848% to **48.340%**,
-including 60.547% on the failed paraphrase renderer. But its role head can solve
-location without teaching the free operation slot to consume the selected token.
-Operation-kind loss remains at chance, exact programs fall to 0/2,048, and
-answers fall to 18.994%.
-
-A no-fit diagnostic then composes v1.2 pointers with v1.1 operation classes. It
-recovers **987/2,048 = 48.193% answers** and **691/2,048 = 33.740% exact
-programs**. That composition is external and cannot count as a compiler, but it
-shows that the two partial capabilities coexist when their parameters do not
-interfere.
-
-V1.3 makes that separation architectural. The structural role parser and
-operation-semantic reader receive independent memory projections and decoders
-over the same frozen layer-19 source states. Job `692992` fits 8,658,701 compiler
-parameters, 133,740,365 total. It restores semantic optimization and reaches:
-
-| Metric | V1.3 |
-|---|---:|
-| answer accuracy | **887/2,048 = 43.311%** |
-| semantic-program exact | **480/2,048 = 23.438%** |
-| full ten-binding pointer exact | **218/2,048 = 10.645%** |
-| initial-state joint exact | **942/2,048 = 45.996%** |
-| all-four answers correct | **46/512 quartets** |
-
-This is a partial mechanism win but not a promotion. On the unseen paraphrase
-renderer, V1.3 reaches 59.766% answers, 42.773% programs, and 99.023% operation
-kind. On the other unseen renderer it reaches only 32.422% answers, 15.820%
-programs, and 46.289% kind. Separate educational paths repair destructive
-interference, but 96,000 repetitions from only two renderer families do not
-identify language-invariant lexical grounding.
-
-The next board is frozen in
-`R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_LANGUAGE_PREREG.md`. It
-factorizes intro frames, argument order, direction lexemes, ordinals,
-distractors, and queries; separates known-atom unseen combinations from truly
-unseen lexemes; and requires an ordinary parser plus lexical, structure, full,
-and shuffled controls. Repeating seeds or tuning against v1.1 development is
-closed. Confirmation remains sealed until a fresh board and matched attribution
-gate pass.
-
-### Factorized-language board admission
-
-The fresh board is now built and CPU-admitted. Its generator/tests were
-committed at `e6d957e` before any production seed existed. It contains 96,000
-train rows, 2,048 known-atom compositional development rows, 2,048
-unseen-direction-lexeme development rows, and 8,192 sealed confirmation rows:
-108,288 total rows, 10,858,878 source tokens, and 1,082,880 model-owned pointer
-labels. Every exact prompt, word-13-gram, nonce name, and full factor combination
-is split-disjoint; every ten-span target is nonempty; two CPU executors agree on
-every row; and all quartet/token-bag gates pass.
-
-The first attribution comparison is equal-budget. V1.3 parameter islands use
-8,658,701 adapter parameters / 133,740,365 total. The favorable conventional
-five-layer bidirectional token tagger uses 8,607,886 / 133,689,550, a 0.587%
-adapter-budget difference. It directly labels source tokens and pools kind
-classes at predicted direction spans; it has no learned program slots or
-parameter islands. All five Newton arms share the immutable raw-300k base,
-96,000 examples, 1,517 updates, seed `2026071810`, evaluator, and zero
-confirmation access.
-
-### Factorized-language development result
-
-Jobs `693048/693049/693098/693101/693102` all completed cleanly. The primary
-known-atom compositional result is:
-
-| Arm | Answers | Programs | Full pointers | All-four exact |
-|---|---:|---:|---:|---:|
-| free slots | 98.340% | 98.242% | 98.242% | 496/512 |
-| structured | 100.000% | 100.000% | 100.000% | 512/512 |
-| parameter islands | 100.000% | 100.000% | 100.000% | 512/512 |
-| ordinary tagger | 100.000% | 100.000% | 100.000% | 512/512 |
-| shuffled islands | 0.488% | 0.146% | 0.000% | 0/512 |
-
-Every absolute v1.3 gate passes. The frozen attribution gate fails because
-islands' exact-program advantage over the favorable ordinary parser is 0.0
-percentage points rather than at least +5. The data factorization, not the
-islands architecture, is the durable result.
-
-Lexical-OOD exact programs are free slots **85.010%**, islands **77.881%**,
-structured **72.852%**, ordinary **63.721%**, and shuffled **0.049%**. Oracle
-localization is decisive: gold operation kinds raise islands and ordinary to
-**99.316%** and **98.975%** exact programs, whereas gold structural pointers
-reach only 78.516% and 64.307%. Initial, entity, literal, and query bindings are
-already about 99--100% exact. The residual OOD error is unseen-word polarity,
-not source-role binding.
-
-Assessment SHA-256
-`ca8cab2ef9dbaa9d894857438e72193476259fd659e8423b85af47e13e37fc0d`
-records `retain_as_conventional_compiler_baseline_confirmation_sealed`.
-Confirmation bytes remain local only and absent from Newton. Retain the
-ordinary parser as conventional infrastructure and require a fresh untouched
-qualification board before connecting any compiler to a source-deleted
-executor, consumer, or halt policy. The authoritative score and custody record
-is `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_DEVELOPMENT_RESULT.md`.
-
-### Conventional compiler one-shot qualification
-
-The selected ordinary tagger was then tested exactly once on a fresh board
-whose seed was selected only after generator and preregistration commit
-`e7fa112`. The board contains 2,048 semantic quartets / 8,192 rows, 4,096
-factor combinations, and 639 source names. All language atoms are known from
-factorized training, while exact prompts, word 13-grams, entity names, and full
-factor combinations have zero overlap with every public factorized split. The
-generator accepts no confirmation path and reports zero confirmation access.
-
-Job `693105` completed on `evc25` without fitting, oracle, retry, seed sweep, or
-arm selection. It scores **8187/8192 answers**, **8186/8192 exact semantic
-programs/full pointers/initial bindings**, **8192/8192 operation kinds**, and
-**2045/2048 all-four exact quartets**. The assessor was committed at `3b3e7e9`
-before score access and records assessment SHA-256
-`35278899fdbcdf801838c414adf860d59a255ecb4de5a44b3acf072248fa6cc7` with
-decision `qualify_conventional_compiler_for_isolated_stage_b_development`.
-
-This closes the Stage-A infrastructure uncertainty. It does not establish
-execution or reasoning. The only newly authorized experiment keeps raw Shohin
-and the compiler frozen, gathers a bounded model-owned packet, deletes source
-states before update, and fits a separately parameterized recurrent executor
-and consumer. Gold packets are diagnostic ceilings only; host code may route
-tensor positions but may not decode, repair, or execute semantic fields. The
-old factorized confirmation remains sealed/local-only. Full custody and exact
-gate arithmetic are in
-`R12_REFERENTIAL_LITERAL_POINTER_COMPILER_QUALIFICATION_RESULT.md`.
-
-### Active Stage B: Referential Gather-Delete Permutation Execution
-
-The first post-qualification executor is frozen in
-`R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_PREREG.md`, SHA-256
-`d49002657ab711ef84e278cfb249ee71cf6e7ee868fab98ae6481d7bc174d224`.
-It treats list state as a soft `3 x 3` assignment matrix over initial entity
-identities. A frozen compiler gathers bounded entity, operation, literal, kind,
-and query vectors; the treatment executor receives no source IDs, masks,
-pointer logits, or full memory. One learned cell predicts a doubly stochastic
-destination-to-source transition and is called twice. A separate query consumer
-reads the final assignment.
-
-The identifying design is atomic-to-composed transfer. For each of 96,000
-training rows, operation zero and operation one are each applied independently
-from identity state. The treatment therefore receives 192,000 atomic targets
-per epoch but never a two-operation state or answer target. Development asks it
-to compose both operations. No-fit operation and query packet shuffles test
-causal consumption. A gold-packet arm localizes compiler error; a two-cell
-untied arm is favorable in capacity; and a full-source cross-attention control
-is favorably trained on complete answers.
-
-The instantiated tied executor has 1,416,783 parameters and 135,106,333 total
-with base/compiler. Untied and source-retained systems total 136,074,215 and
-134,952,337. Nineteen CPU tests, finite backward gradients, source-distractor
-invariance, packet interventions, Ruff, `py_compile`, and shell syntax pass.
-Jobs `693111--693114` completed cleanly and reject v1. Tied predicted reaches
-48.340% answers, 18.701% exact final assignments, and 17.236% both-transition
-exact. Untied is tied at 48.438% answers. Gold-packet training remains at
-49.170% / 20.166% / 19.385%, and source-retained direct answer is 37.988%.
-Query and amount are nearly solved, while entity matching is only 51.294%.
-
-The forensic result is precise. Over 16,384 qualification-board operation
-references, selected positions lie inside both correct multi-token entity spans
-99.982% of the time. Yet v1's selected operation/intro subtoken IDs agree only
-59.326%, whereas the complete span token-ID sequences agree 100%. Softmax
-gathering converted a set-valued role mask into one unstable contextual
-coordinate. This explains why gold pointers and a second cell do not rescue the
-state updater.
-
-Assessment SHA-256
-`c73c9306b422ac30111a8b78af614f50b16a2f90aa6a5c5270af39573f0e53c2`
-records `reject_rgde_v1_identity_packet`. Do not generate confirmation, add
-epochs, or widen v1. The only bounded repair is a new preregistered packet that
-normalizes the compiler's sigmoid multi-token role mask and gathers frozen
-vocabulary embeddings for entity/literal/query identity while retaining
-contextual operation information separately. Even a later pass remains only a
-bounded source-deleted execution component, not language reasoning or novelty.
-
-The committed no-fit repair probe now supplies positive evidence for that exact
-interface. Job `693117` on `evc29` recovers operation-to-initial entity identity
-at **4,090/4,096 = 99.854%** with normalized sigmoid role spans over frozen
-vocabulary embeddings. Contextual softmax is 32.031%, lexical softmax is
-72.412%, and gold lexical spans are 100%. This is not a learned score: no
-optimizer or executor runs in the probe. It demonstrates that source deletion
-can preserve referential identity when a compiler role is treated as a token
-set rather than a categorical coordinate.
-
-`R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_V1_1_PREREG.md` freezes the resulting
-dual-channel packet before fit. Entity/literal identity uses 576-wide lexical
-spans; operation/query control uses 384-wide contextual spans; both complete
-source memories are discarded before the updater. The tied system totals
-135,180,829 parameters. Its primary arm still sees only independent atomic
-updates. An identical tied arm with full composed supervision is added solely
-as an architecture ceiling, alongside gold-packet, untied, operation-shuffle,
-and query-shuffle controls. Only a full frozen development pass can authorize a
-fresh longer-depth board; old confirmation remains sealed.
-
-The frozen v1.1 development run passes that gate. Tied atomic training reaches
-**99.707% answers, 99.902% exact final state, and 99.756% both-transition
-exactness** on two-step composition. Gold atomic reaches 99.902% / 100% / 100%;
-the larger untied arm is slightly worse at 99.512% / 99.609% / 99.414%; and
-direct composed supervision is also slightly worse. All four surfaces exceed
-99.6% answers and 507/512 semantic quartets are entirely correct.
-
-Repaired, globally deranged controls establish field causality. Replacing every
-operation program with a different program lowers answers to 36.963% and exact
-state to 24.365%. Replacing every query with a different requested position
-lowers answers to 0.146% while leaving exact state at 99.902%. All ten frozen
-gates pass; assessment `60ec1bb3...` records
-`qualify_rgde_v1_1_for_fresh_depth_confirmation`. This is the strongest current
-native execution result: a shared model-owned update rule learned from atomic
-examples composes under source deletion. Its next required test is a fresh
-three-to-eight-operation depth board, not another two-step fit.
-
-That next gate is now frozen before seed selection in
-`R12_RGDE_DEPTH_CONFIRMATION_PREREG.md`. It streams ordinary two-operation
-source cards through the qualified compiler, deletes each card's source states,
-and reuses the exact tied executor three to eight times on one persistent
-assignment state. The fresh board will use unseen paired nonce names and unseen
-known-atom factor combinations with order/binding twins. The host still supplies
-the operation count and halt point, so a pass would confirm recurrent native
-state execution through depth eight, not solve autonomous planning or stopping.
-
-The one-shot depth board rejects the end-to-end predicted packet but strongly
-confirms the executor. Predicted packets reach 76.318% answers / 69.238% exact
-state overall and fall to 67.059% / 55.294% at depth eight because novel paired
-names reduce entity matching to 77.952%. In contrast, the exact same frozen
-cell with gold packet roles reaches **99.707% answers, 100% exact final state,
-and 99.072% all-transition exactness overall**; depth-eight answers remain
-99.118% and transitions 98.824%. Operation derangement lowers answers to
-32.275% and exact state to 13.428%.
-
-This changes the research diagnosis. Tied recurrent state is no longer the
-active bottleneck through depth eight. Stage A must learn or compute a bounded
-relation between token sets for compositionally novel names. The failed board
-is sealed and cannot become training data. The next lawful move is a disjoint
-paired-name development board plus a no-fit relational carrier, followed only
-later by an independently seeded confirmation.
-
-The next frozen mechanism is an **ordered relational identity carrier**, not a
-wider name embedding. It keeps the compiler's normalized soft role masks and,
-while source tokens still exist, computes a translation-invariant weighted
-sequence match between each operation referent and the three introduced
-referents. The result is only a bounded three-way relation; full source states
-are still deleted. An unordered vocabulary-mass cosine is a matched control
-because it cannot distinguish reversed names. A new public paired-name board,
-whose seed is chosen only after source/prereg commit, must first show at least
-99% no-fit identity and a 15-point gain over the old mean-vector carrier. The
-failed confirmation is not an input and remains sealed.
-
-That carrier is now rejected on attribution despite a strong absolute score.
-On 11,248 fresh public identity references, the ordered primary reaches
-99.653%, unordered vocabulary mass 99.298%, and gold spans 100%, but the old
-mean-vector cosine is already 97.413%. The 2.240-point gain misses the frozen
-15-point requirement. The useful new localization is therefore not “identity
-is solved”: raw compiler representations are substantially stronger than the
-77.952% identity seen inside the recurrent executor. A separately frozen
-no-fit consumer diagnostic must test whether the learned executor matcher
-causes that transport loss. No carrier integration or confirmation reread is
-authorized.
-
-The matched consumer diagnostic now freezes that exact question. The same
-executor will receive the untouched packet, a packet rebound by ordinary mean
-identity, a packet rebound by the rejected ordered kernel strictly as a
-diagnostic oracle, and a gold-identity rebound packet. A consumer diagnosis
-requires a ten-point answer and state recovery from mean rebinding while the
-untouched matcher is below 90%; otherwise the failure remains unlocalized or
-the public board is declared non-reproducing. No arm trains or sees the sealed
-confirmation.
-
-The resulting architecture proposal is the **S3 categorical permutation
-register**. It discards continuous entity vectors after compilation. Persistent
-state is exactly one of six permutations; categorical identity multiplied by
-that register yields exact current location; and a tied neural cell predicts a
-relative group element from state, location, operation kind, and amount. A
-straight-through gate is hard in the forward pass, so invalid or fractional
-identity states cannot accumulate. The 717,323-parameter executor trains only
-on independent atomic public updates with gold identity and is evaluated with
-mean identity as primary plus ordered/gold ceilings. A long-program gain of ten
-points over the continuous executor and near-exact ceilings are required before
-any new confirmation.
-
-S3 v1 is rejected because its state was categorical but its update was not
-equivariant. Atomic loss reached zero; two-step entity match was 100% with
-ordered/gold identity, yet exact transitions stopped at 66.260% and long gold
-answers at 54.932%. The unrestricted cell had seen the raw assignment matrix
-only at identity state and memorized that coordinate frame. The bounded v1.1
-repair removes both assignment and immutable identity from the transition MLP:
-only current location, direction, and amount remain. Those variables determine
-the local S3 action and are fully covered by atomic training.
-
-S3 v1.1 freezes exactly that repair. Its transition function is invariant to
-global identity labels and assignment coordinates by construction; only exact
-current location and operation features survive. The 3x2x2 local action table
-is fully supported by atomic training. All v1 data, seed, optimizer, and gates
-remain unchanged so any recovery is attributable to equivariance rather than
-compute or supervision.
-
-S3 v1.1 produces a large but insufficient recovery. Job `693131` reaches
-99.463% two-step mean answers / 99.854% exact state and 100% ordered/gold
-state, showing that removing the global coordinate frame fixed v1's immediate
-composition defect. Across depth 3--8, mean reaches 84.180% answers / 80.713%
-state / 60.059% complete chains; gold identity reaches only 87.109% / 84.912%
-/ 66.895%. Depth-eight mean answers clear 80%, but state and full chains are
-78.235% and 47.353%. Because the separate amount classifier remains 100%
-accurate while transition selection fails, the remaining drift is in the
-continuous action channel (`kind_context` and literal features), not the exact
-S3 register. Assessment `3c9ed4f0...` rejects v1.1 for confirmation. The next
-bounded test is closure by construction: discretize model-predicted direction
-and amount and apply their exact local S3 action, keeping compilation, source
-deletion, query consumption, schedule, and halt boundaries explicit.
-
-That zero-fit v1.2 test is now frozen before score access. Its only intervention
-is a complete 3-location x 2-direction x 2-amount action table stored inside
-the executor and returning one of the exact six S3 matrices. Direction remains
-the frozen compiler prediction; amount remains the frozen v1.1 amount-head
-prediction; identity and query remain their existing model-owned channels.
-Seven tests exhaust the table and recurrent non-identity composition. The
-frozen gates require near-exact gold depth execution plus end-to-end mean and
-ordered floors. This can distinguish a continuous-action transport failure
-from compiler direction/amount error without fitting another model. External
-operation count and halt remain outside the model.
-
-V1.2 is now rejected, but it closes another ambiguity. Zero-fit job `693134`
-preserves exact short execution and moves long mean only 84.180% -> 85.303%
-answers, 80.713% -> 82.031% state, and 60.059% -> 63.281% complete chains.
-Gold identity stops at 88.379% / 86.328% / 70.508%. The closed action cannot be
-the source of error; its amount input is 100% accurate. Frozen compiler
-direction accuracy is 93.403% at depth and 70.776% on lexical OOD. All long-
-board direction phrases are exact training atoms with no class collisions, so
-the contextual kind head is losing known lexical polarity. The next bounded
-interface is a training-span-derived lexical relation decoder behind the
-compiler's operation-kind pointer, with neural fallback for unseen phrases.
-
-That training-lexicon interface is now frozen before score. Its deterministic
-builder extracts exactly six left and six right token sequences from 192,000
-training-only direction spans and refuses any cross-class collision. The
-runtime decoder aligns the frozen compiler's soft operation-kind pointer to
-those patterns and overrides the contextual kind head only above a fixed 0.5
-pointer-mass floor; unmatched phrases retain neural fallback. No weight, fit,
-development label, or confirmation is involved. Frozen gates require >=99.5%
-known-atom direction, exact gold state/chains across depth 3--8, strong ordered
-composition, and <=5% lexical-OOD pattern coverage to rule out distractor
-capture. A pass would remain a bounded known-lexeme compiler/executor, with
-external schedule and halt.
-
-V1.3 passes every frozen public gate and becomes the strongest bounded native
-execution component. Zero-fit job `693136` restores direction and amount to
-100% on depth 3--8. Mean identity reaches 94.434% answers / 94.336% state /
-89.453% complete chains; ordered relation reaches **98.340% / 99.463% /
-98.730%**; and gold identity reaches 98.779% answers with **100% exact state
-and every transition chain**. Depth-eight ordered remains 98.529% answers,
-100% state, and 98.824% chains. Lexical OOD has exactly 0% lexicon coverage and
-unchanged fallback scores, ruling out distractor capture. This is a strong
-known-atom, source-deleted, recurrent execution result learned from atomic
-updates only. It now requires one fresh seed-after-commit confirmation and
-causal action/query controls. Schedule, halt, unseen-phrase semantics, and open
-language planning remain unsolved boundaries.
-
-The authorized confirmation is now protocol-frozen before its production
-seed. It will generate 512 fresh quartets across depths 3--8 while excluding
-all public factorized and relational-development prompts, 13-grams, names, and
-factor combinations. Every direction must remain a training lexicon atom, and
-operation/query strata must support global semantic derangements. Ordered
-identity is the complete-system primary; mean and gold are fixed controls.
-Operation and query interventions must causally collapse their respective
-outputs. A scoreless seed-1 mechanics board passed and was deleted; that seed
-is retired. No production confirmation score exists yet.
-
-The first production-generation seed `3906227011763392781` is retired before
-model access: depths 3 and 6 had query strata too imbalanced for the frozen
-semantic derangement. No score exists. A mechanical generator correction now
-cycles query positions within each depth and resamples only the semantic tuple
-until that requested position separates both twins. Model, evaluator, gates,
-board size, exclusions, and causal controls do not change.
-
-The corrected one-shot board strongly reproduces but formally rejects the
-candidate. Ordered primary reaches 99.121% answers / 99.268% state / 98.682%
-chains; mean reaches 95.215% / 93.652% / 88.818%. Operation derangement drops
-to 35.010% answers / 17.871% state, and query derangement to 0.439% answers with
-unchanged state, so the complete system is causally field-dependent. Gold
-identity is 99.609% answers / 99.951% state / 99.902% chains rather than the
-frozen exact 100% because two of 11,248 directions are wrong. Assessment
-`8d69dd5d...` therefore rejects confirmation. No threshold relaxation or board
-rerun is allowed. A fresh public repair may replace the 0.5 lexical mass floor
-with a threshold-free structural pointer-anchor rule, then seek a new board.
-
-That structural repair now passes its entire public contract without fitting.
-The compiler's global operation-kind pointer argmax selects an exact training
-atom only when it lies inside one unambiguous pattern; unmatched or ambiguous
-anchors fall back to the neural head. Job `693142` reaches 100% known-atom
-direction and coverage across depth 3--8, while lexical-OOD coverage remains 0%
-and answer accuracy remains 75.195%. Depth mean is 94.434% answers / 94.336%
-state / 89.453% chains; ordered is **98.340% / 99.463% / 98.730%**; gold is
-98.779% answers with **100% state/chains**. Assessment `a73b0915...` qualifies
-one wholly new independent confirmation. It remains a bounded known-lexeme
-compiler/executor with external schedule and halt, not open-language reasoning.
-
-The first pointer-anchor confirmation infrastructure seed
-`223317486517061319` produced no board or score: Newton failed an import before
-creating the output directory because two tracked generator dependencies were
-missing from its working copy. The seed is retired; syncing those unchanged
-files does not alter the hypothesis or gates.
-
-Pointer-anchor S3 v1.4 is now independently confirmed. Replacement seed
-`8548551866585932338` creates a wholly new 2,048-row board at SHA
-`9fc73f98...`; one-shot job `693145` completes `0:0`. Ordered identity reaches
-**98.242% answers / 99.658% exact state / 98.975% complete chains**. Mean
-identity reaches 92.773% / 92.920% / 88.086%. Gold identity reaches 98.535%
-answers with **100% exact state, chains, direction, and amount**. Replacing every
-operation stream collapses answers/state to 35.059% / 17.578%; replacing only
-the query collapses answers to 0.586% while state remains 99.658%. Every frozen
-overall, depth, causal, exact-gold, and custody gate passes; assessment
-`cc1458f...` records confirmation.
-
-This establishes a real but bounded mechanism: Shohin-owned source compilation,
-ordered categorical identity, known-atom direction decoding, closure-complete
-S3 action, and source-deleted recurrent state execute fresh programs through
-depth eight and causally consume both schedule and query. The system still uses
-external chunk boundaries and stop, and its exact direction interface does not
-generalize beyond 12 training atoms. Thus the next frontier is sharply
-localized to model-owned packet scheduling/halt and unseen action semantics,
-not recurrence or state update. V1.4 is the locked execution baseline; the
-sealed board cannot be reused for development.
-
-The original chunked depth interface cannot legitimately train that missing
-halt boundary. Its odd final chunks render a normal second operation but mark
-it inactive only in `active_operations`. Across the public board, 1,024 hidden
-padding instances and 395 legitimate updates share the exact equivariant
-semantic signature `(left, initial_entity_0, 1)`. The best deterministic
-signature classifier therefore makes at least 395/6,136 errors. Dropping every
-such event reaches 95.313% answers but only 81.592% exact programs; keeping all
-events reaches 76.904% answers and 50% exact programs. This is a corpus no-go,
-not evidence that Shohin cannot learn halt. Fitting a head would reward nonce or
-metadata leakage rather than semantic termination.
-
-S4 is preregistered as the lawful replacement: one unpadded whole-source event
-tape, a model-owned variable-length token parser, monotone grouping of complete
-`(direction, entity, amount)` events, and the locked S3 v1.4 consumer. The tape
-halts after the final complete parsed event, so no host count, chunk index,
-filler, fixed operation slot, or `active_operations` label enters inference.
-The parser is explicitly equivalent to conventional semantic-role labeling plus
-a finite-state transducer; no architectural novelty claim is authorized. Its
-bounded target is autonomous schedule extraction through held-out depth eight,
-with gold, host-count, fixed-slot, and shuffled-supervision controls and a strict
-sub-150M parameter cap.
-
-The admitted S4 public corpus is now complete at post-commit seeds
-`10818821031317486155` / `12621147368670264037`: 48,000 training rows balanced
-across depths one through four and 2,048 matched development rows across depths
-three through eight. The longest source is 343 tokens. Exact prompt, word-
-13-gram, entity-name, and factor-combination overlap are zero both across splits
-and against the existing factorized/relational public corpora. Every row is one
-whole unpadded source, every gold event count equals depth, and both exact CPU
-executors agree. Two earlier seeds are rejected and retired because generic
-cross-boundary 13-grams survived before nonce anchors were added after events
-and distractors.
-
-The neural S4 parser is frozen before fit. It reuses the qualified conventional
-compiler's 63-tensor bidirectional memory encoder, replacing only fixed op0/op1
-heads with generic repeated `event.kind/entity/literal` token roles plus amount
-and query heads. Contiguous predicted spans define event cardinality; unequal
-component counts are invalid rather than host-repaired. Exact source-token
-identity binds each event entity to one predicted initial roster span, and the
-12-pattern training-only direction lexicon preserves the known-semantics
-boundary. Treatment and within-source shuffled-supervision control have the
-same 48,000 examples, one epoch, 750 updates, optimizer, and initialization.
-Total parameters are 133,689,935, of which 125,081,664 base parameters are
-frozen. Evaluation separately reports strict autonomous parsing and favorable
-gold-count rescue before the locked exact S3 local action consumes the tape.
-
-The matched result reproduces the loss but rejects single-comparator
-localization. Untouched execution reaches 77.393% answers / 70.312% exact
-state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /
-85.400%; even gold identity stops at 88.672% / 85.840%. Thus exact referent
-selection does not restore the executor's gold-packet ceiling. Continuous
-entity encoding, soft permutation mixing, and repeated learned rematching form
-the remaining coupled failure. The next architecture must carry categorical
-identity in a three-slot permutation register and remove semantic matching from
-the recurrent loop; it must still learn the update from atomic public examples
-and face favorable ordered/gold controls.
 
 ## Update Protocol
 

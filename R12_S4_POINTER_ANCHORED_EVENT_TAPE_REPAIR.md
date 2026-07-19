@@ -2,9 +2,9 @@
 
 ## Status
 
-Frozen zero-fit public-development repair after S4 v1 treatment evaluation and before any repaired
-score. No model weight, corpus row, optimizer, update count, seed, threshold, or confirmation input
-changes.
+**FORMALLY REJECTED.** This was frozen as a zero-fit public-development repair after S4 v1
+treatment evaluation and before any repaired score. No model weight, corpus row, optimizer, update
+count, seed, threshold, or confirmation input changed.
 
 ## Failure diagnosis
 
@@ -58,3 +58,14 @@ frozen repair above already specified the *set* of training entity-span widths, 
 implemented to accept that set. Before any development score, the builder gate is therefore
 repaired to require a nonempty bounded width set and exact accounting of all 144,000 training intro
 spans. The failed receipt is retained as `s4_structural_lexicon_v1.failed_one_width.json`.
+
+## Result
+
+Jobs `693160` and `693161` completed cleanly. Treatment retains 2048/2048 exact event counts but
+falls to 25/2048 exact programs and 300/2048 answers; shuffled remains 0/2048 exact programs.
+Training-width expansion selects the wrong 4/5/6-token roster boundaries and creates 1,176
+`event_entity` failures. Frozen assessment SHA-256
+`fd0479b0737af49313b0cebf1863c4826c21de336f51e240ece3e4d60d11d587` records
+`reject_s4_v1_1_public_development`. Do not repair or rescore v1.1 on this board. The lawful next
+test is a newly preregistered event-relative start/end pointer architecture on fresh development
+data.
