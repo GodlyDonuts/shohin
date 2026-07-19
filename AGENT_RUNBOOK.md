@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 06:32 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 06:37 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8550,3 +8550,10 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `04e69b99`; assessor `e88a83a5`. Commit these bytes before drawing one random 2,048-row board.
   No H100, production board, development score, confirmation, planning, or broad reasoning claim
   exists yet.
+
+- **2026-07-19 06:36--06:37** -- S4 v3 seed `14970823073944690832` is retired with **no board,
+  model access, or score**. The post-freeze Newton builder exited during Python imports before
+  creating its output directory because the relative command-scoped `PYTHONPATH` did not expose a
+  tracked generator dependency. Source, preregistration, generator, gates, model, and jobs are
+  unchanged. Export absolute Newton `pipeline` and `train` paths, verify imports scorelessly, commit
+  this receipt, then draw one replacement production seed.
