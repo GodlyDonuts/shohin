@@ -8611,3 +8611,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   close learned global event attention. The next bounded source must use model-discovered kind
   anchors to impose monotone event-local regions over frozen v1 role evidence, add no gold depth or
   learned lexical table, and require fresh event-region/roster derangement controls.
+
+- **2026-07-19 07:14--07:18** -- **S4 v4 zero-fit source and its sole fresh board are frozen before
+  model access.** Commit `0c8aa8c` fixes a deterministic monotone event-region decoder: frozen v1
+  kind anchors partition the source at adjacent-anchor gap midpoints, frozen event-role evidence is
+  normalized only inside each region, and the causal vocabulary carrier resolves entity identity.
+  It adds zero trainable parameters and receives no depth, event spans, lexical entity table, or
+  score-derived threshold. Production seed `3847103809226516730` yields 2,048 rows / 512 matched
+  groups, depths 3--8, maximum 341 tokens. Exact-prompt, word-13-gram, nonce/name, factor, and roster
+  token-multiset overlap are all zero against source train/development and both closed fresh boards.
+  Data SHA is `3c06f58c...`, report `27b795d1...`, and read-only safe archive `7443f496...`, all
+  hash-matched on Newton and Mac. Commit these custody artifacts before one serial job runs frozen
+  v1 baseline, v4 treatment, roster rotation, event-region rotation, and the frozen assessor. Do
+  not change the source or read confirmation after the score.

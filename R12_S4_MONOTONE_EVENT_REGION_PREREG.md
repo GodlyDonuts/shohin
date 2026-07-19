@@ -2,7 +2,16 @@
 
 ## Status
 
-**Frozen before production seed selection, board generation, model evaluation, or score access.**
+**Source frozen at commit `0c8aa8c` before production seed selection, board generation, model
+evaluation, or score access. The sole fresh-development board is now admitted and frozen; no model
+has accessed it.**
+
+Production seed `3847103809226516730` generated exactly 2,048 rows / 512 matched groups after the
+source freeze. All declared overlap and mechanics gates pass. Data, report, and read-only safe
+archive SHA-256 values are respectively
+`3c06f58c4ade457ac5017be41afbd97fd3c23a90200430af1318af7e5a988f19`,
+`27b795d1eedbba65d3697d50ab8eaec5175616e4743a573c5ca5419c21aea0f4`, and
+`7443f4962f19c5a3740b85ccf0a2d38bfa52adbf5cc1ab8a08df8e69fd8bddf2`.
 
 ## Measured motivation
 
