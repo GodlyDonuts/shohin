@@ -2,9 +2,12 @@
 
 ## Status
 
-**Protocol frozen at commit `6731743` before confirmation seed selection, board generation, or
-confirmation access. The sole confirmation board is admitted and frozen; no model has accessed
-it.**
+**Closed confirmed on 2026-07-19.** The sole confirmation read scores 97.80% exact programs versus
+93.41% frozen v1; every gate passes and both causal controls score zero programs. The assessor
+records `confirm_s4_v5_hard_island_soft_interface`. No second board or rescore exists.
+
+Protocol was frozen at commit `6731743` before confirmation seed selection, board generation, or
+confirmation access.
 
 Seed `14809014609581254328` generated 2,048 rows / 512 groups with every declared gate passing.
 Confirmation data, report, and read-only archive SHA-256 values are respectively

@@ -1,0 +1,36 @@
+{
+  "all_gates_pass": true,
+  "assessor_sha256": "cd70886c67c0cf3c76ad62aeb924ea508ee3bab280adaa78fcfc73c8e66892b8",
+  "baseline_program_accuracy": 0.93408203125,
+  "baseline_report_sha256": "0293aeeca82660a827c6197fd30b84512d66084925b364cf64152bc39442aaa6",
+  "decision": "confirm_s4_v5_hard_island_soft_interface",
+  "event_deranged_program_accuracy": 0.0,
+  "gates": {
+    "answer_overall_at_least_95pct": true,
+    "confirmation_access_exactly_one": true,
+    "count_every_depth_at_least_95pct": true,
+    "count_overall_at_least_98pct": true,
+    "development_access_zero": true,
+    "event_deranged_program_at_most_40pct": true,
+    "gold_s3_sanity": true,
+    "initial_roster_at_least_95pct": true,
+    "program_at_least_v1_plus_1pp": true,
+    "program_depths_5_to_8_at_least_90pct": true,
+    "program_overall_at_least_95pct": true,
+    "query_overall_at_least_98pct": true,
+    "roster_deranged_program_at_most_40pct": true,
+    "state_overall_at_least_95pct": true,
+    "total_parameters_below_150m": true,
+    "zero_new_trainable_parameters": true
+  },
+  "roster_deranged_program_accuracy": 0.0,
+  "schema": "r12_s4_hard_island_confirmation_assessment_v5",
+  "treatment": {
+    "answer_correct": 0.986328125,
+    "count_exact": 1.0,
+    "initial_exact": 0.98974609375,
+    "program_exact": 0.97802734375,
+    "state_exact": 0.98388671875
+  },
+  "treatment_report_sha256": "d4d1b2b928aec723f7421147d4d14b386ebcbd014db4d2d2db83636b989c44f0"
+}

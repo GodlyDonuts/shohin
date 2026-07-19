@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 07:42 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 07:58 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8674,3 +8674,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   archive `af94e855...` are hash-matched on Newton/Mac. Commit these receipts before exactly one
   serial confirmation job. No second board, repair, rescore, or mechanism change is permitted after
   confirmation access.
+
+- **2026-07-19 07:50--07:58** -- **S4 v5 confirms and is promoted as the best bounded native S4
+  baseline.** Sole confirmation job `693178` completes in 54 seconds on `evc24`. On the disjoint
+  board, frozen v1 scores 1913/2048 = 93.41% programs; unchanged v5 scores **2003/2048 = 97.80%
+  programs, 2015/2048 = 98.39% state, and 2020/2048 = 98.63% answers**, with 100% count/query and
+  98.97% roster. Every depth is 96.18--98.82%; both roster and region rotations again produce zero
+  programs. Assessment SHA `41fb41a7...` records `confirm_s4_v5_hard_island_soft_interface` with
+  all gates passing. Promotion manifest
+  `artifacts/r12/s4_hard_island_soft_interface_v5.promoted.json` binds base/parser/S3/mechanism and
+  both boards. Preserve this as the new bounded baseline. Next research must test unseen operation
+  semantics or a model-owned execution/update interface; do not weaken the claim into general
+  reasoning or tune on these closed boards.

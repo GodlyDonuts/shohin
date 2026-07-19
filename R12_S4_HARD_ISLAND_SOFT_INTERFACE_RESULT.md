@@ -1,12 +1,11 @@
 # R12 S4 Hard-Island / Soft-Interface Result
 
-## Current decision
+## Decision
 
-**Fresh development qualifies S4 v5 for exactly one new disjoint confirmation. This is not yet a
-confirmed promotion.**
+**Confirmed. Promote S4 v5 as the best bounded native S4 reasoning baseline.**
 
-All preregistered development gates pass. The mechanism remains frozen; only confirmation plumbing,
-custody, and a newly sampled board may be added before the confirmation read.
+All preregistered development and confirmation gates pass. The hash-bound promotion manifest is
+`artifacts/r12/s4_hard_island_soft_interface_v5.promoted.json`.
 
 ## Custody
 
@@ -47,15 +46,32 @@ Baseline, treatment, assessment, and log SHA-256 values are respectively
 `c4e874e16c469387adeb5c66702d3174b32ac3fccea560624dcb042a8f8a7ac7`. The assessor decision is
 `qualify_s4_v5_for_fresh_confirmation`.
 
-## Remaining gate
+## Confirmation
 
-Generate exactly one new board after confirmation tooling is committed. It must be disjoint from
-all source and v2--v5 development boards. Run the unchanged decoder, identical-board v1 baseline,
-both interventions, and a confirmation assessor once. No threshold, fallback, selector, lexicon,
-model weight, or development result may alter the mechanism.
+The sole disjoint confirmation board uses seed `14809014609581254328`, data SHA
+`b16534b3c41d21737370f0eb852cb6c53d75e81d661d6d9592927709551a08cf`, and report SHA
+`ce0e2671c8dcd07b5b789798da0325b94066087ce4222082267919f57afdb261`. Job `693178` completes the
+unchanged serial protocol on `evc24`.
+
+| Confirmation arm | Exact program | Exact state | Correct answer |
+|---|---:|---:|---:|
+| Frozen S4 v1 | 1913/2048 = 93.41% | 93.41% | 93.41% |
+| **S4 v5 hybrid** | **2003/2048 = 97.80%** | **2015/2048 = 98.39%** | **2020/2048 = 98.63%** |
+| V5 + roster rotation | **0%** | 0.68% | 3.76% |
+| V5 + event-region rotation | **0%** | 12.50% | 26.12% |
+
+Confirmation program accuracy by depth 3--8 is 97.09%, 98.55%, 98.82%, 96.18%, 98.82%, and
+97.35%. Surface accuracy is 97.66--98.05%. The assessor records
+`confirm_s4_v5_hard_island_soft_interface` at SHA-256
+`41fb41a7aa70139c5a05c321b949bb5ad245e26d1506445910cdbb542e34b407`.
+
+Confirmation baseline, treatment, and log SHA-256 values are
+`0293aeeca82660a827c6197fd30b84512d66084925b364cf64152bc39442aaa6`,
+`d4d1b2b928aec723f7421147d4d14b386ebcbd014db4d2d2db83636b989c44f0`, and
+`cb2d179110c4ef4c31f01d7f1a99748d11ad0235e76d1c521c37f9583a6341b2`.
 
 ## Claim boundary
 
-This is a qualified fresh-development known-atom parser/executor result. It is not yet confirmation,
+This is a confirmed known-atom parser/executor result and promoted bounded baseline. It is not
 unseen operation semantics, open-ended planning, learned halt, free-form reasoning, public benchmark
-improvement, novelty, or model promotion.
+improvement, or a novelty claim.

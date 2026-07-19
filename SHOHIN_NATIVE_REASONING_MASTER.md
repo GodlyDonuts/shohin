@@ -29558,7 +29558,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-19 07:42 EDT
+**Last refreshed:** 2026-07-19 07:58 EDT
 **Flagship source of truth:** Newton Slurm job `686732`,
 `/lustre/fs1/home/sa305415/shohin/logs/flagship2_686732.out`
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -30391,10 +30391,17 @@ answers**, versus **93.70% programs** for frozen v1. Count/query are 100% and ro
 98.73%. Every depth remains at least 94.71%; both roster and event-region rotations yield zero exact
 programs. The frozen assessor qualifies all gates for one confirmation.
 
-This is the strongest native S4 result so far and the first to exceed its identical-board frozen
-baseline by the preregistered margin while passing deep-chain and causal gates. It remains a
-known-atom structured parser/executor result pending a single disjoint confirmation, not a general
-reasoning or benchmark claim.
+On the sole disjoint confirmation, unchanged v5 improves again to **97.80% programs, 98.39% state,
+and 98.63% answers**, versus **93.41% programs** for frozen v1. Every depth is 96.18--98.82% and
+both controls remain at zero programs. All confirmation gates pass. V5 is therefore promoted as the
+best confirmed bounded native S4 baseline, bound by
+`artifacts/r12/s4_hard_island_soft_interface_v5.promoted.json`.
+
+The discovery is architectural decomposition rather than more compute: preserve sharp discrete
+islands where the model already has them, use set-valued carriers only across identity interfaces,
+and enforce monotone locality before exact execution. The next frontier is unseen operation
+semantics and a model-owned state-update interface. This still is not open-ended or free-form
+reasoning and should not be presented as a public benchmark gain.
 
 ## Update Protocol
 

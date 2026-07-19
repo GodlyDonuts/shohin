@@ -2,10 +2,9 @@
 
 ## Status
 
-**Fresh development qualified on 2026-07-19; confirmation is pending.** The frozen assessor records
-`qualify_s4_v5_for_fresh_confirmation`. Exact programs are 96.92% versus 93.70% for frozen v1;
-both causal controls score zero programs and every depth/gate passes. No confirmation has been
-generated or read. Full evidence is in `R12_S4_HARD_ISLAND_SOFT_INTERFACE_RESULT.md`.
+**Confirmed on 2026-07-19.** Development exact programs are 96.92% versus 93.70% for frozen v1;
+confirmation is 97.80% versus 93.41%. Both causal controls score zero programs on both boards and
+every frozen gate passes. Full evidence is in `R12_S4_HARD_ISLAND_SOFT_INTERFACE_RESULT.md`.
 
 Source was frozen at commit `e9a962b` before production seed selection, board generation, model
 evaluation, or score access.
