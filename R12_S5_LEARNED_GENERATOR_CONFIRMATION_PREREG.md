@@ -48,3 +48,15 @@ report SHA-256 is
 `7d2ad6f5e08558dc862feed3b0ee5d885a3e788798e6e3d207afdae50a605b29`.
 Newton and local copies are read-only. Commit this receipt and aggregate report
 before exactly one H100 read; no replacement board or retry is authorized.
+
+## Closure
+
+Sole job `693185` completed once on H100 `evc24` in 36 seconds, exit `0:0`.
+The unchanged learned arm scores 96.924% exact programs, 97.607% exact state,
+and 98.096% answers, exactly matching the host upper bound. It retains 36/36
+unit and 36/36 never-trained amount-two closure. Fixed-deranged, direction-
+rotated, and state-reset controls score 22.217%, 1.807%, and 40.234% state.
+Every gate passes; assessment SHA-256 is
+`165b1a9ae40c8b3f52d133983c21fb22bfa2f2507b30a318f86106c96e6abc4e`.
+The decision is `confirm_s5_learned_generator_factored_execution`. No rerun,
+repair, second board, or post-confirmation fit is authorized.

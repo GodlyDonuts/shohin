@@ -1,0 +1,30 @@
+{
+  "base_sha256": "211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6",
+  "claim_boundary": "Confirmed bounded learned generator-factored execution behind a known-operation structural parser. No unseen semantics, open-ended planning, learned halt, unrestricted language reasoning, or public benchmark claim.",
+  "confirmation": {
+    "answer_accuracy": 0.98095703125,
+    "assessment_sha256": "165b1a9ae40c8b3f52d133983c21fb22bfa2f2507b30a318f86106c96e6abc4e",
+    "data_sha256": "7786919b6d284c359e434783638dcaed96d1c654c6e9174566c4e76767d73fc0",
+    "evaluation_sha256": "6aae5e9981c7f7e4a3832a75955754d37f30ed1a3ffc289e13e8334f8703017a",
+    "program_accuracy": 0.96923828125,
+    "state_accuracy": 0.97607421875
+  },
+  "decision": "promote_confirmed_s5_learned_generator_baseline",
+  "development": {
+    "answer_accuracy": 0.98681640625,
+    "assessment_sha256": "421a27fbcf6d4eb5e2084f2d01048963dbe0cafb7664bdbcf4c76cc9035c6f44",
+    "data_sha256": "5d58f97f6763ac4b6550b4b2aeb959993537c185994b0ed49ac4b102c568582f",
+    "evaluation_sha256": "8e20728f13a011c8e5a424cc8dbd52fccc9b9df93cb3f69ab39ed877c689ba37",
+    "program_accuracy": 0.97509765625,
+    "state_accuracy": 0.98193359375
+  },
+  "generator_parameters": 4934,
+  "parameter_count": 133694869,
+  "parser_sha256": "0f9e9bb54b419507f7788055f5c975e30444eb584d7f22cd4ce3ec27ec9b96de",
+  "protocol": "r12_s5_learned_generator_factored_executor_v1",
+  "schema": "r12_promoted_bounded_reasoning_baseline_v2",
+  "shuffled_generator_sha256": "50b7284c0cc95f96a33ac871e63f1550ef5039080ac2f92ca7d22331d44a6457",
+  "treatment_generator_sha256": "fbf7004e8094fc2c6100f108169f2283e2ad0dd3efd0408b87dff6c6583ff384",
+  "unit_closure": 1.0,
+  "unseen_amount_two_closure": 1.0
+}

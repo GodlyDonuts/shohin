@@ -6,12 +6,23 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 07:58 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 08:34 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
 > GSM8K pass@1 `2/100`, MATH-500 `2/100`, HumanEval `6/164`, and MBPP `0/100`. This confirms a
 > low-single-digit plateau rather than a broad 120k-to-300k capability gain.
+>
+> **Newest bounded reasoning baseline:** S5 learned generator-factored execution is independently
+> confirmed. A 4,934-parameter neural kernel trained on only six unit cells, with zero amount-two
+> or recurrent-program examples, exactly matches the old host action table behind frozen S4 v5.
+> Development job `693183` reaches **97.510% programs / 98.193% state / 98.682% answers**;
+> confirmation job `693185` reaches **96.924% / 97.607% / 98.096%**. Unit and held-out
+> amount-two closure are each 36/36. Fixed-law derangement, direction rotation, and state reset
+> collapse confirmation state to 22.217%, 1.807%, and 40.234%. Promote
+> `artifacts/r12/s5_learned_generator.promoted.json`; preserve treatment SHA-256
+> `fbf7004e...`. This confirms model-owned finite transition semantics in the bounded known-action
+> domain, not unseen semantics, open planning, learned halt, or broad native reasoning.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -8686,3 +8697,35 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   both boards. Preserve this as the new bounded baseline. Next research must test unseen operation
   semantics or a model-owned execution/update interface; do not weaken the claim into general
   reasoning or tune on these closed boards.
+
+- **2026-07-19 07:58--08:22** -- **S5 learned transition semantics are preregistered and the
+  score-bearing board is admitted after two scoreless custody closures.** Commit `fd3b3cf` freezes
+  a 4,934-parameter tied unit generator over current location x direction, with six unit labels,
+  zero amount-two/recurrent/source/answer training, exact categorical state, and matched shuffled-
+  law/direction/reset controls. Seed `107732609041319044` is retired before output when the builder
+  guard rejects an incorrectly supplied old confirmation input; no model or statistic is used.
+  Corrected seed `7741142465189679834` builds but is sealed before model access because 4/2,048
+  rows fail the public roster-multiset gate. Final S5.2 seed `1639560669058669827` passes every
+  corpus gate: 2,048 rows / 512 groups / max 345 tokens, zero exact/13-gram/factor/name/roster
+  overlap, data SHA `5d58f97f...`, confirmation access zero. Its Newton/Mac bytes are read-only.
+
+- **2026-07-19 08:22--08:25** -- **S5 development passes all 18 frozen gates.** Sole job `693183`
+  completes once on H100 `evc24` in 2m25s, exit `0:0`. Treatment and deranged controls each fit
+  their assigned six cells 6/6 from identical initialization. The learned arm scores **97.510%
+  programs / 98.193% state / 98.682% answers**, exactly matching host execution. It achieves
+  36/36 unit and **36/36 never-trained amount-two** transitions. Shuffled law, direction rotation,
+  and state reset score 19.336%, 1.709%, and 43.311% state. Assessment `421a27fb...` records
+  `qualify_s5_learned_generator_for_fresh_confirmation`; fit checkpoints are hash-mirrored locally.
+
+- **2026-07-19 08:25--08:34** -- **CONFIRMED: S5 removes the hand-authored transition law from
+  the promoted bounded loop.** Confirmation-only plumbing commit `939fc5d` changes only board-role
+  admission/access accounting. Seed `2190224777450473319` passes all corpus gates without opening
+  prior confirmation bytes: 2,048 rows / 512 groups / max 339 tokens, data SHA `7786919b...`.
+  Sole job `693185` completes once on H100 `evc24` in 36s, exit `0:0`. Unchanged S5 scores
+  **96.924% programs / 97.607% state / 98.096% answers**, exactly equal to host state/answer;
+  unit and held-out amount-two closure remain 36/36. Shuffled law, direction rotation, and state
+  reset score 22.217%, 1.807%, and 40.234% state. Assessment `165b1a9a...` records
+  `confirm_s5_learned_generator_factored_execution`. Promote the result, but preserve the boundary:
+  known operation language, deterministic v5 program assembly, fixed two-microstep replay, and
+  structural event termination remain. Next attack unseen operation-law induction or model-owned
+  active-step/halt control; do not call this unrestricted native reasoning.

@@ -257,6 +257,7 @@ loop.
 | System | Exact score | What owns the computation | Scientific class |
 |---|---:|---|---|
 | Source-scheduled continuation (SSC) | **115/256 = 44.92%** | Host supplies source and operation cursor; model executes local steps | External-control ceiling |
+| **S4 v5 + S5 learned generator confirmation** | **96.924% programs / 97.607% exact state / 98.096% answers** | Frozen Shohin parser discovers events; a 4,934-parameter learned generator owns the finite transition law and recurrent categorical state; structural runtime owns bounded invocation | **Confirmed strongest bounded reasoning baseline; not unrestricted native reasoning** |
 | S3 v1.4 pointer-anchor confirmation | **98.242% answers / 99.658% exact state / 98.975% chains** | Model consumes known-atom packets through a categorical register; host supplies chunks and stop | Confirmed bounded execution component, not autonomous reasoning |
 | RGDE v1.1 development | **99.707% answers / 99.902% exact state** on two-step composition | Model-owned tied source-deleted update from atomic training; packet/compiler boundary is fixed | Qualified execution component, fresh depth confirmation pending |
 | Conventional complete compiler qualification | **8,187/8,192 answers; 8,186/8,192 programs** | Frozen parser selects source spans for known-atom language | Qualified compiler infrastructure, not execution |
@@ -269,10 +270,11 @@ loop.
 | Direct raw 260k | **16/256 = 6.25%** | Model owns full generation | Native direct baseline, weak |
 | Raw 300k fixed interaction | **1/7 initial** | Model owns full generation | Qualitative native baseline |
 
-The best complete model-owned result so far is still weak. The 44.92% SSC
-score is valuable because it proves that Shohin has substantial local execution
-ability when the missing controller is supplied. It is not an autonomous
-reasoning score.
+The best unrestricted model-owned language-model result is still weak. The
+44.92% SSC score remains an external-control ceiling. S5 is a stronger bounded
+architectural result: it removes the hand-authored action table and confirms a
+learned transition law, but its known operation vocabulary and structural
+runtime prevent treating 98.096% as a general autonomous-reasoning score.
 
 ---
 
@@ -611,6 +613,8 @@ instead of treating a single end-to-end score as one capability.
 | S3 categorical register and closure | Equivariant repair improves long mean execution to 84.180%; exact action table to 85.303%; training-only lexical decoder to 94.434% mean and 98.340% ordered development | Intermediate arms rejected or only qualified; continuous action and direction transport remain failure modes |
 | S3 v1.4 pointer-anchor confirmation | Ordered primary 98.242% answers / 99.658% state / 98.975% chains; operation derangement 35.059% / 17.578%; query derangement 0.586% answers with state unchanged | First strict independent confirmation of bounded known-atom, source-deleted categorical execution through depth 8 |
 | Halt-boundary audit and S4 v1 | Chunk board has 395 legitimate events sharing the exact signature of 1,024 hidden padding labels. S4 treatment finds 2048/2048 counts and 1932/2048 programs/state/answers; shuffled programs are 0/2048. Pointer v1.1 collapses to 25/2048 programs. | Count signal is real, but v1 misses the 95% program gate by 14 rows and v1.1 is rejected. Move to event-relative learned span pointers on a fresh board. |
+| S4 v5 hard-island/soft-interface confirmation | 97.803% programs / 98.389% state / 98.633% answers; roster and event-region rotations each 0% programs | Confirmed whole-source known-operation parser with autonomous event count; exact host action table remains a boundary |
+| **S5 learned generator-factored confirmation** | **96.924% programs / 97.607% state / 98.096% answers**, exactly matching host execution; 36/36 unit and 36/36 never-trained amount-two closure | **Confirmed model-owned finite transition law and recurrent categorical state; known semantics and structural invocation remain bounded** |
 
 The implementation gates were also independently exercised before the model
 claims were read: RGDE v1.1 passed its 19 CPU tests, Ruff, `py_compile`, shell
@@ -826,6 +830,33 @@ a parser that stops when no complete later event exists. S4 v1 finds the exact
 count on 2048/2048 held-out sources but reaches only 1932/2048 exact programs;
 the frozen pointer v1.1 repair is rejected at 25/2048 programs.
 
+### 7.14 Minimal neural generators can replace the exact action table
+
+S5 learns only six unit cells: three current locations times left/right. The
+4,934-parameter kernel sees no source tokens, names, amount-two transitions,
+recurrent programs, development rows, confirmation rows, or answer labels.
+Nevertheless it achieves 36/36 unit closure and 36/36 amount-two transitions by
+replaying the same learned primitive. On disjoint confirmation, its 97.607%
+exact state and 98.096% answers exactly match the old host action table.
+
+This is a stronger result than fitting every finite state/action pair. The
+architecture chooses a generator basis and makes longer moves algebraic reuse,
+so the held-out composition is forced through the same weights. A matched
+deranged law fits its six false labels equally well but falls to 22.217% state;
+direction rotation reaches 1.807%, and resetting state reaches 40.234%. The
+learned law, semantic direction, and recurrence are therefore causally used.
+
+### 7.15 The remaining non-native resource is controller scope, not local law
+
+S5 closes the narrow claim that a hand-authored transition table is necessary.
+It does not close the full native-reasoning contract. The parser still covers
+twelve known left/right atoms, deterministic hard islands assemble each event,
+the runtime replays the cell once or twice from a parsed amount, and event-list
+structure supplies bounded termination. The next theory must explain how a
+small model induces a new operation law or owns active-step/halt decisions
+without reintroducing a host interpreter, answer leakage, or an uncounted
+schedule channel.
+
 ---
 
 ## 8. Hypotheses That Are Closed Or Strongly Disfavored
@@ -869,6 +900,9 @@ Do not reopen these without a materially different causal prediction:
 16. **The chunked `active_operations` label is a valid halt target.** Its
     semantic signature is shared by padding and legitimate updates; S4 replaces
     the invalid corpus boundary.
+17. **The promoted bounded loop requires a hand-authored action table.** S5
+    learns six primitive generators and exactly matches host execution on two
+    disjoint boards, including 36/36 amount-two transitions absent from fit.
 
 ---
 
@@ -1013,6 +1047,15 @@ supervision yields zero programs. It is rejected because the immutable program
 floor is 95%. Gold intro/query boundaries reach 97.217%, while the zero-fit
 variable-width repair collapses, proving that v2 must learn event-relative
 start/end pointers rather than add another deterministic decoder heuristic.
+
+That frontier has now advanced. S4 v5 confirms a hard-island/soft-interface
+whole-source parser at 97.803% programs. S5 then replaces its exact action table
+with a 4,934-parameter generator learned from six unit cells and confirms
+96.924% programs / 97.607% state / 98.096% answers, exactly matching host
+execution. The open schedule/halt problem is therefore narrower: event count is
+model-derived, but deterministic assembly and fixed one/two-step invocation
+still define the runtime. Future work must internalize active-step/termination
+or induce unseen laws without modifying these closed boards.
 
 ---
 
@@ -1290,6 +1333,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-18 | Added the pre-fit v1.1 completeness amendment: three initial-order pointers are now model-owned, all 1,021,440 pointer labels pass audit, and the frozen JSONL bytes remain unchanged. |
 | 2026-07-19 | Added the complete compiler qualification, RGDE identity/depth diagnostics, S3 v1.4 depth-eight confirmation, the invalid halt-target audit, and the preregistered S4 event-tape frontier; refreshed the upload appendix with the new source records. |
 | 2026-07-19 | Recorded S4 v1 at 2048/2048 event counts and 1932/2048 exact programs, rejected its pointer v1.1 collapse, and narrowed the next architecture to learned event-relative start/end pointers on a fresh board. |
+| 2026-07-19 | Confirmed S4 v5 hard-island/soft-interface parsing, then confirmed S5 learned generator-factored execution at 96.924% programs / 97.607% state / 98.096% answers with exact unseen amount-two closure and matched causal controls. |
 
 ---
 
@@ -30399,9 +30443,26 @@ best confirmed bounded native S4 baseline, bound by
 
 The discovery is architectural decomposition rather than more compute: preserve sharp discrete
 islands where the model already has them, use set-valued carriers only across identity interfaces,
-and enforce monotone locality before exact execution. The next frontier is unseen operation
-semantics and a model-owned state-update interface. This still is not open-ended or free-form
-reasoning and should not be presented as a public benchmark gain.
+and enforce monotone locality before execution.
+
+### S5 confirmed learned generator-factored execution
+
+S5 removes v5's hand-authored action table. A 4,934-parameter tied MLP learns only six unit
+generators (three current locations times left/right), with zero amount-two, recurrent-program,
+source-token, answer, development, or confirmation supervision. It replays the same learned cell
+twice for amount two. Both development and confirmation achieve 36/36 unit and 36/36 never-trained
+amount-two closure.
+
+On development, S5 exactly matches host execution at **97.51% programs, 98.19% state, and 98.68%
+answers**. On sole disjoint confirmation it again exactly matches host execution at **96.92%
+programs, 97.61% state, and 98.10% answers**. A matched shuffled law, direction rotation, and state
+reset reduce confirmation state to **22.22%, 1.81%, and 40.23%**. All gates pass, and
+`artifacts/r12/s5_learned_generator.promoted.json` is the strongest bounded baseline.
+
+This confirms a model-owned finite transition law and recurrent categorical state, not unrestricted
+native reasoning. Known operation language, deterministic event assembly, fixed one/two-step replay,
+and structural termination remain. The next frontier is unseen operation-law induction or model-owned
+active-step/halt control. Do not present S5 as a public benchmark gain or open-ended reasoning result.
 
 ## Update Protocol
 

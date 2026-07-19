@@ -1,0 +1,81 @@
+{
+  "all_gates_pass": true,
+  "assessor_sha256": "2394bb7b57a6a4c2f8965ed361eb0cc65adf39b2e419cc033b5234773993b41e",
+  "closure": {
+    "shuffled": {
+      "amount_one": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 36
+      },
+      "amount_two_unseen": {
+        "accuracy": 0.5,
+        "correct": 18,
+        "total": 36
+      }
+    },
+    "treatment": {
+      "amount_one": {
+        "accuracy": 1.0,
+        "correct": 36,
+        "total": 36
+      },
+      "amount_two_unseen": {
+        "accuracy": 1.0,
+        "correct": 36,
+        "total": 36
+      }
+    }
+  },
+  "decision": "confirm_s5_learned_generator_factored_execution",
+  "evaluation_sha256": "6aae5e9981c7f7e4a3832a75955754d37f30ed1a3ffc289e13e8334f8703017a",
+  "gates": {
+    "amount_two_rows_state_at_least_95pct": true,
+    "confirmation_access_exactly_one": true,
+    "development_access_zero": true,
+    "direction_rotation_state_drop_at_least_40pp": true,
+    "every_depth_state_at_least_93pct": true,
+    "generator_below_100k_parameters": true,
+    "learned_answer_at_least_95pct": true,
+    "learned_matches_host_answer_within_point_one_pp": true,
+    "learned_matches_host_state_within_point_one_pp": true,
+    "learned_state_at_least_95pct": true,
+    "no_amount_two_training": true,
+    "no_recurrent_training": true,
+    "parser_parity_exact": true,
+    "program_overall_at_least_95pct": true,
+    "shuffled_law_state_drop_at_least_40pp": true,
+    "state_reset_state_drop_at_least_20pp": true,
+    "total_parameters_below_150m": true,
+    "unit_generator_closure_exact": true,
+    "unseen_amount_two_closure_exact": true
+  },
+  "schema": "r12_s5_learned_generator_confirmation_assessment_v1",
+  "scores": {
+    "direction_rotated": {
+      "answer": 0.404296875,
+      "program": 0.96923828125,
+      "state": 0.01806640625
+    },
+    "host_exact": {
+      "answer": 0.98095703125,
+      "program": 0.96923828125,
+      "state": 0.97607421875
+    },
+    "learned": {
+      "answer": 0.98095703125,
+      "program": 0.96923828125,
+      "state": 0.97607421875
+    },
+    "shuffled_law": {
+      "answer": 0.365234375,
+      "program": 0.96923828125,
+      "state": 0.22216796875
+    },
+    "state_reset": {
+      "answer": 0.57470703125,
+      "program": 0.96923828125,
+      "state": 0.40234375
+    }
+  }
+}
