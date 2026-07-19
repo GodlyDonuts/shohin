@@ -1,6 +1,7 @@
 # R12 RGDE Relational Identity Carrier Preregistration
 
-**Status:** frozen before production seed, board generation, or H100 score.
+**Status:** closed negative after job `693125`. See
+`R12_RGDE_RELATIONAL_IDENTITY_RESULT.md`.
 
 **Claim class:** public no-fit compiler-interface development. This is not an
 executor, sealed confirmation, autonomous reasoning, or novelty claim.

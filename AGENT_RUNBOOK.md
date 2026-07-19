@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 01:55 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 01:53 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8247,7 +8247,7 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Recurrent state is not the active bottleneck through depth eight; next use a disjoint public
   paired-name board to develop a bounded relational token-set carrier without fitting confirmation.
 
-- **2026-07-19 01:44--01:55** -- **An ordered relational identity carrier is frozen before board
+- **2026-07-19 01:44--01:47** -- **An ordered relational identity carrier is frozen before board
   seed or H100 score.** The prior failure is now durable in commit `293ec58` with safe archive
   SHA-256 `ec795b89...`. The new public-development mechanism retains the frozen compiler's soft
   role masks but compares operation and introduction spans through a translation-invariant exact-
@@ -8259,7 +8259,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   shell syntax, and diff checks pass. No production seed, board, fit, score, executor change, or
   confirmation access exists yet.
 
-- **2026-07-19 01:56** -- The first development-generation command was rejected before output:
+- **2026-07-19 01:47** -- The first development-generation command was rejected before output:
   the builder incorrectly required 512 groups to divide exactly by six. No board, example, or
   score was written. The unused seed `9306354405723368031` is retired. The correction freezes the
   intended maximum one-quartet depth imbalance before a new production seed is selected.
+
+- **2026-07-19 01:47--01:53** -- **The ordered relational carrier is absolutely strong but fails
+  its frozen attribution gate and is rejected.** Correction commit `94f8d1b` precedes production
+  seed `18136108174735860272`. The admitted 2,048-row / 6,136-card / 800,803-token public board
+  SHA-256 is `ba2b0d48...`; every data gate passes. No-fit job `693125` completes `0:0` on `evc29`
+  in 75 seconds. The primary ordered sequence kernel scores **11,209/11,248 = 99.653%** identities,
+  every depth at least 99.346% and every surface at least 99.573%; unordered vocabulary mass is
+  99.298% and gold spans are 100%. But the existing lexical mean is already 97.413%, so the gain is
+  only 2.240 points versus the frozen 15-point requirement. Reject and do not integrate. The gap
+  between this raw mean score and the prior executor matcher at 77.952% motivates only a new no-fit
+  public matched-consumer diagnostic; the failed depth confirmation remains sealed.

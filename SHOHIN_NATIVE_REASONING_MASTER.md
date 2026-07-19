@@ -25704,6 +25704,17 @@ whose seed is chosen only after source/prereg commit, must first show at least
 99% no-fit identity and a 15-point gain over the old mean-vector carrier. The
 failed confirmation is not an input and remains sealed.
 
+That carrier is now rejected on attribution despite a strong absolute score.
+On 11,248 fresh public identity references, the ordered primary reaches
+99.653%, unordered vocabulary mass 99.298%, and gold spans 100%, but the old
+mean-vector cosine is already 97.413%. The 2.240-point gain misses the frozen
+15-point requirement. The useful new localization is therefore not “identity
+is solved”: raw compiler representations are substantially stronger than the
+77.952% identity seen inside the recurrent executor. A separately frozen
+no-fit consumer diagnostic must test whether the learned executor matcher
+causes that transport loss. No carrier integration or confirmation reread is
+authorized.
+
 ## Update Protocol
 
 At each 10k checkpoint milestone:
