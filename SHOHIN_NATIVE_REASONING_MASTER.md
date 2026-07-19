@@ -12,7 +12,7 @@ recurrent execution. S8's whole-source neural graph compiler and sealed board
 are frozen but unevaluated; broad language-grounded, self-directed reasoning is
 not yet established.
 
-**Last updated:** 2026-07-19 17:48 EDT.
+**Last updated:** 2026-07-19 18:04 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -974,6 +974,14 @@ laws, names, renderers, and depths. All corpus overlap and executor gates pass;
 development and confirmation access remain zero. The next evidence is the sole
 serial development job, not a claim.
 
+That v1 job does not yield a score. After two scoreless CUDA-preflight failures,
+job `693462` fits both frozen arms but its evaluator fails before scoring because
+token-ID nonce substitution incorrectly assumes equal contextual BPE widths.
+Development was opened, so the board is closed and cannot be rescored; sealed
+confirmation remains unopened. S8.1 changes only that intervention to rotate
+source strings, adjust spans, and retokenize. Architecture, supervision, budget,
+controls, and thresholds remain frozen, and a fresh board is mandatory.
+
 The hard boundary remains graph validation/traversal, categorical equality,
 the node-count safety bound, S7's cyclic compiler, and pop-insert state mutation.
 S8 is designed to remove source grounding, event order, and halt from the host;
@@ -1239,7 +1247,7 @@ learned generator/compiler mechanism, not natural-language semantics, learned
 halt, open-ended planning, or unrestricted native reasoning. Both score-bearing
 boards are permanently closed.
 
-### 9.12 S8 nil-linked law graph (neural board frozen, unevaluated)
+### 9.12 S8 nil-linked law graph (v1 evaluator non-result; S8.1 preregistered)
 
 Source/preregistration commit `81fb6b0` freezes the post-S7 integration contract
 before full CPU seed `4822478724546321200`. The model must emit a nil-terminated
@@ -1258,6 +1266,14 @@ development and confirmation access remain zero. The complete frozen system is
 grounding, model-owned step order and nil halt, and transfer into S7's confirmed
 dynamics; it would not establish arbitrary algebra, unbounded planning, or
 unconstrained language reasoning.
+
+V1 development is permanently closed without a score. Job `693462` completed
+the frozen treatment and shuffled fits, checkpoint SHA-256
+`3c7154f2e31dd4f3e86534f8b007b7457585b85f7f7ffad4d13d8354721143af`,
+then failed before writing evaluation because contextual BPE operation spans had
+unequal widths. S8.1 repairs only the nonce intervention at the source-string
+level and requires a fresh post-commit board. No S8 neural reasoning claim is
+currently authorized.
 
 ---
 
@@ -1572,6 +1588,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Confirmed S7 unchanged on the sole sealed read: 2,048/2,048 recurrent states and answers across 18 disjoint laws, versus 1.562% state for the exact-fit ordinary transformer and 0.732%-2.197% for causal controls. All 18 gates pass; both boards are closed. |
 | 2026-07-19 | Admitted S8 nil-linked law graphs before any neural board: 3,520/3,520 exact CPU executions and storage-reindex invariance, while storage-order, reversed-link, card, witness, reset, and early-nil controls remain at 1.051%-10.142% state. |
 | 2026-07-19 | Froze S8 neural source at `598e405`, then generated its sole board from seed `4026952256631032219`: 48,000 graph-only train, 2,048 development, and 2,048 sealed-confirmation sources with zero cross-split overlap and zero score access. The 8,610,966-parameter compiler keeps the complete system at 133,692,848 parameters. |
+| 2026-07-19 | Closed S8 v1 as an evaluator non-result after the fit completed but source nonce recoding failed on unequal contextual BPE widths before scoring. Development is spent; confirmation remains sealed. Preregistered S8.1 source-level rotation/retokenization with all scientific settings unchanged and a fresh-board requirement. |
 | 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 

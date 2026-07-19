@@ -24,6 +24,10 @@ from semantic_compiler_falsifier import (
 )
 from s6_contextual_affine_law import AffineLaw, pop_insert
 from s7_learned_cayley_law import PRIMARY_MODULI, SymbolBinding, stride_two_successor
+from s8_nil_linked_graph_compiler import (
+    compile_row,
+    recode_operation_ids,
+)
 from s8_nil_linked_law_graph import execute_graph, graph_from_ordered_events
 
 
@@ -528,6 +532,7 @@ def _audit(
     train: list[dict[str, object]],
     development: list[dict[str, object]],
     confirmation: list[dict[str, object]],
+    tokenizer: Tokenizer,
 ) -> dict[str, object]:
     if any("final_state" in row or "answer" in row for row in train):
         raise ValueError("S8 training rows leak state or answer")
@@ -574,6 +579,19 @@ def _audit(
     for label, counts in (("development", dev_cells), ("confirmation", confirmation_cells)):
         if max(counts.values()) - min(counts.values()) > 1:
             raise ValueError(f"S8 {label} cells are imbalanced")
+    recoded_maximum = 0
+    recoded_changed_width = 0
+    for row in train + development + confirmation:
+        original = compile_row(row, tokenizer)
+        recoded = recode_operation_ids(original, tokenizer)
+        recoded_maximum = max(recoded_maximum, len(recoded.ids))
+        recoded_changed_width += int(len(recoded.ids) != len(original.ids))
+        card_names = {str(card["operation"]) for card in recoded.row["cards"]}
+        event_names = {str(node["operation"]) for node in recoded.row["nodes"]}
+        if event_names - card_names:
+            raise ValueError("S8 nonce recoding broke event/card binding")
+        if len(recoded.ids) > 512:
+            raise ValueError("S8 nonce-recoded source exceeds context")
     return {
         "train_rows": len(train),
         "development_rows": len(development),
@@ -594,6 +612,9 @@ def _audit(
         "maximum_token_count": max(
             int(row["token_count"]) for row in train + development + confirmation
         ),
+        "nonce_recode_rows": len(train) + len(development) + len(confirmation),
+        "nonce_recode_maximum_token_count": recoded_maximum,
+        "nonce_recode_changed_width_rows": recoded_changed_width,
         "development_accesses": 0,
         "confirmation_accesses": 0,
     }
@@ -644,7 +665,7 @@ def main() -> None:
         renderers=CONFIRMATION_RENDERERS,
         include_outputs=True,
     )
-    audit = _audit(train, development, confirmation)
+    audit = _audit(train, development, confirmation, tokenizer)
     generator_rows = []
     for modulus in PRIMARY_MODULI:
         binding = bindings[modulus]

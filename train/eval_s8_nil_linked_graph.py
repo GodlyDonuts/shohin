@@ -98,10 +98,16 @@ def _instantiate(base, checkpoint, state_key, device):
     return compiler
 
 
-def _decode_all(compiler, examples, batch_size, recoded=False):
+def _decode_all(compiler, examples, batch_size, tokenizer=None, recoded=False):
     decoded = []
     compiler.eval()
-    source = [recode_operation_ids(example) for example in examples] if recoded else examples
+    if recoded and tokenizer is None:
+        raise ValueError("S8 recoded evaluation requires the frozen tokenizer")
+    source = (
+        [recode_operation_ids(example, tokenizer) for example in examples]
+        if recoded
+        else examples
+    )
     with torch.no_grad():
         for start in range(0, len(source), batch_size):
             indices = list(range(start, min(len(source), start + batch_size)))
@@ -172,7 +178,11 @@ def main() -> None:
         treatment_compiler, examples, args.batch_size
     )
     recoded_decoded = _decode_all(
-        treatment_compiler, examples, args.batch_size, recoded=True
+        treatment_compiler,
+        examples,
+        args.batch_size,
+        tokenizer=tokenizer,
+        recoded=True,
     )
     del treatment_compiler
     torch.cuda.empty_cache()

@@ -1,15 +1,21 @@
 from __future__ import annotations
 
+import hashlib
+import json
 import unittest
 
 import torch
 
+from build_s8_nil_linked_law_graph_board import render_source
+from semantic_compiler_falsifier import attach_token_targets
 from s8_nil_linked_graph_compiler import (
     ROLE_INDEX,
     ROLE_LABELS,
     S8GraphExample,
     _islands,
+    compile_row,
     decode_graph,
+    recode_operation_ids,
     reindex_graph,
     semantic_graph_key,
 )
@@ -20,6 +26,17 @@ from s8_nil_linked_law_graph import (
     NilLinkedLawGraph,
     linked_path,
 )
+
+
+class _CharEncoding:
+    def __init__(self, text: str) -> None:
+        self.ids = [ord(value) for value in text]
+        self.offsets = [(index, index + 1) for index in range(len(text))]
+
+
+class _CharTokenizer:
+    def encode(self, text: str) -> _CharEncoding:
+        return _CharEncoding(text)
 
 
 class S8NilLinkedGraphCompilerTest(unittest.TestCase):
@@ -142,6 +159,60 @@ class S8NilLinkedGraphCompilerTest(unittest.TestCase):
         decoded = decode_graph(example, role_logits, rank_logits)
         self.assertIsNone(decoded["treatment_path"])
         self.assertEqual(decoded["ordinary_path"], (2, 0, 1))
+
+    def test_source_nonce_recoding_handles_unequal_contextual_widths(self) -> None:
+        tokenizer = _CharTokenizer()
+        question, spans = render_source(
+            entities=("e0", "e1", "e2", "e3", "e4"),
+            positions=("p0", "p1", "p2", "p3", "p4"),
+            initial_state=(2, 0, 4, 1, 3),
+            cards=(("x", 0, 1), ("long", 2, 4)),
+            nodes=(
+                ("b", "long", 1, "c"),
+                ("c", "x", 2, None),
+                ("a", "x", 0, "b"),
+            ),
+            entry_tag="a",
+            query_position=2,
+            renderer="registry",
+            card_order=(0, 1),
+        )
+        encoding, token_spans = attach_token_targets(
+            question, spans, tokenizer
+        )
+        row = {
+            "question": question,
+            "token_ids_sha256": hashlib.sha256(
+                json.dumps(
+                    encoding.ids, sort_keys=True, separators=(",", ":")
+                ).encode()
+            ).hexdigest(),
+            "spans": token_spans,
+            "execution_tags": ["a", "b", "c"],
+            "cards": [
+                {"operation": "x", "y0": 0, "y1": 1},
+                {"operation": "long", "y0": 2, "y1": 4},
+            ],
+            "nodes": [
+                {"tag": "b", "operation": "long", "identity": 1, "next_tag": "c"},
+                {"tag": "c", "operation": "x", "identity": 2, "next_tag": None},
+                {"tag": "a", "operation": "x", "identity": 0, "next_tag": "b"},
+            ],
+        }
+        example = compile_row(row, tokenizer)
+        recoded = recode_operation_ids(example, tokenizer)
+        self.assertNotEqual(len(recoded.ids), len(example.ids))
+        self.assertEqual(
+            [card["operation"] for card in recoded.row["cards"]],
+            ["long", "x"],
+        )
+        self.assertEqual(
+            [node["operation"] for node in recoded.row["nodes"]],
+            ["x", "long", "long"],
+        )
+        for label, span in recoded.row["spans"].items():
+            if label.endswith("operation"):
+                self.assertIn(span["text"], {"x", "long"})
 
 
 if __name__ == "__main__":

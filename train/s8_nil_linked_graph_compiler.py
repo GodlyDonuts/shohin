@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 from dataclasses import dataclass, replace
 import hashlib
 import json
@@ -511,25 +512,74 @@ def decode_graph(
     }
 
 
-def recode_operation_ids(example: S8GraphExample) -> S8GraphExample:
-    names = sorted(example.operation_positions)
+def recode_operation_ids(example: S8GraphExample, tokenizer) -> S8GraphExample:
+    """Rotate operation nonces in source text, then retokenize every span.
+
+    Contextual BPE widths can differ across both names and sentence frames, so
+    token-ID substitution is not a valid source-level nonce intervention.
+    """
+
+    row = copy.deepcopy(example.row)
+    names = sorted(str(card["operation"]) for card in row["cards"])
     if len(names) < 2:
         raise ValueError("S8 operation recoding requires two names")
-    ids = list(example.ids)
-    signatures = {
-        name: tuple(ids[position] for position in positions[0])
-        for name, positions in example.operation_positions.items()
-    }
     rotated = names[1:] + names[:1]
     replacement = dict(zip(names, rotated, strict=True))
-    for name, occurrences in example.operation_positions.items():
-        target = signatures[replacement[name]]
-        for positions in occurrences:
-            if len(positions) != len(target):
-                raise ValueError("S8 operation nonce widths differ")
-            for position, token_id in zip(positions, target, strict=True):
-                ids[position] = token_id
-    return replace(example, ids=tuple(ids))
+    question = str(row["question"])
+    source_spans = row["spans"]
+    ordered = sorted(source_spans.items(), key=lambda item: int(item[1]["start"]))
+    parts: list[str] = []
+    spans: dict[str, dict[str, object]] = {}
+    source_cursor = 0
+    output_cursor = 0
+    for label, span in ordered:
+        start = int(span["start"])
+        end = int(span["end"])
+        if start < source_cursor or question[start:end] != str(span["text"]):
+            raise ValueError("S8 source spans overlap or mismatch during recoding")
+        prefix = question[source_cursor:start]
+        parts.append(prefix)
+        output_cursor += len(prefix)
+        text = str(span["text"])
+        if _role_for_label(str(label)) in {"card.operation", "event.operation"}:
+            text = replacement[text]
+        new_start = output_cursor
+        parts.append(text)
+        output_cursor += len(text)
+        spans[str(label)] = {
+            "start": new_start,
+            "end": output_cursor,
+            "text": text,
+        }
+        source_cursor = end
+    parts.append(question[source_cursor:])
+    recoded_question = "".join(parts)
+    encoding = tokenizer.encode(recoded_question)
+    token_spans: dict[str, dict[str, object]] = {}
+    for label, span in spans.items():
+        positions = [
+            index
+            for index, (left, right) in enumerate(encoding.offsets)
+            if right > left and left < span["end"] and right > span["start"]
+        ]
+        if not positions:
+            raise ValueError("S8 recoded span has no tokenizer positions")
+        token_spans[label] = {
+            **span,
+            "token_positions": positions,
+            "token_ids": [encoding.ids[position] for position in positions],
+        }
+    row["question"] = recoded_question
+    row["spans"] = token_spans
+    row["token_count"] = len(encoding.ids)
+    row["token_ids_sha256"] = hashlib.sha256(
+        json.dumps(encoding.ids, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+    for card in row["cards"]:
+        card["operation"] = replacement[str(card["operation"])]
+    for node in row["nodes"]:
+        node["operation"] = replacement[str(node["operation"])]
+    return compile_row(row, tokenizer)
 
 
 def gold_graph(example: S8GraphExample) -> NilLinkedLawGraph:

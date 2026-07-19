@@ -1,6 +1,6 @@
 # R12 S8 Nil-Linked Law Graph Board
 
-**Status:** frozen and admitted before neural access
+**Status:** closed after one evaluator non-result; do not rescore
 
 **Source commit:** `598e405ffdc08b0e03e999b715ec1d04f17f1b20`
 
@@ -47,11 +47,12 @@ adapter state. The favorable ordinary parser emits execution ranks and receives
 host list traversal; the S8 treatment must instead emit entry/next pointers and
 nil termination.
 
-## Custody
+## Closure
 
-The sole authorized next action is one serial development job using source
-commit `598e405`, this board, and training seed `5532971934318350109`. Training
-must not open `development.jsonl` or `confirmation.sealed.jsonl`; evaluation may
-open development exactly once after both treatment and shuffled checkpoints are
-frozen. Confirmation remains sealed unless every preregistered development gate
-passes and an unchanged-weight confirmation evaluator is committed first.
+Job `693462` completed both frozen 750-update fits and wrote checkpoint SHA-256
+`3c7154f2e31dd4f3e86534f8b007b7457585b85f7f7ffad4d13d8354721143af`.
+The evaluator then opened development and failed before scoring or writing an
+evaluation because token-ID nonce rotation assumed equal contextual BPE widths.
+This board may not be patched or rescored. Its confirmation file remains sealed
+and must not be opened. The sole admissible continuation is the separately
+preregistered S8.1 source-level nonce repair on wholly fresh board bytes.

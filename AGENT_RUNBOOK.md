@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 17:48 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 18:04 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -43,6 +43,15 @@
 > 133,692,848 parameters. Sync exact bytes, hash-verify them, then run the sole serial development
 > job. Categorical graph validation/traversal, the node-count safety bound, S7's cyclic compiler,
 > and pop-insert remain explicit structural priors.
+>
+> **S8 v1 development is closed as an evaluator non-result.** Scoreless infrastructure jobs
+> `693457` (`evc25` CUDA shutdown hang) and `693459` (`evc26` CUDA unavailable) wrote no artifacts.
+> On preflighted `evc29`, job `693462` completed both frozen 750-update fits and wrote checkpoint
+> SHA `3c7154f2...`, then opened development and failed before scoring because token-ID nonce
+> substitution assumed equal contextual BPE widths. No evaluation/assessment exists; old
+> confirmation remains unopened. Do not patch/rescore that board. S8.1 changes only nonce
+> intervention to source-string rotation plus full retokenization, keeps every scientific setting
+> and gate fixed, and requires a fresh post-commit board/training seed.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -8848,3 +8857,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   confirmation `ea0d242f...`; access remains zero/zero. The complete system is 133,692,848
   parameters. Sync and hash-verify exact bytes before one serial development read; confirmation
   remains sealed.
+
+- **2026-07-19 17:48--18:04** -- **S8 v1 is closed without a capability score; S8.1 freezes one
+  evaluator-only repair.** Jobs `693457` and `693459` stop in CUDA preflight on `evc25`/`evc26`
+  before board/model access and write no files. Dedicated bf16 preflight `693460` passes on `evc29`.
+  Valid job `693462` then completes both 750-update fits and writes a 68,937,360-byte checkpoint,
+  SHA `3c7154f2...`, but evaluation fails before scoring/output: operation nonce token-ID rotation
+  encounters unequal contextual BPE widths. Development was opened, so v1 may not be patched or
+  rescored; its confirmation remains sealed. S8.1 preregisters source-string nonce rotation with
+  full span adjustment/retokenization, while holding architecture, data size, schedule, controls,
+  thresholds, and exclusions fixed. Five compiler tests and all mechanics/assessment tests pass;
+  the repaired intervention recompiles all 48,000 old training sources, including 8,901 changed
+  token-count rows, with maximum length 444/512. Commit repair before fresh seeds.
