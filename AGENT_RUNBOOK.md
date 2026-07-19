@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 06:13 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 06:32 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8535,3 +8535,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   The next admissible hypothesis must preserve v1's role/count strengths and transport lexical
   identity without absolute boundaries, using a fresh preregistered board and shuffled identity
   control.
+
+- **2026-07-19 06:13--06:32** -- **S4 v3 set-identity source is executable and frozen before any
+  production seed or score.** The representation replaces absolute boundaries with a sparse
+  vocabulary-aligned soft token-set histogram. Frozen v1 role logits supply three roster and query
+  priors; only tied event-conditioned entity/literal membership maps train. Identity is cosine
+  matching between event and roster token sets, so correct same-name occurrences are invariant to
+  source coordinate and BPE width. The real raw-300k/v1 construction loads exactly 71 frozen v1
+  tensors, exposes only four trainable tensors / 589,824 parameters, totals 134,279,759 parameters,
+  and has finite loss/backward. Three bus tests, assessor and fresh-board tests, Ruff, `py_compile`,
+  and Slurm syntax pass. The fresh-board audit adds per-row unique roster token-multiset and public
+  token-multiset disjointness gates. Frozen controls are v1 baseline, shuffled membership labels,
+  cyclic roster-carrier derangement, and gold S3 sanity. Source SHA prefix `3f17839a`; builder
+  `04e69b99`; assessor `e88a83a5`. Commit these bytes before drawing one random 2,048-row board.
+  No H100, production board, development score, confirmation, planning, or broad reasoning claim
+  exists yet.
