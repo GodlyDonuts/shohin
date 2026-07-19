@@ -8486,3 +8486,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   The second mechanical repair adds the same split-specific nonce anchor after every distractor.
   Before another production draw, run a scoreless small cross-split mechanics build and require all
   gates to pass; then commit the exact corrected bytes.
+
+- **2026-07-19 04:38--05:15** -- **S4 corpus passes and the model-owned parser is frozen before
+  H100 fit.** Corrected generator commit `82be617` precedes train/development seeds
+  `10818821031317486155` / `12621147368670264037`. The admitted corpus has 48,000 train rows at
+  depths 1--4 and 2,048 matched public-development rows at depths 3--8; maximum source length is
+  343 tokens. Every whole source is unpadded, gold event count equals depth, both CPU executors
+  agree, and exact/13-gram/name/factor overlap is zero across splits and against existing public
+  factorized/relational data. Train/development SHA-256 values are `317e3132...` / `d073df8f...`;
+  safe archive SHA-256 is `76a89684...`. The parser initializes 63 memory-encoder tensors from the
+  qualified ordinary compiler, emits generic repeated event roles, obtains count from contiguous
+  complete triples, binds entity spans by exact ordered token identity, and uses model heads for
+  amount/query with the training-only kind lexicon. Unequal role counts are invalid. Treatment and
+  shuffled control share architecture/budget; strict and gold-count decoding are separate. Real
+  CPU construction gives 8,608,271 adapter / 133,689,935 total parameters, under 150M. Eight
+  focused tests, perfect-logit source-only decode, Ruff, `py_compile`, Slurm syntax, parameter/hash checks,
+  and diff gates pass. No H100, fit, development score, confirmation access, planning, broad
+  reasoning, or novelty claim exists yet.

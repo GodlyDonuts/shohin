@@ -25901,6 +25901,30 @@ bounded target is autonomous schedule extraction through held-out depth eight,
 with gold, host-count, fixed-slot, and shuffled-supervision controls and a strict
 sub-150M parameter cap.
 
+The admitted S4 public corpus is now complete at post-commit seeds
+`10818821031317486155` / `12621147368670264037`: 48,000 training rows balanced
+across depths one through four and 2,048 matched development rows across depths
+three through eight. The longest source is 343 tokens. Exact prompt, word-
+13-gram, entity-name, and factor-combination overlap are zero both across splits
+and against the existing factorized/relational public corpora. Every row is one
+whole unpadded source, every gold event count equals depth, and both exact CPU
+executors agree. Two earlier seeds are rejected and retired because generic
+cross-boundary 13-grams survived before nonce anchors were added after events
+and distractors.
+
+The neural S4 parser is frozen before fit. It reuses the qualified conventional
+compiler's 63-tensor bidirectional memory encoder, replacing only fixed op0/op1
+heads with generic repeated `event.kind/entity/literal` token roles plus amount
+and query heads. Contiguous predicted spans define event cardinality; unequal
+component counts are invalid rather than host-repaired. Exact source-token
+identity binds each event entity to one predicted initial roster span, and the
+12-pattern training-only direction lexicon preserves the known-semantics
+boundary. Treatment and within-source shuffled-supervision control have the
+same 48,000 examples, one epoch, 750 updates, optimizer, and initialization.
+Total parameters are 133,689,935, of which 125,081,664 base parameters are
+frozen. Evaluation separately reports strict autonomous parsing and favorable
+gold-count rescue before the locked exact S3 local action consumes the tape.
+
 The matched result reproduces the loss but rejects single-comparator
 localization. Untouched execution reaches 77.393% answers / 70.312% exact
 state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /

@@ -1,0 +1,78 @@
+{
+  "all_gates_pass": true,
+  "artifacts": {
+    "development": {
+      "bytes": 12090126,
+      "sha256": "d073df8ff13452d1d0c0ef53e27b067f0e23be4ee39afc8964a6ba829deb6700"
+    },
+    "train": {
+      "bytes": 194059575,
+      "sha256": "317e3132e85c9bf524977cdaee608d22c69d3720a04b13b1db03ab1ce24614e7"
+    }
+  },
+  "claim_boundary": "Public self-delimiting parser development only. Programs and spans are supervision/audit labels and are forbidden at inference.",
+  "confirmation_access": 0,
+  "gates": {
+    "all_event_spans_nonempty": true,
+    "all_event_spans_present": true,
+    "all_ids_unique": true,
+    "all_sources_fit_2048": true,
+    "all_unpadded_whole_source": true,
+    "confirmation_access_zero": true,
+    "development_depths_three_through_eight": true,
+    "event_count_equals_depth": true,
+    "no_external_active_operation_field": true,
+    "public_13gram_overlap_zero": true,
+    "public_exact_overlap_zero": true,
+    "public_factor_overlap_zero": true,
+    "public_name_overlap_zero": true,
+    "train_depths_one_through_four": true,
+    "train_development_13gram_overlap_zero": true,
+    "train_development_exact_overlap_zero": true,
+    "train_development_factor_overlap_zero": true,
+    "train_development_name_overlap_zero": true,
+    "two_cpu_executors_agree": true
+  },
+  "generator_sha256": "a9918e35c0b8ce380f81283362c4eb0367ad58c8cfe4e2812727a97dc54fc953",
+  "generic_roles": [
+    "intro.entity0",
+    "intro.entity1",
+    "intro.entity2",
+    "event.kind",
+    "event.entity",
+    "event.literal",
+    "query.position"
+  ],
+  "maximum_source_tokens": 343,
+  "public_rows_audited": 102144,
+  "schema": "r12_s4_self_delimiting_event_tape_corpus_report_v1",
+  "seeds": {
+    "development": 12621147368670264037,
+    "train": 10818821031317486155
+  },
+  "splits": {
+    "development": {
+      "depth_counts": {
+        "3": 344,
+        "4": 344,
+        "5": 340,
+        "6": 340,
+        "7": 340,
+        "8": 340
+      },
+      "rows": 2048,
+      "source_tokens": 486238
+    },
+    "train": {
+      "depth_counts": {
+        "1": 12000,
+        "2": 12000,
+        "3": 12000,
+        "4": 12000
+      },
+      "rows": 48000,
+      "source_tokens": 7161277
+    }
+  },
+  "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4"
+}
