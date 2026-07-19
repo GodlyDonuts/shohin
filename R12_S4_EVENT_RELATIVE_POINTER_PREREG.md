@@ -2,8 +2,11 @@
 
 ## Status
 
-Frozen source and gate specification after S4 v1/v1.1 rejection and before v2 training, fresh-board
-generation, production seed selection, or v2 score access.
+**Closed negative on 2026-07-19.** The protocol was frozen before seed/score access, both matched
+arms completed once, and the frozen assessor records `reject_s4_v2_fresh_development`. Treatment
+retained 99.80% exact event count but reached only 12.40% exact programs, versus 93.46% for the
+frozen v1 baseline on the same fresh board. Confirmation was never generated or read. Full evidence
+and interpretation are in `R12_S4_EVENT_RELATIVE_POINTER_RESULT.md`.
 
 ## Causal diagnosis
 

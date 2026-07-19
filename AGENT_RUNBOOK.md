@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 05:40 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 06:13 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8518,3 +8518,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Assessment SHA `fd0479b...` records `reject_s4_v1_1_public_development`. No confirmation exists.
   Do not tune v1/v1.1 on this board. Next lawful work is a fresh-board S4 v2 with learned roster
   start/end pointers and event-relative argument pointers; keep the locked S3 executor unchanged.
+
+- **2026-07-19 05:40--06:13** -- **S4 v2 event-relative absolute pointers are rejected on a wholly
+  fresh board; the frozen v1 parser is the stronger baseline.** Source/prereg commit `fceddee`
+  preceded production seed `3662806511482505284`; board freeze commit `c2e070d` precedes every
+  score. The 2,048-row board passes exact-prompt/13-gram/name/nonce/factor disjointness with zero
+  confirmation access. Matched one-epoch jobs `693162/693163` train 1,182,728 treatment or shuffled
+  pointer parameters over the same frozen v1 parser; read-only evaluations `693165/693166` complete
+  once. Treatment count remains **2044/2048**, but initial roster is only **382/2048**, exact programs
+  **254/2048 = 12.402%**, states 296/2048, and answers 318/2048. It falls to zero programs at depths
+  seven and eight. Shuffled supervision gives zero valid programs. Frozen v1 on the same board is
+  **2048/2048 count and 1914/2048 = 93.457% programs/state/answers**, staying above 92% at every
+  depth. Of 1,794 treatment program failures, 1,179 are crossed/invalid event boundaries and 477
+  are identity mismatches. Assessment SHA `1c7af1ce...` records
+  `reject_s4_v2_fresh_development`; no confirmation exists. Close independent start/end argmax.
+  The next admissible hypothesis must preserve v1's role/count strengths and transport lexical
+  identity without absolute boundaries, using a fresh preregistered board and shuffled identity
+  control.

@@ -29558,7 +29558,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-15 17:26 EDT
+**Last refreshed:** 2026-07-19 06:13 EDT
 **Flagship source of truth:** Newton Slurm job `686732`,
 `/lustre/fs1/home/sa305415/shohin/logs/flagship2_686732.out`
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -30305,6 +30305,45 @@ Its stable empirical diagnosis is local/fragile operation competence without
 reliable natural-language compilation, correction, halting, serialization, or
 state reuse. Full transcript custody and interpretation are in
 `RAW300K_INTERACTION_RESULT.md`.
+
+## S4 Autonomous Event-Tape Frontier: 2026-07-19
+
+The strongest bounded end-to-end reasoning component now separates three interfaces:
+
+1. **S3 execution is confirmed:** pointer-anchor S3 v1.4 recurrently executes known operation atoms
+   after source deletion through depth eight, with external schedule/halt.
+2. **S4 event counting is causal and fresh-generalizing:** frozen S4 v1 recovers 2,048/2,048 exact
+   event counts on production seed `3662806511482505284`.
+3. **S4 v1 program parsing is strong but below gate:** 1,914/2,048 = 93.457% exact programs,
+   states, and answers on the wholly fresh board, including >92% at every depth 3--8.
+
+S4 v2 tested whether absolute start/end pointers would close that remaining gap. It froze all v1
+weights and trained only 1,182,728 pointer parameters, for 134,872,663 total parameters. The result
+is a decisive rejection:
+
+| Arm | Count | Initial roster | Exact program | Exact state | Answer |
+|---|---:|---:|---:|---:|---:|
+| Frozen S4 v1 | 100.00% | 93.46% | **93.46%** | **93.46%** | **93.46%** |
+| S4 v2 independent start/end | 99.80% | 18.65% | **12.40%** | 14.45% | 15.53% |
+| Shuffled pointer labels | confounded by early failure | 0% | **0%** | 0% | 0% |
+
+The treatment reaches zero exact programs at depths seven and eight. Its dominant failure is 1,179
+crossed/invalid event boundaries, followed by 477 roster-identity mismatches. Training loss is low,
+so this is not an optimization failure: independent absolute boundaries are a renderer-coordinate
+shortcut rather than a width-invariant identity relation. Assessment SHA-256
+`1c7af1ceb19ae5b0fceaa49fba5f111b6425002c1e40a75fbfe8b43e83367275` records
+`reject_s4_v2_fresh_development`; confirmation access is zero.
+
+The surviving target is narrower and better identified: preserve v1's role/count signal and replace
+hard boundaries with a model-owned set-valued identity carrier. Each roster item and event mention
+should become a soft set over source tokens; identity is then a tied similarity between sets, not
+equality between two independently selected coordinate intervals. This requires a new frozen
+protocol, shuffled-identity control, and fresh board. It remains a known-atom autonomous-interface
+experiment, not a broad reasoning or novelty claim.
+
+Primary evidence: `R12_S4_EVENT_RELATIVE_POINTER_RESULT.md`, treatment report SHA-256
+`12005bd33248d7467036fb462a2e535866db29522bea2632dff0b2e24c7f58fe`, shuffled report SHA-256
+`409aa8b18ad8efd077c0ebd6ad3ccc14f053341fc9459c5082bced928c44d2d4`.
 
 ## Update Protocol
 
