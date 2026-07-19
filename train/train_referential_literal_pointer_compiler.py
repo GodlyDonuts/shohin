@@ -49,6 +49,7 @@ def main():
     parser.add_argument("--encoder-layers", type=int, default=0)
     parser.add_argument("--role-supervision", action="store_true")
     parser.add_argument("--role-weight", type=float, default=0.0)
+    parser.add_argument("--separate-kind-decoder", action="store_true")
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--epochs", type=int, default=1)
     parser.add_argument("--max-examples", type=int, default=0)
@@ -103,6 +104,7 @@ def main():
         ff=args.ff,
         encoder_layers=args.encoder_layers,
         role_supervision=args.role_supervision,
+        separate_kind_decoder=args.separate_kind_decoder,
     ).to("cuda")
     if compiler.adapter_num_params() + sum(parameter.numel() for parameter in model.parameters()) >= 150_000_000:
         raise SystemExit("compiler exceeds strict 150M total-parameter cap")
@@ -115,9 +117,11 @@ def main():
     total_steps = sum(len(batches) for batches in epoch_batches)
     metadata = {
         "protocol": (
+            "r12_referential_literal_pointer_compiler_v1_3_islands_development"
+            if args.separate_kind_decoder else
             "r12_referential_literal_pointer_compiler_v1_2_structured_development"
-            if args.encoder_layers or args.role_supervision
-            else "r12_referential_literal_pointer_compiler_v1_1_development"
+            if args.encoder_layers or args.role_supervision else
+            "r12_referential_literal_pointer_compiler_v1_1_development"
         ),
         "base": os.path.realpath(args.base),
         "base_sha256": sha256_file(args.base),
@@ -136,6 +140,7 @@ def main():
         "encoder_layers": args.encoder_layers,
         "role_supervision": args.role_supervision,
         "role_weight": args.role_weight,
+        "separate_kind_decoder": args.separate_kind_decoder,
         "batch_size": args.batch_size,
         "epochs": args.epochs,
         "examples": len(examples),

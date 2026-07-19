@@ -85,6 +85,20 @@ class ReferentialLiteralPointerCompilerTest(unittest.TestCase):
         self.assertTrue(torch.isfinite(role))
         role.backward()
 
+    def test_separate_kind_island_has_an_independent_memory_path(self):
+        example = compiler_module.compile_row(self.row, self.tokenizer, keep_evidence=True)
+        model = compiler_module.CompletePointerCompiler(
+            DummyBase(), layer=1, width=32, heads=4, decoder_layers=1, ff=64,
+            encoder_layers=2, role_supervision=True, separate_kind_decoder=True,
+        )
+        self.assertIsNot(model.memory_projection, model.kind_memory_projection)
+        ids = torch.tensor([example.ids], dtype=torch.long)
+        valid = torch.ones_like(ids, dtype=torch.bool)
+        outputs = model(ids, valid)
+        loss, _, kind, _ = compiler_module.compiler_loss(outputs, [example])
+        self.assertTrue(torch.isfinite(kind))
+        loss.backward()
+
 
 if __name__ == "__main__":
     unittest.main()

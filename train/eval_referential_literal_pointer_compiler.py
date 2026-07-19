@@ -54,6 +54,7 @@ def main():
     if metadata.get("protocol") not in {
         "r12_referential_literal_pointer_compiler_v1_1_development",
         "r12_referential_literal_pointer_compiler_v1_2_structured_development",
+        "r12_referential_literal_pointer_compiler_v1_3_islands_development",
     }:
         raise SystemExit("invalid compiler bundle protocol")
     if metadata.get("confirmation_access") != 0:
@@ -81,6 +82,7 @@ def main():
         ff=int(metadata["ff"]),
         encoder_layers=int(metadata.get("encoder_layers", 0)),
         role_supervision=bool(metadata.get("role_supervision", False)),
+        separate_kind_decoder=bool(metadata.get("separate_kind_decoder", False)),
     ).to("cuda").eval()
     missing, unexpected = compiler.load_state_dict(bundle["adapter_state"], strict=False)
     missing = [name for name in missing if not name.startswith("model.")]

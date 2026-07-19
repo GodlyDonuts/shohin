@@ -187,7 +187,7 @@ class CompletePointerCompiler(nn.Module):
     """Six learned program slots over frozen causal token states."""
 
     def __init__(self, model, layer=19, width=256, heads=8, decoder_layers=2, ff=1024,
-                 encoder_layers=0, role_supervision=False):
+                 encoder_layers=0, role_supervision=False, separate_kind_decoder=False):
         super().__init__()
         if model.cfg.n_loop != 1:
             raise ValueError("complete compiler requires n_loop=1")
@@ -203,6 +203,7 @@ class CompletePointerCompiler(nn.Module):
         self.memory_projection = nn.Linear(model.cfg.d_model, width, bias=False)
         self.encoder_layers = int(encoder_layers)
         self.role_supervision = bool(role_supervision)
+        self.separate_kind_decoder = bool(separate_kind_decoder)
         if self.encoder_layers:
             encoder_layer = nn.TransformerEncoderLayer(
                 d_model=width,
@@ -236,6 +237,25 @@ class CompletePointerCompiler(nn.Module):
         )
         self.decoder = nn.TransformerDecoder(layer_module, num_layers=decoder_layers)
         self.output_norm = nn.LayerNorm(width)
+        if self.separate_kind_decoder:
+            self.kind_memory_norm = nn.LayerNorm(model.cfg.d_model)
+            self.kind_memory_projection = nn.Linear(model.cfg.d_model, width, bias=False)
+            kind_layer = nn.TransformerDecoderLayer(
+                d_model=width,
+                nhead=heads,
+                dim_feedforward=ff,
+                dropout=0.0,
+                activation="gelu",
+                batch_first=True,
+                norm_first=True,
+            )
+            self.kind_decoder = nn.TransformerDecoder(kind_layer, num_layers=decoder_layers)
+            self.kind_output_norm = nn.LayerNorm(width)
+        else:
+            self.kind_memory_norm = None
+            self.kind_memory_projection = None
+            self.kind_decoder = None
+            self.kind_output_norm = None
         families = sorted(set(FAMILY_FOR_TARGET.values()))
         self.pointer_keys = nn.ModuleDict({
             family: nn.Linear(width, width, bias=False) for family in families
@@ -290,7 +310,16 @@ class CompletePointerCompiler(nn.Module):
             if role_logits is not None:
                 logits = logits + role_logits[:, :, TARGET_INDEX[label]]
             pointer_logits[label] = logits.masked_fill(~valid_mask, -1e9)
-        kind_logits = self.kind_head(decoded[:, 3:5]).float()
+        if self.kind_decoder is not None:
+            kind_memory = self.kind_memory_projection(self.kind_memory_norm(hidden))
+            kind_slots = self.kind_output_norm(self.kind_decoder(
+                tgt=slots,
+                memory=kind_memory,
+                memory_key_padding_mask=~valid_mask,
+            ))
+            kind_logits = self.kind_head(kind_slots[:, 3:5]).float()
+        else:
+            kind_logits = self.kind_head(decoded[:, 3:5]).float()
         return {
             "pointer_logits": pointer_logits,
             "kind_logits": kind_logits,
