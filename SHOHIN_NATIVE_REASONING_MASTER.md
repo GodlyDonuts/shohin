@@ -25556,6 +25556,34 @@ qualification board before connecting any compiler to a source-deleted
 executor, consumer, or halt policy. The authoritative score and custody record
 is `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_DEVELOPMENT_RESULT.md`.
 
+### Conventional compiler one-shot qualification
+
+The selected ordinary tagger was then tested exactly once on a fresh board
+whose seed was selected only after generator and preregistration commit
+`e7fa112`. The board contains 2,048 semantic quartets / 8,192 rows, 4,096
+factor combinations, and 639 source names. All language atoms are known from
+factorized training, while exact prompts, word 13-grams, entity names, and full
+factor combinations have zero overlap with every public factorized split. The
+generator accepts no confirmation path and reports zero confirmation access.
+
+Job `693105` completed on `evc25` without fitting, oracle, retry, seed sweep, or
+arm selection. It scores **8187/8192 answers**, **8186/8192 exact semantic
+programs/full pointers/initial bindings**, **8192/8192 operation kinds**, and
+**2045/2048 all-four exact quartets**. The assessor was committed at `3b3e7e9`
+before score access and records assessment SHA-256
+`35278899fdbcdf801838c414adf860d59a255ecb4de5a44b3acf072248fa6cc7` with
+decision `qualify_conventional_compiler_for_isolated_stage_b_development`.
+
+This closes the Stage-A infrastructure uncertainty. It does not establish
+execution or reasoning. The only newly authorized experiment keeps raw Shohin
+and the compiler frozen, gathers a bounded model-owned packet, deletes source
+states before update, and fits a separately parameterized recurrent executor
+and consumer. Gold packets are diagnostic ceilings only; host code may route
+tensor positions but may not decode, repair, or execute semantic fields. The
+old factorized confirmation remains sealed/local-only. Full custody and exact
+gate arithmetic are in
+`R12_REFERENTIAL_LITERAL_POINTER_COMPILER_QUALIFICATION_RESULT.md`.
+
 ## Update Protocol
 
 At each 10k checkpoint milestone:

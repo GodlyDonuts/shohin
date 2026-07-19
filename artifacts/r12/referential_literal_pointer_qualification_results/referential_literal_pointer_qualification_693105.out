@@ -1,0 +1,9 @@
+[rlpc-qualification] seed=1218705082397710755 node=evc25 adapter=/lustre/fs1/home/sa305415/shohin/train/referential_literal_pointer_factorized_ordinary_2026071810/compiler.pt
+GPU 0: NVIDIA H100 PCIe (UUID: GPU-f6b0f1c9-b65a-0ce3-6f3b-1f77ed01fdc5)
+[compiler-eval] 25/142 batches
+[compiler-eval] 50/142 batches
+[compiler-eval] 75/142 batches
+[compiler-eval] 100/142 batches
+[compiler-eval] 125/142 batches
+{"group_summary": {"all_four_answers_correct": 2046, "all_four_full_pointer_exact": 2045, "all_four_semantic_program_exact": 2045, "canonical_paraphrase_both_exact": 2045, "canonical_paraphrase_both_semantic_exact": 2045, "groups": 2048}, "out": "/lustre/fs1/home/sa305415/shohin/train/referential_literal_pointer_qualification_1218705082397710755/development_compositional.json", "overall": {"answer_accuracy": 0.9993896484375, "full_pointer_exact": 0.999267578125, "initial_joint": 0.999267578125, "kind_accuracy": 1.0, "operation0_joint": 1.0, "operation1_joint": 1.0, "pointer_accuracy": {"intro.entity0": 1.0, "intro.entity1": 0.999267578125, "intro.entity2": 0.999755859375, "op0.entity": 1.0, "op0.kind": 1.0, "op0.literal": 1.0, "op1.entity": 1.0, "op1.kind": 1.0, "op1.literal": 1.0, "query.position": 1.0}, "rows": 8192, "semantic_program_exact": 0.999267578125}, "split": "development_compositional"}
+[rlpc-qualification] one-shot evaluation complete; sealed confirmation was never referenced

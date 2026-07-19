@@ -1,0 +1,47 @@
+{
+  "claim_boundary": "One-shot known-atom compiler qualification only. No sealed factorized confirmation, executor, halt, autonomous rollout, reasoning, or novelty claim.",
+  "decision": "qualify_conventional_compiler_for_isolated_stage_b_development",
+  "expected_identity": {
+    "adapter_file_sha256": "747a559b827c6d114943c091b9dea5b4b90cef7af13aa5003b8435c092d24991",
+    "base_sha256": "211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6",
+    "data_sha256": "06deeb39ac8c6ceb74003f6e503361401c58ead445558485e30a51d8c6d9358e",
+    "groups": 2048,
+    "report_sha256": "1467b089f964b5078f444f5d1c91228dcd3ee0a40792987b319f62dc7e98023d",
+    "rows": 8192
+  },
+  "gates": {
+    "all_four_exact": {
+      "floor": 2000,
+      "pass": true,
+      "value": 2045
+    },
+    "answer_accuracy": {
+      "floor": 0.99,
+      "pass": true,
+      "value": 0.9993896484375
+    },
+    "full_pointer_exact": {
+      "floor": 0.99,
+      "pass": true,
+      "value": 0.999267578125
+    },
+    "initial_joint": {
+      "floor": 0.99,
+      "pass": true,
+      "value": 0.999267578125
+    },
+    "kind_accuracy": {
+      "floor": 0.999,
+      "pass": true,
+      "value": 1.0
+    },
+    "semantic_program_exact": {
+      "floor": 0.99,
+      "pass": true,
+      "value": 0.999267578125
+    }
+  },
+  "qualified": true,
+  "result_sha256": "05c50c79672cf1b07a42fd02c48b5df84e4d4de87a36dfa637730ac600deccba",
+  "schema": "r12_referential_literal_pointer_qualification_assessment_v1"
+}

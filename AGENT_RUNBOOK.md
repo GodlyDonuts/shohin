@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-18 23:56 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 00:14 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -28,6 +28,16 @@
 > entirely to unseen operation polarity: islands rise **77.881% -> 99.316%** exact programs with
 > gold kinds, while gold structure reaches only 78.516%. Retain the conventional compiler baseline;
 > confirmation remains sealed/local-only and no executor/halt/native-reasoning claim is authorized.
+>
+> That untouched one-shot qualification is now complete. Source/prereg commit `e7fa112` preceded
+> seed `1218705082397710755`; assessor commit `3b3e7e9` preceded score access. Job `693105`
+> completed once on `evc25` and passed every frozen gate: **8187/8192 answers**, **8186/8192
+> semantic programs/full pointers and initial bindings**, **8192/8192 operation kinds**, and
+> **2045/2048 all-four exact quartets**. Assessment SHA-256
+> `35278899fdbcdf801838c414adf860d59a255ecb4de5a44b3acf072248fa6cc7` records
+> `qualify_conventional_compiler_for_isolated_stage_b_development`. Stage A is infrastructure
+> only; Stage B must delete source states before model-owned recurrent execution and consumption.
+> The old confirmation remains sealed/local-only.
 >
 > Fresh compiler/executor/serializer interaction is complete: natural-language compilation is
 > `0/6`, terminal serialization is `2/6`, and oracle-compiled frozen DRS transitions are `28/34`
@@ -8104,3 +8114,19 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   on Mac/Newton; compressed safe evidence and the full result ledger are being pushed. Treat factorized
   coverage as the win, retain ordinary as infrastructure, and require a fresh untouched qualification board
   before any source-deleted executor/consumer integration.
+
+- **2026-07-19 00:00--00:14** -- **The favorable conventional compiler passes its frozen one-shot
+  qualification and opens Stage-B development only.** Generator/prereg commit `e7fa112` preceded
+  seed `1218705082397710755`; committed assessor `3b3e7e9` preceded score access. The fresh board has
+  2,048 quartets / 8,192 rows, 4,096 unseen factor combinations, 639 unseen source names, and zero
+  public exact-prompt, word-13-gram, entity-name, or factor-combination overlap. All ten-span,
+  two-executor, token-bag, and shortcut gates pass, with no sealed-confirmation path or access. Job
+  `693105` completed once on H100 `evc25` in 20 seconds, exit `0:0`, with no fit, oracle, retry, or
+  seed sweep. Scores are 8187/8192 answers, 8186/8192 semantic programs/full pointers/initial joint,
+  8192/8192 operation kinds, and 2045/2048 all-four exact quartets. Assessment SHA-256
+  `35278899fdbcdf801838c414adf860d59a255ecb4de5a44b3acf072248fa6cc7` records
+  `qualify_conventional_compiler_for_isolated_stage_b_development`. This freezes Stage A as parser
+  infrastructure; it does not authorize confirmation access or an execution, halt, rollout,
+  reasoning, or novelty claim. The next experiment must freeze base/compiler, gather a bounded
+  model-owned packet, delete source states, and train a separately parameterized recurrent
+  executor/consumer under favorable source-retained, gold-packet, untied-step, and shuffled controls.

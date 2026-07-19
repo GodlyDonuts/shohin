@@ -1,0 +1,71 @@
+{
+  "all_gates_pass": true,
+  "artifacts": {
+    "development_compositional": {
+      "bytes": 25796334,
+      "sha256": "06deeb39ac8c6ceb74003f6e503361401c58ead445558485e30a51d8c6d9358e"
+    }
+  },
+  "claim_boundary": "Fresh one-shot known-atom compiler qualification. No sealed factorized confirmation, executor, halt, autonomous rollout, or reasoning claim.",
+  "confirmation_access": 0,
+  "entity_names": 639,
+  "factor_combinations": 4096,
+  "generator_sha256": "6b4d618caa0d848f8ff09be05eb25c86a12db52c04c78ec45d0cc36a242b541b",
+  "groups": 2048,
+  "nonce_token_width": 2,
+  "public_overlap": {
+    "entity_names": 0,
+    "exact_prompts": 0,
+    "factor_combinations": 0,
+    "word_13grams": 0
+  },
+  "reference_artifacts": {
+    "development_compositional.jsonl": {
+      "path": "/Users/sairamen/projects/shohin/artifacts/r12/referential_literal_pointer_factorized_v1/development_compositional.jsonl",
+      "sha256": "e69fb70bddfb827a428c297352a72e45612ff3528a9fa107dec38c04189e1922"
+    },
+    "development_lexical_ood.jsonl": {
+      "path": "/Users/sairamen/projects/shohin/artifacts/r12/referential_literal_pointer_factorized_v1/development_lexical_ood.jsonl",
+      "sha256": "40a059024770d3785ac27f7b02365d7741f631f7413aa5e69631efbc3af73dc0"
+    },
+    "train.jsonl": {
+      "path": "/Users/sairamen/projects/shohin/artifacts/r12/referential_literal_pointer_factorized_v1/train.jsonl",
+      "sha256": "e6feb311c37f34a88ce7bda59ebb4f968c9ce3b4052cb5c0f6c2ef2e3fca44a8"
+    }
+  },
+  "rows": 8192,
+  "schema": "r12_referential_literal_pointer_qualification_report_v1",
+  "seed": 1218705082397710755,
+  "shortcut_ceilings": {
+    "absolute_pointer_positions": {
+      "accuracy": 0.23372395833333334,
+      "correct": 1436,
+      "total": 6144
+    },
+    "source_token_length": {
+      "accuracy": 0.005859375,
+      "correct": 36,
+      "total": 6144
+    },
+    "token_bag": {
+      "accuracy": 0.3333333333333333,
+      "correct": 2048,
+      "total": 6144
+    }
+  },
+  "structural_gates": {
+    "all_group_gates_pass": true,
+    "all_ids_unique": true,
+    "all_known_atoms_covered": true,
+    "all_questions_unique": true,
+    "all_shortcut_ceilings_at_chance_plus_one_example": true,
+    "all_spans_nonempty": true,
+    "all_spans_present": true,
+    "public_entity_name_overlap_zero": true,
+    "public_exact_prompt_overlap_zero": true,
+    "public_factor_combination_overlap_zero": true,
+    "public_word_13gram_overlap_zero": true,
+    "two_executors_agree": true
+  },
+  "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4"
+}

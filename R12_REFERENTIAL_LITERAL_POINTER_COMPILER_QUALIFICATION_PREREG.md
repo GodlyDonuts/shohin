@@ -1,7 +1,7 @@
 # R12 Conventional Complete-Compiler One-Shot Qualification Preregistration
 
-**Status:** design frozen before qualification seed; no qualification data or
-score exists
+**Status:** completed and passed once; exact result is frozen in
+`R12_REFERENTIAL_LITERAL_POINTER_COMPILER_QUALIFICATION_RESULT.md`
 
 ## Question
 
@@ -55,3 +55,14 @@ for a separately preregistered source-deleted executor/consumer development
 experiment. Failure rejects integration and requires diagnosis on this
 qualification board. Neither outcome establishes execution, halting,
 autonomous rollout, native reasoning, or architectural novelty.
+
+## Frozen outcome
+
+The generator and this preregistration were committed at `e7fa112` before seed
+`1218705082397710755` was selected. Job `693105` completed once on `evc25` and
+passed every preregistered gate: answer accuracy `8187/8192`, semantic-program
+and full-pointer exact `8186/8192`, operation-kind accuracy `8192/8192`, and
+`2045/2048` all-four exact quartets. The committed-before-score assessor records
+`qualify_conventional_compiler_for_isolated_stage_b_development`. This result
+does not authorize opening the old sealed confirmation or claiming execution,
+halting, autonomous rollout, native reasoning, or novelty.
