@@ -8553,7 +8553,9 @@ STATE) and any step that changed. A future agent — maybe you after a context r
 
 - **2026-07-19 06:36--06:37** -- S4 v3 seed `14970823073944690832` is retired with **no board,
   model access, or score**. The post-freeze Newton builder exited during Python imports before
-  creating its output directory because the relative command-scoped `PYTHONPATH` did not expose a
-  tracked generator dependency. Source, preregistration, generator, gates, model, and jobs are
-  unchanged. Export absolute Newton `pipeline` and `train` paths, verify imports scorelessly, commit
-  this receipt, then draw one replacement production seed.
+  creating its output directory because tracked dependency
+  `pipeline/build_s4_self_delimiting_event_tape.py` was absent from the remote working copy. A
+  scoreless absolute-`PYTHONPATH` import check independently reproduced that missing-file cause.
+  Source, preregistration, generator, gates, model, and jobs are unchanged. Sync the exact committed
+  generator dependency chain, verify imports scorelessly, commit this corrected receipt, then draw
+  one replacement production seed.
