@@ -126,7 +126,7 @@ def instantiate(specification, entities):
     )
 
 
-def choose_semantics(depth, entities, rng):
+def choose_semantics(depth, entities, rng, required_query_position=None):
     operations = tuple(itertools.product(DIRECTIONS, range(3), AMOUNTS))
     for _ in range(10000):
         base = tuple(rng.choice(operations) for _ in range(depth))
@@ -153,7 +153,10 @@ def choose_semantics(depth, entities, rng):
             if terminals[0][position] != terminals[1][position]
             and terminals[0][position] != terminals[2][position]
         ]
-        if separators:
+        if required_query_position is not None:
+            if int(required_query_position) in separators:
+                return programs, terminals, int(required_query_position)
+        elif separators:
             return programs, terminals, rng.choice(separators)
     raise RuntimeError("could not sample separated long semantics")
 
@@ -199,7 +202,7 @@ def render_chunks(group, surface, initial, program, query_position, factors,
     return chunks
 
 
-def build_board(groups, seed, tokenizer, public):
+def build_board(groups, seed, tokenizer, public, balanced_queries=False):
     rng = random.Random(seed)
     max_chunks = 4
     factor_specs = fresh_factor_specs(
@@ -216,7 +219,10 @@ def build_board(groups, seed, tokenizer, public):
         entities = tuple(names[group * 4:group * 4 + 3])
         neutral_anchor = names[group * 4 + 3]
         initial = tuple(rng.sample(entities, 3))
-        programs, terminals, query_position = choose_semantics(depth, initial, rng)
+        required_query = (group // 6) % 3 if balanced_queries else None
+        programs, terminals, query_position = choose_semantics(
+            depth, initial, rng, required_query_position=required_query,
+        )
         chunk_count = (depth + 1) // 2
         canonical_factors = [factor_specs[factor_cursor]] * chunk_count
         factor_cursor += 1

@@ -6,6 +6,15 @@ A scoreless 512-group mechanics validation used seed `1`, passed every data
 and derangement gate, and was deleted before this freeze. Seed `1` is retired
 and cannot be the production seed.
 
+The first production-generation attempt at seed `3906227011763392781` was
+rejected before model access because query derangement was infeasible at depths
+3 and 6. No score exists. That seed is retired. The sole mechanical correction
+cycles required query positions 0/1/2 within every depth and resamples semantics
+until the requested position separates both twins. It changes no row count,
+factor/name policy, evaluator, score gate, model, or intervention.
+Corrected scoreless validation seed `2` passed every gate and was deleted; it
+is also retired from production use.
+
 ## Confirmed object
 
 The candidate is the exact public-development system from commit `a2fc8da` and

@@ -25823,6 +25823,13 @@ Operation and query interventions must causally collapse their respective
 outputs. A scoreless seed-1 mechanics board passed and was deleted; that seed
 is retired. No production confirmation score exists yet.
 
+The first production-generation seed `3906227011763392781` is retired before
+model access: depths 3 and 6 had query strata too imbalanced for the frozen
+semantic derangement. No score exists. A mechanical generator correction now
+cycles query positions within each depth and resamples only the semantic tuple
+until that requested position separates both twins. Model, evaluator, gates,
+board size, exclusions, and causal controls do not change.
+
 The matched result reproduces the loss but rejects single-comparator
 localization. Untouched execution reaches 77.393% answers / 70.312% exact
 state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /

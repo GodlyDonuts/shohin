@@ -91,7 +91,9 @@ def main():
         tuple(record["token_ids"]): record["kind"] for record in lexicon["patterns"]
     }
     public = public_record(args.public_data)
-    rows, depth_counts = build_board(args.groups, args.seed, tokenizer, public)
+    rows, depth_counts = build_board(
+        args.groups, args.seed, tokenizer, public, balanced_queries=True,
+    )
     all_chunks = [chunk for row in rows for chunk in row["chunks"]]
     direction_refs = 0
     direction_matches = 0

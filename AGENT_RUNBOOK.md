@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 03:11 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 03:17 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8405,3 +8405,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   generator/evaluator/assessor/job hash prefixes are `977e3954` / `50f2005d` / `262aafe8` /
   `d5c92062` / `9486ad5c`. Commit these bytes before drawing one production seed. No score,
   production board, fit, old-confirmation access, or confirmation claim exists yet.
+
+- **2026-07-19 03:12--03:17** -- **The first production board is rejected before model access;
+  query balance is corrected mechanically.** Seed `3906227011763392781` generated all 2,048 rows
+  and passed every gate except query derangement: depths 3/6 placed 176 of 344/340 rows at query
+  position 1, making a semantic derangement impossible. No H100 job or score exists. Retire that
+  seed and keep its failed board local-only. The correction leaves all model/evaluator/gates fixed,
+  cycles required query position 0/1/2 within each depth, and resamples semantics until that position
+  separates both twins. Existing generator callers retain old behavior; only the S3 confirmation
+  opts in. Run a scoreless validation, commit corrected source/prereg, then draw a new seed.
