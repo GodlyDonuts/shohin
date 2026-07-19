@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 06:37 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 06:42 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8559,3 +8559,11 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Source, preregistration, generator, gates, model, and jobs are unchanged. Sync the exact committed
   generator dependency chain, verify imports scorelessly, commit this corrected receipt, then draw
   one replacement production seed.
+
+- **2026-07-19 06:39--06:42** -- Replacement seed `939143060519850990` is also retired with **no
+  board, report, process, model access, or score**. The remote invocation returned without its
+  required output directory or a retained diagnostic. A subsequent scoreless audit proves both
+  imports and CLI construction work and finds no builder process or seed-named file anywhere under
+  the repo. Do not reuse the seed. Commit this receipt, then invoke a new seed through explicit
+  absolute `env PYTHONPATH=...` arguments and require both files plus a passing report before any
+  model job.
