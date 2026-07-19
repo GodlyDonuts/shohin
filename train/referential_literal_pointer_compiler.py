@@ -26,6 +26,7 @@ TARGET_LABELS = (
     "op1.kind", "op1.entity", "op1.literal",
     "query.position",
 )
+TARGET_INDEX = {label: index for index, label in enumerate(TARGET_LABELS)}
 SLOT_FOR_TARGET = {
     "intro.entity0": 0,
     "intro.entity1": 1,
@@ -185,7 +186,8 @@ def pad_batch(examples, indices, device):
 class CompletePointerCompiler(nn.Module):
     """Six learned program slots over frozen causal token states."""
 
-    def __init__(self, model, layer=19, width=256, heads=8, decoder_layers=2, ff=1024):
+    def __init__(self, model, layer=19, width=256, heads=8, decoder_layers=2, ff=1024,
+                 encoder_layers=0, role_supervision=False):
         super().__init__()
         if model.cfg.n_loop != 1:
             raise ValueError("complete compiler requires n_loop=1")
@@ -199,6 +201,28 @@ class CompletePointerCompiler(nn.Module):
         self.model.requires_grad_(False)
         self.memory_norm = nn.LayerNorm(model.cfg.d_model)
         self.memory_projection = nn.Linear(model.cfg.d_model, width, bias=False)
+        self.encoder_layers = int(encoder_layers)
+        self.role_supervision = bool(role_supervision)
+        if self.encoder_layers:
+            encoder_layer = nn.TransformerEncoderLayer(
+                d_model=width,
+                nhead=heads,
+                dim_feedforward=ff,
+                dropout=0.0,
+                activation="gelu",
+                batch_first=True,
+                norm_first=True,
+            )
+            self.memory_encoder = nn.TransformerEncoder(
+                encoder_layer,
+                num_layers=self.encoder_layers,
+                enable_nested_tensor=False,
+            )
+        else:
+            self.memory_encoder = None
+        self.role_head = (
+            nn.Linear(width, len(TARGET_LABELS)) if self.role_supervision else None
+        )
         self.slot_queries = nn.Parameter(torch.empty(6, width))
         nn.init.normal_(self.slot_queries, mean=0.0, std=width ** -0.5)
         layer_module = nn.TransformerDecoderLayer(
@@ -246,6 +270,9 @@ class CompletePointerCompiler(nn.Module):
             raise ValueError("ids and valid mask must be matching rank-2 tensors")
         hidden = self.encode(ids)
         memory = self.memory_projection(self.memory_norm(hidden))
+        if self.memory_encoder is not None:
+            memory = self.memory_encoder(memory, src_key_padding_mask=~valid_mask)
+        role_logits = self.role_head(memory).float() if self.role_head is not None else None
         slots = self.slot_queries.unsqueeze(0).expand(ids.shape[0], -1, -1)
         decoded = self.output_norm(self.decoder(
             tgt=slots,
@@ -260,9 +287,15 @@ class CompletePointerCompiler(nn.Module):
             query = self.pointer_queries[label.replace(".", "__")](slot)
             keys = self.pointer_keys[family](memory)
             logits = torch.einsum("bd,bld->bl", query.float(), keys.float()) * scale
+            if role_logits is not None:
+                logits = logits + role_logits[:, :, TARGET_INDEX[label]]
             pointer_logits[label] = logits.masked_fill(~valid_mask, -1e9)
         kind_logits = self.kind_head(decoded[:, 3:5]).float()
-        return {"pointer_logits": pointer_logits, "kind_logits": kind_logits}
+        return {
+            "pointer_logits": pointer_logits,
+            "kind_logits": kind_logits,
+            "role_logits": role_logits,
+        }
 
 
 def pointer_mass_loss(logits, examples, label):
@@ -290,6 +323,31 @@ def compiler_loss(outputs, examples, kind_weight=1.0):
     kind = F.cross_entropy(outputs["kind_logits"].reshape(-1, 2), kind_targets.reshape(-1))
     total = pointer + float(kind_weight) * kind
     return total, pointer, kind, pointer_losses
+
+
+def role_supervision_loss(outputs, examples):
+    """Balanced token-role loss over the same gold source spans as the pointers."""
+    logits = outputs.get("role_logits")
+    if logits is None:
+        raise ValueError("compiler does not expose role logits")
+    losses = []
+    for label, column in TARGET_INDEX.items():
+        for row, example in enumerate(examples):
+            length = len(example.ids)
+            targets = torch.zeros(length, dtype=torch.float32, device=logits.device)
+            targets[list(example.target_positions[label])] = 1.0
+            positives = float(targets.sum().item())
+            pos_weight = torch.tensor(
+                max(1.0, (length - positives) / max(1.0, positives)),
+                dtype=torch.float32,
+                device=logits.device,
+            )
+            losses.append(F.binary_cross_entropy_with_logits(
+                logits[row, :length, column].float(),
+                targets,
+                pos_weight=pos_weight,
+            ))
+    return torch.stack(losses).mean()
 
 
 def predictions_from_outputs(outputs):

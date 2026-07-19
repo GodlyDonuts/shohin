@@ -71,6 +71,20 @@ class ReferentialLiteralPointerCompilerTest(unittest.TestCase):
         self.assertEqual(answer, example.answer)
         self.assertTrue(compiler_module.semantic_exact(example, semantic))
 
+    def test_bidirectional_role_parser_has_finite_auxiliary_loss(self):
+        example = compiler_module.compile_row(self.row, self.tokenizer, keep_evidence=True)
+        model = compiler_module.CompletePointerCompiler(
+            DummyBase(), layer=1, width=32, heads=4, decoder_layers=1, ff=64,
+            encoder_layers=2, role_supervision=True,
+        )
+        ids = torch.tensor([example.ids], dtype=torch.long)
+        valid = torch.ones_like(ids, dtype=torch.bool)
+        outputs = model(ids, valid)
+        self.assertEqual(tuple(outputs["role_logits"].shape), (1, len(example.ids), 10))
+        role = compiler_module.role_supervision_loss(outputs, [example])
+        self.assertTrue(torch.isfinite(role))
+        role.backward()
+
 
 if __name__ == "__main__":
     unittest.main()

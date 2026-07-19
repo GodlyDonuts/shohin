@@ -25412,6 +25412,50 @@ reliable natural-language compilation, correction, halting, serialization, or
 state reuse. Full transcript custody and interpretation are in
 `RAW300K_INTERACTION_RESULT.md`.
 
+## Complete Source-Pointer Compiler v1.1: Development Rejection
+
+The external frontier plans converged on a compiler/executor/halt decomposition.
+Before accepting that stack, exact inspection found that Shohin's strongest R4
+compiler result was not complete: deterministic host code supplied initial values
+and event quantities, while `program_exact` omitted those fields. The v1.1 board
+therefore requires the model to select ten bindings directly from source tokens:
+three ordered initial entities, operation kind/entity/literal for two operations,
+and one query position.
+
+The finite CPU board and frozen corpus pass their custody gates. The corpus has
+96,000 train, 2,048 development, and 4,096 sealed confirmation rows; 1,021,440
+pointer labels; disjoint nonce names and renderer templates; and zero exact or
+word-13-gram overlap across splits. The first neural realization used six free
+learned slot queries over linearly projected frozen layer-19 causal states. It fit
+3,241,091 parameters while freezing Shohin, for 128,322,755 total parameters.
+
+Valid H100 job `692966` completed one epoch / 1,514 updates on `evc28`. Training
+loss reached `0.0000018793`, but frozen development rejected the realization:
+
+| Metric | Result |
+|---|---:|
+| full ten-binding pointer exact | **45/2,048 = 2.197%** |
+| semantic-program exact | **313/2,048 = 15.283%** |
+| executed answer accuracy | **602/2,048 = 29.395%** |
+| ordered initial-state joint exact | **386/2,048 = 18.848%** |
+| canonical + paraphrase both exact | **0/512** |
+| all four quartet surfaces exact | **0/512** |
+
+The unseen canonical renderer retains 41.992% answer accuracy, but the unseen
+paraphrase renderer falls to 1/512. Predicted pointers repeatedly land on words
+such as `unaffected` and `travel` at renderer-relative positions. The learned
+object is therefore a template coordinate system, not a renderer-invariant
+program. Literal pointers, query pointers, and operation-kind classes do
+transfer; structural role parsing and initial ordering do not.
+
+This closes the six-free-slot/projected-causal-state realization only. It does
+not close source-pointer compilation. Confirmation remains sealed and was never
+copied to Newton. A valid successor needs a fresh unseen language board and must
+separate lexical grounding, structural parsing, and execution with favorable
+ordinary tagger/pointer, lexical-oracle, structure-oracle, and full-oracle
+controls. The authoritative closeout is
+`R12_REFERENTIAL_LITERAL_POINTER_COMPILER_DEVELOPMENT_RESULT.md`.
+
 ## Update Protocol
 
 At each 10k checkpoint milestone:

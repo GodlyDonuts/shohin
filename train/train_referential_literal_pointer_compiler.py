@@ -22,6 +22,7 @@ from referential_literal_pointer_compiler import (
     load_examples,
     make_batches,
     pad_batch,
+    role_supervision_loss,
     sha256_file,
 )
 
@@ -45,6 +46,9 @@ def main():
     parser.add_argument("--heads", type=int, default=8)
     parser.add_argument("--decoder-layers", type=int, default=2)
     parser.add_argument("--ff", type=int, default=1024)
+    parser.add_argument("--encoder-layers", type=int, default=0)
+    parser.add_argument("--role-supervision", action="store_true")
+    parser.add_argument("--role-weight", type=float, default=0.0)
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--epochs", type=int, default=1)
     parser.add_argument("--max-examples", type=int, default=0)
@@ -61,6 +65,10 @@ def main():
         raise SystemExit("refusing existing output {}".format(args.out))
     if args.epochs <= 0 or args.batch_size <= 0:
         raise SystemExit("invalid epochs or batch size")
+    if args.encoder_layers < 0 or args.role_weight < 0:
+        raise SystemExit("invalid encoder layers or role weight")
+    if bool(args.role_weight) != bool(args.role_supervision):
+        raise SystemExit("role supervision and positive role weight must be enabled together")
 
     torch.manual_seed(args.seed)
     random.seed(args.seed)
@@ -93,6 +101,8 @@ def main():
         heads=args.heads,
         decoder_layers=args.decoder_layers,
         ff=args.ff,
+        encoder_layers=args.encoder_layers,
+        role_supervision=args.role_supervision,
     ).to("cuda")
     if compiler.adapter_num_params() + sum(parameter.numel() for parameter in model.parameters()) >= 150_000_000:
         raise SystemExit("compiler exceeds strict 150M total-parameter cap")
@@ -104,7 +114,11 @@ def main():
     epoch_batches = [make_batches(examples, args.batch_size, args.seed + epoch) for epoch in range(args.epochs)]
     total_steps = sum(len(batches) for batches in epoch_batches)
     metadata = {
-        "protocol": "r12_referential_literal_pointer_compiler_v1_1_development",
+        "protocol": (
+            "r12_referential_literal_pointer_compiler_v1_2_structured_development"
+            if args.encoder_layers or args.role_supervision
+            else "r12_referential_literal_pointer_compiler_v1_1_development"
+        ),
         "base": os.path.realpath(args.base),
         "base_sha256": sha256_file(args.base),
         "base_step": checkpoint.get("step"),
@@ -119,6 +133,9 @@ def main():
         "heads": args.heads,
         "decoder_layers": args.decoder_layers,
         "ff": args.ff,
+        "encoder_layers": args.encoder_layers,
+        "role_supervision": args.role_supervision,
+        "role_weight": args.role_weight,
         "batch_size": args.batch_size,
         "epochs": args.epochs,
         "examples": len(examples),
@@ -156,6 +173,11 @@ def main():
             with torch.autocast("cuda", dtype=torch.bfloat16):
                 outputs = compiler(ids, valid)
                 loss, pointer, kind, _ = compiler_loss(outputs, selected, args.kind_weight)
+                role = (
+                    role_supervision_loss(outputs, selected)
+                    if args.role_supervision else loss.new_zeros(())
+                )
+                loss = loss + args.role_weight * role
             if not torch.isfinite(loss):
                 raise RuntimeError("non-finite loss at update {}".format(global_step))
             loss.backward()
@@ -171,6 +193,7 @@ def main():
                     "loss": float(loss.item()),
                     "pointer_loss": float(pointer.item()),
                     "kind_loss": float(kind.item()),
+                    "role_loss": float(role.item()),
                     "grad_norm": float(grad_norm.item()),
                     "lr": optimizer.param_groups[0]["lr"],
                     "examples_per_second": (global_step + 1) * args.batch_size / elapsed,
