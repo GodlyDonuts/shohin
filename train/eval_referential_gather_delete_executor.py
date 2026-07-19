@@ -88,7 +88,10 @@ def main():
         raise SystemExit("factorized report does not bind evaluation bytes")
     bundle = torch.load(args.executor, map_location="cpu")
     metadata = bundle.get("executor", {})
-    if metadata.get("protocol") != "r12_referential_gather_delete_executor_stage_b_v1":
+    if metadata.get("protocol") not in {
+        "r12_referential_gather_delete_executor_stage_b_v1",
+        "r12_referential_gather_delete_executor_stage_b_v1_1",
+    }:
         raise SystemExit("invalid Stage-B executor protocol")
     if metadata.get("confirmation_access") != 0:
         raise SystemExit("executor metadata records confirmation access")
@@ -130,9 +133,10 @@ def main():
         ).to(device).eval()
     else:
         executor = GatherDeletePermutationExecutor(
-            packet_width=int(metadata["packet_width"]),
+            identity_width=int(metadata.get("identity_width", metadata["packet_width"])),
+            context_width=int(metadata.get("context_width", metadata["packet_width"])),
             width=int(metadata["executor_width"]),
-            tied=metadata["arm"] == "tied",
+            tied=metadata["arm"] in {"tied", "tied_composed"},
         ).to(device).eval()
     executor.load_state_dict(bundle["executor_state"], strict=True)
     if executor_state_hash(executor) != metadata["final_executor_sha256"]:
@@ -160,6 +164,7 @@ def main():
                     selected,
                     valid,
                     oracle=args.packet_oracle,
+                    packet_mode=metadata.get("packet_mode", "contextual_softmax"),
                 )
                 if args.shuffle_operations and len(selected) > 1:
                     permutation = torch.roll(
@@ -259,7 +264,11 @@ def main():
         ),
     }
     result = {
-        "schema": "r12_referential_gather_delete_executor_eval_v1",
+        "schema": (
+            "r12_referential_gather_delete_executor_eval_v1_1"
+            if metadata.get("packet_mode") == "lexical_sigmoid_span" else
+            "r12_referential_gather_delete_executor_eval_v1"
+        ),
         "split": args.split,
         "arm": metadata["arm"],
         "source_deleted": metadata["source_deleted"],
@@ -273,6 +282,7 @@ def main():
         "report_sha256": sha256_file(args.report),
         "tokenizer_sha256": sha256_file(args.tokenizer),
         "packet_oracle": args.packet_oracle,
+        "packet_mode": metadata.get("packet_mode", "contextual_softmax"),
         "shuffle_operations": args.shuffle_operations,
         "shuffle_query": args.shuffle_query,
         "intervention_rows": intervention_rows,

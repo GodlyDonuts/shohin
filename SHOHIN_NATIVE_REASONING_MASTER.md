@@ -25632,6 +25632,25 @@ vocabulary embeddings for entity/literal/query identity while retaining
 contextual operation information separately. Even a later pass remains only a
 bounded source-deleted execution component, not language reasoning or novelty.
 
+The committed no-fit repair probe now supplies positive evidence for that exact
+interface. Job `693117` on `evc29` recovers operation-to-initial entity identity
+at **4,090/4,096 = 99.854%** with normalized sigmoid role spans over frozen
+vocabulary embeddings. Contextual softmax is 32.031%, lexical softmax is
+72.412%, and gold lexical spans are 100%. This is not a learned score: no
+optimizer or executor runs in the probe. It demonstrates that source deletion
+can preserve referential identity when a compiler role is treated as a token
+set rather than a categorical coordinate.
+
+`R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_V1_1_PREREG.md` freezes the resulting
+dual-channel packet before fit. Entity/literal identity uses 576-wide lexical
+spans; operation/query control uses 384-wide contextual spans; both complete
+source memories are discarded before the updater. The tied system totals
+135,180,829 parameters. Its primary arm still sees only independent atomic
+updates. An identical tied arm with full composed supervision is added solely
+as an architecture ceiling, alongside gold-packet, untied, operation-shuffle,
+and query-shuffle controls. Only a full frozen development pass can authorize a
+fresh longer-depth board; old confirmation remains sealed.
+
 ## Update Protocol
 
 At each 10k checkpoint milestone:

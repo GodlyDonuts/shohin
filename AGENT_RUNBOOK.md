@@ -8185,3 +8185,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   SHA-256 values are `6f266e92...`, `93fbcaa0...`, and `6e58911c...`. The lexical repair may
   proceed only if the measured set-valued vocabulary carrier materially exceeds v1's contextual
   identity. No executor or reasoning claim can come from this probe.
+
+- **2026-07-19 00:49--01:03** -- **The no-fit carrier identifies and repairs RGDE v1's lossy
+  interface before any new executor fit.** Job `693117` completed `0:0` on H100 `evc29` in 14
+  seconds. Contextual-softmax entity matching is 1,312/4,096 = 32.031%; lexical softmax reaches
+  2,966/4,096 = 72.412%; normalized lexical sigmoid-span reaches **4,090/4,096 = 99.854%**; gold
+  lexical spans are 100%. Result/log SHA-256 values are `dcc16fa3...` and `9eefc04d...`. The frozen
+  v1.1 repair now carries initial/operation identity through complete 576-wide vocabulary spans
+  while retaining 384-wide contextual operation/query features, then deletes both source memories.
+  Tied/untied systems total 135,180,829 / 136,148,711 parameters. Sixteen CPU tests plus Ruff,
+  `py_compile`, and shell syntax pass. `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_V1_1_PREREG.md`
+  freezes atomic tied/untied/gold arms, a same-architecture composed-supervision ceiling, causal
+  shuffles, and stricter gates before any fit. Old confirmation remains sealed and absent.

@@ -8,6 +8,7 @@ from referential_gather_delete_executor import (
     execution_targets,
     executor_loss,
     gather_source_deleted_packet,
+    normalized_sigmoid_weights,
     select_packet_operations,
     shuffle_operation_packet,
     shuffle_query_packet,
@@ -41,7 +42,44 @@ def compiler_outputs(batch=2, length=10, width=8):
         logits[:, positions[0]] = 20.0
         pointer_logits[label] = logits
     kind_logits = torch.tensor([[[0.0, 20.0], [20.0, 0.0]]] * batch)
-    return {"memory": memory, "pointer_logits": pointer_logits, "kind_logits": kind_logits}
+    return {
+        "memory": memory,
+        "lexical_memory": torch.randn(batch, length, width + 4),
+        "pointer_logits": pointer_logits,
+        "kind_logits": kind_logits,
+    }
+
+
+def test_normalized_sigmoid_weights_preserve_a_multi_token_span():
+    logits = torch.tensor([[-30.0, 30.0, 30.0, -30.0]])
+    weights = normalized_sigmoid_weights(logits, torch.ones(1, 4, dtype=torch.bool))
+    assert torch.allclose(weights, torch.tensor([[0.0, 0.5, 0.5, 0.0]]), atol=1e-6)
+
+
+def test_lexical_span_packet_separates_identity_and_context_channels():
+    outputs = compiler_outputs(batch=1)
+    valid = torch.ones(1, 10, dtype=torch.bool)
+    packet = gather_source_deleted_packet(
+        outputs, [example()], valid, packet_mode="lexical_sigmoid_span",
+    )
+    assert packet["initial_entities"].shape == (1, 3, 12)
+    assert packet["operations"][0]["entity"].shape == (1, 12)
+    assert packet["operations"][0]["kind_context"].shape == (1, 8)
+    assert packet["query"].shape == (1, 8)
+    assert packet["packet_mode"] == "lexical_sigmoid_span"
+
+
+def test_split_width_executor_accepts_lexical_span_packet():
+    outputs = compiler_outputs(batch=2)
+    valid = torch.ones(2, 10, dtype=torch.bool)
+    packet = gather_source_deleted_packet(
+        outputs, [example(), example()], valid, packet_mode="lexical_sigmoid_span",
+    )
+    executor = GatherDeletePermutationExecutor(
+        identity_width=12, context_width=8, width=16, tied=True,
+    )
+    result = executor(packet)
+    assert result["answer_probabilities"].shape == (2, 3)
 
 
 def test_execution_targets_are_destination_to_source_permutations():

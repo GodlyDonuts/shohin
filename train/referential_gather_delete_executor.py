@@ -103,12 +103,21 @@ def _predicted_weights(logits, valid_mask, temperature):
     return F.softmax(masked / float(temperature), dim=-1)
 
 
+def normalized_sigmoid_weights(logits, valid_mask, temperature=1.0):
+    """Preserve a compiler role as a set-valued span instead of one token."""
+    if temperature <= 0:
+        raise ValueError("packet temperature must be positive")
+    weights = torch.sigmoid(logits.float() / float(temperature)) * valid_mask.float()
+    return weights / weights.sum(dim=-1, keepdim=True).clamp_min(1e-8)
+
+
 def gather_source_deleted_packet(
     compiler_outputs,
     examples,
     valid_mask,
     oracle="none",
     temperature=1.0,
+    packet_mode="contextual_softmax",
 ):
     """Gather a bounded packet and return no full-source tensor.
 
@@ -117,22 +126,40 @@ def gather_source_deleted_packet(
     """
     if oracle not in {"none", "lexical", "structure", "full"}:
         raise ValueError("unknown packet oracle {}".format(oracle))
+    if packet_mode not in {"contextual_softmax", "lexical_sigmoid_span"}:
+        raise ValueError("unknown packet mode {}".format(packet_mode))
     memory = compiler_outputs.get("memory")
     if memory is None or memory.ndim != 3:
         raise ValueError("compiler output lacks contextual memory")
     if valid_mask.shape != memory.shape[:2] or len(examples) != memory.shape[0]:
         raise ValueError("packet source shapes do not match")
-    gathered = {}
+    lexical_memory = compiler_outputs.get("lexical_memory")
+    if packet_mode == "lexical_sigmoid_span":
+        if lexical_memory is None or lexical_memory.ndim != 3:
+            raise ValueError("lexical span packet requires frozen token embeddings")
+        if lexical_memory.shape[:2] != memory.shape[:2]:
+            raise ValueError("contextual and lexical memories do not align")
+    contextual = {}
+    lexical = {}
     for label in PACKET_POINTER_FIELDS:
         if oracle in {"structure", "full"}:
             weights = _gold_weights(
                 examples, label, memory.shape[1], memory.device, memory.dtype,
             )
+        elif packet_mode == "lexical_sigmoid_span":
+            weights = normalized_sigmoid_weights(
+                compiler_outputs["pointer_logits"][label], valid_mask, temperature,
+            ).to(memory.dtype)
         else:
             weights = _predicted_weights(
                 compiler_outputs["pointer_logits"][label], valid_mask, temperature,
             ).to(memory.dtype)
-        gathered[label] = torch.einsum("bl,bld->bd", weights, memory)
+        contextual[label] = torch.einsum("bl,bld->bd", weights, memory)
+        lexical[label] = (
+            contextual[label]
+            if packet_mode == "contextual_softmax" else
+            torch.einsum("bl,bld->bd", weights.to(lexical_memory.dtype), lexical_memory)
+        )
     if oracle in {"lexical", "full"}:
         kind_ids = torch.tensor(
             [example.kind_targets for example in examples],
@@ -146,16 +173,17 @@ def gather_source_deleted_packet(
         ).to(memory.dtype)
     return {
         "initial_entities": torch.stack([
-            gathered["intro.entity{}".format(index)] for index in range(3)
+            lexical["intro.entity{}".format(index)] for index in range(3)
         ], dim=1),
         "operations": tuple({
-            "kind_context": gathered["op{}.kind".format(index)],
-            "entity": gathered["op{}.entity".format(index)],
-            "literal": gathered["op{}.literal".format(index)],
+            "kind_context": contextual["op{}.kind".format(index)],
+            "entity": lexical["op{}.entity".format(index)],
+            "literal": lexical["op{}.literal".format(index)],
             "kind_probabilities": kind_probabilities[:, index],
         } for index in range(2)),
-        "query": gathered["query.position"],
+        "query": contextual["query.position"],
         "oracle": oracle,
+        "packet_mode": packet_mode,
     }
 
 
@@ -168,6 +196,7 @@ def select_packet_operations(packet, operation_indices):
         "operations": tuple(packet["operations"][index] for index in indices),
         "query": packet["query"],
         "oracle": packet.get("oracle", "none"),
+        "packet_mode": packet.get("packet_mode", "contextual_softmax"),
     }
 
 
@@ -186,6 +215,7 @@ def shuffle_operation_packet(packet, permutation):
         } for operation in packet["operations"]),
         "query": packet["query"],
         "oracle": packet.get("oracle", "none"),
+        "packet_mode": packet.get("packet_mode", "contextual_softmax"),
     }
 
 
@@ -201,6 +231,7 @@ def shuffle_query_packet(packet, permutation):
         "operations": packet["operations"],
         "query": packet["query"].index_select(0, permutation),
         "oracle": packet.get("oracle", "none"),
+        "packet_mode": packet.get("packet_mode", "contextual_softmax"),
     }
 
 
@@ -262,31 +293,39 @@ class PermutationUpdateCell(nn.Module):
 class GatherDeletePermutationExecutor(nn.Module):
     """Tied model-owned updater plus independent final-state consumer."""
 
-    def __init__(self, packet_width=384, width=192, tied=True, sinkhorn_iterations=6):
+    def __init__(self, packet_width=None, identity_width=None, context_width=None,
+                 width=192, tied=True, sinkhorn_iterations=6):
         super().__init__()
-        self.packet_width = int(packet_width)
+        if packet_width is not None:
+            if identity_width is not None or context_width is not None:
+                raise ValueError("use packet_width or split packet widths, not both")
+            identity_width = context_width = int(packet_width)
+        if identity_width is None or context_width is None:
+            raise ValueError("executor packet widths are required")
+        self.identity_width = int(identity_width)
+        self.context_width = int(context_width)
         self.width = int(width)
         self.tied = bool(tied)
         self.sinkhorn_iterations = int(sinkhorn_iterations)
         self.entity_encoder = nn.Sequential(
-            nn.LayerNorm(packet_width),
-            nn.Linear(packet_width, width),
+            nn.LayerNorm(self.identity_width),
+            nn.Linear(self.identity_width, width),
             nn.GELU(),
             nn.Linear(width, width),
         )
         self.literal_encoder = nn.Sequential(
-            nn.LayerNorm(packet_width),
-            nn.Linear(packet_width, width),
+            nn.LayerNorm(self.identity_width),
+            nn.Linear(self.identity_width, width),
             nn.GELU(),
         )
         self.operation_encoder = nn.Sequential(
-            nn.LayerNorm(packet_width),
-            nn.Linear(packet_width, width),
+            nn.LayerNorm(self.context_width),
+            nn.Linear(self.context_width, width),
             nn.GELU(),
         )
         self.query_encoder = nn.Sequential(
-            nn.LayerNorm(packet_width),
-            nn.Linear(packet_width, width),
+            nn.LayerNorm(self.context_width),
+            nn.Linear(self.context_width, width),
             nn.GELU(),
         )
         self.kind_encoder = nn.Linear(len(KIND_TO_ID), width)
@@ -317,7 +356,8 @@ class GatherDeletePermutationExecutor(nn.Module):
             raise ValueError("executor requires three gathered initial entities")
         if query is None or query.ndim != 2 or not operations:
             raise ValueError("executor packet is incomplete")
-        if initial.shape[-1] != self.packet_width or query.shape[-1] != self.packet_width:
+        if (initial.shape[-1] != self.identity_width
+                or query.shape[-1] != self.context_width):
             raise ValueError("executor packet width mismatch")
         if cell_indices is None:
             cell_indices = tuple(range(len(operations)))

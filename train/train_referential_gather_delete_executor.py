@@ -89,8 +89,16 @@ def main():
     parser.add_argument("--report", required=True)
     parser.add_argument("--tokenizer", required=True)
     parser.add_argument("--out", required=True)
-    parser.add_argument("--arm", choices=("tied", "untied", "source_retained"), required=True)
+    parser.add_argument(
+        "--arm", choices=("tied", "untied", "tied_composed", "source_retained"),
+        required=True,
+    )
     parser.add_argument("--packet-oracle", choices=("none", "full"), default="none")
+    parser.add_argument(
+        "--packet-mode",
+        choices=("contextual_softmax", "lexical_sigmoid_span"),
+        default="contextual_softmax",
+    )
     parser.add_argument("--width", type=int, default=192)
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--epochs", type=int, default=1)
@@ -137,10 +145,15 @@ def main():
         keep_evidence=True,
         limit=args.max_examples,
     )
-    packet_width = int(compiler_metadata["width"])
+    context_width = int(compiler_metadata["width"])
+    identity_width = (
+        int(cfg.d_model)
+        if args.packet_mode == "lexical_sigmoid_span" else
+        context_width
+    )
     if args.arm == "source_retained":
         executor = SourceRetainedAnswerControl(
-            packet_width=packet_width,
+            packet_width=context_width,
             width=args.width,
             heads=8,
             layers=2,
@@ -148,9 +161,10 @@ def main():
         ).to(device)
     else:
         executor = GatherDeletePermutationExecutor(
-            packet_width=packet_width,
+            identity_width=identity_width,
+            context_width=context_width,
             width=args.width,
-            tied=args.arm == "tied",
+            tied=args.arm in {"tied", "tied_composed"},
         ).to(device)
     base_parameters = sum(parameter.numel() for parameter in compiler.model.parameters())
     compiler_parameters = compiler.adapter_num_params()
@@ -168,10 +182,16 @@ def main():
     ]
     total_steps = sum(len(batches) for batches in epoch_batches)
     metadata = {
-        "protocol": "r12_referential_gather_delete_executor_stage_b_v1",
+        "protocol": (
+            "r12_referential_gather_delete_executor_stage_b_v1_1"
+            if args.packet_mode == "lexical_sigmoid_span" else
+            "r12_referential_gather_delete_executor_stage_b_v1"
+        ),
         "arm": args.arm,
         "source_deleted": args.arm != "source_retained",
         "training_contract": (
+            "full two-operation transition/answer supervision; favorable architecture ceiling"
+            if args.arm == "tied_composed" else
             "atomic one-operation supervision only; op0 and op1 are independently applied "
             "from the identity initial state; two-step composition is evaluation-only"
             if args.arm != "source_retained" else
@@ -179,6 +199,7 @@ def main():
             "unrestricted frozen compiler source-memory access"
         ),
         "packet_oracle": args.packet_oracle,
+        "packet_mode": args.packet_mode,
         "base_sha256": sha256_file(args.base),
         "compiler_file_sha256": sha256_file(args.compiler),
         "compiler_adapter_sha256": compiler_metadata["final_adapter_sha256"],
@@ -186,8 +207,15 @@ def main():
         "report_sha256": sha256_file(args.report),
         "tokenizer_sha256": sha256_file(args.tokenizer),
         "examples": len(examples),
-        "atomic_examples_per_epoch": len(examples) * 2 if args.arm != "source_retained" else 0,
-        "full_answer_examples_per_epoch": len(examples) if args.arm == "source_retained" else 0,
+        "atomic_examples_per_epoch": (
+            len(examples) * 2 if args.arm in {"tied", "untied"} else 0
+        ),
+        "full_composition_examples_per_epoch": (
+            len(examples) if args.arm == "tied_composed" else 0
+        ),
+        "full_answer_examples_per_epoch": (
+            len(examples) if args.arm == "source_retained" else 0
+        ),
         "updates": total_steps,
         "batch_size": args.batch_size,
         "epochs": args.epochs,
@@ -195,7 +223,9 @@ def main():
         "warmup": args.warmup,
         "clip": args.clip,
         "seed": args.seed,
-        "packet_width": packet_width,
+        "packet_width": context_width,
+        "identity_width": identity_width,
+        "context_width": context_width,
         "executor_width": args.width,
         "base_parameters": base_parameters,
         "compiler_parameters": compiler_parameters,
@@ -241,21 +271,28 @@ def main():
                     selected,
                     valid,
                     oracle=args.packet_oracle,
+                    packet_mode=args.packet_mode,
                 )
-                atomic_losses = []
                 with torch.autocast("cuda", dtype=torch.bfloat16):
-                    for operation_index in (0, 1):
-                        atomic_packet = select_packet_operations(packet, (operation_index,))
-                        outputs = executor(atomic_packet, cell_indices=(operation_index,))
-                        targets = [
-                            execution_targets(example, (operation_index,))
-                            for example in selected
-                        ]
-                        atomic_losses.append(executor_loss(outputs, targets))
-                    losses = {
-                        name: torch.stack([item[name] for item in atomic_losses]).mean()
-                        for name in atomic_losses[0]
-                    }
+                    if args.arm == "tied_composed":
+                        outputs = executor(packet, cell_indices=(0, 1))
+                        losses = executor_loss(
+                            outputs, [execution_targets(example) for example in selected],
+                        )
+                    else:
+                        atomic_losses = []
+                        for operation_index in (0, 1):
+                            atomic_packet = select_packet_operations(packet, (operation_index,))
+                            outputs = executor(atomic_packet, cell_indices=(operation_index,))
+                            targets = [
+                                execution_targets(example, (operation_index,))
+                                for example in selected
+                            ]
+                            atomic_losses.append(executor_loss(outputs, targets))
+                        losses = {
+                            name: torch.stack([item[name] for item in atomic_losses]).mean()
+                            for name in atomic_losses[0]
+                        }
                     loss = losses["total"]
             if not torch.isfinite(loss):
                 raise RuntimeError("non-finite Stage-B loss at update {}".format(global_step))

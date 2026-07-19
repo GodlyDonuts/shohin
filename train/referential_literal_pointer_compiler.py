@@ -432,6 +432,7 @@ class OrdinaryTokenTaggerCompiler(nn.Module):
     def forward(self, ids, valid_mask):
         if ids.ndim != 2 or valid_mask.shape != ids.shape:
             raise ValueError("ids and valid mask must be matching rank-2 tensors")
+        lexical_memory = self.model.tok(ids).detach()
         hidden = self.encode(ids)
         memory = self.memory_projection(self.memory_norm(hidden))
         memory = self.memory_encoder(memory, src_key_padding_mask=~valid_mask)
@@ -457,6 +458,7 @@ class OrdinaryTokenTaggerCompiler(nn.Module):
             "kind_logits": torch.stack(kind_logits, dim=1),
             "role_logits": role_logits,
             "memory": memory,
+            "lexical_memory": lexical_memory,
         }
 
 
