@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 17:06 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 17:16 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -26,15 +26,18 @@
 > dynamics, contextual unseen-law compilation, and exact recurrent reuse. It does not establish
 > natural-language grounding, arbitrary algebra, learned active-step/halt, or broad native reasoning.
 >
-> **Active next phase:** integrate the confirmed S7 generator/compiler with the confirmed S4 v5
-> hard-island parser and S5 model-owned transition kernel. The next board must replace synthetic law
-> cards with fresh natural-language operation descriptions, make active event/step selection and halt
-> model-owned, and retain hidden coordinates, disjoint laws, favorable ordinary controls, causal
-> ablations, and one sealed confirmation. Do not widen or tune S7 on its closed boards. Cyclic
-> topology, equality, bounded nested replay, event invocation, and pop-insert are still explicit
-> architectural priors; each must either be learned in a new preregistered stage or remain named in
-> the final claim. No new score-bearing board may be generated before the integration theory, CPU
-> falsifier, parameter accounting, and failure gates are committed.
+> **Active next phase:** S8 nil-linked law graphs are CPU-admitted after source/preregistration commit
+> `81fb6b0`. S8 replaces S7's structured card/event list and host `for` loop with a model-emitted graph:
+> initial state, cards, entity/card bindings, entry, next-event links, nil, and query are model-owned;
+> node records are randomly stored and only predicted links determine order/halt. Frozen seed
+> `4822478724546321200` passes 3,520/3,520 independent reference programs over all 120 modulus-five
+> bindings plus 320 larger bindings. Storage reindexing is invariant 3,520/3,520; storage-order,
+> reversed-link, card-deranged, one-witness, reset, and early-nil controls score 10.142%, 4.943%,
+> 1.051%, 3.665%, 2.045%, and 1.989% state. All ten CPU gates pass; report SHA `c98bd96e...`.
+> Implement and commit the whole-source board builder, sub-16M graph compiler, training exclusions,
+> favorable ordinary parser, and frozen assessor before drawing board/training seeds. No score-bearing
+> S8 board exists yet. Categorical graph validation/traversal, the node-count safety bound, S7's cyclic
+> compiler, and pop-insert remain explicit structural priors.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -8815,3 +8818,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   explicit boundary: cyclic topology, equality, bounded replay, event invocation, and pop-insert are
   structural. The next stage is fresh natural-language grounding plus model-owned step/halt control,
   not a widened repeat of S7.
+
+- **2026-07-19 17:06--17:16** -- **S8 nil-linked law graphs pass every pre-board integration gate.**
+  Commit `81fb6b0` freezes the interface and thresholds before full CPU seed
+  `4822478724546321200`. The graph owns initial state, two-witness cards, entity/card references,
+  entry/next pointers, nil termination, and query; runtime sees no gold event list or depth. Across
+  3,520 programs and 440 hidden bindings, treatment exactly matches an independent reference
+  3,520/3,520 and remains invariant under every node-storage permutation. Ignoring links reaches
+  10.142% state; reversed links 4.943%; card derangement 1.051%; one witness 3.665%; reset 2.045%;
+  early nil 1.989%. All ten gates pass; report SHA `c98bd96e...` records
+  `admit_s8_nil_linked_law_graph_preregistration`. This is a gold-graph mechanics result only. Commit
+  the report, then build the neural whole-source compiler and assessor before any board seed; no S8
+  neural capability claim exists yet.

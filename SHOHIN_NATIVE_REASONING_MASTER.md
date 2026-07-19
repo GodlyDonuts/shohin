@@ -11,7 +11,7 @@ at 300,000 steps. S7 confirms bounded native contextual law compilation and
 recurrent execution; broad language-grounded, self-directed reasoning is not
 yet established.
 
-**Last updated:** 2026-07-19 17:06 EDT.
+**Last updated:** 2026-07-19 17:16 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -623,6 +623,7 @@ instead of treating a single end-to-end score as one capability.
 | **S5 learned generator-factored confirmation** | **96.924% programs / 97.607% state / 98.096% answers**, exactly matching host execution; 36/36 unit and 36/36 never-trained amount-two closure | **Confirmed model-owned finite transition law and recurrent categorical state; known semantics and structural invocation remain bounded** |
 | **S6 contextual affine-law induction** | **78/318 = 24.528%** held-out atomic destinations, **167/2048 = 8.154%** recurrent state, **633/2048 = 30.908%** answers after exact 961/961 atomic training fit | **Rejected generic transformer induction; two demonstrations are causally informative but are represented as a lookup surface, not the identified algebra; no confirmation** |
 | **S7 learned Cayley-law compiler confirmation** | **2,048/2,048 = 100% recurrent state and answers over 18 disjoint laws and every depth 3-8. Ordinary transformer: 1.562% state; `S^2`: 0.879% state** | **All 18 frozen confirmation gates pass; promoted as the strongest bounded native component. Cyclic topology, equality, bounded replay, event invocation, and pop-insert remain structural** |
+| S8 nil-linked law graph CPU falsifier | 3,520/3,520 exact graph executions and storage-reindex invariance; storage-order shortcut 10.142%, reversed links 4.943%, card derangement 1.051%, early nil 1.989% state | CPU interface admitted before any neural board; next test is whether a sub-16M whole-source compiler can emit cards, schedule, and halt without answer/recurrent supervision |
 
 The implementation gates were also independently exercised before the model
 claims were read: RGDE v1.1 passed its 19 CPU tests, Ruff, `py_compile`, shell
@@ -948,6 +949,30 @@ pop-insert are structural. The confirmed result establishes contextual induction
 of an unseen operation law under that prior, not universal arithmetic,
 open-language reasoning, or model-owned unbounded halt.
 
+### 7.19 S8 turns the event schedule into a model-owned graph
+
+S7's remaining execution crutch is not arithmetic: evaluation receives structured
+cards and an ordered event list, then a host loop advances them. S8 replaces
+that interface with one nil-linked graph emitted from whole-source language.
+The graph carries initial state, witnessed law cards, entity/card bindings,
+entry and next-event pointers, nil termination, and query. Event records are
+stored in random order, so only the predicted links determine active step and
+halt.
+
+The preregistered CPU falsifier passes 3,520/3,520 programs over 440 hidden
+coordinate systems, including every modulus-five permutation. Every storage
+reindexing is invariant. Ignoring links reaches 10.142% state; reversing links
+4.943%; deranging cards 1.051%; one witness 3.665%; reset 2.045%; and early nil
+1.989%. Thus the graph resource is complete and each claimed field is causal.
+This is still gold-graph mechanics, not a neural score. The next frozen source
+must train a sub-16M graph compiler from graph-field supervision only and test
+fresh laws, names, renderers, depths, and one sealed confirmation.
+
+The hard boundary remains graph validation/traversal, categorical equality,
+the node-count safety bound, S7's cyclic compiler, and pop-insert state mutation.
+S8 is designed to remove source grounding, event order, and halt from the host;
+it does not remove the finite algebraic runtime.
+
 ---
 
 ## 8. Hypotheses That Are Closed Or Strongly Disfavored
@@ -1208,6 +1233,23 @@ learned generator/compiler mechanism, not natural-language semantics, learned
 halt, open-ended planning, or unrestricted native reasoning. Both score-bearing
 boards are permanently closed.
 
+### 9.12 S8 nil-linked law graph (CPU-admitted, no neural board)
+
+Source/preregistration commit `81fb6b0` freezes the post-S7 integration contract
+before full CPU seed `4822478724546321200`. The model must emit a nil-terminated
+event graph from whole-source text; runtime may follow only its predicted links
+and may not receive source order, depth, a repaired card, or a gold event list.
+All ten CPU gates pass over 3,520 programs. Report SHA-256 is
+`c98bd96ef66289fe580523a20116c62c96bef77ef69b7c55eebd2c94630b3aeb`.
+
+No S8 score-bearing board exists. Before seeds are drawn, the board builder,
+sub-16M compiler, ordinary sequence-parser control, shuffled-label control,
+causal interventions, training exclusions, and assessor must be implemented,
+tested, and committed. A pass would establish bounded whole-source grounding,
+model-owned step order and nil halt, and transfer into S7's confirmed dynamics;
+it would not establish arbitrary algebra, unbounded planning, or unconstrained
+language reasoning.
+
 ---
 
 ## 10. Template For A New Theory
@@ -1376,6 +1418,8 @@ ledger; credential-handling and live-operational instructions are excluded.
 - `R12_S7_LEARNED_CAYLEY_DEVELOPMENT_RESULT.md` — primary evidence file; Appendix refresh pending
 - `R12_S7_LEARNED_CAYLEY_CONFIRMATION_PREREG.md` — primary evidence file; Appendix refresh pending
 - `R12_S7_LEARNED_CAYLEY_CONFIRMATION_RESULT.md` — primary evidence file; Appendix refresh pending
+- `R12_S8_NIL_LINKED_LAW_GRAPH_PREREG.md` — primary evidence file; Appendix refresh pending
+- `R12_S8_NIL_LINKED_LAW_GRAPH_CPU_RESULT.md` — primary evidence file; Appendix refresh pending
 
 ### Prior core and control records
 
@@ -1517,6 +1561,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Froze the sole S7 board after source commit `b9a9414`: 23 generator rows, 984 favorable-transformer cells, 150 held-out atomic cells, 2,048 development programs over 16 fresh laws, and 2,048 sealed confirmation programs over 18 disjoint laws. Access remains zero/zero. |
 | 2026-07-19 | Qualified S7 development after the sole frozen run: 150/150 unseen-law atomic cells and 2,048/2,048 recurrent states/answers, versus 2.539% state for the exact-fit ordinary transformer and 0.928%-3.076% for causal controls. All 19 gates pass; confirmation remains sealed. |
 | 2026-07-19 | Confirmed S7 unchanged on the sole sealed read: 2,048/2,048 recurrent states and answers across 18 disjoint laws, versus 1.562% state for the exact-fit ordinary transformer and 0.732%-2.197% for causal controls. All 18 gates pass; both boards are closed. |
+| 2026-07-19 | Admitted S8 nil-linked law graphs before any neural board: 3,520/3,520 exact CPU executions and storage-reindex invariance, while storage-order, reversed-link, card, witness, reset, and early-nil controls remain at 1.051%-10.142% state. |
 | 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 

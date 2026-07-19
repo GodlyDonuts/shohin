@@ -1,0 +1,300 @@
+{
+  "bindings": {
+    "5": 120,
+    "7": 128,
+    "11": 128,
+    "13": 64
+  },
+  "decision": "admit_s8_nil_linked_law_graph_preregistration",
+  "gates": {
+    "deranged_cards_state_below_40pct": true,
+    "early_halt_state_below_40pct": true,
+    "noncanonical_link_paths_at_least_95pct": true,
+    "one_witness_state_below_40pct": true,
+    "reversed_links_state_below_40pct": true,
+    "state_reset_state_below_40pct": true,
+    "storage_order_shortcut_state_below_40pct": true,
+    "storage_permutation_invariant": true,
+    "treatment_answer_exact": true,
+    "treatment_exact": true
+  },
+  "noncanonical_link_paths": 3520,
+  "programs": 3520,
+  "programs_per_binding": 8,
+  "resource_boundary": {
+    "architectural": [
+      "categorical argmax/equality",
+      "linked-graph traversal with node-count safety bound",
+      "confirmed S7 cyclic compiler",
+      "pop-insert state mutation"
+    ],
+    "model_owned": [
+      "initial-state symbols",
+      "law-card witnesses",
+      "event entity and operation pointers",
+      "entry and next-event pointers",
+      "nil termination",
+      "query position"
+    ]
+  },
+  "schema": "r12_s8_nil_linked_law_graph_cpu_falsifier_v1",
+  "scores": {
+    "deranged_cards": {
+      "answer_accuracy": 0.23579545454545456,
+      "answer_correct": 830,
+      "state_accuracy": 0.010511363636363636,
+      "state_correct": 37,
+      "total": 3520
+    },
+    "early_halt": {
+      "answer_accuracy": 0.2943181818181818,
+      "answer_correct": 1036,
+      "state_accuracy": 0.019886363636363636,
+      "state_correct": 70,
+      "total": 3520
+    },
+    "one_witness": {
+      "answer_accuracy": 0.2869318181818182,
+      "answer_correct": 1010,
+      "state_accuracy": 0.03664772727272727,
+      "state_correct": 129,
+      "total": 3520
+    },
+    "reversed_links": {
+      "answer_accuracy": 0.325,
+      "answer_correct": 1144,
+      "state_accuracy": 0.04943181818181818,
+      "state_correct": 174,
+      "total": 3520
+    },
+    "state_reset": {
+      "answer_accuracy": 0.2883522727272727,
+      "answer_correct": 1015,
+      "state_accuracy": 0.020454545454545454,
+      "state_correct": 72,
+      "total": 3520
+    },
+    "storage_order_shortcut": {
+      "answer_accuracy": 0.37613636363636366,
+      "answer_correct": 1324,
+      "state_accuracy": 0.10142045454545455,
+      "state_correct": 357,
+      "total": 3520
+    },
+    "treatment": {
+      "answer_accuracy": 1.0,
+      "answer_correct": 3520,
+      "state_accuracy": 1.0,
+      "state_correct": 3520,
+      "total": 3520
+    }
+  },
+  "scores_by_modulus": {
+    "11": {
+      "deranged_cards": {
+        "answer_accuracy": 0.2744140625,
+        "answer_correct": 281,
+        "state_accuracy": 0.001953125,
+        "state_correct": 2,
+        "total": 1024
+      },
+      "early_halt": {
+        "answer_accuracy": 0.306640625,
+        "answer_correct": 314,
+        "state_accuracy": 0.0068359375,
+        "state_correct": 7,
+        "total": 1024
+      },
+      "one_witness": {
+        "answer_accuracy": 0.287109375,
+        "answer_correct": 294,
+        "state_accuracy": 0.013671875,
+        "state_correct": 14,
+        "total": 1024
+      },
+      "reversed_links": {
+        "answer_accuracy": 0.3486328125,
+        "answer_correct": 357,
+        "state_accuracy": 0.029296875,
+        "state_correct": 30,
+        "total": 1024
+      },
+      "state_reset": {
+        "answer_accuracy": 0.3017578125,
+        "answer_correct": 309,
+        "state_accuracy": 0.005859375,
+        "state_correct": 6,
+        "total": 1024
+      },
+      "storage_order_shortcut": {
+        "answer_accuracy": 0.3984375,
+        "answer_correct": 408,
+        "state_accuracy": 0.08203125,
+        "state_correct": 84,
+        "total": 1024
+      },
+      "treatment": {
+        "answer_accuracy": 1.0,
+        "answer_correct": 1024,
+        "state_accuracy": 1.0,
+        "state_correct": 1024,
+        "total": 1024
+      }
+    },
+    "13": {
+      "deranged_cards": {
+        "answer_accuracy": 0.216796875,
+        "answer_correct": 111,
+        "state_accuracy": 0.001953125,
+        "state_correct": 1,
+        "total": 512
+      },
+      "early_halt": {
+        "answer_accuracy": 0.31640625,
+        "answer_correct": 162,
+        "state_accuracy": 0.001953125,
+        "state_correct": 1,
+        "total": 512
+      },
+      "one_witness": {
+        "answer_accuracy": 0.2734375,
+        "answer_correct": 140,
+        "state_accuracy": 0.001953125,
+        "state_correct": 1,
+        "total": 512
+      },
+      "reversed_links": {
+        "answer_accuracy": 0.3125,
+        "answer_correct": 160,
+        "state_accuracy": 0.017578125,
+        "state_correct": 9,
+        "total": 512
+      },
+      "state_reset": {
+        "answer_accuracy": 0.2890625,
+        "answer_correct": 148,
+        "state_accuracy": 0.005859375,
+        "state_correct": 3,
+        "total": 512
+      },
+      "storage_order_shortcut": {
+        "answer_accuracy": 0.421875,
+        "answer_correct": 216,
+        "state_accuracy": 0.076171875,
+        "state_correct": 39,
+        "total": 512
+      },
+      "treatment": {
+        "answer_accuracy": 1.0,
+        "answer_correct": 512,
+        "state_accuracy": 1.0,
+        "state_correct": 512,
+        "total": 512
+      }
+    },
+    "5": {
+      "deranged_cards": {
+        "answer_accuracy": 0.25,
+        "answer_correct": 240,
+        "state_accuracy": 0.028125,
+        "state_correct": 27,
+        "total": 960
+      },
+      "early_halt": {
+        "answer_accuracy": 0.290625,
+        "answer_correct": 279,
+        "state_accuracy": 0.036458333333333336,
+        "state_correct": 35,
+        "total": 960
+      },
+      "one_witness": {
+        "answer_accuracy": 0.3177083333333333,
+        "answer_correct": 305,
+        "state_accuracy": 0.06979166666666667,
+        "state_correct": 67,
+        "total": 960
+      },
+      "reversed_links": {
+        "answer_accuracy": 0.3385416666666667,
+        "answer_correct": 325,
+        "state_accuracy": 0.1,
+        "state_correct": 96,
+        "total": 960
+      },
+      "state_reset": {
+        "answer_accuracy": 0.29375,
+        "answer_correct": 282,
+        "state_accuracy": 0.053125,
+        "state_correct": 51,
+        "total": 960
+      },
+      "storage_order_shortcut": {
+        "answer_accuracy": 0.35,
+        "answer_correct": 336,
+        "state_accuracy": 0.13645833333333332,
+        "state_correct": 131,
+        "total": 960
+      },
+      "treatment": {
+        "answer_accuracy": 1.0,
+        "answer_correct": 960,
+        "state_accuracy": 1.0,
+        "state_correct": 960,
+        "total": 960
+      }
+    },
+    "7": {
+      "deranged_cards": {
+        "answer_accuracy": 0.193359375,
+        "answer_correct": 198,
+        "state_accuracy": 0.0068359375,
+        "state_correct": 7,
+        "total": 1024
+      },
+      "early_halt": {
+        "answer_accuracy": 0.2744140625,
+        "answer_correct": 281,
+        "state_accuracy": 0.0263671875,
+        "state_correct": 27,
+        "total": 1024
+      },
+      "one_witness": {
+        "answer_accuracy": 0.2646484375,
+        "answer_correct": 271,
+        "state_accuracy": 0.0458984375,
+        "state_correct": 47,
+        "total": 1024
+      },
+      "reversed_links": {
+        "answer_accuracy": 0.294921875,
+        "answer_correct": 302,
+        "state_accuracy": 0.0380859375,
+        "state_correct": 39,
+        "total": 1024
+      },
+      "state_reset": {
+        "answer_accuracy": 0.26953125,
+        "answer_correct": 276,
+        "state_accuracy": 0.01171875,
+        "state_correct": 12,
+        "total": 1024
+      },
+      "storage_order_shortcut": {
+        "answer_accuracy": 0.35546875,
+        "answer_correct": 364,
+        "state_accuracy": 0.1005859375,
+        "state_correct": 103,
+        "total": 1024
+      },
+      "treatment": {
+        "answer_accuracy": 1.0,
+        "answer_correct": 1024,
+        "state_accuracy": 1.0,
+        "state_correct": 1024,
+        "total": 1024
+      }
+    }
+  },
+  "seed": 4822478724546321200,
+  "storage_permutation_invariant": 3520
+}
