@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 02:52 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 03:00 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8380,3 +8380,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   prefixes are `529704aa` / `9d31da47` / `001123ae` / `9f568d90,02239e27` / `a11c5aae` /
   `a5bfba00`. One zero-fit public H100 run may start only after commit. Passing can authorize one
   fresh known-atom confirmation, not unseen-phrase generalization, planning, or learned halt.
+
+- **2026-07-19 02:53--03:00** -- **Lexical direction plus exact S3 passes every public gate and
+  becomes the strongest bounded execution component.** Zero-fit job `693136` completes once on
+  `evc25` in 2m15s, exit `0:0`, from source/prereg commit `a2fc8da`. The builder admits exactly
+  12 collision-free training patterns / 192,000 references. Depth mean reaches **94.434% answers /
+  94.336% state / 89.453% chains**; ordered reaches **98.340% / 99.463% / 98.730%**; gold reaches
+  98.779% answers and **100% exact state/chains**. Depth-eight ordered is 98.529% / 100% / 98.824%.
+  Direction and amount are 100%. Lexical OOD has 0% lexicon coverage and unchanged fallback score,
+  proving no distractor capture. Assessment `41102547...` records
+  `qualify_lexical_closed_s3_v1_3_for_fresh_confirmation`. This authorizes exactly one fresh
+  independently seeded known-atom confirmation with ordered identity primary, mean control, gold
+  ceiling, and causal operation/query interventions. It does not authorize an unseen-phrase,
+  planning, learned-halt, broad reasoning, or novelty claim.

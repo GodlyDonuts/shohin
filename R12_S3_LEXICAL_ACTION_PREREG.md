@@ -1,6 +1,7 @@
 # R12 S3 Training-Lexicon Action Preregistration
 
-**Status:** frozen before lexicon build or public score access.
+**Status:** public development passed all frozen gates; one fresh confirmation
+is authorized and not yet scored.
 
 **Claim class:** bounded known-atom compiler repair plus exact source-deleted S3
 execution. External schedule and halt remain.
@@ -49,3 +50,13 @@ names, unseen known-atom factor combinations, and causal action/query controls.
 It would establish only a known-lexeme neural-symbolic execution component. It
 would not establish unseen-phrase generalization, autonomous planning, learned
 halt, free-form reasoning, or novelty.
+
+## Public closure
+
+Zero-fit job `693136` completed once on H100 `evc25` in 2m15s, exit `0:0`.
+Depth mean reaches 94.434% answers / 94.336% state / 89.453% complete chains;
+ordered reaches 98.340% / 99.463% / 98.730%; gold reaches 98.779% answers and
+100% exact state/chains. Direction and amount are 100%. Lexical OOD uses 0%
+lexicon coverage and preserves the fallback baseline. Assessment
+`41102547...` passes every frozen gate and authorizes one fresh confirmation.
+See `R12_S3_LEXICAL_ACTION_RESULT.md`.

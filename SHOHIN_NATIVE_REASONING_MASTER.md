@@ -25800,6 +25800,19 @@ composition, and <=5% lexical-OOD pattern coverage to rule out distractor
 capture. A pass would remain a bounded known-lexeme compiler/executor, with
 external schedule and halt.
 
+V1.3 passes every frozen public gate and becomes the strongest bounded native
+execution component. Zero-fit job `693136` restores direction and amount to
+100% on depth 3--8. Mean identity reaches 94.434% answers / 94.336% state /
+89.453% complete chains; ordered relation reaches **98.340% / 99.463% /
+98.730%**; and gold identity reaches 98.779% answers with **100% exact state
+and every transition chain**. Depth-eight ordered remains 98.529% answers,
+100% state, and 98.824% chains. Lexical OOD has exactly 0% lexicon coverage and
+unchanged fallback scores, ruling out distractor capture. This is a strong
+known-atom, source-deleted, recurrent execution result learned from atomic
+updates only. It now requires one fresh seed-after-commit confirmation and
+causal action/query controls. Schedule, halt, unseen-phrase semantics, and open
+language planning remain unsolved boundaries.
+
 The matched result reproduces the loss but rejects single-comparator
 localization. Untouched execution reaches 77.393% answers / 70.312% exact
 state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /
