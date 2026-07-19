@@ -9,7 +9,7 @@ runbook and result files.
 **Status:** Living document. The protected raw-pretraining anchor is complete
 at 300,000 steps. Native multi-step reasoning is not yet established.
 
-**Last updated:** 2026-07-19 16:44 EDT.
+**Last updated:** 2026-07-19 16:50 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -620,7 +620,7 @@ instead of treating a single end-to-end score as one capability.
 | S4 v5 hard-island/soft-interface confirmation | 97.803% programs / 98.389% state / 98.633% answers; roster and event-region rotations each 0% programs | Confirmed whole-source known-operation parser with autonomous event count; exact host action table remains a boundary |
 | **S5 learned generator-factored confirmation** | **96.924% programs / 97.607% state / 98.096% answers**, exactly matching host execution; 36/36 unit and 36/36 never-trained amount-two closure | **Confirmed model-owned finite transition law and recurrent categorical state; known semantics and structural invocation remain bounded** |
 | **S6 contextual affine-law induction** | **78/318 = 24.528%** held-out atomic destinations, **167/2048 = 8.154%** recurrent state, **633/2048 = 30.908%** answers after exact 961/961 atomic training fit | **Rejected generic transformer induction; two demonstrations are causally informative but are represented as a lookup surface, not the identified algebra; no confirmation** |
-| S7 learned Cayley-law compiler | No score yet; source/theory freeze only | Preregistered successor-generator architecture to test compositional unseen-law induction after S6; no board, fit, or confirmation result exists |
+| S7 learned Cayley-law compiler | No score yet; source and fresh board frozen | Preregistered 218-parameter successor-generator architecture; 2,048 development and 2,048 sealed confirmation programs await the sole fit/evaluation |
 
 The implementation gates were also independently exercised before the model
 claims were read: RGDE v1.1 passed its 19 CPU tests, Ruff, `py_compile`, shell
@@ -1160,7 +1160,7 @@ as learned reasoning. The scientific question is whether a learned symbol-to-
 action representation plus forced composition transfers, not whether an exact
 host formula can replay the board.
 
-### 9.11 S7 learned Cayley-law compiler (preregistered, no score)
+### 9.11 S7 learned Cayley-law compiler (board frozen, no score)
 
 S7 is the next frozen candidate after S6, not an observed capability result.
 It hides each location space behind a fresh permutation and learns only 23
@@ -1169,6 +1169,14 @@ law card, the treatment compiles the slope and destination through repeated
 successor walks, using equality and bounded cyclic application rather than
 modulus arithmetic, coefficient recovery, or a per-law table.
 
+Source commit `b9a9414` precedes board seed `4905719171551557987` and training
+seed `1314309421681697406`. Hidden coordinates produce 23 generator rows, 984
+ordinary-transformer train cells, 150 held-out atomic cells, 2,048 balanced
+development programs over 16 fresh laws, and 2,048 sealed confirmation programs
+over 18 disjoint laws. Closed S6 development laws do not score S7. Development
+and confirmation SHA-256 values are `19baa8c3...` and `c2eb8d5c...`; both access
+counters are zero.
+
 The preregistration requires a favorable ordinary-transformer control, an
 `S^2` structure-breaking generator, deranged cards, one-witness ablation,
 state reset, nonce recoding, held-out-law atomic rows, and depth-three-through-
@@ -1176,8 +1184,8 @@ eight recurrent programs. It freezes the claim boundary: the cyclic-group
 prior, equality, bounded loop limits, pop-insert mutation, and event invocation
 remain structural, so even a pass would establish only a narrow learned
 generator/compiler mechanism—not natural-language semantics, learned halt,
-open-ended planning, or unrestricted native reasoning. The CPU falsifier and
-neural board have not yet produced a score-bearing result.
+open-ended planning, or unrestricted native reasoning. The board is frozen,
+but no model has read development or confirmation and no neural score exists.
 
 ---
 
@@ -1482,6 +1490,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Froze S6 unseen affine-law induction, recorded a scoreless modulus-5 split-coverage failure, repaired only that admission defect in v1.1, and passed exhaustive identifiability/composition mechanics over 328 laws. No neural score or confirmation exists yet. |
 | 2026-07-19 | Rejected S6 after its sole valid development run: exact train fit but 24.528% held-out atomic destinations, 8.154% recurrent state, and 30.908% answers. Cards are weakly causal; the generic transformer does not induce the algebra. No confirmation was generated. |
 | 2026-07-19 | Admitted S7 learned Cayley compilation before any neural board: 218 learned generator/zero parameters, 2,063,104/2,063,104 hidden-binding cells, 5,544/5,544 recurrent programs, and strong `S^2`/one-witness CPU collapses. |
+| 2026-07-19 | Froze the sole S7 board after source commit `b9a9414`: 23 generator rows, 984 favorable-transformer cells, 150 held-out atomic cells, 2,048 development programs over 16 fresh laws, and 2,048 sealed confirmation programs over 18 disjoint laws. Access remains zero/zero. |
 | 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 

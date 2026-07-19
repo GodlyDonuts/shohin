@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 16:44 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 16:50 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -37,6 +37,14 @@
 > never-read reserved laws for development/confirmation, train a favorable 4.75M ordinary-transformer
 > control, and keep confirmation sealed until every development gate passes. S6 remains closed at
 > 24.528% held-out atomic / 8.154% state; S5 remains the strongest confirmed bounded baseline.
+> **Board now frozen:** source commit `b9a9414` precedes board seed `4905719171551557987` and
+> training seed `1314309421681697406`. The board has 23 generator rows, 984 favorable-transformer
+> atomic train rows, 150 held-out atomic rows, 2,048 balanced development programs, and 2,048 sealed
+> confirmation programs. Development uses 16 never-read reserved laws and confirmation uses a
+> disjoint 18; all S6 development laws are excluded from scoring. Development SHA is `19baa8c3...`,
+> sealed confirmation `c2eb8d5c...`, and report `2a471f3b...`. Commit these exact bytes before one
+> serial H100 development run. Do not read `confirmation.sealed.jsonl` unless the assessor records
+> `qualify_s7_learned_cayley_for_fresh_confirmation`.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -8780,3 +8788,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   optimization sandbox pass. CPU report SHA `a933c174...` records
   `admit_s7_learned_cayley_preregistration`. Commit all source/evidence before drawing post-commit
   board and training seeds; no S7 neural score or confirmation access exists yet.
+
+- **2026-07-19 16:44--16:50** -- **The sole S7 development and sealed-confirmation board is frozen
+  after source commit `b9a9414`.** Post-commit seed `4905719171551557987` hides each modulus behind
+  a fresh symbol permutation; training seed `1314309421681697406` is independently frozen. The board
+  contains 23 generator rows, 984 favorable-transformer atomic rows, 150 held-out atomic cells,
+  2,048 development programs, and 2,048 sealed confirmation programs. Development has 16 fresh laws
+  and confirmation 18 disjoint laws; closed S6 development laws are excluded from scoring. Every
+  development modulus/depth cell has 113 or 114 rows and every program uses at least two laws.
+  Report SHA `2a471f3b...`, development `19baa8c3...`, confirmation `c2eb8d5c...`; access counters are
+  zero/zero. Commit exact bytes before sync/submission; the development job must not open the sealed
+  confirmation file.

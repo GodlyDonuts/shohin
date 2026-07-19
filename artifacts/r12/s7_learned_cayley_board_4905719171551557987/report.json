@@ -1,0 +1,84 @@
+{
+  "audit": {
+    "atomic_development_rows": 150,
+    "confirmation_accesses": 0,
+    "confirmation_rows": 2048,
+    "development_accesses": 0,
+    "development_cell_counts": {
+      "m11_d3": 114,
+      "m11_d4": 114,
+      "m11_d5": 113,
+      "m11_d6": 114,
+      "m11_d7": 114,
+      "m11_d8": 114,
+      "m5_d3": 114,
+      "m5_d4": 114,
+      "m5_d5": 114,
+      "m5_d6": 113,
+      "m5_d7": 114,
+      "m5_d8": 114,
+      "m7_d3": 113,
+      "m7_d4": 114,
+      "m7_d5": 114,
+      "m7_d6": 114,
+      "m7_d7": 113,
+      "m7_d8": 114
+    },
+    "development_rows": 2048,
+    "generator_training_rows": 23,
+    "law_counts": {
+      "11": {
+        "confirmation": 12,
+        "development": 11,
+        "excluded_closed_s6_development": 21,
+        "train": 66
+      },
+      "5": {
+        "confirmation": 3,
+        "development": 3,
+        "excluded_closed_s6_development": 3,
+        "train": 11
+      },
+      "7": {
+        "confirmation": 3,
+        "development": 2,
+        "excluded_closed_s6_development": 8,
+        "train": 29
+      }
+    },
+    "minimum_distinct_laws_per_program": 2,
+    "transformer_atomic_training_rows": 984,
+    "zero_anchor_count": 3
+  },
+  "binding_hashes": {
+    "11": "1a015f68d74ee061c2a67ac9fb7b62851d06c73340615701c8214ffa81afabbc",
+    "5": "622b144a203299d37ac5ed5221218a3c01be61a36b87fd1260d42cb9fde42aad",
+    "7": "5e5217244dedc14b5f3a34d6ccdd1a02e18ea8ef199b490fed81494d5c6c5eb1"
+  },
+  "decision": "admit_s7_learned_cayley_board",
+  "files": {
+    "atomic_development.jsonl": {
+      "bytes": 18154,
+      "sha256": "7263d3bfa2fa70ee35935f595b8eb9e496d77335ecdfd2945cb33f4861991af3"
+    },
+    "confirmation.sealed.jsonl": {
+      "bytes": 1288614,
+      "sha256": "c2eb8d5c5dd285dfcb60389c3067c4842e47872d64b5233681c32c8542434bc5"
+    },
+    "development.jsonl": {
+      "bytes": 1261336,
+      "sha256": "19baa8c3e8b4cfb441dac24f40cb069f0d00600d49ec9a163ba7f020af47e70f"
+    },
+    "generator_train.jsonl": {
+      "bytes": 3763,
+      "sha256": "492fc927e8f172f05be8175b487c8e5b0ec91ede267034135bc6e80e36f0ad44"
+    },
+    "transformer_atomic_train.jsonl": {
+      "bytes": 178115,
+      "sha256": "f0a401db2df0cb641b22fea88d6b321d56612029385d0e239f8b0d654a64748c"
+    }
+  },
+  "schema": "r12_s7_learned_cayley_board_report_v1",
+  "seed": 4905719171551557987,
+  "source_commit": "b9a9414"
+}
