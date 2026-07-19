@@ -1,0 +1,11 @@
+{
+  "all_gates_pass": true,
+  "artifact": "/Users/sairamen/projects/shohin/artifacts/r12/semantic_compiler_falsifier_v1.dev.json",
+  "artifact_bytes": 745080,
+  "artifact_sha256": "a13bee354d847844ba6db27a65a68a8f7ce540f1558692fa06f31be9919193c1",
+  "confirmation_seed": null,
+  "generator_sha256": "400cdfb23b8bc49a3ad23c4a4b5374a54656fadef982d2c8bc732d073e20d10f",
+  "schema": "r12_semantic_compiler_falsifier_v1_receipt",
+  "seed": 20260718,
+  "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4"
+}

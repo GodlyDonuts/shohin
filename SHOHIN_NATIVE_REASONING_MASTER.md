@@ -840,6 +840,41 @@ This is a design review, not an experiment result. It authorizes preparation of
 a preregistration only; no neural fit, H100 run, novelty claim, or reasoning
 claim follows from external-model agreement.
 
+### 9.8 Complete referential compiler CPU gate
+
+The first admitted component is now concrete. Inspection of R4 established a
+previously undercounted interface: the neural model selected operation kinds,
+entity roles, and queries, while a deterministic host lexer supplied every
+initial quantity and event value. R4's `program_exact` omitted those values.
+Its real pointer-binding gain remains valid, but it was not a complete
+text-to-program compiler.
+
+`R12_REFERENTIAL_LITERAL_POINTER_COMPILER_PREREG.md` freezes the missing codon:
+
+```text
+[operation kind, entity token-span pointer, literal token-span pointer]
+```
+
+plus query and STOP. The CPU falsifier does not train Shohin. It validates a
+fresh 32-quartet / 128-surface three-entity list machine with independent
+canonical/paraphrase renderers, noncommuting order twins, argument-binding
+twins, repeated entity/literal distractors, and exact source-span targets.
+
+All 14 frozen gates pass. Typed ASTs and two independent executors agree
+`128/128`; equivalent paraphrases pass `32/32`; order and binding twins are each
+separated `32/32`; canonical/order/binding surfaces have identical Shohin-token
+multisets `32/32`. Bayes-optimal exact-program ceilings are `32/96` for exact
+token bag and entity/literal bag, `7/96` for absolute pointer positions, `5/96`
+for span widths, `4/96` for source length, `3/96` for operation bag, and `1/96`
+for renderer identity. Artifact SHA-256 is
+`a13bee354d847844ba6db27a65a68a8f7ce540f1558692fa06f31be9919193c1`.
+
+This is a board-admission result, not a reasoning result. It authorizes one
+isolated compiler pilot against the frozen R4, absolute-role, ordinary pointer,
+text-AST, joint, shuffled, and oracle controls. Executor integration remains
+blocked until untouched confirmation passes. Source-deleted recurrence and
+HALT remain later independent gates.
+
 ---
 
 ## 10. Template For A New Theory
@@ -1080,6 +1115,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-18 | Created the master native-reasoning ledger from the immutable 300k flagship, public boards, direct interactions, SFT history, DRS/controller/workspace experiments, R9-R12 mechanism studies, and the latest VAMT/relation reviews. |
 | 2026-07-18 | Converted the ledger into a self-contained upload dossier: embedded the complete research markdown closure, replaced invisible local links with in-dossier references, and distilled the operational runbook boundary. |
 | 2026-07-18 | Preserved and reviewed the multi-model frontier plans. Admitted pointer-grounded compiler/executor/halt separation for preregistration, retained several mechanisms as ablations, and rejected the bundled stacks as underidentified. |
+| 2026-07-18 | Froze and passed the 32-quartet complete referential compiler CPU falsifier; authorized one isolated neural compiler pilot while keeping executor, halt, and reasoning claims blocked. |
 
 ---
 
