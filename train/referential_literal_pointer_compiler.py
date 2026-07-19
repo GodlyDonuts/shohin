@@ -456,6 +456,7 @@ class OrdinaryTokenTaggerCompiler(nn.Module):
             "pointer_logits": pointer_logits,
             "kind_logits": torch.stack(kind_logits, dim=1),
             "role_logits": role_logits,
+            "memory": memory,
         }
 
 

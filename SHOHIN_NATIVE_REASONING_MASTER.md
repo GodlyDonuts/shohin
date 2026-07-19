@@ -25584,6 +25584,36 @@ old factorized confirmation remains sealed/local-only. Full custody and exact
 gate arithmetic are in
 `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_QUALIFICATION_RESULT.md`.
 
+### Active Stage B: Referential Gather-Delete Permutation Execution
+
+The first post-qualification executor is frozen in
+`R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_PREREG.md`, SHA-256
+`d49002657ab711ef84e278cfb249ee71cf6e7ee868fab98ae6481d7bc174d224`.
+It treats list state as a soft `3 x 3` assignment matrix over initial entity
+identities. A frozen compiler gathers bounded entity, operation, literal, kind,
+and query vectors; the treatment executor receives no source IDs, masks,
+pointer logits, or full memory. One learned cell predicts a doubly stochastic
+destination-to-source transition and is called twice. A separate query consumer
+reads the final assignment.
+
+The identifying design is atomic-to-composed transfer. For each of 96,000
+training rows, operation zero and operation one are each applied independently
+from identity state. The treatment therefore receives 192,000 atomic targets
+per epoch but never a two-operation state or answer target. Development asks it
+to compose both operations. No-fit operation and query packet shuffles test
+causal consumption. A gold-packet arm localizes compiler error; a two-cell
+untied arm is favorable in capacity; and a full-source cross-attention control
+is favorably trained on complete answers.
+
+The instantiated tied executor has 1,416,783 parameters and 135,106,333 total
+with base/compiler. Untied and source-retained systems total 136,074,215 and
+134,952,337. Nineteen CPU tests, finite backward gradients, source-distractor
+invariance, packet interventions, Ruff, `py_compile`, and shell syntax pass.
+No neural fit or score exists yet. Even a development pass would establish only
+a bounded source-deleted two-step execution component and authorize a fresh
+longer-program confirmation design; it would not establish language reasoning,
+halting, autonomous rollout, or novelty.
+
 ## Update Protocol
 
 At each 10k checkpoint milestone:

@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 00:14 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 00:37 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -38,6 +38,15 @@
 > `qualify_conventional_compiler_for_isolated_stage_b_development`. Stage A is infrastructure
 > only; Stage B must delete source states before model-owned recurrent execution and consumption.
 > The old confirmation remains sealed/local-only.
+>
+> Stage-B source is now frozen and locally green before any fit. Referential Gather-Delete
+> Permutation Execution keeps base/compiler frozen, gathers a fixed packet, exposes no full-source
+> tensor to the executor, trains only atomic one-operation transitions, and evaluates two tied
+> updates plus an independent query consumer. The treatment has 1,416,783 parameters / 135,106,333
+> total; favorable untied and source-retained controls are 136,074,215 and 134,952,337 total.
+> Nineteen CPU tests, Ruff, `py_compile`, shell syntax, and finite backward gradients pass. Frozen
+> prereg SHA-256 is `d49002657ab711ef84e278cfb249ee71cf6e7ee868fab98ae6481d7bc174d224`.
+> No Stage-B fit or score exists yet.
 >
 > Fresh compiler/executor/serializer interaction is complete: natural-language compilation is
 > `0/6`, terminal serialization is `2/6`, and oracle-compiled frozen DRS transitions are `28/34`
@@ -8130,3 +8139,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   reasoning, or novelty claim. The next experiment must freeze base/compiler, gather a bounded
   model-owned packet, delete source states, and train a separately parameterized recurrent
   executor/consumer under favorable source-retained, gold-packet, untied-step, and shuffled controls.
+
+- **2026-07-19 00:14--00:37** -- **The source-deleted Stage-B executor becomes executable and is
+  frozen before any score.** `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_PREREG.md` defines a
+  three-identity soft permutation state in the Birkhoff polytope. The frozen ordinary compiler
+  gathers three initial entities, two operation packets, and one query packet; the executor API
+  receives none of the source IDs, masks, pointer logits, or full memory. One neural cell predicts
+  destination-to-source permutations twice, and an independent consumer reads the final identity.
+  Training is deliberately atomic: each of 96,000 rows supplies op0 and op1 independently from
+  identity state, for 192,000 one-step targets per epoch, while the two-step answer and state are
+  evaluation-only. Treatment/untied/source-retained totals are 135,106,333 / 136,074,215 /
+  134,952,337 parameters. Frozen controls are untied updates, gold packet, full-source direct
+  answer, operation-packet shuffle, query-packet shuffle, and no-fit gold rescore. Nineteen CPU
+  tests plus Ruff, `py_compile`, shell syntax, source-invariance, doubly-stochastic, and finite
+  backward gates pass. Prereg/source/evaluator/job SHA-256 values are `d4900265...`, `fb7ff10d...`,
+  `e96609cd...`, and `273b3252...`. No H100, fit, confirmation, reasoning, or novelty claim exists.
