@@ -8197,3 +8197,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `py_compile`, and shell syntax pass. `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_V1_1_PREREG.md`
   freezes atomic tied/untied/gold arms, a same-architecture composed-supervision ceiling, causal
   shuffles, and stricter gates before any fit. Old confirmation remains sealed and absent.
+
+- **2026-07-19 01:03--01:09** -- **RGDE v1.1 positive arms finish cleanly; causal controls are
+  mechanically amended before replacement scores.** Jobs `693118--693121` complete `0:0` on
+  `evc29/evc33/evc34`. The tied atomic treatment reaches 99.707% answers, 99.902% final assignment,
+  99.756% both transitions, and 99.805% query; gold atomic is 99.902% / 100% / 100%; untied atomic
+  is 99.512% / 99.609% / 99.414%; composed-supervision is 99.609% / 99.756% / 99.707%. However,
+  the original within-batch row rotation often stays inside same-semantic surface quartets, so its
+  control scores are inadmissible. `R12_RGDE_V1_1_CAUSAL_CONTROL_AMENDMENT.md` freezes a no-refit
+  global semantic derangement before replacement score access: all 2,048 operation programs and
+  all 2,048 query positions differ, while only the selected bounded packet field is replaced. The
+  frozen tied state is `d31fd3e6...`; positive scores, weights, thresholds, and data do not change.
+  Old confirmation remains sealed.

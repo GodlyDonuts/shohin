@@ -18,8 +18,7 @@ from referential_gather_delete_executor import (
     execution_targets,
     executor_state_hash,
     gather_source_deleted_packet,
-    shuffle_operation_packet,
-    shuffle_query_packet,
+    semantic_derangement_permutation,
 )
 from referential_literal_pointer_compiler import (
     load_examples,
@@ -144,6 +143,15 @@ def main():
 
     records = [None] * len(examples)
     batches = make_batches(examples, args.batch_size, seed=0, shuffle=False)
+    intervention_permutation = None
+    if args.shuffle_operations:
+        intervention_permutation = semantic_derangement_permutation([
+            tuple(example.program) for example in examples
+        ]).tolist()
+    elif args.shuffle_query:
+        intervention_permutation = semantic_derangement_permutation([
+            example.query_position for example in examples
+        ]).tolist()
     intervention_rows = 0
     with torch.inference_mode(), torch.autocast("cuda", dtype=torch.bfloat16):
         for batch_number, indices in enumerate(batches, 1):
@@ -166,17 +174,29 @@ def main():
                     oracle=args.packet_oracle,
                     packet_mode=metadata.get("packet_mode", "contextual_softmax"),
                 )
-                if args.shuffle_operations and len(selected) > 1:
-                    permutation = torch.roll(
-                        torch.arange(len(selected), device=device), shifts=1,
+                if intervention_permutation is not None:
+                    source_indices = [intervention_permutation[index] for index in indices]
+                    source_examples, source_ids, source_valid = pad_batch(
+                        examples, source_indices, device,
                     )
-                    packet = shuffle_operation_packet(packet, permutation)
-                    intervention_rows += len(selected)
-                if args.shuffle_query and len(selected) > 1:
-                    permutation = torch.roll(
-                        torch.arange(len(selected), device=device), shifts=1,
+                    source_outputs = compiler(source_ids, source_valid)
+                    source_packet = gather_source_deleted_packet(
+                        source_outputs,
+                        source_examples,
+                        source_valid,
+                        oracle=args.packet_oracle,
+                        packet_mode=metadata.get("packet_mode", "contextual_softmax"),
                     )
-                    packet = shuffle_query_packet(packet, permutation)
+                    if args.shuffle_operations:
+                        packet = {
+                            **packet,
+                            "operations": source_packet["operations"],
+                        }
+                    else:
+                        packet = {
+                            **packet,
+                            "query": source_packet["query"],
+                        }
                     intervention_rows += len(selected)
                 outputs = executor(packet, cell_indices=(0, 1))
                 answers = outputs["answer_probabilities"].argmax(-1).tolist()
@@ -278,6 +298,7 @@ def main():
         "compiler_adapter_sha256": compiler_metadata["final_adapter_sha256"],
         "executor_file_sha256": sha256_file(args.executor),
         "executor_state_sha256": metadata["final_executor_sha256"],
+        "evaluator_sha256": sha256_file(__file__),
         "data_sha256": sha256_file(args.data),
         "report_sha256": sha256_file(args.report),
         "tokenizer_sha256": sha256_file(args.tokenizer),

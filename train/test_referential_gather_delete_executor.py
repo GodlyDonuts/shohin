@@ -10,6 +10,7 @@ from referential_gather_delete_executor import (
     gather_source_deleted_packet,
     normalized_sigmoid_weights,
     select_packet_operations,
+    semantic_derangement_permutation,
     shuffle_operation_packet,
     shuffle_query_packet,
     sinkhorn,
@@ -146,6 +147,22 @@ def test_query_shuffle_leaves_state_and_operation_packets_fixed():
     assert shuffled["initial_entities"].data_ptr() == packet["initial_entities"].data_ptr()
     assert shuffled["operations"] is packet["operations"]
     assert torch.equal(shuffled["query"][0], packet["query"][1])
+
+
+def test_semantic_derangement_changes_every_intervened_key():
+    keys = ("a", "a", "b", "b", "c", "c")
+    permutation = semantic_derangement_permutation(keys)
+    assert sorted(permutation.tolist()) == list(range(len(keys)))
+    assert all(keys[row] != keys[source] for row, source in enumerate(permutation.tolist()))
+
+
+def test_semantic_derangement_rejects_an_impossible_batch():
+    try:
+        semantic_derangement_permutation(("a", "a", "a", "b"))
+    except ValueError as error:
+        assert "cannot be semantically deranged" in str(error)
+    else:
+        raise AssertionError("expected an impossible derangement to fail")
 
 
 def test_executor_accepts_only_bounded_packet_and_reuses_one_cell():

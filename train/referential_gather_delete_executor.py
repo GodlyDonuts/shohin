@@ -10,6 +10,7 @@ reused for both operations and a separate query consumer reads the final state.
 from __future__ import annotations
 
 import hashlib
+import collections
 from dataclasses import dataclass
 
 import torch
@@ -233,6 +234,25 @@ def shuffle_query_packet(packet, permutation):
         "oracle": packet.get("oracle", "none"),
         "packet_mode": packet.get("packet_mode", "contextual_softmax"),
     }
+
+
+def semantic_derangement_permutation(keys, device=None):
+    """Return a deterministic permutation whose source key always differs."""
+    keys = tuple(keys)
+    if len(keys) < 2:
+        raise ValueError("semantic derangement requires at least two rows")
+    counts = collections.Counter(keys)
+    largest = max(counts.values())
+    if largest > len(keys) - largest:
+        raise ValueError("batch cannot be semantically deranged")
+    ordered = sorted(range(len(keys)), key=lambda index: (repr(keys[index]), index))
+    rotated = ordered[largest:] + ordered[:largest]
+    permutation = [None] * len(keys)
+    for destination, source in zip(ordered, rotated):
+        permutation[destination] = source
+    if any(keys[destination] == keys[source] for destination, source in enumerate(permutation)):
+        raise AssertionError("semantic derangement construction failed")
+    return torch.tensor(permutation, dtype=torch.long, device=device)
 
 
 def sinkhorn(logits, iterations=6):
