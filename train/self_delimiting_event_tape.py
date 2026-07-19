@@ -373,6 +373,135 @@ def contiguous_runs(labels, target):
     return tuple(runs)
 
 
+def pattern_windows(ids, records):
+    windows = []
+    for record in records:
+        pattern = tuple(record["token_ids"])
+        for start in range(len(ids) - len(pattern) + 1):
+            if tuple(ids[start:start + len(pattern)]) == pattern:
+                windows.append((start, start + len(pattern), record["value"]))
+    return tuple(sorted(windows))
+
+
+def anchored_width_window(logits, anchor, widths, length):
+    candidates = []
+    for width in widths:
+        for start in range(max(0, anchor - width + 1), min(anchor + 1, length - width + 1)):
+            end = start + width
+            score = float(logits[start:end].sum())
+            candidates.append((score, start, end))
+    if not candidates:
+        return None
+    _, start, end = max(candidates)
+    return tuple(range(start, end))
+
+
+def decode_structural_example(example, outputs, row, lexicon):
+    length = len(example.ids)
+    ids = example.ids
+    role_logits = outputs["role_logits"][row, :length]
+    labels = role_logits.argmax(-1).tolist()
+    widths = tuple(map(int, lexicon["entity_widths"]))
+    intro_spans = []
+    for index in range(3):
+        column = ROLE_INDEX["intro.entity{}".format(index)]
+        anchor = int(role_logits[:, column].argmax())
+        span = anchored_width_window(role_logits[:, column], anchor, widths, length)
+        if span is None:
+            return {"valid": False, "failure_reason": "intro_anchor"}
+        intro_spans.append(span)
+    if len(set(intro_spans)) != 3:
+        return {"valid": False, "failure_reason": "intro_overlap"}
+    intro_ids = [tuple(ids[position] for position in span) for span in intro_spans]
+    if len(set(intro_ids)) != 3:
+        return {"valid": False, "failure_reason": "intro_identity_collision"}
+
+    kind_windows = []
+    kind_role = ROLE_INDEX["event.kind"]
+    for start, end, value in pattern_windows(ids, lexicon["kind_patterns"]):
+        if any(labels[position] == kind_role for position in range(start, end)):
+            kind_windows.append((start, end, value))
+    if not kind_windows:
+        return {"valid": False, "failure_reason": "no_kind_anchors", "event_count": 0}
+    if any(kind_windows[index][0] < kind_windows[index - 1][1]
+           for index in range(1, len(kind_windows))):
+        return {"valid": False, "failure_reason": "kind_overlap", "event_count": len(kind_windows)}
+
+    query_role = ROLE_INDEX["query.position"]
+    query_anchor = int(role_logits[:, query_role].argmax())
+    query_candidates = [
+        window for window in pattern_windows(ids, lexicon["query_patterns"])
+        if window[0] <= query_anchor < window[1]
+    ]
+    if len(query_candidates) != 1:
+        return {
+            "valid": False,
+            "failure_reason": "query_anchor",
+            "event_count": len(kind_windows),
+        }
+    query_start, _, query = query_candidates[0]
+    source_start = max(max(span) for span in intro_spans) + 1
+    amount_windows = pattern_windows(ids, lexicon["amount_patterns"])
+    entity_role = ROLE_INDEX["event.entity"]
+    literal_role = ROLE_INDEX["event.literal"]
+    program = []
+    used_entities = set()
+    used_amounts = set()
+    for index, (kind_start, kind_end, kind) in enumerate(kind_windows):
+        kind_center = 0.5 * (kind_start + kind_end)
+        entity_candidates = []
+        for identity, pattern in enumerate(intro_ids):
+            for start in range(source_start, query_start - len(pattern) + 1):
+                end = start + len(pattern)
+                if (start, end) not in used_entities and tuple(ids[start:end]) == pattern:
+                    score = float(role_logits[start:end, entity_role].sum())
+                    distance = abs(0.5 * (start + end) - kind_center)
+                    entity_candidates.append((score, -distance, start, end, identity))
+        if not entity_candidates:
+            occurrence_counts = []
+            for pattern in intro_ids:
+                occurrence_counts.append(sum(
+                    tuple(ids[start:start + len(pattern)]) == pattern
+                    for start in range(source_start, query_start - len(pattern) + 1)
+                ))
+            return {
+                "valid": False,
+                "failure_reason": "event_entity",
+                "event_count": len(kind_windows),
+                "intro_lengths": tuple(map(len, intro_ids)),
+                "entity_occurrence_counts": tuple(occurrence_counts),
+                "source_start": source_start,
+                "query_start": query_start,
+                "used_entities": tuple(sorted(used_entities)),
+            }
+        best_entity = max(entity_candidates)
+        amount_candidates = []
+        for start, end, amount in amount_windows:
+            if source_start <= start and end <= query_start and (start, end) not in used_amounts:
+                score = float(role_logits[start:end, literal_role].sum())
+                distance = abs(0.5 * (start + end) - kind_center)
+                amount_candidates.append((score, -distance, start, end, int(amount)))
+        if not amount_candidates:
+            return {"valid": False, "failure_reason": "event_literal", "event_count": len(kind_windows)}
+        best_amount = max(amount_candidates)
+        used_entities.add((best_entity[2], best_entity[3]))
+        used_amounts.add((best_amount[2], best_amount[3]))
+        program.append((str(kind), int(best_entity[4]), int(best_amount[4])))
+    final_state, answer = execute_program(program, int(query))
+    return {
+        "valid": True,
+        "failure_reason": "none",
+        "event_count": len(program),
+        "program": tuple(program),
+        "query": int(query),
+        "final_state": final_state,
+        "answer_identity": answer,
+        "intro_ids": tuple(intro_ids),
+        "lexical_matches": tuple(True for _ in program),
+        "raw_counts": (len(program), len(program), len(program)),
+    }
+
+
 def build_kind_lexicon(examples):
     patterns = {}
     references = 0

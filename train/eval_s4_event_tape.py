@@ -16,6 +16,7 @@ from self_delimiting_event_tape import (
     SelfDelimitingEventTapeParser,
     adapter_hash,
     decode_example,
+    decode_structural_example,
     load_examples,
     make_batches,
     pad_batch,
@@ -101,6 +102,7 @@ def main():
     parser.add_argument("--data", required=True)
     parser.add_argument("--report", required=True)
     parser.add_argument("--tokenizer", required=True)
+    parser.add_argument("--structural-lexicon")
     parser.add_argument("--out", required=True)
     parser.add_argument("--batch-size", type=int, default=64)
     args = parser.parse_args()
@@ -171,6 +173,38 @@ def main():
         and len(example.program) == example.depth
         for example in examples
     )
+    structural = None
+    structural_lexicon_sha256 = None
+    if args.structural_lexicon:
+        structural_lexicon = json.load(open(args.structural_lexicon))
+        if not structural_lexicon.get("all_gates_pass"):
+            raise SystemExit("S4 structural lexicon did not pass")
+        if structural_lexicon.get("data_sha256") != metadata.get("data_sha256"):
+            raise SystemExit("S4 structural lexicon training-data mismatch")
+        structural_lexicon_sha256 = sha256_file(args.structural_lexicon)
+        structural = []
+        for index, example in enumerate(examples):
+            outputs, row = outputs_by_index[index]
+            decoded = decode_structural_example(example, outputs, row, structural_lexicon)
+            valid = bool(decoded.get("valid"))
+            structural.append({
+                "id": example.row_id,
+                "depth": example.depth,
+                "surface_type": example.surface_type,
+                "valid": valid,
+                "predicted_event_count": int(decoded.get("event_count", 0)),
+                "raw_component_counts": list(decoded.get("raw_counts", (0, 0, 0))),
+                "intro_run_counts": [1, 1, 1] if valid else [0, 0, 0],
+                "query_run_count": int(valid),
+                "failure_reason": decoded.get("failure_reason", "unknown"),
+                "count_exact": int(decoded.get("event_count", 0)) == example.depth,
+                "program_exact": valid and decoded.get("program") == example.program,
+                "query_exact": valid and decoded.get("query") == example.query_target,
+                "state_exact": valid and decoded.get("final_state") == example.final_state,
+                "answer_correct": valid and decoded.get("answer_identity") == example.answer_identity,
+                "initial_exact": valid and decoded.get("intro_ids") == example.initial_ids,
+                "all_kind_lexical_matched": valid,
+            })
     result = {
         "schema": "r12_s4_self_delimiting_event_tape_eval_v1",
         "parser_protocol": metadata["protocol"],
@@ -196,6 +230,7 @@ def main():
             "by_depth": grouped(gold_boundaries, "depth"),
         },
         "gold_event_s3_sanity": gold_sanity,
+        "structural_lexicon_sha256": structural_lexicon_sha256,
         "parameter_count": metadata["total_parameters"],
         "development_access": 1,
         "confirmation_access": 0,
@@ -208,6 +243,15 @@ def main():
             "No confirmation, unseen semantics, planning, broad reasoning, or novelty claim."
         ),
     }
+    if structural is not None:
+        result["pointer_anchored_v1_1"] = {
+            "overall": summarize(structural),
+            "by_depth": grouped(structural, "depth"),
+            "by_surface": grouped(structural, "surface_type"),
+            "failure_reasons": dict(collections.Counter(
+                record["failure_reason"] for record in structural if not record["program_exact"]
+            )),
+        }
     os.makedirs(os.path.dirname(os.path.realpath(args.out)), exist_ok=True)
     with open(args.out, "w") as target:
         json.dump(result, target, indent=2, sort_keys=True)
@@ -217,6 +261,7 @@ def main():
         "protocol": metadata["protocol"],
         "strict": result["strict_autonomous"]["overall"],
         "gold_count": result["gold_count_control"]["overall"],
+        "pointer_anchored": result.get("pointer_anchored_v1_1", {}).get("overall"),
     }, sort_keys=True))
 
 
