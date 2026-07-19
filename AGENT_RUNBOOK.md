@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 02:22 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 02:31 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8329,3 +8329,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   arms, and v1 score gates remain exact. The smaller executor has 710,411 parameters / 134,399,961
   total. Five focused tests, Ruff, `py_compile`, shell syntax, exact S3 closure, finite gradients,
   and diff checks pass. No H100, fit, score, confirmation, reasoning, or novelty claim exists.
+
+- **2026-07-19 02:22--02:31** -- **S3 v1.1 repairs immediate composition but fails the frozen
+  depth gates; confirmation is not authorized.** Job `693131` completes once on `evc25` in 5m33s,
+  exit `0:0`; the 710,411-parameter executor trains for 1,517 unchanged atomic updates, with final
+  state `15f640d7...` and zero confirmation access. Two-step mean reaches **99.463% answers /
+  99.854% state / 99.854% all transitions**; ordered/gold state and transitions are 100%. Depth
+  3--8 mean improves sharply over v1 to **84.180% answers / 80.713% state / 60.059% chains**, but
+  gold identity reaches only 87.109% / 84.912% / 66.895%, and depth-eight gold state/chains are
+  78.824% / 50.882%. Assessment `3c9ed4f0...` rejects v1.1. Amount classification remains 100%
+  accurate at depth while transition choice drifts, localizing the next bounded repair to the
+  continuous action channel. Preserve the exact S3 register; replace only learned transition
+  selection with a closed action table driven by discretized model-predicted direction/amount.
+  External schedule/halt and compiler/query errors remain explicit boundaries.

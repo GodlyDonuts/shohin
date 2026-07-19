@@ -1,6 +1,7 @@
 # R12 S3 Equivariant Local Action Preregistration
 
-**Status:** frozen before v1.1 fit or score.
+**Status:** closed after the one-shot v1.1 development run; partial recovery,
+frozen gates failed, no confirmation authorized.
 
 **Claim class:** bounded architectural repair of rejected S3 v1 on public
 source-deleted execution development. External schedule and halt remain.
@@ -49,3 +50,13 @@ matrix input.
 Failure rejects equivariant S3. Passing authorizes only a fresh independently
 seeded confirmation. It does not establish autonomous planning, learned halt,
 free-form language reasoning, or novelty.
+
+## Closure
+
+Job `693131` completed once on H100 `evc25`, exit `0:0`. Two-step mean
+execution recovered to 99.463% answers, 99.854% exact state, and 99.854% all
+transitions. On depth 3--8, however, mean identity reached only 84.180%
+answers / 80.713% exact state / 60.059% all transitions; even gold identity
+reached only 87.109% / 84.912% / 66.895%. The frozen long-state, long-chain,
+gold-ceiling, and attribution gates fail. See
+`R12_S3_EQUIVARIANT_LOCAL_ACTION_RESULT.md`. No confirmation is authorized.

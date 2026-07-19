@@ -25752,6 +25752,20 @@ is fully supported by atomic training. All v1 data, seed, optimizer, and gates
 remain unchanged so any recovery is attributable to equivariance rather than
 compute or supervision.
 
+S3 v1.1 produces a large but insufficient recovery. Job `693131` reaches
+99.463% two-step mean answers / 99.854% exact state and 100% ordered/gold
+state, showing that removing the global coordinate frame fixed v1's immediate
+composition defect. Across depth 3--8, mean reaches 84.180% answers / 80.713%
+state / 60.059% complete chains; gold identity reaches only 87.109% / 84.912%
+/ 66.895%. Depth-eight mean answers clear 80%, but state and full chains are
+78.235% and 47.353%. Because the separate amount classifier remains 100%
+accurate while transition selection fails, the remaining drift is in the
+continuous action channel (`kind_context` and literal features), not the exact
+S3 register. Assessment `3c9ed4f0...` rejects v1.1 for confirmation. The next
+bounded test is closure by construction: discretize model-predicted direction
+and amount and apply their exact local S3 action, keeping compilation, source
+deletion, query consumption, schedule, and halt boundaries explicit.
+
 The matched result reproduces the loss but rejects single-comparator
 localization. Untouched execution reaches 77.393% answers / 70.312% exact
 state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /
