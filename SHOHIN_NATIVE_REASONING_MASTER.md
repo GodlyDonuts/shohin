@@ -25668,6 +25668,15 @@ native execution result: a shared model-owned update rule learned from atomic
 examples composes under source deletion. Its next required test is a fresh
 three-to-eight-operation depth board, not another two-step fit.
 
+That next gate is now frozen before seed selection in
+`R12_RGDE_DEPTH_CONFIRMATION_PREREG.md`. It streams ordinary two-operation
+source cards through the qualified compiler, deletes each card's source states,
+and reuses the exact tied executor three to eight times on one persistent
+assignment state. The fresh board will use unseen paired nonce names and unseen
+known-atom factor combinations with order/binding twins. The host still supplies
+the operation count and halt point, so a pass would confirm recurrent native
+state execution through depth eight, not solve autonomous planning or stopping.
+
 ## Update Protocol
 
 At each 10k checkpoint milestone:

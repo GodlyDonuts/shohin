@@ -8222,3 +8222,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   comparators. This authorizes only a fresh commit-before-seed three-to-eight-operation
   source-deleted confirmation board using the frozen tied executor. Old confirmation remains
   sealed; no broad language-reasoning or novelty claim is made.
+
+- **2026-07-19 01:16--01:35** -- **A fresh recurrent-depth confirmation protocol is executable
+  and frozen before its production seed exists.** `R12_RGDE_DEPTH_CONFIRMATION_PREREG.md` defines
+  512 semantic quartets balanced across depths 3--8, paired unseen nonce names, unseen known-atom
+  factor combinations, matched normalized word-bag order/binding twins, and zero public exact/
+  13-gram/name/factor overlap. Each ordinary two-operation source card is compiled into the v1.1
+  packet and deleted; the exact tied state `d31fd3e6...` persists across three to eight calls.
+  Operation count and halt remain explicitly host-scheduled. Generator/evaluator/assessor/job
+  SHA-256 prefixes are `790279d9` / `6e6a8211` / `125eef0f` / `1b311def`. Seventeen CPU tests plus
+  static gates pass. No production seed, board, score, retry, fit, or old-confirmation access exists.
