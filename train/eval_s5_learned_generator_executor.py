@@ -150,18 +150,27 @@ def main():
     parser.add_argument("--tokenizer", required=True)
     parser.add_argument("--out", required=True)
     parser.add_argument("--batch-size", type=int, default=64)
+    parser.add_argument(
+        "--board-role", choices=("development", "confirmation"), default="development",
+    )
     args = parser.parse_args()
     if not torch.cuda.is_available():
         raise SystemExit("S5 evaluation requires CUDA")
     if os.path.exists(args.out):
         raise SystemExit("refusing existing S5 evaluation")
     report = json.load(open(args.report))
-    if report.get("schema") != "r12_s4_hard_island_fresh_development_report_v1":
-        raise SystemExit("invalid S5 development report")
+    expected_schema = (
+        "r12_s4_hard_island_fresh_development_report_v1"
+        if args.board_role == "development"
+        else "r12_s5_learned_generator_confirmation_report_v1"
+    )
+    if report.get("schema") != expected_schema:
+        raise SystemExit("invalid S5 {} report".format(args.board_role))
     if not report.get("all_gates_pass") or report.get("confirmation_access") != 0:
-        raise SystemExit("S5 development board is not admitted")
-    if report["artifacts"]["development"]["sha256"] != sha256_file(args.data):
-        raise SystemExit("S5 report does not bind development data")
+        raise SystemExit("S5 {} board is not admitted".format(args.board_role))
+    artifact_key = "development" if args.board_role == "development" else "confirmation"
+    if report["artifacts"][artifact_key]["sha256"] != sha256_file(args.data):
+        raise SystemExit("S5 report does not bind {} data".format(args.board_role))
     fit_report = json.load(open(args.fit_report))
     if not fit_report.get("all_fit_gates_pass"):
         raise SystemExit("S5 generator fit gates failed")
@@ -309,8 +318,9 @@ def main():
         "training_recurrent_examples": int(
             treatment_metadata["recurrent_training_examples"]
         ),
-        "development_access": 1,
-        "confirmation_access": 0,
+        "board_role": args.board_role,
+        "development_access": int(args.board_role == "development"),
+        "confirmation_access": int(args.board_role == "confirmation"),
         "records": arm_records,
         "claim_boundary": (
             "Fresh-development learned finite generator composition behind frozen S4 v5. "
