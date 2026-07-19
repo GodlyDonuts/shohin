@@ -1,16 +1,17 @@
 #!/bin/bash
-#SBATCH --job-name=shohin-s4-parser
-#SBATCH --partition=normal
-#SBATCH --nodes=1
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-#SBATCH --gres=gpu:h100:1
-#SBATCH --mem=64G
-#SBATCH --time=01:00:00
-#SBATCH --output=logs/s4_parser_%j.out
+#SBATCH -J shohin-s4-parser
+#SBATCH -p normal
+#SBATCH --gres=gpu:nvidia_h100_pcie:1
+#SBATCH -c 4
+#SBATCH --mem=96G
+#SBATCH -t 01:00:00
+#SBATCH --exclude=evc22,evc23,evc26,evc31,evc32,evc36,evc43,evc44,evc45,evc49,evc50
+#SBATCH -o /lustre/fs1/home/sa305415/shohin/logs/s4_parser_%j.out
+#SBATCH --open-mode=append
 
 set -euo pipefail
 BASE=${BASE:-/lustre/fs1/home/sa305415/shohin}
+PYTHON=$BASE/miniforge3/bin/python
 DATA=$BASE/artifacts/r12/s4_self_delimiting_event_tape_10818821031317486155
 ARM=${ARM:-treatment}
 OUT=${OUT:-$BASE/train/s4_event_tape_${ARM}_2026071904/parser.pt}
@@ -31,7 +32,7 @@ done
 test ! -e "$OUT" || { echo "refusing existing $OUT" >&2; exit 2; }
 mkdir -p "$(dirname "$OUT")" "$BASE/logs"
 cd "$BASE"
-srun python3 train/train_s4_event_tape.py \
+"$PYTHON" train/train_s4_event_tape.py \
   --base train/flagship_out/ckpt_0300000.pt \
   --initializer train/referential_literal_pointer_factorized_ordinary_2026071810/compiler.pt \
   --data "$DATA/train.jsonl" --report "$DATA/report.json" \
