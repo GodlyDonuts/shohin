@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 07:25 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 07:42 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8655,3 +8655,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   closed v2--v4 boards. Data SHA `4d43b050...`, report `8b9461bc...`, and safe archive
   `eec8ec5e...` are matched on Newton and Mac. Commit these bytes before one serial frozen-v1,
   treatment, roster-rotation, region-rotation, and assessor job; no post-score repair or rescore.
+
+- **2026-07-19 07:34--07:42** -- **S4 v5 is the first S4 arm to qualify every fresh-development
+  gate.** Serial job `693177` completes in 83 seconds on `evc24`. Frozen v1 scores 1919/2048 =
+  93.70% exact programs. The zero-fit hybrid scores **1985/2048 = 96.92% programs, 1996/2048 =
+  97.46% state, and 2009/2048 = 98.10% answers**, with 100% count/query and 98.73% roster recovery.
+  Programs remain 94.71--98.24% at every depth and 96.68--97.46% across surfaces. Roster and region
+  rotations each produce exactly zero programs. Assessment SHA `41a2dd2e...` records
+  `qualify_s4_v5_for_fresh_confirmation`. Preserve mechanism bytes unchanged. Commit raw reports and
+  result, then create confirmation-only plumbing and exactly one newly seeded board disjoint from
+  all source/v2--v5 development; no post-development tuning or confirmation reuse.

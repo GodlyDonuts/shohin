@@ -29558,7 +29558,7 @@ It records confirmed measurements, their source artifacts, and the distinction b
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-19 07:25 EDT
+**Last refreshed:** 2026-07-19 07:42 EDT
 **Flagship source of truth:** Newton Slurm job `686732`,
 `/lustre/fs1/home/sa305415/shohin/logs/flagship2_686732.out`
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -30381,6 +30381,20 @@ softmax over the entire region destroys the hard contiguous event islands alread
 Frozen v1 reaches 95.70% when only intro/query boundaries are supplied. The next lawful decoder
 therefore combines hard model-owned entity/literal islands inside monotone regions with soft
 roster/query carriers; it must not fit new weights or tune on the closed v4 board.
+
+### S4 v5 qualified hard-island result
+
+S4 v5 combines complete contiguous frozen event.entity/event.literal islands inside each monotone
+kind-local region with the causal soft roster/query interfaces. It adds zero weights. On a fifth
+wholly disjoint 2,048-row board it reaches **96.92% exact programs, 97.46% exact state, and 98.10%
+answers**, versus **93.70% programs** for frozen v1. Count/query are 100% and roster recovery is
+98.73%. Every depth remains at least 94.71%; both roster and event-region rotations yield zero exact
+programs. The frozen assessor qualifies all gates for one confirmation.
+
+This is the strongest native S4 result so far and the first to exceed its identical-board frozen
+baseline by the preregistered margin while passing deep-chain and causal gates. It remains a
+known-atom structured parser/executor result pending a single disjoint confirmation, not a general
+reasoning or benchmark claim.
 
 ## Update Protocol
 

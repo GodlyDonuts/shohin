@@ -2,9 +2,13 @@
 
 ## Status
 
-**Source frozen at commit `e9a962b` before production seed selection, board generation, model
-evaluation, or score access. The sole fresh-development board is admitted and frozen; no model has
-accessed it.**
+**Fresh development qualified on 2026-07-19; confirmation is pending.** The frozen assessor records
+`qualify_s4_v5_for_fresh_confirmation`. Exact programs are 96.92% versus 93.70% for frozen v1;
+both causal controls score zero programs and every depth/gate passes. No confirmation has been
+generated or read. Full evidence is in `R12_S4_HARD_ISLAND_SOFT_INTERFACE_RESULT.md`.
+
+Source was frozen at commit `e9a962b` before production seed selection, board generation, model
+evaluation, or score access.
 
 Production seed `14465012970954709091` generated 2,048 rows / 512 matched groups after source
 freeze. All gates pass against source train/development and closed v2--v4 boards. Data, report, and
