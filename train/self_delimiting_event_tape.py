@@ -397,7 +397,10 @@ def build_kind_lexicon(examples):
     }
 
 
-def decode_example(example, outputs, row, lexicon, host_count=False):
+def decode_example(
+    example, outputs, row, lexicon, host_count=False, oracle_intro=False,
+    oracle_query=False,
+):
     length = len(example.ids)
     labels = outputs["role_logits"][row, :length].argmax(-1).tolist()
     intro_runs = [
@@ -410,17 +413,37 @@ def decode_example(example, outputs, row, lexicon, host_count=False):
     query_runs = contiguous_runs(labels, ROLE_INDEX["query.position"])
     raw_counts = (len(kind_runs), len(entity_runs), len(literal_runs))
     required = example.depth if host_count else None
-    if any(len(runs) != 1 for runs in intro_runs) or len(query_runs) != 1:
-        return {"valid": False, "event_count": min(raw_counts), "raw_counts": raw_counts}
+    diagnostics = {
+        "event_count": min(raw_counts),
+        "raw_counts": raw_counts,
+        "intro_run_counts": tuple(len(runs) for runs in intro_runs),
+        "query_run_count": len(query_runs),
+    }
+    if not oracle_intro and any(len(runs) != 1 for runs in intro_runs):
+        return {"valid": False, "failure_reason": "intro_cardinality", **diagnostics}
+    if not oracle_query and len(query_runs) != 1:
+        return {"valid": False, "failure_reason": "query_cardinality", **diagnostics}
     if host_count:
         if any(count < required for count in raw_counts):
-            return {"valid": False, "event_count": min(raw_counts), "raw_counts": raw_counts}
+            return {
+                "valid": False,
+                "failure_reason": "event_component_underflow",
+                **diagnostics,
+            }
         kind_runs = kind_runs[:required]
         entity_runs = entity_runs[:required]
         literal_runs = literal_runs[:required]
     elif len(set(raw_counts)) != 1:
-        return {"valid": False, "event_count": min(raw_counts), "raw_counts": raw_counts}
-    intro_ids = [tuple(example.ids[position] for position in runs[0]) for runs in intro_runs]
+        return {
+            "valid": False,
+            "failure_reason": "event_component_cardinality",
+            **diagnostics,
+        }
+    intro_ids = (
+        list(example.initial_ids)
+        if oracle_intro else
+        [tuple(example.ids[position] for position in runs[0]) for runs in intro_runs]
+    )
     lexicon_map = {
         tuple(record["token_ids"]): KIND_TO_ID[record["kind"]]
         for record in lexicon["patterns"]
@@ -438,13 +461,22 @@ def decode_example(example, outputs, row, lexicon, host_count=False):
         entity_ids = tuple(example.ids[position] for position in entity_span)
         identities = [index for index, values in enumerate(intro_ids) if values == entity_ids]
         if len(identities) != 1:
-            return {"valid": False, "event_count": len(kind_runs), "raw_counts": raw_counts}
+            return {
+                "valid": False,
+                "failure_reason": "entity_identity",
+                **diagnostics,
+            }
         amount = int(mean_positions(outputs["amount_logits"], row, literal_span).argmax()) + 1
         program.append((ID_TO_KIND[kind_id], identities[0], amount))
-    query = int(mean_positions(outputs["query_logits"], row, query_runs[0]).argmax())
+    query = (
+        example.query_target
+        if oracle_query else
+        int(mean_positions(outputs["query_logits"], row, query_runs[0]).argmax())
+    )
     final_state, answer = execute_program(program, query)
     return {
         "valid": True,
+        "failure_reason": "none",
         "event_count": len(program),
         "raw_counts": raw_counts,
         "program": tuple(program),
@@ -453,4 +485,6 @@ def decode_example(example, outputs, row, lexicon, host_count=False):
         "answer_identity": answer,
         "lexical_matches": tuple(lexical_matches),
         "intro_ids": tuple(intro_ids),
+        "intro_run_counts": diagnostics["intro_run_counts"],
+        "query_run_count": diagnostics["query_run_count"],
     }

@@ -96,6 +96,7 @@ class SelfDelimitingEventTapeModelTest(unittest.TestCase):
         self.assertEqual(decoded["program"], example.program)
         self.assertEqual(decoded["final_state"], terminal)
         self.assertEqual(KIND_TO_ID[decoded["program"][0][0]], 0)
+        self.assertEqual(decoded["failure_reason"], "none")
 
 
 if __name__ == "__main__":

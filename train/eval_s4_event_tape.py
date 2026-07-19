@@ -47,11 +47,22 @@ def summarize(records):
     return result
 
 
-def evaluate_decodes(examples, outputs_by_index, lexicon, host_count):
+def evaluate_decodes(
+    examples, outputs_by_index, lexicon, host_count=False, oracle_intro=False,
+    oracle_query=False,
+):
     records = []
     for index, example in enumerate(examples):
         outputs, row = outputs_by_index[index]
-        decoded = decode_example(example, outputs, row, lexicon, host_count=host_count)
+        decoded = decode_example(
+            example,
+            outputs,
+            row,
+            lexicon,
+            host_count=host_count,
+            oracle_intro=oracle_intro,
+            oracle_query=oracle_query,
+        )
         valid = bool(decoded.get("valid"))
         program = decoded.get("program") if valid else None
         records.append({
@@ -61,6 +72,9 @@ def evaluate_decodes(examples, outputs_by_index, lexicon, host_count):
             "valid": valid,
             "predicted_event_count": int(decoded.get("event_count", 0)),
             "raw_component_counts": list(decoded.get("raw_counts", (0, 0, 0))),
+            "intro_run_counts": list(decoded.get("intro_run_counts", (0, 0, 0))),
+            "query_run_count": int(decoded.get("query_run_count", 0)),
+            "failure_reason": decoded.get("failure_reason", "unknown"),
             "count_exact": int(decoded.get("event_count", 0)) == example.depth,
             "program_exact": program == example.program,
             "query_exact": valid and decoded.get("query") == example.query_target,
@@ -145,6 +159,13 @@ def main():
                 outputs_by_index[index] = (cpu_outputs, row)
     strict = evaluate_decodes(examples, outputs_by_index, bundle["kind_lexicon"], False)
     host = evaluate_decodes(examples, outputs_by_index, bundle["kind_lexicon"], True)
+    gold_boundaries = evaluate_decodes(
+        examples,
+        outputs_by_index,
+        bundle["kind_lexicon"],
+        oracle_intro=True,
+        oracle_query=True,
+    )
     gold_sanity = all(
         example.final_state and example.answer_identity in {0, 1, 2}
         and len(example.program) == example.depth
@@ -170,11 +191,18 @@ def main():
             "overall": summarize(host),
             "by_depth": grouped(host, "depth"),
         },
+        "gold_intro_query_control": {
+            "overall": summarize(gold_boundaries),
+            "by_depth": grouped(gold_boundaries, "depth"),
+        },
         "gold_event_s3_sanity": gold_sanity,
         "parameter_count": metadata["total_parameters"],
         "development_access": 1,
         "confirmation_access": 0,
         "failures": [record for record in strict if not record["program_exact"]][:32],
+        "failure_reasons": dict(collections.Counter(
+            record["failure_reason"] for record in strict if not record["program_exact"]
+        )),
         "claim_boundary": (
             "Public autonomous event-count/program parsing with locked exact S3 action. "
             "No confirmation, unseen semantics, planning, broad reasoning, or novelty claim."
