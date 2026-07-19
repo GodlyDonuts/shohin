@@ -1,0 +1,54 @@
+{
+  "accesses": {
+    "confirmation": 1,
+    "development": 1
+  },
+  "artifacts": {
+    "board_report_sha256": "2a471f3bc0da129a890878c802b587417fdbc756efa84d4d449f50374c92f306",
+    "checkpoint_sha256": "c26e2cb6ef54ff409b580b3828c6ace4369423cf67b11bd66d9af05c93db4607",
+    "confirmation_assessment_sha256": "ceda83124e27efb80a188797c379ff3a429b4bb1db22bc272a006811e1181511",
+    "confirmation_board_sha256": "c2eb8d5c5dd285dfcb60389c3067c4842e47872d64b5233681c32c8542434bc5",
+    "confirmation_evaluation_sha256": "4b4a539565fbf821c075f6ec4b16d34aa30e130f08f33caa28ca7c4f41f4360d",
+    "development_assessment_sha256": "2ef4d5ee053d2bf599726aa8db6fa39305f4fc112c0a35af291fe6e109c8bbc4",
+    "development_evaluation_sha256": "e02ed2d3111f8a483a96910286dcd682f9b4ee0a867910450becd8782224688f"
+  },
+  "board_commit": "6d3fd42",
+  "board_seed": 4905719171551557987,
+  "boundary": {
+    "learned": [
+      "cyclic successor labels",
+      "zero anchors",
+      "contextual unseen-law compilation",
+      "recurrent state reuse"
+    ],
+    "structural": [
+      "cyclic topology",
+      "exact equality",
+      "bounded nested replay",
+      "event invocation",
+      "pop-insert state mutation"
+    ]
+  },
+  "confirmation_code_commit": "f2e1527",
+  "decision": "confirm_s7_learned_cayley_contextual_law_compilation",
+  "job": {
+    "elapsed_seconds": 15,
+    "exit_code": "0:0",
+    "id": 693346,
+    "node": "evc25"
+  },
+  "parameters": {
+    "complete_system": 133695087,
+    "ordinary_transformer_control": 4753677,
+    "treatment": 218
+  },
+  "schema": "r12_s7_learned_cayley_promotion_v1",
+  "scores": {
+    "confirmation_answer_accuracy": 1.0,
+    "confirmation_state_accuracy": 1.0,
+    "development_atomic_accuracy": 1.0,
+    "development_state_accuracy": 1.0
+  },
+  "source_commit": "b9a9414",
+  "training_seed": 1314309421681697406
+}

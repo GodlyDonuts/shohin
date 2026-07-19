@@ -1,0 +1,3110 @@
+{
+  "decision": "confirm_s7_learned_cayley_contextual_law_compilation",
+  "gates": {
+    "answer_within_one_point_of_host": true,
+    "bound_checkpoint_hash": true,
+    "bound_confirmation_hash": true,
+    "bound_development_assessment_hash": true,
+    "deranged_card_state_drop_at_least_60pp": true,
+    "every_depth_state_at_least_96pct": true,
+    "nonce_operation_invariant": true,
+    "one_development_one_confirmation_access": true,
+    "one_witness_state_drop_at_least_40pp": true,
+    "state_reset_drop_at_least_20pp": true,
+    "state_within_one_point_of_host": true,
+    "successor_and_zero_only_training_contract": true,
+    "treatment_answer_at_least_98pct": true,
+    "treatment_beats_false_generator_by_60pp": true,
+    "treatment_beats_ordinary_by_40pp": true,
+    "treatment_has_218_parameters": true,
+    "treatment_state_at_least_98pct": true,
+    "whole_system_below_150m": true
+  },
+  "schema": "r12_s7_learned_cayley_confirmation_assessment_v1",
+  "scores": {
+    "deranged_card": {
+      "answer_accuracy": 0.2333984375,
+      "answer_correct": 478,
+      "answer_total": 2048,
+      "depth_state": {
+        "3": {
+          "accuracy": 0.017595307917888565,
+          "correct": 6,
+          "total": 341
+        },
+        "4": {
+          "accuracy": 0.008797653958944282,
+          "correct": 3,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.011695906432748537,
+          "correct": 4,
+          "total": 342
+        },
+        "6": {
+          "accuracy": 0.0029239766081871343,
+          "correct": 1,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.0029239766081871343,
+          "correct": 1,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 340
+        }
+      },
+      "predicted_state_sha256": "4ff9fd9bdb2aa0b37c6144d392505ba25d0c62f6f85b85817eaf963bf1c209de",
+      "samples": [
+        {
+          "expected_answer": 3,
+          "expected_state": [
+            0,
+            6,
+            5,
+            3,
+            4,
+            1,
+            2
+          ],
+          "predicted_answer": 5,
+          "predicted_state": [
+            4,
+            6,
+            0,
+            5,
+            3,
+            2,
+            1
+          ],
+          "row_id": "confirmation_000000",
+          "transitions": [
+            [
+              2,
+              0,
+              6,
+              4,
+              5,
+              3,
+              1
+            ],
+            [
+              2,
+              0,
+              6,
+              5,
+              3,
+              4,
+              1
+            ],
+            [
+              0,
+              6,
+              5,
+              3,
+              2,
+              4,
+              1
+            ],
+            [
+              4,
+              0,
+              6,
+              5,
+              3,
+              2,
+              1
+            ],
+            [
+              4,
+              6,
+              0,
+              5,
+              3,
+              2,
+              1
+            ]
+          ]
+        },
+        {
+          "expected_answer": 8,
+          "expected_state": [
+            3,
+            1,
+            5,
+            8,
+            4,
+            6,
+            9,
+            7,
+            10,
+            0,
+            2
+          ],
+          "predicted_answer": 8,
+          "predicted_state": [
+            3,
+            5,
+            1,
+            8,
+            4,
+            6,
+            2,
+            9,
+            0,
+            7,
+            10
+          ],
+          "row_id": "confirmation_000001",
+          "transitions": [
+            [
+              3,
+              5,
+              0,
+              8,
+              4,
+              6,
+              9,
+              7,
+              1,
+              2,
+              10
+            ],
+            [
+              3,
+              5,
+              0,
+              8,
+              4,
+              6,
+              2,
+              9,
+              7,
+              1,
+              10
+            ],
+            [
+              3,
+              5,
+              8,
+              4,
+              6,
+              2,
+              9,
+              0,
+              7,
+              1,
+              10
+            ],
+            [
+              1,
+              3,
+              5,
+              8,
+              4,
+              6,
+              2,
+              9,
+              0,
+              7,
+              10
+            ],
+            [
+              3,
+              5,
+              1,
+              8,
+              4,
+              6,
+              2,
+              9,
+              0,
+              7,
+              10
+            ]
+          ]
+        },
+        {
+          "expected_answer": 3,
+          "expected_state": [
+            0,
+            3,
+            4,
+            5,
+            1,
+            10,
+            8,
+            6,
+            7,
+            2,
+            9
+          ],
+          "predicted_answer": 8,
+          "predicted_state": [
+            7,
+            8,
+            0,
+            3,
+            4,
+            1,
+            10,
+            6,
+            5,
+            2,
+            9
+          ],
+          "row_id": "confirmation_000002",
+          "transitions": [
+            [
+              0,
+              3,
+              4,
+              8,
+              1,
+              10,
+              6,
+              7,
+              5,
+              2,
+              9
+            ],
+            [
+              0,
+              3,
+              4,
+              1,
+              10,
+              6,
+              7,
+              8,
+              5,
+              2,
+              9
+            ],
+            [
+              0,
+              3,
+              4,
+              1,
+              10,
+              6,
+              8,
+              5,
+              2,
+              7,
+              9
+            ],
+            [
+              8,
+              0,
+              3,
+              4,
+              1,
+              10,
+              6,
+              5,
+              2,
+              7,
+              9
+            ],
+            [
+              8,
+              0,
+              3,
+              4,
+              1,
+              10,
+              6,
+              5,
+              2,
+              7,
+              9
+            ],
+            [
+              7,
+              8,
+              0,
+              3,
+              4,
+              1,
+              10,
+              6,
+              5,
+              2,
+              9
+            ]
+          ]
+        },
+        {
+          "expected_answer": 4,
+          "expected_state": [
+            5,
+            3,
+            6,
+            0,
+            1,
+            4,
+            2
+          ],
+          "predicted_answer": 6,
+          "predicted_state": [
+            0,
+            5,
+            3,
+            4,
+            1,
+            6,
+            2
+          ],
+          "row_id": "confirmation_000003",
+          "transitions": [
+            [
+              5,
+              3,
+              0,
+              4,
+              6,
+              1,
+              2
+            ],
+            [
+              5,
+              4,
+              3,
+              0,
+              6,
+              1,
+              2
+            ],
+            [
+              5,
+              4,
+              3,
+              6,
+              1,
+              0,
+              2
+            ],
+            [
+              5,
+              3,
+              4,
+              6,
+              1,
+              0,
+              2
+            ],
+            [
+              0,
+              5,
+              3,
+              4,
+              6,
+              1,
+              2
+            ],
+            [
+              0,
+              5,
+              3,
+              6,
+              4,
+              1,
+              2
+            ],
+            [
+              0,
+              5,
+              3,
+              4,
+              1,
+              6,
+              2
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            0,
+            5,
+            2,
+            1,
+            3,
+            6,
+            4
+          ],
+          "predicted_answer": 2,
+          "predicted_state": [
+            2,
+            1,
+            6,
+            3,
+            5,
+            4,
+            0
+          ],
+          "row_id": "confirmation_000004",
+          "transitions": [
+            [
+              4,
+              1,
+              2,
+              3,
+              6,
+              0,
+              5
+            ],
+            [
+              5,
+              4,
+              1,
+              2,
+              3,
+              6,
+              0
+            ],
+            [
+              4,
+              1,
+              2,
+              3,
+              5,
+              6,
+              0
+            ],
+            [
+              4,
+              1,
+              0,
+              2,
+              3,
+              5,
+              6
+            ],
+            [
+              4,
+              2,
+              1,
+              0,
+              3,
+              5,
+              6
+            ],
+            [
+              4,
+              2,
+              1,
+              3,
+              5,
+              0,
+              6
+            ],
+            [
+              2,
+              1,
+              3,
+              5,
+              4,
+              0,
+              6
+            ],
+            [
+              2,
+              1,
+              6,
+              3,
+              5,
+              4,
+              0
+            ]
+          ]
+        }
+      ],
+      "state_accuracy": 0.00732421875,
+      "state_correct": 15,
+      "state_total": 2048
+    },
+    "host": {
+      "answer_accuracy": 1.0,
+      "answer_correct": 2048,
+      "answer_total": 2048,
+      "depth_state": {
+        "3": {
+          "accuracy": 1.0,
+          "correct": 341,
+          "total": 341
+        },
+        "4": {
+          "accuracy": 1.0,
+          "correct": 341,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 1.0,
+          "correct": 342,
+          "total": 342
+        },
+        "6": {
+          "accuracy": 1.0,
+          "correct": 342,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 1.0,
+          "correct": 342,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 1.0,
+          "correct": 340,
+          "total": 340
+        }
+      },
+      "predicted_state_sha256": "85ce214a6a274db4e93dc8e562db42ad39aa6e1e9037a8b2b8052a3c4d154591",
+      "samples": [],
+      "state_accuracy": 1.0,
+      "state_correct": 2048,
+      "state_total": 2048
+    },
+    "one_witness": {
+      "answer_accuracy": 0.25439453125,
+      "answer_correct": 521,
+      "answer_total": 2048,
+      "depth_state": {
+        "3": {
+          "accuracy": 0.04985337243401759,
+          "correct": 17,
+          "total": 341
+        },
+        "4": {
+          "accuracy": 0.03812316715542522,
+          "correct": 13,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.014619883040935672,
+          "correct": 5,
+          "total": 342
+        },
+        "6": {
+          "accuracy": 0.014619883040935672,
+          "correct": 5,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.011695906432748537,
+          "correct": 4,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 0.0029411764705882353,
+          "correct": 1,
+          "total": 340
+        }
+      },
+      "predicted_state_sha256": "be82744fddd60ae3a7b2a5421736e69da584c9622161fd8fdb5f7b9a595d3d9c",
+      "samples": [
+        {
+          "expected_answer": 3,
+          "expected_state": [
+            0,
+            6,
+            5,
+            3,
+            4,
+            1,
+            2
+          ],
+          "predicted_answer": 3,
+          "predicted_state": [
+            4,
+            0,
+            5,
+            3,
+            6,
+            2,
+            1
+          ],
+          "row_id": "confirmation_000000",
+          "transitions": [
+            [
+              6,
+              2,
+              0,
+              4,
+              5,
+              3,
+              1
+            ],
+            [
+              6,
+              2,
+              0,
+              5,
+              3,
+              4,
+              1
+            ],
+            [
+              6,
+              0,
+              5,
+              3,
+              2,
+              4,
+              1
+            ],
+            [
+              4,
+              6,
+              0,
+              5,
+              3,
+              2,
+              1
+            ],
+            [
+              4,
+              0,
+              5,
+              3,
+              6,
+              2,
+              1
+            ]
+          ]
+        },
+        {
+          "expected_answer": 8,
+          "expected_state": [
+            3,
+            1,
+            5,
+            8,
+            4,
+            6,
+            9,
+            7,
+            10,
+            0,
+            2
+          ],
+          "predicted_answer": 8,
+          "predicted_state": [
+            3,
+            0,
+            5,
+            8,
+            4,
+            6,
+            9,
+            2,
+            7,
+            10,
+            1
+          ],
+          "row_id": "confirmation_000001",
+          "transitions": [
+            [
+              3,
+              5,
+              8,
+              0,
+              4,
+              6,
+              9,
+              7,
+              1,
+              2,
+              10
+            ],
+            [
+              3,
+              5,
+              8,
+              0,
+              4,
+              6,
+              9,
+              2,
+              7,
+              1,
+              10
+            ],
+            [
+              3,
+              0,
+              5,
+              8,
+              4,
+              6,
+              9,
+              2,
+              7,
+              1,
+              10
+            ],
+            [
+              3,
+              0,
+              5,
+              8,
+              4,
+              1,
+              6,
+              9,
+              2,
+              7,
+              10
+            ],
+            [
+              3,
+              0,
+              5,
+              8,
+              4,
+              6,
+              9,
+              2,
+              7,
+              10,
+              1
+            ]
+          ]
+        },
+        {
+          "expected_answer": 3,
+          "expected_state": [
+            0,
+            3,
+            4,
+            5,
+            1,
+            10,
+            8,
+            6,
+            7,
+            2,
+            9
+          ],
+          "predicted_answer": 0,
+          "predicted_state": [
+            5,
+            0,
+            7,
+            3,
+            4,
+            1,
+            10,
+            8,
+            6,
+            2,
+            9
+          ],
+          "row_id": "confirmation_000002",
+          "transitions": [
+            [
+              5,
+              0,
+              3,
+              4,
+              8,
+              1,
+              10,
+              6,
+              7,
+              2,
+              9
+            ],
+            [
+              5,
+              0,
+              3,
+              4,
+              1,
+              10,
+              6,
+              7,
+              8,
+              2,
+              9
+            ],
+            [
+              5,
+              0,
+              3,
+              4,
+              1,
+              10,
+              6,
+              7,
+              8,
+              2,
+              9
+            ],
+            [
+              5,
+              0,
+              3,
+              4,
+              1,
+              10,
+              8,
+              6,
+              7,
+              2,
+              9
+            ],
+            [
+              5,
+              0,
+              3,
+              4,
+              1,
+              10,
+              8,
+              6,
+              7,
+              2,
+              9
+            ],
+            [
+              5,
+              0,
+              7,
+              3,
+              4,
+              1,
+              10,
+              8,
+              6,
+              2,
+              9
+            ]
+          ]
+        },
+        {
+          "expected_answer": 4,
+          "expected_state": [
+            5,
+            3,
+            6,
+            0,
+            1,
+            4,
+            2
+          ],
+          "predicted_answer": 2,
+          "predicted_state": [
+            4,
+            5,
+            3,
+            0,
+            1,
+            2,
+            6
+          ],
+          "row_id": "confirmation_000003",
+          "transitions": [
+            [
+              5,
+              0,
+              3,
+              4,
+              6,
+              1,
+              2
+            ],
+            [
+              5,
+              0,
+              3,
+              6,
+              1,
+              4,
+              2
+            ],
+            [
+              5,
+              3,
+              6,
+              0,
+              1,
+              4,
+              2
+            ],
+            [
+              4,
+              5,
+              3,
+              6,
+              0,
+              1,
+              2
+            ],
+            [
+              4,
+              5,
+              3,
+              0,
+              6,
+              1,
+              2
+            ],
+            [
+              4,
+              5,
+              3,
+              0,
+              1,
+              6,
+              2
+            ],
+            [
+              4,
+              5,
+              3,
+              0,
+              1,
+              2,
+              6
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            0,
+            5,
+            2,
+            1,
+            3,
+            6,
+            4
+          ],
+          "predicted_answer": 6,
+          "predicted_state": [
+            6,
+            0,
+            1,
+            3,
+            5,
+            2,
+            4
+          ],
+          "row_id": "confirmation_000004",
+          "transitions": [
+            [
+              4,
+              1,
+              2,
+              3,
+              6,
+              0,
+              5
+            ],
+            [
+              4,
+              5,
+              1,
+              2,
+              3,
+              6,
+              0
+            ],
+            [
+              4,
+              1,
+              2,
+              3,
+              5,
+              6,
+              0
+            ],
+            [
+              4,
+              1,
+              0,
+              2,
+              3,
+              5,
+              6
+            ],
+            [
+              4,
+              1,
+              0,
+              3,
+              5,
+              2,
+              6
+            ],
+            [
+              4,
+              0,
+              1,
+              3,
+              5,
+              2,
+              6
+            ],
+            [
+              0,
+              1,
+              3,
+              5,
+              2,
+              6,
+              4
+            ],
+            [
+              6,
+              0,
+              1,
+              3,
+              5,
+              2,
+              4
+            ]
+          ]
+        }
+      ],
+      "state_accuracy": 0.02197265625,
+      "state_correct": 45,
+      "state_total": 2048
+    },
+    "ordinary_transformer": {
+      "answer_accuracy": 0.271484375,
+      "answer_correct": 556,
+      "answer_total": 2048,
+      "depth_state": {
+        "3": {
+          "accuracy": 0.04985337243401759,
+          "correct": 17,
+          "total": 341
+        },
+        "4": {
+          "accuracy": 0.005865102639296188,
+          "correct": 2,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.005847953216374269,
+          "correct": 2,
+          "total": 342
+        },
+        "6": {
+          "accuracy": 0.017543859649122806,
+          "correct": 6,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.008771929824561403,
+          "correct": 3,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 0.0058823529411764705,
+          "correct": 2,
+          "total": 340
+        }
+      },
+      "predicted_state_sha256": "adc205850543bab9e82b5d45e2ed6ab57b6a68b9da21af32065f539a39da0091",
+      "samples": [
+        {
+          "expected_answer": 3,
+          "expected_state": [
+            0,
+            6,
+            5,
+            3,
+            4,
+            1,
+            2
+          ],
+          "predicted_answer": 5,
+          "predicted_state": [
+            0,
+            6,
+            4,
+            5,
+            3,
+            2,
+            1
+          ],
+          "row_id": "confirmation_000000",
+          "transitions": [
+            [
+              2,
+              0,
+              4,
+              6,
+              5,
+              3,
+              1
+            ],
+            [
+              2,
+              0,
+              6,
+              5,
+              3,
+              1,
+              4
+            ],
+            [
+              0,
+              6,
+              5,
+              3,
+              2,
+              1,
+              4
+            ],
+            [
+              0,
+              6,
+              4,
+              5,
+              3,
+              2,
+              1
+            ],
+            [
+              0,
+              6,
+              4,
+              5,
+              3,
+              2,
+              1
+            ]
+          ]
+        },
+        {
+          "expected_answer": 8,
+          "expected_state": [
+            3,
+            1,
+            5,
+            8,
+            4,
+            6,
+            9,
+            7,
+            10,
+            0,
+            2
+          ],
+          "predicted_answer": 8,
+          "predicted_state": [
+            0,
+            3,
+            5,
+            8,
+            4,
+            6,
+            9,
+            7,
+            1,
+            10,
+            2
+          ],
+          "row_id": "confirmation_000001",
+          "transitions": [
+            [
+              3,
+              5,
+              8,
+              0,
+              4,
+              6,
+              9,
+              7,
+              1,
+              2,
+              10
+            ],
+            [
+              3,
+              5,
+              8,
+              0,
+              4,
+              6,
+              9,
+              7,
+              1,
+              10,
+              2
+            ],
+            [
+              0,
+              3,
+              5,
+              8,
+              4,
+              6,
+              9,
+              7,
+              1,
+              10,
+              2
+            ],
+            [
+              0,
+              3,
+              5,
+              8,
+              4,
+              6,
+              9,
+              7,
+              1,
+              10,
+              2
+            ],
+            [
+              0,
+              3,
+              5,
+              8,
+              4,
+              6,
+              9,
+              7,
+              1,
+              10,
+              2
+            ]
+          ]
+        },
+        {
+          "expected_answer": 3,
+          "expected_state": [
+            0,
+            3,
+            4,
+            5,
+            1,
+            10,
+            8,
+            6,
+            7,
+            2,
+            9
+          ],
+          "predicted_answer": 8,
+          "predicted_state": [
+            0,
+            8,
+            3,
+            4,
+            1,
+            10,
+            7,
+            6,
+            2,
+            5,
+            9
+          ],
+          "row_id": "confirmation_000002",
+          "transitions": [
+            [
+              0,
+              3,
+              4,
+              8,
+              1,
+              10,
+              6,
+              7,
+              2,
+              5,
+              9
+            ],
+            [
+              0,
+              3,
+              4,
+              8,
+              1,
+              10,
+              6,
+              7,
+              2,
+              5,
+              9
+            ],
+            [
+              0,
+              3,
+              4,
+              8,
+              1,
+              10,
+              6,
+              2,
+              5,
+              7,
+              9
+            ],
+            [
+              0,
+              8,
+              3,
+              4,
+              1,
+              10,
+              6,
+              2,
+              5,
+              7,
+              9
+            ],
+            [
+              0,
+              8,
+              3,
+              4,
+              1,
+              10,
+              6,
+              2,
+              5,
+              7,
+              9
+            ],
+            [
+              0,
+              8,
+              3,
+              4,
+              1,
+              10,
+              7,
+              6,
+              2,
+              5,
+              9
+            ]
+          ]
+        },
+        {
+          "expected_answer": 4,
+          "expected_state": [
+            5,
+            3,
+            6,
+            0,
+            1,
+            4,
+            2
+          ],
+          "predicted_answer": 1,
+          "predicted_state": [
+            5,
+            4,
+            6,
+            0,
+            3,
+            1,
+            2
+          ],
+          "row_id": "confirmation_000003",
+          "transitions": [
+            [
+              5,
+              3,
+              4,
+              6,
+              1,
+              2,
+              0
+            ],
+            [
+              5,
+              3,
+              6,
+              1,
+              2,
+              4,
+              0
+            ],
+            [
+              5,
+              3,
+              6,
+              1,
+              2,
+              4,
+              0
+            ],
+            [
+              5,
+              4,
+              3,
+              6,
+              1,
+              2,
+              0
+            ],
+            [
+              5,
+              4,
+              0,
+              3,
+              6,
+              1,
+              2
+            ],
+            [
+              5,
+              4,
+              0,
+              3,
+              1,
+              6,
+              2
+            ],
+            [
+              5,
+              4,
+              6,
+              0,
+              3,
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            0,
+            5,
+            2,
+            1,
+            3,
+            6,
+            4
+          ],
+          "predicted_answer": 6,
+          "predicted_state": [
+            6,
+            1,
+            0,
+            5,
+            2,
+            4,
+            3
+          ],
+          "row_id": "confirmation_000004",
+          "transitions": [
+            [
+              4,
+              1,
+              5,
+              2,
+              3,
+              6,
+              0
+            ],
+            [
+              4,
+              1,
+              2,
+              3,
+              5,
+              6,
+              0
+            ],
+            [
+              4,
+              1,
+              2,
+              5,
+              3,
+              6,
+              0
+            ],
+            [
+              0,
+              4,
+              1,
+              2,
+              5,
+              3,
+              6
+            ],
+            [
+              0,
+              4,
+              1,
+              5,
+              2,
+              3,
+              6
+            ],
+            [
+              4,
+              1,
+              0,
+              5,
+              2,
+              3,
+              6
+            ],
+            [
+              1,
+              0,
+              5,
+              2,
+              4,
+              3,
+              6
+            ],
+            [
+              6,
+              1,
+              0,
+              5,
+              2,
+              4,
+              3
+            ]
+          ]
+        }
+      ],
+      "state_accuracy": 0.015625,
+      "state_correct": 32,
+      "state_total": 2048
+    },
+    "state_reset": {
+      "answer_accuracy": 0.26953125,
+      "answer_correct": 552,
+      "answer_total": 2048,
+      "depth_state": {
+        "3": {
+          "accuracy": 0.026392961876832845,
+          "correct": 9,
+          "total": 341
+        },
+        "4": {
+          "accuracy": 0.011730205278592375,
+          "correct": 4,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.017543859649122806,
+          "correct": 6,
+          "total": 342
+        },
+        "6": {
+          "accuracy": 0.017543859649122806,
+          "correct": 6,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.008771929824561403,
+          "correct": 3,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 0.0058823529411764705,
+          "correct": 2,
+          "total": 340
+        }
+      },
+      "predicted_state_sha256": "265869071e954561f3a133a169b4964ce343171d87c6b1087ec342d9079df95a",
+      "samples": [
+        {
+          "expected_answer": 3,
+          "expected_state": [
+            0,
+            6,
+            5,
+            3,
+            4,
+            1,
+            2
+          ],
+          "predicted_answer": 4,
+          "predicted_state": [
+            2,
+            0,
+            6,
+            4,
+            5,
+            3,
+            1
+          ],
+          "row_id": "confirmation_000000",
+          "transitions": [
+            [
+              2,
+              6,
+              0,
+              4,
+              5,
+              3,
+              1
+            ],
+            [
+              2,
+              0,
+              6,
+              5,
+              4,
+              3,
+              1
+            ],
+            [
+              0,
+              4,
+              6,
+              5,
+              3,
+              1,
+              2
+            ],
+            [
+              2,
+              4,
+              0,
+              6,
+              5,
+              3,
+              1
+            ],
+            [
+              2,
+              0,
+              6,
+              4,
+              5,
+              3,
+              1
+            ]
+          ]
+        },
+        {
+          "expected_answer": 8,
+          "expected_state": [
+            3,
+            1,
+            5,
+            8,
+            4,
+            6,
+            9,
+            7,
+            10,
+            0,
+            2
+          ],
+          "predicted_answer": 5,
+          "predicted_state": [
+            1,
+            8,
+            3,
+            5,
+            0,
+            4,
+            6,
+            9,
+            7,
+            2,
+            10
+          ],
+          "row_id": "confirmation_000001",
+          "transitions": [
+            [
+              3,
+              5,
+              8,
+              0,
+              4,
+              6,
+              9,
+              7,
+              1,
+              2,
+              10
+            ],
+            [
+              8,
+              3,
+              5,
+              0,
+              4,
+              6,
+              9,
+              7,
+              1,
+              10,
+              2
+            ],
+            [
+              8,
+              3,
+              5,
+              4,
+              6,
+              9,
+              7,
+              1,
+              2,
+              0,
+              10
+            ],
+            [
+              8,
+              3,
+              5,
+              0,
+              4,
+              1,
+              6,
+              9,
+              7,
+              2,
+              10
+            ],
+            [
+              1,
+              8,
+              3,
+              5,
+              0,
+              4,
+              6,
+              9,
+              7,
+              2,
+              10
+            ]
+          ]
+        },
+        {
+          "expected_answer": 3,
+          "expected_state": [
+            0,
+            3,
+            4,
+            5,
+            1,
+            10,
+            8,
+            6,
+            7,
+            2,
+            9
+          ],
+          "predicted_answer": 3,
+          "predicted_state": [
+            0,
+            3,
+            4,
+            8,
+            1,
+            10,
+            6,
+            7,
+            2,
+            9,
+            5
+          ],
+          "row_id": "confirmation_000002",
+          "transitions": [
+            [
+              0,
+              3,
+              4,
+              8,
+              5,
+              1,
+              10,
+              6,
+              7,
+              2,
+              9
+            ],
+            [
+              0,
+              3,
+              4,
+              1,
+              10,
+              6,
+              7,
+              2,
+              9,
+              5,
+              8
+            ],
+            [
+              0,
+              3,
+              4,
+              8,
+              1,
+              10,
+              6,
+              2,
+              9,
+              5,
+              7
+            ],
+            [
+              0,
+              3,
+              4,
+              1,
+              10,
+              6,
+              7,
+              8,
+              2,
+              9,
+              5
+            ],
+            [
+              0,
+              3,
+              4,
+              8,
+              1,
+              10,
+              6,
+              7,
+              2,
+              9,
+              5
+            ],
+            [
+              0,
+              3,
+              4,
+              8,
+              1,
+              10,
+              6,
+              7,
+              2,
+              9,
+              5
+            ]
+          ]
+        },
+        {
+          "expected_answer": 4,
+          "expected_state": [
+            5,
+            3,
+            6,
+            0,
+            1,
+            4,
+            2
+          ],
+          "predicted_answer": 2,
+          "predicted_state": [
+            5,
+            6,
+            3,
+            4,
+            1,
+            2,
+            0
+          ],
+          "row_id": "confirmation_000003",
+          "transitions": [
+            [
+              5,
+              3,
+              4,
+              6,
+              1,
+              2,
+              0
+            ],
+            [
+              5,
+              4,
+              3,
+              6,
+              1,
+              2,
+              0
+            ],
+            [
+              5,
+              3,
+              4,
+              6,
+              1,
+              2,
+              0
+            ],
+            [
+              5,
+              4,
+              3,
+              6,
+              1,
+              2,
+              0
+            ],
+            [
+              5,
+              3,
+              0,
+              4,
+              6,
+              1,
+              2
+            ],
+            [
+              5,
+              6,
+              3,
+              4,
+              1,
+              2,
+              0
+            ],
+            [
+              5,
+              6,
+              3,
+              4,
+              1,
+              2,
+              0
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            0,
+            5,
+            2,
+            1,
+            3,
+            6,
+            4
+          ],
+          "predicted_answer": 5,
+          "predicted_state": [
+            5,
+            4,
+            1,
+            2,
+            3,
+            6,
+            0
+          ],
+          "row_id": "confirmation_000004",
+          "transitions": [
+            [
+              4,
+              5,
+              1,
+              2,
+              3,
+              6,
+              0
+            ],
+            [
+              4,
+              1,
+              2,
+              3,
+              5,
+              6,
+              0
+            ],
+            [
+              4,
+              1,
+              2,
+              3,
+              6,
+              0,
+              5
+            ],
+            [
+              0,
+              5,
+              4,
+              1,
+              2,
+              3,
+              6
+            ],
+            [
+              5,
+              4,
+              1,
+              3,
+              6,
+              2,
+              0
+            ],
+            [
+              0,
+              5,
+              4,
+              1,
+              2,
+              3,
+              6
+            ],
+            [
+              5,
+              1,
+              2,
+              3,
+              4,
+              6,
+              0
+            ],
+            [
+              5,
+              4,
+              1,
+              2,
+              3,
+              6,
+              0
+            ]
+          ]
+        }
+      ],
+      "state_accuracy": 0.0146484375,
+      "state_correct": 30,
+      "state_total": 2048
+    },
+    "stride_two_generator": {
+      "answer_accuracy": 0.23779296875,
+      "answer_correct": 487,
+      "answer_total": 2048,
+      "depth_state": {
+        "3": {
+          "accuracy": 0.026392961876832845,
+          "correct": 9,
+          "total": 341
+        },
+        "4": {
+          "accuracy": 0.017595307917888565,
+          "correct": 6,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "6": {
+          "accuracy": 0.008771929824561403,
+          "correct": 3,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 340
+        }
+      },
+      "predicted_state_sha256": "210b61f479e256eeb6dd5031293e73e956c770fc0d0d36fb2be315d5d04df028",
+      "samples": [
+        {
+          "expected_answer": 3,
+          "expected_state": [
+            0,
+            6,
+            5,
+            3,
+            4,
+            1,
+            2
+          ],
+          "predicted_answer": 5,
+          "predicted_state": [
+            4,
+            0,
+            2,
+            5,
+            3,
+            6,
+            1
+          ],
+          "row_id": "confirmation_000000",
+          "transitions": [
+            [
+              2,
+              0,
+              4,
+              5,
+              3,
+              1,
+              6
+            ],
+            [
+              2,
+              0,
+              5,
+              3,
+              1,
+              6,
+              4
+            ],
+            [
+              0,
+              2,
+              5,
+              3,
+              1,
+              6,
+              4
+            ],
+            [
+              4,
+              0,
+              2,
+              5,
+              3,
+              1,
+              6
+            ],
+            [
+              4,
+              0,
+              2,
+              5,
+              3,
+              6,
+              1
+            ]
+          ]
+        },
+        {
+          "expected_answer": 8,
+          "expected_state": [
+            3,
+            1,
+            5,
+            8,
+            4,
+            6,
+            9,
+            7,
+            10,
+            0,
+            2
+          ],
+          "predicted_answer": 1,
+          "predicted_state": [
+            3,
+            5,
+            8,
+            1,
+            2,
+            4,
+            6,
+            9,
+            0,
+            7,
+            10
+          ],
+          "row_id": "confirmation_000001",
+          "transitions": [
+            [
+              3,
+              5,
+              8,
+              0,
+              4,
+              6,
+              9,
+              7,
+              1,
+              2,
+              10
+            ],
+            [
+              3,
+              5,
+              8,
+              0,
+              2,
+              4,
+              6,
+              9,
+              7,
+              1,
+              10
+            ],
+            [
+              3,
+              5,
+              8,
+              2,
+              4,
+              6,
+              9,
+              0,
+              7,
+              1,
+              10
+            ],
+            [
+              3,
+              5,
+              8,
+              2,
+              4,
+              6,
+              9,
+              0,
+              7,
+              10,
+              1
+            ],
+            [
+              3,
+              5,
+              8,
+              1,
+              2,
+              4,
+              6,
+              9,
+              0,
+              7,
+              10
+            ]
+          ]
+        },
+        {
+          "expected_answer": 3,
+          "expected_state": [
+            0,
+            3,
+            4,
+            5,
+            1,
+            10,
+            8,
+            6,
+            7,
+            2,
+            9
+          ],
+          "predicted_answer": 3,
+          "predicted_state": [
+            8,
+            3,
+            4,
+            7,
+            1,
+            10,
+            6,
+            5,
+            0,
+            2,
+            9
+          ],
+          "row_id": "confirmation_000002",
+          "transitions": [
+            [
+              0,
+              3,
+              4,
+              8,
+              1,
+              10,
+              6,
+              7,
+              5,
+              2,
+              9
+            ],
+            [
+              0,
+              3,
+              4,
+              1,
+              8,
+              10,
+              6,
+              7,
+              5,
+              2,
+              9
+            ],
+            [
+              0,
+              3,
+              4,
+              1,
+              8,
+              7,
+              10,
+              6,
+              5,
+              2,
+              9
+            ],
+            [
+              8,
+              0,
+              3,
+              4,
+              1,
+              7,
+              10,
+              6,
+              5,
+              2,
+              9
+            ],
+            [
+              8,
+              3,
+              4,
+              1,
+              7,
+              10,
+              6,
+              5,
+              0,
+              2,
+              9
+            ],
+            [
+              8,
+              3,
+              4,
+              7,
+              1,
+              10,
+              6,
+              5,
+              0,
+              2,
+              9
+            ]
+          ]
+        },
+        {
+          "expected_answer": 4,
+          "expected_state": [
+            5,
+            3,
+            6,
+            0,
+            1,
+            4,
+            2
+          ],
+          "predicted_answer": 2,
+          "predicted_state": [
+            5,
+            3,
+            6,
+            1,
+            0,
+            2,
+            4
+          ],
+          "row_id": "confirmation_000003",
+          "transitions": [
+            [
+              0,
+              5,
+              3,
+              4,
+              6,
+              1,
+              2
+            ],
+            [
+              0,
+              5,
+              4,
+              3,
+              6,
+              1,
+              2
+            ],
+            [
+              5,
+              4,
+              3,
+              0,
+              6,
+              1,
+              2
+            ],
+            [
+              5,
+              3,
+              0,
+              6,
+              1,
+              2,
+              4
+            ],
+            [
+              5,
+              3,
+              6,
+              1,
+              0,
+              2,
+              4
+            ],
+            [
+              5,
+              3,
+              6,
+              1,
+              0,
+              2,
+              4
+            ],
+            [
+              5,
+              3,
+              6,
+              1,
+              0,
+              2,
+              4
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            0,
+            5,
+            2,
+            1,
+            3,
+            6,
+            4
+          ],
+          "predicted_answer": 1,
+          "predicted_state": [
+            1,
+            4,
+            0,
+            6,
+            3,
+            2,
+            5
+          ],
+          "row_id": "confirmation_000004",
+          "transitions": [
+            [
+              4,
+              1,
+              2,
+              3,
+              5,
+              6,
+              0
+            ],
+            [
+              4,
+              1,
+              2,
+              3,
+              6,
+              5,
+              0
+            ],
+            [
+              4,
+              1,
+              2,
+              3,
+              6,
+              5,
+              0
+            ],
+            [
+              4,
+              1,
+              2,
+              3,
+              6,
+              0,
+              5
+            ],
+            [
+              4,
+              1,
+              3,
+              6,
+              2,
+              0,
+              5
+            ],
+            [
+              4,
+              1,
+              0,
+              3,
+              6,
+              2,
+              5
+            ],
+            [
+              1,
+              4,
+              0,
+              3,
+              6,
+              2,
+              5
+            ],
+            [
+              1,
+              4,
+              0,
+              6,
+              3,
+              2,
+              5
+            ]
+          ]
+        }
+      ],
+      "state_accuracy": 0.0087890625,
+      "state_correct": 18,
+      "state_total": 2048
+    },
+    "treatment": {
+      "answer_accuracy": 1.0,
+      "answer_correct": 2048,
+      "answer_total": 2048,
+      "depth_state": {
+        "3": {
+          "accuracy": 1.0,
+          "correct": 341,
+          "total": 341
+        },
+        "4": {
+          "accuracy": 1.0,
+          "correct": 341,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 1.0,
+          "correct": 342,
+          "total": 342
+        },
+        "6": {
+          "accuracy": 1.0,
+          "correct": 342,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 1.0,
+          "correct": 342,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 1.0,
+          "correct": 340,
+          "total": 340
+        }
+      },
+      "predicted_state_sha256": "85ce214a6a274db4e93dc8e562db42ad39aa6e1e9037a8b2b8052a3c4d154591",
+      "samples": [
+        {
+          "expected_answer": 3,
+          "expected_state": [
+            0,
+            6,
+            5,
+            3,
+            4,
+            1,
+            2
+          ],
+          "predicted_answer": 3,
+          "predicted_state": [
+            0,
+            6,
+            5,
+            3,
+            4,
+            1,
+            2
+          ],
+          "row_id": "confirmation_000000",
+          "transitions": [
+            [
+              2,
+              6,
+              0,
+              4,
+              5,
+              3,
+              1
+            ],
+            [
+              2,
+              6,
+              4,
+              0,
+              5,
+              3,
+              1
+            ],
+            [
+              6,
+              4,
+              0,
+              5,
+              3,
+              1,
+              2
+            ],
+            [
+              6,
+              0,
+              5,
+              3,
+              4,
+              1,
+              2
+            ],
+            [
+              0,
+              6,
+              5,
+              3,
+              4,
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "expected_answer": 8,
+          "expected_state": [
+            3,
+            1,
+            5,
+            8,
+            4,
+            6,
+            9,
+            7,
+            10,
+            0,
+            2
+          ],
+          "predicted_answer": 8,
+          "predicted_state": [
+            3,
+            1,
+            5,
+            8,
+            4,
+            6,
+            9,
+            7,
+            10,
+            0,
+            2
+          ],
+          "row_id": "confirmation_000001",
+          "transitions": [
+            [
+              3,
+              5,
+              8,
+              0,
+              4,
+              6,
+              9,
+              7,
+              1,
+              2,
+              10
+            ],
+            [
+              3,
+              5,
+              8,
+              0,
+              4,
+              6,
+              9,
+              7,
+              1,
+              10,
+              2
+            ],
+            [
+              3,
+              5,
+              8,
+              4,
+              6,
+              9,
+              7,
+              1,
+              10,
+              0,
+              2
+            ],
+            [
+              3,
+              5,
+              8,
+              1,
+              4,
+              6,
+              9,
+              7,
+              10,
+              0,
+              2
+            ],
+            [
+              3,
+              1,
+              5,
+              8,
+              4,
+              6,
+              9,
+              7,
+              10,
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "expected_answer": 3,
+          "expected_state": [
+            0,
+            3,
+            4,
+            5,
+            1,
+            10,
+            8,
+            6,
+            7,
+            2,
+            9
+          ],
+          "predicted_answer": 3,
+          "predicted_state": [
+            0,
+            3,
+            4,
+            5,
+            1,
+            10,
+            8,
+            6,
+            7,
+            2,
+            9
+          ],
+          "row_id": "confirmation_000002",
+          "transitions": [
+            [
+              0,
+              3,
+              4,
+              8,
+              5,
+              1,
+              10,
+              6,
+              7,
+              2,
+              9
+            ],
+            [
+              0,
+              3,
+              4,
+              5,
+              1,
+              10,
+              6,
+              7,
+              2,
+              9,
+              8
+            ],
+            [
+              0,
+              3,
+              4,
+              5,
+              1,
+              10,
+              6,
+              2,
+              9,
+              8,
+              7
+            ],
+            [
+              0,
+              3,
+              4,
+              5,
+              1,
+              10,
+              8,
+              6,
+              2,
+              9,
+              7
+            ],
+            [
+              0,
+              3,
+              4,
+              5,
+              1,
+              10,
+              8,
+              6,
+              2,
+              9,
+              7
+            ],
+            [
+              0,
+              3,
+              4,
+              5,
+              1,
+              10,
+              8,
+              6,
+              7,
+              2,
+              9
+            ]
+          ]
+        },
+        {
+          "expected_answer": 4,
+          "expected_state": [
+            5,
+            3,
+            6,
+            0,
+            1,
+            4,
+            2
+          ],
+          "predicted_answer": 4,
+          "predicted_state": [
+            5,
+            3,
+            6,
+            0,
+            1,
+            4,
+            2
+          ],
+          "row_id": "confirmation_000003",
+          "transitions": [
+            [
+              5,
+              3,
+              4,
+              6,
+              1,
+              2,
+              0
+            ],
+            [
+              5,
+              4,
+              3,
+              6,
+              1,
+              2,
+              0
+            ],
+            [
+              5,
+              4,
+              3,
+              6,
+              1,
+              2,
+              0
+            ],
+            [
+              5,
+              3,
+              6,
+              1,
+              4,
+              2,
+              0
+            ],
+            [
+              5,
+              3,
+              0,
+              6,
+              1,
+              4,
+              2
+            ],
+            [
+              5,
+              6,
+              3,
+              0,
+              1,
+              4,
+              2
+            ],
+            [
+              5,
+              3,
+              6,
+              0,
+              1,
+              4,
+              2
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            0,
+            5,
+            2,
+            1,
+            3,
+            6,
+            4
+          ],
+          "predicted_answer": 0,
+          "predicted_state": [
+            0,
+            5,
+            2,
+            1,
+            3,
+            6,
+            4
+          ],
+          "row_id": "confirmation_000004",
+          "transitions": [
+            [
+              4,
+              5,
+              1,
+              2,
+              3,
+              6,
+              0
+            ],
+            [
+              4,
+              1,
+              5,
+              2,
+              3,
+              6,
+              0
+            ],
+            [
+              4,
+              5,
+              1,
+              2,
+              3,
+              6,
+              0
+            ],
+            [
+              0,
+              4,
+              5,
+              1,
+              2,
+              3,
+              6
+            ],
+            [
+              0,
+              4,
+              5,
+              2,
+              1,
+              3,
+              6
+            ],
+            [
+              4,
+              0,
+              5,
+              2,
+              1,
+              3,
+              6
+            ],
+            [
+              0,
+              5,
+              2,
+              1,
+              3,
+              6,
+              4
+            ],
+            [
+              0,
+              5,
+              2,
+              1,
+              3,
+              6,
+              4
+            ]
+          ]
+        }
+      ],
+      "state_accuracy": 1.0,
+      "state_correct": 2048,
+      "state_total": 2048
+    }
+  }
+}

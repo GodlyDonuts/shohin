@@ -7,9 +7,11 @@ mechanism without first reconstructing several days of experiments from the
 runbook and result files.
 
 **Status:** Living document. The protected raw-pretraining anchor is complete
-at 300,000 steps. Native multi-step reasoning is not yet established.
+at 300,000 steps. S7 confirms bounded native contextual law compilation and
+recurrent execution; broad language-grounded, self-directed reasoning is not
+yet established.
 
-**Last updated:** 2026-07-19 16:58 EDT.
+**Last updated:** 2026-07-19 17:06 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -620,7 +622,7 @@ instead of treating a single end-to-end score as one capability.
 | S4 v5 hard-island/soft-interface confirmation | 97.803% programs / 98.389% state / 98.633% answers; roster and event-region rotations each 0% programs | Confirmed whole-source known-operation parser with autonomous event count; exact host action table remains a boundary |
 | **S5 learned generator-factored confirmation** | **96.924% programs / 97.607% state / 98.096% answers**, exactly matching host execution; 36/36 unit and 36/36 never-trained amount-two closure | **Confirmed model-owned finite transition law and recurrent categorical state; known semantics and structural invocation remain bounded** |
 | **S6 contextual affine-law induction** | **78/318 = 24.528%** held-out atomic destinations, **167/2048 = 8.154%** recurrent state, **633/2048 = 30.908%** answers after exact 961/961 atomic training fit | **Rejected generic transformer induction; two demonstrations are causally informative but are represented as a lookup surface, not the identified algebra; no confirmation** |
-| **S7 learned Cayley-law compiler development** | **150/150 = 100% unseen-law atomic; 2,048/2,048 = 100% recurrent state and answers at every depth 3-8. Ordinary transformer: 22.667% atomic / 2.539% state; `S^2`: 0.928% state** | **All 19 frozen development gates pass; unchanged 218-parameter compiler qualifies for one sealed confirmation read. Cyclic topology, equality, bounded replay, event invocation, and pop-insert remain structural** |
+| **S7 learned Cayley-law compiler confirmation** | **2,048/2,048 = 100% recurrent state and answers over 18 disjoint laws and every depth 3-8. Ordinary transformer: 1.562% state; `S^2`: 0.879% state** | **All 18 frozen confirmation gates pass; promoted as the strongest bounded native component. Cyclic topology, equality, bounded replay, event invocation, and pop-insert remain structural** |
 
 The implementation gates were also independently exercised before the model
 claims were read: RGDE v1.1 passed its 19 CPU tests, Ruff, `py_compile`, shell
@@ -634,9 +636,11 @@ reasoning. A previously blended failure has been decomposed: S4 v5 supplies a
 confirmed hard-island/soft-interface known-atom parser, S5 supplies a confirmed
 model-owned finite generator and recurrent categorical state, and S6 shows that
 identifiability alone does not make a generic transformer induce an unseen law.
-The remaining non-native interfaces are active-step/termination control, open
-operation semantics, and natural-language scope beyond the bounded known-atom
-domain.
+S7 then confirms that a learned generator basis plus forced reuse can infer and
+execute unseen cyclic laws exactly under hidden coordinates. The remaining
+non-native interfaces are natural-language law grounding, active-step and
+termination control, arbitrary operation structure, and transfer of this
+mechanism into the frozen Shohin language model.
 
 ---
 
@@ -935,13 +939,14 @@ cells and 52/2,048 recurrent states. The equally complete `S^2` generator
 reaches 19/2,048 state; deranged cards, one witness, and state reset reach
 27/2,048, 29/2,048, and 63/2,048. Nonce recoding is bit-identical. All 19
 frozen development gates pass, authorizing exactly one unchanged-weight sealed
-confirmation read.
+confirmation read. That read then independently reaches 2,048/2,048 exact
+states and answers over 18 disjoint laws, with all 18 confirmation gates passing.
 
 The honest boundary matters. S7 is repeated addition in a learned Cayley graph.
 Cyclic topology, exact equality, bounded nested replay, event invocation, and
-pop-insert are structural. Passing would establish contextual induction of an
-unseen operation law under that prior, not universal arithmetic, open-language
-reasoning, or model-owned unbounded halt.
+pop-insert are structural. The confirmed result establishes contextual induction
+of an unseen operation law under that prior, not universal arithmetic,
+open-language reasoning, or model-owned unbounded halt.
 
 ---
 
@@ -1169,7 +1174,7 @@ as learned reasoning. The scientific question is whether a learned symbol-to-
 action representation plus forced composition transfers, not whether an exact
 host formula can replay the board.
 
-### 9.11 S7 learned Cayley-law compiler (development qualified)
+### 9.11 S7 learned Cayley-law compiler (confirmed)
 
 S7 is the first post-S6 candidate to pass its frozen development gate. It hides
 each location space behind a fresh permutation and learns only 23
@@ -1184,7 +1189,7 @@ ordinary-transformer train cells, 150 held-out atomic cells, 2,048 balanced
 development programs over 16 fresh laws, and 2,048 sealed confirmation programs
 over 18 disjoint laws. Closed S6 development laws do not score S7. Development
 and confirmation SHA-256 values are `19baa8c3...` and `c2eb8d5c...`; development
-access is one and confirmation access remains zero.
+and confirmation accesses are now exactly one each and both boards are closed.
 
 The preregistration requires a favorable ordinary-transformer control, an
 `S^2` structure-breaking generator, deranged cards, one-witness ablation,
@@ -1195,10 +1200,13 @@ remain structural. The sole development run scores 100% held-out atomic,
 recurrent state, and answers at every depth three through eight. The favorable
 ordinary transformer scores 22.667% atomic and 2.539% recurrent state despite
 exact train fit; `S^2`, deranged-card, one-witness, and reset controls remain at
-0.928%, 1.318%, 1.416%, and 3.076% state. This establishes a narrow learned
-generator/compiler mechanism in development, not natural-language semantics,
-learned halt, open-ended planning, or unrestricted native reasoning. The frozen
-weights now await exactly one sealed confirmation read.
+0.928%, 1.318%, 1.416%, and 3.076% state. The sole unchanged-weight confirmation
+repeats 100% state and answers over 2,048 programs and 18 disjoint laws, versus
+1.562% for the ordinary transformer and 0.879%, 0.732%, 2.197%, and 1.465% for
+the four causal controls. All 18 confirmation gates pass. This confirms a narrow
+learned generator/compiler mechanism, not natural-language semantics, learned
+halt, open-ended planning, or unrestricted native reasoning. Both score-bearing
+boards are permanently closed.
 
 ---
 
@@ -1365,6 +1373,9 @@ ledger; credential-handling and live-operational instructions are excluded.
 - `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_2.md` — embedded in Appendix A
 - `R12_S7_LEARNED_CAYLEY_LAW_COMPILER_PREREG.md` — embedded in Appendix A
 - `R12_S7_LEARNED_CAYLEY_LAW_CPU_RESULT.md` — primary evidence file; Appendix refresh pending
+- `R12_S7_LEARNED_CAYLEY_DEVELOPMENT_RESULT.md` — primary evidence file; Appendix refresh pending
+- `R12_S7_LEARNED_CAYLEY_CONFIRMATION_PREREG.md` — primary evidence file; Appendix refresh pending
+- `R12_S7_LEARNED_CAYLEY_CONFIRMATION_RESULT.md` — primary evidence file; Appendix refresh pending
 
 ### Prior core and control records
 
@@ -1505,6 +1516,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Admitted S7 learned Cayley compilation before any neural board: 218 learned generator/zero parameters, 2,063,104/2,063,104 hidden-binding cells, 5,544/5,544 recurrent programs, and strong `S^2`/one-witness CPU collapses. |
 | 2026-07-19 | Froze the sole S7 board after source commit `b9a9414`: 23 generator rows, 984 favorable-transformer cells, 150 held-out atomic cells, 2,048 development programs over 16 fresh laws, and 2,048 sealed confirmation programs over 18 disjoint laws. Access remains zero/zero. |
 | 2026-07-19 | Qualified S7 development after the sole frozen run: 150/150 unseen-law atomic cells and 2,048/2,048 recurrent states/answers, versus 2.539% state for the exact-fit ordinary transformer and 0.928%-3.076% for causal controls. All 19 gates pass; confirmation remains sealed. |
+| 2026-07-19 | Confirmed S7 unchanged on the sole sealed read: 2,048/2,048 recurrent states and answers across 18 disjoint laws, versus 1.562% state for the exact-fit ordinary transformer and 0.732%-2.197% for causal controls. All 18 gates pass; both boards are closed. |
 | 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 

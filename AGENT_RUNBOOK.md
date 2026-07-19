@@ -6,37 +6,35 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 16:58 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 17:06 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
 > GSM8K pass@1 `2/100`, MATH-500 `2/100`, HumanEval `6/164`, and MBPP `0/100`. This confirms a
 > low-single-digit plateau rather than a broad 120k-to-300k capability gain.
 >
-> **Newest bounded reasoning baseline:** S5 learned generator-factored execution is independently
-> confirmed. A 4,934-parameter neural kernel trained on only six unit cells, with zero amount-two
-> or recurrent-program examples, exactly matches the old host action table behind frozen S4 v5.
-> Development job `693183` reaches **97.510% programs / 98.193% state / 98.682% answers**;
-> confirmation job `693185` reaches **96.924% / 97.607% / 98.096%**. Unit and held-out
-> amount-two closure are each 36/36. Fixed-law derangement, direction rotation, and state reset
-> collapse confirmation state to 22.217%, 1.807%, and 40.234%. Promote
-> `artifacts/r12/s5_learned_generator.promoted.json`; preserve treatment SHA-256
-> `fbf7004e...`. This confirms model-owned finite transition semantics in the bounded known-action
-> domain, not unseen semantics, open planning, learned halt, or broad native reasoning.
+> **Newest bounded reasoning baseline:** S7 learned Cayley law compilation is independently
+> confirmed. Frozen development job `693344` and one-read confirmation job `693346` both reach
+> **100% exact recurrent state and answers**, including 100% at every depth three through eight.
+> Confirmation covers 2,048 programs over 18 laws disjoint from all training and development laws.
+> The 218-parameter treatment learned only 23 successor cells and three zero anchors; it received no
+> recurrent, answer, development-law, or confirmation-law supervision. The exact-fit 4,753,677-
+> parameter transformer reaches 1.562% confirmation state; learned `S^2`, deranged cards, one
+> witness, and reset reach 0.879%, 0.732%, 2.197%, and 1.465%. All 18 confirmation gates pass.
+> Promote `artifacts/r12/s7_learned_cayley.promoted.json`; preserve checkpoint SHA `c26e2cb6...`,
+> evaluation `4b4a5395...`, and assessment `ceda8312...`. This confirms model-owned learned cyclic
+> dynamics, contextual unseen-law compilation, and exact recurrent reuse. It does not establish
+> natural-language grounding, arbitrary algebra, learned active-step/halt, or broad native reasoning.
 >
-> **Active next phase:** S7 learned Cayley law compilation has passed every fresh-development gate
-> and is awaiting exactly one unchanged-weight sealed confirmation read. Job `693344` completes once
-> on `evc25` in 2m25s. The 218-parameter treatment learns 23/23 successor cells and 3/3 zero anchors,
-> then scores **150/150 unseen-law atomic cells and 2,048/2,048 recurrent states/answers**, with 100%
-> state at every depth three through eight. The favorable 4,753,677-parameter transformer fits all
-> 984 train cells but reaches only 34/150 = 22.667% held-out atomic and 52/2,048 = 2.539% state.
-> Learned `S^2`, deranged cards, one witness, and state reset score 0.928%, 1.318%, 1.416%, and 3.076%
-> state; nonce recoding is bit-identical. All 19 gates pass. Freeze checkpoint SHA `c26e2cb6...`,
-> evaluation `e02ed2d3...`, and assessment `2ef4d5ee...`; no refit or rescore. Confirmation-only code
-> must bind those hashes plus sealed board SHA `c2eb8d5c...`, repeat the same recurrent/causal gates,
-> and read confirmation exactly once. Even if confirmed, the honest boundary remains cyclic topology,
-> exact equality, bounded nested replay, event invocation, and structural pop-insert. S5 remains the
-> strongest confirmed bounded baseline until S7 confirmation passes.
+> **Active next phase:** integrate the confirmed S7 generator/compiler with the confirmed S4 v5
+> hard-island parser and S5 model-owned transition kernel. The next board must replace synthetic law
+> cards with fresh natural-language operation descriptions, make active event/step selection and halt
+> model-owned, and retain hidden coordinates, disjoint laws, favorable ordinary controls, causal
+> ablations, and one sealed confirmation. Do not widen or tune S7 on its closed boards. Cyclic
+> topology, equality, bounded nested replay, event invocation, and pop-insert are still explicit
+> architectural priors; each must either be learned in a new preregistered stage or remain named in
+> the final claim. No new score-bearing board may be generated before the integration theory, CPU
+> falsifier, parameter accounting, and failure gates are committed.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -8803,3 +8801,17 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `qualify_s7_learned_cayley_for_fresh_confirmation`; checkpoint SHA `c26e2cb6...`; development
   access one, confirmation zero. Freeze confirmation-only code and the same recurrent/causal gates
   before the sole sealed read. No model, data, threshold, or mechanism change is permitted.
+
+- **2026-07-19 16:58--17:06** -- **CONFIRMED: S7 learns and reuses unseen operation laws exactly
+  under its bounded cyclic substrate.** Confirmation code and gates are committed/pushed as
+  `f2e1527` before any sealed access, then hash-matched and re-tested on Newton. Sole job `693346`
+  completes on `evc25` in 15s, exit `0:0`, with no training. On 2,048 programs over 18 laws disjoint
+  from every training/development law, treatment reaches 2,048/2,048 exact recurrent states and
+  answers and 100% state at every depth 3--8. The favorable ordinary transformer reaches 32/2,048 =
+  1.562% state; `S^2`, deranged cards, one witness, and reset reach 0.879%, 0.732%, 2.197%, and
+  1.465%. Nonce recoding is bit-identical; all 18 confirmation gates pass. Evaluation SHA
+  `4b4a5395...`, assessment `ceda8312...`; access counters are now one/one and both boards are
+  permanently closed. Promote S7 as the strongest bounded native component while preserving the
+  explicit boundary: cyclic topology, equality, bounded replay, event invocation, and pop-insert are
+  structural. The next stage is fresh natural-language grounding plus model-owned step/halt control,
+  not a widened repeat of S7.
