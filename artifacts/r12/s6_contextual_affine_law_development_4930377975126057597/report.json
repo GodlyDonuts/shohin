@@ -1,0 +1,58 @@
+{
+  "audit": {
+    "atomic_training_rows": 961,
+    "confirmation_accesses": 0,
+    "confirmation_program_rows": 0,
+    "development_cell_counts": {
+      "m11_d3": 114,
+      "m11_d4": 114,
+      "m11_d5": 114,
+      "m11_d6": 114,
+      "m11_d7": 113,
+      "m11_d8": 113,
+      "m5_d3": 114,
+      "m5_d4": 114,
+      "m5_d5": 114,
+      "m5_d6": 114,
+      "m5_d7": 114,
+      "m5_d8": 114,
+      "m7_d3": 114,
+      "m7_d4": 113,
+      "m7_d5": 113,
+      "m7_d6": 114,
+      "m7_d7": 114,
+      "m7_d8": 114
+    },
+    "development_law_count": 34,
+    "diagnostic_law_count": 39,
+    "minimum_distinct_laws_per_program": 2,
+    "primary_development_rows": 2048,
+    "scale_diagnostic_rows": 512,
+    "train_development_law_overlap": 0,
+    "training_law_count": 103,
+    "treatment_input_fields": [
+      "card_y0",
+      "card_y1",
+      "current_location",
+      "modulus"
+    ]
+  },
+  "decision": "admit_s6_development_board",
+  "files": {
+    "atomic_train.jsonl": {
+      "bytes": 166274,
+      "sha256": "c4312b99dddbad5c3c44e0af1b80b5fd281040291b30d05a999330deec64b9b7"
+    },
+    "development.jsonl": {
+      "bytes": 1363511,
+      "sha256": "8fd78f761207e8446562c75e1816d1a0821d90ecd64fcb6b837f7a92fe808047"
+    },
+    "scale_diagnostic.jsonl": {
+      "bytes": 362865,
+      "sha256": "4016a6df9f9681df8599a4ab19b3804d8627c833aef5169f24f705bc28344984"
+    }
+  },
+  "schema": "r12_s6_contextual_affine_development_board_report_v1",
+  "seed": 4930377975126057597,
+  "source_commit": "c09024b"
+}
