@@ -1,0 +1,86 @@
+{
+  "cpu_seed": 2026071907,
+  "decision": "admit_s7_learned_cayley_preregistration",
+  "gates": {
+    "all_hidden_binding_destinations_exact": true,
+    "all_hidden_binding_programs_exact": true,
+    "compiler_source_has_no_field_solver": true,
+    "one_witness_unit_default_is_insufficient": true,
+    "primary_learned_cells_are_23_plus_3_anchors": true,
+    "stride_two_control_is_not_equivalent": true
+  },
+  "moduli": [
+    {
+      "binding_count": 120,
+      "binding_mode": "exhaustive",
+      "destination_cells": 12000,
+      "exact_destination_cells": 12000,
+      "law_count": 20,
+      "learned_successor_cells": 5,
+      "learned_zero_anchors": 1,
+      "modulus": 5,
+      "one_witness_unit_default_accuracy": 0.4,
+      "recurrent_programs": 120,
+      "recurrent_programs_exact": 120,
+      "stride_two_accuracy": 0.2
+    },
+    {
+      "binding_count": 5040,
+      "binding_mode": "exhaustive",
+      "destination_cells": 1481760,
+      "exact_destination_cells": 1481760,
+      "law_count": 42,
+      "learned_successor_cells": 7,
+      "learned_zero_anchors": 1,
+      "modulus": 7,
+      "one_witness_unit_default_accuracy": 0.2857142857142857,
+      "recurrent_programs": 5040,
+      "recurrent_programs_exact": 5040,
+      "stride_two_accuracy": 0.14285714285714285
+    },
+    {
+      "binding_count": 256,
+      "binding_mode": "sampled",
+      "destination_cells": 309760,
+      "exact_destination_cells": 309760,
+      "law_count": 110,
+      "learned_successor_cells": 11,
+      "learned_zero_anchors": 1,
+      "modulus": 11,
+      "one_witness_unit_default_accuracy": 0.18181818181818182,
+      "recurrent_programs": 256,
+      "recurrent_programs_exact": 256,
+      "stride_two_accuracy": 0.09090909090909091
+    },
+    {
+      "binding_count": 128,
+      "binding_mode": "sampled",
+      "destination_cells": 259584,
+      "exact_destination_cells": 259584,
+      "law_count": 156,
+      "learned_successor_cells": 13,
+      "learned_zero_anchors": 1,
+      "modulus": 13,
+      "one_witness_unit_default_accuracy": 0.15384615384615385,
+      "recurrent_programs": 128,
+      "recurrent_programs_exact": 128,
+      "stride_two_accuracy": 0.07692307692307693
+    }
+  ],
+  "resource_vector": {
+    "exact_equality": true,
+    "external_arithmetic_at_inference": 0,
+    "law_specific_parameters": 0,
+    "learned_successor_cells_primary": 23,
+    "learned_zero_anchors_primary": 3,
+    "maximum_nested_successor_depth": 121,
+    "structural_state_mutation": "pop_insert"
+  },
+  "schema": "r12_s7_learned_cayley_cpu_falsifier_v1",
+  "source_forbidden_tokens": {
+    "%": false,
+    ".destination(": false,
+    "infer_affine_law": false,
+    "slope *": false
+  }
+}

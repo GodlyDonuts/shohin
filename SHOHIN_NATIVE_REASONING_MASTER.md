@@ -9,7 +9,7 @@ runbook and result files.
 **Status:** Living document. The protected raw-pretraining anchor is complete
 at 300,000 steps. Native multi-step reasoning is not yet established.
 
-**Last updated:** 2026-07-19 05:40 EDT.
+**Last updated:** 2026-07-19 16:44 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -614,8 +614,13 @@ instead of treating a single end-to-end score as one capability.
 | S3 categorical register and closure | Equivariant repair improves long mean execution to 84.180%; exact action table to 85.303%; training-only lexical decoder to 94.434% mean and 98.340% ordered development | Intermediate arms rejected or only qualified; continuous action and direction transport remain failure modes |
 | S3 v1.4 pointer-anchor confirmation | Ordered primary 98.242% answers / 99.658% state / 98.975% chains; operation derangement 35.059% / 17.578%; query derangement 0.586% answers with state unchanged | First strict independent confirmation of bounded known-atom, source-deleted categorical execution through depth 8 |
 | Halt-boundary audit and S4 v1 | Chunk board has 395 legitimate events sharing the exact signature of 1,024 hidden padding labels. S4 treatment finds 2048/2048 counts and 1932/2048 programs/state/answers; shuffled programs are 0/2048. Pointer v1.1 collapses to 25/2048 programs. | Count signal is real, but v1 misses the 95% program gate by 14 rows and v1.1 is rejected. Move to event-relative learned span pointers on a fresh board. |
+| S4 v2 event-relative pointers | On a fresh 2,048-row board, count is 2044/2048, but exact programs are 254/2048 = 12.40%, state 296/2048 = 14.45%, and answers 318/2048 = 15.53%; shuffled programs are 0/2048 | Rejected. Independent absolute start/end extrema do not learn width-invariant event identity or argument pairing; confirmation access is zero |
+| S4 v3 set-identity event bus | 2048/2048 count, 2037/2048 = 99.46% roster, and 2048/2048 query, but only 191/2048 = 9.33% exact programs; roster derangement drives programs to 0/2048 | Rejected parser, retained causal roster carrier. Global event-conditioned membership does not pair each event anchor with its own arguments |
+| S4 v4 monotone event regions | 100% count/query, 2006/2048 = 97.95% roster, 1443/2048 = 70.46% programs, 83.15% state, 87.06% answers; both roster and region rotations give 0/2048 programs | Rejected parser, retained causal monotone locality. Diffuse regional role softmax loses the hard event islands already present in v1 |
 | S4 v5 hard-island/soft-interface confirmation | 97.803% programs / 98.389% state / 98.633% answers; roster and event-region rotations each 0% programs | Confirmed whole-source known-operation parser with autonomous event count; exact host action table remains a boundary |
 | **S5 learned generator-factored confirmation** | **96.924% programs / 97.607% state / 98.096% answers**, exactly matching host execution; 36/36 unit and 36/36 never-trained amount-two closure | **Confirmed model-owned finite transition law and recurrent categorical state; known semantics and structural invocation remain bounded** |
+| **S6 contextual affine-law induction** | **78/318 = 24.528%** held-out atomic destinations, **167/2048 = 8.154%** recurrent state, **633/2048 = 30.908%** answers after exact 961/961 atomic training fit | **Rejected generic transformer induction; two demonstrations are causally informative but are represented as a lookup surface, not the identified algebra; no confirmation** |
+| S7 learned Cayley-law compiler | No score yet; source/theory freeze only | Preregistered successor-generator architecture to test compositional unseen-law induction after S6; no board, fit, or confirmation result exists |
 
 The implementation gates were also independently exercised before the model
 claims were read: RGDE v1.1 passed its 19 CPU tests, Ruff, `py_compile`, shell
@@ -625,12 +630,13 @@ tests, Ruff, `py_compile`, and production CPU receipt checks. These are
 reproducibility gates, not capability scores.
 
 The correct scientific interpretation is not that Shohin now performs general
-reasoning. A previously blended failure has been decomposed: a known-atom
-compiler is qualified, a model-owned categorical executor carries state through
-depth eight when its packet is correct, and S4 extracts the exact number of
-events from every held-out whole source. Its remaining errors are variable-width
-span boundaries and event-relative argument binding, followed by unseen action
-semantics and open-language termination.
+reasoning. A previously blended failure has been decomposed: S4 v5 supplies a
+confirmed hard-island/soft-interface known-atom parser, S5 supplies a confirmed
+model-owned finite generator and recurrent categorical state, and S6 shows that
+identifiability alone does not make a generic transformer induce an unseen law.
+The remaining non-native interfaces are active-step/termination control, open
+operation semantics, and natural-language scope beyond the bounded known-atom
+domain.
 
 ---
 
@@ -829,9 +835,25 @@ under the same semantic signature. A halt classifier trained on
 lawful next test is S4: one unpadded source, a variable-length event tape, and
 a parser that stops when no complete later event exists. S4 v1 finds the exact
 count on 2048/2048 held-out sources but reaches only 1932/2048 exact programs;
-the frozen pointer v1.1 repair is rejected at 25/2048 programs.
+the frozen pointer v1.1 repair is rejected at 25/2048 programs. The later fresh
+S4 sequence makes the interface diagnosis sharper: v2 absolute pointers collapse
+to 254/2048 programs, v3 preserves roster/query identity but reaches 191/2048
+programs, and v4 proves monotone locality is causal while its diffuse regional
+softmax reaches only 1443/2048 programs.
 
-### 7.14 Minimal neural generators can replace the exact action table
+### 7.14 Hard islands plus soft interfaces are the confirmed S4 decomposition
+
+S4 v5 restores the complete contiguous entity/literal islands that v1 already
+represents sharply, while retaining v3's causal set-valued roster/query carriers
+and v4's model-discovered monotone regions. With zero new trainable parameters,
+it reaches 2003/2048 = 97.80% exact programs, 2015/2048 = 98.39% exact state,
+and 2020/2048 = 98.63% answers on the sole disjoint confirmation; frozen v1 is
+1913/2048 = 93.41% programs. Roster and event-region rotations each produce
+zero exact programs. The discovery is a representation decomposition, not an
+open-ended reasoning result: the vocabulary is still twelve known left/right
+atoms and the runtime supplies bounded event invocation.
+
+### 7.15 Minimal neural generators can replace the exact action table
 
 S5 learns only six unit cells: three current locations times left/right. The
 4,934-parameter kernel sees no source tokens, names, amount-two transitions,
@@ -847,7 +869,7 @@ deranged law fits its six false labels equally well but falls to 22.217% state;
 direction rotation reaches 1.807%, and resetting state reaches 40.234%. The
 learned law, semantic direction, and recurrence are therefore causally used.
 
-### 7.15 The remaining non-native resource is controller scope, not local law
+### 7.16 The remaining non-native resource is controller scope, not local law
 
 S5 closes the narrow claim that a hand-authored transition table is necessary.
 It does not close the full native-reasoning contract. The parser still covers
@@ -858,7 +880,7 @@ small model induces a new operation law or owns active-step/halt decisions
 without reintroducing a host interpreter, answer leakage, or an uncounted
 schedule channel.
 
-### 7.16 S6 formalizes unseen-law induction without widening the saturated kernel
+### 7.17 S6 formalizes unseen-law induction without widening the saturated kernel
 
 S6 replaces the question "can a larger S5 MLP fit the same six cells?" with a
 strictly stronger capability. At prime modulus `m`, a new operation law maps a
@@ -886,6 +908,31 @@ demonstrations are weakly causal, but a generic categorical transformer learns
 a lookup surface rather than the uniquely identified algebra. S6 is rejected;
 confirmation access is zero. Reopening it with width, epochs, or tuning on the
 closed board is forbidden.
+
+### 7.18 S7 replaces arithmetic approximation with learned generator reuse
+
+S7 treats S6's failure as a representation error. Observed location symbols are
+arbitrarily permuted. The trainable module learns only one cyclic successor
+per symbol and one zero anchor per modulus: 23 successor cells, three anchors,
+and 218 parameters total. A new law card is compiled by walking from its first
+witness to its second while walking from zero in parallel, then advancing the
+destination by that inferred generator distance once per query-position step.
+The compiler uses successor application and equality, not modulo, recovered
+coefficients, multiplication, or a per-law table.
+
+The exact theorem passes 2,063,104/2,063,104 destination cells and 5,544/5,544
+recurrent programs across every hidden binding at moduli 5 and 7 and sampled
+bindings at 11 and 13. Replacing the true generator with the equally complete
+`S^2` cycle falls to 20.000%, 14.286%, 9.091%, and 7.692% by scale; completing
+an ambiguous one-witness card with a unit slope reaches only 40.000%, 28.571%,
+18.182%, and 15.385%. The source/CPU mechanism is admitted for one fresh-board
+neural test, not yet a learned result.
+
+The honest boundary matters. S7 is repeated addition in a learned Cayley graph.
+Cyclic topology, exact equality, bounded nested replay, event invocation, and
+pop-insert are structural. Passing would establish contextual induction of an
+unseen operation law under that prior, not universal arithmetic, open-language
+reasoning, or model-owned unbounded halt.
 
 ---
 
@@ -937,6 +984,15 @@ Do not reopen these without a materially different causal prediction:
     two examples identify it.** S6 fits every atomic train cell but reaches only
     24.528% held-out atomic destinations and 8.154% recurrent state. Identifiability
     of the target does not supply the representation bias needed to learn it.
+19. **Independent absolute pointers solve variable-width referential binding.**
+    S4 v2 reaches only 254/2048 exact programs and is dominated by crossed or
+    invalid boundaries.
+20. **A global set-valued event bus is sufficient for compositional parsing.**
+    S4 v3 recovers roster identity and query almost perfectly, but exact programs
+    fall to 191/2048 and decay with depth; the carrier is causal but not enough.
+21. **Diffuse local attention is sufficient once event regions are known.**
+    S4 v4's roster and event-region rotations are causal, yet the soft regional
+    decoder reaches only 70.46% programs. Hard contiguous islands are required.
 
 ---
 
@@ -1065,32 +1121,23 @@ memory but used a literal `{}.jsonl` output path; its retained confirmation file
 is byte-identical to the repaired final confirmation. Neither repair followed a
 model fit, score, or row-level confirmation inspection.
 
-### 9.9 Model-owned schedule and halt through a whole-source event tape
+### 9.9 Model-owned schedule, scope, and halt after the S4/S5 frontier
 
-The confirmed S3 executor is now the frozen consumer baseline. The highest-
-leverage next experiment is S4: train a source-only variable-length parser to
-emit complete `(direction, entity, amount)` events from one unpadded source,
-then feed that tape into the locked S3 consumer. It must compare against gold
-tape, fixed-slot, host-count, and shuffled-supervision controls, and report
-strict autonomous parsing separately from favorable gold-count rescue.
+The S4 sequence is now closed as a bounded parser study. v2 rejects independent
+absolute pointers, v3 retains a causal set-valued identity carrier but fails
+event-local pairing, and v4 shows that monotone locality helps while diffuse
+regional softmax is too imprecise. S4 v5 is the confirmed parser: hard contiguous
+entity/literal islands inside model-discovered monotone regions plus soft roster
+and query carriers reach 97.80% exact programs on confirmation with zero-program
+causal rotations.
 
-Two earlier S4 corpus builds were correctly retired for cross-split 13-gram
-leakage. The corrected corpus has 48,000 train rows at depths 1-4, 2,048
-development rows at depths 3-8, and maximum source length 343. S4 v1 treatment
-learns 2048/2048 event counts and 1932/2048 exact programs/state/answers; shuffled
-supervision yields zero programs. It is rejected because the immutable program
-floor is 95%. Gold intro/query boundaries reach 97.217%, while the zero-fit
-variable-width repair collapses, proving that v2 must learn event-relative
-start/end pointers rather than add another deterministic decoder heuristic.
-
-That frontier has now advanced. S4 v5 confirms a hard-island/soft-interface
-whole-source parser at 97.803% programs. S5 then replaces its exact action table
-with a 4,934-parameter generator learned from six unit cells and confirms
-96.924% programs / 97.607% state / 98.096% answers, exactly matching host
-execution. The open schedule/halt problem is therefore narrower: event count is
-model-derived, but deterministic assembly and fixed one/two-step invocation
-still define the runtime. Future work must internalize active-step/termination
-or induce unseen laws without modifying these closed boards.
+S5 then replaces v5's host action table with a 4,934-parameter tied generator
+trained only on six unit cells. It closes 36/36 unseen amount-two transitions
+and matches host execution at 96.924% programs, 97.607% state, and 98.096%
+answers. This is the strongest bounded baseline, but structural event assembly,
+known operation vocabulary, fixed one/two-step replay, and event-list termination
+remain outside the learned loop. The next target is model-owned active-step/halt
+control or a genuinely compositional unseen-law mechanism.
 
 ### 9.10 Compositional representation is the next unseen-law gate
 
@@ -1105,11 +1152,32 @@ A candidate must include at least: a fresh law split with no S6 development
 reuse; an ordinary-transformer control bound to the closed S6 score; a
 structure-breaking label or composition control; an ambiguous one-witness arm;
 held-out-law atomic and recurrent evaluation; and a scale diagnostic that
-cannot be solved by a per-law table. Any fixed group arithmetic performed by
+cannot be solved by a per-law table. S6's final score is the fixed negative
+control: exact train fit but 24.528% held-out atomic destinations, 8.154%
+recurrent state, and 30.908% answers. Any fixed group arithmetic performed by
 the host must be counted explicitly as architectural prior rather than claimed
 as learned reasoning. The scientific question is whether a learned symbol-to-
 action representation plus forced composition transfers, not whether an exact
 host formula can replay the board.
+
+### 9.11 S7 learned Cayley-law compiler (preregistered, no score)
+
+S7 is the next frozen candidate after S6, not an observed capability result.
+It hides each location space behind a fresh permutation and learns only 23
+successor cells across moduli 5, 7, and 11 plus three zero anchors. Given a new
+law card, the treatment compiles the slope and destination through repeated
+successor walks, using equality and bounded cyclic application rather than
+modulus arithmetic, coefficient recovery, or a per-law table.
+
+The preregistration requires a favorable ordinary-transformer control, an
+`S^2` structure-breaking generator, deranged cards, one-witness ablation,
+state reset, nonce recoding, held-out-law atomic rows, and depth-three-through-
+eight recurrent programs. It freezes the claim boundary: the cyclic-group
+prior, equality, bounded loop limits, pop-insert mutation, and event invocation
+remain structural, so even a pass would establish only a narrow learned
+generator/compiler mechanism—not natural-language semantics, learned halt,
+open-ended planning, or unrestricted native reasoning. The CPU falsifier and
+neural board have not yet produced a score-bearing result.
 
 ---
 
@@ -1195,7 +1263,7 @@ used directly, transitively, or newly added in the current frontier run.
 The source records begin after the maintenance protocol and are labeled by
 stable filenames. Local links are converted to portable in-dossier labels.
 
-Embedded research sources: 139 files, 1,379,325 source bytes.
+Embedded research sources: 162 files, 1,477,993 source bytes.
 
 Operational boundary: the full operational runbook remains intentionally
 distilled rather than copied verbatim. Its custody, checkpoint, training,
@@ -1252,6 +1320,30 @@ ledger; credential-handling and live-operational instructions are excluded.
 - `R12_S3_POINTER_ANCHOR_RESULT.md` — embedded in Appendix A
 - `R12_S4_SELF_DELIMITING_EVENT_TAPE_PREREG.md` — embedded in Appendix A
 - `R12_VAMT_V3_REVIEW_RESULT.md` — embedded in Appendix A
+- `R12_S4_EVENT_RELATIVE_POINTER_PREREG.md` — embedded in Appendix A
+- `R12_S4_EVENT_RELATIVE_POINTER_RESULT.md` — embedded in Appendix A
+- `R12_S4_HARD_ISLAND_SOFT_INTERFACE_PREREG.md` — embedded in Appendix A
+- `R12_S4_HARD_ISLAND_SOFT_INTERFACE_RESULT.md` — embedded in Appendix A
+- `R12_S4_MONOTONE_EVENT_REGION_PREREG.md` — embedded in Appendix A
+- `R12_S4_MONOTONE_EVENT_REGION_RESULT.md` — embedded in Appendix A
+- `R12_S4_POINTER_ANCHORED_EVENT_TAPE_REPAIR.md` — embedded in Appendix A
+- `R12_S4_SELF_DELIMITING_EVENT_TAPE_RESULT.md` — embedded in Appendix A
+- `R12_S4_SET_IDENTITY_EVENT_BUS_PREREG.md` — embedded in Appendix A
+- `R12_S4_SET_IDENTITY_EVENT_BUS_RESULT.md` — embedded in Appendix A
+- `R12_S4_V5_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_S5_LEARNED_GENERATOR_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_S5_LEARNED_GENERATOR_PREREG.md` — embedded in Appendix A
+- `R12_S5_LEARNED_GENERATOR_PREREG_V1_1.md` — embedded in Appendix A
+- `R12_S5_LEARNED_GENERATOR_PREREG_V1_2.md` — embedded in Appendix A
+- `R12_S5_LEARNED_GENERATOR_RESULT.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_CPU_RESULT.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_DEVELOPMENT_BOARD_RECEIPT.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_1.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_2.md` — embedded in Appendix A
+- `R12_S7_LEARNED_CAYLEY_LAW_COMPILER_PREREG.md` — embedded in Appendix A
+- `R12_S7_LEARNED_CAYLEY_LAW_CPU_RESULT.md` — primary evidence file; Appendix refresh pending
 
 ### Prior core and control records
 
@@ -1347,7 +1439,6 @@ ledger; credential-handling and live-operational instructions are excluded.
 - `REASONING_FRONTIER.md` — embedded in Appendix A
 - `TRAINING_METRICS.md` — embedded in Appendix A
 
-
 ## 12. Mandatory Maintenance Protocol
 
 This file is part of experiment completion, not optional documentation.
@@ -1390,19 +1481,195 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Confirmed S4 v5 hard-island/soft-interface parsing, then confirmed S5 learned generator-factored execution at 96.924% programs / 97.607% state / 98.096% answers with exact unseen amount-two closure and matched causal controls. |
 | 2026-07-19 | Froze S6 unseen affine-law induction, recorded a scoreless modulus-5 split-coverage failure, repaired only that admission defect in v1.1, and passed exhaustive identifiability/composition mechanics over 328 laws. No neural score or confirmation exists yet. |
 | 2026-07-19 | Rejected S6 after its sole valid development run: exact train fit but 24.528% held-out atomic destinations, 8.154% recurrent state, and 30.908% answers. Cards are weakly causal; the generic transformer does not induce the algebra. No confirmation was generated. |
+| 2026-07-19 | Admitted S7 learned Cayley compilation before any neural board: 218 learned generator/zero parameters, 2,063,104/2,063,104 hidden-binding cells, 5,544/5,544 recurrent programs, and strong `S^2`/one-witness CPU collapses. |
+| 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
+| 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 
 ---
 
 # Appendix A. Embedded Research Source Records
 
-The following records are the source markdowns available to this ledger.
-They are included so a reviewer does not need access to the local checkout.
-Source text is preserved except that local markdown links are rendered as
-portable labels; the operational runbook is intentionally distilled above.
+This upload edition embeds the complete text of every research markdown
+used directly, transitively, or newly added in the current frontier run.
+The source records begin after the maintenance protocol and are labeled by
+stable filenames. Local links are converted to portable in-dossier labels.
 
----
+Embedded research sources: 162 files, 1,477,993 source bytes.
 
-## Embedded source 01: `FRONTIER_AGENT_PLANS.md`
+Operational boundary: the full operational runbook remains intentionally
+distilled rather than copied verbatim. Its custody, checkpoint, training,
+and isolation facts required for scientific judgment are stated in the main
+ledger; credential-handling and live-operational instructions are excluded.
+
+### New frontier records included in this update
+
+- `R12_S7_LEARNED_CAYLEY_LAW_COMPILER_PREREG.md` — embedded in Appendix A
+
+### Retained source records
+
+- `FRONTIER_AGENT_PLANS.md` — embedded in Appendix A
+- `FRONTIER_AGENT_PLANS_ANALYSIS.md` — embedded in Appendix A
+- `R12_ACTIVE_VERIFIER_QUERY_NO_GO.md` — embedded in Appendix A
+- `R12_ACTIVE_WITNESS_ALLOCATION_NO_GO.md` — embedded in Appendix A
+- `R12_ADDRESSED_CATEGORICAL_WORKSPACE_PREREG.md` — embedded in Appendix A
+- `R12_AXIOMATIC_PRESENTATION_NO_GO.md` — embedded in Appendix A
+- `R12_CANONICAL_RESIDUAL_NAMING_CONTROL.md` — embedded in Appendix A
+- `R12_CAUSAL_ADDRESS_REVELATION.md` — embedded in Appendix A
+- `R12_CAUSAL_CARRY_MOTOR_PREREG.md` — embedded in Appendix A
+- `R12_CAUSAL_CARRY_MOTOR_RECOVERY_PREREG.md` — embedded in Appendix A
+- `R12_CAUSAL_RESULT_DIGIT_MOTOR_PREREG.md` — embedded in Appendix A
+- `R12_CAUSAL_RESULT_DIGIT_MOTOR_RESULT.md` — embedded in Appendix A
+- `R12_CDRL_NEURAL_OPTIMIZATION_RESULT.md` — embedded in Appendix A
+- `R12_CERTIFIED_LANGUAGE_BRIDGE_BOUNDARY.md` — embedded in Appendix A
+- `R12_CLOSED_DELIBERATION_NO_GO.md` — embedded in Appendix A
+- `R12_CLOSED_LATE_QUERY_NO_GO.md` — embedded in Appendix A
+- `R12_COHERENT_ACTION_THEORY.md` — embedded in Appendix A
+- `R12_COMMUTATOR_FACTORIZATION_NO_GO.md` — embedded in Appendix A
+- `R12_COMPILER_PRIOR_NO_GO.md` — embedded in Appendix A
+- `R12_CONFLICT_DRIVEN_RESIDUAL_LOCALIZATION.md` — embedded in Appendix A
+- `R12_CONTRACTIVE_PACKET_RECURRENCE_PREREG.md` — embedded in Appendix A
+- `R12_COUNTERFACTUAL_CONJUGATE_COMMIT_HYPOTHESIS.md` — embedded in Appendix A
+- `R12_COUNTERFACTUAL_CURSOR_ACTION_CPU_PREREG.md` — embedded in Appendix A
+- `R12_COUNTERFACTUAL_CURSOR_ACTION_NEURAL_RESULT.md` — embedded in Appendix A
+- `R12_COUNTERFACTUAL_CURSOR_ACTION_THEORY.md` — embedded in Appendix A
+- `R12_CROSS_DOMAIN_FAULT_CHANNEL_NO_GO.md` — embedded in Appendix A
+- `R12_CROSS_DOMAIN_FAULT_CHANNEL_REVIEW_RESULT.md` — embedded in Appendix A
+- `R12_CURSOR_READOUT_ACTUATION_RESULT.md` — embedded in Appendix A
+- `R12_CURSOR_TOKEN_TAPE_RESULT.md` — embedded in Appendix A
+- `R12_DRS_CAUSAL_CYCLE_RESULT.md` — embedded in Appendix A
+- `R12_DRS_WORKSPACE_PROBE_POST_RESULT.md` — embedded in Appendix A
+- `R12_DYNAMIC_FRONTIER_NO_GO.md` — embedded in Appendix A
+- `R12_FACTORIZED_COUNTERFACTUAL_RESIDUAL_CYCLE_PREREG.md` — embedded in Appendix A
+- `R12_FINITE_STATE_VS_MOTOR_NO_GO.md` — embedded in Appendix A
+- `R12_FORKED_STATE_TRANSPORT_PREREG.md` — embedded in Appendix A
+- `R12_FORK_CORE_THEORY.md` — embedded in Appendix A
+- `R12_FORMAT_CONJUGACY_AND_SSC.md` — embedded in Appendix A
+- `R12_GATE_VACUITY_AND_WGRQ_PREREG.md` — embedded in Appendix A
+- `R12_HIDDEN_COORDINATE_IDENTIFIABILITY_NO_GO.md` — embedded in Appendix A
+- `R12_HOLONOMY_STATE_NO_GO.md` — embedded in Appendix A
+- `R12_JACOBIAN_WORKSPACE_LONGITUDINAL_RESULT.md` — embedded in Appendix A
+- `R12_LAST_RESET_WITNESS_ATTENTION_PREREG.md` — embedded in Appendix A
+- `R12_LOCAL_REVERSIBLE_RULE_CONTROL.md` — embedded in Appendix A
+- `R12_MATROID_CLOSURE_TARGET.md` — embedded in Appendix A
+- `R12_MDL_IDENTIFIABILITY_NO_GO.md` — embedded in Appendix A
+- `R12_MINIMAX_CAUSAL_BROADCAST_SUBSPACE_NO_GO.md` — embedded in Appendix A
+- `R12_MIXED_DIFFERENCE_RESIDUAL_TRANSDUCER_PREREG.md` — embedded in Appendix A
+- `R12_NOISE_STABLE_ACTION_NO_GO.md` — embedded in Appendix A
+- `R12_OPERATION_CURSOR_RESULT.md` — embedded in Appendix A
+- `R12_OPERATION_SELECTION_LIKELIHOOD_RESULT.md` — embedded in Appendix A
+- `R12_OPERATION_WORKSPACE_JACOBIAN_RESULT.md` — embedded in Appendix A
+- `R12_OPERATOR_BALANCED_COMMIT_BISIMULATION_PREREG.md` — embedded in Appendix A
+- `R12_PACKET_ON_LATTICE_CARRY_CELL_PREREG.md` — embedded in Appendix A
+- `R12_PCFT_ADVERSARIAL_AUDIT.md` — embedded in Appendix A
+- `R12_POLYNOMIAL_CODED_ACTION_NO_GO.md` — embedded in Appendix A
+- `R12_POST_COMMIT_INTERFACE_FALSIFIER_PREREG.md` — embedded in Appendix A
+- `R12_POST_COMMIT_INTERFACE_FALSIFIER_RESULT.md` — embedded in Appendix A
+- `R12_POST_COMMIT_PACKET_TRANSPORT_V2_RESULT.md` — embedded in Appendix A
+- `R12_POST_COMMIT_PACKET_TRANSPORT_V3_RESULT.md` — embedded in Appendix A
+- `R12_PRESENTATION_CLOSED_RESIDUAL_TRANSPORT_PREREG.md` — embedded in Appendix A
+- `R12_QUERY_DISTRIBUTIONAL_CONTEXT_NO_GO.md` — embedded in Appendix A
+- `R12_QUERY_KERNEL_FACTORIZATION_NO_GO.md` — embedded in Appendix A
+- `R12_REASONING_INVENTION_CHARTER.md` — embedded in Appendix A
+- `R12_RECURRENT_CONTROLS_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_V1_1_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_V1_1_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_IDENTITY_PACKET_PROBE_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_CPU_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_CORPUS_ADMISSION.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_LANGUAGE_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_ISLANDS_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_ISLANDS_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_PILOT_MANIFEST.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_PREREG_AMENDMENT_V1_1.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_QUALIFICATION_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_QUALIFICATION_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_STRUCTURED_DIAGNOSTIC_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_STRUCTURED_DIAGNOSTIC_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_CORPUS_RESULT.md` — embedded in Appendix A
+- `R12_RELATION_COMPLETE_TRANSPORT_HYPOTHESIS.md` — embedded in Appendix A
+- `R12_RELATION_COMPLETE_TRANSPORT_REVIEW_RESULT.md` — embedded in Appendix A
+- `R12_RESEARCHER_ADAPTIVE_INTERACTION_RESULT.md` — embedded in Appendix A
+- `R12_RESEARCHER_INTERVIEW_RESULT.md` — embedded in Appendix A
+- `R12_RESIDUAL_PACKET_C2_REPRO_AUDIT_RESULT.md` — embedded in Appendix A
+- `R12_RGDE_CONSUMER_TRANSPORT_DIAGNOSTIC_PREREG.md` — embedded in Appendix A
+- `R12_RGDE_CONSUMER_TRANSPORT_DIAGNOSTIC_RESULT.md` — embedded in Appendix A
+- `R12_RGDE_DEPTH_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_RGDE_DEPTH_CONFIRMATION_RESULT.md` — embedded in Appendix A
+- `R12_RGDE_RELATIONAL_IDENTITY_PREREG.md` — embedded in Appendix A
+- `R12_RGDE_RELATIONAL_IDENTITY_RESULT.md` — embedded in Appendix A
+- `R12_RGDE_V1_1_CAUSAL_CONTROL_AMENDMENT.md` — embedded in Appendix A
+- `R12_S3_CATEGORICAL_REGISTER_PREREG.md` — embedded in Appendix A
+- `R12_S3_CATEGORICAL_REGISTER_RESULT.md` — embedded in Appendix A
+- `R12_S3_CLOSED_ACTION_PREREG.md` — embedded in Appendix A
+- `R12_S3_CLOSED_ACTION_RESULT.md` — embedded in Appendix A
+- `R12_S3_EQUIVARIANT_LOCAL_ACTION_PREREG.md` — embedded in Appendix A
+- `R12_S3_EQUIVARIANT_LOCAL_ACTION_RESULT.md` — embedded in Appendix A
+- `R12_S3_LEXICAL_ACTION_PREREG.md` — embedded in Appendix A
+- `R12_S3_LEXICAL_ACTION_RESULT.md` — embedded in Appendix A
+- `R12_S3_LEXICAL_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_S3_LEXICAL_CONFIRMATION_RESULT.md` — embedded in Appendix A
+- `R12_S3_POINTER_ANCHOR_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_S3_POINTER_ANCHOR_CONFIRMATION_RESULT.md` — embedded in Appendix A
+- `R12_S3_POINTER_ANCHOR_PREREG.md` — embedded in Appendix A
+- `R12_S3_POINTER_ANCHOR_RESULT.md` — embedded in Appendix A
+- `R12_S4_SELF_DELIMITING_EVENT_TAPE_PREREG.md` — embedded in Appendix A
+- `R12_SCEB_RESULTS.md` — embedded in Appendix A
+- `R12_SECRET_SHARED_CAUSAL_BOOTSTRAP_NO_GO.md` — embedded in Appendix A
+- `R12_SELF_AUTHENTICATING_STATE_NO_GO.md` — embedded in Appendix A
+- `R12_SELF_CANONICALIZING_EPOCH_RETIREMENT_THEORY.md` — embedded in Appendix A
+- `R12_SEPARATING_QUERY_BASIS_THEORY.md` — embedded in Appendix A
+- `R12_SHARED_TRANSITION_CIRCUIT_THEORY.md` — embedded in Appendix A
+- `R12_SOURCE_DELETED_RESIDUAL_PACKET_C1_CLOSURE.md` — embedded in Appendix A
+- `R12_SOURCE_DELETED_RESIDUAL_PACKET_PREREG.md` — embedded in Appendix A
+- `R12_SOURCE_SCHEDULED_FAILURE_TAXONOMY.md` — embedded in Appendix A
+- `R12_SOURCE_SCHEDULED_REASONING_CONFIRMATION.md` — embedded in Appendix A
+- `R12_SOURCE_SCHEDULED_REASONING_CONFIRMATION_RESULT.md` — embedded in Appendix A
+- `R12_SSC_FIRST_INTEGER_OFFLINE_RESULT.md` — embedded in Appendix A
+- `R12_SSC_HALT_FIRST_LIVE_RESULT.md` — embedded in Appendix A
+- `R12_STRUCTURED_RESIDUAL_RESOURCE_LAW.md` — embedded in Appendix A
+- `R12_TASK_QUOTIENT_LIFTING_PREREG.md` — embedded in Appendix A
+- `R12_TYPED_CONTROLLER_V1_RESULT.md` — embedded in Appendix A
+- `R12_TYPED_CONTROLLER_V2_RESULT.md` — embedded in Appendix A
+- `R12_UPDATER_CANDIDATE_LIKELIHOOD_RESULT.md` — embedded in Appendix A
+- `R12_VAMT_V2_REVIEW_RESULT.md` — embedded in Appendix A
+- `R12_VAMT_V3_BOUNDED_MACHINE_THEORY.md` — embedded in Appendix A
+- `R12_VAMT_V3_REVIEW_RESULT.md` — embedded in Appendix A
+- `R12_VOCABULARY_ALIGNED_MICROCODE_TRANSDUCER_THEORY.md` — embedded in Appendix A
+- `R12_WGRQ_CPU_PREREG.md` — embedded in Appendix A
+- `RAW300K_FREEFORM_INTERACTION_RESULT.md` — embedded in Appendix A
+- `RAW300K_INTERACTION_RESULT.md` — embedded in Appendix A
+- `REASONING_ATTACK_PLAN.md` — embedded in Appendix A
+- `REASONING_FRONTIER.md` — embedded in Appendix A
+- `TRAINING_METRICS.md` — embedded in Appendix A
+- `R12_S4_EVENT_RELATIVE_POINTER_PREREG.md` — embedded in Appendix A
+- `R12_S4_EVENT_RELATIVE_POINTER_RESULT.md` — embedded in Appendix A
+- `R12_S4_HARD_ISLAND_SOFT_INTERFACE_PREREG.md` — embedded in Appendix A
+- `R12_S4_HARD_ISLAND_SOFT_INTERFACE_RESULT.md` — embedded in Appendix A
+- `R12_S4_MONOTONE_EVENT_REGION_PREREG.md` — embedded in Appendix A
+- `R12_S4_MONOTONE_EVENT_REGION_RESULT.md` — embedded in Appendix A
+- `R12_S4_POINTER_ANCHORED_EVENT_TAPE_REPAIR.md` — embedded in Appendix A
+- `R12_S4_SELF_DELIMITING_EVENT_TAPE_RESULT.md` — embedded in Appendix A
+- `R12_S4_SET_IDENTITY_EVENT_BUS_PREREG.md` — embedded in Appendix A
+- `R12_S4_SET_IDENTITY_EVENT_BUS_RESULT.md` — embedded in Appendix A
+- `R12_S4_V5_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_S5_LEARNED_GENERATOR_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_S5_LEARNED_GENERATOR_PREREG.md` — embedded in Appendix A
+- `R12_S5_LEARNED_GENERATOR_PREREG_V1_1.md` — embedded in Appendix A
+- `R12_S5_LEARNED_GENERATOR_PREREG_V1_2.md` — embedded in Appendix A
+- `R12_S5_LEARNED_GENERATOR_RESULT.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_CPU_RESULT.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_DEVELOPMENT_BOARD_RECEIPT.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_1.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_2.md` — embedded in Appendix A
+
+## Embedded source 1: `FRONTIER_AGENT_PLANS.md`
 
 Original source path: `FRONTIER_AGENT_PLANS.md`
 Original source size: 55,142 bytes
@@ -1756,7 +2023,7 @@ Stop trying to make a single decoder learn to be a compiler, ALU, scheduler, and
 
 ---
 
-## Embedded source 02: `FRONTIER_AGENT_PLANS_ANALYSIS.md`
+## Embedded source 2: `FRONTIER_AGENT_PLANS_ANALYSIS.md`
 
 Original source path: `FRONTIER_AGENT_PLANS_ANALYSIS.md`
 Original source size: 18,803 bytes
@@ -2171,7 +2438,7 @@ plans from analogies into causal evidence.
 
 ---
 
-## Embedded source 03: `R12_ACTIVE_VERIFIER_QUERY_NO_GO.md`
+## Embedded source 3: `R12_ACTIVE_VERIFIER_QUERY_NO_GO.md`
 
 Original source path: `R12_ACTIVE_VERIFIER_QUERY_NO_GO.md`
 Original source size: 3,556 bytes
@@ -2271,7 +2538,7 @@ exponential separation from matched active-automata and synthesis controls.
 
 ---
 
-## Embedded source 04: `R12_ACTIVE_WITNESS_ALLOCATION_NO_GO.md`
+## Embedded source 4: `R12_ACTIVE_WITNESS_ALLOCATION_NO_GO.md`
 
 Original source path: `R12_ACTIVE_WITNESS_ALLOCATION_NO_GO.md`
 Original source size: 3,024 bytes
@@ -2356,7 +2623,7 @@ and a complete information ledger.
 
 ---
 
-## Embedded source 05: `R12_ADDRESSED_CATEGORICAL_WORKSPACE_PREREG.md`
+## Embedded source 5: `R12_ADDRESSED_CATEGORICAL_WORKSPACE_PREREG.md`
 
 Original source path: `R12_ADDRESSED_CATEGORICAL_WORKSPACE_PREREG.md`
 Original source size: 38,019 bytes
@@ -3015,7 +3282,7 @@ learned memory, not reasoning.
 
 ---
 
-## Embedded source 06: `R12_AXIOMATIC_PRESENTATION_NO_GO.md`
+## Embedded source 6: `R12_AXIOMATIC_PRESENTATION_NO_GO.md`
 
 Original source path: `R12_AXIOMATIC_PRESENTATION_NO_GO.md`
 Original source size: 7,766 bytes
@@ -3218,7 +3485,7 @@ guarantee.
 
 ---
 
-## Embedded source 07: `R12_CANONICAL_RESIDUAL_NAMING_CONTROL.md`
+## Embedded source 7: `R12_CANONICAL_RESIDUAL_NAMING_CONTROL.md`
 
 Original source path: `R12_CANONICAL_RESIDUAL_NAMING_CONTROL.md`
 Original source size: 4,282 bytes
@@ -3327,7 +3594,7 @@ set.
 
 ---
 
-## Embedded source 08: `R12_CAUSAL_ADDRESS_REVELATION.md`
+## Embedded source 8: `R12_CAUSAL_ADDRESS_REVELATION.md`
 
 Original source path: `R12_CAUSAL_ADDRESS_REVELATION.md`
 Original source size: 8,839 bytes
@@ -3575,7 +3842,7 @@ the cell-probe model.
 
 ---
 
-## Embedded source 09: `R12_CAUSAL_CARRY_MOTOR_PREREG.md`
+## Embedded source 9: `R12_CAUSAL_CARRY_MOTOR_PREREG.md`
 
 Original source path: `R12_CAUSAL_CARRY_MOTOR_PREREG.md`
 Original source size: 36,717 bytes
@@ -10208,7 +10475,7 @@ contract was frozen. The mechanics and negative learning outcome are retained
 only as an exploratory audit. They must never be represented as preregistered,
 canonical, prospectively frozen, promotion-grade, or independent evidence.
 
-The legacy filename carries the `_PREREG` suffix; that filename is not evidence of
+The legacy filename ends in `_PREREG.md`; that filename is not evidence of
 preregistration and confers no timestamp, immutability, or prospective status.
 This calibrated contract authorizes only deterministic local CPU replay and
 hostile validation. It authorizes no H100 job, Shohin checkpoint mutation,
@@ -29653,12 +29920,12 @@ Original source size: 59,242 bytes
 <!-- BEGIN EMBEDDED SOURCE -->
 # Shohin Training Metrics Ledger
 
-This is the auditable metrics companion to the operational runbook summary in this ledger.
+This is the auditable metrics companion to `the operational runbook summary` (full text embedded in this dossier).
 It records confirmed measurements, their source artifacts, and the distinction between
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
 
-**Last refreshed:** 2026-07-19 07:58 EDT
+**Last refreshed:** 2026-07-15 17:26 EDT
 **Flagship source of truth:** Newton Slurm job `686732`,
 `/lustre/fs1/home/sa305415/shohin/logs/flagship2_686732.out`
 **Checkpoint source of truth:** capture the numbered checkpoint at its milestone, promote
@@ -30406,120 +30673,6 @@ reliable natural-language compilation, correction, halting, serialization, or
 state reuse. Full transcript custody and interpretation are in
 `RAW300K_INTERACTION_RESULT.md`.
 
-## S4 Autonomous Event-Tape Frontier: 2026-07-19
-
-The strongest bounded end-to-end reasoning component now separates three interfaces:
-
-1. **S3 execution is confirmed:** pointer-anchor S3 v1.4 recurrently executes known operation atoms
-   after source deletion through depth eight, with external schedule/halt.
-2. **S4 event counting is causal and fresh-generalizing:** frozen S4 v1 recovers 2,048/2,048 exact
-   event counts on production seed `3662806511482505284`.
-3. **S4 v1 program parsing is strong but below gate:** 1,914/2,048 = 93.457% exact programs,
-   states, and answers on the wholly fresh board, including >92% at every depth 3--8.
-
-S4 v2 tested whether absolute start/end pointers would close that remaining gap. It froze all v1
-weights and trained only 1,182,728 pointer parameters, for 134,872,663 total parameters. The result
-is a decisive rejection:
-
-| Arm | Count | Initial roster | Exact program | Exact state | Answer |
-|---|---:|---:|---:|---:|---:|
-| Frozen S4 v1 | 100.00% | 93.46% | **93.46%** | **93.46%** | **93.46%** |
-| S4 v2 independent start/end | 99.80% | 18.65% | **12.40%** | 14.45% | 15.53% |
-| Shuffled pointer labels | confounded by early failure | 0% | **0%** | 0% | 0% |
-
-The treatment reaches zero exact programs at depths seven and eight. Its dominant failure is 1,179
-crossed/invalid event boundaries, followed by 477 roster-identity mismatches. Training loss is low,
-so this is not an optimization failure: independent absolute boundaries are a renderer-coordinate
-shortcut rather than a width-invariant identity relation. Assessment SHA-256
-`1c7af1ceb19ae5b0fceaa49fba5f111b6425002c1e40a75fbfe8b43e83367275` records
-`reject_s4_v2_fresh_development`; confirmation access is zero.
-
-The surviving target is narrower and better identified: preserve v1's role/count signal and replace
-hard boundaries with a model-owned set-valued identity carrier. Each roster item and event mention
-should become a soft set over source tokens; identity is then a tied similarity between sets, not
-equality between two independently selected coordinate intervals. This requires a new frozen
-protocol, shuffled-identity control, and fresh board. It remains a known-atom autonomous-interface
-experiment, not a broad reasoning or novelty claim.
-
-Primary evidence: `R12_S4_EVENT_RELATIVE_POINTER_RESULT.md`, treatment report SHA-256
-`12005bd33248d7467036fb462a2e535866db29522bea2632dff0b2e24c7f58fe`, shuffled report SHA-256
-`409aa8b18ad8efd077c0ebd6ad3ccc14f053341fc9459c5082bced928c44d2d4`.
-
-### S4 v3 set-identity result
-
-S4 v3 removes absolute boundaries. It represents each lexical mention as a normalized sparse
-vocabulary histogram over a model-owned soft token set and matches event carriers to three roster
-carriers. The raw model and all v1 parser weights are frozen; only 589,824 event-membership
-parameters train, for 134,279,759 total parameters.
-
-On a new 2,048-row board with zero prompt/13-gram/name/factor/token-multiset overlap, v3 reaches
-**100% event count, 99.46% roster recovery, and 100% query recovery**. The identity channel is real:
-program exactness is 9.33% versus 0.10% under shuffled membership and exactly 0% after cyclic roster
-derangement; state drops 33.45% -> 11.82% under that intervention. But exact programs decay from
-35.76% at depth three to 0% at depth eight, far below frozen v1's 93.41% overall. The assessor
-therefore records `reject_s4_v3_fresh_development` at SHA-256
-`1b6cb30e5a75fd0e3315ccb369d0131aaa381c208a4c8a8e6627851510511b71`.
-
-The surviving decomposition is now precise: event count, roster identity, terminal query, and S3
-execution are solved at this bounded scale; event-local argument pairing is not. Learned global
-attention is the wrong interface. The next fresh-board test may combine frozen v1 role evidence with
-the causal roster carrier inside monotone regions induced only by model-discovered kind anchors. It
-is a deterministic structured decoder/control, not a new reasoning primitive or broad capability
-claim.
-
-### S4 v4 monotone locality result
-
-S4 v4 adds no weights. Frozen kind anchors partition the source into ordered regions; frozen role
-evidence is normalized only inside each region, and v3's causal set carrier resolves identity. On a
-new disjoint 2,048-row board it reaches **100% count, 97.95% roster, 100% query, 70.46% exact
-programs, 83.15% state, and 87.06% answers**. Rotating either roster carriers or event regions
-drives exact programs to zero, proving both interfaces are used. But frozen v1 remains stronger at
-93.21% programs, and v4 decays from 85.76% at depth three to 58.82% at depth eight.
-
-This negative identifies the representation error: regional locality is right, but a diffuse
-softmax over the entire region destroys the hard contiguous event islands already learned by v1.
-Frozen v1 reaches 95.70% when only intro/query boundaries are supplied. The next lawful decoder
-therefore combines hard model-owned entity/literal islands inside monotone regions with soft
-roster/query carriers; it must not fit new weights or tune on the closed v4 board.
-
-### S4 v5 qualified hard-island result
-
-S4 v5 combines complete contiguous frozen event.entity/event.literal islands inside each monotone
-kind-local region with the causal soft roster/query interfaces. It adds zero weights. On a fifth
-wholly disjoint 2,048-row board it reaches **96.92% exact programs, 97.46% exact state, and 98.10%
-answers**, versus **93.70% programs** for frozen v1. Count/query are 100% and roster recovery is
-98.73%. Every depth remains at least 94.71%; both roster and event-region rotations yield zero exact
-programs. The frozen assessor qualifies all gates for one confirmation.
-
-On the sole disjoint confirmation, unchanged v5 improves again to **97.80% programs, 98.39% state,
-and 98.63% answers**, versus **93.41% programs** for frozen v1. Every depth is 96.18--98.82% and
-both controls remain at zero programs. All confirmation gates pass. V5 is therefore promoted as the
-best confirmed bounded native S4 baseline, bound by
-`artifacts/r12/s4_hard_island_soft_interface_v5.promoted.json`.
-
-The discovery is architectural decomposition rather than more compute: preserve sharp discrete
-islands where the model already has them, use set-valued carriers only across identity interfaces,
-and enforce monotone locality before execution.
-
-### S5 confirmed learned generator-factored execution
-
-S5 removes v5's hand-authored action table. A 4,934-parameter tied MLP learns only six unit
-generators (three current locations times left/right), with zero amount-two, recurrent-program,
-source-token, answer, development, or confirmation supervision. It replays the same learned cell
-twice for amount two. Both development and confirmation achieve 36/36 unit and 36/36 never-trained
-amount-two closure.
-
-On development, S5 exactly matches host execution at **97.51% programs, 98.19% state, and 98.68%
-answers**. On sole disjoint confirmation it again exactly matches host execution at **96.92%
-programs, 97.61% state, and 98.10% answers**. A matched shuffled law, direction rotation, and state
-reset reduce confirmation state to **22.22%, 1.81%, and 40.23%**. All gates pass, and
-`artifacts/r12/s5_learned_generator.promoted.json` is the strongest bounded baseline.
-
-This confirms a model-owned finite transition law and recurrent categorical state, not unrestricted
-native reasoning. Known operation language, deterministic event assembly, fixed one/two-step replay,
-and structural termination remain. The next frontier is unseen operation-law induction or model-owned
-active-step/halt control. Do not present S5 as a public benchmark gain or open-ended reasoning result.
-
 ## Update Protocol
 
 At each 10k checkpoint milestone:
@@ -30535,12 +30688,12 @@ At each 10k checkpoint milestone:
    throughput/loss/gnorm, and local DR status. Do not infer unique-data exposure from step count.
 4. Update each data row only from a saved manifest, hash-bound report, or completed job log.
    Label running work as in progress and never count an unflushed partial as admitted data.
-5. Add a terse append-only milestone to the operational runbook summary, sync both documents to Newton,
+5. Add a terse append-only milestone to `the operational runbook summary`, sync both documents to Newton,
    and commit/push docs and safe code only. Never commit checkpoints, `.env`, or live writer output.
 
 ## Primary Evidence Paths
 
-- Local runbook: the operational runbook summary
+- Local runbook: `the operational runbook summary`
 - Local checkpoints: `train/flagship_out/`
 - Newton checkpoints/log: `/lustre/fs1/home/sa305415/shohin/train/flagship_out/` and
   `/lustre/fs1/home/sa305415/shohin/logs/flagship_685084.out`
@@ -30548,3 +30701,2203 @@ At each 10k checkpoint milestone:
 - Frozen V8 reports: `/lustre/fs1/home/sa305415/shohin/artifacts/sft/sft_mix_reasoning_v8_candidate_r2.*.r3.json`
 - External-source selection reports: `/lustre/fs1/home/sa305415/shohin/artifacts/source_probes/`
 <!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 140: `R12_S4_EVENT_RELATIVE_POINTER_PREREG.md`
+
+Original source path: `R12_S4_EVENT_RELATIVE_POINTER_PREREG.md`
+Original source size: 3,374 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S4 Event-Relative Pointer Preregistration
+
+## Status
+
+**Closed negative on 2026-07-19.** The protocol was frozen before seed/score access, both matched
+arms completed once, and the frozen assessor records `reject_s4_v2_fresh_development`. Treatment
+retained 99.80% exact event count but reached only 12.40% exact programs, versus 93.46% for the
+frozen v1 baseline on the same fresh board. Confirmation was never generated or read. Full evidence
+and interpretation are in `R12_S4_EVENT_RELATIVE_POINTER_RESULT.md`.
+
+## Causal diagnosis
+
+S4 v1 learns exact event count on 2,048/2,048 public-development sources and exact execution on all
+1,932 structurally valid tapes. Gold intro/query boundaries raise exact programs to 97.217%. The
+shared role head fails by fragmenting variable-width roster spans and by giving every event the same
+unconditioned entity/literal score. The zero-fit width decoder confirms that global role maxima do
+not contain enough boundary information.
+
+## Treatment
+
+Freeze the entire v1 treatment parser, including its base model, memory encoder, event-count role
+head, and semantic heads. Add only:
+
+- three roster start and three roster end pointer heads;
+- one query start and one query end pointer head;
+- event-conditioned entity start/end and literal start/end pointer query/key projections.
+
+For each event, the query is the mean frozen memory at its direction span. It scores every source
+token as an argument start or end. The same tied projections serve every event and therefore admit
+arbitrary event count. Training uses gold direction spans only to define the supervised query;
+inference uses model-discovered direction anchors in source order. The pointer heads receive no
+depth, operation index, answer, final state, or gold event count.
+
+## Controls
+
+1. **Frozen v1 parser:** the already scored favorable shared-role baseline.
+2. **Shuffled pointer supervision:** identical frozen v1 initialization, architecture, parameters,
+   examples, updates, and optimizer; all pointer targets are permuted within source.
+3. **Gold tape sanity:** locked S3 execution of exact source events.
+
+No joint v1 fine-tuning, extra epoch, width change, decoder sweep, or result selection is allowed.
+
+## Fresh-board rule
+
+The old S4 development board is closed. After this preregistration, generator, model, trainer,
+evaluator, assessor, tests, and jobs are committed, draw one random seed and generate a new 2,048-row
+development board. Its names, exact prompts, word 13-grams, and factor signatures must be disjoint
+from the full S4 v1 train/development corpus and all supplied public compiler/executor boards. V2 may
+read that board once per frozen arm. No post-score repair or rescore is admissible.
+
+## Frozen gates
+
+- exact model-owned event count at least 98% overall and 95% at every depth;
+- exact program at least 95% overall and 90% at each depth 5--8;
+- exact locked-S3 state and answer at least 95% overall and 90% at depth eight;
+- exact initial roster at least 95% overall;
+- shuffled exact programs at most 40%;
+- gold tape state/answer at least 99%;
+- strict total parameters below 150,000,000;
+- development access exactly one and confirmation access zero.
+
+A pass authorizes one separately frozen confirmation board. It does not establish unseen action
+semantics, planning, free-form reasoning, benchmark improvement, or novelty.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 141: `R12_S4_EVENT_RELATIVE_POINTER_RESULT.md`
+
+Original source path: `R12_S4_EVENT_RELATIVE_POINTER_RESULT.md`
+Original source size: 5,562 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S4 Event-Relative Pointer Result
+
+## Decision
+
+**Reject S4 v2 on fresh development. Do not score confirmation and do not repair or rescore on the
+closed board.**
+
+The treatment preserves model-owned event count but replaces the strong S4 v1 token-role parser
+with independently decoded absolute start/end coordinates. Those coordinates fit the admitted
+training corpus, then fail compositionally on fresh names and longer tapes. This is a clean negative
+result, not an ambiguous threshold miss.
+
+## Custody
+
+- Source/preregistration commit before the fresh seed: `fceddee`.
+- Fresh-board freeze commit: `c2e070d`.
+- Production development seed: `3662806511482505284`.
+- Fresh board: 2,048 rows in 512 matched groups, depths 3--8.
+- Development data SHA-256:
+  `bed2e261484e7cece2f6f4eb748504f8f5a30aecdd1c7ec15718b43579ef2219`.
+- Development report SHA-256:
+  `352d8215e0bc984fc0d30bf18b2f1290c25b45c349115c2a66fa87810580c1c6`.
+- Safe archive SHA-256:
+  `61d3e0ec75b260184cf80c8e7bfae3311232c1586d7c4375c510a80c18dd490d`.
+- Exact prompt, word-13-gram, name, nonce, and factor overlap: zero against the old S4
+  train/development corpus and supplied public compiler/executor boards.
+- Confirmation access: zero.
+- Treatment train/eval jobs: `693162` / `693165`.
+- Shuffled-label train/eval jobs: `693163` / `693166`.
+- Both arms use 48,000 examples, 750 updates, one epoch, the same frozen S4 v1 parser, and the same
+  optimizer/schedule. Only pointer labels differ.
+
+## Parameter and optimization check
+
+The treatment initializes all 71 non-base S4 v1 tensors and freezes them. All 16 trainable tensors
+belong to the new pointer modules.
+
+| Quantity | Count |
+|---|---:|
+| Raw Shohin base | 125,081,664 |
+| Complete adapter including frozen v1 | 9,790,999 |
+| New trainable pointer parameters | 1,182,728 |
+| Total system | 134,872,663 |
+
+The treatment completed in 307.63 seconds with final logged loss 0.11427 and adapter SHA-256
+`4db4bf5f393aec69f35a5b7de83f6e240797c9fbb517b22233366b0a9486d7d8`. The shuffled arm completed
+in 308.18 seconds with final logged loss 4.67416 and adapter SHA-256
+`fbd28342e71d389b60347f71cdee4b49fca254493708a042d12456a36b76af6d`.
+
+## Fresh-board result
+
+| Arm | Event count | Initial roster | Exact program | Exact state | Correct answer |
+|---|---:|---:|---:|---:|---:|
+| Frozen S4 v1 baseline | **2048/2048 (100%)** | 1914/2048 (93.46%) | **1914/2048 (93.46%)** | **1914/2048 (93.46%)** | **1914/2048 (93.46%)** |
+| S4 v2 event-relative pointers | 2044/2048 (99.80%) | 382/2048 (18.65%) | 254/2048 (12.40%) | 296/2048 (14.45%) | 318/2048 (15.53%) |
+| Shuffled pointer labels | 1386/2048 reported count exact | 0/2048 | 0/2048 | 0/2048 | 0/2048 |
+
+The shuffled count number is not a separate count-head measurement. Early pointer failures return a
+zero predicted count in the v2 decoder, so that aggregate is partially confounded by decode failure.
+It does not affect the causal conclusion: shuffled pointer supervision produces zero valid programs,
+while the treatment is far below both the frozen v1 baseline and every frozen advancement gate.
+
+Treatment exact-program accuracy by depth is 51.74%, 18.90%, 2.94%, 0.29%, 0%, and 0% at depths
+3--8. By contrast, frozen v1 remains 92.35--95.00% across those depths. The treatment's 1,794
+non-exact rows contain:
+
+- 1,179 crossed or invalid event argument boundaries (`event_pointer`);
+- 477 event entity spans that fail to equal one roster span (`event_identity`);
+- four invalid intro boundaries;
+- 134 structurally valid but semantically wrong programs.
+
+Treatment evaluation SHA-256 is
+`12005bd33248d7467036fb462a2e535866db29522bea2632dff0b2e24c7f58fe`; shuffled evaluation SHA-256
+is `409aa8b18ad8efd077c0ebd6ad3ccc14f053341fc9459c5082bced928c44d2d4`; assessment SHA-256 is
+`1c7af1ceb19ae5b0fceaa49fba5f111b6425002c1e40a75fbfe8b43e83367275`. The frozen assessor records
+`reject_s4_v2_fresh_development`.
+
+## Interpretation
+
+The result falsifies the proposed repair. A direction-anchor query followed by independent absolute
+start and end argmax is not a compositional identity representation. It can reduce supervised
+coordinate loss without learning the invariant relation "this event name is the same lexical object
+as roster item i." Variable BPE width makes two independent extrema especially brittle, and each
+additional event supplies another opportunity for a crossed or renderer-specific boundary.
+
+The surviving evidence is stronger than before:
+
+1. S4 v1's event-count signal generalizes perfectly to a wholly fresh board.
+2. S4 v1's shared token-role representation also generalizes strongly: 93.46% exact programs,
+   including 92.35% at depth seven and 93.82% at depth eight.
+3. Exact execution is already solved by locked S3 once a correct program exists.
+4. The open interface is lexical identity transport, not event counting or recurrence.
+5. The next lawful mechanism must represent identity without selecting two absolute coordinates.
+
+The most direct next test is a set-valued identity carrier: aggregate a soft token set for each
+roster item, aggregate an event-conditioned soft token set for each event entity, and classify by
+set similarity. It must keep S4 v1 frozen, train only the carrier, use a shuffled-identity control,
+and evaluate once on a newly generated board after source freeze.
+
+## Claim boundary
+
+This result concerns fresh-development parsing of known operation atoms only. It establishes no
+confirmation, unseen action semantics, planning, learned halt, free-form reasoning, public benchmark
+gain, novelty, or Shohin promotion.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 142: `R12_S4_HARD_ISLAND_SOFT_INTERFACE_PREREG.md`
+
+Original source path: `R12_S4_HARD_ISLAND_SOFT_INTERFACE_PREREG.md`
+Original source size: 3,445 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S4 Hard-Island / Soft-Interface Preregistration
+
+## Status
+
+**Confirmed on 2026-07-19.** Development exact programs are 96.92% versus 93.70% for frozen v1;
+confirmation is 97.80% versus 93.41%. Both causal controls score zero programs on both boards and
+every frozen gate passes. Full evidence is in `R12_S4_HARD_ISLAND_SOFT_INTERFACE_RESULT.md`.
+
+Source was frozen at commit `e9a962b` before production seed selection, board generation, model
+evaluation, or score access.
+
+Production seed `14465012970954709091` generated 2,048 rows / 512 matched groups after source
+freeze. All gates pass against source train/development and closed v2--v4 boards. Data, report, and
+read-only archive SHA-256 values are respectively
+`4d43b050892fc26a712e2c97414e84da3721c7949b98d8862b239e6b2f051c7a`,
+`8b9461bc86771f50b4f72b58bda7e09286ab0ac3830175cc0f28540279db434f`, and
+`eec8ec5e277dd39791ce1816d175d979f465363718dcf9a1d429b242a151efe1`.
+
+## Measured motivation
+
+On fresh v4, monotone regions plus soft roster/query are causal but diffuse regional argument
+softmax reduces exact programs to 70.46%. On the same board frozen v1 reaches 95.70% when only its
+intro/query boundaries are replaced by gold, showing that hard event-role islands are the stronger
+argument representation. V5 combines these independently measured components without fitting.
+
+## Frozen mechanism
+
+1. Load raw Shohin 300k, frozen S4 v1 treatment parser, and locked exact S3.
+2. Discover kind anchors and monotone midpoint regions exactly as frozen v4.
+3. Within each region, enumerate complete contiguous argmax islands for frozen `event.entity` and
+   `event.literal` roles.
+4. If more than one island exists, choose the island with maximum summed target-role logit minus
+   best-other-role logit. Ties prefer the longer then earlier island. If none exists, fail closed.
+5. Convert the complete entity island to a uniform vocabulary histogram and match it by frozen
+   cosine scale 20 against three full-sequence soft roster histograms.
+6. Mean frozen amount logits across the complete literal island. Recover query through the frozen
+   full-sequence soft query interface. Execute only with locked S3.
+
+No gold depth/span/identity/literal/query/answer, learned lexical table, fitted weight, fallback, or
+score-derived threshold exists. New trainable parameters are exactly zero.
+
+## Controls and custody
+
+- identical-board strict frozen-v1 baseline;
+- roster carrier rotation `(1,2,0)`;
+- cyclic event-region assignment `i+1 mod depth`;
+- locked S3 gold sanity;
+- one production seed only after source commit;
+- 2,048 rows / 512 groups, depths 3--8;
+- zero exact, word-13-gram, nonce/name, factor, and roster-token-multiset overlap against source
+  train/development and all closed v2--v4 fresh boards;
+- one serial evaluation; no repair/rescore after development access; confirmation inaccessible.
+
+## Frozen gates
+
+Count >=98% overall and >=95% each depth; program >=95% overall and >=90% at depths 5--8; state
+and answer >=95%; query >=98%; roster >=95%; program >= frozen v1 plus one point; roster and region
+derangements each <=40% programs; S3 sanity; zero new trainable parameters; total <150M;
+development access one; confirmation access zero. All gates must pass before one new confirmation.
+
+Passing is bounded known-atom parsing evidence, not unseen semantics, planning, learned halt,
+free-form reasoning, public benchmark improvement, novelty, or model promotion.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 143: `R12_S4_HARD_ISLAND_SOFT_INTERFACE_RESULT.md`
+
+Original source path: `R12_S4_HARD_ISLAND_SOFT_INTERFACE_RESULT.md`
+Original source size: 4,125 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S4 Hard-Island / Soft-Interface Result
+
+## Decision
+
+**Confirmed. Promote S4 v5 as the best bounded native S4 reasoning baseline.**
+
+All preregistered development and confirmation gates pass. The hash-bound promotion manifest is
+`artifacts/r12/s4_hard_island_soft_interface_v5.promoted.json`.
+
+## Custody
+
+- Source/preregistration freeze: commit `e9a962b`.
+- Board freeze: commit `2101832`.
+- Production development seed: `14465012970954709091`.
+- Board: 2,048 rows / 512 matched groups, depths 3--8, maximum 340 tokens.
+- Data SHA-256: `4d43b050892fc26a712e2c97414e84da3721c7949b98d8862b239e6b2f051c7a`.
+- Board report SHA-256: `8b9461bc86771f50b4f72b58bda7e09286ab0ac3830175cc0f28540279db434f`.
+- Safe archive SHA-256: `eec8ec5e277dd39791ce1816d175d979f465363718dcf9a1d429b242a151efe1`.
+- Every exact/13-gram/name/factor/roster-token-multiset gate passes against source data and closed
+  v2--v4 boards.
+- Development access: one. Confirmation access: zero.
+- Serial baseline/treatment/control/assessor job: `693177`, completed on `evc24` in 83 seconds.
+
+## Qualified development result
+
+| Arm | Count | Roster | Query | Exact program | Exact state | Correct answer |
+|---|---:|---:|---:|---:|---:|---:|
+| Frozen S4 v1 | **100%** | 93.70% strict | 93.70% strict | 1919/2048 = 93.70% | 93.70% | 93.70% |
+| **S4 v5 hybrid** | **100%** | **2022/2048 = 98.73%** | **100%** | **1985/2048 = 96.92%** | **1996/2048 = 97.46%** | **2009/2048 = 98.10%** |
+| V5 + roster rotation | 100% | unchanged | 100% | **0/2048** | 0.68% | 5.42% |
+| V5 + event-region rotation | 100% | unchanged | 100% | **0/2048** | 13.67% | 26.51% |
+
+V5 improves exact programs by **3.22 percentage points absolute** over its identical-board v1
+baseline. Exact program accuracy by depth 3--8 is 97.38%, 97.38%, 98.24%, 97.06%, 96.76%, and
+94.71%; every preregistered depth gate passes. Surface-family accuracy is 96.68--97.46%.
+
+The two zero-program interventions establish that neither hard islands nor set carriers are merely
+diagnostics. The successful decomposition is: model-owned kind clock -> monotone local region ->
+complete hard entity/literal islands -> vocabulary-aligned soft roster identity -> soft query ->
+locked exact S3 execution. No v5 parameter was trained.
+
+Baseline, treatment, assessment, and log SHA-256 values are respectively
+`103cc7e07d6be5bb355e8944ffc565c9cf7ba06941413044aac9546f47d87986`,
+`ca3cb11f0eb6871e1ce2b64efb94a380deffdbbbb72ef0064a164b5d95216ece`,
+`41a2dd2eab37c1976803d49e36f1a4ae35b62e8568ebefc3159c118383ab2eb5`, and
+`c4e874e16c469387adeb5c66702d3174b32ac3fccea560624dcb042a8f8a7ac7`. The assessor decision is
+`qualify_s4_v5_for_fresh_confirmation`.
+
+## Confirmation
+
+The sole disjoint confirmation board uses seed `14809014609581254328`, data SHA
+`b16534b3c41d21737370f0eb852cb6c53d75e81d661d6d9592927709551a08cf`, and report SHA
+`ce0e2671c8dcd07b5b789798da0325b94066087ce4222082267919f57afdb261`. Job `693178` completes the
+unchanged serial protocol on `evc24`.
+
+| Confirmation arm | Exact program | Exact state | Correct answer |
+|---|---:|---:|---:|
+| Frozen S4 v1 | 1913/2048 = 93.41% | 93.41% | 93.41% |
+| **S4 v5 hybrid** | **2003/2048 = 97.80%** | **2015/2048 = 98.39%** | **2020/2048 = 98.63%** |
+| V5 + roster rotation | **0%** | 0.68% | 3.76% |
+| V5 + event-region rotation | **0%** | 12.50% | 26.12% |
+
+Confirmation program accuracy by depth 3--8 is 97.09%, 98.55%, 98.82%, 96.18%, 98.82%, and
+97.35%. Surface accuracy is 97.66--98.05%. The assessor records
+`confirm_s4_v5_hard_island_soft_interface` at SHA-256
+`41fb41a7aa70139c5a05c321b949bb5ad245e26d1506445910cdbb542e34b407`.
+
+Confirmation baseline, treatment, and log SHA-256 values are
+`0293aeeca82660a827c6197fd30b84512d66084925b364cf64152bc39442aaa6`,
+`d4d1b2b928aec723f7421147d4d14b386ebcbd014db4d2d2db83636b989c44f0`, and
+`cb2d179110c4ef4c31f01d7f1a99748d11ad0235e76d1c521c37f9583a6341b2`.
+
+## Claim boundary
+
+This is a confirmed known-atom parser/executor result and promoted bounded baseline. It is not
+unseen operation semantics, open-ended planning, learned halt, free-form reasoning, public benchmark
+improvement, or a novelty claim.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 144: `R12_S4_MONOTONE_EVENT_REGION_PREREG.md`
+
+Original source path: `R12_S4_MONOTONE_EVENT_REGION_PREREG.md`
+Original source size: 5,410 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S4 Monotone Event-Region Decoder Preregistration
+
+## Status
+
+**Closed negative on 2026-07-19.** The frozen assessor records
+`reject_s4_v4_fresh_development`: 70.46% exact programs versus 93.21% for frozen v1. Both roster
+and event-region derangements fall to zero programs, so locality is causal but the diffuse regional
+softmax is insufficiently precise. Confirmation was never generated or read. Full evidence is in
+`R12_S4_MONOTONE_EVENT_REGION_RESULT.md`.
+
+Source was frozen at commit `0c8aa8c` before production seed selection, board generation, model
+evaluation, or score access.
+
+Production seed `3847103809226516730` generated exactly 2,048 rows / 512 matched groups after the
+source freeze. All declared overlap and mechanics gates pass. Data, report, and read-only safe
+archive SHA-256 values are respectively
+`3c06f58c4ade457ac5017be41afbd97fd3c23a90200430af1318af7e5a988f19`,
+`27b795d1eedbba65d3697d50ab8eaec5175616e4743a573c5ca5419c21aea0f4`, and
+`7443f4962f19c5a3740b85ccf0a2d38bfa52adbf5cc1ab8a08df8e69fd8bddf2`.
+
+First submission `693175` failed closed during shell preflight, before model or development-board
+access, because the job named a nonexistent frozen-v1 parser directory. The only repair replaces
+that literal with the preserved `train/s4_event_tape_treatment_2026071904/parser.pt`; mechanism,
+board, controls, evaluator, assessor, and gates are unchanged.
+
+## Measured motivation
+
+S4 v3 recovered event count (100%), roster carriers (99.46%), and query (100%), and its identity
+channel was causal. It failed exact programs (9.33%) because a learned global event query had to
+discover local syntax and lexical identity simultaneously. Exactness decayed to zero by depth eight.
+No additional parser fit is justified until locality itself is isolated.
+
+## Hypothesis
+
+Model-discovered kind anchors already provide an ordered event clock. If consecutive anchors
+partition the source at the midpoint of their intervening gaps, frozen v1 `event.entity` and
+`event.literal` evidence should identify each anchor's arguments inside its own local region. A
+vocabulary-aligned soft set then resolves the local entity against the three frozen roster sets.
+
+This is a deterministic monotone structured decoder, not a claimed new reasoning primitive. It
+adds zero weights and receives no gold depth, event boundary, entity label, literal label, query,
+answer, source template, or development-derived threshold.
+
+## Frozen mechanism
+
+1. Load raw Shohin 300k, the frozen S4 v1 treatment parser, and locked S3 executor.
+2. Admit a lexical kind occurrence only when at least one of its tokens receives the frozen v1
+   `event.kind` argmax role. Sort admitted anchors by source position.
+3. Place a boundary between adjacent anchors at `floor((previous_end + current_start) / 2)`. The
+   first region begins at token zero and the last ends at sequence length.
+4. Within each region independently, softmax frozen `event.entity` role logits. Scatter the weights
+   into an exact vocabulary histogram.
+5. Build three roster histograms by softmaxing frozen `intro.entity0..2` role logits over the full
+   valid sequence. Select identity by cosine similarity scaled by the already frozen factor 20.
+6. Within the same event region, softmax frozen `event.literal` role logits and average frozen
+   amount logits; take argmax plus one.
+7. Recover query by the frozen v3 full-sequence soft `query.position` weighting and frozen query
+   head. Execute the resulting program only with locked exact S3 semantics.
+
+There are no trainable tensors. Total parameters must remain the frozen v1 total and below 150M.
+
+## Causal controls
+
+- **Frozen v1 baseline:** strict autonomous v1 on the identical fresh board.
+- **Roster derangement:** rotate the three roster carriers `(1,2,0)` while holding all model
+  outputs and event regions fixed.
+- **Event-region derangement:** cyclically assign region `i+1 mod depth` to kind anchor `i` while
+  holding kinds, roster carriers, and all model outputs fixed.
+- **Gold S3 sanity:** symbolic gold programs must execute consistently; gold programs are never
+  supplied to the treatment decoder.
+
+## Fresh-board custody
+
+- Exactly one production seed will be sampled only after this source and protocol are committed.
+- Exactly 2,048 rows / 512 matched groups, depths 3--8.
+- Zero exact prompt, word-13-gram, nonce/name, factor, and roster-token-multiset overlap against all
+  supplied public sources, including the closed v2 and v3 boards.
+- One treatment evaluation and one identical-board frozen-v1 baseline. No repair, rescore, or
+  threshold change after development access.
+- Confirmation remains inaccessible unless every gate passes.
+
+## Frozen qualification gates
+
+All gates must pass:
+
+1. event count >=98% overall and >=95% at every depth;
+2. exact program >=95% overall and >=90% at depths 5--8;
+3. exact state >=95%, answer >=95%, query >=98%, roster recovery >=95%;
+4. exact program >= frozen v1 plus one percentage point;
+5. roster-deranged and event-region-deranged exact programs each <=40%;
+6. locked S3 gold sanity passes;
+7. zero new trainable parameters, total system <150M;
+8. development access exactly one and confirmation access zero.
+
+Failure closes this exact decoder on the board. A pass permits one newly generated confirmation;
+it does not itself establish unseen semantics, planning, free-form reasoning, benchmark improvement,
+or novelty.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 145: `R12_S4_MONOTONE_EVENT_REGION_RESULT.md`
+
+Original source path: `R12_S4_MONOTONE_EVENT_REGION_RESULT.md`
+Original source size: 3,944 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S4 Monotone Event-Region Decoder Result
+
+## Decision
+
+**Reject S4 v4 on fresh development. Do not generate confirmation or rescore the closed board.**
+
+Monotone locality is strongly causal, but replacing frozen v1's hard event-role islands with a
+diffuse softmax over each complete region loses too much argument precision. Preserve the region
+partition and soft roster/query interfaces; restore hard model-owned event islands.
+
+## Custody
+
+- Source/preregistration freeze: commit `0c8aa8c`.
+- Board freeze: commit `1cf83e7`.
+- Production seed: `3847103809226516730`.
+- Board: 2,048 rows / 512 matched groups, depths 3--8, maximum 341 tokens.
+- Data SHA-256: `3c06f58c4ade457ac5017be41afbd97fd3c23a90200430af1318af7e5a988f19`.
+- Report SHA-256: `27b795d1eedbba65d3697d50ab8eaec5175616e4743a573c5ca5419c21aea0f4`.
+- Safe archive SHA-256: `7443f4962f19c5a3740b85ccf0a2d38bfa52adbf5cc1ab8a08df8e69fd8bddf2`.
+- Exact prompt, word-13-gram, nonce/name, factor, and roster-token-multiset overlap: zero against
+  source train/development and both closed fresh boards.
+- Confirmation access: zero.
+
+Submission `693175` failed shell preflight before model or board access because of a nonexistent
+parser path. Commit `cb3be54` changes only that literal to the preserved frozen-v1 parser.
+Replacement `693176` completed the baseline, treatment, both interventions, and assessor serially
+in 62 seconds on `evc24`.
+
+## Fresh-board result
+
+| Arm | Count | Roster | Query | Exact program | Exact state | Correct answer |
+|---|---:|---:|---:|---:|---:|---:|
+| Frozen S4 v1 | **100%** | 93.21% strict | 93.21% strict | **1909/2048 = 93.21%** | 93.21% | 93.21% |
+| S4 v4 local soft regions | **100%** | **2006/2048 = 97.95%** | **100%** | 1443/2048 = 70.46% | 83.15% | 87.06% |
+| V4 + roster rotation | 100% | unchanged | 100% | **0/2048** | 2.44% | 9.67% |
+| V4 + event-region rotation | 100% | unchanged | 100% | **0/2048** | 14.99% | 29.25% |
+
+Treatment exact programs by depth are 85.76%, 73.84%, 70.59%, 65.88%, 67.65%, and 58.82% at
+depths 3--8. Surface accuracies stay tightly grouped from 69.34% to 71.29%, so no single renderer
+explains the failure. Both interventions eliminate every exact program. Locality and roster identity
+are therefore causal, but the regional soft distributions have a per-event precision error that
+compounds with chain length.
+
+The same frozen-v1 baseline reaches 1926/2048 = 94.04% exact programs with host count and
+1960/2048 = 95.70% when only intro/query boundaries are supplied. Its strict failure inventory is
+83 event-component-cardinality, 51 intro-cardinality, and five entity-identity cases. This shows why
+v4 regressed: it solved roster/query interfaces but discarded the much sharper hard event islands
+already present in v1.
+
+Baseline, treatment, assessment, and job-log SHA-256 values are respectively
+`df4b0ddbc20c77efd5d39bb0f2fe3286245d1c68d38bec9c642d49f346daa44e`,
+`47604341285fb63a4fb2abce3c6db7859fa227eaef796858387c2d3ad5145985`,
+`63f9d5db3e2db70acaf646dfeda5e6ff503b890b10abd002d76c8f00b0c68b08`, and
+`d539d220347dbdceb0b42f2350b9e09d2617c68ae867a8b256135bd0c5de14c0`. The frozen assessor records
+`reject_s4_v4_fresh_development`.
+
+## Next constraint
+
+A bounded v5 may retain each predicted kind region but select complete contiguous frozen
+`event.entity` and `event.literal` argmax islands inside that region. Entity islands become uniform
+vocabulary carriers matched to the soft roster; literal islands use their mean frozen amount logits;
+the soft query remains. If a region contains duplicate islands, select by summed frozen role margin,
+not a learned or score-tuned threshold. Require fresh roster and region derangements.
+
+## Claim boundary
+
+This is fresh-development evidence over known operation atoms. It establishes a causal local
+decomposition, not confirmation, unseen semantics, planning, learned halt, free-form reasoning,
+public benchmark improvement, novelty, or model promotion.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 146: `R12_S4_POINTER_ANCHORED_EVENT_TAPE_REPAIR.md`
+
+Original source path: `R12_S4_POINTER_ANCHORED_EVENT_TAPE_REPAIR.md`
+Original source size: 4,016 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S4 Pointer-Anchored Event Tape Repair
+
+## Status
+
+**FORMALLY REJECTED.** This was frozen as a zero-fit public-development repair after S4 v1
+treatment evaluation and before any repaired score. No model weight, corpus row, optimizer, update
+count, seed, threshold, or confirmation input changed.
+
+## Failure diagnosis
+
+S4 v1 predicts exact event count on 2,048/2,048 held-out rows and is fully correct on every valid
+tape, but strict decoding invalidates 116 rows: 66 initial-roster cardinality errors, 47 event-role
+component-cardinality errors, and three entity-identity errors. Gold initial/query boundaries lift
+exact programs from 94.336% to 97.217%, every depth at least 96.471%. Shuffled supervision remains
+zero. The remaining miss is hard argmax span fragmentation, not count or event semantics.
+
+## Sole repair
+
+Build a structural lexicon from the admitted training split only:
+
+- exact known direction token patterns and class;
+- exact amount and query-literal token patterns and value;
+- the set of training entity-span token widths.
+
+At inference:
+
+1. Each of the three schema-fixed initial-role global pointer anchors expands to the highest-scoring
+   training-width window that contains it.
+2. An event exists only when an exact direction pattern contains a token whose model argmax role is
+   `event.kind`. These anchored patterns, ordered by source position, define event count.
+3. Inside each adjacent anchored-event interval, exact occurrences of the three model-predicted
+   initial token sequences compete under `event.entity` role score; exact known literals compete
+   under `event.literal` score.
+4. The query-role global anchor expands only to an exact training query-literal pattern.
+5. Any missing, overlapping, ambiguous, or duplicate structural selection is invalid. No gold depth,
+   count, span, entity, event, state, or answer enters inference.
+
+This is a deterministic structured decoder over model logits, equivalent to lexicon-constrained
+semantic parsing. It is not a new reasoning primitive.
+
+## Frozen gates
+
+The original S4 gates remain unchanged: at least 98% exact count overall and 95% every depth; at
+least 95% exact programs overall and 90% every held-out depth; at least 95% answers overall and 90%
+at depth eight; gold-count rescue below two points; shuffled exact programs at most 40%; locked S3
+gold sanity; total parameters below 150M; zero confirmation access.
+
+V1.1 may run once on the same public development rows after source, lexicon builder, evaluator, and
+this repair are committed. A pass authorizes only a separately frozen fresh confirmation protocol.
+
+## Pre-evaluation builder receipt
+
+The first post-commit training-only lexicon build failed closed at SHA-256
+`f487d1cb98bebd84137c1b0b7839e2241603cc4f920f4f1a09205f502e9015e6`. Its sole failed gate
+incorrectly required one entity token width. The admitted training spans contain 3,061 width-four,
+130,847 width-five, and 10,092 width-six occurrences because contextual BPE boundaries vary. The
+frozen repair above already specified the *set* of training entity-span widths, and the decoder was
+implemented to accept that set. Before any development score, the builder gate is therefore
+repaired to require a nonempty bounded width set and exact accounting of all 144,000 training intro
+spans. The failed receipt is retained as `s4_structural_lexicon_v1.failed_one_width.json`.
+
+## Result
+
+Jobs `693160` and `693161` completed cleanly. Treatment retains 2048/2048 exact event counts but
+falls to 25/2048 exact programs and 300/2048 answers; shuffled remains 0/2048 exact programs.
+Training-width expansion selects the wrong 4/5/6-token roster boundaries and creates 1,176
+`event_entity` failures. Frozen assessment SHA-256
+`fd0479b0737af49313b0cebf1863c4826c21de336f51e240ece3e4d60d11d587` records
+`reject_s4_v1_1_public_development`. Do not repair or rescore v1.1 on this board. The lawful next
+test is a newly preregistered event-relative start/end pointer architecture on fresh development
+data.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 147: `R12_S4_SELF_DELIMITING_EVENT_TAPE_RESULT.md`
+
+Original source path: `R12_S4_SELF_DELIMITING_EVENT_TAPE_RESULT.md`
+Original source size: 4,383 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S4 Self-Delimiting Event Tape Result
+
+## Decision
+
+`REJECT_S4_V1_AND_V1_1`; retain one causal discovery. The treatment learns exact autonomous event
+count on every public-development source and, whenever it emits a structurally valid tape, the
+entire program/state/answer is exact. It misses the frozen 95% overall program gate by 14 rows.
+The zero-fit pointer-anchored v1.1 repair collapses on variable-width referential boundaries and is
+also rejected. No confirmation board was generated or read.
+
+## Frozen objects
+
+- Immutable base: 125,081,664 parameters at the protected 300k checkpoint.
+- Parser adapter: 8,608,271 parameters; total 133,689,935, below 150M.
+- Training: 48,000 whole-source rows, depths 1--4, 120,000 events, one epoch / 750 updates.
+- Development: 2,048 matched rows, depths 3--8, zero train/development exact, 13-gram, name, or
+  factor overlap.
+- Treatment training job `693152`; shuffled-label control `693154`.
+- Original evaluations `693153` and `693155`; diagnostics `693157` and `693158`.
+- Pointer-anchored evaluations `693160` and `693161`.
+
+## Original autonomous result
+
+| Arm/control | Count | Exact program/state | Answer | Valid tapes |
+|---|---:|---:|---:|---:|
+| Treatment strict | **2048/2048 = 100%** | **1932/2048 = 94.336%** | **1932/2048 = 94.336%** | 1932/2048 |
+| Treatment gold count | 2048/2048 | 1938/2048 = 94.629% | 1939/2048 = 94.678% | 1940/2048 |
+| Treatment gold intro/query | 2048/2048 | **1991/2048 = 97.217%** | same exact-consumption boundary | 1991/2048 |
+| Shuffled strict | 26/2048 = 1.270% | **0/2048** | **0/2048** | 0/2048 |
+
+All 1,932 valid strict tapes have the exact program, state, and answer. Strict treatment program by
+depth is 97.093%, 94.767%, 94.706%, 94.118%, 90.294%, and 95.000% for depths 3--8. The failures
+are 66 intro-cardinality, 47 event-component-cardinality, and three entity-identity errors. Gold
+intro/query boundaries raise every depth to at least 96.471%. This supports learned variable event
+count and event semantics, while localizing the remaining miss to source-span emission.
+
+## Frozen zero-fit repair and rejection
+
+Source/prereg commit `34657ea` and corrected training-width receipt commit `36f06ed` precede any
+v1.1 score. The first training-only lexicon build failed closed because it incorrectly required one
+entity width; contextual BPE spans are widths 4/5/6. Its rejected SHA-256 is
+`f487d1cb98bebd84137c1b0b7839e2241603cc4f920f4f1a09205f502e9015e6`. The lawful set-valued
+receipt passes all gates at SHA-256
+`eb49f75d969c999d4bcb8f2e350658f76a5491d4a91a7e4abff83b086ba4fd38`.
+
+The pointer-anchored treatment preserves exact count at 2048/2048 but falls to 25/2048 = 1.221%
+exact programs and 300/2048 = 14.648% answers; shuffled remains 0/2048 programs. Treatment has
+1,176 `event_entity` failures and only 306/2048 exact initial rosters. A global token-role maximum
+cannot determine the correct 4/5/6-token boundary, and shared event-role scores do not pair each
+direction anchor with its own entity as depth grows. Assessment SHA-256
+`fd0479b0737af49313b0cebf1863c4826c21de336f51e240ece3e4d60d11d587` records
+`reject_s4_v1_1_public_development`.
+
+## What survives
+
+S4 v1 is the first whole-source result here to recover the exact number of complete known-atom
+events on all 2,048 held-out rows without padding, host count, or hidden `active_operations`.
+Shuffling supervision destroys the result. The locked S3 executor is not the bottleneck once a tape
+is valid. The open interface is now narrower: variable-width start/end binding and event-relative
+argument pairing.
+
+## Next admissible experiment
+
+Do not tune another deterministic decoder on this public board. S4 v2 must replace shared token-role
+segmentation with learned start/end pointers for the three roster entries and event-relative pointer
+queries conditioned on each model-found direction anchor. It must retain source-order count, train
+only on depths 1--4, and evaluate once on a newly frozen, disjoint development board through depth
+eight. A favorable parameter-matched shared-role parser and shuffled-label arm remain mandatory.
+
+## Claim boundary
+
+This is evidence for bounded known-atom schedule counting and conditional tape execution, not a
+confirmed autonomous parser, semantic halt, unseen action semantics, planning, open-language
+reasoning, benchmark improvement, or architectural novelty.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 148: `R12_S4_SET_IDENTITY_EVENT_BUS_PREREG.md`
+
+Original source path: `R12_S4_SET_IDENTITY_EVENT_BUS_PREREG.md`
+Original source size: 5,623 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S4 Set-Identity Event Bus Preregistration
+
+## Status
+
+**Closed negative on 2026-07-19.** The frozen assessor records
+`reject_s4_v3_fresh_development`. The treatment recovered 99.46% of roster carriers, 100% of event
+counts and queries, and a causally used identity channel, but only 9.33% exact programs versus
+93.41% for frozen v1. Confirmation was never generated or read. Full evidence is in
+`R12_S4_SET_IDENTITY_EVENT_BUS_RESULT.md`.
+
+The protocol was frozen before production seed selection, fresh-board generation, training, or
+score access.
+Three set-bus tests, one assessor test, one fresh-board mechanics test, `py_compile`, Ruff, Slurm
+syntax, and an actual raw-300k/v1 finite-backward construction pass. No production board, H100 fit,
+development score, or confirmation access exists at freeze.
+
+Post-freeze custody: seeds `14970823073944690832`, `939143060519850990`, and
+`15848092346808854751` were retired before board creation for recorded remote dependency/invocation/
+audit failures. Replacement seed `11437896185638727043` is the sole production board. It has 2,048
+rows / 512 matched groups, passes every frozen gate, and is read-only before model access. Data,
+report, and safe-archive SHA-256 values are respectively
+`b49ddbbfad3da04181d6ec5401f8412b2953185e5e91e344208c8b6b0c5ba1e8`,
+`808b0e0287e53576ffb234a5ea855943552ef3e60b2d3d20847b79f7254d692c`, and
+`28302861b383fbdc8e5056e25bbd98b188487e87b241d25d2ef5ac82cebd43ae`.
+
+## Causal diagnosis
+
+On a wholly fresh board the frozen S4 v1 parser recovers 2,048/2,048 event counts and 1,914/2,048
+exact programs. S4 v2 trains independent absolute start/end pointers to low loss but collapses to
+254/2,048 exact programs, with 1,179 crossed/invalid event boundaries. The missing invariant is not
+another coordinate decoder. It is lexical equality between a roster mention and an event mention.
+
+## Representation
+
+For token IDs `x_t` and a normalized model-owned soft membership `a_t`, define the vocabulary-aligned
+set carrier
+
+`C(a, x)[v] = sum_t a_t * 1[x_t = v]`.
+
+This is a sparse token-frequency distribution. Two occurrences of the same multi-token name produce
+the same carrier when their memberships are correct, independent of absolute position or BPE width.
+It is order-insensitive; the admitted name generator and corpus audit must exclude collisions where
+that would identify two roster names. The carrier adds no learned lexical table.
+
+## Treatment
+
+Freeze the raw 300k model and every S4 v1 parser parameter. Use the frozen v1 role logits as soft
+membership priors for the three roster slots and terminal query phrase. Add only four tied 384x384
+linear maps:
+
+- event-entity query and key;
+- event-literal query and key.
+
+Each discovered operation-kind anchor queries every source token. Its score is the tied contextual
+query/key score plus the frozen v1 event-role logit. A masked softmax yields a complete soft token
+set, never a start/end pair. Event identity is cosine matching between the event carrier and three
+roster carriers. Literal membership weights the frozen v1 amount head. Query membership weights the
+frozen v1 query head. The frozen training-only kind lexicon and locked S3 executor remain unchanged.
+
+Training uses gold kind spans only to form supervised event queries, exactly as v2. Inference uses
+only kind anchors discovered from source tokens and frozen v1 role evidence. No depth, event index,
+program, answer, final state, gold count, or confirmation field enters inference.
+
+The real assembly loads exactly 71 frozen v1 tensors. Four 384x384 tensors and 589,824 parameters
+are trainable; the complete adapter has 9,198,095 parameters and the raw-base-plus-adapter system has
+134,279,759 parameters, strictly below 150M.
+
+## Controls
+
+1. Frozen S4 v1 on the same fresh board.
+2. Shuffled token-membership supervision with identical architecture, initialization, examples,
+   updates, optimizer, and semantic-label inventory.
+3. A roster-derangement intervention that cyclically permutes the three predicted roster carriers
+   after parsing and before event identity matching.
+4. Gold-program locked-S3 sanity.
+
+No v1 fine-tuning, learned token embedding, extra epoch, width change, threshold, top-k token count,
+decoder sweep, or result selection is allowed.
+
+## Fresh-board rule
+
+Commit this preregistration, generator, model, trainer, evaluator, assessor, tests, and jobs first.
+Then draw one random production seed and generate a new 2,048-row development board. It must be
+disjoint at exact prompt, word-13-gram, nonce/name, token-multiset identity, and factor levels from
+all S4 train/old-development/v2-development and supplied public compiler/executor boards. Each row's
+three roster token multisets must be unique. Each arm may read the board once. No post-score repair,
+rescore, or confirmation access is admissible.
+
+## Frozen gates
+
+- event count at least 98% overall and 95% at every depth;
+- exact program, state, and answer at least 95% overall;
+- exact program at least 90% at each depth 5--8;
+- roster-carrier recovery at least 95% overall;
+- treatment exact programs at least one percentage point above frozen v1 on the same board;
+- shuffled exact programs at most 40%;
+- roster-deranged exact programs at most 40%;
+- gold-program S3 sanity at least 99%;
+- strict total parameters below 150,000,000;
+- development access exactly one and confirmation access zero.
+
+A pass authorizes one separately frozen confirmation board. It does not establish unseen operation
+semantics, planning, learned halt, order-sensitive lexical identity, free-form reasoning, benchmark
+improvement, or novelty.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 149: `R12_S4_SET_IDENTITY_EVENT_BUS_RESULT.md`
+
+Original source path: `R12_S4_SET_IDENTITY_EVENT_BUS_RESULT.md`
+Original source size: 5,661 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S4 Set-Identity Event Bus Result
+
+## Decision
+
+**Reject S4 v3 on fresh development. Do not generate confirmation and do not repair or rescore on
+the closed board.**
+
+The set-valued roster carrier is strongly validated, but the learned global event-conditioned token
+membership does not pair each operation anchor with its arguments reliably enough to compose. Keep
+the roster/query carrier as a component; reject the event-attention bus as the S4 parser.
+
+## Custody
+
+- Initial source freeze commit: `2ac31a5`.
+- Public-audit repair commit before production board: `3019ba8`.
+- Board freeze commit before model access: `ab52072`.
+- Sole production seed: `11437896185638727043`.
+- Retired before board/model access: `14970823073944690832`, `939143060519850990`, and
+  `15848092346808854751`.
+- Board: 2,048 rows / 512 matched groups, depths 3--8, maximum 344 tokens.
+- Data SHA-256: `b49ddbbfad3da04181d6ec5401f8412b2953185e5e91e344208c8b6b0c5ba1e8`.
+- Report SHA-256: `808b0e0287e53576ffb234a5ea855943552ef3e60b2d3d20847b79f7254d692c`.
+- Safe archive SHA-256: `28302861b383fbdc8e5056e25bbd98b188487e87b241d25d2ef5ac82cebd43ae`.
+- Exact prompt, word-13-gram, nonce/name, factor, and roster-token-multiset overlap: zero against
+  every supplied public source.
+- Confirmation access: zero.
+
+The first treatment/shuffled jobs `693167/693168` failed before their first update because a
+per-row mask was paired with batch-padded logits. They wrote no parser artifact and had no
+development access. Commit `c6d9f00` fixes only that shape slice and adds a mixed-length real
+backward check. Corrected treatment `693170` and shuffled `693171` then each completed exactly one
+epoch / 750 updates. One-shot evaluations are `693172/693173`; frozen assessor is `693174`.
+
+## Parameter and training receipt
+
+| Quantity | Count |
+|---|---:|
+| Raw Shohin base | 125,081,664 |
+| Complete adapter including frozen v1 | 9,198,095 |
+| New trainable set-membership maps | 589,824 |
+| Total system | 134,279,759 |
+
+Both arms load exactly 71 frozen v1 tensors; only four 384x384 tensors train. Treatment completes in
+273.31 seconds with adapter SHA-256
+`ff718f6c83fb1ed3c369ad0ae55b30e35d3539d3ed743faebe9fc23ac2fb6a92`; shuffled completes in
+275.38 seconds with adapter SHA-256
+`29849ae8dc8b21102e8311c69440629010d5e8ec7639108fcca473ee5543b3a5`.
+
+## Fresh-board result
+
+| Arm | Count | Roster recovery | Query | Exact program | Exact state | Correct answer |
+|---|---:|---:|---:|---:|---:|---:|
+| Frozen S4 v1 | **100%** | 93.41% strict | 93.41% strict | **1913/2048 = 93.41%** | **93.41%** | **93.41%** |
+| S4 v3 set bus | **2048/2048 = 100%** | **2037/2048 = 99.46%** | **2048/2048 = 100%** | 191/2048 = 9.33% | 685/2048 = 33.45% | 949/2048 = 46.34% |
+| Shuffled membership | 100% | 99.46% | 100% | 2/2048 = 0.10% | 18.99% | 34.47% |
+| Treatment + roster derangement | 100% | unchanged | 100% | **0/2048** | 11.82% | 27.73% |
+
+Treatment exact programs by depth are 35.76%, 15.70%, 2.94%, 0.88%, 0.29%, and 0% at depths
+3--8. This chain-length decay is consistent with a partially correct atomic pairing probability
+being multiplied across events; it is not a failure of event count, roster recovery, query
+classification, or locked S3 execution.
+
+The treatment beats shuffled supervision by 9.23 points in exact programs, 14.46 points in exact
+state, and 11.87 points in answers. Cyclically deranging only the three roster carriers removes all
+191 exact programs and reduces state/answer strongly. Therefore the set identity channel is causal,
+not an unused diagnostic. It is simply too inaccurate at event-to-argument alignment.
+
+Baseline, treatment, shuffled, and assessment report SHA-256 values are respectively
+`c2236edc9da3ee68e8bb1a7e96a33194cfcff44bd7b642e8787c143a03b04bca`,
+`3677c08c3e5402d61c8d40159c1d92a205d65df1f8913087c54a2e20767b98ce`,
+`f96b5164eec7694e04a25ca07465c48ae7ebcc10614397b56615be617610c1fc`, and
+`1b6cb30e5a75fd0e3315ccb369d0131aaa381c208a4c8a8e6627851510511b71`. The assessor records
+`reject_s4_v3_fresh_development`.
+
+## Interpretation and next constraint
+
+The representation theorem survived only at the roster interface. A vocabulary-aligned weighted
+token set transports same-name identity across occurrence and BPE width. The failure comes from
+asking a learned global query/key map to discover which event-local entity/literal belongs to each
+kind anchor. That map must solve syntactic segmentation and identity at once; one-epoch train loss
+separates from shuffled, but fresh exactness decays to zero with depth.
+
+The next lawful repair must not retrain lexical identity or another absolute/global pointer. It
+should preserve:
+
+1. frozen v1's exact model-owned kind-anchor count;
+2. v3's 99.46% soft roster recovery and 100% query recovery;
+3. frozen v1's much stronger event-role evidence;
+4. locked S3 execution.
+
+A bounded candidate is a zero-fit monotone event-region decoder. Consecutive model-discovered kind
+anchors partition the source into ordered event regions; frozen entity/literal role evidence is
+normalized only inside its event region, then the resulting entity set is matched to the soft roster
+carrier. This removes learned global pairing while adding no gold depth, boundary label, lexical
+table, threshold, or new parameter. It must be preregistered and scored once on a new board with
+event-region and roster derangements.
+
+## Claim boundary
+
+This is a fresh-development result over known operation atoms. It is causal evidence for a bounded
+set-valued lexical identity channel, not confirmation, unseen semantics, planning, learned halt,
+free-form reasoning, public benchmark improvement, novelty, or model promotion.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 150: `R12_S4_V5_CONFIRMATION_PREREG.md`
+
+Original source path: `R12_S4_V5_CONFIRMATION_PREREG.md`
+Original source size: 2,577 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S4 v5 Confirmation Preregistration
+
+## Status
+
+**Closed confirmed on 2026-07-19.** The sole confirmation read scores 97.80% exact programs versus
+93.41% frozen v1; every gate passes and both causal controls score zero programs. The assessor
+records `confirm_s4_v5_hard_island_soft_interface`. No second board or rescore exists.
+
+Protocol was frozen at commit `6731743` before confirmation seed selection, board generation, or
+confirmation access.
+
+Seed `14809014609581254328` generated 2,048 rows / 512 groups with every declared gate passing.
+Confirmation data, report, and read-only archive SHA-256 values are respectively
+`b16534b3c41d21737370f0eb852cb6c53d75e81d661d6d9592927709551a08cf`,
+`ce0e2671c8dcd07b5b789798da0325b94066087ce4222082267919f57afdb261`, and
+`af94e855ba81905c3fed18ef8f4764e16574afc2bfd29a4f13247f9af5df337f`.
+
+Development assessor SHA `41a2dd2eab37c1976803d49e36f1a4ae35b62e8568ebefc3159c118383ab2eb5`
+qualified the unchanged hard-island/soft-interface mechanism at 96.92% exact programs. This
+protocol adds confirmation-only board, access-accounting, and assessor plumbing. It must import the
+frozen `s4_hard_island_soft_interface.py`; no decoder, parser, model, lexicon, selector, tie-break,
+threshold, fallback, S3 semantics, or gate changes are allowed.
+
+Exactly one 2,048-row / 512-group board will be sampled after this source commit. It must pass all
+fresh mechanics and have zero exact, word-13-gram, nonce/name, factor, and roster-token-multiset
+overlap against source train/development and every closed or qualified v2--v5 development board.
+The inherited row split label remains `s4_event_tape_development` for frozen parser compatibility;
+the report and authoritative artifact role are explicitly confirmation. `artifacts.development` is
+an exact receipt alias to the same bytes solely so the unchanged frozen-v1 baseline evaluator can
+read them.
+
+One serial job runs strict frozen v1, unchanged v5, roster rotation, event-region rotation, and the
+confirmation assessor. Gates are identical to development: program >=95% overall, >=90% at depths
+5--8, and >=v1+1 point; state/answer >=95%; count/query/roster gates; both interventions <=40%;
+zero trainable v5 parameters; total <150M. Development access must be zero and confirmation access
+exactly one. No repair, rescore, second board, or reuse is permitted after the confirmation read.
+
+A pass confirms only bounded known-atom structured parsing/execution. It does not establish unseen
+semantics, open-ended planning, learned halt, free-form reasoning, benchmark gains, or novelty.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 151: `R12_S5_LEARNED_GENERATOR_CONFIRMATION_PREREG.md`
+
+Original source path: `R12_S5_LEARNED_GENERATOR_CONFIRMATION_PREREG.md`
+Original source size: 3,276 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S5 Learned Generator-Factored Confirmation Preregistration
+
+**Status:** frozen after S5.2 development qualification and before confirmation
+seed, board, or access.
+
+Job `693183` completed the sole S5 development read with all gates passing.
+The unchanged learned arm scored 97.510% exact programs, 98.193% exact state,
+and 98.682% answers, exactly matching the quarantined host executor on state
+and answer. It achieved 36/36 unit and 36/36 held-out amount-two transitions.
+Deranged law, direction rotation, and state reset scored 19.336%, 1.709%, and
+43.311% state. The generator has 4,934 parameters; total system size is
+133,694,869. Development evaluation SHA-256 is
+`8e20728f13a011c8e5a424cc8dbd52fccc9b9df93cb3f69ab39ed877c689ba37`.
+
+## Frozen Confirmation
+
+The exact treatment/shuffled checkpoints, parser, base, program-only decoder,
+five execution arms, closure audit, assessor thresholds, and all claim
+boundaries remain unchanged. Confirmation-only code may change only:
+
+- admission of a report marked `board_role=confirmation`;
+- access accounting from development 1 / confirmation 0 to development 0 /
+  confirmation 1; and
+- the final decision label.
+
+After this source is committed, draw one seed and build one 512-group board
+excluded against source training and every public/development S4/S5 board.
+Never open any prior confirmation bytes. The board must pass all existing
+corpus gates before exactly one serial H100 read. No fit, retry, repair, second
+seed after a passing corpus, threshold change, or rescore is allowed.
+
+Every original S5 gate remains required, with only the access-accounting gates
+changed as above. Passing confirms bounded learned generator-factored execution
+behind the frozen known-operation S4 v5 parser. It still does not establish
+unseen operation semantics, open-ended planning, learned termination,
+unrestricted language reasoning, or full standalone native reasoning.
+
+## Frozen Board
+
+Seed `2190224777450473319` yields 2,048 rows / 512 groups over depths three
+through eight, maximum 339 tokens. Every exclusion, balance, context, and
+independent-executor gate passes; prior confirmation bytes were never opened.
+The board is bound to development qualification SHA-256
+`421a27fbcf6d4eb5e2084f2d01048963dbe0cafb7664bdbcf4c76cc9035c6f44`.
+Confirmation data SHA-256 is
+`7786919b6d284c359e434783638dcaed96d1c654c6e9174566c4e76767d73fc0`;
+report SHA-256 is
+`7d2ad6f5e08558dc862feed3b0ee5d885a3e788798e6e3d207afdae50a605b29`.
+Newton and local copies are read-only. Commit this receipt and aggregate report
+before exactly one H100 read; no replacement board or retry is authorized.
+
+## Closure
+
+Sole job `693185` completed once on H100 `evc24` in 36 seconds, exit `0:0`.
+The unchanged learned arm scores 96.924% exact programs, 97.607% exact state,
+and 98.096% answers, exactly matching the host upper bound. It retains 36/36
+unit and 36/36 never-trained amount-two closure. Fixed-deranged, direction-
+rotated, and state-reset controls score 22.217%, 1.807%, and 40.234% state.
+Every gate passes; assessment SHA-256 is
+`165b1a9ae40c8b3f52d133983c21fb22bfa2f2507b30a318f86106c96e6abc4e`.
+The decision is `confirm_s5_learned_generator_factored_execution`. No rerun,
+repair, second board, or post-confirmation fit is authorized.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 152: `R12_S5_LEARNED_GENERATOR_PREREG.md`
+
+Original source path: `R12_S5_LEARNED_GENERATOR_PREREG.md`
+Original source size: 4,975 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S5 Learned Generator-Factored Executor Preregistration
+
+**Status:** frozen before fit, fresh-board creation, or model score.
+
+**Claim class:** bounded model-owned transition-law development behind the
+confirmed S4 v5 known-operation parser. This is not a general native-reasoning
+claim.
+
+## Question
+
+The promoted S4 v5 system autonomously extracts a variable-length categorical
+program from one unpadded natural-language source, but its final state is still
+computed by a hand-authored pop-insert routine. S5 asks whether a tiny neural
+kernel can learn the local transition law from primitive supervision and then
+compose that law recurrently without the exact action table at inference.
+
+## Sole Treatment
+
+The frozen S4 v5 parser emits categorical `(direction, identity, amount)`
+events and a categorical query. S5 replaces only exact execution with:
+
+1. an exact three-by-three categorical assignment register;
+2. a tied neural unit generator receiving only the target's current location
+   and left/right direction;
+3. hard-forward selection among six permutation matrices; and
+4. one replay for amount one or two tied replays for amount two.
+
+The neural generator is supervised on exactly six unit cells: three current
+locations times two directions. It receives no source tokens, identity names,
+amount-two examples, recurrent programs, development rows, confirmation rows,
+or answer labels. Amount two is therefore a held-out algebraic composition of
+the same learned primitive. The full generator has fewer than 100,000
+parameters and the complete system remains below 150 million parameters.
+
+The S5 program-only decoder independently reconstructs the frozen v5 program
+without importing or calling its host executor. Evaluation must additionally
+show exact program/query parity with the promoted decoder on every row. The
+promoted host executor is evaluated only as a quarantined upper-bound arm; its
+state or answer is never an input to S5.
+
+## Matched Controls
+
+- **Fixed deranged law:** identical initialization, architecture, optimizer,
+  updates, and six inputs, with every unit-action target cyclically deranged.
+- **Direction rotation:** treatment weights with every parsed direction
+  swapped at execution.
+- **State reset:** treatment weights but the categorical register is reset
+  before every event.
+- **Host exact upper bound:** promoted v5 program executed by the old exact
+  routine; comparison only, never a treatment input.
+
+## Custody
+
+After these source bytes and tests are committed, one deterministic treatment
+fit and matched deranged fit may run. A new 512-group development board must be
+created from a seed drawn after commit and must pass the existing exact-prompt,
+13-gram, name, factor, and roster-multiset exclusions against source data and
+all prior S4 boards. Exactly one serial H100 evaluation may access that board.
+No gate, label, architecture, optimizer, or decoder may change after access.
+
+## Frozen Gates
+
+All of the following are required:
+
+1. exact frozen-v5 program/query parity on every row;
+2. 6/6 treatment unit-generator closure;
+3. 36/36 exact amount-two transitions over all six states and three identities,
+   despite zero amount-two training examples;
+4. at least 95% program, state, and answer accuracy end to end;
+5. at least 93% state accuracy at every depth three through eight;
+6. at least 95% state accuracy among rows containing amount-two events;
+7. learned state and answer each within 0.1 percentage point of host exact;
+8. fixed-deranged and direction-rotated state each fall at least 40 points;
+9. state-reset state falls at least 20 points;
+10. zero recurrent/amount-two training examples, generator below 100k, total
+    system below 150M, one development access, and zero confirmation access.
+
+Passing qualifies one new independently seeded confirmation of the unchanged
+parser plus learned kernel. It establishes only that a learned, source-deleted,
+generator-factored neural transition law composes under a structurally managed
+known-operation loop. It does not establish unseen operation semantics,
+open-ended planning, learned termination, unrestricted language reasoning, or
+standalone native reasoning. Failure rejects S5 without changing the promoted
+v5 baseline.
+
+## Closure
+
+Seed `107732609041319044` is retired before board creation, fit, model load, or
+score. The board command incorrectly supplied the sealed prior S4 confirmation
+as an exclusion input. The existing builder opened enough of that file to
+identify its forbidden confirmation split and failed closed with
+`ValueError: confirmation input is forbidden`; it created no output directory.
+This violates this protocol's zero-confirmation-access contract, so S5 v1 may
+not proceed. No confirmation content or statistic was used. S5 v1.1 may change
+only custody: exclude source/public/development boards while never opening any
+sealed confirmation bytes. Architecture, fit, controls, gates, and claim
+boundary remain frozen.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 153: `R12_S5_LEARNED_GENERATOR_PREREG_V1_1.md`
+
+Original source path: `R12_S5_LEARNED_GENERATOR_PREREG_V1_1.md`
+Original source size: 2,267 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S5.1 Learned Generator-Factored Executor Preregistration
+
+**Status:** frozen after the S5 v1 pre-board custody failure and before any new
+seed, board, fit, model load, or score.
+
+S5 v1.1 imports the architecture, matched controls, fit contract, all 18 gates,
+and claim boundary from `R12_S5_LEARNED_GENERATOR_PREREG.md` unchanged. Its sole
+correction is the board exclusion contract.
+
+## Retired Attempt
+
+Seed `107732609041319044` produced no board, fit, model load, or score. The
+builder was incorrectly passed the sealed S4 v5 confirmation as an exclusion
+input. It opened enough of the file to detect the confirmation split, failed
+closed, and created no output directory. S5 v1 is retired and cannot authorize
+a result.
+
+## Corrected Custody
+
+After this file and the S5 v1 closure receipt are committed, draw one new seed.
+Build one 512-group development board excluded against:
+
+- the admitted S4 source training corpus;
+- the factorized source training corpus;
+- the public self-delimiting S4 development board; and
+- every S4 v2--v5 **development** board.
+
+Do not pass, open, hash, or otherwise inspect any sealed confirmation board.
+The old confirmation's aggregate public result may remain in documentation,
+but neither its row bytes nor any derived overlap statistic may enter S5.1.
+Random nonces, factor exclusion, and the existing exact-prompt/13-gram/name/
+roster-multiset gates provide the lawful development isolation.
+
+Exactly one matched six-cell fit and one serial H100 evaluation may access the
+new development board. All original gates remain exact. A pass authorizes only
+one newly seeded confirmation protocol that similarly excludes prior public and
+development data without opening any old confirmation bytes.
+
+## Closure
+
+Seed `7741142465189679834` built 2,048 rows / 512 groups without confirmation
+access or model access. Exact-prompt, 13-gram, factor, nonce, context, depth,
+balance, and independent-executor gates pass, but 4/2,048 rows reuse a public
+roster token multiset. `all_gates_pass` is false, so this board is sealed and
+cannot be scored. S5.1 closes with no fit, model load, or result. S5.2 may draw
+one replacement seed after commit with architecture, fit, controls, evaluator,
+assessor, gates, and exclusions unchanged.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 154: `R12_S5_LEARNED_GENERATOR_PREREG_V1_2.md`
+
+Original source path: `R12_S5_LEARNED_GENERATOR_PREREG_V1_2.md`
+Original source size: 1,739 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S5.2 Learned Generator-Factored Executor Preregistration
+
+**Status:** frozen after the scoreless S5.1 corpus-gate failure and before one
+replacement seed, fit, model load, or score.
+
+S5.2 imports every architecture, training, control, evaluation, gate, and claim
+boundary byte from `R12_S5_LEARNED_GENERATOR_PREREG.md` and the corrected sealed
+data policy from `R12_S5_LEARNED_GENERATOR_PREREG_V1_1.md`.
+
+Seed `7741142465189679834` is retired because 4/2,048 generated rows reused a
+public roster token multiset. It had zero model, fit, development-score, and
+confirmation access. No threshold or mechanism changes are authorized.
+
+After this receipt is committed, draw exactly one replacement seed and run the
+same deterministic 512-group builder against the same source/public/development
+exclusions. Never open prior confirmation bytes. The board must pass every
+existing gate before the sole matched fit and serial H100 evaluation. Failure
+closes S5.2; passing uses the original frozen assessor without repair or rescore.
+
+## Frozen Development Board
+
+Replacement seed `1639560669058669827` yields 2,048 rows / 512 groups over
+depths three through eight, with maximum length 345 tokens. Every corpus gate
+passes, including zero exact-prompt, 13-gram, factor, nonce-name, and roster
+token-multiset overlap against the admitted source/public/development inputs.
+Confirmation access is zero. Development data SHA-256 is
+`5d58f97f6763ac4b6550b4b2aeb959993537c185994b0ed49ac4b102c568582f`;
+report SHA-256 is
+`7e667a519f7cb7f3462edd51f75279bfc66260a34baa7414f06424be6cd71dd9`.
+Both Newton and local copies are read-only. Commit this receipt and aggregate
+report before the sole fit/evaluation job; no further seed or board is allowed.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 155: `R12_S5_LEARNED_GENERATOR_RESULT.md`
+
+Original source path: `R12_S5_LEARNED_GENERATOR_RESULT.md`
+Original source size: 5,542 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S5 Learned Generator-Factored Executor Result
+
+**Decision:** `confirm_s5_learned_generator_factored_execution`
+
+S5 replaces the promoted S4 v5 host action table with a 4,934-parameter neural
+unit generator. It learns only six one-step cells, receives no amount-two or
+recurrent-program supervision, and exactly reproduces the host transition law
+when recurrently composed behind the frozen whole-source parser. This is a
+confirmed model-owned transition component, not unrestricted native reasoning.
+
+## Custody
+
+- Mechanism/prereg commit `fd3b3cf` preceded every fit and score.
+- S5 v1 seed `107732609041319044` retired before board creation after the old
+  confirmation guard failed closed; no model or result existed.
+- S5.1 seed `7741142465189679834` retired before model access because 4/2,048
+  rows failed the public roster-multiset gate.
+- S5.2 development seed `1639560669058669827` passed all corpus gates. Data
+  SHA-256 is `5d58f97f6763ac4b6550b4b2aeb959993537c185994b0ed49ac4b102c568582f`.
+- Development job `693183` completed once on H100 `evc24` in 2m25s, exit
+  `0:0`; assessment SHA-256 is
+  `421a27fbcf6d4eb5e2084f2d01048963dbe0cafb7664bdbcf4c76cc9035c6f44`.
+- Confirmation source/board commit `d6112f3` preceded the sole confirmation
+  access. Seed `2190224777450473319` passed all corpus gates. Data SHA-256 is
+  `7786919b6d284c359e434783638dcaed96d1c654c6e9174566c4e76767d73fc0`.
+- Confirmation job `693185` completed once on `evc24` in 36s, exit `0:0`.
+  Evaluation SHA-256 is
+  `6aae5e9981c7f7e4a3832a75955754d37f30ed1a3ffc289e13e8334f8703017a`;
+  assessment SHA-256 is
+  `165b1a9ae40c8b3f52d133983c21fb22bfa2f2507b30a318f86106c96e6abc4e`.
+- Prior sealed confirmation rows were never used by S5.1/S5.2 development or
+  by the new confirmation builder. No post-score fit, repair, threshold change,
+  second confirmation board, or rescore occurred.
+
+## Architecture and Training
+
+The frozen S4 v5 parser emits a variable-length categorical program of
+`(direction, identity, amount)` events plus a query. The S5 executor contains:
+
+1. an exact categorical three-identity assignment register;
+2. one tied MLP receiving only current location (three-way) and direction
+   (two-way);
+3. hard-forward choice among six position-permutation matrices; and
+4. one neural replay for amount one or two tied replays for amount two.
+
+Training contains exactly six balanced unit cells: three locations times two
+directions. Both treatment and fixed-deranged controls start from identical
+weights and train for 500 updates. Both fit their assigned six labels 6/6.
+There are zero source-token, identity-name, amount-two, recurrent-program,
+development, confirmation, or answer-label training examples.
+
+The treatment checkpoint SHA-256 is
+`fbf7004e8094fc2c6100f108169f2283e2ad0dd3efd0408b87dff6c6583ff384`;
+the matched deranged checkpoint is
+`50b7284c0cc95f96a33ac871e63f1550ef5039080ac2f92ca7d22331d44a6457`.
+The complete system has 133,694,869 parameters, below the 150M cap.
+
+## Scores
+
+| Arm | Development program/state/answer | Confirmation program/state/answer |
+|---|---:|---:|
+| Host exact upper bound | 97.510% / 98.193% / 98.682% | 96.924% / 97.607% / 98.096% |
+| **Learned S5 generator** | **97.510% / 98.193% / 98.682%** | **96.924% / 97.607% / 98.096%** |
+| Fixed deranged law | 97.510% / 19.336% / 35.107% | 96.924% / 22.217% / 36.523% |
+| Direction rotated | 97.510% / 1.709% / 38.574% | 96.924% / 1.807% / 40.430% |
+| State reset each event | 97.510% / 43.311% / 57.275% | 96.924% / 40.234% / 57.471% |
+
+Parser parity with the promoted v5 decoder is 2,048/2,048 on each board.
+Treatment closure is 36/36 unit transitions and **36/36 amount-two transitions
+never present in training**. The deranged control is 0/36 on true unit actions
+and 18/36 on amount-two closure. Every depth-three-through-eight state gate,
+every amount-two-row gate, parameter/access gate, and causal-drop gate passes
+on development and confirmation.
+
+## Established Claim
+
+For the confirmed bounded three-entity known-operation domain, a neural kernel
+trained only on six primitive transition cells learns a source-deleted local
+group action and composes it recurrently through depth eight. Its end-to-end
+state and answer outputs are bit-for-bit score-equivalent to the old exact host
+action table. The law, parsed direction, and persistent state are causally
+necessary: matched law derangement, direction rotation, and state reset all
+collapse exact state.
+
+This closes the claim that host-authored action semantics are necessary for
+the promoted bounded system. It also demonstrates a useful small-model design:
+learn a minimal generator basis and reuse it, rather than train a continuous
+state updater on every long trajectory.
+
+## Boundary and Next Frontier
+
+S5 is not full standalone native reasoning. The operation vocabulary remains
+the twelve known left/right language atoms, the v5 decoder uses deterministic
+hard-island/monotone-region assembly, the runtime invokes a fixed maximum of two
+microsteps from the parsed amount, and termination follows the structurally
+detected event list. No unseen operation meaning, open-ended planning,
+self-generated subgoal, learned halt, free-form answer serialization, or public
+benchmark gain is established.
+
+Promote S5 as the strongest bounded reasoning baseline. The next lawful test
+must attack **law induction for unseen operation semantics** or **model-owned
+active-step/halt control** while freezing this parser/register/generator stack
+and retaining matched derangement/reset controls.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 156: `R12_S6_CONTEXTUAL_AFFINE_LAW_CPU_RESULT.md`
+
+Original source path: `R12_S6_CONTEXTUAL_AFFINE_LAW_CPU_RESULT.md`
+Original source size: 2,687 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S6 Contextual Affine Law CPU Mechanics Result
+
+**Decision:** `pass_s6_cpu_mechanics`
+
+S6 defines a new operation law by two categorical demonstrations over an affine
+position action and asks a learned unit to infer and recurrently apply laws absent
+from training. This result establishes the exact mechanics and data split only;
+no neural model, board, fit, development score, or confirmation artifact exists.
+
+## Custody
+
+- Original preregistration SHA-256:
+  `0790584421afe6e27eb892173ca41c15c6931691434ba8f1205272c63b52b5ff`.
+- The first CPU falsifier failed before writing a report because the raw hash
+  split omitted value `1` from the modulus-5 training `card_y1` coordinate.
+- V1.1 documents the sole split repair at SHA-256
+  `a57d4108c0ae6e44555a30bae2dd59b13d479d2bbb3a406eee202113b572c013`.
+  It moves the lexicographically first held-out law that supplies a missing
+  coordinate into training, without changing the theorem, architecture,
+  controls, thresholds, or claim boundary.
+- The repaired falsifier report is
+  `artifacts/r12/s6_contextual_affine_law_cpu_falsifier.json`, SHA-256
+  `a31a232c83a53d0b7aff87b4a495abd6740d98589059325951e2e4688e2bded6`.
+
+## Exact Results
+
+All frozen gates pass over moduli 5, 7, 11, and diagnostic modulus 13:
+
+- 328/328 affine laws have unique two-witness cards;
+- every one-witness class contains exactly `m-1` possible laws;
+- 3,748/3,748 law-position destinations reconstruct exactly;
+- 3,748/3,748 categorical pop-insert cells close exactly;
+- every modulus has a noncommutative order twin and separating late query;
+- train, development, and reserved-confirmation law sets are disjoint;
+- all admitted training splits cover every card coordinate and destination;
+- treatment input contains only `modulus`, `card_y0`, `card_y1`, and
+  `current_location`.
+
+The repaired split counts are:
+
+| Modulus | Train | Development | Reserved confirmation |
+|---:|---:|---:|---:|
+| 5 | 10 | 4 | 6 |
+| 7 | 28 | 8 | 6 |
+| 11 | 65 | 22 | 23 |
+| 13 diagnostic | 82 | 39 | 35 |
+
+Only modulus 5 required a promotion: `m5_a4_b2` moved from confirmation to
+training to supply missing `card_y1=1`. No row or score existed when this repair
+was frozen.
+
+## Boundary And Authorization
+
+This is an identifiability and mechanics pass, not learned reasoning. An exact
+host affine decoder remains a favorable ceiling, and any fixed finite board can
+be tabled. The permitted next action is to commit these bytes, draw one
+post-commit development seed, build atomic training cells plus a disjoint
+recurrent development board, and fit the preregistered card-conditioned module.
+Confirmation generation remains forbidden until every development gate passes.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 157: `R12_S6_CONTEXTUAL_AFFINE_LAW_DEVELOPMENT_BOARD_RECEIPT.md`
+
+Original source path: `R12_S6_CONTEXTUAL_AFFINE_LAW_DEVELOPMENT_BOARD_RECEIPT.md`
+Original source size: 1,738 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S6 Contextual Affine Law Development Board Receipt
+
+**Status:** frozen after source commit `c09024b` and before fit, checkpoint,
+development access, or score.
+
+## Seeds
+
+- Development board seed: `4930377975126057597`
+- Training seed: `412095620685111169`
+
+Both seeds were drawn after the architecture, optimizer, evaluator, assessor,
+tests, and H100 wrapper were committed and pushed. Neither seed may be replaced.
+
+## Frozen Board
+
+Directory:
+`artifacts/r12/s6_contextual_affine_law_development_4930377975126057597`
+
+| File | Rows | SHA-256 |
+|---|---:|---|
+| `atomic_train.jsonl` | 961 | `c4312b99dddbad5c3c44e0af1b80b5fd281040291b30d05a999330deec64b9b7` |
+| `development.jsonl` | 2,048 | `8fd78f761207e8446562c75e1816d1a0821d90ecd64fcb6b837f7a92fe808047` |
+| `scale_diagnostic.jsonl` | 512 | `4016a6df9f9681df8599a4ab19b3804d8627c833aef5169f24f705bc28344984` |
+| `report.json` | 1 report | `9e222b942613a5837775031210d3fc32bcf938eb161307c50eac01964f186394` |
+
+The board has 103 training laws and 34 primary development laws with zero law
+overlap. Every modulus/depth cell has 113 or 114 rows, every program uses at
+least two laws, and treatment fields are exactly `card_y0`, `card_y1`,
+`current_location`, and `modulus`. Confirmation programs and accesses are zero.
+
+## Sole Authorized Run
+
+Run the committed serial H100 wrapper once with this board and training seed.
+It must fit treatment and law-ID control on atomic cells, write one checkpoint,
+perform one development read, and apply the frozen assessor. Failure of a fit or
+capability gate rejects S6. No optimizer, architecture, seed, board, threshold,
+or rescore repair is authorized. Confirmation remains ungenerated unless the
+assessment qualifies every primary gate.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 158: `R12_S6_CONTEXTUAL_AFFINE_LAW_DEVELOPMENT_RESULT.md`
+
+Original source path: `R12_S6_CONTEXTUAL_AFFINE_LAW_DEVELOPMENT_RESULT.md`
+Original source size: 4,704 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S6 Contextual Affine Law Induction: Development Result
+
+**Date:** 2026-07-19
+**Decision:** `reject_s6_contextual_affine_law_development`
+**Confirmation:** forbidden; no confirmation board was generated or read
+
+## Question
+
+Can a small card-conditioned transformer infer an operation law absent from
+training, execute it recurrently, and preserve exact state without receiving
+the hidden slope or intercept?
+
+For prime modulus `m`, each law is
+
+```text
+d(x) = a*x + b (mod m), a != 0
+```
+
+The treatment receives only `(m, 0->y0, 1->y1, x)`. Two witnesses uniquely
+identify the law; one witness leaves exactly `m-1` laws possible. Training uses
+atomic destination supervision on training laws only. Development uses
+disjoint laws in recurrent programs of depth three through eight.
+
+## Frozen evidence
+
+- Source/prereg commits: `93418b0`, `c09024b`, `48e6182`
+- Board seed: `4930377975126057597`
+- Training seed: `412095620685111169`
+- Atomic training rows: 961
+- Primary development rows: 2,048
+- Modulus-13 scale diagnostics: 512
+- Train/development law overlap: zero
+- Treatment parameters: 4,753,677
+- Complete system parameters: 138,448,546
+- Favorable law-ID control parameters: 4,780,301
+- Primary development SHA-256:
+  `8fd78f761207e8446562c75e1816d1a0821d90ecd64fcb6b837f7a92fe808047`
+- CPU mechanics SHA-256:
+  `a31a232c83a53d0b7aff87b4a495abd6740d98589059325951e2e4688e2bded6`
+
+## Custody
+
+Submission `693291` failed before Python initialization because the frozen
+64-bit training seed was assigned directly to CPython's unsigned 32-bit
+`PYTHONHASHSEED`. It created an empty output directory and did not initialize a
+model, read the board, or produce a statistic. Launcher-only commit `676af2c`
+derives the interpreter seed modulo `2^32` while retaining the full frozen seed
+for model and data RNGs. The distinct `retry1` output is the only scientific
+run.
+
+Job `693293` completed once on H100 `evc25` in 3m42s with exit `0:0`.
+Treatment and favorable control each fit 961/961 atomic training rows. The
+evaluator read development once and confirmation zero times.
+
+## Scores
+
+| Arm / intervention | Exact state | Answer |
+|---|---:|---:|
+| Host theorem/executor | 100.000% | 100.000% |
+| Treatment | **8.154%** | **30.908%** |
+| Deranged two-witness card | 1.270% | 24.121% |
+| One-witness ablation | 1.123% | 25.195% |
+| State reset between events | 2.832% | 26.953% |
+| Favorable law-ID memorizer, OOV law | 0.684% | 24.609% |
+| Unseen modulus 13 diagnostic | 0.781% | 27.539% |
+
+Held-out atomic destination accuracy is **78/318 = 24.528%** despite exact
+training fit. Recurrent treatment state accuracy decays with depth:
+
+| Depth | Exact state |
+|---:|---:|
+| 3 | 15.497% |
+| 4 | 10.850% |
+| 5 | 7.331% |
+| 6 | 5.263% |
+| 7 | 4.985% |
+| 8 | 4.985% |
+
+Nonce-name recoding is bit-identical, as expected because names do not enter
+the law unit.
+
+## Gate outcome
+
+Passed:
+
+- atomic-only training contract;
+- treatment and favorable-control training fit at least 99%;
+- one development access and zero confirmation access;
+- parameter caps;
+- nonce-name invariance.
+
+Failed:
+
+- held-out atomic destination at least 95%;
+- exact state and answer at least 95%;
+- every depth at least 92%;
+- host parity;
+- all required causal-drop margins;
+- favorable law-ID control trailing by at least 40 points.
+
+## Interpretation
+
+This is not an optimization failure: both arms fit every training cell with
+final losses below `2e-5`. It is an algorithmic-generalization failure. The
+treatment's +6.88-point state advantage over card derangement and +7.03-point
+advantage over one-witness input show that both demonstrations carry causal
+signal. But a generic categorical transformer represents that signal as a
+weak interpolating lookup surface rather than the identified affine law.
+
+The failure rules out widening, extra epochs, or post-score tuning of this arm
+as the next scientific move. The surviving hypothesis is architectural:
+compile contextual demonstrations into a compositional group action whose
+reuse is enforced by representation structure, then compare that mechanism to
+this frozen transformer and matched structure-breaking controls on a wholly
+fresh board.
+
+## Artifact hashes
+
+- Checkpoint SHA-256:
+  `a440e8677f2006235b76f7fa50dcdfb3541e9667c5f609d6d319062bd85af6d6`
+- Evaluation SHA-256:
+  `1cfd88a86bd8ad2de2c263af29b989f61e787dfc44db60f929040d6d7a87aa5b`
+- Assessment SHA-256:
+  `e9f0f6a1354fd8a8bf950d814757f737775bce115ebe984af5e70ddcd0ad718c`
+
+The checkpoint and reports are mirrored locally under
+`train/s6_contextual_affine_law_4930377975126057597_412095620685111169_retry1/`
+and at the matching Newton path. The model checkpoint is not a promoted
+reasoning artifact.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 159: `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG.md`
+
+Original source path: `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG.md`
+Original source size: 11,769 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S6 Contextual Affine Law Induction Preregistration
+
+**Status:** frozen before neural implementation, board generation, fit, model
+access, or score. Exhaustive CPU mechanics and collapse testing are authorized.
+
+**Claim class:** bounded unseen-law induction and recurrent categorical execution.
+This is not an unrestricted natural-language, planning, or general-reasoning
+claim.
+
+## 1. Question
+
+S5 proves that a 4,934-parameter neural generator can replace a hand-authored
+local action table and recurrently compose six learned primitive cells. Its
+operation semantics are nevertheless fixed before inference: every operation is
+one of twelve known left/right language atoms, and the runtime supplies the
+parsed amount and bounded invocation schedule.
+
+S6 asks a strictly stronger question:
+
+> Can a learned module infer a previously untrained operation law from a minimal
+> identifying context, apply that law to a source-deleted categorical state, and
+> recurrently compose it through unseen programs?
+
+Increasing the S5 generator width is not a treatment. S5 already exactly matches
+the host upper bound, and its input domain has only six cells. S6 spends capacity
+on a missing function: conditional law induction.
+
+## 2. Capability Object
+
+Let `m` be an odd prime and let positions be the finite field `Z_m`. A list state
+is a permutation of `m` distinct identities. An operation law is indexed by
+
+```
+(a, b), where a in Z_m \ {0} and b in Z_m,
+```
+
+and maps a target's current position `x` to
+
+```
+d_(a,b)(x) = a*x + b mod m.
+```
+
+The state update removes the selected identity from its current position and
+inserts it at `d_(a,b)(x)`. This is a deterministic update on the categorical
+assignment register. Programs may use multiple operation laws and are generally
+order-sensitive because pop-insert updates change later source positions.
+
+The law parameters `(a, b)` are never provided to the learned module. A law card
+contains exactly two demonstrations:
+
+```
+0 -> y0
+1 -> y1
+```
+
+where `y0 = b` and `y1 = a + b mod m`. At each atomic application the treatment
+receives only `(m, y0, y1, x)` and predicts the destination position. It never
+receives the source text, identity name, law index, `(a,b)`, recurrent-program
+label, final state, query answer, development row, or confirmation row.
+
+## 3. Identifiability Theorem
+
+**Theorem 1 (two-witness affine identification).** For prime `m`, every valid
+law card `(m, y0, y1)` with `y1 != y0` identifies exactly one affine law:
+
+```
+b = y0
+a = y1 - y0 mod m.
+```
+
+Conversely, one witness `0 -> y0` is insufficient: it fixes `b` while leaving
+all `m-1` nonzero slopes possible.
+
+**Proof.** Substituting `x=0` gives `b=y0`. Substituting `x=1` then gives
+`a+b=y1`, hence `a=y1-y0 mod m`. Nonzero `a` follows from `y1 != y0`. With only
+`x=0`, every nonzero `a` produces the same observation. QED.
+
+**Corollary 1 (unseen-law execution).** A single scale-uniform destination rule
+that reconstructs `(a,b)` from the two witnesses can execute every one of the
+`m(m-1)` laws without law-specific parameters.
+
+**Corollary 2 (composition).** If the same induced destination rule is tied
+across events, recurrent application implements the ordered product of the
+corresponding pop-insert state updates. No recurrent trajectory labels are
+required to define the result.
+
+This theorem establishes identifiability, not neural learnability. The neural
+experiment tests whether the candidate learns the shared rule rather than a
+table over admitted training laws.
+
+## 4. Resource Boundary And Exact Collapse
+
+At fixed `m`, any finite board can be solved by a lookup table. S6 therefore
+makes no claim of separation from arbitrary static circuits. The named
+memorization comparator stores a destination for every `(law, x)` pair, requiring
+`m^2(m-1)` categorical entries at scale `m`. The affine representation stores
+two field elements per law plus one shared application rule.
+
+A hand-authored affine decoder computes the answer exactly with less learned
+capacity than the treatment. It is the favorable host ceiling and prevents S6
+from claiming a new mathematical primitive. The permitted claim is narrower:
+
+- the treatment has no per-law trainable parameters;
+- development laws are absent from all training targets;
+- one tied learned rule must infer and execute those laws from their cards;
+- a matched law-ID memorizer must fail on new IDs;
+- deranging the card while preserving all tensor shapes must destroy execution.
+
+The exhaustive CPU falsifier must establish before neural implementation:
+
+1. card uniqueness for every law at `m in {5, 7, 11, 13}`;
+2. one-witness ambiguity of exactly `m-1` laws;
+3. exact reconstruction and destination closure for every law and position;
+4. exact pop-insert permutation closure;
+5. noncommutative order twins with a separating late query at every scale;
+6. mutually disjoint train, development, and reserved-confirmation law sets;
+7. absence of any law-ID or `(a,b)` field in treatment inputs; and
+8. a complete retained-bit, parameter, source-access, and external-execution
+   ledger.
+
+Failure of any item rejects S6 before neural work.
+
+## 5. Prior-Art Boundary
+
+The broad ingredients are established: neural program interpreters, recurrent
+algorithm learners, neural algorithmic reasoning, conditional program induction,
+and learned transition/world models all predate S6. A law card is also a form of
+in-context specification, and a transformer conditioned on it is not a new
+primitive. Relevant primary references include:
+
+- Neural Programmer-Interpreters: https://arxiv.org/abs/1511.06279
+- Neural GPUs Learn Algorithms: https://arxiv.org/abs/1511.08228
+- Neural Algorithmic Reasoning: https://arxiv.org/abs/2105.02761
+- Learning to Theorize the World from Observation:
+  https://arxiv.org/abs/2605.03413
+- Slots, Transitions, Loops:
+  https://arxiv.org/abs/2606.12316
+- A Symbolic Neural CPU:
+  https://arxiv.org/abs/2607.10021
+
+S6 does not claim those components as novel. Its possible contribution is the
+specific data-minimal, generator-factored protocol: disjoint law-level holdout,
+minimal identifying witnesses, zero recurrent supervision, source-deleted tied
+execution, independent causal card interventions, and sealed confirmation behind
+a sub-150M Shohin system.
+
+## 6. Frozen Law Split
+
+Admitted moduli are `5`, `7`, and `11`. Modulus `13` is a scale diagnostic and
+cannot contribute training targets or primary promotion credit.
+
+For each valid `(m,a,b)`, define
+
+```
+bucket = sha256("s6-law-v1|m|a|b").digest()[0] mod 5.
+```
+
+- buckets `2,3,4`: training laws;
+- bucket `0`: development laws;
+- bucket `1`: reserved-confirmation laws.
+
+The builder must verify at every admitted modulus that each split is nonempty,
+that all destination values and all card coordinates occur in training, and that
+the three law sets are pairwise disjoint. Confirmation laws may be enumerated for
+split auditing, but no confirmation programs, rows, seed, or score may be created
+before development promotion.
+
+Training consists only of atomic rows covering every position of every training
+law. Repetition for optimization is allowed, but no distinct recurrent or answer
+target may be added. The development board contains independently generated
+depth-three-through-eight programs using development laws only, arbitrary nonce
+law names, random initial assignments, late position queries, and at least two
+different laws per multi-law stratum.
+
+## 7. Sole Treatment
+
+The treatment is a card-conditioned categorical destination predictor:
+
+1. learned embeddings represent modulus, role, input coordinate, and output
+   coordinate;
+2. a small transformer reads `[LAW, SUPPORT_0, SUPPORT_1, QUERY]`;
+3. the query state predicts one of the valid positions under a modulus mask;
+4. a hard-forward destination drives the exact categorical pop-insert register;
+5. the same predictor weights are tied across every event.
+
+The module may use at most **8,000,000** unique trainable parameters. The complete
+S4 parser plus S5 register/generator plus S6 module must remain strictly below
+150,000,000 unique parameters. Unused headroom is deliberately reserved for the
+later active-step/halt controller; parameter count is a ceiling, not an objective.
+
+The S4 language parser is not part of this first law-induction claim. S6.1 uses a
+categorical law/event interface so that semantic induction can be isolated from
+language grounding. A pass authorizes S6.2 natural-language law cards; it does not
+allow S6.1 scores to be described as unrestricted native language reasoning.
+
+## 8. Matched Controls
+
+- **Host affine ceiling:** exact theorem decoder plus exact categorical state.
+- **Law-ID memorizer:** same or favorable parameter/compute budget, receives an
+  arbitrary training-law ID and current position but no card. Every development
+  ID maps to one shared OOV identity.
+- **Deranged card:** unchanged treatment weights with complete cards rotated
+  among development laws within the same modulus.
+- **One-witness ablation:** hide `SUPPORT_1` while preserving sequence length and
+  model compute.
+- **State reset:** reset the assignment register before every event.
+- **Untied recurrence:** favorable separate predictor copies by event depth, with
+  at least treatment parameter count; it receives no development laws.
+
+No control may receive `(a,b)`, exact destinations, host states, or final answers
+at inference unless it is explicitly the host ceiling.
+
+## 9. Development Gates
+
+All gates are required:
+
+1. CPU falsifier passes every obligation in section 4.
+2. Treatment fits at least 99% of atomic training cells.
+3. Treatment reaches at least 95% destination accuracy over all atomic cells of
+   held-out development laws.
+4. End-to-end development reaches at least 95% exact final state and answer.
+5. Exact final state is at least 92% at every depth three through eight.
+6. Treatment state and answer are each within 1 percentage point of the host
+   affine ceiling.
+7. Deranged-card exact state falls at least 40 percentage points.
+8. One-witness exact state falls at least 30 percentage points.
+9. State-reset exact state falls at least 20 percentage points.
+10. Law-ID memorizer exact state trails treatment by at least 40 points.
+11. At least 95% state accuracy holds in the multi-law stratum and nonce-law-name
+    permutation leaves treatment outputs bit-identical.
+12. The module is below 8M parameters, the whole system is below 150M, training
+    has zero development/confirmation laws and zero recurrent/answer examples,
+    and development access occurs exactly once.
+
+The modulus-13 scale diagnostic is reported but not a primary gate. It may justify
+a stronger later uniformity claim only if frozen before access and at least 80%
+exact state without modulus-13 training targets.
+
+Passing all primary gates qualifies exactly one independently seeded confirmation
+of unchanged weights, architecture, split, decoder, controls, and thresholds.
+Failure rejects S6.1 without changing promoted S5.
+
+## 10. Claim Boundary And Next Stage
+
+A confirmed pass would establish that Shohin's bounded reasoning stack can infer
+and recurrently apply operation laws absent from training, when each law is given
+through a minimal categorical identifying context. It would remove the fixed
+operation-table boundary of S5 more strongly than adding capacity to the six-cell
+generator.
+
+It would not establish natural-language semantic discovery, autonomous plan
+construction, model-owned law-card binding, learned replay count, learned halt,
+free-form serialization, or public benchmark improvement. S6.2 must ground law
+cards and operation references from whole-source language. S7 must then replace
+the bounded event-list schedule with an active-step/continue/halt controller.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 160: `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_1.md`
+
+Original source path: `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_1.md`
+Original source size: 1,457 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S6.1 Contextual Affine Law Induction Split Repair
+
+**Status:** frozen after the scoreless v1 CPU-gate failure and before neural
+implementation, board generation, fit, model access, or score.
+
+The original S6 preregistration's raw SHA-256 bucket split is rejected because
+the exhaustive falsifier found that modulus-5 training laws never place value
+`1` in the second law-card coordinate. No model, board, fit, development row,
+confirmation row, or score exists. Architecture, capability, theorem, controls,
+thresholds, and claim boundary remain unchanged.
+
+V1.1 changes only law-split admission. Begin with the original hash buckets.
+For each admitted modulus, inspect in order:
+
+1. first card coordinate values in ascending order;
+2. second card coordinate values in ascending order; and
+3. destination values in ascending order.
+
+If a value is absent from training, move the lexicographically first law that
+supplies it from confirmation to training; if confirmation has no movable law,
+use development. Never move the last law in a held-out split. Repeat until all
+three coordinate sets equal `range(m)`. Record every move in the CPU report.
+
+This is a pre-model identifiability repair, not result tuning: it prevents an
+unseen-law score from being confounded by an unseen categorical coordinate. The
+repaired train, development, and confirmation law sets remain pairwise disjoint.
+Failure of the unchanged falsifier after this repair closes S6.1.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 161: `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_2.md`
+
+Original source path: `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_2.md`
+Original source size: 3,316 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S6.2 Contextual Affine Law Neural Development Receipt
+
+**Status:** frozen before development-board seed, board generation, fit, model
+access, or score.
+
+This receipt imports the theorem, claim boundary, law split, controls, and gates
+from `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG.md`, the sole scoreless
+split repair from v1.1, and the passing CPU mechanics artifact at SHA-256
+`a31a232c83a53d0b7aff87b4a495abd6740d98589059325951e2e4688e2bded6`.
+
+## Frozen Development Data
+
+After the source, tests, and this receipt are committed, draw exactly one board
+seed. Build:
+
+- 961 unique atomic training cells: every position of every admitted training
+  law at moduli 5, 7, and 11;
+- 2,048 balanced primary development programs over modulus x depth cells for
+  moduli 5/7/11 and depths 3--8; and
+- 512 modulus-13 scale-diagnostic programs.
+
+Every program uses at least two held-out development laws, depth 3--8, a random
+initial identity permutation, arbitrary nonce operation names, and a late
+position query. Files must contain no confirmation programs. The treatment input
+is exactly `(modulus, card_y0, card_y1, current_location)`; `control_law_id` is
+visible only to the matched memorizer.
+
+## Frozen Architecture
+
+Treatment `ContextualAffineLawInducer`:
+
+- four categorical tokens: `LAW`, `SUPPORT_0`, `SUPPORT_1`, `QUERY`;
+- width 256, six pre-norm Transformer encoder layers;
+- eight attention heads, feed-forward width 1,024, GELU, zero dropout;
+- learned role, modulus, input-coordinate, and output-coordinate embeddings;
+- one 13-way destination head with a hard modulus mask;
+- **4,753,677** trainable parameters;
+- **138,448,546** total parameters with the promoted bounded Shohin stack.
+
+The favorable `LawIdMemorizer` uses the same transformer plus a 104-entry law
+embedding and has **4,780,301** trainable parameters. Training law IDs are unique;
+every development law receives the same OOV ID. The control has more parameters
+than treatment and identical update count, batch stream, optimizer, and device.
+
+## Frozen Optimization
+
+Draw one training seed after the implementation commit. Both arms use:
+
+- AdamW;
+- 4,000 updates;
+- batch size 256 sampled with replacement from the 961 atomic rows;
+- learning rate `5e-4`;
+- weight decay `0.01`;
+- gradient-norm clip `1.0`; and
+- the same sampled row-index stream.
+
+Both arms must reach at least 99% exact atomic training accuracy before the sole
+development read. Failure closes S6 without optimizer, width, epoch, seed, or
+data repair.
+
+## Sole Development Access
+
+One serial H100 job fits both atomic arms, writes one immutable checkpoint, reads
+the primary and diagnostic development boards exactly once, writes one
+evaluation, and applies the already-frozen assessor. No retry may reuse the same
+board after a model or score is produced. Infrastructure failure before a valid
+checkpoint or development read may be documented and retired, but cannot alter
+the mechanism or thresholds.
+
+The evaluator reports host, treatment, deranged-card, one-witness, state-reset,
+and OOV law-ID arms; every depth; the multi-law stratum; nonce-name invariance;
+all held-out atomic law cells; and modulus-13 diagnostic accuracy. Confirmation
+generation remains forbidden unless the assessor records
+`qualify_s6_for_one_confirmation` with every gate true.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 162: `R12_S7_LEARNED_CAYLEY_LAW_COMPILER_PREREG.md`
+
+Original source path: `R12_S7_LEARNED_CAYLEY_LAW_COMPILER_PREREG.md`
+Original source size: 7,078 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S7 Learned Cayley Law Compiler Preregistration
+
+**Status:** source/theory freeze before any S7 score-bearing board
+**Predecessor:** S6 generic contextual transformer, formally rejected
+**Claim class:** bounded unseen-law induction under an explicit cyclic-group prior
+
+## 1. Target failure
+
+S6 proved that mathematical identifiability is not enough. Two demonstrations
+uniquely identify every affine law, both neural arms fit all 961 train cells,
+yet the generic transformer reaches only 24.528% held-out atomic destinations
+and 8.154% recurrent exact state. The next mechanism must force compositional
+reuse rather than reward a larger lookup surface.
+
+## 2. Mechanism
+
+For each prime modulus `m`, observed location symbols are hidden behind an
+arbitrary bijection `pi_m`. S7 learns only:
+
+1. the observed-symbol successor generator `S_m`; and
+2. the observed symbol representing latent zero.
+
+It receives a new law card with demonstrations `0->y0`, `1->y1` and a current
+symbol `x`. It does not receive slope, intercept, a law ID, a destination table,
+or recurrent examples.
+
+The compiler uses only the learned successor, equality, and bounded recurrent
+application:
+
+1. walk from `y0` to `y1` while walking from zero in parallel; the second walk
+   is the slope symbol;
+2. walk a cursor from zero to `x`;
+3. for each cursor step, walk a destination by the inferred slope;
+4. return the destination when the cursor equals `x`.
+
+No `%`, multiplication, subtraction, affine coefficient recovery, or
+per-law table is used by the treatment compiler.
+
+## 3. Exact theorem
+
+Let `S_m(s) = pi_m^-1(pi_m(s)+1 mod m)` and let
+`z_m = pi_m^-1(0)`. For any bijective affine law
+
+```text
+d(r) = a*r+b mod m, a != 0,
+```
+
+encode its card as
+
+```text
+y0 = pi_m^-1(b)
+y1 = pi_m^-1(a+b)
+x  = pi_m^-1(r).
+```
+
+The first parallel walk terminates after exactly `a` successor steps and
+therefore represents the slope without exposing its integer. The outer walk
+terminates after exactly `r` successor steps; each outer step advances the
+destination by `a` successors. The returned symbol is
+
+```text
+pi_m^-1(b+r*a mod m) = pi_m^-1(d(r)).
+```
+
+Thus an exact learned generator and zero anchor imply exact unseen-law atomic
+execution. Recurrent list-state execution follows by induction because each
+event's destination is exact and pop-insert is closed on permutations.
+
+## 4. What is and is not learned
+
+Learned:
+
+- 23 successor cells across moduli 5, 7, and 11;
+- three zero anchors;
+- no law-specific parameter.
+
+Architectural prior / runtime:
+
+- every admitted location space is a finite cycle;
+- equality is exact;
+- nested loops have a fixed maximum of `m` by `m` successor applications;
+- pop-insert state mutation and event invocation remain structural.
+
+This is equivalent to repeated addition in a learned Cayley graph. It is not a
+new universal reasoning primitive, learned field arithmetic, natural-language
+semantic induction, model-owned event parsing, or learned open-ended halt. Its
+stronger claim over S5 is narrow but real if confirmed: the operation law
+itself is absent from training and is compiled from contextual examples.
+
+## 5. Fresh custody split
+
+S6 development laws are closed and cannot score S7. For each primary modulus:
+
+- S7 training uses S6 training laws plus the identity and successor anchors;
+- all other S6 development laws are excluded from scoring and training;
+- the never-read S6 reserved-confirmation laws, excluding any promoted anchor,
+  are split before board generation into S7 development and S7 confirmation;
+- S7 confirmation rows are generated and hash-sealed but must not be opened by
+  any evaluator until development qualifies every gate.
+
+A new post-commit seed creates a hidden symbol permutation per modulus and all
+program rows. The hidden permutation changes every card and destination byte,
+so S6's canonical-symbol score does not leak S7 outputs.
+
+## 6. Training arms
+
+### Treatment
+
+One trainable successor-logit row per observed symbol plus one zero-logit vector
+per modulus. Frozen training:
+
+- successor cross-entropy on exactly `5+7+11 = 23` anchor cells;
+- zero cross-entropy on exactly three anchors;
+- AdamW, fixed seed/schedule chosen before the board;
+- no train-law cards beyond the two anchors, recurrent state, answers,
+  development laws, or confirmation laws.
+
+Maximum treatment parameter count is 218. The promoted stack remains far below
+150M.
+
+### Favorable ordinary-transformer control
+
+The frozen S6 4,753,677-parameter transformer is reinitialized and receives all
+atomic cells from S7 train laws under the new hidden symbols. It gets strictly
+more trainable parameters and examples than treatment. Its result tests whether
+the fresh anchors alone rescue generic interpolation.
+
+### Structure-breaking generator control
+
+An equal-size generator is trained to perfect fit on `S_m^2`, a distinct
+single-cycle successor because all moduli are odd primes. It receives the same
+23 cells and three zero anchors. It must fit its assigned cells but should fail
+cards encoded under the true generator.
+
+## 7. Development interventions
+
+Evaluate exactly once on the frozen development board:
+
+1. host affine theorem/executor ceiling;
+2. learned Cayley treatment;
+3. favorable ordinary transformer;
+4. `S^2` structure-breaking generator;
+5. deranged law cards;
+6. one-witness default-unit completion;
+7. state reset between events;
+8. nonce identity renaming;
+9. held-out-law atomic cells;
+10. depth-three through depth-eight recurrent programs.
+
+## 8. Immutable development gates
+
+All must pass:
+
+- treatment successor and zero anchor fit: 100%;
+- structure-breaking successor and zero fit: 100%;
+- ordinary-transformer atomic train fit: at least 99%;
+- treatment held-out atomic destination: at least 99%;
+- treatment recurrent exact state: at least 98%;
+- treatment answers: at least 98%;
+- every depth exact state: at least 96%;
+- treatment within one point of host state and answer;
+- treatment exceeds ordinary transformer by at least 40 state points;
+- true treatment exceeds `S^2` control by at least 60 state points;
+- deranged card drops state by at least 60 points;
+- one-witness default drops state by at least 40 points;
+- reset drops state by at least 20 points;
+- nonce identity renaming is bit-identical;
+- one development access and zero confirmation accesses;
+- complete system remains below 150M.
+
+Failure closes S7 v1. No width, update, threshold, board, or score repair is
+allowed after development access. Passing authorizes one unchanged-weight read
+of the already sealed confirmation board.
+
+## 9. Pre-score implementation sequence
+
+1. Commit this theorem, equivalence boundary, mechanics, falsifier, tests, model,
+   trainer, evaluator, and assessor.
+2. Run the CPU falsifier over exhaustive hidden bindings at moduli 5 and 7 and
+   deterministic sampled bindings at 11 and 13.
+3. Commit the admitted CPU report.
+4. Draw board and training seeds only after that commit.
+5. Build and hash-seal train, development, and confirmation bytes.
+6. Commit the board receipt before one serial H100 run.
+<!-- END EMBEDDED SOURCE -->
+
+---

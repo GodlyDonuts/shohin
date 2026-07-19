@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 16:22 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 16:44 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -24,18 +24,19 @@
 > `fbf7004e...`. This confirms model-owned finite transition semantics in the bounded known-action
 > domain, not unseen semantics, open planning, learned halt, or broad native reasoning.
 >
-> **Active next phase:** S6 contextual affine law induction is **formally rejected**; confirmation
-> remains forbidden and was never generated. Sole scientific job `693293` fits all 961 atomic
-> training cells in both the 4,753,677-parameter treatment and favorable law-ID control, then reaches
-> only **78/318 = 24.528% held-out atomic destinations, 8.154% recurrent exact state, and 30.908%
-> answers** on disjoint laws. State decays 15.497% -> 4.985% from depth three to eight. Deranged-card,
-> one-witness, reset, law-ID, and unseen-modulus state are 1.270%, 1.123%, 2.832%, 0.684%, and
-> 0.781%. The cards are weakly causal, but the generic transformer memorizes atomic cells instead of
-> inducing the identified algebra. Preserve checkpoint SHA `a440e867...`, evaluation `1cfd88a8...`,
-> and assessment `e9f0f6a1...`; do not widen, add epochs, or tune this arm on the closed board. The
-> next lawful phase must preregister a compositional representation/group-action compiler on a fresh
-> board with structure-breaking controls, or attack model-owned active-step/halt. S5 remains the
-> strongest confirmed bounded baseline.
+> **Active next phase:** S7 learned Cayley law compilation is source/CPU-admitted before any
+> score-bearing seed. It learns only 23 successor cells and three zero anchors (218 parameters), then
+> compiles unseen two-example laws by nested generator reuse and equality. The treatment contains no
+> modulo, coefficient recovery, multiplication, or per-law table; cyclic topology, exact equality,
+> bounded `m x m` replay, and pop-insert remain explicit architectural priors. Across exhaustive
+> hidden bindings at moduli 5/7 and sampled bindings at 11/13, CPU mechanics reach
+> **2,063,104/2,063,104 destinations and 5,544/5,544 recurrent programs**. The `S^2` control scores
+> only 20.000%, 14.286%, 9.091%, and 7.692% atomic accuracy by scale; one-witness unit defaults score
+> 40.000%, 28.571%, 18.182%, and 15.385%. Report SHA is `a933c174...`. Commit the complete source and
+> report before drawing board/training seeds. The fresh board must hide symbol coordinates, use only
+> never-read reserved laws for development/confirmation, train a favorable 4.75M ordinary-transformer
+> control, and keep confirmation sealed until every development gate passes. S6 remains closed at
+> 24.528% held-out atomic / 8.154% state; S5 remains the strongest confirmed bounded baseline.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -8767,3 +8768,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `reject_s6_contextual_affine_law_development`; development access is one and confirmation access
   zero. Close the generic-transformer mechanism. Any successor must use a fresh board and a
   materially different compositional representation, not more width/updates on S6.
+
+- **2026-07-19 16:22--16:44** -- **S7 learned Cayley compilation passes every pre-board CPU gate.**
+  The theorem replaces direct affine approximation with a 218-parameter learned successor/zero
+  interface and a bounded equality-terminated nested generator recurrence. The treatment compiler
+  has no modulo, coefficient solver, destination oracle, multiplication, or law-specific parameter.
+  Exhaustive hidden bindings at moduli 5/7 and deterministic sampled bindings at 11/13 produce
+  2,063,104/2,063,104 exact destinations and 5,544/5,544 exact recurrent programs. Matched `S^2`
+  generator accuracy falls from 20.000% to 7.692% across scale; a one-witness unit default falls from
+  40.000% to 15.385%. Fourteen tests, Ruff, bytecode, shell syntax, and a scoreless synthetic
+  optimization sandbox pass. CPU report SHA `a933c174...` records
+  `admit_s7_learned_cayley_preregistration`. Commit all source/evidence before drawing post-commit
+  board and training seeds; no S7 neural score or confirmation access exists yet.
