@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 00:37 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 00:46 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -46,7 +46,14 @@
 > total; favorable untied and source-retained controls are 136,074,215 and 134,952,337 total.
 > Nineteen CPU tests, Ruff, `py_compile`, shell syntax, and finite backward gradients pass. Frozen
 > prereg SHA-256 is `d49002657ab711ef84e278cfb249ee71cf6e7ee868fab98ae6481d7bc174d224`.
-> No Stage-B fit or score exists yet.
+> Jobs `693111--693114` are now complete and **RGDE v1 is rejected**. Tied predicted reaches only
+> 48.340% answers / 18.701% exact final assignments / 17.236% both transitions; untied is tied at
+> 48.438%; gold-packet training reaches only 49.170% / 20.166% / 19.385%; source-retained direct is
+> 37.988%. Query and amount are about 99.7--99.8%, but entity matching is 51.294%. The compiler
+> points inside both correct entity spans 99.982% of the time, while its selected single subtoken
+> agrees across occurrences only 59.326%; complete span token sequences agree 100%. Close v1. The
+> only admissible repair is a separately preregistered set-valued, vocabulary-aligned identity
+> packet; do not add epochs/width or generate confirmation.
 >
 > Fresh compiler/executor/serializer interaction is complete: natural-language compilation is
 > `0/6`, terminal serialization is `2/6`, and oracle-compiled frozen DRS transitions are `28/34`
@@ -8154,3 +8161,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   tests plus Ruff, `py_compile`, shell syntax, source-invariance, doubly-stochastic, and finite
   backward gates pass. Prereg/source/evaluator/job SHA-256 values are `d4900265...`, `fb7ff10d...`,
   `e96609cd...`, and `273b3252...`. No H100, fit, confirmation, reasoning, or novelty claim exists.
+
+- **2026-07-19 00:37--00:46** -- **RGDE v1 cleanly fails, and the failure localizes to single-
+  subtoken identity collapse.** Four isolated H100 jobs complete `0:0`: tied `693111` on `evc28`,
+  untied `693112` on `evc29`, and gold/source-retained `693113/693114` on distinct `evc33` GPUs.
+  Tied predicted scores 48.340% answers, 18.701% final assignment, 17.236% both transitions, 99.707%
+  query, 99.780% amount, and 51.294% entity match; untied is essentially identical. Tied gold
+  training still scores only 49.170% answers / 20.166% final / 19.385% transitions, so pointer
+  errors are not causal. Source-retained direct reaches 37.988%. Operation shuffle lowers answers
+  to 31.104%, but the 17.236-point margin misses the frozen 40-point gate; query shuffle reaches
+  43.066%, only 5.273 points below treatment. Forensic replay over 16,384 entity references shows
+  correct-span pointer inclusion 99.982%, selected-subtoken identity only 59.326%, and complete-span
+  token-sequence identity 100%. Assessment `c73c930...` records `reject_rgde_v1_identity_packet`.
+  Preserve v1 as a conventional negative. The next bounded repair must preserve the compiler's
+  set-valued role span and use frozen vocabulary embeddings as the identity channel; no old
+  confirmation, broader fit, or reasoning claim is authorized.

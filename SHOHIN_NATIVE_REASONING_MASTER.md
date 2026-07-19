@@ -25609,10 +25609,28 @@ The instantiated tied executor has 1,416,783 parameters and 135,106,333 total
 with base/compiler. Untied and source-retained systems total 136,074,215 and
 134,952,337. Nineteen CPU tests, finite backward gradients, source-distractor
 invariance, packet interventions, Ruff, `py_compile`, and shell syntax pass.
-No neural fit or score exists yet. Even a development pass would establish only
-a bounded source-deleted two-step execution component and authorize a fresh
-longer-program confirmation design; it would not establish language reasoning,
-halting, autonomous rollout, or novelty.
+Jobs `693111--693114` completed cleanly and reject v1. Tied predicted reaches
+48.340% answers, 18.701% exact final assignments, and 17.236% both-transition
+exact. Untied is tied at 48.438% answers. Gold-packet training remains at
+49.170% / 20.166% / 19.385%, and source-retained direct answer is 37.988%.
+Query and amount are nearly solved, while entity matching is only 51.294%.
+
+The forensic result is precise. Over 16,384 qualification-board operation
+references, selected positions lie inside both correct multi-token entity spans
+99.982% of the time. Yet v1's selected operation/intro subtoken IDs agree only
+59.326%, whereas the complete span token-ID sequences agree 100%. Softmax
+gathering converted a set-valued role mask into one unstable contextual
+coordinate. This explains why gold pointers and a second cell do not rescue the
+state updater.
+
+Assessment SHA-256
+`c73c9306b422ac30111a8b78af614f50b16a2f90aa6a5c5270af39573f0e53c2`
+records `reject_rgde_v1_identity_packet`. Do not generate confirmation, add
+epochs, or widen v1. The only bounded repair is a new preregistered packet that
+normalizes the compiler's sigmoid multi-token role mask and gathers frozen
+vocabulary embeddings for entity/literal/query identity while retaining
+contextual operation information separately. Even a later pass remains only a
+bounded source-deleted execution component, not language reasoning or novelty.
 
 ## Update Protocol
 

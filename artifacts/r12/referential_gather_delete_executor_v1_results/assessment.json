@@ -1,0 +1,26 @@
+{
+  "claim_boundary": "Development-only source-deleted two-step list execution component. No confirmation, language reasoning, halt, rollout, or novelty claim.",
+  "decision": "reject_rgde_v1_identity_packet",
+  "diagnosis": {
+    "complete_entity_span_token_sequence_equal": 1.0,
+    "entity_pointer_inside_both_correct_spans": 0.99981689453125,
+    "selected_entity_subtoken_equal": 0.59326171875,
+    "tied_entity_match_accuracy": 0.512939453125
+  },
+  "gates": {
+    "capability_floors": false,
+    "confirmation_access_zero": true,
+    "frozen_identity_contract": true,
+    "gold_packet_floors": false,
+    "intervention_coverage": true,
+    "operation_shuffle_margin": false,
+    "per_surface_and_quartet_floors": false,
+    "predicted_within_gold_gap": true,
+    "query_shuffle_margin": false,
+    "source_retained_ceiling": false,
+    "tied_within_untied_gap": true
+  },
+  "jobs": [693111, 693112, 693113, 693114],
+  "next_admissible_test": "set_valued_vocabulary_aligned_identity_packet",
+  "schema": "r12_referential_gather_delete_executor_assessment_v1"
+}

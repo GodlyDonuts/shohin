@@ -1,6 +1,7 @@
 # R12 Referential Gather-Delete Permutation Executor Preregistration
 
-**Status:** design and gates frozen before any Stage-B fit or score
+**Status:** closed negative after jobs `693111--693114`; exact result is frozen
+in `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_RESULT.md`
 
 **Claim class:** isolated source-deleted execution component. A pass does not
 establish natural-language reasoning, autonomous rollout, halting, broad
