@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 02:10 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 02:19 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8309,3 +8309,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   focused tests, Ruff, `py_compile`, Slurm syntax, finite gradients, exact S3 closure, and diff
   checks pass. Source/prereg SHA-256 values are `e4aa81eb...` and `19d1dab1...`. No H100, fit,
   score, confirmation access, reasoning, or novelty claim exists yet.
+
+- **2026-07-19 02:10--02:19** -- **S3 v1 is rejected, with failure localized to missing group
+  equivariance rather than categorical state.** Job `693127` completes once on `evc29` in 5m39s,
+  exit `0:0`; training itself takes 56.15s and final state is `8f043863...`. Two-step mean/ordered/
+  gold score 66.211% / 66.260% / 66.260% exact transitions and about 79.5% answers despite 99.927%
+  / 100% / 100% entity match. Long gold falls to 54.932% answers / 42.432% state, proving compiler
+  identity is not causal. Atomic transition loss reached zero, but the cell saw the full assignment
+  matrix only at identity state during training and overfit that coordinate frame. Assessment
+  `c9c7b545...` rejects v1. The sole bounded v1.1 repair removes assignment and immutable identity
+  from the MLP; current location, direction, and amount alone define an equivariant local group
+  action. No extra data, epoch, width, confirmation, or threshold change is admissible.

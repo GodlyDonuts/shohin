@@ -25736,6 +25736,15 @@ mean identity as primary plus ordered/gold ceilings. A long-program gain of ten
 points over the continuous executor and near-exact ceilings are required before
 any new confirmation.
 
+S3 v1 is rejected because its state was categorical but its update was not
+equivariant. Atomic loss reached zero; two-step entity match was 100% with
+ordered/gold identity, yet exact transitions stopped at 66.260% and long gold
+answers at 54.932%. The unrestricted cell had seen the raw assignment matrix
+only at identity state and memorized that coordinate frame. The bounded v1.1
+repair removes both assignment and immutable identity from the transition MLP:
+only current location, direction, and amount remain. Those variables determine
+the local S3 action and are fully covered by atomic training.
+
 The matched result reproduces the loss but rejects single-comparator
 localization. Untouched execution reaches 77.393% answers / 70.312% exact
 state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /

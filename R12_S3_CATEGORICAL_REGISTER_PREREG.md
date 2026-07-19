@@ -1,6 +1,7 @@
 # R12 S3 Categorical Permutation Register Preregistration
 
-**Status:** frozen before fit or S3 score.
+**Status:** closed negative after job `693127`. See
+`R12_S3_CATEGORICAL_REGISTER_RESULT.md`.
 
 **Claim class:** public source-deleted execution-component development under an
 external operation schedule and halt. A pass authorizes only a new independent
