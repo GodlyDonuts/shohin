@@ -7,11 +7,15 @@ from tokenizers import Tokenizer
 
 from build_referential_literal_pointer_factorized_corpus import factor_catalogue
 from build_s4_self_delimiting_event_tape import build_development
-from build_s4_set_identity_fresh_development import audit_fresh
+from build_s4_set_identity_fresh_development import audit_fresh, entity_multisets
 from semantic_compiler_falsifier import candidate_names
 
 
 class FreshS4SetIdentityDevelopmentTest(unittest.TestCase):
+    def test_non_question_container_has_no_entity_multisets(self):
+        tokenizer = Tokenizer.from_file("artifacts/shohin-tok-32k.json")
+        self.assertEqual(entity_multisets({"chunks": []}, tokenizer), ())
+
     def test_small_fresh_board_has_unique_roster_multisets(self):
         tokenizer = Tokenizer.from_file("artifacts/shohin-tok-32k.json")
         atoms, _ = candidate_names(tokenizer, 100)

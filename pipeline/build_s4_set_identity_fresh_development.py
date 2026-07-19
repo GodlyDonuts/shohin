@@ -18,12 +18,15 @@ from build_s4_self_delimiting_event_tape import (
     fresh_paired_names,
     read_public,
     select_factors,
+    source_rows,
     write_jsonl,
 )
 from semantic_compiler_falsifier import sha256_file
 
 
 def entity_multisets(row, tokenizer):
+    if not row.get("question"):
+        return ()
     encoding = tokenizer.encode(row["question"])
     values = []
     for identity in range(3):
@@ -44,7 +47,8 @@ def public_entity_multisets(paths, tokenizer):
                 if not line.strip():
                     continue
                 row = json.loads(line)
-                values.update(entity_multisets(row, tokenizer))
+                for item in source_rows(row):
+                    values.update(entity_multisets(item, tokenizer))
     return values
 
 

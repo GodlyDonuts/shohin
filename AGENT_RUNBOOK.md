@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 06:42 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 06:47 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8567,3 +8567,11 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   the repo. Do not reuse the seed. Commit this receipt, then invoke a new seed through explicit
   absolute `env PYTHONPATH=...` arguments and require both files plus a passing report before any
   model job.
+
+- **2026-07-19 06:44--06:47** -- Third seed `15848092346808854751` is retired with **no board,
+  model access, or score**. The explicit remote build log proves the new public token-multiset audit
+  raised `KeyError: question` while scanning a container row from a supplied public JSONL, before
+  output-directory creation. Repair only this audit: skip non-question containers and walk their
+  actual `source_rows`, add a regression test, rerun all CPU gates, commit corrected bytes, and draw
+  a new seed. Model, trainer, evaluator, assessor, data semantics, and frozen score gates do not
+  change.
