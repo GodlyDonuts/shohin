@@ -34,3 +34,17 @@ changed as above. Passing confirms bounded learned generator-factored execution
 behind the frozen known-operation S4 v5 parser. It still does not establish
 unseen operation semantics, open-ended planning, learned termination,
 unrestricted language reasoning, or full standalone native reasoning.
+
+## Frozen Board
+
+Seed `2190224777450473319` yields 2,048 rows / 512 groups over depths three
+through eight, maximum 339 tokens. Every exclusion, balance, context, and
+independent-executor gate passes; prior confirmation bytes were never opened.
+The board is bound to development qualification SHA-256
+`421a27fbcf6d4eb5e2084f2d01048963dbe0cafb7664bdbcf4c76cc9035c6f44`.
+Confirmation data SHA-256 is
+`7786919b6d284c359e434783638dcaed96d1c654c6e9174566c4e76767d73fc0`;
+report SHA-256 is
+`7d2ad6f5e08558dc862feed3b0ee5d885a3e788798e6e3d207afdae50a605b29`.
+Newton and local copies are read-only. Commit this receipt and aggregate report
+before exactly one H100 read; no replacement board or retry is authorized.
