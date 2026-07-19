@@ -4,13 +4,20 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 
-from self_delimiting_event_tape import sha256_file
-
 
 HELD_OUT_DEPTHS = (5, 6, 7, 8)
+
+
+def sha256_file(path):
+    digest = hashlib.sha256()
+    with open(path, "rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def accuracy(summary, field):
