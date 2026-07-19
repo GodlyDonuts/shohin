@@ -82,3 +82,16 @@ known-operation loop. It does not establish unseen operation semantics,
 open-ended planning, learned termination, unrestricted language reasoning, or
 standalone native reasoning. Failure rejects S5 without changing the promoted
 v5 baseline.
+
+## Closure
+
+Seed `107732609041319044` is retired before board creation, fit, model load, or
+score. The board command incorrectly supplied the sealed prior S4 confirmation
+as an exclusion input. The existing builder opened enough of that file to
+identify its forbidden confirmation split and failed closed with
+`ValueError: confirmation input is forbidden`; it created no output directory.
+This violates this protocol's zero-confirmation-access contract, so S5 v1 may
+not proceed. No confirmation content or statistic was used. S5 v1.1 may change
+only custody: exclude source/public/development boards while never opening any
+sealed confirmation bytes. Architecture, fit, controls, gates, and claim
+boundary remain frozen.
