@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 18:04 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 18:12 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -52,6 +52,13 @@
 > confirmation remains unopened. Do not patch/rescore that board. S8.1 changes only nonce
 > intervention to source-string rotation plus full retokenization, keeps every scientific setting
 > and gate fixed, and requires a fresh post-commit board/training seed.
+> S8.1 source commit `ce2a5e4` now precedes board seed `5943437777437228096` and training seed
+> `8354164228219389085`. The fresh board has 48,000/2,048/2,048 train/development/confirmation
+> rows; every original and source-level nonce-recoded source compiles; 9,018 rows change token
+> count; recoded maximum is 457/512; overlap is zero; access is zero/zero. Report SHA
+> `1dcd576d...`, train `9e917ae5...`, development `d16a1a8f...`, sealed confirmation
+> `e951ac17...`. Commit/sync exact bytes, then run one unchanged serial development job on a
+> CUDA-preflighted node.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -8869,3 +8876,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   thresholds, and exclusions fixed. Five compiler tests and all mechanics/assessment tests pass;
   the repaired intervention recompiles all 48,000 old training sources, including 8,901 changed
   token-count rows, with maximum length 444/512. Commit repair before fresh seeds.
+
+- **2026-07-19 18:04--18:12** -- **The fresh S8.1 board is admitted before neural access.** Source
+  commit `ce2a5e4` precedes board seed `5943437777437228096` and independent training seed
+  `8354164228219389085`. The board contains 48,000 graph-only training, 2,048 development, 2,048
+  sealed confirmation, and 23 generator rows. All original and source-level nonce-recoded sources
+  compile; 9,018/52,096 change token count, proving the repair is exercised; original/recoded maxima
+  are 455/457 under the 512-token cap. Exact prompt, 13-gram, and name overlap are zero; independent
+  executors agree; access remains zero/zero. Report SHA `1dcd576d...`; train `9e917ae5...`;
+  development `d16a1a8f...`; sealed confirmation `e951ac17...`. Commit and hash-match exact bytes
+  before the sole unchanged development job.

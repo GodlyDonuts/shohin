@@ -8,11 +8,11 @@ runbook and result files.
 
 **Status:** Living document. The protected raw-pretraining anchor is complete
 at 300,000 steps. S7 confirms bounded native contextual law compilation and
-recurrent execution. S8's whole-source neural graph compiler and sealed board
-are frozen but unevaluated; broad language-grounded, self-directed reasoning is
-not yet established.
+recurrent execution. S8 v1 is closed as an evaluator non-result; S8.1's fresh
+whole-source board is frozen but unevaluated. Broad language-grounded,
+self-directed reasoning is not yet established.
 
-**Last updated:** 2026-07-19 18:04 EDT.
+**Last updated:** 2026-07-19 18:12 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -982,6 +982,13 @@ confirmation remains unopened. S8.1 changes only that intervention to rotate
 source strings, adjust spans, and retokenize. Architecture, supervision, budget,
 controls, and thresholds remain frozen, and a fresh board is mandatory.
 
+Source commit `ce2a5e4` precedes fresh board seed `5943437777437228096` and
+training seed `8354164228219389085`. The board has 48,000 graph-only training,
+2,048 development, and 2,048 sealed-confirmation sources. Its builder executes
+the repaired intervention over all 52,096 rows before sealing: 9,018 change
+token count, every span recompiles, and the recoded maximum is 457/512. Cross-
+split overlap and score access remain zero. This is still an unevaluated board.
+
 The hard boundary remains graph validation/traversal, categorical equality,
 the node-count safety bound, S7's cyclic compiler, and pop-insert state mutation.
 S8 is designed to remove source grounding, event order, and halt from the host;
@@ -1274,6 +1281,13 @@ then failed before writing evaluation because contextual BPE operation spans had
 unequal widths. S8.1 repairs only the nonce intervention at the source-string
 level and requires a fresh post-commit board. No S8 neural reasoning claim is
 currently authorized.
+
+The fresh S8.1 board is frozen from seed `5943437777437228096` after repair
+commit `ce2a5e4`: 48,000 graph-only train, 2,048 development, and 2,048 sealed
+confirmation rows. Report SHA-256 is
+`1dcd576d9706c011ff8164994f0424f4bdc96a16525cdda400559b255b3aa831`.
+All 52,096 source-level nonce interventions recompile before sealing; 9,018
+change token count; access remains zero/zero.
 
 ---
 
@@ -1589,6 +1603,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Admitted S8 nil-linked law graphs before any neural board: 3,520/3,520 exact CPU executions and storage-reindex invariance, while storage-order, reversed-link, card, witness, reset, and early-nil controls remain at 1.051%-10.142% state. |
 | 2026-07-19 | Froze S8 neural source at `598e405`, then generated its sole board from seed `4026952256631032219`: 48,000 graph-only train, 2,048 development, and 2,048 sealed-confirmation sources with zero cross-split overlap and zero score access. The 8,610,966-parameter compiler keeps the complete system at 133,692,848 parameters. |
 | 2026-07-19 | Closed S8 v1 as an evaluator non-result after the fit completed but source nonce recoding failed on unequal contextual BPE widths before scoring. Development is spent; confirmation remains sealed. Preregistered S8.1 source-level rotation/retokenization with all scientific settings unchanged and a fresh-board requirement. |
+| 2026-07-19 | Froze the fresh S8.1 board after repair commit `ce2a5e4`: 48,000 graph-only train, 2,048 development, and 2,048 sealed-confirmation rows. All 52,096 original/recoded sources compile, 9,018 exercise changed token counts, and score access remains zero/zero. |
 | 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 
