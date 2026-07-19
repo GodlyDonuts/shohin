@@ -1,6 +1,7 @@
 # R12 S3 Closure-Complete Local Action Preregistration
 
-**Status:** frozen before zero-fit score access.
+**Status:** closed after one zero-fit public run; gates failed and no
+confirmation is authorized.
 
 **Claim class:** bounded neural-symbolic repair on public source-deleted
 execution development. External schedule and halt remain.
@@ -55,3 +56,12 @@ Failure rejects v1.2 for confirmation and localizes whether direction, amount,
 identity, query, or the closed algebra remains responsible. A pass is still an
 externally scheduled execution component, not free-form reasoning, autonomous
 planning, learned halt, or a novelty claim.
+
+## Closure
+
+Job `693134` completed once on H100 `evc25` in 2m01s, exit `0:0`, with zero
+fit and zero confirmation access. Two-step behavior remained exact, but depth
+mean reached only 85.303% answers / 82.031% state / 63.281% complete chains;
+gold reached 88.379% / 86.328% / 70.508%. Direction accuracy was only 93.403%
+while amount remained 100%. See `R12_S3_CLOSED_ACTION_RESULT.md`. V1.2 is
+rejected for confirmation.

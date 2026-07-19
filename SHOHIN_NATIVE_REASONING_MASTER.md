@@ -25777,6 +25777,17 @@ ordered floors. This can distinguish a continuous-action transport failure
 from compiler direction/amount error without fitting another model. External
 operation count and halt remain outside the model.
 
+V1.2 is now rejected, but it closes another ambiguity. Zero-fit job `693134`
+preserves exact short execution and moves long mean only 84.180% -> 85.303%
+answers, 80.713% -> 82.031% state, and 60.059% -> 63.281% complete chains.
+Gold identity stops at 88.379% / 86.328% / 70.508%. The closed action cannot be
+the source of error; its amount input is 100% accurate. Frozen compiler
+direction accuracy is 93.403% at depth and 70.776% on lexical OOD. All long-
+board direction phrases are exact training atoms with no class collisions, so
+the contextual kind head is losing known lexical polarity. The next bounded
+interface is a training-span-derived lexical relation decoder behind the
+compiler's operation-kind pointer, with neural fallback for unseen phrases.
+
 The matched result reproduces the loss but rejects single-comparator
 localization. Untouched execution reaches 77.393% answers / 70.312% exact
 state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /

@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 02:36 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 02:45 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8355,3 +8355,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   / `7c6753f4` / `d423fecd`. One public H100 evaluation may run only after this source/prereg is
   committed. A pass can authorize one fresh confirmation; it cannot establish planning, learned
   halt, free-form reasoning, or novelty.
+
+- **2026-07-19 02:38--02:45** -- **Closure-complete S3 rejects transition drift as the principal
+  failure and localizes long execution to compiler direction.** Zero-fit job `693134` completes
+  once on `evc25` in 2m01s, exit `0:0`, from committed source `82e92d5`. Two-step mean remains
+  99.463% answers / 99.854% state/chains. Depth mean is **85.303% answers / 82.031% state / 63.281%
+  chains**; gold reaches only 88.379% / 86.328% / 70.508%. Amount is 100% throughout, but direction
+  is **93.403%** at depth and **70.776%** on lexical OOD. Assessment `603ec1ff...` rejects v1.2.
+  Exact action adds only 1.123 answer points over v1.1, so do not fit another executor. A CPU audit
+  shows every long-board direction sequence is one of the 12 exact training atoms with zero class
+  collision. The next bounded repair must derive a direction lexicon from training spans only,
+  decode it through the frozen operation-kind pointer, fall back to the neural head for unmatched
+  phrases, and reuse the exact S3 action. No development labels or confirmation may build it.
