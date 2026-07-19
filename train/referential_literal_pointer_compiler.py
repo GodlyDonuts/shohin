@@ -329,6 +329,92 @@ class CompletePointerCompiler(nn.Module):
         }
 
 
+class OrdinaryTokenTaggerCompiler(nn.Module):
+    """Favorable conventional bidirectional sequence-tagger control."""
+
+    def __init__(self, model, layer=19, width=384, heads=8, encoder_layers=5,
+                 ff=1408):
+        super().__init__()
+        if model.cfg.n_loop != 1:
+            raise ValueError("ordinary compiler requires n_loop=1")
+        if not 0 <= int(layer) < len(model.blocks):
+            raise ValueError("invalid frozen layer")
+        if width % heads:
+            raise ValueError("compiler width must divide attention heads")
+        if encoder_layers <= 0:
+            raise ValueError("ordinary compiler requires a positive encoder depth")
+        self.model = model
+        self.layer = int(layer)
+        self.width = int(width)
+        self.encoder_layers = int(encoder_layers)
+        self.model.requires_grad_(False)
+        self.memory_norm = nn.LayerNorm(model.cfg.d_model)
+        self.memory_projection = nn.Linear(model.cfg.d_model, width, bias=False)
+        encoder_layer = nn.TransformerEncoderLayer(
+            d_model=width,
+            nhead=heads,
+            dim_feedforward=ff,
+            dropout=0.0,
+            activation="gelu",
+            batch_first=True,
+            norm_first=True,
+        )
+        self.memory_encoder = nn.TransformerEncoder(
+            encoder_layer,
+            num_layers=self.encoder_layers,
+            enable_nested_tensor=False,
+        )
+        self.role_head = nn.Linear(width, len(TARGET_LABELS))
+        self.kind_token_head = nn.Linear(width, 2 * len(KIND_TO_ID))
+
+    def adapter_parameters(self):
+        for name, parameter in self.named_parameters():
+            if not name.startswith("model."):
+                yield parameter
+
+    def adapter_num_params(self):
+        return sum(parameter.numel() for parameter in self.adapter_parameters())
+
+    def encode(self, ids):
+        self.model.eval()
+        with torch.no_grad():
+            x = self.model.tok(ids)
+            cos = self.model.cos[:ids.shape[1]].to(x.device)
+            sin = self.model.sin[:ids.shape[1]].to(x.device)
+            for block in self.model.blocks[:self.layer + 1]:
+                x, _ = block(x, cos, sin)
+        return x.detach()
+
+    def forward(self, ids, valid_mask):
+        if ids.ndim != 2 or valid_mask.shape != ids.shape:
+            raise ValueError("ids and valid mask must be matching rank-2 tensors")
+        hidden = self.encode(ids)
+        memory = self.memory_projection(self.memory_norm(hidden))
+        memory = self.memory_encoder(memory, src_key_padding_mask=~valid_mask)
+        role_logits = self.role_head(memory).float()
+        pointer_logits = {
+            label: role_logits[:, :, TARGET_INDEX[label]].masked_fill(~valid_mask, -1e9)
+            for label in TARGET_LABELS
+        }
+        token_kind_logits = self.kind_token_head(memory).float().reshape(
+            ids.shape[0], ids.shape[1], 2, len(KIND_TO_ID),
+        )
+        kind_logits = []
+        for operation_index in range(2):
+            span_logits = pointer_logits["op{}.kind".format(operation_index)]
+            span_log_probabilities = F.log_softmax(span_logits, dim=-1)
+            kind_logits.append(torch.logsumexp(
+                span_log_probabilities.unsqueeze(-1)
+                + token_kind_logits[:, :, operation_index, :],
+                dim=1,
+            ))
+        return {
+            "pointer_logits": pointer_logits,
+            "kind_logits": torch.stack(kind_logits, dim=1),
+            "role_logits": role_logits,
+        }
+
+
 def pointer_mass_loss(logits, examples, label):
     losses = []
     for row, example in enumerate(examples):

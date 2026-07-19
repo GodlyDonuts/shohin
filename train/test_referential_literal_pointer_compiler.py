@@ -107,6 +107,21 @@ class ReferentialLiteralPointerCompilerTest(unittest.TestCase):
         self.assertTrue(torch.isfinite(kind))
         loss.backward()
 
+    def test_ordinary_tagger_is_a_direct_token_parser(self):
+        example = compiler_module.compile_row(self.row, self.tokenizer, keep_evidence=True)
+        model = compiler_module.OrdinaryTokenTaggerCompiler(
+            DummyBase(), layer=1, width=32, heads=4, encoder_layers=2, ff=64,
+        )
+        ids = torch.tensor([example.ids], dtype=torch.long)
+        valid = torch.ones_like(ids, dtype=torch.bool)
+        outputs = model(ids, valid)
+        self.assertEqual(tuple(outputs["role_logits"].shape), (1, len(example.ids), 10))
+        self.assertEqual(tuple(outputs["kind_logits"].shape), (1, 2, 2))
+        loss, _, _, _ = compiler_module.compiler_loss(outputs, [example])
+        role = compiler_module.role_supervision_loss(outputs, [example])
+        self.assertTrue(torch.isfinite(loss + role))
+        (loss + role).backward()
+
 
 if __name__ == "__main__":
     unittest.main()

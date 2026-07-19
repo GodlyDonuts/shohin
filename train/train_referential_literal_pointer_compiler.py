@@ -16,6 +16,7 @@ from tokenizers import Tokenizer
 from model import GPT, GPTConfig
 from referential_literal_pointer_compiler import (
     CompletePointerCompiler,
+    OrdinaryTokenTaggerCompiler,
     TARGET_LABELS,
     adapter_hash,
     adapter_state,
@@ -57,6 +58,7 @@ def main():
     parser.add_argument("--role-supervision", action="store_true")
     parser.add_argument("--role-weight", type=float, default=0.0)
     parser.add_argument("--separate-kind-decoder", action="store_true")
+    parser.add_argument("--ordinary-tagger", action="store_true")
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--epochs", type=int, default=1)
     parser.add_argument("--max-examples", type=int, default=0)
@@ -77,6 +79,10 @@ def main():
         raise SystemExit("invalid encoder layers or role weight")
     if bool(args.role_weight) != bool(args.role_supervision):
         raise SystemExit("role supervision and positive role weight must be enabled together")
+    if args.ordinary_tagger and args.separate_kind_decoder:
+        raise SystemExit("ordinary tagger cannot use a separate slot kind decoder")
+    if args.ordinary_tagger and args.decoder_layers != 2:
+        raise SystemExit("decoder layers are unused by the ordinary tagger; retain the default")
 
     torch.manual_seed(args.seed)
     random.seed(args.seed)
@@ -109,17 +115,27 @@ def main():
     )
     model = GPT(cfg).to("cuda").eval()
     model.load_state_dict(checkpoint["model"])
-    compiler = CompletePointerCompiler(
-        model,
-        layer=args.layer,
-        width=args.width,
-        heads=args.heads,
-        decoder_layers=args.decoder_layers,
-        ff=args.ff,
-        encoder_layers=args.encoder_layers,
-        role_supervision=args.role_supervision,
-        separate_kind_decoder=args.separate_kind_decoder,
-    ).to("cuda")
+    if args.ordinary_tagger:
+        compiler = OrdinaryTokenTaggerCompiler(
+            model,
+            layer=args.layer,
+            width=args.width,
+            heads=args.heads,
+            encoder_layers=args.encoder_layers,
+            ff=args.ff,
+        ).to("cuda")
+    else:
+        compiler = CompletePointerCompiler(
+            model,
+            layer=args.layer,
+            width=args.width,
+            heads=args.heads,
+            decoder_layers=args.decoder_layers,
+            ff=args.ff,
+            encoder_layers=args.encoder_layers,
+            role_supervision=args.role_supervision,
+            separate_kind_decoder=args.separate_kind_decoder,
+        ).to("cuda")
     if compiler.adapter_num_params() + sum(parameter.numel() for parameter in model.parameters()) >= 150_000_000:
         raise SystemExit("compiler exceeds strict 150M total-parameter cap")
     initial_adapter_sha256 = adapter_hash(compiler)
@@ -130,6 +146,8 @@ def main():
     epoch_batches = [make_batches(examples, args.batch_size, args.seed + epoch) for epoch in range(args.epochs)]
     total_steps = sum(len(batches) for batches in epoch_batches)
     protocol = (
+            "r12_referential_literal_pointer_compiler_ordinary_tagger_development"
+            if args.ordinary_tagger else
             "r12_referential_literal_pointer_compiler_v1_3_islands_development"
             if args.separate_kind_decoder else
             "r12_referential_literal_pointer_compiler_v1_2_structured_development"
@@ -161,6 +179,7 @@ def main():
         "role_supervision": args.role_supervision,
         "role_weight": args.role_weight,
         "separate_kind_decoder": args.separate_kind_decoder,
+        "ordinary_tagger": args.ordinary_tagger,
         "batch_size": args.batch_size,
         "epochs": args.epochs,
         "examples": len(examples),

@@ -15,6 +15,7 @@ from tokenizers import Tokenizer
 from model import GPT, GPTConfig
 from referential_literal_pointer_compiler import (
     CompletePointerCompiler,
+    OrdinaryTokenTaggerCompiler,
     TARGET_LABELS,
     execute_prediction,
     load_examples,
@@ -67,6 +68,7 @@ def main():
         "r12_referential_literal_pointer_compiler_v1_1_factorized_development",
         "r12_referential_literal_pointer_compiler_v1_2_structured_factorized_development",
         "r12_referential_literal_pointer_compiler_v1_3_islands_factorized_development",
+        "r12_referential_literal_pointer_compiler_ordinary_tagger_factorized_development",
     }:
         raise SystemExit("invalid compiler bundle protocol")
     if metadata.get("confirmation_access") != 0:
@@ -85,17 +87,27 @@ def main():
     encodings = [tokenizer.encode(example.question) for example in examples]
     model = GPT(cfg).to("cuda").eval()
     model.load_state_dict(checkpoint["model"])
-    compiler = CompletePointerCompiler(
-        model,
-        layer=int(metadata["layer"]),
-        width=int(metadata["width"]),
-        heads=int(metadata["heads"]),
-        decoder_layers=int(metadata["decoder_layers"]),
-        ff=int(metadata["ff"]),
-        encoder_layers=int(metadata.get("encoder_layers", 0)),
-        role_supervision=bool(metadata.get("role_supervision", False)),
-        separate_kind_decoder=bool(metadata.get("separate_kind_decoder", False)),
-    ).to("cuda").eval()
+    if metadata.get("ordinary_tagger"):
+        compiler = OrdinaryTokenTaggerCompiler(
+            model,
+            layer=int(metadata["layer"]),
+            width=int(metadata["width"]),
+            heads=int(metadata["heads"]),
+            encoder_layers=int(metadata["encoder_layers"]),
+            ff=int(metadata["ff"]),
+        ).to("cuda").eval()
+    else:
+        compiler = CompletePointerCompiler(
+            model,
+            layer=int(metadata["layer"]),
+            width=int(metadata["width"]),
+            heads=int(metadata["heads"]),
+            decoder_layers=int(metadata["decoder_layers"]),
+            ff=int(metadata["ff"]),
+            encoder_layers=int(metadata.get("encoder_layers", 0)),
+            role_supervision=bool(metadata.get("role_supervision", False)),
+            separate_kind_decoder=bool(metadata.get("separate_kind_decoder", False)),
+        ).to("cuda").eval()
     missing, unexpected = compiler.load_state_dict(bundle["adapter_state"], strict=False)
     missing = [name for name in missing if not name.startswith("model.")]
     unexpected = [name for name in unexpected if not name.startswith("model.")]
