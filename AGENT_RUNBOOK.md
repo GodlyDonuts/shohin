@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 16:50 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 16:58 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -24,27 +24,19 @@
 > `fbf7004e...`. This confirms model-owned finite transition semantics in the bounded known-action
 > domain, not unseen semantics, open planning, learned halt, or broad native reasoning.
 >
-> **Active next phase:** S7 learned Cayley law compilation is source/CPU-admitted before any
-> score-bearing seed. It learns only 23 successor cells and three zero anchors (218 parameters), then
-> compiles unseen two-example laws by nested generator reuse and equality. The treatment contains no
-> modulo, coefficient recovery, multiplication, or per-law table; cyclic topology, exact equality,
-> bounded `m x m` replay, and pop-insert remain explicit architectural priors. Across exhaustive
-> hidden bindings at moduli 5/7 and sampled bindings at 11/13, CPU mechanics reach
-> **2,063,104/2,063,104 destinations and 5,544/5,544 recurrent programs**. The `S^2` control scores
-> only 20.000%, 14.286%, 9.091%, and 7.692% atomic accuracy by scale; one-witness unit defaults score
-> 40.000%, 28.571%, 18.182%, and 15.385%. Report SHA is `a933c174...`. Commit the complete source and
-> report before drawing board/training seeds. The fresh board must hide symbol coordinates, use only
-> never-read reserved laws for development/confirmation, train a favorable 4.75M ordinary-transformer
-> control, and keep confirmation sealed until every development gate passes. S6 remains closed at
-> 24.528% held-out atomic / 8.154% state; S5 remains the strongest confirmed bounded baseline.
-> **Board now frozen:** source commit `b9a9414` precedes board seed `4905719171551557987` and
-> training seed `1314309421681697406`. The board has 23 generator rows, 984 favorable-transformer
-> atomic train rows, 150 held-out atomic rows, 2,048 balanced development programs, and 2,048 sealed
-> confirmation programs. Development uses 16 never-read reserved laws and confirmation uses a
-> disjoint 18; all S6 development laws are excluded from scoring. Development SHA is `19baa8c3...`,
-> sealed confirmation `c2eb8d5c...`, and report `2a471f3b...`. Commit these exact bytes before one
-> serial H100 development run. Do not read `confirmation.sealed.jsonl` unless the assessor records
-> `qualify_s7_learned_cayley_for_fresh_confirmation`.
+> **Active next phase:** S7 learned Cayley law compilation has passed every fresh-development gate
+> and is awaiting exactly one unchanged-weight sealed confirmation read. Job `693344` completes once
+> on `evc25` in 2m25s. The 218-parameter treatment learns 23/23 successor cells and 3/3 zero anchors,
+> then scores **150/150 unseen-law atomic cells and 2,048/2,048 recurrent states/answers**, with 100%
+> state at every depth three through eight. The favorable 4,753,677-parameter transformer fits all
+> 984 train cells but reaches only 34/150 = 22.667% held-out atomic and 52/2,048 = 2.539% state.
+> Learned `S^2`, deranged cards, one witness, and state reset score 0.928%, 1.318%, 1.416%, and 3.076%
+> state; nonce recoding is bit-identical. All 19 gates pass. Freeze checkpoint SHA `c26e2cb6...`,
+> evaluation `e02ed2d3...`, and assessment `2ef4d5ee...`; no refit or rescore. Confirmation-only code
+> must bind those hashes plus sealed board SHA `c2eb8d5c...`, repeat the same recurrent/causal gates,
+> and read confirmation exactly once. Even if confirmed, the honest boundary remains cyclic topology,
+> exact equality, bounded nested replay, event invocation, and structural pop-insert. S5 remains the
+> strongest confirmed bounded baseline until S7 confirmation passes.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -8799,3 +8791,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Report SHA `2a471f3b...`, development `19baa8c3...`, confirmation `c2eb8d5c...`; access counters are
   zero/zero. Commit exact bytes before sync/submission; the development job must not open the sealed
   confirmation file.
+
+- **2026-07-19 16:51--16:58** -- **S7 development passes all 19 frozen gates with exact unseen-law
+  execution.** Sole serial job `693344` completes on H100 `evc25` in 2m25s, exit `0:0`. The true and
+  false 218-parameter generators fit 23/23 assigned successor cells plus 3/3 zero anchors; the
+  favorable 4,753,677-parameter transformer fits 984/984 atomic train cells. Treatment then reaches
+  150/150 held-out atomic destinations and 2,048/2,048 exact recurrent states and answers, with 100%
+  at every depth 3--8. The ordinary transformer reaches 34/150 atomic and 52/2,048 = 2.539% state;
+  `S^2`, deranged cards, one witness, and reset reach 0.928%, 1.318%, 1.416%, and 3.076% state.
+  Operation nonce recoding is bit-identical. Assessment SHA `2ef4d5ee...` records
+  `qualify_s7_learned_cayley_for_fresh_confirmation`; checkpoint SHA `c26e2cb6...`; development
+  access one, confirmation zero. Freeze confirmation-only code and the same recurrent/causal gates
+  before the sole sealed read. No model, data, threshold, or mechanism change is permitted.
