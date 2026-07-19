@@ -25852,6 +25852,12 @@ state / 89.453% chains; ordered is **98.340% / 99.463% / 98.730%**; gold is
 one wholly new independent confirmation. It remains a bounded known-lexeme
 compiler/executor with external schedule and halt, not open-language reasoning.
 
+The first pointer-anchor confirmation infrastructure seed
+`223317486517061319` produced no board or score: Newton failed an import before
+creating the output directory because two tracked generator dependencies were
+missing from its working copy. The seed is retired; syncing those unchanged
+files does not alter the hypothesis or gates.
+
 The matched result reproduces the loss but rejects single-comparator
 localization. Untouched execution reaches 77.393% answers / 70.312% exact
 state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /

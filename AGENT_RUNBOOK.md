@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 03:31 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 03:34 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8436,3 +8436,8 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   exactly 0% with unchanged 75.195% fallback answers. Assessment `a73b0915...` qualifies v1.4.
   Freeze a wholly new confirmation protocol before drawing its seed; all previous boards remain
   sealed and forbidden.
+
+- **2026-07-19 03:32--03:34** -- Confirmation infrastructure seed `223317486517061319` is retired
+  with **no board and no score**. Newton failed import before creating the output directory because
+  two tracked generator dependencies were absent from its working copy. Sync the unchanged files,
+  commit this receipt, and only then draw a replacement seed. No model, board, arm, or gate changes.

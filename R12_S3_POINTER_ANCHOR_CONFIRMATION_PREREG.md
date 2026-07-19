@@ -2,6 +2,12 @@
 
 **Status:** frozen before production seed, board generation, or score.
 
+Infrastructure attempt seed `223317486517061319` is retired without a board or
+score. Newton lacked two already-tracked generator dependencies, so Python
+failed at import before output-directory creation. Syncing those unchanged
+repository files is the sole correction; candidate, generator, evaluator,
+board contract, arms, and gates do not change.
+
 ## Confirmed Object
 
 The candidate is commit `51ed8fc` and public assessment
