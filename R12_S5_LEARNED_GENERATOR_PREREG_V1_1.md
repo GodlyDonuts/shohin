@@ -35,3 +35,13 @@ Exactly one matched six-cell fit and one serial H100 evaluation may access the
 new development board. All original gates remain exact. A pass authorizes only
 one newly seeded confirmation protocol that similarly excludes prior public and
 development data without opening any old confirmation bytes.
+
+## Closure
+
+Seed `7741142465189679834` built 2,048 rows / 512 groups without confirmation
+access or model access. Exact-prompt, 13-gram, factor, nonce, context, depth,
+balance, and independent-executor gates pass, but 4/2,048 rows reuse a public
+roster token multiset. `all_gates_pass` is false, so this board is sealed and
+cannot be scored. S5.1 closes with no fit, model load, or result. S5.2 may draw
+one replacement seed after commit with architecture, fit, controls, evaluator,
+assessor, gates, and exclusions unchanged.
