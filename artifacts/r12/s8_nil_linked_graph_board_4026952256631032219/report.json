@@ -1,0 +1,161 @@
+{
+  "audit": {
+    "confirmation_accesses": 0,
+    "confirmation_cell_counts": {
+      "11|3|archive": 56,
+      "11|3|dispatch": 57,
+      "11|4|archive": 57,
+      "11|4|dispatch": 57,
+      "11|5|archive": 57,
+      "11|5|dispatch": 57,
+      "11|6|archive": 57,
+      "11|6|dispatch": 57,
+      "11|7|archive": 57,
+      "11|7|dispatch": 56,
+      "11|8|archive": 57,
+      "11|8|dispatch": 57,
+      "5|3|archive": 56,
+      "5|3|dispatch": 57,
+      "5|4|archive": 57,
+      "5|4|dispatch": 57,
+      "5|5|archive": 57,
+      "5|5|dispatch": 57,
+      "5|6|archive": 57,
+      "5|6|dispatch": 57,
+      "5|7|archive": 56,
+      "5|7|dispatch": 57,
+      "5|8|archive": 57,
+      "5|8|dispatch": 57,
+      "7|3|archive": 57,
+      "7|3|dispatch": 57,
+      "7|4|archive": 57,
+      "7|4|dispatch": 57,
+      "7|5|archive": 57,
+      "7|5|dispatch": 57,
+      "7|6|archive": 57,
+      "7|6|dispatch": 57,
+      "7|7|archive": 57,
+      "7|7|dispatch": 57,
+      "7|8|archive": 57,
+      "7|8|dispatch": 57
+    },
+    "confirmation_rows": 2048,
+    "development_accesses": 0,
+    "development_cell_counts": {
+      "11|3|dossier": 57,
+      "11|3|relay": 57,
+      "11|4|dossier": 57,
+      "11|4|relay": 57,
+      "11|5|dossier": 57,
+      "11|5|relay": 57,
+      "11|6|dossier": 57,
+      "11|6|relay": 57,
+      "11|7|dossier": 56,
+      "11|7|relay": 57,
+      "11|8|dossier": 57,
+      "11|8|relay": 56,
+      "5|3|dossier": 57,
+      "5|3|relay": 57,
+      "5|4|dossier": 57,
+      "5|4|relay": 57,
+      "5|5|dossier": 57,
+      "5|5|relay": 56,
+      "5|6|dossier": 57,
+      "5|6|relay": 57,
+      "5|7|dossier": 57,
+      "5|7|relay": 57,
+      "5|8|dossier": 57,
+      "5|8|relay": 57,
+      "7|3|dossier": 57,
+      "7|3|relay": 57,
+      "7|4|dossier": 57,
+      "7|4|relay": 57,
+      "7|5|dossier": 57,
+      "7|5|relay": 56,
+      "7|6|dossier": 57,
+      "7|6|relay": 57,
+      "7|7|dossier": 57,
+      "7|7|relay": 57,
+      "7|8|dossier": 57,
+      "7|8|relay": 57
+    },
+    "development_rows": 2048,
+    "exact_prompt_overlap": {
+      "development_confirmation": 0,
+      "train_confirmation": 0,
+      "train_development": 0
+    },
+    "executor_agreement_rows": 52096,
+    "maximum_token_count": 453,
+    "noncanonical_storage_rows": 52096,
+    "split_name_overlap": 0,
+    "thirteen_gram_overlap": {
+      "development_confirmation": 0,
+      "train_confirmation": 0,
+      "train_development": 0
+    },
+    "train_has_state_or_answer": false,
+    "train_rows": 48000
+  },
+  "binding_hashes": {
+    "11": "5dda7546fd539422f7f10a8af58e2fde9f6b592f0bd470ccd8521ffa6e46bdf5",
+    "5": "0e172c97b98147344c27abd4164965eb3682cfdec717f468bd3de778d4731819",
+    "7": "bcf2012d04e10e7b8e0bdaa01636333c5c590ddcdada6dae7df6f2522bf1a4bd"
+  },
+  "decision": "admit_s8_nil_linked_law_graph_board",
+  "files": {
+    "confirmation.sealed.jsonl": {
+      "bytes": 18697579,
+      "sha256": "ea0d242f9315e7d8a185162dde02b9d50b896b33149778705f59c97a5cbf2bd4"
+    },
+    "development.jsonl": {
+      "bytes": 18752468,
+      "sha256": "58953f1d1dfa51e6913ce9674548f2b0d3f094019b106649f6173e7ea1e86754"
+    },
+    "generator_train.jsonl": {
+      "bytes": 3763,
+      "sha256": "5c3b2e1ef13261b0e872305a495d70931232e4352baaa65b41f078995ce9c918"
+    },
+    "train.jsonl": {
+      "bytes": 406632176,
+      "sha256": "d2925e0062051d11133f438ba7dfb8fb26e48886f802fc3cc1a97662f5818446"
+    }
+  },
+  "law_counts": {
+    "11": {
+      "confirmation": 22,
+      "development": 22,
+      "train": 66
+    },
+    "5": {
+      "confirmation": 4,
+      "development": 4,
+      "train": 12
+    },
+    "7": {
+      "confirmation": 9,
+      "development": 8,
+      "train": 25
+    }
+  },
+  "name_pool_size_per_split": 1100,
+  "renderers": {
+    "confirmation": [
+      "archive",
+      "dispatch"
+    ],
+    "development": [
+      "dossier",
+      "relay"
+    ],
+    "train": [
+      "registry",
+      "ledger",
+      "routing"
+    ]
+  },
+  "schema": "r12_s8_nil_linked_law_graph_board_report_v1",
+  "seed": 4026952256631032219,
+  "source_commit": "598e405ffdc08b0e03e999b715ec1d04f17f1b20",
+  "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4"
+}

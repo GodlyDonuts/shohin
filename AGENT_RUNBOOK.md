@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 17:16 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 17:48 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -34,10 +34,15 @@
 > bindings plus 320 larger bindings. Storage reindexing is invariant 3,520/3,520; storage-order,
 > reversed-link, card-deranged, one-witness, reset, and early-nil controls score 10.142%, 4.943%,
 > 1.051%, 3.665%, 2.045%, and 1.989% state. All ten CPU gates pass; report SHA `c98bd96e...`.
-> Implement and commit the whole-source board builder, sub-16M graph compiler, training exclusions,
-> favorable ordinary parser, and frozen assessor before drawing board/training seeds. No score-bearing
-> S8 board exists yet. Categorical graph validation/traversal, the node-count safety bound, S7's cyclic
-> compiler, and pop-insert remain explicit structural priors.
+> Neural source commit `598e405` is now frozen before board seed `4026952256631032219` and training
+> seed `5532971934318350109`. The admitted board has 48,000 graph-only training sources, 2,048
+> development sources, and 2,048 sealed-confirmation sources; zero cross-split prompt/13-gram/name
+> overlap; maximum length 453/512; and zero development/confirmation accesses. Report SHA
+> `067d97d7...`, train `d2925e00...`, development `58953f1d...`, confirmation `ea0d242f...`.
+> The frozen trunk plus 8,610,966-parameter graph compiler and 218-parameter generator totals
+> 133,692,848 parameters. Sync exact bytes, hash-verify them, then run the sole serial development
+> job. Categorical graph validation/traversal, the node-count safety bound, S7's cyclic compiler,
+> and pop-insert remain explicit structural priors.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -8830,3 +8835,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `admit_s8_nil_linked_law_graph_preregistration`. This is a gold-graph mechanics result only. Commit
   the report, then build the neural whole-source compiler and assessor before any board seed; no S8
   neural capability claim exists yet.
+
+- **2026-07-19 17:16--17:48** -- **S8 neural source and the sole score-bearing board are frozen
+  before model access.** Commit `598e405` adds the whole-source builder, 8,610,966-parameter graph
+  compiler, strict adapter/hash custody, favorable rank parser, shuffled-label control, frozen
+  evaluator/assessor, and serial H100 launcher. Post-commit board seed `4026952256631032219` and
+  training seed `5532971934318350109` are independently drawn. The admitted board contains 48,000
+  graph-only training rows, 2,048 development rows, 2,048 sealed-confirmation rows, and 23 generator
+  cells. All 52,096 sources have independent executor agreement and noncanonical storage; exact,
+  13-gram, and split-name overlap are zero; maximum length is 453/512; training contains no state or
+  answer. Report SHA `067d97d7...`; train `d2925e00...`; development `58953f1d...`; sealed
+  confirmation `ea0d242f...`; access remains zero/zero. The complete system is 133,692,848
+  parameters. Sync and hash-verify exact bytes before one serial development read; confirmation
+  remains sealed.

@@ -8,10 +8,11 @@ runbook and result files.
 
 **Status:** Living document. The protected raw-pretraining anchor is complete
 at 300,000 steps. S7 confirms bounded native contextual law compilation and
-recurrent execution; broad language-grounded, self-directed reasoning is not
-yet established.
+recurrent execution. S8's whole-source neural graph compiler and sealed board
+are frozen but unevaluated; broad language-grounded, self-directed reasoning is
+not yet established.
 
-**Last updated:** 2026-07-19 17:16 EDT.
+**Last updated:** 2026-07-19 17:48 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -964,9 +965,14 @@ coordinate systems, including every modulus-five permutation. Every storage
 reindexing is invariant. Ignoring links reaches 10.142% state; reversing links
 4.943%; deranging cards 1.051%; one witness 3.665%; reset 2.045%; and early nil
 1.989%. Thus the graph resource is complete and each claimed field is causal.
-This is still gold-graph mechanics, not a neural score. The next frozen source
-must train a sub-16M graph compiler from graph-field supervision only and test
-fresh laws, names, renderers, depths, and one sealed confirmation.
+This remains gold-graph mechanics, not a neural score. Neural source commit
+`598e405` now freezes an 8,610,966-parameter whole-source compiler plus the
+218-parameter S7 generator, for 133,692,848 total parameters. Only after that
+commit, seed `4026952256631032219` froze 48,000 graph-only training sources,
+2,048 development sources, and 2,048 sealed-confirmation sources with fresh
+laws, names, renderers, and depths. All corpus overlap and executor gates pass;
+development and confirmation access remain zero. The next evidence is the sole
+serial development job, not a claim.
 
 The hard boundary remains graph validation/traversal, categorical equality,
 the node-count safety bound, S7's cyclic compiler, and pop-insert state mutation.
@@ -1233,7 +1239,7 @@ learned generator/compiler mechanism, not natural-language semantics, learned
 halt, open-ended planning, or unrestricted native reasoning. Both score-bearing
 boards are permanently closed.
 
-### 9.12 S8 nil-linked law graph (CPU-admitted, no neural board)
+### 9.12 S8 nil-linked law graph (neural board frozen, unevaluated)
 
 Source/preregistration commit `81fb6b0` freezes the post-S7 integration contract
 before full CPU seed `4822478724546321200`. The model must emit a nil-terminated
@@ -1242,13 +1248,16 @@ and may not receive source order, depth, a repaired card, or a gold event list.
 All ten CPU gates pass over 3,520 programs. Report SHA-256 is
 `c98bd96ef66289fe580523a20116c62c96bef77ef69b7c55eebd2c94630b3aeb`.
 
-No S8 score-bearing board exists. Before seeds are drawn, the board builder,
-sub-16M compiler, ordinary sequence-parser control, shuffled-label control,
-causal interventions, training exclusions, and assessor must be implemented,
-tested, and committed. A pass would establish bounded whole-source grounding,
-model-owned step order and nil halt, and transfer into S7's confirmed dynamics;
-it would not establish arbitrary algebra, unbounded planning, or unconstrained
-language reasoning.
+Neural source commit `598e405` precedes board seed `4026952256631032219` and
+training seed `5532971934318350109`. The frozen board has 48,000 graph-only
+training rows, 2,048 development rows, 2,048 sealed-confirmation rows, zero
+cross-split exact/13-gram/name overlap, and maximum length 453/512. Board report
+SHA-256 is `067d97d790c0a2cadb0158ee013a74e0e0264e7dd099afa2ca0c5389294ddd31`;
+development and confirmation access remain zero. The complete frozen system is
+133,692,848 parameters. A development pass would establish bounded whole-source
+grounding, model-owned step order and nil halt, and transfer into S7's confirmed
+dynamics; it would not establish arbitrary algebra, unbounded planning, or
+unconstrained language reasoning.
 
 ---
 
@@ -1562,6 +1571,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Qualified S7 development after the sole frozen run: 150/150 unseen-law atomic cells and 2,048/2,048 recurrent states/answers, versus 2.539% state for the exact-fit ordinary transformer and 0.928%-3.076% for causal controls. All 19 gates pass; confirmation remains sealed. |
 | 2026-07-19 | Confirmed S7 unchanged on the sole sealed read: 2,048/2,048 recurrent states and answers across 18 disjoint laws, versus 1.562% state for the exact-fit ordinary transformer and 0.732%-2.197% for causal controls. All 18 gates pass; both boards are closed. |
 | 2026-07-19 | Admitted S8 nil-linked law graphs before any neural board: 3,520/3,520 exact CPU executions and storage-reindex invariance, while storage-order, reversed-link, card, witness, reset, and early-nil controls remain at 1.051%-10.142% state. |
+| 2026-07-19 | Froze S8 neural source at `598e405`, then generated its sole board from seed `4026952256631032219`: 48,000 graph-only train, 2,048 development, and 2,048 sealed-confirmation sources with zero cross-split overlap and zero score access. The 8,610,966-parameter compiler keeps the complete system at 133,692,848 parameters. |
 | 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 
