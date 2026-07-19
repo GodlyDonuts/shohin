@@ -1,0 +1,59 @@
+{
+  "assessment_sha256": "85565f07f880730d35672cefa597c9d2c2498278c94c6db53e6cafd456e70a09",
+  "board_report_sha256": "fb81b75f5963ad4bcd513d9e4a14e2fa36ad02dabd1085b9f4387c270755cd93",
+  "board_seed": 7563652620455132721,
+  "checkpoint_sha256": "02a0ae680aa817d5f20c7fab0a75baeae4e4e262231e3051925a980f492ff8fc",
+  "confirmation_accesses": 0,
+  "confirmation_sha256": "2f0967bc35ee4b01f1adb59e6f0278c18394f3a0f84a5727b21e8df21e256419",
+  "decision": "reject_s9_occurrence_quotient_v1_confirmation_sealed",
+  "development_accesses": 1,
+  "development_sha256": "193df4513e9b7186aefbe3890931be85f4a7f0b154ab39c0409614603a686ff0",
+  "evaluation_sha256": "874f762648d2eeca7868cea6f9b3a51c6eb9186e2ad22aedfc1db5ba07ae3a94",
+  "failed_gates": [
+    "class_membership_exact_at_least_95pct",
+    "operation_nonce_bit_identical"
+  ],
+  "job": 693707,
+  "parameters": {
+    "base": 125081664,
+    "complete_system": 134580264,
+    "generator": 218,
+    "occurrence_compiler": 9498382
+  },
+  "schema": "r12_s9_occurrence_quotient_development_decision_v1",
+  "scores": {
+    "class_exact": {
+      "correct": 1941,
+      "total": 2048
+    },
+    "graph_exact": {
+      "correct": 1941,
+      "total": 2048
+    },
+    "graph_valid": {
+      "correct": 1943,
+      "total": 2048
+    },
+    "no_class_graph_exact": {
+      "correct": 950,
+      "total": 2048
+    },
+    "nonce_identical": {
+      "correct": 1925,
+      "required_eligible": 1943
+    },
+    "shuffled_graph_exact": {
+      "correct": 0,
+      "total": 2048
+    },
+    "treatment_answer": {
+      "correct": 1943,
+      "total": 2048
+    },
+    "treatment_state": {
+      "correct": 1943,
+      "total": 2048
+    }
+  },
+  "training_seed": 1782702123750965299
+}

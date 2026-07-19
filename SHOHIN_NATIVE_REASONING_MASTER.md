@@ -8,13 +8,14 @@ runbook and result files.
 
 **Status:** Living document. The protected raw-pretraining anchor is complete
 at 300,000 steps. S7 confirms bounded native contextual law compilation and
-recurrent execution. S8.1 is rejected end to end at 25.098%, but its conditional
-decomposition is exact: every valid predicted graph executes correctly. The
-active S9 target is therefore class-level relational grounding, not a new
-arithmetic runtime. Broad language-grounded, self-directed reasoning is not yet
-established.
+recurrent execution. S9 raises fresh-development exact graph compilation from
+S8.1's 25.098% to 94.775% and exact recurrent state/answers to 94.873%, with a
+48.389-point exact-graph advantage over its equal-budget no-class-message arm.
+It is not confirmed: class exact misses its 95% gate by five examples and 18
+otherwise-valid parses fail operation-name recoding. Broad language-grounded,
+self-directed reasoning is not yet established.
 
-**Last updated:** 2026-07-19 19:03 EDT.
+**Last updated:** 2026-07-19 19:29 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -1373,7 +1374,29 @@ rows with zero overlap/access. All 52,096 source/recoded and executor gates pass
 8,890 recodes change token width. Oracle logits reconstruct 2,048/2,048 exact
 development graphs through the actual neural proposal/assembly path. Report SHA
 is `fb81b75f5963ad4bcd513d9e4a14e2fa36ad02dabd1085b9f4387c270755cd93`.
-The board is frozen and unevaluated.
+Sole valid development job `693707` completed on `evc45` in 18m59s. Treatment
+reaches 1,941/2,048 = 94.775% exact graphs and 1,943/2,048 = 94.873% exact
+state/answers. The equal-budget no-class arm reaches 950/2,048 = 46.387% exact
+graphs and 951/2,048 = 46.436% state/answers; shuffled relations reach zero
+exact graphs. Treatment state remains 85.673%--98.534% at every depth three
+through eight. Reversed links, deranged cards, one witness, reset, and early nil
+reduce exact state to 6.836%, 1.367%, 4.639%, 2.637%, and 3.760%.
+
+This is the strongest fresh-language graph-grounding result in the ledger and
+the +48.389-point treatment/no-class gap gives exact-surface class messages a
+real causal development signal. It still fails two frozen gates. All-row exact
+class membership is 94.775%, five examples below the 95% floor. Operation-name
+recoding is bit-identical on all 1,925 mutually valid pairs, but invalidates 18
+otherwise-valid parses. Assessment SHA-256 is
+`85565f07f880730d35672cefa597c9d2c2498278c94c6db53e6cafd456e70a09` and records
+`reject_s9_occurrence_quotient_v1`. Development/confirmation access is one/zero;
+the sealed confirmation remains unopened.
+
+The admissible next test is fresh-board S9.1: preserve the parameter count and
+unchanged S7/S8 runtime, add explicit operation-name orbit equivariance and a
+model-logit-only constrained relation assignment, and retain every existing
+absolute, attribution, shuffled, causal, and access gate. This is a targeted
+robustness repair, not permission to relax thresholds or rescore S9.
 
 ---
 
@@ -1693,6 +1716,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Rejected S8.1 end to end at 514/2,048 = 25.098% exact graph/state/answer, but retained its decisive conditional result: all 514 valid graphs are exact and execute exactly, versus 205/2,048 state for the favorable ordinary parser and zero exact graphs for shuffled labels. Confirmation remains sealed. Activated S9 occurrence-quotient relational grounding. |
 | 2026-07-19 | Admitted the S9 occurrence-quotient representation on CPU: 2,048/2,048 exact graph/state/answer from oracle-emitted relations, exact class/relation-storage reindexing, causal witness/link collapse, and 2,048/2,048 rejection for split, merge, free-word, kind, and slot corruptions. This is a mechanics result only; neural grounding remains unproven. |
 | 2026-07-19 | Froze S9 neural source at `9fd8aea` plus active-batch proposal repair `ba9e4c6`, then generated fresh board `7563652620455132721`: 48,000/2,048/2,048 graph-only train/development/sealed confirmation, zero overlap/access, and 2,048/2,048 oracle-logit reconstruction through the actual span/relation assembler. |
+| 2026-07-19 | Rejected S9 for confirmation despite a large causal development gain: 94.775% exact graphs and 94.873% exact state/answer versus 46.387% exact graphs for the equal-budget no-class arm, 0% shuffled, and 25.098% S8.1. It passes 20/22 gates but misses 95% class exact by five examples and loses 18 otherwise-valid parses under operation-name recoding. Confirmation remains sealed; S9.1 must use a fresh board. |
 | 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 

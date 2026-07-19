@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 19:03 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 19:29 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -68,26 +68,21 @@
 > `74a391f3...`, assessment `d6aaa221...`; local mirrors hash-match; development/confirmation access
 > is one/zero. Never open S8.1 confirmation.
 >
-> **Active next phase:** S9 Occurrence-Quotient Relational Compilation (OQRC) attacks only that
-> grounding bottleneck. It must make nonce-span boundaries and sentence-level semantic relations
-> model-owned, then use exact equality only to quotient repeated emitted surface spans into shared
-> classes before reconstructing the unchanged S8 graph. It may not receive gold names, spans,
-> relation tuples, state, answer, event order, or halt at inference. A fresh neural board is forbidden
-> until CPU sufficiency, occurrence/storage permutation, free-word negative control, relation
-> ablation, information-flow, and host-resource gates are preregistered and pass. Those representation
-> gates now pass on 2,048/2,048 closed S8.1 sources: oracle-emitted quotients reconstruct exact graph,
-> state, and answer; class/relation-storage reindexing is exact; split, merge, free-word, relation-kind,
-> and slot corruptions reject 2,048/2,048; swapped witnesses and reversed links leave only 1.465% and
-> 7.520% exact state. Report SHA `f77dce82...`. This admits theory only. Freeze a model-owned bounded
-> span proposer, class-aware relation decoder, equal-budget no-class-message/shuffled controls, and
-> evaluator before drawing any board seed. No broad novelty or native-language reasoning claim is
-> authorized yet. Neural source commit `9fd8aea` and bounded-memory repair `ba9e4c6` precede fresh
-> board seed `7563652620455132721` and training seed `1782702123750965299`. The admitted board has
-> 48,000/2,048/2,048 rows, zero overlap/access, 8,890 width-changing nonce recodes, maximum 459/512,
-> and oracle-logit exact reconstruction through the full proposal/assembly path on 2,048/2,048.
-> Report SHA `fb81b75f...`, train `fea64b03...`, development `193df451...`, sealed confirmation
-> `2f0967bc...`. The 9,498,382-parameter compiler keeps the system at 134,580,264 parameters. Commit
-> and sync exact bytes, then run one serial development job; do not open confirmation.
+> **Active next phase:** S9 Occurrence-Quotient Relational Compilation (OQRC) is a large
+> development-only gain but is **rejected for confirmation**. Sole valid job `693707` completed on
+> `evc45` in 18m59s. Treatment reaches 1,941/2,048 = **94.775% exact graphs** and 1,943/2,048 =
+> **94.873% exact state/answer**, versus 950/2,048 = 46.387% exact graphs for the equal-budget
+> no-class arm, zero for shuffled relations, and 25.098% for closed S8.1. Every depth three through
+> eight remains above 85.67% state, and reversed-link/card/witness/reset/early-nil controls collapse
+> to 6.836%/1.367%/4.639%/2.637%/3.760%. This establishes a strong causal development signal for
+> exact-surface occurrence messages, model-emitted graph order/halt, and unchanged recurrent
+> execution. It fails two frozen gates: class exact is 94.775% versus 95% (five examples short), and
+> 18 otherwise-valid parses become invalid after operation-name recoding, although all 1,925 mutually
+> valid recodes are bit-identical. Checkpoint SHA `02a0ae68...`, evaluation `874f7626...`, assessment
+> `85565f07...`; local mirrors hash-match; development/confirmation access is one/zero. Never open
+> S9 confirmation. Preregister S9.1 on a fresh board with operation-orbit equivariance and
+> model-logit-only constrained relation assignment; keep the parameter count, S7/S8 runtime,
+> no-class/shuffled controls, and all current thresholds fixed.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -8958,3 +8953,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   SHA `fb81b75f...`, train `fea64b03...`, development `193df451...`, sealed confirmation
   `2f0967bc...`. The complete system is 134,580,264 parameters. Sync and hash-verify before the sole
   serial development read; confirmation remains sealed.
+
+- **2026-07-19 19:03--19:29** -- **S9 produces the strongest bounded language-grounding result so
+  far, but misses two frozen gates and is rejected for confirmation.** Jobs `693705` (`evc44`, no
+  visible GPU) and `693706` (empty output-directory guard) fail before model/board access and write no
+  score. Sole valid job `693707` completes on healthy H100 `evc45` in 18m59s, exit `0:0`. Treatment
+  reaches 1,941/2,048 = **94.775% exact graphs** and 1,943/2,048 = **94.873% exact state/answers**,
+  versus 950/2,048 = 46.387% exact graphs for the equal-budget no-class arm, zero exact graphs for
+  shuffled labels, and 25.098% for S8.1. The +48.389-point matched-control advantage gives explicit
+  occurrence-class messaging a strong causal development signal. All 1,943 valid graphs are
+  storage-reindex invariant; state collapses to 6.836%/1.367%/4.639%/2.637%/3.760% under reversed
+  links/deranged cards/one witness/reset/early nil. Twenty of 22 gates pass. All-row class exact is
+  five examples below its 95% floor, and 18 otherwise-valid parses become invalid after operation
+  nonce rotation, despite 1,925/1,925 bit-identical mutually valid pairs. Assessment SHA
+  `85565f07...` records `reject_s9_occurrence_quotient_v1`; checkpoint/evaluation SHA are
+  `02a0ae68...`/`874f7626...`; local mirrors match. Development/confirmation access is one/zero.
+  Never open S9 confirmation or rescore this board. Fresh-board S9.1 may test explicit operation-orbit
+  equivariance plus constrained model-logit relation assignment under unchanged controls/gates.
