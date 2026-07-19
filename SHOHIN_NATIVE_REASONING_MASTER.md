@@ -25841,6 +25841,17 @@ frozen exact 100% because two of 11,248 directions are wrong. Assessment
 rerun is allowed. A fresh public repair may replace the 0.5 lexical mass floor
 with a threshold-free structural pointer-anchor rule, then seek a new board.
 
+That structural repair now passes its entire public contract without fitting.
+The compiler's global operation-kind pointer argmax selects an exact training
+atom only when it lies inside one unambiguous pattern; unmatched or ambiguous
+anchors fall back to the neural head. Job `693142` reaches 100% known-atom
+direction and coverage across depth 3--8, while lexical-OOD coverage remains 0%
+and answer accuracy remains 75.195%. Depth mean is 94.434% answers / 94.336%
+state / 89.453% chains; ordered is **98.340% / 99.463% / 98.730%**; gold is
+98.779% answers with **100% state/chains**. Assessment `a73b0915...` qualifies
+one wholly new independent confirmation. It remains a bounded known-lexeme
+compiler/executor with external schedule and halt, not open-language reasoning.
+
 The matched result reproduces the loss but rejects single-comparator
 localization. Untouched execution reaches 77.393% answers / 70.312% exact
 state. Mean rebinding reaches 85.645% / 81.543%; ordered reaches 88.281% /

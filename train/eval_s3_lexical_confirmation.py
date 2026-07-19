@@ -93,6 +93,7 @@ def main():
     parser.add_argument("--intervention", choices=("none", "operations", "query"), default="none")
     parser.add_argument("--out", required=True)
     parser.add_argument("--batch-size", type=int, default=64)
+    parser.add_argument("--kind-decoder", choices=("mass", "pointer_anchor"), default="mass")
     args = parser.parse_args()
     if not torch.cuda.is_available():
         raise SystemExit("S3 lexical confirmation requires CUDA")
@@ -125,6 +126,7 @@ def main():
     packets, chunks = compile_packets(
         rows, tokenizer, compiler, cfg, args.identity_mode, "cuda", args.batch_size,
         lexicon=lexicon,
+        kind_decoder=args.kind_decoder,
     )
     packets, intervention_rows = apply_intervention(rows, packets, args.intervention)
     executor = S3ClosedActionPermutationExecutor(
@@ -190,6 +192,10 @@ def main():
         "schema": "r12_s3_lexical_confirmation_eval_v1",
         "identity_mode": args.identity_mode,
         "intervention": args.intervention,
+        "kind_protocol": (
+            "training_lexicon_pointer_anchor_v1"
+            if args.kind_decoder == "pointer_anchor" else "training_lexicon_v1"
+        ),
         "base_sha256": sha256_file(args.base),
         "compiler_sha256": sha256_file(args.compiler),
         "compiler_adapter_sha256": compiler_metadata["final_adapter_sha256"],

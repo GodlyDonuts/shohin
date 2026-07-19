@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 03:25 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 03:31 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -8426,3 +8426,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   board. The lawful repair returns to public development and replaces the arbitrary 0.5 mass gate
   with a structural pointer-anchor rule (global pointer maximum inside exact known pattern), then
   must qualify for a wholly new confirmation.
+
+- **2026-07-19 03:23--03:31** -- **Threshold-free structural pointer anchoring passes every public
+  gate and is qualified for one new confirmation.** Commit `51ed8fc` freezes the global-pointer-
+  argmax containment rule before score. Zero-fit job `693142` completes on `evc28`, exit `0:0`.
+  Two-step mean is 99.463% answers / 99.854% state/chains. Depth mean is 94.434% / 94.336% /
+  89.453%; ordered is **98.340% / 99.463% / 98.730%**; gold is 98.779% answers with **100% exact
+  state/chains, direction, and amount**. Known-atom coverage is 100%; lexical-OOD coverage remains
+  exactly 0% with unchanged 75.195% fallback answers. Assessment `a73b0915...` qualifies v1.4.
+  Freeze a wholly new confirmation protocol before drawing its seed; all previous boards remain
+  sealed and forbidden.

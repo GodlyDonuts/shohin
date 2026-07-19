@@ -10,10 +10,12 @@ from pathlib import Path
 from referential_literal_pointer_compiler import sha256_file
 
 
-def load(path):
+def load(path, kind_protocol):
     value = json.load(open(path))
     if value.get("schema") != "r12_s3_lexical_confirmation_eval_v1":
         raise SystemExit("invalid S3 lexical confirmation result")
+    if value.get("kind_protocol", "training_lexicon_v1") != kind_protocol:
+        raise SystemExit("S3 lexical confirmation kind protocol mismatch")
     return value
 
 
@@ -28,6 +30,11 @@ def main():
     parser.add_argument("--sacct", required=True)
     parser.add_argument("--job-id", required=True)
     parser.add_argument("--out", required=True)
+    parser.add_argument(
+        "--kind-protocol",
+        choices=("training_lexicon_v1", "training_lexicon_pointer_anchor_v1"),
+        default="training_lexicon_v1",
+    )
     args = parser.parse_args()
     if Path(args.out).exists():
         raise SystemExit("refusing existing S3 lexical confirmation assessment")
@@ -35,7 +42,10 @@ def main():
         "report", "ordered", "mean", "gold", "operation", "query", "sacct",
     )}
     report = json.load(open(args.report))
-    values = {name: load(path) for name, path in paths.items() if name not in {"report", "sacct"}}
+    values = {
+        name: load(path, args.kind_protocol)
+        for name, path in paths.items() if name not in {"report", "sacct"}
+    }
     ordered = values["ordered"]
     mean = values["mean"]
     gold = values["gold"]
@@ -99,10 +109,15 @@ def main():
             and len({row["kind_lexicon_sha256"] for row in values.values()}) == 1
         ),
     }
+    candidate = (
+        "pointer_anchor_s3_v1_4"
+        if args.kind_protocol == "training_lexicon_pointer_anchor_v1"
+        else "lexical_closed_s3_v1_3"
+    )
     decision = (
-        "confirm_lexical_closed_s3_execution_through_depth_8"
+        "confirm_{}_execution_through_depth_8".format(candidate)
         if all(gates.values()) else
-        "reject_lexical_closed_s3_confirmation"
+        "reject_{}_confirmation".format(candidate)
     )
     result = {
         "schema": "r12_s3_lexical_confirmation_assessment_v1",
