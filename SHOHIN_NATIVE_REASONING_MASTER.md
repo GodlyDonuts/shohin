@@ -14,7 +14,7 @@ active S9 target is therefore class-level relational grounding, not a new
 arithmetic runtime. Broad language-grounded, self-directed reasoning is not yet
 established.
 
-**Last updated:** 2026-07-19 18:42 EDT.
+**Last updated:** 2026-07-19 19:03 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -1363,6 +1363,18 @@ swapped event slots all reject 2,048/2,048. Report SHA-256 is
 This admits only the representation. Neural source must still learn bounded span
 selection and class-aware relations from source with no gold dictionary.
 
+Neural commits `9fd8aea` and `ba9e4c6` freeze a 9,498,382-parameter compiler
+before fresh board seed `7563652620455132721` and training seed
+`1782702123750965299`. Its treatment scores every contiguous span up to four
+tokens and receives an exact-surface class message; an equal-parameter control
+zeros that message, and a third arm shuffles relation labels. The board has
+48,000 graph-only training, 2,048 development, and 2,048 sealed-confirmation
+rows with zero overlap/access. All 52,096 source/recoded and executor gates pass;
+8,890 recodes change token width. Oracle logits reconstruct 2,048/2,048 exact
+development graphs through the actual neural proposal/assembly path. Report SHA
+is `fb81b75f5963ad4bcd513d9e4a14e2fa36ad02dabd1085b9f4387c270755cd93`.
+The board is frozen and unevaluated.
+
 ---
 
 ## 10. Template For A New Theory
@@ -1680,6 +1692,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Froze the fresh S8.1 board after repair commit `ce2a5e4`: 48,000 graph-only train, 2,048 development, and 2,048 sealed-confirmation rows. All 52,096 original/recoded sources compile, 9,018 exercise changed token counts, and score access remains zero/zero. |
 | 2026-07-19 | Rejected S8.1 end to end at 514/2,048 = 25.098% exact graph/state/answer, but retained its decisive conditional result: all 514 valid graphs are exact and execute exactly, versus 205/2,048 state for the favorable ordinary parser and zero exact graphs for shuffled labels. Confirmation remains sealed. Activated S9 occurrence-quotient relational grounding. |
 | 2026-07-19 | Admitted the S9 occurrence-quotient representation on CPU: 2,048/2,048 exact graph/state/answer from oracle-emitted relations, exact class/relation-storage reindexing, causal witness/link collapse, and 2,048/2,048 rejection for split, merge, free-word, kind, and slot corruptions. This is a mechanics result only; neural grounding remains unproven. |
+| 2026-07-19 | Froze S9 neural source at `9fd8aea` plus active-batch proposal repair `ba9e4c6`, then generated fresh board `7563652620455132721`: 48,000/2,048/2,048 graph-only train/development/sealed confirmation, zero overlap/access, and 2,048/2,048 oracle-logit reconstruction through the actual span/relation assembler. |
 | 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 

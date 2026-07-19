@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 18:42 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 19:03 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -81,7 +81,13 @@
 > 7.520% exact state. Report SHA `f77dce82...`. This admits theory only. Freeze a model-owned bounded
 > span proposer, class-aware relation decoder, equal-budget no-class-message/shuffled controls, and
 > evaluator before drawing any board seed. No broad novelty or native-language reasoning claim is
-> authorized yet.
+> authorized yet. Neural source commit `9fd8aea` and bounded-memory repair `ba9e4c6` precede fresh
+> board seed `7563652620455132721` and training seed `1782702123750965299`. The admitted board has
+> 48,000/2,048/2,048 rows, zero overlap/access, 8,890 width-changing nonce recodes, maximum 459/512,
+> and oracle-logit exact reconstruction through the full proposal/assembly path on 2,048/2,048.
+> Report SHA `fb81b75f...`, train `fea64b03...`, development `193df451...`, sealed confirmation
+> `2f0967bc...`. The 9,498,382-parameter compiler keeps the system at 134,580,264 parameters. Commit
+> and sync exact bytes, then run one serial development job; do not open confirmation.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -8937,3 +8943,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   records `admit_s9_occurrence_quotient_theory_only`. The free-word result is an explicit alias
   boundary. Neural source must make span selection and relation slots model-owned and beat both S8.1
   and an equal-budget no-class-message control before any confirmation access.
+
+- **2026-07-19 18:42--19:03** -- **S9 neural source and a fresh post-repair board are frozen before
+  learned score access.** Commit `9fd8aea` adds a bounded span proposer, exact within-example class
+  aggregation, class-aware relation head, equal-parameter no-class and shuffled controls, frozen
+  evaluator/assessor, and serial launcher. A pre-board audit catches corpus-wide proposal
+  materialization as needless host RAM; `ba9e4c6` changes only generation to active batches, tests it,
+  and forces new seeds. Final board seed `7563652620455132721` and training seed
+  `1782702123750965299` produce 48,000 graph-only train, 2,048 development, 2,048 sealed
+  confirmation, and 23 generator cells. All 52,096 executors agree; exact/13-gram/name overlap and
+  access are zero; 8,890 recodes change width; maximum is 459/512; gold spans are at most three
+  tokens under the frozen width-four cap. Oracle logits reconstruct 2,048/2,048 exact development
+  graphs through proposal, nonoverlap selection, relation assembly, quotienting, and compile. Report
+  SHA `fb81b75f...`, train `fea64b03...`, development `193df451...`, sealed confirmation
+  `2f0967bc...`. The complete system is 134,580,264 parameters. Sync and hash-verify before the sole
+  serial development read; confirmation remains sealed.
