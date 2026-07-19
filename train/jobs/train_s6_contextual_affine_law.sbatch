@@ -6,6 +6,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=48G
 #SBATCH --time=02:00:00
+#SBATCH --chdir=/lustre/fs1/home/sa305415/shohin
 #SBATCH --output=logs/s6_contextual_affine_law_%j.out
 
 set -euo pipefail
@@ -18,7 +19,9 @@ TRAIN_SEED=${TRAIN_SEED:?set the frozen post-commit S6 training seed}
 
 cd "$BASE"
 export PYTHONPATH="$BASE/pipeline:$BASE/train${PYTHONPATH:+:$PYTHONPATH}"
-export PYTHONHASHSEED="$TRAIN_SEED"
+# CPython accepts only unsigned 32-bit PYTHONHASHSEED values. Keep the full
+# frozen seed for model/data RNGs and derive the interpreter seed explicitly.
+export PYTHONHASHSEED=$((TRAIN_SEED % 4294967296))
 
 if [ -e "$OUTDIR" ]; then
   echo "refusing existing S6 output directory: $OUTDIR" >&2

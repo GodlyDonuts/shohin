@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 08:34 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 16:14 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -25,15 +25,18 @@
 > domain, not unseen semantics, open planning, learned halt, or broad native reasoning.
 >
 > **Active next phase:** S6 contextual affine law induction is theory/CPU-admitted, with no neural
-> score yet. The first scoreless falsifier rejected the raw hash split because modulus-5 training
-> omitted one second-card coordinate. Frozen v1.1 repairs only that coverage defect. The unchanged
-> exhaustive mechanics now pass over 328 laws at moduli 5/7/11/13: unique two-witness
+> score yet. The exhaustive mechanics pass over 328 laws at moduli 5/7/11/13: unique two-witness
 > identification, exact one-witness ambiguity, 3,748/3,748 destination and pop-insert cells,
 > noncommutative late-query witnesses, disjoint law splits, and a clean treatment schema. Report
 > SHA-256 is `a31a232c83a53d0b7aff87b4a495abd6740d98589059325951e2e4688e2bded6`.
-> Commit this milestone before drawing the sole development-board seed. S6 tests operation laws
-> absent from training; confirmation remains forbidden until all frozen development and causal
-> gates pass.
+> Post-commit board seed `4930377975126057597` freezes 961 train atoms, 2,048 primary development
+> programs, and 512 modulus-13 diagnostic programs; primary data SHA-256 is
+> `8fd78f761207e8446562c75e1816d1a0821d90ecd64fcb6b837f7a92fe808047`. Training seed
+> `412095620685111169` is also frozen. Job `693291` failed before Python initialization because the
+> 64-bit training seed exceeded CPython's 32-bit `PYTHONHASHSEED` range. It created only an empty
+> output directory and read neither model nor board, so a launcher-only retry is permitted after
+> commit. S6 tests operation laws absent from training; confirmation remains forbidden until all
+> frozen development and causal gates pass.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -8740,3 +8743,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   known operation language, deterministic v5 program assembly, fixed two-microstep replay, and
   structural event termination remain. Next attack unseen operation-law induction or model-owned
   active-step/halt control; do not call this unrestricted native reasoning.
+
+- **2026-07-19 15:51--16:14** -- **S6 unseen affine-law development is frozen; the first submission
+  is a scoreless launcher failure.** Commits `93418b0`, `c09024b`, and `48e6182` freeze the theorem,
+  exhaustive CPU admission, 4,753,677-parameter treatment, favorable law-ID memorizer, assessor,
+  post-commit seeds, and sole development board before neural access. The board contains 961 atomic
+  rows, 2,048 held-out-law recurrent programs, and 512 unseen-modulus diagnostics with zero
+  train/development law overlap and no confirmation rows. Job `693291` exits in two seconds before
+  Python initialization because `PYTHONHASHSEED=412095620685111169` is outside CPython's unsigned
+  32-bit range. Its output directory is empty; no checkpoint, model initialization, board read, or
+  score exists. Derive only the interpreter seed modulo 2^32 while retaining the full frozen model
+  seed, commit that launcher repair, and use a distinct `retry1` output path. No scientific rerun or
+  post-score tuning is authorized.
