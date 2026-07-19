@@ -24,6 +24,17 @@
 > `fbf7004e...`. This confirms model-owned finite transition semantics in the bounded known-action
 > domain, not unseen semantics, open planning, learned halt, or broad native reasoning.
 >
+> **Active next phase:** S6 contextual affine law induction is theory/CPU-admitted, with no neural
+> score yet. The first scoreless falsifier rejected the raw hash split because modulus-5 training
+> omitted one second-card coordinate. Frozen v1.1 repairs only that coverage defect. The unchanged
+> exhaustive mechanics now pass over 328 laws at moduli 5/7/11/13: unique two-witness
+> identification, exact one-witness ambiguity, 3,748/3,748 destination and pop-insert cells,
+> noncommutative late-query witnesses, disjoint law splits, and a clean treatment schema. Report
+> SHA-256 is `a31a232c83a53d0b7aff87b4a495abd6740d98589059325951e2e4688e2bded6`.
+> Commit this milestone before drawing the sole development-board seed. S6 tests operation laws
+> absent from training; confirmation remains forbidden until all frozen development and causal
+> gates pass.
+>
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
 > role parsing `692983` lifts initial binding 18.8% -> 48.3% but disconnects operation semantics,

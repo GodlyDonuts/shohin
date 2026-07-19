@@ -857,6 +857,26 @@ small model induces a new operation law or owns active-step/halt decisions
 without reintroducing a host interpreter, answer leakage, or an uncounted
 schedule channel.
 
+### 7.16 S6 formalizes unseen-law induction without widening the saturated kernel
+
+S6 replaces the question "can a larger S5 MLP fit the same six cells?" with a
+strictly stronger capability. At prime modulus `m`, a new operation law maps a
+target location by `d(x)=a*x+b mod m`, but the learned unit sees only two
+demonstrations, `0->y0` and `1->y1`, plus the current location. The witnesses
+identify `b=y0` and `a=y1-y0 mod m`; one witness provably leaves `m-1` laws
+ambiguous. Training laws, development laws, and reserved-confirmation laws are
+disjoint, so a law-ID table cannot solve the primary board.
+
+The first scoreless CPU run caught an incomplete modulus-5 training coordinate
+and wrote no report. Frozen v1.1 promotes one lexicographically selected held-out
+law into training before any model or board exists. The unchanged exhaustive
+falsifier then passes all 328 laws over moduli 5, 7, 11, and diagnostic 13,
+including 3,748/3,748 destinations, 3,748/3,748 pop-insert cells, exact
+one-witness ambiguity, and an order-sensitive late-query witness at every scale.
+This authorizes an isolated card-conditioned neural development fit after the
+mechanics commit. It is not yet a learned result, natural-language semantic
+claim, or confirmation.
+
 ---
 
 ## 8. Hypotheses That Are Closed Or Strongly Disfavored
@@ -1334,6 +1354,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Added the complete compiler qualification, RGDE identity/depth diagnostics, S3 v1.4 depth-eight confirmation, the invalid halt-target audit, and the preregistered S4 event-tape frontier; refreshed the upload appendix with the new source records. |
 | 2026-07-19 | Recorded S4 v1 at 2048/2048 event counts and 1932/2048 exact programs, rejected its pointer v1.1 collapse, and narrowed the next architecture to learned event-relative start/end pointers on a fresh board. |
 | 2026-07-19 | Confirmed S4 v5 hard-island/soft-interface parsing, then confirmed S5 learned generator-factored execution at 96.924% programs / 97.607% state / 98.096% answers with exact unseen amount-two closure and matched causal controls. |
+| 2026-07-19 | Froze S6 unseen affine-law induction, recorded a scoreless modulus-5 split-coverage failure, repaired only that admission defect in v1.1, and passed exhaustive identifiability/composition mechanics over 328 laws. No neural score or confirmation exists yet. |
 
 ---
 

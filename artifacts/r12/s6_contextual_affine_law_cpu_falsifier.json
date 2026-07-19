@@ -1,0 +1,269 @@
+{
+  "decision": "pass_s6_cpu_mechanics",
+  "gates": {
+    "all_admitted_splits_nonempty_and_covered": true,
+    "all_destinations_reconstruct": true,
+    "all_laws_have_unique_cards": true,
+    "all_pop_insert_updates_close": true,
+    "all_scales_have_order_witness": true,
+    "one_witness_is_exactly_m_minus_one_ambiguous": true,
+    "treatment_schema_has_no_forbidden_fields": true
+  },
+  "moduli": [
+    {
+      "affine_card_field_elements_per_law": 2,
+      "complete_training_coordinate_coverage": true,
+      "coverage_promotions": [
+        {
+          "destination": "train",
+          "field": "card_y1",
+          "law": "m5_a4_b2",
+          "modulus": 5,
+          "source": "confirmation",
+          "value": 1
+        }
+      ],
+      "expected_law_count": 20,
+      "expected_one_witness_candidates": 4,
+      "law_count": 20,
+      "memorization_table_entries": 100,
+      "modulus": 5,
+      "one_witness_candidate_counts": [
+        4
+      ],
+      "order_witness": {
+        "first_identity": 0,
+        "first_law": "m5_a1_b1",
+        "forward_answer": 0,
+        "forward_state": [
+          0,
+          2,
+          1,
+          3,
+          4
+        ],
+        "reverse_answer": 2,
+        "reverse_state": [
+          2,
+          0,
+          3,
+          1,
+          4
+        ],
+        "second_identity": 1,
+        "second_law": "m5_a1_b2",
+        "separating_query": 0
+      },
+      "pop_insert_closure_cells": 100,
+      "reconstructed_destination_cells": 100,
+      "split_counts": {
+        "confirmation": 6,
+        "development": 4,
+        "train": 10
+      },
+      "treatment_input_fields": [
+        "card_y0",
+        "card_y1",
+        "current_location",
+        "modulus"
+      ],
+      "unique_card_count": 20
+    },
+    {
+      "affine_card_field_elements_per_law": 2,
+      "complete_training_coordinate_coverage": true,
+      "coverage_promotions": [],
+      "expected_law_count": 42,
+      "expected_one_witness_candidates": 6,
+      "law_count": 42,
+      "memorization_table_entries": 294,
+      "modulus": 7,
+      "one_witness_candidate_counts": [
+        6
+      ],
+      "order_witness": {
+        "first_identity": 0,
+        "first_law": "m7_a1_b1",
+        "forward_answer": 0,
+        "forward_state": [
+          0,
+          2,
+          1,
+          3,
+          4,
+          5,
+          6
+        ],
+        "reverse_answer": 2,
+        "reverse_state": [
+          2,
+          0,
+          3,
+          1,
+          4,
+          5,
+          6
+        ],
+        "second_identity": 1,
+        "second_law": "m7_a1_b2",
+        "separating_query": 0
+      },
+      "pop_insert_closure_cells": 294,
+      "reconstructed_destination_cells": 294,
+      "split_counts": {
+        "confirmation": 6,
+        "development": 8,
+        "train": 28
+      },
+      "treatment_input_fields": [
+        "card_y0",
+        "card_y1",
+        "current_location",
+        "modulus"
+      ],
+      "unique_card_count": 42
+    },
+    {
+      "affine_card_field_elements_per_law": 2,
+      "complete_training_coordinate_coverage": true,
+      "coverage_promotions": [],
+      "expected_law_count": 110,
+      "expected_one_witness_candidates": 10,
+      "law_count": 110,
+      "memorization_table_entries": 1210,
+      "modulus": 11,
+      "one_witness_candidate_counts": [
+        10
+      ],
+      "order_witness": {
+        "first_identity": 0,
+        "first_law": "m11_a1_b1",
+        "forward_answer": 0,
+        "forward_state": [
+          0,
+          2,
+          1,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "reverse_answer": 2,
+        "reverse_state": [
+          2,
+          0,
+          3,
+          1,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "second_identity": 1,
+        "second_law": "m11_a1_b2",
+        "separating_query": 0
+      },
+      "pop_insert_closure_cells": 1210,
+      "reconstructed_destination_cells": 1210,
+      "split_counts": {
+        "confirmation": 23,
+        "development": 22,
+        "train": 65
+      },
+      "treatment_input_fields": [
+        "card_y0",
+        "card_y1",
+        "current_location",
+        "modulus"
+      ],
+      "unique_card_count": 110
+    },
+    {
+      "affine_card_field_elements_per_law": 2,
+      "complete_training_coordinate_coverage": true,
+      "coverage_promotions": [],
+      "expected_law_count": 156,
+      "expected_one_witness_candidates": 12,
+      "law_count": 156,
+      "memorization_table_entries": 2028,
+      "modulus": 13,
+      "one_witness_candidate_counts": [
+        12
+      ],
+      "order_witness": {
+        "first_identity": 0,
+        "first_law": "m13_a1_b1",
+        "forward_answer": 0,
+        "forward_state": [
+          0,
+          2,
+          1,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "reverse_answer": 2,
+        "reverse_state": [
+          2,
+          0,
+          3,
+          1,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "second_identity": 1,
+        "second_law": "m13_a1_b2",
+        "separating_query": 0
+      },
+      "pop_insert_closure_cells": 2028,
+      "reconstructed_destination_cells": 2028,
+      "split_counts": {
+        "confirmation": 35,
+        "development": 39,
+        "train": 82
+      },
+      "treatment_input_fields": [
+        "card_y0",
+        "card_y1",
+        "current_location",
+        "modulus"
+      ],
+      "unique_card_count": 156
+    }
+  ],
+  "resource_vector": {
+    "external_execution": "yes for falsifier and favorable ceiling; forbidden as neural treatment evidence",
+    "external_memory": "none beyond explicit categorical state and law card",
+    "inference_flops": "host exact mechanics only; not a neural score",
+    "oracle_calls": 0,
+    "parameters": "no neural parameters in falsifier",
+    "precision": "exact Python integers",
+    "retained_bits": "categorical list state plus two field elements per active law card",
+    "sequential_depth": 2,
+    "source_bytes": 0,
+    "training_examples": 0,
+    "training_flops": 0
+  },
+  "schema": "r12_s6_contextual_affine_law_cpu_falsifier_v1"
+}
