@@ -1,0 +1,57 @@
+{
+  "all_gates_pass": true,
+  "cardinality_counts": {
+    "3": 2500,
+    "4": 2500,
+    "5": 2500,
+    "6": 2500
+  },
+  "claim_boundary": "Variable-cardinality finite relation mechanics only; no neural compiler, fresh-board score, or broad-reasoning claim.",
+  "counts": {
+    "card_storage_reindex_invariant": 10000,
+    "cardinality_padding_invariant": 10000,
+    "deranged_card_state_exact": 753,
+    "equality_ablated_state_exact": 417,
+    "execution_exact": 10000,
+    "non_bijective_episode": 9936,
+    "opcode_alpha_invariant": 10000,
+    "post_halt_suffix_invariant": 10000,
+    "relation_composition_exact": 10000,
+    "source_deleted_packet_invariant": 10000,
+    "witness_alpha_invariant": 10000,
+    "witness_inference_exact": 10000
+  },
+  "episode_registration_sha256": "da8d4c3bf3e17b9f50114f486e9387d6f1afa4662bf810c62182329f87f05d7c",
+  "gates": {
+    "card_storage_reindex_invariant": true,
+    "cardinality_exact_balanced": true,
+    "cardinality_padding_invariant": true,
+    "deranged_card_state_below_40pct": true,
+    "equality_ablated_state_below_40pct": true,
+    "execution_exact": true,
+    "non_bijective_episodes_at_least_90pct": true,
+    "opcode_alpha_invariant": true,
+    "post_halt_suffix_invariant": true,
+    "relation_composition_exact": true,
+    "source_deleted_packet_invariant": true,
+    "witness_alpha_invariant": true,
+    "witness_inference_exact": true
+  },
+  "rates": {
+    "card_storage_reindex_invariant": 1.0,
+    "cardinality_padding_invariant": 1.0,
+    "deranged_card_state_exact": 0.0753,
+    "equality_ablated_state_exact": 0.0417,
+    "execution_exact": 1.0,
+    "non_bijective_episode": 0.9936,
+    "opcode_alpha_invariant": 1.0,
+    "post_halt_suffix_invariant": 1.0,
+    "relation_composition_exact": 1.0,
+    "source_deleted_packet_invariant": 1.0,
+    "witness_alpha_invariant": 1.0,
+    "witness_inference_exact": 1.0
+  },
+  "schema": "r12_er_relation_tensor_cpu_falsifier_v1",
+  "seed": 2718,
+  "trials": 10000
+}

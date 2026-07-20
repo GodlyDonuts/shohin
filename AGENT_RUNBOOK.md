@@ -10374,3 +10374,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   derangement/equality ablation retain only 7.53%/4.17% state. All 13 gates pass. This is CPU/tensor
   mechanics only: no source freeze, durable report, neural adapter, board, seed, GPU run, or score
   exists. Commit/push exact source before producing the durable report.
+
+- **2026-07-20 18:50--19:00** -- **Frozen ER-TT CPU mechanics are durably admitted.** Exact source
+  `0bf6d91b86c90a8772a8f109803131f729e1602f` precedes the exclusive-write 10,000-episode report
+  at seed 2,718. Cardinality is exactly balanced across `N=3..6`; witness inference, arbitrary
+  relation execution/composition, witness/opcode alpha rename, card-storage reindex, padding,
+  source deletion, and post-HALT suffix are all 10,000/10,000 exact. Non-bijective rules occur in
+  9,936/10,000 episodes. Family derangement/equality ablation retain only 753/10,000 and 417/10,000
+  terminal states. All 13 gates pass. Report/registration SHA-256 are `28e5acc2...`/`da8d4c3b...`.
+  This admits only neural-adapter implementation and exact sub-200M accounting. No board seed,
+  training seed, GPU run, scored access, or neural reasoning claim exists.
