@@ -38,6 +38,9 @@ PARENT_BOARD_REPORT_SHA256 = (
 PARENT_BOARD_TRAIN_SHA256 = (
     "694bce3a6077244b06ebeabba66e3255dc47507f664f8f45c2e9c3780581e0bb"
 )
+CONSUMED_DEVELOPMENT_SHA256 = (
+    "b85ea65ed310554192d421c909c6519e4738b01a80647abe7f4ffd1b70079c4e"
+)
 
 
 def canonical_json(value: object) -> str:
@@ -107,6 +110,7 @@ def projected_audit(
     development: Sequence[Mapping[str, object]],
     confirmation: Sequence[Mapping[str, object]],
     parent_train: Sequence[Mapping[str, object]] | None = None,
+    prior_development: Sequence[Mapping[str, object]] | None = None,
 ) -> dict[str, object]:
     base = audit_board(list(train), list(development), list(confirmation))
     split_rows = {
@@ -202,6 +206,25 @@ def projected_audit(
             inherited_overlap[split]["grams"] == 0
             for split in (DEVELOPMENT_SPLIT, CONFIRMATION_SPLIT)
         )
+    prior_overlap: dict[str, dict[str, int]] | None = None
+    if prior_development is not None:
+        prior_sets = _overlap_sets(prior_development)
+        prior_overlap = {}
+        for split, rows in split_rows.items():
+            fresh_sets = _overlap_sets(rows)
+            prior_overlap[split] = {
+                field: len(prior_sets[field] & fresh_sets[field])
+                for field in ("prompts", "grams", "names", "sequences")
+            }
+        gates["zero_prior_consumed_instance_overlap"] = all(
+            values[field] == 0
+            for values in prior_overlap.values()
+            for field in ("prompts", "names", "sequences")
+        )
+        gates["zero_prior_train_and_confirmation_13gram_overlap"] = all(
+            prior_overlap[split]["grams"] == 0
+            for split in (TRAIN_SPLIT, CONFIRMATION_SPLIT)
+        )
     return {
         "base_audit": base,
         "projected_gates": gates,
@@ -211,7 +234,17 @@ def projected_audit(
         "lexical_inventory_sha256": lexical_digests,
         "evaluation_balance": split_binding_balance,
         "inherited_parent_train_overlap": inherited_overlap,
+        "prior_consumed_development_overlap": prior_overlap,
     }
+
+
+def load_consumed_development(path: Path) -> list[dict[str, object]]:
+    if sha256_bytes(path.read_bytes()) != CONSUMED_DEVELOPMENT_SHA256:
+        raise ValueError("consumed projected development hash differs")
+    rows = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+    if len(rows) != 2_304 or any(row.get("split") != DEVELOPMENT_SPLIT for row in rows):
+        raise ValueError("consumed projected development rows differ")
+    return rows
 
 
 def load_parent_training_board(
@@ -274,12 +307,16 @@ def main() -> None:
     parser.add_argument("--seed", type=int, required=True)
     parser.add_argument("--source-commit", required=True)
     parser.add_argument("--parent-board-dir", type=Path, required=True)
+    parser.add_argument("--consumed-development", type=Path, required=True)
     args = parser.parse_args()
     if args.out_dir.exists():
         raise SystemExit(f"refusing existing projected board: {args.out_dir}")
     source_commit = _verify_source_commit(args.source_commit)
     parent_train, parent_board = load_parent_training_board(args.parent_board_dir)
-    reserved_sequences = {_program_signature(row) for row in parent_train}
+    prior_development = load_consumed_development(args.consumed_development)
+    reserved_sequences = {
+        _program_signature(row) for row in parent_train + prior_development
+    }
     train, development, confirmation = build_all(
         train_rows=EXPECTED_ROWS[TRAIN_SPLIT],
         development_families=288,
@@ -287,7 +324,13 @@ def main() -> None:
         seed=args.seed,
         reserved_sequences=reserved_sequences,
     )
-    audit = projected_audit(train, development, confirmation, parent_train)
+    audit = projected_audit(
+        train,
+        development,
+        confirmation,
+        parent_train,
+        prior_development,
+    )
     if not audit["all_gates_pass"]:
         raise SystemExit("projected fresh board audit failed")
     payloads = {
@@ -302,6 +345,9 @@ def main() -> None:
         "source_commit": source_commit,
         "source_custody": "clean_head_verified",
         "inherited_parent_board": parent_board,
+        "prior_consumed_development": {
+            "split_sha256": CONSUMED_DEVELOPMENT_SHA256,
+        },
         "all_gates_pass": True,
         "audit": audit,
         "development_registration": _registration(development),

@@ -69,3 +69,49 @@ def test_projected_audit_detects_inherited_parent_leakage():
     report = projected_audit(train, development, confirmation, train)
     assert not report["projected_gates"]["zero_inherited_parent_instance_overlap"]
     assert report["inherited_parent_train_overlap"]["sd_cst_train"]["sequences"]
+
+
+def test_successor_reserves_every_consumed_development_sequence():
+    _, prior_development, _ = build_all(
+        train_rows=96,
+        development_families=12,
+        confirmation_families=12,
+        seed=8519,
+    )
+    reserved = {_program_signature(row) for row in prior_development}
+    train, development, confirmation = build_all(
+        train_rows=96,
+        development_families=12,
+        confirmation_families=12,
+        seed=8520,
+        reserved_sequences=reserved,
+    )
+    report = projected_audit(
+        train,
+        development,
+        confirmation,
+        prior_development=prior_development,
+    )
+    overlap = report["prior_consumed_development_overlap"]
+    assert all(values["sequences"] == 0 for values in overlap.values())
+    assert report["projected_gates"]["zero_prior_consumed_instance_overlap"]
+    assert report["projected_gates"]["zero_prior_train_and_confirmation_13gram_overlap"]
+
+
+def test_successor_audit_rejects_consumed_development_reuse():
+    train, development, confirmation = build_all(
+        train_rows=96,
+        development_families=12,
+        confirmation_families=12,
+        seed=19281,
+    )
+    report = projected_audit(
+        train,
+        development,
+        confirmation,
+        prior_development=development,
+    )
+    assert not report["projected_gates"]["zero_prior_consumed_instance_overlap"]
+    assert report["prior_consumed_development_overlap"]["sd_cst_development"][
+        "sequences"
+    ]

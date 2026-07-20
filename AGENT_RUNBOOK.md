@@ -9404,3 +9404,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   to exact global MAP under the public exactly-one-STOP grammar, applied equally to every arm with
   raw logits exported for assessor recomputation. It adds zero parameters, advances all schemas,
   retains every threshold/control, and requires a new source commit and fresh board. No v2 seed yet.
+
+- **2026-07-20 08:52--09:02** -- **The first unlaunched v2 board is rejected before GPU use for
+  cross-generation sequence reuse.** V2 decoder source `03c10d2` is frozen before board/training
+  seeds `3069712212437980146` / `1406604500382831061`; 100 SD-CST tests and exact-parent remote
+  preflight pass. The resulting v2 48,000/2,304/2,304 board passes its original audits and remains
+  local with access `0/0`; report/train/dev/confirmation SHA values are `577100a6...`/`9946253d...`/
+  `1116ff18...`/`b7d97502...`. A new audit reads only the already consumed v1 development file, not
+  old confirmation. Exact prompt/name overlap is zero, and new confirmation has zero old-dev
+  sequence/13-gram overlap, but new train reuses 13 abstract operation sequences and new development
+  reuses one; development also shares 42 renderer-grammar 13-grams. Reject the board without sync,
+  submission, or model execution. Harden the builder to require/hash-bind consumed v1 development
+  `b85ea65e...`, reserve all 2,304 of its operation sequences plus inherited parent train, require
+  zero exact prompt/name/sequence overlap everywhere, and require zero old-dev 13-gram overlap in
+  successor train and confirmation. Development grammar overlap remains measured. Freeze a new
+  source and new seeds after tests; never open old sealed confirmation.

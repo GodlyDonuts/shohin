@@ -1,7 +1,7 @@
 # R12 Projected SD-CST Fresh v2 Preregistration
 
-**Status:** structured decoder and assessor under source freeze; no v2 source
-commit, board seed, training seed, development read, or confirmation read exists
+**Status:** first unlaunched v2 board rejected by cross-generation audit;
+successor source hardening in progress with no replacement seed or scored read
 
 ## Parent result and exact failure
 
@@ -38,6 +38,31 @@ model's raw eight-by-three kind logits and public grammar. It adds zero learned
 parameters and is applied identically to treatment, row-shuffled-label,
 consumed-parent, and binding-source-free compiler arms.
 
+## Cross-generation exclusion amendment
+
+Structured-decoder source `03c10d2dba5ce09a939c0e58617f73492a7df162`
+was frozen before board/training seeds `3069712212437980146` /
+`1406604500382831061`. The built board passed its inherited-parent and internal
+audits and was never synced, submitted, trained, or opened. A new pre-launch
+audit against the already consumed v1 development split found 13 abstract
+operation-sequence overlaps in v2 train and one in v2 development. Exact prompts
+and names were zero; v2 confirmation had zero sequence and 13-gram overlap.
+Because train exposure to a consumed development sequence is avoidable, this
+unlaunched board is rejected.
+
+The successor builder must require the exact consumed v1 development file with
+SHA-256 `b85ea65ed310554192d421c909c6519e4738b01a80647abe7f4ffd1b70079c4e`.
+It reserves every operation sequence in that file in addition to all inherited
+parent-training sequences. Its report binds the consumed hash and measures
+prompt, name, sequence, and 13-gram overlap against every new split. Exact
+prompt/name/sequence overlap must be zero everywhere; 13-gram overlap must be
+zero for successor train and sealed confirmation. Development grammar-level
+13-gram overlap is reported but may be nonzero because development is the
+explicitly iterative split and uses the same task grammar. Old confirmation is
+never opened. This amendment changes no model, decoder, threshold, optimizer,
+parameter, or scored-access contract. Freeze new source and draw entirely new
+seeds after the added tests pass.
+
 ## Frozen audit evidence
 
 Every compiled arm must export its full raw float32 kind logits to the scorer.
@@ -65,6 +90,7 @@ All fresh v1 contracts remain unchanged unless this document says otherwise:
 - 48,000 train rows, 2,304 development rows, and 2,304 sealed confirmation rows;
 - inherited-parent overlap audit and split-disjoint names, prompts, sequences,
   and scored 13-grams;
+- hash-bound exclusion of every sequence from the consumed v1 development set;
 - 6,748,897 trainable parameters, 20,955,890 compiler parameters, and
   146,057,595 nominal complete-system parameters;
 - strict sub-150M comparison and strict sub-200M global gates;

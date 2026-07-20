@@ -34,11 +34,14 @@ beat the row-shuffled-label arm, but the sole fresh development read rejected
 the first malformed tape because independent kind argmax did not emit exactly
 one STOP. V1 is closed at access `1/0` without an accuracy score. V2 now tests
 an exact model-logit-only MAP decoder under the disclosed one-STOP grammar on a
-wholly new board. No fresh neural development score exists yet.
+wholly new board. Its first unlaunched board was rejected pre-GPU because the
+builder had not reserved operation sequences from the consumed v1 development
+set; that exclusion is now being added. No fresh neural development score exists
+yet.
 Broad language-grounded,
 self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 08:52 EDT. User authority permits future complete
+**Last updated:** 2026-07-20 09:02 EDT. User authority permits future complete
 systems strictly below 200M parameters; the current isolated pilot retains its
 stricter 150M comparison gate.
 
@@ -101,6 +104,18 @@ the projection, reports raw versus structured rates, and rejects any packet
 mismatch. All previous accuracy, attribution, intervention, source-deletion,
 parameter, and one-read gates remain unchanged. A v2 success would still be a
 bounded structured state-transport result, not general reasoning.
+
+The first v2 source freeze `03c10d2` and post-commit seeds
+`3069712212437980146` / `1406604500382831061` produced an internally clean but
+unlaunched board. A cross-generation audit against only the consumed v1
+development split found 13 reused abstract operation sequences in new training
+and one in new development. New confirmation had zero sequence and 13-gram
+overlap, and exact prompt/name reuse was zero throughout. The board was rejected
+before sync, GPU training, or scored access. The successor builder now
+hash-binds consumed development `b85ea65e...`, reserves all of its sequences,
+and requires zero instance overlap everywhere plus zero old-development
+13-gram overlap in new train and confirmation. Old sealed confirmation remains
+unopened.
 
 ---
 

@@ -24,6 +24,7 @@ from assess_sd_cst_projected_mechanics import (
 )
 from build_sd_cst_projected_board import (
     BOARD_SCHEMA,
+    CONSUMED_DEVELOPMENT_SHA256,
     PARENT_BOARD_REPORT_SHA256,
     PARENT_BOARD_TRAIN_SHA256,
     PROTOCOL,
@@ -405,6 +406,10 @@ def config_main(args: argparse.Namespace) -> None:
         raise SystemExit(
             "projected board does not bind the inherited parent train split"
         )
+    if report.get("prior_consumed_development") != {
+        "split_sha256": CONSUMED_DEVELOPMENT_SHA256,
+    }:
+        raise SystemExit("projected board does not bind consumed development")
     board = checkpoint.get("board", {})
     parameters = checkpoint.get("parameters", {})
     arms = checkpoint.get("arms", {})
