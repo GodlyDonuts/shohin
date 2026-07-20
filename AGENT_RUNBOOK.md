@@ -308,6 +308,26 @@
 > local and Newton copies match; access is `0/0`. Do not add epochs or widen v1.1. Run a read-only
 > six-slot confusion audit on the same consumed heldout rows before selecting a distinct successor.
 >
+> **V1.1 six-slot audit is closed and localizes the residual.** Exact source `a9a8d9a`, sole job
+> `694209`, and endpoint `46697b39...` evaluate all 8,000 consumed heldout views in 25s. Across
+> 48,000 query decisions, every top one falls inside one of the six true entity spans and zero fall
+> on other bytes. Minimum per-slot exactness is binding roles 80.80%/99.40%/73.50% and initial
+> occurrences 47.05%/**0%**/16.70%. The middle occurrence is only 0--10.35% by renderer and aliases
+> mainly to binding role 2 and the adjacent initial occurrences. Report SHA is `b09122a9...`, access
+> remains `0/0`. The residual is occurrence-role confusion, not missing entity evidence. The next
+> admitted training-only falsifier replaces declaration dot-product queries with a local nonlinear
+> six-class token head while loading/fixing the exact v1 query path and physical event bus. Keep the
+> same data, schedule, gates, source deletion, and strict sub-200M ceiling.
+>
+> **Active v1.2 occurrence-head falsifier:** locally complete and unseeded. A local LayerNorm +
+> 384-to-1536 GELU + 1536-to-6 head emits six model logits at every declaration byte. It trains
+> exactly six tensors / 601,350 parameters while the old declaration queries are unused/frozen and
+> every successful query/event/executor path is reconstructed and frozen. Exact compiler/complete
+> size is 67,027,474 / **192,129,179**, leaving 7,870,821 below 200M. Twelve focused/inherited tests,
+> Ruff, `py_compile`, shell syntax, exact parent reconstruction, and a real consumed-family backward
+> pass are clean; all six declared tensors have gradients and no excluded tensor does. Freeze/push
+> source before deriving the sole seed, then submit one scoreless H100 run under unchanged gates.
+>
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
 > role parsing `692983` lifts initial binding 18.8% -> 48.3% but disconnects operation semantics,

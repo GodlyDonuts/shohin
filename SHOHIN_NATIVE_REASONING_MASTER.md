@@ -259,6 +259,32 @@ must localize the selections before another architecture is admitted. Full
 evidence is in
 `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_RESULT.md`.
 
+The deterministic six-slot audit now closes the ambiguity. Exact source
+`a9a8d9a`, job `694209`, and endpoint `46697b39...` inspect all 8,000 consumed
+heldout views. Every one of 48,000 top-one decisions lands in one of the six
+true entity spans; zero select punctuation or unrelated bytes. Minimum per-slot
+exactness is 80.80%/99.40%/73.50% for binding roles and
+47.05%/0%/16.70% for initial occurrences. The middle initial query reaches
+0--10.35% depending on declaration renderer and aliases mainly to binding role
+2 and adjacent initial occurrences. Report SHA begins `b09122a9...`; access is
+`0/0`.
+
+Thus evidence localization is already complete, but the shared bilinear
+query/key readout aliases surface roles and repeated positions. The next
+training-only falsifier is a local nonlinear six-class token head, not a larger
+global encoder, deterministic grammar parser, or more v1.1 epochs. It remains
+conventional compiler mechanics under the strict sub-200M ceiling.
+
+The corresponding v1.2 falsifier is locally implemented and unseeded. It emits
+six occurrence-role logits per local byte through LayerNorm, a 384-to-1536 GELU
+projection, and a 1536-to-6 head. Exactly 601,350 new tensors train; the old
+declaration queries are unused/frozen, and the exact query, physical event bus,
+parent, tape, executor, motor, reader, and trunk remain frozen. Exact
+compiler/complete size is 67,027,474 / 192,129,179, leaving 7,870,821 below
+200M. Focused/inherited tests, exact-parent reconstruction, and a real
+consumed-family backward pass are clean. This remains a scoreless interface
+falsifier.
+
 ---
 
 ## 2026-07-20 frontier update: v2 closes; grounding, not execution, is the bottleneck

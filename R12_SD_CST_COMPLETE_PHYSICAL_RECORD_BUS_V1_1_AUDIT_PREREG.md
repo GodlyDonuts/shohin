@@ -1,6 +1,8 @@
 # R12 SD-CST Complete Physical-Record Front-End v1.1 Audit Preregistration
 
-**Status:** deterministic read-only source draft; no audit output exists
+**Status:** closed. Exact source `a9a8d9a06a4a16c82385ae31ce346edda0d25d2f`
+produced sole job `694209` on H100 `evc23`; full result:
+`R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_AUDIT_RESULT.md`.
 
 This post-hoc audit reads only the same 2,000-semantic consumed-training
 heldout partition already evaluated by v1.1. Development and confirmation remain
@@ -26,3 +28,8 @@ The audit decides only the next representation hypothesis:
 
 No threshold is promoted, no failed run is rescored, and no reasoning or fresh
 generalization claim can follow from this audit.
+
+Observed result: all 48,000 top-one decisions select one of the six true entity
+spans and none select other bytes, but the middle initial occurrence is only
+0--10.35% exact. This admits an occurrence-role classifier, not more v1.1
+epochs or a broader encoder.
