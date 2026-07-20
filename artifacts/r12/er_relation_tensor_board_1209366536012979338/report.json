@@ -1,0 +1,125 @@
+{
+  "all_gates_pass": true,
+  "cardinality_counts": {
+    "3": 13024,
+    "4": 13024,
+    "5": 13024,
+    "6": 13024
+  },
+  "claim_boundary": "Fresh variable-cardinality finite-relation compiler board only; no neural score or broad-reasoning claim.",
+  "confirmation_accesses": 0,
+  "controls": {
+    "equality_ablated_state_exact": 1063,
+    "equality_ablated_state_rate": 0.08161855036855037,
+    "families": 13024,
+    "family_deranged_state_exact": 1036,
+    "family_deranged_state_rate": 0.07954545454545454
+  },
+  "depth_counts": {
+    "1": 4344,
+    "2": 4336,
+    "3": 4344,
+    "4": 4336,
+    "5": 4344,
+    "6": 4344,
+    "7": 4344,
+    "8": 4344,
+    "9": 4336,
+    "10": 4344,
+    "11": 4336,
+    "12": 4344
+  },
+  "development_accesses": 0,
+  "families": {
+    "er_tt_confirmation": 512,
+    "er_tt_development": 512,
+    "er_tt_train": 12000
+  },
+  "files": {
+    "confirmation.jsonl": {
+      "bytes": 6678600,
+      "rows": 2048,
+      "sha256": "cac2515bcdec2f2be2bac30162954592de0a12af4823bc1ec25cbe821030c5e6"
+    },
+    "development.jsonl": {
+      "bytes": 6674519,
+      "rows": 2048,
+      "sha256": "59be0c40656d5f7cedbbf5cea8e384896ed0eeb5cbed5083df4ac1281ff81090"
+    },
+    "train.jsonl": {
+      "bytes": 155836848,
+      "rows": 48000,
+      "sha256": "1982aeb272ab630472b9326149fc0e9c4f653c2e54a8e70b2b09162d0c95e734"
+    }
+  },
+  "gates": {
+    "cardinality_balanced": true,
+    "cross_split_exact_prompts_zero": true,
+    "cross_split_names_zero": true,
+    "cross_split_semantic_families_zero": true,
+    "cross_split_word_13grams_zero": true,
+    "depth_balanced": true,
+    "deranged_state_below_40pct": true,
+    "equality_ablated_state_below_40pct": true,
+    "global_names_unique_by_family_role": true,
+    "line_within_144_bytes": true,
+    "non_bijective_families_at_least_90pct": true,
+    "program_within_640_bytes": true,
+    "row_counts_exact": true,
+    "rule_count_balanced": true,
+    "semantic_validation_exact": true,
+    "train_scored_renderers_disjoint": true
+  },
+  "maximum_line_bytes": 96,
+  "maximum_program_bytes": 610,
+  "non_bijective_families": 13024,
+  "non_bijective_family_rate": 1.0,
+  "overlap": {
+    "er_tt_development__er_tt_confirmation": {
+      "exact_prompts": 0,
+      "names": 0,
+      "semantic_families": 0,
+      "word_13grams": 0
+    },
+    "er_tt_train__er_tt_confirmation": {
+      "exact_prompts": 0,
+      "names": 0,
+      "semantic_families": 0,
+      "word_13grams": 0
+    },
+    "er_tt_train__er_tt_development": {
+      "exact_prompts": 0,
+      "names": 0,
+      "semantic_families": 0,
+      "word_13grams": 0
+    }
+  },
+  "protocol": "R12-ER-TT-v1",
+  "renderers": {
+    "scored": [
+      "er-tt-d0w1e0q0-v1",
+      "er-tt-d0w1e1q1-v1",
+      "er-tt-d1w0e0q0-v1",
+      "er-tt-d1w0e1q1-v1"
+    ],
+    "train": [
+      "er-tt-d0w0e0q0-v1",
+      "er-tt-d0w0e1q1-v1",
+      "er-tt-d1w1e0q0-v1",
+      "er-tt-d1w1e1q1-v1"
+    ]
+  },
+  "rows": {
+    "er_tt_confirmation": 2048,
+    "er_tt_development": 2048,
+    "er_tt_train": 48000
+  },
+  "rule_count_counts": {
+    "2": 17368,
+    "3": 17368,
+    "4": 17360
+  },
+  "schema": "r12_er_relation_tensor_fresh_board_v1",
+  "seed": 1209366536012979338,
+  "views_per_family": 4
+}

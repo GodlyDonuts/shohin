@@ -10406,3 +10406,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   non-bijective; maximum program/line lengths are 610/96 under 640/144; every split-pair overlap is
   zero; and deranged/equality-ablated state is 8.170%/7.878%. No board bytes or scientific seed
   exists. Commit/push exact builder, parser, tests, and preregistration before drawing one.
+
+- **2026-07-20 19:48--20:02** -- **The production ER-TT board is admitted and independently
+  reproduced before any training seed.** Exact source `bd77c0fafdbc527688ba57aedd74ccdfbe2ed1cf`
+  precedes public beacon round 6305283 / payload SHA `0fda3a99...` and board seed
+  `1209366536012979338`. The 48,000/2,048/2,048 rows pass all 15 gates and a second complete build
+  is byte-identical. Train/development/confirmation/report SHA-256 begin `1982aeb2`/`59be0c40`/
+  `cac2515b`/`64ea4c0e`; confirmation is mode `0600`, custody `0/0`. Cardinality is exact-balanced,
+  every 13,024 family is non-bijective, all split overlap is zero, source limits are 610/96 bytes,
+  and deranged/equality-ablated state is 7.955%/8.162%. No training seed or neural score exists.
+  Freeze the equal-budget trainer, raw-evidence evaluator, independent assessor, and job source next.
