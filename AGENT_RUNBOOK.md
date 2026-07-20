@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 11:16 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 11:32 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -255,14 +255,17 @@
 > layers, parameters, or epochs to this contract. Audit batching, gradients, and objective mechanics
 > before choosing a distinct successor; no current development or sealed confirmation may be read.
 >
-> **Active post-hoc mechanics audit:** the consumed-training-only slot audit is implemented before
-> execution. It hash-binds exact initial and rejected joint weights, reports line/kind/amount/
-> identity/event-pointer accuracy per slot rather than only all-slots-at-once, and applies two
-> transparent diagnostic interventions: gold source-line pooling before the unchanged slot decoder
-> and gold event-span pooling before the unchanged frozen fingerprint matcher. It trains nothing,
-> cannot read development or confirmation, and cannot qualify a model. Eleven focused/current tests,
-> Ruff, `py_compile`, shell syntax, and local gradient/delta probes pass. Freeze exact source, run the
-> full fit/heldout orbit once, then choose a new contract from the measured bottleneck.
+> **Post-hoc joint mechanics audit is complete.** Exact source `219fd413`, sole job `694110`, and
+> H100 `evc27` evaluate exact initialization and endpoint over all 48,000 fit and 8,000 held-out
+> rendered rows in 10m44s. Held-out per-slot line/event-address/kind/amount/identity move from
+> 10.896%/6.555%/40.719%/49.836%/41.168% at initialization to
+> 42.029%/25.466%/55.731%/68.000%/50.325%; fit is nearly identical. Gold line pooling raises kind
+> to 73.641% but amount only to 68.134%; gold event-span pooling raises identity to 100% over all
+> 56,000 active slots. Training and gradients are real, renderer-overfit is not the cause, and the
+> exact fingerprint matcher is sufficient conditional on address. Report SHA is `318b6458...`,
+> access remains `0/0`, and the result is not score-eligible. The next distinct hypothesis must
+> factor delimiter-bounded physical records, local field extraction, and one-to-one model-owned
+> record assignment; no widening or extension of the failed global-query contract is authorized.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9651,3 +9654,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   every renderer and aggregate, and reads only consumed training rows. It trains nothing and has
   access `0/0`. Eleven focused/current tests and all static checks pass. Freeze exact source before
   one full H100 audit; do not use its interventions as capability scores.
+
+- **2026-07-20 11:16--11:32** -- **The exact all-row post-hoc audit completes and localizes the
+  multiplicative failure.** Exact source `219fd4132d59b100389edf116450522e0a13a7f6` is transported
+  to Newton as a clean Git-bundle capsule after remote GitHub authentication is unavailable. Exact
+  data/orbit/joint hashes pass, and sole job `694110` completes on H100 `evc27` in 10m44s. Across
+  8,000 held-out rendered rows, per-slot line/event-address/kind/amount/identity are
+  42.029%/25.466%/55.731%/68.000%/50.325%; all five fit aggregates differ by at most 0.25 points.
+  Initialization rates were 10.896%/6.555%/40.719%/49.836%/41.168%, proving real optimization.
+  Gold source-line pooling raises kind to 73.641% but amount only to 68.134%. Gold event-span
+  pooling raises identity to 56,000/56,000. Therefore the frozen content matcher is exact given an
+  address, renderer-orbit generalization is not the issue, and ordinary independent global queries
+  accumulate local record/address errors. Report SHA is `318b6458...`; access is `0/0`. Admit only
+  a distinct physical-record/local-field/one-to-one-write factorization under the strict 200M cap.

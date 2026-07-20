@@ -32,14 +32,16 @@ decoder then also reaches 0% lines/events/packets on fit renderers when orbit
 memory is frozen, while preserving successful interfaces exactly. This closes
 head-only repair. The final favorable conventional control jointly trains the
 32,782,853-parameter renderer memory and decoder at 179,826,564 complete
-parameters, yet still reaches 0% line/event pointers and packets on every fit
-and held-out renderer. This closes ordinary joint co-adaptation under the frozen
-contract and requires an implementation/credit-assignment audit before any
-distinct mechanism is admitted.
+parameters, yet still reaches 0% complete-record line/event pointers and packets
+on every fit and held-out renderer. The exact post-hoc audit rules out dead
+gradients and renderer overfit: final held-out per-slot line/event-address/kind/
+amount/identity are 42.029%/25.466%/55.731%/68.000%/50.325%, and gold event
+address makes identity 100%. This closes ordinary global-query co-adaptation and
+admits only a distinct physical-record/local-field/write-assignment factorization.
 V2 custody is `1/0`, its confirmation is sealed, and no board will be rescored.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 10:59 EDT. User authority requires every future
+**Last updated:** 2026-07-20 11:32 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -125,6 +127,19 @@ This rejects ordinary joint memory/head co-adaptation under the declared
 objective, not all sub-200M architectures. A mechanics audit must precede any
 new contract. Full evidence is in
 `R12_SD_CST_RENDERER_NATIVE_JOINT_RESULT.md`.
+
+That exact mechanics audit is now complete. Across all 8,000 held-out renderer
+rows, initialization-to-endpoint per-slot rates are line 10.896% -> 42.029%,
+event address 6.555% -> 25.466%, kind 40.719% -> 55.731%, amount 49.836% ->
+68.000%, and identity 41.168% -> 50.325%. Fit is nearly identical on every
+field, so the parity holdout is not the cause. Gold source-line pooling raises
+kind to 73.641% but barely changes amount; gold event-span pooling makes
+identity exactly 100%. This proves useful evidence is learned and the frozen
+matcher is sufficient conditional on address, while independent global queries
+compound several moderate local errors into zero complete packets. Report SHA
+begins `318b6458...`; access is `0/0`. The next conventional falsifier must use
+delimiter-bounded physical records, local field motors, and a model-logit-only
+one-to-one categorical write bus. It may not be described as reasoning.
 
 ---
 
@@ -1610,13 +1625,14 @@ text token imitated from SFT. A useful theory should predict when the halt
 state becomes causally available and how it remains stable under output
 recoding and paraphrase.
 
-### 9.6 Architecture changes under the 150M cap
+### 9.6 Architecture changes under the global 200M cap
 
-Architecture changes are explicitly allowed. The promoted bounded S5 stack
-leaves roughly 16.3M parameters below the strict 150M total; rejected S6's
-4.75M parameters are not part of the promoted stack. Parameter count alone is
-not the constraint. A proposal must state why its mechanism should outperform
-a matched recurrent or static control and which current failure it changes.
+Architecture changes are explicitly allowed. User authority now sets the global
+complete deployed-system limit strictly below 200M parameters. Historical and
+closed experiment-specific 150M contracts remain immutable; the promoted
+bounded S5 stack still has its original accounting. Parameter count alone is
+not the constraint. A proposal must state why its mechanism should outperform a
+matched recurrent or static control and which current failure it changes.
 
 ### 9.7 External frontier-plan synthesis
 

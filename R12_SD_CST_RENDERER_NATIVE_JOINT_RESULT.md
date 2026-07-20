@@ -72,6 +72,14 @@ audit that distinguishes a clean optimization/credit-assignment failure from a
 hidden gradient, batching, or objective defect. Any successor must be a new
 preregistered contract, not an extension or rescore of this pilot.
 
+That post-hoc audit is now complete. All trainable groups changed and every
+relevant loss has a finite gradient path. On all held-out renderer rows, final
+per-slot line/event-address/kind/amount/identity are 42.029%/25.466%/55.731%/
+68.000%/50.325%, nearly identical to fit. Gold line pooling raises kind to
+73.641% but does not improve amount; gold event-span pooling makes identity
+100%. See `R12_SD_CST_RENDERER_NATIVE_JOINT_AUDIT.md`. The successor must change
+record/address factorization, not add capacity or epochs to this contract.
+
 ## Preserved Evidence
 
 - checkpoint SHA-256:

@@ -1,0 +1,700 @@
+{
+  "claim_boundary": "Consumed training rows and model-state interventions only; not a fresh score or reasoning result.",
+  "confirmation_accesses": 0,
+  "development_accesses": 0,
+  "final": {
+    "fit": {
+      "aggregate": {
+        "counts": {
+          "active_slots": 336000,
+          "amount_active": 229293,
+          "event_pointer_active": 85571,
+          "gold_event_identity_active": 336000,
+          "gold_line_amount_active": 229944,
+          "gold_line_kind_slot": 282195,
+          "identity_active": 168452,
+          "kind_slot": 214255,
+          "kind_slots": 384000,
+          "line_slot": 181571,
+          "line_slots": 432000,
+          "rows": 48000
+        },
+        "rates": {
+          "amount_active": 0.6824196428571428,
+          "event_pointer_active": 0.25467559523809524,
+          "gold_event_identity_active": 1.0,
+          "gold_line_amount_active": 0.6843571428571429,
+          "gold_line_kind_slot": 0.7348828125,
+          "identity_active": 0.5013452380952381,
+          "kind_slot": 0.5579557291666667,
+          "line_slot": 0.4203032407407407
+        }
+      },
+      "renderers": {
+        "orbit-d0e0q0-v1": {
+          "counts": {
+            "active_slots": 84000,
+            "amount_active": 57838,
+            "event_pointer_active": 21006,
+            "gold_event_identity_active": 84000,
+            "gold_line_amount_active": 57761,
+            "gold_line_kind_slot": 70847,
+            "identity_active": 41877,
+            "kind_slot": 53592,
+            "kind_slots": 96000,
+            "line_slot": 45006,
+            "line_slots": 108000,
+            "rows": 12000
+          },
+          "rates": {
+            "amount_active": 0.6885476190476191,
+            "event_pointer_active": 0.25007142857142856,
+            "gold_event_identity_active": 1.0,
+            "gold_line_amount_active": 0.6876309523809524,
+            "gold_line_kind_slot": 0.7379895833333333,
+            "identity_active": 0.4985357142857143,
+            "kind_slot": 0.55825,
+            "line_slot": 0.4167222222222222
+          }
+        },
+        "orbit-d0e1q1-v1": {
+          "counts": {
+            "active_slots": 84000,
+            "amount_active": 56754,
+            "event_pointer_active": 22418,
+            "gold_event_identity_active": 84000,
+            "gold_line_amount_active": 56528,
+            "gold_line_kind_slot": 69382,
+            "identity_active": 42799,
+            "kind_slot": 53009,
+            "kind_slots": 96000,
+            "line_slot": 46418,
+            "line_slots": 108000,
+            "rows": 12000
+          },
+          "rates": {
+            "amount_active": 0.6756428571428571,
+            "event_pointer_active": 0.2668809523809524,
+            "gold_event_identity_active": 1.0,
+            "gold_line_amount_active": 0.672952380952381,
+            "gold_line_kind_slot": 0.7227291666666666,
+            "identity_active": 0.5095119047619048,
+            "kind_slot": 0.5521770833333334,
+            "line_slot": 0.4297962962962963
+          }
+        },
+        "orbit-d1e0q1-v1": {
+          "counts": {
+            "active_slots": 84000,
+            "amount_active": 57922,
+            "event_pointer_active": 21037,
+            "gold_event_identity_active": 84000,
+            "gold_line_amount_active": 58834,
+            "gold_line_kind_slot": 71644,
+            "identity_active": 41834,
+            "kind_slot": 54716,
+            "kind_slots": 96000,
+            "line_slot": 45037,
+            "line_slots": 108000,
+            "rows": 12000
+          },
+          "rates": {
+            "amount_active": 0.6895476190476191,
+            "event_pointer_active": 0.2504404761904762,
+            "gold_event_identity_active": 1.0,
+            "gold_line_amount_active": 0.7004047619047619,
+            "gold_line_kind_slot": 0.7462916666666667,
+            "identity_active": 0.49802380952380954,
+            "kind_slot": 0.5699583333333333,
+            "line_slot": 0.41700925925925925
+          }
+        },
+        "orbit-d1e1q0-v1": {
+          "counts": {
+            "active_slots": 84000,
+            "amount_active": 56779,
+            "event_pointer_active": 21110,
+            "gold_event_identity_active": 84000,
+            "gold_line_amount_active": 56821,
+            "gold_line_kind_slot": 70322,
+            "identity_active": 41942,
+            "kind_slot": 52938,
+            "kind_slots": 96000,
+            "line_slot": 45110,
+            "line_slots": 108000,
+            "rows": 12000
+          },
+          "rates": {
+            "amount_active": 0.6759404761904761,
+            "event_pointer_active": 0.2513095238095238,
+            "gold_event_identity_active": 1.0,
+            "gold_line_amount_active": 0.6764404761904762,
+            "gold_line_kind_slot": 0.7325208333333333,
+            "identity_active": 0.4993095238095238,
+            "kind_slot": 0.5514375,
+            "line_slot": 0.41768518518518516
+          }
+        }
+      }
+    },
+    "heldout": {
+      "aggregate": {
+        "counts": {
+          "active_slots": 56000,
+          "amount_active": 38080,
+          "event_pointer_active": 14261,
+          "gold_event_identity_active": 56000,
+          "gold_line_amount_active": 38155,
+          "gold_line_kind_slot": 47130,
+          "identity_active": 28182,
+          "kind_slot": 35668,
+          "kind_slots": 64000,
+          "line_slot": 30261,
+          "line_slots": 72000,
+          "rows": 8000
+        },
+        "rates": {
+          "amount_active": 0.68,
+          "event_pointer_active": 0.2546607142857143,
+          "gold_event_identity_active": 1.0,
+          "gold_line_amount_active": 0.6813392857142857,
+          "gold_line_kind_slot": 0.73640625,
+          "identity_active": 0.50325,
+          "kind_slot": 0.5573125,
+          "line_slot": 0.4202916666666667
+        }
+      },
+      "renderers": {
+        "orbit-d0e0q1-v1": {
+          "counts": {
+            "active_slots": 14000,
+            "amount_active": 9586,
+            "event_pointer_active": 3477,
+            "gold_event_identity_active": 14000,
+            "gold_line_amount_active": 9618,
+            "gold_line_kind_slot": 11843,
+            "identity_active": 7004,
+            "kind_slot": 8912,
+            "kind_slots": 16000,
+            "line_slot": 7477,
+            "line_slots": 18000,
+            "rows": 2000
+          },
+          "rates": {
+            "amount_active": 0.6847142857142857,
+            "event_pointer_active": 0.24835714285714286,
+            "gold_event_identity_active": 1.0,
+            "gold_line_amount_active": 0.687,
+            "gold_line_kind_slot": 0.7401875,
+            "identity_active": 0.5002857142857143,
+            "kind_slot": 0.557,
+            "line_slot": 0.41538888888888886
+          }
+        },
+        "orbit-d0e1q0-v1": {
+          "counts": {
+            "active_slots": 14000,
+            "amount_active": 9425,
+            "event_pointer_active": 3765,
+            "gold_event_identity_active": 14000,
+            "gold_line_amount_active": 9382,
+            "gold_line_kind_slot": 11602,
+            "identity_active": 7195,
+            "kind_slot": 8808,
+            "kind_slots": 16000,
+            "line_slot": 7765,
+            "line_slots": 18000,
+            "rows": 2000
+          },
+          "rates": {
+            "amount_active": 0.6732142857142858,
+            "event_pointer_active": 0.2689285714285714,
+            "gold_event_identity_active": 1.0,
+            "gold_line_amount_active": 0.6701428571428572,
+            "gold_line_kind_slot": 0.725125,
+            "identity_active": 0.5139285714285714,
+            "kind_slot": 0.5505,
+            "line_slot": 0.4313888888888889
+          }
+        },
+        "orbit-d1e0q0-v1": {
+          "counts": {
+            "active_slots": 14000,
+            "amount_active": 9650,
+            "event_pointer_active": 3504,
+            "gold_event_identity_active": 14000,
+            "gold_line_amount_active": 9735,
+            "gold_line_kind_slot": 11904,
+            "identity_active": 7004,
+            "kind_slot": 9147,
+            "kind_slots": 16000,
+            "line_slot": 7504,
+            "line_slots": 18000,
+            "rows": 2000
+          },
+          "rates": {
+            "amount_active": 0.6892857142857143,
+            "event_pointer_active": 0.2502857142857143,
+            "gold_event_identity_active": 1.0,
+            "gold_line_amount_active": 0.6953571428571429,
+            "gold_line_kind_slot": 0.744,
+            "identity_active": 0.5002857142857143,
+            "kind_slot": 0.5716875,
+            "line_slot": 0.41688888888888886
+          }
+        },
+        "orbit-d1e1q1-v1": {
+          "counts": {
+            "active_slots": 14000,
+            "amount_active": 9419,
+            "event_pointer_active": 3515,
+            "gold_event_identity_active": 14000,
+            "gold_line_amount_active": 9420,
+            "gold_line_kind_slot": 11781,
+            "identity_active": 6979,
+            "kind_slot": 8801,
+            "kind_slots": 16000,
+            "line_slot": 7515,
+            "line_slots": 18000,
+            "rows": 2000
+          },
+          "rates": {
+            "amount_active": 0.6727857142857143,
+            "event_pointer_active": 0.25107142857142856,
+            "gold_event_identity_active": 1.0,
+            "gold_line_amount_active": 0.6728571428571428,
+            "gold_line_kind_slot": 0.7363125,
+            "identity_active": 0.4985,
+            "kind_slot": 0.5500625,
+            "line_slot": 0.4175
+          }
+        }
+      }
+    }
+  },
+  "initial": {
+    "fit": {
+      "aggregate": {
+        "counts": {
+          "active_slots": 336000,
+          "amount_active": 168212,
+          "event_pointer_active": 22318,
+          "gold_event_identity_active": 335999,
+          "gold_line_amount_active": 168212,
+          "gold_line_kind_slot": 192092,
+          "identity_active": 138373,
+          "kind_slot": 156029,
+          "kind_slots": 384000,
+          "line_slot": 47028,
+          "line_slots": 432000,
+          "rows": 48000
+        },
+        "rates": {
+          "amount_active": 0.5006309523809523,
+          "event_pointer_active": 0.06642261904761905,
+          "gold_event_identity_active": 0.9999970238095238,
+          "gold_line_amount_active": 0.5006309523809523,
+          "gold_line_kind_slot": 0.5002395833333333,
+          "identity_active": 0.41182440476190474,
+          "kind_slot": 0.40632552083333334,
+          "line_slot": 0.10886111111111112
+        }
+      },
+      "renderers": {
+        "orbit-d0e0q0-v1": {
+          "counts": {
+            "active_slots": 84000,
+            "amount_active": 42053,
+            "event_pointer_active": 5070,
+            "gold_event_identity_active": 84000,
+            "gold_line_amount_active": 42053,
+            "gold_line_kind_slot": 46085,
+            "identity_active": 34687,
+            "kind_slot": 39016,
+            "kind_slots": 96000,
+            "line_slot": 12270,
+            "line_slots": 108000,
+            "rows": 12000
+          },
+          "rates": {
+            "amount_active": 0.5006309523809523,
+            "event_pointer_active": 0.06035714285714286,
+            "gold_event_identity_active": 1.0,
+            "gold_line_amount_active": 0.5006309523809523,
+            "gold_line_kind_slot": 0.4800520833333333,
+            "identity_active": 0.4129404761904762,
+            "kind_slot": 0.40641666666666665,
+            "line_slot": 0.11361111111111111
+          }
+        },
+        "orbit-d0e1q1-v1": {
+          "counts": {
+            "active_slots": 84000,
+            "amount_active": 42053,
+            "event_pointer_active": 5120,
+            "gold_event_identity_active": 84000,
+            "gold_line_amount_active": 42053,
+            "gold_line_kind_slot": 47739,
+            "identity_active": 35093,
+            "kind_slot": 38983,
+            "kind_slots": 96000,
+            "line_slot": 12037,
+            "line_slots": 108000,
+            "rows": 12000
+          },
+          "rates": {
+            "amount_active": 0.5006309523809523,
+            "event_pointer_active": 0.06095238095238095,
+            "gold_event_identity_active": 1.0,
+            "gold_line_amount_active": 0.5006309523809523,
+            "gold_line_kind_slot": 0.49728125,
+            "identity_active": 0.41777380952380955,
+            "kind_slot": 0.4060729166666667,
+            "line_slot": 0.11145370370370371
+          }
+        },
+        "orbit-d1e0q1-v1": {
+          "counts": {
+            "active_slots": 84000,
+            "amount_active": 42053,
+            "event_pointer_active": 5269,
+            "gold_event_identity_active": 83999,
+            "gold_line_amount_active": 42053,
+            "gold_line_kind_slot": 50199,
+            "identity_active": 34131,
+            "kind_slot": 39026,
+            "kind_slots": 96000,
+            "line_slot": 10887,
+            "line_slots": 108000,
+            "rows": 12000
+          },
+          "rates": {
+            "amount_active": 0.5006309523809523,
+            "event_pointer_active": 0.06272619047619048,
+            "gold_event_identity_active": 0.9999880952380953,
+            "gold_line_amount_active": 0.5006309523809523,
+            "gold_line_kind_slot": 0.52290625,
+            "identity_active": 0.40632142857142856,
+            "kind_slot": 0.40652083333333333,
+            "line_slot": 0.10080555555555555
+          }
+        },
+        "orbit-d1e1q0-v1": {
+          "counts": {
+            "active_slots": 84000,
+            "amount_active": 42053,
+            "event_pointer_active": 6859,
+            "gold_event_identity_active": 84000,
+            "gold_line_amount_active": 42053,
+            "gold_line_kind_slot": 48069,
+            "identity_active": 34462,
+            "kind_slot": 39004,
+            "kind_slots": 96000,
+            "line_slot": 11834,
+            "line_slots": 108000,
+            "rows": 12000
+          },
+          "rates": {
+            "amount_active": 0.5006309523809523,
+            "event_pointer_active": 0.08165476190476191,
+            "gold_event_identity_active": 1.0,
+            "gold_line_amount_active": 0.5006309523809523,
+            "gold_line_kind_slot": 0.50071875,
+            "identity_active": 0.41026190476190477,
+            "kind_slot": 0.40629166666666666,
+            "line_slot": 0.10957407407407407
+          }
+        }
+      }
+    },
+    "heldout": {
+      "aggregate": {
+        "counts": {
+          "active_slots": 56000,
+          "amount_active": 27908,
+          "event_pointer_active": 3671,
+          "gold_event_identity_active": 56000,
+          "gold_line_amount_active": 27908,
+          "gold_line_kind_slot": 31932,
+          "identity_active": 23054,
+          "kind_slot": 26060,
+          "kind_slots": 64000,
+          "line_slot": 7845,
+          "line_slots": 72000,
+          "rows": 8000
+        },
+        "rates": {
+          "amount_active": 0.49835714285714283,
+          "event_pointer_active": 0.06555357142857143,
+          "gold_event_identity_active": 1.0,
+          "gold_line_amount_active": 0.49835714285714283,
+          "gold_line_kind_slot": 0.4989375,
+          "identity_active": 0.41167857142857145,
+          "kind_slot": 0.4071875,
+          "line_slot": 0.10895833333333334
+        }
+      },
+      "renderers": {
+        "orbit-d0e0q1-v1": {
+          "counts": {
+            "active_slots": 14000,
+            "amount_active": 6977,
+            "event_pointer_active": 767,
+            "gold_event_identity_active": 14000,
+            "gold_line_amount_active": 6977,
+            "gold_line_kind_slot": 7693,
+            "identity_active": 5711,
+            "kind_slot": 6500,
+            "kind_slots": 16000,
+            "line_slot": 1974,
+            "line_slots": 18000,
+            "rows": 2000
+          },
+          "rates": {
+            "amount_active": 0.49835714285714283,
+            "event_pointer_active": 0.054785714285714285,
+            "gold_event_identity_active": 1.0,
+            "gold_line_amount_active": 0.49835714285714283,
+            "gold_line_kind_slot": 0.4808125,
+            "identity_active": 0.4079285714285714,
+            "kind_slot": 0.40625,
+            "line_slot": 0.10966666666666666
+          }
+        },
+        "orbit-d0e1q0-v1": {
+          "counts": {
+            "active_slots": 14000,
+            "amount_active": 6977,
+            "event_pointer_active": 853,
+            "gold_event_identity_active": 14000,
+            "gold_line_amount_active": 6977,
+            "gold_line_kind_slot": 7953,
+            "identity_active": 5886,
+            "kind_slot": 6533,
+            "kind_slots": 16000,
+            "line_slot": 2036,
+            "line_slots": 18000,
+            "rows": 2000
+          },
+          "rates": {
+            "amount_active": 0.49835714285714283,
+            "event_pointer_active": 0.06092857142857143,
+            "gold_event_identity_active": 1.0,
+            "gold_line_amount_active": 0.49835714285714283,
+            "gold_line_kind_slot": 0.4970625,
+            "identity_active": 0.42042857142857143,
+            "kind_slot": 0.4083125,
+            "line_slot": 0.1131111111111111
+          }
+        },
+        "orbit-d1e0q0-v1": {
+          "counts": {
+            "active_slots": 14000,
+            "amount_active": 6977,
+            "event_pointer_active": 892,
+            "gold_event_identity_active": 14000,
+            "gold_line_amount_active": 6977,
+            "gold_line_kind_slot": 8307,
+            "identity_active": 5647,
+            "kind_slot": 6496,
+            "kind_slots": 16000,
+            "line_slot": 1838,
+            "line_slots": 18000,
+            "rows": 2000
+          },
+          "rates": {
+            "amount_active": 0.49835714285714283,
+            "event_pointer_active": 0.06371428571428571,
+            "gold_event_identity_active": 1.0,
+            "gold_line_amount_active": 0.49835714285714283,
+            "gold_line_kind_slot": 0.5191875,
+            "identity_active": 0.40335714285714286,
+            "kind_slot": 0.406,
+            "line_slot": 0.10211111111111111
+          }
+        },
+        "orbit-d1e1q1-v1": {
+          "counts": {
+            "active_slots": 14000,
+            "amount_active": 6977,
+            "event_pointer_active": 1159,
+            "gold_event_identity_active": 14000,
+            "gold_line_amount_active": 6977,
+            "gold_line_kind_slot": 7979,
+            "identity_active": 5810,
+            "kind_slot": 6531,
+            "kind_slots": 16000,
+            "line_slot": 1997,
+            "line_slots": 18000,
+            "rows": 2000
+          },
+          "rates": {
+            "amount_active": 0.49835714285714283,
+            "event_pointer_active": 0.08278571428571428,
+            "gold_event_identity_active": 1.0,
+            "gold_line_amount_active": 0.49835714285714283,
+            "gold_line_kind_slot": 0.4986875,
+            "identity_active": 0.415,
+            "kind_slot": 0.4081875,
+            "line_slot": 0.11094444444444444
+          }
+        }
+      }
+    }
+  },
+  "parameters": {
+    "base": 125081664,
+    "compiler": 54724859,
+    "complete_system": 179826564,
+    "headroom": 20173436,
+    "motor": 19206,
+    "reader": 835,
+    "train_shared_orbit": true,
+    "trainable": 32782853,
+    "trainable_names": [
+      "native_amount_head.bias",
+      "native_amount_head.weight",
+      "native_event_queries",
+      "native_event_query_projection.weight",
+      "native_kind_head.bias",
+      "native_kind_head.weight",
+      "native_program_queries",
+      "native_program_query_projection.weight",
+      "native_slot_encoder.layers.0.linear1.bias",
+      "native_slot_encoder.layers.0.linear1.weight",
+      "native_slot_encoder.layers.0.linear2.bias",
+      "native_slot_encoder.layers.0.linear2.weight",
+      "native_slot_encoder.layers.0.norm1.bias",
+      "native_slot_encoder.layers.0.norm1.weight",
+      "native_slot_encoder.layers.0.norm2.bias",
+      "native_slot_encoder.layers.0.norm2.weight",
+      "native_slot_encoder.layers.0.self_attn.in_proj_bias",
+      "native_slot_encoder.layers.0.self_attn.in_proj_weight",
+      "native_slot_encoder.layers.0.self_attn.out_proj.bias",
+      "native_slot_encoder.layers.0.self_attn.out_proj.weight",
+      "native_slot_encoder.layers.1.linear1.bias",
+      "native_slot_encoder.layers.1.linear1.weight",
+      "native_slot_encoder.layers.1.linear2.bias",
+      "native_slot_encoder.layers.1.linear2.weight",
+      "native_slot_encoder.layers.1.norm1.bias",
+      "native_slot_encoder.layers.1.norm1.weight",
+      "native_slot_encoder.layers.1.norm2.bias",
+      "native_slot_encoder.layers.1.norm2.weight",
+      "native_slot_encoder.layers.1.self_attn.in_proj_bias",
+      "native_slot_encoder.layers.1.self_attn.in_proj_weight",
+      "native_slot_encoder.layers.1.self_attn.out_proj.bias",
+      "native_slot_encoder.layers.1.self_attn.out_proj.weight",
+      "native_slot_norm.bias",
+      "native_slot_norm.weight",
+      "native_source_key_projection.weight",
+      "orbit_byte_embedding.weight",
+      "orbit_encoder.layers.0.linear1.bias",
+      "orbit_encoder.layers.0.linear1.weight",
+      "orbit_encoder.layers.0.linear2.bias",
+      "orbit_encoder.layers.0.linear2.weight",
+      "orbit_encoder.layers.0.norm1.bias",
+      "orbit_encoder.layers.0.norm1.weight",
+      "orbit_encoder.layers.0.norm2.bias",
+      "orbit_encoder.layers.0.norm2.weight",
+      "orbit_encoder.layers.0.self_attn.in_proj_bias",
+      "orbit_encoder.layers.0.self_attn.in_proj_weight",
+      "orbit_encoder.layers.0.self_attn.out_proj.bias",
+      "orbit_encoder.layers.0.self_attn.out_proj.weight",
+      "orbit_encoder.layers.1.linear1.bias",
+      "orbit_encoder.layers.1.linear1.weight",
+      "orbit_encoder.layers.1.linear2.bias",
+      "orbit_encoder.layers.1.linear2.weight",
+      "orbit_encoder.layers.1.norm1.bias",
+      "orbit_encoder.layers.1.norm1.weight",
+      "orbit_encoder.layers.1.norm2.bias",
+      "orbit_encoder.layers.1.norm2.weight",
+      "orbit_encoder.layers.1.self_attn.in_proj_bias",
+      "orbit_encoder.layers.1.self_attn.in_proj_weight",
+      "orbit_encoder.layers.1.self_attn.out_proj.bias",
+      "orbit_encoder.layers.1.self_attn.out_proj.weight",
+      "orbit_encoder.layers.2.linear1.bias",
+      "orbit_encoder.layers.2.linear1.weight",
+      "orbit_encoder.layers.2.linear2.bias",
+      "orbit_encoder.layers.2.linear2.weight",
+      "orbit_encoder.layers.2.norm1.bias",
+      "orbit_encoder.layers.2.norm1.weight",
+      "orbit_encoder.layers.2.norm2.bias",
+      "orbit_encoder.layers.2.norm2.weight",
+      "orbit_encoder.layers.2.self_attn.in_proj_bias",
+      "orbit_encoder.layers.2.self_attn.in_proj_weight",
+      "orbit_encoder.layers.2.self_attn.out_proj.bias",
+      "orbit_encoder.layers.2.self_attn.out_proj.weight",
+      "orbit_encoder.layers.3.linear1.bias",
+      "orbit_encoder.layers.3.linear1.weight",
+      "orbit_encoder.layers.3.linear2.bias",
+      "orbit_encoder.layers.3.linear2.weight",
+      "orbit_encoder.layers.3.norm1.bias",
+      "orbit_encoder.layers.3.norm1.weight",
+      "orbit_encoder.layers.3.norm2.bias",
+      "orbit_encoder.layers.3.norm2.weight",
+      "orbit_encoder.layers.3.self_attn.in_proj_bias",
+      "orbit_encoder.layers.3.self_attn.in_proj_weight",
+      "orbit_encoder.layers.3.self_attn.out_proj.bias",
+      "orbit_encoder.layers.3.self_attn.out_proj.weight",
+      "orbit_encoder.layers.4.linear1.bias",
+      "orbit_encoder.layers.4.linear1.weight",
+      "orbit_encoder.layers.4.linear2.bias",
+      "orbit_encoder.layers.4.linear2.weight",
+      "orbit_encoder.layers.4.norm1.bias",
+      "orbit_encoder.layers.4.norm1.weight",
+      "orbit_encoder.layers.4.norm2.bias",
+      "orbit_encoder.layers.4.norm2.weight",
+      "orbit_encoder.layers.4.self_attn.in_proj_bias",
+      "orbit_encoder.layers.4.self_attn.in_proj_weight",
+      "orbit_encoder.layers.4.self_attn.out_proj.bias",
+      "orbit_encoder.layers.4.self_attn.out_proj.weight",
+      "orbit_encoder.layers.5.linear1.bias",
+      "orbit_encoder.layers.5.linear1.weight",
+      "orbit_encoder.layers.5.linear2.bias",
+      "orbit_encoder.layers.5.linear2.weight",
+      "orbit_encoder.layers.5.norm1.bias",
+      "orbit_encoder.layers.5.norm1.weight",
+      "orbit_encoder.layers.5.norm2.bias",
+      "orbit_encoder.layers.5.norm2.weight",
+      "orbit_encoder.layers.5.self_attn.in_proj_bias",
+      "orbit_encoder.layers.5.self_attn.in_proj_weight",
+      "orbit_encoder.layers.5.self_attn.out_proj.bias",
+      "orbit_encoder.layers.5.self_attn.out_proj.weight",
+      "orbit_encoder.layers.6.linear1.bias",
+      "orbit_encoder.layers.6.linear1.weight",
+      "orbit_encoder.layers.6.linear2.bias",
+      "orbit_encoder.layers.6.linear2.weight",
+      "orbit_encoder.layers.6.norm1.bias",
+      "orbit_encoder.layers.6.norm1.weight",
+      "orbit_encoder.layers.6.norm2.bias",
+      "orbit_encoder.layers.6.norm2.weight",
+      "orbit_encoder.layers.6.self_attn.in_proj_bias",
+      "orbit_encoder.layers.6.self_attn.in_proj_weight",
+      "orbit_encoder.layers.6.self_attn.out_proj.bias",
+      "orbit_encoder.layers.6.self_attn.out_proj.weight",
+      "orbit_encoder.layers.7.linear1.bias",
+      "orbit_encoder.layers.7.linear1.weight",
+      "orbit_encoder.layers.7.linear2.bias",
+      "orbit_encoder.layers.7.linear2.weight",
+      "orbit_encoder.layers.7.norm1.bias",
+      "orbit_encoder.layers.7.norm1.weight",
+      "orbit_encoder.layers.7.norm2.bias",
+      "orbit_encoder.layers.7.norm2.weight",
+      "orbit_encoder.layers.7.self_attn.in_proj_bias",
+      "orbit_encoder.layers.7.self_attn.in_proj_weight",
+      "orbit_encoder.layers.7.self_attn.out_proj.bias",
+      "orbit_encoder.layers.7.self_attn.out_proj.weight",
+      "orbit_norm.bias",
+      "orbit_norm.weight",
+      "orbit_position_embedding.weight"
+    ]
+  },
+  "schema": "r12_sd_cst_renderer_native_joint_posthoc_audit_v1",
+  "score_eligible": false,
+  "source": {
+    "joint_checkpoint_sha256": "4b842e4c2d0d608c32f0fd113b404866be7269676084cdac9b1a00d43cdd298d",
+    "orbit_checkpoint_sha256": "2e019b81406bb90e539665271c9893a0e568e0177396243ac427f17d8ca51eca",
+    "train_sha256": "b7756dbf8d4401dbc5fb897dee53f68758e27200b1ce0d2387631f2f0205ec25"
+  },
+  "status": "posthoc_consumed_training_diagnostic"
+}
