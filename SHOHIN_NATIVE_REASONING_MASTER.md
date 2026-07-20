@@ -22,13 +22,16 @@ training-only hypothesis is a frozen-parent projected content-addressable
 binding bus, for a 146,057,595-parameter complete system. The first joint bus
 run proves 100% declaration-to-initial binding but regresses solved parent
 fields. A frozen hierarchy preserves the parent and lifts event addressing to
-32.625%, but rejects its line-task key projection for name spans. The active
-pilot adds a binding-only nonlinear key adapter/query projection while leaving
-the parent byte compiler immutable. No neural development score exists yet.
+32.625%. The projected adapter then reaches an exact consumed-training
+compiler certificate and passes all 29 independent source-blind execution
+mechanics gates. This is not yet a fresh-distribution neural result. The active
+phase is one post-commit fresh board with independently randomized corrupted
+supervision, an inherited-parent leakage audit, a binding-source-free ablation,
+and one-read development custody. No fresh neural development score exists yet.
 Broad language-grounded,
 self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 06:20 EDT. User authority permits future complete
+**Last updated:** 2026-07-20 08:01 EDT. User authority permits future complete
 systems strictly below 200M parameters; the current isolated pilot retains its
 stricter 150M comparison gate.
 
@@ -49,6 +52,47 @@ full job-by-job chronology remains in the operational runbook summary.
 claim boundaries are in Sections 1-12; the complete research source text used
 to support them is embedded in Appendix A. No conclusion in this document
 requires opening another markdown file.
+
+---
+
+## 2026-07-20 frontier update: projected mechanics pass; fresh transfer pending
+
+Projected compiler job `693979` passes all 14 consumed-training compiler gates:
+8,000/8,000 initial state, event kind, entity identity, amount, late query, and
+whole tape; 7,999/8,000 declaration pointers, 8,000/8,000 initial-occurrence
+pointers, and 7,998/8,000 event-occurrence pointers. Every inherited parent
+tensor is byte-identical. The compiler has 20,955,890 parameters, of which
+6,748,897 are trainable. Together with the nominal 125,081,664 Shohin trunk and
+the certified motor/reader, the complete accounting is 146,057,595 parameters.
+The trunk is inactive in this projected compiler forward path, so both nominal
+and active counts must always be disclosed.
+
+Exact source `18610ac` and seed `2391953347805476054` then produce mechanics
+job `693986`. All 29 gates pass. Every one of 17 canonical/control packet arms
+has 8,000/8,000 exact final states, answers, recurrent trajectories, and alive
+trajectories against its independent changed oracle. Motor and reader retain
+78/78 and 18/18 certificates; declaration/event counterfactuals and line
+relocation are exact; post-STOP perturbation is invariant; and force-alive,
+reset/freeze, state/query/suffix, field mutation, and shuffled-packet controls
+all follow their changed semantics exactly. Execution-core SHA-256 is
+`166ca6f81dd962b06a94f7a3661921a410760090ed1b750d78ec1b0f610113f1`.
+This establishes only that a correct private categorical packet is sufficient
+and causally consumed after GPU-side source tensors are destroyed. The host
+scorer still retains hash-bound row/oracle evidence. It does not establish that
+the compiler generalizes.
+
+The score-bearing successor is therefore a new 48,000/2,304/2,304 board, drawn
+only after a clean source commit. It reserves all 48,000 operation sequences
+from the inherited byte-parent training board. The production-scale pre-seed
+audit has zero inherited sequence, name, and exact-prompt overlap in every new
+split and zero inherited 13-gram overlap in development and confirmation. The
+new training split shares 72 inherited renderer-grammar 13-grams by design;
+that overlap is reported rather than hidden. The matched negative arm uses an
+independent deterministic role permutation per row, not a globally equivalent
+relabeling. The evaluator binds exact row content, canonical access ledgers,
+packet/output tensor artifacts, and a recomputed development authorization
+chain. A perfect-system test passes every frozen gate. No board or score seed
+exists yet.
 
 ---
 

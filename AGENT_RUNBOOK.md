@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 07:03 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 08:01 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -9349,3 +9349,22 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Report/core/packet/output SHA values are `e7353f50...`/`166ca6f8...`/`eae55555...`/`cd43c10c...`;
   verified local copies preserve report, core, and outputs. Access stays `0/0`. This authorizes a
   fresh post-commit integration board only; it is not an independent score or broad reasoning claim.
+
+- **2026-07-20 07:03--08:01** -- **The fresh projected score contract is hardened before any
+  board or training seed.** The global user-authorized ceiling is now strict below 200M, while this
+  experiment intentionally retains its 146,057,595-parameter system and sub-150M comparison gate.
+  Adversarial review rejected a global label permutation as an equivalent coordinate system; the
+  matched arm now receives an independently deterministic per-row role permutation with a frozen
+  aggregate digest. Exact row-content commitments, canonical board-local `O_EXCL` access ledgers,
+  exact packet/output tensor-artifact binding, recomputed confirmation authorization, exact JSON
+  numeric typing, and frozen transitive source/tests close replay and fabrication paths. The source-
+  free diagnostic now deletes only projected binding evidence while preserving the real frozen
+  parent line/kind/amount/query path, matching its stated claim. The new builder reserves all 48,000
+  inherited parent-training operation sequences. A production-scale pre-seed dry run passes every
+  board gate: zero inherited sequence/name/exact-prompt overlap in all splits, zero inherited
+  13-gram overlap in development/confirmation, and 72 measured shared renderer-grammar 13-grams in
+  training. Thirty-four focused/adversarial tests, 20 broader SD-CST regressions, and static checks
+  pass; a 2,304-row synthetic perfect system passes every frozen evaluator gate. No source commit,
+  board seed, training seed,
+  development read, or confirmation read has occurred yet. Freeze this exact source next; only then
+  draw fresh seeds and build the board.

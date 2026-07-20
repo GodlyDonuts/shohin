@@ -43,10 +43,14 @@ class BindingBusCompiler(ByteAddressedCompiler):
         nn.init.normal_(self.initial_entity_queries, std=0.02)
         nn.init.normal_(self.event_entity_queries, std=0.02)
         self.bigram_embedding = nn.Embedding(
-            BIGRAM_VOCAB, fingerprint_width, padding_idx=BIGRAM_PAD,
+            BIGRAM_VOCAB,
+            fingerprint_width,
+            padding_idx=BIGRAM_PAD,
         )
         self.fingerprint_projection = nn.Linear(
-            fingerprint_width, fingerprint_width, bias=False,
+            fingerprint_width,
+            fingerprint_width,
+            bias=False,
         )
         self.logit_scale = nn.Parameter(torch.tensor(math.log(10.0)))
         permutation = torch.tensor(PERMUTATIONS, dtype=torch.long)
@@ -64,7 +68,8 @@ class BindingBusCompiler(ByteAddressedCompiler):
             self.key_projection(memory),
         ) / math.sqrt(self.width)
         return logits.masked_fill(
-            ~valid_mask[:, None], torch.finfo(logits.dtype).min,
+            ~valid_mask[:, None],
+            torch.finfo(logits.dtype).min,
         ).float()
 
     @staticmethod
@@ -74,7 +79,8 @@ class BindingBusCompiler(ByteAddressedCompiler):
         first = ids.clamp_max(255)
         bigrams = first * 256 + following
         pair_valid = valid_mask & torch.cat(
-            (valid_mask[:, 1:], torch.zeros_like(valid_mask[:, :1])), dim=1,
+            (valid_mask[:, 1:], torch.zeros_like(valid_mask[:, :1])),
+            dim=1,
         )
         return torch.where(pair_valid, bigrams, torch.full_like(bigrams, BIGRAM_PAD))
 
@@ -87,51 +93,80 @@ class BindingBusCompiler(ByteAddressedCompiler):
         weights = pointer_logits.softmax(-1)
         content = self.bigram_embedding(self._bigram_ids(ids, valid_mask))
         pair_weights = weights * torch.cat(
-            (weights[:, :, 1:], torch.zeros_like(weights[:, :, :1])), dim=-1,
+            (weights[:, :, 1:], torch.zeros_like(weights[:, :, :1])),
+            dim=-1,
         )
-        pair_weights = pair_weights / pair_weights.sum(-1, keepdim=True).clamp_min(1e-12)
+        pair_weights = pair_weights / pair_weights.sum(-1, keepdim=True).clamp_min(
+            1e-12
+        )
         pooled = torch.einsum("bsl,blf->bsf", pair_weights, content)
         return F.normalize(self.fingerprint_projection(pooled), dim=-1)
 
     def compile_program(
-        self, ids: torch.Tensor, valid_mask: torch.Tensor,
+        self,
+        ids: torch.Tensor,
+        valid_mask: torch.Tensor,
     ) -> BindingBusOutput:
         memory = self._encode(ids, valid_mask)
         line_slots, line_pointer_logits = self._address(
-            memory, valid_mask, self.program_queries,
+            memory,
+            valid_mask,
+            self.program_queries,
         )
         line_slots = self.slot_norm(self.slot_encoder(line_slots))
         events = line_slots[:, 1:]
 
         binding_pointer_logits = self._pointer_logits(
-            memory, valid_mask, self.binding_queries,
+            memory,
+            valid_mask,
+            self.binding_queries,
         )
         initial_pointer_logits = self._pointer_logits(
-            memory, valid_mask, self.initial_entity_queries,
+            memory,
+            valid_mask,
+            self.initial_entity_queries,
         )
         event_pointer_logits = self._pointer_logits(
-            memory, valid_mask, self.event_entity_queries,
+            memory,
+            valid_mask,
+            self.event_entity_queries,
         )
         bindings = self._fingerprints(
-            ids, valid_mask, binding_pointer_logits,
+            ids,
+            valid_mask,
+            binding_pointer_logits,
         )
         initial_entities = self._fingerprints(
-            ids, valid_mask, initial_pointer_logits,
+            ids,
+            valid_mask,
+            initial_pointer_logits,
         )
         event_entities = self._fingerprints(
-            ids, valid_mask, event_pointer_logits,
+            ids,
+            valid_mask,
+            event_pointer_logits,
         )
         scale = self.logit_scale.exp().clamp(max=100.0)
         initial_matches = scale * torch.einsum(
-            "bpf,brf->bpr", initial_entities, bindings,
+            "bpf,brf->bpr",
+            initial_entities,
+            bindings,
         )
         event_matches = scale * torch.einsum(
-            "bef,brf->ber", event_entities, bindings,
+            "bef,brf->ber",
+            event_entities,
+            bindings,
         )
-        state_logits = torch.stack([
-            sum(initial_matches[:, position, role] for position, role in enumerate(perm))
-            for perm in PERMUTATIONS
-        ], dim=-1)
+        state_logits = torch.stack(
+            [
+                sum(
+                    initial_matches[:, position, role]
+                    for position, role in enumerate(perm)
+                )
+                for perm in PERMUTATIONS
+            ],
+            dim=-1,
+        )
         tape = DeletedProgramTape(
             initial_state=state_logits.float(),
             event_kind=self.kind_head(events).float(),
@@ -163,11 +198,15 @@ class HierarchicalBindingBusCompiler(BindingBusCompiler):
         anchors = pointer_logits.argmax(-1)[..., None]
         newlines = (ids.eq(10) & valid_mask)[:, None]
         before = torch.where(
-            newlines & positions.lt(anchors), positions, torch.full_like(positions, -1),
+            newlines & positions.lt(anchors),
+            positions,
+            torch.full_like(positions, -1),
         ).amax(-1, keepdim=True)
         lengths = valid_mask.sum(-1)[:, None, None]
         after = torch.where(
-            newlines & positions.ge(anchors), positions + 1, lengths,
+            newlines & positions.ge(anchors),
+            positions + 1,
+            lengths,
         ).amin(-1, keepdim=True)
         return valid_mask[:, None] & positions.ge(before + 1) & positions.lt(after)
 
@@ -180,47 +219,72 @@ class HierarchicalBindingBusCompiler(BindingBusCompiler):
         return self._pointer_logits(memory, valid_mask, queries)
 
     def compile_program(
-        self, ids: torch.Tensor, valid_mask: torch.Tensor,
+        self,
+        ids: torch.Tensor,
+        valid_mask: torch.Tensor,
     ) -> BindingBusOutput:
         memory = self._encode(ids, valid_mask)
         line_slots, line_pointer_logits = self._address(
-            memory, valid_mask, self.program_queries,
+            memory,
+            valid_mask,
+            self.program_queries,
         )
         line_slots = self.slot_norm(self.slot_encoder(line_slots))
         events = line_slots[:, 1:]
 
         binding_pointer_logits = self._binding_pointer_logits(
-            memory, valid_mask, self.binding_queries,
+            memory,
+            valid_mask,
+            self.binding_queries,
         )
         initial_pointer_logits = self._binding_pointer_logits(
-            memory, valid_mask, self.initial_entity_queries,
+            memory,
+            valid_mask,
+            self.initial_entity_queries,
         )
         event_pointer_logits = self._binding_pointer_logits(
-            memory, valid_mask, self.event_entity_queries,
+            memory,
+            valid_mask,
+            self.event_entity_queries,
         )
         line_mask = self._selected_line_mask(ids, valid_mask, line_pointer_logits)
         event_pointer_logits = event_pointer_logits.masked_fill(
-            ~line_mask[:, 1:], torch.finfo(event_pointer_logits.dtype).min,
+            ~line_mask[:, 1:],
+            torch.finfo(event_pointer_logits.dtype).min,
         )
 
         bindings = self._fingerprints(ids, valid_mask, binding_pointer_logits)
         initial_entities = self._fingerprints(
-            ids, valid_mask, initial_pointer_logits,
+            ids,
+            valid_mask,
+            initial_pointer_logits,
         )
         event_entities = self._fingerprints(
-            ids, valid_mask, event_pointer_logits,
+            ids,
+            valid_mask,
+            event_pointer_logits,
         )
         scale = self.logit_scale.exp().clamp(max=100.0)
         initial_matches = scale * torch.einsum(
-            "bpf,brf->bpr", initial_entities, bindings,
+            "bpf,brf->bpr",
+            initial_entities,
+            bindings,
         )
         event_matches = scale * torch.einsum(
-            "bef,brf->ber", event_entities, bindings,
+            "bef,brf->ber",
+            event_entities,
+            bindings,
         )
-        state_logits = torch.stack([
-            sum(initial_matches[:, position, role] for position, role in enumerate(perm))
-            for perm in PERMUTATIONS
-        ], dim=-1)
+        state_logits = torch.stack(
+            [
+                sum(
+                    initial_matches[:, position, role]
+                    for position, role in enumerate(perm)
+                )
+                for perm in PERMUTATIONS
+            ],
+            dim=-1,
+        )
         tape = DeletedProgramTape(
             initial_state=state_logits.float(),
             event_kind=self.kind_head(events).float(),
@@ -260,5 +324,61 @@ class ProjectedHierarchicalBindingBusCompiler(HierarchicalBindingBusCompiler):
             self.binding_key_adapter(memory),
         ) / math.sqrt(self.width)
         return logits.masked_fill(
-            ~valid_mask[:, None], torch.finfo(logits.dtype).min,
+            ~valid_mask[:, None],
+            torch.finfo(logits.dtype).min,
         ).float()
+
+    def compile_program_source_free_binding(
+        self,
+        ids: torch.Tensor,
+        valid_mask: torch.Tensor,
+    ) -> BindingBusOutput:
+        """Preserve parent fields while deleting projected binding evidence."""
+        memory = self._encode(ids, valid_mask)
+        line_slots, line_pointer_logits = self._address(
+            memory,
+            valid_mask,
+            self.program_queries,
+        )
+        line_slots = self.slot_norm(self.slot_encoder(line_slots))
+        events = line_slots[:, 1:]
+        minimum = torch.finfo(memory.dtype).min
+
+        def uniform_pointer(slots: int) -> torch.Tensor:
+            logits = torch.zeros(
+                ids.shape[0],
+                slots,
+                ids.shape[1],
+                device=ids.device,
+                dtype=memory.dtype,
+            )
+            return logits.masked_fill(~valid_mask[:, None], minimum).float()
+
+        binding_pointer_logits = uniform_pointer(3)
+        initial_pointer_logits = uniform_pointer(3)
+        event_pointer_logits = uniform_pointer(8)
+        state_logits = torch.zeros(
+            ids.shape[0],
+            len(PERMUTATIONS),
+            device=ids.device,
+            dtype=torch.float32,
+        )
+        event_identity = torch.zeros(
+            ids.shape[0],
+            8,
+            3,
+            device=ids.device,
+            dtype=torch.float32,
+        )
+        return BindingBusOutput(
+            tape=DeletedProgramTape(
+                initial_state=state_logits,
+                event_kind=self.kind_head(events).float(),
+                event_identity=event_identity,
+                amount=self.amount_head(events).float(),
+            ),
+            line_pointer_logits=line_pointer_logits,
+            binding_pointer_logits=binding_pointer_logits,
+            initial_entity_pointer_logits=initial_pointer_logits,
+            event_entity_pointer_logits=event_pointer_logits,
+        )

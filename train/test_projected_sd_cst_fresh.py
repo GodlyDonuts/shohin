@@ -1,0 +1,118 @@
+from __future__ import annotations
+
+from build_sd_cst_board import build_all
+from projected_sd_cst_fresh import (
+    PERMUTATIONS,
+    as_binding_row,
+    parse_projected_row,
+    permute_training_labels,
+    row_shuffled_permutation,
+)
+from pilot_sd_cst_byte_addressed import byte_batch
+from sd_cst import HardProgramTape
+from sd_cst_binding_bus import ProjectedHierarchicalBindingBusCompiler
+from train_eval_sd_cst_projected_fresh import (
+    safe_mutate_first_active,
+    safe_perturb_post_stop,
+)
+import torch
+
+
+def test_parser_handles_direct_paraphrase_and_storage_order():
+    train, development, _ = build_all(
+        train_rows=12,
+        development_families=6,
+        confirmation_families=6,
+        seed=4412,
+    )
+    direct = parse_projected_row(train[0], "sd_cst_train")
+    paraphrase_raw = next(row for row in development if row["variant"] == "paraphrase")
+    paraphrase = parse_projected_row(paraphrase_raw, "sd_cst_development")
+    assert len(direct.pointer_ranges) == 9
+    assert len(paraphrase.pointer_ranges) == 9
+    assert all(end > start for start, end in direct.binding_ranges)
+    assert all(end > start for start, end in paraphrase.binding_ranges)
+    assert sum(end > start for start, end in paraphrase.event_entity_ranges) == 7
+    assert paraphrase.final_state is not None
+    assert paraphrase.answer_role is not None
+    assert paraphrase.active_state_trajectory is not None
+
+
+def test_label_permutation_changes_semantics_but_not_source_or_occurrences():
+    train, _, _ = build_all(
+        train_rows=12,
+        development_families=6,
+        confirmation_families=6,
+        seed=88173,
+    )
+    row = parse_projected_row(train[0], "sd_cst_train")
+    permutation = (1, 2, 0)
+    control = permute_training_labels(row, permutation)
+    assert control.program_bytes == row.program_bytes
+    assert control.query_bytes == row.query_bytes
+    assert control.pointer_ranges == row.pointer_ranges
+    assert control.initial_entity_ranges == row.initial_entity_ranges
+    assert control.event_entity_ranges == row.event_entity_ranges
+    assert control.binding_ranges != row.binding_ranges
+    assert PERMUTATIONS[control.initial_state] == tuple(
+        permutation[role] for role in PERMUTATIONS[row.initial_state]
+    )
+    assert control.event_identity == tuple(
+        permutation[role] for role in row.event_identity
+    )
+
+
+def test_row_shuffled_labels_are_deterministic_and_not_one_global_relabeling():
+    train, _, _ = build_all(
+        train_rows=96,
+        development_families=6,
+        confirmation_families=6,
+        seed=7219,
+    )
+    rows = [parse_projected_row(value, "sd_cst_train") for value in train]
+    first = [row_shuffled_permutation(991, row.row_id) for row in rows]
+    second = [row_shuffled_permutation(991, row.row_id) for row in rows]
+    assert first == second
+    assert len(set(first)) > 1
+    assert all(sorted(value) == [0, 1, 2] for value in first)
+    assert all(len(row.raw_row_sha256) == 64 for row in rows)
+
+
+def test_binding_source_free_ablation_preserves_parent_fields():
+    train, _, _ = build_all(
+        train_rows=12,
+        development_families=6,
+        confirmation_families=6,
+        seed=44119,
+    )
+    rows = [parse_projected_row(value, "sd_cst_train") for value in train[:4]]
+    batch = [as_binding_row(row) for row in rows]
+    ids, valid = byte_batch(batch, "program_bytes", torch.device("cpu"))
+    model = ProjectedHierarchicalBindingBusCompiler().eval()
+    with torch.no_grad():
+        normal = model.compile_program(ids, valid)
+        ablated = model.compile_program_source_free_binding(ids, valid)
+        normal_again = model.compile_program(ids, valid)
+    assert torch.equal(normal.tape.event_kind, normal_again.tape.event_kind)
+    assert torch.equal(normal.tape.amount, normal_again.tape.amount)
+    assert torch.equal(normal.tape.event_kind, ablated.tape.event_kind)
+    assert torch.equal(normal.tape.amount, ablated.tape.amount)
+    assert torch.equal(normal.line_pointer_logits, ablated.line_pointer_logits)
+    assert not bool(ablated.tape.initial_state.any())
+    assert not bool(ablated.tape.event_identity.any())
+
+
+def test_control_mutations_preserve_the_predicted_stop_grammar():
+    kinds = torch.zeros((1, 8), dtype=torch.uint8)
+    kinds[0, 2] = 2
+    tape = HardProgramTape(
+        torch.tensor([0], dtype=torch.uint8),
+        kinds,
+        torch.zeros((1, 8), dtype=torch.uint8),
+        torch.zeros((1, 8), dtype=torch.uint8),
+    )
+    post = safe_perturb_post_stop(tape)
+    assert int(post.event_identity[0, 3]) == 1
+    mutated = safe_mutate_first_active(tape, "identity")
+    assert int(mutated.event_identity[0, 0]) == 1
+    assert int(mutated.event_kind.eq(2).sum()) == 1

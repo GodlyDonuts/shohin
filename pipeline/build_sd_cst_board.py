@@ -678,8 +678,9 @@ def build_all(
     development_families: int,
     confirmation_families: int,
     seed: int,
+    reserved_sequences: set[str] | None = None,
 ) -> tuple[list[dict[str, object]], list[dict[str, object]], list[dict[str, object]]]:
-    used_sequences: set[str] = set()
+    used_sequences: set[str] = set(reserved_sequences or ())
     train = build_train(
         train_rows, seed ^ _SPLIT_SEED_MASKS[TRAIN_SPLIT], used_sequences
     )
