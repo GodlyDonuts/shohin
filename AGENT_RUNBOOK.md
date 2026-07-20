@@ -203,7 +203,16 @@
 > byte-identically. Train/development/confirmation/report hashes begin `b5cb2f14...`/`5cd0395f...`/
 > `7404b247...`/`589b203f...`; confirmation is `0600`; access is `0/0`. All 52,096 addressed-rule
 > rows production-parse and execute exactly; deranged-card state is 2,033/13,024 = 15.610%. No
-> training seed or neural job exists. Commit/push and hash-verify transport before training source.
+> training seed or neural job exists. The score-bearing training/evaluation source is now locally
+> admitted before source freeze: treatment, family-deranged, and equality-ablated arms use identical
+> initialization, 48,000 rows, 3,000 updates, and immutable pre-development checkpointing. Equality
+> ablation preserves byte offsets and cross-renderer family identity while removing only witness
+> equality. Twenty-three focused tests pass, independent raw-evidence metric recomputation passes,
+> and an actual confirmed-parent/real-row backward pass is finite with all core ER heads reached and
+> zero excluded-parent gradient leakage. The user reaffirmed a strict under-200M ceiling; the current
+> 192,421,936-parameter system remains unchanged with 7,578,064 headroom. No training seed, H100 job,
+> development access, or confirmation access exists. Commit/push exact source, then draw the sole
+> training seed and submit one serial H100 qualification.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10193,3 +10202,17 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   state. The independent rebuild is byte-identical. Train/development/confirmation/report hashes
   begin `b5cb2f14...`/`5cd0395f...`/`7404b247...`/`589b203f...`. No training seed or model output
   exists. Commit/push the receipt, sync/hash-verify Newton bytes, then freeze training/evaluation.
+
+- **2026-07-20 17:00--17:18** -- **ER-CST score-bearing source is locally admitted before source
+  freeze or training-seed draw.** The three equal-budget arms are treatment, family-deranged cards,
+  and equality-ablated witnesses; all start byte-identically and receive 48,000 rows, two epochs,
+  and 3,000 updates. The equality control preserves source width, pointer offsets, and family-stable
+  symbols across all four renderers while breaking only before/after equality. Motor and reader fit
+  their complete 36/18-cell finite domains independently. All arms must be written into an immutable
+  checkpoint before an `O_EXCL` development ledger is created. Frozen gates require >=90% treatment
+  packet/state/answer/joint, renderer/depth floors, >=50pp advantages over both controls, and strict
+  `1/0` custody under 200M. Twenty-three focused tests, Ruff, byte compilation, shell syntax,
+  independent raw-evidence metric recomputation, and an actual confirmed-parent/real-board-row
+  backward pass all pass; exact complete/trainable/headroom counts remain
+  192,421,936/11,716,385/7,578,064 and excluded-parent gradient leakage is zero. No training seed,
+  job, development read, or confirmation read exists. Commit/push this exact source before seed.
