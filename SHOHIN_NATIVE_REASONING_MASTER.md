@@ -10,16 +10,17 @@ runbook and result files.
 at 300,000 steps. S7 confirms bounded native contextual law compilation and
 recurrent execution. S9.1 remains the strongest fresh-development compiler at
 2,025/2,048 = 98.877% exact graph/state/answer, but is permanently unconfirmed
-after its frozen alpha-closure failures. S9.2 is now decisively rejected at
-340/2,048 = 16.602% exact graph/state/answer and 21/43 gates: its class-message
-path learned a maximum-depth shortcut that the global grammar enforced, while
-the no-class arm reached 98.730% state/answer and the same-logit local decoder
-reached 99.512% exact graphs. Broad language-grounded, self-directed reasoning
-is not yet established. Parser-only anchor repair is retired as the active
-frontier; the next primary experiment is model-owned source-deleted recurrent
-state transport with causal interventions.
+after its frozen alpha-closure failures. S9.2 is decisively rejected at
+340/2,048 = 16.602% exact graph/state/answer and 21/43 gates. Parser-only anchor
+repair is retired. The active experiment is Source-Deleted Categorical State
+Transport (SD-CST): a 134,306,714-parameter system that compiles language once
+into an eight-slot private categorical tape, deletes the source, executes one
+tied learned motor through model-predicted STOP, and answers a separately
+compiled late query. Mechanics, scale, custody, and independent-assessor tests
+pass; no neural development score exists yet. Broad language-grounded,
+self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 00:35 EDT.
+**Last updated:** 2026-07-20 04:16 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -66,6 +67,64 @@ causal use through state, suffix, query, halt, and source-poison interventions.
 The matched gold-tape, exact-identity, oracle-motor, shuffled-compiler,
 state-reset, untied, and source-retained arms separate compilation from update,
 memory transport, readout, and halt.
+
+---
+
+## 2026-07-20 frontier update: SD-CST admitted for one neural development test
+
+Source-Deleted Categorical State Transport is the first post-S9.2 experiment
+that tests the complete bounded reasoning chain rather than repairing another
+parser anchor. The frozen Shohin trunk reads a program once. A 9,205,009-
+parameter compiler emits one six-way initial state and eight categorical event
+slots containing seven operations plus one STOP. The source IDs, residuals,
+logits, probabilities, and attention state are then discarded. A 19,206-
+parameter tied motor receives only the current integer state and one integer
+event packet at each of eight public calls; its argmax is re-discretized before
+the next call. STOP closes an internal alive gate. An independent 835-parameter
+reader receives only the halted integer state and a separately compiled late
+query. The complete system has **134,306,714 parameters**, 15,693,286 below the
+strict 150M cap.
+
+The board is designed to eliminate the shortcuts that confounded earlier
+tracks. Each instance has explicit but arbitrary alpha/beta/gamma bindings, an
+independently arbitrary initial ordering, randomized textual storage order,
+semantic ordinals, active depths one through six, and genuine state-changing
+post-STOP operations. Training contains 48,000 compiler-only rows and no final
+state, answer, recurrent trajectory, execution reward, repair signal, or
+development/confirmation labels. The motor and reader receive only their
+complete finite atomic truth tables for fixed preregistered update budgets.
+
+Pre-neural evidence is complete:
+
+- production-scale generation succeeds for 48,000 train, 2,304 development,
+  and 2,304 sealed-confirmation rows;
+- an independent board audit passes all 22 gates with zero cross-split prompt,
+  13-gram, name, template, or operation-sequence overlap;
+- the CPU falsifier passes all 13 gates and both independent simulators agree on
+  72/72 atomic cells;
+- execute-through-STOP, textual-storage order, event-bag, STOP-blind,
+  query-blind, and suffix-overrun controls all score zero; length-only halt is
+  exactly 1/6 and reset-every-step reaches only 63.889%;
+- 44 integrated tests pass, along with Ruff, bytecode compilation, shell syntax,
+  and diff hygiene; and
+- the actual protected 300k checkpoint instantiates the exact preregistered
+  parameter composition and step number.
+
+The score path is fail-closed. Compiler outputs must contain exactly one STOP,
+are copied to CPU `uint8`, and are the only program payload accepted by
+`rollout_hard`. A gate configuration is created before development bytes are
+opened and binds the board, checkpoint, architecture, assessor, parameter cap,
+thresholds, controls, row IDs, depth counts, and deterministic exclusive-access
+ledger hash. The independent JSON-only assessor recomputes every oracle,
+certificate, exact-packet denominator, causal query/state/suffix intervention,
+control, and access gate. A failed development run closes that fresh board; it
+cannot be rescored and confirmation stays sealed.
+
+This is not yet a reasoning result. It is an admitted, falsifiable integration
+experiment. A pass would establish bounded autonomous language-to-private-tape
+compilation, recurrent state transport, learned transition reuse, internal
+halting, and late-query consumption. It would not establish arbitrary algebra,
+unbounded planning, free-form decomposition, or general reasoning.
 
 ---
 

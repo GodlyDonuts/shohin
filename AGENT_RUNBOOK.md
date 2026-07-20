@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 00:35 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 04:16 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -147,6 +147,22 @@
 > experiment is source-deleted counterfactual state transport: model-owned compilation into a
 > private categorical tape, tied recurrent update, internal halt, query readout, and causal
 > state/suffix/query swaps under a strict sub-150M budget.
+>
+> **Active experiment before source freeze:** Source-Deleted Categorical State Transport (SD-CST)
+> is locally complete and unscored. The frozen 300k trunk plus a 9,205,009-parameter compiler,
+> 19,206-parameter tied categorical motor, and 835-parameter reader totals exactly 134,306,714
+> parameters. Program compilation emits one initial state and eight hard event slots containing
+> seven operations plus one model-predicted STOP; source tensors/logits are deleted before eight
+> tied hard motor calls and a separately compiled late query. Production-scale test generation at
+> 48,000/2,304/2,304 passes all 22 board gates; the independent CPU falsifier passes 13/13 with
+> 72/72 atomic simulator agreement and all major shortcut controls at zero. Forty-four integrated
+> tests, Ruff, `py_compile`, shell syntax, and the actual protected-checkpoint parameter smoke pass.
+> A gate config now hash-binds board/checkpoint/architecture/assessor, all thresholds and controls,
+> registered row IDs/depths, and the deterministic exclusive-access ledger before development opens.
+> No neural checkpoint, development score, board seed, training seed, or confirmation access exists
+> yet. Commit these exact bytes, draw one fresh board/training seed, build once from clean HEAD, sync
+> hash-matched inputs to Newton, and run one serial H100 development experiment. Never describe the
+> mechanics result as native reasoning and never open confirmation unless every frozen gate passes.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9128,3 +9144,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   assessment `58c3ca00...`, and ledger `35effa66...`. Close S9.2 without rescore. Move to
   source-deleted counterfactual state transport with model-owned compile/update/read/halt and
   matched causal state, suffix, query, halt, reset, shuffled, and source-retained controls.
+
+- **2026-07-20 00:35--04:16** -- **SD-CST is mechanically admitted and ready for source freeze,
+  but has no neural score.** The new architecture compiles explicit instance-local bindings,
+  arbitrary initial order, seven operations, randomized semantic storage, one interleaved STOP,
+  and a separate late query into a fixed CPU-`uint8` packet. The source is deleted before eight
+  tied hard motor calls. The protected step-300k trunk plus compiler/motor/reader is exactly
+  134,306,714 parameters. A production-scale test board at 48,000/2,304/2,304 rows passes all 22
+  independent audit gates; the CPU falsifier passes 13/13, both simulators agree 72/72, major
+  shortcut controls score zero, length-only halt is 1/6, and reset-every-step is 63.889%.
+  Forty-four integrated tests and all static checks pass. The JSON-only assessor now recomputes
+  exact-packet conditional execution, variable pre-STOP state swaps, late-query swaps, post-STOP
+  invariance, forced-alive suffix execution, all atomic certificates, source deletion, ten controls,
+  parameter composition, and custody. Gate configuration occurs before development and binds the
+  deterministic exclusive-access ledger hash, closing replay. No board/training seed is frozen and
+  no development or confirmation byte has been opened. Commit exact source before drawing seeds.
