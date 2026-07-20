@@ -91,8 +91,11 @@ reader receive no fitted weights.
 - 48,000 training, 2,048 development, and 2,048 sealed confirmation rows;
 - exactly balanced cardinality and scored depth, with balanced rule counts;
 - at least 90% of episodes containing a non-bijective rule;
-- split-disjoint family IDs, names, relation tuples, renderer compositions,
-  exact prompts, and word 13-grams;
+- split-disjoint family IDs, names, complete semantic-family signatures,
+  renderer compositions, exact prompts, and word 13-grams. Atomic relation rows
+  may recur because there are only 27 total relations at `N=3`; generalization
+  is measured on unseen combinations, programs, symbols, and renderers rather
+  than an impossible atomic-row exclusion;
 - independent parser, witness-inference implementation, and executor validating
   every row before training;
 - fixed-width compact names so every program fits the inherited 640-byte source
