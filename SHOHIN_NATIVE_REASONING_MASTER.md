@@ -18,17 +18,17 @@ closed before development because the generic language compiler learned
 source-blind priors. A byte-addressed compiler then reached 100% source-line
 pointers, raw kind/STOP, amount, and query on an 8,000-row consumed-training
 holdout, while identity and initial binding stayed at chance. The active
-training-only hypothesis is a frozen-parent hierarchical content-addressable
-binding bus, for a 145,614,843-parameter complete system. The first joint bus
-run proves 100% declaration-to-initial binding but regresses the solved parent
-fields and fails event occurrence addressing. The successor freezes the exact
-byte compiler and restricts each event-name pointer to its model-selected
-newline-delimited semantic line before shared fingerprint matching. No neural
-development score exists yet.
+training-only hypothesis is a frozen-parent projected content-addressable
+binding bus, for a 146,057,595-parameter complete system. The first joint bus
+run proves 100% declaration-to-initial binding but regresses solved parent
+fields. A frozen hierarchy preserves the parent and lifts event addressing to
+32.625%, but rejects its line-task key projection for name spans. The active
+pilot adds a binding-only nonlinear key adapter/query projection while leaving
+the parent byte compiler immutable. No neural development score exists yet.
 Broad language-grounded,
 self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 06:08 EDT. User authority permits future complete
+**Last updated:** 2026-07-20 06:20 EDT. User authority permits future complete
 systems strictly below 200M parameters; the current isolated pilot retains its
 stricter 150M comparison gate.
 
@@ -88,6 +88,15 @@ event-name pointer is restricted to that region. Only the 14 binding queries,
 shared bigram table/projection, and scale train. This removes objective
 competition and tests semantic-line-to-name binding directly; inherited
 parameters must remain byte-identical.
+
+Frozen-parent job `693977` validates that separation: every inherited tensor and
+all solved fields remain exact, while event-occurrence localization rises to
+32.625%. It also rejects the parent's line-task key space as a name-binding
+interface: declaration/initial all-slot pointers remain zero and complete tape
+is 0.8125%. The active pilot adds only a binding-specific nonlinear key adapter
+and query projection. Its compiler is 20,955,890 parameters, 6,748,897
+trainable, for a 146,057,595-parameter complete system. No inherited path can
+change.
 
 This is intentionally a narrow structural prior for exact repeated surfaces,
 not general coreference. The preregistered pilot reads only consumed training,

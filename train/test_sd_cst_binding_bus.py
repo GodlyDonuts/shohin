@@ -10,6 +10,7 @@ from pilot_sd_cst_byte_addressed import (
     READER_PARAMETERS,
 )
 from pilot_sd_cst_hierarchical_binding import (
+    PROJECTED_TRAINABLE_NAMES,
     TRAINABLE_NAMES,
     freeze_parent,
     load_parent_state,
@@ -18,6 +19,7 @@ from sd_cst_binding_bus import (
     BIGRAM_PAD,
     BindingBusCompiler,
     HierarchicalBindingBusCompiler,
+    ProjectedHierarchicalBindingBusCompiler,
 )
 from sd_cst_byte_addressed import ByteAddressedCompiler
 
@@ -170,3 +172,23 @@ def test_frozen_parent_load_exposes_only_binding_bus_parameters():
     assert set(trainable) == TRAINABLE_NAMES
     for name, parameter in child.named_parameters():
         assert parameter.requires_grad == (name in TRAINABLE_NAMES)
+
+
+def test_dedicated_projection_is_the_only_additional_trainable_path():
+    kwargs = {
+        "width": 32,
+        "heads": 4,
+        "encoder_layers": 1,
+        "slot_layers": 1,
+        "ff": 64,
+        "slot_ff": 64,
+        "max_bytes": 64,
+    }
+    parent = ByteAddressedCompiler(**kwargs)
+    child = ProjectedHierarchicalBindingBusCompiler(
+        fingerprint_width=16, **kwargs,
+    )
+    load_parent_state(child, parent.state_dict())
+    trainable = freeze_parent(child, PROJECTED_TRAINABLE_NAMES)
+    assert set(trainable) == PROJECTED_TRAINABLE_NAMES
+    assert child.parameter_count() > parent.parameter_count()

@@ -36,7 +36,10 @@ from pilot_sd_cst_byte_addressed import (
     sha256_file,
 )
 from sd_cst import STOP_KIND
-from sd_cst_binding_bus import HierarchicalBindingBusCompiler
+from sd_cst_binding_bus import (
+    HierarchicalBindingBusCompiler,
+    ProjectedHierarchicalBindingBusCompiler,
+)
 
 
 PARENT_SHA256 = "e5f87a1d5b22d24250a6aac6fb7c70b4a77dbdf01bd5f5c509020a3584dfa6f9"
@@ -47,6 +50,12 @@ TRAINABLE_NAMES = frozenset({
     "bigram_embedding.weight",
     "fingerprint_projection.weight",
     "logit_scale",
+})
+PROJECTED_TRAINABLE_NAMES = TRAINABLE_NAMES | frozenset({
+    "binding_query_projection.weight",
+    "binding_key_adapter.0.weight",
+    "binding_key_adapter.0.bias",
+    "binding_key_adapter.2.weight",
 })
 
 
@@ -65,11 +74,14 @@ def load_parent_state(
     return tuple(sorted(result.missing_keys))
 
 
-def freeze_parent(model: HierarchicalBindingBusCompiler) -> tuple[str, ...]:
+def freeze_parent(
+    model: HierarchicalBindingBusCompiler,
+    trainable_names: frozenset[str] = TRAINABLE_NAMES,
+) -> tuple[str, ...]:
     for name, parameter in model.named_parameters():
-        parameter.requires_grad_(name in TRAINABLE_NAMES)
+        parameter.requires_grad_(name in trainable_names)
     actual = {name for name, parameter in model.named_parameters() if parameter.requires_grad}
-    if actual != TRAINABLE_NAMES:
+    if actual != trainable_names:
         raise ValueError(f"trainable parameter mismatch: {sorted(actual)}")
     return tuple(sorted(actual))
 
@@ -141,6 +153,11 @@ def main() -> None:
     parser.add_argument("--eval-batch-size", type=int, default=128)
     parser.add_argument("--lr", type=float, default=3e-4)
     parser.add_argument("--warmup", type=int, default=100)
+    parser.add_argument(
+        "--binding-projection",
+        choices=("shared-frozen", "dedicated-nonlinear"),
+        default="shared-frozen",
+    )
     args = parser.parse_args()
     if args.out_dir.exists():
         raise SystemExit(f"refusing existing hierarchical output: {args.out_dir}")
@@ -160,9 +177,14 @@ def main() -> None:
     payload = torch.load(args.parent_checkpoint, map_location="cpu", weights_only=False)
     if payload.get("schema") != "r12_sd_cst_byte_addressed_training_pilot_v1":
         raise SystemExit("parent byte compiler schema mismatch")
-    model = HierarchicalBindingBusCompiler()
+    if args.binding_projection == "dedicated-nonlinear":
+        model = ProjectedHierarchicalBindingBusCompiler()
+        declared_trainable = PROJECTED_TRAINABLE_NAMES
+    else:
+        model = HierarchicalBindingBusCompiler()
+        declared_trainable = TRAINABLE_NAMES
     missing = load_parent_state(model, payload["state"])
-    trainable_names = freeze_parent(model)
+    trainable_names = freeze_parent(model, declared_trainable)
     model.to(device)
     compiler_parameters = model.parameter_count()
     trainable_parameters = sum(
@@ -296,6 +318,7 @@ def main() -> None:
             "elapsed_seconds": time.time() - started,
             "trainable_names": trainable_names,
             "parent_missing_keys": missing,
+            "binding_projection": args.binding_projection,
         },
         "parameters": {
             "base": BASE_PARAMETERS,

@@ -1,0 +1,345 @@
+{
+  "board": {
+    "board_source_commit": "cefac2a78bf0f4d0bd5a9ddfba3dff4f76e18a46",
+    "confirmation_accesses": 0,
+    "development_accesses": 0,
+    "report_sha256": "e4ac239ccf1cb519a41a0e6d8abb9e5a8c880598a67c060953379d49aa79b0de",
+    "train_sha256": "694bce3a6077244b06ebeabba66e3255dc47507f664f8f45c2e9c3780581e0bb"
+  },
+  "checkpoint_sha256": "040932bbb02e49e701bf1e0e20d8873d17ee6486c6c82e145ffd0432fbd04c37",
+  "claim_boundary": "Consumed training split only; frozen-parent binding pilot, not a score.",
+  "confirmation_accesses": 0,
+  "decision": "reject_or_revise_hierarchical_binding",
+  "development_accesses": 0,
+  "fit": {
+    "exact": {
+      "amount": 40000,
+      "binding_pointer": 0,
+      "event_entity_pointer": 12938,
+      "identity": 1845,
+      "initial": 7219,
+      "initial_entity_pointer": 0,
+      "kind": 40000,
+      "line_pointer": 40000,
+      "query": 40000,
+      "whole_tape": 402
+    },
+    "rates": {
+      "amount": 1.0,
+      "binding_pointer": 0.0,
+      "event_entity_pointer": 0.32345,
+      "identity": 0.046125,
+      "initial": 0.180475,
+      "initial_entity_pointer": 0.0,
+      "kind": 1.0,
+      "line_pointer": 1.0,
+      "query": 1.0,
+      "whole_tape": 0.01005
+    },
+    "raw_stop_count_histogram": {
+      "1": 40000
+    },
+    "rows": 40000
+  },
+  "gates": {
+    "amount_at_least_90pct": true,
+    "binding_pointer_at_least_90pct": false,
+    "complete_system_below_150m": true,
+    "event_entity_pointer_at_least_90pct": false,
+    "exactly_one_raw_stop_every_row": true,
+    "frozen_parent_unchanged": true,
+    "identity_at_least_80pct": false,
+    "initial_at_least_80pct": false,
+    "initial_entity_pointer_at_least_90pct": false,
+    "kind_at_least_90pct": true,
+    "prefit_parent_exact": true,
+    "query_at_least_98pct": true,
+    "scored_access_zero": true,
+    "whole_tape_at_least_60pct": false
+  },
+  "heldout": {
+    "exact": {
+      "amount": 8000,
+      "binding_pointer": 0,
+      "event_entity_pointer": 2610,
+      "identity": 333,
+      "initial": 1418,
+      "initial_entity_pointer": 0,
+      "kind": 8000,
+      "line_pointer": 8000,
+      "query": 8000,
+      "whole_tape": 65
+    },
+    "rates": {
+      "amount": 1.0,
+      "binding_pointer": 0.0,
+      "event_entity_pointer": 0.32625,
+      "identity": 0.041625,
+      "initial": 0.17725,
+      "initial_entity_pointer": 0.0,
+      "kind": 1.0,
+      "line_pointer": 1.0,
+      "query": 1.0,
+      "whole_tape": 0.008125
+    },
+    "raw_stop_count_histogram": {
+      "1": 8000
+    },
+    "rows": 8000
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "fit_losses": {
+        "binding_address": 5.801462640380859,
+        "event_entity_address": 3.5629671928405764,
+        "identity": 1.098454060935974,
+        "initial": 1.7991404291152955,
+        "initial_entity_address": 5.637751375579834,
+        "total": 17.899775778198244
+      },
+      "heldout": {
+        "exact": {
+          "amount": 8000,
+          "binding_pointer": 0,
+          "event_entity_pointer": 2547,
+          "identity": 264,
+          "initial": 1366,
+          "initial_entity_pointer": 0,
+          "kind": 8000,
+          "line_pointer": 8000,
+          "query": 8000,
+          "whole_tape": 53
+        },
+        "rates": {
+          "amount": 1.0,
+          "binding_pointer": 0.0,
+          "event_entity_pointer": 0.318375,
+          "identity": 0.033,
+          "initial": 0.17075,
+          "initial_entity_pointer": 0.0,
+          "kind": 1.0,
+          "line_pointer": 1.0,
+          "query": 1.0,
+          "whole_tape": 0.006625
+        },
+        "raw_stop_count_histogram": {
+          "1": 8000
+        },
+        "rows": 8000
+      },
+      "updates": 625
+    },
+    {
+      "epoch": 2,
+      "fit_losses": {
+        "binding_address": 5.74843917388916,
+        "event_entity_address": 3.529922848892212,
+        "identity": 1.086795893096924,
+        "initial": 1.7937714513778686,
+        "initial_entity_address": 5.585073137664795,
+        "total": 17.744002575683595
+      },
+      "heldout": {
+        "exact": {
+          "amount": 8000,
+          "binding_pointer": 0,
+          "event_entity_pointer": 2624,
+          "identity": 279,
+          "initial": 1418,
+          "initial_entity_pointer": 0,
+          "kind": 8000,
+          "line_pointer": 8000,
+          "query": 8000,
+          "whole_tape": 54
+        },
+        "rates": {
+          "amount": 1.0,
+          "binding_pointer": 0.0,
+          "event_entity_pointer": 0.328,
+          "identity": 0.034875,
+          "initial": 0.17725,
+          "initial_entity_pointer": 0.0,
+          "kind": 1.0,
+          "line_pointer": 1.0,
+          "query": 1.0,
+          "whole_tape": 0.00675
+        },
+        "raw_stop_count_histogram": {
+          "1": 8000
+        },
+        "rows": 8000
+      },
+      "updates": 1250
+    },
+    {
+      "epoch": 3,
+      "fit_losses": {
+        "binding_address": 5.7441658081054685,
+        "event_entity_address": 3.5248828189849855,
+        "identity": 1.0800163177490234,
+        "initial": 1.7936640937805175,
+        "initial_entity_address": 5.581660313415528,
+        "total": 17.724389447021483
+      },
+      "heldout": {
+        "exact": {
+          "amount": 8000,
+          "binding_pointer": 0,
+          "event_entity_pointer": 2579,
+          "identity": 340,
+          "initial": 1382,
+          "initial_entity_pointer": 0,
+          "kind": 8000,
+          "line_pointer": 8000,
+          "query": 8000,
+          "whole_tape": 75
+        },
+        "rates": {
+          "amount": 1.0,
+          "binding_pointer": 0.0,
+          "event_entity_pointer": 0.322375,
+          "identity": 0.0425,
+          "initial": 0.17275,
+          "initial_entity_pointer": 0.0,
+          "kind": 1.0,
+          "line_pointer": 1.0,
+          "query": 1.0,
+          "whole_tape": 0.009375
+        },
+        "raw_stop_count_histogram": {
+          "1": 8000
+        },
+        "rows": 8000
+      },
+      "updates": 1875
+    },
+    {
+      "epoch": 4,
+      "fit_losses": {
+        "binding_address": 5.742954434204101,
+        "event_entity_address": 3.523450102996826,
+        "identity": 1.0767571252822876,
+        "initial": 1.7927306898117066,
+        "initial_entity_address": 5.580489495849609,
+        "total": 17.716381970214844
+      },
+      "heldout": {
+        "exact": {
+          "amount": 8000,
+          "binding_pointer": 0,
+          "event_entity_pointer": 2610,
+          "identity": 333,
+          "initial": 1418,
+          "initial_entity_pointer": 0,
+          "kind": 8000,
+          "line_pointer": 8000,
+          "query": 8000,
+          "whole_tape": 65
+        },
+        "rates": {
+          "amount": 1.0,
+          "binding_pointer": 0.0,
+          "event_entity_pointer": 0.32625,
+          "identity": 0.041625,
+          "initial": 0.17725,
+          "initial_entity_pointer": 0.0,
+          "kind": 1.0,
+          "line_pointer": 1.0,
+          "query": 1.0,
+          "whole_tape": 0.008125
+        },
+        "raw_stop_count_histogram": {
+          "1": 8000
+        },
+        "rows": 8000
+      },
+      "updates": 2500
+    }
+  ],
+  "parameters": {
+    "base": 125081664,
+    "compiler": 20513138,
+    "complete_system": 145614843,
+    "headroom": 4385157,
+    "motor": 19206,
+    "reader": 835,
+    "trainable": 6306145
+  },
+  "parent": {
+    "checkpoint_sha256": "e5f87a1d5b22d24250a6aac6fb7c70b4a77dbdf01bd5f5c509020a3584dfa6f9",
+    "frozen_digest_after": "775b6cbe528b56471c6f5935f009f99c5029aa8e424e09ed06fe5105b75112f4",
+    "frozen_digest_before": "775b6cbe528b56471c6f5935f009f99c5029aa8e424e09ed06fe5105b75112f4",
+    "prefit": {
+      "exact": {
+        "amount": 8000,
+        "binding_pointer": 0,
+        "event_entity_pointer": 364,
+        "identity": 36,
+        "initial": 1404,
+        "initial_entity_pointer": 0,
+        "kind": 8000,
+        "line_pointer": 8000,
+        "query": 8000,
+        "whole_tape": 8
+      },
+      "rates": {
+        "amount": 1.0,
+        "binding_pointer": 0.0,
+        "event_entity_pointer": 0.0455,
+        "identity": 0.0045,
+        "initial": 0.1755,
+        "initial_entity_pointer": 0.0,
+        "kind": 1.0,
+        "line_pointer": 1.0,
+        "query": 1.0,
+        "whole_tape": 0.001
+      },
+      "raw_stop_count_histogram": {
+        "1": 8000
+      },
+      "rows": 8000
+    },
+    "prefit_gates": {
+      "amount_exact": true,
+      "kind_exact": true,
+      "line_pointer_exact": true,
+      "one_raw_stop": true,
+      "query_exact": true
+    },
+    "schema": "r12_sd_cst_byte_addressed_training_pilot_v1"
+  },
+  "partition": {
+    "fit_rows": 40000,
+    "heldout_rows": 8000,
+    "method": "sha256(row_id) ordering"
+  },
+  "schema": "r12_sd_cst_hierarchical_binding_training_pilot_report_v1",
+  "score_eligible": false,
+  "seed": 1443236527879375785,
+  "training": {
+    "batch_size": 64,
+    "elapsed_seconds": 185.15593004226685,
+    "epochs": 4,
+    "lr": 0.0003,
+    "parent_missing_keys": [
+      "bigram_embedding.weight",
+      "binding_queries",
+      "event_entity_queries",
+      "fingerprint_projection.weight",
+      "initial_entity_queries",
+      "logit_scale",
+      "permutations"
+    ],
+    "trainable_names": [
+      "bigram_embedding.weight",
+      "binding_queries",
+      "event_entity_queries",
+      "fingerprint_projection.weight",
+      "initial_entity_queries",
+      "logit_scale"
+    ],
+    "updates": 2500,
+    "warmup": 100
+  }
+}

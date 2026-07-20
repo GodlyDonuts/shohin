@@ -171,6 +171,14 @@ class HierarchicalBindingBusCompiler(BindingBusCompiler):
         ).amin(-1, keepdim=True)
         return valid_mask[:, None] & positions.ge(before + 1) & positions.lt(after)
 
+    def _binding_pointer_logits(
+        self,
+        memory: torch.Tensor,
+        valid_mask: torch.Tensor,
+        queries: torch.Tensor,
+    ) -> torch.Tensor:
+        return self._pointer_logits(memory, valid_mask, queries)
+
     def compile_program(
         self, ids: torch.Tensor, valid_mask: torch.Tensor,
     ) -> BindingBusOutput:
@@ -181,13 +189,13 @@ class HierarchicalBindingBusCompiler(BindingBusCompiler):
         line_slots = self.slot_norm(self.slot_encoder(line_slots))
         events = line_slots[:, 1:]
 
-        binding_pointer_logits = self._pointer_logits(
+        binding_pointer_logits = self._binding_pointer_logits(
             memory, valid_mask, self.binding_queries,
         )
-        initial_pointer_logits = self._pointer_logits(
+        initial_pointer_logits = self._binding_pointer_logits(
             memory, valid_mask, self.initial_entity_queries,
         )
-        event_pointer_logits = self._pointer_logits(
+        event_pointer_logits = self._binding_pointer_logits(
             memory, valid_mask, self.event_entity_queries,
         )
         line_mask = self._selected_line_mask(ids, valid_mask, line_pointer_logits)
@@ -226,3 +234,31 @@ class HierarchicalBindingBusCompiler(BindingBusCompiler):
             initial_entity_pointer_logits=initial_pointer_logits,
             event_entity_pointer_logits=event_pointer_logits,
         )
+
+
+class ProjectedHierarchicalBindingBusCompiler(HierarchicalBindingBusCompiler):
+    """Expose a binding-only nonlinear key space without changing the parent path."""
+
+    def __init__(self, **kwargs: int) -> None:
+        super().__init__(**kwargs)
+        self.binding_query_projection = nn.Linear(self.width, self.width, bias=False)
+        self.binding_key_adapter = nn.Sequential(
+            nn.Linear(self.width, self.width),
+            nn.GELU(),
+            nn.Linear(self.width, self.width, bias=False),
+        )
+
+    def _binding_pointer_logits(
+        self,
+        memory: torch.Tensor,
+        valid_mask: torch.Tensor,
+        queries: torch.Tensor,
+    ) -> torch.Tensor:
+        logits = torch.einsum(
+            "sw,blw->bsl",
+            self.binding_query_projection(queries),
+            self.binding_key_adapter(memory),
+        ) / math.sqrt(self.width)
+        return logits.masked_fill(
+            ~valid_mask[:, None], torch.finfo(logits.dtype).min,
+        ).float()

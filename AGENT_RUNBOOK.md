@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 06:08 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 06:20 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -178,11 +178,13 @@
 > binding bus. From-scratch job `693974` is rejected overall but proves declaration-to-initial
 > binding: both pointer sets and arbitrary initial state reach 8,000/8,000. Joint training regresses
 > the solved parent fields and event pointer remains zero; report SHA is `6a7d0ed9...`. The active
-> successor loads and freezes exact byte-compiler checkpoint `e5f87a1d...`, uses its model-owned
-> semantic line pointers to mask each event-name pointer to the selected newline-delimited line, and
-> trains only 6,306,145 binding parameters. Complete Shohin remains 145,614,843. Commit source/job
-> before its seed. Raw STOP/tape, frozen-parent identity, and zero scored access are mandatory. User
-> authority permits future systems below 200M, while this pilot retains its stricter 150M comparison
+> successor `693977` preserves every parent field/tensor and lifts event-span localization to
+> 32.625%, but frozen parent keys leave declaration/initial pointers at zero; report SHA is
+> `2b27cd79...`. The active projected pilot adds only a binding-specific 384-wide nonlinear key
+> adapter and query projection. The compiler is 20,955,890 parameters, 6,748,897 trainable; complete
+> Shohin is 146,057,595. Commit source/job before its seed. Raw STOP/tape, frozen-parent identity,
+> and zero scored access are mandatory. User authority permits future systems below 200M, while this
+> pilot retains its stricter 150M comparison
 > gate. Mechanics alone are not native reasoning.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
@@ -9272,3 +9274,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `e5f87a1d...`, uses its model-owned line pointer plus public newline syntax to bound each event-name
   pointer, and trains only new binding parameters. Fifty-two tests and static checks pass. Commit
   this source before drawing the one authorized training-only seed; no scored split is eligible.
+
+- **2026-07-20 06:08--06:20** -- **Frozen-parent hierarchy preserves extraction and narrows the
+  interface failure.** Job `693977` completes on H100 `evc22` in 3m42s from exact source `09934d9`,
+  seed `1443236527879375785`, and parent checkpoint `e5f87a1d...`. Prefit and final line/kind/amount/
+  query/one-STOP are all 8,000/8,000; frozen-parent digest is byte-identical. Model-selected line
+  masking lifts event-occurrence pointer to 2,610/8,000 = 32.625%, but declaration and initial
+  all-slot pointers remain zero through the parent's frozen key space. Initial/identity/whole tape
+  are 17.725%/4.1625%/0.8125%. Report/checkpoint SHA values are `2b27cd79...`/`040932bb...`; access
+  is `0/0`. Preregister one binding-only nonlinear key adapter/query projection while preserving the
+  entire parent path. Projected compiler/complete counts are 20,955,890/146,057,595; 6,748,897 are
+  trainable. Fifty-three tests pass. Freeze exact source before a new training-only seed.
