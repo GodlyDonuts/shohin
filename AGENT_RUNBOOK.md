@@ -289,7 +289,8 @@
 > complete path no longer calls either inherited global encoder. Three focused tests, all current
 > physical-bus tests, real-parent reconstruction, and a real consumed-row full backward pass are
 > clean; all ten declared tensors receive gradients and no excluded tensor does. Exact scientific
-> source is frozen at `6294ea90f8b9e308edde9cad4d4b276c729961ae` before seed. A pass only authorizes a separately
+> source is frozen at `6294ea90f8b9e308edde9cad4d4b276c729961ae` before seed. Post-push beacon
+> and sole scientific seed are `4564290739472553435`; no H100 output exists yet. A pass only authorizes a separately
 > committed fresh board; it is not reasoning evidence.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
@@ -9753,3 +9754,7 @@ STATE) and any step that changed. A future agent — maybe you after a context r
 - **2026-07-20 12:31** -- **Complete-local scientific source is frozen before seed.** Exact commit
   `6294ea90f8b9e308edde9cad4d4b276c729961ae` is pushed with architecture, pilot, three tests,
   Slurm job, preregistration, and ledgers. No seed, H100 job, output, or scored access exists yet.
+
+- **2026-07-20 12:34** -- **The complete-local seed is drawn after source push.** Raw beacon
+  `4564290739472553435` is already signed-safe and becomes the sole scientific seed unchanged.
+  Architecture, trainability, inputs, optimizer, and gates remain frozen; no output exists yet.

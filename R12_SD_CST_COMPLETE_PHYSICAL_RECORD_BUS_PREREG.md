@@ -5,7 +5,8 @@ consumed-training mechanics only
 
 **Source contract:** exact architecture, pilot, tests, job, preregistration, and
 ledger commit `6294ea90f8b9e308edde9cad4d4b276c729961ae`. No seed or output exists at
-this receipt.
+that receipt. After source push, raw 64-bit beacon and sole scientific seed are
+both `4564290739472553435` (already below `2^63`).
 
 **Parent compiler:** retained independent-assignment Physical-Record Write Bus,
 checkpoint SHA-256

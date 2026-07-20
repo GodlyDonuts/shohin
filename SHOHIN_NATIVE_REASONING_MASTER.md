@@ -219,9 +219,12 @@ complete system to 191,527,829 parameters. The program and query forwards pass
 with both inherited global encoders replaced by raising sentinels. Every new
 tensor receives finite gradient on a real consumed row and no excluded tensor
 does. Exact scientific source is frozen before seed at commit
-`6294ea90f8b9e308edde9cad4d4b276c729961ae`. This local-completion gate has not yet been seeded or run. It must pass
+`6294ea90f8b9e308edde9cad4d4b276c729961ae`. This local-completion gate is now seeded but has not run. It must pass
 consumed-training interface gates before any fresh board can be generated; a
 pass remains compiler mechanics, not reasoning.
+
+After source push, raw beacon and sole seed `4564290739472553435` were recorded
+unchanged because the value is below `2^63`. No output existed at that receipt.
 
 ---
 
