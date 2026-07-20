@@ -1,0 +1,34 @@
+{
+  "closed_board": "artifacts/r12/s9_occurrence_quotient_board_7563652620455132721",
+  "counts": {
+    "low_margin_old_exact": 0,
+    "low_margin_structured_exact": 2048,
+    "oracle_structured_exact": 2048,
+    "recoded_oracle_exact": 2048,
+    "recoded_within_width_cap": 2048,
+    "shuffled_exact": 0,
+    "uniform_valid": 0,
+    "wrong_child_exact": 0
+  },
+  "decision": "admit_s9_1_alpha_closed_mechanics",
+  "gates": {
+    "all_recoded_oracles_exact": true,
+    "all_recodes_within_width_cap": true,
+    "old_greedy_fails_low_margin_intervention": true,
+    "oracle_structured_all_exact": true,
+    "shuffled_roles_below_10pct_exact": true,
+    "structured_recovers_low_margin_intervention": true,
+    "syntax_has_multiple_local_choices": true,
+    "uniform_logits_zero_valid": true,
+    "wrong_child_never_semantically_repaired": true
+  },
+  "grammar_choice_lower_bound": {
+    "maximum_candidates": 123,
+    "median_candidates": 83,
+    "minimum_candidates": 55,
+    "regions": 17437
+  },
+  "rows": 2048,
+  "schema": "r12_s9_1_alpha_closed_cpu_falsifier_v1",
+  "seed": 917431867
+}
