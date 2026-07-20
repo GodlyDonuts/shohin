@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 15:51 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 15:53 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -175,8 +175,11 @@
 > 10,000/10,000; rotating card meanings leaves 1,508/10,000 exact final states. The confirmed
 > 192,129,179-parameter parent leaves at most 7,870,820 new parameters under an absolute
 > 199,999,999 cap. No neural source commit, board seed, training seed, H100 job, development score,
-> or confirmation access exists. Freeze/push exact CPU theory and mechanics before producing the
-> durable falsifier report, then implement the smallest parameter-audited neural adapter.
+> or confirmation access exists. Exact CPU source `5a03824d2adcaa11633c6b7fd77cebe73afbd99e`
+> produces the durable report from seed 1,729: all seven gates pass; report/episode-registration
+> SHA-256 are `90c5e6fe...`/`a3802185...`. Implement the smallest parameter-audited neural adapter;
+> do not draw a board or training seed before architecture, trainability, source-deletion, and
+> matched-control tests are frozen.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10075,3 +10078,11 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   7,870,820 new parameters above the confirmed 192,129,179 parent. This is CPU mechanics only: no
   neural source freeze, seed, board, GPU run, or score exists. Commit/push exact theory/mechanics,
   then rerun the durable CPU report from that source before neural implementation.
+
+- **2026-07-20 15:51--15:53** -- **ER-CST CPU mechanics pass from frozen source.** Exact commit
+  `5a03824d2adcaa11633c6b7fd77cebe73afbd99e` and fixed mechanics seed 1,729 produce a durable
+  10,000-episode report. All seven gates pass: witness inference, full execution/trajectory,
+  witness/opcode alpha rename, card-storage reindex, and post-HALT suffix are exact; card derangement
+  retains only 1,508/10,000 exact final states. Report/episode-registration SHA-256 are
+  `90c5e6fe...`/`a3802185...`. This admits only the neural adapter implementation under the remaining
+  7,870,820-parameter budget; no board, neural seed, GPU run, or score exists.

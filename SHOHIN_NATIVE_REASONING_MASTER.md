@@ -153,10 +153,13 @@ delete source, and compose cards recurrently. This tests episodic semantic bindi
 rather than another renderer paraphrase. Five CPU tests pass, and the 10,000-episode
 pre-freeze dry falsifier is exact on witness inference, execution, witness/opcode
 renaming, card storage order, and post-HALT invariance; rotating card meanings leaves
-15.08% exact final states. No neural source, board, seed, GPU run, or score exists.
-The complete design and gates are in `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md`.
+15.08% exact final states. Frozen source `5a03824...` reproduces the durable 10,000-
+episode report with all seven gates passing; report and episode-registration hashes
+begin `90c5e6fe`/`a3802185`. No neural source, board, seed, GPU run, or score exists.
+The complete design and gates are in `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md`; CPU
+evidence is in `R12_ER_CST_RULE_CARD_CPU_RESULT.md`.
 
-**Last updated:** 2026-07-20 15:51 EDT. User authority requires every future
+**Last updated:** 2026-07-20 15:53 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2670,6 +2673,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Closed the first fresh-board seed before byte write on inherited name reuse, repaired only global family re-keying under source `aa1c598`, and admitted the replacement 48,000/2,048/2,048 board with all 16 gates, byte-identical rebuilds, sealed confirmation, and `0/0` access. No training seed exists yet. |
 | 2026-07-20 | Independently confirmed SD-CST Complete Physical Fresh v1.3 on the sole 2,048-row sealed read: treatment is 100% exact on packets, every pointer, recurrent states, answers, joints, each unseen renderer, and every depth; family-deranged labels are 0% packet and 7.666% state/joint. All 19 scientific and four assessor gates pass with custody `1/1`. Promote checkpoint `a5888d88...` as a bounded fresh compiler/source-deleted executor baseline, not general reasoning. |
 | 2026-07-20 | Implemented ER-CST pre-freeze CPU mechanics: every problem defines fresh opaque `S_3` operations by determining witnesses, then requires rule-card compilation and recurrent composition. Five tests and a 10,000-episode dry falsifier pass all exact/invariance gates; card derangement drops final-state exactness to 15.08%. No neural source, board, seed, or score exists. |
+| 2026-07-20 | Froze ER-CST CPU source at `5a03824` and reproduced its durable 10,000-episode report: all seven mechanics/invariance gates pass, card derangement remains 15.08%, and report/registration hashes begin `90c5e6fe`/`a3802185`. Neural implementation is admitted under the remaining 7,870,820-parameter budget; no neural score exists. |
 
 ---
 
