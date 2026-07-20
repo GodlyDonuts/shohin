@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 05:06 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 05:18 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -165,9 +165,12 @@
 > confirmation is mode `0600`. Sole v1.1 job `693958` passed every input and hardware check and
 > completed atomic/compiler fitting, then its training-summary pass raised before checkpoint write
 > because at least one raw compiler row lacked exactly one STOP. Development and confirmation were
-> never opened; close v1.1 without rescore. Run one source-bound training-only diagnostic to measure
-> the raw STOP-count histogram, then preregister a fresh-board grammar-safe decoder repair. Mechanics
-> alone are not native reasoning.
+> never opened; close v1.1 without rescore. Training-only diagnostic `693960` reproduces the fit and
+> shows a full compiler collapse: all 48,000 rows emit zero STOPs, kind/whole-tape exactness is zero,
+> initial-state exactness is 16.946%, identity 0.031%, amount 0.762%, while isolated late-query
+> prediction is 100%. A one-STOP grammar decoder alone would conceal rather than solve this. Probe
+> per-cell/slot behavior on training data only, then replace the failed generic global-slot compiler
+> with a causally localized compiler before any fresh board. Mechanics alone are not native reasoning.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9209,3 +9212,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `train/diagnose_sd_cst_train_stop.py` is a training-only wrapper that preserves the frozen fit,
   cannot invoke a scored split, and records the raw STOP-count histogram without constructing a
   valid tape. Run it once on the consumed training split; its output is never score-eligible.
+
+- **2026-07-20 05:04--05:18** -- **The training-only diagnostic rejects the one-STOP-only repair.**
+  Job `693960` completes on `evc22` in 6m11s and reproduces exact motor/reader certificates plus the
+  frozen 3,000-update compiler fit. It reads only the consumed 48,000-row training split. Raw program
+  predictions contain zero STOPs in all 48,000 rows; exact initial/kind/identity/amount/whole-tape
+  rows are 8,134/0/15/366/0, while the separately compiled query is 48,000/48,000. Average compiler
+  losses remain near chance (`1.802/0.954/1.101/0.695`), versus query loss `0.183`. Diagnostic
+  checkpoint/report SHA values are `b25d6a45...`/`cb919a2a...`; they are never score-eligible and
+  development/confirmation access is `0/0`. This localizes failure to the generic program compiler,
+  not STOP validation or recurrent execution. Run the preregistered training-only per-slot probe;
+  do not advance a grammar-only decoder to a scored board.

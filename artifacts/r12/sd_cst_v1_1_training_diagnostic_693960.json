@@ -1,0 +1,67 @@
+{
+  "checkpoint_sha256": "b25d6a45c5e1b58713ab231e3ec32a544d80c88bcc81f2eb00f25035c9004d8b",
+  "compiler_fit": {
+    "batch_size": 64,
+    "charged_rows": 192000,
+    "elapsed_seconds": 291.2980606555939,
+    "epochs": 4,
+    "gradient_clip": 1.0,
+    "losses": {
+      "amount": 0.69463657528162,
+      "event_identity": 1.1008880132039387,
+      "event_kind": 0.9537556511561076,
+      "initial_state": 1.8015768393675486,
+      "late_query": 0.18286427702231337,
+      "total": 4.733721350987753
+    },
+    "objective": "initial_state + event_kind + non_STOP_identity + non_STOP_amount + separately_tokenized_late_query_position; no state, answer, trajectory, episode, development, or confirmation supervision",
+    "optimizer": {
+      "betas": [
+        0.9,
+        0.95
+      ],
+      "lr": 0.001,
+      "name": "AdamW",
+      "weight_decay": 0.01
+    },
+    "rows_per_epoch": 48000,
+    "schedule": {
+      "floor": 0.0,
+      "name": "warmup_cosine",
+      "updates": 3000,
+      "warmup": 100
+    },
+    "updates": 3000
+  },
+  "confirmation_accesses": 0,
+  "development_accesses": 0,
+  "job_id": 693960,
+  "motor_exact": true,
+  "reader_exact": true,
+  "schema": "r12_sd_cst_v1_1_training_only_stop_diagnostic_v1",
+  "score_eligible": false,
+  "train_compiler_metrics": {
+    "diagnostic_only": true,
+    "exact": {
+      "amount": 366,
+      "identity": 15,
+      "initial": 8134,
+      "kind": 0,
+      "query": 48000,
+      "whole_tape": 0
+    },
+    "exactly_one_stop": 0,
+    "rates": {
+      "amount": 0.007625,
+      "identity": 0.0003125,
+      "initial": 0.16945833333333332,
+      "kind": 0.0,
+      "query": 1.0,
+      "whole_tape": 0.0
+    },
+    "rows": 48000,
+    "unconstrained_stop_count_histogram": {
+      "0": 48000
+    }
+  }
+}

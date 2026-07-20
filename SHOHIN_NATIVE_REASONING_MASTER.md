@@ -23,7 +23,7 @@ passes 64/64 fresh exact fits on H100. No neural development score exists yet.
 Broad language-grounded,
 self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 05:06 EDT.
+**Last updated:** 2026-07-20 05:18 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -154,7 +154,16 @@ and H100 checks, completed all frozen fits, then failed before checkpoint write
 because raw independent event-kind argmaxes did not contain exactly one STOP for
 every training row. No scored split was opened. V1.1 is closed. A single
 training-only rerun may measure the STOP-count histogram; the next scored version
-must preregister a grammar-safe model-logit decoder and use a fresh board.
+must use a fresh board.
+
+Training-only diagnostic `693960` shows that a grammar decoder is insufficient:
+all 48,000 training rows emit zero STOPs, kind and whole-tape exactness are zero,
+initial-state exactness is 16.946%, identity is 0.031%, and amount is 0.762%; only
+the separately compiled late query reaches 100%. The generic global slot compiler
+therefore failed to localize and bind program fields. Forcing one STOP would hide
+this failure. The next architecture must localize source evidence and causally
+bind repeated arbitrary entities before source deletion; its first gate is a
+training-only per-slot diagnostic, not another scored board.
 
 This is not yet a reasoning result. It is an admitted, falsifiable integration
 experiment. A pass would establish bounded autonomous language-to-private-tape
