@@ -319,14 +319,16 @@
 > six-class token head while loading/fixing the exact v1 query path and physical event bus. Keep the
 > same data, schedule, gates, source deletion, and strict sub-200M ceiling.
 >
-> **Active v1.2 occurrence-head falsifier:** locally complete and unseeded. A local LayerNorm +
+> **Active v1.2 occurrence-head falsifier:** exact scientific source
+> `a32c881326eff4ea29ff7c4ee9482f8798894462` preceded raw beacon
+> `16320682315740454145` and sole signed-safe seed `7097310278885678337`. A local LayerNorm +
 > 384-to-1536 GELU + 1536-to-6 head emits six model logits at every declaration byte. It trains
 > exactly six tensors / 601,350 parameters while the old declaration queries are unused/frozen and
 > every successful query/event/executor path is reconstructed and frozen. Exact compiler/complete
 > size is 67,027,474 / **192,129,179**, leaving 7,870,821 below 200M. Twelve focused/inherited tests,
 > Ruff, `py_compile`, shell syntax, exact parent reconstruction, and a real consumed-family backward
-> pass are clean; all six declared tensors have gradients and no excluded tensor does. Freeze/push
-> source before deriving the sole seed, then submit one scoreless H100 run under unchanged gates.
+> pass are clean; all six declared tensors have gradients and no excluded tensor does. Build an
+> exact clean Newton capsule and submit one scoreless H100 run under unchanged gates.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional

@@ -1,6 +1,9 @@
 # R12 SD-CST Complete Physical-Record Front-End v1.2 Preregistration
 
-**Status:** source draft; no scientific seed, H100 job, or output exists
+**Status:** exact scientific source frozen and pushed before seed at commit
+`a32c881326eff4ea29ff7c4ee9482f8798894462`; no output existed at that
+receipt. Raw post-commit beacon `16320682315740454145` yields sole signed-safe
+seed `7097310278885678337` modulo `2^63`.
 
 **Claim class:** consumed-training occurrence-role repair only. This cannot
 establish fresh-language generalization, native reasoning, or Shohin promotion.

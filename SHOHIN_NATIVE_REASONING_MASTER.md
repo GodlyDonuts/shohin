@@ -275,7 +275,9 @@ training-only falsifier is a local nonlinear six-class token head, not a larger
 global encoder, deterministic grammar parser, or more v1.1 epochs. It remains
 conventional compiler mechanics under the strict sub-200M ceiling.
 
-The corresponding v1.2 falsifier is locally implemented and unseeded. It emits
+The corresponding v1.2 falsifier is frozen at exact scientific source
+`a32c881326eff4ea29ff7c4ee9482f8798894462` before raw beacon
+`16320682315740454145` and sole signed-safe seed `7097310278885678337`. It emits
 six occurrence-role logits per local byte through LayerNorm, a 384-to-1536 GELU
 projection, and a 1536-to-6 head. Exactly 601,350 new tensors train; the old
 declaration queries are unused/frozen, and the exact query, physical event bus,
