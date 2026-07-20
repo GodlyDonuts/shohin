@@ -240,14 +240,24 @@ Each episode has cardinality three through six and two to four fresh operations;
 complete opaque witnesses define arbitrary `N^N` copy relations, including
 non-bijective maps. The compiler must emit masked `N x N` relation tensors. A
 parameter-free source-deleted recurrent motor applies `S_next = R @ S` under
-persistent HALT. Six focused tests and a pre-freeze 10,000-episode falsifier pass
-all 13 mechanics gates. Every exact/invariance count is 10,000/10,000; 99.36% of
-episodes contain non-bijective relations; card derangement and equality ablation
-retain only 7.53% and 4.17% state. This is not yet neural evidence. No source
-commit, durable report, adapter, board seed, training seed, GPU run, or score
-exists. The exact hypothesis is `R12_ER_RELATION_TENSOR_TRANSPORT_THEORY.md`.
+persistent HALT. Frozen CPU source `0bf6d91` and its 10,000-episode report pass
+all 13 mechanics gates; report SHA begins `28e5acc2`. The admitted neural adapter
+uses 192,740,854 complete and 12,037,293 trainable parameters, with no learned
+motor/reader and 7,259,146 parameters of headroom below 200M. Production-board
+source `bd77c0f` precedes public seed `1209366536012979338`; the independently
+reproduced 48,000/2,048/2,048 board passes all 15 gates, has zero split overlap,
+100% non-bijective families, confirmation mode `0600`, and custody `0/0`.
+Train/development/confirmation/report hashes begin `1982aeb2`/`59be0c40`/
+`cac2515b`/`64ea4c0e`. The equal-budget treatment/family-deranged/equality-
+ablated fitter, raw-evidence evaluator, independent list-executor assessor, and
+single-H100 job are now locally qualified before source freeze. Twenty-five
+focused tests and a real confirmed-parent production-family backward pass are
+finite; all 110 trainable tensors receive gradient. No training seed, GPU run,
+development read, confirmation read, or neural score exists. The exact theory
+and score contract are `R12_ER_RELATION_TENSOR_TRANSPORT_THEORY.md` and
+`R12_ER_RELATION_TENSOR_SCORE_PREREG.md`.
 
-**Last updated:** 2026-07-20 18:50 EDT. User authority requires every future
+**Last updated:** 2026-07-20 20:25 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2781,6 +2791,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Locally admitted the ER-TT neural adapter before source freeze: 18 shuffled records, direct variable `6x6` initial/relation equality tensors, `N=3..6`, four rule slots, twelve updates plus HALT, and zero-parameter matrix motor/reader. The finite permutation buffer/class head and learned transition table are absent. Exact complete/trainable/headroom counts are 192,740,854/12,037,293/7,259,146. Actual confirmed-v1.1 reconstruction is byte-identical on every retained tensor; 16 focused tests and static checks pass. No board seed, training seed, GPU run, scored access, or neural score exists. |
 | 2026-07-20 | Qualified the seedless ER-TT board builder at full 48,000/2,048/2,048 scale. Independent public-byte parsing/execution agrees on every row; all 15 gates pass; `N=3..6` is exact-balanced; all 13,024 families contain non-bijective transport; source is within 610/640 and 96/144 byte limits; every split overlap is zero; and deranged/equality-ablated state is 8.170%/7.878%. Dry seed 104729 is barred from scoring. No scientific seed or board bytes exist until source is committed. |
 | 2026-07-20 | Admitted and independently reproduced the production ER-TT board from exact source `bd77c0f`, public beacon round 6305283, and seed `1209366536012979338`: 48,000/2,048/2,048 rows, all 15 gates, byte-identical rebuild, zero overlap, confirmation `0600`, custody `0/0`, exact-balanced cardinality, 100% non-bijective families, and 7.955%/8.162% deranged/equality-ablated state. No training seed or neural score exists. |
+| 2026-07-20 | Locally qualified the ER-TT score path before source freeze: three identical 3,000-update arms, strict variable-cardinality masks, source-only supervision, parameter-free source-deleted execution, five source invariances, four causal packet interventions, raw evidence, and an independent list-executor assessor. Twenty-five focused tests, static checks, and a real-parent production-family backward pass succeed; all 110 trainable tensors receive finite gradient. System size remains 192,740,854 with 7,259,146 headroom. Board custody remains `0/0`; no training seed or neural score exists. |
 
 ---
 

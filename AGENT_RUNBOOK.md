@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 18:50 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 20:25 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -281,9 +281,15 @@
 > twelve, and a zero-parameter torch tensor motor implementing `S_next = R @ S`. Six focused tests
 > pass. A 10,000-episode dry falsifier passes all 13 gates: all exact/invariance counts are
 > 10,000/10,000, 99.36% of episodes contain a non-bijective rule, deranged-card state is 7.53%, and
-> equality-ablated state is 4.17%. No ER-TT source commit, durable report, neural adapter, board seed,
-> training seed, GPU run, or scored access exists. Commit/push exact mechanics, then rerun the
-> durable CPU report from that source before neural implementation.
+> equality-ablated state is 4.17%. Frozen mechanics source/report, the 192,740,854-parameter
+> adapter, and the production board are now admitted. Board source `bd77c0f` precedes seed
+> `1209366536012979338`; all 15 board gates pass, all 13,024 families are non-bijective, and
+> train/development/confirmation/report hashes begin `1982aeb2`/`59be0c40`/`cac2515b`/`64ea4c0e`.
+> The equal-budget training path, raw-evidence evaluator, independent list-executor assessor,
+> source invariances, packet interventions, and one-H100 job are locally qualified. Twenty-five
+> focused tests and a real confirmed-parent production-family backward pass are finite; all 110
+> trainable tensors receive gradient. Custody remains `0/0`. Freeze/push the exact score source
+> before drawing one training seed; no ER-TT neural score exists.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10416,3 +10422,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   every 13,024 family is non-bijective, all split overlap is zero, source limits are 610/96 bytes,
   and deranged/equality-ablated state is 7.955%/8.162%. No training seed or neural score exists.
   Freeze the equal-budget trainer, raw-evidence evaluator, independent assessor, and job source next.
+
+- **2026-07-20 20:02--20:25** -- **The ER-TT score-bearing path is locally admitted before source
+  freeze or training-seed draw.** Three arms receive identical confirmed-parent reconstruction,
+  family order, 48,000 rows, and 3,000 updates. Family derangement swaps only relation labels within
+  matched cardinality/rule-count buckets; equality ablation changes only fixed-width after-witness
+  names while preserving every offset and target. Training contains no state, answer, trajectory,
+  development, or confirmation oracle. Hard packets execute after source deletion through the
+  zero-parameter relation motor/reader; invalid live references fail rather than repair. Raw
+  evidence covers every field/pointer/state/answer and an independent list executor recomputes
+  metrics plus relation/cardinality/reset/query interventions. Rule/physical storage reindex,
+  witness/opcode alpha rename, post-HALT suffix, and post-seal source poison are frozen controls.
+  Twenty-five focused tests, Ruff, byte compilation, shell syntax, and diff checks pass. A real
+  confirmed-parent production-family backward is finite and reaches all 110 trainable tensors.
+  Exact complete/trainable/headroom counts remain 192,740,854/12,037,293/7,259,146. Board access is
+  still `0/0`; no training seed, GPU job, or neural score exists. Freeze and push exact source next.

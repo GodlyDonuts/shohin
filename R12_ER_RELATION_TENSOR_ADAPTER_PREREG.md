@@ -2,8 +2,11 @@
 
 **Protocol:** `R12-ER-TT-v1-neural-adapter`
 
-**Status:** implementation and local qualification before source freeze. No
-scientific board seed, training seed, GPU run, or scored access exists.
+**Status:** adapter and production board admitted; score-bearing source is
+locally qualified before scientific source freeze. The fixed board remains at
+development/confirmation access `0/0`. No training seed, GPU run, or neural
+score exists. The immutable fit/evaluation contract is in
+`R12_ER_RELATION_TENSOR_SCORE_PREREG.md`.
 
 ## Scientific objective
 
