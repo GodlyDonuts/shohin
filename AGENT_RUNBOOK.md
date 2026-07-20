@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 22:57 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 23:06 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -128,7 +128,11 @@
 > training/evaluation compare every scientific runtime path with that source commit; evaluation
 > hash-binds base and tokenizer; all architecture/optimizer/arm settings are assessor-gated; and an
 > atomic read-only board-hash ledger consumes development before its bytes are opened. Commit exact
-> source before drawing independent fresh board/training seeds. A result below every one
+> source commit `38c934cf` now precedes independent board/training seeds
+> `3823077847356570601`/`1277007704479652588`. The admitted board contains
+> 48,000/2,048/2,048 train/development/sealed-confirmation rows, 52,096 executor agreements,
+> zero exact/13-gram/name overlap, access `0/0`, and report SHA `f22401e8...`. Neither scored split
+> has been opened after generation. A result below every one
 > of 43 frozen gates closes S9.2 without rescoring or opening confirmation. Even a pass is only a
 > bounded compiler result; the causal grammar firewall remains the next independent generalization
 > test.
@@ -9084,3 +9088,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   full architecture/optimizer/arm assertions. Forty-five integrated custody/mechanics/regression
   tests pass.
   No fresh board seed, model fit, development score, or confirmation access exists yet.
+
+- **2026-07-19 22:57--23:06** -- **The sole fresh S9.2 board is frozen after scientific source
+  commit `38c934c`.** Independent board/training seeds are `3823077847356570601` and
+  `1277007704479652588`. The admitted board contains 48,000 graph-only train, 2,048 development,
+  2,048 sealed confirmation, and 23 generator rows. All 52,096 executor/noncanonical-storage audits
+  pass; exact prompt, 13-gram, and split-name overlap are zero; original/recoded maxima are 453/452
+  under the 512-token cap; 9,345 recodes change token width; training contains no state or answer;
+  access is `0/0`. Report/train/development/sealed-confirmation SHA values begin
+  `f22401e8...`/`1b7e9029...`/`a186df62...`/`84be3808...`. The first generator invocation had an
+  incorrect expanded commit hash and failed inside the clean-HEAD guard before creating any file;
+  the frozen seed was first consumed by the successful build. Commit the receipt/report, sync exact
+  bytes, and submit one serial H100 development job. Do not open confirmation unless all 43 gates pass.

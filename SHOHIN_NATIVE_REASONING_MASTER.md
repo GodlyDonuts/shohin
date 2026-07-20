@@ -17,9 +17,10 @@ invalidates one graph and changes two canonical graphs despite preserving all
 2,024 mutually valid states/answers. Broad language-grounded, self-directed
 reasoning is not yet established. S9.1 is permanently closed with confirmation
 sealed. S9.2 global anchor closure has now passed all 17 pre-board CPU gates and
-is ready for exact-source freeze; it has no fresh board seed or neural score.
+is source-frozen at `38c934c` with an admitted fresh board; it has no neural
+score.
 
-**Last updated:** 2026-07-19 22:57 EDT.
+**Last updated:** 2026-07-19 23:06 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -1568,6 +1569,18 @@ argument reversal, and removal of explicit ontology words. Only that stage can
 begin separating semantic language-to-machine grounding from mastery of the
 current synthetic grammar.
 
+Scientific source commit `38c934cf9f360e1fd13258c23be310e948cafba1`
+precedes independent board/training seeds `3823077847356570601` and
+`1277007704479652588`. The admitted board has 48,000 graph-only training,
+2,048 development, 2,048 sealed confirmation, and 23 generator rows. All
+52,096 executor and noncanonical-storage audits pass; exact prompt, 13-gram,
+and split-name overlap are zero; operation recoding changes token width on
+9,345 rows while staying within 452 tokens; and scored access remains `0/0`.
+Report/train/development/sealed SHA-256 values begin
+`f22401e8`/`1b7e9029`/`a186df62`/`84be3808`. Neither scored split was opened
+after generation. The sole H100 development run must use exact hash-matched
+bytes and consume the one-use access ledger before evaluation.
+
 ---
 
 ## 10. Template For A New Theory
@@ -1902,6 +1915,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Rejected S9.1 before confirmation at 2,025/2,048 = 98.877% exact graph/state/answer versus 86.230% no-class and zero shuffled/source-free/uniform. Every emitted graph is exact; the only base-board residual is 23 invalid/abstaining parses. Operation recoding preserves all 2,024 mutually valid states/answers but invalidates one graph and changes two canonical graphs, so 29/31 frozen gates pass and confirmation remains sealed. Activated fresh-board S9.2 global anchor closure as the only admissible repair. |
 | 2026-07-19 | Admitted S9.2 Global Anchor Closure mechanics after 17/17 CPU gates. The zero-parameter one-shot Viterbi root decoder is target/metadata/compiler/executor/retry blind; oracle/recode are 2,048/2,048 exact, adversarial wrong roots/counts remain wrong, every row has hundreds of feasible assignments, and 10,000 exhaustive reduced cases agree. Froze a five-arm, 43-gate, 134,580,264-parameter fresh-board contract; no new seed or neural score yet. |
 | 2026-07-19 | Closed the final S9.2 custody audit before seed draw: added clean-HEAD board binding, exact committed-runtime/base/tokenizer verification, full architecture/optimizer/arm assertions, and an atomic read-only board-hash development ledger. Expanded integrated tests pass 45/45; no decoder leakage or semantic retry was found. |
+| 2026-07-19 | Froze S9.2 source at `38c934c`, then drew independent board/training seeds `3823077847356570601`/`1277007704479652588`. Admitted a 48,000/2,048/2,048 board with 52,096 executor agreements, zero split overlap, and access `0/0`; report SHA begins `f22401e8`. No neural score or confirmation access exists. |
 | 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 

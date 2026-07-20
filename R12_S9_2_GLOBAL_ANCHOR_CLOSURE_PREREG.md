@@ -1,6 +1,6 @@
 # R12 S9.2 Global Anchor Closure Preregistration
 
-**Status:** CPU mechanics admitted; no fresh board seed or neural score access
+**Status:** CPU mechanics and fresh board admitted; no neural score access
 
 **Parent:** S9.1 is closed at 2,025/2,048 = 98.877% exact graph, state,
 and answer. All 2,025 emitted graphs are exact. Its 23 failed rows retain no
@@ -152,6 +152,15 @@ controls are 0/2,048, every wrong high-margin root/count intervention is
 followed without repair, and 10,000/10,000 reduced exhaustive cases match the
 Viterbi result. Report SHA-256 is
 `91d653c7e2a131ad7e21319dd72a52dee95c00520fbd59771fe5f7a08fe52e24`.
+
+Scientific source commit
+`38c934cf9f360e1fd13258c23be310e948cafba1` precedes fresh board seed
+`3823077847356570601` and independent training seed `1277007704479652588`.
+The admitted board has 48,000/2,048/2,048 train/development/sealed-confirmation
+rows, 52,096 executor agreements, zero exact/13-gram/name overlap, and access
+`0/0`. Report SHA-256 is
+`f22401e82690f8240abe89d6083e3a387619243bc68bb9d9e380540d90b1899e`.
+The development and confirmation files remain unopened after generation.
 
 ## Sole fresh-development gates
 
