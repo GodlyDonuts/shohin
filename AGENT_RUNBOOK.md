@@ -297,15 +297,18 @@
 > same consumed-row absolute gates under a new source commit and seed. Every complete system remains
 > strictly below 200M; this repair is not reasoning evidence.
 >
-> **Active declaration-key repair v1.1:** source is locally complete but not yet seeded. It loads
+> **Active declaration-key repair v1.1:** exact scientific source is frozen at
+> `b93b17b3ee5c096509cd1ab0d903ef7a9287d3a3` before output. Raw post-commit beacon
+> `14330060956843215829` gives sole signed-safe seed `5106688919988440021`. It loads
 > complete-local v1 checkpoint SHA `30b75305...`, preserves only its exact eight-tensor query path,
 > reconstructs the retained independent physical bus, resets the two failed declaration tensors,
 > and adds one bias-free 384x384 declaration-key projection. Exactly three tensors / 297,216
 > parameters train; compiler/complete size is 66,573,580 / **191,675,285**, leaving 8,324,715 below
 > 200M. Twelve focused/inherited tests, Ruff, `py_compile`, shell syntax, exact three-parent
 > reconstruction, and a real consumed-family backward pass are clean; every declared tensor has
-> nonzero gradient and no excluded tensor does. Freeze and push the exact source before deriving the
-> sole seed. A pass remains scoreless compiler mechanics and only authorizes a fresh board.
+> nonzero gradient and no excluded tensor does. Sync the exact execution receipt, hash-verify all
+> inputs, and submit one isolated H100 run. A pass remains scoreless compiler mechanics and only
+> authorizes a fresh board.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional

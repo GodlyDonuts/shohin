@@ -239,7 +239,9 @@ physical event bus, resets the failed declaration queries/projection, and adds
 one declaration-local key projection under a separate contract. Full evidence
 is in `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_RESULT.md`.
 
-That v1.1 repair is now implemented locally under an unseeded source contract.
+That v1.1 repair is frozen before output at exact scientific source
+`b93b17b3ee5c096509cd1ab0d903ef7a9287d3a3`. Raw post-commit beacon
+`14330060956843215829` yields sole signed-safe seed `5106688919988440021`.
 It trains only the six-query table, declaration-query projection, and a new
 bias-free 384 by 384 declaration-key projection: 297,216 parameters. The query
 endpoint, physical bus, parent, executor, motor, reader, and Shohin trunk remain
