@@ -7,6 +7,7 @@ from build_er_cst_fresh_board import (
     CONFIRMATION_SPLIT,
     DEVELOPMENT_SPLIT,
     TRAIN_SPLIT,
+    _opaque,
     build_board,
     sha256_bytes,
     write_board,
@@ -68,3 +69,20 @@ def test_board_writer_hashes_and_seals_confirmation(tmp_path: Path) -> None:
         payload = (output / filename).read_bytes()
         assert value["files"][filename]["sha256"] == sha256_bytes(payload)
     assert (output / "confirmation.jsonl").stat().st_mode & 0o777 == 0o600
+
+
+def test_opaque_name_bijection_is_unique_at_full_scale() -> None:
+    values = set()
+    counts = {
+        TRAIN_SPLIT: 12_000,
+        DEVELOPMENT_SPLIT: 512,
+        CONFIRMATION_SPLIT: 512,
+    }
+    for split, families in counts.items():
+        for family in range(families):
+            for kind, slots in (("e", 3), ("o", 3), ("w", 9)):
+                for slot in range(slots):
+                    name = _opaque(998_877, split, family, kind, slot)
+                    assert name not in values
+                    values.add(name)
+    assert len(values) == sum(counts.values()) * 15

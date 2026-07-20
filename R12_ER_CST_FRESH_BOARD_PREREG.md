@@ -2,9 +2,10 @@
 
 **Protocol:** `R12-ER-CST-v1.2`
 
-**Status:** builder and audits locally admitted before source freeze. No scientific
-board seed, board bytes, training seed, H100 job, output, development access, or
-confirmation access exists.
+**Status:** v1 closed before byte write on full-scale opaque-name collisions. V1.1
+changes only name allocation to a seed-keyed bijection. No admitted board, board
+bytes, training seed, H100 job, output, development access, or confirmation access
+exists.
 
 ## 1. Purpose
 

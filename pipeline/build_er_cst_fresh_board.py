@@ -26,7 +26,7 @@ from er_cst_rule_cards import (
 )
 
 
-BOARD_SCHEMA = "r12_er_cst_fresh_board_report_v1"
+BOARD_SCHEMA = "r12_er_cst_fresh_board_report_v1_1"
 ROW_SCHEMA = "r12_er_cst_fresh_row_v1"
 PROTOCOL = "R12-ER-CST-v1.2"
 TRAIN_SPLIT = "er_cst_train"
@@ -65,10 +65,20 @@ def _derived_int(*parts: object) -> int:
 def _opaque(seed: int, split: str, family: int, kind: str, slot: int) -> str:
     if kind not in {"e", "w", "o", "x"}:
         raise ValueError("ER-CST opaque-name kind differs")
-    digest = hashlib.sha256(
-        f"{seed}:{split}:{family}:{kind}:{slot}".encode("utf-8")
-    ).hexdigest()
-    return f"{kind}{digest[:8]}"
+    split_id = {
+        TRAIN_SPLIT: 0,
+        DEVELOPMENT_SPLIT: 1,
+        CONFIRMATION_SPLIT: 2,
+    }.get(split)
+    if split_id is None or family < 0:
+        raise ValueError("ER-CST opaque-name location differs")
+    offsets = {"e": 0, "o": 3, "w": 6, "x": 24}
+    limits = {"e": 3, "o": 3, "w": 9, "x": 8}
+    if slot not in range(limits[kind]):
+        raise ValueError("ER-CST opaque-name slot differs")
+    identity = split_id * 1_000_000 + family * 32 + offsets[kind] + slot
+    mask = _derived_int(seed, "opaque-name-bijection") & 0xFFFFFFFF
+    return f"{kind}{identity ^ mask:08x}"
 
 
 def _family_id(seed: int, split: str, index: int) -> str:
