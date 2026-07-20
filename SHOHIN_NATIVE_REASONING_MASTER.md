@@ -1489,7 +1489,7 @@ links, deranged cards, one witness, reset, and early nil collapse state to
 Class and relation-storage reindexing are exact on all valid graphs. Operation
 recoding is valid on 2,024/2,025 originally valid rows, preserves state/answer
 on 2,024/2,024 mutually valid rows, but preserves bit-identical canonical
-graphs on only 2,022/2,024. Twenty-seven of 30 frozen gates pass; the
+graphs on only 2,022/2,024. Twenty-nine of 31 frozen gates pass; the
 graph-level alpha requirements are not relaxed. Assessment `727c913d...`
 records rejection before confirmation, which remains sealed. The complete
 system remains 134,580,264 parameters. The measured successor is fresh-board
@@ -1830,7 +1830,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Archived and reviewed two frontier nominal-machine proposals. Adopted renaming-orbit supervision and syntax-only structured assignment for S9.1, but rejected byte-width failure as the current diagnosis: all 229,588 original-plus-recoded development gold spans fit widths one through three under the existing width-four cap. Deferred aliases, rule cards, agenda control, and causal realization until S9.1 confirmation. |
 | 2026-07-19 | Refreshed the self-contained appendix with the complete S7 confirmation, S8/S8.1 graph evidence, and S9 occurrence-quotient CPU/development records; updated the frontier to treat S9 as a near-pass requiring fresh operation-equivariant repair. |
 | 2026-07-19 | Froze S9.1 alpha-closed source at `863a210`, passed all nine 2,048-row mechanics gates, generated fresh board/training seeds `1370124171784245712`/`8076551815802451212`, hash-matched exact Newton bytes, and launched sole development job `693793` on `evc47`; confirmation remains sealed. |
-| 2026-07-19 | Rejected S9.1 before confirmation at 2,025/2,048 = 98.877% exact graph/state/answer versus 86.230% no-class and zero shuffled/source-free/uniform. Every emitted graph is exact; the only base-board residual is 23 invalid/abstaining parses. Operation recoding preserves all 2,024 mutually valid states/answers but invalidates one graph and changes two canonical graphs, so 27/30 frozen gates pass and confirmation remains sealed. Activated fresh-board S9.2 global anchor closure as the only admissible repair. |
+| 2026-07-19 | Rejected S9.1 before confirmation at 2,025/2,048 = 98.877% exact graph/state/answer versus 86.230% no-class and zero shuffled/source-free/uniform. Every emitted graph is exact; the only base-board residual is 23 invalid/abstaining parses. Operation recoding preserves all 2,024 mutually valid states/answers but invalidates one graph and changes two canonical graphs, so 29/31 frozen gates pass and confirmation remains sealed. Activated fresh-board S9.2 global anchor closure as the only admissible repair. |
 | 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 

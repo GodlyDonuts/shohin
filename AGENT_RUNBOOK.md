@@ -103,7 +103,7 @@
 > selection. Causal reversed-link/card/witness/reset/early-nil controls collapse state to
 > 8.838%/0.977%/3.857%/2.832%/3.760%. Operation recoding preserves state/answer on 2,024/2,024
 > mutually valid rows but only 2,022/2,024 canonical graphs are bit-identical and one originally
-> valid graph becomes invalid; therefore 27/30 gates pass and no threshold is relaxed. Checkpoint,
+> valid graph becomes invalid; therefore 29/31 gates pass and no threshold is relaxed. Checkpoint,
 > evaluation, and assessment SHA-256 begin `0c040398...`/`e0d77a32...`/`727c913d...`; local and
 > Newton copies match; development/confirmation access is `1/0`. Never rescore this board or open
 > confirmation. The only admitted next hypothesis is a fresh-board S9.2 global-anchor closure test:
@@ -9037,7 +9037,7 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   anchor closure is now the measured bottleneck. Reversed links, deranged cards, one witness, reset,
   and early nil collapse state to 8.838%, 0.977%, 3.857%, 2.832%, and 3.760%. Class/relation reindex
   is exact. Operation recoding keeps state/answer identical on 2,024/2,024 mutually valid rows, but
-  one original graph becomes invalid and two canonical graphs differ. Twenty-seven of 30 gates pass;
+  one original graph becomes invalid and two canonical graphs differ. Twenty-nine of 31 gates pass;
   confirmation remains unopened and the board is permanently closed. Preserve this as the strongest
   bounded fresh-development baseline and require a new theorem/falsifier/fresh board for S9.2 global
   anchor closure; do not widen the transformer or add arithmetic supervision as a substitute.

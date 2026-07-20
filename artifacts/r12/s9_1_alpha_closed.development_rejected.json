@@ -7,9 +7,10 @@
   "evaluation_sha256": "e0d77a32cbab9276e0cbc048a08f698594eca1fa4d98ff912c56ef33dbfcfa5c",
   "failed_gates": [
     "operation_nonce_all_valid_eligible",
-    "operation_nonce_graph_bit_identical",
-    "operation_nonce_state_and_answer_are_exact_but_do_not_relax_graph_gate"
+    "operation_nonce_graph_bit_identical"
   ],
+  "gate_count": 31,
+  "gate_pass_count": 29,
   "graph": {
     "no_class_exact": 1766,
     "shuffled_exact": 0,

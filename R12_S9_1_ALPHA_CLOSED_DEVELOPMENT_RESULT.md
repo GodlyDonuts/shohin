@@ -88,8 +88,8 @@ The shuffled arm retained only 15.708% positive accuracy.
 
 ## Decision and next theory
 
-Twenty-seven of 30 frozen gates pass. The three failures are operation-recode
-eligibility, canonical graph identity, and the consequent all-gates decision.
+Twenty-nine of 31 frozen gates pass. The two failures are operation-recode
+all-valid eligibility and canonical graph identity.
 Confirmation remains sealed and this board must never be rescored.
 
 The admissible S9.2 hypothesis is **global anchor closure**, not more arithmetic
