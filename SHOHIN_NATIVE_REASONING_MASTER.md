@@ -30,12 +30,16 @@ the generic residual fails to drive frozen line/kind/amount/event heads. This
 rejects generic residual translation. A 7,103,493-parameter renderer-native
 decoder then also reaches 0% lines/events/packets on fit renderers when orbit
 memory is frozen, while preserving successful interfaces exactly. This closes
-head-only repair and localizes the conventional control to joint memory/decoder
-co-adaptation under the unchanged 179,826,564 total-parameter count.
+head-only repair. The final favorable conventional control jointly trains the
+32,782,853-parameter renderer memory and decoder at 179,826,564 complete
+parameters, yet still reaches 0% line/event pointers and packets on every fit
+and held-out renderer. This closes ordinary joint co-adaptation under the frozen
+contract and requires an implementation/credit-assignment audit before any
+distinct mechanism is admitted.
 V2 custody is `1/0`, its confirmation is sealed, and no board will be rescored.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 10:38 EDT. User authority requires every future
+**Last updated:** 2026-07-20 10:59 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -106,6 +110,21 @@ only shared orbit memory and the native decoder, under the unchanged
 
 Full frozen evidence is in `R12_SD_CST_RENDERER_ORBIT_QUERY_BUS_RESULT.md`.
 The decoder result is in `R12_SD_CST_RENDERER_NATIVE_PROGRAM_RESULT.md`.
+
+The final ordinary joint control is also closed. Exact source
+`102ab3f5172e9a6c86d1045d61c0e1ce66f159e2`, seed `6795424534800881443`, and
+job `694099` train the eight-layer orbit memory plus native decoder for the
+fixed 3,000 updates. Complete/trainable sizes are 179,826,564/32,782,853.
+Every fit and held-out renderer remains at 0% complete-record exact line
+pointer, event pointer, tape, and packet; minimum held-out complete-record
+kind/identity/amount are
+0.300%/0.150%/1.450%. Initial/query/binding paths remain exact, the frozen
+excluded state is byte-identical, and scored access is `0/0`. Eight of fifteen
+gates pass. Checkpoint/report SHA-256 values begin `4b842e4c...`/`cefb33e8...`.
+This rejects ordinary joint memory/head co-adaptation under the declared
+objective, not all sub-200M architectures. A mechanics audit must precede any
+new contract. Full evidence is in
+`R12_SD_CST_RENDERER_NATIVE_JOINT_RESULT.md`.
 
 ---
 

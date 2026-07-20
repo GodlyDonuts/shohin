@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 10:45 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 10:59 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -243,15 +243,17 @@
 > decoder while every successful motor/projection/executor remains frozen and preservation losses
 > stay active. Complete size remains 179,826,564 below 200M.
 >
-> **Active training-only conventional control:** joint renderer memory plus native decoder is
-> implemented and preregistered before source freeze or seed. It unfreezes exactly the byte/position
-> embeddings, eight-layer orbit encoder, orbit norm, and 35 native decoder tensors: 135 names /
-> 32,782,853 trainable parameters. Residual projection/scale, query motors, binding machinery, tape,
-> executor, motor, reader, and trunk remain frozen. Complete size/headroom stay 179,826,564 /
-> 20,173,436. An exact loaded-parent consumed-row backward pass has finite encoder/decoder gradients,
-> no ordinal-head gradient, and a bound frozen digest. Twenty-six focused/current tests and static
-> checks pass. This is still an ordinary joint parser control and cannot support a novelty or
-> reasoning claim. Freeze exact source, draw one seed, and close on the registered two-epoch result.
+> **Joint renderer-memory/native-decoder control is closed and rejected.** Exact source
+> `102ab3f5172e9a6c86d1045d61c0e1ce66f159e2`, seed `6795424534800881443`, and sole job `694099`
+> complete 3,000 updates on H100 `evc36` in 6m47s. Exact complete/trainable parameters are
+> 179,826,564/32,782,853 with 20,173,436 headroom. Every fit and held-out renderer has 0% exact
+> line pointer, event pointer, tape, and packet. Minimum held-out kind/identity/amount are only
+> 0.300%/0.150%/1.450%; final event support is 20.819%. Initial, declaration/initial pointer, query,
+> and query pointer remain 100%, and the excluded-state digest is byte-identical. Eight of fifteen
+> gates pass; decision is `reject_or_revise_renderer_native_joint_control`. Checkpoint/report SHA
+> values are `4b842e4c...`/`cefb33e8...`; exact local copies match Newton; access is `0/0`. Do not add
+> layers, parameters, or epochs to this contract. Audit batching, gradients, and objective mechanics
+> before choosing a distinct successor; no current development or sealed confirmation may be read.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9611,3 +9613,19 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   orbit is not a fresh score; a pass retains only a favorable conventional parser baseline, while a
   failure closes joint co-adaptation without more layers, parameters, or epochs. Freeze exact source
   before one post-commit seed; development and confirmation remain unreachable.
+
+- **2026-07-20 10:45--10:59** -- **The last conventional joint compiler control completes and is
+  rejected even on its fit renderers.** Exact source
+  `102ab3f5172e9a6c86d1045d61c0e1ce66f159e2` and post-commit seed
+  `6795424534800881443` pass source/data/checkpoint/parameter/Slurm preflight. Sole job `694099`
+  runs on H100 `evc36`, completes the fixed two epochs / 3,000 updates in 6m47s, and writes
+  artifacts atomically. Complete/trainable parameters are 179,826,564/32,782,853. All four fit and
+  all four held-out renderers have zero exact line pointer, event pointer, tape, and packet.
+  Minimum held-out kind/identity/amount are 0.300%/0.150%/1.450%; event support ends at 20.819%.
+  The successful initial/query/declaration/initial-occurrence paths remain 100%, frozen excluded
+  state is identical, and access is `0/0`. Eight of fifteen gates pass. Decision is
+  `reject_or_revise_renderer_native_joint_control`; no extension is permitted. Checkpoint/report
+  SHA-256 values are `4b842e4c2d0d608c32f0fd113b404866be7269676084cdac9b1a00d43cdd298d` /
+  `cefb33e81d42b69b8e088e0ea79926c4557ecca79db3731efa83b44241d6f7ff`; local copies hash-match
+  Newton. Audit implementation and credit assignment before preregistering a genuinely distinct
+  successor. Development and confirmation remain untouched.

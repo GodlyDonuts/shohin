@@ -1,7 +1,12 @@
 # R12 SD-CST Joint Renderer-Memory Program Decoder Preregistration
 
-**Status:** implemented and locally audited before source freeze, seed, H100
-fit, or scored access
+**Status:** closed and rejected by the sole valid training-only H100 run; no
+scored split was opened
+
+**Result:** exact source `102ab3f5172e9a6c86d1045d61c0e1ce66f159e2`,
+seed `6795424534800881443`, and job `694099` completed the frozen 3,000-update
+contract on H100 `evc36`. Fit and held-out line pointers, event pointers, tapes,
+and packets are all 0%. See `R12_SD_CST_RENDERER_NATIVE_JOINT_RESULT.md`.
 
 **Parent:** exact rejected Renderer-Orbit v1.2 checkpoint
 
