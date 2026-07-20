@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 04:16 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 04:30 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -148,8 +148,8 @@
 > private categorical tape, tied recurrent update, internal halt, query readout, and causal
 > state/suffix/query swaps under a strict sub-150M budget.
 >
-> **Active experiment before source freeze:** Source-Deleted Categorical State Transport (SD-CST)
-> is locally complete and unscored. The frozen 300k trunk plus a 9,205,009-parameter compiler,
+> **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) source is frozen at
+> commit `0e1e7a80c7b34c52cbb695681bab957b134453ef`. The frozen 300k trunk plus a 9,205,009-parameter compiler,
 > 19,206-parameter tied categorical motor, and 835-parameter reader totals exactly 134,306,714
 > parameters. Program compilation emits one initial state and eight hard event slots containing
 > seven operations plus one model-predicted STOP; source tensors/logits are deleted before eight
@@ -159,10 +159,13 @@
 > tests, Ruff, `py_compile`, shell syntax, and the actual protected-checkpoint parameter smoke pass.
 > A gate config now hash-binds board/checkpoint/architecture/assessor, all thresholds and controls,
 > registered row IDs/depths, and the deterministic exclusive-access ledger before development opens.
-> No neural checkpoint, development score, board seed, training seed, or confirmation access exists
-> yet. Commit these exact bytes, draw one fresh board/training seed, build once from clean HEAD, sync
-> hash-matched inputs to Newton, and run one serial H100 development experiment. Never describe the
-> mechanics result as native reasoning and never open confirmation unless every frozen gate passes.
+> Fresh board/training seeds are `2741775784141707523` / `7026924755428542396`. The admitted board
+> has 48,000/2,304/2,304 rows; report/train/development/sealed-confirmation SHA-256 values are
+> `b607b88a...`/`61f0a4cc...`/`a13ec5e4...`/`c83d65a3...`; access is `0/0` and confirmation is mode
+> `0600`. Exact local/Newton bytes match. Sole job `693954` is RUNNING on `evc36`; it passed the
+> H100/bf16 preflight and began the frozen train path. Do not submit another run, patch this board,
+> or open confirmation. If development fails any gate, close the board permanently. Never describe
+> mechanics alone as native reasoning.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9159,3 +9162,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   parameter composition, and custody. Gate configuration occurs before development and binds the
   deterministic exclusive-access ledger hash, closing replay. No board/training seed is frozen and
   no development or confirmation byte has been opened. Commit exact source before drawing seeds.
+
+- **2026-07-20 04:16--04:30** -- **SD-CST source/board are frozen and the sole H100 run starts.**
+  Scientific source commit `0e1e7a8` was pushed before independent board/training seeds
+  `2741775784141707523` / `7026924755428542396` were drawn. The clean-HEAD board contains
+  48,000 compiler-only train rows plus 2,304 development and 2,304 sealed-confirmation rows; all 22
+  gates pass. Report/train/development/confirmation SHA-256 values begin `b607b88a...`,
+  `61f0a4cc...`, `a13ec5e4...`, and `c83d65a3...`; confirmation is mode `0600` and access `0/0`.
+  A minimal shallow Git source capsule preserves the exact original commit and all score-bearing
+  blobs on Newton; source manifest checks and every data/base/tokenizer hash match. `sbatch
+  --test-only` reserved `evc36`; sole job `693954` is RUNNING there with one H100/four CPUs and has
+  passed CUDA/bf16 preflight. It is presently tokenizing the frozen train board before GPU fit.

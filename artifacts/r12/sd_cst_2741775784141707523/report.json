@@ -1,0 +1,543 @@
+{
+  "all_gates_pass": true,
+  "answer_balance": {
+    "sd_cst_confirmation": {
+      "binding_recode": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "canonical": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "order_counterfactual": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "paraphrase": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "post_halt_suffix": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "query_swap": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "stop_shift": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "storage_order_shuffle": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      }
+    },
+    "sd_cst_development": {
+      "binding_recode": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "canonical": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "order_counterfactual": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "paraphrase": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "post_halt_suffix": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "query_swap": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "stop_shift": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "storage_order_shuffle": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      }
+    }
+  },
+  "claim_boundary": "Board mechanics only. Training labels are compiler fields; no neural or native-reasoning claim is implied.",
+  "confirmation_accesses": 0,
+  "cross_split_overlap_counts": {
+    "grams": {
+      "sd_cst_development__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_development": 0
+    },
+    "names": {
+      "sd_cst_development__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_development": 0
+    },
+    "prompts": {
+      "sd_cst_development__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_development": 0
+    },
+    "sequences": {
+      "sd_cst_development__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_development": 0
+    },
+    "templates": {
+      "sd_cst_development__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_development": 0
+    }
+  },
+  "development_registration": {
+    "depth_counts": {
+      "1": 384,
+      "2": 384,
+      "3": 384,
+      "4": 384,
+      "5": 384,
+      "6": 384
+    },
+    "family_count": 288,
+    "family_size": 8,
+    "protocol": "r12_sd_cst_v1",
+    "row_count": 2304,
+    "row_ids_sha256": "4af24d49c4aaa4c46714f84d44784784a6e4192c3720f1e6aed2fdd360cb54c5",
+    "variants": [
+      "canonical",
+      "query_swap",
+      "paraphrase",
+      "binding_recode",
+      "order_counterfactual",
+      "stop_shift",
+      "storage_order_shuffle",
+      "post_halt_suffix"
+    ]
+  },
+  "family_size": 8,
+  "files": {
+    "confirmation.sealed.jsonl": {
+      "bytes": 8767722,
+      "sha256": "c83d65a3f5917923a7a0a96951c72bd1f2959021a4a963947c4c6a1089012d0c"
+    },
+    "development.jsonl": {
+      "bytes": 8772312,
+      "sha256": "a13ec5e440595dc249e75fe2f2ace08ac725d632c4fa5c5b012bb5618839a042"
+    },
+    "train.jsonl": {
+      "bytes": 170784568,
+      "sha256": "61f0a4ccd2c7b4ac8bc25fa5b5e9ec35749e521eb9da92952be7a0146af2824a"
+    }
+  },
+  "gates": {
+    "active_depth_one_to_six_with_real_suffix": true,
+    "all_ids_unique": true,
+    "all_programs_parse_exactly": true,
+    "answer_and_query_roles_balanced": true,
+    "confirmation_access_zero": true,
+    "cross_split_13gram_overlap_zero": true,
+    "cross_split_exact_prompt_overlap_zero": true,
+    "cross_split_name_overlap_zero": true,
+    "cross_split_sequence_overlap_zero": true,
+    "cross_split_template_overlap_zero": true,
+    "every_event_is_a_valid_state_change": true,
+    "exactly_eight_slots_seven_operations_one_stop": true,
+    "fixed_shape_without_padding": true,
+    "independent_simulator_matches_all_oracles": true,
+    "late_query_withheld_until_after_program": true,
+    "paired_family_semantics_exact": true,
+    "post_halt_suffix_invariance_exact": true,
+    "program_length_cannot_reveal_halt": true,
+    "query_twin_program_bytes_identical_and_answers_separate": true,
+    "rendered_text_matches_compiler_fields": true,
+    "split_labels_exact": true,
+    "training_evidence_excluded": true
+  },
+  "length_depth_groups": {
+    "sd_cst_confirmation|binding_recode|confirmation_quorin_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_confirmation|canonical|confirmation_quorin_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_confirmation|order_counterfactual|confirmation_quorin_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_confirmation|paraphrase|confirmation_quorin_paraphrase_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        519
+      ]
+    },
+    "sd_cst_confirmation|post_halt_suffix|confirmation_quorin_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_confirmation|query_swap|confirmation_quorin_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_confirmation|stop_shift|confirmation_quorin_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_confirmation|storage_order_shuffle|confirmation_quorin_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_development|binding_recode|development_mirexo_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_development|canonical|development_mirexo_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_development|order_counterfactual|development_mirexo_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_development|paraphrase|development_mirexo_paraphrase_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        519
+      ]
+    },
+    "sd_cst_development|post_halt_suffix|development_mirexo_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_development|query_swap|development_mirexo_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_development|stop_shift|development_mirexo_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_development|storage_order_shuffle|development_mirexo_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_train|compiler_train|train_talvek_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    }
+  },
+  "row_counts": {
+    "confirmation": 2304,
+    "development": 2304,
+    "train": 48000
+  },
+  "schema": "r12_sd_cst_board_report_v1",
+  "seed": 2741775784141707523,
+  "source_commit": "0e1e7a80c7b34c52cbb695681bab957b134453ef",
+  "source_custody": "clean_head_verified",
+  "violations": []
+}

@@ -20,7 +20,7 @@ compiled late query. Mechanics, scale, custody, and independent-assessor tests
 pass; no neural development score exists yet. Broad language-grounded,
 self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 04:16 EDT.
+**Last updated:** 2026-07-20 04:30 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -119,6 +119,14 @@ ledger hash. The independent JSON-only assessor recomputes every oracle,
 certificate, exact-packet denominator, causal query/state/suffix intervention,
 control, and access gate. A failed development run closes that fresh board; it
 cannot be rescored and confirmation stays sealed.
+
+Scientific source commit `0e1e7a8` precedes independent board and training seeds
+`2741775784141707523` and `7026924755428542396`. The sole admitted board contains
+48,000/2,304/2,304 train/development/sealed-confirmation rows. Receipt, train,
+development, and confirmation SHA-256 values begin `b607b88a...`, `61f0a4cc...`,
+`a13ec5e4...`, and `c83d65a3...`; confirmation is mode `0600` with zero access.
+Exact source/data/base/tokenizer bytes match on Newton. Sole one-H100 job `693954`
+is running on `evc36` after passing source and CUDA/bf16 preflight.
 
 This is not yet a reasoning result. It is an admitted, falsifiable integration
 experiment. A pass would establish bounded autonomous language-to-private-tape
