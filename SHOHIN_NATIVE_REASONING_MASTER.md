@@ -239,17 +239,25 @@ physical event bus, resets the failed declaration queries/projection, and adds
 one declaration-local key projection under a separate contract. Full evidence
 is in `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_RESULT.md`.
 
-That v1.1 repair is frozen before output at exact scientific source
-`b93b17b3ee5c096509cd1ab0d903ef7a9287d3a3`. Raw post-commit beacon
-`14330060956843215829` yields sole signed-safe seed `5106688919988440021`.
-It trains only the six-query table, declaration-query projection, and a new
-bias-free 384 by 384 declaration-key projection: 297,216 parameters. The query
-endpoint, physical bus, parent, executor, motor, reader, and Shohin trunk remain
-frozen. Exact compiler/complete size is 66,573,580 / 191,675,285, leaving
-8,324,715 below 200M. Twelve focused/inherited tests plus real-parent
-reconstruction and a consumed-family full backward pass are clean; all three
-declared tensors receive nonzero gradients and no excluded tensor does. This is
-still a conventional consumed-training interface falsifier, not reasoning.
+That v1.1 repair froze exact source
+`b93b17b3ee5c096509cd1ab0d903ef7a9287d3a3` before raw beacon
+`14330060956843215829` and signed-safe seed `5106688919988440021`. Sole job
+`694203` completed cleanly on H100 `evc22` in 8m09s. It trains only the
+six-query table, declaration-query projection, and a new bias-free 384 by 384
+declaration-key projection: 297,216 parameters. Exact compiler/complete size is
+66,573,580 / 191,675,285.
+
+The mechanism is useful but insufficient. Minimum held-out binding pointer
+rises 5.15% -> 61.00%, identity 82.20% -> 98.90%, initial state 15.00% ->
+48.00%, and packet 13.45% -> 47.45%, while every frozen query/event path stays
+exact. Initial-occurrence pointer remains effectively zero: minimum 0% and no
+renderer exceeds 0.55% all-three exact. Six of twelve gates pass; v1.1 is
+closed as `reject_declaration_key_repair`, checkpoint/report SHA values begin
+`46697b39...`/`73d470bb...`, and access is `0/0`. A dedicated key exposes entity
+content but not repeated-occurrence order. A read-only six-slot confusion audit
+must localize the selections before another architecture is admitted. Full
+evidence is in
+`R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_RESULT.md`.
 
 ---
 

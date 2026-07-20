@@ -1,9 +1,14 @@
 # R12 SD-CST Complete Physical-Record Front-End v1.1 Preregistration
 
-**Status:** exact scientific source frozen and pushed before seed at commit
-`b93b17b3ee5c096509cd1ab0d903ef7a9287d3a3`; no output existed at that
-receipt. Post-commit raw beacon `14330060956843215829` yields the sole
-signed-safe seed `5106688919988440021` modulo `2^63`.
+**Status:** closed and rejected under the frozen gates. Sole job `694203`
+completed cleanly on H100 `evc22`; full result:
+`R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_RESULT.md`.
+
+Exact scientific source `b93b17b3ee5c096509cd1ab0d903ef7a9287d3a3`
+preceded raw beacon `14330060956843215829` and signed-safe seed
+`5106688919988440021`. The dedicated key raises minimum binding pointer to
+61.0% and packet to 47.45%, but minimum initial-occurrence pointer remains 0%.
+Decision: `reject_declaration_key_repair`.
 
 **Claim class:** consumed-training declaration-address repair only. This cannot
 establish fresh-language generalization, native reasoning, or Shohin promotion.

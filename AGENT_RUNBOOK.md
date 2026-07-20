@@ -297,18 +297,16 @@
 > same consumed-row absolute gates under a new source commit and seed. Every complete system remains
 > strictly below 200M; this repair is not reasoning evidence.
 >
-> **Active declaration-key repair v1.1:** exact scientific source is frozen at
-> `b93b17b3ee5c096509cd1ab0d903ef7a9287d3a3` before output. Raw post-commit beacon
-> `14330060956843215829` gives sole signed-safe seed `5106688919988440021`. It loads
-> complete-local v1 checkpoint SHA `30b75305...`, preserves only its exact eight-tensor query path,
-> reconstructs the retained independent physical bus, resets the two failed declaration tensors,
-> and adds one bias-free 384x384 declaration-key projection. Exactly three tensors / 297,216
-> parameters train; compiler/complete size is 66,573,580 / **191,675,285**, leaving 8,324,715 below
-> 200M. Twelve focused/inherited tests, Ruff, `py_compile`, shell syntax, exact three-parent
-> reconstruction, and a real consumed-family backward pass are clean; every declared tensor has
-> nonzero gradient and no excluded tensor does. Sync the exact execution receipt, hash-verify all
-> inputs, and submit one isolated H100 run. A pass remains scoreless compiler mechanics and only
-> authorizes a fresh board.
+> **Declaration-key repair v1.1 is closed and rejected, with a real partial mechanism gain.** Exact
+> source `b93b17b3ee5c096509cd1ab0d903ef7a9287d3a3`, seed `5106688919988440021`, and sole job
+> `694203` completed cleanly on H100 `evc22` in 8m09s. The 191,675,285-parameter system trains only
+> 297,216 declaration parameters. Minimum held-out binding pointer rises 5.15% -> **61.00%**,
+> identity 82.20% -> **98.90%**, initial state 15.00% -> **48.00%**, and packet 13.45% ->
+> **47.45%** while query/event paths stay 100%. Initial-occurrence pointer remains effectively zero
+> (minimum 0%, maximum renderer 0.55% all-three exact). Six of twelve gates pass; decision is
+> `reject_declaration_key_repair`. Checkpoint/report SHA values are `46697b39...`/`73d470bb...`;
+> local and Newton copies match; access is `0/0`. Do not add epochs or widen v1.1. Run a read-only
+> six-slot confusion audit on the same consumed heldout rows before selecting a distinct successor.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
