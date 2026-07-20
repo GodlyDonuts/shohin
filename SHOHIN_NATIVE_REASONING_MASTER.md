@@ -23,7 +23,7 @@ passes 64/64 fresh exact fits on H100. No neural development score exists yet.
 Broad language-grounded,
 self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 05:18 EDT.
+**Last updated:** 2026-07-20 05:33 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -161,9 +161,13 @@ all 48,000 training rows emit zero STOPs, kind and whole-tape exactness are zero
 initial-state exactness is 16.946%, identity is 0.031%, and amount is 0.762%; only
 the separately compiled late query reaches 100%. The generic global slot compiler
 therefore failed to localize and bind program fields. Forcing one STOP would hide
-this failure. The next architecture must localize source evidence and causally
-bind repeated arbitrary entities before source deletion; its first gate is a
-training-only per-slot diagnostic, not another scored board.
+this failure. Per-slot probe `693964` confirms chance localization and a chance
+16.6625% constrained STOP position. The next architecture is a byte-addressed
+evidence compiler: absolute byte positions, source self-attention, nine learned
+model pointer slots supervised to localize the binding/event clauses, and the
+same source-deleted categorical tape. Its 14,206,993 parameters produce a
+139,308,698-parameter complete system. A frozen 40k/8k consumed-training pilot
+must pass pointer and every semantic-field gate before any fresh scored board.
 
 This is not yet a reasoning result. It is an admitted, falsifiable integration
 experiment. A pass would establish bounded autonomous language-to-private-tape

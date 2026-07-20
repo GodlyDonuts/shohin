@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 05:18 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 05:33 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -168,9 +168,12 @@
 > never opened; close v1.1 without rescore. Training-only diagnostic `693960` reproduces the fit and
 > shows a full compiler collapse: all 48,000 rows emit zero STOPs, kind/whole-tape exactness is zero,
 > initial-state exactness is 16.946%, identity 0.031%, amount 0.762%, while isolated late-query
-> prediction is 100%. A one-STOP grammar decoder alone would conceal rather than solve this. Probe
-> per-cell/slot behavior on training data only, then replace the failed generic global-slot compiler
-> with a causally localized compiler before any fresh board. Mechanics alone are not native reasoning.
+> prediction is 100%. Per-slot probe `693964` confirms chance cells and a chance 16.6625%
+> constrained STOP location; a one-STOP decoder alone would conceal rather than solve this. The
+> next pre-board pilot is a 14,206,993-parameter byte-addressed evidence compiler with supervised
+> model pointer localization and a deterministic 40k/8k split of consumed training rows. Complete
+> system is 139,308,698. Commit the pilot source, then draw its seed and run its nine frozen
+> admission gates without scored access. Mechanics alone are not native reasoning.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9223,3 +9226,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   development/confirmation access is `0/0`. This localizes failure to the generic program compiler,
   not STOP validation or recurrent execution. Run the preregistered training-only per-slot probe;
   do not advance a grammar-only decoder to a scored board.
+
+- **2026-07-20 05:15--05:33** -- **The per-slot probe confirms chance localization; a byte-addressed
+  replacement is preregistered.** H100 job `693964` evaluates the diagnostic checkpoint on all
+  48,000 consumed training rows only. Constrained STOP position is 7,998/48,000 = 16.6625%; complete
+  constrained kind is 65/48,000 = 0.1354%. Per-slot kind is 41.6--50.3%, identity 33.3--33.5%, and
+  amount 49.8--50.5%. Report SHA is `fdca9906...`, access `0/0`. This rejects grammar-only repair.
+  The replacement byte-addressed evidence compiler uses UTF-8 and absolute-position embeddings,
+  six source-attention layers, nine model pointer slots with source-line localization supervision,
+  two slot-mixing layers, and unchanged categorical outputs. It has 14,206,993 parameters; complete
+  Shohin is 139,308,698. The frozen pilot uses a SHA-ordered 40k/8k partition of consumed training
+  rows, four epochs, and nine explicit gates. Commit source before drawing the pilot seed.

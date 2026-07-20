@@ -1,0 +1,80 @@
+{
+  "checkpoint_sha256": "b25d6a45c5e1b58713ab231e3ec32a544d80c88bcc81f2eb00f25035c9004d8b",
+  "confirmation_accesses": 0,
+  "constrained_decoder": "global exact MAP under exactly-one-STOP grammar using only kind logits",
+  "development_accesses": 0,
+  "device": "cuda",
+  "gold_kind_label_histogram": {
+    "0": 167354,
+    "1": 168646,
+    "2": 48000
+  },
+  "per_slot_cell_accuracy": {
+    "amount": [
+      0.5050833333333333,
+      0.49935,
+      0.503225,
+      0.497775,
+      0.501075,
+      0.49955,
+      0.499025,
+      0.5029583333333333
+    ],
+    "identity": [
+      0.3338541666666667,
+      0.33315,
+      0.335,
+      0.3346,
+      0.335375,
+      0.333825,
+      0.33405,
+      0.33520833333333333
+    ],
+    "kind": [
+      0.4995833333333333,
+      0.42175,
+      0.4184375,
+      0.4158125,
+      0.41733333333333333,
+      0.4208125,
+      0.4185833333333333,
+      0.5027291666666667
+    ]
+  },
+  "raw_kind_prediction_histogram": {
+    "0": 9740,
+    "1": 374260
+  },
+  "raw_stop_count_histogram": {
+    "0": 48000
+  },
+  "row_exact": {
+    "amount_exact": {
+      "correct": 366,
+      "rate": 0.007625
+    },
+    "constrained_kind_exact": {
+      "correct": 65,
+      "rate": 0.0013541666666666667
+    },
+    "constrained_stop_position_exact": {
+      "correct": 7998,
+      "rate": 0.166625
+    },
+    "identity_exact": {
+      "correct": 15,
+      "rate": 0.0003125
+    },
+    "initial_exact": {
+      "correct": 8134,
+      "rate": 0.16945833333333332
+    },
+    "raw_kind_exact": {
+      "correct": 0,
+      "rate": 0.0
+    }
+  },
+  "rows": 48000,
+  "schema": "r12_sd_cst_v1_1_training_compiler_probe_v1",
+  "score_eligible": false
+}
