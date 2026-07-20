@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 15:04 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 15:06 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -379,6 +379,9 @@
 > 52,096 rows, and a complete second build is byte-identical. Report/train/development/confirmation
 > SHA-256 values begin `fd487cdf...`/`bb870ac3...`/`5dc5035c...`/`6186fb8c...`; confirmation is
 > mode `0600`; access is `0/0`. Commit/push the board receipt before drawing the sole training seed.
+> Board receipt commit `fc9ee4c4d110c14662705a70f70a70d07a9fe68f` precedes raw and signed-safe
+> training seed `8446904969546017898`. No output or scored access exists. Record/push the seed,
+> transport exact bytes, hash-verify them, and submit the sole v1.3 development job.
 > The admitted board
 > creates 48,000 compiler-only training rows from 12,000 latent programs and four even-parity
 > renderer views, plus 2,048 development and 2,048 sealed-confirmation rows from four odd-parity
@@ -9977,3 +9980,9 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   build is byte-identical. Report/train/development/confirmation hashes begin
   `fd487cdf...`/`bb870ac3...`/`5dc5035c...`/`6186fb8c...`. Commit/push the board receipt before any
   training seed exists.
+
+- **2026-07-20 15:06** -- **The sole v1.3 training seed is drawn after the committed board
+  receipt.** Commit `fc9ee4c4d110c14662705a70f70a70d07a9fe68f` precedes raw beacon
+  `8446904969546017898`, which is already below `2^63` and becomes the training seed unchanged. No
+  scientific setting changes and no GPU job, output, development access, or confirmation access
+  exists at this receipt point. Commit/push this receipt before transport/submission.

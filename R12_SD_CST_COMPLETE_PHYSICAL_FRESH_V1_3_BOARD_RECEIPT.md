@@ -46,6 +46,16 @@ Treatment and the matched family-deranged arm each train 102 tensor names /
 gate, threshold, control, and claim boundary is frozen in
 `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_PREREG.md`.
 
-The next allowed action is to commit/push this receipt and only then draw one
-training seed. No development or confirmation bytes may be opened before both
-matched endpoints and the immutable gate config exist.
+## Training-seed receipt
+
+Board receipt commit `fc9ee4c4d110c14662705a70f70a70d07a9fe68f` was
+pushed before raw training beacon `8446904969546017898`. The value is below
+`2^63` and becomes the sole training seed unchanged. No architecture, board,
+arm, optimizer, update, gate, threshold, assessor, or claim-boundary setting
+changes. No GPU job, output directory, development access, or confirmation
+access exists at this receipt point.
+
+The next allowed action is to commit/push this seed receipt, transport and hash-
+verify exact source/board/parent bytes, pass Slurm test-only admission, and
+submit one score-bearing job. No development or confirmation bytes may be
+opened before both matched endpoints and the immutable gate config exist.
