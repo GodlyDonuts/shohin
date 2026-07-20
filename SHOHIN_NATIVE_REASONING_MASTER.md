@@ -16,9 +16,10 @@ valid-but-wrong computations. It remains unconfirmed because operation recoding
 invalidates one graph and changes two canonical graphs despite preserving all
 2,024 mutually valid states/answers. Broad language-grounded, self-directed
 reasoning is not yet established. S9.1 is permanently closed with confirmation
-sealed; S9.2 global anchor closure is the next theorem/falsifier target.
+sealed. S9.2 global anchor closure has now passed all 17 pre-board CPU gates and
+is ready for exact-source freeze; it has no fresh board seed or neural score.
 
-**Last updated:** 2026-07-19 22:02 EDT.
+**Last updated:** 2026-07-19 22:57 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -1501,6 +1502,72 @@ alpha consistency on positive anchors and hard negative competitors, and
 retain source-free/uniform/shuffled/no-class controls. Execution, answers,
 depth, gold graph repair, and retry are forbidden during decoding.
 
+### 9.16 S9.2 global anchor closure pre-board result
+
+S9.2 isolates the unproven root/cardinality hypothesis without adding a new
+reasoning primitive or parameter. For each admitted `(m, c, d)` hypothesis,
+it constructs the ordered root template
+`entity^m, position^m, state^m, card^c, entry, event^d, query` and finds the
+maximum-score nonoverlapping assignment with interval Viterbi. Every edge
+weight is a model-produced `role_logit - none_logit` margin. The best assignment
+must have strictly positive total score or the decoder abstains. Ties are
+deterministic. Existing S9.1 local child assignment runs exactly once after the
+root decision, and quotient compilation runs at most once afterward.
+
+The optimizer receives candidate intervals and model logits only. Candidate
+targets are stripped at inference. Row modulus, depth, cards, graph fields,
+exact-byte classes, compiler validity, executor output, state, answer, and retry
+feedback are forbidden. This makes a high-scoring wrong syntax-legal assignment
+remain wrong or fail rather than being repaired by downstream semantics.
+
+The full CPU falsifier ran once over the permanently closed S9 development
+mechanics board with seed `7509220561492772015`; it did not neurally rescore the
+board and did not read confirmation. All 17 gates pass. Oracle and
+operation-recoded oracle logits reconstruct 2,048/2,048 exact graphs. Lowering
+one required root below `none` and inserting one extra high-positive root each
+break local selection but global decoding recovers 2,048/2,048. Uniform logits
+abstain on every row. Flat-positive, shuffled, high-margin wrong-root, and
+high-margin wrong-count controls produce zero exact graphs. Every row has
+multiple complete syntax-valid assignments; the measured lower bound ranges
+from 632 to 1,459, median 986. Poisoning metadata and candidate targets leaves
+the assignment identical. Optimizer instrumentation sees zero compiler or
+executor calls. Dynamic programming agrees with exhaustive enumeration on
+10,000/10,000 reduced synthetic cases. The hard-negative orbit loss is zero for
+identical score multisets and changes with finite gradients after a competitor
+perturbation. Report SHA-256 is
+`91d653c7e2a131ad7e21319dd72a52dee95c00520fbd59771fe5f7a08fe52e24`.
+
+The fresh neural contract freezes five equal-budget arms: treatment,
+positive-orbit-only, no-class, paired-shuffled, and oracle-masked layout-only.
+Each receives 24,000 unique sources, 48,000 original-plus-recoded charged
+views, batch 64, 750 updates, and 128 sampled negatives. S9.2 adds no trainable
+parameters; the complete system remains exactly 134,580,264. Qualification
+requires at least 2,031/2,048 exact graph, state, and answer; every valid graph
+exact; root spans/counts at least 99%; global decoding strictly above the
+same-logit local-root decoder; perfect operation-recode graph/root/count/state/
+answer transport on every originally valid row; layout/shuffled/source-free
+below 10%; uniform zero; a five-point no-class advantage; and every inherited
+causal, depth, storage, budget, hash, parameter, and access gate. There are 43
+gates total. Failure closes the fresh board without rescore or confirmation.
+
+The pre-board adversarial audit also closed four custody confounds before a
+seed was drawn. Board creation now resolves `source_commit` to a clean committed
+HEAD; training and evaluation compare all frozen runtime paths against that
+commit; evaluation binds base and tokenizer hashes to checkpoint and board;
+the assessor checks the exact architecture, optimizer, sampling, masking,
+class-message, orbit, and five-arm budget contract; and a deterministic
+board-hash ledger is created atomically and made read-only before development
+bytes are opened. A new output directory cannot replay the split. The expanded
+custody/mechanics/regression suite passes 45 tests. The audit found no target/gold
+access in treatment decoding and no compiler/executor-guided retry path.
+
+This remains bounded parser engineering even if it confirms. The separately
+specified causal grammar firewall must next test reordered clauses,
+same-layout counterfactual bindings, quoted and negated decoys, relation
+argument reversal, and removal of explicit ontology words. Only that stage can
+begin separating semantic language-to-machine grounding from mastery of the
+current synthetic grammar.
+
 ---
 
 ## 10. Template For A New Theory
@@ -1833,6 +1900,8 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Refreshed the self-contained appendix with the complete S7 confirmation, S8/S8.1 graph evidence, and S9 occurrence-quotient CPU/development records; updated the frontier to treat S9 as a near-pass requiring fresh operation-equivariant repair. |
 | 2026-07-19 | Froze S9.1 alpha-closed source at `863a210`, passed all nine 2,048-row mechanics gates, generated fresh board/training seeds `1370124171784245712`/`8076551815802451212`, hash-matched exact Newton bytes, and launched sole development job `693793` on `evc47`; confirmation remains sealed. |
 | 2026-07-19 | Rejected S9.1 before confirmation at 2,025/2,048 = 98.877% exact graph/state/answer versus 86.230% no-class and zero shuffled/source-free/uniform. Every emitted graph is exact; the only base-board residual is 23 invalid/abstaining parses. Operation recoding preserves all 2,024 mutually valid states/answers but invalidates one graph and changes two canonical graphs, so 29/31 frozen gates pass and confirmation remains sealed. Activated fresh-board S9.2 global anchor closure as the only admissible repair. |
+| 2026-07-19 | Admitted S9.2 Global Anchor Closure mechanics after 17/17 CPU gates. The zero-parameter one-shot Viterbi root decoder is target/metadata/compiler/executor/retry blind; oracle/recode are 2,048/2,048 exact, adversarial wrong roots/counts remain wrong, every row has hundreds of feasible assignments, and 10,000 exhaustive reduced cases agree. Froze a five-arm, 43-gate, 134,580,264-parameter fresh-board contract; no new seed or neural score yet. |
+| 2026-07-19 | Closed the final S9.2 custody audit before seed draw: added clean-HEAD board binding, exact committed-runtime/base/tokenizer verification, full architecture/optimizer/arm assertions, and an atomic read-only board-hash development ledger. Expanded integrated tests pass 45/45; no decoder leakage or semantic retry was found. |
 | 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 

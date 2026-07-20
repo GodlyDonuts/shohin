@@ -9,6 +9,7 @@ import hashlib
 import json
 from pathlib import Path
 import random
+import subprocess
 from typing import Iterable, Sequence
 
 from tokenizers import Tokenizer
@@ -43,6 +44,30 @@ NAME_POOL_SIZE = 1100
 
 def _sha256(payload: bytes) -> str:
     return hashlib.sha256(payload).hexdigest()
+
+
+def verified_head_source_commit(expected: str, repo_root: Path) -> str:
+    """Bind a new board to the exact clean tracked bytes at repository HEAD."""
+
+    def git(*arguments: str) -> subprocess.CompletedProcess[str]:
+        return subprocess.run(
+            ("git", *arguments),
+            cwd=repo_root,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+
+    resolved = git("rev-parse", "--verify", f"{expected}^{{commit}}")
+    head = git("rev-parse", "--verify", "HEAD")
+    if resolved.returncode or head.returncode:
+        raise RuntimeError("S8 board source commit is not a local Git commit")
+    resolved_sha = resolved.stdout.strip()
+    if resolved_sha != head.stdout.strip():
+        raise RuntimeError("S8 board source commit is not current HEAD")
+    if git("diff", "--quiet", "HEAD", "--").returncode:
+        raise RuntimeError("S8 board source tree has tracked modifications")
+    return resolved_sha
 
 
 def _jsonl(rows: Iterable[dict[str, object]]) -> bytes:
@@ -634,6 +659,10 @@ def main() -> None:
         raise SystemExit(f"refusing existing S8 board: {args.out_dir}")
     if min(args.train_rows, args.development_rows, args.confirmation_rows) <= 0:
         raise SystemExit("S8 row counts must be positive")
+    source_commit = verified_head_source_commit(
+        args.source_commit,
+        Path(__file__).resolve().parents[1],
+    )
     tokenizer = Tokenizer.from_file(str(args.tokenizer))
     names = _split_name_pools(tokenizer, args.seed ^ 0x51A8)
     rng = random.Random(args.seed)
@@ -690,7 +719,7 @@ def main() -> None:
         "schema": "r12_s8_nil_linked_law_graph_board_report_v1",
         "decision": "admit_s8_nil_linked_law_graph_board",
         "seed": args.seed,
-        "source_commit": args.source_commit,
+        "source_commit": source_commit,
         "tokenizer_sha256": sha256_file(args.tokenizer),
         "name_pool_size_per_split": NAME_POOL_SIZE,
         "renderers": {

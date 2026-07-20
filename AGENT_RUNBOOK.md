@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 22:02 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 22:57 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -111,6 +111,27 @@
 > joint model-logit anchor selection under finite syntax/cardinality plus stronger positive-and-hard-
 > negative alpha equivariance, with executor/answer/depth/gold/repair access forbidden and matched
 > source-free/uniform/shuffled/no-class controls retained.
+>
+> **S9.2 pre-board state:** Global Anchor Closure is CPU-admitted but has no fresh board seed or
+> neural score. It adds zero parameters and replaces independent root selection with one deterministic
+> interval-Viterbi MAP decision over model role-minus-none logits under the declared finite surface
+> grammar. The decision is irrevocable: the optimizer cannot read candidate targets, row metadata,
+> exact-byte classes, graph validity, executor output, state, answer, or retry feedback; quotient
+> compilation occurs at most once afterward. The full closed-board falsifier passes 17/17 gates:
+> oracle and recoded oracle are 2,048/2,048 exact, lowered-root and extra-positive failures are
+> recovered 2,048/2,048, uniform abstains 2,048/2,048, flat-positive/shuffled/wrong-root/wrong-count
+> exactness is zero, metadata/target poisoning is inert, and 10,000/10,000 reduced exhaustive cases
+> agree with Viterbi. Report SHA-256 is `91d653c7...`. The five-arm neural contract is treatment,
+> positive-orbit-only, no-class, paired-shuffled, and oracle-masked layout-only, each 24,000 unique
+> sources / 48,000 charged views / 750 updates / batch 64. Exact system size remains 134,580,264.
+> An adversarial custody audit is closed: the board builder now requires a clean committed HEAD;
+> training/evaluation compare every scientific runtime path with that source commit; evaluation
+> hash-binds base and tokenizer; all architecture/optimizer/arm settings are assessor-gated; and an
+> atomic read-only board-hash ledger consumes development before its bytes are opened. Commit exact
+> source before drawing independent fresh board/training seeds. A result below every one
+> of 43 frozen gates closes S9.2 without rescoring or opening confirmation. Even a pass is only a
+> bounded compiler result; the causal grammar firewall remains the next independent generalization
+> test.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9043,3 +9064,23 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   confirmation remains unopened and the board is permanently closed. Preserve this as the strongest
   bounded fresh-development baseline and require a new theorem/falsifier/fresh board for S9.2 global
   anchor closure; do not widen the transformer or add arithmetic supervision as a substitute.
+
+- **2026-07-19 22:02--22:57** -- **S9.2 Global Anchor Closure passes its full pre-board CPU
+  falsifier and is ready for source freeze.** The zero-parameter interval-Viterbi decoder searches
+  every admitted `(modulus, card count, event count)` root template using only role-minus-none model
+  margins and nonoverlap/source order. One root decision is made, S9.1 children are selected once,
+  and quotient compilation is attempted once; compiler/executor feedback and semantic retry are
+  structurally absent. The full 2,048-row mechanics run passes 17/17 gates: oracle and recoded oracle
+  are exact on every row; lowered-root and extra-positive greedy failures recover globally on every
+  row; uniform abstains; flat-positive, shuffled, high-margin wrong-root, and high-margin wrong-count
+  controls score zero exact; each row admits at least 632 complete assignments under the measured
+  lower bound; metadata/target poison is inert; and 10,000 reduced exhaustive cases agree exactly
+  with dynamic programming. Hard-negative alpha loss has the required identity and finite-gradient
+  behavior. Report SHA `91d653c7...` records `admit_s9_2_global_anchor_mechanics`. The frozen neural
+  experiment uses five equal-budget arms and exactly 134,580,264 parameters, with 31 inherited plus
+  12 new gates. An adversarial review found no label access, checkpoint-schema mismatch, semantic
+  repair, or retry path, but found replay/hash/config custody holes; these are now closed with an
+  exclusive board-hash access ledger, base/tokenizer binding, committed-runtime verification, and
+  full architecture/optimizer/arm assertions. Forty-five integrated custody/mechanics/regression
+  tests pass.
+  No fresh board seed, model fit, development score, or confirmation access exists yet.

@@ -1,0 +1,87 @@
+{
+  "closed_board": "artifacts/r12/s9_occurrence_quotient_board_7563652620455132721",
+  "closed_split": "development.jsonl",
+  "counts": {
+    "extra_root_breaks_local_selection": 2048,
+    "extra_root_global_exact": 2048,
+    "flat_positive_correct_counts": 2048,
+    "flat_positive_exact": 0,
+    "low_root_breaks_local_selection": 2048,
+    "low_root_global_exact": 2048,
+    "metadata_target_poison_identical": 2048,
+    "oracle_exact": 2048,
+    "recoded_oracle_exact": 2048,
+    "rows_with_multiple_feasible_assignments": 2048,
+    "shuffled_exact": 0,
+    "uniform_abstentions": 2048,
+    "wrong_high_count_exact": 0,
+    "wrong_high_count_followed": 2048,
+    "wrong_high_root_exact": 0,
+    "wrong_high_root_selected": 2048
+  },
+  "decision": "admit_s9_2_global_anchor_mechanics",
+  "feasible_assignment_lower_bound": {
+    "maximum": 1459,
+    "median": 986.0,
+    "minimum": 632
+  },
+  "gates": {
+    "every_row_has_at_least_two_complete_syntax_assignments": true,
+    "extra_low_positive_root_breaks_local_on_all_rows": true,
+    "extra_low_positive_root_ignored_globally_on_all_rows": true,
+    "flat_positive_correct_count_control_below_10pct_exact": true,
+    "full_decode_calls_compiler_once_and_executor_never": true,
+    "hard_negative_orbit_identity_and_gradient_gates": true,
+    "metadata_and_candidate_target_poisoning_is_inert": true,
+    "one_low_root_breaks_local_on_all_rows": true,
+    "one_low_root_recovered_globally_on_all_rows": true,
+    "operation_recoded_oracle_all_exact": true,
+    "optimizer_calls_no_compiler_or_executor": true,
+    "oracle_all_exact": true,
+    "reduced_viterbi_matches_exhaustive_at_least_10000": true,
+    "shuffled_score_distribution_below_10pct_exact": true,
+    "uniform_logits_abstain_on_all_rows": true,
+    "wrong_high_count_is_followed_and_never_repaired": true,
+    "wrong_high_root_is_followed_and_never_repaired": true
+  },
+  "hard_negative_orbit": {
+    "changed_competitor_loss": 1.920850991155021e-06,
+    "gradients_finite": true,
+    "identical_multiset_loss": 0.0,
+    "original_gradient_l1": 2.0643085008487105e-05,
+    "recoded_gradient_l1": 1.3137748283043038e-05
+  },
+  "instrumentation": {
+    "full_decode_compile_calls": 1,
+    "full_decode_executor_calls": 0,
+    "optimizer_compile_calls": 0,
+    "optimizer_executor_calls": 0
+  },
+  "rates": {
+    "flat_positive_exact": 0.0,
+    "shuffled_exact": 0.0
+  },
+  "reduced_exhaustive": {
+    "cases": 10000,
+    "exact_matches": 10000,
+    "max_score_absolute_error": 0.0
+  },
+  "resource_boundary": {
+    "confirmation_rows_read": 0,
+    "cpu_oracle_only": true,
+    "neural_scoring_performed": false,
+    "optimizer_forbidden_inputs": [
+      "candidate targets",
+      "row modulus, depth, cards, nodes, spans, state, or answer",
+      "source bytes or exact-byte classes",
+      "compiler validity, executor output, or retry feedback"
+    ],
+    "optimizer_inputs": [
+      "candidate intervals",
+      "constructed role logits"
+    ]
+  },
+  "rows": 2048,
+  "schema": "r12_s9_2_global_anchor_cpu_falsifier_v1",
+  "seed": 7509220561492772015
+}
