@@ -10396,3 +10396,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `d45d757f...`. Sixteen focused tests, non-bijective equality recovery, source-free execution,
   gradient isolation, parameter audit, fail-fast hashes, Ruff, and byte compilation pass. Freeze
   and push exact adapter/preregistration source before drawing a board seed. No neural score exists.
+
+- **2026-07-20 19:24--19:48** -- **The seedless ER-TT fresh-board builder passes a full-scale dry
+  qualification.** It produces planned 48,000/2,048/2,048 rows from 12,000/512/512 fresh families,
+  four views each, 18 shuffled records, complementary train/scored renderer cosets, and no train
+  outcome oracle. Independent public-byte parsing, witness inference, execution, and answer recovery
+  agree on every row. Dry seed 104729 is source-test-only: all 15 gates pass; cardinality is exactly
+  balanced; rule/depth counts meet the tight scored-split remainder; all 13,024 families are
+  non-bijective; maximum program/line lengths are 610/96 under 640/144; every split-pair overlap is
+  zero; and deranged/equality-ablated state is 8.170%/7.878%. No board bytes or scientific seed
+  exists. Commit/push exact builder, parser, tests, and preregistration before drawing one.
