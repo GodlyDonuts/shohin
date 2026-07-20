@@ -233,7 +233,21 @@ are in `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md` and
 `R12_ER_CST_WITNESS_EQUALITY_BUS_RESULT.md`, and the sealed result is in
 `R12_ER_CST_WITNESS_EQUALITY_CONFIRMATION_RESULT.md`.
 
-**Last updated:** 2026-07-20 18:46 EDT. User authority requires every future
+The active post-confirmation hypothesis is Episodic Relation Tensor Transport
+(ER-TT). It removes both remaining finite enumerations: operation cards are no
+longer six `S_3` class IDs, and execution is no longer a learned 36-cell table.
+Each episode has cardinality three through six and two to four fresh operations;
+complete opaque witnesses define arbitrary `N^N` copy relations, including
+non-bijective maps. The compiler must emit masked `N x N` relation tensors. A
+parameter-free source-deleted recurrent motor applies `S_next = R @ S` under
+persistent HALT. Six focused tests and a pre-freeze 10,000-episode falsifier pass
+all 13 mechanics gates. Every exact/invariance count is 10,000/10,000; 99.36% of
+episodes contain non-bijective relations; card derangement and equality ablation
+retain only 7.53% and 4.17% state. This is not yet neural evidence. No source
+commit, durable report, adapter, board seed, training seed, GPU run, or score
+exists. The exact hypothesis is `R12_ER_RELATION_TENSOR_TRANSPORT_THEORY.md`.
+
+**Last updated:** 2026-07-20 18:50 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2762,6 +2776,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Implemented and preregistered ER-CST v1.1 Witness Equality Bus: dedicated detached occurrence pointers, inherited byte fingerprints, a learned 3x3 equality matrix, and exact finite `S_3` assignment scoring replace the failed direct classifier. Exact system size is 192,726,827 with 7,273,173 headroom. Commit `5670ad8` precedes fresh board seed `2244518911844010727`; 48,000/2,048/2,048 rows pass all 14 gates and reproduce byte-identically, including every one of 18 witness spans per row, zero overlap, confirmation `0600`, and access `0/0`. Newton hashes match. Twenty-one focused/static checks and independent raw-evidence recomputation pass; no training seed or score exists. |
 | 2026-07-20 | Froze ER-CST v1.1 score source `87d53b5` before seed `2262748995832026278`; sole H100 job `694567` passes development at 99.512% packet/joint, 99.609% state, 100% answer, 96.875% minimum-depth joint, and 99.414% minimum-renderer joint. Family-deranged/equality-ablated packet/joint remain 0.098%/0%. All 14 scientific and eight assessor gates pass; custody is `1/0`, local artifact mirrors and assessor replay match. A separate no-training, authorization-first, `O_EXCL` one-read confirmation lane now passes three confirmation plus 22 inherited focused tests and awaits evaluator source freeze. |
 | 2026-07-20 | Independently confirmed ER-CST v1.1 from evaluator source `4a930c0`: sole sealed job `694641` reaches 99.023% packet/state/answer/joint, 99.805% cards/witness pointers, 92.969% minimum-depth joint, and 99.023% on every unseen renderer. Both causal controls remain near zero packet/joint. All 14 scientific and six assessor gates pass; final custody is `1/1`, local replay matches, and checkpoint `917c1a1f...` is promoted read-only. This confirms bounded episodic `S_3` semantic binding and source-deleted recurrent composition; next remove fixed state/card enumeration through variable-cardinality relation transport. |
+| 2026-07-20 | Implemented ER-TT pre-freeze mechanics: variable cardinality 3--6, arbitrary total/non-bijective relation witnesses, direct relation tensors, and a zero-parameter source-deleted torch motor `S_next = R @ S`. Six tests and a 10,000-episode falsifier pass all 13 exact/invariance/causal gates; 99.36% of episodes are non-bijective, while card derangement/equality ablation retain 7.53%/4.17% state. No frozen source, neural adapter, board, seed, or score exists. |
 
 ---
 

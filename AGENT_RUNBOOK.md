@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 18:46 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 18:50 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -275,7 +275,15 @@
 > reasoning. The admitted next hypothesis must remove fixed three-state/six-card enumeration through
 > variable-cardinality model-emitted relation matrices and direct recurrent relation application while
 > preserving fresh names/renderers, source deletion, internal halt, matched causal controls, and the
-> strict under-200M complete-system ceiling.
+> strict under-200M complete-system ceiling. That successor is now named Episodic Relation Tensor
+> Transport (ER-TT). Its pre-freeze CPU mechanics support cardinalities three through six, two to
+> four fresh rules, arbitrary total copy relations including non-bijective maps, depth through
+> twelve, and a zero-parameter torch tensor motor implementing `S_next = R @ S`. Six focused tests
+> pass. A 10,000-episode dry falsifier passes all 13 gates: all exact/invariance counts are
+> 10,000/10,000, 99.36% of episodes contain a non-bijective rule, deranged-card state is 7.53%, and
+> equality-ablated state is 4.17%. No ER-TT source commit, durable report, neural adapter, board seed,
+> training seed, GPU run, or scored access exists. Commit/push exact mechanics, then rerun the
+> durable CPU report from that source before neural implementation.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10354,3 +10362,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `shohin_promoted/er_cst_witness_equality_v1_1`. This confirms bounded fresh episodic `S_3`
   semantic binding and source-deleted recurrent composition, not unrestricted reasoning. The next
   frontier is variable-cardinality relation transport without enumerated card classes.
+
+- **2026-07-20 18:46--18:50** -- **ER-TT is implemented as the next pre-freeze architecture
+  hypothesis.** It removes six-class `S_3` cards and the learned 36-cell motor. Episodes vary
+  cardinality three through six and define arbitrary total copy relations, including repeated
+  outputs, from complete opaque witnesses. A parameter-free torch motor composes model-emitted
+  relation matrices as `S_next = R @ S` under persistent HALT after source deletion. Six focused
+  tests pass. The deterministic 10,000-episode dry falsifier is exact on inference, execution,
+  relation composition, witness/opcode alpha rename, card storage reindex, cardinality padding,
+  source deletion, and post-HALT suffix; 99.36% of episodes are non-bijective, while card
+  derangement/equality ablation retain only 7.53%/4.17% state. All 13 gates pass. This is CPU/tensor
+  mechanics only: no source freeze, durable report, neural adapter, board, seed, GPU run, or score
+  exists. Commit/push exact source before producing the durable report.
