@@ -2712,7 +2712,7 @@ This is a compiler-mechanics result, not a native-reasoning score. Its held-out
 partition was observed after every training epoch and comes from an already
 consumed training board.
 
-### Active source-deletion theorem test
+### Source-deletion theorem result
 
 `R12_SD_CST_PROJECTED_MECHANICS_PREREG.md` freezes the next gate before its seed.
 The compiler process must compile the program, reduce it to 25 CPU `uint8`
@@ -2729,6 +2729,21 @@ post-STOP perturbation, force-alive suffix execution, operand-suffix swap, and
 shuffled packets. Exact 78-cell motor and 18-cell reader certificates are
 mandatory. Passing authorizes only a fresh-board integration.
 
+After two scoreless infrastructure failures, source `18610ac`, seed
+`2391953347805476054`, and job `693986` pass all 29 gates. Every final state,
+answer, joint result, intermediate state, and alive bit is exact on all 8,000
+rows for all 17 source-blind canonical and causal arms. Every observed STOP
+bucket is exact. Motor and reader certificates are 78/78 and 18/18. Alpha
+renaming preserves 7,995/8,000 whole tapes; declaration swap, valid event-name
+counterfactual, and event-line relocation each reach 8,000/8,000. Post-STOP
+perturbation is exactly invariant, while force-alive executes the suffix oracle
+exactly. The full frozen compiler state digest is unchanged.
+
+Report and execution-core SHA values are `e7353f50...` and `166ca6f8...`.
+Access is `0/0`. Decision: admit a fresh post-commit integration board. This is
+the first complete SD-CST mechanism pass, but it remains a consumed-training
+mechanics result rather than evidence of fresh language generalization.
+
 ### Parameter-cap policy
 
 The user now authorizes any complete system **strictly below 200,000,000
@@ -2737,8 +2752,9 @@ parameters**. Current available expansion from the 146,057,595 system is
 frozen 150M gates; globally changing old constants would invalidate matched
 comparisons.
 
-Extra parameters are not spent until the 146.06M mechanism passes causal and
-fresh-board gates. The first independently falsifiable expansion candidates are:
+Extra parameters are not spent until the now-causally-admitted 146.06M mechanism
+passes fresh-board gates. The first independently falsifiable expansion
+candidates are:
 
 1. a roughly 20.46M pretrained-semantic fusion path, compared against an
    equal-parameter byte-memory arm and line-permuted Shohin residuals;

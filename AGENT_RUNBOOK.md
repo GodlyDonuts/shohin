@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 07:00 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 07:03 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -186,13 +186,21 @@
 > 7,998/8,000; every row has one raw STOP; and the frozen parent is byte-identical. The untrained
 > projected prefit has only 1/8,000 whole tapes. Compiler/report SHA values are `f347d1ae...`/
 > `5d6be147...`; access remains `0/0`. The compiler is 20,955,890 parameters, 6,748,897 trainable;
-> complete Shohin is 146,057,595. The active gate is now a separate-process source-deletion and
-> causal-mechanics falsifier over the same consumed training rows, including alpha rename,
-> declaration/event counterfactuals, line relocation, exact motor/reader certificates, all-state/
-> alive trajectories, halt, reset/freeze/force-alive, state/query/suffix swaps, shuffled packets,
-> and source poisoning. Commit exact source before its seed. User authority permits future systems
-> strictly below 200M, but every historical/current 150M contract remains immutable and this pilot
-> retains its stricter comparison gate. Mechanics alone are not native reasoning.
+> complete Shohin is 146,057,595. After two scoreless infrastructure failures, exact source
+> `18610ac` and seed `2391953347805476054` produce a complete mechanics pass in job `693986`: all
+> 29 gates pass, all 17 source-blind canonical/control arms have 8,000/8,000 final states, answers,
+> intermediate-state trajectories, and alive trajectories; motor/reader are 78/78 and 18/18;
+> alpha rename is 7,995/8,000 tapes; declaration/event counterfactuals and event-line relocation are
+> 8,000/8,000; every observed STOP bucket is exact; and post-STOP perturbation is invariant while
+> force-alive, reset/freeze, state/query/suffix, initial/kind/identity/amount, and shuffled-packet
+> controls follow their changed oracles exactly. Report/core SHA values are `e7353f50...`/
+> `166ca6f8...`; access is `0/0`. The source is destroyed before late-query compilation and a
+> separate process receives only 25+1 categorical bytes plus motor/reader weights. The active phase
+> is a fresh post-commit board that transfers this exact compiler/executor contract to new names and
+> renderer families with matched controls; no current scored split may be reused. User authority
+> permits future systems strictly below 200M, but every historical/current 150M contract remains
+> immutable and this system retains its stricter comparison gate. Mechanics alone are not native
+> reasoning.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9326,3 +9334,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   end in LF. Do not inspect partial predictions or call this a result. Repair only logical-line
   split/rejoin while preserving original trailing-LF status and exact byte length; test both forms
   and all 8,000 production transformations locally, freeze a new commit, and draw a new seed.
+
+- **2026-07-20 07:00--07:03** -- **Projected SD-CST passes complete source-deleted causal
+  mechanics and advances to a fresh board.** Exact repair source `18610ac`, post-commit seed
+  `2391953347805476054`, and H100 job `693986` complete in 53s on `evc22`. All 29 frozen gates pass.
+  Canonical packet/query are 8,000/8,000; motor/reader certificates are 78/78 and 18/18; all 17
+  source-blind arms have 8,000/8,000 final state, answer, joint, eight-step state trajectory, and
+  alive trajectory. All six observed STOP buckets are exact. Alpha rename is 7,995/8,000 whole
+  tapes; declaration swap, event-name counterfactual, and event-line relocation are 8,000/8,000.
+  Initial/kind/identity/amount, state/query, reset/freeze, post-STOP/force-alive, suffix, and shuffled
+  controls all follow their changed oracle; causal opportunities range from 1,448 to 8,000 rows.
+  The compiler full state digest is identical before/after. The program source is destroyed before
+  query compilation; an independent process receives only the 25+1 hard bytes and core weights.
+  Report/core/packet/output SHA values are `e7353f50...`/`166ca6f8...`/`eae55555...`/`cd43c10c...`;
+  verified local copies preserve report, core, and outputs. Access stays `0/0`. This authorizes a
+  fresh post-commit integration board only; it is not an independent score or broad reasoning claim.

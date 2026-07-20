@@ -1,6 +1,6 @@
 # R12 SD-CST Projected Source-Deletion Mechanics Gate
 
-**Status:** preregistered training-only causal gate; no scored access authorized
+**Status:** training-only causal pass; fresh-board integration authorized
 
 ## Fixed input
 
@@ -113,3 +113,39 @@ execution path driven by a learned compiler on consumed training mechanics. It
 does not establish fresh-distribution generalization, natural-language breadth,
 or broad native reasoning. Only a new post-commit board with matched controls
 can make the next claim.
+
+## Result
+
+Two scoreless infrastructure attempts are closed without metrics: `693982`
+failed on scalar state-digest serialization, and `693984` failed while
+constructing the event-line relocation for production text without a trailing
+LF. Both exited before a report and their seeds are retired.
+
+Exact repair source `18610acefd40cb33067caba648160981ab041161` preceded
+fresh seed `2391953347805476054`. Job `693986` completed on H100 `evc22` in
+53 seconds. All 29 gates pass:
+
+- canonical program/query packet: 8,000/8,000 exact;
+- motor certificate: 78/78; reader certificate: 18/18;
+- final state, answer, joint result, every intermediate state, and every alive
+  bit: 8,000/8,000 on all 17 canonical/control arms;
+- all six observed STOP-position buckets: 100%;
+- alpha rename: 7,995/8,000 whole tapes;
+- declaration-role swap, event-name counterfactual, and event-line relocation:
+  8,000/8,000 changed/invariant whole tapes as applicable;
+- program source destroyed before late query compilation;
+- separate source-blind executor packet/output hashes recorded;
+- full compiler state dictionary byte-identical before/after; and
+- development/confirmation access `0/0`.
+
+The control opportunities are substantial: initial/kind/identity/amount changes
+alter 2,260/3,712/3,664/1,448 final states; state swap alters 2,997; freeze
+6,722; reset 4,010; forced post-STOP execution 5,887; suffix swap 2,126; and
+query rotation changes all 8,000 answers. Shuffled packets retain only 1,312
+states and 2,669 answers. Post-STOP perturbation is exactly invariant.
+
+Report, execution-core, packet, and executor-output SHA-256 values are
+`e7353f50...`, `166ca6f8...`, `eae55555...`, and `cd43c10c...`.
+
+Decision: `admit_fresh_board_integration`. This remains a consumed-training
+mechanics result and makes no broad reasoning claim.
