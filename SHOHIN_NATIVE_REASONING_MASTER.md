@@ -164,12 +164,17 @@ source `0159bd4` was closed before board generation because it omitted the late-
 category from its public result. V1.1 attached query but could encode only seven
 updates plus pre-apply HALT. Active v1.2 uses nine event slots/thirteen records for
 depth eight plus HALT, adding 769 parameters. No v1.2 source commit, board,
-seed, GPU run, or score exists. The complete design and gates
+seed, GPU run, or score exists. A seedless fresh-board builder now defines
+48,000/2,048/2,048 rows over disjoint renderer-composition cosets, thirteen shuffled
+physical records, explicit depth-eight HALT capacity, no train oracle, and independent
+grammar/executor audits. A 288-row dry build passes every gate with zero cross-split
+name/prompt/13-gram/family overlap and 12.5% deranged-card state exactness; 22 focused
+tests pass. The complete design and gates
 are in `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md` and
 `R12_ER_CST_NEURAL_ADAPTER_PREREG.md`; CPU evidence is in
 `R12_ER_CST_RULE_CARD_CPU_RESULT.md`.
 
-**Last updated:** 2026-07-20 16:20 EDT. User authority requires every future
+**Last updated:** 2026-07-20 16:24 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2687,6 +2692,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Admitted the ER-CST neural adapter before source freeze: exact confirmed-parent reconstruction/copy passes; a 308,756-parameter compiler extension plus replacement 2,438-parameter tied motor yields 192,421,167 total parameters and 7,578,833 headroom. Fourteen tests, exact motor fit, source deletion, gradient isolation, static checks, and parameter/hash certificates pass. No board, seed, H100 job, or score exists. |
 | 2026-07-20 | Closed ER-CST adapter v1 pre-board because its public compilation result omitted late query, then admitted v1.1 with the inherited frozen query compiler attached. This changes zero parameters or trainable tensors and restores the categorical answer interface; all 14 tests and exact parent/hash certificates still pass. No board, seed, job, or score exists. |
 | 2026-07-20 | Closed ER-CST v1.1 pre-board because eight event slots cannot encode depth eight followed by explicit pre-apply HALT. V1.2 uses nine slots/thirteen records, totals 192,421,936 parameters with 7,578,064 headroom, and passes the full 14-test plus exact-parent contract. No board, seed, job, or score exists. |
+| 2026-07-20 | Admitted the seedless ER-CST fresh-board builder: 48,000/2,048/2,048 planned rows, four-view disjoint renderer cosets, independent grammar/executor round-trip, no train oracle, explicit depth-eight HALT, zero dry-build cross-split overlap, and 22 passing focused tests. No scientific seed or board bytes exist. |
 
 ---
 

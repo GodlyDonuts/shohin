@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 16:20 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 16:24 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -186,8 +186,11 @@
 > training seed, H100 job, development score, or confirmation access exists. Exact CPU source
 > `5a03824d2adcaa11633c6b7fd77cebe73afbd99e`
 > produces the durable report from seed 1,729: all seven gates pass; report/episode-registration
-> SHA-256 are `90c5e6fe...`/`a3802185...`. Commit/push the admitted neural adapter before drawing a
-> board seed; then implement and freeze the fresh-board builder, matched controls, and custody audit.
+> SHA-256 are `90c5e6fe...`/`a3802185...`. The seedless fresh-board source now builds
+> 48,000/2,048/2,048 rows from 12,000/512/512 four-view families across disjoint renderer cosets.
+> A 288-row dry build is fully exact, has zero cross-split name/prompt/13-gram/family overlap, no
+> train oracle, maximum 402/512 program bytes, and 12.5% deranged-card state exactness. Twenty-two
+> focused architecture/builder tests pass. Commit/push this exact builder before any board seed.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10124,3 +10127,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   contract now hashes to `1e637f3d...`. Fourteen focused tests and actual confirmed-parent
   reconstruction pass with unchanged parent/excluded digests. Freeze/push v1.2 and its board source
   before drawing any seed.
+
+- **2026-07-20 16:20--16:24** -- **The ER-CST fresh-board builder is locally admitted before
+  source freeze or seed.** It defines 12,000/512/512 latent families with four views each, disjoint
+  even/odd renderer-composition cosets, thirteen shuffled physical records, exactly one HALT, and
+  balanced depths one through eight. Training rows expose compiler fields only; scored oracles are
+  isolated. An independent grammar parser and categorical executor validate every dry-build row.
+  The 288-row seed-fixture build passes all 13 board gates with zero cross-split name/prompt/raw
+  word-13-gram/family overlap, maximum 402 program bytes and 74 line bytes, and 9/72 = 12.5%
+  deranged-card state exactness. Twenty-two focused tests plus Ruff and byte compilation pass. No
+  scientific board seed or board bytes exist. Commit/push exact source before seed draw.
