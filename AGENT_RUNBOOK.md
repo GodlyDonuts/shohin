@@ -210,9 +210,13 @@
 > equality. Twenty-three focused tests pass, independent raw-evidence metric recomputation passes,
 > and an actual confirmed-parent/real-row backward pass is finite with all core ER heads reached and
 > zero excluded-parent gradient leakage. The user reaffirmed a strict under-200M ceiling; the current
-> 192,421,936-parameter system remains unchanged with 7,578,064 headroom. No training seed, H100 job,
-> development access, or confirmation access exists. Commit/push exact source, then draw the sole
-> training seed and submit one serial H100 qualification.
+> 192,421,936-parameter system remains unchanged with 7,578,064 headroom. Exact scientific source
+> commit `90fd496de23ee9f12d21fa2c553df0de3fad9b23` was pushed before training seed
+> `7148525615058810782` was drawn (beacon SHA-256 `6334aa2c...`). A clean minimal Git capsule was
+> hash-verified on Newton after the shared workspace's unrelated unborn `master` metadata was left
+> untouched. `sbatch --test-only` selected `evc25`; sole job `694511` is RUNNING there and has passed
+> the real bf16 H100 preflight. It has not written a checkpoint or development ledger yet.
+> Development/confirmation custody remains `0/0`; do not submit a second writer or open either split.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10216,3 +10220,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   backward pass all pass; exact complete/trainable/headroom counts remain
   192,421,936/11,716,385/7,578,064 and excluded-parent gradient leakage is zero. No training seed,
   job, development read, or confirmation read exists. Commit/push this exact source before seed.
+
+- **2026-07-20 17:18--17:28** -- **ER-CST source is frozen and the sole H100 qualification starts.**
+  Exact source `90fd496de23ee9f12d21fa2c553df0de3fad9b23` was committed and pushed before
+  training seed `7148525615058810782` was derived from beacon SHA-256 `6334aa2c...`. Newton's shared
+  workspace has an unrelated unborn `master` ref, so it was not repaired in place; a minimal current-
+  tree Git capsule was packed locally, transferred with matching SHA-256 `9be7ad93...`, expanded
+  single-threaded under `shohin_capsules/er_cst_90fd496`, and verified at zero status differences.
+  The board hashes/mode remain exact. `sbatch --test-only` selected `evc25`; sole job `694511` is
+  RUNNING there and confirms `NVIDIA H100 PCIe` with bf16. No checkpoint or access ledger exists yet,
+  so custody remains `0/0`. Monitor the one job through all three fits, immutable checkpoint write,
+  development read, and independent assessment; never launch a duplicate.
