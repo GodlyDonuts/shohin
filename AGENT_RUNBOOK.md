@@ -346,8 +346,10 @@
 > `15994587003838256523` and board seed `6771214966983480715`. The resulting
 > 48,000/2,048/2,048 board passes all 16 gates and is byte-identical under a complete second rebuild.
 > Report/train/development/confirmation SHA values begin `7ecb3dcf...`/`bad7f8db...`/
-> `58aef892...`/`afedef75...`; confirmation is mode `0600`; access is `0/0`. No training seed or GPU
-> output exists yet. The admitted board
+> `58aef892...`/`afedef75...`; confirmation is mode `0600`; access is `0/0`. Board receipt commit
+> `296af7e96e06082771b8963c524de6c23a26a445` precedes raw training beacon
+> `16198579975688416761` and sole training seed `6975207938833640953`. No GPU output exists yet. The
+> admitted board
 > creates 48,000 compiler-only training rows from 12,000 latent programs and four even-parity
 > renderer views, plus 2,048 development and 2,048 sealed-confirmation rows from four odd-parity
 > renderer views with new names and entirely new declaration/event/query language. Treatment and a
@@ -9883,3 +9885,9 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `0/0`. A full independent rebuild from the same source/seed/prior inputs is byte-identical for all
   four files. No training seed or model fit exists. Commit the receipt before drawing the sole
   training seed.
+
+- **2026-07-20 14:18** -- **The sole fresh-board training seed is drawn after the committed board
+  receipt.** Commit `296af7e96e06082771b8963c524de6c23a26a445` precedes raw 64-bit beacon
+  `16198579975688416761`, reduced modulo `2^63` to seed `6975207938833640953`. No source, board,
+  architecture, arm, optimizer, gate, threshold, or assessor setting changes. No GPU job or output
+  exists at this receipt point. Transport exact source/data/checkpoints before submission.

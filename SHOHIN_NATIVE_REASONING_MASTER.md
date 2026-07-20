@@ -70,7 +70,8 @@ all sixteen admission gates, has zero cross-split/prior leakage, three globally
 unique names per family, mode-`0600` confirmation, byte-identical deterministic
 rebuilds, and `0/0` score access. Report/train/development/confirmation SHA-256
 values begin `7ecb3dcf...`/`bad7f8db...`/`58aef892...`/`afedef75...`. No training
-seed or model fit exists yet.
+seed or model fit existed at board receipt. Receipt commit `296af7e` precedes
+the sole training seed `6975207938833640953`; no GPU output exists yet.
 V2 custody is `1/0`, its confirmation is sealed, and no board will be rescored.
 Broad language-grounded, self-directed reasoning remains unestablished.
 

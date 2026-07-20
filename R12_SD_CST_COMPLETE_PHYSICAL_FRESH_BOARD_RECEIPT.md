@@ -1,6 +1,8 @@
 # R12 SD-CST Complete Physical Fresh-Board Receipt
 
-**Status:** admitted and sealed before training-seed draw or model fit.
+**Status:** admitted and sealed before training-seed draw or model fit. Board
+receipt commit `296af7e96e06082771b8963c524de6c23a26a445` precedes the sole
+training-seed draw.
 
 ## Custody
 
@@ -10,6 +12,8 @@
 - Development accesses: `0`
 - Confirmation accesses: `0`
 - Confirmation file mode: `0600`
+- Raw training beacon: `16198579975688416761`
+- Training seed, reduced modulo `2^63`: `6975207938833640953`
 - Prior consumed train SHA-256:
   `b7756dbf8d4401dbc5fb897dee53f68758e27200b1ce0d2387631f2f0205ec25`
 - Prior consumed development SHA-256:
@@ -65,5 +69,6 @@ All sixteen board gates pass:
 
 A second full generation from the same committed source, prior inputs, and seed
 is byte-identical for all four artifacts. This receipt authorizes only a later
-post-receipt training-seed draw and the sole preregistered development pilot. It
-does not authorize confirmation access or make a reasoning claim.
+post-receipt training-seed draw and the sole preregistered development pilot.
+That draw is now recorded above; no fit or GPU output exists yet. It does not
+authorize confirmation access or make a reasoning claim.
