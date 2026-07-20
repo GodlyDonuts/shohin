@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 06:20 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 06:46 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -180,12 +180,19 @@
 > the solved parent fields and event pointer remains zero; report SHA is `6a7d0ed9...`. The active
 > successor `693977` preserves every parent field/tensor and lifts event-span localization to
 > 32.625%, but frozen parent keys leave declaration/initial pointers at zero; report SHA is
-> `2b27cd79...`. The active projected pilot adds only a binding-specific 384-wide nonlinear key
-> adapter and query projection. The compiler is 20,955,890 parameters, 6,748,897 trainable; complete
-> Shohin is 146,057,595. Commit source/job before its seed. Raw STOP/tape, frozen-parent identity,
-> and zero scored access are mandatory. User authority permits future systems below 200M, while this
-> pilot retains its stricter 150M comparison
-> gate. Mechanics alone are not native reasoning.
+> `2b27cd79...`. The dedicated projected pilot `693979` then passes all 14 training-only gates from
+> source `9bd2e04` and seed `6715972906370623241`: initial/kind/identity/amount/query/whole tape are
+> 8,000/8,000; declaration/initial/event pointer rows are 7,999/8,000, 8,000/8,000, and
+> 7,998/8,000; every row has one raw STOP; and the frozen parent is byte-identical. The untrained
+> projected prefit has only 1/8,000 whole tapes. Compiler/report SHA values are `f347d1ae...`/
+> `5d6be147...`; access remains `0/0`. The compiler is 20,955,890 parameters, 6,748,897 trainable;
+> complete Shohin is 146,057,595. The active gate is now a separate-process source-deletion and
+> causal-mechanics falsifier over the same consumed training rows, including alpha rename,
+> declaration/event counterfactuals, line relocation, exact motor/reader certificates, all-state/
+> alive trajectories, halt, reset/freeze/force-alive, state/query/suffix swaps, shuffled packets,
+> and source poisoning. Commit exact source before its seed. User authority permits future systems
+> strictly below 200M, but every historical/current 150M contract remains immutable and this pilot
+> retains its stricter comparison gate. Mechanics alone are not native reasoning.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9285,3 +9292,19 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   is `0/0`. Preregister one binding-only nonlinear key adapter/query projection while preserving the
   entire parent path. Projected compiler/complete counts are 20,955,890/146,057,595; 6,748,897 are
   trainable. Fifty-three tests pass. Freeze exact source before a new training-only seed.
+
+- **2026-07-20 06:20--06:46** -- **A dedicated projected key space solves the complete
+  training-only compiler; the stronger source-deletion gate is frozen before its seed.** Job
+  `693979` completes on H100 `evc22` from exact source `9bd2e04` and post-commit seed
+  `6715972906370623241`. Epoch one reaches 7,979/8,000 whole tapes and epochs two through four reach
+  8,000/8,000. Final initial/kind/identity/amount/query/whole tape are all 8,000/8,000;
+  declaration/initial/event pointer rows are 7,999/8,000, 8,000/8,000, and 7,998/8,000; one raw
+  STOP holds on every row; and the frozen parent digest is unchanged. Untrained prefit whole tape is
+  only 1/8,000. Checkpoint/report SHA values are `f347d1ae...`/`5d6be147...`; access is `0/0`.
+  Complete size remains 146,057,595. The next preregistered mechanics gate destroys program source
+  before query disclosure, emits only 25+1 categorical bytes, and executes those bytes in a
+  separate process importing no projected compiler/board/targets. It freezes exact alpha/declaration/event/
+  line controls plus initial/kind/identity/amount/state/query/reset/freeze/halt/force-alive/suffix/
+  shuffled-packet interventions and full state/alive trajectories. Twenty-six focused tests and all
+  static checks pass locally. Global authority is now strict below 200M; old and current 150M gates
+  remain frozen scientific contracts. Commit this exact source, then draw one mechanics seed.

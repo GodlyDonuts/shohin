@@ -2670,6 +2670,89 @@ Stop trying to make a single decoder learn to be a compiler, ALU, scheduler, and
 <!-- END EMBEDDED SOURCE -->
 
 ---
+
+## 2026-07-20 SD-CST projected-binding update
+
+### New compiler result
+
+The byte-addressed parent had already solved physical line localization, event
+kind, amount, STOP, and late query, but could not bind repeated arbitrary names.
+The first shared content bus solved declaration-to-initial binding and failed
+event binding. A frozen-parent hierarchical bus improved event localization to
+32.625% but exposed a frozen-key-interface failure.
+
+The dedicated projected bus changes only that interface: one independent
+384-by-384 query projection and a binding-only
+`Linear(384,384) -> GELU -> Linear(384,384)` key adapter. The parent source
+encoder, line pointers, event fields, query path, content fingerprint, and
+permutation scorer remain frozen.
+
+Training-only job `693979`, source `9bd2e04`, seed
+`6715972906370623241`, reaches on the 8,000 held-out consumed-training rows:
+
+| Field | Exact |
+|---|---:|
+| Whole categorical tape | 8,000/8,000 |
+| Initial state | 8,000/8,000 |
+| Event kind / one raw STOP | 8,000/8,000 |
+| Event identity | 8,000/8,000 |
+| Amount | 8,000/8,000 |
+| Late query | 8,000/8,000 |
+| Declaration pointer set | 7,999/8,000 |
+| Initial-occurrence pointer set | 8,000/8,000 |
+| Event-occurrence pointer set | 7,998/8,000 |
+| Untrained projected prefit whole tape | 1/8,000 |
+
+All 14 frozen gates pass. The compiler has 20,955,890 parameters, of
+which 6,748,897 are trainable. Frozen Shohin plus compiler, motor, and reader is
+146,057,595 parameters. Checkpoint/report SHA-256 values are `f347d1ae...` and
+`5d6be147...`; development/confirmation access is `0/0`.
+
+This is a compiler-mechanics result, not a native-reasoning score. Its held-out
+partition was observed after every training epoch and comes from an already
+consumed training board.
+
+### Active source-deletion theorem test
+
+`R12_SD_CST_PROJECTED_MECHANICS_PREREG.md` freezes the next gate before its seed.
+The compiler process must compile the program, reduce it to 25 CPU `uint8`
+categories, destroy all source tensors, and only then compile the one-byte late
+query. A separate process receives only those 26 bytes plus independently fitted
+motor/reader weights. It cannot import the projected compiler, board, parser,
+targets, row IDs, source, residuals, pointers, or confidences.
+
+The hard executor must match an independent oracle on every final state,
+answer, intermediate state, and alive bit under canonical execution, global
+alpha renaming, valid declaration/event counterfactuals, event-line relocation,
+initial/kind/identity/amount changes, state and query swaps, reset, freeze,
+post-STOP perturbation, force-alive suffix execution, operand-suffix swap, and
+shuffled packets. Exact 78-cell motor and 18-cell reader certificates are
+mandatory. Passing authorizes only a fresh-board integration.
+
+### Parameter-cap policy
+
+The user now authorizes any complete system **strictly below 200,000,000
+parameters**. Current available expansion from the 146,057,595 system is
+53,942,404 parameters. Historical and active sub-150M experiments keep their
+frozen 150M gates; globally changing old constants would invalidate matched
+comparisons.
+
+Extra parameters are not spent until the 146.06M mechanism passes causal and
+fresh-board gates. The first independently falsifiable expansion candidates are:
+
+1. a roughly 20.46M pretrained-semantic fusion path, compared against an
+   equal-parameter byte-memory arm and line-permuted Shohin residuals;
+2. a net roughly 6.81M ordered span-equality encoder, but only if adversarial
+   same-bigram names expose the current position-free fingerprint; and
+3. a roughly 25.25M entity-factorized recurrent transport system, compared
+   against an equal-parameter absolute-index executor and required to transfer
+   to unseen four/five-entity cardinalities.
+
+These mechanisms must win separately before composition. Scaling the current
+finite six-state motor would merely memorize the same 78 cells and is not an
+admitted use of the new cap.
+
+---
 ## Embedded source 2: `FRONTIER_AGENT_PLANS_ANALYSIS.md`
 
 Original source path: `FRONTIER_AGENT_PLANS_ANALYSIS.md`

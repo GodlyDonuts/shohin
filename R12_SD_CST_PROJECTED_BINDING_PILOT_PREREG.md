@@ -1,6 +1,6 @@
 # R12 SD-CST Dedicated-Projection Binding Pilot
 
-**Status:** frozen training-only interface falsifier; no scored access authorized
+**Status:** training-only pass; source-deletion mechanics gate preregistered; no scored access
 
 ## Parent results and diagnosis
 
@@ -55,3 +55,28 @@ and access `0/0`.
 A pass advances only to shuffled/swap/no-address/hard-negative causal controls
 and fresh-board end-to-end source deletion. It is not a reasoning score. A
 failure closes this projected interface before any scored split.
+
+## Result
+
+Source commit `9bd2e04ea93406eb50a6fd112cd844892b72a7c4` preceded
+seed `6715972906370623241`. Job `693979` completed on H100 `evc22` in
+4m04s. Epoch one already reached 7,979/8,000 exact whole tapes; epochs two
+through four reached 8,000/8,000. The final held-out consumed-training result is:
+
+- 8,000/8,000 initial state, kind, identity, amount, query, and whole tape;
+- 8,000/8,000 initial-occurrence pointers;
+- 7,999/8,000 declaration pointers;
+- 7,998/8,000 event-occurrence pointers;
+- exactly one raw STOP on all 8,000 rows; and
+- frozen-parent digest unchanged.
+
+All 14 frozen gates pass. The untrained projected prefit has only 1/8,000 whole
+tapes, so the result is not inherited from the frozen parent. Checkpoint and
+report SHA-256 values are
+`f347d1aea90dd3c60f7500167c7c22884451b365880259698306c6fce8ab10f3`
+and `5d6be14798af3a75781898c6405e956fe9eb040e861ee63e669e7b87e7fa6f32`.
+Development and confirmation access remain `0/0`.
+
+This passes compiler mechanics only. The next authorized experiment is
+`R12_SD_CST_PROJECTED_MECHANICS_PREREG.md`; no fresh scored board is authorized
+until its separate-process source-deletion and causal controls pass.

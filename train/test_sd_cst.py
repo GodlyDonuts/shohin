@@ -30,6 +30,7 @@ from sd_cst import (
     compiler_field_losses,
     late_query_loss,
     reader_loss,
+    rollout_hard_categorical,
     swap_late_queries,
     swap_tape_suffix,
 )
@@ -435,6 +436,17 @@ def test_oracle_fit_state_suffix_query_swaps_and_source_poison(oracle_system):
     assert torch.equal(source_storage, torch.full_like(source_storage, -1))
 
     hard = oracle_system.rollout_hard(tape.hard(), query.hard())
+    standalone = rollout_hard_categorical(
+        oracle_system.motor, oracle_system.reader, tape.hard(), query.hard(),
+    )
     assert hard.final_state.tolist() == expected
+    assert torch.equal(standalone.final_state, hard.final_state)
+    assert torch.equal(standalone.answer_logits, hard.answer_logits)
+    assert all(
+        torch.equal(left, right)
+        for left, right in zip(
+            standalone.state_trajectory, hard.state_trajectory, strict=True,
+        )
+    )
     assert all(state.dtype == torch.uint8 for state in hard.state_trajectory)
     assert all(alive.dtype == torch.bool for alive in hard.alive_trajectory)

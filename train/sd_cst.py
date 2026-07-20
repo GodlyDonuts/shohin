@@ -421,6 +421,71 @@ class CategoricalStateReader(nn.Module):
         return self.network(torch.cat((state, query), dim=-1))
 
 
+@torch.no_grad()
+def rollout_hard_categorical(
+    motor: TiedCategoricalMotor,
+    reader: CategoricalStateReader,
+    tape: HardProgramTape,
+    query_packet: HardLateQuery,
+    *,
+    control: Literal["normal", "reset", "freeze"] = "normal",
+    state_swap: StateSwap | None = None,
+    force_alive: bool = False,
+) -> HardRolloutResult:
+    """Execute the production hard-byte path without requiring a source compiler."""
+    if not isinstance(tape, HardProgramTape):
+        raise TypeError("hard rollout requires HardProgramTape")
+    if not isinstance(query_packet, HardLateQuery):
+        raise TypeError("hard rollout requires HardLateQuery")
+    if tape.batch_size != query_packet.position.shape[0]:
+        raise ValueError("hard program/query batch sizes differ")
+    if control not in {"normal", "reset", "freeze"}:
+        raise ValueError("control must be normal, reset, or freeze")
+    device = next(motor.parameters()).device
+    kind_ids = tape.event_kind.to(device=device, dtype=torch.long)
+    identity_ids = tape.event_identity.to(device=device, dtype=torch.long)
+    amount_ids = tape.amount.to(device=device, dtype=torch.long)
+    query_ids = query_packet.position.to(device=device, dtype=torch.long)
+    batch = tape.batch_size
+    state_ids = tape.initial_state.to(device=device, dtype=torch.long)
+    initial_ids = state_ids.clone()
+    alive = torch.ones(batch, device=device, dtype=torch.bool)
+    state_trajectory = []
+    alive_trajectory = []
+    for step in range(EVENT_STEPS):
+        motor_state = initial_ids if control == "reset" else state_ids
+        logits = motor(
+            F.one_hot(motor_state, STATE_COUNT).float(),
+            F.one_hot(kind_ids[:, step], EVENT_KIND_COUNT).float(),
+            F.one_hot(identity_ids[:, step], IDENTITY_COUNT).float(),
+            F.one_hot(amount_ids[:, step], AMOUNT_COUNT).float(),
+        )
+        proposal_ids = logits.argmax(-1)
+        stop = kind_ids[:, step].eq(STOP_KIND)
+        update = alive & ~stop
+        if control != "freeze":
+            state_ids = torch.where(update, proposal_ids, state_ids)
+        if not force_alive:
+            alive = alive & ~stop
+        if state_swap is not None and step == state_swap.after_step:
+            permutation = _validate_batch_permutation(
+                state_swap.batch_permutation, batch, state_ids.device,
+            )
+            state_ids = state_ids.index_select(0, permutation)
+        state_trajectory.append(state_ids.to(torch.uint8))
+        alive_trajectory.append(alive.clone())
+    answer_logits = reader(
+        F.one_hot(state_ids, STATE_COUNT).float(),
+        F.one_hot(query_ids, QUERY_COUNT).float(),
+    )
+    return HardRolloutResult(
+        final_state=state_ids.to(torch.uint8),
+        answer_logits=answer_logits,
+        state_trajectory=tuple(state_trajectory),
+        alive_trajectory=tuple(alive_trajectory),
+    )
+
+
 def swap_tape_suffix(
     tape: DeletedProgramTape,
     batch_permutation: torch.Tensor,
@@ -607,56 +672,14 @@ class SDCSTSystem(nn.Module):
         force_alive: bool = False,
     ) -> HardRolloutResult:
         """Score only integer categories; no logit or confidence survives a step."""
-        if not isinstance(tape, HardProgramTape):
-            raise TypeError("hard rollout requires HardProgramTape")
-        if not isinstance(query_packet, HardLateQuery):
-            raise TypeError("hard rollout requires HardLateQuery")
-        if tape.batch_size != query_packet.position.shape[0]:
-            raise ValueError("hard program/query batch sizes differ")
-        if control not in {"normal", "reset", "freeze"}:
-            raise ValueError("control must be normal, reset, or freeze")
-        device = next(self.motor.parameters()).device
-        kind_ids = tape.event_kind.to(device=device, dtype=torch.long)
-        identity_ids = tape.event_identity.to(device=device, dtype=torch.long)
-        amount_ids = tape.amount.to(device=device, dtype=torch.long)
-        query_ids = query_packet.position.to(device=device, dtype=torch.long)
-        batch = tape.batch_size
-        state_ids = tape.initial_state.to(device=device, dtype=torch.long)
-        initial_ids = state_ids.clone()
-        alive = torch.ones(batch, device=device, dtype=torch.bool)
-        state_trajectory = []
-        alive_trajectory = []
-        for step in range(EVENT_STEPS):
-            motor_state = initial_ids if control == "reset" else state_ids
-            logits = self.motor(
-                F.one_hot(motor_state, STATE_COUNT).float(),
-                F.one_hot(kind_ids[:, step], EVENT_KIND_COUNT).float(),
-                F.one_hot(identity_ids[:, step], IDENTITY_COUNT).float(),
-                F.one_hot(amount_ids[:, step], AMOUNT_COUNT).float(),
-            )
-            proposal_ids = logits.argmax(-1)
-            stop = kind_ids[:, step].eq(STOP_KIND)
-            update = alive & ~stop
-            if control != "freeze":
-                state_ids = torch.where(update, proposal_ids, state_ids)
-            if not force_alive:
-                alive = alive & ~stop
-            if state_swap is not None and step == state_swap.after_step:
-                permutation = _validate_batch_permutation(
-                    state_swap.batch_permutation, batch, state_ids.device,
-                )
-                state_ids = state_ids.index_select(0, permutation)
-            state_trajectory.append(state_ids.to(torch.uint8))
-            alive_trajectory.append(alive.clone())
-        answer_logits = self.reader(
-            F.one_hot(state_ids, STATE_COUNT).float(),
-            F.one_hot(query_ids, QUERY_COUNT).float(),
-        )
-        return HardRolloutResult(
-            final_state=state_ids.to(torch.uint8),
-            answer_logits=answer_logits,
-            state_trajectory=tuple(state_trajectory),
-            alive_trajectory=tuple(alive_trajectory),
+        return rollout_hard_categorical(
+            self.motor,
+            self.reader,
+            tape,
+            query_packet,
+            control=control,
+            state_swap=state_swap,
+            force_alive=force_alive,
         )
 
     def source_poison_invariance(
