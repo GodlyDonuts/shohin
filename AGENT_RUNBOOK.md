@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 16:48 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 17:00 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -198,8 +198,12 @@
 > post-admission identifiability audit closes this unopened board: ordered rule-card slots were latent
 > arbitrary IDs with no source-visible address. No training seed or scored access exists. Board v1.2
 > adds only `W1/W2/W3` or `L1/L2/L3` storage addresses; these reveal no rule meaning or outcome.
-> Twenty-three tests and a complete 52,096-row fixture pass all gates with maximum 405/512 bytes.
-> Commit/push this exact repair before a new board seed; never train the old board.
+> Exact addressed source `9cf9d043d0e86a30d18c6d5e3b838c80ec054d7c` precedes replacement board seed
+> `8277659525319823840`. The 48,000/2,048/2,048 board passes all 13 gates and independently rebuilds
+> byte-identically. Train/development/confirmation/report hashes begin `b5cb2f14...`/`5cd0395f...`/
+> `7404b247...`/`589b203f...`; confirmation is `0600`; access is `0/0`. All 52,096 addressed-rule
+> rows production-parse and execute exactly; deranged-card state is 2,033/13,024 = 15.610%. No
+> training seed or neural job exists. Commit/push and hash-verify transport before training source.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10179,3 +10183,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   The production parser requires all three slots exactly once. Twenty-three tests and a complete
   52,096-row fixture pass all 13 gates; maximum source is 405/512 bytes. Freeze/push exact repair and
   draw a fresh board seed; never train source `fba34cd` board seed `1686667709479653771`.
+
+- **2026-07-20 16:48--17:00** -- **The addressed ER-CST v1.2 board is admitted and independently
+  reproduced before training seed.** Exact source `9cf9d043d0e86a30d18c6d5e3b838c80ec054d7c`
+  precedes seed `8277659525319823840`. The 48,000/2,048/2,048 rows pass all 13 gates, including exact
+  addressed-rule parsing and execution on all 52,096 rows, 195,360/195,360 unique names, zero
+  cross-split name/prompt/word-13-gram/family overlap, exact depth balance, 405/512 maximum source,
+  confirmation mode `0600`, and custody `0/0`. Family-deranged cards retain 2,033/13,024 = 15.610%
+  state. The independent rebuild is byte-identical. Train/development/confirmation/report hashes
+  begin `b5cb2f14...`/`5cd0395f...`/`7404b247...`/`589b203f...`. No training seed or model output
+  exists. Commit/push the receipt, sync/hash-verify Newton bytes, then freeze training/evaluation.

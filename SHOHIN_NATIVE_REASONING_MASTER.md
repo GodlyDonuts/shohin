@@ -173,14 +173,17 @@ Builder v1.1 uses a seed-keyed bijection. Exact source `fba34cd` precedes admitt
 board seed `1686667709479653771`: the bytes pass all integrity gates but are closed
 before training because the ordered rule slots were latent arbitrary IDs with no
 source-visible address. Board v1.2 adds only `W1/W2/W3` or `L1/L2/L3` storage
-addresses, not operation meaning. Twenty-three tests and a complete 52,096-row
-fixture pass all gates at maximum 405/512 bytes. No replacement source commit,
-board seed, training seed, or neural result exists. The complete design and gates
+addresses, not operation meaning. Exact addressed source `9cf9d04` precedes board
+seed `8277659525319823840`; the replacement 48,000/2,048/2,048 board passes all 13
+gates and independently rebuilds byte-identically, with zero cross-split overlap,
+exact depth balance, confirmation `0600`, access `0/0`, and 15.610% deranged-card
+state. Hashes begin `b5cb2f14`/`5cd0395f`/`7404b247`; report `589b203f`. No training
+seed or neural result exists. The complete design and gates
 are in `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md` and
 `R12_ER_CST_NEURAL_ADAPTER_PREREG.md`; CPU evidence is in
 `R12_ER_CST_RULE_CARD_CPU_RESULT.md`.
 
-**Last updated:** 2026-07-20 16:48 EDT. User authority requires every future
+**Last updated:** 2026-07-20 17:00 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2702,6 +2705,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Closed the first ER-CST board seed before byte write on full-scale 32-bit name collisions. V1.1 replaces only name allocation with a seed-keyed bijection, passes 195,360/195,360 uniqueness and all 13 gates on a complete 52,096-row fixture, and retains the failed seed permanently closed. |
 | 2026-07-20 | Admitted and independently reproduced the ER-CST fresh board from exact source `fba34cd` and seed `1686667709479653771`: 48,000/2,048/2,048 rows, all 13 gates, all 52,096 parser/executor checks, zero cross-split overlap, confirmation `0600`, and access `0/0`. No training seed or neural score exists. |
 | 2026-07-20 | Closed the unopened `fba34cd` ER-CST board before training because ordered rule-card slots were unidentifiable from source. Board v1.2 adds only explicit rule storage addresses, retains shuffled physical records and hidden operation meaning, and passes all 23 tests plus a full 52,096-row fixture audit. A fresh source commit and board seed are required. |
+| 2026-07-20 | Admitted and independently reproduced addressed ER-CST board source `9cf9d04`, seed `8277659525319823840`: 48,000/2,048/2,048 rows, all 13 gates, all 52,096 parser/executor checks, zero cross-split overlap, confirmation `0600`, access `0/0`, and 15.610% deranged-card state. No training seed or neural result exists. |
 
 ---
 

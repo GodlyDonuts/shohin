@@ -1,0 +1,197 @@
+{
+  "all_gates_pass": true,
+  "board_seed": 8277659525319823840,
+  "confirmation_accesses": 0,
+  "controls": {
+    "families": 13024,
+    "family_deranged_state_exact": 2033,
+    "rate": 0.15609643734643736
+  },
+  "development_accesses": 0,
+  "files": {
+    "confirmation.jsonl": {
+      "bytes": 6143917,
+      "rows": 2048,
+      "sha256": "7404b2473da5d76835f4d5bf69d852b62572683cd878c6c968740421cae54189"
+    },
+    "development.jsonl": {
+      "bytes": 6137400,
+      "rows": 2048,
+      "sha256": "5cd0395f6b171c5b61e741694ffe3f584d3d60d0795bcdfbfbc27966cfc56ef9"
+    },
+    "train.jsonl": {
+      "bytes": 133932986,
+      "rows": 48000,
+      "sha256": "b5cb2f14949b68e9f005b03d11356a24a3d75df76876aebd2da20a3d9efc2a28"
+    }
+  },
+  "gates": {
+    "all_rows_semantic_exact": true,
+    "balanced_depth_card_query": true,
+    "complete_renderer_families": true,
+    "deranged_card_state_below_40pct": true,
+    "exact_family_counts": true,
+    "exact_row_counts": true,
+    "globally_unique_opaque_names": true,
+    "lines_within_144_bytes": true,
+    "program_within_512_bytes": true,
+    "renderer_compositions_disjoint": true,
+    "scored_rows_have_oracle": true,
+    "train_has_no_oracle": true,
+    "zero_cross_split_overlap": true
+  },
+  "overlap": {
+    "er_cst_development__er_cst_confirmation": {
+      "families": 0,
+      "names": 0,
+      "prompts": 0,
+      "word_13grams": 0
+    },
+    "er_cst_train__er_cst_confirmation": {
+      "families": 0,
+      "names": 0,
+      "prompts": 0,
+      "word_13grams": 0
+    },
+    "er_cst_train__er_cst_development": {
+      "families": 0,
+      "names": 0,
+      "prompts": 0,
+      "word_13grams": 0
+    }
+  },
+  "protocol": "R12-ER-CST-v1.2",
+  "schema": "r12_er_cst_fresh_board_report_v1_2",
+  "source_commit": "9cf9d043d0e86a30d18c6d5e3b838c80ec054d7c",
+  "splits": {
+    "er_cst_confirmation": {
+      "card_counts": {
+        "0": 1028,
+        "1": 1024,
+        "2": 1020,
+        "3": 1020,
+        "4": 1024,
+        "5": 1028
+      },
+      "depth_counts": {
+        "1": 256,
+        "2": 256,
+        "3": 256,
+        "4": 256,
+        "5": 256,
+        "6": 256,
+        "7": 256,
+        "8": 256
+      },
+      "expected_renderer_names": [
+        "er-fresh-d0w1e0q0-v1",
+        "er-fresh-d0w1e1q1-v1",
+        "er-fresh-d1w0e0q0-v1",
+        "er-fresh-d1w0e1q1-v1"
+      ],
+      "families": 512,
+      "family_complete": true,
+      "max_line_bytes": 75,
+      "max_program_bytes": 405,
+      "query_counts": {
+        "0": 684,
+        "1": 684,
+        "2": 680
+      },
+      "renderer_counts": {
+        "er-fresh-d0w1e0q0-v1": 512,
+        "er-fresh-d0w1e1q1-v1": 512,
+        "er-fresh-d1w0e0q0-v1": 512,
+        "er-fresh-d1w0e1q1-v1": 512
+      },
+      "rows": 2048,
+      "semantic_exact": 2048
+    },
+    "er_cst_development": {
+      "card_counts": {
+        "0": 1020,
+        "1": 1020,
+        "2": 1024,
+        "3": 1028,
+        "4": 1028,
+        "5": 1024
+      },
+      "depth_counts": {
+        "1": 256,
+        "2": 256,
+        "3": 256,
+        "4": 256,
+        "5": 256,
+        "6": 256,
+        "7": 256,
+        "8": 256
+      },
+      "expected_renderer_names": [
+        "er-fresh-d0w1e0q0-v1",
+        "er-fresh-d0w1e1q1-v1",
+        "er-fresh-d1w0e0q0-v1",
+        "er-fresh-d1w0e1q1-v1"
+      ],
+      "families": 512,
+      "family_complete": true,
+      "max_line_bytes": 75,
+      "max_program_bytes": 405,
+      "query_counts": {
+        "0": 684,
+        "1": 684,
+        "2": 680
+      },
+      "renderer_counts": {
+        "er-fresh-d0w1e0q0-v1": 512,
+        "er-fresh-d0w1e1q1-v1": 512,
+        "er-fresh-d1w0e0q0-v1": 512,
+        "er-fresh-d1w0e1q1-v1": 512
+      },
+      "rows": 2048,
+      "semantic_exact": 2048
+    },
+    "er_cst_train": {
+      "card_counts": {
+        "0": 24000,
+        "1": 24000,
+        "2": 24000,
+        "3": 24000,
+        "4": 24000,
+        "5": 24000
+      },
+      "depth_counts": {
+        "1": 6000,
+        "2": 6000,
+        "3": 6000,
+        "4": 6000,
+        "5": 6000,
+        "6": 6000,
+        "7": 6000,
+        "8": 6000
+      },
+      "expected_renderer_names": [
+        "er-fresh-d0w0e0q0-v1",
+        "er-fresh-d0w0e1q1-v1",
+        "er-fresh-d1w1e0q0-v1",
+        "er-fresh-d1w1e1q1-v1"
+      ],
+      "families": 12000,
+      "family_complete": true,
+      "max_line_bytes": 75,
+      "max_program_bytes": 405,
+      "query_counts": {
+        "0": 16000,
+        "1": 16000,
+        "2": 16000
+      },
+      "renderer_counts": {
+        "er-fresh-d0w0e0q0-v1": 12000,
+        "er-fresh-d0w0e1q1-v1": 12000,
+        "er-fresh-d1w1e0q0-v1": 12000,
+        "er-fresh-d1w1e1q1-v1": 12000
+      },
+      "rows": 48000,
+      "semantic_exact": 48000
+    }
+  }
+}
