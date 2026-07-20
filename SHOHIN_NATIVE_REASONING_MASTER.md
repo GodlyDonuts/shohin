@@ -144,7 +144,19 @@ The full closed-board record is
 `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_2_RESULT.md`.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 15:40 EDT. User authority requires every future
+The active post-confirmation hypothesis is Episodic Rule-Card Categorical State
+Transport (ER-CST). It replaces the fixed event ontology with three opaque
+operations whose meanings are defined inside each problem by determining
+before/after witnesses over fresh symbols. The planned model must compile those
+witnesses into categorical `S_3` permutation cards, bind fresh opcode invocations,
+delete source, and compose cards recurrently. This tests episodic semantic binding
+rather than another renderer paraphrase. Five CPU tests pass, and the 10,000-episode
+pre-freeze dry falsifier is exact on witness inference, execution, witness/opcode
+renaming, card storage order, and post-HALT invariance; rotating card meanings leaves
+15.08% exact final states. No neural source, board, seed, GPU run, or score exists.
+The complete design and gates are in `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md`.
+
+**Last updated:** 2026-07-20 15:51 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2657,6 +2669,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Implemented the pre-seed complete-physical fresh-board transfer source: new lexical/name atoms, even-to-odd renderer composition, matched family-deranged labels, source deletion, a second evidence-based assessor, exact 192,129,179 total parameters, and 20 passing focused tests. No source freeze, seed, board, or score exists yet. |
 | 2026-07-20 | Closed the first fresh-board seed before byte write on inherited name reuse, repaired only global family re-keying under source `aa1c598`, and admitted the replacement 48,000/2,048/2,048 board with all 16 gates, byte-identical rebuilds, sealed confirmation, and `0/0` access. No training seed exists yet. |
 | 2026-07-20 | Independently confirmed SD-CST Complete Physical Fresh v1.3 on the sole 2,048-row sealed read: treatment is 100% exact on packets, every pointer, recurrent states, answers, joints, each unseen renderer, and every depth; family-deranged labels are 0% packet and 7.666% state/joint. All 19 scientific and four assessor gates pass with custody `1/1`. Promote checkpoint `a5888d88...` as a bounded fresh compiler/source-deleted executor baseline, not general reasoning. |
+| 2026-07-20 | Implemented ER-CST pre-freeze CPU mechanics: every problem defines fresh opaque `S_3` operations by determining witnesses, then requires rule-card compilation and recurrent composition. Five tests and a 10,000-episode dry falsifier pass all exact/invariance gates; card derangement drops final-state exactness to 15.08%. No neural source, board, seed, or score exists. |
 
 ---
 

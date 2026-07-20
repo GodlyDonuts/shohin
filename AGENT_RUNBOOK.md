@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 15:40 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 15:51 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -163,6 +163,20 @@
 > bounded fresh renderer/name compilation into a source-deleted categorical executor. It does not
 > establish unconstrained language grounding, arbitrary programs, learned arithmetic, planning,
 > or broad general reasoning.
+>
+> **Active next hypothesis:** Episodic Rule-Card Categorical State Transport (ER-CST) varies the
+> operation semantics inside every problem rather than adding more fixed-ontology paraphrases. Three
+> fresh opaque operations are each defined by one determining before/after witness over fresh symbols;
+> the model must emit categorical permutation cards, bind later opcode invocations, delete source,
+> and compose the cards recurrently. The named finite rule family is `S_3`, so this is an exact test
+> of episodic semantic binding, not unrestricted operation invention. The pre-freeze CPU mechanics
+> pass five focused tests and a deterministic 10,000-episode dry falsifier: witness inference,
+> execution, witness/opcode renaming, card-storage reindexing, and post-HALT suffix invariance are
+> 10,000/10,000; rotating card meanings leaves 1,508/10,000 exact final states. The confirmed
+> 192,129,179-parameter parent leaves at most 7,870,820 new parameters under an absolute
+> 199,999,999 cap. No neural source commit, board seed, training seed, H100 job, development score,
+> or confirmation access exists. Freeze/push exact CPU theory and mechanics before producing the
+> durable falsifier report, then implement the smallest parameter-audited neural adapter.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10050,3 +10064,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `a5888d88...` is retained read-only on Newton. Promote this as the bounded fresh compiler/executor
   baseline only; it is not broad language grounding, arbitrary program induction, planning, or
   general reasoning.
+
+- **2026-07-20 15:40--15:51** -- **ER-CST is implemented as the next pre-freeze CPU hypothesis.**
+  Each episode defines three fresh opaque operations by determining before/after witnesses over
+  fresh symbols. The intended neural system must compile permutation cards and opcode bindings,
+  delete source, and reuse one tied rule-card motor. Five focused tests pass. A deterministic
+  10,000-episode dry falsifier reaches 10,000/10,000 exact witness inference, execution, witness and
+  opcode alpha-renaming invariance, card-storage reindexing, and post-HALT suffix invariance; rotating
+  card meanings leaves 1,508/10,000 exact final states. The architecture budget reserves at most
+  7,870,820 new parameters above the confirmed 192,129,179 parent. This is CPU mechanics only: no
+  neural source freeze, seed, board, GPU run, or score exists. Commit/push exact theory/mechanics,
+  then rerun the durable CPU report from that source before neural implementation.
