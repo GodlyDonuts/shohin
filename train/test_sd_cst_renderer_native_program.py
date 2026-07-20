@@ -10,7 +10,9 @@ from pilot_sd_cst_byte_addressed import (
 from pilot_sd_cst_renderer_native_program import frozen_state_digest
 from sd_cst_renderer_native_program import (
     RendererNativeProgramCompiler,
+    freeze_to_renderer_native_joint,
     freeze_to_renderer_native_program,
+    renderer_native_joint_trainable_names,
     renderer_native_program_trainable_names,
 )
 
@@ -60,3 +62,19 @@ def test_renderer_orbit_component_refactor_preserves_combined_encoding() -> None
     assert torch.equal(combined, model._encode(ids, valid))
     assert combined.shape == (1, 64, model.width)
     assert orbit.shape == (1, 64, model.orbit_width)
+
+
+def test_renderer_native_joint_unfreezes_only_shared_memory_and_decoder() -> None:
+    model = RendererNativeProgramCompiler()
+    declared = renderer_native_joint_trainable_names(model)
+    frozen = freeze_to_renderer_native_joint(model)
+    assert set(frozen) == declared
+    assert renderer_native_program_trainable_names(model) < declared
+    assert "orbit_byte_embedding.weight" in declared
+    assert "orbit_position_embedding.weight" in declared
+    assert "orbit_encoder.layers.0.self_attn.in_proj_weight" in declared
+    assert "orbit_norm.weight" in declared
+    assert "orbit_to_parent.weight" not in declared
+    assert "orbit_residual_scale" not in declared
+    assert "ordinal_head.weight" not in declared
+    assert "binding_query_projection.weight" not in declared

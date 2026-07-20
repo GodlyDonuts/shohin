@@ -34,7 +34,9 @@ from pilot_sd_cst_renderer_orbit import (
 )
 from sd_cst_renderer_native_program import (
     RendererNativeProgramCompiler,
+    freeze_to_renderer_native_joint,
     freeze_to_renderer_native_program,
+    renderer_native_joint_trainable_names,
     renderer_native_program_trainable_names,
 )
 from sd_cst_renderer_orbit import HELD_OUT_RENDERERS, TRAIN_RENDERERS
@@ -64,6 +66,8 @@ def frozen_state_digest(
 def initialize_model(
     orbit_checkpoint: Path,
     device: torch.device,
+    *,
+    train_shared_orbit: bool = False,
 ) -> tuple[RendererNativeProgramCompiler, dict[str, object], str]:
     if sha256_file(orbit_checkpoint) != ORBIT_CHECKPOINT_SHA256:
         raise ValueError("renderer-native orbit checkpoint hash differs")
@@ -81,8 +85,13 @@ def initialize_model(
     missing, unexpected = model.load_state_dict(checkpoint["state"], strict=False)
     if set(missing) != expected_missing or unexpected:
         raise ValueError("renderer-native parent state contract differs")
-    trainable = freeze_to_renderer_native_program(model)
-    parent_digest = frozen_state_digest(model, expected_missing)
+    if train_shared_orbit:
+        trainable_names = renderer_native_joint_trainable_names(model)
+        trainable = freeze_to_renderer_native_joint(model)
+    else:
+        trainable_names = expected_missing
+        trainable = freeze_to_renderer_native_program(model)
+    parent_digest = frozen_state_digest(model, trainable_names)
     model.to(device)
     compiler = model.parameter_count()
     complete = BASE_PARAMETERS + compiler + MOTOR_PARAMETERS + READER_PARAMETERS
@@ -101,6 +110,7 @@ def initialize_model(
             if parameter.requires_grad
         ),
         "trainable_names": list(trainable),
+        "train_shared_orbit": train_shared_orbit,
     }
     return model, parameters, parent_digest
 
@@ -119,6 +129,7 @@ def main() -> None:
     parser.add_argument("--lr", type=float, default=2e-4)
     parser.add_argument("--warmup", type=int, default=100)
     parser.add_argument("--consistency-weight", type=float, default=1.0)
+    parser.add_argument("--train-shared-orbit", action="store_true")
     args = parser.parse_args()
     if args.out_dir.exists():
         raise SystemExit(f"refusing existing renderer-native output: {args.out_dir}")
@@ -139,6 +150,7 @@ def main() -> None:
     model, parameters, parent_digest = initialize_model(
         args.orbit_checkpoint,
         device,
+        train_shared_orbit=args.train_shared_orbit,
     )
     trainable = [
         parameter for parameter in model.parameters() if parameter.requires_grad
@@ -218,7 +230,11 @@ def main() -> None:
 
     fit = evaluate(model, fit_groups, args.eval_family_batch_size, device)
     heldout = evaluate(model, heldout_groups, args.eval_family_batch_size, device)
-    trainable_names = renderer_native_program_trainable_names(model)
+    trainable_names = (
+        renderer_native_joint_trainable_names(model)
+        if args.train_shared_orbit
+        else renderer_native_program_trainable_names(model)
+    )
     final_parent_digest = frozen_state_digest(model, trainable_names)
     gates = {
         "heldout_initial_at_least_95pct": _minimum_rate(heldout, "initial") >= 0.95,
@@ -228,6 +244,18 @@ def main() -> None:
         "heldout_query_at_least_99pct": _minimum_rate(heldout, "query") >= 0.99,
         "heldout_query_pointer_at_least_99pct": (
             _minimum_rate(heldout, "query_pointer") >= 0.99
+        ),
+        "heldout_binding_pointer_at_least_99pct": (
+            _minimum_rate(heldout, "binding_pointer") >= 0.99
+        ),
+        "heldout_initial_pointer_at_least_99pct": (
+            _minimum_rate(heldout, "initial_pointer") >= 0.99
+        ),
+        "heldout_line_pointer_at_least_95pct": (
+            _minimum_rate(heldout, "line_pointer") >= 0.95
+        ),
+        "heldout_event_pointer_at_least_90pct": (
+            _minimum_rate(heldout, "event_pointer") >= 0.90
         ),
         "heldout_packet_at_least_80pct": _minimum_rate(heldout, "packet") >= 0.80,
         "fit_event_pointer_at_least_99pct": (
@@ -241,9 +269,19 @@ def main() -> None:
 
     args.out_dir.mkdir(parents=True)
     checkpoint_path = args.out_dir / "compiler.pt"
+    checkpoint_schema = (
+        "r12_sd_cst_renderer_native_joint_pilot_v1"
+        if args.train_shared_orbit
+        else "r12_sd_cst_renderer_native_program_pilot_v1"
+    )
+    report_schema = (
+        "r12_sd_cst_renderer_native_joint_pilot_report_v1"
+        if args.train_shared_orbit
+        else "r12_sd_cst_renderer_native_program_pilot_report_v1"
+    )
     torch.save(
         {
-            "schema": "r12_sd_cst_renderer_native_program_pilot_v1",
+            "schema": checkpoint_schema,
             "seed": args.seed,
             "state": model.state_dict(),
             "trainable_names": parameters["trainable_names"],
@@ -255,11 +293,19 @@ def main() -> None:
         checkpoint_path,
     )
     report = {
-        "schema": "r12_sd_cst_renderer_native_program_pilot_report_v1",
+        "schema": report_schema,
         "decision": (
-            "retain_renderer_native_program_as_conventional_compiler_control"
+            (
+                "retain_renderer_native_joint_as_conventional_compiler_control"
+                if args.train_shared_orbit
+                else "retain_renderer_native_program_as_conventional_compiler_control"
+            )
             if all(gates.values())
-            else "reject_or_revise_renderer_native_program_control"
+            else (
+                "reject_or_revise_renderer_native_joint_control"
+                if args.train_shared_orbit
+                else "reject_or_revise_renderer_native_program_control"
+            )
         ),
         "seed": args.seed,
         "source": {
@@ -275,6 +321,7 @@ def main() -> None:
             "lr": args.lr,
             "warmup": args.warmup,
             "consistency_weight": args.consistency_weight,
+            "train_shared_orbit": args.train_shared_orbit,
             "elapsed_seconds": time.time() - started,
         },
         "parameters": parameters,
@@ -287,10 +334,8 @@ def main() -> None:
         "development_accesses": 0,
         "confirmation_accesses": 0,
         "score_eligible": False,
-        "claim_boundary": (
-            "Consumed training rows only; favorable conventional compiler control, "
-            "not a reasoning or novelty result."
-        ),
+        "claim_boundary": "Consumed training rows only; favorable conventional "
+        "compiler control, not a reasoning or novelty result.",
     }
     report_path = args.out_dir / "report.json"
     report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n")

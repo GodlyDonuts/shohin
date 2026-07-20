@@ -175,10 +175,24 @@ def renderer_native_program_trainable_names(
     )
 
 
-def freeze_to_renderer_native_program(
+def renderer_native_joint_trainable_names(
     model: RendererNativeProgramCompiler,
+) -> frozenset[str]:
+    shared_prefixes = (
+        "orbit_byte_embedding.",
+        "orbit_position_embedding.",
+        "orbit_encoder.",
+        "orbit_norm.",
+    )
+    return renderer_native_program_trainable_names(model) | frozenset(
+        name for name, _ in model.named_parameters() if name.startswith(shared_prefixes)
+    )
+
+
+def _freeze_to_declared(
+    model: RendererNativeProgramCompiler,
+    declared: frozenset[str],
 ) -> tuple[str, ...]:
-    declared = renderer_native_program_trainable_names(model)
     for name, parameter in model.named_parameters():
         parameter.requires_grad_(name in declared)
     actual = {
@@ -187,3 +201,17 @@ def freeze_to_renderer_native_program(
     if actual != declared:
         raise ValueError("renderer-native trainable parameter contract mismatch")
     return tuple(sorted(actual))
+
+
+def freeze_to_renderer_native_program(
+    model: RendererNativeProgramCompiler,
+) -> tuple[str, ...]:
+    declared = renderer_native_program_trainable_names(model)
+    return _freeze_to_declared(model, declared)
+
+
+def freeze_to_renderer_native_joint(
+    model: RendererNativeProgramCompiler,
+) -> tuple[str, ...]:
+    declared = renderer_native_joint_trainable_names(model)
+    return _freeze_to_declared(model, declared)

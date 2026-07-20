@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 10:38 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 10:45 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -242,6 +242,16 @@
 > The next training-only conventional control may jointly train only shared orbit memory plus native
 > decoder while every successful motor/projection/executor remains frozen and preservation losses
 > stay active. Complete size remains 179,826,564 below 200M.
+>
+> **Active training-only conventional control:** joint renderer memory plus native decoder is
+> implemented and preregistered before source freeze or seed. It unfreezes exactly the byte/position
+> embeddings, eight-layer orbit encoder, orbit norm, and 35 native decoder tensors: 135 names /
+> 32,782,853 trainable parameters. Residual projection/scale, query motors, binding machinery, tape,
+> executor, motor, reader, and trunk remain frozen. Complete size/headroom stay 179,826,564 /
+> 20,173,436. An exact loaded-parent consumed-row backward pass has finite encoder/decoder gradients,
+> no ordinal-head gradient, and a bound frozen digest. Twenty-six focused/current tests and static
+> checks pass. This is still an ordinary joint parser control and cannot support a novelty or
+> reasoning claim. Freeze exact source, draw one seed, and close on the registered two-epoch result.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9586,3 +9596,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `6fffe15d...`; local copies hash-match Newton; access is `0/0`. The smallest next control is joint
   co-adaptation of shared orbit memory plus the native decoder, with query/binding/tape/executor
   preservation and the same 179,826,564 complete parameter count.
+
+- **2026-07-20 10:38--10:45** -- **Joint renderer-memory/decoder co-adaptation is implemented as
+  the last conventional compiler control, before source freeze or seed.** The model still loads
+  exact v1.2 checkpoint `2e019b81...` and freshly initializes the native decoder. Exactly the
+  byte/position embeddings, eight orbit encoder layers, orbit normalization, and 35 native decoder
+  tensors may train: 135 names / 32,782,853 parameters. Residual projection/scale, query motors,
+  binding machinery, packet heads, executor, motor, reader, and trunk remain frozen and digest-
+  bound. Complete size remains 179,826,564 with 20,173,436 headroom. All preservation losses remain
+  active, and held-out declaration/initial/line/event pointer gates are strengthened to
+  99%/99%/95%/90%. An exact loaded-parent consumed-row backward pass produces finite gradients in
+  shared memory and native decoder, no gradient in the frozen ordinal head, and exact count/digest
+  checks. Twenty-six focused/current tests plus static/job checks pass. This adaptive training-only
+  orbit is not a fresh score; a pass retains only a favorable conventional parser baseline, while a
+  failure closes joint co-adaptation without more layers, parameters, or epochs. Freeze exact source
+  before one post-commit seed; development and confirmation remain unreachable.
