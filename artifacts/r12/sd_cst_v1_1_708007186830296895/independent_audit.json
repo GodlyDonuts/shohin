@@ -1,0 +1,500 @@
+{
+  "all_gates_pass": true,
+  "answer_balance": {
+    "sd_cst_confirmation": {
+      "binding_recode": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "canonical": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "order_counterfactual": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "paraphrase": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "post_halt_suffix": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "query_swap": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "stop_shift": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "storage_order_shuffle": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      }
+    },
+    "sd_cst_development": {
+      "binding_recode": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "canonical": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "order_counterfactual": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "paraphrase": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "post_halt_suffix": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "query_swap": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "stop_shift": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      },
+      "storage_order_shuffle": {
+        "answer_roles": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        },
+        "balanced": true,
+        "query_positions": {
+          "0": 96,
+          "1": 96,
+          "2": 96
+        }
+      }
+    }
+  },
+  "confirmation_accesses": 0,
+  "cross_split_overlap_counts": {
+    "grams": {
+      "sd_cst_development__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_development": 0
+    },
+    "names": {
+      "sd_cst_development__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_development": 0
+    },
+    "prompts": {
+      "sd_cst_development__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_development": 0
+    },
+    "sequences": {
+      "sd_cst_development__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_development": 0
+    },
+    "templates": {
+      "sd_cst_development__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_confirmation": 0,
+      "sd_cst_train__sd_cst_development": 0
+    }
+  },
+  "family_size": 8,
+  "gates": {
+    "active_depth_one_to_six_with_real_suffix": true,
+    "all_ids_unique": true,
+    "all_programs_parse_exactly": true,
+    "answer_and_query_roles_balanced": true,
+    "confirmation_access_zero": true,
+    "cross_split_13gram_overlap_zero": true,
+    "cross_split_exact_prompt_overlap_zero": true,
+    "cross_split_name_overlap_zero": true,
+    "cross_split_sequence_overlap_zero": true,
+    "cross_split_template_overlap_zero": true,
+    "every_event_is_a_valid_state_change": true,
+    "exactly_eight_slots_seven_operations_one_stop": true,
+    "fixed_shape_without_padding": true,
+    "independent_simulator_matches_all_oracles": true,
+    "late_query_withheld_until_after_program": true,
+    "paired_family_semantics_exact": true,
+    "post_halt_suffix_invariance_exact": true,
+    "program_length_cannot_reveal_halt": true,
+    "query_twin_program_bytes_identical_and_answers_separate": true,
+    "rendered_text_matches_compiler_fields": true,
+    "split_labels_exact": true,
+    "training_evidence_excluded": true
+  },
+  "length_depth_groups": {
+    "sd_cst_confirmation|binding_recode|confirmation_quorin_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_confirmation|canonical|confirmation_quorin_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_confirmation|order_counterfactual|confirmation_quorin_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_confirmation|paraphrase|confirmation_quorin_paraphrase_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        519
+      ]
+    },
+    "sd_cst_confirmation|post_halt_suffix|confirmation_quorin_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_confirmation|query_swap|confirmation_quorin_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_confirmation|stop_shift|confirmation_quorin_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_confirmation|storage_order_shuffle|confirmation_quorin_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_development|binding_recode|development_mirexo_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_development|canonical|development_mirexo_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_development|order_counterfactual|development_mirexo_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_development|paraphrase|development_mirexo_paraphrase_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        519
+      ]
+    },
+    "sd_cst_development|post_halt_suffix|development_mirexo_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_development|query_swap|development_mirexo_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_development|stop_shift|development_mirexo_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_development|storage_order_shuffle|development_mirexo_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    },
+    "sd_cst_train|compiler_train|train_talvek_direct_v1": {
+      "depths": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "program_character_counts": [
+        496
+      ]
+    }
+  },
+  "row_counts": {
+    "confirmation": 2304,
+    "development": 2304,
+    "train": 48000
+  },
+  "schema": "r12_sd_cst_board_audit_v1",
+  "violations": []
+}

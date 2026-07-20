@@ -1,0 +1,47 @@
+{
+  "atomic_simulator_cells": {
+    "exact": 72,
+    "total": 72
+  },
+  "board_gate_count": 22,
+  "board_violations": [],
+  "confirmation_accesses": 0,
+  "decision": "admit_sd_cst_board_mechanics",
+  "forbidden_import_findings": {
+    "audit_sd_cst_board": [],
+    "build_sd_cst_board": []
+  },
+  "gates": {
+    "all_adversarial_mutations_are_detected": true,
+    "board_mechanics_use_only_standard_library": true,
+    "confirmation_access_zero": true,
+    "event_bag_shortcut_fails": true,
+    "execute_through_stop_control_fails": true,
+    "fresh_in_memory_board_passes_all_audits": true,
+    "independent_simulators_agree_on_all_atomic_cells": true,
+    "length_only_halt_control_is_at_chance": true,
+    "post_halt_overrun_control_fails": true,
+    "query_insensitive_control_fails": true,
+    "state_reset_control_is_insufficient": true,
+    "stop_insensitive_control_fails": true,
+    "storage_order_shortcut_fails": true
+  },
+  "mutation_checks": {
+    "cross_split_sequence_reuse_rejected": true,
+    "explicit_train_answer_rejected": true,
+    "nonidentical_query_twin_program_rejected": true,
+    "query_in_program_rejected": true
+  },
+  "negative_controls": {
+    "event_bag_ignoring_order_accuracy": 0.0,
+    "execute_post_halt_suffix_accuracy": 0.0,
+    "execute_through_stop_accuracy": 0.0,
+    "ignore_late_query_swap_accuracy": 0.0,
+    "ignore_stop_shift_accuracy": 0.0,
+    "program_and_query_length_depth_accuracy": 0.16666666666666666,
+    "reset_state_each_step_accuracy": 0.6111111111111112,
+    "storage_order_as_semantic_order_accuracy": 0.0
+  },
+  "schema": "r12_sd_cst_cpu_falsifier_v1",
+  "seed": 792451398761220486
+}

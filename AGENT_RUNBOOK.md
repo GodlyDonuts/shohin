@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 04:46 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 04:50 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -158,9 +158,12 @@
 > `0.005` for 500 updates, and leaves architecture, 134,306,714 parameter count, compiler training,
 > task, controls, thresholds, evaluator, and claim boundary unchanged. Pre-board H100 job `693956`
 > completed 64/64 fresh seeds at exact 78/78 motor and 18/18 reader certificates; report SHA is
-> `472ff05b...`. Forty-five integrated tests and all static checks pass. Freeze and push v1.1 source
-> before drawing new independent board/training seeds; then generate one clean 48,000/2,304/2,304
-> board and run exactly one serial H100 development path. Mechanics alone are not native reasoning.
+> `472ff05b...`. V1.1 source commit `cefac2a` precedes independent board/training seeds
+> `708007186830296895` / `460548278529624463`. The fresh 48,000/2,304/2,304 board passes all 22
+> independent audit gates and the 13-gate CPU falsifier; report/train/development/sealed-confirmation
+> SHA values begin `e4ac239c...`/`694bce3a...`/`425dc36f...`/`7116b266...`, access is `0/0`, and
+> confirmation is mode `0600`. Sync and hash-verify exact bytes, then run exactly one serial H100
+> development path. Mechanics alone are not native reasoning.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9181,3 +9184,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   64/64 fresh seeds are exact at 78/78 and 18/18, report SHA `472ff05b...`. No base, tokenizer,
   board, development, or confirmation input was available to the canary. Freeze source before
   drawing the one authorized fresh v1.1 board.
+
+- **2026-07-20 04:46--04:50** -- **SD-CST v1.1 source and one fresh board are frozen.** Commit
+  `cefac2a78bf0f4d0bd5a9ddfba3dff4f76e18a46` was pushed before independent board/training seeds
+  `708007186830296895` / `460548278529624463` were drawn. The board contains 48,000 train, 2,304
+  development, and 2,304 sealed-confirmation rows. Its built-in and independent audits pass all
+  22 gates; the CPU falsifier passes 13/13 with 72/72 atomic simulator agreement. Report/train/
+  development/confirmation SHA-256 values are `e4ac239c...`/`694bce3a...`/`425dc36f...`/
+  `7116b266...`; independent audit/falsifier are `24925931...`/`11371a92...`. Confirmation is mode
+  `0600`, development/confirmation access is `0/0`, and neither scored split has been inspected.
+  Commit the safe receipt, sync exact bytes, and submit the sole serial H100 job.

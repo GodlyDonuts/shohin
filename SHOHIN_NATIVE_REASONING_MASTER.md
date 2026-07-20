@@ -23,7 +23,7 @@ passes 64/64 fresh exact fits on H100. No neural development score exists yet.
 Broad language-grounded,
 self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 04:46 EDT.
+**Last updated:** 2026-07-20 04:50 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -142,7 +142,15 @@ fits the motor at lr `0.003` for 1,000 updates, and fits the reader at lr `0.005
 for 500 updates. Pre-board target-hardware job `693956` completed all 64 fresh
 H100 initializations at exact 78/78 motor and 18/18 reader cells. Its report
 SHA-256 is `472ff05ba4ef4dc4cb3956d8d69574f4b2ada8663224fa94c336a3c9de156433`.
-One new board may be drawn only after v1.1 source is committed.
+V1.1 source commit `cefac2a78bf0f4d0bd5a9ddfba3dff4f76e18a46` precedes
+independent board/training seeds `708007186830296895` and
+`460548278529624463`. The fresh board has 48,000/2,304/2,304
+train/development/sealed-confirmation rows. Both the built-in and independent
+auditors pass all 22 board gates, and the CPU falsifier passes 13/13 with 72/72
+atomic cells. Report/train/development/confirmation SHA-256 values begin
+`e4ac239c...`/`694bce3a...`/`425dc36f...`/`7116b266...`; confirmation remains
+mode `0600` with zero access. Exactly one serial H100 development path is
+authorized after source/data/base/tokenizer hashes match on Newton.
 
 This is not yet a reasoning result. It is an admitted, falsifiable integration
 experiment. A pass would establish bounded autonomous language-to-private-tape
