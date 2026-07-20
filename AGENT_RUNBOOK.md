@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 06:53 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 07:00 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -9317,3 +9317,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   is reachable and access remains `0/0`. Repair only scalar state-dict byte serialization, add a
   scalar-buffer regression, freeze a new source commit, and draw a new seed; never describe
   `693982` as a mechanism result.
+
+- **2026-07-20 06:53--07:00** -- **The second launch is a scoreless source-control construction
+  failure.** Scalar-digest repair source `ce05e45` and fresh seed `5294866337588971969` launch job
+  `693984` on `evc22`. It passes custody/hardware, exact full-state digest, atomic fitting, and
+  begins the training-only compiler arms, then raises before metrics/report because production
+  program text omits a final LF while the event-line relocation helper required all nine lines to
+  end in LF. Do not inspect partial predictions or call this a result. Repair only logical-line
+  split/rejoin while preserving original trailing-LF status and exact byte length; test both forms
+  and all 8,000 production transformations locally, freeze a new commit, and draw a new seed.

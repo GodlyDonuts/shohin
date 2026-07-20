@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ast
+from dataclasses import replace
 from pathlib import Path
 
 import torch
@@ -89,6 +90,11 @@ def test_source_level_controls_have_declared_semantics_and_fixed_width():
     assert bytes(relocated.program_bytes).splitlines()[1:] == list(
         reversed(bytes(row.program_bytes).splitlines()[1:])
     )
+
+    no_final_lf = replace(row, program_bytes=tuple(bytes(row.program_bytes).rstrip(b"\n")))
+    relocated_no_lf = relocated_event_lines_row(no_final_lf)
+    assert len(relocated_no_lf.program_bytes) == len(no_final_lf.program_bytes)
+    assert not bytes(relocated_no_lf.program_bytes).endswith(b"\n")
 
 
 def test_semantic_rollout_respects_halt_and_late_query_rotation():

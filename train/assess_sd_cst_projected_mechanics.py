@@ -135,11 +135,15 @@ def declaration_role_swap_row(row: BindingPilotRow) -> BindingPilotRow:
 
 def relocated_event_lines_row(row: BindingPilotRow) -> BindingPilotRow:
     source = bytes(row.program_bytes)
-    lines = source.splitlines(keepends=True)
-    if len(lines) != 9 or not all(line.endswith(b"\n") for line in lines):
+    trailing_lf = source.endswith(b"\n")
+    lines = source.splitlines()
+    if len(lines) != 9:
         raise ValueError("event relocation requires one binding plus eight LF lines")
     relocated = lines[:1] + list(reversed(lines[1:]))
-    return replace(row, program_bytes=tuple(b"".join(relocated)))
+    encoded = b"\n".join(relocated) + (b"\n" if trailing_lf else b"")
+    if len(encoded) != len(source):
+        raise ValueError("event relocation changed byte width")
+    return replace(row, program_bytes=tuple(encoded))
 
 
 def _concatenate_tapes(tapes: Sequence[HardProgramTape]) -> HardProgramTape:
