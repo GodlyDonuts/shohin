@@ -1,0 +1,506 @@
+{
+  "architecture": {
+    "max_line_bytes": 144,
+    "occurrence_ff": 1536,
+    "record_ff": 1536,
+    "record_heads": 6,
+    "record_layers": 4,
+    "record_set_layers": 2,
+    "record_width": 384,
+    "sinkhorn_steps": 8
+  },
+  "checkpoint_sha256": "eaa83df068ca0545ddd578f36d4d3f269334e83553f0730f844e46e107323c18",
+  "claim_boundary": "Consumed training rows only; nonlinear occurrence head gate, not native reasoning or fresh generalization.",
+  "confirmation_accesses": 0,
+  "decision": "retain_occurrence_head_for_fresh_board",
+  "development_accesses": 0,
+  "excluded_state_digest": "200cd1bf03888b1353a267dfc3250ca4420de785e06d3df4b393c6a92d3d8842",
+  "final_excluded_state_digest": "200cd1bf03888b1353a267dfc3250ca4420de785e06d3df4b393c6a92d3d8842",
+  "fit": {
+    "orbit-d0e0q0-v1": {
+      "exact": {
+        "amount": 12000,
+        "binding_pointer": 12000,
+        "event_pointer": 12000,
+        "identity": 11999,
+        "initial": 12000,
+        "initial_pointer": 11999,
+        "kind": 12000,
+        "line_pointer": 12000,
+        "packet": 11999,
+        "query": 12000,
+        "query_pointer": 12000,
+        "whole_tape": 11999
+      },
+      "rates": {
+        "amount": 1.0,
+        "binding_pointer": 1.0,
+        "event_pointer": 1.0,
+        "identity": 0.9999166666666667,
+        "initial": 1.0,
+        "initial_pointer": 0.9999166666666667,
+        "kind": 1.0,
+        "line_pointer": 1.0,
+        "packet": 0.9999166666666667,
+        "query": 1.0,
+        "query_pointer": 1.0,
+        "whole_tape": 0.9999166666666667
+      },
+      "rows": 12000
+    },
+    "orbit-d0e1q1-v1": {
+      "exact": {
+        "amount": 12000,
+        "binding_pointer": 12000,
+        "event_pointer": 12000,
+        "identity": 11999,
+        "initial": 12000,
+        "initial_pointer": 11999,
+        "kind": 12000,
+        "line_pointer": 12000,
+        "packet": 11999,
+        "query": 12000,
+        "query_pointer": 12000,
+        "whole_tape": 11999
+      },
+      "rates": {
+        "amount": 1.0,
+        "binding_pointer": 1.0,
+        "event_pointer": 1.0,
+        "identity": 0.9999166666666667,
+        "initial": 1.0,
+        "initial_pointer": 0.9999166666666667,
+        "kind": 1.0,
+        "line_pointer": 1.0,
+        "packet": 0.9999166666666667,
+        "query": 1.0,
+        "query_pointer": 1.0,
+        "whole_tape": 0.9999166666666667
+      },
+      "rows": 12000
+    },
+    "orbit-d1e0q1-v1": {
+      "exact": {
+        "amount": 12000,
+        "binding_pointer": 12000,
+        "event_pointer": 12000,
+        "identity": 12000,
+        "initial": 12000,
+        "initial_pointer": 11921,
+        "kind": 12000,
+        "line_pointer": 12000,
+        "packet": 12000,
+        "query": 12000,
+        "query_pointer": 12000,
+        "whole_tape": 12000
+      },
+      "rates": {
+        "amount": 1.0,
+        "binding_pointer": 1.0,
+        "event_pointer": 1.0,
+        "identity": 1.0,
+        "initial": 1.0,
+        "initial_pointer": 0.9934166666666666,
+        "kind": 1.0,
+        "line_pointer": 1.0,
+        "packet": 1.0,
+        "query": 1.0,
+        "query_pointer": 1.0,
+        "whole_tape": 1.0
+      },
+      "rows": 12000
+    },
+    "orbit-d1e1q0-v1": {
+      "exact": {
+        "amount": 12000,
+        "binding_pointer": 12000,
+        "event_pointer": 12000,
+        "identity": 12000,
+        "initial": 12000,
+        "initial_pointer": 11921,
+        "kind": 12000,
+        "line_pointer": 12000,
+        "packet": 12000,
+        "query": 12000,
+        "query_pointer": 12000,
+        "whole_tape": 12000
+      },
+      "rates": {
+        "amount": 1.0,
+        "binding_pointer": 1.0,
+        "event_pointer": 1.0,
+        "identity": 1.0,
+        "initial": 1.0,
+        "initial_pointer": 0.9934166666666666,
+        "kind": 1.0,
+        "line_pointer": 1.0,
+        "packet": 1.0,
+        "query": 1.0,
+        "query_pointer": 1.0,
+        "whole_tape": 1.0
+      },
+      "rows": 12000
+    }
+  },
+  "gates": {
+    "complete_system_below_200m": true,
+    "excluded_state_byte_identical": true,
+    "fit_packet_at_least_99pct": true,
+    "heldout_binding_pointer_at_least_99pct": true,
+    "heldout_event_pointer_at_least_99pct": true,
+    "heldout_initial_at_least_95pct": true,
+    "heldout_initial_pointer_at_least_99pct": true,
+    "heldout_kind_identity_amount_all_99pct": true,
+    "heldout_packet_at_least_95pct": true,
+    "heldout_query_at_least_99pct": true,
+    "heldout_query_pointer_at_least_99pct": true,
+    "scored_access_zero": true
+  },
+  "heldout": {
+    "orbit-d0e0q1-v1": {
+      "exact": {
+        "amount": 2000,
+        "binding_pointer": 2000,
+        "event_pointer": 2000,
+        "identity": 2000,
+        "initial": 2000,
+        "initial_pointer": 2000,
+        "kind": 2000,
+        "line_pointer": 2000,
+        "packet": 2000,
+        "query": 2000,
+        "query_pointer": 2000,
+        "whole_tape": 2000
+      },
+      "rates": {
+        "amount": 1.0,
+        "binding_pointer": 1.0,
+        "event_pointer": 1.0,
+        "identity": 1.0,
+        "initial": 1.0,
+        "initial_pointer": 1.0,
+        "kind": 1.0,
+        "line_pointer": 1.0,
+        "packet": 1.0,
+        "query": 1.0,
+        "query_pointer": 1.0,
+        "whole_tape": 1.0
+      },
+      "rows": 2000
+    },
+    "orbit-d0e1q0-v1": {
+      "exact": {
+        "amount": 2000,
+        "binding_pointer": 2000,
+        "event_pointer": 2000,
+        "identity": 2000,
+        "initial": 2000,
+        "initial_pointer": 2000,
+        "kind": 2000,
+        "line_pointer": 2000,
+        "packet": 2000,
+        "query": 2000,
+        "query_pointer": 2000,
+        "whole_tape": 2000
+      },
+      "rates": {
+        "amount": 1.0,
+        "binding_pointer": 1.0,
+        "event_pointer": 1.0,
+        "identity": 1.0,
+        "initial": 1.0,
+        "initial_pointer": 1.0,
+        "kind": 1.0,
+        "line_pointer": 1.0,
+        "packet": 1.0,
+        "query": 1.0,
+        "query_pointer": 1.0,
+        "whole_tape": 1.0
+      },
+      "rows": 2000
+    },
+    "orbit-d1e0q0-v1": {
+      "exact": {
+        "amount": 2000,
+        "binding_pointer": 2000,
+        "event_pointer": 2000,
+        "identity": 2000,
+        "initial": 2000,
+        "initial_pointer": 1984,
+        "kind": 2000,
+        "line_pointer": 2000,
+        "packet": 2000,
+        "query": 2000,
+        "query_pointer": 2000,
+        "whole_tape": 2000
+      },
+      "rates": {
+        "amount": 1.0,
+        "binding_pointer": 1.0,
+        "event_pointer": 1.0,
+        "identity": 1.0,
+        "initial": 1.0,
+        "initial_pointer": 0.992,
+        "kind": 1.0,
+        "line_pointer": 1.0,
+        "packet": 1.0,
+        "query": 1.0,
+        "query_pointer": 1.0,
+        "whole_tape": 1.0
+      },
+      "rows": 2000
+    },
+    "orbit-d1e1q1-v1": {
+      "exact": {
+        "amount": 2000,
+        "binding_pointer": 2000,
+        "event_pointer": 2000,
+        "identity": 2000,
+        "initial": 2000,
+        "initial_pointer": 1984,
+        "kind": 2000,
+        "line_pointer": 2000,
+        "packet": 2000,
+        "query": 2000,
+        "query_pointer": 2000,
+        "whole_tape": 2000
+      },
+      "rates": {
+        "amount": 1.0,
+        "binding_pointer": 1.0,
+        "event_pointer": 1.0,
+        "identity": 1.0,
+        "initial": 1.0,
+        "initial_pointer": 0.992,
+        "kind": 1.0,
+        "line_pointer": 1.0,
+        "packet": 1.0,
+        "query": 1.0,
+        "query_pointer": 1.0,
+        "whole_tape": 1.0
+      },
+      "rows": 2000
+    }
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "fit_losses": {
+        "amount": 0.0,
+        "binding_address": 3.5625521284739174,
+        "event_entity_address": 2.564986360390981,
+        "event_support_rate": 1.0,
+        "identity": 0.056172689778348286,
+        "initial": 0.2543699418811082,
+        "initial_entity_address": 3.7587635691960655,
+        "kind": 0.0,
+        "line_address": 3.7663597118059795,
+        "orbit_consistency": 0.016714889158378356,
+        "query": 0.0,
+        "query_address": 5.943079147385788e-08,
+        "total": 13.979919338226319
+      },
+      "heldout_min_rates": {
+        "binding_pointer": 1.0,
+        "event_pointer": 1.0,
+        "initial": 1.0,
+        "initial_pointer": 0.9935,
+        "packet": 1.0,
+        "query": 1.0
+      },
+      "updates": 1500
+    },
+    {
+      "epoch": 2,
+      "fit_losses": {
+        "amount": 0.0,
+        "binding_address": 2.823637731393178,
+        "event_entity_address": 2.5649863710403444,
+        "event_support_rate": 1.0,
+        "identity": 8.67854352594198e-05,
+        "initial": 7.079366957358424e-05,
+        "initial_entity_address": 2.9608169299761453,
+        "kind": 0.0,
+        "line_address": 3.7663597097396853,
+        "orbit_consistency": 0.003788558866867485,
+        "query": 0.0,
+        "query_address": 5.943079160974918e-08,
+        "total": 12.119746978759766
+      },
+      "heldout_min_rates": {
+        "binding_pointer": 1.0,
+        "event_pointer": 1.0,
+        "initial": 1.0,
+        "initial_pointer": 0.992,
+        "packet": 1.0,
+        "query": 1.0
+      },
+      "updates": 3000
+    }
+  ],
+  "initial_heldout": {
+    "orbit-d0e0q1-v1": {
+      "exact": {
+        "amount": 2000,
+        "binding_pointer": 0,
+        "event_pointer": 2000,
+        "identity": 6,
+        "initial": 312,
+        "initial_pointer": 0,
+        "kind": 2000,
+        "line_pointer": 2000,
+        "packet": 1,
+        "query": 2000,
+        "query_pointer": 2000,
+        "whole_tape": 1
+      },
+      "rates": {
+        "amount": 1.0,
+        "binding_pointer": 0.0,
+        "event_pointer": 1.0,
+        "identity": 0.003,
+        "initial": 0.156,
+        "initial_pointer": 0.0,
+        "kind": 1.0,
+        "line_pointer": 1.0,
+        "packet": 0.0005,
+        "query": 1.0,
+        "query_pointer": 1.0,
+        "whole_tape": 0.0005
+      },
+      "rows": 2000
+    },
+    "orbit-d0e1q0-v1": {
+      "exact": {
+        "amount": 2000,
+        "binding_pointer": 0,
+        "event_pointer": 2000,
+        "identity": 6,
+        "initial": 312,
+        "initial_pointer": 0,
+        "kind": 2000,
+        "line_pointer": 2000,
+        "packet": 1,
+        "query": 2000,
+        "query_pointer": 2000,
+        "whole_tape": 1
+      },
+      "rates": {
+        "amount": 1.0,
+        "binding_pointer": 0.0,
+        "event_pointer": 1.0,
+        "identity": 0.003,
+        "initial": 0.156,
+        "initial_pointer": 0.0,
+        "kind": 1.0,
+        "line_pointer": 1.0,
+        "packet": 0.0005,
+        "query": 1.0,
+        "query_pointer": 1.0,
+        "whole_tape": 0.0005
+      },
+      "rows": 2000
+    },
+    "orbit-d1e0q0-v1": {
+      "exact": {
+        "amount": 2000,
+        "binding_pointer": 0,
+        "event_pointer": 2000,
+        "identity": 0,
+        "initial": 312,
+        "initial_pointer": 0,
+        "kind": 2000,
+        "line_pointer": 2000,
+        "packet": 0,
+        "query": 2000,
+        "query_pointer": 2000,
+        "whole_tape": 0
+      },
+      "rates": {
+        "amount": 1.0,
+        "binding_pointer": 0.0,
+        "event_pointer": 1.0,
+        "identity": 0.0,
+        "initial": 0.156,
+        "initial_pointer": 0.0,
+        "kind": 1.0,
+        "line_pointer": 1.0,
+        "packet": 0.0,
+        "query": 1.0,
+        "query_pointer": 1.0,
+        "whole_tape": 0.0
+      },
+      "rows": 2000
+    },
+    "orbit-d1e1q1-v1": {
+      "exact": {
+        "amount": 2000,
+        "binding_pointer": 0,
+        "event_pointer": 2000,
+        "identity": 0,
+        "initial": 312,
+        "initial_pointer": 0,
+        "kind": 2000,
+        "line_pointer": 2000,
+        "packet": 0,
+        "query": 2000,
+        "query_pointer": 2000,
+        "whole_tape": 0
+      },
+      "rates": {
+        "amount": 1.0,
+        "binding_pointer": 0.0,
+        "event_pointer": 1.0,
+        "identity": 0.0,
+        "initial": 0.156,
+        "initial_pointer": 0.0,
+        "kind": 1.0,
+        "line_pointer": 1.0,
+        "packet": 0.0,
+        "query": 1.0,
+        "query_pointer": 1.0,
+        "whole_tape": 0.0
+      },
+      "rows": 2000
+    }
+  },
+  "occurrence_initial_sha256": "4d20d09474ee230aaed5113659883bfbdd0183e4896eea7da3b1ce2466a85492",
+  "parameters": {
+    "base": 125081664,
+    "compiler": 67027474,
+    "complete_system": 192129179,
+    "headroom": 7870821,
+    "motor": 19206,
+    "reader": 835,
+    "trainable": 601350,
+    "trainable_names": [
+      "local_occurrence_head.bias",
+      "local_occurrence_head.weight",
+      "local_occurrence_hidden.bias",
+      "local_occurrence_hidden.weight",
+      "local_occurrence_norm.bias",
+      "local_occurrence_norm.weight"
+    ]
+  },
+  "query_state_sha256": "88d1338145890921a68f05148a04aad93b50662fd1e17e7197f24b661d8b13d6",
+  "schema": "r12_sd_cst_complete_physical_record_bus_pilot_report_v1_2",
+  "score_eligible": false,
+  "seed": 7097310278885678337,
+  "source": {
+    "fit_source_sha256": "d53e4e805037e56183971bcbd835ce836006c7cd1a5c174e63f2fae877ee4610",
+    "heldout_source_sha256": "0efd0993f4ec3d832e8b1d8b5daa053b966af65ece5cededa1211157c1f18719",
+    "joint_checkpoint_sha256": "4b842e4c2d0d608c32f0fd113b404866be7269676084cdac9b1a00d43cdd298d",
+    "physical_checkpoint_sha256": "89ab7d7417918e72da60028e6d5936908a3ee29c0981f5fdac9dc385c3099419",
+    "train_sha256": "b7756dbf8d4401dbc5fb897dee53f68758e27200b1ce0d2387631f2f0205ec25",
+    "v1_checkpoint_sha256": "30b75305031b1e2f67a24f98b4907d2d65bc847310ea406d25f34c7b9611e1b4"
+  },
+  "training": {
+    "consistency_weight": 1.0,
+    "elapsed_seconds": 212.7246162891388,
+    "epochs": 2,
+    "family_batch_size": 8,
+    "lr": 0.0002,
+    "updates": 3000,
+    "warmup": 100
+  }
+}

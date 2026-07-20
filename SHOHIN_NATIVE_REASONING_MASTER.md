@@ -43,10 +43,19 @@ consumed-training compiler baseline. Its 11,106,830 trainable parameters encode
 physical records locally. Both one-to-one and independent semantic-slot
 assignment arms reach 48,000/48,000 fit and 8,000/8,000 held-out exact packets;
 therefore physical locality is retained and one-to-one attribution is rejected.
+The final local interface initially fails because bilinear declaration queries
+confuse repeated entity occurrences. A read-only audit proves all 48,000
+top-one selections land on true entity spans. Replacing only that readout with a
+601,350-parameter nonlinear six-role local occurrence head solves the complete
+consumed-data interface: minimum held-out packets, states, query, binding,
+event, kind, identity, and amount are 100%, and strict initial-occurrence
+pointers are 99.20%. The full system is 192,129,179 parameters and all twelve
+frozen gates pass. This authorizes a new fresh-board transfer test, not a native
+reasoning claim.
 V2 custody is `1/0`, its confirmation is sealed, and no board will be rescored.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 12:31 EDT. User authority requires every future
+**Last updated:** 2026-07-20 13:35 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -269,23 +278,29 @@ exactness is 80.80%/99.40%/73.50% for binding roles and
 2 and adjacent initial occurrences. Report SHA begins `b09122a9...`; access is
 `0/0`.
 
-Thus evidence localization is already complete, but the shared bilinear
-query/key readout aliases surface roles and repeated positions. The next
-training-only falsifier is a local nonlinear six-class token head, not a larger
-global encoder, deterministic grammar parser, or more v1.1 epochs. It remains
-conventional compiler mechanics under the strict sub-200M ceiling.
+The admitted nonlinear repair is now complete. Exact source
+`a32c881326eff4ea29ff7c4ee9482f8798894462`, execution receipt `b6b41906`, raw
+beacon `16320682315740454145`, signed-safe seed `7097310278885678337`, and sole
+job `694214` train only a shared LayerNorm, 384-to-1536 GELU layer, and
+1536-to-6 local occurrence-role head. The exact compiler/system counts are
+67,027,474 / 192,129,179, leaving 7,870,821 parameters below the strict cap.
 
-The corresponding v1.2 falsifier is frozen at exact scientific source
-`a32c881326eff4ea29ff7c4ee9482f8798894462` before raw beacon
-`16320682315740454145` and sole signed-safe seed `7097310278885678337`. It emits
-six occurrence-role logits per local byte through LayerNorm, a 384-to-1536 GELU
-projection, and a 1536-to-6 head. Exactly 601,350 new tensors train; the old
-declaration queries are unused/frozen, and the exact query, physical event bus,
-parent, tape, executor, motor, reader, and trunk remain frozen. Exact
-compiler/complete size is 67,027,474 / 192,129,179, leaving 7,870,821 below
-200M. Focused/inherited tests, exact-parent reconstruction, and a real
-consumed-family backward pass are clean. This remains a scoreless interface
-falsifier.
+All twelve gates pass. Minimum held-out binding, event, query, query-pointer,
+kind, identity, amount, initial-state, whole-tape, and packet exactness are
+100%. Strict all-three initial-occurrence pointer exactness is 99.20% on the
+two difficult renderers and 100% on the other two; the 16/2,000 strict pointer
+misses per difficult renderer do not change a single compiled initial value or
+packet. Excluded state remains byte-identical and scored access is `0/0`.
+
+The result proves that local physical records plus nonlinear occurrence-role
+classification are sufficient for the entire finite compiler interface on the
+consumed renderer family. It does not prove language transfer or reasoning.
+The exact decision is `retain_occurrence_head_for_fresh_board`. The next score
+must come from a separately committed board with new names and renderer/source
+families, source deletion before execution, matched controls, and an unchanged
+categorical executor. Full evidence is in
+`R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_2_RESULT.md`; checkpoint/report
+SHA-256 begin `eaa83df0...`/`6148b4ef...`.
 
 ---
 
@@ -2303,6 +2318,8 @@ ledger; credential-handling and live-operational instructions are excluded.
 
 ### New frontier records included in this update
 
+- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_2_RESULT.md` — current result,
+  linked here but not yet embedded in this upload snapshot
 - `FRONTIER_AGENT_PLANS.md` — embedded in Appendix A
 - `FRONTIER_AGENT_PLANS_ANALYSIS.md` — embedded in Appendix A
 - `R12_CROSS_DOMAIN_FAULT_CHANNEL_REVIEW_RESULT.md` — embedded in Appendix A
@@ -2547,6 +2564,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Froze S9.2 source at `38c934c`, then drew independent board/training seeds `3823077847356570601`/`1277007704479652588`. Admitted a 48,000/2,048/2,048 board with 52,096 executor agreements, zero split overlap, and access `0/0`; report SHA begins `f22401e8`. No neural score or confirmation access exists. |
 | 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
+| 2026-07-20 | Closed Complete Physical-Record Front-End v1.2: a 601,350-parameter nonlinear six-role occurrence head raises the 192,129,179-parameter complete compiler to 100% minimum held-out packets/states and 99.20% strict initial-occurrence pointers. All 12 consumed-training gates pass with `0/0` scored access; this authorizes only a separately committed fresh-board transfer test. |
 
 ---
 

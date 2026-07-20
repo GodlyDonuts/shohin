@@ -1,9 +1,12 @@
 # R12 SD-CST Complete Physical-Record Front-End v1.2 Preregistration
 
-**Status:** exact scientific source frozen and pushed before seed at commit
-`a32c881326eff4ea29ff7c4ee9482f8798894462`; no output existed at that
-receipt. Raw post-commit beacon `16320682315740454145` yields sole signed-safe
-seed `7097310278885678337` modulo `2^63`.
+**Status:** closed. Exact scientific source was frozen and pushed before seed at
+commit `a32c881326eff4ea29ff7c4ee9482f8798894462`; no output existed at that
+receipt. Raw post-commit beacon `16320682315740454145` yielded sole signed-safe
+seed `7097310278885678337` modulo `2^63`. Sole job `694214` completed cleanly
+and passed all twelve gates. The immutable decision is
+`retain_occurrence_head_for_fresh_board`; see
+`R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_2_RESULT.md`.
 
 **Claim class:** consumed-training occurrence-role repair only. This cannot
 establish fresh-language generalization, native reasoning, or Shohin promotion.

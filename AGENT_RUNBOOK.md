@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 12:31 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 13:35 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -319,16 +319,19 @@
 > six-class token head while loading/fixing the exact v1 query path and physical event bus. Keep the
 > same data, schedule, gates, source deletion, and strict sub-200M ceiling.
 >
-> **Active v1.2 occurrence-head falsifier:** exact scientific source
-> `a32c881326eff4ea29ff7c4ee9482f8798894462` preceded raw beacon
-> `16320682315740454145` and sole signed-safe seed `7097310278885678337`. A local LayerNorm +
-> 384-to-1536 GELU + 1536-to-6 head emits six model logits at every declaration byte. It trains
-> exactly six tensors / 601,350 parameters while the old declaration queries are unused/frozen and
-> every successful query/event/executor path is reconstructed and frozen. Exact compiler/complete
-> size is 67,027,474 / **192,129,179**, leaving 7,870,821 below 200M. Twelve focused/inherited tests,
-> Ruff, `py_compile`, shell syntax, exact parent reconstruction, and a real consumed-family backward
-> pass are clean; all six declared tensors have gradients and no excluded tensor does. Build an
-> exact clean Newton capsule and submit one scoreless H100 run under unchanged gates.
+> **V1.2 nonlinear occurrence head passes all consumed-training mechanics gates.** Exact scientific
+> source `a32c881326eff4ea29ff7c4ee9482f8798894462`, execution receipt `b6b41906`, seed
+> `7097310278885678337`, and sole job `694214` complete cleanly on H100 `evc23` in 4m24s. The local
+> LayerNorm + 384-to-1536 GELU + 1536-to-6 head trains exactly six tensors / 601,350 parameters;
+> complete compiler/system size is 67,027,474 / **192,129,179**, leaving 7,870,821 below 200M.
+> Minimum held-out binding, event, query, query-pointer, kind, identity, amount, initial-state, and
+> packet exactness are all **100%**; initial-occurrence pointer is **99.20%**. All twelve gates pass,
+> the excluded digest is byte-identical, and access is `0/0`. Decision is
+> `retain_occurrence_head_for_fresh_board`. Checkpoint/report SHA values are `eaa83df0...`/
+> `6148b4ef...`; local and Newton copies match. This solves the complete finite compiler on consumed
+> renderer families only. It is not native reasoning. The active phase is a separately committed
+> fresh board with new names and renderer/source families, source deletion, unchanged categorical
+> execution, matched controls, and strict complete-system size below 200M.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9795,3 +9798,30 @@ STATE) and any step that changed. A future agent — maybe you after a context r
 - **2026-07-20 12:34** -- **The complete-local seed is drawn after source push.** Raw beacon
   `4564290739472553435` is already signed-safe and becomes the sole scientific seed unchanged.
   Architecture, trainability, inputs, optimizer, and gates remain frozen; no output exists yet.
+
+- **2026-07-20 12:34--13:01** -- **Complete-local v1 closes as a declaration-address failure.**
+  Sole job `694199` completes on `evc37`. The local query path and physical event bus remain exact,
+  but minimum held-out binding/initial-occurrence/initial-state/packet are 5.15%/0%/15.0%/13.45%.
+  Endpoint tensors move and receive gradient; the frozen event-key geometry is unsuitable for
+  declarations. Decision is `reject_or_revise_complete_local_front_end`; checkpoint/report hashes
+  begin `30b75305...`/`c06348d5...`, local and Newton copies match, and access remains `0/0`.
+
+- **2026-07-20 13:01--13:19** -- **V1.1 declaration-key repair produces a real partial gain but is
+  rejected.** Exact source `b93b17b3`, seed `5106688919988440021`, and sole job `694203` on `evc22`
+  raise minimum binding pointer to 61.0%, identity to 98.9%, initial state to 48.0%, and packet to
+  47.45%, while initial-occurrence pointer remains 0%. Six of twelve gates pass. A read-only
+  six-slot audit, sole job `694209`, finds all 48,000 top-one choices inside true entity spans but
+  the middle initial occurrence at 0% exact. This localizes occurrence-role confusion rather than
+  missing evidence; access remains `0/0`.
+
+- **2026-07-20 13:19--13:35** -- **The nonlinear six-class local occurrence head solves the
+  complete consumed-data compiler interface.** Exact source
+  `a32c881326eff4ea29ff7c4ee9482f8798894462`, receipt `b6b41906`, raw beacon
+  `16320682315740454145`, signed-safe seed `7097310278885678337`, and sole job `694214` on `evc23`
+  train only 601,350 parameters. The complete system is 192,129,179, strictly 7,870,821 below 200M.
+  Minimum held-out packet, initial state, query, query pointer, binding pointer, event pointer, kind,
+  identity, and amount are 100%; initial-occurrence pointer is 99.20%. All twelve gates pass,
+  excluded state is byte-identical, and access is `0/0`. Decision is
+  `retain_occurrence_head_for_fresh_board`; checkpoint/report SHA values are `eaa83df0...`/
+  `6148b4ef...`, with exact local/Newton matches. This is conventional consumed-training mechanics,
+  not a reasoning claim. Freeze a distinct fresh-board source before any new board or score.
