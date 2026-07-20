@@ -1,7 +1,7 @@
 # R12 SD-CST Renderer-Orbit Query Bus Preregistration
 
-**Status:** implemented and locally audited before training-only source freeze,
-pilot seed, H100 fit, fresh board, or scored access
+**Status:** v1 closed as an unscored numerical-loss failure; optimization-only
+v1.1 implemented and locally audited before its source freeze or seed
 
 **Parent:** rejected projected fresh v2; retained exact source-deleted executor
 and v2 treatment checkpoint
@@ -107,6 +107,23 @@ confirmation, oracle answer, final state, or recurrent trajectory can be read.
 
 Only compiler fields and byte spans are labels. No execution-derived target is
 available.
+
+### V1 numerical closure and v1.1 repair
+
+Exact v1 source commit `a16a555cae21dca845689f8ddc119b1d8f9a0f91` and seed
+`7492631734612190994` reached one training-only epoch in job `694059`. The
+inherited uniform span cross-entropy multiplied zero target mass by masked
+`-inf` log probabilities under bf16. Event-address loss and therefore total
+loss were infinite. The run was canceled before epoch two and before creating
+an output directory, checkpoint, or report. It had no route to development or
+confirmation and cannot be interpreted as a mechanism result.
+
+V1.1 changes only the mathematically equivalent loss arithmetic: logits are
+promoted to float32, target entries are selected with `torch.where`, and active
+target spans must be nonempty and finite. A regression containing explicit
+`-inf` masked logits verifies finite value and gradients. Architecture, data,
+partition, labels, objective weights, optimizer, update count, gates, and claim
+boundary are unchanged. V1.1 requires a new source commit and post-commit seed.
 
 ## 6. Training-only gates
 

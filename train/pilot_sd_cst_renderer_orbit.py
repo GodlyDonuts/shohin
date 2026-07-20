@@ -25,7 +25,6 @@ import torch.nn.functional as F
 from pilot_sd_cst_binding_bus import (
     BindingPilotRow,
     span_mask,
-    uniform_span_loss,
 )
 from pilot_sd_cst_byte_addressed import (
     BASE_PARAMETERS,
@@ -220,6 +219,26 @@ def _orbit_consistency(logits: torch.Tensor, families: int, views: int) -> torch
     return (probs * (log_probs - mean.log())).sum(-1).mean()
 
 
+def _finite_uniform_span_loss(
+    pointer_logits: torch.Tensor,
+    target_mask: torch.Tensor,
+    active: torch.Tensor,
+) -> torch.Tensor:
+    """Uniform span cross-entropy without multiplying zero mass by -inf."""
+    if not bool(active.any()):
+        raise ValueError("span loss requires an active target")
+    counts = target_mask.sum(-1)
+    if bool((counts[active] == 0).any()):
+        raise ValueError("active span loss target is empty")
+    log_probs = pointer_logits.float().log_softmax(-1)
+    selected = torch.where(target_mask, log_probs, torch.zeros_like(log_probs))
+    per_slot = -selected.sum(-1) / counts.clamp_min(1).float()
+    result = per_slot[active].mean()
+    if not bool(torch.isfinite(result)):
+        raise RuntimeError("non-finite renderer-orbit span loss")
+    return result
+
+
 def loss_groups(
     model: RendererOrbitGroundedCompiler,
     groups: Sequence[Sequence[OrbitPilotRow]],
@@ -270,19 +289,19 @@ def loss_groups(
     )
     pieces.update(
         {
-            "line_address": uniform_span_loss(
+            "line_address": _finite_uniform_span_loss(
                 program.line_pointer_logits, line_mask, line_active
             ),
-            "binding_address": uniform_span_loss(
+            "binding_address": _finite_uniform_span_loss(
                 program.binding_pointer_logits, binding_mask, binding_active
             ),
-            "initial_entity_address": uniform_span_loss(
+            "initial_entity_address": _finite_uniform_span_loss(
                 program.initial_entity_pointer_logits, initial_mask, initial_active
             ),
-            "event_entity_address": uniform_span_loss(
+            "event_entity_address": _finite_uniform_span_loss(
                 program.event_entity_pointer_logits, event_mask, event_active
             ),
-            "query_address": uniform_span_loss(
+            "query_address": _finite_uniform_span_loss(
                 query.pointer_logits,
                 _query_span_mask(rows, query_ids.shape[1], device),
                 torch.ones(len(rows), dtype=torch.bool, device=device),

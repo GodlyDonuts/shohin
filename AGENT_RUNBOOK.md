@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 09:42 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 09:58 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -216,8 +216,9 @@
 > Every complete future system must remain strictly below 200M parameters; closed 150M contracts
 > remain unchanged.
 >
-> **Active training-only successor:** Renderer-Orbit Query Bus v1 is implemented but has no source
-> freeze, seed, H100 fit, fresh board, or score yet. It keeps every inherited projected/executor
+> **Active training-only successor:** Renderer-Orbit Query Bus v1 source is frozen at exact commit
+> `a16a555cae21dca845689f8ddc119b1d8f9a0f91`; its sole scientific pilot seed is
+> `7492631734612190994`. It keeps every inherited projected/executor
 > parameter frozen, adds a zero-gated eight-layer 512-wide renderer encoder, and forces the late
 > query through contextual ordinal addressing followed by a raw position-free byte-value motor.
 > Exact complete/trainable counts are 172,723,071 / 26,665,476, leaving 27,276,929 parameters below
@@ -225,9 +226,17 @@
 > rendered through four even-parity declaration/event/query combinations for fit, versus 2,000
 > disjoint semantics rendered through four odd-parity combinations. Every surface atom occurs in
 > both sets, but no complete renderer does. Development/confirmation are unreachable. Twenty-one
-> focused/current projected tests plus Ruff, format, `py_compile`, and Slurm syntax pass. Freeze and
-> push the exact source next, then draw one post-commit pilot seed and run the training-only H100
-> gate. A pass authorizes only a separately preregistered fresh board with no-consistency,
+> focused/current projected tests plus Ruff, format, `py_compile`, and Slurm syntax pass. Newton
+> source and input hashes match; remote CPU initialization independently reconstructs
+> 172,723,071/26,665,476 complete/trainable parameters. Job `694057` failed CUDA preflight on
+> `evc26` before model initialization, data load, optimizer construction, output creation, or any
+> scientific access. Job `694059` on preflighted H100 `evc36` was canceled after epoch one exposed
+> infinite event-address/total losses from zero target mass multiplied by masked `-inf` under bf16;
+> it created no output directory or artifact and is not a mechanism result. Optimization-only v1.1
+> uses equivalent float32 `torch.where`-masked span cross-entropy, rejects empty/nonfinite active
+> spans, excludes `evc26`, and passes 22 focused/current tests plus static checks. Freeze this repair
+> source and draw a new post-commit seed before one retry. A pass authorizes only a separately
+> preregistered fresh board with no-consistency,
 > wrong-family, direct-only, shuffled-label, and query-deletion controls.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
@@ -9484,3 +9493,30 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Twenty-one focused/current tests pass with static and job checks. Exact parent and v2 checkpoints
   are local and hash-verified at `e5f87a1d...` and `1d338651...`. No source commit or pilot seed has
   been drawn. Commit exact bytes before the one authorized training-only H100 pilot.
+
+- **2026-07-20 09:42--09:52** -- **Renderer-Orbit source is frozen and its sole training-only pilot
+  is live after one scoreless node failure.** Exact source commit
+  `a16a555cae21dca845689f8ddc119b1d8f9a0f91` is pushed and reconstructed as a clean detached
+  Newton worktree. Consumed-train, byte-parent, and rejected-v2 checkpoint SHA-256 values match
+  `b7756dbf...`, `e5f87a1d...`, and `1d338651...`; remote CPU initialization independently
+  reproduces 172,723,071 complete and 26,665,476 trainable parameters. The post-commit 64-bit beacon
+  `16716003771466966802` is deterministically reduced modulo `2^63` to scientific seed
+  `7492631734612190994`, avoiding a negative Bash/PYTHONHASHSEED representation. Job `694057` on
+  `evc26` reports zero CUDA devices and exits during bf16 hardware preflight, before model
+  initialization, data load, optimizer setup, output creation, or any scored/training artifact.
+  Preserve it as scoreless infrastructure only. Submission-time exclusion then assigns the same
+  sole scientific seed to job `694059` on `evc36`; H100 and bf16 preflight pass and training is
+  active. Do not duplicate this run. Development and confirmation remain unreachable and unopened.
+
+- **2026-07-20 09:52--09:58** -- **The first scientific renderer-orbit launch is closed before
+  artifacts as a numerical-loss implementation failure.** Job `694059` runs on a real H100 on
+  `evc36` and reaches epoch one, but inherited uniform span cross-entropy multiplies zero target
+  mass by masked `-inf` log probabilities under bf16. Event-address and total losses are infinite;
+  packet/whole-tape scores from this invalid objective are inadmissible. Cancel before epoch two.
+  No output directory, checkpoint, report, development read, or confirmation read exists. The
+  optimization-only v1.1 repair computes the same uniform span cross-entropy in float32, uses
+  `torch.where` rather than zero-times-infinity multiplication, and raises on empty/nonfinite active
+  spans. An explicit `-inf` regression has finite value and gradients. Architecture, data,
+  partition, labels, objective weights, optimizer, updates, gates, and claim boundary remain fixed;
+  `evc26` is added to the hardware exclude. Twenty-two focused/current tests and static checks pass.
+  Freeze a new exact source commit before drawing one new pilot seed.
