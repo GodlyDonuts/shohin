@@ -116,12 +116,28 @@ mode `0600`, and has access `0/0`. Report/train/development/confirmation hashes
 begin `fd487cdf`/`bb870ac3`/`5dc5035c`/`6186fb8c`. The committed board receipt
 commit `fc9ee4c4d110c14662705a70f70a70d07a9fe68f` precedes raw and signed-safe
 sole training seed `8446904969546017898`. No model output or scored access
-exists at the seed receipt.
+exists at the seed receipt. Sole job `694383` then completes cleanly on H100
+`evc23` in 11m48s. Treatment is 2,048/2,048 exact packets, every pointer, final
+states, answers, and joints, with 512/512 on each unseen renderer composition.
+Family-deranged labels are 0/2,048 exact packets and 148/2,048 exact states/
+joints. All 18 pilot gates, 18 independently recomputed core gates, and four
+assessor gates pass. The decision is `authorize_one_sealed_confirmation`.
+Checkpoint/report/assessment hashes begin `a5888d88`/`7dc048cc`/`1c5fad49`;
+local mirrors match Newton; custody is `1/0`; confirmation remains sealed.
+
+A separate confirmation lane is implemented but not yet source-frozen. It
+performs no training, hash-binds the exact development authorization, writes an
+atomic confirmation ledger before semantic access, compiles the 2,048 sealed
+rows once, deletes/poisons source before separate execution, and requires a
+second independent assessor. Twenty focused tests plus static checks pass. Its
+complete frozen procedure is
+`R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_CONFIRMATION_PREREG.md`; the development
+result is `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_DEVELOPMENT_RESULT.md`.
 The full closed-board record is
 `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_2_RESULT.md`.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 15:06 EDT. User authority requires every future
+**Last updated:** 2026-07-20 15:29 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 

@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 15:06 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 15:29 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -382,6 +382,15 @@
 > Board receipt commit `fc9ee4c4d110c14662705a70f70a70d07a9fe68f` precedes raw and signed-safe
 > training seed `8446904969546017898`. No output or scored access exists. Record/push the seed,
 > transport exact bytes, hash-verify them, and submit the sole v1.3 development job.
+> Sole job `694383` completed cleanly on H100 `evc23` in 11m48s. Treatment is **2,048/2,048 exact
+> packets, every pointer, final states, answers, and joints**, including 512/512 on each unseen
+> renderer; family-deranged labels are 0 packet and 148 state/joint. All 18 pilot core gates, 18
+> independently recomputed core gates, and four assessor gates pass. Decision is
+> `authorize_one_sealed_confirmation`. Checkpoint/report/assessment hashes begin
+> `a5888d88...`/`7dc048cc...`/`1c5fad49...`; exact local mirrors match; access is `1/0`; confirmation
+> remains mode `0600`. The separately implemented confirmation lane performs no training, writes an
+> atomic ledger before opening semantics, and requires a second independent assessor. Twenty
+> focused tests plus static checks pass. Commit/push the exact evaluator source before confirmation.
 > The admitted board
 > creates 48,000 compiler-only training rows from 12,000 latent programs and four even-parity
 > renderer views, plus 2,048 development and 2,048 sealed-confirmation rows from four odd-parity
@@ -9986,3 +9995,22 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `8446904969546017898`, which is already below `2^63` and becomes the training seed unchanged. No
   scientific setting changes and no GPU job, output, development access, or confirmation access
   exists at this receipt point. Commit/push this receipt before transport/submission.
+
+- **2026-07-20 15:11--15:24** -- **V1.3 passes development end to end.** Exact source/board/parent/
+  core hashes and Slurm test-only pass before sole job `694383` runs on H100 `evc23`. It completes
+  in 11m48s. Treatment is 2,048/2,048 exact on packet, every pointer, state, answer, and joint and
+  512/512 on every unseen renderer; family-deranged labels are 0/2,048 packet, 148/2,048 state/joint,
+  and 467/2,048 answer. All 18 pilot gates, 18 independent core gates, and four assessor gates pass.
+  Decision is `authorize_one_sealed_confirmation`. Checkpoint/config/packet/evidence/executor/
+  report/assessment hashes begin `a5888d88...`/`ab466c33...`/`00a45016...`/`80f477af...`/
+  `4bcfc441...`/`7dc048cc...`/`1c5fad49...`; ledger `15a9edd0...`; local and Newton copies match.
+  Custody is `1/0`; confirmation remains sealed.
+
+- **2026-07-20 15:24--15:29** -- **A separate one-read confirmation lane is implemented before
+  evaluator source freeze or confirmation access.** It hash-binds the exact development
+  authorization, writes an immutable authorization artifact and `O_EXCL` confirmation ledger before
+  parsing sealed rows, performs no training, evaluates treatment/control once through source
+  deletion and separate execution, and invokes a second independent assessor. The unchanged 18
+  scientific gates plus exact development authorization/final `1/1` custody and four assessor gates
+  are frozen. Twenty focused tests, including a complete synthetic confirmation capsule, plus Ruff,
+  byte compilation, and Slurm syntax pass. Commit/push evaluator source before opening confirmation.
