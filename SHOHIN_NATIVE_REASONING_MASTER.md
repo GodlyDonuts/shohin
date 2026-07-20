@@ -46,7 +46,7 @@ therefore physical locality is retained and one-to-one attribution is rejected.
 V2 custody is `1/0`, its confirmation is sealed, and no board will be rescored.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 12:18 EDT. User authority requires every future
+**Last updated:** 2026-07-20 12:31 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -210,6 +210,17 @@ board with new names and renderer/source distributions, followed by the already
 proven source-deleted executor. Existing development and confirmation remain
 sealed. Full result is in `R12_SD_CST_PHYSICAL_RECORD_BUS_RESULT.md`; checkpoint
 and report SHA-256 begin `89ab7d74...`/`9c768fa8...`.
+
+Before fresh scoring, a bounded successor removes the last inherited global
+source dependencies. It retains and freezes the perfect independent-assignment
+record bus, adds 594,435 trainable parameters for declaration-local binding and
+initial-order pointers plus a local query selector/value motor, and brings the
+complete system to 191,527,829 parameters. The program and query forwards pass
+with both inherited global encoders replaced by raising sentinels. Every new
+tensor receives finite gradient on a real consumed row and no excluded tensor
+does. This local-completion gate has not yet been seeded or run. It must pass
+consumed-training interface gates before any fresh board can be generated; a
+pass remains compiler mechanics, not reasoning.
 
 ---
 

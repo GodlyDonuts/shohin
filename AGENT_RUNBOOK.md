@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 12:18 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 12:31 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -281,6 +281,16 @@
 > credit to one-to-one normalization and is not a reasoning claim. Checkpoint/report SHA values are
 > `89ab7d74...`/`9c768fa8...`; local and Newton copies match; access is `0/0`. Any advancement must
 > use a separately committed fresh board. Never open existing development or confirmation.
+>
+> **Active local-completion gate:** before fresh-board scoring, the retained independent physical
+> record bus receives a fully local declaration/initial/query path. Only ten new `local_*` tensors /
+> 594,435 parameters train; all 88 record-bus tensors and every parent/executor tensor are frozen.
+> The complete compiler/system is 66,426,124 / **191,527,829**, leaving 8,472,171 below 200M. The
+> complete path no longer calls either inherited global encoder. Three focused tests, all current
+> physical-bus tests, real-parent reconstruction, and a real consumed-row full backward pass are
+> clean; all ten declared tensors receive gradients and no excluded tensor does. Freeze exact
+> source and prereg before one consumed-training H100 gate. A pass only authorizes a separately
+> committed fresh board; it is not reasoning evidence.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9726,3 +9736,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   checkpoint/report hashes match `89ab7d74...`/`9c768fa8...`; access remains `0/0`. Retain this as a
   conventional compiler baseline only. A fresh-board qualification must be separately committed;
   no current scored split may be opened.
+
+- **2026-07-20 12:18--12:31** -- **A fully local source front end is implemented before source
+  freeze or seed.** The retained independent record bus remains frozen. Ten new tensors / 594,435
+  parameters provide six declaration-local binding/initial pointers and a separate local query
+  selector/value motor over the shared line encoder. Program and query compilation succeed with the
+  inherited global source/orbit methods replaced by raising sentinels, proving those paths are not
+  consulted. Exact compiler/complete counts are 66,426,124 / 191,527,829 with 8,472,171 headroom.
+  Three focused tests, six retained-bus tests, Ruff/byte compilation/job syntax, actual parent-plus-
+  record checkpoint reconstruction, and a real consumed-row full backward pass pass; every one of
+  ten local tensors receives a gradient and every excluded tensor remains gradient-free. The frozen
+  prereg uses only consumed rows and requires 95--99% complete/interface rates plus exact excluded
+  digest and `0/0` access. Commit exact source before one seed. A pass only completes the compiler
+  interface needed for a separately committed fresh board.
