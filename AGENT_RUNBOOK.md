@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 18:29 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 18:46 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -228,8 +228,8 @@
 > evidence, report, and assessment SHA-256 are `150febfa...`/`05756471...`/`be4b5c50...`/
 > `39ffd483...`; read-only local mirrors match Newton.
 >
-> ER-CST v1.1 Witness Equality Bus is now a decisive development success and is authorized for one
-> sealed confirmation. It
+> **Newest confirmed reasoning frontier:** ER-CST v1.1 Witness Equality Bus is independently
+> confirmed. It
 > must preserve the already exact parser/order/opcode/HALT/query/executor, add dedicated model-owned
 > occurrence pointers for the three before and three after names in each rule, reuse learned byte-
 > bigram fingerprints, form a learned 3x3 equality matrix, and score all six `S_3` assignments by
@@ -251,9 +251,18 @@
 > 2,046/2,048; every other structural field/pointer is at least 99.609%. Minimum depth joint is
 > 96.875% and minimum renderer joint is 99.414%. Family-deranged/equality-ablated packet accuracy is
 > 0.098%/0%, joint is 0.098%/0%, and state is 17.822%/15.479%. All 14 scientific and eight
-> independent-assessor gates pass; custody is `1/0`. Checkpoint/evidence/report/assessment hashes are
+> independent-assessor gates pass on development. Checkpoint/evidence/report/assessment hashes are
 > `917c1a1f...`/`1a7504eb...`/`d295f8f6...`/`29e43492...`; read-only local mirrors match and a local
-> assessor replay is byte-identical.
+> assessor replay is byte-identical. Exact no-training evaluator source
+> `4a930c032adc04ec580ce7272df473365fe57a4a` precedes the one sealed read. Job `694641` completes on
+> H100 `evc22` in 2m42s. Confirmation treatment reaches 2,028/2,048 = **99.023% packet, state,
+> answer, and joint**, 2,044/2,048 = 99.805% cards and witness pointers, 92.969% minimum-depth joint,
+> and 99.023% on every unseen renderer. Family-deranged/equality-ablated packet/joint are 0.098%/0%
+> and state is 17.334%/16.357%. All 14 scientific and six confirmation-assessor gates pass; final
+> custody is exactly `1/1`. Authorization/evidence/report/assessment/ledger hashes are
+> `84e99ce3...`/`2138a4b6...`/`92de586a...`/`4a0fb472...`/`137a8810...`; local mirrors and an
+> independent replay match. The read-only checkpoint is promoted at
+> `/lustre/fs1/home/sa305415/shohin_promoted/er_cst_witness_equality_v1_1`.
 > Pre-board mechanics are now locally admitted: the direct classifier is removed; six learned
 > occurrence queries, dedicated detached witness projections, inherited byte fingerprints, a 3x3
 > equality matrix, and exact six-assignment aggregation produce public pointer/equality evidence.
@@ -261,14 +270,12 @@
 > counts are 192,726,827/12,021,276/7,273,173; a real-family CPU backward is finite, every new
 > equality component receives gradient, excluded-parent leakage is zero, and 21 focused tests plus
 > Ruff, byte compilation, shell syntax, and independent raw-evidence recomputation pass. The
-> score-bearing pilot/assessor used immutable-checkpoint-before-development custody and the frozen
-> original thresholds plus witness-pointer gates. A separate no-training, one-read confirmation lane
-> is now locally implemented and preregistered. It hash-binds the exact development authorization,
-> writes immutable authorization before an `O_EXCL` confirmation ledger, evaluates every frozen arm
-> once, and invokes a second raw-evidence assessor. Three confirmation tests plus 22 inherited
-> focused tests, Ruff, byte compilation,
-> and Slurm syntax pass. Commit/push the evaluator source, transport an exact clean capsule, and only
-> then open the sealed confirmation once. Do not rescore development or change thresholds.
+> score-bearing and confirmation pipelines are now closed. Never rescore either split. The confirmed
+> claim is bounded episodic `S_3` semantic binding and source-deleted recurrent composition, not broad
+> reasoning. The admitted next hypothesis must remove fixed three-state/six-card enumeration through
+> variable-cardinality model-emitted relation matrices and direct recurrent relation application while
+> preserving fresh names/renderers, source deletion, internal halt, matched causal controls, and the
+> strict under-200M complete-system ceiling.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10333,3 +10340,17 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Three confirmation tests plus 22 inherited focused tests, Ruff, byte compilation, and Slurm
   syntax pass. Commit/push exact evaluator
   source and verify a clean Newton capsule before the one sealed read.
+
+- **2026-07-20 18:29--18:46** -- **ER-CST v1.1 independently confirms on the sole sealed read.**
+  Exact evaluator source `4a930c032adc04ec580ce7272df473365fe57a4a` and evaluator-manifest SHA
+  `1c710acd...` precede access. Job `694641` completes on H100 `evc22` in 2m42s with no fitting.
+  Treatment reaches 2,028/2,048 = 99.023% exact packet/state/answer/joint, 2,044/2,048 = 99.805%
+  cards and all 18 witness pointers, 92.969% minimum-depth joint, and 99.023% on all four unseen
+  renderers. Family-deranged/equality-ablated packet/joint remain 0.098%/0% and state remains
+  17.334%/16.357%. All 14 scientific and six independent-assessor gates pass; custody is exactly
+  `1/1`. Authorization/evidence/report/assessment/ledger hashes begin `84e99ce3`/`2138a4b6`/
+  `92de586a`/`4a0fb472`/`137a8810`; local read-only mirrors and a byte-identical assessor replay
+  match. Promote checkpoint `917c1a1f...` read-only under
+  `shohin_promoted/er_cst_witness_equality_v1_1`. This confirms bounded fresh episodic `S_3`
+  semantic binding and source-deleted recurrent composition, not unrestricted reasoning. The next
+  frontier is variable-cardinality relation transport without enumerated card classes.

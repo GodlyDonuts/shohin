@@ -1,6 +1,9 @@
 # R12 ER-CST Witness Equality Bus v1.1 Development Result
 
-**Decision:** `authorize_one_sealed_confirmation`
+**Development decision:** `authorize_one_sealed_confirmation`
+
+**Final status:** independently confirmed; see
+`R12_ER_CST_WITNESS_EQUALITY_CONFIRMATION_RESULT.md`.
 
 ## Frozen identity
 

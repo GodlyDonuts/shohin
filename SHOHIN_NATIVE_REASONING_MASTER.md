@@ -219,15 +219,21 @@ Family-deranged/equality-ablated packet/joint are 0.098%/0%, with state only
 17.822%/15.479%. All 14 scientific and eight assessor gates pass; custody is `1/0`.
 Checkpoint/evidence/report/assessment hashes begin `917c1a1f`/`1a7504eb`/
 `d295f8f6`/`29e43492`; local mirrors match and the assessor replay is byte-identical.
-A separate no-training one-read confirmation evaluator is implemented and frozen in
-`R12_ER_CST_WITNESS_EQUALITY_CONFIRMATION_PREREG.md`; confirmation remains sealed
-until that evaluator is committed and capsule-verified. The complete design and gates
+A separate no-training one-read confirmation evaluator was frozen at `4a930c0`.
+Sole job `694641` confirms the mechanism at 99.023% packet/state/answer/joint,
+99.805% cards/witness pointers, 92.969% minimum-depth joint, and 99.023% on each
+unseen renderer. Both controls remain at 0.098%/0% packet/joint and near-chance
+state. All 14 scientific and six confirmation-assessor gates pass; custody is
+exactly `1/1`. Authorization/evidence/report/assessment/ledger hashes begin
+`84e99ce3`/`2138a4b6`/`92de586a`/`4a0fb472`/`137a8810`; local replay is byte-
+identical and checkpoint `917c1a1f...` is promoted read-only. The complete design and gates
 are in `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md` and
 `R12_ER_CST_NEURAL_ADAPTER_PREREG.md`; CPU evidence is in
 `R12_ER_CST_RULE_CARD_CPU_RESULT.md`; the development result is in
-`R12_ER_CST_WITNESS_EQUALITY_BUS_RESULT.md`.
+`R12_ER_CST_WITNESS_EQUALITY_BUS_RESULT.md`, and the sealed result is in
+`R12_ER_CST_WITNESS_EQUALITY_CONFIRMATION_RESULT.md`.
 
-**Last updated:** 2026-07-20 18:29 EDT. User authority requires every future
+**Last updated:** 2026-07-20 18:46 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2755,6 +2761,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Closed ER-CST v1 after sole job `694511` completed three equal-budget fits and one-read development. Treatment solves every structural pointer/event/HALT/query field at 100% but scores 0/2,048 complete cards, 311/2,048 states, 682/2,048 answers, and zero joints. Deranged labels retain 98.535% initial state; equality ablation retains 68.262%; held-out global class remapping recovers only 16.80% complete cards. The failure is dynamic witness equality plus shared-path interference, not parser, order, halt, executor, or a class-code convention. Custody is `1/0`; old confirmation stays sealed. Active repair: fresh-board learned witness-equality bus under 200M. |
 | 2026-07-20 | Implemented and preregistered ER-CST v1.1 Witness Equality Bus: dedicated detached occurrence pointers, inherited byte fingerprints, a learned 3x3 equality matrix, and exact finite `S_3` assignment scoring replace the failed direct classifier. Exact system size is 192,726,827 with 7,273,173 headroom. Commit `5670ad8` precedes fresh board seed `2244518911844010727`; 48,000/2,048/2,048 rows pass all 14 gates and reproduce byte-identically, including every one of 18 witness spans per row, zero overlap, confirmation `0600`, and access `0/0`. Newton hashes match. Twenty-one focused/static checks and independent raw-evidence recomputation pass; no training seed or score exists. |
 | 2026-07-20 | Froze ER-CST v1.1 score source `87d53b5` before seed `2262748995832026278`; sole H100 job `694567` passes development at 99.512% packet/joint, 99.609% state, 100% answer, 96.875% minimum-depth joint, and 99.414% minimum-renderer joint. Family-deranged/equality-ablated packet/joint remain 0.098%/0%. All 14 scientific and eight assessor gates pass; custody is `1/0`, local artifact mirrors and assessor replay match. A separate no-training, authorization-first, `O_EXCL` one-read confirmation lane now passes three confirmation plus 22 inherited focused tests and awaits evaluator source freeze. |
+| 2026-07-20 | Independently confirmed ER-CST v1.1 from evaluator source `4a930c0`: sole sealed job `694641` reaches 99.023% packet/state/answer/joint, 99.805% cards/witness pointers, 92.969% minimum-depth joint, and 99.023% on every unseen renderer. Both causal controls remain near zero packet/joint. All 14 scientific and six assessor gates pass; final custody is `1/1`, local replay matches, and checkpoint `917c1a1f...` is promoted read-only. This confirms bounded episodic `S_3` semantic binding and source-deleted recurrent composition; next remove fixed state/card enumeration through variable-cardinality relation transport. |
 
 ---
 
