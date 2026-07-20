@@ -27,12 +27,15 @@ that bottleneck further on consumed training rows. Its dedicated query bus,
 declaration binding, initial-occurrence binding, and initial state transfer at
 99.85--100%, but every fit and held-out renderer remains 0% exact packet because
 the generic residual fails to drive frozen line/kind/amount/event heads. This
-rejects generic residual translation and authorizes only a dedicated
-renderer-native program decoder within the remaining 27,276,929 parameters.
+rejects generic residual translation. A 7,103,493-parameter renderer-native
+decoder then also reaches 0% lines/events/packets on fit renderers when orbit
+memory is frozen, while preserving successful interfaces exactly. This closes
+head-only repair and localizes the conventional control to joint memory/decoder
+co-adaptation under the unchanged 179,826,564 total-parameter count.
 V2 custody is `1/0`, its confirmation is sealed, and no board will be rescored.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 10:17 EDT. User authority requires every future
+**Last updated:** 2026-07-20 10:38 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -90,7 +93,19 @@ renderer-native program decoder over the learned orbit memory, while retaining
 the successful query/declaration/initial paths and exact categorical executor.
 The complete deployed system must remain strictly below 200M.
 
+That favorable conventional decoder is now also closed. Exact source `dd25c38`,
+seed `8890082017095272164`, and H100 job `694073` train 7,103,493 new
+line/slot/kind/amount/event parameters while preserving every v1.2 tensor. All
+fit renderers remain 0% exact line/event pointers and packets; minimum held-out
+kind/identity/amount are 0.050%/0.050%/1.450%. The frozen parent remains byte-
+identical and its query/initial interfaces stay exact. This rules out a head-
+only decoder repair and shows that renderer program structure was not exposed
+in frozen orbit memory. The next conventional control must jointly co-adapt
+only shared orbit memory and the native decoder, under the unchanged
+179,826,564 total-parameter count and all preservation gates.
+
 Full frozen evidence is in `R12_SD_CST_RENDERER_ORBIT_QUERY_BUS_RESULT.md`.
+The decoder result is in `R12_SD_CST_RENDERER_NATIVE_PROGRAM_RESULT.md`.
 
 ---
 

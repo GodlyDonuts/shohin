@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 10:28 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 10:38 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -231,15 +231,17 @@
 > hypothesis may spend the remaining 27,276,929 parameters on a renderer-native program decoder
 > while freezing the successful query, declaration/initial binding, tape, and executor paths.
 >
-> **Active training-only conventional control:** the renderer-native program decoder is implemented
-> and preregistered before source freeze or seed. It adds only 35 `native_*` tensors: nine line/slot
-> queries, shared source keys, two slot-composition transformer layers, kind/amount heads, and eight
-> line-conditioned event queries. Every v1.2 tensor is frozen and digest-bound. Exact compiler/
-> trainable/complete/headroom counts are 54,724,859 / 7,103,493 / 179,826,564 / 20,173,436.
-> An exact loaded-parent consumed-row forward/backward is finite; 25 focused/current tests and static
-> checks pass. This is a favorable ordinary structured-parser control, not a claimed invention or
-> reasoning mechanism. Freeze exact source next, then draw one pilot seed. Passing may retain the
-> parser only as a fresh-board control; failure closes it without extra epochs.
+> **Renderer-native frozen-memory control is closed and rejected.** Exact source `dd25c38`, seed
+> `8890082017095272164`, and sole job `694073` complete 3,000 updates on H100 `evc36` in 4m46s.
+> Every fit renderer has 0% exact line/event pointers and packets; minimum held-out line/event/
+> packet are also 0%, with kind/identity/amount only 0.050%/0.050%/1.450%. Initial state,
+> declaration/initial pointers, query, and query pointer remain 100%/99.85--100%/100%/100%, and the
+> parent digest is byte-identical. Six of eleven gates pass. Checkpoint/report SHA values are
+> `fe95385d...`/`6fffe15d...`; exact local copies match Newton; access is `0/0`. Do not add epochs.
+> This closes “add decoder heads” and shows frozen orbit memory lacks decodable program structure.
+> The next training-only conventional control may jointly train only shared orbit memory plus native
+> decoder while every successful motor/projection/executor remains frozen and preservation losses
+> stay active. Complete size remains 179,826,564 below 200M.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9569,3 +9571,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   reasoning claim. A pass only establishes parser capacity and retains this known structured-
   attention system as a favorable future control. Freeze exact source before drawing one seed;
   development and confirmation remain unreachable.
+
+- **2026-07-20 10:28--10:38** -- **The frozen-memory renderer-native decoder completes and is
+  rejected even on fit renderers.** Source `dd25c388c381ca94141797ce27098aa388e80548`, raw beacon
+  `18113454053950047972`, and signed-safe seed `8890082017095272164` produce sole H100 job `694073`
+  on `evc36`. It completes 3,000 updates in 4m46s. Every fit renderer has 0% exact line pointer,
+  event pointer, tape, and packet. Minimum held-out line/event/packet are also 0%; kind/identity/
+  amount are 0.050%/0.050%/1.450%. Initial, declaration/initial binding, query, and query pointer
+  remain exact, and frozen-parent digest `2d717630...` is byte-identical. Six of eleven gates pass;
+  decision is `reject_or_revise_renderer_native_program_control`. Event support declines
+  8.893% -> 5.660% and line/kind loss stays near uniform/chance, so extra epochs are not authorized.
+  This establishes that frozen v1.2 orbit memory itself lacks readily decodable program structure;
+  dedicated heads alone are insufficient. Checkpoint/report SHA values are `fe95385d...`/
+  `6fffe15d...`; local copies hash-match Newton; access is `0/0`. The smallest next control is joint
+  co-adaptation of shared orbit memory plus the native decoder, with query/binding/tape/executor
+  preservation and the same 179,826,564 complete parameter count.

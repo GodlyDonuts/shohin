@@ -1,7 +1,7 @@
 # R12 SD-CST Renderer-Native Program Decoder Preregistration
 
-**Status:** implemented and locally audited before source freeze, seed, H100
-fit, or any scored access
+**Status:** closed and rejected on the sole valid training-only run; see
+`R12_SD_CST_RENDERER_NATIVE_PROGRAM_RESULT.md`
 
 **Parent:** rejected Renderer-Orbit Query Bus v1.2 checkpoint; its successful
 query/declaration/initial interfaces are frozen
