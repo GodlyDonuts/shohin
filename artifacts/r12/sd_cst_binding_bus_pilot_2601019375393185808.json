@@ -1,0 +1,311 @@
+{
+  "board": {
+    "board_source_commit": "cefac2a78bf0f4d0bd5a9ddfba3dff4f76e18a46",
+    "confirmation_accesses": 0,
+    "development_accesses": 0,
+    "report_sha256": "e4ac239ccf1cb519a41a0e6d8abb9e5a8c880598a67c060953379d49aa79b0de",
+    "train_sha256": "694bce3a6077244b06ebeabba66e3255dc47507f664f8f45c2e9c3780581e0bb"
+  },
+  "checkpoint_sha256": "361026909dfa5966fc4a82e7a5dcfd1a61cf939b43e3d9accc234ef6e818aab2",
+  "claim_boundary": "Consumed training split only; binding architecture pilot, not a reasoning score.",
+  "confirmation_accesses": 0,
+  "decision": "reject_or_revise_binding_bus",
+  "development_accesses": 0,
+  "fit": {
+    "exact": {
+      "amount": 1203,
+      "binding_pointer": 40000,
+      "event_entity_pointer": 0,
+      "identity": 119,
+      "initial": 40000,
+      "initial_entity_pointer": 40000,
+      "kind": 2479,
+      "line_pointer": 35834,
+      "query": 40000,
+      "whole_tape": 0
+    },
+    "rates": {
+      "amount": 0.030075,
+      "binding_pointer": 1.0,
+      "event_entity_pointer": 0.0,
+      "identity": 0.002975,
+      "initial": 1.0,
+      "initial_entity_pointer": 1.0,
+      "kind": 0.061975,
+      "line_pointer": 0.89585,
+      "query": 1.0,
+      "whole_tape": 0.0
+    },
+    "raw_stop_count_histogram": {
+      "1": 39972,
+      "2": 28
+    },
+    "rows": 40000
+  },
+  "gates": {
+    "amount_at_least_90pct": false,
+    "binding_pointer_at_least_90pct": true,
+    "complete_system_below_150m": true,
+    "event_entity_pointer_at_least_90pct": false,
+    "exactly_one_raw_stop_every_row": false,
+    "identity_at_least_80pct": false,
+    "initial_at_least_80pct": true,
+    "initial_entity_pointer_at_least_90pct": true,
+    "kind_at_least_90pct": false,
+    "line_pointer_at_least_90pct": false,
+    "query_at_least_98pct": true,
+    "scored_access_zero": true,
+    "whole_tape_at_least_60pct": false
+  },
+  "heldout": {
+    "exact": {
+      "amount": 267,
+      "binding_pointer": 8000,
+      "event_entity_pointer": 0,
+      "identity": 26,
+      "initial": 8000,
+      "initial_entity_pointer": 8000,
+      "kind": 459,
+      "line_pointer": 7105,
+      "query": 8000,
+      "whole_tape": 0
+    },
+    "rates": {
+      "amount": 0.033375,
+      "binding_pointer": 1.0,
+      "event_entity_pointer": 0.0,
+      "identity": 0.00325,
+      "initial": 1.0,
+      "initial_entity_pointer": 1.0,
+      "kind": 0.057375,
+      "line_pointer": 0.888125,
+      "query": 1.0,
+      "whole_tape": 0.0
+    },
+    "raw_stop_count_histogram": {
+      "1": 7994,
+      "2": 6
+    },
+    "rows": 8000
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "fit_losses": {
+        "amount": 0.6444267560958862,
+        "binding_address": 3.1124020935058594,
+        "event_entity_address": 4.905878335571289,
+        "identity": 1.1204508515357972,
+        "initial": 0.2614095190430408,
+        "initial_entity_address": 3.0981017921447753,
+        "kind": 1.0345956691741944,
+        "line_address": 5.889100477600097,
+        "query": 0.05192926801296557,
+        "total": 20.11829486694336
+      },
+      "heldout": {
+        "exact": {
+          "amount": 124,
+          "binding_pointer": 7992,
+          "event_entity_pointer": 0,
+          "identity": 10,
+          "initial": 8000,
+          "initial_entity_pointer": 8000,
+          "kind": 0,
+          "line_pointer": 0,
+          "query": 8000,
+          "whole_tape": 0
+        },
+        "rates": {
+          "amount": 0.0155,
+          "binding_pointer": 0.999,
+          "event_entity_pointer": 0.0,
+          "identity": 0.00125,
+          "initial": 1.0,
+          "initial_entity_pointer": 1.0,
+          "kind": 0.0,
+          "line_pointer": 0.0,
+          "query": 1.0,
+          "whole_tape": 0.0
+        },
+        "raw_stop_count_histogram": {
+          "3": 1,
+          "4": 12,
+          "5": 23,
+          "6": 7964
+        },
+        "rows": 8000
+      },
+      "updates": 625
+    },
+    {
+      "epoch": 2,
+      "fit_losses": {
+        "amount": 0.6194245770454406,
+        "binding_address": 2.566310690689087,
+        "event_entity_address": 4.513183639526368,
+        "identity": 0.9717116415023803,
+        "initial": 0.007673723697662354,
+        "initial_entity_address": 2.56635820274353,
+        "kind": 0.5349248071670533,
+        "line_address": 5.597781184387207,
+        "query": 4.635202184718423e-06,
+        "total": 17.37737319030762
+      },
+      "heldout": {
+        "exact": {
+          "amount": 124,
+          "binding_pointer": 8000,
+          "event_entity_pointer": 0,
+          "identity": 10,
+          "initial": 8000,
+          "initial_entity_pointer": 8000,
+          "kind": 121,
+          "line_pointer": 7683,
+          "query": 8000,
+          "whole_tape": 0
+        },
+        "rates": {
+          "amount": 0.0155,
+          "binding_pointer": 1.0,
+          "event_entity_pointer": 0.0,
+          "identity": 0.00125,
+          "initial": 1.0,
+          "initial_entity_pointer": 1.0,
+          "kind": 0.015125,
+          "line_pointer": 0.960375,
+          "query": 1.0,
+          "whole_tape": 0.0
+        },
+        "raw_stop_count_histogram": {
+          "1": 8000
+        },
+        "rows": 8000
+      },
+      "updates": 1250
+    },
+    {
+      "epoch": 3,
+      "fit_losses": {
+        "amount": 0.5496540355682373,
+        "binding_address": 2.5663232711791992,
+        "event_entity_address": 4.28227606048584,
+        "identity": 0.8782891744613648,
+        "initial": 0.005289442307502032,
+        "initial_entity_address": 2.5670245460510253,
+        "kind": 0.34959607467651366,
+        "line_address": 5.201706201171875,
+        "query": 8.529120492255515e-08,
+        "total": 16.4001589263916
+      },
+      "heldout": {
+        "exact": {
+          "amount": 240,
+          "binding_pointer": 8000,
+          "event_entity_pointer": 0,
+          "identity": 25,
+          "initial": 8000,
+          "initial_entity_pointer": 8000,
+          "kind": 220,
+          "line_pointer": 7996,
+          "query": 8000,
+          "whole_tape": 0
+        },
+        "rates": {
+          "amount": 0.03,
+          "binding_pointer": 1.0,
+          "event_entity_pointer": 0.0,
+          "identity": 0.003125,
+          "initial": 1.0,
+          "initial_entity_pointer": 1.0,
+          "kind": 0.0275,
+          "line_pointer": 0.9995,
+          "query": 1.0,
+          "whole_tape": 0.0
+        },
+        "raw_stop_count_histogram": {
+          "1": 8000
+        },
+        "rows": 8000
+      },
+      "updates": 1875
+    },
+    {
+      "epoch": 4,
+      "fit_losses": {
+        "amount": 0.5316227479457856,
+        "binding_address": 2.5655608867645263,
+        "event_entity_address": 4.170223741912841,
+        "identity": 0.8426256572723388,
+        "initial": 0.004626409842073917,
+        "initial_entity_address": 2.5658175304412842,
+        "kind": 0.3236340667724609,
+        "line_address": 5.157562713623047,
+        "query": 2.354383298097673e-10,
+        "total": 16.161673782348632
+      },
+      "heldout": {
+        "exact": {
+          "amount": 267,
+          "binding_pointer": 8000,
+          "event_entity_pointer": 0,
+          "identity": 26,
+          "initial": 8000,
+          "initial_entity_pointer": 8000,
+          "kind": 459,
+          "line_pointer": 7105,
+          "query": 8000,
+          "whole_tape": 0
+        },
+        "rates": {
+          "amount": 0.033375,
+          "binding_pointer": 1.0,
+          "event_entity_pointer": 0.0,
+          "identity": 0.00325,
+          "initial": 1.0,
+          "initial_entity_pointer": 1.0,
+          "kind": 0.057375,
+          "line_pointer": 0.888125,
+          "query": 1.0,
+          "whole_tape": 0.0
+        },
+        "raw_stop_count_histogram": {
+          "1": 7994,
+          "2": 6
+        },
+        "rows": 8000
+      },
+      "updates": 2500
+    }
+  ],
+  "parameters": {
+    "base": 125081664,
+    "compiler": 20513138,
+    "complete_system": 145614843,
+    "headroom": 4385157,
+    "motor": 19206,
+    "reader": 835
+  },
+  "partition": {
+    "fit_rows": 40000,
+    "heldout_rows": 8000,
+    "method": "sha256(row_id) ordering"
+  },
+  "schema": "r12_sd_cst_binding_bus_training_pilot_report_v1",
+  "score_eligible": false,
+  "seed": 2601019375393185808,
+  "training": {
+    "batch_size": 64,
+    "elapsed_seconds": 330.099728345871,
+    "epochs": 4,
+    "kind_class_weights": [
+      1.0,
+      1.0,
+      4.0
+    ],
+    "lr": 0.0003,
+    "span_target": "uniform over exact training-only entity/source span",
+    "updates": 2500,
+    "warmup": 100
+  }
+}

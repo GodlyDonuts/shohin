@@ -9,7 +9,17 @@ from pilot_sd_cst_byte_addressed import (
     MOTOR_PARAMETERS,
     READER_PARAMETERS,
 )
-from sd_cst_binding_bus import BIGRAM_PAD, BindingBusCompiler
+from pilot_sd_cst_hierarchical_binding import (
+    TRAINABLE_NAMES,
+    freeze_parent,
+    load_parent_state,
+)
+from sd_cst_binding_bus import (
+    BIGRAM_PAD,
+    BindingBusCompiler,
+    HierarchicalBindingBusCompiler,
+)
+from sd_cst_byte_addressed import ByteAddressedCompiler
 
 
 def _training_row() -> dict[str, object]:
@@ -124,3 +134,39 @@ def test_binding_bus_shapes_and_production_parameter_cap():
         + READER_PARAMETERS
     )
     assert complete < MAX_PARAMETERS
+
+
+def test_hierarchical_mask_uses_model_anchor_and_newline_syntax():
+    ids = torch.tensor([list(b"alpha one\nbeta two\ngamma") + [256] * 4])
+    valid = ids.ne(256)
+    logits = torch.full((1, 3, ids.shape[1]), -100.0)
+    logits[0, 0, 2] = 1.0
+    logits[0, 1, 14] = 1.0
+    logits[0, 2, 18] = 1.0
+    mask = HierarchicalBindingBusCompiler._selected_line_mask(ids, valid, logits)
+    source = bytes(value for value in ids[0].tolist() if value < 256)
+    selected = [
+        bytes(ids[0, slot_mask].tolist()) for slot_mask in mask[0]
+    ]
+    assert selected == [b"alpha one\n", b"beta two\n", b"beta two\n"]
+    assert source == b"alpha one\nbeta two\ngamma"
+
+
+def test_frozen_parent_load_exposes_only_binding_bus_parameters():
+    kwargs = {
+        "width": 32,
+        "heads": 4,
+        "encoder_layers": 1,
+        "slot_layers": 1,
+        "ff": 64,
+        "slot_ff": 64,
+        "max_bytes": 64,
+    }
+    parent = ByteAddressedCompiler(**kwargs)
+    child = HierarchicalBindingBusCompiler(fingerprint_width=16, **kwargs)
+    missing = load_parent_state(child, parent.state_dict())
+    trainable = freeze_parent(child)
+    assert "binding_queries" in missing
+    assert set(trainable) == TRAINABLE_NAMES
+    for name, parameter in child.named_parameters():
+        assert parameter.requires_grad == (name in TRAINABLE_NAMES)

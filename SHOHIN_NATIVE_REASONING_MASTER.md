@@ -18,14 +18,17 @@ closed before development because the generic language compiler learned
 source-blind priors. A byte-addressed compiler then reached 100% source-line
 pointers, raw kind/STOP, amount, and query on an 8,000-row consumed-training
 holdout, while identity and initial binding stayed at chance. The active
-training-only hypothesis is a 20,513,138-parameter content-addressable binding
-bus, for a 145,614,843-parameter complete system. It matches model-selected
-repeated entity spans through shared position-free byte-bigram fingerprints
-before source deletion. No neural development score exists yet.
+training-only hypothesis is a frozen-parent hierarchical content-addressable
+binding bus, for a 145,614,843-parameter complete system. The first joint bus
+run proves 100% declaration-to-initial binding but regresses the solved parent
+fields and fails event occurrence addressing. The successor freezes the exact
+byte compiler and restricts each event-name pointer to its model-selected
+newline-delimited semantic line before shared fingerprint matching. No neural
+development score exists yet.
 Broad language-grounded,
 self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 05:45 EDT. User authority permits future complete
+**Last updated:** 2026-07-20 06:08 EDT. User authority permits future complete
 systems strictly below 200M parameters; the current isolated pilot retains its
 stricter 150M comparison gate.
 
@@ -61,7 +64,7 @@ addressing and local event extraction now work, while exact repeated-name
 binding does not. Report SHA-256 is
 `0bd0b6bbbc68f904ce9fdc06e35e5484114a66db85a3a20af528a9c05e86766e`.
 
-The next falsifier is not another generic transformer layer. A model-owned
+The first falsifier is not another generic transformer layer. A model-owned
 content-addressable binding bus selects declaration, initial-order, and event
 name spans. One shared position-free byte-bigram fingerprint maps selected
 content into a 96-wide space, and cosine equality emits anonymous role logits.
@@ -69,6 +72,22 @@ Initial state is scored over the six possible permutations from three
 occurrence-to-role match rows. The last selected byte cannot leak its following
 delimiter because only adjacent pairs whose two pointer weights are selected
 contribute. The current complete accounting is 145,614,843 parameters.
+
+Joint pilot `693974` gives a partial positive and an overall rejection. The
+declaration and initial-occurrence pointers and six-way arbitrary initial state
+all reach 8,000/8,000, showing that shared position-free fingerprints perform
+exact declaration-to-initial binding. Event pointers remain zero, while the
+from-scratch joint objective regresses parent line/kind/amount to 88.8125%/
+5.7375%/3.3375%. Whole tape stays zero and six rows emit two STOPs. Report SHA
+is `6a7d0ed94bc13194ceb5bac207f1726d49b75adea865b942c5ba7417e7b85b95`.
+
+The next falsifier freezes every parameter from the previously exact byte
+compiler checkpoint `e5f87a1d...`. Its model-selected semantic line address is
+expanded only to the containing public newline-delimited region, and each new
+event-name pointer is restricted to that region. Only the 14 binding queries,
+shared bigram table/projection, and scale train. This removes objective
+competition and tests semantic-line-to-name binding directly; inherited
+parameters must remain byte-identical.
 
 This is intentionally a narrow structural prior for exact repeated surfaces,
 not general coreference. The preregistered pilot reads only consumed training,

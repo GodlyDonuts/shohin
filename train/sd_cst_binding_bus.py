@@ -148,3 +148,81 @@ class BindingBusCompiler(ByteAddressedCompiler):
 
     def compile_query(self, ids: torch.Tensor, valid_mask: torch.Tensor) -> LateQuery:
         return super().compile_query(ids, valid_mask)
+
+
+class HierarchicalBindingBusCompiler(BindingBusCompiler):
+    """Bind event names only inside each model-addressed semantic event line."""
+
+    @staticmethod
+    def _selected_line_mask(
+        ids: torch.Tensor,
+        valid_mask: torch.Tensor,
+        pointer_logits: torch.Tensor,
+    ) -> torch.Tensor:
+        positions = torch.arange(ids.shape[1], device=ids.device)[None, None]
+        anchors = pointer_logits.argmax(-1)[..., None]
+        newlines = (ids.eq(10) & valid_mask)[:, None]
+        before = torch.where(
+            newlines & positions.lt(anchors), positions, torch.full_like(positions, -1),
+        ).amax(-1, keepdim=True)
+        lengths = valid_mask.sum(-1)[:, None, None]
+        after = torch.where(
+            newlines & positions.ge(anchors), positions + 1, lengths,
+        ).amin(-1, keepdim=True)
+        return valid_mask[:, None] & positions.ge(before + 1) & positions.lt(after)
+
+    def compile_program(
+        self, ids: torch.Tensor, valid_mask: torch.Tensor,
+    ) -> BindingBusOutput:
+        memory = self._encode(ids, valid_mask)
+        line_slots, line_pointer_logits = self._address(
+            memory, valid_mask, self.program_queries,
+        )
+        line_slots = self.slot_norm(self.slot_encoder(line_slots))
+        events = line_slots[:, 1:]
+
+        binding_pointer_logits = self._pointer_logits(
+            memory, valid_mask, self.binding_queries,
+        )
+        initial_pointer_logits = self._pointer_logits(
+            memory, valid_mask, self.initial_entity_queries,
+        )
+        event_pointer_logits = self._pointer_logits(
+            memory, valid_mask, self.event_entity_queries,
+        )
+        line_mask = self._selected_line_mask(ids, valid_mask, line_pointer_logits)
+        event_pointer_logits = event_pointer_logits.masked_fill(
+            ~line_mask[:, 1:], torch.finfo(event_pointer_logits.dtype).min,
+        )
+
+        bindings = self._fingerprints(ids, valid_mask, binding_pointer_logits)
+        initial_entities = self._fingerprints(
+            ids, valid_mask, initial_pointer_logits,
+        )
+        event_entities = self._fingerprints(
+            ids, valid_mask, event_pointer_logits,
+        )
+        scale = self.logit_scale.exp().clamp(max=100.0)
+        initial_matches = scale * torch.einsum(
+            "bpf,brf->bpr", initial_entities, bindings,
+        )
+        event_matches = scale * torch.einsum(
+            "bef,brf->ber", event_entities, bindings,
+        )
+        state_logits = torch.stack([
+            sum(initial_matches[:, position, role] for position, role in enumerate(perm))
+            for perm in PERMUTATIONS
+        ], dim=-1)
+        tape = DeletedProgramTape(
+            initial_state=state_logits.float(),
+            event_kind=self.kind_head(events).float(),
+            event_identity=event_matches.float(),
+            amount=self.amount_head(events).float(),
+        )
+        return BindingBusOutput(
+            tape=tape,
+            line_pointer_logits=line_pointer_logits,
+            binding_pointer_logits=binding_pointer_logits,
+            initial_entity_pointer_logits=initial_pointer_logits,
+            event_entity_pointer_logits=event_pointer_logits,
+        )

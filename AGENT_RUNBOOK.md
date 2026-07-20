@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 05:45 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 06:08 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -175,13 +175,15 @@
 > consumed-training rows, but only 5/8,000 entity identity, 1,338/8,000 initial state, and zero whole
 > tapes. Report SHA is `0bd0b6bb...`. This isolates cross-occurrence variable binding after evidence
 > addressing and local field extraction. The active training-only successor is a content-addressable
-> binding bus: model-selected declaration/initial/event name spans are mapped through one shared
-> position-free byte-bigram fingerprint and cosine-matched into anonymous roles. Its compiler has
-> 20,513,138 parameters; complete Shohin is 145,614,843. Commit exact source and job contract before
-> drawing the pilot seed. Raw STOP and raw whole-tape gates are mandatory; no grammar repair or
-> scored access is authorized. User authority now permits future systems below 200M parameters, but
-> this isolated pilot retains its stricter preregistered 150M comparison gate. Mechanics alone are
-> not native reasoning.
+> binding bus. From-scratch job `693974` is rejected overall but proves declaration-to-initial
+> binding: both pointer sets and arbitrary initial state reach 8,000/8,000. Joint training regresses
+> the solved parent fields and event pointer remains zero; report SHA is `6a7d0ed9...`. The active
+> successor loads and freezes exact byte-compiler checkpoint `e5f87a1d...`, uses its model-owned
+> semantic line pointers to mask each event-name pointer to the selected newline-delimited line, and
+> trains only 6,306,145 binding parameters. Complete Shohin remains 145,614,843. Commit source/job
+> before its seed. Raw STOP/tape, frozen-parent identity, and zero scored access are mandatory. User
+> authority permits future systems below 200M, while this pilot retains its stricter 150M comparison
+> gate. Mechanics alone are not native reasoning.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9258,3 +9260,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   pilot deliberately retains a stricter 150M gate to isolate mechanism from scale. Freeze source,
   job, and prereg before its seed; require raw STOP and tape gates, then controls and fresh-board
   integration before any scored claim.
+
+- **2026-07-20 05:45--06:08** -- **The first content-addressable bus proves initial binding but is
+  rejected jointly; a frozen-parent hierarchy is preregistered.** Job `693974` completes on H100
+  `evc22` in 6m01s with source commit `cd937f1` and post-commit seed `2601019375393185808`.
+  Declaration pointers, initial-occurrence pointers, and arbitrary six-way initial state are all
+  8,000/8,000, a genuine jump from 16.725% initial state. Event-occurrence pointer is zero; identity
+  is 26/8,000; the four-loss from-scratch objective regresses line/kind/amount to 88.8125%/5.7375%/
+  3.3375%, and whole tape remains zero. Report/checkpoint SHA values are `6a7d0ed9...`/
+  `36102690...`; access is `0/0`. The smallest repair loads and freezes exact parent byte checkpoint
+  `e5f87a1d...`, uses its model-owned line pointer plus public newline syntax to bound each event-name
+  pointer, and trains only new binding parameters. Fifty-two tests and static checks pass. Commit
+  this source before drawing the one authorized training-only seed; no scored split is eligible.
