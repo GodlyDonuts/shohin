@@ -5,8 +5,9 @@ consumed-training mechanics only; no scored split may be opened
 
 **Source contract:** exact architecture, pilot, test, job, and preregistration
 commit `5c9a2855a202692996e6e4100c927e9d8842bf48`; the following documentation-only
-commit does not change the scientific contract. The independent pilot seed has
-not yet been drawn.
+commits do not change the scientific contract. After source push, raw 64-bit
+beacon `18183044536483492966` was reduced modulo `2^63` to sole scientific seed
+`8959672499628717158`.
 
 **Parent:** rejected joint renderer-memory/native-decoder checkpoint SHA-256
 `4b842e4c2d0d608c32f0fd113b404866be7269676084cdac9b1a00d43cdd298d`

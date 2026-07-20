@@ -45,7 +45,7 @@ assignment from byte-identical initialization. It has not run and has no result.
 V2 custody is `1/0`, its confirmation is sealed, and no board will be rescored.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 11:51 EDT. User authority requires every future
+**Last updated:** 2026-07-20 11:54 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -177,6 +177,10 @@ baseline while the one-to-one claim is rejected. This consumed-training pilot
 cannot establish language generalization, state transport, self-selected
 programs, halting, or native reasoning, and it cannot open development or
 confirmation.
+
+After the source and receipt commits were pushed, raw 64-bit beacon
+`18183044536483492966` was reduced modulo `2^63` to sole pilot seed
+`8959672499628717158`. No output existed when the seed was recorded.
 
 ---
 

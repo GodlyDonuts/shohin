@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 11:51 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 11:54 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -279,7 +279,9 @@
 > everywhere, maximum 132-byte payload / 133-byte record including newline under the fixed 144-byte
 > window. Real-parent reconstruction, a real consumed-row complete loss, six new tests, eleven
 > inherited focused tests, Ruff, compilation, and job syntax pass. Freeze exact source and prereg
-> before drawing one seed. Development and confirmation remain unreachable.
+> before drawing one seed. Raw post-push beacon `18183044536483492966` is reduced modulo `2^63` to
+> sole scientific seed `8959672499628717158`; no H100 launch or output exists yet. Development and
+> confirmation remain unreachable.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9704,3 +9706,9 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   six tests, Slurm job, preregistration, and ledger state. The subsequent receipt edit changes only
   documentation and records this hash. No seed, H100 job, output directory, development access, or
   confirmation access exists yet.
+
+- **2026-07-20 11:54** -- **The sole physical-record pilot seed is drawn after source push.** Raw
+  beacon `18183044536483492966` becomes signed-safe seed `8959672499628717158` modulo `2^63`.
+  Architecture, arms, initialization, data, optimizer, gates, and thresholds remain unchanged. No
+  H100 job or output exists at this receipt point; transport the exact clean committed source before
+  submission.
