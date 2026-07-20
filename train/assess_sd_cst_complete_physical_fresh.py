@@ -17,14 +17,14 @@ from build_sd_cst_complete_physical_fresh_board import PROTOCOL
 from sd_cst import STOP_KIND, HardLateQuery, HardProgramTape
 
 
-REPORT_SCHEMA = "r12_sd_cst_complete_physical_fresh_development_report_v1"
-ASSESSMENT_SCHEMA = "r12_sd_cst_complete_physical_fresh_assessment_v1"
-CHECKPOINT_SCHEMA = "r12_sd_cst_complete_physical_fresh_checkpoint_v1"
-CONFIG_SCHEMA = "r12_sd_cst_complete_physical_fresh_gate_config_v1"
-EVIDENCE_SCHEMA = "r12_sd_cst_complete_physical_fresh_evidence_v1"
+REPORT_SCHEMA = "r12_sd_cst_complete_physical_fresh_development_report_v1_3"
+ASSESSMENT_SCHEMA = "r12_sd_cst_complete_physical_fresh_assessment_v1_3"
+CHECKPOINT_SCHEMA = "r12_sd_cst_complete_physical_fresh_checkpoint_v1_3"
+CONFIG_SCHEMA = "r12_sd_cst_complete_physical_fresh_gate_config_v1_3"
+EVIDENCE_SCHEMA = "r12_sd_cst_complete_physical_fresh_evidence_v1_3"
 PACKET_SCHEMA = "r12_sd_cst_hard_packet_bundle_v1"
 EXECUTOR_SCHEMA = "r12_sd_cst_hard_packet_outputs_v1"
-ACCESS_SCHEMA = "r12_sd_cst_complete_physical_fresh_access_v1"
+ACCESS_SCHEMA = "r12_sd_cst_complete_physical_fresh_access_v1_3"
 ROWS = 2_048
 EXPECTED_PARAMETERS = {
     "base": 125_081_664,
@@ -485,7 +485,7 @@ def assess(
         "decision": (
             "authorize_one_sealed_confirmation"
             if all_pass
-            else "reject_complete_physical_fresh_v1"
+            else "reject_complete_physical_fresh_v1_3"
         ),
         "all_gates_pass": all_pass,
         "core_gates": core_gates,

@@ -82,11 +82,37 @@ the exact production parser over all 52,096 rows, and rebuilds byte-identically.
 Report/train/development/confirmation SHA-256 values begin
 `162b6054...`/`9bc8d0b6...`/`6bc327ce...`/`b8ec5d84...`; confirmation is mode
 `0600` and access is `0/0`. Receipt commit `b5beee2` precedes sole training seed
-`5923413289392567580`; no model fit or output exists yet.
-V2 custody is `1/0`, its confirmation is sealed, and no board will be rescored.
+`5923413289392567580`. Sole H100 job `694355` completes both frozen fits, writes
+the immutable checkpoint/config, consumes one development read, and emits hard
+packets, pointer evidence, and separate executor outputs. It then fails before
+report write because the frozen fit-minimum helper iterates top-level fit
+metadata rather than nested renderer metrics. V1.2 custody is `1/0`, its
+confirmation is sealed, and the board is permanently ineligible for rescore.
+
+A read-only diagnostic over only the preserved source-free artifacts finds a
+perfect treatment signal: 2,048/2,048 exact packets, line/binding/initial/event
+pointers, final states, answers, and joint outcomes, including 512/512 exact on
+each of four unseen renderer compositions. The matched family-deranged arm has
+0/2,048 exact packets and 131/2,048 exact states/joints. Treatment fit is
+48,000/48,000 exact packets versus 1,223/48,000 for the deranged arm. Exact
+artifact SHA-256 prefixes are checkpoint `2c9ce2be`, evidence `672e2b95`,
+executor `12327103`, packets `3c73c113`, gate config `dc1a9f58`, and ledger
+`0f0d2c4d`. These numbers are diagnostic, not an authorizing score, because no
+frozen report or independent assessment completed.
+
+V1.3 changes only report aggregation and protocol/schema identity. It validates
+and reads `fit["train_metrics"]` and adds both a realistic nested-fit regression
+test and a complete synthetic source-free assessor acceptance test. The
+192,129,179-parameter architecture, 12,152,855 trainable parameters, board
+counts/renderers, matched arms, optimizer, thresholds, controls, source
+deletion, and claim boundary remain exact. Nineteen focused tests plus all
+static checks pass before source freeze. A new source commit, board seed, board,
+and training seed are mandatory before the next sole development attempt.
+The full closed-board record is
+`R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_2_RESULT.md`.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 14:33 EDT. User authority requires every future
+**Last updated:** 2026-07-20 15:00 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 

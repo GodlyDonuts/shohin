@@ -43,12 +43,12 @@ from train_eval_sd_cst_projected_fresh import (
 )
 
 
-CHECKPOINT_SCHEMA = "r12_sd_cst_complete_physical_fresh_checkpoint_v1"
-REPORT_SCHEMA = "r12_sd_cst_complete_physical_fresh_development_report_v1"
+CHECKPOINT_SCHEMA = "r12_sd_cst_complete_physical_fresh_checkpoint_v1_3"
+REPORT_SCHEMA = "r12_sd_cst_complete_physical_fresh_development_report_v1_3"
 TRAIN_SPLIT = "sd_cst_train"
 DEVELOPMENT_SPLIT = "sd_cst_development"
 FROZEN_SOURCE_PATHS = (
-    "R12_SD_CST_COMPLETE_PHYSICAL_FRESH_PREREG.md",
+    "R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_PREREG.md",
     "pipeline/build_sd_cst_complete_physical_fresh_board.py",
     "pipeline/sd_cst_complete_physical_fresh_renderers.py",
     "train/sd_cst_complete_physical_fresh.py",
@@ -148,7 +148,7 @@ def _ledger_bytes(*, board_sha: str, split_sha: str, source_commit: str) -> byte
     return (
         json.dumps(
             {
-                "schema": "r12_sd_cst_complete_physical_fresh_access_v1",
+                "schema": "r12_sd_cst_complete_physical_fresh_access_v1_3",
                 "protocol": PROTOCOL,
                 "split": DEVELOPMENT_SPLIT,
                 "board_report_sha256": board_sha,
@@ -186,7 +186,18 @@ def _consume_development_access(
 
 
 def _minimum_fit_packet(fit: Mapping[str, object]) -> float:
-    return min(float(value["rates"]["packet"]) for value in fit.values())
+    metrics = fit.get("train_metrics")
+    if not isinstance(metrics, Mapping) or not metrics:
+        raise RuntimeError("fresh fit renderer metrics are absent")
+    rates = []
+    for renderer, value in metrics.items():
+        if not isinstance(renderer, str) or not isinstance(value, Mapping):
+            raise RuntimeError("fresh fit renderer metric differs")
+        renderer_rates = value.get("rates")
+        if not isinstance(renderer_rates, Mapping) or "packet" not in renderer_rates:
+            raise RuntimeError("fresh fit renderer packet rate is absent")
+        rates.append(float(renderer_rates["packet"]))
+    return min(rates)
 
 
 def _exact_packet(
@@ -377,7 +388,7 @@ def _save_evidence(
     renderer_to_index = {name: index for index, name in enumerate(renderer_names)}
     torch.save(
         {
-            "schema": "r12_sd_cst_complete_physical_fresh_evidence_v1",
+            "schema": "r12_sd_cst_complete_physical_fresh_evidence_v1_3",
             "pointers": {
                 arm: {
                     name: value.detach().cpu().long().clone()
@@ -502,7 +513,7 @@ def main() -> None:
     }
     torch.save(checkpoint, checkpoint_path)
     gate_config = {
-        "schema": "r12_sd_cst_complete_physical_fresh_gate_config_v1",
+        "schema": "r12_sd_cst_complete_physical_fresh_gate_config_v1_3",
         "protocol": PROTOCOL,
         "source_manifest_sha256": source["sha256"],
         "board_report_sha256": checkpoint["board_report_sha256"],
@@ -650,7 +661,7 @@ def main() -> None:
     decision = (
         "authorize_one_sealed_confirmation"
         if all(gates.values())
-        else "reject_complete_physical_fresh_v1"
+        else "reject_complete_physical_fresh_v1_3"
     )
     report = {
         "schema": REPORT_SCHEMA,

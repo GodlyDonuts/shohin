@@ -37,8 +37,8 @@ from sd_cst_complete_physical_fresh_renderers import (
 )
 
 
-BOARD_SCHEMA = "r12_sd_cst_complete_physical_fresh_board_report_v1"
-PROTOCOL = "r12_sd_cst_complete_physical_fresh_v1"
+BOARD_SCHEMA = "r12_sd_cst_complete_physical_fresh_board_report_v1_3"
+PROTOCOL = "r12_sd_cst_complete_physical_fresh_v1_3"
 NAME_RE = re.compile(r"\b[a-z0-9]{4}-[a-z0-9]{8}\b")
 NUMBER_RE = re.compile(r"\b[0-9]+\b")
 EXPECTED_ROWS = {

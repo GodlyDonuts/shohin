@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 14:33 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 15:00 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -359,7 +359,20 @@
 > 17 gates and rebuilds byte-identically. Report/train/development/confirmation hashes begin
 > `162b6054...`/`9bc8d0b6...`/`6bc327ce...`/`b8ec5d84...`; confirmation is `0600`; access is `0/0`.
 > Receipt commit `b5beee2d04f802771093f16b891e60a830a1144b` precedes raw training beacon
-> `15146785326247343388` and sole training seed `5923413289392567580`. No model fit or output exists.
+> `15146785326247343388` and sole training seed `5923413289392567580`. Sole job `694355` completed
+> both 3,000-update fits on H100 `evc50`, wrote the immutable checkpoint/config, consumed exactly one
+> development access, compiled all 2,048 rows, and wrote source-free packet/evidence/executor
+> artifacts. It then failed before report write because the frozen fit-minimum helper iterated
+> top-level fit metadata instead of nested `train_metrics`. Confirmation remains sealed and access
+> is `1/0`; close the board permanently without rescore. A read-only diagnostic over only the saved
+> source-free artifacts finds treatment **2,048/2,048 exact packets, every pointer, states, and
+> answers** on all four unseen renderer compositions, versus 0/2,048 exact packets and 131/2,048
+> exact states for family-deranged labels. This is strong motivation but not an authorizing score.
+> V1.3 changes only report aggregation/schema identity, adds realistic nested-fit and complete
+> synthetic assessor regression tests, and keeps the exact 192,129,179-parameter architecture,
+> data, arms, optimization, thresholds, controls, and claim boundary. All 19 focused tests plus
+> static checks pass. Freeze a new source commit, then draw a new board seed, rebuild/reseal/hash a
+> fresh board, commit its receipt, draw a new training seed, and run one score-bearing job.
 > The admitted board
 > creates 48,000 compiler-only training rows from 12,000 latent programs and four even-parity
 > renderer views, plus 2,048 development and 2,048 sealed-confirmation rows from four odd-parity
@@ -9924,3 +9937,28 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   receipt.** Commit `b5beee2d04f802771093f16b891e60a830a1144b` precedes raw beacon
   `15146785326247343388`, reduced modulo `2^63` to seed `5923413289392567580`. No scientific setting
   changes and no job/output exists yet. Transport the exact new source and board before submission.
+
+- **2026-07-20 14:39--14:51** -- **Fresh-board v1.2 closes as an evaluator non-result after a
+  perfect source-free diagnostic signal.** Every source, board, parent, and execution-core hash
+  matches before sole job `694355` starts on H100 `evc50`. Both matched 3,000-update fits complete;
+  treatment is 48,000/48,000 exact fit packets and the family-deranged arm is 1,223/48,000. The
+  checkpoint/config are immutable before the sole development ledger is created. Compilation and
+  separate execution produce all packet, pointer, and executor artifacts, then report assembly
+  raises because `_minimum_fit_packet` treats integer fit metadata as renderer metrics. No report
+  or assessment exists; confirmation remains sealed; custody is `1/0`; never rescore this board.
+  Exact local mirrors match Newton: checkpoint `2c9ce2be...`, evidence `672e2b95...`, executor
+  `12327103...`, packets `3c73c113...`, config `dc1a9f58...`, and ledger `0f0d2c4d...`. A read-only
+  diagnostic using only these source-free artifacts finds 2,048/2,048 exact treatment packet,
+  every pointer, state, answer, and joint across each of four unseen renderer families. The
+  family-deranged arm has 0/2,048 packet, 131/2,048 state/joint, and the frozen causal controls
+  behave as expected. This result is diagnostic only because the preregistered report/assessor
+  chain did not complete.
+
+- **2026-07-20 14:51--15:00** -- **V1.3 evaluator-only repair is locally admitted before source
+  freeze or any new seed.** The fit-minimum helper now validates and reads nested
+  `fit["train_metrics"]`. Protocol/schema identities advance to v1.3, while architecture, exact
+  192,129,179 complete parameters, 12,152,855 trainable parameters, data counts, renderers, matched
+  arms, optimizer, 3,000 updates/arm, thresholds, controls, source deletion, and claim boundary are
+  unchanged. A realistic fit-schema regression test and a complete synthetic checkpoint/config/
+  packet/evidence/executor/ledger assessment test pass. Nineteen focused tests, Ruff, byte
+  compilation, and Slurm syntax pass. Commit/push this exact source before a new board seed.
