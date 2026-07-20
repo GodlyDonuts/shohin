@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 17:52 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 18:29 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -228,7 +228,8 @@
 > evidence, report, and assessment SHA-256 are `150febfa...`/`05756471...`/`be4b5c50...`/
 > `39ffd483...`; read-only local mirrors match Newton.
 >
-> The only admitted successor is ER-CST v1.1 Witness Equality Bus on a fresh post-commit board. It
+> ER-CST v1.1 Witness Equality Bus is now a decisive development success and is authorized for one
+> sealed confirmation. It
 > must preserve the already exact parser/order/opcode/HALT/query/executor, add dedicated model-owned
 > occurrence pointers for the three before and three after names in each rule, reuse learned byte-
 > bigram fingerprints, form a learned 3x3 equality matrix, and score all six `S_3` assignments by
@@ -241,7 +242,18 @@
 > all 52,096 rows parse/execute exactly, all 18 witness spans per row decode exactly, cross-split
 > overlap is zero, maximum source is 405 bytes, confirmation is `0600`, and access is `0/0`.
 > Train/development/confirmation/report SHA-256 are `43b17bb4...`/`ad58c84f...`/`6593bb17...`/
-> `22cb355e...`; Newton mirrors match. No training seed or score exists yet.
+> `22cb355e...`; Newton mirrors match. Exact score source
+> `87d53b53462d8d15660663238fd33886c010efb7` was pushed before training seed
+> `2262748995832026278` was drawn (beacon SHA `dc2b6531...`). Sole job `694567` completed all three
+> equal-budget fits and the independent one-read development assessment on `evc48` in 16m34s.
+> Treatment reaches 2,038/2,048 = **99.512% exact packets and joints**, 2,040/2,048 = **99.609%
+> exact recurrent states**, and 2,048/2,048 exact answers. Cards and all 18 witness pointers are each
+> 2,046/2,048; every other structural field/pointer is at least 99.609%. Minimum depth joint is
+> 96.875% and minimum renderer joint is 99.414%. Family-deranged/equality-ablated packet accuracy is
+> 0.098%/0%, joint is 0.098%/0%, and state is 17.822%/15.479%. All 14 scientific and eight
+> independent-assessor gates pass; custody is `1/0`. Checkpoint/evidence/report/assessment hashes are
+> `917c1a1f...`/`1a7504eb...`/`d295f8f6...`/`29e43492...`; read-only local mirrors match and a local
+> assessor replay is byte-identical.
 > Pre-board mechanics are now locally admitted: the direct classifier is removed; six learned
 > occurrence queries, dedicated detached witness projections, inherited byte fingerprints, a 3x3
 > equality matrix, and exact six-assignment aggregation produce public pointer/equality evidence.
@@ -249,10 +261,14 @@
 > counts are 192,726,827/12,021,276/7,273,173; a real-family CPU backward is finite, every new
 > equality component receives gradient, excluded-parent leakage is zero, and 21 focused tests plus
 > Ruff, byte compilation, shell syntax, and independent raw-evidence recomputation pass. The
-> score-bearing pilot/assessor is locally admitted with immutable-checkpoint-before-development
-> custody and the frozen original thresholds plus witness-pointer gates. Commit and push that exact
-> score source before drawing the training seed, then sync an exact clean source capsule and submit
-> one H100 job only.
+> score-bearing pilot/assessor used immutable-checkpoint-before-development custody and the frozen
+> original thresholds plus witness-pointer gates. A separate no-training, one-read confirmation lane
+> is now locally implemented and preregistered. It hash-binds the exact development authorization,
+> writes immutable authorization before an `O_EXCL` confirmation ledger, evaluates every frozen arm
+> once, and invokes a second raw-evidence assessor. Three confirmation tests plus 22 inherited
+> focused tests, Ruff, byte compilation,
+> and Slurm syntax pass. Commit/push the evaluator source, transport an exact clean capsule, and only
+> then open the sealed confirmation once. Do not rescore development or change thresholds.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10295,3 +10311,25 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   are exact, overlap is zero, confirmation is `0600`, and access remains `0/0`. Hashes begin
   `43b17bb4`/`ad58c84f`/`6593bb17`/`22cb355e`; Newton matches. Score-bearing pilot/assessor and job
   source are locally admitted but no training seed or scored read exists. Commit/push before seed.
+
+- **2026-07-20 17:52--18:19** -- **ER-CST v1.1 passes fresh development decisively.** Exact
+  score-bearing source `87d53b53462d8d15660663238fd33886c010efb7` and source-manifest SHA
+  `4f323480...` precede training seed `2262748995832026278` (beacon SHA `dc2b6531...`). A clean
+  shallow Git capsule and all fresh-board hashes were independently verified on Newton. Sole job
+  `694567` completes on H100 `evc48` in 16m34s. Treatment reaches 99.512% packet/joint, 99.609%
+  state, 100% answer, 99.902% cards and witness pointers, 96.875% minimum-depth joint, and 99.414%
+  minimum-renderer joint. Family-deranged/equality-ablated packet/joint stay at 0.098%/0% and state
+  at 17.822%/15.479%. All 14 scientific and eight assessor gates pass; decision is
+  `authorize_one_sealed_confirmation`, custody `1/0`. Checkpoint/evidence/report/assessment hashes
+  are `917c1a1f...`/`1a7504eb...`/`d295f8f6...`/`29e43492...`; all are mirrored read-only locally,
+  and the independent assessor replay is byte-identical.
+
+- **2026-07-20 18:19--18:29** -- **The separate ER-CST v1.1 one-read confirmation lane is locally
+  admitted before evaluator source freeze or sealed access.** It performs no training; hash-binds
+  the exact passing checkpoint, development evidence/report/assessment, board, and sole development
+  ledger; writes immutable authorization before an `O_EXCL` confirmation ledger; reconstructs and
+  evaluates all three arms once; and invokes an independent raw-evidence assessor. The unchanged 14
+  scientific gates plus six confirmation-assessor gates and exact final `1/1` custody are frozen.
+  Three confirmation tests plus 22 inherited focused tests, Ruff, byte compilation, and Slurm
+  syntax pass. Commit/push exact evaluator
+  source and verify a clean Newton capsule before the one sealed read.
