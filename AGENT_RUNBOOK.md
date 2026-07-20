@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 23:06 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 00:35 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -112,8 +112,8 @@
 > negative alpha equivariance, with executor/answer/depth/gold/repair access forbidden and matched
 > source-free/uniform/shuffled/no-class controls retained.
 >
-> **S9.2 pre-board state:** Global Anchor Closure is CPU-admitted but has no fresh board seed or
-> neural score. It adds zero parameters and replaces independent root selection with one deterministic
+> **S9.2 is closed and rejected on fresh development.** Global Anchor Closure added zero parameters
+> and replaced independent root selection with one deterministic
 > interval-Viterbi MAP decision over model role-minus-none logits under the declared finite surface
 > grammar. The decision is irrevocable: the optimizer cannot read candidate targets, row metadata,
 > exact-byte classes, graph validity, executor output, state, answer, or retry feedback; quotient
@@ -132,10 +132,21 @@
 > `3823077847356570601`/`1277007704479652588`. The admitted board contains
 > 48,000/2,048/2,048 train/development/sealed-confirmation rows, 52,096 executor agreements,
 > zero exact/13-gram/name overlap, access `0/0`, and report SHA `f22401e8...`. Neither scored split
-> has been opened after generation. A result below every one
-> of 43 frozen gates closes S9.2 without rescoring or opening confirmation. Even a pass is only a
-> bounded compiler result; the causal grammar firewall remains the next independent generalization
-> test.
+> had been opened after generation. Sole job `693890` completed cleanly on `evc25` in 59m39s.
+> Treatment reaches only 340/2,048 = **16.602%** exact graph/state/answer, with 0% at depths three
+> through seven and 100% at depth eight. The same-logit local-root decoder reaches 2,038/2,048 =
+> **99.512%**, unconstrained reaches 2,035/2,048 = **99.365%**, and the no-class arm reaches
+> 2,019/2,048 = **98.584%** exact graph and 98.730% state/answer. The class-message path therefore
+> learned a maximum-depth/cardinality shortcut that global Viterbi enforced catastrophically.
+> Layout-only itself reaches 26.562% exact graph; shuffled/source-free/uniform remain zero. All 340
+> valid treatment graphs are exact and execute exactly, so the retained S7/S8 machine is not the
+> failure. Assessment is 21/43 and rejects S9.2; development/confirmation access is `1/0`, and
+> confirmation remains unopened. Checkpoint/evaluation/assessment/access-ledger SHA-256 begin
+> `590a3944...`/`0ef0523c...`/`58c3ca00...`/`35effa66...`; local mirrors match. Never rescore or
+> open S9.2 confirmation. Retire parser-only anchor repair as the active frontier. The next primary
+> experiment is source-deleted counterfactual state transport: model-owned compilation into a
+> private categorical tape, tied recurrent update, internal halt, query readout, and causal
+> state/suffix/query swaps under a strict sub-150M budget.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9100,3 +9111,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   incorrect expanded commit hash and failed inside the clean-HEAD guard before creating any file;
   the frozen seed was first consumed by the successful build. Commit the receipt/report, sync exact
   bytes, and submit one serial H100 development job. Do not open confirmation unless all 43 gates pass.
+
+- **2026-07-19 23:06--2026-07-20 00:35** -- **S9.2 completes cleanly and is decisively rejected;
+  parser-only anchor repair is retired.** Sole job `693890` runs all five frozen 750-update arms on
+  H100 `evc25` and exits `0:0` in 59m39s. Treatment and positive-orbit-only each reach only
+  340/2,048 = 16.602% exact graph/state/answer. Both score 0% at depths three through seven and
+  100% at depth eight. Treatment card count is 2,047/2,048 and modulus 2,048/2,048, but complete
+  counts/root spans are only 340/2,048: the class-message path learned a maximum-depth/cardinality
+  shortcut and global Viterbi made it irrevocable. The same-logit local-root decoder reaches
+  2,038/2,048 exact graphs, unconstrained reaches 2,035/2,048, and the no-class arm reaches
+  2,019/2,048 exact graphs plus 2,022/2,048 states/answers across all depths. Layout-only reaches
+  544/2,048 exact graphs; shuffled/source-free/uniform are zero. Every one of the 340 valid treatment
+  graphs is exact and executes exactly, preserving the S7/S8 runtime diagnosis. Assessment passes
+  only 21/43 gates and records `reject_s9_2_global_anchor_v1`. Confirmation remains unopened;
+  access is `1/0`. Local mirrors hash-match checkpoint `590a3944...`, evaluation `0ef0523c...`,
+  assessment `58c3ca00...`, and ledger `35effa66...`. Close S9.2 without rescore. Move to
+  source-deleted counterfactual state transport with model-owned compile/update/read/halt and
+  matched causal state, suffix, query, halt, reset, shuffled, and source-retained controls.

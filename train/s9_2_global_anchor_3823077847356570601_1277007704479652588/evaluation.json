@@ -1,0 +1,3915 @@
+{
+  "access_ledger_sha256": "35effa66f661ca0ba7e407b0f05599ccaeabd23f3ce901c8e00ea2e71c7bc92a",
+  "architecture": {
+    "added_trainable_parameters": 0,
+    "compiler_class": "OccurrenceQuotientCompiler",
+    "encoder_layers": 5,
+    "ff": 1408,
+    "hard_negative_top_k": 8,
+    "heads": 8,
+    "layer": 19,
+    "max_span_width": 4,
+    "negative_candidates_per_view": 128,
+    "width": 384
+  },
+  "arms": {
+    "deranged_cards": {
+      "answer": 75,
+      "answer_accuracy": 0.03662109375,
+      "depth": {
+        "3": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 341
+        },
+        "6": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 0.0058823529411764705,
+          "correct": 2,
+          "total": 340
+        }
+      },
+      "state": 2,
+      "state_accuracy": 0.0009765625,
+      "total": 2048
+    },
+    "early_nil": {
+      "answer": 87,
+      "answer_accuracy": 0.04248046875,
+      "depth": {
+        "3": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 341
+        },
+        "6": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 0.014705882352941176,
+          "correct": 5,
+          "total": 340
+        }
+      },
+      "state": 5,
+      "state_accuracy": 0.00244140625,
+      "total": 2048
+    },
+    "gold_graph": {
+      "answer": 2048,
+      "answer_accuracy": 1.0,
+      "depth": {
+        "3": {
+          "accuracy": 1.0,
+          "correct": 342,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 1.0,
+          "correct": 341,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 1.0,
+          "correct": 341,
+          "total": 341
+        },
+        "6": {
+          "accuracy": 1.0,
+          "correct": 342,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 1.0,
+          "correct": 342,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 1.0,
+          "correct": 340,
+          "total": 340
+        }
+      },
+      "state": 2048,
+      "state_accuracy": 1.0,
+      "total": 2048
+    },
+    "layout": {
+      "answer": 619,
+      "answer_accuracy": 0.30224609375,
+      "depth": {
+        "3": {
+          "accuracy": 0.3742690058479532,
+          "correct": 128,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.3519061583577713,
+          "correct": 120,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.2873900293255132,
+          "correct": 98,
+          "total": 341
+        },
+        "6": {
+          "accuracy": 0.27485380116959063,
+          "correct": 94,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.2543859649122807,
+          "correct": 87,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 0.2411764705882353,
+          "correct": 82,
+          "total": 340
+        }
+      },
+      "state": 609,
+      "state_accuracy": 0.29736328125,
+      "total": 2048
+    },
+    "no_class_message": {
+      "answer": 2022,
+      "answer_accuracy": 0.9873046875,
+      "depth": {
+        "3": {
+          "accuracy": 0.9853801169590644,
+          "correct": 337,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.9824046920821115,
+          "correct": 335,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.9824046920821115,
+          "correct": 335,
+          "total": 341
+        },
+        "6": {
+          "accuracy": 0.9824561403508771,
+          "correct": 336,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.9970760233918129,
+          "correct": 341,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 0.9941176470588236,
+          "correct": 338,
+          "total": 340
+        }
+      },
+      "state": 2022,
+      "state_accuracy": 0.9873046875,
+      "total": 2048
+    },
+    "one_witness": {
+      "answer": 58,
+      "answer_accuracy": 0.0283203125,
+      "depth": {
+        "3": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 341
+        },
+        "6": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 0.029411764705882353,
+          "correct": 10,
+          "total": 340
+        }
+      },
+      "state": 10,
+      "state_accuracy": 0.0048828125,
+      "total": 2048
+    },
+    "positive_only": {
+      "answer": 340,
+      "answer_accuracy": 0.166015625,
+      "depth": {
+        "3": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 341
+        },
+        "6": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 1.0,
+          "correct": 340,
+          "total": 340
+        }
+      },
+      "state": 340,
+      "state_accuracy": 0.166015625,
+      "total": 2048
+    },
+    "reversed_links": {
+      "answer": 89,
+      "answer_accuracy": 0.04345703125,
+      "depth": {
+        "3": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 341
+        },
+        "6": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 0.04411764705882353,
+          "correct": 15,
+          "total": 340
+        }
+      },
+      "state": 15,
+      "state_accuracy": 0.00732421875,
+      "total": 2048
+    },
+    "shuffled": {
+      "answer": 0,
+      "answer_accuracy": 0.0,
+      "depth": {
+        "3": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 341
+        },
+        "6": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 340
+        }
+      },
+      "state": 0,
+      "state_accuracy": 0.0,
+      "total": 2048
+    },
+    "state_reset": {
+      "answer": 70,
+      "answer_accuracy": 0.0341796875,
+      "depth": {
+        "3": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 341
+        },
+        "6": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 0.0058823529411764705,
+          "correct": 2,
+          "total": 340
+        }
+      },
+      "state": 2,
+      "state_accuracy": 0.0009765625,
+      "total": 2048
+    },
+    "treatment": {
+      "answer": 340,
+      "answer_accuracy": 0.166015625,
+      "depth": {
+        "3": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 341
+        },
+        "6": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 1.0,
+          "correct": 340,
+          "total": 340
+        }
+      },
+      "state": 340,
+      "state_accuracy": 0.166015625,
+      "total": 2048
+    }
+  },
+  "base_sha256": "211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6",
+  "board_report_sha256": "f22401e82690f8240abe89d6083e3a387619243bc68bb9d9e380540d90b1899e",
+  "checkpoint_sha256": "590a3944c7af5bf7b27b4a27bddbe159f7e4f8b3fc7fac06bfa673d33c647918",
+  "confirmation_accesses": 0,
+  "development_accesses": 1,
+  "development_sha256": "a186df62c9fe030d71f8c3734e6e6d570667c2c2ddc340d81718813258b96550",
+  "fit": {
+    "layout": {
+      "adapter_sha256": "955e92822f706d3ac09a0183b86bbdcc63b6f3d626234f9a4c62fab2a4c8d5d4",
+      "batch_size": 64,
+      "charged_views": 48000,
+      "class_messages": false,
+      "elapsed_seconds": 304.1555972099304,
+      "final": {
+        "candidate_accuracy": 0.9854104518890381,
+        "grad_norm": 0.1387246549129486,
+        "loss": 0.035173531621694565,
+        "orbit_loss": 0.02948521450161934,
+        "positive_accuracy": 0.9921531677246094,
+        "supervised_loss": 0.027802227064967155
+      },
+      "gradient_clip": 1.0,
+      "hard_negative_top_k": 8,
+      "learning_rate": 0.001,
+      "mask_gold_tokens": true,
+      "mask_token_id": 0,
+      "negative_candidates_per_view": 128,
+      "orbit_mode": "full",
+      "orbit_weight": 0.25,
+      "unique_sources": 24000,
+      "updates": 750,
+      "warmup_updates": 50
+    },
+    "no_class": {
+      "adapter_sha256": "b8000b61479f4173bad89a5bddada276555b666e72bbd80ca290158faf75f751",
+      "batch_size": 64,
+      "charged_views": 48000,
+      "class_messages": false,
+      "elapsed_seconds": 276.7955334186554,
+      "final": {
+        "candidate_accuracy": 1.0,
+        "grad_norm": 0.0006431812653318048,
+        "loss": 0.00015053145762067288,
+        "orbit_loss": 0.0004919413477182388,
+        "positive_accuracy": 1.0,
+        "supervised_loss": 2.754611887212377e-05
+      },
+      "gradient_clip": 1.0,
+      "hard_negative_top_k": 8,
+      "learning_rate": 0.001,
+      "mask_gold_tokens": false,
+      "mask_token_id": null,
+      "negative_candidates_per_view": 128,
+      "orbit_mode": "full",
+      "orbit_weight": 0.25,
+      "unique_sources": 24000,
+      "updates": 750,
+      "warmup_updates": 50
+    },
+    "positive_only": {
+      "adapter_sha256": "02c4d3f8c03a37715a1208d5ca4e1322d4b157f93adebb8e35356427b6898e64",
+      "batch_size": 64,
+      "charged_views": 48000,
+      "class_messages": true,
+      "elapsed_seconds": 256.04424715042114,
+      "final": {
+        "candidate_accuracy": 1.0,
+        "grad_norm": 0.0005270129186101258,
+        "loss": 0.00010733777889981866,
+        "orbit_loss": 0.0003795767843257636,
+        "positive_accuracy": 1.0,
+        "supervised_loss": 1.2443579180398956e-05
+      },
+      "gradient_clip": 1.0,
+      "hard_negative_top_k": null,
+      "learning_rate": 0.001,
+      "mask_gold_tokens": false,
+      "mask_token_id": null,
+      "negative_candidates_per_view": 128,
+      "orbit_mode": "positive",
+      "orbit_weight": 0.25,
+      "unique_sources": 24000,
+      "updates": 750,
+      "warmup_updates": 50
+    },
+    "shuffled": {
+      "adapter_sha256": "a132e366852fa996e5443c9610fe4bed55cb6a39cfb31ee3a8afc30d23344463",
+      "batch_size": 64,
+      "charged_views": 48000,
+      "class_messages": true,
+      "elapsed_seconds": 276.9098951816559,
+      "final": {
+        "candidate_accuracy": 0.7590965032577515,
+        "grad_norm": 0.05222507193684578,
+        "loss": 1.7063586711883545,
+        "orbit_loss": 0.00025958966580219567,
+        "positive_accuracy": 0.13967357575893402,
+        "supervised_loss": 1.7062938213348389
+      },
+      "gradient_clip": 1.0,
+      "hard_negative_top_k": 8,
+      "learning_rate": 0.001,
+      "mask_gold_tokens": false,
+      "mask_token_id": null,
+      "negative_candidates_per_view": 128,
+      "orbit_mode": "full",
+      "orbit_weight": 0.25,
+      "unique_sources": 24000,
+      "updates": 750,
+      "warmup_updates": 50
+    },
+    "treatment": {
+      "adapter_sha256": "c167bd6e2b7aba946f9d5a2befabfd5c423f9f581e4243fe81e2faa0768e3add",
+      "batch_size": 64,
+      "charged_views": 48000,
+      "class_messages": true,
+      "elapsed_seconds": 290.895610332489,
+      "final": {
+        "candidate_accuracy": 1.0,
+        "grad_norm": 0.0005757618346251547,
+        "loss": 0.00011633107351372018,
+        "orbit_loss": 0.0004138547810725868,
+        "positive_accuracy": 1.0,
+        "supervised_loss": 1.2867379155068193e-05
+      },
+      "gradient_clip": 1.0,
+      "hard_negative_top_k": 8,
+      "learning_rate": 0.001,
+      "mask_gold_tokens": false,
+      "mask_token_id": null,
+      "negative_candidates_per_view": 128,
+      "orbit_mode": "full",
+      "orbit_weight": 0.25,
+      "unique_sources": 24000,
+      "updates": 750,
+      "warmup_updates": 50
+    }
+  },
+  "generator_fit": {
+    "final_loss": 0.0013954557944089174,
+    "initial_loss": 1.9856928586959839,
+    "learning_rate": 0.05,
+    "successor_accuracy": 1.0,
+    "successor_correct": 23,
+    "successor_total": 23,
+    "target_field": "next_symbol",
+    "updates": 1000,
+    "zero_accuracy": 1.0,
+    "zero_correct": 3,
+    "zero_total": 3
+  },
+  "graph": {
+    "exact": 340,
+    "exact_accuracy": 0.166015625,
+    "layout_exact": 544,
+    "layout_exact_accuracy": 0.265625,
+    "local_root_exact": 2038,
+    "local_root_exact_accuracy": 0.9951171875,
+    "no_class_exact": 2019,
+    "no_class_exact_accuracy": 0.98583984375,
+    "positive_only_exact": 340,
+    "positive_only_exact_accuracy": 0.166015625,
+    "shuffled_exact": 0,
+    "shuffled_exact_accuracy": 0.0,
+    "source_free_exact": 0,
+    "source_free_exact_accuracy": 0.0,
+    "unconstrained_exact": 2035,
+    "unconstrained_exact_accuracy": 0.99365234375,
+    "uniform_exact": 0,
+    "uniform_exact_accuracy": 0.0,
+    "valid": 340,
+    "valid_accuracy": 0.166015625
+  },
+  "invariance": {
+    "class_reindex": 340,
+    "eligible": 340,
+    "nonce_answer_identical": 340,
+    "nonce_count_identical": 340,
+    "nonce_eligible": 340,
+    "nonce_graph_identical": 340,
+    "nonce_root_eligible": 340,
+    "nonce_root_identical": 340,
+    "nonce_state_identical": 340,
+    "relation_storage_reindex": 340
+  },
+  "parameters": {
+    "base": 125081664,
+    "compiler": 9498382,
+    "complete_system": 134580264,
+    "generator": 218
+  },
+  "predicted_state_sha256": "86e7d6fb91263c96ab9e3f17721e3db852b6bbd5a3fb4f51313ba41339f56d57",
+  "root": {
+    "layout": {
+      "card_count_exact": 1953,
+      "card_count_exact_accuracy": 0.95361328125,
+      "count_exact": 1694,
+      "count_exact_accuracy": 0.8271484375,
+      "eligible": 2048,
+      "eligible_accuracy": 1.0,
+      "event_count_exact": 1778,
+      "event_count_exact_accuracy": 0.8681640625,
+      "failure_stage": {
+        "compile": 1418
+      },
+      "modulus_exact": 2048,
+      "modulus_exact_accuracy": 1.0,
+      "span_exact": 644,
+      "span_exact_accuracy": 0.314453125,
+      "total": 2048
+    },
+    "no_class": {
+      "card_count_exact": 2038,
+      "card_count_exact_accuracy": 0.9951171875,
+      "count_exact": 2031,
+      "count_exact_accuracy": 0.99169921875,
+      "eligible": 2048,
+      "eligible_accuracy": 1.0,
+      "event_count_exact": 2040,
+      "event_count_exact_accuracy": 0.99609375,
+      "failure_stage": {
+        "compile": 26
+      },
+      "modulus_exact": 2048,
+      "modulus_exact_accuracy": 1.0,
+      "span_exact": 2019,
+      "span_exact_accuracy": 0.98583984375,
+      "total": 2048
+    },
+    "positive_only": {
+      "card_count_exact": 2047,
+      "card_count_exact_accuracy": 0.99951171875,
+      "count_exact": 340,
+      "count_exact_accuracy": 0.166015625,
+      "eligible": 2048,
+      "eligible_accuracy": 1.0,
+      "event_count_exact": 340,
+      "event_count_exact_accuracy": 0.166015625,
+      "failure_stage": {
+        "child": 795,
+        "compile": 913
+      },
+      "modulus_exact": 2048,
+      "modulus_exact_accuracy": 1.0,
+      "span_exact": 340,
+      "span_exact_accuracy": 0.166015625,
+      "total": 2048
+    },
+    "recoded_treatment": {
+      "card_count_exact": 2047,
+      "card_count_exact_accuracy": 0.99951171875,
+      "count_exact": 340,
+      "count_exact_accuracy": 0.166015625,
+      "eligible": 2048,
+      "eligible_accuracy": 1.0,
+      "event_count_exact": 340,
+      "event_count_exact_accuracy": 0.166015625,
+      "failure_stage": {
+        "child": 340,
+        "compile": 1368
+      },
+      "modulus_exact": 2048,
+      "modulus_exact_accuracy": 1.0,
+      "span_exact": 340,
+      "span_exact_accuracy": 0.166015625,
+      "total": 2048
+    },
+    "shuffled": {
+      "card_count_exact": 837,
+      "card_count_exact_accuracy": 0.40869140625,
+      "count_exact": 22,
+      "count_exact_accuracy": 0.0107421875,
+      "eligible": 2048,
+      "eligible_accuracy": 1.0,
+      "event_count_exact": 342,
+      "event_count_exact_accuracy": 0.1669921875,
+      "failure_stage": {
+        "child": 1996,
+        "compile": 52
+      },
+      "modulus_exact": 681,
+      "modulus_exact_accuracy": 0.33251953125,
+      "span_exact": 0,
+      "span_exact_accuracy": 0.0,
+      "total": 2048
+    },
+    "source_free": {
+      "card_count_exact": 0,
+      "card_count_exact_accuracy": 0.0,
+      "count_exact": 0,
+      "count_exact_accuracy": 0.0,
+      "eligible": 0,
+      "eligible_accuracy": 0.0,
+      "event_count_exact": 0,
+      "event_count_exact_accuracy": 0.0,
+      "failure_stage": {
+        "root": 2048
+      },
+      "modulus_exact": 0,
+      "modulus_exact_accuracy": 0.0,
+      "span_exact": 0,
+      "span_exact_accuracy": 0.0,
+      "total": 2048
+    },
+    "treatment": {
+      "card_count_exact": 2047,
+      "card_count_exact_accuracy": 0.99951171875,
+      "count_exact": 340,
+      "count_exact_accuracy": 0.166015625,
+      "eligible": 2048,
+      "eligible_accuracy": 1.0,
+      "event_count_exact": 340,
+      "event_count_exact_accuracy": 0.166015625,
+      "failure_stage": {
+        "child": 323,
+        "compile": 1385
+      },
+      "modulus_exact": 2048,
+      "modulus_exact_accuracy": 1.0,
+      "span_exact": 340,
+      "span_exact_accuracy": 0.166015625,
+      "total": 2048
+    },
+    "uniform": {
+      "card_count_exact": 0,
+      "card_count_exact_accuracy": 0.0,
+      "count_exact": 0,
+      "count_exact_accuracy": 0.0,
+      "eligible": 0,
+      "eligible_accuracy": 0.0,
+      "event_count_exact": 0,
+      "event_count_exact_accuracy": 0.0,
+      "failure_stage": {
+        "root": 2048
+      },
+      "modulus_exact": 0,
+      "modulus_exact_accuracy": 0.0,
+      "span_exact": 0,
+      "span_exact_accuracy": 0.0,
+      "total": 2048
+    }
+  },
+  "rows": 2048,
+  "samples": [
+    {
+      "depth": 7,
+      "error": "S9 event tags collide",
+      "error_stage": "compile",
+      "exact": false,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000000",
+      "recoded_error": "S9 event tags collide",
+      "recoded_error_stage": "compile",
+      "renderer": "relay",
+      "root": {
+        "card_count": 4,
+        "event_count": 8,
+        "modulus": 5,
+        "score": 369.0836181640625,
+        "selected": [
+          {
+            "end": 26,
+            "role": "entity.roster",
+            "start": 22
+          },
+          {
+            "end": 33,
+            "role": "entity.roster",
+            "start": 29
+          },
+          {
+            "end": 40,
+            "role": "entity.roster",
+            "start": 36
+          },
+          {
+            "end": 47,
+            "role": "entity.roster",
+            "start": 43
+          },
+          {
+            "end": 54,
+            "role": "entity.roster",
+            "start": 50
+          },
+          {
+            "end": 91,
+            "role": "position.roster",
+            "start": 87
+          },
+          {
+            "end": 98,
+            "role": "position.roster",
+            "start": 94
+          },
+          {
+            "end": 105,
+            "role": "position.roster",
+            "start": 101
+          },
+          {
+            "end": 112,
+            "role": "position.roster",
+            "start": 108
+          },
+          {
+            "end": 119,
+            "role": "position.roster",
+            "start": 115
+          },
+          {
+            "end": 167,
+            "role": "state.entity",
+            "start": 163
+          },
+          {
+            "end": 174,
+            "role": "state.entity",
+            "start": 170
+          },
+          {
+            "end": 181,
+            "role": "state.entity",
+            "start": 177
+          },
+          {
+            "end": 188,
+            "role": "state.entity",
+            "start": 184
+          },
+          {
+            "end": 195,
+            "role": "state.entity",
+            "start": 191
+          },
+          {
+            "end": 249,
+            "role": "card.operation",
+            "start": 245
+          },
+          {
+            "end": 347,
+            "role": "card.operation",
+            "start": 343
+          },
+          {
+            "end": 445,
+            "role": "card.operation",
+            "start": 441
+          },
+          {
+            "end": 543,
+            "role": "card.operation",
+            "start": 539
+          },
+          {
+            "end": 655,
+            "role": "entry.tag",
+            "start": 651
+          },
+          {
+            "end": 723,
+            "role": "event.tag",
+            "start": 719
+          },
+          {
+            "end": 797,
+            "role": "event.tag",
+            "start": 793
+          },
+          {
+            "end": 872,
+            "role": "event.tag",
+            "start": 868
+          },
+          {
+            "end": 926,
+            "role": "event.tag",
+            "start": 922
+          },
+          {
+            "end": 947,
+            "role": "event.tag",
+            "start": 943
+          },
+          {
+            "end": 1022,
+            "role": "event.tag",
+            "start": 1018
+          },
+          {
+            "end": 1097,
+            "role": "event.tag",
+            "start": 1093
+          },
+          {
+            "end": 1172,
+            "role": "event.tag",
+            "start": 1168
+          },
+          {
+            "end": 1290,
+            "role": "query.position",
+            "start": 1286
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "depth": 8,
+      "error": null,
+      "error_stage": null,
+      "exact": true,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000001",
+      "recoded_error": null,
+      "recoded_error_stage": null,
+      "renderer": "relay",
+      "root": {
+        "card_count": 4,
+        "event_count": 8,
+        "modulus": 5,
+        "score": 382.5419921875,
+        "selected": [
+          {
+            "end": 26,
+            "role": "entity.roster",
+            "start": 22
+          },
+          {
+            "end": 33,
+            "role": "entity.roster",
+            "start": 29
+          },
+          {
+            "end": 40,
+            "role": "entity.roster",
+            "start": 36
+          },
+          {
+            "end": 47,
+            "role": "entity.roster",
+            "start": 43
+          },
+          {
+            "end": 54,
+            "role": "entity.roster",
+            "start": 50
+          },
+          {
+            "end": 91,
+            "role": "position.roster",
+            "start": 87
+          },
+          {
+            "end": 98,
+            "role": "position.roster",
+            "start": 94
+          },
+          {
+            "end": 105,
+            "role": "position.roster",
+            "start": 101
+          },
+          {
+            "end": 112,
+            "role": "position.roster",
+            "start": 108
+          },
+          {
+            "end": 119,
+            "role": "position.roster",
+            "start": 115
+          },
+          {
+            "end": 167,
+            "role": "state.entity",
+            "start": 163
+          },
+          {
+            "end": 174,
+            "role": "state.entity",
+            "start": 170
+          },
+          {
+            "end": 181,
+            "role": "state.entity",
+            "start": 177
+          },
+          {
+            "end": 188,
+            "role": "state.entity",
+            "start": 184
+          },
+          {
+            "end": 195,
+            "role": "state.entity",
+            "start": 191
+          },
+          {
+            "end": 249,
+            "role": "card.operation",
+            "start": 245
+          },
+          {
+            "end": 347,
+            "role": "card.operation",
+            "start": 343
+          },
+          {
+            "end": 445,
+            "role": "card.operation",
+            "start": 441
+          },
+          {
+            "end": 543,
+            "role": "card.operation",
+            "start": 539
+          },
+          {
+            "end": 655,
+            "role": "entry.tag",
+            "start": 651
+          },
+          {
+            "end": 723,
+            "role": "event.tag",
+            "start": 719
+          },
+          {
+            "end": 798,
+            "role": "event.tag",
+            "start": 794
+          },
+          {
+            "end": 873,
+            "role": "event.tag",
+            "start": 869
+          },
+          {
+            "end": 948,
+            "role": "event.tag",
+            "start": 944
+          },
+          {
+            "end": 1022,
+            "role": "event.tag",
+            "start": 1018
+          },
+          {
+            "end": 1097,
+            "role": "event.tag",
+            "start": 1093
+          },
+          {
+            "end": 1172,
+            "role": "event.tag",
+            "start": 1168
+          },
+          {
+            "end": 1247,
+            "role": "event.tag",
+            "start": 1243
+          },
+          {
+            "end": 1365,
+            "role": "query.position",
+            "start": 1361
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "depth": 8,
+      "error": null,
+      "error_stage": null,
+      "exact": true,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000002",
+      "recoded_error": null,
+      "recoded_error_stage": null,
+      "renderer": "relay",
+      "root": {
+        "card_count": 2,
+        "event_count": 8,
+        "modulus": 7,
+        "score": 441.486328125,
+        "selected": [
+          {
+            "end": 26,
+            "role": "entity.roster",
+            "start": 22
+          },
+          {
+            "end": 33,
+            "role": "entity.roster",
+            "start": 29
+          },
+          {
+            "end": 40,
+            "role": "entity.roster",
+            "start": 36
+          },
+          {
+            "end": 47,
+            "role": "entity.roster",
+            "start": 43
+          },
+          {
+            "end": 54,
+            "role": "entity.roster",
+            "start": 50
+          },
+          {
+            "end": 61,
+            "role": "entity.roster",
+            "start": 57
+          },
+          {
+            "end": 68,
+            "role": "entity.roster",
+            "start": 64
+          },
+          {
+            "end": 105,
+            "role": "position.roster",
+            "start": 101
+          },
+          {
+            "end": 112,
+            "role": "position.roster",
+            "start": 108
+          },
+          {
+            "end": 119,
+            "role": "position.roster",
+            "start": 115
+          },
+          {
+            "end": 126,
+            "role": "position.roster",
+            "start": 122
+          },
+          {
+            "end": 133,
+            "role": "position.roster",
+            "start": 129
+          },
+          {
+            "end": 140,
+            "role": "position.roster",
+            "start": 136
+          },
+          {
+            "end": 147,
+            "role": "position.roster",
+            "start": 143
+          },
+          {
+            "end": 195,
+            "role": "state.entity",
+            "start": 191
+          },
+          {
+            "end": 202,
+            "role": "state.entity",
+            "start": 198
+          },
+          {
+            "end": 209,
+            "role": "state.entity",
+            "start": 205
+          },
+          {
+            "end": 216,
+            "role": "state.entity",
+            "start": 212
+          },
+          {
+            "end": 223,
+            "role": "state.entity",
+            "start": 219
+          },
+          {
+            "end": 230,
+            "role": "state.entity",
+            "start": 226
+          },
+          {
+            "end": 237,
+            "role": "state.entity",
+            "start": 233
+          },
+          {
+            "end": 291,
+            "role": "card.operation",
+            "start": 287
+          },
+          {
+            "end": 389,
+            "role": "card.operation",
+            "start": 385
+          },
+          {
+            "end": 501,
+            "role": "entry.tag",
+            "start": 497
+          },
+          {
+            "end": 569,
+            "role": "event.tag",
+            "start": 565
+          },
+          {
+            "end": 643,
+            "role": "event.tag",
+            "start": 639
+          },
+          {
+            "end": 718,
+            "role": "event.tag",
+            "start": 714
+          },
+          {
+            "end": 793,
+            "role": "event.tag",
+            "start": 789
+          },
+          {
+            "end": 868,
+            "role": "event.tag",
+            "start": 864
+          },
+          {
+            "end": 943,
+            "role": "event.tag",
+            "start": 939
+          },
+          {
+            "end": 1018,
+            "role": "event.tag",
+            "start": 1014
+          },
+          {
+            "end": 1093,
+            "role": "event.tag",
+            "start": 1089
+          },
+          {
+            "end": 1211,
+            "role": "query.position",
+            "start": 1207
+          }
+        ]
+      },
+      "valid": true
+    },
+    {
+      "depth": 7,
+      "error": "S9 event tags collide",
+      "error_stage": "compile",
+      "exact": false,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000003",
+      "recoded_error": "S9 event tags collide",
+      "recoded_error_stage": "compile",
+      "renderer": "dossier",
+      "root": {
+        "card_count": 2,
+        "event_count": 8,
+        "modulus": 7,
+        "score": 437.1182861328125,
+        "selected": [
+          {
+            "end": 39,
+            "role": "entity.roster",
+            "start": 35
+          },
+          {
+            "end": 45,
+            "role": "entity.roster",
+            "start": 41
+          },
+          {
+            "end": 51,
+            "role": "entity.roster",
+            "start": 47
+          },
+          {
+            "end": 57,
+            "role": "entity.roster",
+            "start": 53
+          },
+          {
+            "end": 63,
+            "role": "entity.roster",
+            "start": 59
+          },
+          {
+            "end": 69,
+            "role": "entity.roster",
+            "start": 65
+          },
+          {
+            "end": 75,
+            "role": "entity.roster",
+            "start": 71
+          },
+          {
+            "end": 117,
+            "role": "position.roster",
+            "start": 113
+          },
+          {
+            "end": 123,
+            "role": "position.roster",
+            "start": 119
+          },
+          {
+            "end": 129,
+            "role": "position.roster",
+            "start": 125
+          },
+          {
+            "end": 135,
+            "role": "position.roster",
+            "start": 131
+          },
+          {
+            "end": 141,
+            "role": "position.roster",
+            "start": 137
+          },
+          {
+            "end": 147,
+            "role": "position.roster",
+            "start": 143
+          },
+          {
+            "end": 153,
+            "role": "position.roster",
+            "start": 149
+          },
+          {
+            "end": 198,
+            "role": "state.entity",
+            "start": 194
+          },
+          {
+            "end": 204,
+            "role": "state.entity",
+            "start": 200
+          },
+          {
+            "end": 210,
+            "role": "state.entity",
+            "start": 206
+          },
+          {
+            "end": 216,
+            "role": "state.entity",
+            "start": 212
+          },
+          {
+            "end": 222,
+            "role": "state.entity",
+            "start": 218
+          },
+          {
+            "end": 228,
+            "role": "state.entity",
+            "start": 224
+          },
+          {
+            "end": 234,
+            "role": "state.entity",
+            "start": 230
+          },
+          {
+            "end": 293,
+            "role": "card.operation",
+            "start": 289
+          },
+          {
+            "end": 388,
+            "role": "card.operation",
+            "start": 384
+          },
+          {
+            "end": 492,
+            "role": "entry.tag",
+            "start": 488
+          },
+          {
+            "end": 556,
+            "role": "event.tag",
+            "start": 552
+          },
+          {
+            "end": 604,
+            "role": "event.tag",
+            "start": 600
+          },
+          {
+            "end": 621,
+            "role": "event.tag",
+            "start": 617
+          },
+          {
+            "end": 686,
+            "role": "event.tag",
+            "start": 682
+          },
+          {
+            "end": 751,
+            "role": "event.tag",
+            "start": 747
+          },
+          {
+            "end": 815,
+            "role": "event.tag",
+            "start": 811
+          },
+          {
+            "end": 880,
+            "role": "event.tag",
+            "start": 876
+          },
+          {
+            "end": 945,
+            "role": "event.tag",
+            "start": 941
+          },
+          {
+            "end": 1060,
+            "role": "query.position",
+            "start": 1056
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "depth": 6,
+      "error": "S9 event tags collide",
+      "error_stage": "compile",
+      "exact": false,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000004",
+      "recoded_error": "S9 event tags collide",
+      "recoded_error_stage": "compile",
+      "renderer": "relay",
+      "root": {
+        "card_count": 2,
+        "event_count": 8,
+        "modulus": 11,
+        "score": 590.6154174804688,
+        "selected": [
+          {
+            "end": 26,
+            "role": "entity.roster",
+            "start": 22
+          },
+          {
+            "end": 33,
+            "role": "entity.roster",
+            "start": 29
+          },
+          {
+            "end": 40,
+            "role": "entity.roster",
+            "start": 36
+          },
+          {
+            "end": 47,
+            "role": "entity.roster",
+            "start": 43
+          },
+          {
+            "end": 54,
+            "role": "entity.roster",
+            "start": 50
+          },
+          {
+            "end": 61,
+            "role": "entity.roster",
+            "start": 57
+          },
+          {
+            "end": 68,
+            "role": "entity.roster",
+            "start": 64
+          },
+          {
+            "end": 75,
+            "role": "entity.roster",
+            "start": 71
+          },
+          {
+            "end": 82,
+            "role": "entity.roster",
+            "start": 78
+          },
+          {
+            "end": 89,
+            "role": "entity.roster",
+            "start": 85
+          },
+          {
+            "end": 96,
+            "role": "entity.roster",
+            "start": 92
+          },
+          {
+            "end": 133,
+            "role": "position.roster",
+            "start": 129
+          },
+          {
+            "end": 140,
+            "role": "position.roster",
+            "start": 136
+          },
+          {
+            "end": 147,
+            "role": "position.roster",
+            "start": 143
+          },
+          {
+            "end": 154,
+            "role": "position.roster",
+            "start": 150
+          },
+          {
+            "end": 161,
+            "role": "position.roster",
+            "start": 157
+          },
+          {
+            "end": 168,
+            "role": "position.roster",
+            "start": 164
+          },
+          {
+            "end": 175,
+            "role": "position.roster",
+            "start": 171
+          },
+          {
+            "end": 182,
+            "role": "position.roster",
+            "start": 178
+          },
+          {
+            "end": 189,
+            "role": "position.roster",
+            "start": 185
+          },
+          {
+            "end": 196,
+            "role": "position.roster",
+            "start": 192
+          },
+          {
+            "end": 203,
+            "role": "position.roster",
+            "start": 199
+          },
+          {
+            "end": 251,
+            "role": "state.entity",
+            "start": 247
+          },
+          {
+            "end": 258,
+            "role": "state.entity",
+            "start": 254
+          },
+          {
+            "end": 265,
+            "role": "state.entity",
+            "start": 261
+          },
+          {
+            "end": 272,
+            "role": "state.entity",
+            "start": 268
+          },
+          {
+            "end": 279,
+            "role": "state.entity",
+            "start": 275
+          },
+          {
+            "end": 286,
+            "role": "state.entity",
+            "start": 282
+          },
+          {
+            "end": 293,
+            "role": "state.entity",
+            "start": 289
+          },
+          {
+            "end": 300,
+            "role": "state.entity",
+            "start": 296
+          },
+          {
+            "end": 307,
+            "role": "state.entity",
+            "start": 303
+          },
+          {
+            "end": 314,
+            "role": "state.entity",
+            "start": 310
+          },
+          {
+            "end": 321,
+            "role": "state.entity",
+            "start": 317
+          },
+          {
+            "end": 375,
+            "role": "card.operation",
+            "start": 371
+          },
+          {
+            "end": 473,
+            "role": "card.operation",
+            "start": 469
+          },
+          {
+            "end": 585,
+            "role": "entry.tag",
+            "start": 581
+          },
+          {
+            "end": 653,
+            "role": "event.tag",
+            "start": 649
+          },
+          {
+            "end": 707,
+            "role": "event.tag",
+            "start": 703
+          },
+          {
+            "end": 728,
+            "role": "event.tag",
+            "start": 724
+          },
+          {
+            "end": 803,
+            "role": "event.tag",
+            "start": 799
+          },
+          {
+            "end": 857,
+            "role": "event.tag",
+            "start": 853
+          },
+          {
+            "end": 878,
+            "role": "event.tag",
+            "start": 874
+          },
+          {
+            "end": 953,
+            "role": "event.tag",
+            "start": 949
+          },
+          {
+            "end": 1027,
+            "role": "event.tag",
+            "start": 1023
+          },
+          {
+            "end": 1145,
+            "role": "query.position",
+            "start": 1141
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "depth": 4,
+      "error": "S9 event tags collide",
+      "error_stage": "compile",
+      "exact": false,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000005",
+      "recoded_error": "S9 event tags collide",
+      "recoded_error_stage": "compile",
+      "renderer": "dossier",
+      "root": {
+        "card_count": 4,
+        "event_count": 7,
+        "modulus": 7,
+        "score": 413.4970703125,
+        "selected": [
+          {
+            "end": 39,
+            "role": "entity.roster",
+            "start": 35
+          },
+          {
+            "end": 45,
+            "role": "entity.roster",
+            "start": 41
+          },
+          {
+            "end": 51,
+            "role": "entity.roster",
+            "start": 47
+          },
+          {
+            "end": 57,
+            "role": "entity.roster",
+            "start": 53
+          },
+          {
+            "end": 63,
+            "role": "entity.roster",
+            "start": 59
+          },
+          {
+            "end": 69,
+            "role": "entity.roster",
+            "start": 65
+          },
+          {
+            "end": 75,
+            "role": "entity.roster",
+            "start": 71
+          },
+          {
+            "end": 117,
+            "role": "position.roster",
+            "start": 113
+          },
+          {
+            "end": 123,
+            "role": "position.roster",
+            "start": 119
+          },
+          {
+            "end": 129,
+            "role": "position.roster",
+            "start": 125
+          },
+          {
+            "end": 135,
+            "role": "position.roster",
+            "start": 131
+          },
+          {
+            "end": 141,
+            "role": "position.roster",
+            "start": 137
+          },
+          {
+            "end": 147,
+            "role": "position.roster",
+            "start": 143
+          },
+          {
+            "end": 153,
+            "role": "position.roster",
+            "start": 149
+          },
+          {
+            "end": 198,
+            "role": "state.entity",
+            "start": 194
+          },
+          {
+            "end": 204,
+            "role": "state.entity",
+            "start": 200
+          },
+          {
+            "end": 210,
+            "role": "state.entity",
+            "start": 206
+          },
+          {
+            "end": 216,
+            "role": "state.entity",
+            "start": 212
+          },
+          {
+            "end": 222,
+            "role": "state.entity",
+            "start": 218
+          },
+          {
+            "end": 228,
+            "role": "state.entity",
+            "start": 224
+          },
+          {
+            "end": 234,
+            "role": "state.entity",
+            "start": 230
+          },
+          {
+            "end": 293,
+            "role": "card.operation",
+            "start": 289
+          },
+          {
+            "end": 388,
+            "role": "card.operation",
+            "start": 384
+          },
+          {
+            "end": 483,
+            "role": "card.operation",
+            "start": 479
+          },
+          {
+            "end": 578,
+            "role": "card.operation",
+            "start": 574
+          },
+          {
+            "end": 682,
+            "role": "entry.tag",
+            "start": 678
+          },
+          {
+            "end": 746,
+            "role": "event.tag",
+            "start": 742
+          },
+          {
+            "end": 810,
+            "role": "event.tag",
+            "start": 806
+          },
+          {
+            "end": 858,
+            "role": "event.tag",
+            "start": 854
+          },
+          {
+            "end": 875,
+            "role": "event.tag",
+            "start": 871
+          },
+          {
+            "end": 923,
+            "role": "event.tag",
+            "start": 919
+          },
+          {
+            "end": 940,
+            "role": "event.tag",
+            "start": 936
+          },
+          {
+            "end": 988,
+            "role": "event.tag",
+            "start": 984
+          },
+          {
+            "end": 1055,
+            "role": "query.position",
+            "start": 1051
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "depth": 3,
+      "error": "S9 event tags collide",
+      "error_stage": "compile",
+      "exact": false,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000006",
+      "recoded_error": "S9 event tags collide",
+      "recoded_error_stage": "compile",
+      "renderer": "dossier",
+      "root": {
+        "card_count": 2,
+        "event_count": 5,
+        "modulus": 11,
+        "score": 545.8748779296875,
+        "selected": [
+          {
+            "end": 39,
+            "role": "entity.roster",
+            "start": 35
+          },
+          {
+            "end": 45,
+            "role": "entity.roster",
+            "start": 41
+          },
+          {
+            "end": 51,
+            "role": "entity.roster",
+            "start": 47
+          },
+          {
+            "end": 57,
+            "role": "entity.roster",
+            "start": 53
+          },
+          {
+            "end": 63,
+            "role": "entity.roster",
+            "start": 59
+          },
+          {
+            "end": 69,
+            "role": "entity.roster",
+            "start": 65
+          },
+          {
+            "end": 75,
+            "role": "entity.roster",
+            "start": 71
+          },
+          {
+            "end": 81,
+            "role": "entity.roster",
+            "start": 77
+          },
+          {
+            "end": 87,
+            "role": "entity.roster",
+            "start": 83
+          },
+          {
+            "end": 93,
+            "role": "entity.roster",
+            "start": 89
+          },
+          {
+            "end": 99,
+            "role": "entity.roster",
+            "start": 95
+          },
+          {
+            "end": 141,
+            "role": "position.roster",
+            "start": 137
+          },
+          {
+            "end": 147,
+            "role": "position.roster",
+            "start": 143
+          },
+          {
+            "end": 153,
+            "role": "position.roster",
+            "start": 149
+          },
+          {
+            "end": 159,
+            "role": "position.roster",
+            "start": 155
+          },
+          {
+            "end": 165,
+            "role": "position.roster",
+            "start": 161
+          },
+          {
+            "end": 171,
+            "role": "position.roster",
+            "start": 167
+          },
+          {
+            "end": 177,
+            "role": "position.roster",
+            "start": 173
+          },
+          {
+            "end": 183,
+            "role": "position.roster",
+            "start": 179
+          },
+          {
+            "end": 189,
+            "role": "position.roster",
+            "start": 185
+          },
+          {
+            "end": 195,
+            "role": "position.roster",
+            "start": 191
+          },
+          {
+            "end": 201,
+            "role": "position.roster",
+            "start": 197
+          },
+          {
+            "end": 246,
+            "role": "state.entity",
+            "start": 242
+          },
+          {
+            "end": 252,
+            "role": "state.entity",
+            "start": 248
+          },
+          {
+            "end": 258,
+            "role": "state.entity",
+            "start": 254
+          },
+          {
+            "end": 264,
+            "role": "state.entity",
+            "start": 260
+          },
+          {
+            "end": 270,
+            "role": "state.entity",
+            "start": 266
+          },
+          {
+            "end": 276,
+            "role": "state.entity",
+            "start": 272
+          },
+          {
+            "end": 282,
+            "role": "state.entity",
+            "start": 278
+          },
+          {
+            "end": 288,
+            "role": "state.entity",
+            "start": 284
+          },
+          {
+            "end": 294,
+            "role": "state.entity",
+            "start": 290
+          },
+          {
+            "end": 300,
+            "role": "state.entity",
+            "start": 296
+          },
+          {
+            "end": 306,
+            "role": "state.entity",
+            "start": 302
+          },
+          {
+            "end": 365,
+            "role": "card.operation",
+            "start": 361
+          },
+          {
+            "end": 460,
+            "role": "card.operation",
+            "start": 456
+          },
+          {
+            "end": 564,
+            "role": "entry.tag",
+            "start": 560
+          },
+          {
+            "end": 628,
+            "role": "event.tag",
+            "start": 624
+          },
+          {
+            "end": 676,
+            "role": "event.tag",
+            "start": 672
+          },
+          {
+            "end": 693,
+            "role": "event.tag",
+            "start": 689
+          },
+          {
+            "end": 757,
+            "role": "event.tag",
+            "start": 753
+          },
+          {
+            "end": 805,
+            "role": "event.tag",
+            "start": 801
+          },
+          {
+            "end": 872,
+            "role": "query.position",
+            "start": 868
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "depth": 5,
+      "error": "S9 event tags collide",
+      "error_stage": "compile",
+      "exact": false,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000007",
+      "recoded_error": "S9 event tags collide",
+      "recoded_error_stage": "compile",
+      "renderer": "dossier",
+      "root": {
+        "card_count": 4,
+        "event_count": 8,
+        "modulus": 5,
+        "score": 339.95953369140625,
+        "selected": [
+          {
+            "end": 39,
+            "role": "entity.roster",
+            "start": 35
+          },
+          {
+            "end": 45,
+            "role": "entity.roster",
+            "start": 41
+          },
+          {
+            "end": 51,
+            "role": "entity.roster",
+            "start": 47
+          },
+          {
+            "end": 57,
+            "role": "entity.roster",
+            "start": 53
+          },
+          {
+            "end": 63,
+            "role": "entity.roster",
+            "start": 59
+          },
+          {
+            "end": 105,
+            "role": "position.roster",
+            "start": 101
+          },
+          {
+            "end": 111,
+            "role": "position.roster",
+            "start": 107
+          },
+          {
+            "end": 117,
+            "role": "position.roster",
+            "start": 113
+          },
+          {
+            "end": 123,
+            "role": "position.roster",
+            "start": 119
+          },
+          {
+            "end": 129,
+            "role": "position.roster",
+            "start": 125
+          },
+          {
+            "end": 174,
+            "role": "state.entity",
+            "start": 170
+          },
+          {
+            "end": 180,
+            "role": "state.entity",
+            "start": 176
+          },
+          {
+            "end": 186,
+            "role": "state.entity",
+            "start": 182
+          },
+          {
+            "end": 192,
+            "role": "state.entity",
+            "start": 188
+          },
+          {
+            "end": 198,
+            "role": "state.entity",
+            "start": 194
+          },
+          {
+            "end": 257,
+            "role": "card.operation",
+            "start": 253
+          },
+          {
+            "end": 352,
+            "role": "card.operation",
+            "start": 348
+          },
+          {
+            "end": 447,
+            "role": "card.operation",
+            "start": 443
+          },
+          {
+            "end": 542,
+            "role": "card.operation",
+            "start": 538
+          },
+          {
+            "end": 646,
+            "role": "entry.tag",
+            "start": 642
+          },
+          {
+            "end": 710,
+            "role": "event.tag",
+            "start": 706
+          },
+          {
+            "end": 758,
+            "role": "event.tag",
+            "start": 754
+          },
+          {
+            "end": 775,
+            "role": "event.tag",
+            "start": 771
+          },
+          {
+            "end": 840,
+            "role": "event.tag",
+            "start": 836
+          },
+          {
+            "end": 888,
+            "role": "event.tag",
+            "start": 884
+          },
+          {
+            "end": 905,
+            "role": "event.tag",
+            "start": 901
+          },
+          {
+            "end": 953,
+            "role": "event.tag",
+            "start": 949
+          },
+          {
+            "end": 970,
+            "role": "event.tag",
+            "start": 966
+          },
+          {
+            "end": 1084,
+            "role": "query.position",
+            "start": 1080
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "depth": 7,
+      "error": "S9 event tags collide",
+      "error_stage": "compile",
+      "exact": false,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000008",
+      "recoded_error": "S9 event tags collide",
+      "recoded_error_stage": "compile",
+      "renderer": "relay",
+      "root": {
+        "card_count": 4,
+        "event_count": 8,
+        "modulus": 11,
+        "score": 623.9096069335938,
+        "selected": [
+          {
+            "end": 26,
+            "role": "entity.roster",
+            "start": 22
+          },
+          {
+            "end": 33,
+            "role": "entity.roster",
+            "start": 29
+          },
+          {
+            "end": 40,
+            "role": "entity.roster",
+            "start": 36
+          },
+          {
+            "end": 47,
+            "role": "entity.roster",
+            "start": 43
+          },
+          {
+            "end": 54,
+            "role": "entity.roster",
+            "start": 50
+          },
+          {
+            "end": 61,
+            "role": "entity.roster",
+            "start": 57
+          },
+          {
+            "end": 68,
+            "role": "entity.roster",
+            "start": 64
+          },
+          {
+            "end": 75,
+            "role": "entity.roster",
+            "start": 71
+          },
+          {
+            "end": 82,
+            "role": "entity.roster",
+            "start": 78
+          },
+          {
+            "end": 89,
+            "role": "entity.roster",
+            "start": 85
+          },
+          {
+            "end": 96,
+            "role": "entity.roster",
+            "start": 92
+          },
+          {
+            "end": 133,
+            "role": "position.roster",
+            "start": 129
+          },
+          {
+            "end": 140,
+            "role": "position.roster",
+            "start": 136
+          },
+          {
+            "end": 147,
+            "role": "position.roster",
+            "start": 143
+          },
+          {
+            "end": 154,
+            "role": "position.roster",
+            "start": 150
+          },
+          {
+            "end": 161,
+            "role": "position.roster",
+            "start": 157
+          },
+          {
+            "end": 168,
+            "role": "position.roster",
+            "start": 164
+          },
+          {
+            "end": 175,
+            "role": "position.roster",
+            "start": 171
+          },
+          {
+            "end": 182,
+            "role": "position.roster",
+            "start": 178
+          },
+          {
+            "end": 189,
+            "role": "position.roster",
+            "start": 185
+          },
+          {
+            "end": 196,
+            "role": "position.roster",
+            "start": 192
+          },
+          {
+            "end": 203,
+            "role": "position.roster",
+            "start": 199
+          },
+          {
+            "end": 251,
+            "role": "state.entity",
+            "start": 247
+          },
+          {
+            "end": 258,
+            "role": "state.entity",
+            "start": 254
+          },
+          {
+            "end": 265,
+            "role": "state.entity",
+            "start": 261
+          },
+          {
+            "end": 272,
+            "role": "state.entity",
+            "start": 268
+          },
+          {
+            "end": 279,
+            "role": "state.entity",
+            "start": 275
+          },
+          {
+            "end": 286,
+            "role": "state.entity",
+            "start": 282
+          },
+          {
+            "end": 293,
+            "role": "state.entity",
+            "start": 289
+          },
+          {
+            "end": 300,
+            "role": "state.entity",
+            "start": 296
+          },
+          {
+            "end": 307,
+            "role": "state.entity",
+            "start": 303
+          },
+          {
+            "end": 314,
+            "role": "state.entity",
+            "start": 310
+          },
+          {
+            "end": 321,
+            "role": "state.entity",
+            "start": 317
+          },
+          {
+            "end": 375,
+            "role": "card.operation",
+            "start": 371
+          },
+          {
+            "end": 473,
+            "role": "card.operation",
+            "start": 469
+          },
+          {
+            "end": 571,
+            "role": "card.operation",
+            "start": 567
+          },
+          {
+            "end": 669,
+            "role": "card.operation",
+            "start": 665
+          },
+          {
+            "end": 781,
+            "role": "entry.tag",
+            "start": 777
+          },
+          {
+            "end": 849,
+            "role": "event.tag",
+            "start": 845
+          },
+          {
+            "end": 924,
+            "role": "event.tag",
+            "start": 920
+          },
+          {
+            "end": 999,
+            "role": "event.tag",
+            "start": 995
+          },
+          {
+            "end": 1073,
+            "role": "event.tag",
+            "start": 1069
+          },
+          {
+            "end": 1148,
+            "role": "event.tag",
+            "start": 1144
+          },
+          {
+            "end": 1202,
+            "role": "event.tag",
+            "start": 1198
+          },
+          {
+            "end": 1223,
+            "role": "event.tag",
+            "start": 1219
+          },
+          {
+            "end": 1298,
+            "role": "event.tag",
+            "start": 1294
+          },
+          {
+            "end": 1416,
+            "role": "query.position",
+            "start": 1412
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "depth": 3,
+      "error": "S9.1 structured region has no non-overlapping assignment",
+      "error_stage": "child",
+      "exact": false,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000009",
+      "recoded_error": "S9.1 structured region has no non-overlapping assignment",
+      "recoded_error_stage": "child",
+      "renderer": "dossier",
+      "root": {
+        "card_count": 4,
+        "event_count": 4,
+        "modulus": 5,
+        "score": 314.052001953125,
+        "selected": [
+          {
+            "end": 39,
+            "role": "entity.roster",
+            "start": 35
+          },
+          {
+            "end": 45,
+            "role": "entity.roster",
+            "start": 41
+          },
+          {
+            "end": 51,
+            "role": "entity.roster",
+            "start": 47
+          },
+          {
+            "end": 57,
+            "role": "entity.roster",
+            "start": 53
+          },
+          {
+            "end": 63,
+            "role": "entity.roster",
+            "start": 59
+          },
+          {
+            "end": 105,
+            "role": "position.roster",
+            "start": 101
+          },
+          {
+            "end": 111,
+            "role": "position.roster",
+            "start": 107
+          },
+          {
+            "end": 117,
+            "role": "position.roster",
+            "start": 113
+          },
+          {
+            "end": 123,
+            "role": "position.roster",
+            "start": 119
+          },
+          {
+            "end": 129,
+            "role": "position.roster",
+            "start": 125
+          },
+          {
+            "end": 174,
+            "role": "state.entity",
+            "start": 170
+          },
+          {
+            "end": 180,
+            "role": "state.entity",
+            "start": 176
+          },
+          {
+            "end": 186,
+            "role": "state.entity",
+            "start": 182
+          },
+          {
+            "end": 192,
+            "role": "state.entity",
+            "start": 188
+          },
+          {
+            "end": 198,
+            "role": "state.entity",
+            "start": 194
+          },
+          {
+            "end": 257,
+            "role": "card.operation",
+            "start": 253
+          },
+          {
+            "end": 352,
+            "role": "card.operation",
+            "start": 348
+          },
+          {
+            "end": 447,
+            "role": "card.operation",
+            "start": 443
+          },
+          {
+            "end": 542,
+            "role": "card.operation",
+            "start": 538
+          },
+          {
+            "end": 646,
+            "role": "entry.tag",
+            "start": 642
+          },
+          {
+            "end": 710,
+            "role": "event.tag",
+            "start": 706
+          },
+          {
+            "end": 775,
+            "role": "event.tag",
+            "start": 771
+          },
+          {
+            "end": 839,
+            "role": "event.tag",
+            "start": 835
+          },
+          {
+            "end": 887,
+            "role": "event.tag",
+            "start": 883
+          },
+          {
+            "end": 954,
+            "role": "query.position",
+            "start": 950
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "depth": 6,
+      "error": "S9 event tags collide",
+      "error_stage": "compile",
+      "exact": false,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000010",
+      "recoded_error": "S9 event tags collide",
+      "recoded_error_stage": "compile",
+      "renderer": "relay",
+      "root": {
+        "card_count": 4,
+        "event_count": 8,
+        "modulus": 5,
+        "score": 357.826416015625,
+        "selected": [
+          {
+            "end": 26,
+            "role": "entity.roster",
+            "start": 22
+          },
+          {
+            "end": 33,
+            "role": "entity.roster",
+            "start": 29
+          },
+          {
+            "end": 40,
+            "role": "entity.roster",
+            "start": 36
+          },
+          {
+            "end": 47,
+            "role": "entity.roster",
+            "start": 43
+          },
+          {
+            "end": 54,
+            "role": "entity.roster",
+            "start": 50
+          },
+          {
+            "end": 91,
+            "role": "position.roster",
+            "start": 87
+          },
+          {
+            "end": 98,
+            "role": "position.roster",
+            "start": 94
+          },
+          {
+            "end": 105,
+            "role": "position.roster",
+            "start": 101
+          },
+          {
+            "end": 112,
+            "role": "position.roster",
+            "start": 108
+          },
+          {
+            "end": 119,
+            "role": "position.roster",
+            "start": 115
+          },
+          {
+            "end": 167,
+            "role": "state.entity",
+            "start": 163
+          },
+          {
+            "end": 174,
+            "role": "state.entity",
+            "start": 170
+          },
+          {
+            "end": 181,
+            "role": "state.entity",
+            "start": 177
+          },
+          {
+            "end": 188,
+            "role": "state.entity",
+            "start": 184
+          },
+          {
+            "end": 195,
+            "role": "state.entity",
+            "start": 191
+          },
+          {
+            "end": 249,
+            "role": "card.operation",
+            "start": 245
+          },
+          {
+            "end": 347,
+            "role": "card.operation",
+            "start": 343
+          },
+          {
+            "end": 445,
+            "role": "card.operation",
+            "start": 441
+          },
+          {
+            "end": 543,
+            "role": "card.operation",
+            "start": 539
+          },
+          {
+            "end": 655,
+            "role": "entry.tag",
+            "start": 651
+          },
+          {
+            "end": 723,
+            "role": "event.tag",
+            "start": 719
+          },
+          {
+            "end": 798,
+            "role": "event.tag",
+            "start": 794
+          },
+          {
+            "end": 872,
+            "role": "event.tag",
+            "start": 868
+          },
+          {
+            "end": 947,
+            "role": "event.tag",
+            "start": 943
+          },
+          {
+            "end": 1001,
+            "role": "event.tag",
+            "start": 997
+          },
+          {
+            "end": 1022,
+            "role": "event.tag",
+            "start": 1018
+          },
+          {
+            "end": 1097,
+            "role": "event.tag",
+            "start": 1093
+          },
+          {
+            "end": 1151,
+            "role": "event.tag",
+            "start": 1147
+          },
+          {
+            "end": 1215,
+            "role": "query.position",
+            "start": 1211
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "depth": 3,
+      "error": "S9.1 structured region has no non-overlapping assignment",
+      "error_stage": "child",
+      "exact": false,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000011",
+      "recoded_error": "S9.1 structured region has no non-overlapping assignment",
+      "recoded_error_stage": "child",
+      "renderer": "dossier",
+      "root": {
+        "card_count": 4,
+        "event_count": 5,
+        "modulus": 7,
+        "score": 398.66845703125,
+        "selected": [
+          {
+            "end": 39,
+            "role": "entity.roster",
+            "start": 35
+          },
+          {
+            "end": 45,
+            "role": "entity.roster",
+            "start": 41
+          },
+          {
+            "end": 51,
+            "role": "entity.roster",
+            "start": 47
+          },
+          {
+            "end": 57,
+            "role": "entity.roster",
+            "start": 53
+          },
+          {
+            "end": 63,
+            "role": "entity.roster",
+            "start": 59
+          },
+          {
+            "end": 69,
+            "role": "entity.roster",
+            "start": 65
+          },
+          {
+            "end": 75,
+            "role": "entity.roster",
+            "start": 71
+          },
+          {
+            "end": 117,
+            "role": "position.roster",
+            "start": 113
+          },
+          {
+            "end": 123,
+            "role": "position.roster",
+            "start": 119
+          },
+          {
+            "end": 129,
+            "role": "position.roster",
+            "start": 125
+          },
+          {
+            "end": 135,
+            "role": "position.roster",
+            "start": 131
+          },
+          {
+            "end": 141,
+            "role": "position.roster",
+            "start": 137
+          },
+          {
+            "end": 147,
+            "role": "position.roster",
+            "start": 143
+          },
+          {
+            "end": 153,
+            "role": "position.roster",
+            "start": 149
+          },
+          {
+            "end": 198,
+            "role": "state.entity",
+            "start": 194
+          },
+          {
+            "end": 204,
+            "role": "state.entity",
+            "start": 200
+          },
+          {
+            "end": 210,
+            "role": "state.entity",
+            "start": 206
+          },
+          {
+            "end": 216,
+            "role": "state.entity",
+            "start": 212
+          },
+          {
+            "end": 222,
+            "role": "state.entity",
+            "start": 218
+          },
+          {
+            "end": 228,
+            "role": "state.entity",
+            "start": 224
+          },
+          {
+            "end": 234,
+            "role": "state.entity",
+            "start": 230
+          },
+          {
+            "end": 293,
+            "role": "card.operation",
+            "start": 289
+          },
+          {
+            "end": 388,
+            "role": "card.operation",
+            "start": 384
+          },
+          {
+            "end": 483,
+            "role": "card.operation",
+            "start": 479
+          },
+          {
+            "end": 578,
+            "role": "card.operation",
+            "start": 574
+          },
+          {
+            "end": 682,
+            "role": "entry.tag",
+            "start": 678
+          },
+          {
+            "end": 746,
+            "role": "event.tag",
+            "start": 742
+          },
+          {
+            "end": 794,
+            "role": "event.tag",
+            "start": 790
+          },
+          {
+            "end": 811,
+            "role": "event.tag",
+            "start": 807
+          },
+          {
+            "end": 875,
+            "role": "event.tag",
+            "start": 871
+          },
+          {
+            "end": 923,
+            "role": "event.tag",
+            "start": 919
+          },
+          {
+            "end": 990,
+            "role": "query.position",
+            "start": 986
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "depth": 7,
+      "error": "S9 event tags collide",
+      "error_stage": "compile",
+      "exact": false,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000012",
+      "recoded_error": "S9 event tags collide",
+      "recoded_error_stage": "compile",
+      "renderer": "relay",
+      "root": {
+        "card_count": 3,
+        "event_count": 8,
+        "modulus": 7,
+        "score": 449.770263671875,
+        "selected": [
+          {
+            "end": 26,
+            "role": "entity.roster",
+            "start": 22
+          },
+          {
+            "end": 33,
+            "role": "entity.roster",
+            "start": 29
+          },
+          {
+            "end": 40,
+            "role": "entity.roster",
+            "start": 36
+          },
+          {
+            "end": 47,
+            "role": "entity.roster",
+            "start": 43
+          },
+          {
+            "end": 54,
+            "role": "entity.roster",
+            "start": 50
+          },
+          {
+            "end": 61,
+            "role": "entity.roster",
+            "start": 57
+          },
+          {
+            "end": 68,
+            "role": "entity.roster",
+            "start": 64
+          },
+          {
+            "end": 105,
+            "role": "position.roster",
+            "start": 101
+          },
+          {
+            "end": 112,
+            "role": "position.roster",
+            "start": 108
+          },
+          {
+            "end": 119,
+            "role": "position.roster",
+            "start": 115
+          },
+          {
+            "end": 126,
+            "role": "position.roster",
+            "start": 122
+          },
+          {
+            "end": 133,
+            "role": "position.roster",
+            "start": 129
+          },
+          {
+            "end": 140,
+            "role": "position.roster",
+            "start": 136
+          },
+          {
+            "end": 147,
+            "role": "position.roster",
+            "start": 143
+          },
+          {
+            "end": 195,
+            "role": "state.entity",
+            "start": 191
+          },
+          {
+            "end": 202,
+            "role": "state.entity",
+            "start": 198
+          },
+          {
+            "end": 209,
+            "role": "state.entity",
+            "start": 205
+          },
+          {
+            "end": 216,
+            "role": "state.entity",
+            "start": 212
+          },
+          {
+            "end": 223,
+            "role": "state.entity",
+            "start": 219
+          },
+          {
+            "end": 230,
+            "role": "state.entity",
+            "start": 226
+          },
+          {
+            "end": 237,
+            "role": "state.entity",
+            "start": 233
+          },
+          {
+            "end": 291,
+            "role": "card.operation",
+            "start": 287
+          },
+          {
+            "end": 389,
+            "role": "card.operation",
+            "start": 385
+          },
+          {
+            "end": 487,
+            "role": "card.operation",
+            "start": 483
+          },
+          {
+            "end": 599,
+            "role": "entry.tag",
+            "start": 595
+          },
+          {
+            "end": 667,
+            "role": "event.tag",
+            "start": 663
+          },
+          {
+            "end": 742,
+            "role": "event.tag",
+            "start": 738
+          },
+          {
+            "end": 796,
+            "role": "event.tag",
+            "start": 792
+          },
+          {
+            "end": 817,
+            "role": "event.tag",
+            "start": 813
+          },
+          {
+            "end": 891,
+            "role": "event.tag",
+            "start": 887
+          },
+          {
+            "end": 966,
+            "role": "event.tag",
+            "start": 962
+          },
+          {
+            "end": 1041,
+            "role": "event.tag",
+            "start": 1037
+          },
+          {
+            "end": 1116,
+            "role": "event.tag",
+            "start": 1112
+          },
+          {
+            "end": 1234,
+            "role": "query.position",
+            "start": 1230
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "depth": 5,
+      "error": "S9 event tags collide",
+      "error_stage": "compile",
+      "exact": false,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000013",
+      "recoded_error": "S9 event tags collide",
+      "recoded_error_stage": "compile",
+      "renderer": "relay",
+      "root": {
+        "card_count": 4,
+        "event_count": 8,
+        "modulus": 11,
+        "score": 597.774169921875,
+        "selected": [
+          {
+            "end": 26,
+            "role": "entity.roster",
+            "start": 22
+          },
+          {
+            "end": 33,
+            "role": "entity.roster",
+            "start": 29
+          },
+          {
+            "end": 40,
+            "role": "entity.roster",
+            "start": 36
+          },
+          {
+            "end": 47,
+            "role": "entity.roster",
+            "start": 43
+          },
+          {
+            "end": 54,
+            "role": "entity.roster",
+            "start": 50
+          },
+          {
+            "end": 61,
+            "role": "entity.roster",
+            "start": 57
+          },
+          {
+            "end": 68,
+            "role": "entity.roster",
+            "start": 64
+          },
+          {
+            "end": 75,
+            "role": "entity.roster",
+            "start": 71
+          },
+          {
+            "end": 82,
+            "role": "entity.roster",
+            "start": 78
+          },
+          {
+            "end": 89,
+            "role": "entity.roster",
+            "start": 85
+          },
+          {
+            "end": 96,
+            "role": "entity.roster",
+            "start": 92
+          },
+          {
+            "end": 133,
+            "role": "position.roster",
+            "start": 129
+          },
+          {
+            "end": 140,
+            "role": "position.roster",
+            "start": 136
+          },
+          {
+            "end": 147,
+            "role": "position.roster",
+            "start": 143
+          },
+          {
+            "end": 154,
+            "role": "position.roster",
+            "start": 150
+          },
+          {
+            "end": 161,
+            "role": "position.roster",
+            "start": 157
+          },
+          {
+            "end": 168,
+            "role": "position.roster",
+            "start": 164
+          },
+          {
+            "end": 175,
+            "role": "position.roster",
+            "start": 171
+          },
+          {
+            "end": 182,
+            "role": "position.roster",
+            "start": 178
+          },
+          {
+            "end": 189,
+            "role": "position.roster",
+            "start": 185
+          },
+          {
+            "end": 196,
+            "role": "position.roster",
+            "start": 192
+          },
+          {
+            "end": 203,
+            "role": "position.roster",
+            "start": 199
+          },
+          {
+            "end": 251,
+            "role": "state.entity",
+            "start": 247
+          },
+          {
+            "end": 258,
+            "role": "state.entity",
+            "start": 254
+          },
+          {
+            "end": 265,
+            "role": "state.entity",
+            "start": 261
+          },
+          {
+            "end": 272,
+            "role": "state.entity",
+            "start": 268
+          },
+          {
+            "end": 279,
+            "role": "state.entity",
+            "start": 275
+          },
+          {
+            "end": 286,
+            "role": "state.entity",
+            "start": 282
+          },
+          {
+            "end": 293,
+            "role": "state.entity",
+            "start": 289
+          },
+          {
+            "end": 300,
+            "role": "state.entity",
+            "start": 296
+          },
+          {
+            "end": 307,
+            "role": "state.entity",
+            "start": 303
+          },
+          {
+            "end": 314,
+            "role": "state.entity",
+            "start": 310
+          },
+          {
+            "end": 321,
+            "role": "state.entity",
+            "start": 317
+          },
+          {
+            "end": 375,
+            "role": "card.operation",
+            "start": 371
+          },
+          {
+            "end": 473,
+            "role": "card.operation",
+            "start": 469
+          },
+          {
+            "end": 571,
+            "role": "card.operation",
+            "start": 567
+          },
+          {
+            "end": 669,
+            "role": "card.operation",
+            "start": 665
+          },
+          {
+            "end": 781,
+            "role": "entry.tag",
+            "start": 777
+          },
+          {
+            "end": 849,
+            "role": "event.tag",
+            "start": 845
+          },
+          {
+            "end": 903,
+            "role": "event.tag",
+            "start": 899
+          },
+          {
+            "end": 924,
+            "role": "event.tag",
+            "start": 920
+          },
+          {
+            "end": 999,
+            "role": "event.tag",
+            "start": 995
+          },
+          {
+            "end": 1053,
+            "role": "event.tag",
+            "start": 1049
+          },
+          {
+            "end": 1074,
+            "role": "event.tag",
+            "start": 1070
+          },
+          {
+            "end": 1148,
+            "role": "event.tag",
+            "start": 1144
+          },
+          {
+            "end": 1202,
+            "role": "event.tag",
+            "start": 1198
+          },
+          {
+            "end": 1266,
+            "role": "query.position",
+            "start": 1262
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "depth": 5,
+      "error": "S9 event tags collide",
+      "error_stage": "compile",
+      "exact": false,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000014",
+      "recoded_error": "S9 event tags collide",
+      "recoded_error_stage": "compile",
+      "renderer": "relay",
+      "root": {
+        "card_count": 2,
+        "event_count": 8,
+        "modulus": 5,
+        "score": 324.4461364746094,
+        "selected": [
+          {
+            "end": 26,
+            "role": "entity.roster",
+            "start": 22
+          },
+          {
+            "end": 33,
+            "role": "entity.roster",
+            "start": 29
+          },
+          {
+            "end": 40,
+            "role": "entity.roster",
+            "start": 36
+          },
+          {
+            "end": 47,
+            "role": "entity.roster",
+            "start": 43
+          },
+          {
+            "end": 54,
+            "role": "entity.roster",
+            "start": 50
+          },
+          {
+            "end": 91,
+            "role": "position.roster",
+            "start": 87
+          },
+          {
+            "end": 98,
+            "role": "position.roster",
+            "start": 94
+          },
+          {
+            "end": 105,
+            "role": "position.roster",
+            "start": 101
+          },
+          {
+            "end": 112,
+            "role": "position.roster",
+            "start": 108
+          },
+          {
+            "end": 119,
+            "role": "position.roster",
+            "start": 115
+          },
+          {
+            "end": 167,
+            "role": "state.entity",
+            "start": 163
+          },
+          {
+            "end": 174,
+            "role": "state.entity",
+            "start": 170
+          },
+          {
+            "end": 181,
+            "role": "state.entity",
+            "start": 177
+          },
+          {
+            "end": 188,
+            "role": "state.entity",
+            "start": 184
+          },
+          {
+            "end": 195,
+            "role": "state.entity",
+            "start": 191
+          },
+          {
+            "end": 249,
+            "role": "card.operation",
+            "start": 245
+          },
+          {
+            "end": 347,
+            "role": "card.operation",
+            "start": 343
+          },
+          {
+            "end": 459,
+            "role": "entry.tag",
+            "start": 455
+          },
+          {
+            "end": 527,
+            "role": "event.tag",
+            "start": 523
+          },
+          {
+            "end": 601,
+            "role": "event.tag",
+            "start": 597
+          },
+          {
+            "end": 655,
+            "role": "event.tag",
+            "start": 651
+          },
+          {
+            "end": 676,
+            "role": "event.tag",
+            "start": 672
+          },
+          {
+            "end": 751,
+            "role": "event.tag",
+            "start": 747
+          },
+          {
+            "end": 805,
+            "role": "event.tag",
+            "start": 801
+          },
+          {
+            "end": 826,
+            "role": "event.tag",
+            "start": 822
+          },
+          {
+            "end": 880,
+            "role": "event.tag",
+            "start": 876
+          },
+          {
+            "end": 944,
+            "role": "query.position",
+            "start": 940
+          }
+        ]
+      },
+      "valid": false
+    },
+    {
+      "depth": 3,
+      "error": "S9 event tags collide",
+      "error_stage": "compile",
+      "exact": false,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000015",
+      "recoded_error": "S9 event tags collide",
+      "recoded_error_stage": "compile",
+      "renderer": "relay",
+      "root": {
+        "card_count": 3,
+        "event_count": 5,
+        "modulus": 11,
+        "score": 552.1117858886719,
+        "selected": [
+          {
+            "end": 26,
+            "role": "entity.roster",
+            "start": 22
+          },
+          {
+            "end": 33,
+            "role": "entity.roster",
+            "start": 29
+          },
+          {
+            "end": 40,
+            "role": "entity.roster",
+            "start": 36
+          },
+          {
+            "end": 47,
+            "role": "entity.roster",
+            "start": 43
+          },
+          {
+            "end": 54,
+            "role": "entity.roster",
+            "start": 50
+          },
+          {
+            "end": 61,
+            "role": "entity.roster",
+            "start": 57
+          },
+          {
+            "end": 68,
+            "role": "entity.roster",
+            "start": 64
+          },
+          {
+            "end": 75,
+            "role": "entity.roster",
+            "start": 71
+          },
+          {
+            "end": 82,
+            "role": "entity.roster",
+            "start": 78
+          },
+          {
+            "end": 89,
+            "role": "entity.roster",
+            "start": 85
+          },
+          {
+            "end": 96,
+            "role": "entity.roster",
+            "start": 92
+          },
+          {
+            "end": 133,
+            "role": "position.roster",
+            "start": 129
+          },
+          {
+            "end": 140,
+            "role": "position.roster",
+            "start": 136
+          },
+          {
+            "end": 147,
+            "role": "position.roster",
+            "start": 143
+          },
+          {
+            "end": 154,
+            "role": "position.roster",
+            "start": 150
+          },
+          {
+            "end": 161,
+            "role": "position.roster",
+            "start": 157
+          },
+          {
+            "end": 168,
+            "role": "position.roster",
+            "start": 164
+          },
+          {
+            "end": 175,
+            "role": "position.roster",
+            "start": 171
+          },
+          {
+            "end": 182,
+            "role": "position.roster",
+            "start": 178
+          },
+          {
+            "end": 189,
+            "role": "position.roster",
+            "start": 185
+          },
+          {
+            "end": 196,
+            "role": "position.roster",
+            "start": 192
+          },
+          {
+            "end": 203,
+            "role": "position.roster",
+            "start": 199
+          },
+          {
+            "end": 251,
+            "role": "state.entity",
+            "start": 247
+          },
+          {
+            "end": 258,
+            "role": "state.entity",
+            "start": 254
+          },
+          {
+            "end": 265,
+            "role": "state.entity",
+            "start": 261
+          },
+          {
+            "end": 272,
+            "role": "state.entity",
+            "start": 268
+          },
+          {
+            "end": 279,
+            "role": "state.entity",
+            "start": 275
+          },
+          {
+            "end": 286,
+            "role": "state.entity",
+            "start": 282
+          },
+          {
+            "end": 293,
+            "role": "state.entity",
+            "start": 289
+          },
+          {
+            "end": 300,
+            "role": "state.entity",
+            "start": 296
+          },
+          {
+            "end": 307,
+            "role": "state.entity",
+            "start": 303
+          },
+          {
+            "end": 314,
+            "role": "state.entity",
+            "start": 310
+          },
+          {
+            "end": 321,
+            "role": "state.entity",
+            "start": 317
+          },
+          {
+            "end": 375,
+            "role": "card.operation",
+            "start": 371
+          },
+          {
+            "end": 473,
+            "role": "card.operation",
+            "start": 469
+          },
+          {
+            "end": 571,
+            "role": "card.operation",
+            "start": 567
+          },
+          {
+            "end": 683,
+            "role": "entry.tag",
+            "start": 679
+          },
+          {
+            "end": 751,
+            "role": "event.tag",
+            "start": 747
+          },
+          {
+            "end": 825,
+            "role": "event.tag",
+            "start": 821
+          },
+          {
+            "end": 879,
+            "role": "event.tag",
+            "start": 875
+          },
+          {
+            "end": 900,
+            "role": "event.tag",
+            "start": 896
+          },
+          {
+            "end": 954,
+            "role": "event.tag",
+            "start": 950
+          },
+          {
+            "end": 1018,
+            "role": "query.position",
+            "start": 1014
+          }
+        ]
+      },
+      "valid": false
+    }
+  ],
+  "schema": "r12_s9_2_global_anchor_development_evaluation_v1",
+  "source_commit": "38c934cf9f360e1fd13258c23be310e948cafba1",
+  "span": {
+    "class_exact": 340,
+    "class_exact_accuracy": 0.166015625,
+    "f1": 0.8456044495629894,
+    "gold": 114501,
+    "precision": 0.8648295760630381,
+    "predicted": 109521,
+    "recall": 0.8272154828342111,
+    "row_exact": 340,
+    "row_exact_accuracy": 0.166015625,
+    "tp": 94717
+  },
+  "tokenizer_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4",
+  "training_contract": {
+    "batch_size": 64,
+    "charged_views_per_arm": 48000,
+    "forbidden_supervision": "final state, answer, recurrence, development laws, confirmation laws",
+    "gradient_clip": 1.0,
+    "hard_negative_top_k": 8,
+    "learning_rate": 0.001,
+    "negative_candidates_per_view": 128,
+    "orbit_weight": 0.25,
+    "pair_batch_size": 32,
+    "supervision": "graph fields only",
+    "unique_sources_per_arm": 24000,
+    "updates_per_arm": 750,
+    "warmup_updates": 50
+  }
+}

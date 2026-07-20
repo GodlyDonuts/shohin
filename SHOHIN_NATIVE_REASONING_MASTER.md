@@ -8,19 +8,18 @@ runbook and result files.
 
 **Status:** Living document. The protected raw-pretraining anchor is complete
 at 300,000 steps. S7 confirms bounded native contextual law compilation and
-recurrent execution. S9.1 is the strongest fresh-development compiler:
-2,025/2,048 = 98.877% exact graph/state/answer against 86.230% for its matched
-no-class arm and zero for shuffled, source-free, and uniform controls. Every
-emitted graph is exact; the residual is 23 invalid/abstaining parses and zero
-valid-but-wrong computations. It remains unconfirmed because operation recoding
-invalidates one graph and changes two canonical graphs despite preserving all
-2,024 mutually valid states/answers. Broad language-grounded, self-directed
-reasoning is not yet established. S9.1 is permanently closed with confirmation
-sealed. S9.2 global anchor closure has now passed all 17 pre-board CPU gates and
-is source-frozen at `38c934c` with an admitted fresh board; it has no neural
-score.
+recurrent execution. S9.1 remains the strongest fresh-development compiler at
+2,025/2,048 = 98.877% exact graph/state/answer, but is permanently unconfirmed
+after its frozen alpha-closure failures. S9.2 is now decisively rejected at
+340/2,048 = 16.602% exact graph/state/answer and 21/43 gates: its class-message
+path learned a maximum-depth shortcut that the global grammar enforced, while
+the no-class arm reached 98.730% state/answer and the same-logit local decoder
+reached 99.512% exact graphs. Broad language-grounded, self-directed reasoning
+is not yet established. Parser-only anchor repair is retired as the active
+frontier; the next primary experiment is model-owned source-deleted recurrent
+state transport with causal interventions.
 
-**Last updated:** 2026-07-19 23:06 EDT.
+**Last updated:** 2026-07-20 00:35 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -39,6 +38,34 @@ full job-by-job chronology remains in the operational runbook summary.
 claim boundaries are in Sections 1-12; the complete research source text used
 to support them is embedded in Appendix A. No conclusion in this document
 requires opening another markdown file.
+
+---
+
+## 2026-07-20 frontier update: S9.2 rejected, parser repair retired
+
+S9.2 Global Anchor Closure completed its sole fresh development read on job
+`693890`. It is rejected at 340/2,048 = 16.602% exact graph/state/answer and
+21/43 frozen gates. Every success is at depth eight; depths three through seven
+are zero. The same treatment logits reach 2,038/2,048 exact graphs with the
+closed local-root decoder, while the equal-budget no-class arm reaches
+2,019/2,048 exact graphs and 2,022/2,048 exact states/answers. Layout-only reaches
+544/2,048 exact graphs. This localizes the failure to a cardinality shortcut in
+occurrence-class messages that the global grammar makes irrevocable. It does not
+invalidate the S7/S8 recurrent machine: all 340 valid emitted graphs are exact
+and execute exactly.
+
+S9.2 confirmation remains unopened and is permanently ineligible. Exact custody,
+scores, failed gates, hashes, and interpretation are recorded in
+`R12_S9_2_GLOBAL_ANCHOR_CLOSURE_DEVELOPMENT_RESULT.md`.
+
+The primary frontier is no longer another language-parser repair. It is a
+source-deleted counterfactual state-transport experiment: compile once from
+language into a private fixed tape, remove every source-token path, execute a
+tied learned transition repeatedly, learn halt and query consumption, and prove
+causal use through state, suffix, query, halt, and source-poison interventions.
+The matched gold-tape, exact-identity, oracle-motor, shuffled-compiler,
+state-reset, untied, and source-retained arms separate compilation from update,
+memory transport, readout, and halt.
 
 ---
 
