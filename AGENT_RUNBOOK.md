@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 14:11 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 14:18 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -333,7 +333,7 @@
 > fresh board with new names and renderer/source families, source deletion, unchanged categorical
 > execution, matched controls, and strict complete-system size below 200M.
 >
-> **Fresh Complete Physical board v1 is closed scoreless; v1.1 name repair is active.** Source
+> **Fresh Complete Physical board v1.1 is admitted before training-seed draw.** Source
 > `cd5a02b91493352b757d19212701bbf543ebbef4` was frozen and pushed before raw beacon
 > `17279531721804544805`, correctly reduced modulo `2^63` to board seed
 > `8056159684949768997`. Generation passed every semantic, renderer, overlap, oracle, and access
@@ -341,8 +341,13 @@
 > across families, violating the preregistered global uniqueness gate. No board directory, training
 > seed, GPU output, development access, or confirmation access exists. Never reuse that seed. V1.1
 > changes only board admission: deterministically re-key every latent family with three globally
-> unique split/prior-disjoint opaque names before rendering, and test the gate directly. Freeze a
-> new exact source before drawing a new board seed. The proposed source otherwise
+> unique split/prior-disjoint opaque names before rendering, and test the gate directly. Exact
+> source `aa1c598594aec985519e300f9207a0fa8da72ea4` precedes raw beacon
+> `15994587003838256523` and board seed `6771214966983480715`. The resulting
+> 48,000/2,048/2,048 board passes all 16 gates and is byte-identical under a complete second rebuild.
+> Report/train/development/confirmation SHA values begin `7ecb3dcf...`/`bad7f8db...`/
+> `58aef892...`/`afedef75...`; confirmation is mode `0600`; access is `0/0`. No training seed or GPU
+> output exists yet. The admitted board
 > creates 48,000 compiler-only training rows from 12,000 latent programs and four even-parity
 > renderer views, plus 2,048 development and 2,048 sealed-confirmation rows from four odd-parity
 > renderer views with new names and entirely new declaration/event/query language. Treatment and a
@@ -351,9 +356,8 @@
 > bilinear declaration tensors are deterministically zeroed and frozen; direct 1,000x perturbation
 > leaves every v1.2 program output bit-identical. A source-free evidence capsule and separately
 > committed assessor independently recompute packet, pointer, state, answer, control, artifact,
-> parameter, and custody gates. Twenty focused tests and all static/job checks pass. No source
-> commit, board seed, training seed, fresh board, GPU output, development access, or confirmation
-> access exists at this point. Commit and push the exact source before drawing any seed.
+> parameter, and custody gates. Twenty focused tests and all static/job checks pass. Commit the board
+> receipt before drawing the sole training seed.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9869,3 +9873,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   bytes or scored access exist. V1.1 replaces names deterministically per family and split while
   retaining all renderer, data-count, model, optimization, assessor, and threshold contracts. A new
   source commit and new seed are mandatory.
+
+- **2026-07-20 14:16--14:18** -- **Fresh-board v1.1 is admitted and sealed before training-seed
+  draw.** Repair source `aa1c598594aec985519e300f9207a0fa8da72ea4` is pushed before raw beacon
+  `15994587003838256523`, reduced modulo `2^63` to board seed `6771214966983480715`. The generated
+  48,000/2,048/2,048 board passes all 16 semantic, renderer, overlap, uniqueness, oracle, sealing,
+  and access gates. Report/train/development/confirmation hashes begin
+  `7ecb3dcf...`/`bad7f8db...`/`58aef892...`/`afedef75...`; confirmation is mode `0600`; access is
+  `0/0`. A full independent rebuild from the same source/seed/prior inputs is byte-identical for all
+  four files. No training seed or model fit exists. Commit the receipt before drawing the sole
+  training seed.

@@ -64,11 +64,17 @@ correctly failed before writing data because the inherited 1,731-name pool
 violated the preregistered globally unique family-name gate. The only v1.1
 change deterministically re-keys each family with three unique split/prior-
 disjoint names. It requires a new source commit and new seed; no board, training
-seed, GPU output, or scored access exists.
+seed, GPU output, or scored access exists. Repair source `aa1c598...` then
+precedes board seed `6771214966983480715`. Its 48,000/2,048/2,048 board passes
+all sixteen admission gates, has zero cross-split/prior leakage, three globally
+unique names per family, mode-`0600` confirmation, byte-identical deterministic
+rebuilds, and `0/0` score access. Report/train/development/confirmation SHA-256
+values begin `7ecb3dcf...`/`bad7f8db...`/`58aef892...`/`afedef75...`. No training
+seed or model fit exists yet.
 V2 custody is `1/0`, its confirmation is sealed, and no board will be rescored.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 14:11 EDT. User authority requires every future
+**Last updated:** 2026-07-20 14:18 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2579,6 +2585,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 | 2026-07-20 | Closed Complete Physical-Record Front-End v1.2: a 601,350-parameter nonlinear six-role occurrence head raises the 192,129,179-parameter complete compiler to 100% minimum held-out packets/states and 99.20% strict initial-occurrence pointers. All 12 consumed-training gates pass with `0/0` scored access; this authorizes only a separately committed fresh-board transfer test. |
 | 2026-07-20 | Implemented the pre-seed complete-physical fresh-board transfer source: new lexical/name atoms, even-to-odd renderer composition, matched family-deranged labels, source deletion, a second evidence-based assessor, exact 192,129,179 total parameters, and 20 passing focused tests. No source freeze, seed, board, or score exists yet. |
+| 2026-07-20 | Closed the first fresh-board seed before byte write on inherited name reuse, repaired only global family re-keying under source `aa1c598`, and admitted the replacement 48,000/2,048/2,048 board with all 16 gates, byte-identical rebuilds, sealed confirmation, and `0/0` access. No training seed exists yet. |
 
 ---
 
