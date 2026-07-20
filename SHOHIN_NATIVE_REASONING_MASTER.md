@@ -144,7 +144,7 @@ The full closed-board record is
 `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_2_RESULT.md`.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-The active post-confirmation hypothesis is Episodic Rule-Card Categorical State
+The latest closed post-confirmation hypothesis is Episodic Rule-Card Categorical State
 Transport (ER-CST). It replaces the fixed event ontology with three opaque
 operations whose meanings are defined inside each problem by determining
 before/after witnesses over fresh symbols. The planned model must compile those
@@ -177,13 +177,40 @@ addresses, not operation meaning. Exact addressed source `9cf9d04` precedes boar
 seed `8277659525319823840`; the replacement 48,000/2,048/2,048 board passes all 13
 gates and independently rebuilds byte-identically, with zero cross-split overlap,
 exact depth balance, confirmation `0600`, access `0/0`, and 15.610% deranged-card
-state. Hashes begin `b5cb2f14`/`5cd0395f`/`7404b247`; report `589b203f`. No training
-seed or neural result exists. The complete design and gates
+state. Hashes begin `b5cb2f14`/`5cd0395f`/`7404b247`; report `589b203f`.
+Scientific source `90fd496` was pushed before training seed `7148525615058810782`.
+Sole H100 job `694511` completed all three equal-budget arms and the one-read
+development assessment. V1 is rejected with custody `1/0`: treatment is 100% exact
+on structural line/binding/initial/query pointers, event references, HALT, and query,
+but 0/2,048 on complete rule-card tuples, 311/2,048 on recurrent state, 682/2,048 on
+answers, and zero packets/joints. Family-deranged training retains 98.535% initial-
+state exactness while also producing zero cards; equality ablation retains 68.262%
+initial exactness and zero cards. A held-out global relabeling diagnostic recovers
+only 16.80% complete card tuples, excluding a simple inverse or class-code mismatch.
+The failure is therefore specifically dynamic equality extraction from six opaque
+witness occurrences, with additional gradient interference between the card and
+declaration paths. The old confirmation remains permanently sealed. Artifact hashes
+begin `150febfa`/`05756471`/`be4b5c50`/`39ffd483`.
+
+The active repair is ER-CST v1.1 Witness Equality Bus on a new renderer/name board.
+It preserves the exact parser, opcode binding, order, HALT, query, categorical motor,
+and reader. A separate learned witness path will point to all before/after name
+occurrences, fingerprint each opaque name, construct a 3x3 learned equality matrix,
+and score the six `S_3` cards by finite assignment sums. This is model-owned
+structured equality attention, not host parsing. The equal-budget treatment,
+family-deranged, and equality-ablated arms and all existing thresholds remain fixed;
+new witness-pointer gates are added. It must remain below 200M and use fresh source,
+board, and training seeds. Pre-board implementation now removes the direct card
+classifier and passes finite all-`S_3` equality recovery, detached-gradient isolation,
+fresh-span integrity, public-output, real-family backward, exact confirmed-parent
+reconstruction, static checks, and 15 focused tests. Exact complete/trainable/headroom
+counts are 192,726,827/12,021,276/7,273,173. No board or training seed exists. The
+complete design and gates
 are in `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md` and
 `R12_ER_CST_NEURAL_ADAPTER_PREREG.md`; CPU evidence is in
 `R12_ER_CST_RULE_CARD_CPU_RESULT.md`.
 
-**Last updated:** 2026-07-20 17:00 EDT. User authority requires every future
+**Last updated:** 2026-07-20 17:31 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2708,6 +2735,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Admitted and independently reproduced addressed ER-CST board source `9cf9d04`, seed `8277659525319823840`: 48,000/2,048/2,048 rows, all 13 gates, all 52,096 parser/executor checks, zero cross-split overlap, confirmation `0600`, access `0/0`, and 15.610% deranged-card state. No training seed or neural result exists. |
 | 2026-07-20 | Locally admitted the ER-CST neural qualification before source freeze: three identical-initialization/equal-budget arms (true cards, family-deranged cards, equality-ablated witnesses), immutable checkpoint-before-development custody, independent raw-evidence assessment, and frozen >=90% treatment / >=50pp causal-advantage gates. Equality ablation preserves offsets and cross-renderer identity while removing only witness equality. Twenty-three tests and an actual confirmed-parent/real-row backward pass show finite ten-part loss, all core ER gradients, and zero excluded-parent leakage. The complete system remains 192,421,936 parameters under the user-authorized strict 200M ceiling. No training seed, H100 job, or scored access exists. |
 | 2026-07-20 | Froze and pushed ER-CST qualification source `90fd496` before seed `7148525615058810782`, transported a hash-verified clean source capsule to Newton, and passed `sbatch --test-only` plus real bf16 H100 preflight. Sole job `694511` runs on `evc25`; no immutable checkpoint or development ledger exists yet, so scored custody remains `0/0`. |
+| 2026-07-20 | Closed ER-CST v1 after sole job `694511` completed three equal-budget fits and one-read development. Treatment solves every structural pointer/event/HALT/query field at 100% but scores 0/2,048 complete cards, 311/2,048 states, 682/2,048 answers, and zero joints. Deranged labels retain 98.535% initial state; equality ablation retains 68.262%; held-out global class remapping recovers only 16.80% complete cards. The failure is dynamic witness equality plus shared-path interference, not parser, order, halt, executor, or a class-code convention. Custody is `1/0`; old confirmation stays sealed. Active repair: fresh-board learned witness-equality bus under 200M. |
 
 ---
 

@@ -226,6 +226,31 @@ def render_row(
         initial_start = start + len(name)
     targets["binding_ranges"] = binding_ranges
     targets["initial_ranges"] = initial_ranges
+
+    witness_before_ranges: list[list[list[int]]] = []
+    witness_after_ranges: list[list[list[int]]] = []
+    for semantic_slot, item in enumerate(_rule_targets(result), start=1):
+        line = lines[semantic_slot]
+        line_offset = semantic_ranges[semantic_slot][0]
+        cursor = line.index(str(item["opcode"])) + len(str(item["opcode"]))
+        before_ranges = []
+        after_ranges = []
+        for name in map(str, item["before"]):
+            start = line.index(name, cursor)
+            before_ranges.append(
+                [line_offset + start, line_offset + start + len(name)]
+            )
+            cursor = start + len(name)
+        for name in map(str, item["after"]):
+            start = line.index(name, cursor)
+            after_ranges.append(
+                [line_offset + start, line_offset + start + len(name)]
+            )
+            cursor = start + len(name)
+        witness_before_ranges.append(before_ranges)
+        witness_after_ranges.append(after_ranges)
+    targets["witness_before_ranges"] = witness_before_ranges
+    targets["witness_after_ranges"] = witness_after_ranges
     targets["query_range"] = list(query_span)
     result["compiler_targets"] = targets
     result["source_shape"] = {

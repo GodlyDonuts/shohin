@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 17:00 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 17:31 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -164,7 +164,8 @@
 > establish unconstrained language grounding, arbitrary programs, learned arithmetic, planning,
 > or broad general reasoning.
 >
-> **Active next hypothesis:** Episodic Rule-Card Categorical State Transport (ER-CST) varies the
+> **Closed development result and active repair:** Episodic Rule-Card Categorical State Transport
+> (ER-CST) varies the
 > operation semantics inside every problem rather than adding more fixed-ontology paraphrases. Three
 > fresh opaque operations are each defined by one determining before/after witness over fresh symbols;
 > the model must emit categorical permutation cards, bind later opcode invocations, delete source,
@@ -214,9 +215,36 @@
 > commit `90fd496de23ee9f12d21fa2c553df0de3fad9b23` was pushed before training seed
 > `7148525615058810782` was drawn (beacon SHA-256 `6334aa2c...`). A clean minimal Git capsule was
 > hash-verified on Newton after the shared workspace's unrelated unborn `master` metadata was left
-> untouched. `sbatch --test-only` selected `evc25`; sole job `694511` is RUNNING there and has passed
-> the real bf16 H100 preflight. It has not written a checkpoint or development ledger yet.
-> Development/confirmation custody remains `0/0`; do not submit a second writer or open either split.
+> untouched. Sole job `694511` completed all three fits and the one-read independent development
+> assessment on `evc25` in about 17 minutes. ER-CST v1 is rejected and its confirmation must remain
+> sealed forever; final custody is `1/0`. Treatment reaches 100% on line, binding, initial, query,
+> event, and HALT pointers/fields, but 0/2,048 complete rule-card tuples, 311/2,048 = 15.186% exact
+> states, 682/2,048 = 33.301% answers, and zero packets/joints. Family-deranged supervision retains
+> 2,018/2,048 = 98.535% initial states but also zero cards; equality ablation retains 1,398/2,048 =
+> 68.262% initial states and zero cards. A held-out global class-remapping diagnostic recovers only
+> 16.80% complete card tuples, so the failure is not an inverse or arbitrary class-code convention.
+> Fit losses and controls localize the failure to dynamic before/after witness equality extraction;
+> the shared record path also exhibits card-vs-declaration gradient interference. Checkpoint,
+> evidence, report, and assessment SHA-256 are `150febfa...`/`05756471...`/`be4b5c50...`/
+> `39ffd483...`; read-only local mirrors match Newton.
+>
+> The only admitted successor is ER-CST v1.1 Witness Equality Bus on a fresh post-commit board. It
+> must preserve the already exact parser/order/opcode/HALT/query/executor, add dedicated model-owned
+> occurrence pointers for the three before and three after names in each rule, reuse learned byte-
+> bigram fingerprints, form a learned 3x3 equality matrix, and score all six `S_3` assignments by
+> their matched equality sums. It must separate witness-card features from declaration/initial-state
+> features, expose pointer evidence, retain the true/family-deranged/equality-ablated equal-budget
+> controls, remain strictly below 200M parameters, commit/preregister before fresh board and training
+> seeds, and never read the old confirmation. No v1.1 source commit, board seed, training seed, or
+> score exists yet.
+> Pre-board mechanics are now locally admitted: the direct classifier is removed; six learned
+> occurrence queries, dedicated detached witness projections, inherited byte fingerprints, a 3x3
+> equality matrix, and exact six-assignment aggregation produce public pointer/equality evidence.
+> The actual confirmed parent reconstructs byte-identically. Exact complete/trainable/headroom
+> counts are 192,726,827/12,021,276/7,273,173; a real-family CPU backward is finite, every new
+> equality component receives gradient, excluded-parent leakage is zero, and 15 focused tests plus
+> Ruff and byte compilation pass. Freeze `R12_ER_CST_WITNESS_EQUALITY_BUS_PREREG.md` and the seedless
+> board source in a clean pushed commit before drawing the new board seed.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10231,3 +10259,17 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   RUNNING there and confirms `NVIDIA H100 PCIe` with bf16. No checkpoint or access ledger exists yet,
   so custody remains `0/0`. Monitor the one job through all three fits, immutable checkpoint write,
   development read, and independent assessment; never launch a duplicate.
+
+- **2026-07-20 17:28--17:31** -- **ER-CST v1 closes as a sharply localized development
+  rejection.** Sole job `694511` completed all three equal-budget fits and the independent one-read
+  assessment on `evc25`; custody is exactly development/confirmation `1/0`. Treatment reaches
+  2,048/2,048 on every structural pointer, event reference, HALT, and query, but 0/2,048 complete
+  card tuples, 311/2,048 states, 682/2,048 answers, and zero packet/joint. Deranged supervision
+  retains 2,018/2,048 initial-state exactness and equality ablation 1,398/2,048, while both also
+  produce zero cards. A held-out global class remapping reaches only 16.80% complete card tuples,
+  ruling out a simple output-code convention. This isolates dynamic equality extraction from six
+  opaque witness occurrences and shows shared-path gradient interference. Checkpoint/evidence/
+  report/assessment hashes begin `150febfa`/`05756471`/`be4b5c50`/`39ffd483`; read-only local
+  mirrors hash-match. Never rescore this board or open its confirmation. The preregistered repair is
+  a fresh-board, under-200M learned witness-equality bus with dedicated occurrence pointers,
+  byte-fingerprint equality, finite `S_3` assignment scoring, and the same matched controls.

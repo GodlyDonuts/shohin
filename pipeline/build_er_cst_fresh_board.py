@@ -305,6 +305,24 @@ def _row_exact(row: Mapping[str, object]) -> bool:
         for ranges in (target["binding_ranges"], target["initial_ranges"]):
             if any(source[int(start):int(end)].decode() not in bindings for start, end in ranges):
                 return False
+        for rule, before_ranges, after_ranges in zip(
+            rules,
+            target["witness_before_ranges"],
+            target["witness_after_ranges"],
+            strict=True,
+        ):
+            if len(before_ranges) != 3 or len(after_ranges) != 3:
+                return False
+            decoded_before = tuple(
+                source[int(start):int(end)].decode() for start, end in before_ranges
+            )
+            decoded_after = tuple(
+                source[int(start):int(end)].decode() for start, end in after_ranges
+            )
+            if decoded_before != tuple(map(str, rule["before"])):
+                return False
+            if decoded_after != tuple(map(str, rule["after"])):
+                return False
         qstart, qend = map(int, target["query_range"])
         if query[qstart:qend].decode() != str(int(target["query_position"]) + 1):
             return False
