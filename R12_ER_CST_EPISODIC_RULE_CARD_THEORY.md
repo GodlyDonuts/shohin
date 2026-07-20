@@ -2,9 +2,9 @@
 
 **Protocol:** `R12-ER-CST-v1-theory`
 
-**Status:** CPU mechanics and preregistration hypothesis only. No neural source,
-board seed, training seed, H100 job, development score, or confirmation access is
-authorized by this document.
+**Status:** CPU mechanics and a parameter-audited neural adapter are locally
+admitted before source freeze. No board seed, training seed, H100 job, development
+score, or confirmation access exists.
 
 ## 1. Why this is the next experiment
 
@@ -65,13 +65,18 @@ remain below the user-authorized 200M ceiling but may not exceed it:
 | Component | Parameters |
 |---|---:|
 | Confirmed v1.3 complete system | 192,129,179 |
-| Maximum new rule-card path and motor | 7,870,820 |
+| ER-CST complete system | 192,421,167 |
+| Net increase after motor replacement | 291,988 |
+| Remaining headroom below 200M | 7,578,833 |
 | Absolute complete-system maximum | 199,999,999 |
 
 The favorable treatment may reuse and fine-tune the confirmed physical line encoder.
-New parameters are limited to rule-witness record queries, a permutation-card head,
-opaque-opcode binding, and a tied rule-card motor. Parameter names and exact counts
-must be frozen before board generation.
+New parameters are limited to a twelve-role record path, rule/event norms, a
+permutation-card head, opaque-opcode binding projections, a HALT head, and a tied
+rule-card motor. The exact 98-compiler-tensor plus four-motor-tensor trainability
+contract is frozen in `R12_ER_CST_NEURAL_ADAPTER_PREREG.md`; its name/shape/count
+hash is `f2c6c1de...`. The adapter adds 308,756 compiler parameters and replaces
+the old 19,206-parameter motor with a 2,438-parameter tied motor.
 
 The treatment may receive rule-card, opcode-pointer, program-pointer, initial-state,
 and query targets on training rows. It may not receive final states, answers,
@@ -141,8 +146,9 @@ language programs, planning, or general reasoning.
 ## 8. Ordered work
 
 1. Run and preserve the deterministic CPU falsifier.
-2. Implement the smallest rule-card adapter and exact parameter ledger.
-3. Add gradient, source-deletion, malformed-card, and matched-arm tests.
+2. Implement the smallest rule-card adapter and exact parameter ledger. **Done.**
+3. Add gradient, source-deletion, malformed-card, and matched-arm tests. **Done for
+   the architecture contract; board-level matched-arm tests remain pre-freeze.**
 4. Freeze and push exact scientific source.
 5. Draw a board seed, build/audit/rebuild/seal the board, and commit its receipt.
 6. Draw one training seed and run one development job.

@@ -155,11 +155,17 @@ pre-freeze dry falsifier is exact on witness inference, execution, witness/opcod
 renaming, card storage order, and post-HALT invariance; rotating card meanings leaves
 15.08% exact final states. Frozen source `5a03824...` reproduces the durable 10,000-
 episode report with all seven gates passing; report and episode-registration hashes
-begin `90c5e6fe`/`a3802185`. No neural source, board, seed, GPU run, or score exists.
-The complete design and gates are in `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md`; CPU
-evidence is in `R12_ER_CST_RULE_CARD_CPU_RESULT.md`.
+begin `90c5e6fe`/`a3802185`. A locally admitted neural adapter reconstructs the
+confirmed parent byte-identically, uses a 2,438-parameter tied card motor, and totals
+192,421,167 parameters with 11,715,616 trainable and 7,578,833 headroom. Its
+trainability contract hashes to `f2c6c1de`; 14 focused tests, gradient isolation,
+exact motor fit, static checks, and actual parent reconstruction pass. No neural
+source commit, board, seed, GPU run, or score exists. The complete design and gates
+are in `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md` and
+`R12_ER_CST_NEURAL_ADAPTER_PREREG.md`; CPU evidence is in
+`R12_ER_CST_RULE_CARD_CPU_RESULT.md`.
 
-**Last updated:** 2026-07-20 15:53 EDT. User authority requires every future
+**Last updated:** 2026-07-20 16:05 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2674,6 +2680,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Independently confirmed SD-CST Complete Physical Fresh v1.3 on the sole 2,048-row sealed read: treatment is 100% exact on packets, every pointer, recurrent states, answers, joints, each unseen renderer, and every depth; family-deranged labels are 0% packet and 7.666% state/joint. All 19 scientific and four assessor gates pass with custody `1/1`. Promote checkpoint `a5888d88...` as a bounded fresh compiler/source-deleted executor baseline, not general reasoning. |
 | 2026-07-20 | Implemented ER-CST pre-freeze CPU mechanics: every problem defines fresh opaque `S_3` operations by determining witnesses, then requires rule-card compilation and recurrent composition. Five tests and a 10,000-episode dry falsifier pass all exact/invariance gates; card derangement drops final-state exactness to 15.08%. No neural source, board, seed, or score exists. |
 | 2026-07-20 | Froze ER-CST CPU source at `5a03824` and reproduced its durable 10,000-episode report: all seven mechanics/invariance gates pass, card derangement remains 15.08%, and report/registration hashes begin `90c5e6fe`/`a3802185`. Neural implementation is admitted under the remaining 7,870,820-parameter budget; no neural score exists. |
+| 2026-07-20 | Admitted the ER-CST neural adapter before source freeze: exact confirmed-parent reconstruction/copy passes; a 308,756-parameter compiler extension plus replacement 2,438-parameter tied motor yields 192,421,167 total parameters and 7,578,833 headroom. Fourteen tests, exact motor fit, source deletion, gradient isolation, static checks, and parameter/hash certificates pass. No board, seed, H100 job, or score exists. |
 
 ---
 

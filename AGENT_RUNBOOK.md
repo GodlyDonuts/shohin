@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 15:53 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 16:05 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -174,12 +174,17 @@
 > execution, witness/opcode renaming, card-storage reindexing, and post-HALT suffix invariance are
 > 10,000/10,000; rotating card meanings leaves 1,508/10,000 exact final states. The confirmed
 > 192,129,179-parameter parent leaves at most 7,870,820 new parameters under an absolute
-> 199,999,999 cap. No neural source commit, board seed, training seed, H100 job, development score,
-> or confirmation access exists. Exact CPU source `5a03824d2adcaa11633c6b7fd77cebe73afbd99e`
+> 199,999,999 cap. The locally admitted adapter reconstructs that parent byte-identically, replaces
+> its 19,206-parameter motor with a 2,438-parameter tied rule-card motor, and totals 192,421,167
+> parameters with 11,715,616 trainable and 7,578,833 headroom. Its 98 compiler plus four motor
+> trainability tensors hash to `f2c6c1de...`; confirmed-parent/excluded-state digests are
+> `cfb3d8bd...`/`1ad33273...`. Fourteen focused tests, exact 36-cell motor fit, gradient isolation,
+> static checks, and actual parent reconstruction pass. No neural source commit, board seed,
+> training seed, H100 job, development score, or confirmation access exists. Exact CPU source
+> `5a03824d2adcaa11633c6b7fd77cebe73afbd99e`
 > produces the durable report from seed 1,729: all seven gates pass; report/episode-registration
-> SHA-256 are `90c5e6fe...`/`a3802185...`. Implement the smallest parameter-audited neural adapter;
-> do not draw a board or training seed before architecture, trainability, source-deletion, and
-> matched-control tests are frozen.
+> SHA-256 are `90c5e6fe...`/`a3802185...`. Commit/push the admitted neural adapter before drawing a
+> board seed; then implement and freeze the fresh-board builder, matched controls, and custody audit.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10086,3 +10091,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   retains only 1,508/10,000 exact final states. Report/episode-registration SHA-256 are
   `90c5e6fe...`/`a3802185...`. This admits only the neural adapter implementation under the remaining
   7,870,820-parameter budget; no board, neural seed, GPU run, or score exists.
+
+- **2026-07-20 15:53--16:05** -- **The ER-CST neural adapter is locally admitted under the 200M
+  ceiling before source freeze or seed.** The exact confirmed v1.3 parent reconstructs and copies
+  byte-identically with state SHA `cfb3d8bd...`. Thirteen new compiler tensors add 308,756
+  parameters, while a 2,438-parameter tied `S_3` motor replaces the old 19,206-parameter motor.
+  Complete/trainable/headroom counts are 192,421,167/11,715,616/7,578,833. The 98 compiler plus
+  four motor trainability contract hashes to `f2c6c1de...`; excluded state hashes to `1ad33273...`.
+  Fourteen focused tests, exact 36-cell motor fit, source-path sentinels, gradient isolation, Ruff,
+  byte compilation, and a real parent-checkpoint reconstruction pass. No source commit, board seed,
+  training seed, H100 job, or scored access exists. Commit/push this exact contract before board
+  generation.
