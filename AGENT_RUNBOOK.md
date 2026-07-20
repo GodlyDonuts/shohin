@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 06:46 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 06:53 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -9308,3 +9308,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   shuffled-packet interventions and full state/alive trajectories. Twenty-six focused tests and all
   static checks pass locally. Global authority is now strict below 200M; old and current 150M gates
   remain frozen scientific contracts. Commit this exact source, then draw one mechanics seed.
+
+- **2026-07-20 06:46--06:53** -- **The first projected-mechanics launch is a scoreless digest
+  infrastructure failure.** Exact source `c36dceb` and post-commit seed `8840942453076574374`
+  launch job `693982` on H100 `evc22`. Source/data/compiler/report/CUDA preflight passes, but the
+  full-state SHA helper raises on a zero-dimensional float buffer before any compiler evaluation,
+  motor/reader fit, packet, control, metric, or report. Exit is `1:0` after 1m22s. No scored split
+  is reachable and access remains `0/0`. Repair only scalar state-dict byte serialization, add a
+  scalar-buffer regression, freeze a new source commit, and draw a new seed; never describe
+  `693982` as a mechanism result.

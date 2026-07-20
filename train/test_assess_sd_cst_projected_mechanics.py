@@ -13,6 +13,7 @@ from assess_sd_cst_projected_mechanics import (
     relocated_event_lines_row,
     rotate_queries,
     semantic_rollout,
+    state_dict_digest,
 )
 from pilot_sd_cst_binding_bus import parse_binding_row
 from sd_cst import HardLateQuery
@@ -124,3 +125,17 @@ def test_source_blind_executor_does_not_import_compiler_or_board_modules():
     assert "program_text" not in source
     assert "row_id" not in source
     assert "target" not in source
+
+
+def test_full_state_digest_includes_scalar_buffers():
+    class ScalarState(torch.nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.weight = torch.nn.Parameter(torch.tensor([1.0, 2.0]))
+            self.register_buffer("scale", torch.tensor(3.0))
+
+    module = ScalarState()
+    before = state_dict_digest(module)
+    module.scale.fill_(4.0)
+    after = state_dict_digest(module)
+    assert before != after
