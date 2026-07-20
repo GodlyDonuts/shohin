@@ -333,7 +333,16 @@
 > fresh board with new names and renderer/source families, source deletion, unchanged categorical
 > execution, matched controls, and strict complete-system size below 200M.
 >
-> **Fresh Complete Physical board source is implemented but not yet frozen.** The proposed source
+> **Fresh Complete Physical board v1 is closed scoreless; v1.1 name repair is active.** Source
+> `cd5a02b91493352b757d19212701bbf543ebbef4` was frozen and pushed before raw beacon
+> `17279531721804544805`, correctly reduced modulo `2^63` to board seed
+> `8056159684949768997`. Generation passed every semantic, renderer, overlap, oracle, and access
+> gate but failed before writing bytes because the inherited generator reused a 1,731-name pool
+> across families, violating the preregistered global uniqueness gate. No board directory, training
+> seed, GPU output, development access, or confirmation access exists. Never reuse that seed. V1.1
+> changes only board admission: deterministically re-key every latent family with three globally
+> unique split/prior-disjoint opaque names before rendering, and test the gate directly. Freeze a
+> new exact source before drawing a new board seed. The proposed source otherwise
 > creates 48,000 compiler-only training rows from 12,000 latent programs and four even-parity
 > renderer views, plus 2,048 development and 2,048 sealed-confirmation rows from four odd-parity
 > renderer views with new names and entirely new declaration/event/query language. Treatment and a
@@ -9850,3 +9859,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   execution, hash, parameter, and custody gates from a source-free evidence capsule. Twenty focused
   tests plus Ruff, byte compilation, and Slurm syntax pass. No scientific source commit or seed
   exists yet; preserve that ordering.
+
+- **2026-07-20 14:11--14:16** -- **Fresh-board v1 closes as a scoreless pre-write name-admission
+  failure.** Exact source `cd5a02b91493352b757d19212701bbf543ebbef4` was pushed before raw beacon
+  `17279531721804544805`, reduced with arbitrary-precision arithmetic to seed
+  `8056159684949768997`. Full generation passes every gate except global opaque-name uniqueness:
+  inherited `build_all` intentionally draws from only 1,731 names, producing 1,299 repeated names
+  across 13,024 latent families. The builder exits before creating the output directory, so no board
+  bytes or scored access exist. V1.1 replaces names deterministically per family and split while
+  retaining all renderer, data-count, model, optimization, assessor, and threshold contracts. A new
+  source commit and new seed are mandatory.

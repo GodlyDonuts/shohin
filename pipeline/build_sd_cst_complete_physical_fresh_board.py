@@ -106,6 +106,49 @@ def _canonical_families(
     return values
 
 
+def rekey_families(
+    rows: Sequence[Mapping[str, object]],
+    *,
+    seed: int,
+    namespace: str,
+    forbidden: set[str],
+) -> list[dict[str, object]]:
+    """Assign three deterministic globally unique opaque names per family."""
+    output = []
+    assigned: dict[str, tuple[str, str, str]] = {}
+    used = set(forbidden)
+    for source in rows:
+        row = json.loads(json.dumps(dict(source)))
+        family = str(row["id"])
+        if family not in assigned:
+            names = []
+            for role in range(3):
+                nonce = 0
+                while True:
+                    digest = hashlib.sha256(
+                        f"{seed}:{namespace}:{family}:{role}:{nonce}".encode("utf-8")
+                    ).hexdigest()
+                    candidate = f"{digest[:4]}-{digest[4:12]}"
+                    if candidate not in used:
+                        break
+                    nonce += 1
+                used.add(candidate)
+                names.append(candidate)
+            assigned[family] = tuple(names)  # type: ignore[assignment]
+        names = assigned[family]
+        targets = row["compiler_targets"]
+        bindings = sorted(
+            targets["entity_bindings"], key=lambda item: int(item["entity_role"])
+        )
+        for role, binding in enumerate(bindings):
+            binding["entity"] = names[role]
+        if "oracle" in row:
+            answer_role = int(row["oracle"]["answer_role"])
+            row["oracle"]["answer_entity"] = names[answer_role]
+        output.append(row)
+    return output
+
+
 def renderer_signature(row: Mapping[str, object]) -> str:
     source = str(row["program_text"]) + "\n<QUERY>\n" + str(row["late_query_text"])
     return NUMBER_RE.sub("<N>", NAME_RE.sub("<NAME>", source))
@@ -326,9 +369,38 @@ def main() -> None:
         seed=args.seed,
         reserved_sequences=reserved,
     )
+    forbidden_names = set(_overlap_sets(prior_rows)["names"])
+    train_base = rekey_families(
+        train_base,
+        seed=args.seed,
+        namespace=TRAIN_SPLIT,
+        forbidden=forbidden_names,
+    )
+    forbidden_names.update(
+        binding["entity"]
+        for row in train_base
+        for binding in row["compiler_targets"]["entity_bindings"]
+    )
+    development_base = rekey_families(
+        _canonical_families(development_base),
+        seed=args.seed,
+        namespace=DEVELOPMENT_SPLIT,
+        forbidden=forbidden_names,
+    )
+    forbidden_names.update(
+        binding["entity"]
+        for row in development_base
+        for binding in row["compiler_targets"]["entity_bindings"]
+    )
+    confirmation_base = rekey_families(
+        _canonical_families(confirmation_base),
+        seed=args.seed,
+        namespace=CONFIRMATION_SPLIT,
+        forbidden=forbidden_names,
+    )
     train = expand_rows(train_base, TRAIN_RENDERERS)
-    development = expand_rows(_canonical_families(development_base), SCORED_RENDERERS)
-    confirmation = expand_rows(_canonical_families(confirmation_base), SCORED_RENDERERS)
+    development = expand_rows(development_base, SCORED_RENDERERS)
+    confirmation = expand_rows(confirmation_base, SCORED_RENDERERS)
     audit = audit_fresh_board(train, development, confirmation, prior_rows)
     if not audit["all_gates_pass"]:
         raise SystemExit(json.dumps(audit["gates"], sort_keys=True))

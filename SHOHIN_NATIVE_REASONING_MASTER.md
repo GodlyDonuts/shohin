@@ -58,8 +58,13 @@ name atoms. A matched family-deranged false-label arm receives identical source
 bytes, initialization, 102 trainable tensors, 12,152,855 trainable parameters,
 3,000 updates, and 192,129,179 complete parameters. A separately committed
 assessor recomputes all development gates from source-free hard-packet,
-pointer-range, executor, hash, parameter, and access-ledger evidence. No source
-commit, board seed, training seed, board, or fresh score exists yet.
+pointer-range, executor, hash, parameter, and access-ledger evidence. Source
+`cd5a02b...` was frozen before board seed `8056159684949768997`, but generation
+correctly failed before writing data because the inherited 1,731-name pool
+violated the preregistered globally unique family-name gate. The only v1.1
+change deterministically re-keys each family with three unique split/prior-
+disjoint names. It requires a new source commit and new seed; no board, training
+seed, GPU output, or scored access exists.
 V2 custody is `1/0`, its confirmation is sealed, and no board will be rescored.
 Broad language-grounded, self-directed reasoning remains unestablished.
 

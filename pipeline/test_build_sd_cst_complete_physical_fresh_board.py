@@ -9,6 +9,7 @@ sys.path.insert(0, str(ROOT / "pipeline"))
 from build_sd_cst_board import build_all  # noqa: E402
 from build_sd_cst_complete_physical_fresh_board import (  # noqa: E402
     audit_fresh_board,
+    rekey_families,
 )
 from sd_cst_complete_physical_fresh_renderers import (  # noqa: E402
     SCORED_RENDERERS,
@@ -26,6 +27,23 @@ def _small_board():
     )
     development = [row for row in development if row["variant"] == "canonical"]
     confirmation = [row for row in confirmation if row["variant"] == "canonical"]
+    train = rekey_families(train, seed=9182, namespace="train", forbidden=set())
+    used = {
+        binding["entity"]
+        for row in train
+        for binding in row["compiler_targets"]["entity_bindings"]
+    }
+    development = rekey_families(
+        development, seed=9182, namespace="development", forbidden=used
+    )
+    used.update(
+        binding["entity"]
+        for row in development
+        for binding in row["compiler_targets"]["entity_bindings"]
+    )
+    confirmation = rekey_families(
+        confirmation, seed=9182, namespace="confirmation", forbidden=used
+    )
     return (
         expand_rows(train, TRAIN_RENDERERS),
         expand_rows(development, SCORED_RENDERERS),
@@ -43,6 +61,7 @@ def test_small_board_semantics_and_orbits() -> None:
     assert gates["development_confirmation_renderer_orbits_equal"]
     assert gates["training_oracles_absent"]
     assert gates["evaluation_oracles_present"]
+    assert gates["opaque_names_fixed_and_globally_unique"]
 
 
 def test_row_corruption_fails_semantic_audit() -> None:
