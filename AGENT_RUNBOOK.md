@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 11:32 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 11:51 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -266,6 +266,20 @@
 > access remains `0/0`, and the result is not score-eligible. The next distinct hypothesis must
 > factor delimiter-bounded physical records, local field extraction, and one-to-one model-owned
 > record assignment; no widening or extension of the failed global-query contract is authorized.
+>
+> **Active training-only falsifier:** the Physical-Record Write Bus is locally admitted before
+> source freeze, seed, or H100 execution. It segments exactly nine newline-bounded records, encodes
+> each with shared relative-position weights, performs set-level record contextualization, assigns
+> physical records to semantic slots from model logits, and uses local kind/amount/entity motors.
+> The constrained arm uses Sinkhorn training plus deterministic greedy one-to-one evaluation; its
+> exact equal-parameter control assigns semantic slots independently. Both reconstruct joint parent
+> SHA `4b842e4c...`, receive byte-identical new-module initialization, and freeze every parent tensor.
+> Exact compiler/trainable/complete counts are 65,831,689 / 11,106,830 / **190,933,394**, leaving
+> 9,066,606 below the strict 200M cap. The full 56,000-view consumed renderer scan finds nine records
+> everywhere, maximum 132-byte payload / 133-byte record including newline under the fixed 144-byte
+> window. Real-parent reconstruction, a real consumed-row complete loss, six new tests, eleven
+> inherited focused tests, Ruff, compilation, and job syntax pass. Freeze exact source and prereg
+> before drawing one seed. Development and confirmation remain unreachable.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9667,3 +9681,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   address, renderer-orbit generalization is not the issue, and ordinary independent global queries
   accumulate local record/address errors. Report SHA is `318b6458...`; access is `0/0`. Admit only
   a distinct physical-record/local-field/one-to-one-write factorization under the strict 200M cap.
+
+- **2026-07-20 11:32--11:51** -- **The Physical-Record Write Bus is implemented and locally
+  admitted before source freeze, seed, or H100 execution.** The new compiler is deliberately
+  distinct from the failed global-query decoder: it uses the observed newline delimiter to pack
+  nine physical records, a shared four-layer local encoder, a two-layer record-set encoder,
+  model-logit role assignment, field-local kind/amount motors, and local entity pointers feeding the
+  frozen exact declaration matcher. Treatment uses eight Sinkhorn normalizations during training
+  and a documented greedy one-to-one assignment at evaluation; the matched control uses independent
+  semantic-slot assignments. Both arms load parent SHA `4b842e4c...`, have identical initialization,
+  88 trainable names / 11,106,830 trainable parameters, and a frozen-parent digest. Complete compiler
+  and system counts are 65,831,689 and 190,933,394, leaving 9,066,606 below 200M. A full 56,000-view
+  renderer scan finds zero record-count violations and a maximum 133-byte compiler record under the
+  144-byte cap. Exact parent reconstruction, equal arm state, real consumed-row finite loss, six
+  new tests plus eleven inherited focused tests, Ruff, byte compilation, and job syntax pass. The
+  frozen prereg separates absolute compiler gates from +5pp one-to-one attribution gates; this is a
+  conventional consumed-training mechanics control, never a reasoning or novelty claim. Commit and
+  push exact bytes, record the source commit in the prereg, then draw one independent seed.

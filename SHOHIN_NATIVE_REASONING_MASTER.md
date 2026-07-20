@@ -38,10 +38,14 @@ gradients and renderer overfit: final held-out per-slot line/event-address/kind/
 amount/identity are 42.029%/25.466%/55.731%/68.000%/50.325%, and gold event
 address makes identity 100%. This closes ordinary global-query co-adaptation and
 admits only a distinct physical-record/local-field/write-assignment factorization.
+That factorization is now implemented and preregistered before seed as a
+190,933,394-parameter complete system. Its 11,106,830 trainable parameters encode
+physical records locally and compare one-to-one versus independent semantic-slot
+assignment from byte-identical initialization. It has not run and has no result.
 V2 custody is `1/0`, its confirmation is sealed, and no board will be rescored.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 11:32 EDT. User authority requires every future
+**Last updated:** 2026-07-20 11:51 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -140,6 +144,38 @@ compound several moderate local errors into zero complete packets. Report SHA
 begins `318b6458...`; access is `0/0`. The next conventional falsifier must use
 delimiter-bounded physical records, local field motors, and a model-logit-only
 one-to-one categorical write bus. It may not be described as reasoning.
+
+That falsifier is now locally admitted before source freeze or seed. The
+Physical-Record Write Bus hard-segments exactly nine newline-bounded records,
+encodes each with a shared four-layer 384-wide relative-position Transformer,
+contextualizes the nine-record set with two shared layers, and emits role, kind,
+amount, and local entity-pointer logits. It feeds local entity evidence into the
+frozen matcher that the intervention audit showed is exact given the address;
+the successful declaration, initial-state, late-query, categorical executor,
+motor, reader, and Shohin trunk remain frozen.
+
+The treatment uses eight Sinkhorn normalizations in training and a documented
+greedy one-to-one assignment at evaluation. The equal-parameter control uses
+independent physical-record assignment for each semantic slot. Both reconstruct
+joint parent SHA `4b842e4c...`, receive byte-identical values for all 88 new
+parameter names, train under the same 3,000-update schedule, and preserve a digest
+over every excluded tensor. Exact compiler/trainable/complete counts are
+65,831,689 / 11,106,830 / 190,933,394, leaving 9,066,606 below the strict 200M
+ceiling. A complete 56,000-view scan finds exactly nine records everywhere, with
+maximum 132-byte payload / 133-byte compiler record under a 144-byte window.
+Real-parent reconstruction, real-row finite loss, all unit/static checks, and
+the matched state certificate pass.
+
+The preregistration deliberately separates absolute compilation from causal
+attribution. Absolute gates require at least 80% minimum-renderer complete
+packet plus 90--99% field/address/preservation rates and 95--99% fit rates.
+One-to-one attribution additionally requires at least +5 percentage points over
+the independent arm for packets, line pointers, and event pointers. If only the
+absolute gates pass, physical-record parsing may survive as a conventional
+baseline while the one-to-one claim is rejected. This consumed-training pilot
+cannot establish language generalization, state transport, self-selected
+programs, halting, or native reasoning, and it cannot open development or
+confirmation.
 
 ---
 
