@@ -21,6 +21,7 @@ from assess_sd_cst_projected_fresh import (
     parse_output,
     parse_packet,
     sha256_file,
+    validate_kind_projection,
 )
 from build_sd_cst_board import build_all
 from build_sd_cst_projected_board import PROTOCOL, _registration
@@ -104,6 +105,67 @@ def test_output_parser_rejects_integer_as_boolean():
     }
     with pytest.raises(AssessmentError):
         parse_output(value, 3, "bad")
+
+
+def test_assessor_recomputes_exact_one_stop_map_from_raw_logits():
+    logits = torch.tensor(
+        [
+            [
+                [3.0, 1.0, 2.0],
+                [0.0, 4.0, 1.0],
+                [2.0, 1.0, 6.0],
+                [3.0, 1.0, 0.0],
+                [1.0, 2.0, 0.0],
+                [2.0, 1.0, 0.0],
+                [1.0, 2.0, 0.0],
+                [2.0, 1.0, 0.0],
+            ]
+        ]
+    )
+    packet = parse_packet(
+        {
+            "initial_state": [0],
+            "event_kind": [[0, 1, 2, 0, 1, 0, 1, 0]],
+            "event_identity": [[0] * 8],
+            "amount": [[0] * 8],
+            "query": [0],
+        },
+        1,
+        "packet",
+    )[0]
+    evidence = {
+        "decoder": "exact_map_one_stop_v1",
+        "kind_logits": logits.tolist(),
+    }
+    result = validate_kind_projection(evidence, packet, 1, "projection")
+    assert bool(result["raw_one_stop"].all())
+    evidence["kind_logits"][0][2][2] = 1.0
+    with pytest.raises(AssessmentError, match="differs from exact one-STOP MAP"):
+        validate_kind_projection(evidence, packet, 1, "projection")
+
+
+@pytest.mark.parametrize("bad", [0, True, float("nan")])
+def test_assessor_rejects_non_float_or_nonfinite_kind_evidence(bad):
+    packet = parse_packet(
+        {
+            "initial_state": [0],
+            "event_kind": [[2, 0, 0, 0, 0, 0, 0, 0]],
+            "event_identity": [[0] * 8],
+            "amount": [[0] * 8],
+            "query": [0],
+        },
+        1,
+        "packet",
+    )[0]
+    logits = torch.nn.functional.one_hot(packet.event_kind.long(), 3).float().tolist()
+    logits[0][0][0] = bad
+    with pytest.raises(AssessmentError, match="finite JSON float"):
+        validate_kind_projection(
+            {"decoder": "exact_map_one_stop_v1", "kind_logits": logits},
+            packet,
+            1,
+            "projection",
+        )
 
 
 def test_row_evidence_must_reparse_from_committed_raw_source():
@@ -335,6 +397,16 @@ def test_perfect_system_contract_has_no_impossible_frozen_gate():
     compiled = {
         name: {
             "packet": tape_to_json(tape, query),
+            "kind_projection": {
+                "decoder": "exact_map_one_stop_v1",
+                "kind_logits": torch.nn.functional.one_hot(
+                    tape.event_kind.long(),
+                    num_classes=3,
+                )
+                .float()
+                .mul(8.0)
+                .tolist(),
+            },
             "pointers": treatment_pointers if name == "treatment" else zero_pointers,
             "source_poison_bit_identical": True,
         }
@@ -418,6 +490,7 @@ def test_perfect_system_contract_has_no_impossible_frozen_gate():
             "program_gpu_tensors_destroyed_before_query_compile": True,
             "host_evaluator_retains_hash_bound_row_evidence": True,
             "separate_typed_executor": True,
+            "structured_kind_decoder": "exact_map_one_stop_v1",
             "all_compiler_arms_source_poison_bit_identical": True,
         },
     }

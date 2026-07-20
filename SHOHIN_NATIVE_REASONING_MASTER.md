@@ -27,15 +27,18 @@ compiler certificate and passes all 29 independent source-blind execution
 mechanics gates. This is not yet a fresh-distribution neural result. The active
 phase is one post-commit fresh board with independently randomized corrupted
 supervision, an inherited-parent leakage audit, a binding-source-free ablation,
-and one-read development custody. The first frozen launch, job `693998`, closed
-before training or scored access because its initializer conflated one derived
-non-trainable buffer with learned missing parameters. The exact repair permits
-only that named buffer and is being refrozen for a new board. No fresh neural
-development score exists yet.
+and one-read development custody. Job `693998` closed before training or scored
+access on a derived-buffer contract bug. The narrow repair then enabled job
+`694008`: treatment reached 48,000/48,000 exact training tapes and decisively
+beat the row-shuffled-label arm, but the sole fresh development read rejected
+the first malformed tape because independent kind argmax did not emit exactly
+one STOP. V1 is closed at access `1/0` without an accuracy score. V2 now tests
+an exact model-logit-only MAP decoder under the disclosed one-STOP grammar on a
+wholly new board. No fresh neural development score exists yet.
 Broad language-grounded,
 self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 08:29 EDT. User authority permits future complete
+**Last updated:** 2026-07-20 08:52 EDT. User authority permits future complete
 systems strictly below 200M parameters; the current isolated pilot retains its
 stricter 150M comparison gate.
 
@@ -56,6 +59,48 @@ full job-by-job chronology remains in the operational runbook summary.
 claim boundaries are in Sections 1-12; the complete research source text used
 to support them is embedded in Appendix A. No conclusion in this document
 requires opening another markdown file.
+
+---
+
+## 2026-07-20 frontier update: compiler transfer succeeds; legal tape transfer fails
+
+After exact-parent reconstruction passed under repair source
+`4a7fb4880c919735ae35bf1f33f4c7245a8bff73`, independent board/training seeds
+`3040523197183361035` / `8787815392344128274` created a second fully audited
+48,000/2,304/2,304 board. Report/train/development/confirmation hashes are
+`e8094d8e...`, `b9825505...`, `b85ea65e...`, and `ab7a488a...`; exact remote
+bytes match and confirmation remains sealed mode `0600`.
+
+H100 job `694008` provides a real compiler-learning result before its fresh
+failure. Treatment is exact on all 48,000 training tapes, initial states, event
+kinds, identities, amounts, binding pointers, initial-occurrence pointers,
+source-line pointers, and late queries; event-occurrence localization is
+47,952/48,000. The equal-update independently row-shuffled-label arm reaches
+only 870/48,000 exact tapes, 1,298/48,000 identities, and 185/48,000 binding
+pointers. This is strong evidence that the projected path learned the intended
+cross-row binding function rather than merely inheriting it or fitting an
+equivalent label coordinate system. Checkpoint SHA is `91d4860b...` and gate
+configuration SHA is `a725fabe...`.
+
+The sole development read then exposes the next interface failure. Independent
+per-slot event-kind argmax produces at least one fresh row with other than
+exactly one STOP. Strict packet construction rejects it before source-deleted
+execution or scoring. No evaluation or assessor artifact exists; the registered
+development ledger is `d58e64da...`, custody is `1/0`, and the board is closed.
+This is not evidence that the recurrent core failed. It says the compiler's
+locally normalized kind interface does not preserve a known global grammar on
+fresh sources.
+
+Projected fresh v2 preregisters the smallest architectural response: exact
+global MAP over legal one-STOP tapes. For each slot it keeps the best non-STOP
+kind, then places STOP at the position with the largest STOP-versus-best-
+non-STOP logit gain. This is exact over all `8 * 2^7` legal assignments, uses no
+row metadata or oracle, applies equally to all learned and diagnostic arms, and
+adds zero parameters. The assessor receives raw float32 kind logits, recomputes
+the projection, reports raw versus structured rates, and rejects any packet
+mismatch. All previous accuracy, attribution, intervention, source-deletion,
+parameter, and one-read gates remain unchanged. A v2 success would still be a
+bounded structured state-transport result, not general reasoning.
 
 ---
 

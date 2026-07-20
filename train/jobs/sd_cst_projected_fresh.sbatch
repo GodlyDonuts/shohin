@@ -26,6 +26,7 @@ SOURCE_PATHS=(
   R12_SD_CST_PROJECTED_MECHANICS_PREREG.md
   R12_SD_CST_PROJECTED_BINDING_PILOT_PREREG.md
   R12_SD_CST_PROJECTED_FRESH_BOARD_PREREG.md
+  R12_SD_CST_PROJECTED_FRESH_V2_PREREG.md
   pipeline/assess_sd_cst_projected_fresh.py
   pipeline/audit_sd_cst_board.py
   pipeline/build_sd_cst_board.py

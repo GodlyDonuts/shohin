@@ -41,6 +41,7 @@ from sd_cst_binding_bus import ProjectedHierarchicalBindingBusCompiler
 GLOBAL_PARAMETER_CAP = 200_000_000
 COMPARISON_PARAMETER_CAP = 150_000_000
 PARENT_DERIVED_BUFFER_NAMES = frozenset({"permutations"})
+STRUCTURED_KIND_DECODER = "exact_map_one_stop_v1"
 EXECUTION_CORE_SHA256 = (
     "166ca6f81dd962b06a94f7a3661921a410760090ed1b750d78ec1b0f610113f1"
 )
@@ -143,6 +144,24 @@ def validate_parent_missing_names(missing: Sequence[str]) -> None:
             "parent missing keys do not equal projected trainable "
             "plus derived-buffer contract"
         )
+
+
+def exact_one_stop_map(kind_logits: torch.Tensor) -> torch.Tensor:
+    """Return the exact categorical MAP tape under the public one-STOP grammar."""
+    if kind_logits.ndim != 3 or tuple(kind_logits.shape[1:]) != (
+        EVENT_STEPS,
+        STOP_KIND + 1,
+    ):
+        raise ValueError("kind logits do not match the one-STOP decoder contract")
+    if not bool(torch.isfinite(kind_logits).all()):
+        raise ValueError("kind logits must be finite")
+    non_stop_logits = kind_logits[..., :STOP_KIND]
+    non_stop_score, non_stop_kind = non_stop_logits.max(-1)
+    stop_gain = kind_logits[..., STOP_KIND] - non_stop_score
+    stop_slot = stop_gain.argmax(-1)
+    decoded = non_stop_kind.to(torch.uint8)
+    decoded.scatter_(1, stop_slot[:, None], STOP_KIND)
+    return decoded
 
 
 def _find_within(source: bytes, needle: bytes, start: int, end: int) -> tuple[int, int]:
@@ -510,6 +529,7 @@ def compile_fresh_rows(
             "event_entity",
         )
     }
+    kind_logits = []
     source_poison_exact = True
     for start in range(0, len(rows), batch_size):
         fresh = rows[start : start + batch_size]
@@ -521,7 +541,13 @@ def compile_fresh_rows(
                 if source_free_binding
                 else model.compile_program(program_ids, program_valid)
             )
-        hard = output.tape.hard()
+        decoded_kind = exact_one_stop_map(output.tape.event_kind)
+        hard = HardProgramTape(
+            output.tape.initial_state.argmax(-1).to(torch.uint8),
+            decoded_kind,
+            output.tape.event_identity.argmax(-1).to(torch.uint8),
+            output.tape.amount.argmax(-1).to(torch.uint8),
+        )
         sealed = HardProgramTape(
             hard.initial_state.detach().cpu().to(torch.uint8).clone(),
             hard.event_kind.detach().cpu().to(torch.uint8).clone(),
@@ -538,6 +564,7 @@ def compile_fresh_rows(
         pointers["event_entity"].append(
             output.event_entity_pointer_logits.argmax(-1).detach().cpu()
         )
+        kind_logits.append(output.tape.event_kind.detach().float().cpu().clone())
         before = tuple(
             value.clone()
             for value in (
@@ -583,6 +610,8 @@ def compile_fresh_rows(
         "tape": _concatenate_tapes(tapes),
         "query": HardLateQuery(torch.cat(queries)),
         "pointers": {name: torch.cat(values) for name, values in pointers.items()},
+        "kind_logits": torch.cat(kind_logits),
+        "structured_kind_decoder": STRUCTURED_KIND_DECODER,
         "source_poison_bit_identical": source_poison_exact,
     }
 

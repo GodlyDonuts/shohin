@@ -9383,3 +9383,24 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   derived buffer in addition to the frozen trainable whitelist, while full/frozen state digests
   still bind it and any other key fails. Ninety-three SD-CST tests and static checks pass. Freeze a
   new source commit, then draw entirely fresh board/training seeds; do not reuse the closed board.
+
+- **2026-07-20 08:29--08:52** -- **Projected fresh v1 learns the compiler but fails fresh legal
+  tape construction; v2 exact-MAP STOP decoding is preregistered.** Repair source
+  `4a7fb4880c919735ae35bf1f33f4c7245a8bff73` passes exact-parent CPU reconstruction before fresh
+  seeds: 146,057,595 nominal / 20,975,931 active compiler-plus-core / 6,748,897 trainable, with the
+  `[6,3]` permutation buffer non-trainable. Board/training seeds `3040523197183361035` /
+  `8787815392344128274` produce a fresh all-gates-pass 48,000/2,304/2,304 board. Report/train/dev/
+  confirmation SHA values are `e8094d8e...`/`b9825505...`/`b85ea65e...`/`ab7a488a...`; exact bytes
+  match Newton and confirmation is mode `0600`. Job `694008` trains both fixed arms on H100 `evc22`.
+  Treatment is 48,000/48,000 exact whole tape, initial, kind, identity, amount, line, binding,
+  initial-occurrence, and query; event-occurrence pointers are 47,952/48,000. Equal-update per-row
+  shuffled supervision is only 870/48,000 whole tapes, 1,298/48,000 identities, and 185/48,000
+  binding pointers, while inherited line/kind/amount/query stay exact. Checkpoint/config SHA values
+  are `91d4860b...`/`a725fabe...`. Development opens once, then strict `HardProgramTape` construction
+  rejects a treatment batch because independent per-slot kind argmax contains other than exactly one
+  STOP. No evaluation/assessment/confirmation artifact exists. Development ledger SHA is
+  `d58e64da...`; custody is `1/0`; job exits `1:0` after 9m25s. Hash-verified local copies preserve
+  checkpoint, config, ledger, and log. Close v1 without rescore. V2 changes only kind discretization
+  to exact global MAP under the public exactly-one-STOP grammar, applied equally to every arm with
+  raw logits exported for assessor recomputation. It adds zero parameters, advances all schemas,
+  retains every threshold/control, and requires a new source commit and fresh board. No v2 seed yet.

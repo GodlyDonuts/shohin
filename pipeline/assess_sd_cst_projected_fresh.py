@@ -8,6 +8,7 @@ from collections import defaultdict
 from dataclasses import asdict
 import hashlib
 import json
+import math
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -22,6 +23,7 @@ from assess_sd_cst_projected_mechanics import (
 from build_sd_cst_projected_board import PROTOCOL
 from projected_sd_cst_fresh import (
     PROJECTED_TRAINABLE_NAMES,
+    STRUCTURED_KIND_DECODER,
     canonical_json,
     parse_projected_row,
 )
@@ -128,6 +130,51 @@ def _tensor(
     validate(value, shape, label)
     tensor = torch.tensor(value, dtype=dtype)
     return tensor
+
+
+def _float_tensor(value: Any, *, shape: tuple[int, ...], label: str) -> torch.Tensor:
+    def validate(item: Any, dimensions: tuple[int, ...], location: str) -> None:
+        if not dimensions:
+            if type(item) is not float or not math.isfinite(item):
+                raise AssessmentError(f"{location} is not a finite JSON float")
+            return
+        if not isinstance(item, list) or len(item) != dimensions[0]:
+            raise AssessmentError(f"{location} does not match shape {shape}")
+        for index, child in enumerate(item):
+            validate(child, dimensions[1:], f"{location}[{index}]")
+
+    validate(value, shape, label)
+    return torch.tensor(value, dtype=torch.float32)
+
+
+def validate_kind_projection(
+    value: Mapping[str, Any],
+    tape: HardProgramTape,
+    rows: int,
+    label: str,
+) -> dict[str, torch.Tensor]:
+    if not isinstance(value, Mapping) or set(value) != {"decoder", "kind_logits"}:
+        raise AssessmentError(f"{label} structured decoder evidence keys differ")
+    if value.get("decoder") != STRUCTURED_KIND_DECODER:
+        raise AssessmentError(f"{label} structured decoder identity differs")
+    logits = _float_tensor(
+        value["kind_logits"],
+        shape=(rows, EVENT_STEPS, STOP_KIND + 1),
+        label=f"{label}.kind_logits",
+    )
+    raw_kind = logits.argmax(-1).to(torch.uint8)
+    non_stop_score, non_stop_kind = logits[..., :STOP_KIND].max(-1)
+    stop_gain = logits[..., STOP_KIND] - non_stop_score
+    selected_stop = stop_gain.argmax(-1)
+    projected = non_stop_kind.to(torch.uint8)
+    projected.scatter_(1, selected_stop[:, None], STOP_KIND)
+    if not torch.equal(projected, tape.event_kind):
+        raise AssessmentError(f"{label} packet differs from exact one-STOP MAP")
+    return {
+        "raw_kind": raw_kind,
+        "raw_one_stop": raw_kind.eq(STOP_KIND).sum(-1).eq(1),
+        "selected_stop": selected_stop,
+    }
 
 
 def parse_packet(
@@ -694,9 +741,16 @@ def assess(
         raise AssessmentError("compiled arm set differs")
     compiled = {}
     for name, value in compiled_raw.items():
+        packet = parse_packet(value["packet"], count, f"compiled.{name}")
         compiled[name] = {
-            "packet": parse_packet(value["packet"], count, f"compiled.{name}"),
+            "packet": packet,
             "pointers": pointer_exact(value["pointers"], rows),
+            "kind_projection": validate_kind_projection(
+                value["kind_projection"],
+                packet[0],
+                count,
+                f"compiled.{name}",
+            ),
             "source_poison": value.get("source_poison_bit_identical") is True,
         }
 
@@ -767,6 +821,26 @@ def assess(
             name: grouped_rates(values, rows, "variant")
             for name, values in pointer_scores.items()
         },
+        "raw_kind_diagnostics": {
+            name: {
+                "one_stop": _metric_summary(
+                    {"one_stop": value["kind_projection"]["raw_one_stop"]}
+                )["one_stop"],
+                "exact_kind": _metric_summary(
+                    {
+                        "exact_kind": value["kind_projection"]["raw_kind"]
+                        .eq(gold[0].event_kind)
+                        .all(-1)
+                    }
+                )["exact_kind"],
+            }
+            for name, value in compiled.items()
+        },
+        "treatment_raw_one_stop_by_variant": grouped_rates(
+            compiled["treatment"]["kind_projection"]["raw_one_stop"],
+            rows,
+            "variant",
+        ),
     }
 
     exact_rows = treatment_packet["packet"]
@@ -1084,6 +1158,7 @@ def assess(
                     "program_gpu_tensors_destroyed_before_query_compile": True,
                     "host_evaluator_retains_hash_bound_row_evidence": True,
                     "separate_typed_executor": True,
+                    "structured_kind_decoder": STRUCTURED_KIND_DECODER,
                     "all_compiler_arms_source_poison_bit_identical": True,
                 }
                 and all(value["source_poison"] for value in compiled.values())
@@ -1099,10 +1174,17 @@ def assess(
                     "program_gpu_tensors_destroyed_before_query_compile": True,
                     "host_evaluator_retains_hash_bound_row_evidence": True,
                     "separate_typed_executor": True,
+                    "structured_kind_decoder": STRUCTURED_KIND_DECODER,
                     "all_compiler_arms_source_poison_bit_identical": True,
                 }
                 and all(value["source_poison"] for value in compiled.values())
             ),
+        },
+        "exact_map_one_stop_decoder_contract": {
+            "value": True,
+            "threshold": True,
+            "direction": "equal",
+            "pass": True,
         },
         "parameter_and_training_contract": {
             "value": True,

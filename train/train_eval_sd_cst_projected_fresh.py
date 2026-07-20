@@ -35,6 +35,7 @@ from projected_sd_cst_fresh import (
     GLOBAL_PARAMETER_CAP,
     PARENT_SHA256,
     PROJECTED_TRAINABLE_NAMES,
+    STRUCTURED_KIND_DECODER,
     TRAINING_CONTRACT,
     ProjectedFreshRow,
     canonical_json,
@@ -58,10 +59,10 @@ from projected_sd_cst_fresh import (
 from sd_cst import EVENT_STEPS, STOP_KIND, HardLateQuery, HardProgramTape
 
 
-CHECKPOINT_SCHEMA = "r12_sd_cst_projected_fresh_checkpoint_v1"
-CONFIG_SCHEMA = "r12_sd_cst_projected_fresh_gate_config_v1"
-EVALUATION_SCHEMA = "r12_sd_cst_projected_fresh_evaluation_v1"
-ASSESSMENT_SCHEMA = "r12_sd_cst_projected_fresh_assessment_v1"
+CHECKPOINT_SCHEMA = "r12_sd_cst_projected_fresh_checkpoint_v2"
+CONFIG_SCHEMA = "r12_sd_cst_projected_fresh_gate_config_v2"
+EVALUATION_SCHEMA = "r12_sd_cst_projected_fresh_evaluation_v2"
+ASSESSMENT_SCHEMA = "r12_sd_cst_projected_fresh_assessment_v2"
 TRAIN_SPLIT = "sd_cst_train"
 DEVELOPMENT_SPLIT = "sd_cst_development"
 CONFIRMATION_SPLIT = "sd_cst_confirmation"
@@ -69,6 +70,7 @@ FROZEN_SOURCE_PATHS = (
     "R12_SD_CST_PROJECTED_MECHANICS_PREREG.md",
     "R12_SD_CST_PROJECTED_BINDING_PILOT_PREREG.md",
     "R12_SD_CST_PROJECTED_FRESH_BOARD_PREREG.md",
+    "R12_SD_CST_PROJECTED_FRESH_V2_PREREG.md",
     "pipeline/assess_sd_cst_projected_fresh.py",
     "pipeline/audit_sd_cst_board.py",
     "pipeline/build_sd_cst_board.py",
@@ -699,6 +701,10 @@ def _load_arm_model(
 def _compiled_json(value: Mapping[str, object]) -> dict[str, object]:
     return {
         "packet": tape_to_json(value["tape"], value["query"]),
+        "kind_projection": {
+            "decoder": value["structured_kind_decoder"],
+            "kind_logits": value["kind_logits"].tolist(),
+        },
         "pointers": {
             name: tensor.tolist() for name, tensor in value["pointers"].items()
         },
@@ -1023,6 +1029,7 @@ def evaluate_main(args: argparse.Namespace) -> None:
             "program_gpu_tensors_destroyed_before_query_compile": True,
             "host_evaluator_retains_hash_bound_row_evidence": True,
             "separate_typed_executor": True,
+            "structured_kind_decoder": STRUCTURED_KIND_DECODER,
             "all_compiler_arms_source_poison_bit_identical": all(
                 bool(value["source_poison_bit_identical"])
                 for value in compiled.values()
