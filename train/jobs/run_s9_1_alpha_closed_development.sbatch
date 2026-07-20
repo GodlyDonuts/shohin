@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=96G
 #SBATCH --time=02:00:00
-#SBATCH --exclude=evc44
+#SBATCH --exclude=evc28,evc44
 #SBATCH --chdir=/lustre/fs1/home/sa305415/shohin
 #SBATCH --output=logs/s9_1_alpha_closed_%j.out
 

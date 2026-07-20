@@ -13,9 +13,12 @@ S8.1's 25.098% to 94.775% and exact recurrent state/answers to 94.873%, with a
 48.389-point exact-graph advantage over its equal-budget no-class-message arm.
 It is not confirmed: class exact misses its 95% gate by five examples and 18
 otherwise-valid parses fail operation-name recoding. Broad language-grounded,
-self-directed reasoning is not yet established.
+self-directed reasoning is not yet established. S9.1 is now the sole live
+fresh-board repair: its all-row mechanics pass, its source/data/budget are
+frozen, and neural development job `693793` is running with confirmation still
+sealed.
 
-**Last updated:** 2026-07-19 20:19 EDT.
+**Last updated:** 2026-07-19 21:10 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -1444,6 +1447,40 @@ decoding. Learned alias partitions, first-class rule cards, an agenda graph,
 source-deleted integration, and causal language realization remain ordered
 future stages, not one bundled experiment.
 
+### 9.15 S9.1 alpha-closed structured compiler
+
+Scientific source commit `863a210` freezes the two admitted S9 repairs without
+adding parameters. Training now uses 24,000 unique sources paired with fully
+retokenized operation-name rotations: 48,000 charged views, batch 64, and 750
+updates per treatment/no-class/shuffled arm. Ordinary weighted role loss is
+augmented by a 0.25 mean-squared consistency loss between aligned original and
+recoded role-log-softmax vectors. The structured decoder leaves every roster,
+state, card anchor, event anchor, and count model-owned, then chooses the
+highest-scoring non-overlapping tuple among the top eight local candidates for
+each grammar-required child. It never receives a graph, depth, executor result,
+state, answer, or retry signal.
+
+The pre-board falsifier passes all nine gates across every one of the 2,048
+closed S9 development sources. Oracle and operation-recoded oracle logits
+produce 2,048/2,048 exact graphs. Lowering one required operation child below
+`none` gives old greedy decoding 0/2,048 exact and structured decoding
+2,048/2,048 exact. Uniform logits produce zero valid graphs; shuffled roles and
+a deliberately wrong high-margin child produce zero exact graphs. Across
+17,437 card/event regions, syntax leaves 55--123 candidate spans (median 83),
+so it does not uniquely disclose the gold child. Report SHA-256 is
+`a43824595c513226f52f54a629bad5d52f0d7f3c2a67e672103d0a16284dc563`.
+
+Fresh board seed `1370124171784245712` and training seed
+`8076551815802451212` produce 48,000 train, 2,048 development, and 2,048 sealed
+confirmation rows. All 52,096 executor/storage audits pass; exact-prompt,
+13-gram, and split-name overlap are zero; training has no state/answer; access
+is zero/zero. Report/train/development/sealed-confirmation SHA-256 values begin
+`92cde7e7`/`db764917`/`4b5d0e39`/`ee7e19fc`. Job `693789` is a scoreless
+`evc28` CUDA-preflight hang canceled before model/data access. Replacement
+`693793` passed H100/bf16 preflight on `evc47` and is the sole live serial
+development experiment. No S9.1 capability claim exists until its frozen
+assessor completes, and confirmation may open only if every gate passes.
+
 ---
 
 ## 10. Template For A New Theory
@@ -1774,6 +1811,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Rejected S9 for confirmation despite a large causal development gain: 94.775% exact graphs and 94.873% exact state/answer versus 46.387% exact graphs for the equal-budget no-class arm, 0% shuffled, and 25.098% S8.1. It passes 20/22 gates but misses 95% class exact by five examples and loses 18 otherwise-valid parses under operation-name recoding. Confirmation remains sealed; S9.1 must use a fresh board. |
 | 2026-07-19 | Archived and reviewed two frontier nominal-machine proposals. Adopted renaming-orbit supervision and syntax-only structured assignment for S9.1, but rejected byte-width failure as the current diagnosis: all 229,588 original-plus-recoded development gold spans fit widths one through three under the existing width-four cap. Deferred aliases, rule cards, agenda control, and causal realization until S9.1 confirmation. |
 | 2026-07-19 | Refreshed the self-contained appendix with the complete S7 confirmation, S8/S8.1 graph evidence, and S9 occurrence-quotient CPU/development records; updated the frontier to treat S9 as a near-pass requiring fresh operation-equivariant repair. |
+| 2026-07-19 | Froze S9.1 alpha-closed source at `863a210`, passed all nine 2,048-row mechanics gates, generated fresh board/training seeds `1370124171784245712`/`8076551815802451212`, hash-matched exact Newton bytes, and launched sole development job `693793` on `evc47`; confirmation remains sealed. |
 | 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 
