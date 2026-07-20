@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 16:31 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 16:38 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -190,9 +190,14 @@
 > 48,000/2,048/2,048 rows from 12,000/512/512 four-view families across disjoint renderer cosets.
 > First source `c06eab3...` and seed `2459068742837489615` closed before byte write when independent
 > 32-bit name hashes collided at full scale. V1.1 replaces only name allocation with a seed-keyed
-> bijection. It passes 195,360/195,360 full-scale uniqueness and a complete 52,096-row fixture audit:
-> all 13 gates pass, maximum source is 402/512 bytes, and deranged-card state exactness is
-> 2,085/13,024 = 16.009%. Twenty-three focused tests pass. Commit/push v1.1 before a new seed.
+> bijection. Exact source `fba34cdc9bfab75882dee8093b07ab96042d4a07` precedes replacement
+> board seed `1686667709479653771`. The admitted 48,000/2,048/2,048 board passes all 13 gates and
+> independently rebuilds byte-identically. Train/development/confirmation/report SHA values begin
+> `57abe77e...`/`8ef7f824...`/`a6dc26a5...`/`5c9b5b81...`; confirmation is `0600`; access is `0/0`.
+> Every depth is exact-balanced, all 52,096 rows pass production parser/executor agreement, and
+> deranged-card state exactness is 2,068/13,024 = 15.878%. No training seed or neural job exists.
+> Commit/push this receipt, sync/hash-verify exact bytes to Newton, then freeze training/evaluation
+> source before the sole seed draw.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10150,3 +10155,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   row fixture build passes all 13 gates with 2,085/13,024 = 16.009% deranged-card state exactness,
   maximum 402 program bytes, and zero cross-split overlap. Twenty-three focused tests pass. Freeze
   source before drawing a replacement seed.
+
+- **2026-07-20 16:31--16:38** -- **ER-CST v1.2 fresh board is admitted and independently
+  reproduced before training seed.** Exact source `fba34cdc9bfab75882dee8093b07ab96042d4a07`
+  precedes board seed `1686667709479653771`. The 48,000/2,048/2,048 rows pass all 13 gates and all
+  52,096 production parser/witness/executor/query/oracle checks. Depths are exact-balanced; compact
+  names are 195,360/195,360 unique; cross-split name/prompt/word-13-gram/family overlap is zero;
+  maximum program/line sizes are 402/74 bytes; confirmation is mode `0600`; custody is `0/0`.
+  Family-deranged cards retain 2,068/13,024 = 15.878% state. A complete second build is byte-
+  identical. Train/development/confirmation/report SHA values begin `57abe77e...`/`8ef7f824...`/
+  `a6dc26a5...`/`5c9b5b81...`. No training seed or neural job exists. Commit/push the receipt and
+  hash-verify transport before training source freeze.
