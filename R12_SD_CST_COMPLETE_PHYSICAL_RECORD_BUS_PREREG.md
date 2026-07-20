@@ -1,7 +1,11 @@
 # R12 SD-CST Complete Physical-Record Front-End Preregistration
 
-**Status:** locally admitted before source freeze, seed, or H100 execution;
+**Status:** exact scientific source frozen before seed or H100 execution;
 consumed-training mechanics only
+
+**Source contract:** exact architecture, pilot, tests, job, preregistration, and
+ledger commit `6294ea90f8b9e308edde9cad4d4b276c729961ae`. No seed or output exists at
+this receipt.
 
 **Parent compiler:** retained independent-assignment Physical-Record Write Bus,
 checkpoint SHA-256

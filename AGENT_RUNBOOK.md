@@ -288,8 +288,8 @@
 > The complete compiler/system is 66,426,124 / **191,527,829**, leaving 8,472,171 below 200M. The
 > complete path no longer calls either inherited global encoder. Three focused tests, all current
 > physical-bus tests, real-parent reconstruction, and a real consumed-row full backward pass are
-> clean; all ten declared tensors receive gradients and no excluded tensor does. Freeze exact
-> source and prereg before one consumed-training H100 gate. A pass only authorizes a separately
+> clean; all ten declared tensors receive gradients and no excluded tensor does. Exact scientific
+> source is frozen at `6294ea90f8b9e308edde9cad4d4b276c729961ae` before seed. A pass only authorizes a separately
 > committed fresh board; it is not reasoning evidence.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
@@ -9749,3 +9749,7 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   prereg uses only consumed rows and requires 95--99% complete/interface rates plus exact excluded
   digest and `0/0` access. Commit exact source before one seed. A pass only completes the compiler
   interface needed for a separately committed fresh board.
+
+- **2026-07-20 12:31** -- **Complete-local scientific source is frozen before seed.** Exact commit
+  `6294ea90f8b9e308edde9cad4d4b276c729961ae` is pushed with architecture, pilot, three tests,
+  Slurm job, preregistration, and ledgers. No seed, H100 job, output, or scored access exists yet.

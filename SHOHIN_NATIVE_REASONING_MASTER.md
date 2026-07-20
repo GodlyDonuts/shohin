@@ -218,7 +218,8 @@ initial-order pointers plus a local query selector/value motor, and brings the
 complete system to 191,527,829 parameters. The program and query forwards pass
 with both inherited global encoders replaced by raising sentinels. Every new
 tensor receives finite gradient on a real consumed row and no excluded tensor
-does. This local-completion gate has not yet been seeded or run. It must pass
+does. Exact scientific source is frozen before seed at commit
+`6294ea90f8b9e308edde9cad4d4b276c729961ae`. This local-completion gate has not yet been seeded or run. It must pass
 consumed-training interface gates before any fresh board can be generated; a
 pass remains compiler mechanics, not reasoning.
 
