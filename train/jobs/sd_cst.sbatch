@@ -29,12 +29,15 @@ export OMP_NUM_THREADS=4
 
 SOURCE_PATHS=(
   R12_SD_CST_PREREG.md
+  R12_SD_CST_V1_1_PREREG.md
   pipeline/assess_sd_cst.py
   pipeline/audit_sd_cst_board.py
   pipeline/build_sd_cst_board.py
+  train/atomic_optimizer_canary.py
   train/model.py
   train/sd_cst.py
   train/train_sd_cst.py
+  train/jobs/sd_cst_atomic_canary.sbatch
   train/jobs/sd_cst.sbatch
 )
 git cat-file -e "$SOURCE_COMMIT^{commit}"

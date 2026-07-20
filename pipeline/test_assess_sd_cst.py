@@ -284,7 +284,7 @@ def evidence() -> tuple[dict, dict]:
     hashes["evaluator_sha256"] = sha256_file(ROOT / "assess_sd_cst.py")
     payload = {
         "schema": EVAL_SCHEMA,
-        "protocol": "r12_sd_cst_v1",
+        "protocol": "r12_sd_cst_v1_1",
         "split": "sd_cst_development",
         "custody": {
             "development_accesses": 1,

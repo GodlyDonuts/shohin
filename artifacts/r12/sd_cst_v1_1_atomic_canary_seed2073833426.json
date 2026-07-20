@@ -1,0 +1,469 @@
+{
+  "all_exact": true,
+  "device": "cuda",
+  "device_name": "NVIDIA H100 PCIe",
+  "forbidden_inputs": "no base checkpoint, tokenizer, source board, development, or confirmation",
+  "rows": [
+    {
+      "motor_correct": 78,
+      "motor_loss": 2.781545731522783e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.27183307908308e-08,
+      "seed": 2073833426
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 3.5915550711251853e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.1258654097900944e-07,
+      "seed": 2073833427
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 2.2160652690672578e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.27183307908308e-08,
+      "seed": 2073833428
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.9868205924922222e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.0596380661809235e-07,
+      "seed": 2073833429
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.083575511984236e-06,
+      "reader_correct": 18,
+      "reader_loss": 9.93410651517479e-08,
+      "seed": 2073833430
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 8.497433441334579e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.93410651517479e-08,
+      "seed": 2073833431
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 3.255327385431883e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.0596380661809235e-07,
+      "seed": 2073833432
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 2.384182948844682e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.27183307908308e-08,
+      "seed": 2073833433
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 6.464798616434564e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.93410651517479e-08,
+      "seed": 2073833434
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 4.4015681055498135e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.3245475827261544e-07,
+      "seed": 2073833435
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 5.777053502242779e-07,
+      "reader_correct": 18,
+      "reader_loss": 8.609558932448635e-08,
+      "seed": 2073833436
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.742288446848761e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.1920927533992653e-07,
+      "seed": 2073833437
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 2.888529877509427e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.1258654097900944e-07,
+      "seed": 2073833438
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 5.960463411724959e-08,
+      "reader_correct": 18,
+      "reader_loss": 9.93410651517479e-08,
+      "seed": 2073833439
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 5.440814447865705e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.27183307908308e-08,
+      "seed": 2073833440
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 2.8273970542613824e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.0596380661809235e-07,
+      "seed": 2073833441
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.1615257022867809e-07,
+      "reader_correct": 18,
+      "reader_loss": 8.609558932448635e-08,
+      "seed": 2073833442
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.085109531118178e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.2583201680627099e-07,
+      "seed": 2073833443
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 2.0785185483873647e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.93410651517479e-08,
+      "seed": 2073833444
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 9.872935606836108e-07,
+      "reader_correct": 18,
+      "reader_loss": 8.609558932448635e-08,
+      "seed": 2073833445
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.031615170177247e-06,
+      "reader_correct": 18,
+      "reader_loss": 1.1258654097900944e-07,
+      "seed": 2073833446
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 7.167819831011002e-07,
+      "reader_correct": 18,
+      "reader_loss": 7.947285496356926e-08,
+      "seed": 2073833447
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 2.3841809593250218e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.1920927533992653e-07,
+      "seed": 2073833448
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 5.074017508377437e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.93410651517479e-08,
+      "seed": 2073833449
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 6.113295114573702e-08,
+      "reader_correct": 18,
+      "reader_loss": 7.947285496356926e-08,
+      "seed": 2073833450
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 3.7291056287358515e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.0596380661809235e-07,
+      "seed": 2073833451
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 2.4606006832073035e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.1258654097900944e-07,
+      "seed": 2073833452
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 5.838183483319881e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.1258654097900944e-07,
+      "seed": 2073833453
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 3.4845757568291447e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.1258654097900944e-07,
+      "seed": 2073833454
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.2379420866182045e-07,
+      "reader_correct": 18,
+      "reader_loss": 8.609558932448635e-08,
+      "seed": 2073833455
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.2685075034823967e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.27183307908308e-08,
+      "seed": 2073833456
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.2150115935583017e-06,
+      "reader_correct": 18,
+      "reader_loss": 1.1920927533992653e-07,
+      "seed": 2073833457
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 8.558613018294636e-08,
+      "reader_correct": 18,
+      "reader_loss": 1.0596380661809235e-07,
+      "seed": 2073833458
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.2929550621265662e-06,
+      "reader_correct": 18,
+      "reader_loss": 9.93410651517479e-08,
+      "seed": 2073833459
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.7422877363060252e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.1920927533992653e-07,
+      "seed": 2073833460
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 8.787831689005543e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.0596380661809235e-07,
+      "seed": 2073833461
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 4.0959022840070247e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.1920927533992653e-07,
+      "seed": 2073833462
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 6.908013574502547e-07,
+      "reader_correct": 18,
+      "reader_loss": 8.609558932448635e-08,
+      "seed": 2073833463
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 5.119879347148526e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.0596380661809235e-07,
+      "seed": 2073833464
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.5741726144824497e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.3245475827261544e-07,
+      "seed": 2073833465
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 2.5690799247968243e-06,
+      "reader_correct": 18,
+      "reader_loss": 1.1920927533992653e-07,
+      "seed": 2073833466
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 2.0785195431471948e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.0596380661809235e-07,
+      "seed": 2073833467
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 2.7662639467962435e-07,
+      "reader_correct": 18,
+      "reader_loss": 8.609558932448635e-08,
+      "seed": 2073833468
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 2.6898484861703764e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.93410651517479e-08,
+      "seed": 2073833469
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 2.9343777896428946e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.93410651517479e-08,
+      "seed": 2073833470
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 3.010794387137139e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.93410651517479e-08,
+      "seed": 2073833471
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 6.525922913169779e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.93410651517479e-08,
+      "seed": 2073833472
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 9.169944803488761e-09,
+      "reader_correct": 18,
+      "reader_loss": 1.0596380661809235e-07,
+      "seed": 2073833473
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 3.3623047102082637e-07,
+      "reader_correct": 18,
+      "reader_loss": 8.609558932448635e-08,
+      "seed": 2073833474
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.7881380642847944e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.27183307908308e-08,
+      "seed": 2073833475
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 2.0021030877614976e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.0596380661809235e-07,
+      "seed": 2073833476
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.1309594327713057e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.1920927533992653e-07,
+      "seed": 2073833477
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.7881379221762472e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.27183307908308e-08,
+      "seed": 2073833478
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 5.226859798312944e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.27183307908308e-08,
+      "seed": 2073833479
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.0392592031394088e-07,
+      "reader_correct": 18,
+      "reader_loss": 8.609558932448635e-08,
+      "seed": 2073833480
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.6353047271877585e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.1258654097900944e-07,
+      "seed": 2073833481
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.604739878757755e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.93410651517479e-08,
+      "seed": 2073833482
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 4.875345780419593e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.27183307908308e-08,
+      "seed": 2073833483
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 8.283491297333967e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.0596380661809235e-07,
+      "seed": 2073833484
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 4.019487107598252e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.1258654097900944e-07,
+      "seed": 2073833485
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.375491223143399e-07,
+      "reader_correct": 18,
+      "reader_loss": 9.93410651517479e-08,
+      "seed": 2073833486
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 1.5099753909453284e-06,
+      "reader_correct": 18,
+      "reader_loss": 7.285011349722481e-08,
+      "seed": 2073833487
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 4.967046152160037e-07,
+      "reader_correct": 18,
+      "reader_loss": 1.1258654097900944e-07,
+      "seed": 2073833488
+    },
+    {
+      "motor_correct": 78,
+      "motor_loss": 2.598150850019465e-08,
+      "reader_correct": 18,
+      "reader_loss": 9.93410651517479e-08,
+      "seed": 2073833489
+    }
+  ],
+  "schema": "r12_sd_cst_v1_1_atomic_optimizer_canary_v1",
+  "seed_start": 2073833426,
+  "seeds": 64,
+  "settings": {
+    "motor": {
+      "lr": 0.003,
+      "updates": 1000
+    },
+    "reader": {
+      "lr": 0.005,
+      "updates": 500
+    }
+  }
+}

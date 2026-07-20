@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 04:30 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 04:46 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -148,24 +148,19 @@
 > private categorical tape, tied recurrent update, internal halt, query readout, and causal
 > state/suffix/query swaps under a strict sub-150M budget.
 >
-> **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) source is frozen at
-> commit `0e1e7a80c7b34c52cbb695681bab957b134453ef`. The frozen 300k trunk plus a 9,205,009-parameter compiler,
-> 19,206-parameter tied categorical motor, and 835-parameter reader totals exactly 134,306,714
-> parameters. Program compilation emits one initial state and eight hard event slots containing
-> seven operations plus one model-predicted STOP; source tensors/logits are deleted before eight
-> tied hard motor calls and a separately compiled late query. Production-scale test generation at
-> 48,000/2,304/2,304 passes all 22 board gates; the independent CPU falsifier passes 13/13 with
-> 72/72 atomic simulator agreement and all major shortcut controls at zero. Forty-four integrated
-> tests, Ruff, `py_compile`, shell syntax, and the actual protected-checkpoint parameter smoke pass.
-> A gate config now hash-binds board/checkpoint/architecture/assessor, all thresholds and controls,
-> registered row IDs/depths, and the deterministic exclusive-access ledger before development opens.
-> Fresh board/training seeds are `2741775784141707523` / `7026924755428542396`. The admitted board
-> has 48,000/2,304/2,304 rows; report/train/development/sealed-confirmation SHA-256 values are
-> `b607b88a...`/`61f0a4cc...`/`a13ec5e4...`/`c83d65a3...`; access is `0/0` and confirmation is mode
-> `0600`. Exact local/Newton bytes match. Sole job `693954` is RUNNING on `evc36`; it passed the
-> H100/bf16 preflight and began the frozen train path. Do not submit another run, patch this board,
-> or open confirmation. If development fails any gate, close the board permanently. Never describe
-> mechanics alone as native reasoning.
+> **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
+> development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
+> but failed its frozen final motor certificate before writing a checkpoint or opening development;
+> confirmation also remains unopened. Never rerun v1 or reuse its board. The fault is isolated to
+> unstable high-rate exact-table optimization: explicit CPU initializations gave 30/32 exact motor
+> fits at lr `0.025` and 63/64 exact reader fits at lr `0.04`. Optimization-only v1.1 resets each
+> component from its recorded local seed, uses motor lr `0.003` for 1,000 updates and reader lr
+> `0.005` for 500 updates, and leaves architecture, 134,306,714 parameter count, compiler training,
+> task, controls, thresholds, evaluator, and claim boundary unchanged. Pre-board H100 job `693956`
+> completed 64/64 fresh seeds at exact 78/78 motor and 18/18 reader certificates; report SHA is
+> `472ff05b...`. Forty-five integrated tests and all static checks pass. Freeze and push v1.1 source
+> before drawing new independent board/training seeds; then generate one clean 48,000/2,304/2,304
+> board and run exactly one serial H100 development path. Mechanics alone are not native reasoning.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9173,3 +9168,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   blobs on Newton; source manifest checks and every data/base/tokenizer hash match. `sbatch
   --test-only` reserved `evc36`; sole job `693954` is RUNNING there with one H100/four CPUs and has
   passed CUDA/bf16 preflight. It is presently tokenizing the frozen train board before GPU fit.
+
+- **2026-07-20 04:30--04:46** -- **SD-CST v1 closes pre-development; optimization-only v1.1
+  passes its target-hardware gate.** Job `693954` completed source/data/base/tokenizer and H100/bf16
+  preflight, parsed the frozen training board, then failed because its final motor certificate was
+  below 78/78. It wrote no checkpoint or evaluation and never opened development or confirmation;
+  the v1 board is permanently closed. Reproduction found that the high constant atomic learning
+  rates can leave exact fit after near-zero loss and that recorded seeds had not controlled module
+  initialization. V1.1 changes only deterministic component resets and atomic schedules: motor
+  lr `0.003` for 1,000 updates, reader lr `0.005` for 500. CPU sweeps are exact at 32/32 motor and
+  64/64 reader initializations. Target-hardware canary `693956` completes on H100 `evc22` in 1m44s:
+  64/64 fresh seeds are exact at 78/78 and 18/18, report SHA `472ff05b...`. No base, tokenizer,
+  board, development, or confirmation input was available to the canary. Freeze source before
+  drawing the one authorized fresh v1.1 board.

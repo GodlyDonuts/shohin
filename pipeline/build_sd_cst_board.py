@@ -776,7 +776,7 @@ def main() -> None:
     report = audit_board(train, development, confirmation)
     report.update(
         {
-            "schema": "r12_sd_cst_board_report_v1",
+            "schema": "r12_sd_cst_board_report_v1_1",
             "seed": args.seed,
             "confirmation_accesses": 0,
             "source_commit": (
@@ -790,7 +790,7 @@ def main() -> None:
                 else "clean_head_verified"
             ),
             "development_registration": {
-                "protocol": "r12_sd_cst_v1",
+                "protocol": "r12_sd_cst_v1_1",
                 "row_count": len(development),
                 "family_count": len(development) // len(SURFACE_TYPES),
                 "family_size": len(SURFACE_TYPES),

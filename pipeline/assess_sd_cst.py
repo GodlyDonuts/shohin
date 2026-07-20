@@ -22,9 +22,9 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 
-EVAL_SCHEMA = "r12_sd_cst_development_eval_v1"
-CONFIG_SCHEMA = "r12_sd_cst_development_gate_config_v1"
-ASSESSMENT_SCHEMA = "r12_sd_cst_development_assessment_v1"
+EVAL_SCHEMA = "r12_sd_cst_development_eval_v1_1"
+CONFIG_SCHEMA = "r12_sd_cst_development_gate_config_v1_1"
+ASSESSMENT_SCHEMA = "r12_sd_cst_development_assessment_v1_1"
 DEVELOPMENT_SPLIT = "sd_cst_development"
 EXPECTED_VARIANTS = (
     "canonical",

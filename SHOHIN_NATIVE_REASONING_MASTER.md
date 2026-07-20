@@ -13,14 +13,17 @@ recurrent execution. S9.1 remains the strongest fresh-development compiler at
 after its frozen alpha-closure failures. S9.2 is decisively rejected at
 340/2,048 = 16.602% exact graph/state/answer and 21/43 gates. Parser-only anchor
 repair is retired. The active experiment is Source-Deleted Categorical State
-Transport (SD-CST): a 134,306,714-parameter system that compiles language once
+Transport (SD-CST) v1.1: a 134,306,714-parameter system that compiles language once
 into an eight-slot private categorical tape, deletes the source, executes one
 tied learned motor through model-predicted STOP, and answers a separately
 compiled late query. Mechanics, scale, custody, and independent-assessor tests
-pass; no neural development score exists yet. Broad language-grounded,
+pass. V1 closed before development on an unstable atomic optimizer; v1.1 changes
+only deterministic component initialization and atomic fit rates/budgets, and
+passes 64/64 fresh exact fits on H100. No neural development score exists yet.
+Broad language-grounded,
 self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 04:30 EDT.
+**Last updated:** 2026-07-20 04:46 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -120,13 +123,26 @@ certificate, exact-packet denominator, causal query/state/suffix intervention,
 control, and access gate. A failed development run closes that fresh board; it
 cannot be rescored and confirmation stays sealed.
 
-Scientific source commit `0e1e7a8` precedes independent board and training seeds
+V1 scientific source commit `0e1e7a8` precedes independent board and training seeds
 `2741775784141707523` and `7026924755428542396`. The sole admitted board contains
 48,000/2,304/2,304 train/development/sealed-confirmation rows. Receipt, train,
 development, and confirmation SHA-256 values begin `b607b88a...`, `61f0a4cc...`,
 `a13ec5e4...`, and `c83d65a3...`; confirmation is mode `0600` with zero access.
 Exact source/data/base/tokenizer bytes match on Newton. Sole one-H100 job `693954`
-is running on `evc36` after passing source and CUDA/bf16 preflight.
+passed source and CUDA/bf16 preflight, then failed its frozen final motor
+certificate before writing a checkpoint or opening development. Confirmation was
+also never opened, and the v1 board is permanently closed.
+
+The failure was optimization, not a neural capability score. Under independent
+explicit initializations, the old motor schedule finished exact in 30/32 seeds
+and the old reader in 63/64; high constant rates sometimes left exact fit after
+near-zero loss. V1.1 makes no architectural, data, evaluator, threshold, control,
+or parameter-count change. It resets each component from its recorded local seed,
+fits the motor at lr `0.003` for 1,000 updates, and fits the reader at lr `0.005`
+for 500 updates. Pre-board target-hardware job `693956` completed all 64 fresh
+H100 initializations at exact 78/78 motor and 18/18 reader cells. Its report
+SHA-256 is `472ff05ba4ef4dc4cb3956d8d69574f4b2ada8663224fa94c336a3c9de156433`.
+One new board may be drawn only after v1.1 source is committed.
 
 This is not yet a reasoning result. It is an admitted, falsifiable integration
 experiment. A pass would establish bounded autonomous language-to-private-tape

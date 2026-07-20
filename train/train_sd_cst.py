@@ -55,23 +55,26 @@ from sd_cst import (
 )
 
 
-CHECKPOINT_SCHEMA = "r12_sd_cst_checkpoint_v1"
-EVALUATION_SCHEMA = "r12_sd_cst_development_eval_v1"
-GATE_CONFIG_SCHEMA = "r12_sd_cst_development_gate_config_v1"
-PROTOCOL = "r12_sd_cst_v1"
-BOARD_SCHEMA = "r12_sd_cst_board_report_v1"
+CHECKPOINT_SCHEMA = "r12_sd_cst_checkpoint_v1_1"
+EVALUATION_SCHEMA = "r12_sd_cst_development_eval_v1_1"
+GATE_CONFIG_SCHEMA = "r12_sd_cst_development_gate_config_v1_1"
+PROTOCOL = "r12_sd_cst_v1_1"
+BOARD_SCHEMA = "r12_sd_cst_board_report_v1_1"
 TRAIN_SPLIT = "sd_cst_train"
 DEVELOPMENT_SPLIT = "sd_cst_development"
 PERMUTATIONS = tuple(itertools.permutations(range(3)))
 PERMUTATION_TO_STATE = {value: index for index, value in enumerate(PERMUTATIONS)}
 FROZEN_SOURCE_PATHS = (
     "R12_SD_CST_PREREG.md",
+    "R12_SD_CST_V1_1_PREREG.md",
     "pipeline/assess_sd_cst.py",
     "pipeline/audit_sd_cst_board.py",
     "pipeline/build_sd_cst_board.py",
+    "train/atomic_optimizer_canary.py",
     "train/model.py",
     "train/sd_cst.py",
     "train/train_sd_cst.py",
+    "train/jobs/sd_cst_atomic_canary.sbatch",
     "train/jobs/sd_cst.sbatch",
 )
 FROZEN_BASE_SHA256 = "211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6"
@@ -82,10 +85,10 @@ FROZEN_TRAINING = {
     "batch_size": 64,
     "epochs": 4,
     "compiler_lr": 1e-3,
-    "motor_lr": 0.025,
-    "reader_lr": 0.04,
-    "motor_updates": 2000,
-    "reader_updates": 1200,
+    "motor_lr": 0.003,
+    "reader_lr": 0.005,
+    "motor_updates": 1000,
+    "reader_updates": 500,
     "warmup": 100,
     "clip": 1.0,
 }
@@ -228,7 +231,7 @@ def development_ledger_bytes(
     report_sha256: str, development_sha256: str, source_commit: str,
 ) -> bytes:
     payload = {
-        "schema": "r12_sd_cst_development_access_v1",
+        "schema": "r12_sd_cst_development_access_v1_1",
         "board_report_sha256": report_sha256,
         "development_sha256": development_sha256,
         "source_commit": source_commit,
@@ -242,7 +245,7 @@ def _consume_development_access(
     source_commit: str,
 ) -> dict[str, str]:
     ledger_dir.mkdir(parents=True, exist_ok=True)
-    path = ledger_dir / f"sd_cst_development_{development_sha256}.json"
+    path = ledger_dir / f"sd_cst_v1_1_development_{development_sha256}.json"
     encoded = development_ledger_bytes(
         report_sha256, development_sha256, source_commit,
     )
@@ -505,8 +508,17 @@ def _certificate_hash(payload: Mapping[str, torch.Tensor]) -> str:
     return digest.hexdigest()
 
 
-def fit_motor_certificate(system: SDCSTSystem, *, seed: int, lr: float, max_updates: int) -> dict[str, object]:
+def reset_component(module: torch.nn.Module, seed: int) -> None:
+    """Reset every parameterized child from an explicit component-local seed."""
     torch.manual_seed(seed)
+    for child in module.modules():
+        reset = getattr(child, "reset_parameters", None)
+        if callable(reset):
+            reset()
+
+
+def fit_motor_certificate(system: SDCSTSystem, *, seed: int, lr: float, max_updates: int) -> dict[str, object]:
+    reset_component(system.motor, seed)
     device = next(system.motor.parameters()).device
     board = motor_certificate(device)
     optimizer = torch.optim.AdamW(system.motor.parameters(), lr=lr, betas=(0.9, 0.95), weight_decay=0.0)
@@ -547,11 +559,12 @@ def fit_motor_certificate(system: SDCSTSystem, *, seed: int, lr: float, max_upda
         "certificate_sha256": _certificate_hash(board),
         "optimizer": {"name": "AdamW", "lr": lr, "betas": [0.9, 0.95], "weight_decay": 0.0},
         "schedule": {"name": "constant", "updates": max_updates},
+        "initialization": {"name": "component_local_reset", "seed": seed},
     }
 
 
 def fit_reader_certificate(system: SDCSTSystem, *, seed: int, lr: float, max_updates: int) -> dict[str, object]:
-    torch.manual_seed(seed)
+    reset_component(system.reader, seed)
     device = next(system.reader.parameters()).device
     board = reader_certificate(device)
     optimizer = torch.optim.AdamW(system.reader.parameters(), lr=lr, betas=(0.9, 0.95), weight_decay=0.0)
@@ -579,6 +592,7 @@ def fit_reader_certificate(system: SDCSTSystem, *, seed: int, lr: float, max_upd
         "certificate_sha256": _certificate_hash(board),
         "optimizer": {"name": "AdamW", "lr": lr, "betas": [0.9, 0.95], "weight_decay": 0.0},
         "schedule": {"name": "constant", "updates": max_updates},
+        "initialization": {"name": "component_local_reset", "seed": seed},
     }
 
 
@@ -1690,10 +1704,10 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     train.add_argument("--eval-batch-size", type=int, default=128)
     train.add_argument("--epochs", type=int, default=4)
     train.add_argument("--compiler-lr", type=float, default=1e-3)
-    train.add_argument("--motor-lr", type=float, default=0.025)
-    train.add_argument("--reader-lr", type=float, default=0.04)
-    train.add_argument("--motor-updates", type=int, default=2000)
-    train.add_argument("--reader-updates", type=int, default=1200)
+    train.add_argument("--motor-lr", type=float, default=0.003)
+    train.add_argument("--reader-lr", type=float, default=0.005)
+    train.add_argument("--motor-updates", type=int, default=1000)
+    train.add_argument("--reader-updates", type=int, default=500)
     train.add_argument("--warmup", type=int, default=100)
     train.add_argument("--clip", type=float, default=1.0)
     train.add_argument("--allow-cpu-train", action="store_true", help=argparse.SUPPRESS)

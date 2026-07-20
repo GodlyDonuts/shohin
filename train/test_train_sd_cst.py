@@ -235,6 +235,23 @@ def test_atomic_fit_must_reach_all_78_motor_and_18_reader_certificates():
     assert reader["updates"] == 900
 
 
+def test_atomic_fit_reinitializes_components_from_recorded_local_seeds():
+    first = tiny_system()
+    second = tiny_system()
+    fit_motor_certificate(first, seed=101, lr=0.005, max_updates=500)
+    fit_motor_certificate(second, seed=101, lr=0.005, max_updates=500)
+    fit_reader_certificate(first, seed=103, lr=0.005, max_updates=300)
+    fit_reader_certificate(second, seed=103, lr=0.005, max_updates=300)
+    for left, right in zip(
+        first.motor.state_dict().values(), second.motor.state_dict().values(), strict=True,
+    ):
+        assert torch.equal(left, right)
+    for left, right in zip(
+        first.reader.state_dict().values(), second.reader.state_dict().values(), strict=True,
+    ):
+        assert torch.equal(left, right)
+
+
 def test_base_is_frozen_and_complete_parameter_count_is_strictly_below_cap():
     system = tiny_system()
     report = system.parameter_report()
