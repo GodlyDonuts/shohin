@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import pytest
 import torch
 
+import assess_er_cst_witness_equality as assessor
 from build_er_cst_witness_equality_board import TRAIN_SPLIT, build_board
 from er_cst_fresh import byte_batch
 from er_cst_rule_card_adapter import TiedRuleCardMotor
-from er_cst_witness_equality import loss_batch, parse_row
+from er_cst_witness_equality import evaluate_arm, loss_batch, parse_row
 from er_cst_witness_equality_bus import (
     WITNESS_POSITIONS,
     WitnessEqualityBusCompiler,
@@ -178,3 +180,31 @@ def test_real_family_loss_reaches_witness_and_equality_parameters() -> None:
     assert model.er_witness_queries.grad is not None
     assert model.er_equality_projection.weight.grad is not None
     assert model.er_event_card_query_projection.weight.grad is not None
+
+
+def test_independent_assessor_recomputes_witness_evidence(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    splits, _ = build_board(
+        seed=8_441_237,
+        families={
+            "er_cst_train": 8,
+            "er_cst_development": 8,
+            "er_cst_confirmation": 8,
+        },
+    )
+    rows = [
+        parse_row(value, "er_cst_development")
+        for value in splits["er_cst_development"]
+    ]
+    result = evaluate_arm(
+        _small_model(),
+        TiedRuleCardMotor(),
+        CategoricalStateReader(),
+        rows,
+        batch_size=32,
+        include_raw=True,
+    )
+    raw = result.pop("raw")
+    monkeypatch.setattr(assessor, "ROWS", 32)
+    assert assessor.metric_equal(result, assessor.recompute_arm(raw))

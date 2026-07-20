@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 17:31 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 17:52 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -235,16 +235,24 @@
 > their matched equality sums. It must separate witness-card features from declaration/initial-state
 > features, expose pointer evidence, retain the true/family-deranged/equality-ablated equal-budget
 > controls, remain strictly below 200M parameters, commit/preregister before fresh board and training
-> seeds, and never read the old confirmation. No v1.1 source commit, board seed, training seed, or
-> score exists yet.
+> seeds, and never read the old confirmation. Exact board-source commit `5670ad83ae4e5806ec351337997c16990f2b5452`
+> was pushed before board seed `2244518911844010727` was drawn (beacon SHA-256 `5f4e9ac7...`). The
+> admitted 48,000/2,048/2,048 board passes all 14 gates and independently rebuilds byte-identically:
+> all 52,096 rows parse/execute exactly, all 18 witness spans per row decode exactly, cross-split
+> overlap is zero, maximum source is 405 bytes, confirmation is `0600`, and access is `0/0`.
+> Train/development/confirmation/report SHA-256 are `43b17bb4...`/`ad58c84f...`/`6593bb17...`/
+> `22cb355e...`; Newton mirrors match. No training seed or score exists yet.
 > Pre-board mechanics are now locally admitted: the direct classifier is removed; six learned
 > occurrence queries, dedicated detached witness projections, inherited byte fingerprints, a 3x3
 > equality matrix, and exact six-assignment aggregation produce public pointer/equality evidence.
 > The actual confirmed parent reconstructs byte-identically. Exact complete/trainable/headroom
 > counts are 192,726,827/12,021,276/7,273,173; a real-family CPU backward is finite, every new
-> equality component receives gradient, excluded-parent leakage is zero, and 15 focused tests plus
-> Ruff and byte compilation pass. Freeze `R12_ER_CST_WITNESS_EQUALITY_BUS_PREREG.md` and the seedless
-> board source in a clean pushed commit before drawing the new board seed.
+> equality component receives gradient, excluded-parent leakage is zero, and 21 focused tests plus
+> Ruff, byte compilation, shell syntax, and independent raw-evidence recomputation pass. The
+> score-bearing pilot/assessor is locally admitted with immutable-checkpoint-before-development
+> custody and the frozen original thresholds plus witness-pointer gates. Commit and push that exact
+> score source before drawing the training seed, then sync an exact clean source capsule and submit
+> one H100 job only.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10273,3 +10281,17 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   mirrors hash-match. Never rescore this board or open its confirmation. The preregistered repair is
   a fresh-board, under-200M learned witness-equality bus with dedicated occurrence pointers,
   byte-fingerprint equality, finite `S_3` assignment scoring, and the same matched controls.
+
+- **2026-07-20 17:31--17:52** -- **ER-CST v1.1 Witness Equality Bus is implemented, frozen before
+  data, and admitted on a fresh board.** The direct classifier is removed. Six learned occurrence
+  queries per rule select `before[0:3]`/`after[0:3]`; inherited byte fingerprints form a learned 3x3
+  equality matrix; the six legal `S_3` assignments are scored by matched-edge sums. Card gradients
+  are detached from shared record/declaration features. Exact complete/trainable/headroom counts are
+  192,726,827/12,021,276/7,273,173. Finite all-card recovery, actual-parent reconstruction, real-row
+  backward, gradient isolation, public evidence, and 21 focused/static checks pass. Source
+  `5670ad83ae4e5806ec351337997c16990f2b5452` was pushed before board seed
+  `2244518911844010727` (beacon SHA `5f4e9ac7...`). The 48,000/2,048/2,048 board passes all 14 gates
+  and independently reproduces every byte; all 52,096 semantics and all 18 witness spans per row
+  are exact, overlap is zero, confirmation is `0600`, and access remains `0/0`. Hashes begin
+  `43b17bb4`/`ad58c84f`/`6593bb17`/`22cb355e`; Newton matches. Score-bearing pilot/assessor and job
+  source are locally admitted but no training seed or scored read exists. Commit/push before seed.
