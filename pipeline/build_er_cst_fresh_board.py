@@ -26,7 +26,7 @@ from er_cst_rule_cards import (
 )
 
 
-BOARD_SCHEMA = "r12_er_cst_fresh_board_report_v1_1"
+BOARD_SCHEMA = "r12_er_cst_fresh_board_report_v1_2"
 ROW_SCHEMA = "r12_er_cst_fresh_row_v1"
 PROTOCOL = "R12-ER-CST-v1.2"
 TRAIN_SPLIT = "er_cst_train"
@@ -263,7 +263,9 @@ def _row_exact(row: Mapping[str, object]) -> bool:
             return False
         if set(parsed["rules"]) != set(cards):
             return False
-        for opcode, (before, after) in parsed["rules"].items():
+        for opcode, (slot, before, after) in parsed["rules"].items():
+            if slot != int(next(item["slot"] for item in rules if item["opcode"] == opcode)):
+                return False
             if infer_position_permutation(before, after) != cards[opcode]:
                 return False
         expected_events = tuple(

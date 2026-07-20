@@ -1,6 +1,12 @@
 # R12 ER-CST Fresh Board Result
 
-**Decision:** `admit_er_cst_v1_2_board_before_training_seed`
+**Decision:** `close_pretraining_unidentifiable_rule_slot_order`.
+
+This board passed every integrity gate but is closed before training by
+`R12_ER_CST_FRESH_BOARD_PREREG_AMENDMENT_V1_2.md`. Its three rule records did not
+surface their arbitrary latent storage slot, making ordered card targets
+unidentifiable. No training seed or scored access exists; do not train or score this
+board.
 
 **Scientific source:** `fba34cdc9bfab75882dee8093b07ab96042d4a07`
 

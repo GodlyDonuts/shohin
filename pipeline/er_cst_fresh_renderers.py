@@ -48,10 +48,10 @@ DECLARATION_PATTERNS = (
 )
 WITNESS_PATTERNS = (
     re.compile(
-        r"^W (\S+) (\S+) (\S+) (\S+) > (\S+) (\S+) (\S+)$"
+        r"^W([1-3]) (\S+) (\S+) (\S+) (\S+) > (\S+) (\S+) (\S+)$"
     ),
     re.compile(
-        r"^L (\S+) (\S+) (\S+) (\S+) => (\S+) (\S+) (\S+)$"
+        r"^L([1-3]) (\S+) (\S+) (\S+) (\S+) => (\S+) (\S+) (\S+)$"
     ),
 )
 EVENT_PATTERNS = (
@@ -130,13 +130,14 @@ def semantic_lines(
         opcode = str(item["opcode"])
         before = tuple(map(str, item["before"]))
         after = tuple(map(str, item["after"]))
+        slot = int(item["slot"]) + 1
         if renderer.witness == 0:
             rules.append(
-                f"W {opcode} {' '.join(before)} > {' '.join(after)}"
+                f"W{slot} {opcode} {' '.join(before)} > {' '.join(after)}"
             )
         else:
             rules.append(
-                f"L {opcode} {' '.join(before)} => {' '.join(after)}"
+                f"L{slot} {opcode} {' '.join(before)} => {' '.join(after)}"
             )
 
     events = []
@@ -244,7 +245,7 @@ def parse_rendered_row(row: Mapping[str, object]) -> dict[str, object]:
 
     declaration: tuple[str, ...] | None = None
     initial: tuple[str, ...] | None = None
-    rules: dict[str, tuple[tuple[str, ...], tuple[str, ...]]] = {}
+    rules: dict[str, tuple[int, tuple[str, ...], tuple[str, ...]]] = {}
     events: dict[int, str | None] = {}
     for line in lines:
         declaration_match = DECLARATION_PATTERNS[renderer.declaration].fullmatch(line)
@@ -256,10 +257,14 @@ def parse_rendered_row(row: Mapping[str, object]) -> dict[str, object]:
             continue
         witness_match = WITNESS_PATTERNS[renderer.witness].fullmatch(line)
         if witness_match:
-            opcode, *symbols = witness_match.groups()
+            slot_text, opcode, *symbols = witness_match.groups()
             if opcode in rules:
                 raise ValueError("ER-CST rendered program repeats rule")
-            rules[opcode] = (tuple(symbols[:3]), tuple(symbols[3:]))
+            rules[opcode] = (
+                int(slot_text) - 1,
+                tuple(symbols[:3]),
+                tuple(symbols[3:]),
+            )
             continue
         event_match = EVENT_PATTERNS[renderer.event].fullmatch(line)
         if event_match:
@@ -276,6 +281,8 @@ def parse_rendered_row(row: Mapping[str, object]) -> dict[str, object]:
         raise ValueError("ER-CST rendered query differs")
     if declaration is None or initial is None or len(rules) != 3 or set(events) != set(range(9)):
         raise ValueError("ER-CST rendered record cardinality differs")
+    if {value[0] for value in rules.values()} != set(range(3)):
+        raise ValueError("ER-CST rendered rule slots differ")
     if sum(value is None for value in events.values()) != 1:
         raise ValueError("ER-CST rendered program requires exactly one HALT")
     return {

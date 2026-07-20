@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 16:38 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 16:48 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -194,10 +194,12 @@
 > board seed `1686667709479653771`. The admitted 48,000/2,048/2,048 board passes all 13 gates and
 > independently rebuilds byte-identically. Train/development/confirmation/report SHA values begin
 > `57abe77e...`/`8ef7f824...`/`a6dc26a5...`/`5c9b5b81...`; confirmation is `0600`; access is `0/0`.
-> Every depth is exact-balanced, all 52,096 rows pass production parser/executor agreement, and
-> deranged-card state exactness is 2,068/13,024 = 15.878%. No training seed or neural job exists.
-> Commit/push this receipt, sync/hash-verify exact bytes to Newton, then freeze training/evaluation
-> source before the sole seed draw.
+> Every depth is exact-balanced and all 52,096 rows pass production parser/executor agreement, but a
+> post-admission identifiability audit closes this unopened board: ordered rule-card slots were latent
+> arbitrary IDs with no source-visible address. No training seed or scored access exists. Board v1.2
+> adds only `W1/W2/W3` or `L1/L2/L3` storage addresses; these reveal no rule meaning or outcome.
+> Twenty-three tests and a complete 52,096-row fixture pass all gates with maximum 405/512 bytes.
+> Commit/push this exact repair before a new board seed; never train the old board.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10166,3 +10168,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   identical. Train/development/confirmation/report SHA values begin `57abe77e...`/`8ef7f824...`/
   `a6dc26a5...`/`5c9b5b81...`. No training seed or neural job exists. Commit/push the receipt and
   hash-verify transport before training source freeze.
+
+- **2026-07-20 16:38--16:48** -- **The admitted unopened ER-CST board is closed before training on
+  rule-slot non-identifiability; board v1.2 repairs only source addresses.** The three rule records
+  had ordered latent card slots but no source marker identifying those slots. Exact ordered card
+  scoring could therefore reward accidental name-generation correlations or an impossible arbitrary
+  permutation choice. No training seed, H100 job, development access, or confirmation access exists.
+  V1.2 adds only one-character `W1/W2/W3` or `L1/L2/L3` storage addresses. Physical records remain
+  shuffled; witnesses still uniquely determine card semantics; opcode equality must still be learned.
+  The production parser requires all three slots exactly once. Twenty-three tests and a complete
+  52,096-row fixture pass all 13 gates; maximum source is 405/512 bytes. Freeze/push exact repair and
+  draw a fresh board seed; never train source `fba34cd` board seed `1686667709479653771`.

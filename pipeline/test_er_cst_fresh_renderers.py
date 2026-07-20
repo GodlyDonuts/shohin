@@ -40,6 +40,7 @@ def test_every_renderer_round_trips_a_depth_eight_family() -> None:
         )
         parsed = parse_rendered_row(row)
         assert parsed["events"].index(None) == 8
+        assert {value[0] for value in parsed["rules"].values()} == {0, 1, 2}
         assert len(row["program_text"].splitlines()) == 13
         assert _row_exact(row)
 
