@@ -22,13 +22,17 @@ packet executes exactly, while the late query is exactly at three-way chance
 and the held-out paraphrase renderer falls to 0% exact packets and 13.542%
 state. This isolates renderer-invariant source grounding and content-addressed
 late-query binding as the next bottleneck; widening the recurrent executor is
-not justified. V2 custody is `1/0`, confirmation is sealed, and the board will
-not be rescored. The next experiment must use a wholly fresh board and charge
-any added capacity only to a trainable source/query front end under a strict
-complete-system `<200,000,000` parameter gate. Broad language-grounded,
-self-directed reasoning remains unestablished.
+not justified. The 172,723,071-parameter Renderer-Orbit Query Bus then separates
+that bottleneck further on consumed training rows. Its dedicated query bus,
+declaration binding, initial-occurrence binding, and initial state transfer at
+99.85--100%, but every fit and held-out renderer remains 0% exact packet because
+the generic residual fails to drive frozen line/kind/amount/event heads. This
+rejects generic residual translation and authorizes only a dedicated
+renderer-native program decoder within the remaining 27,276,929 parameters.
+V2 custody is `1/0`, its confirmation is sealed, and no board will be rescored.
+Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 09:42 EDT. User authority requires every future
+**Last updated:** 2026-07-20 10:17 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -49,6 +53,44 @@ full job-by-job chronology remains in the operational runbook summary.
 claim boundaries are in Sections 1-12; the complete research source text used
 to support them is embedded in Appendix A. No conclusion in this document
 requires opening another markdown file.
+
+---
+
+## 2026-07-20 frontier update: query grounding transfers; generic program residual fails
+
+Training-only Renderer-Orbit Query Bus v1.2 uses exact source
+`05fb94a8193640b01a9548b6772996f907bdfbe5`, seed `379608196154368358`, and
+sole valid H100 job `694063`. The eight-layer 512-wide byte encoder and ordinal
+query bus bring the complete system to 172,723,071 parameters, leaving
+27,276,929 below the strict global cap. It fits four even-parity renderer
+combinations over 12,000 consumed-training semantics and evaluates four
+odd-parity combinations over 2,000 disjoint consumed-training semantics. It
+cannot read development, confirmation, final states, answers, or trajectories.
+
+The valid run completes 3,000 updates in 6m15s. Event support rises from 21.778%
+to 51.460% and total loss falls from 27.882 to 15.716. Minimum held-out initial
+state, query class, query pointer, declaration pointer, and initial-occurrence
+pointer are 100%, 100%, 100%, 99.850%, and 100%. These are real positive
+interface results: the content-addressed ordinal query motor and initial binding
+paths recombine renderer factors.
+
+Program compilation fails even on fit renderers. Minimum held-out exact
+kind/identity/amount/line/event-pointer/packet are
+0.300%/4.450%/1.600%/0.350%/0.450%/0%, and all fit renderers are also 0% exact
+packet. Five of ten gates pass, so the frozen decision is
+`reject_or_revise_renderer_orbit_front_end`. Checkpoint/report SHA-256 values
+begin `2e019b81...`/`5cce5d9c...`; access is `0/0`.
+
+The causal interpretation is narrower than “the encoder is too small.” The
+interfaces with dedicated trainable motors transfer; the interfaces forced
+through one scalar-gated residual into frozen exact-surface line, kind, amount,
+and hard line-conditioned event heads do not. Additional epochs on this
+contract are forbidden. The next admitted training-only mechanism is a
+renderer-native program decoder over the learned orbit memory, while retaining
+the successful query/declaration/initial paths and exact categorical executor.
+The complete deployed system must remain strictly below 200M.
+
+Full frozen evidence is in `R12_SD_CST_RENDERER_ORBIT_QUERY_BUS_RESULT.md`.
 
 ---
 

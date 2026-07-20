@@ -1,7 +1,7 @@
 # R12 SD-CST Renderer-Orbit Query Bus Preregistration
 
-**Status:** v1/v1.1 closed before artifacts; support-safe v1.2 implemented and
-locally audited before its source freeze or seed
+**Status:** closed and rejected on the sole valid training-only run; see
+`R12_SD_CST_RENDERER_ORBIT_QUERY_BUS_RESULT.md`
 
 **Parent:** rejected projected fresh v2; retained exact source-deleted executor
 and v2 treatment checkpoint
