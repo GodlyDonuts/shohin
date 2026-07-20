@@ -76,11 +76,16 @@ but rejected the board before model initialization: declaration re-keying did
 not update redundant active-event entity strings. No optimizer, output, ledger,
 or scored read occurred; access remains `0/0`. V1.2 updates those strings and
 adds actual runtime-parser acceptance over all 52,096 rows as a new board gate.
-It requires a new source and both new seeds.
+Repair source `fab094f...` now precedes board seed `4196082084031177718`.
+The replacement 48,000/2,048/2,048 board passes all seventeen gates, including
+the exact production parser over all 52,096 rows, and rebuilds byte-identically.
+Report/train/development/confirmation SHA-256 values begin
+`162b6054...`/`9bc8d0b6...`/`6bc327ce...`/`b8ec5d84...`; confirmation is mode
+`0600` and access is `0/0`. No training seed or model fit exists yet.
 V2 custody is `1/0`, its confirmation is sealed, and no board will be rescored.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 14:29 EDT. User authority requires every future
+**Last updated:** 2026-07-20 14:33 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
