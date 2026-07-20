@@ -81,7 +81,8 @@ The replacement 48,000/2,048/2,048 board passes all seventeen gates, including
 the exact production parser over all 52,096 rows, and rebuilds byte-identically.
 Report/train/development/confirmation SHA-256 values begin
 `162b6054...`/`9bc8d0b6...`/`6bc327ce...`/`b8ec5d84...`; confirmation is mode
-`0600` and access is `0/0`. No training seed or model fit exists yet.
+`0600` and access is `0/0`. Receipt commit `b5beee2` precedes sole training seed
+`5923413289392567580`; no model fit or output exists yet.
 V2 custody is `1/0`, its confirmation is sealed, and no board will be rescored.
 Broad language-grounded, self-directed reasoning remains unestablished.
 

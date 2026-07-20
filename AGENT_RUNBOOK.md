@@ -358,7 +358,9 @@
 > `13419454120885953526` and seed `4196082084031177718`. The new 48,000/2,048/2,048 board passes all
 > 17 gates and rebuilds byte-identically. Report/train/development/confirmation hashes begin
 > `162b6054...`/`9bc8d0b6...`/`6bc327ce...`/`b8ec5d84...`; confirmation is `0600`; access is `0/0`.
-> No training seed or model fit exists. The admitted board
+> Receipt commit `b5beee2d04f802771093f16b891e60a830a1144b` precedes raw training beacon
+> `15146785326247343388` and sole training seed `5923413289392567580`. No model fit or output exists.
+> The admitted board
 > creates 48,000 compiler-only training rows from 12,000 latent programs and four even-parity
 > renderer views, plus 2,048 development and 2,048 sealed-confirmation rows from four odd-parity
 > renderer views with new names and entirely new declaration/event/query language. Treatment and a
@@ -9917,3 +9919,8 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `162b6054...`/`9bc8d0b6...`/`6bc327ce...`/`b8ec5d84...`; confirmation is `0600`; access is `0/0`.
   A complete second build is byte-identical. Commit the board receipt before drawing a new training
   seed; no model fit or score exists.
+
+- **2026-07-20 14:33** -- **The sole v1.2 training seed is drawn after the committed board
+  receipt.** Commit `b5beee2d04f802771093f16b891e60a830a1144b` precedes raw beacon
+  `15146785326247343388`, reduced modulo `2^63` to seed `5923413289392567580`. No scientific setting
+  changes and no job/output exists yet. Transport the exact new source and board before submission.

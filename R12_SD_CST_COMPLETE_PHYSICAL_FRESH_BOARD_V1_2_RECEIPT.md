@@ -1,6 +1,8 @@
 # R12 SD-CST Complete Physical Fresh-Board v1.2 Receipt
 
-**Status:** admitted and sealed before training-seed draw or model fit.
+**Status:** admitted and sealed before training-seed draw or model fit. Receipt
+commit `b5beee2d04f802771093f16b891e60a830a1144b` precedes the sole
+training-seed draw.
 
 ## Custody
 
@@ -10,6 +12,8 @@
 - Development/confirmation access: `0/0`
 - Confirmation mode: `0600`
 - Previous v1.1 board/training seeds are closed and not reused.
+- Raw training beacon: `15146785326247343388`
+- Training seed modulo `2^63`: `5923413289392567580`
 
 ## Board and hashes
 
@@ -38,7 +42,7 @@ the exact production `parse_projected_row` path. This directly closes the v1.1
 redundant-event-name defect before GPU execution.
 
 A second full generation from the same source, seed, and prior inputs is
-byte-identical for all four artifacts. No training seed, optimizer, output, or
-scored read exists. This receipt authorizes only the post-receipt training-seed
-draw and sole preregistered development pilot; it does not authorize
+byte-identical for all four artifacts. The post-receipt training draw is now
+recorded above; no optimizer, output, or scored read exists. This authorizes
+only the sole preregistered development pilot; it does not authorize
 confirmation or establish reasoning.
