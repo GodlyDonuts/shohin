@@ -9368,3 +9368,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   board seed, training seed,
   development read, or confirmation read has occurred yet. Freeze this exact source next; only then
   draw fresh seeds and build the board.
+
+- **2026-07-20 08:01--08:29** -- **The first fresh board closes on a scoreless derived-buffer
+  contract failure.** Exact source `76a183df6eb0a47c0b06a5db9ba4079e6399f4b6` was pushed before
+  board/training seeds `3099288459709017829` / `235733286388889829` were drawn. The resulting
+  48,000/2,304/2,304 board passes all frozen gates; report/train/development/confirmation SHA-256
+  values are `cdb06f30...`/`c1dfc07e...`/`88d9c998...`/`50e0caf7...`, confirmation is mode `0600`,
+  and exact source/board bytes hash-match on Newton. Slurm preflight accepted `evc22`; sole job
+  `693998` passed CUDA/bf16 preflight but failed in `initialize_model` before either arm trained.
+  The exact parent is missing all ten intended projected parameters plus deterministic non-trainable
+  buffer `permutations`; the initializer incorrectly required missing state keys to equal trainable
+  parameter keys. No checkpoint, gate config, evaluation, assessor, or access ledger exists;
+  development/confirmation remain `0/0`. Close this board. The only repair admits exactly the named
+  derived buffer in addition to the frozen trainable whitelist, while full/frozen state digests
+  still bind it and any other key fails. Ninety-three SD-CST tests and static checks pass. Freeze a
+  new source commit, then draw entirely fresh board/training seeds; do not reuse the closed board.

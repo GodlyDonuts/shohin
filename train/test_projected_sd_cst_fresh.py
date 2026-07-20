@@ -2,20 +2,56 @@ from __future__ import annotations
 
 from build_sd_cst_board import build_all
 from projected_sd_cst_fresh import (
+    PARENT_DERIVED_BUFFER_NAMES,
     PERMUTATIONS,
+    PROJECTED_TRAINABLE_NAMES,
     as_binding_row,
     parse_projected_row,
     permute_training_labels,
     row_shuffled_permutation,
+    validate_parent_missing_names,
 )
+from pilot_sd_cst_hierarchical_binding import freeze_parent, load_parent_state
 from pilot_sd_cst_byte_addressed import byte_batch
 from sd_cst import HardProgramTape
+from sd_cst_byte_addressed import ByteAddressedCompiler
 from sd_cst_binding_bus import ProjectedHierarchicalBindingBusCompiler
 from train_eval_sd_cst_projected_fresh import (
     safe_mutate_first_active,
     safe_perturb_post_stop,
 )
 import torch
+
+
+def test_parent_contract_separates_derived_buffer_from_trainable_parameters():
+    parent = ByteAddressedCompiler()
+    model = ProjectedHierarchicalBindingBusCompiler()
+    missing = set(load_parent_state(model, parent.state_dict()))
+    trainable = set(freeze_parent(model, PROJECTED_TRAINABLE_NAMES))
+    assert missing == set(PROJECTED_TRAINABLE_NAMES) | set(PARENT_DERIVED_BUFFER_NAMES)
+    assert trainable == set(PROJECTED_TRAINABLE_NAMES)
+    assert PARENT_DERIVED_BUFFER_NAMES.isdisjoint(trainable)
+    assert torch.equal(
+        model.permutations,
+        torch.tensor(PERMUTATIONS, dtype=torch.long),
+    )
+    validate_parent_missing_names(tuple(sorted(missing)))
+
+
+def test_parent_contract_rejects_any_unregistered_missing_state():
+    missing = tuple(
+        sorted(
+            set(PROJECTED_TRAINABLE_NAMES)
+            | set(PARENT_DERIVED_BUFFER_NAMES)
+            | {"unregistered_buffer"}
+        )
+    )
+    try:
+        validate_parent_missing_names(missing)
+    except ValueError as error:
+        assert "derived-buffer contract" in str(error)
+    else:
+        raise AssertionError("unregistered parent state unexpectedly accepted")
 
 
 def test_parser_handles_direct_paraphrase_and_storage_order():

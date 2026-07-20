@@ -27,11 +27,15 @@ compiler certificate and passes all 29 independent source-blind execution
 mechanics gates. This is not yet a fresh-distribution neural result. The active
 phase is one post-commit fresh board with independently randomized corrupted
 supervision, an inherited-parent leakage audit, a binding-source-free ablation,
-and one-read development custody. No fresh neural development score exists yet.
+and one-read development custody. The first frozen launch, job `693998`, closed
+before training or scored access because its initializer conflated one derived
+non-trainable buffer with learned missing parameters. The exact repair permits
+only that named buffer and is being refrozen for a new board. No fresh neural
+development score exists yet.
 Broad language-grounded,
 self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 08:01 EDT. User authority permits future complete
+**Last updated:** 2026-07-20 08:29 EDT. User authority permits future complete
 systems strictly below 200M parameters; the current isolated pilot retains its
 stricter 150M comparison gate.
 
@@ -52,6 +56,35 @@ full job-by-job chronology remains in the operational runbook summary.
 claim boundaries are in Sections 1-12; the complete research source text used
 to support them is embedded in Appendix A. No conclusion in this document
 requires opening another markdown file.
+
+---
+
+## 2026-07-20 frontier update: first fresh launch closes before score
+
+Exact source `76a183df6eb0a47c0b06a5db9ba4079e6399f4b6` was pushed before
+independent board/training seeds `3099288459709017829` and
+`235733286388889829` were drawn. The resulting 48,000/2,304/2,304 board passes
+all frozen audits. Report/train/development/confirmation hashes are
+`cdb06f30...`, `c1dfc07e...`, `88d9c998...`, and `50e0caf7...`; the sealed
+confirmation remains mode `0600`. Exact source and board bytes were copied to
+Newton and independently hash-verified. Slurm preflight accepted H100 `evc22`.
+
+Sole job `693998` failed after CUDA/bf16 preflight and before either learned arm
+trained. The exact parent load reported the ten expected fresh projected
+parameters plus deterministic buffer `permutations` as missing. The initializer
+incorrectly asserted that every missing state-dict entry must itself be a
+trainable parameter. There is no checkpoint, gate configuration, evaluation,
+assessment, development ledger, or confirmation ledger; access is exactly
+`0/0`. This is a scoreless initialization-contract failure, not evidence about
+generalization or execution. The board is closed rather than reused.
+
+The repair admits only the named deterministic non-trainable buffer in addition
+to the exact trainable whitelist. It remains covered by full-state and frozen-
+state digests, and any other missing key is rejected. Ninety-three SD-CST tests
+pass, including direct parent-class reconstruction and an unregistered-buffer
+negative control. No model architecture, learned parameter, optimizer, data,
+threshold, evaluator, or custody contract changes. A new source commit and
+fresh independent seeds are required before another launch.
 
 ---
 

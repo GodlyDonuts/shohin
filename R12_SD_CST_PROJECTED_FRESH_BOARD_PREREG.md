@@ -1,7 +1,29 @@
 # R12 Projected SD-CST Fresh-Board Preregistration
 
-**Status:** source/design freeze in progress; no board, training, development, or
-confirmation seed exists
+**Status:** first board closed before training or scored access; one narrow
+derived-buffer contract repair is frozen below before a new source commit and
+fresh board
+
+## Pre-score infrastructure amendment
+
+Source `76a183df6eb0a47c0b06a5db9ba4079e6399f4b6`, board seed
+`3099288459709017829`, training seed `235733286388889829`, and job `693998`
+failed inside `initialize_model` before either arm trained, before a checkpoint
+or gate configuration existed, and before development or confirmation access.
+Both access counts remained zero. The exact byte parent lacks ten newly learned
+projected parameters and one deterministic non-trainable `permutations` lookup
+buffer. The initializer incorrectly required all missing state-dict keys to be
+trainable parameters.
+
+The sole permitted repair separates these categories: the missing-key set must
+equal `PROJECTED_TRAINABLE_NAMES` union exactly
+`PARENT_DERIVED_BUFFER_NAMES = {"permutations"}`; the derived buffer is fixed by
+the architecture, receives no gradients, and remains covered by full-state and
+frozen-state digests. Any additional or absent key fails. No architecture,
+parameter count, optimizer, data schema, evaluator, threshold, control, or
+custody rule changes. The first board is closed and cannot be scored under the
+new source. A new clean source commit must precede fresh independent board and
+training seeds.
 
 ## Question
 

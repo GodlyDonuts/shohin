@@ -40,6 +40,7 @@ from sd_cst_binding_bus import ProjectedHierarchicalBindingBusCompiler
 
 GLOBAL_PARAMETER_CAP = 200_000_000
 COMPARISON_PARAMETER_CAP = 150_000_000
+PARENT_DERIVED_BUFFER_NAMES = frozenset({"permutations"})
 EXECUTION_CORE_SHA256 = (
     "166ca6f81dd962b06a94f7a3661921a410760090ed1b750d78ec1b0f610113f1"
 )
@@ -133,6 +134,15 @@ def load_trainable_state(
             if value.shape != target.shape or value.dtype != target.dtype:
                 raise ValueError(f"projected tensor contract mismatch: {name}")
             target.copy_(value)
+
+
+def validate_parent_missing_names(missing: Sequence[str]) -> None:
+    expected = set(PROJECTED_TRAINABLE_NAMES) | set(PARENT_DERIVED_BUFFER_NAMES)
+    if set(missing) != expected:
+        raise ValueError(
+            "parent missing keys do not equal projected trainable "
+            "plus derived-buffer contract"
+        )
 
 
 def _find_within(source: bytes, needle: bytes, start: int, end: int) -> tuple[int, int]:
@@ -350,10 +360,7 @@ def initialize_model(
         raise ValueError("fresh projected parent schema mismatch")
     missing = load_parent_state(model, payload["state"])
     trainable = freeze_parent(model, PROJECTED_TRAINABLE_NAMES)
-    if set(missing) != set(PROJECTED_TRAINABLE_NAMES):
-        raise ValueError(
-            "parent missing keys do not equal projected trainable contract"
-        )
+    validate_parent_missing_names(missing)
     model.to(device)
     compiler_parameters = model.parameter_count()
     trainable_parameters = sum(
