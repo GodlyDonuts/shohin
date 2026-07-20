@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 21:10 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 22:02 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -92,20 +92,24 @@
 > lattices, learned aliases, universal rule cards, agenda control, and graph-to-language realization
 > until fresh-board S9.1 passes and confirms.
 >
-> **Current live experiment:** S9.1 Alpha-Closed Structured Compilation is frozen at scientific
-> source commit `863a210`. Its all-row CPU falsifier passes 9/9 gates: oracle and operation-recoded
-> oracle are 2,048/2,048 exact; one required child forced below `none` gives old greedy 0/2,048 but
-> structured assignment 2,048/2,048; shuffled, uniform, and malicious wrong-child exactness are
-> zero. Every card/event region has at least 55 syntax-valid candidate spans (median 83), so grammar
-> does not reveal the gold child. Report SHA `a4382459...`. Fresh board seed
-> `1370124171784245712` and training seed `8076551815802451212` produce 48,000/2,048/2,048
-> train/development/sealed-confirmation rows; report SHA `92cde7e7...`, train `db764917...`,
-> development `4b5d0e39...`, sealed confirmation `ee7e19fc...`, access `0/0`. Every arm is fixed at
-> 24,000 unique paired sources, 48,000 charged views, and 750 updates. Job `693789` was canceled on
-> `evc28` after CUDA preflight hung before model/data access and wrote no artifacts. Sole live job
-> `693793` is RUNNING on `evc47`; it has passed H100/bf16 preflight and is preprocessing paired
-> views. Monitor `logs/s9_1_alpha_closed_693793.out`. Do not open confirmation unless its frozen
-> development assessor qualifies every gate.
+> **Current reasoning frontier:** S9.1 Alpha-Closed Structured Compilation is closed on fresh
+> development and **rejected for confirmation**, while retained as the strongest bounded compiler
+> baseline. Sole valid job `693793` completed cleanly on `evc47` in 41m23s. Treatment reaches
+> 2,025/2,048 = **98.877% exact graph/state/answer**, versus 1,766/2,048 = 86.230% for its
+> equal-budget no-class arm and zero for shuffled, source-free, and uniform controls. Every emitted
+> treatment graph is exact; the residual is exactly 23 invalid/abstaining parses and zero
+> valid-but-wrong computations. Structured child assignment adds only two exact rows over the
+> unconstrained decoder, localizing the remaining failure to complete root anchor/cardinality
+> selection. Causal reversed-link/card/witness/reset/early-nil controls collapse state to
+> 8.838%/0.977%/3.857%/2.832%/3.760%. Operation recoding preserves state/answer on 2,024/2,024
+> mutually valid rows but only 2,022/2,024 canonical graphs are bit-identical and one originally
+> valid graph becomes invalid; therefore 27/30 gates pass and no threshold is relaxed. Checkpoint,
+> evaluation, and assessment SHA-256 begin `0c040398...`/`e0d77a32...`/`727c913d...`; local and
+> Newton copies match; development/confirmation access is `1/0`. Never rescore this board or open
+> confirmation. The only admitted next hypothesis is a fresh-board S9.2 global-anchor closure test:
+> joint model-logit anchor selection under finite syntax/cardinality plus stronger positive-and-hard-
+> negative alpha equivariance, with executor/answer/depth/gold/repair access forbidden and matched
+> source-free/uniform/shuffled/no-class controls retained.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9022,3 +9026,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   model/data access. Replacement `693793` passed H100/bf16 preflight on `evc47` and is the sole live
   serial treatment/no-class/shuffled/development job. Confirmation remains sealed unless all frozen
   gates pass.
+
+- **2026-07-19 21:10--22:02** -- **S9.1 closes at 98.877% exact but is rejected before sealed
+  confirmation.** Sole valid job `693793` completes on `evc47` in 41m23s, exit `0:0`; local and
+  Newton copies hash-match checkpoint `0c040398...`, evaluation `e0d77a32...`, and assessment
+  `727c913d...`. Treatment is 2,025/2,048 exact graph/state/answer, equal-budget no-class is
+  1,766/2,048, and shuffled/source-free/uniform are zero. All 2,025 emitted graphs are exact and the
+  remaining 23 rows abstain or are invalid; there are no valid-but-wrong computations. Structured
+  child assignment recovers only two rows over unconstrained decode, so root roster/state/card/event
+  anchor closure is now the measured bottleneck. Reversed links, deranged cards, one witness, reset,
+  and early nil collapse state to 8.838%, 0.977%, 3.857%, 2.832%, and 3.760%. Class/relation reindex
+  is exact. Operation recoding keeps state/answer identical on 2,024/2,024 mutually valid rows, but
+  one original graph becomes invalid and two canonical graphs differ. Twenty-seven of 30 gates pass;
+  confirmation remains unopened and the board is permanently closed. Preserve this as the strongest
+  bounded fresh-development baseline and require a new theorem/falsifier/fresh board for S9.2 global
+  anchor closure; do not widen the transformer or add arithmetic supervision as a substitute.

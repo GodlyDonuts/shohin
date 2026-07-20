@@ -8,17 +8,17 @@ runbook and result files.
 
 **Status:** Living document. The protected raw-pretraining anchor is complete
 at 300,000 steps. S7 confirms bounded native contextual law compilation and
-recurrent execution. S9 raises fresh-development exact graph compilation from
-S8.1's 25.098% to 94.775% and exact recurrent state/answers to 94.873%, with a
-48.389-point exact-graph advantage over its equal-budget no-class-message arm.
-It is not confirmed: class exact misses its 95% gate by five examples and 18
-otherwise-valid parses fail operation-name recoding. Broad language-grounded,
-self-directed reasoning is not yet established. S9.1 is now the sole live
-fresh-board repair: its all-row mechanics pass, its source/data/budget are
-frozen, and neural development job `693793` is running with confirmation still
-sealed.
+recurrent execution. S9.1 is the strongest fresh-development compiler:
+2,025/2,048 = 98.877% exact graph/state/answer against 86.230% for its matched
+no-class arm and zero for shuffled, source-free, and uniform controls. Every
+emitted graph is exact; the residual is 23 invalid/abstaining parses and zero
+valid-but-wrong computations. It remains unconfirmed because operation recoding
+invalidates one graph and changes two canonical graphs despite preserving all
+2,024 mutually valid states/answers. Broad language-grounded, self-directed
+reasoning is not yet established. S9.1 is permanently closed with confirmation
+sealed; S9.2 global anchor closure is the next theorem/falsifier target.
 
-**Last updated:** 2026-07-19 21:10 EDT.
+**Last updated:** 2026-07-19 22:02 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -1476,10 +1476,28 @@ confirmation rows. All 52,096 executor/storage audits pass; exact-prompt,
 13-gram, and split-name overlap are zero; training has no state/answer; access
 is zero/zero. Report/train/development/sealed-confirmation SHA-256 values begin
 `92cde7e7`/`db764917`/`4b5d0e39`/`ee7e19fc`. Job `693789` is a scoreless
-`evc28` CUDA-preflight hang canceled before model/data access. Replacement
-`693793` passed H100/bf16 preflight on `evc47` and is the sole live serial
-development experiment. No S9.1 capability claim exists until its frozen
-assessor completes, and confirmation may open only if every gate passes.
+`evc28` CUDA-preflight hang canceled before model/data access. Sole valid job
+`693793` completed cleanly on `evc47` in 41m23s. Treatment reaches
+2,025/2,048 = 98.877% exact graph, state, and answer, versus 1,766/2,048 =
+86.230% for the equal-budget no-class arm and zero for shuffled, source-free,
+and uniform controls. Unconstrained decode reaches 2,023/2,048, so syntax-only
+child assignment contributes two rows. All 2,025 valid graphs are exact; there
+are 23 invalid/abstaining rows and no valid-but-wrong computations. Reversed
+links, deranged cards, one witness, reset, and early nil collapse state to
+8.838%, 0.977%, 3.857%, 2.832%, and 3.760%.
+
+Class and relation-storage reindexing are exact on all valid graphs. Operation
+recoding is valid on 2,024/2,025 originally valid rows, preserves state/answer
+on 2,024/2,024 mutually valid rows, but preserves bit-identical canonical
+graphs on only 2,022/2,024. Twenty-seven of 30 frozen gates pass; the
+graph-level alpha requirements are not relaxed. Assessment `727c913d...`
+records rejection before confirmation, which remains sealed. The complete
+system remains 134,580,264 parameters. The measured successor is fresh-board
+S9.2 global anchor closure: jointly choose root roster/state/card/event anchor
+sets from model logits under finite syntax/cardinality constraints, strengthen
+alpha consistency on positive anchors and hard negative competitors, and
+retain source-free/uniform/shuffled/no-class controls. Execution, answers,
+depth, gold graph repair, and retry are forbidden during decoding.
 
 ---
 
@@ -1812,6 +1830,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Archived and reviewed two frontier nominal-machine proposals. Adopted renaming-orbit supervision and syntax-only structured assignment for S9.1, but rejected byte-width failure as the current diagnosis: all 229,588 original-plus-recoded development gold spans fit widths one through three under the existing width-four cap. Deferred aliases, rule cards, agenda control, and causal realization until S9.1 confirmation. |
 | 2026-07-19 | Refreshed the self-contained appendix with the complete S7 confirmation, S8/S8.1 graph evidence, and S9 occurrence-quotient CPU/development records; updated the frontier to treat S9 as a near-pass requiring fresh operation-equivariant repair. |
 | 2026-07-19 | Froze S9.1 alpha-closed source at `863a210`, passed all nine 2,048-row mechanics gates, generated fresh board/training seeds `1370124171784245712`/`8076551815802451212`, hash-matched exact Newton bytes, and launched sole development job `693793` on `evc47`; confirmation remains sealed. |
+| 2026-07-19 | Rejected S9.1 before confirmation at 2,025/2,048 = 98.877% exact graph/state/answer versus 86.230% no-class and zero shuffled/source-free/uniform. Every emitted graph is exact; the only base-board residual is 23 invalid/abstaining parses. Operation recoding preserves all 2,024 mutually valid states/answers but invalidates one graph and changes two canonical graphs, so 27/30 frozen gates pass and confirmation remains sealed. Activated fresh-board S9.2 global anchor closure as the only admissible repair. |
 | 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 

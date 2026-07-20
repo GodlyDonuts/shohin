@@ -1,0 +1,34 @@
+{
+  "assessment_sha256": "727c913db8d8fc5765dc6f39074c4e4d2a09fcec6b5f0df942ad621feda873c6",
+  "checkpoint_sha256": "0c04039821fdb130da9b6aaf3d303c7652768ed769db3f3671a7792e78d4c8b8",
+  "confirmation_accesses": 0,
+  "decision": "reject_s9_1_alpha_closed_v1",
+  "development_accesses": 1,
+  "evaluation_sha256": "e0d77a32cbab9276e0cbc048a08f698594eca1fa4d98ff912c56ef33dbfcfa5c",
+  "failed_gates": [
+    "operation_nonce_all_valid_eligible",
+    "operation_nonce_graph_bit_identical",
+    "operation_nonce_state_and_answer_are_exact_but_do_not_relax_graph_gate"
+  ],
+  "graph": {
+    "no_class_exact": 1766,
+    "shuffled_exact": 0,
+    "source_free_exact": 0,
+    "treatment_exact": 2025,
+    "treatment_valid": 2025,
+    "unconstrained_exact": 2023,
+    "uniform_exact": 0
+  },
+  "invariance": {
+    "class_reindex": "2025/2025",
+    "operation_recode_answer_identical": "2024/2024",
+    "operation_recode_canonical_graph_identical": "2022/2024",
+    "operation_recode_eligible": "2024/2025",
+    "operation_recode_state_identical": "2024/2024",
+    "relation_storage_reindex": "2025/2025"
+  },
+  "job": 693793,
+  "parameters": 134580264,
+  "rows": 2048,
+  "schema": "r12_s9_1_alpha_closed_development_rejected_v1"
+}
