@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 15:29 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 15:40 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -147,6 +147,22 @@
 > experiment is source-deleted counterfactual state transport: model-owned compilation into a
 > private categorical tape, tied recurrent update, internal halt, query readout, and causal
 > state/suffix/query swaps under a strict sub-150M budget.
+>
+> **Newest confirmed bounded baseline:** SD-CST Complete Physical Fresh v1.3 is independently
+> confirmed on the sole sealed-board read. Exact scientific source `eed66757...`, evaluator source
+> `94b2605...`, board/training seeds `8920874392524997882`/`8446904969546017898`, and job `694451`
+> on `evc46` produce 2,048/2,048 exact treatment packets, every pointer, recurrent state, answer,
+> and joint outcome. Every one of four unseen renderer compositions is 512/512 exact and every
+> depth one through six is 100% joint. The matched family-deranged arm has 0/2,048 exact packets,
+> 157/2,048 exact states/joints, and 515/2,048 answers. All 19 scientific gates and four independent
+> assessor gates pass; final custody is exactly `1/1`. Complete/trainable parameters are
+> 192,129,179/12,152,855, leaving 7,870,821 below 200M. Checkpoint/report/assessment hashes begin
+> `a5888d88...`/`2857f94f...`/`4629a745...`; Newton and local mirrors match, and the local assessor
+> replay is byte-identical. Promote the read-only checkpoint under
+> `/lustre/fs1/home/sa305415/shohin_promoted/sd_cst_complete_physical_fresh_v1_3`. This confirms
+> bounded fresh renderer/name compilation into a source-deleted categorical executor. It does not
+> establish unconstrained language grounding, arbitrary programs, learned arithmetic, planning,
+> or broad general reasoning.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -391,6 +407,14 @@
 > remains mode `0600`. The separately implemented confirmation lane performs no training, writes an
 > atomic ledger before opening semantics, and requires a second independent assessor. Twenty
 > focused tests plus static checks pass. Commit/push the exact evaluator source before confirmation.
+> Exact evaluator source `94b26058bfa9d43089ce02277b3cdaeb9a1d6594` was frozen and pushed before
+> access. Sole confirmation job `694451` completed on `evc46` in 33s with no fitting. Treatment is
+> 2,048/2,048 exact packets/states/answers/joints, 512/512 on every renderer, and 100% at every depth;
+> family-deranged labels are 0 packets and 157 states/joints. All 19 confirmation gates and four
+> independent assessor gates pass. Decision is `confirm_complete_physical_fresh_v1_3`; custody is
+> exactly `1/1`. Report/assessment/ledger hashes begin `2857f94f...`/`4629a745...`/`b9bf805f...`.
+> Exact local mirrors and a byte-identical local assessor replay are verified. Retain this checkpoint
+> as the bounded baseline; do not rescore the spent board or widen its claim.
 > The admitted board
 > creates 48,000 compiler-only training rows from 12,000 latent programs and four even-parity
 > renderer views, plus 2,048 development and 2,048 sealed-confirmation rows from four odd-parity
@@ -10014,3 +10038,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   scientific gates plus exact development authorization/final `1/1` custody and four assessor gates
   are frozen. Twenty focused tests, including a complete synthetic confirmation capsule, plus Ruff,
   byte compilation, and Slurm syntax pass. Commit/push evaluator source before opening confirmation.
+
+- **2026-07-20 15:29--15:40** -- **SD-CST Complete Physical Fresh v1.3 confirms on the sole sealed
+  read.** Exact evaluator source `94b26058bfa9d43089ce02277b3cdaeb9a1d6594` precedes access. Job
+  `694451` completes on H100 `evc46` in 33s without fitting. Treatment is 2,048/2,048 exact on
+  packets, every pointer, states, answers, and joints, including 512/512 on each unseen renderer and
+  100% at every depth one through six. Family-deranged labels are 0/2,048 packets, 157/2,048 states/
+  joints, and 515/2,048 answers. All 19 scientific and four independent-assessor gates pass; custody
+  is exactly `1/1`. Report/assessment/ledger SHA-256 begin `2857f94f...`/`4629a745...`/
+  `b9bf805f...`; local mirrors match and a local assessor replay is byte-identical. Checkpoint
+  `a5888d88...` is retained read-only on Newton. Promote this as the bounded fresh compiler/executor
+  baseline only; it is not broad language grounding, arbitrary program induction, planning, or
+  general reasoning.

@@ -125,19 +125,26 @@ assessor gates pass. The decision is `authorize_one_sealed_confirmation`.
 Checkpoint/report/assessment hashes begin `a5888d88`/`7dc048cc`/`1c5fad49`;
 local mirrors match Newton; custody is `1/0`; confirmation remains sealed.
 
-A separate confirmation lane is implemented but not yet source-frozen. It
-performs no training, hash-binds the exact development authorization, writes an
-atomic confirmation ledger before semantic access, compiles the 2,048 sealed
-rows once, deletes/poisons source before separate execution, and requires a
-second independent assessor. Twenty focused tests plus static checks pass. Its
-complete frozen procedure is
-`R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_CONFIRMATION_PREREG.md`; the development
-result is `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_DEVELOPMENT_RESULT.md`.
+A separate confirmation lane was frozen at exact evaluator source
+`94b26058bfa9d43089ce02277b3cdaeb9a1d6594` before access. Sole job `694451`
+completed on H100 `evc46` in 33 seconds without fitting. Treatment is
+2,048/2,048 exact on packets, every pointer, recurrent states, answers, and
+joints; each of four unseen renderer compositions is 512/512 exact and every
+depth one through six is 100%. Family-deranged labels are 0/2,048 exact packets,
+157/2,048 exact states/joints, and 515/2,048 answers. All 19 scientific gates and
+four independent-assessor gates pass; final custody is exactly `1/1`. The
+confirmation report/assessment/ledger hashes begin `2857f94f`/`4629a745`/
+`b9bf805f`, local mirrors match Newton, and a local independent-assessor replay
+is byte-identical. The 192,129,179-parameter checkpoint `a5888d88...` is promoted
+read-only as the strongest confirmed bounded compiler/executor baseline. The
+frozen procedure is
+`R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_CONFIRMATION_PREREG.md`; full results are
+`R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_CONFIRMATION_RESULT.md`.
 The full closed-board record is
 `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_2_RESULT.md`.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 15:29 EDT. User authority requires every future
+**Last updated:** 2026-07-20 15:40 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2649,6 +2656,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Closed Complete Physical-Record Front-End v1.2: a 601,350-parameter nonlinear six-role occurrence head raises the 192,129,179-parameter complete compiler to 100% minimum held-out packets/states and 99.20% strict initial-occurrence pointers. All 12 consumed-training gates pass with `0/0` scored access; this authorizes only a separately committed fresh-board transfer test. |
 | 2026-07-20 | Implemented the pre-seed complete-physical fresh-board transfer source: new lexical/name atoms, even-to-odd renderer composition, matched family-deranged labels, source deletion, a second evidence-based assessor, exact 192,129,179 total parameters, and 20 passing focused tests. No source freeze, seed, board, or score exists yet. |
 | 2026-07-20 | Closed the first fresh-board seed before byte write on inherited name reuse, repaired only global family re-keying under source `aa1c598`, and admitted the replacement 48,000/2,048/2,048 board with all 16 gates, byte-identical rebuilds, sealed confirmation, and `0/0` access. No training seed exists yet. |
+| 2026-07-20 | Independently confirmed SD-CST Complete Physical Fresh v1.3 on the sole 2,048-row sealed read: treatment is 100% exact on packets, every pointer, recurrent states, answers, joints, each unseen renderer, and every depth; family-deranged labels are 0% packet and 7.666% state/joint. All 19 scientific and four assessor gates pass with custody `1/1`. Promote checkpoint `a5888d88...` as a bounded fresh compiler/source-deleted executor baseline, not general reasoning. |
 
 ---
 

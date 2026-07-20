@@ -1,0 +1,18 @@
+{
+  "claim_boundary": "Confirmed fresh finite renderer/name compilation into a source-deleted categorical executor; not broad natural-language or general reasoning.",
+  "complete_system_parameters": 192129179,
+  "confirmation_accesses": 1,
+  "confirmation_assessment_sha256": "4629a745f6eed2e388eb6e1f78b29dff346ee6939e21275ae6ff1d66719d3cb9",
+  "confirmation_report_sha256": "2857f94f0816053ed7ac9610ef8eab5e3749360cb53cb1d0e6e8ef707dc8ded7",
+  "decision": "confirm_complete_physical_fresh_v1_3",
+  "development_accesses": 1,
+  "evaluator_source": "94b26058bfa9d43089ce02277b3cdaeb9a1d6594",
+  "headroom_below_200m": 7870821,
+  "local_checkpoint": "train/sd_cst_complete_physical_fresh_run_8920874392524997882_8446904969546017898/compiler.pt",
+  "newton_checkpoint": "/lustre/fs1/home/sa305415/shohin_promoted/sd_cst_complete_physical_fresh_v1_3/compiler.pt",
+  "scientific_source": "eed66757c47e126b6566ee269bc73b0c0cef4fab",
+  "sealed_confirmation_rows": 2048,
+  "trained_checkpoint_sha256": "a5888d88541904cfa186a6686012c13c7b555f7d186ba1e3e73f71dbaca462d8",
+  "trainable_parameters": 12152855,
+  "training_rows": 48000
+}
