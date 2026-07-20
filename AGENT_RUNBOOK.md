@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 15:00 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 15:04 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -373,6 +373,12 @@
 > data, arms, optimization, thresholds, controls, and claim boundary. All 19 focused tests plus
 > static checks pass. Freeze a new source commit, then draw a new board seed, rebuild/reseal/hash a
 > fresh board, commit its receipt, draw a new training seed, and run one score-bearing job.
+> Exact v1.3 source `eed66757c47e126b6566ee269bc73b0c0cef4fab` now precedes raw board beacon
+> `18144246429379773690` and signed-safe seed `8920874392524997882`. The new
+> 48,000/2,048/2,048 board passes all 17 gates, including the exact production parser over all
+> 52,096 rows, and a complete second build is byte-identical. Report/train/development/confirmation
+> SHA-256 values begin `fd487cdf...`/`bb870ac3...`/`5dc5035c...`/`6186fb8c...`; confirmation is
+> mode `0600`; access is `0/0`. Commit/push the board receipt before drawing the sole training seed.
 > The admitted board
 > creates 48,000 compiler-only training rows from 12,000 latent programs and four even-parity
 > renderer views, plus 2,048 development and 2,048 sealed-confirmation rows from four odd-parity
@@ -9962,3 +9968,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   unchanged. A realistic fit-schema regression test and a complete synthetic checkpoint/config/
   packet/evidence/executor/ledger assessment test pass. Nineteen focused tests, Ruff, byte
   compilation, and Slurm syntax pass. Commit/push this exact source before a new board seed.
+
+- **2026-07-20 15:00--15:04** -- **V1.3 source is frozen and its fresh board is admitted before
+  training-seed draw.** Commit `eed66757c47e126b6566ee269bc73b0c0cef4fab` is pushed before raw
+  board beacon `18144246429379773690`, reduced modulo `2^63` to seed
+  `8920874392524997882`. The generated 48,000/2,048/2,048 board passes all 17 gates, production-
+  parses all 52,096 rows, keeps confirmation mode `0600`, and has access `0/0`. A complete second
+  build is byte-identical. Report/train/development/confirmation hashes begin
+  `fd487cdf...`/`bb870ac3...`/`5dc5035c...`/`6186fb8c...`. Commit/push the board receipt before any
+  training seed exists.

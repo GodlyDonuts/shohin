@@ -108,11 +108,18 @@ counts/renderers, matched arms, optimizer, thresholds, controls, source
 deletion, and claim boundary remain exact. Nineteen focused tests plus all
 static checks pass before source freeze. A new source commit, board seed, board,
 and training seed are mandatory before the next sole development attempt.
+Exact source `eed66757c47e126b6566ee269bc73b0c0cef4fab` is now frozen and pushed
+before raw board beacon `18144246429379773690` and signed-safe board seed
+`8920874392524997882`. Its 48,000/2,048/2,048 board passes all 17 gates,
+production-parses all 52,096 rows, rebuilds byte-identically, keeps confirmation
+mode `0600`, and has access `0/0`. Report/train/development/confirmation hashes
+begin `fd487cdf`/`bb870ac3`/`5dc5035c`/`6186fb8c`. The committed board receipt
+must precede the sole training seed.
 The full closed-board record is
 `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_2_RESULT.md`.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 15:00 EDT. User authority requires every future
+**Last updated:** 2026-07-20 15:04 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
