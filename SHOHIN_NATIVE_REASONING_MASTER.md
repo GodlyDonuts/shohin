@@ -239,6 +239,16 @@ physical event bus, resets the failed declaration queries/projection, and adds
 one declaration-local key projection under a separate contract. Full evidence
 is in `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_RESULT.md`.
 
+That v1.1 repair is now implemented locally under an unseeded source contract.
+It trains only the six-query table, declaration-query projection, and a new
+bias-free 384 by 384 declaration-key projection: 297,216 parameters. The query
+endpoint, physical bus, parent, executor, motor, reader, and Shohin trunk remain
+frozen. Exact compiler/complete size is 66,573,580 / 191,675,285, leaving
+8,324,715 below 200M. Twelve focused/inherited tests plus real-parent
+reconstruction and a consumed-family full backward pass are clean; all three
+declared tensors receive nonzero gradients and no excluded tensor does. This is
+still a conventional consumed-training interface falsifier, not reasoning.
+
 ---
 
 ## 2026-07-20 frontier update: v2 closes; grounding, not execution, is the bottleneck
