@@ -99,8 +99,9 @@
 > equal-budget no-class arm and zero for shuffled, source-free, and uniform controls. Every emitted
 > treatment graph is exact; the residual is exactly 23 invalid/abstaining parses and zero
 > valid-but-wrong computations. Structured child assignment adds only two exact rows over the
-> unconstrained decoder, localizing the remaining failure to complete root anchor/cardinality
-> selection. Causal reversed-link/card/witness/reset/early-nil controls collapse state to
+> unconstrained decoder. Because failed graph construction suppresses partial-span diagnostics,
+> root anchor/cardinality closure is the leading residual hypothesis, not yet a proven
+> localization. Causal reversed-link/card/witness/reset/early-nil controls collapse state to
 > 8.838%/0.977%/3.857%/2.832%/3.760%. Operation recoding preserves state/answer on 2,024/2,024
 > mutually valid rows but only 2,022/2,024 canonical graphs are bit-identical and one originally
 > valid graph becomes invalid; therefore 29/31 gates pass and no threshold is relaxed. Checkpoint,
@@ -9033,8 +9034,9 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `727c913d...`. Treatment is 2,025/2,048 exact graph/state/answer, equal-budget no-class is
   1,766/2,048, and shuffled/source-free/uniform are zero. All 2,025 emitted graphs are exact and the
   remaining 23 rows abstain or are invalid; there are no valid-but-wrong computations. Structured
-  child assignment recovers only two rows over unconstrained decode, so root roster/state/card/event
-  anchor closure is now the measured bottleneck. Reversed links, deranged cards, one witness, reset,
+  child assignment recovers only two rows over unconstrained decode. Failed graph construction does
+  not preserve partial-span diagnostics, so root roster/state/card/event closure is the next
+  falsifiable hypothesis rather than an established bottleneck. Reversed links, deranged cards, one witness, reset,
   and early nil collapse state to 8.838%, 0.977%, 3.857%, 2.832%, and 3.760%. Class/relation reindex
   is exact. Operation recoding keeps state/answer identical on 2,024/2,024 mutually valid rows, but
   one original graph becomes invalid and two canonical graphs differ. Twenty-nine of 31 gates pass;

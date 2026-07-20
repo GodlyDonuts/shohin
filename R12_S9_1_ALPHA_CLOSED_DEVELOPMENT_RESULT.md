@@ -45,9 +45,11 @@ graph; there are no valid-but-wrong treatment graphs.
 
 Structured child assignment contributes two exact graphs over the frozen
 unconstrained decoder (2,025 versus 2,023). Therefore the measured missing-child
-repair is real but no longer the main residual. The next bottleneck is complete
-root anchor/cardinality selection: roster, state, card, or event anchors must
-all be present before a graph exists.
+repair is real but no longer explains most residual rows. The evaluator discards
+partial spans whenever quotient construction fails, so this artifact cannot
+distinguish missing root anchors, wrong root cardinality, child assignment, or
+binding failure inside the remaining 23 rows. Global anchor/cardinality closure
+is the leading next hypothesis, not a result already established by S9.1.
 
 ## Alpha-closure result
 

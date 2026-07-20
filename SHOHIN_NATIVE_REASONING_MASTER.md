@@ -1492,8 +1492,10 @@ on 2,024/2,024 mutually valid rows, but preserves bit-identical canonical
 graphs on only 2,022/2,024. Twenty-nine of 31 frozen gates pass; the
 graph-level alpha requirements are not relaxed. Assessment `727c913d...`
 records rejection before confirmation, which remains sealed. The complete
-system remains 134,580,264 parameters. The measured successor is fresh-board
-S9.2 global anchor closure: jointly choose root roster/state/card/event anchor
+system remains 134,580,264 parameters. Since failed quotient construction
+suppresses partial-span diagnostics, the 23 failures are not yet partitioned
+between roots, cardinality, children, and binding. The leading successor
+hypothesis is fresh-board S9.2 global anchor closure: jointly choose root roster/state/card/event anchor
 sets from model logits under finite syntax/cardinality constraints, strengthen
 alpha consistency on positive anchors and hard negative competitors, and
 retain source-free/uniform/shuffled/no-class controls. Execution, answers,
