@@ -1,7 +1,14 @@
 # R12 SD-CST Physical-Record Write-Bus Preregistration
 
-**Status:** exact scientific source frozen before seed and H100 execution;
-consumed-training mechanics only; no scored split may be opened
+**Status:** sole valid training-only run complete; physical-record baseline
+retained, one-to-one attribution rejected; no scored split was opened
+
+**Result:** exact source `5c9a2855a202692996e6e4100c927e9d8842bf48`,
+seed `8959672499628717158`, and job `694136` completed cleanly on H100 `evc37`.
+Both constrained and independent arms reach 48,000/48,000 fit and 8,000/8,000
+held-out exact packets with every field/pointer at 100%. All absolute gates pass;
+the three frozen +5pp attribution gates fail at a 100%/100% tie. See
+`R12_SD_CST_PHYSICAL_RECORD_BUS_RESULT.md`.
 
 **Source contract:** exact architecture, pilot, test, job, and preregistration
 commit `5c9a2855a202692996e6e4100c927e9d8842bf48`; the following documentation-only
@@ -116,8 +123,8 @@ inputs fail closed.
 | immutable Shohin trunk | 125,081,664 |
 | complete compiler, including frozen parent | 65,831,689 |
 | new trainable parameters | 11,106,830 |
-| categorical motor | 2,781 |
-| categorical reader | 17,260 |
+| categorical motor | 19,206 |
+| categorical reader | 835 |
 | **complete deployed system** | **190,933,394** |
 | **strict-200M headroom** | **9,066,606** |
 

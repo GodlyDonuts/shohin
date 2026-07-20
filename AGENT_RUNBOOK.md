@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 11:54 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 12:18 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -267,21 +267,20 @@
 > factor delimiter-bounded physical records, local field extraction, and one-to-one model-owned
 > record assignment; no widening or extension of the failed global-query contract is authorized.
 >
-> **Active training-only falsifier:** the Physical-Record Write Bus scientific source is frozen at
-> exact commit `5c9a2855a202692996e6e4100c927e9d8842bf48` before seed or H100 execution. It segments exactly nine newline-bounded records, encodes
-> each with shared relative-position weights, performs set-level record contextualization, assigns
-> physical records to semantic slots from model logits, and uses local kind/amount/entity motors.
-> The constrained arm uses Sinkhorn training plus deterministic greedy one-to-one evaluation; its
-> exact equal-parameter control assigns semantic slots independently. Both reconstruct joint parent
-> SHA `4b842e4c...`, receive byte-identical new-module initialization, and freeze every parent tensor.
-> Exact compiler/trainable/complete counts are 65,831,689 / 11,106,830 / **190,933,394**, leaving
-> 9,066,606 below the strict 200M cap. The full 56,000-view consumed renderer scan finds nine records
-> everywhere, maximum 132-byte payload / 133-byte record including newline under the fixed 144-byte
-> window. Real-parent reconstruction, a real consumed-row complete loss, six new tests, eleven
-> inherited focused tests, Ruff, compilation, and job syntax pass. Freeze exact source and prereg
-> before drawing one seed. Raw post-push beacon `18183044536483492966` is reduced modulo `2^63` to
-> sole scientific seed `8959672499628717158`; no H100 launch or output exists yet. Development and
-> confirmation remain unreachable.
+> **Physical-Record Write Bus is retained; one-to-one attribution is rejected.** Exact scientific
+> source `5c9a2855a202692996e6e4100c927e9d8842bf48`, seed `8959672499628717158`, and sole job
+> `694136` complete cleanly on H100 `evc37` in 14m18s. The 190,933,394-parameter complete system
+> trains 11,106,830 new parameters. Both constrained Sinkhorn/greedy-one-to-one and exact
+> equal-parameter independent-assignment arms reach **48,000/48,000 fit and 8,000/8,000 held-out
+> exact packets**, with minimum every-renderer initial/query/declaration/initial-occurrence/line/
+> event pointer, kind, identity, amount, tape, and packet all 100%. Seventeen of twenty gates pass:
+> every absolute, preservation, parameter, matched-count, and access gate passes; all three +5pp
+> differential gates fail at a 100%/100% tie. Decision is
+> `retain_physical_record_bus_reject_one_to_one_attribution`. The result establishes explicit
+> physical-record/local-field factorization as a complete finite compiler baseline but gives no
+> credit to one-to-one normalization and is not a reasoning claim. Checkpoint/report SHA values are
+> `89ab7d74...`/`9c768fa8...`; local and Newton copies match; access is `0/0`. Any advancement must
+> use a separately committed fresh board. Never open existing development or confirmation.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9712,3 +9711,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Architecture, arms, initialization, data, optimizer, gates, and thresholds remain unchanged. No
   H100 job or output exists at this receipt point; transport the exact clean committed source before
   submission.
+
+- **2026-07-20 11:59--12:18** -- **Physical-record factorization solves the complete finite
+  compiler, while one-to-one assignment receives zero causal credit.** Slurm test-only admits a
+  four-CPU/one-H100 launch on `evc37`; exact source commit
+  `4eeb86f4c4d37e84af78f88d175a2ce7955f3a5c`, data `b7756dbf...`, parent `4b842e4c...`, bf16,
+  and 190,933,394 parameters pass runtime preflight. Sole job `694136` completes in 14m18s. Both
+  3,000-update arms reach 48,000/48,000 fit and 8,000/8,000 held-out exact packets, and every
+  renderer/field/pointer is 100% after the first epoch. Parent digest `9b3b34bd...` remains exact in
+  both arms. Constrained and independent are tied on every frozen differential metric, so 17/20
+  gates pass and the preregistered decision is
+  `retain_physical_record_bus_reject_one_to_one_attribution`. The causal discovery is physical
+  locality and shared local field extraction; Sinkhorn/exclusivity is unnecessary. Local and Newton
+  checkpoint/report hashes match `89ab7d74...`/`9c768fa8...`; access remains `0/0`. Retain this as a
+  conventional compiler baseline only. A fresh-board qualification must be separately committed;
+  no current scored split may be opened.

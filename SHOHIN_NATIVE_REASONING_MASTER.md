@@ -38,14 +38,15 @@ gradients and renderer overfit: final held-out per-slot line/event-address/kind/
 amount/identity are 42.029%/25.466%/55.731%/68.000%/50.325%, and gold event
 address makes identity 100%. This closes ordinary global-query co-adaptation and
 admits only a distinct physical-record/local-field/write-assignment factorization.
-That factorization is now implemented and preregistered before seed as a
-190,933,394-parameter complete system. Its 11,106,830 trainable parameters encode
-physical records locally and compare one-to-one versus independent semantic-slot
-assignment from byte-identical initialization. It has not run and has no result.
+That factorization now succeeds completely as a 190,933,394-parameter
+consumed-training compiler baseline. Its 11,106,830 trainable parameters encode
+physical records locally. Both one-to-one and independent semantic-slot
+assignment arms reach 48,000/48,000 fit and 8,000/8,000 held-out exact packets;
+therefore physical locality is retained and one-to-one attribution is rejected.
 V2 custody is `1/0`, its confirmation is sealed, and no board will be rescored.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 11:54 EDT. User authority requires every future
+**Last updated:** 2026-07-20 12:18 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -145,7 +146,7 @@ begins `318b6458...`; access is `0/0`. The next conventional falsifier must use
 delimiter-bounded physical records, local field motors, and a model-logit-only
 one-to-one categorical write bus. It may not be described as reasoning.
 
-That falsifier's exact scientific source is now frozen before seed at commit
+That falsifier's exact scientific source was frozen before seed at commit
 `5c9a2855a202692996e6e4100c927e9d8842bf48`. The
 Physical-Record Write Bus hard-segments exactly nine newline-bounded records,
 encodes each with a shared four-layer 384-wide relative-position Transformer,
@@ -180,7 +181,35 @@ confirmation.
 
 After the source and receipt commits were pushed, raw 64-bit beacon
 `18183044536483492966` was reduced modulo `2^63` to sole pilot seed
-`8959672499628717158`. No output existed when the seed was recorded.
+`8959672499628717158`. No output existed when the seed was recorded. Sole job
+`694136` then completed cleanly on H100 `evc37` in 14m18s.
+
+The result is exact and decisive. The constrained Sinkhorn/greedy-one-to-one arm
+and its byte-initialized equal-parameter independent-assignment control both
+reach 48,000/48,000 fit and 8,000/8,000 held-out exact packets. Minimum accuracy
+across all four held-out renderers is 100% for initial state, late query,
+declaration pointer, initial-occurrence pointer, all-nine line pointer, active
+event pointer, kind, identity, amount, whole tape, and complete packet. Both
+arms reach those rates after epoch one. Parent digest `9b3b34bd...` is unchanged
+in both arms, and scored access remains `0/0`.
+
+Seventeen of twenty gates pass. Every absolute, preservation, parameter,
+matched-count, and access gate passes. The only failures are the three frozen
++5pp treatment-over-control attribution gates: packet, line pointer, and event
+pointer are each 100% versus 100%. The exact preregistered decision is
+`retain_physical_record_bus_reject_one_to_one_attribution`.
+
+This materially sharpens the compiler theory. The same parent that reached only
+42.029% per-slot line, 25.466% event address, and zero complete packets becomes
+perfect when evidence is first divided into explicit physical records and
+field motors operate locally. The result does not support doubly stochastic
+assignment; independent slot assignment learns the same mapping. Retain the
+physical-record/local-field package as the strongest finite conventional
+compiler baseline. Its next legitimate test is a separately committed fresh
+board with new names and renderer/source distributions, followed by the already
+proven source-deleted executor. Existing development and confirmation remain
+sealed. Full result is in `R12_SD_CST_PHYSICAL_RECORD_BUS_RESULT.md`; checkpoint
+and report SHA-256 begin `89ab7d74...`/`9c768fa8...`.
 
 ---
 
