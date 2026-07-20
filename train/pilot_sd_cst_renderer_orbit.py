@@ -239,6 +239,22 @@ def _finite_uniform_span_loss(
     return result
 
 
+def _currently_supported_targets(
+    pointer_logits: torch.Tensor,
+    target_mask: torch.Tensor,
+    active: torch.Tensor,
+) -> torch.Tensor:
+    """Select targets that remain inside the model's current hard support."""
+    if (
+        pointer_logits.shape != target_mask.shape
+        or active.shape != target_mask.shape[:-1]
+    ):
+        raise ValueError("renderer-orbit support shapes differ")
+    floor = torch.finfo(pointer_logits.dtype).min
+    admissible = torch.isfinite(pointer_logits) & pointer_logits.gt(floor / 2)
+    return active & (target_mask & admissible).any(-1)
+
+
 def loss_groups(
     model: RendererOrbitGroundedCompiler,
     groups: Sequence[Sequence[OrbitPilotRow]],
@@ -265,10 +281,6 @@ def loss_groups(
             target["kind"].reshape(-1),
             weight=torch.tensor([1.0, 1.0, 4.0], device=device),
         ),
-        "identity": F.cross_entropy(
-            tape.event_identity.reshape(-1, 3)[active],
-            target["identity"].reshape(-1)[active],
-        ),
         "amount": F.cross_entropy(
             tape.amount.reshape(-1, 2)[active],
             target["amount"].reshape(-1)[active],
@@ -287,6 +299,27 @@ def loss_groups(
     event_mask, event_active = span_mask(
         binding_rows, "event_entity_ranges", 8, program_ids.shape[1], device
     )
+    event_supported = _currently_supported_targets(
+        program.event_entity_pointer_logits,
+        event_mask,
+        event_active & target["kind"].ne(STOP_KIND),
+    )
+    if bool(event_supported.any()):
+        pieces["identity"] = F.cross_entropy(
+            tape.event_identity[event_supported],
+            target["identity"][event_supported],
+        )
+        event_address_loss = _finite_uniform_span_loss(
+            program.event_entity_pointer_logits,
+            event_mask,
+            event_supported,
+        )
+    else:
+        pieces["identity"] = torch.zeros((), device=device)
+        event_address_loss = torch.zeros((), device=device)
+    pieces["event_support_rate"] = event_supported.sum() / (
+        event_active & target["kind"].ne(STOP_KIND)
+    ).sum().clamp_min(1)
     pieces.update(
         {
             "line_address": _finite_uniform_span_loss(
@@ -298,9 +331,7 @@ def loss_groups(
             "initial_entity_address": _finite_uniform_span_loss(
                 program.initial_entity_pointer_logits, initial_mask, initial_active
             ),
-            "event_entity_address": _finite_uniform_span_loss(
-                program.event_entity_pointer_logits, event_mask, event_active
-            ),
+            "event_entity_address": event_address_loss,
             "query_address": _finite_uniform_span_loss(
                 query.pointer_logits,
                 _query_span_mask(rows, query_ids.shape[1], device),
@@ -319,7 +350,11 @@ def loss_groups(
         )
     )
     pieces["orbit_consistency"] = consistency
-    total = sum(value for name, value in pieces.items() if name != "orbit_consistency")
+    total = sum(
+        value
+        for name, value in pieces.items()
+        if name not in {"event_support_rate", "orbit_consistency"}
+    )
     total = total + consistency_weight * consistency
     pieces["total"] = total
     return total, {name: float(value.detach()) for name, value in pieces.items()}
@@ -522,6 +557,9 @@ def main() -> None:
             _minimum_rate(heldout, "query_pointer") >= 0.99
         ),
         "heldout_packet_at_least_80pct": _minimum_rate(heldout, "packet") >= 0.80,
+        "fit_event_pointer_at_least_99pct": (
+            _minimum_rate(fit, "event_pointer") >= 0.99
+        ),
         "complete_system_below_200m": parameters["complete_system"]
         < GLOBAL_PARAMETER_CAP,
         "scored_access_zero": True,
@@ -530,7 +568,7 @@ def main() -> None:
     checkpoint_path = args.out_dir / "compiler.pt"
     torch.save(
         {
-            "schema": "r12_sd_cst_renderer_orbit_training_pilot_v1",
+            "schema": "r12_sd_cst_renderer_orbit_training_pilot_v1_2",
             "seed": args.seed,
             "state": model.state_dict(),
             "trainable_names": parameters["trainable_names"],
@@ -541,7 +579,7 @@ def main() -> None:
         checkpoint_path,
     )
     report = {
-        "schema": "r12_sd_cst_renderer_orbit_training_pilot_report_v1",
+        "schema": "r12_sd_cst_renderer_orbit_training_pilot_report_v1_2",
         "decision": (
             "advance_renderer_orbit_to_fresh_board"
             if all(gates.values())

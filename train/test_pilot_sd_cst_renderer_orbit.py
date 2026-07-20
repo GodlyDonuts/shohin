@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
 
 from pilot_sd_cst_renderer_orbit import (  # noqa: E402
+    _currently_supported_targets,
     _finite_uniform_span_loss,
     _orbit_consistency,
     _query_span_mask,
@@ -68,3 +69,13 @@ def test_uniform_span_loss_is_finite_with_masked_negative_infinity() -> None:
     assert torch.allclose(loss, expected)
     loss.backward()
     assert torch.isfinite(logits.grad[0, 0, 1:3]).all()
+
+
+def test_current_support_excludes_targets_behind_hard_line_mask() -> None:
+    floor = torch.finfo(torch.float32).min
+    logits = torch.tensor([[[3.0, 1.0, floor, floor], [floor, floor, 2.0, 0.0]]])
+    target = torch.tensor([[[False, True, False, False], [True, False, False, False]]])
+    active = torch.tensor([[True, True]])
+    assert _currently_supported_targets(logits, target, active).tolist() == [
+        [True, False]
+    ]

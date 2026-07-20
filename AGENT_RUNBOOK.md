@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 09:58 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 10:06 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -234,8 +234,15 @@
 > infinite event-address/total losses from zero target mass multiplied by masked `-inf` under bf16;
 > it created no output directory or artifact and is not a mechanism result. Optimization-only v1.1
 > uses equivalent float32 `torch.where`-masked span cross-entropy, rejects empty/nonfinite active
-> spans, excludes `evc26`, and passes 22 focused/current tests plus static checks. Freeze this repair
-> source and draw a new post-commit seed before one retry. A pass authorizes only a separately
+> spans, excludes `evc26`, and passes 22 focused/current tests plus static checks. Exact repair
+> source `ca67217` and seed `1744594462434664693` then fail safely on update one in job `694061`:
+> gold event-name spans can lie outside the frozen parent's current hard selected-line support. No
+> optimizer update or output artifact exists. V1.2 trains line selection everywhere and charges
+> event-address/identity losses only where the current selected line supports the gold span; final
+> fit event pointers must reach 99%, so the curriculum cannot avoid hard events. An exact consumed-
+> row forward/backward starts at 25% event support with finite loss and gradients; 23 focused/current
+> tests pass. Freeze v1.2 source and draw a new post-commit seed before one retry. A pass authorizes
+> only a separately
 > preregistered fresh board with no-consistency,
 > wrong-family, direct-only, shuffled-label, and query-deletion controls.
 >
@@ -9520,3 +9527,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   partition, labels, objective weights, optimizer, updates, gates, and claim boundary remain fixed;
   `evc26` is added to the hardware exclude. Twenty-two focused/current tests and static checks pass.
   Freeze a new exact source commit before drawing one new pilot seed.
+
+- **2026-07-20 09:58--10:06** -- **The arithmetic repair exposes a deeper hard-support dependency;
+  support-safe v1.2 is locally admitted.** Exact repair source
+  `ca67217ef991a363dcc311e436a33236e860ba58` and post-commit seed
+  `1744594462434664693` launch job `694061` on preflighted H100 `evc36`. The finite guard raises on
+  update one, before any optimizer step or output artifact: some target event-name spans are outside
+  the frozen parent's current argmax-selected event line and therefore have true negative-infinite
+  probability. This is not the zero-times-infinity arithmetic defect and must not be clipped. V1.2
+  supervises line selection on every row while charging event-name address and identity only for
+  active slots currently inside model-selected line support. As line grounding improves, those
+  losses activate automatically; targets never alter predictions or held-out metrics. A new final
+  gate requires at least 99% exact fit event pointers, preventing avoidance. An exact consumed-row
+  forward/backward begins at measured 25% event support and passes finite loss/gradient checks at
+  172,723,071 total parameters. Twenty-three focused/current tests and static checks pass.
+  Architecture, renderer partition, optimizer, updates, held-out gates, and score boundary remain
+  fixed. Freeze exact v1.2 source before drawing its one seed. Development/confirmation remain
+  unreachable and unopened.

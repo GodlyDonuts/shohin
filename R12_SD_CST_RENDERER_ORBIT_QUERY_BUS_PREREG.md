@@ -1,7 +1,7 @@
 # R12 SD-CST Renderer-Orbit Query Bus Preregistration
 
-**Status:** v1 closed as an unscored numerical-loss failure; optimization-only
-v1.1 implemented and locally audited before its source freeze or seed
+**Status:** v1/v1.1 closed before artifacts; support-safe v1.2 implemented and
+locally audited before its source freeze or seed
 
 **Parent:** rejected projected fresh v2; retained exact source-deleted executor
 and v2 treatment checkpoint
@@ -118,12 +118,28 @@ loss were infinite. The run was canceled before epoch two and before creating
 an output directory, checkpoint, or report. It had no route to development or
 confirmation and cannot be interpreted as a mechanism result.
 
-V1.1 changes only the mathematically equivalent loss arithmetic: logits are
+V1.1 changed only the mathematically equivalent loss arithmetic: logits are
 promoted to float32, target entries are selected with `torch.where`, and active
 target spans must be nonempty and finite. A regression containing explicit
-`-inf` masked logits verifies finite value and gradients. Architecture, data,
-partition, labels, objective weights, optimizer, update count, gates, and claim
-boundary are unchanged. V1.1 requires a new source commit and post-commit seed.
+`-inf` masked logits verifies finite value and gradients. Exact source commit
+`ca67217ef991a363dcc311e436a33236e860ba58` and seed
+`1744594462434664693` then fail on update one in job `694061`: some gold
+event-name spans lie outside the frozen parent's current hard selected-line
+support, so their correct log probability is truly negative infinity. The
+guard rejects the batch before any optimizer update or output artifact. No
+scored split is reachable.
+
+V1.2 adds the smallest causal curriculum required by that hard support. Line
+addressing is supervised on every event. Event-name addressing and event
+identity are charged only for active slots whose current selected line contains
+the gold name span. Losses activate automatically as model-owned line selection
+improves; no target changes a forward prediction or final metric. The final fit
+must reach at least 99% exact event pointers, preventing permanent loss
+avoidance. Every held-out gate remains fixed. One exact consumed-row
+forward/backward begins at 25% event support and has finite loss and gradients.
+Architecture, data, partition, all other labels/loss weights, optimizer, update
+count, held-out gates, and claim boundary remain unchanged. V1.2 requires a new
+source commit and post-commit seed.
 
 ## 6. Training-only gates
 
@@ -137,7 +153,8 @@ Every gate must pass on every one of the four odd-parity renderer combinations:
 6. query ordinal pointer at least 99%;
 7. complete packet at least 80%;
 8. exact complete-system parameter count below 200M; and
-9. development and confirmation access exactly zero.
+9. final fit event-pointer exactness at least 99%; and
+10. development and confirmation access exactly zero.
 
 Failure rejects or revises the front end without a fresh board. Passing permits
 only full fresh-board preregistration with equal-budget controls; it is not a
