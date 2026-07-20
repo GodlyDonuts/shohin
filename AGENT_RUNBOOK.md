@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 20:25 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 22:58 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -288,8 +288,16 @@
 > The equal-budget training path, raw-evidence evaluator, independent list-executor assessor,
 > source invariances, packet interventions, and one-H100 job are locally qualified. Twenty-five
 > focused tests and a real confirmed-parent production-family backward pass are finite; all 110
-> trainable tensors receive gradient. Custody remains `0/0`. Freeze/push the exact score source
-> before drawing one training seed; no ER-TT neural score exists.
+> trainable tensors receive gradient. Exact score source
+> `3bd8a329ab94f3426be61ae87db92a14a285f2f7` was pushed before public beacon round `6305343`
+> produced training seed `4773363983426630371` (canonical beacon payload SHA
+> `016ca28a...`, derivation SHA `c23e6540...`). An earlier malformed ad hoc derivation yielded
+> `9040942210094722103`; it used a fabricated short commit string, was never launched, and is
+> permanently rejected. A hash-verified clean capsule and board now reside on Newton. Sole job
+> `694758` is running on `evc40`; its own preflight confirms NVIDIA H100 PCIe and bf16 before the
+> exact equal-budget treatment/family-deranged/equality-ablated fits. No development bytes have
+> been opened, custody remains `0/0`, and no ER-TT neural score
+> exists. Monitor `694758`; require immutable checkpoint creation before the one development read.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10437,3 +10445,19 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   confirmed-parent production-family backward is finite and reaches all 110 trainable tensors.
   Exact complete/trainable/headroom counts remain 192,740,854/12,037,293/7,259,146. Board access is
   still `0/0`; no training seed, GPU job, or neural score exists. Freeze and push exact source next.
+
+- **2026-07-20 20:25--22:58** -- **ER-TT score source is frozen and its sole development run is
+  queued without opening scored data.** Exact scientific source
+  `3bd8a329ab94f3426be61ae87db92a14a285f2f7` was pushed before public drand round `6305343`.
+  Randomness `03d64a87...`, canonical beacon payload SHA `016ca28a...`, and the full-commit
+  derivation label produce training seed `4773363983426630371` with derivation SHA `c23e6540...`.
+  An earlier malformed ad hoc derivation yielded `9040942210094722103` from a fabricated short
+  commit string; it was never used or submitted and is permanently rejected. Incremental capsule
+  bundle SHA `bf6a3cc3...` reconstructs a clean Newton worktree at exact HEAD `3bd8a329...`.
+  Board hashes are exact (`1982aeb2...`/`59be0c40...`/`cac2515b...`/`64ea4c0e...`), confirmation
+  is `0600`, access is `0/0`, promoted witness checkpoint/assessment hashes are
+  `917c1a1f...`/`4a0fb472...`, and every inherited parent exists. `sbatch --test-only` admitted the
+  one-H100 job; sole job `694758` is running on H100 `evc40` with isolated output
+  `shohin_er_relation_tensor_1209366536012979338_4773363983426630371`. Do not submit a duplicate.
+  Its own preflight reports NVIDIA H100 PCIe and bf16. Require all three immutable equal-budget fits, checkpoint creation before
+  development access, and independent assessment. Confirmation remains unopened.
