@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 10:59 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 11:16 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -254,6 +254,15 @@
 > values are `4b842e4c...`/`cefb33e8...`; exact local copies match Newton; access is `0/0`. Do not add
 > layers, parameters, or epochs to this contract. Audit batching, gradients, and objective mechanics
 > before choosing a distinct successor; no current development or sealed confirmation may be read.
+>
+> **Active post-hoc mechanics audit:** the consumed-training-only slot audit is implemented before
+> execution. It hash-binds exact initial and rejected joint weights, reports line/kind/amount/
+> identity/event-pointer accuracy per slot rather than only all-slots-at-once, and applies two
+> transparent diagnostic interventions: gold source-line pooling before the unchanged slot decoder
+> and gold event-span pooling before the unchanged frozen fingerprint matcher. It trains nothing,
+> cannot read development or confirmation, and cannot qualify a model. Eleven focused/current tests,
+> Ruff, `py_compile`, shell syntax, and local gradient/delta probes pass. Freeze exact source, run the
+> full fit/heldout orbit once, then choose a new contract from the measured bottleneck.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9629,3 +9638,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `cefb33e81d42b69b8e088e0ea79926c4557ecca79db3731efa83b44241d6f7ff`; local copies hash-match
   Newton. Audit implementation and credit assignment before preregistering a genuinely distinct
   successor. Development and confirmation remain untouched.
+
+- **2026-07-20 10:59--11:16** -- **Post-hoc mechanics audit is implemented after the negative
+  decision and before execution.** Exact parameter-delta reconstruction shows all 32,782,853
+  declared tensors changed; direct backward probes show nonzero line-loss gradients in program
+  queries/source keys/all eight encoder layers and nonzero kind/amount gradients in slot decoder
+  and encoder. A bounded 20-semantic local probe shows why complete-record rates can be zero without
+  per-slot chance: held-out free line/kind/amount/identity are approximately
+  41.8%/54.1%/69.1%/47.7% per slot. Gold source-line pooling raises kind to 74.8%, while gold
+  event-span pooling raises frozen identity matching to 100%; these sample numbers are diagnostic,
+  not final evidence. The new full audit reconstructs exact initialization and endpoint, reports
+  every renderer and aggregate, and reads only consumed training rows. It trains nothing and has
+  access `0/0`. Eleven focused/current tests and all static checks pass. Freeze exact source before
+  one full H100 audit; do not use its interventions as capability scores.
