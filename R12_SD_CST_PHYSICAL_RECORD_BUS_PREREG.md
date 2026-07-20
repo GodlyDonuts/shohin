@@ -1,10 +1,12 @@
 # R12 SD-CST Physical-Record Write-Bus Preregistration
 
-**Status:** frozen before seed and H100 execution; consumed-training mechanics
-only; no scored split may be opened
+**Status:** exact scientific source frozen before seed and H100 execution;
+consumed-training mechanics only; no scored split may be opened
 
-**Source contract:** the exact post-prereg source commit will be recorded here
-before the independent pilot seed is drawn.
+**Source contract:** exact architecture, pilot, test, job, and preregistration
+commit `5c9a2855a202692996e6e4100c927e9d8842bf48`; the following documentation-only
+commit does not change the scientific contract. The independent pilot seed has
+not yet been drawn.
 
 **Parent:** rejected joint renderer-memory/native-decoder checkpoint SHA-256
 `4b842e4c2d0d608c32f0fd113b404866be7269676084cdac9b1a00d43cdd298d`

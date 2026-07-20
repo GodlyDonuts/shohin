@@ -145,7 +145,8 @@ begins `318b6458...`; access is `0/0`. The next conventional falsifier must use
 delimiter-bounded physical records, local field motors, and a model-logit-only
 one-to-one categorical write bus. It may not be described as reasoning.
 
-That falsifier is now locally admitted before source freeze or seed. The
+That falsifier's exact scientific source is now frozen before seed at commit
+`5c9a2855a202692996e6e4100c927e9d8842bf48`. The
 Physical-Record Write Bus hard-segments exactly nine newline-bounded records,
 encodes each with a shared four-layer 384-wide relative-position Transformer,
 contextualizes the nine-record set with two shared layers, and emits role, kind,

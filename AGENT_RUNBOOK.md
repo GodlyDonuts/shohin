@@ -267,8 +267,8 @@
 > factor delimiter-bounded physical records, local field extraction, and one-to-one model-owned
 > record assignment; no widening or extension of the failed global-query contract is authorized.
 >
-> **Active training-only falsifier:** the Physical-Record Write Bus is locally admitted before
-> source freeze, seed, or H100 execution. It segments exactly nine newline-bounded records, encodes
+> **Active training-only falsifier:** the Physical-Record Write Bus scientific source is frozen at
+> exact commit `5c9a2855a202692996e6e4100c927e9d8842bf48` before seed or H100 execution. It segments exactly nine newline-bounded records, encodes
 > each with shared relative-position weights, performs set-level record contextualization, assigns
 > physical records to semantic slots from model logits, and uses local kind/amount/entity motors.
 > The constrained arm uses Sinkhorn training plus deterministic greedy one-to-one evaluation; its
@@ -9697,4 +9697,10 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   new tests plus eleven inherited focused tests, Ruff, byte compilation, and job syntax pass. The
   frozen prereg separates absolute compiler gates from +5pp one-to-one attribution gates; this is a
   conventional consumed-training mechanics control, never a reasoning or novelty claim. Commit and
-  push exact bytes, record the source commit in the prereg, then draw one independent seed.
+  push the documentation-only source receipt, then draw one independent seed.
+
+- **2026-07-20 11:51** -- **Physical-record scientific source is frozen before seed.** Commit
+  `5c9a2855a202692996e6e4100c927e9d8842bf48` contains the exact architecture, matched pilot,
+  six tests, Slurm job, preregistration, and ledger state. The subsequent receipt edit changes only
+  documentation and records this hash. No seed, H100 job, output directory, development access, or
+  confirmation access exists yet.
