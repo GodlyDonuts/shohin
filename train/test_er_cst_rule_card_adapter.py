@@ -174,8 +174,8 @@ def test_hard_rollout_uses_selected_cards_and_persistent_halt() -> None:
     program = HardRuleCardProgram(
         initial_state=torch.tensor([0], dtype=torch.long),
         rule_cards=torch.tensor([[3, 1, 5]], dtype=torch.long),
-        event_card=torch.tensor([[0, 1, 2, 0, 0, 0, 0, 0]], dtype=torch.long),
-        event_halt=torch.tensor([[0, 0, 1, 0, 0, 0, 0, 0]], dtype=torch.long),
+        event_card=torch.tensor([[0, 1, 2, 0, 0, 0, 0, 0, 0]], dtype=torch.long),
+        event_halt=torch.tensor([[0, 0, 1, 0, 0, 0, 0, 0, 0]], dtype=torch.long),
     )
     result = rollout_rule_cards(program, ExactMotor())
     assert result.alive_trajectory[0].item() is True
@@ -198,9 +198,9 @@ def test_default_parameter_certificate_stays_below_200m() -> None:
         base_parameters=BASE_PARAMETERS,
         reader_parameters=READER_PARAMETERS,
     )
-    assert model.parameter_count() == 67_336_230
+    assert model.parameter_count() == 67_336_999
     assert report["motor"] == 2_438
-    assert report["complete_system"] == 192_421_167
-    assert report["headroom_below_200m"] == 7_578_833
-    assert report["trainable"] == 11_715_616
+    assert report["complete_system"] == 192_421_936
+    assert report["headroom_below_200m"] == 7_578_064
+    assert report["trainable"] == 11_716_385
     assert report["complete_system"] < 200_000_000

@@ -156,19 +156,20 @@ renaming, card storage order, and post-HALT invariance; rotating card meanings l
 15.08% exact final states. Frozen source `5a03824...` reproduces the durable 10,000-
 episode report with all seven gates passing; report and episode-registration hashes
 begin `90c5e6fe`/`a3802185`. A locally admitted neural adapter reconstructs the
-confirmed parent byte-identically, uses a 2,438-parameter tied card motor, and totals
-192,421,167 parameters with 11,715,616 trainable and 7,578,833 headroom. Its
-trainability contract hashes to `f2c6c1de`; 14 focused tests, gradient isolation,
+confirmed parent byte-identically, uses a 2,438-parameter tied card motor, and in
+active v1.2 totals 192,421,936 parameters with 11,716,385 trainable and 7,578,064
+headroom. Its trainability contract hashes to `1e637f3d`; 14 focused tests, gradient isolation,
 exact motor fit, static checks, and actual parent reconstruction pass. Adapter v1
 source `0159bd4` was closed before board generation because it omitted the late-query
-category from its public result. V1.1 attaches the inherited frozen query path with
-zero parameter change and passes the same contract. No v1.1 source commit, board,
+category from its public result. V1.1 attached query but could encode only seven
+updates plus pre-apply HALT. Active v1.2 uses nine event slots/thirteen records for
+depth eight plus HALT, adding 769 parameters. No v1.2 source commit, board,
 seed, GPU run, or score exists. The complete design and gates
 are in `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md` and
 `R12_ER_CST_NEURAL_ADAPTER_PREREG.md`; CPU evidence is in
 `R12_ER_CST_RULE_CARD_CPU_RESULT.md`.
 
-**Last updated:** 2026-07-20 16:13 EDT. User authority requires every future
+**Last updated:** 2026-07-20 16:20 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2685,6 +2686,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Froze ER-CST CPU source at `5a03824` and reproduced its durable 10,000-episode report: all seven mechanics/invariance gates pass, card derangement remains 15.08%, and report/registration hashes begin `90c5e6fe`/`a3802185`. Neural implementation is admitted under the remaining 7,870,820-parameter budget; no neural score exists. |
 | 2026-07-20 | Admitted the ER-CST neural adapter before source freeze: exact confirmed-parent reconstruction/copy passes; a 308,756-parameter compiler extension plus replacement 2,438-parameter tied motor yields 192,421,167 total parameters and 7,578,833 headroom. Fourteen tests, exact motor fit, source deletion, gradient isolation, static checks, and parameter/hash certificates pass. No board, seed, H100 job, or score exists. |
 | 2026-07-20 | Closed ER-CST adapter v1 pre-board because its public compilation result omitted late query, then admitted v1.1 with the inherited frozen query compiler attached. This changes zero parameters or trainable tensors and restores the categorical answer interface; all 14 tests and exact parent/hash certificates still pass. No board, seed, job, or score exists. |
+| 2026-07-20 | Closed ER-CST v1.1 pre-board because eight event slots cannot encode depth eight followed by explicit pre-apply HALT. V1.2 uses nine slots/thirteen records, totals 192,421,936 parameters with 7,578,064 headroom, and passes the full 14-test plus exact-parent contract. No board, seed, job, or score exists. |
 
 ---
 

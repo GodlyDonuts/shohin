@@ -2,11 +2,11 @@
 
 **Protocol:** `R12-ER-CST-v1-theory`
 
-**Status:** CPU mechanics and the parameter-audited v1.1 neural adapter are locally
-admitted before source freeze. V1 was closed pre-board because its public result
-omitted late query; v1.1 attaches the inherited frozen query path with zero parameter
-change. No board seed, training seed, H100 job, development score, or confirmation
-access exists.
+**Status:** CPU mechanics and the parameter-audited v1.2 neural adapter are locally
+admitted before source freeze. V1 omitted late query; v1.1 had only eight slots for
+depth eight plus pre-apply HALT. Both closed before board generation. V1.2 uses nine
+event slots and thirteen records. No board seed, training seed, H100 job, development
+score, or confirmation access exists.
 
 ## 1. Why this is the next experiment
 
@@ -67,17 +67,17 @@ remain below the user-authorized 200M ceiling but may not exceed it:
 | Component | Parameters |
 |---|---:|
 | Confirmed v1.3 complete system | 192,129,179 |
-| ER-CST complete system | 192,421,167 |
-| Net increase after motor replacement | 291,988 |
-| Remaining headroom below 200M | 7,578,833 |
+| ER-CST v1.2 complete system | 192,421,936 |
+| Net increase after motor replacement | 292,757 |
+| Remaining headroom below 200M | 7,578,064 |
 | Absolute complete-system maximum | 199,999,999 |
 
 The favorable treatment may reuse and fine-tune the confirmed physical line encoder.
-New parameters are limited to a twelve-role record path, rule/event norms, a
+New parameters are limited to a thirteen-role record path, rule/event norms, a
 permutation-card head, opaque-opcode binding projections, a HALT head, and a tied
 rule-card motor. The exact 98-compiler-tensor plus four-motor-tensor trainability
-contract is frozen in `R12_ER_CST_NEURAL_ADAPTER_PREREG.md` and its v1.1 amendment;
-its name/shape/count hash is `f2c6c1de...`. The adapter adds 308,756 compiler
+contract is frozen in `R12_ER_CST_NEURAL_ADAPTER_PREREG.md` and its amendments;
+its v1.2 name/shape/count hash is `1e637f3d...`. The adapter adds 309,525 compiler
 parameters and replaces the old 19,206-parameter motor with a 2,438-parameter tied
 motor. The inherited frozen query compiler adds no parameter or trainable tensor.
 

@@ -20,7 +20,7 @@ from sd_cst_complete_physical_record_bus_v1_2 import (
 
 RULE_COUNT = 3
 RULE_CARD_COUNT = len(PERMUTATIONS)
-EVENT_SLOTS = 8
+EVENT_SLOTS = 9
 ER_RECORDS = 1 + RULE_COUNT + EVENT_SLOTS
 HALT_CLASS = 1
 
@@ -88,7 +88,7 @@ class RuleCardRollout:
 
 
 class EpisodicRuleCardCompiler(CompletePhysicalRecordBusCompilerV1_2):
-    """Compile twelve physical records into cards, references, and state."""
+    """Compile thirteen physical records into cards, references, and state."""
 
     def __init__(self, **kwargs: int) -> None:
         super().__init__(**kwargs)
@@ -113,7 +113,7 @@ class EpisodicRuleCardCompiler(CompletePhysicalRecordBusCompilerV1_2):
         self._validate_orbit_input(ids, valid_mask)
         newline = ids.eq(10) & valid_mask
         if not bool(newline.sum(-1).eq(ER_RECORDS - 1).all()):
-            raise ValueError("ER-CST compiler requires exactly twelve physical lines")
+            raise ValueError("ER-CST compiler requires exactly thirteen physical lines")
         line_index = newline.long().cumsum(-1) - newline.long()
         roles = torch.arange(ER_RECORDS, device=ids.device)
         masks = line_index[:, None].eq(roles[None, :, None])

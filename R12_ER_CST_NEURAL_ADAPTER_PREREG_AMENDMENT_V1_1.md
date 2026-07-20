@@ -2,8 +2,10 @@
 
 **Protocol:** `R12-ER-CST-v1.1-neural-adapter`
 
-**Status:** pre-board interface repair only. No board seed, training seed, H100
-job, output, development access, or confirmation access exists.
+**Status:** closed pre-board after the subsequent audit found eight event slots
+cannot represent depth eight plus explicit pre-apply HALT. No board seed, training
+seed, H100 job, output, development access, or confirmation access exists. V1.2 is
+defined by `R12_ER_CST_NEURAL_ADAPTER_PREREG_AMENDMENT_V1_2.md`.
 
 ## Closed v1 defect
 

@@ -155,11 +155,11 @@ def initialize_er_cst(
         reader_parameters=READER_PARAMETERS,
     )
     if (
-        parameters["compiler"] != 67_336_230
+        parameters["compiler"] != 67_336_999
         or parameters["motor"] != 2_438
-        or parameters["complete_system"] != 192_421_167
-        or parameters["headroom_below_200m"] != 7_578_833
-        or parameters["trainable"] != 11_715_616
+        or parameters["complete_system"] != 192_421_936
+        or parameters["headroom_below_200m"] != 7_578_064
+        or parameters["trainable"] != 11_716_385
     ):
         raise ValueError("ER-CST exact parameter certificate differs")
     model.to(device)

@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 16:13 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 16:20 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -175,13 +175,14 @@
 > 10,000/10,000; rotating card meanings leaves 1,508/10,000 exact final states. The confirmed
 > 192,129,179-parameter parent leaves at most 7,870,820 new parameters under an absolute
 > 199,999,999 cap. The locally admitted adapter reconstructs that parent byte-identically, replaces
-> its 19,206-parameter motor with a 2,438-parameter tied rule-card motor, and totals 192,421,167
-> parameters with 11,715,616 trainable and 7,578,833 headroom. Its 98 compiler plus four motor
-> trainability tensors hash to `f2c6c1de...`; confirmed-parent/excluded-state digests are
+> its 19,206-parameter motor with a 2,438-parameter tied rule-card motor. The active v1.2 uses nine
+> event slots/thirteen records so depth eight has a following explicit HALT; it totals 192,421,936
+> parameters with 11,716,385 trainable and 7,578,064 headroom. Its 98 compiler plus four motor
+> trainability tensors hash to `1e637f3d...`; confirmed-parent/excluded-state digests are
 > `cfb3d8bd...`/`1ad33273...`. Fourteen focused tests, exact 36-cell motor fit, gradient isolation,
 > static checks, actual parent reconstruction, and the v1.1 categorical late-query interface pass.
-> V1 source `0159bd4` is closed pre-board because its public result omitted late query; v1.1 adds
-> the inherited frozen query compiler with zero parameter change. No v1.1 source commit, board seed,
+> V1 source `0159bd4` is closed pre-board because its public result omitted late query; v1.1 added
+> query but had insufficient slots for depth eight plus HALT. No v1.2 source commit, board seed,
 > training seed, H100 job, development score, or confirmation access exists. Exact CPU source
 > `5a03824d2adcaa11633c6b7fd77cebe73afbd99e`
 > produces the durable report from seed 1,729: all seven gates pass; report/episode-registration
@@ -10114,3 +10115,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   supervision, controls, and source-deletion boundary remain unchanged except that the sealed packet
   now includes query. Fourteen focused tests, static checks, and actual parent reconstruction pass.
   Commit/push v1.1 before implementing or seeding the fresh board.
+
+- **2026-07-20 16:13--16:20** -- **ER-CST v1.1 is closed pre-board; v1.2 restores the promised
+  depth-eight contract.** The pre-apply HALT semantics mean eight event slots can carry only seven
+  active updates plus HALT. With no board seed or data bytes yet, v1.2 increases event slots to nine
+  and physical records to thirteen. The changed role head/embedding adds 769 parameters. Exact
+  complete/trainable/headroom counts are 192,421,936/11,716,385/7,578,064; the 98+4 tensor
+  contract now hashes to `1e637f3d...`. Fourteen focused tests and actual confirmed-parent
+  reconstruction pass with unchanged parent/excluded digests. Freeze/push v1.2 and its board source
+  before drawing any seed.

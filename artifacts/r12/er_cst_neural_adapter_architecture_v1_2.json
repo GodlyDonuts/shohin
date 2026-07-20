@@ -1,24 +1,26 @@
 {
-  "amends_source_commit": "0159bd4",
-  "change": "attach_inherited_frozen_late_query_logits_and_pointer_to_public_compilation_output",
+  "amends_protocol": "R12-ER-CST-v1.1-neural-adapter",
+  "change": "increase_event_slots_from_8_to_9_for_explicit_depth_8_plus_halt",
   "confirmed_parent": {
     "assessment_sha256": "4629a745f6eed2e388eb6e1f78b29dff346ee6939e21275ae6ff1d66719d3cb9",
     "checkpoint_sha256": "a5888d88541904cfa186a6686012c13c7b555f7d186ba1e3e73f71dbaca462d8",
     "state_sha256": "cfb3d8bdf712bd0ed51e35c015b8a106b4b48b6112418585fc1df1139c3b49d9"
   },
+  "event_slots": 9,
   "excluded_state_sha256": "1ad33273f7db5073b4cfac0e79031544a74b74914050026642110aee484c94e7",
   "parameters": {
     "base": 125081664,
-    "compiler": 67336230,
-    "complete_system": 192421167,
-    "headroom_below_200m": 7578833,
+    "compiler": 67336999,
+    "complete_system": 192421936,
+    "headroom_below_200m": 7578064,
     "motor": 2438,
     "reader": 835,
-    "trainable": 11715616
+    "trainable": 11716385
   },
-  "protocol": "R12-ER-CST-v1.1-neural-adapter",
-  "schema": "r12_er_cst_neural_adapter_architecture_v1_1",
-  "scientific_status": "closed_preboard_insufficient_depth8_halt_capacity",
+  "physical_records": 13,
+  "protocol": "R12-ER-CST-v1.2-neural-adapter",
+  "schema": "r12_er_cst_neural_adapter_architecture_v1_2",
+  "scientific_status": "architecture_admitted_before_source_freeze",
   "scored_access": {
     "confirmation": 0,
     "development": 0
@@ -27,15 +29,15 @@
   "trainable_contract": {
     "compiler_tensors": 98,
     "motor_tensors": 4,
-    "sha256": "f2c6c1debd1e17c43c287b2dc72db1185765ba9fa7d340ed56007c65c0a1bc2b"
+    "sha256": "1e637f3ddc09c1f89d5af9d8d258eb212218517991249ca6ff6e62ced9931eec"
   },
   "validation": {
     "actual_confirmed_parent_reconstruction": "pass",
     "byte_identical_parent_copy": "pass",
     "focused_tests": 14,
-    "parameter_delta_from_v1": 0,
+    "maximum_active_depth": 8,
+    "persistent_halt": "pass",
     "python_byte_compile": "pass",
-    "query_interface": "pass",
     "ruff": "pass"
   }
 }
