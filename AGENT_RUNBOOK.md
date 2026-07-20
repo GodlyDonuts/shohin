@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 16:05 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 16:13 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -179,7 +179,9 @@
 > parameters with 11,715,616 trainable and 7,578,833 headroom. Its 98 compiler plus four motor
 > trainability tensors hash to `f2c6c1de...`; confirmed-parent/excluded-state digests are
 > `cfb3d8bd...`/`1ad33273...`. Fourteen focused tests, exact 36-cell motor fit, gradient isolation,
-> static checks, and actual parent reconstruction pass. No neural source commit, board seed,
+> static checks, actual parent reconstruction, and the v1.1 categorical late-query interface pass.
+> V1 source `0159bd4` is closed pre-board because its public result omitted late query; v1.1 adds
+> the inherited frozen query compiler with zero parameter change. No v1.1 source commit, board seed,
 > training seed, H100 job, development score, or confirmation access exists. Exact CPU source
 > `5a03824d2adcaa11633c6b7fd77cebe73afbd99e`
 > produces the durable report from seed 1,729: all seven gates pass; report/episode-registration
@@ -10102,3 +10104,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   byte compilation, and a real parent-checkpoint reconstruction pass. No source commit, board seed,
   training seed, H100 job, or scored access exists. Commit/push this exact contract before board
   generation.
+
+- **2026-07-20 16:05--16:13** -- **ER-CST v1 is closed pre-board and zero-parameter v1.1 repairs
+  its answer interface.** Exact source `0159bd4` exposed categorical initial state, cards, opcode
+  bindings, and HALT but omitted late-query logits from its public result, so the promised reader
+  could not produce an answer. No board seed, output, or scored access existed. V1.1 invokes the
+  inherited confirmed `compile_query_with_evidence` exactly once and adds its categorical query and
+  source pointer to the result. Parameters, 98+4 trainability tensors, parent/excluded digests,
+  supervision, controls, and source-deletion boundary remain unchanged except that the sealed packet
+  now includes query. Fourteen focused tests, static checks, and actual parent reconstruction pass.
+  Commit/push v1.1 before implementing or seeding the fresh board.

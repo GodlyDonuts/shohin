@@ -10,6 +10,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from sd_cst import LateQuery
 from sd_cst_binding_bus import PERMUTATIONS
 from sd_cst_byte_addressed import BYTE_PAD
 from sd_cst_complete_physical_record_bus_v1_2 import (
@@ -72,9 +73,11 @@ class HardRuleCardProgram:
 @dataclass(frozen=True, slots=True)
 class RuleCardCompilerOutput:
     program: RuleCardProgram
+    query: LateQuery
     line_pointer_logits: torch.Tensor
     binding_pointer_logits: torch.Tensor
     initial_entity_pointer_logits: torch.Tensor
+    query_pointer_logits: torch.Tensor
 
 
 @dataclass(frozen=True, slots=True)
@@ -208,6 +211,8 @@ class EpisodicRuleCardCompiler(CompletePhysicalRecordBusCompilerV1_2):
         self,
         ids: torch.Tensor,
         valid_mask: torch.Tensor,
+        query_ids: torch.Tensor,
+        query_valid_mask: torch.Tensor,
     ) -> RuleCardCompilerOutput:
         records, token_memory, local_valid, source_indices, line_masks = (
             self._er_encode_records(ids, valid_mask)
@@ -264,6 +269,10 @@ class EpisodicRuleCardCompiler(CompletePhysicalRecordBusCompilerV1_2):
         ).clamp_min(1e-30).log()
         if declaration.shape != (ids.shape[0], ER_RECORDS):
             raise RuntimeError("ER-CST declaration assignment differs")
+        query_output = self.compile_query_with_evidence(
+            query_ids,
+            query_valid_mask,
+        )
         return RuleCardCompilerOutput(
             program=RuleCardProgram(
                 initial_state=state_logits.float(),
@@ -271,9 +280,11 @@ class EpisodicRuleCardCompiler(CompletePhysicalRecordBusCompilerV1_2):
                 event_card=event_card_logits.float(),
                 event_halt=self.er_event_halt_head(events).float(),
             ),
+            query=query_output.query,
             line_pointer_logits=line_pointer_logits,
             binding_pointer_logits=binding_pointer_logits,
             initial_entity_pointer_logits=initial_pointer_logits,
+            query_pointer_logits=query_output.pointer_logits,
         )
 
 

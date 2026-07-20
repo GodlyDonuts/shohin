@@ -2,9 +2,11 @@
 
 **Protocol:** `R12-ER-CST-v1-theory`
 
-**Status:** CPU mechanics and a parameter-audited neural adapter are locally
-admitted before source freeze. No board seed, training seed, H100 job, development
-score, or confirmation access exists.
+**Status:** CPU mechanics and the parameter-audited v1.1 neural adapter are locally
+admitted before source freeze. V1 was closed pre-board because its public result
+omitted late query; v1.1 attaches the inherited frozen query path with zero parameter
+change. No board seed, training seed, H100 job, development score, or confirmation
+access exists.
 
 ## 1. Why this is the next experiment
 
@@ -74,9 +76,10 @@ The favorable treatment may reuse and fine-tune the confirmed physical line enco
 New parameters are limited to a twelve-role record path, rule/event norms, a
 permutation-card head, opaque-opcode binding projections, a HALT head, and a tied
 rule-card motor. The exact 98-compiler-tensor plus four-motor-tensor trainability
-contract is frozen in `R12_ER_CST_NEURAL_ADAPTER_PREREG.md`; its name/shape/count
-hash is `f2c6c1de...`. The adapter adds 308,756 compiler parameters and replaces
-the old 19,206-parameter motor with a 2,438-parameter tied motor.
+contract is frozen in `R12_ER_CST_NEURAL_ADAPTER_PREREG.md` and its v1.1 amendment;
+its name/shape/count hash is `f2c6c1de...`. The adapter adds 308,756 compiler
+parameters and replaces the old 19,206-parameter motor with a 2,438-parameter tied
+motor. The inherited frozen query compiler adds no parameter or trainable tensor.
 
 The treatment may receive rule-card, opcode-pointer, program-pointer, initial-state,
 and query targets on training rows. It may not receive final states, answers,

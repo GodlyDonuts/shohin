@@ -2,9 +2,10 @@
 
 **Protocol:** `R12-ER-CST-v1-neural-adapter`
 
-**Status:** architecture admitted before scientific source freeze. No board seed,
-training seed, H100 job, development read, confirmation read, or neural result
-exists.
+**Status:** v1 closed before board generation because its public output omitted
+the late-query category. It has no board seed, training seed, H100 job, output,
+development read, confirmation read, or neural result. V1.1 is defined only by
+`R12_ER_CST_NEURAL_ADAPTER_PREREG_AMENDMENT_V1_1.md`.
 
 ## 1. Question
 

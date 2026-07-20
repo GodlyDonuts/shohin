@@ -71,8 +71,9 @@ def test_rule_card_compiler_shapes_and_source_only_boundary() -> None:
     model._orbit_encode = forbidden_parent_path  # type: ignore[method-assign]
     program = b"\n".join(f"record {index} zed".encode() for index in range(ER_RECORDS))
     ids, valid = _batch([program])
+    query_ids, query_valid = _batch([b"Return rank 2."])
     with torch.no_grad():
-        output = model.compile_rule_program(ids, valid)
+        output = model.compile_rule_program(ids, valid, query_ids, query_valid)
     assert output.program.initial_state.shape == (1, RULE_CARD_COUNT)
     assert output.program.rule_cards.shape == (1, RULE_COUNT, RULE_CARD_COUNT)
     assert output.program.event_card.shape == (1, EVENT_SLOTS, RULE_COUNT)
@@ -80,6 +81,8 @@ def test_rule_card_compiler_shapes_and_source_only_boundary() -> None:
     assert output.line_pointer_logits.shape == (1, ER_RECORDS, ids.shape[1])
     assert output.binding_pointer_logits.shape == (1, 3, ids.shape[1])
     assert output.initial_entity_pointer_logits.shape == (1, 3, ids.shape[1])
+    assert output.query.logits.shape == (1, 3)
+    assert output.query_pointer_logits.shape == query_ids.shape
 
 
 def test_er_trainability_is_explicit_and_new_names_are_exact() -> None:
@@ -100,7 +103,8 @@ def test_er_backward_reaches_every_declared_tensor_only() -> None:
     declared = set(freeze_to_er_adaptive(model))
     program = b"\n".join(f"r{index} a b c".encode() for index in range(ER_RECORDS))
     ids, valid = _batch([program])
-    output = model.compile_rule_program(ids, valid)
+    query_ids, query_valid = _batch([b"Return rank 2."])
+    output = model.compile_rule_program(ids, valid, query_ids, query_valid)
     loss = (
         output.line_pointer_logits.square().mean()
         + output.binding_pointer_logits.square().mean()
@@ -109,6 +113,8 @@ def test_er_backward_reaches_every_declared_tensor_only() -> None:
         + output.program.rule_cards.square().mean()
         + output.program.event_card.square().mean()
         + output.program.event_halt.square().mean()
+        + output.query.logits.square().mean()
+        + output.query_pointer_logits.square().mean()
     )
     loss.backward()
     missing = [
