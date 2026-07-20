@@ -27,6 +27,7 @@ from build_sd_cst_board import (
     build_all,
     row_ids_sha256,
 )
+from projected_sd_cst_fresh import parse_projected_row
 from sd_cst_complete_physical_fresh_renderers import (
     SCORED_RENDERERS,
     TRAIN_RENDERERS,
@@ -142,6 +143,9 @@ def rekey_families(
         )
         for role, binding in enumerate(bindings):
             binding["entity"] = names[role]
+        for slot in targets["event_slots"]:
+            if int(slot["kind_id"]) != 2:
+                slot["entity"] = names[int(slot["entity_role"])]
         if "oracle" in row:
             answer_role = int(row["oracle"]["answer_role"])
             row["oracle"]["answer_entity"] = names[answer_role]
@@ -189,6 +193,13 @@ def _row_semantics_exact(row: Mapping[str, object]) -> bool:
         return False
     bindings = _bindings(row)
     if set(bindings) != {0, 1, 2} or len(set(bindings.values())) != 3:
+        return False
+    slots = row["compiler_targets"]["event_slots"]
+    if any(
+        int(slot["kind_id"]) != 2
+        and str(slot.get("entity")) != bindings[int(slot["entity_role"])]
+        for slot in slots
+    ):
         return False
     expected_state, trajectory = simulate_adjacent_swaps(
         tuple(int(value) for value in row["compiler_targets"]["initial_order_roles"]),
@@ -302,6 +313,9 @@ def audit_fresh_board(
         "all_ids_unique": len({str(row["id"]) for row in all_rows}) == len(all_rows),
         "all_rows_semantically_exact": all(
             _row_semantics_exact(row) for row in all_rows
+        ),
+        "all_rows_runtime_parse": all(
+            parse_projected_row(row, str(row["split"])) for row in all_rows
         ),
         "all_families_have_four_views": all(
             registration["all_families_complete"] and registration["family_size"] == 4

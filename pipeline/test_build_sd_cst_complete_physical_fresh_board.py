@@ -5,12 +5,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "pipeline"))
+sys.path.insert(0, str(ROOT / "train"))
 
 from build_sd_cst_board import build_all  # noqa: E402
 from build_sd_cst_complete_physical_fresh_board import (  # noqa: E402
     audit_fresh_board,
     rekey_families,
 )
+from projected_sd_cst_fresh import parse_projected_row  # noqa: E402
 from sd_cst_complete_physical_fresh_renderers import (  # noqa: E402
     SCORED_RENDERERS,
     TRAIN_RENDERERS,
@@ -62,6 +64,12 @@ def test_small_board_semantics_and_orbits() -> None:
     assert gates["training_oracles_absent"]
     assert gates["evaluation_oracles_present"]
     assert gates["opaque_names_fixed_and_globally_unique"]
+    for split, rows in (
+        ("sd_cst_train", train),
+        ("sd_cst_development", development),
+        ("sd_cst_confirmation", confirmation),
+    ):
+        assert all(parse_projected_row(row, split) for row in rows)
 
 
 def test_row_corruption_fails_semantic_audit() -> None:

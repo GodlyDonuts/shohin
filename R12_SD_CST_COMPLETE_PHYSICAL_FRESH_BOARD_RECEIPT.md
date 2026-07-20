@@ -1,6 +1,6 @@
 # R12 SD-CST Complete Physical Fresh-Board Receipt
 
-**Status:** admitted and sealed before training-seed draw or model fit. Board
+**Status:** rejected prefit without scored access. Board
 receipt commit `296af7e96e06082771b8963c524de6c23a26a445` precedes the sole
 training-seed draw.
 
@@ -68,7 +68,12 @@ All sixteen board gates pass:
 - zero development and confirmation access.
 
 A second full generation from the same committed source, prior inputs, and seed
-is byte-identical for all four artifacts. This receipt authorizes only a later
-post-receipt training-seed draw and the sole preregistered development pilot.
-That draw is now recorded above; no fit or GPU output exists yet. It does not
-authorize confirmation access or make a reasoning claim.
+is byte-identical for all four artifacts. H100 job `694333` then passed CUDA
+preflight but failed while parsing training bytes: family re-keying had updated
+declaration bindings and scorer answers without updating redundant active-event
+entity strings. The failure occurred before model initialization, optimizer
+creation, output-directory creation, access-ledger creation, or development
+read. Access remains `0/0`; confirmation remains sealed. Close this board and
+both seeds. The successor must update event strings, require all 52,096 rows to
+pass the exact runtime parser during board admission, freeze a new source, and
+draw new board/training seeds.

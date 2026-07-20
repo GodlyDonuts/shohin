@@ -71,11 +71,16 @@ unique names per family, mode-`0600` confirmation, byte-identical deterministic
 rebuilds, and `0/0` score access. Report/train/development/confirmation SHA-256
 values begin `7ecb3dcf...`/`bad7f8db...`/`58aef892...`/`afedef75...`. No training
 seed or model fit existed at board receipt. Receipt commit `296af7e` precedes
-the sole training seed `6975207938833640953`; no GPU output exists yet.
+the sole training seed `6975207938833640953`. Job `694333` passed H100 preflight
+but rejected the board before model initialization: declaration re-keying did
+not update redundant active-event entity strings. No optimizer, output, ledger,
+or scored read occurred; access remains `0/0`. V1.2 updates those strings and
+adds actual runtime-parser acceptance over all 52,096 rows as a new board gate.
+It requires a new source and both new seeds.
 V2 custody is `1/0`, its confirmation is sealed, and no board will be rescored.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 14:18 EDT. User authority requires every future
+**Last updated:** 2026-07-20 14:29 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 

@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 14:18 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 14:29 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -333,7 +333,7 @@
 > fresh board with new names and renderer/source families, source deletion, unchanged categorical
 > execution, matched controls, and strict complete-system size below 200M.
 >
-> **Fresh Complete Physical board v1.1 is admitted before training-seed draw.** Source
+> **Fresh Complete Physical board v1.1 is closed prefit; v1.2 admission repair is active.** Source
 > `cd5a02b91493352b757d19212701bbf543ebbef4` was frozen and pushed before raw beacon
 > `17279531721804544805`, correctly reduced modulo `2^63` to board seed
 > `8056159684949768997`. Generation passed every semantic, renderer, overlap, oracle, and access
@@ -348,8 +348,13 @@
 > Report/train/development/confirmation SHA values begin `7ecb3dcf...`/`bad7f8db...`/
 > `58aef892...`/`afedef75...`; confirmation is mode `0600`; access is `0/0`. Board receipt commit
 > `296af7e96e06082771b8963c524de6c23a26a445` precedes raw training beacon
-> `16198579975688416761` and sole training seed `6975207938833640953`. No GPU output exists yet. The
-> admitted board
+> `16198579975688416761` and sole training seed `6975207938833640953`. Job `694333` passed H100/bf16
+> preflight on `evc49` but failed while parsing training bytes because family re-keying did not update
+> redundant active-event entity strings. It exited before model initialization, optimizer, output
+> directory, access ledger, or development read; access remains `0/0` and confirmation remains
+> sealed. Close source/board/training seeds. V1.2 updates each active event string with its re-keyed
+> role entity and adds exact runtime-parser acceptance for all 52,096 rows as a seventeenth board
+> gate. Freeze a new source before new seeds. The intended board
 > creates 48,000 compiler-only training rows from 12,000 latent programs and four even-parity
 > renderer views, plus 2,048 development and 2,048 sealed-confirmation rows from four odd-parity
 > renderer views with new names and entirely new declaration/event/query language. Treatment and a
@@ -358,8 +363,7 @@
 > bilinear declaration tensors are deterministically zeroed and frozen; direct 1,000x perturbation
 > leaves every v1.2 program output bit-identical. A source-free evidence capsule and separately
 > committed assessor independently recompute packet, pointer, state, answer, control, artifact,
-> parameter, and custody gates. Twenty focused tests and all static/job checks pass. Commit the board
-> receipt before drawing the sole training seed.
+> parameter, and custody gates. Re-run all focused/static checks before source freeze.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9891,3 +9895,13 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `16198579975688416761`, reduced modulo `2^63` to seed `6975207938833640953`. No source, board,
   architecture, arm, optimizer, gate, threshold, or assessor setting changes. No GPU job or output
   exists at this receipt point. Transport exact source/data/checkpoints before submission.
+
+- **2026-07-20 14:27--14:29** -- **Fresh-board v1.1 closes prefit on a runtime-parser admission
+  defect.** Exact data/checkpoint/core hashes and H100/bf16 pass in sole job `694333` on `evc49`.
+  Parsing the first training split raises because re-keying updated declaration bindings and scorer
+  answers but left legacy names in redundant active-event metadata, which the renderer emitted.
+  The job exits before model initialization, optimizer construction, output-directory creation,
+  access-ledger creation, or development read; access is `0/0` and confirmation remains sealed.
+  V1.2 updates active-event strings from their role after re-keying and adds actual runtime-parser
+  acceptance over all 52,096 rows to board admission. Close both old seeds; freeze a new source and
+  draw new board/training seeds only after the stronger tests pass.
