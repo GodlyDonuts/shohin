@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 05:33 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 05:45 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -170,10 +170,18 @@
 > initial-state exactness is 16.946%, identity 0.031%, amount 0.762%, while isolated late-query
 > prediction is 100%. Per-slot probe `693964` confirms chance cells and a chance 16.6625%
 > constrained STOP location; a one-STOP decoder alone would conceal rather than solve this. The
-> next pre-board pilot is a 14,206,993-parameter byte-addressed evidence compiler with supervised
-> model pointer localization and a deterministic 40k/8k split of consumed training rows. Complete
-> system is 139,308,698. Commit the pilot source, then draw its seed and run its nine frozen
-> admission gates without scored access. Mechanics alone are not native reasoning.
+> Byte-addressed pilot `693969` is closed without scored access. It reaches 100% on all nine line
+> pointers, raw event kind with exactly one raw STOP, amount, and late query over 8,000 held-out
+> consumed-training rows, but only 5/8,000 entity identity, 1,338/8,000 initial state, and zero whole
+> tapes. Report SHA is `0bd0b6bb...`. This isolates cross-occurrence variable binding after evidence
+> addressing and local field extraction. The active training-only successor is a content-addressable
+> binding bus: model-selected declaration/initial/event name spans are mapped through one shared
+> position-free byte-bigram fingerprint and cosine-matched into anonymous roles. Its compiler has
+> 20,513,138 parameters; complete Shohin is 145,614,843. Commit exact source and job contract before
+> drawing the pilot seed. Raw STOP and raw whole-tape gates are mandatory; no grammar repair or
+> scored access is authorized. User authority now permits future systems below 200M parameters, but
+> this isolated pilot retains its stricter preregistered 150M comparison gate. Mechanics alone are
+> not native reasoning.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9237,3 +9245,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   two slot-mixing layers, and unchanged categorical outputs. It has 14,206,993 parameters; complete
   Shohin is 139,308,698. The frozen pilot uses a SHA-ordered 40k/8k partition of consumed training
   rows, four epochs, and nine explicit gates. Commit source before drawing the pilot seed.
+
+- **2026-07-20 05:33--05:45** -- **Byte addressing solves extraction and isolates exact variable
+  binding.** Training-only H100 job `693969` completes on `evc22` in 3m39s using frozen source
+  commit `20d58b7` and seed `4554941412679220339`. On 8,000 deterministic held-out rows from the
+  consumed training split, all nine pointers, raw kinds with exactly one raw STOP, amounts, and late
+  queries are 8,000/8,000. Entity identity is 5/8,000, initial state is 1,338/8,000, and raw whole
+  tape is zero. Report SHA is `0bd0b6bb...`; access remains `0/0`. The next training-only mechanism
+  is a 20,513,138-parameter content-addressable binding bus using model-selected declaration,
+  initial, and event name spans plus one shared position-free byte-bigram fingerprint. Complete
+  system size is 145,614,843. User authority raises the global future-system ceiling to 200M; this
+  pilot deliberately retains a stricter 150M gate to isolate mechanism from scale. Freeze source,
+  job, and prereg before its seed; require raw STOP and tape gates, then controls and fresh-board
+  integration before any scored claim.

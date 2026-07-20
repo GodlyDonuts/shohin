@@ -13,17 +13,21 @@ recurrent execution. S9.1 remains the strongest fresh-development compiler at
 after its frozen alpha-closure failures. S9.2 is decisively rejected at
 340/2,048 = 16.602% exact graph/state/answer and 21/43 gates. Parser-only anchor
 repair is retired. The active experiment is Source-Deleted Categorical State
-Transport (SD-CST) v1.1: a 134,306,714-parameter system that compiles language once
-into an eight-slot private categorical tape, deletes the source, executes one
-tied learned motor through model-predicted STOP, and answers a separately
-compiled late query. Mechanics, scale, custody, and independent-assessor tests
-pass. V1 closed before development on an unstable atomic optimizer; v1.1 changes
-only deterministic component initialization and atomic fit rates/budgets, and
-passes 64/64 fresh exact fits on H100. No neural development score exists yet.
+Transport (SD-CST). Its recurrent motor/reader mechanics are retained, but v1.1
+closed before development because the generic language compiler learned
+source-blind priors. A byte-addressed compiler then reached 100% source-line
+pointers, raw kind/STOP, amount, and query on an 8,000-row consumed-training
+holdout, while identity and initial binding stayed at chance. The active
+training-only hypothesis is a 20,513,138-parameter content-addressable binding
+bus, for a 145,614,843-parameter complete system. It matches model-selected
+repeated entity spans through shared position-free byte-bigram fingerprints
+before source deletion. No neural development score exists yet.
 Broad language-grounded,
 self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 05:33 EDT.
+**Last updated:** 2026-07-20 05:45 EDT. User authority permits future complete
+systems strictly below 200M parameters; the current isolated pilot retains its
+stricter 150M comparison gate.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -42,6 +46,38 @@ full job-by-job chronology remains in the operational runbook summary.
 claim boundaries are in Sections 1-12; the complete research source text used
 to support them is embedded in Appendix A. No conclusion in this document
 requires opening another markdown file.
+
+---
+
+## 2026-07-20 frontier update: byte addressing succeeds, binding is isolated
+
+Training-only job `693969` closes the byte-addressed compiler pilot without
+opening development or confirmation. On its deterministic 8,000-row holdout of
+already-consumed training data, all nine model pointer slots, raw event kind,
+exactly-one raw STOP, event amount, and late query reach 100%. Entity identity
+is only 5/8,000 = 0.0625%, initial state is 1,338/8,000 = 16.725%, and complete
+raw tapes are zero. The result is a clean decomposition: learned source
+addressing and local event extraction now work, while exact repeated-name
+binding does not. Report SHA-256 is
+`0bd0b6bbbc68f904ce9fdc06e35e5484114a66db85a3a20af528a9c05e86766e`.
+
+The next falsifier is not another generic transformer layer. A model-owned
+content-addressable binding bus selects declaration, initial-order, and event
+name spans. One shared position-free byte-bigram fingerprint maps selected
+content into a 96-wide space, and cosine equality emits anonymous role logits.
+Initial state is scored over the six possible permutations from three
+occurrence-to-role match rows. The last selected byte cannot leak its following
+delimiter because only adjacent pairs whose two pointer weights are selected
+contribute. The current complete accounting is 145,614,843 parameters.
+
+This is intentionally a narrow structural prior for exact repeated surfaces,
+not general coreference. The preregistered pilot reads only consumed training,
+requires raw rather than grammar-repaired tape accuracy, and cannot open scored
+splits. A pass still requires shuffled/swap/no-address/hard-negative controls,
+source-deletion integration with the retained tied motor/reader, and a fresh
+post-commit board before any bounded native-reasoning claim. The newly
+authorized sub-200M ceiling is reserved for evidence-driven integration rather
+than being spent before this mechanism is falsified.
 
 ---
 
