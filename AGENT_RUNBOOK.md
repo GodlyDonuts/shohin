@@ -282,16 +282,20 @@
 > `89ab7d74...`/`9c768fa8...`; local and Newton copies match; access is `0/0`. Any advancement must
 > use a separately committed fresh board. Never open existing development or confirmation.
 >
-> **Active local-completion gate:** before fresh-board scoring, the retained independent physical
-> record bus receives a fully local declaration/initial/query path. Only ten new `local_*` tensors /
-> 594,435 parameters train; all 88 record-bus tensors and every parent/executor tensor are frozen.
-> The complete compiler/system is 66,426,124 / **191,527,829**, leaving 8,472,171 below 200M. The
-> complete path no longer calls either inherited global encoder. Three focused tests, all current
-> physical-bus tests, real-parent reconstruction, and a real consumed-row full backward pass are
-> clean; all ten declared tensors receive gradients and no excluded tensor does. Exact scientific
-> source is frozen at `6294ea90f8b9e308edde9cad4d4b276c729961ae` before seed. Post-push beacon
-> and sole scientific seed are `4564290739472553435`; no H100 output exists yet. A pass only authorizes a separately
-> committed fresh board; it is not reasoning evidence.
+> **Complete local-front-end v1 is closed and rejected.** Exact scientific source
+> `6294ea90f8b9e308edde9cad4d4b276c729961ae`, seed `4564290739472553435`, and sole job `694199`
+> completed cleanly on H100 `evc37` in 6m19s. The 191,527,829-parameter system retains 100% held-out
+> line/event pointer, kind, amount, query, and query pointer, but reaches only 5.15% binding pointer,
+> 0% initial-occurrence pointer, 15.0% initial state, and 13.45% complete packet. Fit is nearly
+> identical, excluded state is byte-identical, and scored access is `0/0`. Endpoint declaration
+> tensors have large nonzero deltas and gradients, while both address losses remain near uniform;
+> the failure is active but the six declaration queries are addressing through a frozen key map
+> trained for event lines. Checkpoint/report SHA values are `30b75305...`/`c06348d5...`; local and
+> Newton copies match. Do not add epochs or generate a fresh board from v1. The only admitted
+> training-only repair is to freeze the exact v1 query path and perfect physical event bus, reset
+> the failed declaration queries/projection, add one declaration-local key projection, and rerun the
+> same consumed-row absolute gates under a new source commit and seed. Every complete system remains
+> strictly below 200M; this repair is not reasoning evidence.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional

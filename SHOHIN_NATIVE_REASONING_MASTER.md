@@ -218,13 +218,26 @@ initial-order pointers plus a local query selector/value motor, and brings the
 complete system to 191,527,829 parameters. The program and query forwards pass
 with both inherited global encoders replaced by raising sentinels. Every new
 tensor receives finite gradient on a real consumed row and no excluded tensor
-does. Exact scientific source is frozen before seed at commit
-`6294ea90f8b9e308edde9cad4d4b276c729961ae`. This local-completion gate is now seeded but has not run. It must pass
-consumed-training interface gates before any fresh board can be generated; a
-pass remains compiler mechanics, not reasoning.
+does. Exact scientific source was frozen before seed at commit
+`6294ea90f8b9e308edde9cad4d4b276c729961ae`; raw beacon and sole seed were
+`4564290739472553435`. Sole job `694199` completed cleanly on H100 `evc37` in
+6m19s. The 191,527,829-parameter system retains 100% minimum held-out query,
+query pointer, line pointer, event pointer, kind, and amount, but reaches only
+5.15% binding pointer, 0% initial-occurrence pointer, 15.0% initial state, and
+13.45% complete packet. Fit is nearly identical and excluded state remains
+byte-identical, so neither renderer holdout nor dead gradients explain the
+failure. The query path learned; the declaration path did not.
 
-After source push, raw beacon and sole seed `4564290739472553435` were recorded
-unchanged because the value is below `2^63`. No output existed at that receipt.
+Endpoint declaration queries and their projection changed substantially and
+retain large gradients, while address losses stay close to uniform. The six
+declaration roles are forced through `record_entity_key`, a frozen key map
+trained for event-line entities. V1 is therefore closed as
+`reject_or_revise_complete_local_front_end`; checkpoint/report SHA values begin
+`30b75305...`/`c06348d5...`, access is `0/0`, and no fresh board is authorized.
+The next bounded repair freezes the now-exact local query path and the perfect
+physical event bus, resets the failed declaration queries/projection, and adds
+one declaration-local key projection under a separate contract. Full evidence
+is in `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_RESULT.md`.
 
 ---
 

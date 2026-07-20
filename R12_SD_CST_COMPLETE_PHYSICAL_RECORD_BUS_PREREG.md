@@ -1,12 +1,19 @@
 # R12 SD-CST Complete Physical-Record Front-End Preregistration
 
-**Status:** exact scientific source frozen before seed or H100 execution;
-consumed-training mechanics only
+**Status:** closed and rejected under the frozen gates; sole job `694199`
+completed cleanly on H100 `evc37`. Full result:
+`R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_RESULT.md`
 
 **Source contract:** exact architecture, pilot, tests, job, preregistration, and
-ledger commit `6294ea90f8b9e308edde9cad4d4b276c729961ae`. No seed or output exists at
-that receipt. After source push, raw 64-bit beacon and sole scientific seed are
+ledger commit `6294ea90f8b9e308edde9cad4d4b276c729961ae`. No seed or output existed at
+that receipt. After source push, raw 64-bit beacon and sole scientific seed were
 both `4564290739472553435` (already below `2^63`).
+
+The frozen run reaches 100% held-out query, query pointer, and event pointer,
+but only 5.15% binding pointer, 0% initial-occurrence pointer, 15.0% initial
+state, and 13.45% complete packet. The decision is
+`reject_or_revise_complete_local_front_end`; no fresh board is authorized by
+this result.
 
 **Parent compiler:** retained independent-assignment Physical-Record Write Bus,
 checkpoint SHA-256
