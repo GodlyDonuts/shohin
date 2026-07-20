@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-19 19:29 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-19 20:19 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -83,6 +83,14 @@
 > S9 confirmation. Preregister S9.1 on a fresh board with operation-orbit equivariance and
 > model-logit-only constrained relation assignment; keep the parameter count, S7/S8 runtime,
 > no-class/shuffled controls, and all current thresholds fixed.
+> Two frontier architecture submissions are archived verbatim and reviewed in
+> `FRONTIER_S9_TO_GENERAL_REASONING_ANALYSIS.md`. Adopt their compiler-machine thesis, orbit
+> consistency, and structured assignment. Do **not** adopt byte-span replacement as the S9.1
+> diagnosis: an independent audit over all 2,048 development sources finds recoded gold spans at
+> widths 1/2/3 only and zero above the current width-four cap. The 18 failures are learned
+> selection/assembly failures. Mean class aggregation is already permutation invariant. Defer byte
+> lattices, learned aliases, universal rule cards, agenda control, and graph-to-language realization
+> until fresh-board S9.1 passes and confirms.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -8970,3 +8978,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `02a0ae68...`/`874f7626...`; local mirrors match. Development/confirmation access is one/zero.
   Never open S9 confirmation or rescore this board. Fresh-board S9.1 may test explicit operation-orbit
   equivariance plus constrained model-logit relation assignment under unchanged controls/gates.
+
+- **2026-07-19 19:46--20:19** -- **Two frontier nominal-machine proposals are archived, audited,
+  and reduced to the measured S9.1 repair.** Exact source SHA-256 values are `e39f9787...` and
+  `d4d2d622...`; review is `FRONTIER_S9_TO_GENERAL_REASONING_ANALYSIS.md`. Adopt the central thesis:
+  language should compile into an anonymous model-owned machine rather than a longer prose trace.
+  Adopt paired operation-renaming orbit supervision and syntax/type-only maximum-score relation
+  assignment. Reject the proposed token-width diagnosis: an independent audit of all 2,048 frozen
+  development rows counts 114,794 original and 114,794 recoded gold spans, all at widths one through
+  three, with zero above S9's width-four cap. The 18 failures are learned selection/assembly errors,
+  not missing candidates. S9's class mean is already permutation invariant. Byte lattices, nominal
+  aliases, rule cards, agenda control, and causal language realization remain ordered future
+  hypotheses and may not be bundled into S9.1.

@@ -15,7 +15,7 @@ It is not confirmed: class exact misses its 95% gate by five examples and 18
 otherwise-valid parses fail operation-name recoding. Broad language-grounded,
 self-directed reasoning is not yet established.
 
-**Last updated:** 2026-07-19 19:29 EDT.
+**Last updated:** 2026-07-19 20:19 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -264,6 +264,8 @@ loop.
 |---|---:|---|---|
 | Source-scheduled continuation (SSC) | **115/256 = 44.92%** | Host supplies source and operation cursor; model executes local steps | External-control ceiling |
 | **S4 v5 + S5 learned generator confirmation** | **96.924% programs / 97.607% exact state / 98.096% answers** | Frozen Shohin parser discovers events; a 4,934-parameter learned generator owns the finite transition law and recurrent categorical state; structural runtime owns bounded invocation | **Confirmed strongest bounded reasoning baseline; not unrestricted native reasoning** |
+| **S7 learned contextual-law compiler confirmation** | **2,048/2,048 = 100% recurrent states and answers over 18 disjoint laws and depths 3-8** | A 218-parameter successor/Cayley generator compiles unseen operation laws from two witnesses; cyclic topology and bounded replay remain structural | **Confirmed strongest bounded contextual-law component; not universal arithmetic or open-language reasoning** |
+| **S9 occurrence-quotient compiler development** | **1,941/2,048 = 94.775% exact graphs; 1,943/2,048 = 94.873% exact state and answers** | Whole-source span proposal plus exact repeated-surface classes and relational graph decoding; matched no-class control reaches 46.387% exact graphs | **Strongest fresh language-grounding near-pass; rejected for confirmation after missing 2 frozen gates** |
 | S6 generic contextual-law transformer | **24.528% held-out atomic / 8.154% exact recurrent state / 30.908% answers** | A 4.75M transformer receives two identifying examples of an unseen affine law, then the host invokes its predicted destinations | **Rejected algorithmic generalization mechanism; no confirmation** |
 | S3 v1.4 pointer-anchor confirmation | **98.242% answers / 99.658% exact state / 98.975% chains** | Model consumes known-atom packets through a categorical register; host supplies chunks and stop | Confirmed bounded execution component, not autonomous reasoning |
 | RGDE v1.1 development | **99.707% answers / 99.902% exact state** on two-step composition | Model-owned tied source-deleted update from atomic training; packet/compiler boundary is fixed | Qualified execution component, fresh depth confirmation pending |
@@ -305,6 +307,7 @@ The present evidence decomposes the missing capability as follows:
 | Halt/DONE | Raw runs hit caps; typed v1 learns DONE but not arithmetic; typed v2 destroys DONE | Missing and entangled |
 | Self-review | Fixed raw probes remain 0/7 | Missing |
 | Broad transfer | Raw/SFT/code boards remain low; width-8 DRS is zero | Missing |
+| Whole-source graph grounding | S8.1 emits **514/2048 = 25.098%** exact graphs, and every valid graph executes exactly; S9 improves to **1941/2048 = 94.775%** exact graphs and **1943/2048 = 94.873%** state/answers | Conditional graph execution is solved; the remaining bottleneck is robust span, occurrence-class, relation, and operation grounding under recoding |
 | Autonomous schedule/halt | S4 v1 finds **2048/2048** event counts and exact programs on every valid tape, but strict validity/programs are **1932/2048 = 94.336%** | Count is learned; variable-width span binding and per-event argument pairing remain open |
 
 This diagnosis rules out the simplest stories:
@@ -628,6 +631,8 @@ instead of treating a single end-to-end score as one capability.
 | **S6 contextual affine-law induction** | **78/318 = 24.528%** held-out atomic destinations, **167/2048 = 8.154%** recurrent state, **633/2048 = 30.908%** answers after exact 961/961 atomic training fit | **Rejected generic transformer induction; two demonstrations are causally informative but are represented as a lookup surface, not the identified algebra; no confirmation** |
 | **S7 learned Cayley-law compiler confirmation** | **2,048/2,048 = 100% recurrent state and answers over 18 disjoint laws and every depth 3-8. Ordinary transformer: 1.562% state; `S^2`: 0.879% state** | **All 18 frozen confirmation gates pass; promoted as the strongest bounded native component. Cyclic topology, equality, bounded replay, event invocation, and pop-insert remain structural** |
 | S8 nil-linked law graph CPU falsifier | 3,520/3,520 exact graph executions and storage-reindex invariance; storage-order shortcut 10.142%, reversed links 4.943%, card derangement 1.051%, early nil 1.989% state | CPU interface admitted before any neural board; next test is whether a sub-16M whole-source compiler can emit cards, schedule, and halt without answer/recurrent supervision |
+| **S8.1 nil-linked whole-source compiler** | **514/2048 = 25.098%** exact graph/state/answer; all 514 valid graphs are exact and execute exactly; gold graph is 2048/2048 | **Rejected end-to-end compiler; conditional graph execution is exact, so the failure is source grounding rather than recurrent dynamics** |
+| **S9 occurrence-quotient relational compiler** | **1941/2048 = 94.775%** exact graphs and **1943/2048 = 94.873%** exact state/answers; 20/22 gates pass; no-class control is 46.387% graphs | **Rejected for confirmation by five class-exact examples and 18 operation-recoding invalidations; retain exact-surface class messaging and move to a fresh repair board** |
 
 The implementation gates were also independently exercised before the model
 claims were read: RGDE v1.1 passed its 19 CPU tests, Ruff, `py_compile`, shell
@@ -642,10 +647,12 @@ confirmed hard-island/soft-interface known-atom parser, S5 supplies a confirmed
 model-owned finite generator and recurrent categorical state, and S6 shows that
 identifiability alone does not make a generic transformer induce an unseen law.
 S7 then confirms that a learned generator basis plus forced reuse can infer and
-execute unseen cyclic laws exactly under hidden coordinates. The remaining
-non-native interfaces are natural-language law grounding, active-step and
-termination control, arbitrary operation structure, and transfer of this
-mechanism into the frozen Shohin language model.
+execute unseen cyclic laws exactly under hidden coordinates. S8.1 shows that
+valid model-emitted graphs execute exactly, while S9 shows that occurrence
+classes and relational decoding sharply improve whole-source grounding. The
+remaining non-native interfaces are robust operation-name equivariance,
+active-step and termination control, arbitrary operation structure, and
+transfer of the confirmed generator into unconstrained language.
 
 ---
 
@@ -1080,6 +1087,13 @@ Do not reopen these without a materially different causal prediction:
 21. **Diffuse local attention is sufficient once event regions are known.**
     S4 v4's roster and event-region rotations are causal, yet the soft regional
     decoder reaches only 70.46% programs. Hard contiguous islands are required.
+22. **A nil-linked graph runtime alone solves whole-source reasoning.** S8.1
+    reaches only 514/2048 exact graphs, but every valid graph is exact; graph
+    execution is not the bottleneck, source grounding is.
+23. **Exact repeated-surface quotienting is already sufficient for confirmation.**
+    S9 reaches 94.775% exact graphs and 94.873% state/answers, but misses the
+    95% class gate by five examples and loses 18 otherwise-valid parses under
+    operation-name recoding. The mechanism is promising, not confirmed.
 
 ---
 
@@ -1398,6 +1412,38 @@ model-logit-only constrained relation assignment, and retain every existing
 absolute, attribution, shuffled, causal, and access gate. This is a targeted
 robustness repair, not permission to relax thresholds or rescore S9.
 
+### 9.14 Frontier nominal-machine synthesis
+
+Two new frontier submissions are preserved verbatim as
+`FRONTIER_NOMINAL_GRAPH_REWRITE_MACHINE_PLAN.md` and
+`FRONTIER_S9_ARCHITECTURE_PROPOSAL.md`; the evidence review is
+`FRONTIER_S9_TO_GENERAL_REASONING_ANALYSIS.md`. Their central thesis is adopted:
+Shohin should become a renaming-invariant language compiler for a small,
+model-owned reasoning computer, rather than learning longer textual rationales.
+Their immediate orbit-consistency and model-logit-only structured-assignment
+proposals agree with S9's measured failures.
+
+One attractive diagnosis is rejected by direct audit. Across all 2,048 frozen
+S9 development sources, original gold span widths are 1/2/3 with counts
+4,562/101,355/8,877; source-recoded widths are 1/2/3 with counts
+4,564/101,341/8,889. There are zero spans wider than the frozen width-four cap.
+The 18 recoding failures are therefore learned selection or relation-assembly
+failures, not missing legal candidates. Byte-aligned proposal lattices remain a
+future hypothesis, not the S9.1 repair. Likewise, S9's class mean is already
+permutation invariant; changing mean to sum changes multiplicity scaling, not
+alpha invariance.
+
+The admitted S9.1 contract retains token-span proposals, the 134.58M envelope,
+the unchanged S7/S8 runtime, and every frozen threshold. It adds paired
+source-level renaming-orbit supervision plus maximum-score graph assignment
+under syntax/type constraints only. Uniform, source-free, shuffled, no-class,
+unconstrained, and oracle controls must traverse the same decoder, and the
+report must show that the grammar leaves many candidate assignments. No
+executor result, final answer, gold depth, or semantic repair may affect
+decoding. Learned alias partitions, first-class rule cards, an agenda graph,
+source-deleted integration, and causal language realization remain ordered
+future stages, not one bundled experiment.
+
 ---
 
 ## 10. Template For A New Theory
@@ -1482,7 +1528,7 @@ used directly, transitively, or newly added in the current frontier run.
 The source records begin after the maintenance protocol and are labeled by
 stable filenames. Local links are converted to portable in-dossier labels.
 
-Embedded research sources: 162 files, 1,477,993 source bytes.
+Embedded research sources: 177 files, 1,534,126 source bytes.
 
 Operational boundary: the full operational runbook remains intentionally
 distilled rather than copied verbatim. Its custody, checkpoint, training,
@@ -1562,12 +1608,21 @@ ledger; credential-handling and live-operational instructions are excluded.
 - `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_1.md` — embedded in Appendix A
 - `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_2.md` — embedded in Appendix A
 - `R12_S7_LEARNED_CAYLEY_LAW_COMPILER_PREREG.md` — embedded in Appendix A
-- `R12_S7_LEARNED_CAYLEY_LAW_CPU_RESULT.md` — primary evidence file; Appendix refresh pending
-- `R12_S7_LEARNED_CAYLEY_DEVELOPMENT_RESULT.md` — primary evidence file; Appendix refresh pending
-- `R12_S7_LEARNED_CAYLEY_CONFIRMATION_PREREG.md` — primary evidence file; Appendix refresh pending
-- `R12_S7_LEARNED_CAYLEY_CONFIRMATION_RESULT.md` — primary evidence file; Appendix refresh pending
-- `R12_S8_NIL_LINKED_LAW_GRAPH_PREREG.md` — primary evidence file; Appendix refresh pending
-- `R12_S8_NIL_LINKED_LAW_GRAPH_CPU_RESULT.md` — primary evidence file; Appendix refresh pending
+- `R12_S7_LEARNED_CAYLEY_LAW_CPU_RESULT.md` — embedded in Appendix A
+- `R12_S7_LEARNED_CAYLEY_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_S7_LEARNED_CAYLEY_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_S7_LEARNED_CAYLEY_CONFIRMATION_RESULT.md` — embedded in Appendix A
+- `R12_S8_NIL_LINKED_LAW_GRAPH_PREREG.md` — embedded in Appendix A
+- `R12_S8_NIL_LINKED_LAW_GRAPH_CPU_RESULT.md` — embedded in Appendix A
+- `R12_S7_LEARNED_CAYLEY_BOARD_RECEIPT.md` — embedded in Appendix A
+- `R12_S8_1_EVALUATOR_REPAIR_PREREG.md` — embedded in Appendix A
+- `R12_S8_1_NIL_LINKED_LAW_GRAPH_BOARD.md` — embedded in Appendix A
+- `R12_S8_1_NIL_LINKED_LAW_GRAPH_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_S8_NIL_LINKED_LAW_GRAPH_BOARD.md` — embedded in Appendix A
+- `R12_S9_OCCURRENCE_QUOTIENT_BOARD.md` — embedded in Appendix A
+- `R12_S9_OCCURRENCE_QUOTIENT_CPU_RESULT.md` — embedded in Appendix A
+- `R12_S9_OCCURRENCE_QUOTIENT_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_S9_OCCURRENCE_QUOTIENT_RELATIONAL_COMPILER_PREREG.md` — embedded in Appendix A
 
 ### Prior core and control records
 
@@ -1717,6 +1772,8 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Admitted the S9 occurrence-quotient representation on CPU: 2,048/2,048 exact graph/state/answer from oracle-emitted relations, exact class/relation-storage reindexing, causal witness/link collapse, and 2,048/2,048 rejection for split, merge, free-word, kind, and slot corruptions. This is a mechanics result only; neural grounding remains unproven. |
 | 2026-07-19 | Froze S9 neural source at `9fd8aea` plus active-batch proposal repair `ba9e4c6`, then generated fresh board `7563652620455132721`: 48,000/2,048/2,048 graph-only train/development/sealed confirmation, zero overlap/access, and 2,048/2,048 oracle-logit reconstruction through the actual span/relation assembler. |
 | 2026-07-19 | Rejected S9 for confirmation despite a large causal development gain: 94.775% exact graphs and 94.873% exact state/answer versus 46.387% exact graphs for the equal-budget no-class arm, 0% shuffled, and 25.098% S8.1. It passes 20/22 gates but misses 95% class exact by five examples and loses 18 otherwise-valid parses under operation-name recoding. Confirmation remains sealed; S9.1 must use a fresh board. |
+| 2026-07-19 | Archived and reviewed two frontier nominal-machine proposals. Adopted renaming-orbit supervision and syntax-only structured assignment for S9.1, but rejected byte-width failure as the current diagnosis: all 229,588 original-plus-recoded development gold spans fit widths one through three under the existing width-four cap. Deferred aliases, rule cards, agenda control, and causal realization until S9.1 confirmation. |
+| 2026-07-19 | Refreshed the self-contained appendix with the complete S7 confirmation, S8/S8.1 graph evidence, and S9 occurrence-quotient CPU/development records; updated the frontier to treat S9 as a near-pass requiring fresh operation-equivariant repair. |
 | 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 
@@ -1729,7 +1786,7 @@ used directly, transitively, or newly added in the current frontier run.
 The source records begin after the maintenance protocol and are labeled by
 stable filenames. Local links are converted to portable in-dossier labels.
 
-Embedded research sources: 162 files, 1,477,993 source bytes.
+Embedded research sources: 177 files, 1,534,126 source bytes.
 
 Operational boundary: the full operational runbook remains intentionally
 distilled rather than copied verbatim. Its custody, checkpoint, training,
@@ -1738,7 +1795,21 @@ ledger; credential-handling and live-operational instructions are excluded.
 
 ### New frontier records included in this update
 
-- `R12_S7_LEARNED_CAYLEY_LAW_COMPILER_PREREG.md` — embedded in Appendix A
+- `R12_S7_LEARNED_CAYLEY_BOARD_RECEIPT.md` — embedded in Appendix A
+- `R12_S7_LEARNED_CAYLEY_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_S7_LEARNED_CAYLEY_CONFIRMATION_RESULT.md` — embedded in Appendix A
+- `R12_S7_LEARNED_CAYLEY_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_S7_LEARNED_CAYLEY_LAW_CPU_RESULT.md` — embedded in Appendix A
+- `R12_S8_1_EVALUATOR_REPAIR_PREREG.md` — embedded in Appendix A
+- `R12_S8_1_NIL_LINKED_LAW_GRAPH_BOARD.md` — embedded in Appendix A
+- `R12_S8_1_NIL_LINKED_LAW_GRAPH_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_S8_NIL_LINKED_LAW_GRAPH_BOARD.md` — embedded in Appendix A
+- `R12_S8_NIL_LINKED_LAW_GRAPH_CPU_RESULT.md` — embedded in Appendix A
+- `R12_S8_NIL_LINKED_LAW_GRAPH_PREREG.md` — embedded in Appendix A
+- `R12_S9_OCCURRENCE_QUOTIENT_BOARD.md` — embedded in Appendix A
+- `R12_S9_OCCURRENCE_QUOTIENT_CPU_RESULT.md` — embedded in Appendix A
+- `R12_S9_OCCURRENCE_QUOTIENT_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_S9_OCCURRENCE_QUOTIENT_RELATIONAL_COMPILER_PREREG.md` — embedded in Appendix A
 
 ### Retained source records
 
@@ -1903,6 +1974,7 @@ ledger; credential-handling and live-operational instructions are excluded.
 - `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG.md` — embedded in Appendix A
 - `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_1.md` — embedded in Appendix A
 - `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_2.md` — embedded in Appendix A
+- `R12_S7_LEARNED_CAYLEY_LAW_COMPILER_PREREG.md` — embedded in Appendix A
 
 ## Embedded source 1: `FRONTIER_AGENT_PLANS.md`
 
@@ -2257,7 +2329,6 @@ Stop trying to make a single decoder learn to be a compiler, ALU, scheduler, and
 <!-- END EMBEDDED SOURCE -->
 
 ---
-
 ## Embedded source 2: `FRONTIER_AGENT_PLANS_ANALYSIS.md`
 
 Original source path: `FRONTIER_AGENT_PLANS_ANALYSIS.md`
@@ -33133,6 +33204,1393 @@ of the already sealed confirmation board.
 4. Draw board and training seeds only after that commit.
 5. Build and hash-seal train, development, and confirmation bytes.
 6. Commit the board receipt before one serial H100 run.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 163: `R12_S7_LEARNED_CAYLEY_BOARD_RECEIPT.md`
+
+Original source path: `R12_S7_LEARNED_CAYLEY_BOARD_RECEIPT.md`
+Original source size: 2,745 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S7 Learned Cayley Law Compiler: Board Receipt
+
+**Date:** 2026-07-19
+**Decision:** `admit_s7_learned_cayley_board`
+**Source commit:** `b9a9414`
+**Board seed:** `4905719171551557987`
+**Frozen training seed:** `1314309421681697406`
+
+## Contents
+
+| File | Rows | SHA-256 |
+|---|---:|---|
+| `generator_train.jsonl` | 23 | `492fc927e8f172f05be8175b487c8e5b0ec91ede267034135bc6e80e36f0ad44` |
+| `transformer_atomic_train.jsonl` | 984 | `f0a401db2df0cb641b22fea88d6b321d56612029385d0e239f8b0d654a64748c` |
+| `atomic_development.jsonl` | 150 | `7263d3bfa2fa70ee35935f595b8eb9e496d77335ecdfd2945cb33f4861991af3` |
+| `development.jsonl` | 2,048 | `19baa8c3e8b4cfb441dac24f40cb069f0d00600d49ec9a163ba7f020af47e70f` |
+| `confirmation.sealed.jsonl` | 2,048 | `c2eb8d5c5dd285dfcb60389c3067c4842e47872d64b5233681c32c8542434bc5` |
+
+Report SHA-256:
+`2a471f3bc0da129a890878c802b587417fdbc756efa84d4d449f50374c92f306`.
+
+## Law custody
+
+S6 development laws are closed and do not score S7. For each modulus, the S7
+train split is the old training pool plus identity/successor anchors. The
+never-read S6 reserved-confirmation pool is split before row generation:
+
+| Modulus | Train laws | S7 development laws | S7 confirmation laws | Closed S6 laws excluded |
+|---:|---:|---:|---:|---:|
+| 5 | 11 | 3 | 3 | 3 |
+| 7 | 29 | 2 | 3 | 8 |
+| 11 | 66 | 11 | 12 | 21 |
+
+Train, development, and confirmation law sets are disjoint. Every development
+and confirmation program uses at least two distinct laws. Development is
+balanced over all 18 modulus/depth cells at 113 or 114 rows each.
+
+## Hidden coordinate custody
+
+Each modulus uses a post-commit random observed-symbol permutation. Raw
+permutations are learnable only from the 23 successor cells and three zero
+anchors; the report binds them without exposing them as model metadata:
+
+- modulus 5 binding hash: `622b144a203299d37ac5ed5221218a3c01be61a36b87fd1260d42cb9fde42aad`
+- modulus 7 binding hash: `5e5217244dedc14b5f3a34d6ccdd1a02e18ea8ef199b490fed81494d5c6c5eb1`
+- modulus 11 binding hash: `1a015f68d74ee061c2a67ac9fb7b62851d06c73340615701c8214ffa81afabbc`
+
+Generator and transformer training rows contain no slope, intercept, final
+state, or answer fields. Treatment receives no train-law card except what is
+implied by successor/zero anchors. The favorable transformer receives all 984
+train-law atomic cells.
+
+## Access state
+
+- Development accesses: 0
+- Confirmation accesses: 0
+- Neural checkpoints: none
+- Neural scores: none
+
+Commit all board bytes and this receipt before synchronization or submission.
+The development wrapper may read only `development.jsonl` and
+`atomic_development.jsonl`. The confirmation file remains sealed unless the
+immutable development assessor qualifies every gate.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 164: `R12_S7_LEARNED_CAYLEY_CONFIRMATION_PREREG.md`
+
+Original source path: `R12_S7_LEARNED_CAYLEY_CONFIRMATION_PREREG.md`
+Original source size: 2,401 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S7 Learned Cayley Law Compiler: Confirmation Preregistration
+
+**Status:** freeze after development qualification and before confirmation access
+**Mechanism changes:** none
+**Weight changes:** none
+**Board changes:** none
+
+## Bound artifacts
+
+- Frozen checkpoint SHA-256:
+  `c26e2cb6ef54ff409b580b3828c6ace4369423cf67b11bd66d9af05c93db4607`
+- Development assessment SHA-256:
+  `2ef4d5ee053d2bf599726aa8db6fa39305f4fc112c0a35af291fe6e109c8bbc4`
+- Required development decision:
+  `qualify_s7_learned_cayley_for_fresh_confirmation`
+- Sealed confirmation SHA-256:
+  `c2eb8d5c5dd285dfcb60389c3067c4842e47872d64b5233681c32c8542434bc5`
+- Confirmation rows: 2,048
+- Confirmation laws: 18, disjoint from the 16 development and all train laws
+- Development accesses before run: one
+- Confirmation accesses before run: zero
+
+## One-read protocol
+
+The confirmation job loads the frozen checkpoint without training and evaluates
+the same arms on `confirmation.sealed.jsonl`:
+
+1. host theorem/executor;
+2. learned Cayley treatment;
+3. frozen favorable ordinary transformer;
+4. frozen learned `S^2` generator;
+5. deranged law cards;
+6. one-witness unit completion;
+7. state reset;
+8. nonce-operation recoding.
+
+There is no confirmation atomic file, so confirmation repeats the recurrent and
+causal gates but not the development-only held-out atomic gate.
+
+## Immutable confirmation gates
+
+All must pass:
+
+- treatment exact state at least 98%;
+- treatment answers at least 98%;
+- every depth exact state at least 96%;
+- treatment within one point of host state and answer;
+- treatment exceeds ordinary transformer by at least 40 state points;
+- treatment exceeds `S^2` generator by at least 60 state points;
+- deranged cards drop state by at least 60 points;
+- one-witness unit completion drops state by at least 40 points;
+- state reset drops state by at least 20 points;
+- operation-nonce recoding is bit-identical;
+- checkpoint, board, development assessment, training contract, and parameter
+  hashes/counts match;
+- development accesses equal one and confirmation accesses equal one after the
+  sole read;
+- complete system remains below 150M.
+
+Passing records `confirm_s7_learned_cayley_contextual_law_compilation` and
+promotes S7 as the strongest bounded unseen-law component. Failure records
+`reject_s7_learned_cayley_confirmation`; no repair, second confirmation board,
+rescore, or refit is permitted.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 165: `R12_S7_LEARNED_CAYLEY_CONFIRMATION_RESULT.md`
+
+Original source path: `R12_S7_LEARNED_CAYLEY_CONFIRMATION_RESULT.md`
+Original source size: 3,917 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S7 Learned Cayley Law Compiler: Confirmation Result
+
+**Date:** 2026-07-19
+**Decision:** `confirm_s7_learned_cayley_contextual_law_compilation`
+**Job:** `693346`, H100 `evc25`, 15s, exit `0:0`
+**Accesses:** one development / one confirmation; both now closed
+
+## Frozen confirmation
+
+- Source commit: `b9a9414`
+- Board commit: `6d3fd42`
+- Confirmation-code commit: `f2e1527`
+- Board seed: `4905719171551557987`
+- Training seed: `1314309421681697406`
+- Frozen checkpoint SHA-256:
+  `c26e2cb6ef54ff409b580b3828c6ace4369423cf67b11bd66d9af05c93db4607`
+- Sealed confirmation SHA-256:
+  `c2eb8d5c5dd285dfcb60389c3067c4842e47872d64b5233681c32c8542434bc5`
+- Confirmation: 2,048 recurrent programs over 18 laws disjoint from all
+  training and development laws, balanced at depths three through eight
+- Treatment: 218 learned parameters; 133,695,087 parameters in the complete
+  promoted system
+
+No weight, mechanism, threshold, board, or evaluation change occurred between
+development qualification and confirmation.
+
+## Confirmation scores
+
+| Arm / intervention | Exact recurrent state | Answer |
+|---|---:|---:|
+| Host theorem/executor | 2,048/2,048 = 100.000% | 100.000% |
+| **Learned Cayley treatment** | **2,048/2,048 = 100.000%** | **100.000%** |
+| Favorable ordinary transformer | 32/2,048 = 1.562% | 27.148% |
+| Learned `S^2` false generator | 18/2,048 = 0.879% | 23.779% |
+| Deranged two-witness cards | 15/2,048 = 0.732% | 23.340% |
+| One-witness unit completion | 45/2,048 = 2.197% | 25.439% |
+| State reset between events | 30/2,048 = 1.465% | 26.953% |
+
+Treatment exact state is 100% independently at every depth from three through
+eight. Operation-nonce recoding leaves all predicted states bit-identical. All
+18 immutable confirmation gates pass.
+
+## What is confirmed
+
+S7 learns a compact model-owned representation of the cyclic successor law
+from 23 successor labels and three zero anchors. It then uses the same learned
+generator to infer and execute previously unseen affine operation cards from
+two demonstrations, compose those operations recurrently, and preserve exact
+state through depth eight. It receives no recurrent, answer, development-law,
+or confirmation-law supervision.
+
+The exact-fit ordinary transformer fails on the same unseen laws, while wrong
+topology, broken cards, insufficient evidence, and state-reset controls all
+collapse. S7 is therefore promoted as the strongest confirmed bounded native
+reasoning component: learned symbolic dynamics plus contextual law induction
+and exact recurrent reuse.
+
+## What is not confirmed
+
+The result does not establish unrestricted native reasoning. Cyclic topology,
+equality, bounded nested replay, event invocation, pop-insert state mutation,
+and the loop limits are architectural. Natural-language grounding, arbitrary
+algebra discovery, model-owned active-step selection, learned halt, open-ended
+planning, and transfer into the frozen Shohin language model remain open.
+
+The next phase is integration, not a wider repeat of this board: ground the
+confirmed generator/compiler through S4/S5's model-owned parser and controller,
+then test fresh natural-language operations and learned termination under the
+same causal and sealed-confirmation discipline.
+
+## Artifact custody
+
+- Confirmation evaluation SHA-256:
+  `4b4a539565fbf821c075f6ec4b16d34aa30e130f08f33caa28ca7c4f41f4360d`
+- Confirmation assessment SHA-256:
+  `ceda83124e27efb80a188797c379ff3a429b4bb1db22bc272a006811e1181511`
+- Development evaluation SHA-256:
+  `e02ed2d3111f8a483a96910286dcd682f9b4ee0a867910450becd8782224688f`
+- Development assessment SHA-256:
+  `2ef4d5ee053d2bf599726aa8db6fa39305f4fc112c0a35af291fe6e109c8bbc4`
+
+Checkpoint, board, evaluations, assessments, and promotion manifest are
+mirrored locally and on Newton. The S7 development and confirmation boards are
+closed permanently; there is no rescore, refit, threshold repair, or second
+confirmation board.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 166: `R12_S7_LEARNED_CAYLEY_DEVELOPMENT_RESULT.md`
+
+Original source path: `R12_S7_LEARNED_CAYLEY_DEVELOPMENT_RESULT.md`
+Original source size: 3,328 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S7 Learned Cayley Law Compiler: Development Result
+
+**Date:** 2026-07-19
+**Decision:** `qualify_s7_learned_cayley_for_fresh_confirmation`
+**Job:** `693344`, H100 `evc25`, 2m25s, exit `0:0`
+**Confirmation access:** zero
+
+## Frozen setup
+
+- Source commit: `b9a9414`
+- Board commit: `6d3fd42`
+- Board seed: `4905719171551557987`
+- Training seed: `1314309421681697406`
+- Treatment: 218 parameters / 133,695,087 complete-system parameters
+- Treatment supervision: 23 true successor cells and three zero anchors
+- Structure-breaking supervision: 23 `S^2` successor cells and the same anchors
+- Favorable ordinary transformer: 4,753,677 parameters, 984 train-law atomic cells
+- Development: 150 held-out atomic cells and 2,048 recurrent programs over 16
+  never-read laws, balanced at depths three through eight
+
+All three arms pass their frozen training-fit gates: true and false generators
+fit 23/23 successor cells plus 3/3 zero anchors; the ordinary transformer fits
+984/984 atomic train cells.
+
+## Development scores
+
+| Arm / intervention | Held-out atomic | Exact recurrent state | Answer |
+|---|---:|---:|---:|
+| Host theorem/executor | n/a | 2,048/2,048 = 100.000% | 100.000% |
+| **Learned Cayley treatment** | **150/150 = 100.000%** | **2,048/2,048 = 100.000%** | **100.000%** |
+| Favorable ordinary transformer | 34/150 = 22.667% | 52/2,048 = 2.539% | 27.295% |
+| Learned `S^2` false generator | n/a | 19/2,048 = 0.928% | 25.684% |
+| Deranged two-witness cards | n/a | 27/2,048 = 1.318% | 23.584% |
+| One-witness unit default | n/a | 29/2,048 = 1.416% | 25.439% |
+| State reset between events | n/a | 63/2,048 = 3.076% | 29.248% |
+
+Treatment exact state is 100% at every individual depth from three through
+eight. Recoding every operation nonce leaves every predicted state bit-identical.
+All 19 immutable development gates pass.
+
+## Interpretation
+
+S7 is a real architectural generalization result inside its stated boundary.
+The generic transformer repeats S6's failure despite more parameters and 984
+atomic examples. The 218-parameter treatment sees no train-law cards beyond
+successor/zero anchors, yet exactly compiles 16 unseen operation laws under
+fresh hidden coordinates. The wrong-cycle, card, witness, and recurrence
+controls rule out identity lookup, law-ID memorization, answer recreation, and
+state-independent execution.
+
+The gain comes from forcing computation through a learned generator basis. It
+does not establish unrestricted native reasoning. Cyclic topology, exact
+equality, bounded nested replay, event invocation, and pop-insert remain
+architectural/structural. Natural-language law grounding, arbitrary algebra,
+learned active-step/halt, and open-ended planning are not tested.
+
+## Artifact custody
+
+- Checkpoint SHA-256:
+  `c26e2cb6ef54ff409b580b3828c6ace4369423cf67b11bd66d9af05c93db4607`
+- Evaluation SHA-256:
+  `e02ed2d3111f8a483a96910286dcd682f9b4ee0a867910450becd8782224688f`
+- Assessment SHA-256:
+  `2ef4d5ee053d2bf599726aa8db6fa39305f4fc112c0a35af291fe6e109c8bbc4`
+
+The checkpoint and reports are mirrored locally and on Newton. They are frozen.
+No refit, threshold change, alternate board, or development rescore is allowed.
+An unchanged-weight confirmation-only evaluator may read the already sealed
+2,048-row confirmation board exactly once after its code and gates are committed.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 167: `R12_S7_LEARNED_CAYLEY_LAW_CPU_RESULT.md`
+
+Original source path: `R12_S7_LEARNED_CAYLEY_LAW_CPU_RESULT.md`
+Original source size: 2,703 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S7 Learned Cayley Law Compiler: CPU Result
+
+**Date:** 2026-07-19
+**Decision:** `admit_s7_learned_cayley_preregistration`
+**Neural score:** none; no score-bearing board seed exists yet
+
+## Result
+
+All frozen CPU gates pass. The treatment compiler uses only a successor
+permutation, a zero symbol, equality, and bounded repeated generator
+application. Source audit finds no modulo operator, affine solver call,
+destination oracle, or slope multiplication in `compile_destination`.
+
+The falsifier evaluates every hidden symbol permutation at moduli 5 and 7 and
+deterministic sampled permutations at moduli 11 and 13:
+
+| Modulus | Hidden bindings | Mode | Exact destination cells | Exact recurrent programs | `S^2` accuracy | One-witness unit-default |
+|---:|---:|---|---:|---:|---:|---:|
+| 5 | 120 | exhaustive | 12,000/12,000 | 120/120 | 20.000% | 40.000% |
+| 7 | 5,040 | exhaustive | 1,481,760/1,481,760 | 5,040/5,040 | 14.286% | 28.571% |
+| 11 | 256 | sampled | 309,760/309,760 | 256/256 | 9.091% | 18.182% |
+| 13 | 128 | sampled diagnostic | 259,584/259,584 | 128/128 | 7.692% | 15.385% |
+
+Totals are **2,063,104/2,063,104 exact destination cells** and **5,544/5,544
+exact recurrent programs** across 5,544 hidden coordinate systems.
+
+## Resource boundary
+
+- Primary learned successor cells: 23
+- Primary learned zero anchors: 3
+- Trainable treatment parameters: 218
+- Complete promoted-stack plus treatment parameters: 133,695,087
+- Law-specific parameters: zero
+- External arithmetic at inference: zero
+- Maximum fixed nested successor depth: 121
+- Exact equality: structural
+- State mutation: structural pop-insert
+
+The CPU result proves mechanics, not learning. It does not show that gradient
+training recovers the true generator, that the ordinary transformer control
+fits, or that development laws transfer. Those remain the sole fresh-board
+neural gate.
+
+## Evidence
+
+- CPU report:
+  `artifacts/r12/s7_learned_cayley_cpu_falsifier.json`
+- CPU report SHA-256:
+  `a933c174cb8c81dd076a5e37277a08b0eb1b075d52695b65b58ded4959937929`
+- Unit tests: 14 passing S7 tests before board generation
+- Sandbox optimization: both true and `S^2` 218-parameter generators fit all
+  23 synthetic successor cells and all three zero anchors under the frozen
+  1,000-update schedule. This sandbox contains no S7 development law or score.
+
+## Consequence
+
+Commit the theorem, mechanics, model, controls, builder, trainer, evaluator,
+assessor, tests, and this report together. Only after that commit may the board
+and training seeds be drawn. Development must use never-read reserved laws and
+hidden symbol permutations; confirmation remains sealed unless every immutable
+development and causal gate passes.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 168: `R12_S8_1_EVALUATOR_REPAIR_PREREG.md`
+
+Original source path: `R12_S8_1_EVALUATOR_REPAIR_PREREG.md`
+Original source size: 2,638 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S8.1 Source-Level Nonce Repair Preregistration
+
+**Status:** source freeze before a fresh board or score access
+
+**Parent:** S8 nil-linked law graph v1
+
+## Why S8 v1 is closed
+
+The valid H100 fit in job `693462` completed both frozen 750-update arms and
+wrote checkpoint SHA-256
+`3c7154f2e31dd4f3e86534f8b007b7457585b85f7f7ffad4d13d8354721143af`.
+The evaluator then opened the development file and completed original-source
+forward passes, but failed before scoring or writing an evaluation because its
+operation-nonce intervention assumed that contextual BPE spans have equal token
+width. They do not. No result statistic exists. The development board is still
+closed because access occurred; it may not be repaired or rescored. Its sealed
+confirmation file remains unopened.
+
+Jobs `693457` and `693459` are separate scoreless infrastructure failures.
+They stopped in CUDA preflight on `evc25` and `evc26`, respectively, before
+model or board access and wrote no checkpoint.
+
+## Sole repair
+
+S8.1 changes only operation-nonce recoding. It rotates nonce **strings** in all
+card and event-operation source spans, adjusts every subsequent character span,
+retokenizes the complete source with the frozen tokenizer, and recompiles token
+targets. This is the intervention originally intended by the S8 preregistration.
+It makes no assumption about token width or contextual segmentation.
+
+The following remain bit-identical in design and frozen before a new seed:
+
+- the 125,081,664-parameter base and S4 parser initializer;
+- the 8,610,966-parameter graph compiler and 218-parameter generator;
+- one epoch, 48,000 graph-only rows, batch 64, optimizer, and schedule;
+- all role/rank labels, controls, causal perturbations, and parameter caps;
+- all development thresholds in the S8 preregistration; and
+- zero state, answer, recurrent, development-law, or confirmation-law training.
+
+## Fresh-custody requirement
+
+After this repair and its tests are committed, draw a fresh board seed and a
+fresh training seed. Regenerate all bindings, law examples, names, train,
+development, and sealed confirmation bytes. Before submission, execute the
+source-level nonce recoder over every generated source and require:
+
+1. successful retokenization and span recompilation;
+2. unchanged graph semantics under consistent nonce rotation;
+3. maximum recoded length at most 512 tokens; and
+4. zero development and confirmation accesses.
+
+One serial H100 development job is authorized on a CUDA-preflighted node. A
+failure closes S8.1; passing every unchanged S8 gate authorizes only a separately
+committed unchanged-weight sealed confirmation evaluator.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 169: `R12_S8_1_NIL_LINKED_LAW_GRAPH_BOARD.md`
+
+Original source path: `R12_S8_1_NIL_LINKED_LAW_GRAPH_BOARD.md`
+Original source size: 1,602 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S8.1 Nil-Linked Law Graph Board
+
+**Status:** frozen and admitted before neural access
+
+**Source commit:** `ce2a5e47496f326c8dbd949c5ea3955b62ad4a49`
+
+**Board seed:** `5943437777437228096`
+
+**Training seed:** `8354164228219389085`
+
+**Report SHA-256:** `1dcd576d9706c011ff8164994f0424f4bdc96a16525cdda400559b255b3aa831`
+
+| Payload | Rows | Bytes | SHA-256 |
+|---|---:|---:|---|
+| `generator_train.jsonl` | 23 | 3,763 | `263e215960d84097b4fd298f5a48f7e3823993435a01b91bd783ff88e2fd1215` |
+| `train.jsonl` | 48,000 | 406,135,235 | `9e917ae5f09f9df623e354da6e66f4c5b92d39ac59f6910dd23a737e0ad80a28` |
+| `development.jsonl` | 2,048 | 18,731,454 | `d16a1a8f773ff627b5f47ebd06b2344cad67a6473c431d78d79a5ef41f360d54` |
+| `confirmation.sealed.jsonl` | 2,048 | 18,707,232 | `e951ac173135ee7791528ae78206cb48900865dbeade65085fcf948a2da2977d` |
+
+The original-source audit matches S8 v1's exclusions: zero state/answer in
+training, zero cross-split names, exact prompts, or 13-grams, independent
+executor agreement for all 52,096 rows, noncanonical node storage, and maximum
+length 455/512.
+
+S8.1 additionally rotates operation nonce strings, adjusts all source spans,
+retokenizes, and recompiles every generated source before sealing. All 52,096
+pass; 9,018 change token count, and the maximum recoded length is 457/512.
+Development and confirmation access counters are zero/zero.
+
+The sole authorized next action is the unchanged S8 serial train/development
+job using training seed `8354164228219389085` on a CUDA-preflighted H100.
+Confirmation remains sealed unless every unchanged development gate passes.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 170: `R12_S8_1_NIL_LINKED_LAW_GRAPH_DEVELOPMENT_RESULT.md`
+
+Original source path: `R12_S8_1_NIL_LINKED_LAW_GRAPH_DEVELOPMENT_RESULT.md`
+Original source size: 5,090 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S8.1 Nil-Linked Law Graph Development Result
+
+**Decision:** rejected as an end-to-end neural compiler; retained as a positive
+conditional-execution result
+
+**Development access:** 1
+
+**Confirmation access:** 0; the sealed confirmation board remains unopened
+
+## Custody
+
+- source repair commit: `ce2a5e4`
+- board commit: `5f1550d`
+- board seed: `5943437777437228096`
+- training seed: `8354164228219389085`
+- bf16 preflight: Slurm `693527` on `evc39`, passed
+- sole score-bearing development job: Slurm `693529` on `evc39`, completed
+  cleanly in 4m25s
+- board report SHA-256:
+  `1dcd576d9706c011ff8164994f0424f4bdc96a16525cdda400559b255b3aa831`
+- development SHA-256:
+  `d16a1a8f773ff627b5f47ebd06b2344cad67a6473c431d78d79a5ef41f360d54`
+- sealed confirmation SHA-256:
+  `e951ac173135ee7791528ae78206cb48900865dbeade65085fcf948a2da2977d`
+- checkpoint SHA-256:
+  `44b3291555047085257cfb1c4ec03dd6e5485ce83e134a5200d8ea0055614585`
+- evaluation SHA-256:
+  `74a391f3fd3f123da13007ad19cad8bf9075aa0809df3561a122f65c04267600`
+- assessment SHA-256:
+  `d6aaa221c58387010e79ee65ccfc9087c3073ed488d86bf9b932599c7f6eb119`
+
+The local mirror contains the checkpoint, evaluation, and assessment with the
+same hashes. The checkpoint is not committed to Git.
+
+## Frozen contract
+
+The compiler saw 48,000 whole-source graph-field rows and no final state,
+answer, recurrent trace, development law, or confirmation law. The 218-
+parameter cyclic generator saw only 23 successor cells and three zero anchors.
+The complete system has 133,692,848 parameters: 125,081,664 frozen base,
+8,610,966 graph compiler, and 218 generator parameters.
+
+The repaired nonce intervention was exercised before sealing over all 52,096
+board rows. It rotates operation strings in source, repairs spans, retokenizes,
+and recompiles; 9,018 rows change token count. S8 v1's invalid equal-width token
+substitution is not reused.
+
+## Development scores
+
+| Arm | Exact state | Answer |
+|---|---:|---:|
+| Gold graph | 2,048/2,048 = 100.000% | 2,048/2,048 = 100.000% |
+| **Treatment** | **514/2,048 = 25.098%** | **514/2,048 = 25.098%** |
+| Favorable ordinary sequence parser | 205/2,048 = 10.010% | 209/2,048 = 10.205% |
+| Storage-order shortcut | 82/2,048 = 4.004% | 209/2,048 = 10.205% |
+| Reversed links | 40/2,048 = 1.953% | 152/2,048 = 7.422% |
+| Deranged cards | 6/2,048 = 0.293% | 122/2,048 = 5.957% |
+| One witness | 26/2,048 = 1.270% | 133/2,048 = 6.494% |
+| State reset | 19/2,048 = 0.928% | 140/2,048 = 6.836% |
+| Early nil | 22/2,048 = 1.074% | 140/2,048 = 6.836% |
+
+Treatment exact state remains between 21.994% and 26.765% at every evaluated
+depth from three through eight. The shuffled-label compiler emits zero exact
+graphs. Graph-node reindexing is invariant on 514/514 eligible cases.
+
+## Decisive decomposition
+
+The treatment emits 514 valid graphs. Every one of those graphs is also the
+exact semantic graph, has the exact node count and nil halt, and produces the
+exact recurrent state and answer. There are **zero valid-but-wrong graphs**:
+
+```text
+valid graph       = 514
+exact graph       = 514
+exact state       = 514
+exact answer      = 514
+valid but wrong   = 0
+```
+
+Therefore S8.1 does not reveal an arithmetic, law-induction, link-traversal,
+halt, or recurrent-state failure after successful compilation. Its entire
+observed end-to-end deficit lies before execution: the token-role compiler
+fails to extract a complete graph from unseen source renderers and nonce names.
+Typical failures are roster/state cardinality, missing or duplicate card
+witnesses, and non-unique repeated-name matching.
+
+The pointer graph is nevertheless materially better than its favorable global-
+rank parser: 25.098% versus 10.010% exact state. This supports model-owned linked
+control as the retained execution interface, but it is far below the frozen
+95% valid-graph and 90% exact-graph gates. The operation-nonce intervention is
+bit-identical on 422/422 mutually valid cases, but 92 originally valid graphs
+become invalid after recoding, so the preregistered all-valid eligibility gate
+correctly fails.
+
+## Claim boundary and next phase
+
+S8.1 is not promoted and its confirmation board must not be opened. The result
+supports only this bounded statement:
+
+> When a learned whole-source compiler emits a valid S8 nil-linked graph, the
+> confirmed cyclic substrate executes its model-owned order, halt, state
+> transitions, and query exactly on this board.
+
+S9 must not modify or widen that proven executor. It targets the isolated
+grounding bottleneck with an occurrence-quotient relational compiler: learn
+nonce-span boundaries and sentence-level relations, bind repeated occurrences
+by exact emitted surface equality, then decode class-level relation tuples
+instead of independently assigning a role to every subtoken. Exact grouping is
+an architectural prior; boundaries and semantic relations remain model-owned.
+No literature novelty claim is made. A fresh neural board is forbidden until
+the quotient representation passes CPU sufficiency, permutation, negative-
+control, information-flow, and host-resource audits.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 171: `R12_S8_NIL_LINKED_LAW_GRAPH_BOARD.md`
+
+Original source path: `R12_S8_NIL_LINKED_LAW_GRAPH_BOARD.md`
+Original source size: 2,778 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S8 Nil-Linked Law Graph Board
+
+**Status:** closed after one evaluator non-result; do not rescore
+
+**Source commit:** `598e405ffdc08b0e03e999b715ec1d04f17f1b20`
+
+**Board seed:** `4026952256631032219`
+
+**Training seed:** `5532971934318350109`
+
+**Board report SHA-256:** `067d97d790c0a2cadb0158ee013a74e0e0264e7dd099afa2ca0c5389294ddd31`
+
+## Frozen board
+
+| Payload | Rows | Bytes | SHA-256 |
+|---|---:|---:|---|
+| `generator_train.jsonl` | 23 | 3,763 | `5c3b2e1ef13261b0e872305a495d70931232e4352baaa65b41f078995ce9c918` |
+| `train.jsonl` | 48,000 | 406,632,176 | `d2925e0062051d11133f438ba7dfb8fb26e48886f802fc3cc1a97662f5818446` |
+| `development.jsonl` | 2,048 | 18,752,468 | `58953f1d1dfa51e6913ce9674548f2b0d3f094019b106649f6173e7ea1e86754` |
+| `confirmation.sealed.jsonl` | 2,048 | 18,697,579 | `ea0d242f9315e7d8a185162dde02b9d50b896b33149778705f59c97a5cbf2bd4` |
+
+The builder records zero development and zero confirmation accesses. Training
+contains graph-field supervision only and no final state or answer. Development
+and confirmation use disjoint law pools, nonce names, and language renderers.
+Across all 52,096 sources:
+
+- independent reference and graph executors agree;
+- node storage is noncanonical;
+- split-name overlap is zero;
+- exact prompt overlap is zero;
+- 13-gram overlap is zero; and
+- maximum tokenized length is 453 under the frozen 512-token tokenizer.
+
+## Frozen neural system
+
+The 125,081,664-parameter 300k Shohin trunk is frozen. The whole-source graph
+compiler adds 8,610,966 parameters and initializes its five-layer memory encoder
+from the confirmed S4 parser family. The learned cyclic generator adds 218
+parameters. Complete-system accounting is **133,692,848 parameters**, below the
+150M project ceiling.
+
+The compiler is trained for one epoch on the 48,000 graph-field rows. It never
+receives final states, answers, recurrent transitions, development laws, or
+confirmation laws. The generator receives only 23 successor cells and three
+zero anchors. A matched shuffled-label compiler starts from the identical
+adapter state. The favorable ordinary parser emits execution ranks and receives
+host list traversal; the S8 treatment must instead emit entry/next pointers and
+nil termination.
+
+## Closure
+
+Job `693462` completed both frozen 750-update fits and wrote checkpoint SHA-256
+`3c7154f2e31dd4f3e86534f8b007b7457585b85f7f7ffad4d13d8354721143af`.
+The evaluator then opened development and failed before scoring or writing an
+evaluation because token-ID nonce rotation assumed equal contextual BPE widths.
+This board may not be patched or rescored. Its confirmation file remains sealed
+and must not be opened. The sole admissible continuation is the separately
+preregistered S8.1 source-level nonce repair on wholly fresh board bytes.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 172: `R12_S8_NIL_LINKED_LAW_GRAPH_CPU_RESULT.md`
+
+Original source path: `R12_S8_NIL_LINKED_LAW_GRAPH_CPU_RESULT.md`
+Original source size: 2,610 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S8 Nil-Linked Law Graph: CPU Result
+
+**Date:** 2026-07-19
+**Source/preregistration commit:** `81fb6b0`
+**Post-commit seed:** `4822478724546321200`
+**Decision:** `admit_s8_nil_linked_law_graph_preregistration`
+
+## Coverage
+
+The frozen falsifier evaluates 3,520 depth-three-through-eight programs over
+440 hidden coordinate systems:
+
+- all 120 permutations at modulus 5;
+- 128 deterministic permutations at modulus 7;
+- 128 deterministic permutations at modulus 11; and
+- 64 deterministic permutations at modulus 13.
+
+Every program has at least two contextual laws. Event records are stored under
+a random node permutation independent of their executable order.
+
+## Results
+
+| Arm | Exact state | Answer |
+|---|---:|---:|
+| **Nil-linked treatment** | **3,520/3,520 = 100.000%** | **100.000%** |
+| Storage-order shortcut | 357/3,520 = 10.142% | 37.614% |
+| Reversed event links | 174/3,520 = 4.943% | 32.500% |
+| Deranged operation cards | 37/3,520 = 1.051% | 23.580% |
+| One-witness unit completion | 129/3,520 = 3.665% | 28.693% |
+| State reset per event | 72/3,520 = 2.045% | 28.835% |
+| Early nil after one event | 70/3,520 = 1.989% | 29.432% |
+
+Changing every node's storage ID while preserving predicted links leaves all
+3,520 treatment states and answers unchanged. All 3,520 executable paths differ
+from raw storage order. Treatment remains exact separately at every modulus;
+every causal/shortcut arm remains below its frozen 40% state ceiling. All ten
+preregistered CPU gates pass.
+
+## Interpretation
+
+The interface is complete: initial state, law cards, entity/card bindings,
+entry pointer, next-event links, nil termination, and query are sufficient for
+the confirmed S7 dynamics to reproduce an independent reference executor. The
+large causal collapses establish that links are not decorative metadata and
+that schedule, two-witness law evidence, persistent state, and terminal depth
+all affect the result.
+
+This is a mechanics result, not a neural reasoning result. The graph fields in
+this falsifier are gold. A neural experiment is authorized only after the
+whole-source board builder, sub-16M graph compiler, training exclusions,
+favorable ordinary parser, causal controls, and frozen assessor are committed.
+No S8 development or confirmation board exists yet.
+
+The architectural boundary remains explicit: categorical argmax/equality,
+nil-linked traversal with a node-count safety bound, the confirmed S7 cyclic
+compiler, and categorical pop-insert mutation are hard runtime operations.
+
+## Artifact
+
+CPU report SHA-256:
+`c98bd96ef66289fe580523a20116c62c96bef77ef69b7c55eebd2c94630b3aeb`
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 173: `R12_S8_NIL_LINKED_LAW_GRAPH_PREREG.md`
+
+Original source path: `R12_S8_NIL_LINKED_LAW_GRAPH_PREREG.md`
+Original source size: 8,125 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S8 Nil-Linked Law Graph Preregistration
+
+**Status:** source/theory freeze before the full CPU falsifier or any neural board
+**Parent:** confirmed S7 learned Cayley law compiler
+**Claim class:** bounded whole-source grounding, model-owned event schedule, and
+nil-terminated recurrent execution
+
+## Motivation
+
+S7 confirms exact contextual induction and recurrent execution of unseen cyclic
+laws, but its evaluator receives structured law cards and ordered event records,
+then advances them with a host `for` loop. S4 v5 separately confirms whole-source
+known-operation parsing, while S5 confirms a learned local transition law. The
+next honest intervention is therefore not a wider arithmetic model. It must
+remove S7's structured card/event/schedule interface.
+
+S8 compiles a natural-language source once into a discrete **nil-linked law
+graph**. Every executable choice must be present in model output:
+
+1. initial-state symbols and query position;
+2. operation-card names and both witnessed outputs;
+3. event entity and operation-card pointers;
+4. an entry-event pointer;
+5. one next-event pointer per event; and
+6. a nil link that terminates execution.
+
+Node records are stored in random order. The runtime may follow only the emitted
+entry/next links; source order, row order, a gold depth, and a host event list are
+unavailable. Each visited event invokes the frozen S7 generator/compiler and
+updates the categorical state. The result is read from the emitted query.
+
+This is a project-original architectural hypothesis, not a literature novelty
+claim. It replaces autoregressive verbal chain-of-thought with an executable
+pointer graph whose links jointly encode active-step selection and halt.
+
+## Exact resource boundary
+
+### Model-owned
+
+- source-to-roster and initial-state grounding;
+- law-card witness extraction;
+- event entity and operation-card binding;
+- entry and next-event pointers;
+- nil termination;
+- query grounding;
+- the already confirmed learned cyclic successor dynamics.
+
+### Architectural
+
+- discrete argmax and equality;
+- validation that a predicted graph is one nil-terminated path;
+- graph traversal with a node-count safety bound;
+- the confirmed S7 bounded cyclic compiler;
+- categorical `pop_insert` state mutation;
+- the finite admitted modulus set.
+
+Malformed, cyclic, multiply visited, or stranded graphs fail closed. The host
+may validate and traverse model pointers but may not repair them, infer order
+from source positions, supply depth, select an operation card, or fill a missing
+terminal link.
+
+## CPU theorem and falsifier
+
+Before any board seed, the independent reference executor and graph executor
+must be compared over:
+
+- all 120 hidden coordinate bindings at modulus 5;
+- 128 deterministic bindings each at moduli 7 and 11;
+- 64 deterministic bindings at modulus 13;
+- eight depth-three-through-eight programs per binding;
+- random node storage permutations and at least two laws per program.
+
+Immutable CPU gates:
+
+1. treatment state and answer are exactly 100%;
+2. changing node storage IDs leaves every result unchanged;
+3. at least 95% of paths differ from storage order;
+4. storage-order execution is below 40% exact state;
+5. reversed links are below 40% exact state;
+6. deranged operation cards are below 40% exact state;
+7. one-witness unit completion is below 40% exact state;
+8. state reset is below 40% exact state; and
+9. early nil termination is below 40% exact state.
+
+Failure rejects the interface before GPU use. A passing CPU result authorizes
+only a committed board builder and one fresh development experiment.
+
+## Neural architecture and parameter cap
+
+The protected 300k Shohin trunk and confirmed S7 dynamics remain frozen. A
+trainable graph compiler may add at most **16,000,000 parameters**, keeping the
+complete system below 150M. The preferred form is late-layer adapters plus
+factorized span, binding, link, entry, nil, and query heads. Wider recurrent
+language-model decoding is not permitted in v1 because it would reintroduce
+serialization errors and obscure the resource comparison.
+
+Training may supervise graph fields on training sources. It may not supervise
+final state, final answer, recurrent transitions, development laws, confirmation
+laws, or any result produced by the S7 executor. The S7 generator may receive
+only successor cells and zero anchors under the new hidden coordinate binding.
+
+## Future board custody
+
+Only after source, CPU report, and this preregistration are committed may board
+and training seeds be drawn. The builder must produce:
+
+- disjoint training, development, and sealed-confirmation law pools;
+- arbitrary hidden symbol bindings generated after source commit;
+- disjoint entity names, operation nonces, and language renderers;
+- random event-node storage order independent of source/execution order;
+- balanced depths three through eight and at least two laws per program;
+- zero exact prompt, normalized prompt, or 13-gram overlap across splits;
+- no structured graph, depth, state, or answer in score-time model input;
+- 2,048 development and 2,048 sealed-confirmation programs;
+- access counters beginning at zero/zero.
+
+The confirmation file may not be opened by training, development evaluation,
+diagnostics, or board audits that reveal labels.
+
+## Frozen neural arms
+
+1. **Gold-graph upper bound:** frozen S7 execution from the gold graph; quarantined.
+2. **S8 treatment:** learned graph fields, links, nil, cards, and query; frozen S7 execution.
+3. **Favorable ordinary sequence parser:** same trunk and comparable head budget,
+   but emits source-ordered event records and receives host list traversal.
+4. **Storage-order shortcut:** ignores predicted links and executes node records in storage order.
+5. **Reversed-link intervention:** preserves every node/card field but reverses the linked path.
+6. **Card derangement:** rotates witnessed outputs across operation names.
+7. **One-witness intervention:** replaces the second witness with a unit default.
+8. **State reset:** restores initial state before each visited event.
+9. **Early-nil intervention:** terminates after the first predicted event.
+10. **Shuffled graph-label control:** matched compiler trained on a fixed label permutation.
+
+## Immutable development gates
+
+All must pass on the sole development read:
+
+- graph validity at least 95%;
+- exact complete graph at least 90%;
+- exact event count and nil termination at least 98%;
+- exact recurrent state at least 85%;
+- answer accuracy at least 90%;
+- every depth exact state at least 75%;
+- gold-graph state and answers exactly 100%;
+- treatment no more than 10 state points below gold graph;
+- treatment no more than three state points below the favorable ordinary parser;
+- storage-order shortcut below 40% state;
+- reversed links reduce state by at least 40 points;
+- card derangement reduces state by at least 50 points;
+- one-witness completion reduces state by at least 30 points;
+- state reset reduces state by at least 20 points;
+- early nil reduces state by at least 30 points;
+- shuffled-label exact graph below 10%;
+- graph reindexing leaves treatment states bit-identical;
+- operation-nonce recoding leaves treatment states bit-identical;
+- all hashes, access counters, training exclusions, and parameter counts match.
+
+Passing authorizes one unchanged-weight sealed confirmation under separately
+committed gates. Failure closes S8 v1. No width, threshold, renderer, board,
+training-label, or rescore repair is allowed on the opened development board.
+
+## Claim on a pass
+
+A confirmed pass would establish that a sub-150M Shohin stack can ground a whole
+source into an executable discrete law graph, choose and order its own bounded
+reasoning steps, terminate with its own nil link, infer unseen cyclic operation
+laws from demonstrations, and reuse learned state dynamics recurrently.
+
+It would still not establish arbitrary algebra, free-form theorem proving,
+unbounded planning, unconstrained natural language, or an autonomous agent. The
+finite cyclic substrate, hard graph runtime, safety bound, and state mutation
+would remain explicit architectural priors.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 174: `R12_S9_OCCURRENCE_QUOTIENT_BOARD.md`
+
+Original source path: `R12_S9_OCCURRENCE_QUOTIENT_BOARD.md`
+Original source size: 2,969 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S9 Occurrence-Quotient Relational Compiler Board
+
+**Status:** frozen and unevaluated
+
+**Neural source commit:** `9fd8aea`
+
+**Bounded-memory source commit:** `ba9e4c6`
+
+**Board seed:** `7563652620455132721`
+
+**Training seed:** `1782702123750965299`
+
+The first post-`9fd8aea` candidate board was discarded before training or score
+access because full-corpus span materialization wasted host memory. Commit
+`ba9e4c6` changes only proposal materialization from corpus-wide to active-
+batch generation; it preserves every candidate, label, model parameter, loss,
+control, and gate. Fresh seeds were drawn after that repair.
+
+## Architecture
+
+The frozen Shohin trunk feeds a five-layer width-384 contextual encoder. The
+model scores all contiguous token spans up to width four, pools start/end/mean
+residuals, groups candidates by exact trimmed source bytes within one example,
+and predicts relation slots from local span plus shared class context. The
+treatment receives that class message. The equal-parameter no-class control
+zeros it. A third equal-architecture arm receives shuffled relation labels.
+
+Parameter count from the frozen implementation:
+
+- Shohin base: 125,081,664
+- occurrence-quotient compiler: 9,498,382
+- learned cyclic generator: 218
+- complete system: **134,580,264**
+
+The checkpoint will record the runtime count and fail if it differs or reaches
+150 million.
+
+## Board custody
+
+| Payload | Rows | Bytes | SHA-256 |
+|---|---:|---:|---|
+| generator train | 23 | 3,763 | `bc691adff44fd12b4fa5419379a9ee1c5f90c97bdaafa7576f36685ff2d7dad5` |
+| graph-only train | 48,000 | 406,246,861 | `fea64b033f4ff418e4b4af194b17bbedd0b4e601f9ed3224aaf9feb70f034327` |
+| development | 2,048 | 18,774,014 | `193df4513e9b7186aefbe3890931be85f4a7f0b154ab39c0409614603a686ff0` |
+| sealed confirmation | 2,048 | 18,752,717 | `2f0967bc35ee4b01f1adb59e6f0278c18394f3a0f84a5727b21e8df21e256419` |
+
+Board report SHA-256:
+`fb81b75f5963ad4bcd513d9e4a14e2fa36ad02dabd1085b9f4387c270755cd93`
+
+Audit results:
+
+- 52,096/52,096 independent executor agreements;
+- 52,096/52,096 noncanonical node-storage rows;
+- no train final state or answer;
+- zero exact prompt, 13-gram, or split-name overlap;
+- development/confirmation access `0/0`;
+- original maximum 459/512 tokens;
+- source-recoded maximum 458/512;
+- 8,890 nonce recodings change token width;
+- maximum gold island width 3 under the frozen width-4 proposal cap; and
+- oracle logits pass the complete neural proposal/assembly path on 2,048/2,048
+  development graphs without fitting or score access.
+
+## Authorized next action
+
+Commit the report, generator cells, this receipt, and updated ledgers. Sync exact
+large payload bytes, source, tokenizer, protected 300k base, and closed S8.1
+initializer to Newton and hash-verify them. Then run one serial development job:
+treatment, no-class-message, shuffled-relations, evaluation, and assessment.
+Confirmation remains unopened unless every immutable development gate passes.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 175: `R12_S9_OCCURRENCE_QUOTIENT_CPU_RESULT.md`
+
+Original source path: `R12_S9_OCCURRENCE_QUOTIENT_CPU_RESULT.md`
+Original source size: 1,088 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S9 Occurrence-Quotient CPU Result
+
+**Decision:** admit theory/representation only; no neural capability claim
+
+**Seed:** `792451398761220486`
+
+**Rows:** 2,048 closed S8.1 development sources
+
+**Report SHA-256:**
+`f77dce825314cc38b0630cd574b450284c00fc8afa23dc0ab39cfc5be8ef2c94`
+
+The oracle-emitted quotient reconstructs the exact graph, recurrent state, and
+answer on 2,048/2,048 sources. Independent class-ID and relation-storage
+permutations remain exact on 2,048/2,048. Swapping card witnesses leaves only
+30/2,048 exact states; reversing links leaves 154/2,048. Splitting one repeated
+operation, merging entity classes, giving every occurrence a unique free word,
+corrupting a relation type, or swapping event argument slots causes strict
+rejection on all 2,048 rows.
+
+All 13 CPU gates pass. This shows that class-level emitted relations are a
+lossless and causal interface to the retained S8 executor. It does not show
+that a neural model can find the spans or relations. The CPU run uses frozen
+board labels as oracle emissions and must not be reported as a reasoning score.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 176: `R12_S9_OCCURRENCE_QUOTIENT_DEVELOPMENT_RESULT.md`
+
+Original source path: `R12_S9_OCCURRENCE_QUOTIENT_DEVELOPMENT_RESULT.md`
+Original source size: 6,479 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S9 Occurrence-Quotient Development Result
+
+**Decision:** rejected for confirmation after a large development-only gain
+
+**Development access:** 1
+
+**Confirmation access:** 0; the sealed confirmation board remains unopened
+
+## Custody
+
+- neural source commit: `9fd8aea`
+- bounded-memory repair commit: `ba9e4c6`
+- frozen board commit: `d3cacd7`
+- board seed: `7563652620455132721`
+- training seed: `1782702123750965299`
+- scoreless infrastructure jobs: `693705` (`evc44`, no GPU visible) and
+  `693706` (empty output-directory guard after the prior preflight failure)
+- sole valid score-bearing job: Slurm `693707` on `evc45`, completed cleanly
+  in 18m59s
+- board report SHA-256:
+  `fb81b75f5963ad4bcd513d9e4a14e2fa36ad02dabd1085b9f4387c270755cd93`
+- development SHA-256:
+  `193df4513e9b7186aefbe3890931be85f4a7f0b154ab39c0409614603a686ff0`
+- sealed confirmation SHA-256:
+  `2f0967bc35ee4b01f1adb59e6f0278c18394f3a0f84a5727b21e8df21e256419`
+- checkpoint SHA-256:
+  `02a0ae680aa817d5f20c7fab0a75baeae4e4e262231e3051925a980f492ff8fc`
+- evaluation SHA-256:
+  `874f762648d2eeca7868cea6f9b3a51c6eb9186e2ad22aedfc1db5ba07ae3a94`
+- assessment SHA-256:
+  `85565f07f880730d35672cefa597c9d2c2498278c94c6db53e6cafd456e70a09`
+
+The local mirror contains the checkpoint, evaluation, and assessment with the
+same hashes. The large checkpoint remains outside Git.
+
+## Frozen contract
+
+The 125,081,664-parameter Shohin base is frozen through layer 19. The treatment
+adds a 9,498,382-parameter bounded-span relational compiler and the confirmed
+218-parameter S7 cyclic generator, for 134,580,264 total parameters. Every
+contiguous source span up to four tokens is scored. The treatment receives a
+mean message from other candidate spans with the same exact trimmed source
+surface. The equal-parameter no-class arm zeros only that message. The shuffled
+arm retains the architecture but trains on independently permuted relation
+labels.
+
+All arms receive 750 updates over the same 48,000 graph-only training sources.
+They receive no final state, answer, recurrent trace, development law, or
+confirmation law. The treatment and no-class arms both reach 100% sampled
+candidate and positive-label accuracy at the end of fitting; the shuffled arm
+does not. End-to-end development therefore remains the decisive comparison.
+
+## Development scores
+
+| Arm | Exact graph | Exact state | Answer |
+|---|---:|---:|---:|
+| Gold graph | 2,048/2,048 = 100.000% | 2,048/2,048 = 100.000% | 2,048/2,048 = 100.000% |
+| **S9 treatment** | **1,941/2,048 = 94.775%** | **1,943/2,048 = 94.873%** | **1,943/2,048 = 94.873%** |
+| Equal-budget no-class message | 950/2,048 = 46.387% | 951/2,048 = 46.436% | 951/2,048 = 46.436% |
+| Shuffled relations | 0/2,048 = 0.000% | not a scored runtime arm | not a scored runtime arm |
+| Closed S8.1 treatment | 514/2,048 = 25.098% | 514/2,048 = 25.098% | 514/2,048 = 25.098% |
+
+S9 improves exact graph compilation by **69.678 percentage points** over S8.1
+and **48.389 points** over the matched no-class arm. State accuracy remains
+above 85.67% at every evaluated depth from three through eight:
+
+| Depth | Exact state |
+|---:|---:|
+| 3 | 293/342 = 85.673% |
+| 4 | 313/340 = 92.059% |
+| 5 | 335/342 = 97.953% |
+| 6 | 332/342 = 97.076% |
+| 7 | 334/341 = 97.947% |
+| 8 | 336/341 = 98.534% |
+
+The treatment emits 1,943 valid graphs. Of these, 1,941 are exact semantic
+graphs. The two non-exact graphs nevertheless execute to the expected state and
+answer on their particular programs. This is not counted as exact graph
+compilation.
+
+## Attribution and causal controls
+
+The explicit occurrence-class message is causally useful on this board. It
+raises exact graph accuracy from 46.387% to 94.775% with the same parameter
+count, training examples, update count, frozen base, and global memory encoder.
+The shuffled-label arm emits zero exact graphs.
+
+Every graph-storage reindexing is invariant on all 1,943 valid treatment rows.
+The unchanged S8/S7 execution controls sharply reduce exact state:
+
+| Intervention | Exact state |
+|---|---:|
+| Reversed links | 140/2,048 = 6.836% |
+| Deranged cards | 28/2,048 = 1.367% |
+| One witness | 95/2,048 = 4.639% |
+| State reset | 54/2,048 = 2.637% |
+| Early nil | 77/2,048 = 3.760% |
+
+These controls rule out storage order, ignored links, ignored card witnesses,
+source-state replay, and ignored nil halt as explanations for the high treatment
+score.
+
+## Why confirmation is forbidden
+
+Twenty of twenty-two frozen gates pass. Two fail:
+
+1. **Exact class membership:** 1,941/2,048 = 94.775%, below the frozen 95%
+   floor by five examples.
+2. **Operation-name recoding:** all 1,925 mutually valid original/recoded pairs
+   are bit-identical, but 18 originally valid parses become invalid after the
+   source operation names are rotated and fully retokenized. The frozen gate
+   requires eligibility for every valid original graph.
+
+The aggregate span F1 is 99.997% on graph-producing rows, with no false-positive
+spans and six false negatives in that scored subset. It must not be described as
+an unconditional all-row boundary score because rows that fail graph assembly
+do not contribute span sets to that aggregate. The all-row class-exact score is
+the binding robustness measure and is the one that fails.
+
+No threshold is relaxed, no same-board repair is scored, and the sealed
+confirmation file remains unopened.
+
+## Claim boundary and next phase
+
+S9 supplies strong development evidence for a bounded model-owned chain:
+natural-language span/relation extraction, repeated-identity binding, graph
+order and nil halt, recurrent cyclic state updates, and query consumption. It
+does not yet establish a confirmed mechanism, non-identical coreference,
+unbounded reasoning, self-generated problem decomposition, or broad benchmark
+reasoning.
+
+The admissible successor is a fresh-board S9.1 robustness experiment, not a
+wider repeat. It should keep the parameter count and proven S7/S8 runtime fixed
+while testing two preregistered changes:
+
+1. operation-name orbit augmentation or a consistency objective so source
+   recoding is an explicit learned equivariance rather than an incidental OOD
+   test;
+2. a model-logit-only constrained relation assignment that guarantees the
+   declared graph grammar without receiving gold spans, names, event order, or
+   halt.
+
+Both changes require new source commits, seeds, development, and sealed
+confirmation bytes. The same no-class and shuffled controls and all current
+thresholds remain required.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 177: `R12_S9_OCCURRENCE_QUOTIENT_RELATIONAL_COMPILER_PREREG.md`
+
+Original source path: `R12_S9_OCCURRENCE_QUOTIENT_RELATIONAL_COMPILER_PREREG.md`
+Original source size: 7,660 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S9 Occurrence-Quotient Relational Compiler Preregistration
+
+**Status:** CPU representation admitted; neural source and board not yet frozen
+
+**Parent result:** S8.1 rejected end to end at 514/2,048 exact graphs, with
+514/514 exact execution conditional on graph validity
+
+## 1. Target failure
+
+S8.1 is not failing after compilation. Its valid, exact-graph, exact-state, and
+exact-answer sets are the same 514 development rows. The compiler instead loses
+complete rosters, state permutations, card witnesses, or repeated-name bindings
+under unseen renderers and nonce vocabularies. Its architecture independently
+labels BPE tokens, although the source repeatedly refers to the same entity,
+position, operation, and event tag.
+
+S9 tests whether **identity before semantics** is a better factorization:
+
+1. propose nonempty surface islands from source tokens;
+2. quotient byte-identical proposed islands into occurrence classes;
+3. classify local relation types and argument slots using both local context and
+   the shared class representation;
+4. emit class-level roster, state, card, event, entry, next/nil, and query
+   relations; and
+5. compile those relations into the unchanged S8 graph and execute through the
+   confirmed S7/S8 runtime.
+
+No arithmetic or recurrent component is widened in this phase.
+
+## 2. Model and host ownership
+
+### Model-owned
+
+- each selected island's start and end;
+- whether an island participates in the graph;
+- its local relation kind and argument slot;
+- all roster/state/card/event/entry/query records;
+- every event tag, operation, entity, next link, and nil decision.
+
+### Architectural
+
+- enumeration of bounded contiguous token-span proposals without a candidate-
+  name dictionary;
+- exact byte equality over spans selected by the model;
+- quotient class renaming and relation-storage invariance;
+- strict categorical relation/graph validation;
+- the already disclosed S8 linked traversal, node-count safety bound, S7 cyclic
+  compiler, and pop-insert transition.
+
+### Forbidden at inference
+
+- gold spans, names, or candidate-name dictionaries;
+- board `spans`, `entities`, `positions`, `cards`, `nodes`, `execution_tags`,
+  `initial_state`, `final_state`, `answer`, depth, or source event order;
+- host alias resolution, graph repair, retry/search, state transition, or answer
+  selection.
+
+The host may tokenize source, enumerate all spans up to the preregistered maximum
+width, compare the exact bytes of model-selected spans, validate the emitted
+relation graph, and invoke the frozen runtime once.
+
+## 3. CPU theorem and result
+
+Source seed `792451398761220486` runs the representation over all 2,048 already-
+closed S8.1 development sources. Frozen labeled spans stand in only for future
+model emissions; the compiler function receives source and emitted spans, not
+the row's structured graph fields. Expected graph/state/answer are scorer-only.
+
+Report SHA-256:
+`f77dce825314cc38b0630cd574b450284c00fc8afa23dc0ab39cfc5be8ef2c94`
+
+| CPU arm | Exact graph | Exact state | Valid/rejected |
+|---|---:|---:|---:|
+| Oracle-emitted quotient | 2,048/2,048 | 2,048/2,048 | 2,048 valid |
+| Class-ID reindex | 2,048/2,048 | 2,048/2,048 | 2,048 valid |
+| Relation-storage reindex | 2,048/2,048 | 2,048/2,048 | 2,048 valid |
+| Swapped card witnesses | 0/2,048 | 30/2,048 | 2,048 valid |
+| Reversed links | 0/2,048 | 154/2,048 | 2,048 valid |
+| Split repeated operation | 0 | 0 | 2,048 rejected |
+| Merge two entity classes | 0 | 0 | 2,048 rejected |
+| Unique free word per occurrence | 0 | 0 | 2,048 rejected |
+| Corrupt relation kind | 0 | 0 | 2,048 rejected |
+| Swap event argument slots | 0 | 0 | 2,048 rejected |
+
+All 13 frozen CPU gates pass. This proves representational sufficiency and
+causal dependence only. It does not show that Shohin can emit the quotient.
+
+## 4. Neural architecture freeze requirements
+
+Before any board seed is drawn, source and tests must freeze:
+
+- a frozen Shohin residual extractor;
+- a trainable contextual encoder;
+- a bounded span proposal scorer that cannot inspect board span labels at
+  inference;
+- exact source-byte class grouping only after model selection;
+- a class-aware relation/slot decoder;
+- a shuffled-relation control with equal architecture and updates;
+- the complete parameter count below 150,000,000;
+- fail-fast checkpoint/base/tokenizer/board hashes;
+- an evaluator that records selected-span, class, relation, graph, state, answer,
+  depth, renderer, and causal-control scores; and
+- access counters fixed at zero before the board and incremented once only by
+  the sole development evaluation.
+
+Teacher forcing may label span proposals and relation slots in training. It may
+not provide final state, answer, recurrent trace, or development/confirmation
+relation records. Development and confirmation names, renderers, and laws must
+remain disjoint from training.
+
+## 5. Fresh-board controls
+
+The future board must preserve S8.1's counts and scientific exclusions unless a
+new source commit preregisters a smaller infrastructure canary:
+
+- 48,000 graph-field-only training rows;
+- 2,048 development rows;
+- 2,048 sealed-confirmation rows;
+- 23 successor cells and three zero anchors only for the S7 generator;
+- depths one through eight in training and three through eight in scoring;
+- split-disjoint names, laws, and renderer families;
+- zero exact prompt, 13-gram, and split-name overlap;
+- no train final states or answers; and
+- no development or confirmation access before source, assessor, thresholds,
+  and seeds are frozen.
+
+Required controls are gold quotient, gold graph, S8.1 token-role parser, a
+same-parameter span model with equality-class messages disabled, shuffled
+relation labels, class-ID reindex, relation-storage reindex, operation-nonce
+rotation, split-reference, merged-class, swapped-witness, reversed-link,
+state-reset, and early-nil interventions.
+
+## 6. Immutable development gates
+
+The sole development read advances S9 only if every gate passes:
+
+1. selected-span F1 at least 98%;
+2. class membership exact at least 95%;
+3. complete relation tuple exact at least 90%;
+4. valid graph at least 90%;
+5. exact graph at least 85%;
+6. recurrent state at least 80%;
+7. answer at least 85%;
+8. every depth-three-through-eight state at least 70%;
+9. at least +20 percentage points exact graph over frozen S8.1's 25.098%;
+10. at least +5 points exact graph over the same-parameter no-class-message
+    control;
+11. shuffled relations below 10% exact graph;
+12. class and relation-storage reindexing bit-identical on every valid graph;
+13. operation nonce recoding bit-identical on every originally valid graph;
+14. swapped witnesses, reversed links, reset, and early nil each cause their
+    preregistered causal drop;
+15. split/merge corruptions are rejected rather than repaired;
+16. complete system below 150,000,000 parameters; and
+17. one development access and zero confirmation accesses.
+
+Failure closes this architecture/version. Passing authorizes one separately
+frozen confirmation evaluator with unchanged weights. It does not by itself
+establish alias resolution, unconstrained language grounding, arbitrary
+algebra, unbounded planning, or broad native reasoning.
+
+## 7. Honest free-word boundary
+
+Exact occurrence quotienting helps only when references share exact surface
+bytes. The free-word control makes every occurrence unique and correctly causes
+the current compiler to abstain on 2,048/2,048 cases. S9 must never describe
+this as general coreference. A future alias-capable phase would need a distinct,
+causally tested learned equivalence relation and a negative set containing
+similar-but-nonidentical distractors.
 <!-- END EMBEDDED SOURCE -->
 
 ---
