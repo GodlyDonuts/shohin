@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 13:35 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 14:11 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -332,6 +332,19 @@
 > renderer families only. It is not native reasoning. The active phase is a separately committed
 > fresh board with new names and renderer/source families, source deletion, unchanged categorical
 > execution, matched controls, and strict complete-system size below 200M.
+>
+> **Fresh Complete Physical board source is implemented but not yet frozen.** The proposed source
+> creates 48,000 compiler-only training rows from 12,000 latent programs and four even-parity
+> renderer views, plus 2,048 development and 2,048 sealed-confirmation rows from four odd-parity
+> renderer views with new names and entirely new declaration/event/query language. Treatment and a
+> matched family-deranged false-label arm each train the same 102 tensors / 12,152,855 parameters;
+> complete size remains exactly 192,129,179 with 7,870,821 headroom. Two inherited forward-dead
+> bilinear declaration tensors are deterministically zeroed and frozen; direct 1,000x perturbation
+> leaves every v1.2 program output bit-identical. A source-free evidence capsule and separately
+> committed assessor independently recompute packet, pointer, state, answer, control, artifact,
+> parameter, and custody gates. Twenty focused tests and all static/job checks pass. No source
+> commit, board seed, training seed, fresh board, GPU output, development access, or confirmation
+> access exists at this point. Commit and push the exact source before drawing any seed.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9825,3 +9838,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `retain_occurrence_head_for_fresh_board`; checkpoint/report SHA values are `eaa83df0...`/
   `6148b4ef...`, with exact local/Newton matches. This is conventional consumed-training mechanics,
   not a reasoning claim. Freeze a distinct fresh-board source before any new board or score.
+
+- **2026-07-20 13:35--14:11** -- **The complete-physical fresh-board source is locally admitted
+  before source freeze, seed, board generation, or scored access.** New split-disjoint lexical atoms
+  and names produce four even-parity training renderer combinations and four odd-parity scored
+  combinations. The planned board is 48,000/2,048/2,048 train/development/sealed-confirmation rows.
+  Treatment and the matched family-level three-cycle false-label control train identical 102 tensors
+  / 12,152,855 parameters for 3,000 updates; the full system remains 192,129,179, strictly below
+  200M. The two obsolete inherited declaration tensors are directly proven forward-dead under v1.2
+  and are zeroed/frozen deterministically. A separate assessor will recompute all score, pointer,
+  execution, hash, parameter, and custody gates from a source-free evidence capsule. Twenty focused
+  tests plus Ruff, byte compilation, and Slurm syntax pass. No scientific source commit or seed
+  exists yet; preserve that ordering.

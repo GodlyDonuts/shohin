@@ -51,11 +51,19 @@ consumed-data interface: minimum held-out packets, states, query, binding,
 event, kind, identity, and amount are 100%, and strict initial-occurrence
 pointers are 99.20%. The full system is 192,129,179 parameters and all twelve
 frozen gates pass. This authorizes a new fresh-board transfer test, not a native
-reasoning claim.
+reasoning claim. That transfer source is now implemented but not frozen: four
+even-parity training renderer combinations must transfer to four odd-parity
+combinations using new declaration, event, direction, amount, query, and opaque
+name atoms. A matched family-deranged false-label arm receives identical source
+bytes, initialization, 102 trainable tensors, 12,152,855 trainable parameters,
+3,000 updates, and 192,129,179 complete parameters. A separately committed
+assessor recomputes all development gates from source-free hard-packet,
+pointer-range, executor, hash, parameter, and access-ledger evidence. No source
+commit, board seed, training seed, board, or fresh score exists yet.
 V2 custody is `1/0`, its confirmation is sealed, and no board will be rescored.
 Broad language-grounded, self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 13:35 EDT. User authority requires every future
+**Last updated:** 2026-07-20 14:11 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2565,6 +2573,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-19 | Embedded the complete S4 v2-v5 and S5/S6 preregistration/result closure, promoted S4 v5 and S5 as bounded confirmations, and recorded S6's negative unseen-law induction result with its repaired CPU mechanics boundary. |
 | 2026-07-19 | Added the frozen S7 learned Cayley-law compiler preregistration as the next post-S6 candidate; explicitly recorded that it has no score-bearing board or neural result yet. |
 | 2026-07-20 | Closed Complete Physical-Record Front-End v1.2: a 601,350-parameter nonlinear six-role occurrence head raises the 192,129,179-parameter complete compiler to 100% minimum held-out packets/states and 99.20% strict initial-occurrence pointers. All 12 consumed-training gates pass with `0/0` scored access; this authorizes only a separately committed fresh-board transfer test. |
+| 2026-07-20 | Implemented the pre-seed complete-physical fresh-board transfer source: new lexical/name atoms, even-to-odd renderer composition, matched family-deranged labels, source deletion, a second evidence-based assessor, exact 192,129,179 total parameters, and 20 passing focused tests. No source freeze, seed, board, or score exists yet. |
 
 ---
 
