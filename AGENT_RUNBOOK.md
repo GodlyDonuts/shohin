@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 08:01 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 09:42 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -201,6 +201,34 @@
 > permits future systems strictly below 200M, but every historical/current 150M contract remains
 > immutable and this system retains its stricter comparison gate. Mechanics alone are not native
 > reasoning.
+>
+> **Projected fresh v2 is now closed and rejected.** Exact source `6ca8933c` preceded final
+> board/training seeds `126281723562431289` / `2943136710636342416`. Sole job `694028` completed
+> cleanly on `evc27`. Treatment learned 48,000/48,000 training tapes, while row-shuffled labels
+> learned 934/48,000. On the one development read, treatment exact packet/state/answer/joint are
+> 29.167%/89.193%/33.116%/29.688%; every one of 672 exact packets executes exactly. Late query is
+> exactly 33.333%, and the held-out paraphrase renderer is 0/288 exact packets and 39/288 exact
+> states. The exact one-STOP MAP decoder is valid but adds only one exact kind row over raw argmax.
+> Assessment `4c459708...` records `reject_projected_fresh_board`; access is `1/0`; sealed
+> confirmation remains unopened. Local checkpoint/evaluation/tensor/assessment/ledger copies all
+> hash-match Newton. Never rescore v2 or open its confirmation. The next fresh-board hypothesis must
+> keep the exact executor fixed and isolate a trainable renderer-invariant source/query front end.
+> Every complete future system must remain strictly below 200M parameters; closed 150M contracts
+> remain unchanged.
+>
+> **Active training-only successor:** Renderer-Orbit Query Bus v1 is implemented but has no source
+> freeze, seed, H100 fit, fresh board, or score yet. It keeps every inherited projected/executor
+> parameter frozen, adds a zero-gated eight-layer 512-wide renderer encoder, and forces the late
+> query through contextual ordinal addressing followed by a raw position-free byte-value motor.
+> Exact complete/trainable counts are 172,723,071 / 26,665,476, leaving 27,276,929 parameters below
+> the strict global cap. The pilot uses only consumed v2 training rows: 12,000 SHA-ordered semantics
+> rendered through four even-parity declaration/event/query combinations for fit, versus 2,000
+> disjoint semantics rendered through four odd-parity combinations. Every surface atom occurs in
+> both sets, but no complete renderer does. Development/confirmation are unreachable. Twenty-one
+> focused/current projected tests plus Ruff, format, `py_compile`, and Slurm syntax pass. Freeze and
+> push the exact source next, then draw one post-commit pilot seed and run the training-only H100
+> gate. A pass authorizes only a separately preregistered fresh board with no-consistency,
+> wrong-family, direct-only, shuffled-label, and query-deletion controls.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9419,3 +9447,40 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   zero exact prompt/name/sequence overlap everywhere, and require zero old-dev 13-gram overlap in
   successor train and confirmation. Development grammar overlap remains measured. Freeze a new
   source and new seeds after tests; never open old sealed confirmation.
+
+- **2026-07-20 09:02--09:22** -- **Projected fresh v2 closes as a grounding rejection with exact
+  conditional execution.** Final source `6ca8933c2cfcc2d972733774b26ced9a9b75caef` precedes
+  board/training seeds `126281723562431289` / `2943136710636342416`. The admitted
+  48,000/2,304/2,304 board has report/train/development/sealed-confirmation SHA values
+  `050794b3...`/`b7756dbf...`/`0e072003...`/`c477718c...`; it excludes all inherited-parent and
+  consumed-v1-development operation sequences, with zero prior prompt/name/sequence overlap in all
+  splits and zero prior 13-gram overlap in train/confirmation. Sole job `694028` completes cleanly
+  on H100 `evc27` in 8m18s. Treatment reaches 48,000/48,000 exact training tapes; row-shuffled
+  supervision reaches 934/48,000. On the one development read, treatment packet/state/answer/joint
+  are 672/2,304 (29.167%), 2,055/2,304 (89.193%), 763/2,304 (33.116%), and 684/2,304
+  (29.688%). All 672 exact packets execute exactly; every causal packet intervention matches its
+  oracle and source deletion passes. Initial/kind/identity/amount are 94.444%/87.543%/87.457%/
+  87.674%, while late query is exactly 33.333%. Seven non-paraphrase variants have 100% state; the
+  held-out paraphrase renderer has 0/288 packets and 39/288 state. Raw kinds are already one-STOP
+  on 95.747% and exact on 87.500%; exact MAP adds one exact-kind row. Assessment `4c459708...`
+  rejects; access is `1/0`; confirmation stays sealed. Checkpoint/config/evaluation/packet/executor/
+  assessment/ledger SHA values are `1d338651...`/`3bac8380...`/`9bc40bf9...`/`531aab65...`/
+  `0a823e46...`/`4c459708...`/`3e0b328b...`; all local mirrors hash-match Newton. Close v2
+  permanently. The next fresh experiment must leave the exact executor fixed and test a
+  renderer-invariant source/query front end under the complete-system strict-below-200M gate.
+
+- **2026-07-20 09:22--09:42** -- **Renderer-Orbit Query Bus is implemented and locally admitted
+  to source freeze, before any pilot seed.** The v2 data audit confirms that all 48,000 training
+  rows use `train_talvek_direct_v1`; development alone contains 288 paraphrase rows, and every
+  development query changes the marker and frame from training. The new treatment keeps the
+  20,955,890-parameter projected parent and exact executor frozen. It adds a 26,665,476-parameter
+  eight-layer 512-wide byte renderer encoder with a zero-initialized residual gate and a query bus
+  whose contextual path may select an ordinal span but whose class motor receives only raw,
+  position-free selected-byte values. Complete system size is 172,723,071, leaving 27,276,929 below
+  the strict 200M cap. A binary declaration/event/query renderer product is split by parity: four
+  even combinations train on 12,000 consumed-training semantics and four odd combinations evaluate
+  2,000 disjoint consumed-training semantics; each atom occurs in both halves and complete renderers
+  are disjoint. The pilot cannot read development, confirmation, answers, states, or trajectories.
+  Twenty-one focused/current tests pass with static and job checks. Exact parent and v2 checkpoints
+  are local and hash-verified at `e5f87a1d...` and `1d338651...`. No source commit or pilot seed has
+  been drawn. Commit exact bytes before the one authorized training-only H100 pilot.

@@ -1,7 +1,7 @@
 # R12 Projected SD-CST Fresh v2 Preregistration
 
-**Status:** first unlaunched v2 board rejected by cross-generation audit;
-successor source hardening in progress with no replacement seed or scored read
+**Status:** closed and rejected after the sole fresh development read; sealed
+confirmation remains unopened and is not authorized
 
 ## Parent result and exact failure
 
@@ -128,3 +128,22 @@ decoder. It would not establish unconstrained natural-language reasoning, a
 learned halting grammar, self-generated plans, or active use of Shohin's nominal
 125.08M trunk. Raw versus structured kind rates must be disclosed so the
 decoder's contribution remains visible.
+
+## Frozen result
+
+Successor source `6ca8933c2cfcc2d972733774b26ced9a9b75caef` preceded board/training
+seeds `126281723562431289` / `2943136710636342416`. The final board passes the
+cross-generation exclusion contract and sole job `694028` completes cleanly on
+`evc27`. Treatment fits all 48,000 training tapes; row-shuffled supervision fits
+only 934. On the sole development read, treatment reaches 672/2,304 = 29.167%
+exact packets, 2,055/2,304 = 89.193% exact state, 763/2,304 = 33.116% answers,
+and 684/2,304 = 29.688% joint. All 672 exact packets execute exactly.
+
+The exact-MAP decoder is valid but not causal to the main failure: raw kind
+argmax is already one-STOP on 95.747% and exact on 87.500%, while structured
+kind is 87.543%. The frozen late query is exactly 768/2,304 = 33.333%, and the
+held-out paraphrase variant is 0/288 exact packets and 39/288 exact states.
+The assessor therefore records `reject_projected_fresh_board`; access is `1/0`
+and confirmation remains sealed. Full custody, metrics, hashes, and diagnosis
+are frozen in `R12_SD_CST_PROJECTED_FRESH_V2_RESULT.md`. Never rescore or repair
+this board.

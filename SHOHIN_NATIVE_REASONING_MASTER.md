@@ -12,38 +12,25 @@ recurrent execution. S9.1 remains the strongest fresh-development compiler at
 2,025/2,048 = 98.877% exact graph/state/answer, but is permanently unconfirmed
 after its frozen alpha-closure failures. S9.2 is decisively rejected at
 340/2,048 = 16.602% exact graph/state/answer and 21/43 gates. Parser-only anchor
-repair is retired. The active experiment is Source-Deleted Categorical State
-Transport (SD-CST). Its recurrent motor/reader mechanics are retained, but v1.1
-closed before development because the generic language compiler learned
-source-blind priors. A byte-addressed compiler then reached 100% source-line
-pointers, raw kind/STOP, amount, and query on an 8,000-row consumed-training
-holdout, while identity and initial binding stayed at chance. The active
-training-only hypothesis is a frozen-parent projected content-addressable
-binding bus, for a 146,057,595-parameter complete system. The first joint bus
-run proves 100% declaration-to-initial binding but regresses solved parent
-fields. A frozen hierarchy preserves the parent and lifts event addressing to
-32.625%. The projected adapter then reaches an exact consumed-training
-compiler certificate and passes all 29 independent source-blind execution
-mechanics gates. This is not yet a fresh-distribution neural result. The active
-phase is one post-commit fresh board with independently randomized corrupted
-supervision, an inherited-parent leakage audit, a binding-source-free ablation,
-and one-read development custody. Job `693998` closed before training or scored
-access on a derived-buffer contract bug. The narrow repair then enabled job
-`694008`: treatment reached 48,000/48,000 exact training tapes and decisively
-beat the row-shuffled-label arm, but the sole fresh development read rejected
-the first malformed tape because independent kind argmax did not emit exactly
-one STOP. V1 is closed at access `1/0` without an accuracy score. V2 now tests
-an exact model-logit-only MAP decoder under the disclosed one-STOP grammar on a
-wholly new board. Its first unlaunched board was rejected pre-GPU because the
-builder had not reserved operation sequences from the consumed v1 development
-set; that exclusion is now being added. No fresh neural development score exists
-yet.
-Broad language-grounded,
+repair is retired. Source-Deleted Categorical State Transport (SD-CST) now has
+a complete causal decomposition. Its 146,057,595-parameter projected system
+passes all 29 source-blind execution-mechanics gates, learns 48,000/48,000
+training tapes, and decisively beats row-shuffled binding supervision. Fresh v2
+job `694028` nevertheless rejects on the sole development read: exact packet
+29.167%, recurrent state 89.193%, answer 33.116%, and joint 29.688%. Every exact
+packet executes exactly, while the late query is exactly at three-way chance
+and the held-out paraphrase renderer falls to 0% exact packets and 13.542%
+state. This isolates renderer-invariant source grounding and content-addressed
+late-query binding as the next bottleneck; widening the recurrent executor is
+not justified. V2 custody is `1/0`, confirmation is sealed, and the board will
+not be rescored. The next experiment must use a wholly fresh board and charge
+any added capacity only to a trainable source/query front end under a strict
+complete-system `<200,000,000` parameter gate. Broad language-grounded,
 self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 09:02 EDT. User authority permits future complete
-systems strictly below 200M parameters; the current isolated pilot retains its
-stricter 150M comparison gate.
+**Last updated:** 2026-07-20 09:42 EDT. User authority requires every future
+complete deployed system to remain strictly below 200M parameters; historical
+and closed experiment-specific 150M contracts remain immutable.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -62,6 +49,74 @@ full job-by-job chronology remains in the operational runbook summary.
 claim boundaries are in Sections 1-12; the complete research source text used
 to support them is embedded in Appendix A. No conclusion in this document
 requires opening another markdown file.
+
+---
+
+## 2026-07-20 frontier update: v2 closes; grounding, not execution, is the bottleneck
+
+Exact source `6ca8933c2cfcc2d972733774b26ced9a9b75caef` preceded final
+board/training seeds `126281723562431289` / `2943136710636342416`. The board
+contains 48,000/2,304/2,304 train/development/sealed-confirmation rows and
+excludes every operation sequence from inherited parent training and consumed
+v1 development. Its report/train/development/confirmation SHA-256 values are
+`050794b3...`/`b7756dbf...`/`0e072003...`/`c477718c...`. The prior-development
+audit finds zero prompt/name/sequence overlap everywhere and zero 13-gram
+overlap in new train and confirmation; 34 shared renderer-grammar 13-grams in
+new development are disclosed. Confirmation remains mode `0600` and unopened.
+
+Sole H100 job `694028` completes cleanly on `evc27` in 8m18s. Treatment reaches
+48,000/48,000 exact training tapes and all major fields. The equal-update
+row-shuffled-label arm reaches only 934/48,000 exact tapes, 1,361/48,000
+identities, and 100/48,000 binding pointers. This is strong causal evidence for
+learning the projected exact-surface binding function on training data.
+
+The sole development read rejects the system. Treatment reaches 672/2,304 =
+29.167% exact packets, 2,055/2,304 = 89.193% exact state, 763/2,304 = 33.116%
+answers, and 684/2,304 = 29.688% joint. Row-shuffled packet/state/joint are
+0.564%/18.056%/5.816%. Every one of the 672 exact treatment packets executes to
+the exact state and answer, all packet interventions match their changed
+oracles, and source deletion passes. Conditional execution is therefore 100%.
+
+The error is sharply localized. Initial/kind/identity/amount are 94.444%/
+87.543%/87.457%/87.674%, but late query is exactly 768/2,304 = 33.333%.
+Seven non-paraphrase variants each have 100% exact state; the held-out
+paraphrase variant has 0/288 exact packets and only 39/288 = 13.542% exact
+state. Raw kind logits already contain exactly one STOP on 95.747% of rows and
+are 87.500% exact; exact-MAP decoding adds only one exact-kind row. The legal
+decoder solved its declared interface but was not the capability bottleneck.
+
+Assessment decision is `reject_projected_fresh_board`; confirmation is not
+authorized. Local checkpoint, config, evaluation, packet tensor, executor
+tensor, assessment, and access-ledger copies all hash-match Newton. Full result
+and hashes are frozen in `R12_SD_CST_PROJECTED_FRESH_V2_RESULT.md`.
+
+The next admissible intervention keeps the proven projected executor fixed and
+tests a trainable renderer-invariant source/query front end on a fresh board.
+Training must expose multiple independently generated renderers per latent
+program, hold out entire renderer orbits, and supervise query-to-entity binding
+rather than a direct three-class query label. Any added parameters must be
+matched by equal-budget no-orbit and shuffled controls, and the complete
+deployed system must remain strictly below 200,000,000 parameters.
+
+That front-end hypothesis is now implemented for a training-only identifiability
+gate before any fresh board. `RendererOrbitGroundedCompiler` adds 26,665,476
+trainable parameters, bringing the exact complete system to 172,723,071. Its
+eight-layer 512-wide byte encoder enters the inherited program compiler through
+a scalar residual gate initialized at zero, preserving the v2 treatment at
+initialization. The late-query path is deliberately narrower: contextual memory
+may address the requested ordinal, but the three-class motor receives only the
+selected raw position-free byte embedding. Query-template context cannot cross
+that value boundary.
+
+The training-only renderer set is the even-parity half of a binary
+declaration/event/query product; holdout is the odd-parity half. Both contain
+both values of every factor, while the four complete combinations are disjoint.
+The pilot fits 12,000 consumed-training semantic programs with four views each
+and evaluates four held-out views over 2,000 disjoint consumed-training
+programs. It reads no development, confirmation, final state, answer, or
+trajectory. Twenty-one current/focused tests and all static/job checks pass.
+Exact source must be committed before the sole pilot seed. A pilot pass is not a
+reasoning result; it permits only a fresh controlled board.
 
 ---
 
