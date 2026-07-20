@@ -130,10 +130,19 @@ class RendererOrbitGroundedCompiler(ProjectedHierarchicalBindingBusCompiler):
         ids: torch.Tensor,
         valid_mask: torch.Tensor,
     ) -> torch.Tensor:
+        combined, _ = self._encode_components(ids, valid_mask)
+        return combined
+
+    def _encode_components(
+        self,
+        ids: torch.Tensor,
+        valid_mask: torch.Tensor,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
         parent = super()._encode(ids, valid_mask)
-        orbit = self.orbit_to_parent(self._orbit_encode(ids, valid_mask))
+        orbit = self._orbit_encode(ids, valid_mask)
+        projected = self.orbit_to_parent(orbit)
         scale = self.orbit_residual_scale.tanh()
-        return parent + scale * orbit
+        return parent + scale * projected, orbit
 
     def compile_query_with_evidence(
         self,

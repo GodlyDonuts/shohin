@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 10:17 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 10:28 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -230,6 +230,16 @@
 > translate new renderer structure into frozen line/kind/amount/event heads. The next training-only
 > hypothesis may spend the remaining 27,276,929 parameters on a renderer-native program decoder
 > while freezing the successful query, declaration/initial binding, tape, and executor paths.
+>
+> **Active training-only conventional control:** the renderer-native program decoder is implemented
+> and preregistered before source freeze or seed. It adds only 35 `native_*` tensors: nine line/slot
+> queries, shared source keys, two slot-composition transformer layers, kind/amount heads, and eight
+> line-conditioned event queries. Every v1.2 tensor is frozen and digest-bound. Exact compiler/
+> trainable/complete/headroom counts are 54,724,859 / 7,103,493 / 179,826,564 / 20,173,436.
+> An exact loaded-parent consumed-row forward/backward is finite; 25 focused/current tests and static
+> checks pass. This is a favorable ordinary structured-parser control, not a claimed invention or
+> reasoning mechanism. Freeze exact source next, then draw one pilot seed. Passing may retain the
+> parser only as a fresh-board control; failure closes it without extra epochs.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9545,3 +9555,17 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   values are `2e019b81...`/`5cce5d9c...`; local copies hash-match Newton; access remains `0/0`.
   Preserve the 172,723,071-parameter result and do not add epochs. Preregister the dedicated decoder
   under the strict 200M cap before another seed.
+
+- **2026-07-20 10:17--10:28** -- **A renderer-native program decoder is implemented as the
+  favorable conventional compiler control, before source freeze or seed.** The treatment loads and
+  freezes exact v1.2 checkpoint `2e019b81...`, retaining its 100% query and initial-binding paths.
+  It adds nine renderer-native line/slot queries, shared 512-wide source keys, a two-layer eight-head
+  slot transformer, kind/amount heads, and eight event-name queries hard-masked by model-owned line
+  selection. Only 35 `native_*` tensors are trainable. Exact compiler/trainable/complete counts are
+  54,724,859 / 7,103,493 / 179,826,564, leaving 20,173,436 below 200M. One exact consumed-row
+  loaded-checkpoint backward pass is finite; its frozen-parent digest is bound. Twenty-five focused/
+  current tests and static/job checks pass. The control deliberately reuses the already-observed
+  training-only renderer orbit and therefore cannot make a fresh generalization, novelty, or
+  reasoning claim. A pass only establishes parser capacity and retains this known structured-
+  attention system as a favorable future control. Freeze exact source before drawing one seed;
+  development and confirmation remain unreachable.
