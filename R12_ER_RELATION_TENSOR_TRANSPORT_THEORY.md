@@ -2,8 +2,9 @@
 
 **Protocol:** `R12-ER-TT-v1-theory`
 
-**Status:** pre-freeze CPU and tensor-mechanics hypothesis. No neural adapter,
-source commit, board seed, training seed, GPU run, or scored access exists.
+**Status:** CPU/tensor mechanics and a local neural adapter are implemented.
+The adapter is not source-frozen and no board seed, training seed, GPU run, or
+scored access exists.
 
 ## Motivation
 
@@ -82,3 +83,14 @@ compilation and source-deleted recurrent composition. It would still not prove
 free-form language grounding, unbounded algorithms, arithmetic, branching,
 planning, or general intelligence. Those require later boards whose program
 structure itself is inferred rather than supplied by the finite grammar.
+
+## Adapter implementation receipt
+
+The implemented adapter totals 192,740,854 parameters, of which 12,037,293 are
+trainable, leaving 7,259,146 below the strict 200M ceiling. It removes the
+finite permutation buffer, direct card classifier, learned categorical motor,
+and learned reader from the deployed path. Actual reconstruction from the
+confirmed v1.1 checkpoint copies every retained parent tensor byte-identically.
+Exact architecture, supervision, controls, and gates are preregistered in
+`R12_ER_RELATION_TENSOR_ADAPTER_PREREG.md`. No scientific board may be seeded
+until this source and contract are committed.

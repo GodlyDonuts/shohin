@@ -10384,3 +10384,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   terminal states. All 13 gates pass. Report/registration SHA-256 are `28e5acc2...`/`da8d4c3b...`.
   This admits only neural-adapter implementation and exact sub-200M accounting. No board seed,
   training seed, GPU run, scored access, or neural reasoning claim exists.
+
+- **2026-07-20 19:00--19:24** -- **The ER-TT neural adapter is locally admitted before source
+  freeze or any board seed.** It expands the shuffled physical bus to 18 records, emits direct
+  variable `6x6` initial/relation logits from coordinate-generated witness equality, supports
+  `N=3..6`, four rule slots, and twelve updates plus persistent pre-apply HALT. The inherited finite
+  permutation buffer, direct permutation head, fixed three-position query head, learned motor, and
+  learned reader are absent from the deployed path. Complete/trainable/headroom counts are exactly
+  192,740,854/12,037,293/7,259,146. Actual confirmed-v1.1 reconstruction copies every retained
+  parent tensor byte-identically (`ccb1420f...` copied subset); excluded frozen state is
+  `d45d757f...`. Sixteen focused tests, non-bijective equality recovery, source-free execution,
+  gradient isolation, parameter audit, fail-fast hashes, Ruff, and byte compilation pass. Freeze
+  and push exact adapter/preregistration source before drawing a board seed. No neural score exists.
