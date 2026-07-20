@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 04:50 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 05:06 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -162,8 +162,12 @@
 > `708007186830296895` / `460548278529624463`. The fresh 48,000/2,304/2,304 board passes all 22
 > independent audit gates and the 13-gate CPU falsifier; report/train/development/sealed-confirmation
 > SHA values begin `e4ac239c...`/`694bce3a...`/`425dc36f...`/`7116b266...`, access is `0/0`, and
-> confirmation is mode `0600`. Sync and hash-verify exact bytes, then run exactly one serial H100
-> development path. Mechanics alone are not native reasoning.
+> confirmation is mode `0600`. Sole v1.1 job `693958` passed every input and hardware check and
+> completed atomic/compiler fitting, then its training-summary pass raised before checkpoint write
+> because at least one raw compiler row lacked exactly one STOP. Development and confirmation were
+> never opened; close v1.1 without rescore. Run one source-bound training-only diagnostic to measure
+> the raw STOP-count histogram, then preregister a fresh-board grammar-safe decoder repair. Mechanics
+> alone are not native reasoning.
 >
 > Three complete source-pointer compiler diagnostics are now closed without reading confirmation.
 > Free slots `692966` overfit renderer coordinates: 29.4% answers / 15.3% programs. Bidirectional
@@ -9194,3 +9198,14 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `7116b266...`; independent audit/falsifier are `24925931...`/`11371a92...`. Confirmation is mode
   `0600`, development/confirmation access is `0/0`, and neither scored split has been inspected.
   Commit the safe receipt, sync exact bytes, and submit the sole serial H100 job.
+
+- **2026-07-20 04:55--05:06** -- **SD-CST v1.1 closes before checkpoint/development on STOP
+  cardinality.** Sole job `693958` runs on H100 `evc22` for 5m34s. It passes exact source, board,
+  base, tokenizer, CUDA, and bf16 checks; deterministic motor/reader fits and compiler training
+  complete. The post-fit training-metric pass then raises because independent per-slot kind argmaxes
+  contain a row with other than exactly one STOP. No checkpoint, gate config, development ledger,
+  evaluation, assessment, or confirmation access is written. This is a compiler-output grammar
+  failure hidden by a fail-fast summary, not a recurrent-execution score. The v1.1 board is closed.
+  `train/diagnose_sd_cst_train_stop.py` is a training-only wrapper that preserves the frozen fit,
+  cannot invoke a scored split, and records the raw STOP-count histogram without constructing a
+  valid tape. Run it once on the consumed training split; its output is never score-eligible.

@@ -23,7 +23,7 @@ passes 64/64 fresh exact fits on H100. No neural development score exists yet.
 Broad language-grounded,
 self-directed reasoning remains unestablished.
 
-**Last updated:** 2026-07-20 04:50 EDT.
+**Last updated:** 2026-07-20 05:06 EDT.
 
 **Operational source of truth:** the operational runbook summary in this ledger
 
@@ -149,8 +149,12 @@ train/development/sealed-confirmation rows. Both the built-in and independent
 auditors pass all 22 board gates, and the CPU falsifier passes 13/13 with 72/72
 atomic cells. Report/train/development/confirmation SHA-256 values begin
 `e4ac239c...`/`694bce3a...`/`425dc36f...`/`7116b266...`; confirmation remains
-mode `0600` with zero access. Exactly one serial H100 development path is
-authorized after source/data/base/tokenizer hashes match on Newton.
+mode `0600` with zero access. Sole job `693958` passed source/data/base/tokenizer
+and H100 checks, completed all frozen fits, then failed before checkpoint write
+because raw independent event-kind argmaxes did not contain exactly one STOP for
+every training row. No scored split was opened. V1.1 is closed. A single
+training-only rerun may measure the STOP-count histogram; the next scored version
+must preregister a grammar-safe model-logit decoder and use a fresh board.
 
 This is not yet a reasoning result. It is an admitted, falsifiable integration
 experiment. A pass would establish bounded autonomous language-to-private-tape
