@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 21:19 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 23:11 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -317,10 +317,20 @@
 > confirmation `1/0/0`. Checkpoint/evidence/report hashes are `82913911...`/`e3e86467...`/
 > `697ce283...`; read-only local mirrors hash-match. Do not generate a fresh board or revive this
 > hard-route design. Preserve confirmed ER-CST v1.1 as the strongest episodic reasoning baseline.
-> Marginal-route v1.1 now implements the required train-only oracle-route versus soft-route
-> separation. Exact source `8419c74e...` precedes seed `4412270997190025241`; sole job `694909` is
-> pending normal-partition H100 resources. It has no development/confirmation path. Do not launch a
-> duplicate, alter its frozen thresholds, or treat oracle-route success as a learned capability.
+> Marginal-route v1.1 is also formally rejected before fresh data, but it produces the first useful
+> variable-cardinality relation bus. Exact source `8419c74e...` precedes seed
+> `4412270997190025241`; sole job `694909` completed on H100 `evc43` in 9m06s. Oracle-route
+> transport and complete neutral-alpha invariance are 8,000/8,000. Learned packet/relation/joint is
+> 7,275/8,000 = 90.938%, state is 97.062%, and answer is 98.537%. The sole failed gate is complete
+> witness pointers at 7,194/8,000 = 89.925%, six rows below the immutable 90% threshold. All 806
+> affected rows have exactly one after-witness pointer error; before witnesses are 107,764/107,764
+> exact. Checkpoint/evidence/report hashes begin `9e6115d1...`/`52e70d01...`/`a89439c8...`; local and
+> Newton mirrors match; custody is `1/0/0`. Do not rescore v1.1 or relax its gate. Ordinal-route v1.2
+> is the sole admitted next hypothesis: cardinality-marginalized monotone witness paths with
+> model-scored opcode exclusion, unchanged exact identity bus, zero-parameter executor/reader,
+> unchanged 185,532,296 parameters, and unchanged train-only thresholds. Fifteen focused tests plus
+> actual confirmed-parent reconstruction and a real-family all-trainable backward pass now pass
+> before source freeze. No v1.2 source commit, seed, H100 job, or scored-split access exists.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10547,3 +10557,23 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `/lustre/fs1/home/sa305415/shohin_runs/er_dual_stream_marginal_4412270997190025241`.
   Development/confirmation access remains `0/0`; no score or output artifact exists. Do not submit
   a duplicate while `694909` is pending or running.
+
+- **2026-07-20 22:43--23:11** -- **Marginal-route v1.1 nearly repairs variable relation transport
+  but is formally rejected; ordinal-route v1.2 is admitted pre-seed.** Sole job `694909` completed
+  cleanly on H100 `evc43` in 9m06s. Oracle-route initial/relations/events/joint and complete
+  neutral-namespace alpha invariance are each 8,000/8,000. Learned packet/relation/joint reaches
+  7,275/8,000 = 90.938%, state 7,765/8,000 = 97.062%, and answer 7,883/8,000 = 98.537%. Complete
+  witness pointers are 7,194/8,000 = 89.925%, six rows below the frozen 90% gate, so the immutable
+  decision remains `reject_dual_stream_before_fresh_board`; custody is `1/0/0` and no fresh board is
+  authorized. Local artifacts hash-match Newton at checkpoint/evidence/report SHA-256
+  `9e6115d1...`/`52e70d01...`/`a89439c8...`. Independent immutable-evidence localization finds
+  every before-witness pointer exact at 107,764/107,764; all 806 affected rows contain exactly one
+  after-witness error, with 202 selecting another occurrence of the correct symbol and 604 an
+  adjacent symbol. V1.2 changes only that factorization: a differentiable monotone path lattice
+  marginalizes model-predicted cardinality and learns which one of `2N+1` local candidates is the
+  opcode. Exact equality, record assignment, zero-parameter relation motor/reader, source-only loss,
+  parameter count, and all thresholds remain unchanged. Focused CPU job `694921` passes 15/15
+  tests; actual-parent/real-family job `694922` reconstructs the confirmed parent, preserves the
+  185,532,296 parameter certificate, gives every declared trainable finite gradient, and leaks none
+  to excluded state. No v1.2 source commit, seed, H100 job, development read, or confirmation read
+  exists yet.

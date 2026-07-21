@@ -52,7 +52,7 @@ from pilot_sd_cst_byte_addressed import sha256_file
 from pilot_sd_cst_renderer_native_program import frozen_state_digest
 
 
-SCHEMA = "r12_er_dual_stream_train_only_canary_v1_1"
+SCHEMA = "r12_er_dual_stream_train_only_canary_v1_2"
 BOARD_REPORT_SHA256 = (
     "64ea4c0e19ea029102af240d44242c830d7b014e49a59af09a836b2d3efb6010"
 )
@@ -96,6 +96,7 @@ FROZEN_SOURCE_PATHS = tuple(
             ER_TT_FROZEN_SOURCE_PATHS
             + (
                 "R12_ER_DUAL_STREAM_RELATION_REPAIR_PREREG.md",
+                "R12_ER_DUAL_STREAM_ORDINAL_ROUTE_PREREG.md",
                 "R12_ER_DUAL_STREAM_TRAIN_CANARY_RESULT.md",
                 "train/er_dual_stream_relation_adapter.py",
                 "train/pilot_er_dual_stream_relation_adapter.py",

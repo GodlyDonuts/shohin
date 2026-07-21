@@ -124,6 +124,8 @@ def initialize_dual_stream_relation(
         "routing_assignment_receives_pointer_gradients": True,
         "routing_assignment_detaches_record_features": True,
         "identity_equality_is_exact_route_marginal": True,
+        "witness_routes_use_cardinality_marginalized_monotone_lattice": True,
+        "witness_opcode_exclusion_is_model_scored": True,
         "dead_v1_identity_parameters_removed": True,
         "learned_motor_parameters": 0,
         "learned_reader_parameters": 0,

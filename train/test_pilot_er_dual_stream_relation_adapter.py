@@ -53,6 +53,11 @@ def test_actual_confirmed_parent_reconstructs_into_dual_stream() -> None:
     assert receipt["routing_assignment_receives_pointer_gradients"] is True
     assert receipt["routing_assignment_detaches_record_features"] is True
     assert receipt["identity_equality_is_exact_route_marginal"] is True
+    assert (
+        receipt["witness_routes_use_cardinality_marginalized_monotone_lattice"]
+        is True
+    )
+    assert receipt["witness_opcode_exclusion_is_model_scored"] is True
     assert receipt["dead_v1_identity_parameters_removed"] is True
     assert not hasattr(model, "er_tt_occurrence_head")
     assert not hasattr(model, "er_event_card_query_projection")

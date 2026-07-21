@@ -109,3 +109,95 @@ It separates representational sufficiency of the identity bus from learned
 route acquisition and cannot authorize promotion. The learned soft-route arm
 retains every original capability and alpha-invariance threshold. V1 is closed
 and will not be rerun.
+
+## Marginal-route v1.1 result
+
+**Protocol:** `r12_er_dual_stream_train_only_canary_v1_1`
+
+**Decision:** formally reject v1.1 before fresh-board generation. The sole
+failed frozen gate is still binding; no threshold is relaxed and no scored
+split was read.
+
+### Custody and provenance
+
+- Source: `8419c74e161f41c704d324d2b6ad72ed5587035f`
+- Deterministic post-commit seed: `4412270997190025241`
+- Seed derivation SHA-256:
+  `3d3b891840452019b5e35332a360c29293909edcc9e396dbd0d9326526ae3b46`
+- Sole H100 job: `694909` on `evc43`
+- Runtime: 9m06s, exit code zero
+- Fit/probe: 10,000/2,000 family-disjoint old-training families,
+  40,000/8,000 rows
+- Train-only/development/confirmation accesses: `1/0/0`
+- Complete/trainable/headroom parameters:
+  `185,532,296 / 11,129,504 / 14,467,704`
+
+| Artifact | SHA-256 |
+|---|---|
+| `compiler.pt` | `9e6115d1db01499f6cf5c7dd4763b2a43e82019c28a267131a1f71a2e95edb6f` |
+| `train_probe_evidence.pt` | `52e70d017b49738a775df3c2638a3ee757ae68d0e06b67bfff3f251d18380fad` |
+| `train_probe_report.json` | `a89439c861870b48983ca62e995e9da38ca8dc75d188165af2cde2612820f479` |
+
+Newton and local copies hash-match and are read-only.
+
+### Frozen result
+
+| Metric | Exact |
+|---|---:|
+| Packet / joint / relation rows | 7,275/8,000 = 90.938% |
+| Recurrent state | 7,765/8,000 = 97.062% |
+| Answer | 7,883/8,000 = 98.537% |
+| Complete active witness pointers | 7,194/8,000 = 89.925% |
+| Declaration binding / initial pointers | 8,000/8,000 |
+| Initial rows | 8,000/8,000 |
+| Events / HALT / query | 8,000/8,000 |
+| Neutral-namespace alpha invariance | 8,000/8,000 complete |
+| Oracle-route initial / relations / events / joint | 8,000/8,000 |
+
+Every capability, custody, parameter, alpha-invariance, oracle-route, and
+minimum-cardinality gate passes except complete witness pointers, which miss
+the immutable 90% gate by six rows. The report therefore correctly emits
+`reject_dual_stream_before_fresh_board`; no fresh board is authorized.
+
+### Independent residual localization
+
+The immutable evidence was matched back to the deterministic probe split
+without opening development or confirmation:
+
+- 214,722/215,528 = 99.626% active witness occurrences select the exact
+  prescribed occurrence;
+- 214,924/215,528 = 99.720% select the correct six-byte symbol identity;
+- every one of the 107,764 active before-witness pointers is exact;
+- all 806 affected rows contain exactly one after-witness pointer error;
+- 202/806 errors select another occurrence of the correct symbol and 604 select
+  an adjacent wrong symbol;
+- cardinality four has zero witness errors; residuals concentrate in the
+  fourth active rule and cardinalities three, five, and six; and
+- learned relation rows remain exact in 221/806 occurrence-inexact rows,
+  demonstrating that exact marginal identity already tolerates some
+  occurrence ambiguity.
+
+This rejects both the old gradient-starvation diagnosis as the remaining
+problem and a capacity explanation. Marginal routing repairs the relation bus;
+the residual is independent local slot selection under a known ordered witness
+structure.
+
+## Admitted v1.2 hypothesis: ordinal witness lattice
+
+V1.2 must not rerun or reinterpret v1.1. It replaces only independent local
+witness-slot selection with a differentiable monotone route lattice. For each
+model-proposed cardinality, the lattice enumerates order-preserving paths over
+the opaque candidates in a model-selected semantic rule record. A rule record
+contains one extra candidate, so learned path probability must identify which
+candidate is the opcode; the remaining candidates map in order to the before
+and after witness slots. Cardinality uncertainty is marginalized, not supplied
+by the host. Record assignment, opcode exclusion, cardinality, relations,
+events, HALT, and query remain model-owned.
+
+The exact equality bus, source deletion, parameter-free relation motor, zero-
+parameter reader, training data, source-only losses, alpha intervention,
+oracle-route control, 185,532,296-parameter certificate, and all frozen v1.1
+thresholds remain unchanged. V1.2 requires a new committed source and a new
+post-commit seed. It receives only another train-only old-family canary; it may
+not read any development or confirmation split. Passing would authorize a
+fresh neutral-namespace board, not a reasoning claim.

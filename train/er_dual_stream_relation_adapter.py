@@ -11,6 +11,7 @@ from er_relation_tensor_adapter import (
     DECLARATION_OCCURRENCES,
     MAX_CARDINALITY,
     MAX_RULES,
+    MIN_CARDINALITY,
     SHOHIN_BASE_PARAMETERS,
     STRICT_PARAMETER_CAP,
     TT_RECORDS,
@@ -174,6 +175,137 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
         probabilities = torch.einsum("bpr,bpol->brol", semantic_assignment, physical)
         return probabilities.clamp_min(1e-30).log()
 
+    def _ordinal_witness_logits(
+        self,
+        records: torch.Tensor,
+        token_memory: torch.Tensor,
+        local_valid: torch.Tensor,
+        source_indices: torch.Tensor,
+        starts: torch.Tensor,
+        assignment: torch.Tensor,
+        cardinality_logits: torch.Tensor,
+        source_width: int,
+    ) -> torch.Tensor:
+        """Marginalize ordered witness routes instead of selecting slots independently.
+
+        A rule record contains one opcode followed by equally sized before and
+        after witness lists. For each possible cardinality, the lattice scores
+        every order-preserving route through the local opaque candidates. Rule
+        records have one extra candidate, so the only latent decision is which
+        candidate to exclude. Declaration records have no extra candidate and
+        remain a matched structural distractor for semantic role assignment.
+        """
+        records = records.detach()
+        token_memory = token_memory.detach()
+        candidates = self._local_candidates(starts, source_indices, local_valid)
+        query = self.er_ds_router_norm(records)[:, :, None]
+        query = query + self.er_ds_witness_queries[None, None]
+        query = self.er_ds_router_query(query)
+        keys = self.er_ds_router_key(token_memory)
+        local_logits = torch.einsum("bpow,bpkw->bpok", query, keys)
+        local_logits = local_logits.float() / math.sqrt(self.record_width)
+        local_logits = local_logits.masked_fill(
+            ~candidates[:, :, None], torch.finfo(local_logits.dtype).min
+        )
+
+        local_probability = self._ordered_route_probability(
+            local_logits, candidates, cardinality_logits
+        )
+
+        physical = torch.zeros(
+            records.shape[0],
+            TT_RECORDS,
+            2 * MAX_CARDINALITY,
+            source_width,
+            device=records.device,
+            dtype=local_probability.dtype,
+        )
+        physical.scatter_add_(
+            -1,
+            source_indices[:, :, None].expand(
+                -1, -1, 2 * MAX_CARDINALITY, -1
+            ),
+            local_probability * local_valid[:, :, None],
+        )
+        semantic_assignment = assignment[:, :, 1 : 1 + MAX_RULES].float()
+        probabilities = torch.einsum(
+            "bpr,bpol->brol", semantic_assignment, physical
+        )
+        return probabilities.clamp_min(1e-30).log()
+
+    @staticmethod
+    def _ordered_route_probability(
+        local_logits: torch.Tensor,
+        candidates: torch.Tensor,
+        cardinality_logits: torch.Tensor,
+    ) -> torch.Tensor:
+        """Return differentiable marginals over monotone local witness paths."""
+        if local_logits.ndim != 4 or candidates.shape != local_logits.shape[:2] + (
+            local_logits.shape[-1],
+        ):
+            raise ValueError("ordered witness lattice shape differs")
+        if local_logits.shape[2] != 2 * MAX_CARDINALITY:
+            raise ValueError("ordered witness lattice slot count differs")
+        if cardinality_logits.shape != (
+            local_logits.shape[0],
+            MAX_CARDINALITY - MIN_CARDINALITY + 1,
+        ):
+            raise ValueError("ordered witness cardinality shape differs")
+
+        candidate_rank = candidates.long().cumsum(-1) - 1
+        candidate_count = candidates.long().sum(-1)
+        cardinality_probability = cardinality_logits.float().softmax(-1)
+        local_probability = torch.zeros_like(local_logits.float())
+
+        for cardinality in range(MIN_CARDINALITY, MAX_CARDINALITY + 1):
+            active_slots = tuple(range(cardinality)) + tuple(
+                range(MAX_CARDINALITY, MAX_CARDINALITY + cardinality)
+            )
+            path_length = len(active_slots)
+            weight = cardinality_probability[
+                :, cardinality - MIN_CARDINALITY, None, None, None
+            ]
+            route_probability = torch.zeros_like(local_logits)
+
+            direct = candidate_count.eq(path_length)
+            for ordinal, slot in enumerate(active_slots):
+                at_rank = candidates & candidate_rank.eq(ordinal)
+                route_probability[:, :, slot] += (
+                    direct[:, :, None] * at_rank
+                ).to(route_probability.dtype)
+
+            one_extra = candidate_count.eq(path_length + 1)
+            path_scores = []
+            for excluded in range(path_length + 1):
+                score = torch.zeros_like(candidate_count, dtype=local_logits.dtype)
+                for ordinal, slot in enumerate(active_slots):
+                    selected_rank = ordinal + int(ordinal >= excluded)
+                    at_rank = candidates & candidate_rank.eq(selected_rank)
+                    selected = local_logits[:, :, slot].masked_fill(
+                        ~at_rank, torch.finfo(local_logits.dtype).min
+                    )
+                    score = score + selected.amax(-1)
+                path_scores.append(score)
+            stacked_scores = torch.stack(path_scores, -1)
+            stacked_scores = torch.where(
+                one_extra[:, :, None],
+                stacked_scores,
+                torch.zeros_like(stacked_scores),
+            )
+            path_probability = stacked_scores.softmax(-1)
+            path_probability = path_probability * one_extra[:, :, None]
+            for excluded in range(path_length + 1):
+                for ordinal, slot in enumerate(active_slots):
+                    selected_rank = ordinal + int(ordinal >= excluded)
+                    at_rank = candidates & candidate_rank.eq(selected_rank)
+                    route_probability[:, :, slot] += (
+                        path_probability[:, :, excluded, None] * at_rank
+                    )
+
+            local_probability = local_probability + weight * route_probability
+
+        return local_probability
+
     @staticmethod
     def _all_symbol_bytes(ids: torch.Tensor) -> torch.Tensor:
         """Materialize one six-byte candidate at every source position."""
@@ -249,7 +381,12 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
             "bps,bpw->bsw", semantic_assignment, records
         )
         semantic_records = semantic_records + self.er_tt_record_role_embedding[None]
+        routing_records = torch.einsum(
+            "bps,bpw->bsw", routing_assignment, records.detach()
+        )
+        routing_records = routing_records + self.er_tt_record_role_embedding[None]
         declaration = semantic_records[:, 0]
+        routing_declaration = routing_records[:, 0]
         rules = self.er_rule_norm(semantic_records[:, 1 : 1 + MAX_RULES])
         events = self.er_event_norm(semantic_records[:, 1 + MAX_RULES :])
 
@@ -273,15 +410,18 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
             binding_pointer_logits,
         )
 
-        witness_pointer_logits = self._routed_symbol_logits(
+        cardinality_logits = self.er_tt_cardinality_head(declaration).float()
+        routing_cardinality_logits = self.er_tt_cardinality_head(
+            routing_declaration
+        ).float()
+        witness_pointer_logits = self._ordinal_witness_logits(
             records,
             token_memory,
             local_valid,
             source_indices,
             starts,
             routing_assignment,
-            slice(1, 1 + MAX_RULES),
-            self.er_ds_witness_queries,
+            routing_cardinality_logits,
             ids.shape[1],
         )
         relation_equality = self._marginal_identity_equality(
@@ -330,7 +470,7 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
         )
         return RelationTensorCompilerOutput(
             program=RelationTensorProgram(
-                cardinality=self.er_tt_cardinality_head(declaration).float(),
+                cardinality=cardinality_logits,
                 initial_state=initial_equality.float(),
                 rule_cards=relation_equality.float(),
                 rule_active=self.er_tt_rule_active_head(rules).float(),

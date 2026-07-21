@@ -1,7 +1,8 @@
 # R12 ER-TT Dual-Stream Relation Repair Preregistration
 
-**Status:** hard-route v1 rejected; marginal-route v1.1 locally admitted for a
-train-only diagnostic; v1.1 source not yet frozen
+**Status:** hard-route v1 and marginal-route v1.1 rejected before fresh data;
+ordinal-route v1.2 is specified separately in
+`R12_ER_DUAL_STREAM_ORDINAL_ROUTE_PREREG.md`
 
 **Parent:** confirmed ER-CST Witness Equality Bus v1.1, checkpoint SHA-256
 `917c1a1fce67c02258d0f90f04398ab433d18ba63c2dca92450cc5856c022ae7`
