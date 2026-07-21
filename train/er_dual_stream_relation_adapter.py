@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 import math
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 from er_relation_tensor_adapter import (
     DECLARATION_OCCURRENCES,
@@ -24,6 +26,30 @@ from er_relation_tensor_adapter import (
 
 OPAQUE_SYMBOL_BYTES = 6
 OPAQUE_CANONICAL_BYTE = ord("x")
+
+
+@dataclass(frozen=True, slots=True)
+class OrderedRouteTables:
+    """Structured exclusion paths and their witness-slot marginals."""
+
+    marginal_probability: torch.Tensor
+    path_scores: torch.Tensor
+    path_probability: torch.Tensor
+    path_valid: torch.Tensor
+
+
+@dataclass(frozen=True, slots=True)
+class OrderedRouteDiagnostics:
+    """Train-only route evidence before semantic hardening."""
+
+    routing_assignment: torch.Tensor
+    cardinality_logits: torch.Tensor
+    local_logits: torch.Tensor
+    opcode_logits: torch.Tensor
+    candidates: torch.Tensor
+    source_indices: torch.Tensor
+    rule_opcode_logits: torch.Tensor
+    event_opcode_logits: torch.Tensor
 
 
 class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
@@ -68,6 +94,8 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
         ):
             nn.init.normal_(parameter, std=0.02)
         self.opcode_coupling_scale = 1.0
+        self.query_structural_routing = False
+        self.structured_route_objective = False
 
     @staticmethod
     def opaque_symbol_starts(
@@ -197,37 +225,20 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
         have no extra candidate and remain a matched structural distractor for
         semantic role assignment.
         """
-        records = records.detach()
-        token_memory = token_memory.detach()
-        candidates = self._local_candidates(starts, source_indices, local_valid)
-        query = self.er_ds_router_norm(records)[:, :, None]
-        query = query + self.er_ds_witness_queries[None, None]
-        query = self.er_ds_router_query(query)
-        keys = self.er_ds_router_key(token_memory)
-        local_logits = torch.einsum("bpow,bpkw->bpok", query, keys)
-        local_logits = local_logits.float() / math.sqrt(self.record_width)
-        local_logits = local_logits.masked_fill(
-            ~candidates[:, :, None], torch.finfo(local_logits.dtype).min
+        local_logits, opcode_logits, candidates = self._ordinal_route_inputs(
+            records,
+            token_memory,
+            local_valid,
+            source_indices,
+            starts,
         )
-
-        opcode_query = self.er_ds_router_norm(records)[:, :, None]
-        opcode_query = opcode_query + self.er_ds_rule_opcode_query[None, None]
-        opcode_query = self.er_ds_router_query(opcode_query)
-        opcode_logits = torch.einsum(
-            "bpow,bpkw->bpok", opcode_query, keys
-        ).squeeze(2)
-        opcode_logits = opcode_logits.float() / math.sqrt(self.record_width)
-        opcode_logits = opcode_logits.masked_fill(
-            ~candidates, torch.finfo(opcode_logits.dtype).min
-        )
-
-        local_probability = self._ordered_route_probability(
+        local_probability = self._ordered_route_tables(
             local_logits,
             candidates,
             cardinality_logits,
             opcode_logits,
             opcode_weight=self.opcode_coupling_scale,
-        )
+        ).marginal_probability
 
         physical = torch.zeros(
             records.shape[0],
@@ -250,16 +261,175 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
         )
         return probabilities.clamp_min(1e-30).log()
 
+    def _ordinal_route_inputs(
+        self,
+        records: torch.Tensor,
+        token_memory: torch.Tensor,
+        local_valid: torch.Tensor,
+        source_indices: torch.Tensor,
+        starts: torch.Tensor,
+    ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+        """Score witness slots and the complementary opcode candidate."""
+        records = records.detach()
+        token_memory = token_memory.detach()
+        candidates = self._local_candidates(starts, source_indices, local_valid)
+        keys = self.er_ds_router_key(token_memory)
+
+        query = self.er_ds_router_norm(records)[:, :, None]
+        query = query + self.er_ds_witness_queries[None, None]
+        query = self.er_ds_router_query(query)
+        local_logits = torch.einsum("bpow,bpkw->bpok", query, keys)
+        local_logits = local_logits.float() / math.sqrt(self.record_width)
+        local_logits = local_logits.masked_fill(
+            ~candidates[:, :, None], torch.finfo(local_logits.dtype).min
+        )
+
+        opcode_query = self.er_ds_router_norm(records)[:, :, None]
+        opcode_query = opcode_query + self.er_ds_rule_opcode_query[None, None]
+        opcode_query = self.er_ds_router_query(opcode_query)
+        opcode_logits = torch.einsum(
+            "bpow,bpkw->bpok", opcode_query, keys
+        ).squeeze(2)
+        opcode_logits = opcode_logits.float() / math.sqrt(self.record_width)
+        opcode_logits = opcode_logits.masked_fill(
+            ~candidates, torch.finfo(opcode_logits.dtype).min
+        )
+        return local_logits, opcode_logits, candidates
+
+    def ordered_route_diagnostics(
+        self, ids: torch.Tensor, valid_mask: torch.Tensor
+    ) -> OrderedRouteDiagnostics:
+        """Expose path inputs for train-only coherent-decoder qualification."""
+        structural_ids, starts = self.structural_view(ids, valid_mask)
+        records, token_memory, local_valid, source_indices, _ = (
+            self._er_encode_records(structural_ids, valid_mask)
+        )
+        routing_logits = self.er_tt_record_role_head(records.detach())
+        routing_assignment = self._er_assignment(routing_logits)
+        routing_records = torch.einsum(
+            "bps,bpw->bsw", routing_assignment, records.detach()
+        )
+        routing_records = routing_records + self.er_tt_record_role_embedding[None]
+        cardinality_logits = self.er_tt_cardinality_head(
+            routing_records[:, 0]
+        ).float()
+        local_logits, opcode_logits, candidates = self._ordinal_route_inputs(
+            records,
+            token_memory,
+            local_valid,
+            source_indices,
+            starts,
+        )
+        rule_opcode_logits = self._routed_symbol_logits(
+            records,
+            token_memory,
+            local_valid,
+            source_indices,
+            starts,
+            routing_assignment,
+            slice(1, 1 + MAX_RULES),
+            self.er_ds_rule_opcode_query,
+            ids.shape[1],
+        ).squeeze(2)
+        event_opcode_logits = self._routed_symbol_logits(
+            records,
+            token_memory,
+            local_valid,
+            source_indices,
+            starts,
+            routing_assignment,
+            slice(1 + MAX_RULES, TT_RECORDS),
+            self.er_ds_event_opcode_query,
+            ids.shape[1],
+        ).squeeze(2)
+        return OrderedRouteDiagnostics(
+            routing_assignment=routing_assignment.float(),
+            cardinality_logits=cardinality_logits,
+            local_logits=local_logits,
+            opcode_logits=opcode_logits,
+            candidates=candidates,
+            source_indices=source_indices,
+            rule_opcode_logits=rule_opcode_logits,
+            event_opcode_logits=event_opcode_logits,
+        )
+
+    def structured_route_loss(
+        self,
+        ids: torch.Tensor,
+        valid_mask: torch.Tensor,
+        rows: list[object],
+    ) -> torch.Tensor:
+        """Train one coherent opcode-exclusion path per active source rule."""
+        diagnostics = self.ordered_route_diagnostics(ids, valid_mask)
+        tables = self._ordered_route_tables(
+            diagnostics.local_logits,
+            diagnostics.candidates,
+            diagnostics.cardinality_logits,
+            diagnostics.opcode_logits,
+            opcode_weight=self.opcode_coupling_scale,
+        )
+        losses = []
+        for row_index, row in enumerate(rows):
+            cardinality = int(row.cardinality)
+            cardinality_index = cardinality - MIN_CARDINALITY
+            physical_roles = sorted(
+                range(TT_RECORDS), key=lambda role: int(row.line_ranges[role][0])
+            )
+            payload_targets = {
+                rule: {
+                    int(start)
+                    for start, _ in (
+                        row.witness_before_ranges[rule]
+                        + row.witness_after_ranges[rule]
+                    )
+                }
+                for rule in range(int(row.rule_count))
+            }
+            for rule in range(int(row.rule_count)):
+                physical_record = physical_roles.index(1 + rule)
+                local = diagnostics.candidates[
+                    row_index, physical_record
+                ].nonzero().flatten()
+                global_positions = diagnostics.source_indices[
+                    row_index, physical_record, local
+                ]
+                if global_positions.numel() != 2 * cardinality + 1:
+                    raise ValueError("structured route candidate count differs")
+                target = [
+                    rank
+                    for rank, position in enumerate(global_positions.tolist())
+                    if int(position) not in payload_targets[rule]
+                ]
+                if len(target) != 1:
+                    raise ValueError("structured route target exclusion differs")
+                scores = tables.path_scores[
+                    row_index,
+                    physical_record,
+                    cardinality_index,
+                    : 2 * cardinality + 1,
+                ]
+                if not bool(torch.isfinite(scores).all()):
+                    raise ValueError("structured route score is nonfinite")
+                losses.append(
+                    F.cross_entropy(
+                        scores[None],
+                        torch.tensor([target[0]], device=scores.device),
+                    )
+                )
+        if not losses:
+            raise ValueError("structured route batch has no active rules")
+        return torch.stack(losses).mean()
+
     @staticmethod
-    def _ordered_route_probability(
+    def _ordered_route_tables(
         local_logits: torch.Tensor,
         candidates: torch.Tensor,
         cardinality_logits: torch.Tensor,
         opcode_logits: torch.Tensor,
         *,
         opcode_weight: float = 1.0,
-    ) -> torch.Tensor:
-        """Return marginals over paths that explain one opcode plus witnesses."""
+    ) -> OrderedRouteTables:
+        """Return coherent exclusion paths and their witness-slot marginals."""
         if local_logits.ndim != 4 or candidates.shape != local_logits.shape[:2] + (
             local_logits.shape[-1],
         ):
@@ -280,6 +450,14 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
         candidate_count = candidates.long().sum(-1)
         cardinality_probability = cardinality_logits.float().softmax(-1)
         local_probability = torch.zeros_like(local_logits.float())
+        path_scores_all = torch.full(
+            (*candidate_count.shape, MAX_CARDINALITY - MIN_CARDINALITY + 1, 13),
+            float("-inf"),
+            device=local_logits.device,
+            dtype=local_logits.dtype,
+        )
+        path_probability_all = torch.zeros_like(path_scores_all)
+        path_valid_all = torch.zeros_like(path_scores_all, dtype=torch.bool)
 
         for cardinality in range(MIN_CARDINALITY, MAX_CARDINALITY + 1):
             active_slots = tuple(range(cardinality)) + tuple(
@@ -323,6 +501,14 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
             )
             path_probability = stacked_scores.softmax(-1)
             path_probability = path_probability * one_extra[:, :, None]
+            index = cardinality - MIN_CARDINALITY
+            path_scores_all[:, :, index, : path_length + 1] = torch.where(
+                one_extra[:, :, None],
+                stacked_scores,
+                torch.full_like(stacked_scores, float("-inf")),
+            )
+            path_probability_all[:, :, index, : path_length + 1] = path_probability
+            path_valid_all[:, :, index, : path_length + 1] = one_extra[:, :, None]
             for excluded in range(path_length + 1):
                 for ordinal, slot in enumerate(active_slots):
                     selected_rank = ordinal + int(ordinal >= excluded)
@@ -333,7 +519,55 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
 
             local_probability = local_probability + weight * route_probability
 
-        return local_probability
+        return OrderedRouteTables(
+            marginal_probability=local_probability,
+            path_scores=path_scores_all,
+            path_probability=path_probability_all,
+            path_valid=path_valid_all,
+        )
+
+    @staticmethod
+    def _ordered_route_probability(
+        local_logits: torch.Tensor,
+        candidates: torch.Tensor,
+        cardinality_logits: torch.Tensor,
+        opcode_logits: torch.Tensor,
+        *,
+        opcode_weight: float = 1.0,
+    ) -> torch.Tensor:
+        """Compatibility wrapper returning witness-slot marginals only."""
+        return DualStreamRelationCompiler._ordered_route_tables(
+            local_logits,
+            candidates,
+            cardinality_logits,
+            opcode_logits,
+            opcode_weight=opcode_weight,
+        ).marginal_probability
+
+    def compile_relation_query(
+        self, ids: torch.Tensor, valid_mask: torch.Tensor
+    ) -> RelationTensorQuery:
+        """Optionally remove neutral-name identity from query pointer routing."""
+        if not self.query_structural_routing:
+            return super().compile_relation_query(ids, valid_mask)
+        structural_ids, _ = self.structural_view(ids, valid_mask)
+        _, memory = self._encode_query_record(structural_ids, valid_mask)
+        query = self.local_query_query_projection(self.local_query_selector)
+        keys = self.local_query_key_projection(memory)
+        pointer_logits = torch.einsum("w,blw->bl", query, keys)
+        pointer_logits = pointer_logits / math.sqrt(self.record_width)
+        pointer_logits = pointer_logits.masked_fill(
+            ~valid_mask, torch.finfo(pointer_logits.dtype).min
+        ).float()
+        weights = pointer_logits.softmax(-1).to(memory.dtype)
+        values = self.local_query_value_projection(
+            self.record_byte_embedding(structural_ids)
+        )
+        selected = self.local_query_norm(torch.einsum("bl,blw->bw", weights, values))
+        return RelationTensorQuery(
+            logits=self.er_tt_query_head(selected).float(),
+            pointer_logits=pointer_logits,
+        )
 
     @staticmethod
     def _all_symbol_bytes(ids: torch.Tensor) -> torch.Tensor:

@@ -10651,3 +10651,29 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   and diff checks pass. The sole broader failure is the inherited actual-parent integration fixture
   whose large witness checkpoint is absent locally; verify it in a clean Newton capsule before any
   seed or job. No development/confirmation byte is read and the closed v1 board remains `1/0`.
+
+- **2026-07-21 01:58--02:18** -- **The pre-seed v1.3 launch is superseded by a structured-route
+  factorial after independent audit; no H100 seed was drawn.** Source `66619f9...` is clean and
+  pushed, and Newton CPU allocation `695014` reconstructs the exact promoted parent with
+  185,532,296 complete / 11,129,504 trainable / 14,467,704 below 200M, finite loss 22.9711,
+  nonzero opcode/witness gradient norms 0.03407/0.10467, and zero missing, leaked, or nonfinite
+  gradients. The audit then identifies two unresolved factors in the old preregistration: hard
+  scoring independently argmaxes witness marginals instead of selecting one coherent exclusion
+  path, and query-pointer alpha/distractor failures cannot be repaired by opcode coupling alone.
+  The revised pre-freeze experiment retains every `2N+1` path score/probability and crosses a
+  zero-update reference, legacy marginal fit, opcode-coupled marginal fit, and structured
+  exclusion-NLL fit. Each checkpoint is scored with opcode weight on/off, marginal versus coherent
+  MAP hardening, and raw versus neutral-structural query routing. Controlled train-only twins cross
+  only opcode-first/middle and query-prefix/suffix while holding declaration, events, storage, and
+  noise fixed; rotated opcode logits are causal controls. No parameters are added and the user-
+  authorized strict-below-200M certificate remains exact. Nineteen focused tests and 65 broader
+  board/relation tests pass; the only two broader failures are unchanged local fixtures for absent
+  large witness artifacts, already covered by `695014`. Ruff, byte compilation, and job syntax
+  pass. This supersedes the old v1.3 launch authorization: freeze a new exact source commit, repeat
+  real-parent qualification in its clean capsule, then draw one post-commit seed. An independent
+  v1.4 assessor is now part of the frozen source and Slurm artifact chain. It recomputes gates and
+  diagnosis, verifies every retained coherent candidate partition and MAP, checks stored path
+  probabilities against their logits, and requires evidence-derived row-exact route counts to equal
+  the reported witness metric. The focused suite is 20/20 after adding its synthetic partition
+  check; all lint, byte compilation, shell syntax, and diff checks pass. Development and
+  confirmation remain unopened and the closed v1 board remains `1/0`.

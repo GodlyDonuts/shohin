@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=er-ds-opcode-v13
+#SBATCH --job-name=er-ds-route-v14
 #SBATCH --account=skattel
 #SBATCH --partition=normal
 #SBATCH --gres=gpu:nvidia_h100_pcie:1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=96G
-#SBATCH --time=03:00:00
+#SBATCH --time=04:00:00
 #SBATCH --exclude=evc26,evc28,evc31,evc44
 #SBATCH --chdir=/lustre/fs1/home/sa305415/shohin
 #SBATCH --output=logs/er_dual_stream_opcode_%j.out
@@ -58,4 +58,14 @@ export OMP_NUM_THREADS=4
   --source-commit "$SOURCE_COMMIT" \
   --seed "$SEED"
 
-sha256sum "$OUTDIR/compiler.pt" "$OUTDIR/train_probe_evidence.pt" "$OUTDIR/train_probe_report.json"
+"$PYTHON" train/assess_er_dual_stream_opcode_canary.py \
+  --checkpoint "$OUTDIR/compiler.pt" \
+  --evidence "$OUTDIR/train_probe_evidence.pt" \
+  --report "$OUTDIR/train_probe_report.json" \
+  --out "$OUTDIR/train_probe_assessment.json"
+
+sha256sum \
+  "$OUTDIR/compiler.pt" \
+  "$OUTDIR/train_probe_evidence.pt" \
+  "$OUTDIR/train_probe_report.json" \
+  "$OUTDIR/train_probe_assessment.json"

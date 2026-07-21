@@ -480,6 +480,16 @@ def loss_batch(
         [[row.query_range] for row in rows], 1, query_ids.shape[1], device
     )
     active_event = target["halt"].eq(0)
+    witness_loss = _masked_span_loss(
+        output.witness_pointer_logits,
+        witness_mask,
+        target["witness_active"],
+    )
+    if bool(getattr(model, "structured_route_objective", False)):
+        structured = getattr(model, "structured_route_loss", None)
+        if structured is None:
+            raise ValueError("structured route objective lacks a route loss")
+        witness_loss = structured(program_ids, program_valid, rows)
     pieces = {
         "line_pointer": _masked_span_loss(
             output.line_pointer_logits, line_mask, line_active
@@ -490,11 +500,7 @@ def loss_batch(
         "initial_pointer": _masked_span_loss(
             output.initial_entity_pointer_logits, initial_mask, initial_active
         ),
-        "witness_pointer": _masked_span_loss(
-            output.witness_pointer_logits,
-            witness_mask,
-            target["witness_active"],
-        )
+        "witness_pointer": witness_loss
         * float(TRAINING_CONTRACT["pointer_weight"]),
         "query_pointer": _masked_span_loss(
             output.query.pointer_logits[:, None], query_mask, query_active

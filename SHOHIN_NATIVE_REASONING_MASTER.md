@@ -3441,6 +3441,48 @@ Stop trying to make a single decoder learn to be a compiler, ALU, scheduler, and
 
 ---
 
+## 2026-07-21 Frontier-Plan Synthesis: Structured Compiler Route
+
+The external frontier plans converge on the right educational decomposition:
+language compiler, explicit state transition, state consumer, and halt must be
+separate interfaces and objectives. They do not justify a bundled
+Hopfield/VQ/SSM/RL architecture. The highest-value immediate component is the
+pointer-grounded compiler with phase-separated parameters and causal controls.
+
+ER-TT is the active bounded compiler experiment. Fresh v1 was formally
+rejected at 76.074% packet/relation/joint, with opcode-middle renderers and
+cardinalities three and four near 52%. The route scored retained witnesses but
+not the excluded candidate as opcode. Independent audit added a second defect:
+independent witness-marginal argmax need not equal one coherent exclusion-path
+MAP and can emit a tuple belonging to no legal route.
+
+The pre-seed repair is therefore a four-arm, train-only structured-route
+factorial:
+
+| Arm | Opcode score in fit | Route objective |
+|---|---:|---|
+| zero update | 0 | none |
+| legacy | 0 | per-slot witness marginal |
+| opcode coupled | 1 | per-slot witness marginal |
+| structured route | 1 | coherent exclusion-path NLL |
+
+Every checkpoint is crossed at inference with opcode score on/off, marginal
+versus coherent hardening, and raw versus neutral-structural query routing.
+The controlled probe changes only opcode-first/middle witness layout and
+query-prefix/suffix layout. Advancement requires at least 99% overall and in
+every renderer/cardinality cell, exact eight-view and recoding invariance,
+source-free joint at most 10%, and a uniquely identified 20-point causal
+advantage over the favorable control. Complete/trainable/headroom remains
+185,532,296 / 11,129,504 / 14,467,704 under the user-authorized strict-below-
+200M ceiling.
+
+This remains a compiler claim only. The current tensor motor is fixed host
+algebra, packet interventions on already-correct packets are runtime unit
+tests, and compiled `END` is not learned state-dependent halt. Even a perfect
+compiler result would still leave source-deleted learned execution, state
+consumption, autonomous halt, open-language transfer, and general reasoning
+unproven.
+
 ## 2026-07-20 SD-CST projected-binding update
 
 ### New compiler result

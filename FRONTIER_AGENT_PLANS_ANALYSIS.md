@@ -403,3 +403,48 @@ The research decision is:
 No claim in this review establishes native reasoning, novelty, or expected
 benchmark gain. It identifies the smallest experiments that can convert the
 plans from analogies into causal evidence.
+
+## 8. Implementation Consequence: Structured Compiler Routing
+
+The subsequent ER-TT result sharpens the Tier-A compiler recommendation. Its
+fresh v1 score did not fail uniformly: opcode-first renderers and cardinalities
+five and six were exact, while opcode-middle renderers and cardinalities three
+and four collapsed near 52% joint. The immutable pointer evidence shows that
+the route lattice often excludes an endpoint rather than the middle opcode.
+
+A second audit found that the old evaluator then compounds this ambiguity by
+hardening each witness-slot marginal independently. For exclusion-path score
+`S_e`, the model retains only slot marginals under `softmax(S)` and discards the
+coherent path posterior. Slotwise argmax can therefore decode the posterior
+median exclusion, or even a tuple that belongs to no legal path, while the
+coherent MAP exclusion is different.
+
+The admitted train-only factorial now separates four explanations before any
+new fresh board:
+
+1. zero-update coherent MAP versus marginal decode;
+2. inference-time complementary opcode scoring;
+3. opcode-coupled marginal training; and
+4. structured exclusion-path NLL.
+
+It also crosses raw versus neutral-structural query routing because the prior
+query semantics were invariant while the query pointer itself changed under
+neutral-name recoding. Controlled twins change only witness position and query
+position; declaration, event style, storage, and noise remain fixed. Every
+candidate must clear 99% absolute and per-cell gates, exact recoding
+invariance, source-free collapse, and a 20-point matched-control advantage.
+
+This is a direct implementation of the plans' pointer-grounded,
+phase-separated compiler recommendation. It is not yet Stage B or C. The
+current relation motor is fixed host tensor algebra and `END` compilation is
+not a learned state-dependent halt policy. A compiler pass can authorize only
+a new fresh compiler board; learned source-deleted execution, consumption, and
+halt remain separate unsatisfied gates.
+
+The protocol also freezes an independent artifact assessor. It does not merely
+trust normalized probabilities or the trainer's summary: it checks that each
+stored path distribution equals the softmax of its retained logits, that MAP
+witnesses plus the complementary opcode exactly partition the physical
+candidates, and that evidence-derived row-exact route counts equal the reported
+witness metric. This closes the most direct self-confirming-decoder loophole;
+it does not turn a train-only transfer probe into unseen-semantic evidence.

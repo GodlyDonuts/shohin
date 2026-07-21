@@ -233,6 +233,47 @@ def test_ordered_witness_lattice_explains_middle_opcode_as_complement() -> None:
     )
 
 
+def test_ordered_route_tables_retain_one_coherent_map_exclusion() -> None:
+    logits = torch.zeros(1, 1, 2 * MAX_CARDINALITY, 13)
+    candidates = torch.zeros(1, 1, 13, dtype=torch.bool)
+    candidate_positions = torch.arange(0, 13, 2)
+    candidates[0, 0, candidate_positions] = True
+    active_slots = (0, 1, 2, 6, 7, 8)
+    opcode_rank = 3
+    expected = torch.cat(
+        (candidate_positions[:opcode_rank], candidate_positions[opcode_rank + 1 :])
+    )
+    for ordinal, slot in enumerate(active_slots):
+        logits[0, 0, slot, expected[ordinal]] = 2.0
+    opcode = torch.zeros(1, 1, 13)
+    opcode[0, 0, candidate_positions[opcode_rank]] = 12.0
+    cardinality = torch.tensor([[20.0, -20.0, -20.0, -20.0]])
+    tables = DualStreamRelationCompiler._ordered_route_tables(
+        logits, candidates, cardinality, opcode
+    )
+    assert tables.path_scores.shape == (1, 1, 4, 13)
+    assert tables.path_probability.shape == tables.path_scores.shape
+    assert tables.path_valid[0, 0, 0].sum() == 7
+    assert tables.path_scores[0, 0, 0].argmax() == opcode_rank
+    assert torch.allclose(tables.path_probability[0, 0, 0].sum(), torch.tensor(1.0))
+    assert torch.equal(
+        tables.marginal_probability[0, 0, list(active_slots)].argmax(-1),
+        expected,
+    )
+
+
+def test_structural_query_route_is_neutral_name_invariant() -> None:
+    torch.manual_seed(416)
+    model = _small_model().eval()
+    model.query_structural_routing = True
+    first_ids, first_valid = _batch(b"Q2 z12345")
+    second_ids, second_valid = _batch(b"Q2 zabcde")
+    first = model.compile_relation_query(first_ids, first_valid)
+    second = model.compile_relation_query(second_ids, second_valid)
+    assert torch.equal(first.pointer_logits, second.pointer_logits)
+    assert torch.equal(first.logits, second.logits)
+
+
 def test_ordered_witness_lattice_maps_direct_candidate_sequence_exactly() -> None:
     logits = torch.randn(1, 1, 2 * MAX_CARDINALITY, 12)
     candidates = torch.zeros(1, 1, 12, dtype=torch.bool)
