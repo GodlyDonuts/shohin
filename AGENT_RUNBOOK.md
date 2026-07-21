@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 21:19 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 23:04 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -317,10 +317,28 @@
 > confirmation `1/0/0`. Checkpoint/evidence/report hashes are `82913911...`/`e3e86467...`/
 > `697ce283...`; read-only local mirrors hash-match. Do not generate a fresh board or revive this
 > hard-route design. Preserve confirmed ER-CST v1.1 as the strongest episodic reasoning baseline.
-> Marginal-route v1.1 now implements the required train-only oracle-route versus soft-route
-> separation. Exact source `8419c74e...` precedes seed `4412270997190025241`; sole job `694909` is
-> pending normal-partition H100 resources. It has no development/confirmation path. Do not launch a
-> duplicate, alter its frozen thresholds, or treat oracle-route success as a learned capability.
+> Marginal-route v1.1 is closed and rejected by its sole train-only probe, but it is a strong
+> near-pass that changes the diagnosis. Exact source `8419c74e...` precedes seed
+> `4412270997190025241`; job `694909` completed cleanly on H100 `evc43` in 9m06s. It reaches
+> 7,275/8,000 = **90.9375% packet/joint/relation rows**, 7,765/8,000 = 97.0625% state, and
+> 7,883/8,000 = 98.5375% answer. Binding, initial, event, HALT, query, query-pointer, cardinality,
+> and rule-active rows are all 100%; line pointers are 7,998/8,000. Every hard output is exactly
+> invariant on all 8,000 neutral-namespace alpha recodes, and source-span oracle routing transports
+> initial/relation/event/joint identity exactly on 8,000/8,000 rows through the same equality
+> operator. The frozen witness-pointer gate alone fails: 7,194/8,000 = **89.925%** versus 90%.
+> No threshold is relaxed; custody is `1/0/0`, and no fresh board is authorized. Compiler/evidence/
+> report hashes are `9e6115d1...`/`52e70d01...`/`a89439c8...`; read-only local mirrors match.
+> Independent immutable-evidence reconstruction finds all 806 failed rows contain exactly one
+> wrong witness occurrence; 214,722/215,528 = 99.626% individual occurrences are exact. Errors are
+> concentrated in late fourth-rule after-witness slots and commonly select the adjacent duplicate,
+> while the target is usually route rank two. This localizes the residual to occurrence addressing,
+> not identity equality or recurrent relation execution. The sole admitted next train-only repair
+> adds alpha-invariant within-record ordinal and candidate-count address embeddings to the marginal
+> router, starts from the independently confirmed parent rather than failed canary weights, keeps
+> the exact v1.1 data/optimizer/threshold/custody contract, and remains below 200M. Its local
+> qualification passes 22 focused tests including real-parent reconstruction, real-row alpha
+> invariance, complete trainable-gradient coverage, and zero excluded-parent leakage. Freeze and
+> push exact source before deriving one seed and submitting one H100 canary.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`

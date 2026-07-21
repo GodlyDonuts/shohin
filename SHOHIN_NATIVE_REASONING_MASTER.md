@@ -289,13 +289,33 @@ pass. A 1,152-row CPU audit spanning all four renderers, `N=3..6`, rule counts
 2--4, and depths 1--12 gives 100% oracle-route initial/relation/event/joint
 transport through the exact same equality operator. No v1.1 source commit,
 post-commit seed, H100 job, or score existed at local admission. Source commit
-`8419c74e` is now frozen and pushed before derivation SHA-256 `3d3b8918...` and
-seed `4412270997190025241`. A clean exact Newton capsule passed
-`sbatch --test-only`; sole train-only job `694909` is pending H100 resources.
-No development/confirmation path is accepted, custody remains `0/0`, and no
-v1.1 score or output artifact exists yet.
+`8419c74e` was frozen and pushed before derivation SHA-256 `3d3b8918...` and
+seed `4412270997190025241`. Sole train-only job `694909` completed cleanly on
+H100 `evc43` in 9m06s. It reaches 90.9375% packet/joint/relation rows, 97.0625%
+state, and 98.5375% answer. Binding, initial, events, HALT, query, cardinality,
+and rule-active are 100%; line pointer is 99.975%. All 8,000 rows are exactly
+invariant under neutral-namespace alpha recoding and oracle-route initial/
+relation/event/joint transport is 100% through the same equality operator. The
+one frozen failure is complete witness pointers: 7,194/8,000 = 89.925% versus
+the 90% gate. The decision remains rejection, custody is `1/0/0`, and no fresh
+board is authorized. Compiler/evidence/report hashes begin `9e6115d1`/
+`52e70d01`/`a89439c8`; read-only mirrors match.
 
-**Last updated:** 2026-07-20 21:55 EDT. User authority requires every future
+Independent reconstruction of the immutable evidence localizes all 806 failed
+rows to one wrong witness occurrence each; 214,722/215,528 = 99.626% individual
+occurrences are exact. Most errors are late fourth-rule after-witness slots and
+select an adjacent duplicate while the target remains route rank two. The next
+pre-freeze hypothesis therefore separates opaque identity from occurrence
+address: learned alpha-invariant within-record ordinal and candidate-count
+embeddings augment the marginal route keys. It adds 10,752 parameters, for
+185,543,048 complete / 11,140,256 trainable / 14,456,952 headroom. It reuses the
+same train-only split, update budget, gates, and zero scored-split custody and
+starts from the confirmed parent, never a failed canary. Twenty-two focused
+tests plus Ruff, byte compilation, shell syntax, real-row alpha invariance,
+real-parent backward coverage, and excluded-state isolation pass before source
+freeze. No addressed-route source commit, seed, H100 job, or score exists yet.
+
+**Last updated:** 2026-07-20 23:04 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2834,6 +2854,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Locally admitted the dual-stream ER-TT repair and train-only pre-board canary: alpha-canonical structural routing, model-selected whole-symbol reads, exact identity equality for state/relations/events, zero motor/reader parameters, and confirmed-parent initialization without rejected-v1 weights. Complete/trainable/headroom is 192,730,091/18,327,299/7,269,909. Ten tests plus a real-family confirmed-parent backward and static checks pass. Frozen canary gates require >=90% relations/witness pointers, >=85% packet/joint, and 8,000/8,000 neutral-namespace alpha invariance using only a 10,000/2,000 family-disjoint split of old train data. No source commit, seed, job, or score exists. |
 | 2026-07-20 | Rejected dual-stream hard-route v1 before fresh data. Source `54476bc`, seed `5113128174248698871`, and sole train-only H100 job `694800` produce exact 8,000/8,000 neutral-alpha invariance but 0 relation rows, witness pointers, packets, or joints; state/answer are 2.050%/20.825%. Granular audit shows chance relation cells and collapsed routes. Checkpoint/evidence/report hashes begin `82913911`/`e3e86467`/`697ce283`; local mirrors match and development/confirmation remain unread. V1.1 is admitted only as a matched oracle-route versus learned-soft-route diagnostic: dense exact marginal equality and repaired role-head gradients, unchanged thresholds, and 7,197,795 dead v1 parameters removed. Complete/trainable/headroom is 185,532,296/11,129,504/14,467,704. Fourteen tests pass; oracle mechanics are 1,152/1,152 across 576 renderer/cardinality/rule-count/depth strata; no new commit/seed/job/score. |
 | 2026-07-20 | Froze/pushed marginal-route v1.1 at `8419c74e` before derivation SHA `3d3b8918...` and seed `4412270997190025241`. A clean exact Newton capsule passes source cleanliness and `sbatch --test-only`; sole train-only H100 job `694909` is pending resources because all normal H100 GRES were allocated. Output is isolated, the job accepts no scored split, development/confirmation custody is `0/0`, and no result exists yet. |
+| 2026-07-20 | Marginal-route v1.1 job `694909` completed cleanly on `evc43` and is rejected by one frozen gate: witness-pointer rows 7,194/8,000 = 89.925% versus 90%. It nevertheless reaches 90.9375% packet/joint/relation, 97.0625% state, 98.5375% answer, 100% alpha invariance, and 100% oracle-route transport. Every one of 806 failed rows has exactly one wrong occurrence, concentrated in late after-witness slots; 99.626% of individual occurrences are exact. This localizes the residual to duplicate occurrence addressing. An ordinal/count-addressed marginal repair adds 10,752 parameters while preserving all budgets/gates/custody; 22 tests and real-parent/real-row qualification pass before source freeze. |
 
 ---
 

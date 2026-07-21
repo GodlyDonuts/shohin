@@ -109,3 +109,73 @@ It separates representational sufficiency of the identity bus from learned
 route acquisition and cannot authorize promotion. The learned soft-route arm
 retains every original capability and alpha-invariance threshold. V1 is closed
 and will not be rerun.
+
+## Marginal-route v1.1 result
+
+**Protocol:** `r12_er_dual_stream_train_only_canary_v1_1`
+
+**Decision:** reject before fresh-board generation. No development or
+confirmation split was read, and the frozen threshold is not relaxed.
+
+- Source: `8419c74e161f41c704d324d2b6ad72ed5587035f`
+- Deterministic post-commit seed: `4412270997190025241`
+- Sole H100 job: `694909` on `evc43`
+- Runtime: 9m06s, exit code zero
+- Fit/probe: 10,000/2,000 disjoint training families, 40,000/8,000 rows
+- Complete/trainable/headroom: `185,532,296 / 11,129,504 / 14,467,704`
+- Development/confirmation reads: `0/0`
+
+| Metric | Exact |
+|---|---:|
+| Packet / joint / relation rows | 7,275/8,000 = 90.9375% |
+| State | 7,765/8,000 = 97.0625% |
+| Answer | 7,883/8,000 = 98.5375% |
+| Witness pointers | 7,194/8,000 = 89.925% |
+| Line pointers | 7,998/8,000 = 99.975% |
+| Binding / initial pointers | 8,000/8,000 |
+| Events / HALT / query | 8,000/8,000 |
+| Alpha-invariant complete hard output | 8,000/8,000 |
+| Oracle-route initial/relation/event/joint | 8,000/8,000 |
+
+Every cardinality-specific joint gate passes; the minimum is `N=6` at
+1,749/2,056 = 85.068%. The witness-pointer gate is the sole failed gate.
+
+Immutable artifact SHA-256 values are:
+
+| Artifact | SHA-256 |
+|---|---|
+| `compiler.pt` | `9e6115d1db01499f6cf5c7dd4763b2a43e82019c28a267131a1f71a2e95edb6f` |
+| `train_probe_evidence.pt` | `52e70d017b49738a775df3c2638a3ee757ae68d0e06b67bfff3f251d18380fad` |
+| `train_probe_report.json` | `a89439c861870b48983ca62e995e9da38ca8dc75d188165af2cde2612820f479` |
+
+### Residual localization
+
+Independent recomputation from immutable evidence finds all 806 failed
+witness-pointer rows contain exactly one wrong occurrence. Individual pointer
+occurrences are 214,722/215,528 = 99.626% exact. The dominant failures are the
+second and third after-witness positions in the fourth rule. On representative
+failures, the correct occurrence is route rank two while an adjacent duplicate
+is rank one. Witness and relation failures overlap strongly but not perfectly:
+7,054 rows have both exact, 585 have both wrong, 221 have only witness wrong,
+and 140 have only relation wrong.
+
+This is no longer evidence that identity equality or the recurrent relation
+executor is missing. It is evidence that the alpha-invariant structural route
+does not reliably distinguish repeated occurrences inside longer physical
+records.
+
+## Admitted train-only repair
+
+The occurrence-addressed marginal repair adds two learned, identity-free
+address components to the route: opaque-occurrence ordinal within the record
+and total opaque candidates in that record. Raw symbol bytes remain confined to
+the exact equality marginal. The repair adds 10,752 parameters, yielding
+185,543,048 complete / 11,140,256 trainable / 14,456,952 headroom. It starts
+from the confirmed parent, never failed canary weights, and keeps the v1.1 data,
+2,500-update budget, optimizer, thresholds, and `1/0/0` custody unchanged.
+
+Before source freeze, 22 focused tests plus Ruff, byte compilation, shell
+syntax, a real-board alpha-recode equality check, a real-parent backward pass,
+full trainable-gradient coverage, and zero excluded-parent leakage pass. A
+single post-commit seed and single isolated H100 canary are authorized; no
+fresh board is authorized unless every unchanged gate passes.
