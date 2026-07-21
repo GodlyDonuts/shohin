@@ -317,8 +317,10 @@
 > confirmation `1/0/0`. Checkpoint/evidence/report hashes are `82913911...`/`e3e86467...`/
 > `697ce283...`; read-only local mirrors hash-match. Do not generate a fresh board or revive this
 > hard-route design. Preserve confirmed ER-CST v1.1 as the strongest episodic reasoning baseline.
-> The next diagnostic must remain train-only and independently separate route learnability from
-> identity transport, using matched oracle-route and soft-route controls before any new scored split.
+> Marginal-route v1.1 now implements the required train-only oracle-route versus soft-route
+> separation. Exact source `8419c74e...` precedes seed `4412270997190025241`; sole job `694909` is
+> pending normal-partition H100 resources. It has no development/confirmation path. Do not launch a
+> duplicate, alter its frozen thresholds, or treat oracle-route success as a learned capability.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10533,3 +10535,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   cardinalities 3--6, rule counts 2--4, depths 1--12, and 576 strata gives 100% oracle-route
   initial/relation/event/joint transport. No new source commit, post-commit seed, H100 job,
   development read, confirmation read, or score exists.
+
+- **2026-07-20 21:41--21:55** -- **Marginal-route v1.1 is source-frozen and queued as the sole
+  train-only H100 canary.** Commit `8419c74e161f41c704d324d2b6ad72ed5587035f` was pushed before
+  deriving label `r12-er-dual-stream-marginal-route-canary-v1-1`, derivation SHA-256
+  `3d3b891840452019b5e35332a360c29293909edcc9e396dbd0d9326526ae3b46`, and seed
+  `4412270997190025241`. A clean hash-exact Newton capsule at
+  `/lustre/fs1/home/sa305415/shohin_capsules/er_ds_8419c74_marginal` passed source cleanliness and
+  `sbatch --test-only`. Job `694909` is pending resources; all normal-partition H100 GRES were
+  allocated at the check. Its isolated output is
+  `/lustre/fs1/home/sa305415/shohin_runs/er_dual_stream_marginal_4412270997190025241`.
+  Development/confirmation access remains `0/0`; no score or output artifact exists. Do not submit
+  a duplicate while `694909` is pending or running.
