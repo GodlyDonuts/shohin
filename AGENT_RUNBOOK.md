@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 23:11 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 23:47 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -326,11 +326,18 @@
 > affected rows have exactly one after-witness pointer error; before witnesses are 107,764/107,764
 > exact. Checkpoint/evidence/report hashes begin `9e6115d1...`/`52e70d01...`/`a89439c8...`; local and
 > Newton mirrors match; custody is `1/0/0`. Do not rescore v1.1 or relax its gate. Ordinal-route v1.2
-> is the sole admitted next hypothesis: cardinality-marginalized monotone witness paths with
-> model-scored opcode exclusion, unchanged exact identity bus, zero-parameter executor/reader,
-> unchanged 185,532,296 parameters, and unchanged train-only thresholds. Fifteen focused tests plus
-> actual confirmed-parent reconstruction and a real-family all-trainable backward pass now pass
-> before source freeze. No v1.2 source commit, seed, H100 job, or scored-split access exists.
+> is now the strongest train-only mechanism result. Exact source `c0d3d372...` precedes derivation
+> SHA `18d8a3e0...` and seed `1790361034717866861`; sole job `694930` completed on H100 `evc37`
+> in 14m25s. Packet, state, answer, joint, every field/pointer, every cardinality 3--6, every depth
+> 1--12, every renderer, non-bijective rows, oracle transport, and complete neutral-alpha
+> invariance are all **8,000/8,000 exact**. The confirmed parent is unchanged, the exact system
+> remains 185,532,296 parameters, and custody is `1/0/0`. Checkpoint/evidence/report SHA-256 begin
+> `99be7b89...`/`c08e3840...`/`6cc31e67...`; read-only local mirrors match Newton. This authorizes
+> only a separately frozen fresh neutral-namespace distractor board. Its seedless builder now
+> passes five focused tests and a full 52,096-row barred-seed dry falsifier: maximum source/line is
+> 627/97, distractor rotation is 52,096/52,096 semantically exact, all 13,024 families are
+> non-bijective, and deranged/equality controls are 8.185%/7.878%. No production board source
+> commit, board seed, development read, or confirmation read exists yet.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10577,3 +10584,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   185,532,296 parameter certificate, gives every declared trainable finite gradient, and leaks none
   to excluded state. No v1.2 source commit, seed, H100 job, development read, or confirmation read
   exists yet.
+
+- **2026-07-20 23:11--23:47** -- **Ordinal-route v1.2 passes every train-only gate and admits the
+  fresh-board source freeze.** Exact source `c0d3d37218b0c65ba6c1baf7722d7381ee3be92e` was pushed
+  before deriving label `r12-er-dual-stream-ordinal-route-canary-v1-2`, SHA-256 `18d8a3e0...`, and
+  seed `1790361034717866861`. Clean capsule source manifest is `3d2dd29b...`; `sbatch --test-only`
+  passed before sole job `694930` ran on H100 `evc37`. It completed in 14m25s with all 11 gates
+  true and every one of 8,000 packets, states, answers, joints, hard fields, hard pointers,
+  non-bijective rows, alpha-recodes, and oracle-route transports exact. Every cardinality and depth
+  is 100%. Complete/trainable/headroom remains 185,532,296/11,129,504/14,467,704; custody is
+  `1/0/0`. Checkpoint/evidence/report hashes are `99be7b89...`/`c08e3840...`/`6cc31e67...` and local
+  read-only mirrors match. A separate v2 fresh-board path puts all semantic and distractor tokens in
+  one `z.....` namespace, uses disjoint renderer cosets, preserves exact ordinal candidate counts,
+  and adds irrelevant inactive/event/query candidates. Five fixture tests and the full 52,096-row
+  dry build at permanently barred seed `104729` pass every gate: 627/97-byte maxima, 52,096/52,096
+  distractor invariance, 100% non-bijective families, and 8.185%/7.878% deranged/equality state.
+  Freeze/push the board source before deriving one production board seed; development and
+  confirmation remain `0/0`.

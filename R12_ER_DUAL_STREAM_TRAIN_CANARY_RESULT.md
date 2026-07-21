@@ -201,3 +201,54 @@ thresholds remain unchanged. V1.2 requires a new committed source and a new
 post-commit seed. It receives only another train-only old-family canary; it may
 not read any development or confirmation split. Passing would authorize a
 fresh neutral-namespace board, not a reasoning claim.
+
+## Ordinal-route v1.2 result
+
+**Protocol:** `r12_er_dual_stream_train_only_canary_v1_2`
+
+**Decision:** authorize one separately committed fresh neutral-namespace
+distractor board. This is a train-only mechanism pass, not development,
+confirmation, or a general-reasoning claim.
+
+### Provenance and custody
+
+- Exact source: `c0d3d37218b0c65ba6c1baf7722d7381ee3be92e`
+- Derivation label: `r12-er-dual-stream-ordinal-route-canary-v1-2`
+- Derivation SHA-256:
+  `18d8a3e0160f2b6d083ef83e6217c971b22185f07797b1295e7bf8693d8e17a0`
+- Seed: `1790361034717866861`
+- Sole H100 job: `694930` on `evc37`
+- Runtime: 14m25s, exit code zero
+- Train-only/development/confirmation accesses: `1/0/0`
+- Complete/trainable/headroom parameters:
+  `185,532,296 / 11,129,504 / 14,467,704`
+
+| Artifact | SHA-256 |
+|---|---|
+| `compiler.pt` | `99be7b89e0b7dfe35f745abf1320c6640ad61f2fb62624b288fb8f9502cd97e7` |
+| `train_probe_evidence.pt` | `c08e3840952ce1881c49272bb689f93783bbabea6fbc5634bdf9a9e367166875` |
+| `train_probe_report.json` | `6cc31e67734afa2320bc825d8bc368c780125fb7e6bb98409841e08950a2dece` |
+
+Newton and local copies hash-match and are read-only.
+
+### Frozen result
+
+All 11 immutable gates pass. Every metric below is 8,000/8,000 = 100%:
+
+- packet, recurrent state, answer, and joint;
+- cardinality, initial rows, relation rows, rule-active, events, `HALT`, and
+  query;
+- line, declaration binding, initial, witness, and query pointers;
+- oracle-route initial/relation/event/joint transport;
+- complete neutral-namespace alpha invariance; and
+- non-bijective packet/state/answer/joint.
+
+Every cardinality 3--6, depth 1--12, and renderer is independently 100% exact.
+The confirmed parent is byte-identical and no outcome supervision or scored
+split was read. Compared with v1.1, ordinal factorization repairs the 806
+affected witness rows and lifts witness, packet, state, and answer to exactness
+without adding parameters, labels, epochs, or retry feedback.
+
+The lawful successor is the board contract in
+`R12_ER_DUAL_STREAM_FRESH_BOARD_PREREG.md`. No old development or confirmation
+split becomes authorized by this result.

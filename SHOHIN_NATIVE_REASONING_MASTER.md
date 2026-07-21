@@ -296,13 +296,22 @@ pointers are 7,194/8,000 = 89.925%, six rows below the immutable 90% gate, so
 v1.1 is formally rejected with custody `1/0/0`. Every before-witness pointer is
 exact; all 806 affected rows contain one after-witness error. This admits only
 ordinal-route v1.2: a differentiable monotone witness lattice with model-scored
-opcode exclusion and predicted-cardinality marginalization. Exact equality,
-source deletion, the zero-parameter executor/reader, system size, source-only
-loss, and thresholds remain unchanged. Fifteen focused tests and actual-parent
-real-family gradient isolation pass before source freeze. No v1.2 commit, seed,
-H100 job, or scored-split access exists.
+opcode exclusion and predicted-cardinality marginalization. Exact source
+`c0d3d372` precedes derivation SHA `18d8a3e0...` and seed
+`1790361034717866861`. Sole job `694930` completed on H100 `evc37` in 14m25s.
+Every packet, state, answer, joint, hard field, hard pointer, cardinality 3--6,
+depth 1--12, renderer, non-bijective row, oracle transport, and complete neutral-
+alpha recode is 8,000/8,000 exact. System size remains 185,532,296 parameters;
+custody is `1/0/0`; checkpoint/evidence/report hashes begin
+`99be7b89`/`c08e3840`/`6cc31e67`. This authorizes only a separately frozen fresh
+board. Its seedless v2 builder uses one `z.....` namespace, disjoint renderer
+cosets, exact ordinal candidate counts, and inactive/event/query distractors.
+Five fixture tests and a full 52,096-row barred-seed dry build pass every gate:
+627/97-byte maxima, 52,096/52,096 distractor invariance, all families non-
+bijective, and 8.185%/7.878% deranged/equality state. No production board seed
+or scored read exists.
 
-**Last updated:** 2026-07-20 23:11 EDT. User authority requires every future
+**Last updated:** 2026-07-20 23:47 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2842,6 +2851,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Rejected dual-stream hard-route v1 before fresh data. Source `54476bc`, seed `5113128174248698871`, and sole train-only H100 job `694800` produce exact 8,000/8,000 neutral-alpha invariance but 0 relation rows, witness pointers, packets, or joints; state/answer are 2.050%/20.825%. Granular audit shows chance relation cells and collapsed routes. Checkpoint/evidence/report hashes begin `82913911`/`e3e86467`/`697ce283`; local mirrors match and development/confirmation remain unread. V1.1 is admitted only as a matched oracle-route versus learned-soft-route diagnostic: dense exact marginal equality and repaired role-head gradients, unchanged thresholds, and 7,197,795 dead v1 parameters removed. Complete/trainable/headroom is 185,532,296/11,129,504/14,467,704. Fourteen tests pass; oracle mechanics are 1,152/1,152 across 576 renderer/cardinality/rule-count/depth strata; no new commit/seed/job/score. |
 | 2026-07-20 | Froze/pushed marginal-route v1.1 at `8419c74e` before derivation SHA `3d3b8918...` and seed `4412270997190025241`. A clean exact Newton capsule passes source cleanliness and `sbatch --test-only`; sole train-only H100 job `694909` is pending resources because all normal H100 GRES were allocated. Output is isolated, the job accepts no scored split, development/confirmation custody is `0/0`, and no result exists yet. |
 | 2026-07-20 | Marginal-route v1.1 job `694909` completed in 9m06s: oracle transport and full alpha invariance are 8,000/8,000; learned packet/relation/joint is 90.938%, state 97.062%, answer 98.537%, and complete witness pointers 89.925%. The witness gate misses by six rows, so v1.1 is formally rejected with custody `1/0/0`. Every before pointer is exact and each of 806 failed rows has one after-pointer error. Ordinal-route v1.2 is locally admitted pre-seed: cardinality-marginalized monotone paths with model-scored opcode exclusion, unchanged 185,532,296 parameters and thresholds. Fifteen focused tests plus actual-parent real-family gradient isolation pass; no v1.2 commit, seed, job, or scored access exists. |
+| 2026-07-20 | Ordinal-route v1.2 source `c0d3d372`, seed `1790361034717866861`, and sole H100 job `694930` pass all 11 train-only gates: every one of 8,000 packets, states, answers, joints, fields, pointers, alpha recodes, and oracle transports is exact across all cardinalities/depths/renderers. Parameters remain 185,532,296 and custody is `1/0/0`; artifact hashes begin `99be7b89`/`c08e3840`/`6cc31e67`. The separately implemented seedless fresh-board path puts all names/distractors in one namespace and holds out renderer compositions. Five fixture tests plus a full 52,096-row barred-seed dry build pass every gate, including exact distractor invariance and low deranged/equality controls. No production board seed or scored read exists. |
 
 ---
 
