@@ -6,12 +6,36 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 23:04 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-21 01:12 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
 > GSM8K pass@1 `2/100`, MATH-500 `2/100`, HumanEval `6/164`, and MBPP `0/100`. This confirms a
 > low-single-digit plateau rather than a broad 120k-to-300k capability gain.
+>
+> **Newest train-only routing result:** factorized witness route job `694945` completed cleanly on
+> `evc36` and is **rejected before fresh-board generation**. Treatment reaches 25.8625% witness,
+> 27.9875% relation, 27.6125% joint, 57.8875% state, and 77.075% answer on 8,000 disjoint
+> old-training rows. The content-disabled structural-only arm reaches 92.05% witness but only 1.25%
+> relation/joint; artifact inspection shows both treatment and structural-only learned the exact
+> 36/36 grammar address lookup, while shuffled address reaches 10/36 and baseline 0/36. The lookup
+> therefore memorizes where but does not transport what.
+> Nine of thirteen frozen gates pass; no scored split was read (`1/0/0` custody), no fresh board is
+> authorized, and the route is permanently closed. Source is `4643d1a...`; checkpoint/evidence/
+> report SHA-256 begin `e93bb4cf...`/`11d931b3...`/`87ea12a2...`. The serialized artifact-only
+> audit SHA is `272b6b3b...`; it independently recomputes all retained alpha tensors but explicitly
+> labels oracle-route, split, custody, frozen-parent, and total-parameter facts as producer receipts.
+>
+> **Active architecture work:** Closure-Tied Action Algebra (CTAA) is pre-neural only. Its exact
+> three-position copy-action algebra now passes an independent-oracle CPU audit: 729 atomic cells,
+> 19,683 closure checks, 531,441 associative execution checks, 588 ordered noncommuting pairs,
+> 6,561 exhaustive halt/suffix traces, 729 executable-action checks, and 648 changed-donor plus 54
+> same-terminal intervention cases. Identity-executor, reversed-composition, direct-state-signature,
+> and single-action executor mutations are killed by tests. This proves only
+> coherent finite mechanics. The future neural falsifier must causally use the exact 125,081,664-
+> parameter raw-300k trunk, add at most 24,918,335 parameters, learn model-owned STOP, and beat
+> parameter/state/FLOP-matched generic recurrence. No neural source freeze, seed, board, or H100 job
+> exists yet.
 >
 > **Newest bounded reasoning baseline:** S7 learned Cayley law compilation is independently
 > confirmed. Frozen development job `693344` and one-read confirmation job `693346` both reach
@@ -10612,3 +10636,27 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   185,534,660 / 11,131,868 / 2,364. Twenty-four focused tests, Ruff, formatting, byte compilation,
   shell syntax, and diff checks pass. No source commit, post-commit seed, H100 job, or new probe read
   exists yet.
+
+- **2026-07-21 00:00--01:12** -- **The factorized route is source-frozen, executed once, audited,
+  and permanently rejected; CTAA mechanics replace it as the pre-neural frontier.** Exact source
+  `4643d1a51defe53397f9bed481051621d85c0b11` was pushed before drand round `6305851` derived seed
+  `6769631927967421693`. Sole job `694945` completed on `evc36` in 24m25s. Treatment reaches
+  25.8625% witness, 27.9875% relation, 27.6125% packet/joint, 57.8875% state, and 77.075% answer;
+  joint falls from 67.276% at cardinality three to 1.892% at cardinality six. Structural-only
+  reaches 92.05% witness yet only 1.25% relation/joint, while immutable checkpoint inspection finds
+  the cardinality-dependent grammar ordinal on 36/36 active cases in both arms. The address table
+  learned where, but the content residual did not carry what. Nine of thirteen frozen gates pass;
+  custody is exactly `1/0/0`; no fresh board or rerun is allowed. Checkpoint/evidence/report hashes are
+  `e93bb4ff...`/`11d931b3...`/`87ea12a2...`; local read-only copies match Newton. Serialized
+  artifact-only audit SHA is `272b6b3b...`; it recomputes all retained canonical/recoded alpha
+  tensors, enforces the exact 400-leaf metric schema, and explicitly records which other facts remain
+  producer receipts. Paired control statistics cannot be reconstructed because row-level control
+  predictions were not retained. CTAA CPU mechanics were then rewritten
+  against independent oracles after review exposed a tautological first audit. A second adversarial
+  review then exposed direct-state signatures, one untested executable action, and malformed
+  immediate-halt geometry; all are closed. Twelve tests now pass, including identity-executor,
+  reversed-composition, direct-state-signature, and single-action executor mutation kills;
+  exhaustive counts are 729 atomic, 729 executable, 19,683 closure, 531,441 associative, 588
+  noncommuting, 6,561 halt/suffix, 648 changed-donor, and 54 same-terminal sham cases. CPU audit SHA
+  is `14ee18b2...`. This is not learned reasoning. No CTAA neural source, seed, board, or H100 job
+  exists.
