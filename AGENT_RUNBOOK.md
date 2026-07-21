@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 20:53 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 21:19 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -304,21 +304,21 @@
 > are 95.273% but after-witness occurrences only 51.965%; relation training loss remains at chance;
 > witness/opcode alpha rename yields only 6/32 fully invariant rows. Checkpoint/evidence/report/
 > assessment hashes are `0c12b2eb...`/`5504dc27...`/`2b935215...`/`3628e2d0...`; local mirrors
-> and a byte-identical assessor replay match. The admitted fresh-board repair is an alpha-invariant structural routing stream separated
-> from a whole-symbol identity/equality stream, including identity-based event binding.
-> That repair is now locally admitted for a train-only falsifier before any fresh board. It
-> reconstructs the confirmed witness parent and uses no rejected ER-TT v1 trained state. All
-> six-byte opaque payloads are canonicalized before structural routing; original bytes are read
-> only after a learned route, and exact whole-symbol equality produces initial rows, relations, and
-> event-to-rule binding. Complete/trainable/headroom parameters are exactly
-> 192,730,091/18,327,299/7,269,909, with zero motor/reader parameters. Ten focused tests plus an
-> actual confirmed-parent/real-family backward pass, Ruff, byte compilation, job syntax, and diff
-> checks pass; every new route head receives gradient and excluded-parent leakage is zero. The
-> preregistered canary may read only old `train.jsonl`: fit 10,000 families, probe 2,000 disjoint
-> families, and require >=90% relations/witness pointers, >=85% packet/joint, and 100% hard-output
-> invariance after all opaque names are moved into one neutral namespace. No source commit, seed,
-> H100 job, or canary score exists yet. Freeze/push exact source before seed; never touch old
-> development or confirmation bytes.
+> and a byte-identical assessor replay match. The alpha-invariant structural/identity dual-stream
+> repair is also closed before any fresh board. Exact source commit `54476bcb...` precedes canary
+> seed `5113128174248698871`; sole train-only job `694800` completed on H100 `evc36` in 11m21s.
+> It fit 10,000 old training families and probed 2,000 disjoint old training families without reading
+> development or confirmation. All 8,000 predictions are bit-identical after every opaque symbol is
+> bijectively moved into one neutral namespace, but the invariance is vacuous: exact relation rows,
+> witness pointers, packets, and joints are all 0/8,000; state is 164/8,000 = 2.050% and answer is
+> 1,666/8,000 = 20.825%. Query pointers are 100% and query fields 95%, while event fields are 0%
+> and HALT is 40.650%. Relation loss stays near chance and the learned pointer losses worsen during
+> fitting. The decision is `reject_dual_stream_before_fresh_board`; custody is train-only/development/
+> confirmation `1/0/0`. Checkpoint/evidence/report hashes are `82913911...`/`e3e86467...`/
+> `697ce283...`; read-only local mirrors hash-match. Do not generate a fresh board or revive this
+> hard-route design. Preserve confirmed ER-CST v1.1 as the strongest episodic reasoning baseline.
+> The next diagnostic must remain train-only and independently separate route learnability from
+> identity transport, using matched oracle-route and soft-route controls before any new scored split.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10503,3 +10503,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   2,000 disjoint old training families, never read development/confirmation, and requires >=90%
   relations/witness pointers, >=85% packet/joint, and exact 8,000/8,000 invariance after all symbols
   are bijectively moved into one neutral namespace. No source commit, seed, H100 job, or score exists.
+
+- **2026-07-20 20:53--21:19** -- **The dual-stream train-only canary rejects before any fresh
+  board.** Exact source `54476bcb02cc9d3f7388407fbe3700e92bfdbc28` precedes seed
+  `5113128174248698871`. Sole job `694800` completed on H100 `evc36` in 11m21s after fitting 10,000
+  old training families and probing 2,000 disjoint old training families; development and
+  confirmation remained unread. Alpha recoding is exactly invariant for every hard output on all
+  8,000 rows, but exact relation rows, witness pointers, packets, and joints are all zero. State is
+  164/8,000 = 2.050%, answer is 1,666/8,000 = 20.825%, query pointer/query are 100%/95%, and
+  events/HALT are 0%/40.650%. Relation loss remains near chance and pointer losses worsen, so the
+  model learned an alpha-invariant but task-incorrect representation rather than identity transport.
+  The frozen decision is `reject_dual_stream_before_fresh_board`; custody is `1/0/0`. Checkpoint,
+  evidence, and report SHA-256 are `82913911...`/`e3e86467...`/`697ce283...`; read-only local
+  mirrors hash-match Newton. Do not build a fresh board or revive this route. Preserve independently
+  confirmed ER-CST v1.1 as the current episodic baseline and require train-only oracle-route versus
+  soft-route diagnostics before another score-bearing experiment.
