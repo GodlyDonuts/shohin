@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-21 02:28 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-21 03:19 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -46,9 +46,15 @@
 > infrastructure. The future neural falsifier must causally use the exact 125,081,664-
 > parameter raw-300k trunk, add at most 24,918,335 parameters, learn model-owned STOP, and beat
 > parameter/state/FLOP-matched generic recurrence. No neural source freeze, seed, board, or H100 job
-> exists yet. Do not draw a production board/training seed or launch an H100 until the complete
-> writer, independent v2 oracle, trainer, evaluator, assessor, profiler, sealing orchestrator, and
-> mutation suite pass and a second adversarial source-freeze review closes every blocker.
+> exists yet. The oracle-blind evaluator is now implemented through source-only program prediction,
+> derived invalid-packet masks, valid-subset packet sealing, a fresh source-blind executor,
+> execution-gated query compilation, late query bytes, raw-evidence commitment, and an oracle-only
+> one-access assessor. Invalid and all-invalid compiles stay in the score denominator. A static
+> resource receipt and arbitrary-table matched-control capacity receipt pass. Runtime h19/h29,
+> donor-state/action, packet-transplant, source-poison, and other mandatory intervention orchestration
+> plus the final five-seed paired/Holm/bootstrap gate remain incomplete. Do not draw a production
+> board/training seed or launch an H100 until those paths, a clean combined test gate, and the second
+> adversarial source-freeze review close every blocker.
 >
 > **Newest bounded reasoning baseline:** S7 learned Cayley law compilation is independently
 > confirmed. Frozen development job `693344` and one-read confirmation job `693346` both reach
@@ -10704,3 +10710,26 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   regression suite is 59/59; the independent full v2 audit is 3/3 over 13,824 development plus
   confirmation families; and the split-artifact board-writer integration is 1/1 over 6,912 families
   per scored partition. These are infrastructure gates, not capability results.
+
+- **2026-07-21 02:28--03:19** -- **The blind evaluator, assessor, and resource/control receipts now
+  exist, but source freeze remains blocked.** Program compilation accepts exactly family ID plus
+  program source and writes raw card/initial/schedule bytes with a validity mask recomputed from
+  exact one-interior-STOP geometry. Packet sealing preserves every malformed row as a failure while
+  passing only valid rows to a fixed packet. A fresh process then executes without query or oracle;
+  query compilation is refused until the immutable execution hash matches the packet-index hash.
+  The oracle-blind committer retains every family, including missing execution/query/answer stages,
+  and the independent assessor opens source-free oracle files only after atomically spending the
+  partition access. It reports cards, binding, initial, STOP, schedule, query, halt, route,
+  full-prefix, terminal, answer, action, quartile, class, depth, renderer, and family-cluster
+  outcomes; it does not compute or claim a capability pass. Fresh-process ordering, outcome-field
+  rejection, forged validity, wrong packet/query binding, family-set mismatch, mixed-invalid,
+  all-invalid, and access-reuse mutations are covered; the expanded custody suite is 21/21 with
+  Ruff and bytecode compilation clean. Static resource receipt SHA-256 is
+  `1c9957271cdfe8cf9f685e185db8710bbc507e1c8c5e004892526b38c35b7066`: total parameters
+  137,986,868; headroom 12,013,131; both cores 107,753 parameters; conservative charged transition
+  envelope 215,584 FLOPs; fixed dual-route evaluator charge 26,516,832 core FLOPs/row. Scoreless
+  capacity receipt SHA-256 is `3d2fcbd67facdf4a171e19927215d5a39175a2285e841a260647951dc1ac14dc`:
+  CTAA closure law reaches 100% exact and OPRC fits an arbitrary 729-row table to 100% exact. No
+  board/training seed, H100 job, development/confirmation access, or capability score exists.
+  Mandatory runtime interventions and final paired statistical aggregation remain blockers; three
+  independent adversarial source-freeze reviews are in progress.

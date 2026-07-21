@@ -291,6 +291,20 @@ recorded and charged. Compiler weights freeze before core fitting; core weights
 freeze before any scored packet is executed. Scored source is compiled once
 before arm identity is attached, so core results cannot affect compilation.
 
+The evaluator is physically staged and oracle-blind. A program compiler accepts
+only `family_id` plus `program_source` and commits raw card, initial-state, and
+schedule bytes. A separate sealer derives packet validity from exact STOP
+geometry; invalid rows remain in every denominator and never reach the
+executor. A fresh process receives only valid fixed packets and one frozen core.
+Only after its read-only execution receipt exists may another process open the
+sealed query source and materialize query bytes. An oracle-blind committer then
+records every source row, including missing downstream stages. The assessor has
+no source input and spends the partition access before opening oracle-only
+labels. Assessment retains family-level outcomes needed for paired clustered
+statistics. This implemented native path does not yet cover all mandatory
+runtime interventions below; therefore this paragraph is not source-freeze or
+seed authorization.
+
 Five paired master training seeds are required. Each derives initialization,
 batching, compiler, core, and curriculum seeds through tagged SHA-256. Report
 every seed, equal-seed means, exact family counts, finite-domain exact scores,

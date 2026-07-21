@@ -1,0 +1,32 @@
+{
+  "all_gates_pass": true,
+  "claim_boundary": "scoreless finite optimization preflight; no board or reasoning result",
+  "control": {
+    "coordinate_accuracy": 1.0,
+    "exact_accuracy": 1.0,
+    "final_loss": 0.09112273901700974,
+    "first_checked_exact_step": 70,
+    "optimizer_steps": 70
+  },
+  "control_parameters": 107753,
+  "device": "cpu",
+  "gates": {
+    "arbitrary_control_table_optimizes_exactly": true,
+    "closure_treatment_optimizes_exactly": true,
+    "control_features_separate_all_pairs": true,
+    "parameters_exactly_matched": true
+  },
+  "learning_rate": 0.003,
+  "max_steps": 2000,
+  "schema": "ctaa_matched_core_preflight_v1",
+  "seed": 271828,
+  "treatment": {
+    "coordinate_accuracy": 1.0,
+    "exact_accuracy": 1.0,
+    "final_loss": 0.07890576124191284,
+    "first_checked_exact_step": 10,
+    "optimizer_steps": 10
+  },
+  "treatment_parameters": 107753,
+  "unique_control_features": 729
+}

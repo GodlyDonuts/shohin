@@ -1,0 +1,42 @@
+{
+  "all_static_gates_pass": true,
+  "base_sha256": "211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6",
+  "base_step": 300000,
+  "board_seed_generated": false,
+  "core_parameters": {
+    "closure_feature": 107753,
+    "exactly_matched": true,
+    "outer_product_control": 107753
+  },
+  "evaluation_charge": {
+    "charged_core_flops_per_row": 26516832,
+    "dual_route_core_calls_per_row": 123,
+    "note": "evaluation-only route agreement executes one state call plus two composition-route calls per fixed event"
+  },
+  "oracle_access": 0,
+  "parameter_ledger": {
+    "compiler_adapter": 12797451,
+    "core": 107753,
+    "headroom": 12013131,
+    "total": 137986868,
+    "trunk": 125081664
+  },
+  "qualified_compiler_sha256": "747a559b827c6d114943c091b9dea5b4b90cef7af13aa5003b8435c092d24991",
+  "qualified_memory_tensors": 63,
+  "runtime": null,
+  "schema": "r12_ctaa_v2_resource_profile_v1",
+  "state_contract": {
+    "halt_state_bytes": 1,
+    "hard_packet_bytes_per_row": 56,
+    "implementation_recurrent_state_int64_bytes": 24,
+    "matched_across_arms": true,
+    "semantic_recurrent_state_bytes": 3
+  },
+  "transition_flops": {
+    "charged_per_call": 215584,
+    "closure_feature_analytic": 215530,
+    "control_padding_charge": 0,
+    "outer_product_control_analytic": 215584,
+    "treatment_padding_charge": 54
+  }
+}
