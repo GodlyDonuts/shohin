@@ -93,16 +93,11 @@ def test_whole_symbol_identity_recovers_non_bijective_relation() -> None:
     positions = starts[0].nonzero().flatten()
     logits = torch.full((1, 12, len(source)), -20.0)
     logits[0, torch.arange(12), positions] = 20.0
-    identities = model._selected_identities(ids, valid, starts, logits)
-    selected_bytes = model._selected_symbol_bytes(ids, logits)
-    before_identity = identities[:, :6]
-    after_identity = identities[:, 6:]
-    equality = model._identity_equality(
-        selected_bytes[:, 6:],
-        selected_bytes[:, :6],
-        after_identity,
-        before_identity,
-        model.er_equality_scale,
+    equality = model._marginal_identity_equality(
+        ids,
+        starts,
+        logits[:, 6:],
+        logits[:, :6],
     )
     assert equality.shape == (1, 6, 6)
     assert torch.equal(equality.argmax(-1), torch.tensor(relation)[None])
@@ -150,16 +145,33 @@ def test_opcode_identity_binding_is_alpha_invariant() -> None:
     positions = starts[0].nonzero().flatten()
     logits = torch.full((1, 6, len(source)), -20.0)
     logits[0, torch.arange(6), positions] = 20.0
-    identities = model._selected_identities(ids, valid, starts, logits)
-    selected_bytes = model._selected_symbol_bytes(ids, logits)
-    scores = model._identity_equality(
-        selected_bytes[:, 3:],
-        selected_bytes[:, :3],
-        identities[:, 3:],
-        identities[:, :3],
-        model.er_ds_opcode_scale,
+    scores = model._marginal_identity_equality(
+        ids,
+        starts,
+        logits[:, 3:],
+        logits[:, :3],
     )
     assert scores.argmax(-1).tolist() == [[2, 0, 1]]
+
+
+def test_marginal_exact_equality_recovers_oracle_routes_and_dense_gradients() -> None:
+    torch.manual_seed(415)
+    model = _small_model().train()
+    source = b"x00000 x00001 x00002 x00002 x00000 x00001"
+    ids, valid = _batch(source)
+    _, starts = model.structural_view(ids, valid)
+    positions = starts[0].nonzero().flatten()
+    left = torch.full((1, 3, len(source)), -8.0, requires_grad=True)
+    right = torch.full((1, 3, len(source)), -8.0, requires_grad=True)
+    with torch.no_grad():
+        left[0, torch.arange(3), positions[3:]] = 8.0
+        right[0, torch.arange(3), positions[:3]] = 8.0
+    equality = model._marginal_identity_equality(ids, starts, left, right)
+    assert equality.argmax(-1).tolist() == [[2, 0, 1]]
+    loss = -equality[0, torch.arange(3), torch.tensor([2, 0, 1])].mean()
+    loss.backward()
+    assert left.grad is not None and bool(left.grad.abs().gt(0).any())
+    assert right.grad is not None and bool(right.grad.abs().gt(0).any())
 
 
 def test_compiler_emits_source_deleted_packet_and_routes_gradients() -> None:
@@ -189,6 +201,29 @@ def test_compiler_emits_source_deleted_packet_and_routes_gradients() -> None:
     ]
     assert leaked == []
     assert not hasattr(output.program, "source")
+
+
+def test_pointer_only_gradient_reaches_role_assignment_not_record_encoder() -> None:
+    torch.manual_seed(414)
+    model = _small_model().train()
+    freeze_to_dual_stream(model)
+    ids, valid = _batch(_program())
+    query_ids, query_valid = _batch(b"Q2")
+    output = model.compile_relation_program(ids, valid, query_ids, query_valid)
+    loss = (
+        output.line_pointer_logits.square().mean()
+        + output.binding_pointer_logits.square().mean()
+        + output.witness_pointer_logits.square().mean()
+    )
+    loss.backward()
+    assert model.er_tt_record_role_head.weight.grad is not None
+    assert model.er_ds_router_query.weight.grad is not None
+    assert model.er_ds_router_key.weight.grad is not None
+    assert all(
+        parameter.grad is None
+        for name, parameter in model.named_parameters()
+        if name.startswith(("record_line_encoder.", "record_set_encoder."))
+    )
 
 
 def test_default_system_remains_below_200m() -> None:

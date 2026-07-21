@@ -265,23 +265,32 @@ theory, score contract, and result are
 `R12_ER_RELATION_TENSOR_SCORE_PREREG.md`, and
 `R12_ER_RELATION_TENSOR_RESULT.md`.
 
-That dual-stream repair is now locally admitted for a train-only falsifier. It
-canonicalizes all six-byte opaque payloads before structural routing, reads the
-original six bytes only after a model-selected route, and uses exact selected-
-symbol equality for declaration state, arbitrary relations, and opcode binding.
-It totals 192,730,091 parameters, with 18,327,299 trainable and 7,269,909
-headroom below 200M; motor and reader remain parameter-free. Ten focused tests
-plus a confirmed-parent production-family backward pass show finite gradients
-to every new route head and zero excluded-parent leakage. Before any fresh
-board, the frozen canary fits 10,000 old training families and probes 2,000
-family-disjoint old training families. Promotion requires at least 90%
-relations/witness pointers, 85% packet/joint, and exact invariance on all 8,000
-rows after every opaque symbol category is collapsed into one neutral namespace.
-It may not read development or confirmation. The preregistration is
-`R12_ER_DUAL_STREAM_RELATION_REPAIR_PREREG.md`; no source commit, seed, H100
-job, or result exists yet.
+The first dual-stream repair is now rejected on a train-only pre-board probe.
+Exact source `54476bc` preceded seed `5113128174248698871`; sole H100 job
+`694800` fit 10,000 old training families and probed 2,000 disjoint families
+without reading development or confirmation. Every hard output is exactly
+alpha-invariant on all 8,000 rows, but relation rows, witness pointers, packets,
+and joints are all zero; state and answer are 2.050% and 20.825%. The failure is
+route acquisition: hard equality could not train a semantic-record assignment
+that was detached from pointer supervision.
 
-**Last updated:** 2026-07-20 20:53 EDT. User authority requires every future
+V1.1 is locally admitted only as a matched train-only diagnostic. It recomputes
+the numerically identical routing assignment from detached record features so
+pointer loss trains the shared role head but not the record encoder. It replaces
+hard selection with exact equality marginalized over learned route
+distributions: `sum_ij p_i q_j 1[symbol_i = symbol_j]`. A source-span
+oracle-route arm must recover initial rows, arbitrary relations, and event
+binding at 100% through that same operator; only the learned soft-route arm may
+pass the unchanged >=90% relation/witness, >=85% packet/joint, and exact alpha
+gates. V1.1 removes 7,197,795 dead v1 identity/occurrence parameters. The
+complete system is 185,532,296 parameters, with 11,129,504 trainable and
+14,467,704 headroom. Fourteen focused tests and all static checks
+pass. A 1,152-row CPU audit spanning all four renderers, `N=3..6`, rule counts
+2--4, and depths 1--12 gives 100% oracle-route initial/relation/event/joint
+transport through the exact same equality operator. No v1.1 source commit,
+post-commit seed, H100 job, or score exists.
+
+**Last updated:** 2026-07-20 21:41 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2818,6 +2827,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Locally qualified the ER-TT score path before source freeze: three identical 3,000-update arms, strict variable-cardinality masks, source-only supervision, parameter-free source-deleted execution, five source invariances, four causal packet interventions, raw evidence, and an independent list-executor assessor. Twenty-five focused tests, static checks, and a real-parent production-family backward pass succeed; all 110 trainable tensors receive finite gradient. System size remains 192,740,854 with 7,259,146 headroom. Board custody remains `0/0`; no training seed or neural score exists. |
 | 2026-07-20 | Froze/pushed ER-TT score source `3bd8a329` before valid post-commit seed `4773363983426630371`; malformed unused seed `9040942210094722103` is rejected. Sole job `694758` completed in 22m59s and rejects v1: treatment packet/state/answer/joint 0.098%/15.381%/32.666%/0.098%, control joint zero, relation cells 36.528% vs 26.987%/28.866%, before/after witness localization 95.273%/51.965%, and severe alpha-recode collapse. Custody is `1/0`; confirmation stays sealed. Next test: dual structural-routing and whole-symbol identity streams with equality-based event binding. |
 | 2026-07-20 | Locally admitted the dual-stream ER-TT repair and train-only pre-board canary: alpha-canonical structural routing, model-selected whole-symbol reads, exact identity equality for state/relations/events, zero motor/reader parameters, and confirmed-parent initialization without rejected-v1 weights. Complete/trainable/headroom is 192,730,091/18,327,299/7,269,909. Ten tests plus a real-family confirmed-parent backward and static checks pass. Frozen canary gates require >=90% relations/witness pointers, >=85% packet/joint, and 8,000/8,000 neutral-namespace alpha invariance using only a 10,000/2,000 family-disjoint split of old train data. No source commit, seed, job, or score exists. |
+| 2026-07-20 | Rejected dual-stream hard-route v1 before fresh data. Source `54476bc`, seed `5113128174248698871`, and sole train-only H100 job `694800` produce exact 8,000/8,000 neutral-alpha invariance but 0 relation rows, witness pointers, packets, or joints; state/answer are 2.050%/20.825%. Granular audit shows chance relation cells and collapsed routes. Checkpoint/evidence/report hashes begin `82913911`/`e3e86467`/`697ce283`; local mirrors match and development/confirmation remain unread. V1.1 is admitted only as a matched oracle-route versus learned-soft-route diagnostic: dense exact marginal equality and repaired role-head gradients, unchanged thresholds, and 7,197,795 dead v1 parameters removed. Complete/trainable/headroom is 185,532,296/11,129,504/14,467,704. Fourteen tests pass; oracle mechanics are 1,152/1,152 across 576 renderer/cardinality/rule-count/depth strata; no new commit/seed/job/score. |
 
 ---
 

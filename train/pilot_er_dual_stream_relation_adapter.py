@@ -20,22 +20,35 @@ from pilot_sd_cst_renderer_native_program import frozen_state_digest
 
 REMOVED_V1_STATE = frozenset(
     {
+        "bigram_embedding.weight",
+        "er_equality_projection.weight",
+        "er_equality_scale",
         "er_event_card_query_projection.weight",
         "er_rule_card_key_projection.weight",
         "er_tt_occurrence_head.bias",
         "er_tt_occurrence_head.weight",
         "er_tt_witness_position_embedding",
         "er_tt_witness_side_embedding",
+        "er_witness_key_projection.weight",
+        "er_witness_norm.bias",
+        "er_witness_norm.weight",
+        "er_witness_query_projection.weight",
+        "fingerprint_projection.weight",
+        "local_occurrence_hidden.bias",
+        "local_occurrence_hidden.weight",
+        "local_occurrence_norm.bias",
+        "local_occurrence_norm.weight",
+        "logit_scale",
     }
 )
 EXPECTED_PARAMETERS = {
     "base": 125_081_664,
-    "compiler": 67_648_427,
+    "compiler": 60_450_632,
     "motor": 0,
     "reader": 0,
-    "complete_system": 192_730_091,
-    "headroom_below_200m": 7_269_909,
-    "trainable": 18_327_299,
+    "complete_system": 185_532_296,
+    "headroom_below_200m": 14_467_704,
+    "trainable": 11_129_504,
 }
 
 
@@ -108,6 +121,10 @@ def initialize_dual_stream_relation(
         "structural_stream_alpha_canonical": True,
         "whole_symbol_exact_equality": True,
         "event_binding_uses_identity_equality": True,
+        "routing_assignment_receives_pointer_gradients": True,
+        "routing_assignment_detaches_record_features": True,
+        "identity_equality_is_exact_route_marginal": True,
+        "dead_v1_identity_parameters_removed": True,
         "learned_motor_parameters": 0,
         "learned_reader_parameters": 0,
     }

@@ -41,16 +41,18 @@ from er_relation_tensor_training import (
     load_split,
     loss_batch,
 )
+from er_relation_tensor_adapter import EVENT_SLOTS, MAX_CARDINALITY, MAX_RULES
 from pilot_er_dual_stream_relation_adapter import (
     EXPECTED_PARAMETERS,
     initialize_dual_stream_relation,
 )
+from er_dual_stream_relation_adapter import DualStreamRelationCompiler
 from pilot_er_relation_tensor import FROZEN_SOURCE_PATHS as ER_TT_FROZEN_SOURCE_PATHS
 from pilot_sd_cst_byte_addressed import sha256_file
 from pilot_sd_cst_renderer_native_program import frozen_state_digest
 
 
-SCHEMA = "r12_er_dual_stream_train_only_canary_v1"
+SCHEMA = "r12_er_dual_stream_train_only_canary_v1_1"
 BOARD_REPORT_SHA256 = (
     "64ea4c0e19ea029102af240d44242c830d7b014e49a59af09a836b2d3efb6010"
 )
@@ -86,6 +88,7 @@ THRESHOLDS = {
     "halt": 0.95,
     "minimum_cardinality_joint": 0.75,
     "alpha_exact": 1.0,
+    "oracle_route_transport_exact": 1.0,
 }
 FROZEN_SOURCE_PATHS = tuple(
     sorted(
@@ -93,6 +96,7 @@ FROZEN_SOURCE_PATHS = tuple(
             ER_TT_FROZEN_SOURCE_PATHS
             + (
                 "R12_ER_DUAL_STREAM_RELATION_REPAIR_PREREG.md",
+                "R12_ER_DUAL_STREAM_TRAIN_CANARY_RESULT.md",
                 "train/er_dual_stream_relation_adapter.py",
                 "train/pilot_er_dual_stream_relation_adapter.py",
                 "train/pilot_er_dual_stream_train_canary.py",
@@ -401,12 +405,190 @@ def alpha_metrics(
     return result
 
 
+def _first_opaque_range_in_line(
+    row: RelationTensorRow, line_index: int
+) -> tuple[int, int] | None:
+    start, end = row.line_ranges[line_index]
+    payload = bytes(row.program_bytes)
+    matches = [
+        match.span()
+        for match in OPAQUE_PATTERN.finditer(payload, start, end)
+        if start <= match.start() and match.end() <= end
+    ]
+    return matches[0] if matches else None
+
+
+def _oracle_pointer_logits(
+    starts: torch.Tensor,
+    ranges: Sequence[Sequence[tuple[int, int] | None]],
+    *,
+    device: torch.device,
+) -> torch.Tensor:
+    if len(ranges) != starts.shape[0] or not ranges:
+        raise ValueError("dual-stream oracle route batch differs")
+    slots = len(ranges[0])
+    if any(len(row) != slots for row in ranges):
+        raise ValueError("dual-stream oracle route slot count differs")
+    logits = torch.full(
+        (len(ranges), slots, starts.shape[1]),
+        -1e4,
+        device=device,
+    )
+    fallback = starts.float().argmax(-1)
+    for row_index, row_ranges in enumerate(ranges):
+        for slot, span in enumerate(row_ranges):
+            position = int(fallback[row_index]) if span is None else int(span[0])
+            if not bool(starts[row_index, position]):
+                raise ValueError("dual-stream oracle route is not an opaque-symbol start")
+            logits[row_index, slot, position] = 0.0
+    return logits
+
+
+@torch.no_grad()
+def oracle_route_transport_metrics(
+    model: DualStreamRelationCompiler,
+    rows: Sequence[RelationTensorRow],
+    *,
+    batch_size: int,
+) -> tuple[dict[str, object], dict[str, torch.Tensor]]:
+    """Test the exact identity bus under target routes, never target outcomes."""
+    model.eval()
+    device = next(model.parameters()).device
+    fields: dict[str, list[torch.Tensor]] = {
+        "initial": [],
+        "relations": [],
+        "events": [],
+        "joint": [],
+    }
+    predictions: dict[str, list[torch.Tensor]] = {
+        "initial": [],
+        "relations": [],
+        "events": [],
+    }
+    for offset in range(0, len(rows), batch_size):
+        batch = rows[offset : offset + batch_size]
+        ids, valid = byte_batch(batch, "program_bytes", device)
+        _, starts = model.structural_view(ids, valid)
+        binding_ranges = [
+            list(row.binding_ranges)
+            + [None] * (MAX_CARDINALITY - len(row.binding_ranges))
+            for row in batch
+        ]
+        initial_ranges = [
+            list(row.initial_ranges)
+            + [None] * (MAX_CARDINALITY - len(row.initial_ranges))
+            for row in batch
+        ]
+        before_ranges = []
+        after_ranges = []
+        rule_opcode_ranges = []
+        event_opcode_ranges = []
+        for row in batch:
+            row_before: list[tuple[int, int] | None] = []
+            row_after: list[tuple[int, int] | None] = []
+            for rule in range(MAX_RULES):
+                before = list(row.witness_before_ranges[rule])
+                after = list(row.witness_after_ranges[rule])
+                row_before.extend(
+                    before + [None] * (MAX_CARDINALITY - len(before))
+                )
+                row_after.extend(
+                    after + [None] * (MAX_CARDINALITY - len(after))
+                )
+            before_ranges.append(row_before)
+            after_ranges.append(row_after)
+            rule_opcode_ranges.append(
+                [
+                    _first_opaque_range_in_line(row, 1 + rule)
+                    for rule in range(MAX_RULES)
+                ]
+            )
+            event_opcode_ranges.append(
+                [
+                    _first_opaque_range_in_line(row, 1 + MAX_RULES + event)
+                    for event in range(EVENT_SLOTS)
+                ]
+            )
+
+        binding = _oracle_pointer_logits(starts, binding_ranges, device=device)
+        initial = _oracle_pointer_logits(starts, initial_ranges, device=device)
+        before = _oracle_pointer_logits(starts, before_ranges, device=device).reshape(
+            len(batch), MAX_RULES, MAX_CARDINALITY, -1
+        )
+        after = _oracle_pointer_logits(starts, after_ranges, device=device).reshape(
+            len(batch), MAX_RULES, MAX_CARDINALITY, -1
+        )
+        rule_opcode = _oracle_pointer_logits(
+            starts, rule_opcode_ranges, device=device
+        )
+        event_opcode = _oracle_pointer_logits(
+            starts, event_opcode_ranges, device=device
+        )
+        predicted_initial = model._marginal_identity_equality(
+            ids, starts, initial, binding
+        ).argmax(-1)
+        predicted_relations = model._marginal_identity_equality(
+            ids, starts, after, before
+        ).argmax(-1)
+        predicted_events = model._marginal_identity_equality(
+            ids, starts, event_opcode, rule_opcode
+        ).argmax(-1)
+
+        initial_exact = torch.ones(len(batch), dtype=torch.bool, device=device)
+        relation_exact = torch.ones(len(batch), dtype=torch.bool, device=device)
+        event_exact = torch.ones(len(batch), dtype=torch.bool, device=device)
+        for row_index, row in enumerate(batch):
+            initial_target = torch.tensor(row.initial_order, device=device)
+            initial_exact[row_index] = predicted_initial[
+                row_index, : row.cardinality
+            ].eq(initial_target).all()
+            for rule in range(row.rule_count):
+                relation_target = torch.tensor(row.relation_rows[rule], device=device)
+                relation_exact[row_index] &= predicted_relations[
+                    row_index, rule, : row.cardinality
+                ].eq(relation_target).all()
+            for event, halt in enumerate(row.event_halt):
+                if not halt:
+                    event_exact[row_index] &= predicted_events[
+                        row_index, event
+                    ].eq(row.event_cards[event])
+        joint = initial_exact & relation_exact & event_exact
+        for name, value in (
+            ("initial", initial_exact),
+            ("relations", relation_exact),
+            ("events", event_exact),
+            ("joint", joint),
+        ):
+            fields[name].append(value.cpu())
+        for name, value in (
+            ("initial", predicted_initial),
+            ("relations", predicted_relations),
+            ("events", predicted_events),
+        ):
+            predictions[name].append(value.cpu().to(torch.int16))
+
+    result = {}
+    for name, parts in fields.items():
+        value = torch.cat(parts)
+        result[name] = {
+            "exact": int(value.sum()),
+            "rows": int(value.numel()),
+            "rate": float(value.float().mean()),
+        }
+    result["uses_target_outcomes"] = False
+    result["uses_same_exact_equality_operator_as_soft_route"] = True
+    return result, {
+        name: torch.cat(parts) for name, parts in predictions.items()
+    }
+
+
 def compute_gates(
     metrics: Mapping[str, object],
     alpha: Mapping[str, object],
     parameters: Mapping[str, int],
     fit: Mapping[str, object],
     split: Mapping[str, object],
+    oracle_route: Mapping[str, object],
 ) -> dict[str, bool]:
     overall = metrics["overall"]
     cardinality = metrics["by_cardinality"]
@@ -442,6 +624,11 @@ def compute_gates(
             alpha["complete"]["rate"]
         )
         == float(THRESHOLDS["alpha_exact"]),
+        "oracle_route_identity_transport_is_exact": all(
+            float(oracle_route[name]["rate"])
+            == float(THRESHOLDS["oracle_route_transport_exact"])
+            for name in ("initial", "relations", "events", "joint")
+        ),
         "confirmed_parent_unchanged": fit["frozen_parent_unchanged"] is True,
         "parameter_certificate_exact_and_below_200m": dict(parameters)
         == EXPECTED_PARAMETERS,
@@ -560,6 +747,9 @@ def main() -> None:
         include_raw=False,
         include_invariances=False,
     )
+    oracle_route, oracle_predictions = oracle_route_transport_metrics(
+        model, scored_probe, batch_size=args.batch_size
+    )
     recoded_probe = [
         alpha_recode_row(row, "dual-stream-neutral-alpha") for row in scored_probe
     ]
@@ -579,12 +769,15 @@ def main() -> None:
         "canonical_predictions": canonical_predictions,
         "recoded_predictions": recoded_predictions,
         "alpha_complete_mask": complete_mask,
+        "oracle_route_predictions": oracle_predictions,
         "development_accesses": 0,
         "confirmation_accesses": 0,
     }
     evidence_path = args.out_dir / "train_probe_evidence.pt"
     atomic_torch_save(evidence, evidence_path)
-    gates = compute_gates(metrics, alpha, parameters, fit, split_receipt)
+    gates = compute_gates(
+        metrics, alpha, parameters, fit, split_receipt, oracle_route
+    )
     report = {
         "schema": SCHEMA,
         "source_commit": args.source_commit,
@@ -598,6 +791,20 @@ def main() -> None:
         "split": split_receipt,
         "fit": fit,
         "metrics": metrics,
+        "routing_diagnostics": {
+            "oracle_route": oracle_route,
+            "soft_route": {
+                name: metrics["overall"][name]
+                for name in (
+                    "initial_rows",
+                    "relation_rows",
+                    "events",
+                    "binding_pointer",
+                    "initial_pointer",
+                    "witness_pointer",
+                )
+            },
+        },
         "alpha_invariance": alpha,
         "gates": gates,
         "all_gates_pass": all(gates.values()),

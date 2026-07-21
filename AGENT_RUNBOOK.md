@@ -10518,3 +10518,18 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   mirrors hash-match Newton. Do not build a fresh board or revive this route. Preserve independently
   confirmed ER-CST v1.1 as the current episodic baseline and require train-only oracle-route versus
   soft-route diagnostics before another score-bearing experiment.
+
+- **2026-07-20 21:19--21:41** -- **The required matched routing diagnostic is locally admitted,
+  still before source freeze.** Hard-route v1 remains closed. V1.1 recomputes routing role
+  assignment from detached record features so pointer loss trains the shared role head without
+  changing the structural record encoder, then computes exact whole-symbol equality marginalized
+  over both learned route distributions. A source-span oracle-route arm uses the same equality
+  operator and no outcome/scored fields; it must recover declaration state, arbitrary relations,
+  event binding, and their joint at 100%. Only the learned soft-route arm can satisfy the unchanged
+  capability thresholds. V1.1 removes 7,197,795 dead fingerprint/equality/witness/occurrence/scale
+  parameters; complete/trainable/headroom is now 185,532,296/11,129,504/14,467,704. Fourteen focused tests, including non-bijective end-to-end
+  oracle transport and pointer-gradient isolation, plus Ruff, byte compilation, shell syntax, and
+  diff checks pass. An isolated CPU audit over 1,152 real training rows spanning all four renderers,
+  cardinalities 3--6, rule counts 2--4, depths 1--12, and 576 strata gives 100% oracle-route
+  initial/relation/event/joint transport. No new source commit, post-commit seed, H100 job,
+  development read, confirmation read, or score exists.

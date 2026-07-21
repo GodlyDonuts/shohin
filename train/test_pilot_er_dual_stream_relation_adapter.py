@@ -50,8 +50,14 @@ def test_actual_confirmed_parent_reconstructs_into_dual_stream() -> None:
     assert receipt["structural_stream_alpha_canonical"] is True
     assert receipt["whole_symbol_exact_equality"] is True
     assert receipt["event_binding_uses_identity_equality"] is True
+    assert receipt["routing_assignment_receives_pointer_gradients"] is True
+    assert receipt["routing_assignment_detaches_record_features"] is True
+    assert receipt["identity_equality_is_exact_route_marginal"] is True
+    assert receipt["dead_v1_identity_parameters_removed"] is True
     assert not hasattr(model, "er_tt_occurrence_head")
     assert not hasattr(model, "er_event_card_query_projection")
+    assert not hasattr(model, "er_equality_projection")
+    assert not hasattr(model, "bigram_embedding")
 
     board = ROOT / "artifacts/r12/er_relation_tensor_board_1209366536012979338/train.jsonl"
     with board.open() as handle:
@@ -79,3 +85,9 @@ def test_actual_confirmed_parent_reconstructs_into_dual_stream() -> None:
         "er_ds_router_key.weight",
     ):
         assert model.get_parameter(name).grad is not None
+    missing = [
+        name
+        for name, parameter in model.named_parameters()
+        if parameter.requires_grad and parameter.grad is None
+    ]
+    assert missing == []

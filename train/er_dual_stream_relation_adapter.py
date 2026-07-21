@@ -6,7 +6,6 @@ import math
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
 from er_relation_tensor_adapter import (
     DECLARATION_OCCURRENCES,
@@ -38,6 +37,16 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
         del self.er_tt_witness_position_embedding
         del self.er_event_card_query_projection
         del self.er_rule_card_key_projection
+        del self.er_equality_projection
+        del self.er_equality_scale
+        del self.er_witness_norm
+        del self.er_witness_query_projection
+        del self.er_witness_key_projection
+        del self.local_occurrence_norm
+        del self.local_occurrence_hidden
+        del self.bigram_embedding
+        del self.fingerprint_projection
+        del self.logit_scale
 
         self.er_ds_router_norm = nn.LayerNorm(width)
         self.er_ds_router_query = nn.Linear(width, width, bias=False)
@@ -50,7 +59,6 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
         )
         self.er_ds_rule_opcode_query = nn.Parameter(torch.empty(1, width))
         self.er_ds_event_opcode_query = nn.Parameter(torch.empty(1, width))
-        self.er_ds_opcode_scale = nn.Parameter(torch.tensor(math.log(10.0)))
         for parameter in (
             self.er_ds_declaration_queries,
             self.er_ds_witness_queries,
@@ -140,7 +148,6 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
         """Route semantic slots to opaque candidates using structural memory only."""
         records = records.detach()
         token_memory = token_memory.detach()
-        assignment = assignment.detach()
         candidates = self._local_candidates(starts, source_indices, local_valid)
         query = self.er_ds_router_norm(records)[:, :, None] + queries[None, None]
         query = self.er_ds_router_query(query)
@@ -167,74 +174,59 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
         probabilities = torch.einsum("bpr,bpol->brol", semantic_assignment, physical)
         return probabilities.clamp_min(1e-30).log()
 
-    def _whole_symbol_memory(
-        self,
-        ids: torch.Tensor,
-        valid_mask: torch.Tensor,
-        starts: torch.Tensor,
-    ) -> torch.Tensor:
-        bigrams = self.bigram_embedding(self._bigram_ids(ids, valid_mask))
-        pooled = torch.zeros_like(bigrams)
-        width = ids.shape[1]
-        for offset in range(OPAQUE_SYMBOL_BYTES - 1):
-            pooled[:, : width - offset] += bigrams[:, offset:]
-        pooled = pooled / float(OPAQUE_SYMBOL_BYTES - 1)
-        pooled = F.normalize(self.fingerprint_projection(pooled), dim=-1)
-        return pooled * starts[:, :, None]
-
-    def _selected_identities(
-        self,
-        ids: torch.Tensor,
-        valid_mask: torch.Tensor,
-        starts: torch.Tensor,
-        pointer_logits: torch.Tensor,
-    ) -> torch.Tensor:
-        if pointer_logits.shape[0] != ids.shape[0] or pointer_logits.shape[-1] != ids.shape[1]:
-            raise ValueError("dual-stream identity pointer shape differs")
-        soft = pointer_logits.float().softmax(-1)
-        hard = F.one_hot(soft.argmax(-1), ids.shape[1]).to(soft.dtype)
-        weights = hard + soft - soft.detach() if self.training else hard
-        memory = self._whole_symbol_memory(ids, valid_mask, starts)
-        selected = torch.einsum("b...l,blf->b...f", weights, memory)
-        return F.normalize(self.er_equality_projection(selected), dim=-1)
-
     @staticmethod
-    def _selected_symbol_bytes(
-        ids: torch.Tensor,
-        pointer_logits: torch.Tensor,
-    ) -> torch.Tensor:
-        """Read one complete routed symbol; routing remains the learned decision."""
-        if pointer_logits.shape[0] != ids.shape[0] or pointer_logits.shape[-1] != ids.shape[1]:
-            raise ValueError("dual-stream symbol pointer shape differs")
-        leading = pointer_logits.shape[1:-1]
-        flat = pointer_logits.reshape(ids.shape[0], -1, ids.shape[1]).argmax(-1)
+    def _all_symbol_bytes(ids: torch.Tensor) -> torch.Tensor:
+        """Materialize one six-byte candidate at every source position."""
+        if ids.ndim != 2:
+            raise ValueError("dual-stream source ids must be rank two")
+        batch, width = ids.shape
+        positions = torch.arange(width, device=ids.device)
         offsets = torch.arange(OPAQUE_SYMBOL_BYTES, device=ids.device)
-        indices = (flat[:, :, None] + offsets).clamp_max(ids.shape[1] - 1)
-        source = ids[:, None].expand(-1, flat.shape[1], -1)
-        selected = source.gather(-1, indices)
-        return selected.reshape(ids.shape[0], *leading, OPAQUE_SYMBOL_BYTES)
+        indices = (positions[:, None] + offsets[None]).clamp_max(width - 1)
+        return ids[:, indices]
 
-    def _identity_equality(
+    def _marginal_identity_equality(
         self,
-        left_bytes: torch.Tensor,
-        right_bytes: torch.Tensor,
-        left_identity: torch.Tensor,
-        right_identity: torch.Tensor,
-        scale: torch.Tensor,
+        ids: torch.Tensor,
+        starts: torch.Tensor,
+        left_logits: torch.Tensor,
+        right_logits: torch.Tensor,
     ) -> torch.Tensor:
-        """Exact equality forward with cosine surrogate gradients during fitting."""
-        if left_bytes.shape[:-1] != left_identity.shape[:-1]:
-            raise ValueError("dual-stream left identity shape differs")
-        if right_bytes.shape[:-1] != right_identity.shape[:-1]:
-            raise ValueError("dual-stream right identity shape differs")
-        exact = left_bytes.unsqueeze(-2).eq(right_bytes.unsqueeze(-3)).all(-1)
-        surrogate = torch.matmul(left_identity, right_identity.transpose(-1, -2))
-        equality = (
-            exact.to(surrogate.dtype) + surrogate - surrogate.detach()
-            if self.training
-            else exact.to(surrogate.dtype)
-        )
-        return scale.exp().clamp(max=100.0) * equality
+        """Marginalize exact symbol equality over all model-owned routes."""
+        if left_logits.shape[0] != ids.shape[0] or right_logits.shape[0] != ids.shape[0]:
+            raise ValueError("dual-stream marginal equality batch differs")
+        if left_logits.shape[-1] != ids.shape[1] or right_logits.shape[-1] != ids.shape[1]:
+            raise ValueError("dual-stream marginal equality source width differs")
+        negative = torch.finfo(left_logits.dtype).min
+        left = left_logits.masked_fill(~starts[(slice(None),) + (None,) * (left_logits.ndim - 2)], negative)
+        right = right_logits.masked_fill(~starts[(slice(None),) + (None,) * (right_logits.ndim - 2)], negative)
+        left_probability = left.float().softmax(-1)
+        right_probability = right.float().softmax(-1)
+        symbols = self._all_symbol_bytes(ids)
+        exact = symbols[:, :, None].eq(symbols[:, None]).all(-1)
+        exact &= starts[:, :, None] & starts[:, None, :]
+        equality = exact.to(left_probability.dtype)
+        if left_logits.ndim == 3 and right_logits.ndim == 3:
+            probability = torch.einsum(
+                "bil,blm,bjm->bij",
+                left_probability,
+                equality,
+                right_probability,
+            )
+        elif (
+            left_logits.ndim == 4
+            and right_logits.ndim == 4
+            and left_logits.shape[1] == right_logits.shape[1]
+        ):
+            probability = torch.einsum(
+                "bgil,blm,bgjm->bgij",
+                left_probability,
+                equality,
+                right_probability,
+            )
+        else:
+            raise ValueError("dual-stream marginal equality leading dimensions differ")
+        return probability.clamp_min(1e-30).log()
 
     def compile_relation_program(
         self,
@@ -247,9 +239,15 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
         records, token_memory, local_valid, source_indices, line_masks = (
             self._er_encode_records(structural_ids, valid_mask)
         )
-        role_logits = self.er_tt_record_role_head(records)
-        assignment = self._er_assignment(role_logits)
-        semantic_records = torch.einsum("bps,bpw->bsw", assignment, records)
+        semantic_role_logits = self.er_tt_record_role_head(records)
+        semantic_assignment = self._er_assignment(semantic_role_logits)
+        # Routing supervision updates role assignment, but cannot disturb the
+        # shared structural encoder. Both assignments are numerically identical.
+        routing_role_logits = self.er_tt_record_role_head(records.detach())
+        routing_assignment = self._er_assignment(routing_role_logits)
+        semantic_records = torch.einsum(
+            "bps,bpw->bsw", semantic_assignment, records
+        )
         semantic_records = semantic_records + self.er_tt_record_role_embedding[None]
         declaration = semantic_records[:, 0]
         rules = self.er_rule_norm(semantic_records[:, 1 : 1 + MAX_RULES])
@@ -261,27 +259,18 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
             local_valid,
             source_indices,
             starts,
-            assignment,
+            routing_assignment,
             slice(0, 1),
             self.er_ds_declaration_queries,
             ids.shape[1],
         )[:, 0]
         binding_pointer_logits = declaration_logits[:, :MAX_CARDINALITY]
         initial_pointer_logits = declaration_logits[:, MAX_CARDINALITY:]
-        binding_identity = self._selected_identities(
-            ids, valid_mask, starts, binding_pointer_logits
-        )
-        initial_identity = self._selected_identities(
-            ids, valid_mask, starts, initial_pointer_logits
-        )
-        binding_bytes = self._selected_symbol_bytes(ids, binding_pointer_logits)
-        initial_bytes = self._selected_symbol_bytes(ids, initial_pointer_logits)
-        initial_equality = self._identity_equality(
-            initial_bytes,
-            binding_bytes,
-            initial_identity,
-            binding_identity,
-            self.logit_scale,
+        initial_equality = self._marginal_identity_equality(
+            ids,
+            starts,
+            initial_pointer_logits,
+            binding_pointer_logits,
         )
 
         witness_pointer_logits = self._routed_symbol_logits(
@@ -290,25 +279,16 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
             local_valid,
             source_indices,
             starts,
-            assignment,
+            routing_assignment,
             slice(1, 1 + MAX_RULES),
             self.er_ds_witness_queries,
             ids.shape[1],
         )
-        witness_identity = self._selected_identities(
-            ids, valid_mask, starts, witness_pointer_logits
-        )
-        witness_bytes = self._selected_symbol_bytes(ids, witness_pointer_logits)
-        before = witness_identity[..., :MAX_CARDINALITY, :]
-        after = witness_identity[..., MAX_CARDINALITY:, :]
-        before_bytes = witness_bytes[..., :MAX_CARDINALITY, :]
-        after_bytes = witness_bytes[..., MAX_CARDINALITY:, :]
-        relation_equality = self._identity_equality(
-            after_bytes,
-            before_bytes,
-            after,
-            before,
-            self.er_equality_scale,
+        relation_equality = self._marginal_identity_equality(
+            ids,
+            starts,
+            witness_pointer_logits[..., MAX_CARDINALITY:, :],
+            witness_pointer_logits[..., :MAX_CARDINALITY, :],
         )
 
         rule_opcode_logits = self._routed_symbol_logits(
@@ -317,7 +297,7 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
             local_valid,
             source_indices,
             starts,
-            assignment,
+            routing_assignment,
             slice(1, 1 + MAX_RULES),
             self.er_ds_rule_opcode_query,
             ids.shape[1],
@@ -328,31 +308,22 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
             local_valid,
             source_indices,
             starts,
-            assignment,
+            routing_assignment,
             slice(1 + MAX_RULES, TT_RECORDS),
             self.er_ds_event_opcode_query,
             ids.shape[1],
         ).squeeze(2)
-        rule_opcode_identity = self._selected_identities(
-            ids, valid_mask, starts, rule_opcode_logits
-        )
-        event_opcode_identity = self._selected_identities(
-            ids, valid_mask, starts, event_opcode_logits
-        )
-        rule_opcode_bytes = self._selected_symbol_bytes(ids, rule_opcode_logits)
-        event_opcode_bytes = self._selected_symbol_bytes(ids, event_opcode_logits)
-        event_card_logits = self._identity_equality(
-            event_opcode_bytes,
-            rule_opcode_bytes,
-            event_opcode_identity,
-            rule_opcode_identity,
-            self.er_ds_opcode_scale,
+        event_card_logits = self._marginal_identity_equality(
+            ids,
+            starts,
+            event_opcode_logits,
+            rule_opcode_logits,
         )
 
         line_distribution = line_masks.float()
         line_distribution = line_distribution / line_distribution.sum(-1, keepdim=True)
         line_pointer_logits = torch.einsum(
-            "bps,bpl->bsl", assignment.float(), line_distribution
+            "bps,bpl->bsl", routing_assignment.float(), line_distribution
         ).clamp_min(1e-30).log()
         query: RelationTensorQuery = self.compile_relation_query(
             query_ids, query_valid_mask
@@ -396,7 +367,6 @@ def dual_stream_trainable_names(
         "er_ds_witness_queries",
         "er_ds_rule_opcode_query",
         "er_ds_event_opcode_query",
-        "er_ds_opcode_scale",
         "er_ds_router_norm.weight",
         "er_ds_router_query.weight",
         "er_ds_router_key.weight",
@@ -411,10 +381,6 @@ def dual_stream_trainable_names(
         "record_line_norm.",
         "record_set_encoder.",
         "record_set_norm.",
-        "local_occurrence_",
-        "bigram_embedding.",
-        "fingerprint_projection.",
-        "logit_scale",
     )
     return er_names | frozenset(
         name

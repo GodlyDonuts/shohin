@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=er-ds-canary
+#SBATCH --job-name=er-ds-canary-11
 #SBATCH --account=skattel
 #SBATCH --partition=normal
 #SBATCH --gres=gpu:nvidia_h100_pcie:1
