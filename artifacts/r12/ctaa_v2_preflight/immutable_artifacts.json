@@ -1,0 +1,33 @@
+{
+  "all_gates_pass": true,
+  "base": {
+    "path": "train/flagship_out/ckpt_0300000.pt",
+    "sha256": "211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6",
+    "step": 300000,
+    "strict_missing_keys": [],
+    "strict_unexpected_keys": []
+  },
+  "board_artifact_written": false,
+  "core_match": {
+    "control_flops": 215584,
+    "control_parameters": 107753,
+    "treatment_flops": 215530,
+    "treatment_parameters": 107753
+  },
+  "jobs_launched": false,
+  "parameter_ledger": {
+    "compiler_adapter": 12797451,
+    "core": 107753,
+    "headroom": 12013131,
+    "total": 137986868,
+    "trunk": 125081664
+  },
+  "production_seed_generated": false,
+  "qualified_compiler": {
+    "memory_tensors_loaded": 63,
+    "memory_tensors_present": 63,
+    "path": "train/referential_literal_pointer_factorized_ordinary_2026071810/compiler.pt",
+    "sha256": "747a559b827c6d114943c091b9dea5b4b90cef7af13aa5003b8435c092d24991"
+  },
+  "schema": "r12_ctaa_v2_immutable_artifact_preflight_v1"
+}

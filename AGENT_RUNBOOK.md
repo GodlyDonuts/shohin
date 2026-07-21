@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-21 01:12 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-21 02:28 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -26,16 +26,29 @@
 > audit SHA is `272b6b3b...`; it independently recomputes all retained alpha tensors but explicitly
 > labels oracle-route, split, custody, frozen-parent, and total-parameter facts as producer receipts.
 >
-> **Active architecture work:** Closure-Tied Action Algebra (CTAA) is pre-neural only. Its exact
+> **Active architecture work:** Closure-Tied Action Algebra (CTAA) revision 1 is rejected for
+> source freeze after independent review found unattainable confidence gates, an incomplete board,
+> semantic/renderer/lexical confounding, class/query coupling, repeated-opcode shortcuts, state-
+> blind causal-depth claims, and a query file created before execution. Revision 2 remains
+> pre-neural and non-authorizing. The exact
 > three-position copy-action algebra now passes an independent-oracle CPU audit: 729 atomic cells,
 > 19,683 closure checks, 531,441 associative execution checks, 588 ordered noncommuting pairs,
 > 6,561 exhaustive halt/suffix traces, 729 executable-action checks, and 648 changed-donor plus 54
 > same-terminal intervention cases. Identity-executor, reversed-composition, direct-state-signature,
 > and single-action executor mutations are killed by tests. This proves only
-> coherent finite mechanics. The future neural falsifier must causally use the exact 125,081,664-
+> coherent finite mechanics. The revision-2 implementation now additionally has fixed 56-byte
+> packets, exact one-STOP validation, host-owned event streaming whose core API sees only current
+> action/state, post-receipt late-query materialization, route-agreement rejection, monotonic right-
+> padding and mask-correct independent h19/h29 interventions, factorial semantic/renderer/lexical
+> axes, varied rank-two/final-collapse programs, and full prefix-state scoring. The immutable real-
+> artifact preflight passes: raw SHA and strict step-300k load; 63/63 qualified memory tensors;
+> exact complete-system parameters 137,986,868 with 12,013,131 headroom. This remains only
+> infrastructure. The future neural falsifier must causally use the exact 125,081,664-
 > parameter raw-300k trunk, add at most 24,918,335 parameters, learn model-owned STOP, and beat
 > parameter/state/FLOP-matched generic recurrence. No neural source freeze, seed, board, or H100 job
-> exists yet.
+> exists yet. Do not draw a production board/training seed or launch an H100 until the complete
+> writer, independent v2 oracle, trainer, evaluator, assessor, profiler, sealing orchestrator, and
+> mutation suite pass and a second adversarial source-freeze review closes every blocker.
 >
 > **Newest bounded reasoning baseline:** S7 learned Cayley law compilation is independently
 > confirmed. Frozen development job `693344` and one-read confirmation job `693346` both reach
@@ -10660,3 +10673,34 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   noncommuting, 6,561 halt/suffix, 648 changed-donor, and 54 same-terminal sham cases. CPU audit SHA
   is `14ee18b2...`. This is not learned reasoning. No CTAA neural source, seed, board, or H100 job
   exists.
+
+- **2026-07-21 01:12--02:28** -- **CTAA revision 1 is adversarially rejected before source freeze;
+  revision 2 closes the first execution and board-design blockers without launching a job.** Three
+  independent reviews verified the fixed 27-map split and renderer coset algebra but found that the
+  declared 99.9% lower-bound gate was impossible at the proposed stratum sizes, the board generator
+  omitted most declared datasets/interventions, novelty axes and class/query were confounded,
+  repeated long schedules and duplicate families admitted shortcuts, causal depth ignored initial
+  state/query, and the query existed on the executor-visible filesystem before execution. The
+  preregistration now records that rejection. Revision 2 treats 243 atomic and 2,187 two-action
+  cases per semantic axis as exact finite enumerations rather than repeated statistical samples;
+  crosses all eight semantic/renderer/lexical shift cells; balances each long class/depth/cell over
+  16 renderers and 18 query/initial-permutation combinations; replaces repeated permutation words
+  with varied stable-rank-two, implicit-final-collapse, and explicit-final-collapse programs; and
+  scores every unseen prefix state plus separate map/state/answer deletion depth and shortest-word
+  compression. A 6,912-family dry build is unique and passes its typed tests. Hard packet custody is
+  now exactly 56 bytes with four cards, three-state bytes, 41 events, exactly one interior STOP, and
+  post-STOP suffix; the neural core exposes no schedule-bearing method and sees only one current
+  action/state pair per host-streamed call. Query bytes are created only after a read-only execution
+  receipt exists, unsafe pickle loading is removed, and late readout rejects malformed STOP or
+  route disagreement. The immutable artifact receipt at
+  `artifacts/r12/ctaa_v2_preflight/immutable_artifacts.json` verifies raw checkpoint SHA
+  `211d6b2c...`, strict step 300000, qualified compiler SHA `747a559b...`, 63/63 memory tensors,
+  matched 107,753-parameter cores, complete system 137,986,868, and 12,013,131 headroom. No
+  production board seed, training seed, H100 job, development read, confirmation read, or reasoning
+  score exists. Complete the production writer, independent v2 oracle, trainer/evaluator/assessor,
+  profiler, sealing orchestrator, and mutation tests before a new freeze review. The immutable
+  receipt SHA-256 is `d4e4b2f5d792e95a73cf6edadea6ea7146ea5cdcaf4f2e4e0340d666000f184f`.
+  Post-change verification is clean: focused Ruff and bytecode compilation pass; the moderate CTAA
+  regression suite is 59/59; the independent full v2 audit is 3/3 over 13,824 development plus
+  confirmation families; and the split-artifact board-writer integration is 1/1 over 6,912 families
+  per scored partition. These are infrastructure gates, not capability results.
