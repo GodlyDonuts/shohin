@@ -179,3 +179,46 @@ syntax, a real-board alpha-recode equality check, a real-parent backward pass,
 full trainable-gradient coverage, and zero excluded-parent leakage pass. A
 single post-commit seed and single isolated H100 canary are authorized; no
 fresh board is authorized unless every unchanged gate passes.
+
+## Occurrence-addressed result
+
+**Protocol:** `r12_er_addressed_marginal_train_only_canary_v1`
+
+**Decision:** reject before fresh-board generation. Exact source
+`7601625f2cdc0a476f9383ce9773722f64760d17` precedes drand round `6305746`,
+canonical payload SHA `8884bfe6...`, derivation SHA `c24770ac...`, and seed
+`4775909816533321494`. Sole job `694928` completed on H100 `evc36` in 7m38s.
+Development/confirmation custody remains `0/0`.
+
+| Metric | Exact |
+|---|---:|
+| Packet / joint / relation rows | 4,873/8,000 = 60.9125% |
+| State | 6,411/8,000 = 80.1375% |
+| Answer | 7,218/8,000 = 90.225% |
+| Witness pointers | 4,760/8,000 = 59.500% |
+| Binding / initial / events / HALT / query / line | 8,000/8,000 |
+| Alpha-invariant complete hard output | 8,000/8,000 |
+| Oracle-route initial/relation/event/joint | 8,000/8,000 |
+
+Cardinality-specific joint is 90.041%, 64.008%, 47.194%, and 43.606% for
+`N=3,4,5,6`. Four scientific gates fail. The parameter certificate remains
+185,543,048 complete / 11,140,256 trainable / 14,456,952 headroom.
+
+Artifact SHA-256 values are:
+
+- checkpoint: `803a850af3f18a8138d6f5029f6c1d459b0f15fb6d0c42f3e0c407810108e4e3`
+- evidence: `a2d8349bd6efcfc9eaca522661b24130529ad04fd08ab313ce20dbeeb3c35227`
+- report: `11d230a2d2c83bbf70997bbd2fd11189f6094d43fdd1717f2a7595e04d52b0f6`
+
+Independent reconstruction finds 3,240 witness-failed rows. Wrong-pointer
+counts per failed row range from one through six rather than the predecessor's
+single error. The dominant errors are adjacent ordinal swaps in after-witness
+positions, especially for cardinalities four through six. Endpoint ordinal
+embedding norm is 8.64 and ordinal rows six/seven have cosine 0.878; count
+embedding norm is 2.02. The address representation therefore became an
+entangled positional shortcut rather than a reliable tie-breaker.
+
+The architecture/version is closed. A post-hoc scale ablation may read this
+same consumed training probe solely to separate ordinal dominance from count
+interaction. It has no optimizer and cannot authorize a fresh board, promotion,
+or any reasoning claim.

@@ -342,9 +342,20 @@
 > Randomness `611f201f...`, canonical payload SHA `8884bfe6...`, label
 > `r12-er-addressed-marginal-route-canary-v1`, and derivation SHA `c24770ac...` produce seed
 > `4775909816533321494`. A clean hash-exact capsule and training-only two-file data view passed
-> `sbatch --test-only`. Sole job `694928` is running on H100 `evc36`; its isolated output is
-> `/lustre/fs1/home/sa305415/shohin_runs/er_addressed_marginal_4775909816533321494`. Do not submit
-> a duplicate or change any threshold while it is pending/running.
+> `sbatch --test-only`. Sole job `694928` completed cleanly on H100 `evc36` in 7m38s and is
+> **rejected**. Packet/joint/relation rows fall to 4,873/8,000 = 60.9125%, state is 80.1375%,
+> answer is 90.225%, and witness pointers are 4,760/8,000 = 59.500%. Binding/initial/event/HALT/
+> query/line rows, alpha invariance, oracle-route transport, parent preservation, parameters, and
+> custody all remain exact. Minimum-cardinality joint falls to 43.606%. No gate is relaxed and no
+> fresh board is authorized. Checkpoint/evidence/report hashes are `803a850a...`/`a2d8349b...`/
+> `11d230a2...`; read-only local mirrors hash-match. Independent evidence reconstruction finds
+> 3,240 witness-failed rows, including up to six errors per row, with adjacent ordinal swaps
+> concentrated in cardinality four through six. Endpoint ordinal embedding norm grew to 8.64 and
+> adjacent ordinal rows 6/7 have cosine 0.878, while count embedding norm is 2.02. The repair learned
+> a count-conditioned positional shortcut and is closed. The active read-only diagnostic scales
+> only the frozen endpoint's ordinal/count embeddings on the already consumed train probe; it has
+> no optimizer or scored-split path and cannot authorize promotion. Use its result only to decide
+> whether a distinct factorized residual-bias route is justified.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
