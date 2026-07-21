@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 20:25 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 20:53 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -306,6 +306,19 @@
 > assessment hashes are `0c12b2eb...`/`5504dc27...`/`2b935215...`/`3628e2d0...`; local mirrors
 > and a byte-identical assessor replay match. The admitted fresh-board repair is an alpha-invariant structural routing stream separated
 > from a whole-symbol identity/equality stream, including identity-based event binding.
+> That repair is now locally admitted for a train-only falsifier before any fresh board. It
+> reconstructs the confirmed witness parent and uses no rejected ER-TT v1 trained state. All
+> six-byte opaque payloads are canonicalized before structural routing; original bytes are read
+> only after a learned route, and exact whole-symbol equality produces initial rows, relations, and
+> event-to-rule binding. Complete/trainable/headroom parameters are exactly
+> 192,730,091/18,327,299/7,269,909, with zero motor/reader parameters. Ten focused tests plus an
+> actual confirmed-parent/real-family backward pass, Ruff, byte compilation, job syntax, and diff
+> checks pass; every new route head receives gradient and excluded-parent leakage is zero. The
+> preregistered canary may read only old `train.jsonl`: fit 10,000 families, probe 2,000 disjoint
+> families, and require >=90% relations/witness pointers, >=85% packet/joint, and 100% hard-output
+> invariance after all opaque names are moved into one neutral namespace. No source commit, seed,
+> H100 job, or canary score exists yet. Freeze/push exact source before seed; never touch old
+> development or confirmation bytes.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10477,3 +10490,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `2b935215...`/`3628e2d0...`; local mirrors and a byte-identical assessor replay match. The next fresh-board repair must separate an
   alpha-invariant structural where-channel from a whole-symbol identity/equality what-channel and
   use the same equality bus for event-to-rule binding.
+
+- **2026-07-20 20:25--20:53** -- **The dual-stream ER-TT repair and train-only pre-board canary are
+  locally admitted before source freeze.** The repair canonicalizes every six-byte opaque payload
+  before structural record/occurrence routing, reads original bytes only after a learned hard route,
+  and uses exact whole-symbol equality for initial rows, arbitrary relation rows, and event-to-rule
+  binding. It starts from the confirmed witness parent through untrained adapter initialization,
+  never from rejected v1 weights. Exact complete/trainable/headroom counts are
+  192,730,091/18,327,299/7,269,909; motor/reader remain zero. Ten focused tests plus an actual
+  confirmed-parent/real-family backward, gradient isolation, Ruff, byte compilation, shell syntax,
+  and diff checks pass. The frozen pre-board canary will fit 10,000 old training families, probe
+  2,000 disjoint old training families, never read development/confirmation, and requires >=90%
+  relations/witness pointers, >=85% packet/joint, and exact 8,000/8,000 invariance after all symbols
+  are bijectively moved into one neutral namespace. No source commit, seed, H100 job, or score exists.

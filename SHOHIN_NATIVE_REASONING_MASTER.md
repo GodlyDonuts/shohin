@@ -265,7 +265,23 @@ theory, score contract, and result are
 `R12_ER_RELATION_TENSOR_SCORE_PREREG.md`, and
 `R12_ER_RELATION_TENSOR_RESULT.md`.
 
-**Last updated:** 2026-07-20 20:25 EDT. User authority requires every future
+That dual-stream repair is now locally admitted for a train-only falsifier. It
+canonicalizes all six-byte opaque payloads before structural routing, reads the
+original six bytes only after a model-selected route, and uses exact selected-
+symbol equality for declaration state, arbitrary relations, and opcode binding.
+It totals 192,730,091 parameters, with 18,327,299 trainable and 7,269,909
+headroom below 200M; motor and reader remain parameter-free. Ten focused tests
+plus a confirmed-parent production-family backward pass show finite gradients
+to every new route head and zero excluded-parent leakage. Before any fresh
+board, the frozen canary fits 10,000 old training families and probes 2,000
+family-disjoint old training families. Promotion requires at least 90%
+relations/witness pointers, 85% packet/joint, and exact invariance on all 8,000
+rows after every opaque symbol category is collapsed into one neutral namespace.
+It may not read development or confirmation. The preregistration is
+`R12_ER_DUAL_STREAM_RELATION_REPAIR_PREREG.md`; no source commit, seed, H100
+job, or result exists yet.
+
+**Last updated:** 2026-07-20 20:53 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2801,6 +2817,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Admitted and independently reproduced the production ER-TT board from exact source `bd77c0f`, public beacon round 6305283, and seed `1209366536012979338`: 48,000/2,048/2,048 rows, all 15 gates, byte-identical rebuild, zero overlap, confirmation `0600`, custody `0/0`, exact-balanced cardinality, 100% non-bijective families, and 7.955%/8.162% deranged/equality-ablated state. No training seed or neural score exists. |
 | 2026-07-20 | Locally qualified the ER-TT score path before source freeze: three identical 3,000-update arms, strict variable-cardinality masks, source-only supervision, parameter-free source-deleted execution, five source invariances, four causal packet interventions, raw evidence, and an independent list-executor assessor. Twenty-five focused tests, static checks, and a real-parent production-family backward pass succeed; all 110 trainable tensors receive finite gradient. System size remains 192,740,854 with 7,259,146 headroom. Board custody remains `0/0`; no training seed or neural score exists. |
 | 2026-07-20 | Froze/pushed ER-TT score source `3bd8a329` before valid post-commit seed `4773363983426630371`; malformed unused seed `9040942210094722103` is rejected. Sole job `694758` completed in 22m59s and rejects v1: treatment packet/state/answer/joint 0.098%/15.381%/32.666%/0.098%, control joint zero, relation cells 36.528% vs 26.987%/28.866%, before/after witness localization 95.273%/51.965%, and severe alpha-recode collapse. Custody is `1/0`; confirmation stays sealed. Next test: dual structural-routing and whole-symbol identity streams with equality-based event binding. |
+| 2026-07-20 | Locally admitted the dual-stream ER-TT repair and train-only pre-board canary: alpha-canonical structural routing, model-selected whole-symbol reads, exact identity equality for state/relations/events, zero motor/reader parameters, and confirmed-parent initialization without rejected-v1 weights. Complete/trainable/headroom is 192,730,091/18,327,299/7,269,909. Ten tests plus a real-family confirmed-parent backward and static checks pass. Frozen canary gates require >=90% relations/witness pointers, >=85% packet/joint, and 8,000/8,000 neutral-namespace alpha invariance using only a 10,000/2,000 family-disjoint split of old train data. No source commit, seed, job, or score exists. |
 
 ---
 
