@@ -142,8 +142,8 @@ def audit_long_families(
     }
 
 
-def audit_v2(*, dry_seed: int = 611_953, per_class_depth_cell: int = 144) -> dict[str, object]:
-    _require(per_class_depth_cell % 144 == 0, "v2 dry count balance differs")
+def audit_v2(*, dry_seed: int = 611_953, per_class_depth_cell: int = 288) -> dict[str, object]:
+    _require(per_class_depth_cell % 288 == 0, "v2 dry count balance differs")
     finite_actions = tuple(product(range(3), repeat=3))
     atomic = 0
     closure = 0

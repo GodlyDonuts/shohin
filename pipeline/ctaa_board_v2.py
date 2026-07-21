@@ -47,7 +47,7 @@ PROGRAM_CLASSES: tuple[ProgramClass, ...] = (
 )
 INITIAL_STATES: tuple[State, ...] = tuple(permutations(range(WIDTH)))  # type: ignore[assignment]
 FACTORIAL_BITS = tuple(product((0, 1), repeat=3))
-LONG_PER_CLASS_DEPTH_CELL = 432
+LONG_PER_CLASS_DEPTH_CELL = 576
 
 
 @dataclass(frozen=True)
@@ -583,8 +583,10 @@ def build_long_families(
     *,
     per_class_depth_cell: int = LONG_PER_CLASS_DEPTH_CELL,
 ) -> tuple[CTAAProgramFamilyV2, ...]:
-    if per_class_depth_cell < 1 or per_class_depth_cell % 144:
-        raise ValueError("CTAA v2 long count must balance 16 renderers and 18 query/state cells")
+    if per_class_depth_cell < 1 or per_class_depth_cell % 288:
+        raise ValueError(
+            "CTAA v2 long count must jointly balance 16 renderers and 18 query/state cells"
+        )
     result: list[CTAAProgramFamilyV2] = []
     seen: set[tuple[object, ...]] = set()
     serial = 0
@@ -615,6 +617,18 @@ def build_long_families(
                     serial += 1
                     accepted += 1
     return tuple(result)
+
+
+def balanced_renderer_index(family_index: int, per_class_depth_cell: int) -> int:
+    """Cross every renderer with every query/initial cell equally per stratum."""
+    if (
+        family_index < 0
+        or per_class_depth_cell < 288
+        or per_class_depth_cell % 288
+    ):
+        raise ValueError("CTAA v2 renderer cross-balance geometry differs")
+    within_stratum = family_index % per_class_depth_cell
+    return (within_stratum // 18) % 16
 
 
 def _with_schedule(

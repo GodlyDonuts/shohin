@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+from collections import Counter
 
 import pytest
 
@@ -22,7 +23,7 @@ def test_reduced_board_writer_is_single_use_sealed_and_hash_complete(tmp_path: P
         atomic_contexts=1,
         closure_contexts=1,
         compiler_per_depth=18,
-        long_per_class_depth_cell=144,
+        long_per_class_depth_cell=288,
         diagnostics_per_class_depth=1,
         name_pool_per_axis=32,
     )
@@ -31,10 +32,10 @@ def test_reduced_board_writer_is_single_use_sealed_and_hash_complete(tmp_path: P
     assert report["counts"]["train_atomic"] == 243
     assert report["counts"]["train_closure"] == 945
     assert report["counts"]["train_compiler"] == 144
-    assert report["counts"]["development"] == 6_912
-    assert report["counts"]["confirmation"] == 6_912
-    assert report["counts"]["development_interventions"] == 2_610
-    assert report["counts"]["confirmation_interventions"] == 2_610
+    assert report["counts"]["development"] == 13_824
+    assert report["counts"]["confirmation"] == 13_824
+    assert report["counts"]["development_interventions"] == 5_202
+    assert report["counts"]["confirmation_interventions"] == 5_202
     assert (output / "confirmation_program.jsonl").stat().st_mode & 0o777 == 0o600
     assert (output / "confirmation_query.jsonl").stat().st_mode & 0o777 == 0o600
     assert (output / "confirmation_oracle.jsonl").stat().st_mode & 0o777 == 0o600
@@ -52,5 +53,22 @@ def test_reduced_board_writer_is_single_use_sealed_and_hash_complete(tmp_path: P
     assert "prefix_states" not in first
     assert "terminal_state" not in first
     assert "answer" not in first
+    development_oracle = [
+        json.loads(line)
+        for line in (output / "development_oracle.jsonl").read_text().splitlines()
+    ]
+    joint = Counter(
+        (
+            row["factorial_cell"],
+            row["program_class"],
+            row["depth"],
+            row["renderer"],
+            row["query_position"],
+            tuple(row["initial_state"]),
+        )
+        for row in development_oracle
+    )
+    assert len(joint) == 8 * 3 * 2 * 16 * 18
+    assert set(joint.values()) == {1}
     with pytest.raises(FileExistsError):
         build_board(991_027, output, TOKENIZER, sizes=sizes)

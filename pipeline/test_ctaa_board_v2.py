@@ -8,6 +8,7 @@ from pipeline.ctaa_board_v2 import (
     INITIAL_STATES,
     PROGRAM_CLASSES,
     FactorialCell,
+    balanced_renderer_index,
     board_contract_counts,
     build_compiler_families,
     build_long_families,
@@ -39,7 +40,7 @@ def test_typed_finite_exposures_have_exact_unique_and_optimization_counts() -> N
         "closure_optimization_exposures": 60_480,
         "closure_unique_finite_cases": 945,
         "compiler_schedule_rows": 32_768,
-        "long_scored_families_per_partition": 20_736,
+        "long_scored_families_per_partition": 27_648,
     }
     assert len(train_closed_pairs()) == 35
     assert len(tuple(iter_atomic_exposures("train", contexts=1))) == 243
@@ -94,8 +95,8 @@ def test_new_program_classes_are_varied_and_report_distinct_causal_metrics() -> 
 
 
 def test_small_balanced_long_build_is_unique_and_crosses_query_initial() -> None:
-    families = build_long_families(SEED, "development", per_class_depth_cell=144)
-    assert len(families) == 8 * 3 * 2 * 144
+    families = build_long_families(SEED, "development", per_class_depth_cell=288)
+    assert len(families) == 8 * 3 * 2 * 288
     assert len({family.canonical_key for family in families}) == len(families)
     counts = Counter(
         (
@@ -107,7 +108,22 @@ def test_small_balanced_long_build_is_unique_and_crosses_query_initial() -> None
         )
         for family in families
     )
-    assert set(counts.values()) == {8}
+    assert set(counts.values()) == {16}
+
+
+def test_renderer_is_jointly_crossed_with_every_query_initial_cell() -> None:
+    families = build_long_families(SEED, "development", per_class_depth_cell=288)
+    first_stratum = families[:288]
+    counts = Counter(
+        (
+            balanced_renderer_index(index, 288),
+            family.query_position,
+            family.initial_state,
+        )
+        for index, family in enumerate(first_stratum)
+    )
+    assert len(counts) == 16 * 18
+    assert set(counts.values()) == {1}
 
 
 def test_factorial_surface_uses_axis_specific_names_without_changing_packet() -> None:

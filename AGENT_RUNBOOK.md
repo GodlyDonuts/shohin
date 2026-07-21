@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-21 03:19 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-21 04:01 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -52,9 +52,15 @@
 > one-access assessor. Invalid and all-invalid compiles stay in the score denominator. A static
 > resource receipt and arbitrary-table matched-control capacity receipt pass. Runtime h19/h29,
 > donor-state/action, packet-transplant, source-poison, and other mandatory intervention orchestration
-> plus the final five-seed paired/Holm/bootstrap gate remain incomplete. Do not draw a production
-> board/training seed or launch an H100 until those paths, a clean combined test gate, and the second
-> adversarial source-freeze review close every blocker.
+> plus the final five-seed paired/Holm/bootstrap gate remain incomplete. Two completed independent
+> adversarial reviews explicitly return `REJECT_SOURCE_FREEZE`; a third systems review was stopped
+> without a final verdict and is not evidence. Post-review hardening adds exact Clopper-Pearson,
+> Holm, and paired hierarchical-bootstrap mechanics; exact finite-core audits; immutable source,
+> packet, query, and checkpoint receipts; deterministic execution replay; one precompiled packet per
+> paired arm; invalid-intervention denominator retention; and a process-sandbox wrapper that hides
+> the sealed board root. These are still unqualified work in progress. Do not draw a production
+> board/training seed, open a scored split, or launch an H100 until the remaining custody,
+> intervention, resource-profile, mutation, and independent-review blockers below are closed.
 >
 > **Newest bounded reasoning baseline:** S7 learned Cayley law compilation is independently
 > confirmed. Frozen development job `693344` and one-read confirmation job `693346` both reach
@@ -10733,3 +10739,50 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   board/training seed, H100 job, development/confirmation access, or capability score exists.
   Mandatory runtime interventions and final paired statistical aggregation remain blockers; three
   independent adversarial source-freeze reviews are in progress.
+
+- **2026-07-21 03:19--04:01** -- **CTAA revision 2 is paused at an explicit
+  `REJECT_SOURCE_FREEZE`; no neural experiment is authorized.** Two completed independent reviews
+  reject the current source. The statistical review identified absent gate computation, finite-core
+  audits, evidence-source binding, paired-arm identity, invalid-intervention accounting,
+  intervention provenance, clustered/factorial statistics, token-length balancing, complete
+  profiling, and mutation coverage. The custody review additionally identified logical rather than
+  physical oracle isolation, oracle bytes opened too early, resettable/substitutable access state,
+  forgeable sidecars, replayable/fabricable execution evidence, disappearing downstream failures,
+  optional parent interventions, and weak same-UID filesystem protection. A third systems review
+  was interrupted at shutdown without returning a verdict and must be repeated; it is not an
+  approval.
+
+  Bounded post-review hardening closes only part of that list. The board now enforces exact
+  dev/confirmation program and query token-length histograms globally and within every factorial
+  cell, and its dynamic 13-gram audit includes intervention sources. The assessor reports semantic
+  action, active-step rank, shift-order, factorial, and family-cluster outcomes. Exact one-sided
+  Clopper-Pearson bounds, exact binomial tests, Holm correction, and a deterministic exact-equivalent
+  100,000-draw paired hierarchical bootstrap exist. Exact finite audits cover 243 atomic and 2,187
+  two-action programs per semantic axis. Evidence receipts bind program/query sources, compiler,
+  core checkpoint plus training metadata, packet index, and query positions. The committer strictly
+  reloads and deterministically replays the core, recomputes the answer, retains missing downstream
+  stages in the denominator, and requires both intervention parent and child to be oracle-correct.
+  Paired arms consume one immutable precompiled packet artifact. The orchestrator discloses query
+  bytes only after successful execution and wraps child processes in a board-root-hiding OS sandbox.
+  The advancement-gate command intentionally fails closed with `UnresolvedContractError` instead
+  of manufacturing a capability verdict. Current focused verification is Ruff clean, bytecode
+  compilation clean, and 46/46 targeted tests passing in 4.01 seconds. The long full writer run that
+  preceded the optimized name-restricted 13-gram index ended without a retained final result, so it
+  must not be cited as verification of the current writer.
+
+  **Tomorrow's restart order is fixed:** (1) reconcile advancement-gate schema/constants with the
+  current assessor and commit a pre-outcome bootstrap-seed receipt; (2) complete a real Newton
+  `bwrap` smoke test plus hostile same-UID board/ledger mutation tests; (3) replace resettable local
+  custody with an externally signed append-only access/dev-gate registry; (4) implement and bind all
+  mandatory interventions end to end: independent h19/h29 zero/rotate/donor, alpha/entity/witness/
+  opcode recoding, renderer/rule shuffle, source deletion/poison/future/query/post-STOP, midpoint
+  donor state/action, and packet transplant; (5) complete forward, backward, optimizer, curriculum,
+  compiler-training, and inference receipts at active depths 1/16/32/39; (6) run the full writer,
+  combined suite, and adversarial mutation matrix; and (7) obtain a fresh completed independent
+  source-freeze review. Only after every item passes may source be frozen, a public board seed be
+  drawn and reproduced byte-identically, and five training seeds be derived. Protected inputs remain
+  raw checkpoint SHA-256 `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`,
+  tokenizer SHA-256 `87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4`,
+  and qualified compiler SHA-256 `747a559b827c6d114943c091b9dea5b4b90cef7af13aa5003b8435c092d24991`.
+  Complete parameters remain 137,986,868 with 12,013,131 headroom. There is still no CTAA seed,
+  H100 job, scored-board access, neural score, or native-reasoning claim.

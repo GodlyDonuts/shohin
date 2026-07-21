@@ -172,11 +172,36 @@ def _strata(row_scores: list[dict[str, object]], key: str) -> dict[str, object]:
     return {name: _aggregate(values) for name, values in sorted(grouped.items())}
 
 
+def _factorial_effects(row_scores: list[dict[str, object]]) -> dict[str, object]:
+    axes = {"semantic": 0, "renderer": 1, "lexical": 2}
+    effects: dict[str, object] = {}
+    for name, position in axes.items():
+        inherited = [
+            bool(row["prefix_exact"])
+            for row in row_scores
+            if str(row["factorial_cell"])[position] == "i"
+        ]
+        held_out = [
+            bool(row["prefix_exact"])
+            for row in row_scores
+            if str(row["factorial_cell"])[position] == "h"
+        ]
+        effects[name] = {
+            "inherited": _mean(inherited),
+            "held_out": _mean(held_out),
+            "held_out_minus_inherited": _mean(held_out) - _mean(inherited),
+            "inherited_families": len(inherited),
+            "held_out_families": len(held_out),
+        }
+    return effects
+
+
 def score_evidence(
     evidence_rows: list[dict[str, object]],
     oracle_rows: list[dict[str, object]],
     *,
     parent_evidence_rows: list[dict[str, object]] | None = None,
+    parent_oracle_rows: list[dict[str, object]] | None = None,
 ) -> dict[str, object]:
     evidence = {row["family_id"]: row for row in evidence_rows}
     oracle = {row["family_id"]: row for row in oracle_rows}
@@ -187,8 +212,15 @@ def score_evidence(
         if parent_evidence_rows is not None
         else {}
     )
+    parent_oracle = (
+        {row["family_id"]: row for row in parent_oracle_rows}
+        if parent_oracle_rows is not None
+        else {}
+    )
     row_scores: list[dict[str, object]] = []
     action_correct: dict[str, list[bool]] = defaultdict(list)
+    semantic_action_correct: dict[str, list[bool]] = defaultdict(list)
+    action_rank_correct: dict[str, list[bool]] = defaultdict(list)
     quartile_correct: dict[str, list[bool]] = defaultdict(list)
     relation_correct: dict[str, list[bool]] = defaultdict(list)
     for family_id in [row["family_id"] for row in oracle_rows]:
@@ -247,12 +279,20 @@ def score_evidence(
                 and state_route[step + 1] == target["prefix_states"][step + 1]
             )
             action_correct[str(target["schedule"][step])].append(correct)
+            action = target["action_cards"][target["schedule"][step]]
+            semantic_action_correct[
+                json.dumps(action, separators=(",", ":"))
+            ].append(correct)
+            action_rank_correct[str(len(set(action)))].append(correct)
             quartile = min(3, (4 * step) // depth)
             quartile_correct[str(quartile + 1)].append(correct)
             active_correct += int(correct)
         row_score = {
             "family_id": family_id,
+            "cluster_family_id": target.get("parent_family_id", family_id),
+            "relation": target.get("relation"),
             "factorial_cell": target["factorial_cell"],
+            "shift_order": str(target["factorial_cell"]).count("h"),
             "program_class": target["program_class"],
             "depth": target["depth"],
             "renderer": target["renderer"],
@@ -275,7 +315,8 @@ def score_evidence(
         row_scores.append(row_score)
         if "parent_family_id" in target and parent_evidence:
             parent = parent_evidence.get(target["parent_family_id"])
-            if parent is None:
+            parent_target = parent_oracle.get(target["parent_family_id"])
+            if parent is None or parent_target is None:
                 relation_correct[str(target["relation"])].append(False)
             else:
                 expected_trace_equal = bool(target["invariant_trace"])
@@ -290,8 +331,16 @@ def score_evidence(
                     and isinstance(predicted["state_route"], list)
                     and parent["state_route"][-1] == predicted["state_route"][-1]
                 )
+                parent_correct = (
+                    bool(parent.get("packet_valid"))
+                    and _halt_valid(parent.get("halted"))
+                    and bool(parent.get("route_agreement"))
+                    and parent.get("state_route") == parent_target["prefix_states"]
+                )
                 relation_correct[str(target["relation"])].append(
-                    observed_trace_equal == expected_trace_equal
+                    parent_correct
+                    and prefix_exact
+                    and observed_trace_equal == expected_trace_equal
                     and observed_terminal_equal == expected_terminal_equal
                 )
     return {
@@ -300,8 +349,17 @@ def score_evidence(
         "by_program_class": _strata(row_scores, "program_class"),
         "by_depth": _strata(row_scores, "depth"),
         "by_renderer": _strata(row_scores, "renderer"),
+        "by_shift_order": _strata(row_scores, "shift_order"),
+        "factorial_main_effects": _factorial_effects(row_scores),
         "by_action_active_prefix_accuracy": {
             key: _mean(values) for key, values in sorted(action_correct.items())
+        },
+        "by_semantic_action_active_prefix_accuracy": {
+            key: _mean(values)
+            for key, values in sorted(semantic_action_correct.items())
+        },
+        "by_action_rank_active_prefix_accuracy": {
+            key: _mean(values) for key, values in sorted(action_rank_correct.items())
         },
         "by_step_quartile_active_prefix_accuracy": {
             key: _mean(values) for key, values in sorted(quartile_correct.items())

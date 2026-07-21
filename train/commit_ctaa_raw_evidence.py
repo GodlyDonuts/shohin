@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 
@@ -17,11 +18,80 @@ from ctaa_evaluation_io import (
     write_json_once,
     write_jsonl_once,
 )
-from run_ctaa_packet_executor import EXECUTION_SCHEMA
+from ctaa_core_training import ARMS
+from ctaa_packet_io import read_packet_file, read_query_file
+from run_ctaa_packet_executor import CORE_SCHEMA, EXECUTION_SCHEMA, load_core
 
 
 RAW_EVIDENCE_SCHEMA = "r12_ctaa_v2_raw_evidence_v1"
 RAW_EVIDENCE_RECEIPT_SCHEMA = "r12_ctaa_v2_raw_evidence_receipt_v1"
+
+
+def _query_positions_commitment(query: dict[str, object] | None) -> str | None:
+    if query is None:
+        return None
+    payload = json.dumps(
+        {
+            "family_ids": query["family_ids"],
+            "positions": query["positions"].tolist(),
+        },
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+    return hashlib.sha256(payload.encode()).hexdigest()
+
+
+def _core_training_commitment(
+    core_path: Path | None,
+    execution: dict[str, object] | None,
+) -> dict[str, object] | None:
+    if core_path is None:
+        if execution is not None:
+            raise ValueError("CTAA execution lacks its core commitment")
+        return None
+    core_sha = sha256_file(core_path)
+    core, loaded_kind = load_core(core_path)
+    del core
+    if execution is not None and core_sha != execution["core_sha256"]:
+        raise ValueError("CTAA execution is not bound to its core checkpoint")
+    payload = torch.load(core_path, map_location="cpu", weights_only=True)
+    training = payload.get("training") if isinstance(payload, dict) else None
+    if (
+        not isinstance(payload, dict)
+        or payload.get("schema") != CORE_SCHEMA
+        or payload.get("kind") != loaded_kind
+        or (execution is not None and payload.get("kind") != execution["core_kind"])
+        or not isinstance(payload.get("state"), dict)
+        or not isinstance(training, dict)
+        or training.get("schema") != "r12_ctaa_v2_core_training_v1"
+        or training.get("arm") not in ARMS
+        or not isinstance(training.get("seed"), int)
+        or training["seed"] < 0
+        or not isinstance(training.get("atomic_sha256"), str)
+        or len(training["atomic_sha256"]) != 64
+        or not isinstance(training.get("closure_sha256"), str)
+        or len(training["closure_sha256"]) != 64
+    ):
+        raise ValueError("CTAA core-training commitment differs")
+    expected_kind = (
+        "outer_product_control"
+        if training["arm"] == "oprc_closure"
+        else "closure_feature"
+    )
+    if payload["kind"] != expected_kind:
+        raise ValueError("CTAA core kind/arm binding differs")
+    return {
+        "core_sha256": core_sha,
+        "core_kind": loaded_kind,
+        "training_schema": training["schema"],
+        "training_seed": training["seed"],
+        "training_arm": training["arm"],
+        "atomic_sha256": training["atomic_sha256"],
+        "closure_sha256": training["closure_sha256"],
+        "updates": training.get("updates"),
+        "batch_size": training.get("batch_size"),
+        "learning_rate": training.get("learning_rate"),
+    }
 
 
 def _load_execution(path: Path, expected_packet_sha: str, rows: int) -> dict[str, object]:
@@ -63,19 +133,49 @@ def _load_execution(path: Path, expected_packet_sha: str, rows: int) -> dict[str
     return value
 
 
-def _load_answers(path: Path, execution_sha: str, rows: int) -> list[int]:
+def _load_answers(
+    path: Path,
+    execution_sha: str,
+    query_sha: str,
+    rows: int,
+) -> list[int]:
     value = json.loads(path.read_text())
     if (
         not isinstance(value, dict)
         or set(value) != {"schema", "execution_sha256", "query_sha256", "answers"}
         or value.get("schema") != "ctaa_late_query_answer_v1"
         or value.get("execution_sha256") != execution_sha
+        or value.get("query_sha256") != query_sha
         or not isinstance(value.get("answers"), list)
         or len(value["answers"]) != rows
         or any(not isinstance(answer, int) or not 0 <= answer < 3 for answer in value["answers"])
     ):
         raise ValueError("CTAA raw-evidence answer artifact differs")
     return value["answers"]
+
+
+@torch.inference_mode()
+def _verify_execution_replay(
+    execution: dict[str, object],
+    packet_path: Path | None,
+    core_path: Path | None,
+) -> None:
+    if packet_path is None or core_path is None:
+        raise ValueError("CTAA execution replay commitments are incomplete")
+    if sha256_file(packet_path) != execution["packet_sha256"]:
+        raise ValueError("CTAA execution packet commitment differs")
+    core, kind = load_core(core_path)
+    if kind != execution["core_kind"]:
+        raise ValueError("CTAA execution core kind differs on replay")
+    replay = read_packet_file(packet_path).execute_dual(core)
+    expected = {
+        "state_route": replay.state_route.states.to(torch.uint8).cpu(),
+        "halted": replay.state_route.halted.cpu(),
+        "composed_cards": replay.composed_cards.to(torch.uint8).cpu(),
+        "composed_states": replay.composed_states.to(torch.uint8).cpu(),
+    }
+    if any(not torch.equal(execution[key], value) for key, value in expected.items()):
+        raise ValueError("CTAA execution artifact differs from deterministic replay")
 
 
 def commit_raw_evidence(
@@ -86,6 +186,10 @@ def commit_raw_evidence(
     execution_path: Path | None = None,
     query_predictions_path: Path | None = None,
     answers_path: Path | None = None,
+    query_source_path: Path | None = None,
+    core_checkpoint_path: Path | None = None,
+    packet_path: Path | None = None,
+    hard_query_path: Path | None = None,
 ) -> dict[str, object]:
     if output_dir.exists():
         raise FileExistsError(f"refusing existing CTAA raw-evidence directory: {output_dir}")
@@ -124,6 +228,7 @@ def commit_raw_evidence(
             len(valid_indices),
         )
         execution_sha = sha256_file(execution_path)
+        _verify_execution_replay(execution, packet_path, core_checkpoint_path)
     if query_predictions_path is not None:
         if execution is None or execution_sha is None:
             raise ValueError("CTAA raw-evidence query exists before execution")
@@ -135,9 +240,33 @@ def commit_raw_evidence(
         ):
             raise ValueError("CTAA raw-evidence query binding differs")
     if answers_path is not None:
-        if query is None or execution_sha is None:
+        if query is None or execution_sha is None or hard_query_path is None:
             raise ValueError("CTAA raw-evidence answers exist before late query")
-        answers = _load_answers(answers_path, execution_sha, len(valid_indices))
+        hard_query = read_query_file(hard_query_path)
+        if not torch.equal(hard_query.position, query["positions"]):
+            raise ValueError("CTAA hard-query bytes differ from query prediction")
+        answers = _load_answers(
+            answers_path,
+            execution_sha,
+            sha256_file(hard_query_path),
+            len(valid_indices),
+        )
+        replay_answers = (
+            execution["state_route"][:, -1]
+            .long()
+            .gather(1, hard_query.position.long()[:, None])
+            .squeeze(1)
+            .tolist()
+        )
+        if answers != replay_answers:
+            raise ValueError("CTAA answer artifact differs from deterministic replay")
+    if (
+        query_source_path is not None
+        and query is not None
+        and sha256_file(query_source_path) != query["query_source_sha256"]
+    ):
+        raise ValueError("CTAA raw-evidence query source commitment differs")
+    core_training = _core_training_commitment(core_checkpoint_path, execution)
 
     valid_row = {source_index: row for row, source_index in enumerate(valid_indices)}
     evidence_rows = []
@@ -191,13 +320,25 @@ def commit_raw_evidence(
             "answered_rows": len(valid_indices) if answers is not None else 0,
             "program_predictions_sha256": sha256_file(program_predictions_path),
             "compiler_sha256": program["compiler_sha256"],
+            "program_source_sha256": program["program_source_sha256"],
+            "query_source_sha256": (
+                sha256_file(query_source_path)
+                if query_source_path is not None
+                else (query["query_source_sha256"] if query is not None else None)
+            ),
             "packet_index_sha256": sha256_file(packet_index_path),
             "execution_sha256": execution_sha,
-            "core_sha256": execution["core_sha256"] if execution is not None else None,
-            "core_kind": execution["core_kind"] if execution is not None else None,
+            "core_sha256": (
+                core_training["core_sha256"] if core_training is not None else None
+            ),
+            "core_kind": (
+                core_training["core_kind"] if core_training is not None else None
+            ),
+            "core_training": core_training,
             "query_predictions_sha256": (
                 sha256_file(query_predictions_path) if query_predictions_path is not None else None
             ),
+            "query_positions_sha256": _query_positions_commitment(query),
             "answers_sha256": sha256_file(answers_path) if answers_path is not None else None,
             "evidence_sha256": evidence_sha,
             "oracle_access": 0,
@@ -222,6 +363,10 @@ def main() -> None:
     parser.add_argument("--execution", type=Path)
     parser.add_argument("--query-predictions", type=Path)
     parser.add_argument("--answers", type=Path)
+    parser.add_argument("--query-source-commitment", type=Path)
+    parser.add_argument("--core-checkpoint-commitment", type=Path)
+    parser.add_argument("--packet-commitment", type=Path)
+    parser.add_argument("--hard-query-commitment", type=Path)
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args()
     print(
@@ -232,6 +377,10 @@ def main() -> None:
                 execution_path=args.execution,
                 query_predictions_path=args.query_predictions,
                 answers_path=args.answers,
+                query_source_path=args.query_source_commitment,
+                core_checkpoint_path=args.core_checkpoint_commitment,
+                packet_path=args.packet_commitment,
+                hard_query_path=args.hard_query_commitment,
                 output_dir=args.output_dir,
             ),
             sort_keys=True,

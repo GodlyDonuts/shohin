@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from collections import Counter, defaultdict
 from dataclasses import asdict, dataclass
 import hashlib
 import json
@@ -19,6 +20,7 @@ from pipeline.ctaa_board_v2 import (
     PROGRAM_CLASSES,
     SCORED_DEPTHS,
     CTAAProgramFamilyV2,
+    balanced_renderer_index,
     build_compiler_families,
     build_long_families,
     iter_atomic_exposures,
@@ -117,6 +119,7 @@ def _build_interventions(
     families: tuple[CTAAProgramFamilyV2, ...],
     name_pools: Mapping[str, tuple[str, ...]],
     diagnostics_per_class_depth: int,
+    per_class_depth_cell: int,
 ) -> tuple[
     list[dict[str, object]],
     list[dict[str, object]],
@@ -130,7 +133,7 @@ def _build_interventions(
     relation_counts: CounterLike = CounterLike()
     diagnostic_seen: dict[tuple[str, int, str], int] = {}
     for index, family in enumerate(triple):
-        renderer_index = index % 16
+        renderer_index = balanced_renderer_index(index, per_class_depth_cell)
         try:
             sensitive = make_order_contrast_twin(family)
         except ValueError:
@@ -210,9 +213,24 @@ def _source_audit(
         "CREATE TABLE grams (digest BLOB, partition TEXT, token_ids TEXT, "
         "PRIMARY KEY (digest, partition)) WITHOUT ROWID"
     )
+    all_names = tuple(name for values in name_pools.values() for name in values)
+    dynamic_token_ids = {
+        token_id
+        for name in all_names
+        for token_id in tokenizer.encode(name).ids
+    }
     exact: dict[str, set[str]] = {partition: set() for partition in files}
     lengths: dict[str, list[int]] = {partition: [] for partition in files}
+    kind_lengths: dict[str, dict[str, list[int]]] = {
+        partition: {"program": [], "query": []} for partition in files
+    }
+    cell_kind_lengths: dict[
+        str, dict[str, dict[str, list[int]]]
+    ] = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
     for partition, (program_path, query_path, oracle_path) in files.items():
+        axis_partition = partition.split("_", 1)[0]
+        if axis_partition not in {"train", "development", "confirmation"}:
+            raise ValueError("CTAA source-audit partition differs")
         query_rows = {
             row["family_id"]: row["query_source"]
             for row in (json.loads(line) for line in query_path.read_text().splitlines())
@@ -234,14 +252,26 @@ def _source_audit(
                 exact[partition].add(hashlib.sha256(paired_source.encode()).hexdigest())
                 lexical_axis = (
                     "train"
-                    if partition == "train" or cells[row["family_id"]][2] == "i"
-                    else partition
+                    if axis_partition == "train"
+                    or cells[row["family_id"]][2] == "i"
+                    else axis_partition
                 )
-                for source in (row["program_source"], query_source):
+                for source_kind, source in (
+                    ("program", row["program_source"]),
+                    ("query", query_source),
+                ):
                     ids = tokenizer.encode(source).ids
                     lengths[partition].append(len(ids))
+                    kind_lengths[partition][source_kind].append(len(ids))
+                    if axis_partition != "train":
+                        cell_key = canonical_json(cells[row["family_id"]])
+                        cell_kind_lengths[partition][cell_key][source_kind].append(
+                            len(ids)
+                        )
                     for start in range(max(0, len(ids) - 12)):
                         gram = ids[start : start + 13]
+                        if dynamic_token_ids.isdisjoint(gram):
+                            continue
                         encoded = json.dumps(gram, separators=(",", ":"))
                         pending.append(
                             (
@@ -269,7 +299,6 @@ def _source_audit(
         "SELECT token_ids, COUNT(DISTINCT partition) FROM grams "
         "GROUP BY digest HAVING COUNT(DISTINCT partition) > 1"
     ).fetchall()
-    all_names = tuple(name for values in name_pools.values() for name in values)
     dynamic_leaks = []
     for token_ids, partitions in shared:
         decoded = tokenizer.decode(json.loads(token_ids))
@@ -279,6 +308,23 @@ def _source_audit(
                 break
     connection.close()
     database.unlink()
+    cross_partition_length_match = {
+        source_kind: Counter(kind_lengths["development"][source_kind])
+        == Counter(kind_lengths["confirmation"][source_kind])
+        for source_kind in ("program", "query")
+    }
+    within_partition_cell_length_match: dict[str, dict[str, bool]] = {}
+    for partition in ("development", "confirmation"):
+        within_partition_cell_length_match[partition] = {}
+        for source_kind in ("program", "query"):
+            histograms = [
+                Counter(by_kind[source_kind])
+                for _, by_kind in sorted(cell_kind_lengths[partition].items())
+            ]
+            within_partition_cell_length_match[partition][source_kind] = (
+                len(histograms) == 8
+                and all(histogram == histograms[0] for histogram in histograms[1:])
+            )
     return {
         "exact_source_overlap": overlap_exact,
         "shared_grammar_13grams": len(shared),
@@ -292,10 +338,22 @@ def _source_audit(
             }
             for partition, values in lengths.items()
         },
+        "cross_partition_token_length_histograms_match": (
+            cross_partition_length_match
+        ),
+        "within_partition_factorial_cell_token_length_histograms_match": (
+            within_partition_cell_length_match
+        ),
         "all_gates_pass": (
             all(value == 0 for value in overlap_exact.values())
             and not dynamic_leaks
             and all(max(values) <= 2048 for values in lengths.values())
+            and all(cross_partition_length_match.values())
+            and all(
+                value
+                for partition in within_partition_cell_length_match.values()
+                for value in partition.values()
+            )
         ),
     }
 
@@ -362,7 +420,15 @@ def build_board(
                 per_class_depth_cell=sizes.long_per_class_depth_cell,
             )
             surfaces = [
-                render_family_v2(seed, family, pools, renderer_index=index)
+                render_family_v2(
+                    seed,
+                    family,
+                    pools,
+                    renderer_index=balanced_renderer_index(
+                        index,
+                        sizes.long_per_class_depth_cell,
+                    ),
+                )
                 for index, family in enumerate(families)
             ]
             program_path = temporary / f"{partition}_program.jsonl"
@@ -407,6 +473,7 @@ def build_board(
                 families,
                 pools,
                 sizes.diagnostics_per_class_depth,
+                sizes.long_per_class_depth_cell,
             )
             intervention_program_path = temporary / f"{partition}_intervention_program.jsonl"
             intervention_query_path = temporary / f"{partition}_intervention_query.jsonl"
@@ -438,6 +505,16 @@ def build_board(
                     temporary / "confirmation_program.jsonl",
                     temporary / "confirmation_query.jsonl",
                     temporary / "confirmation_oracle.jsonl",
+                ),
+                "development_intervention": (
+                    temporary / "development_intervention_program.jsonl",
+                    temporary / "development_intervention_query.jsonl",
+                    temporary / "development_intervention_oracle.jsonl",
+                ),
+                "confirmation_intervention": (
+                    temporary / "confirmation_intervention_program.jsonl",
+                    temporary / "confirmation_intervention_query.jsonl",
+                    temporary / "confirmation_intervention_oracle.jsonl",
                 ),
             },
             pools,

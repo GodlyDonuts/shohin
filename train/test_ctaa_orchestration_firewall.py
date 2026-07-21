@@ -4,10 +4,12 @@ import inspect
 import json
 from pathlib import Path
 
+import pytest
 import torch
 
 import orchestrate_ctaa_evaluation as orchestration
 from commit_ctaa_raw_evidence import commit_raw_evidence
+from ctaa_neural_core import ClosureFeatureTransitionCore
 from ctaa_evaluation_io import (
     PROGRAM_PREDICTION_SCHEMA,
     QUERY_PREDICTION_SCHEMA,
@@ -16,9 +18,11 @@ from ctaa_evaluation_io import (
     write_json_once,
     write_torch_once,
 )
-from run_ctaa_packet_executor import EXECUTION_SCHEMA, write_execution_once
+from ctaa_packet_io import read_packet_file, read_query_file
+from run_ctaa_packet_executor import EXECUTION_SCHEMA, load_core, write_execution_once
 from seal_ctaa_late_queries import seal_queries
 from seal_ctaa_program_packets import seal_predictions
+from prepare_ctaa_program_packets import SCHEMA as PREPARED_SCHEMA
 
 
 def _arguments(command: list[str]) -> dict[str, Path]:
@@ -36,41 +40,81 @@ def test_orchestrator_has_no_oracle_surface_and_opens_query_after_execution(tmp_
         path = tmp_path / name
         path.write_bytes(name.encode())
         inputs[name] = path
+    inputs["core"].unlink()
+    core_module = ClosureFeatureTransitionCore().eval()
+    write_torch_once(
+        inputs["core"],
+        {
+            "schema": "ctaa_recurrent_core_v1",
+            "kind": "closure_feature",
+            "state": core_module.state_dict(),
+            "training": {
+                "schema": "r12_ctaa_v2_core_training_v1",
+                "arm": "ctaa_closure",
+                "seed": 31,
+                "atomic_sha256": "1" * 64,
+                "closure_sha256": "2" * 64,
+            },
+        },
+    )
     program_source = tmp_path / "program.jsonl"
     program_source.write_text(json.dumps({"family_id": "f0", "program_source": "program"}) + "\n")
     query_source = tmp_path / "query.jsonl"
     query_source.write_text(json.dumps({"family_id": "f0", "query_source": "query"}) + "\n")
     query_source.chmod(0o600)
+    prepared = tmp_path / "prepared"
+    prepared.mkdir()
+    prepared_predictions = prepared / "program_predictions.pt"
+    prepared_packet = prepared / "program_packets.bin"
+    prepared_index = prepared / "packet_index.json"
+    schedule = torch.zeros((1, 41), dtype=torch.uint8)
+    schedule[:, 1] = 4
+    write_torch_once(
+        prepared_predictions,
+        {
+            "schema": PROGRAM_PREDICTION_SCHEMA,
+            "family_ids": ["f0"],
+            "program_source_sha256": sha256_file(program_source),
+            "compiler_sha256": sha256_file(inputs["compiler"]),
+            "action_cards": torch.zeros((1, 4, 3), dtype=torch.uint8),
+            "initial_state": torch.zeros((1, 3), dtype=torch.uint8),
+            "schedule": schedule,
+            "packet_valid": packet_valid_mask(schedule),
+        },
+    )
+    sealed = seal_predictions(prepared_predictions, prepared_packet, prepared_index)
+    write_json_once(
+        prepared / "preparation_receipt.json",
+        {
+            "schema": PREPARED_SCHEMA,
+            "program_source_sha256": sha256_file(program_source),
+            "compiler_sha256": sha256_file(inputs["compiler"]),
+            "program_predictions_sha256": sha256_file(prepared_predictions),
+            "packet_index_sha256": sha256_file(prepared_index),
+            "packet_sha256": sha256_file(prepared_packet),
+            "valid_rows": sealed["valid_rows"],
+            "invalid_rows": sealed["invalid_rows"],
+            "stages": [],
+            "oracle_access": 0,
+        },
+    )
     stage_names = []
 
-    def fake_run(command: list[str], *, root: Path) -> dict[str, object]:
+    def fake_run(
+        command: list[str],
+        *,
+        root: Path,
+        hidden_board_root: Path | None = None,
+    ) -> dict[str, object]:
         del root
+        assert hidden_board_root == query_source.parent
         script = Path(command[1]).name
         stage_names.append(script)
         args = _arguments(command)
-        if script == "run_ctaa_program_compiler.py":
-            schedule = torch.zeros((1, 41), dtype=torch.uint8)
-            schedule[:, 1] = 4
-            write_torch_once(
-                args["output"],
-                {
-                    "schema": PROGRAM_PREDICTION_SCHEMA,
-                    "family_ids": ["f0"],
-                    "program_source_sha256": sha256_file(program_source),
-                    "compiler_sha256": sha256_file(inputs["compiler"]),
-                    "action_cards": torch.zeros((1, 4, 3), dtype=torch.uint8),
-                    "initial_state": torch.zeros((1, 3), dtype=torch.uint8),
-                    "schedule": schedule,
-                    "packet_valid": packet_valid_mask(schedule),
-                },
-            )
-        elif script == "seal_ctaa_program_packets.py":
-            seal_predictions(args["predictions"], args["packet"], args["index"])
-        elif script == "run_ctaa_packet_executor.py":
+        if script == "run_ctaa_packet_executor.py":
             packet_sha = json.loads((args["packet"].parent / "packet_index.json").read_text())["packet_sha256"]
-            state = torch.zeros((1, 42, 3), dtype=torch.uint8)
-            halted = torch.zeros((1, 42), dtype=torch.bool)
-            halted[:, 2:] = True
+            replay_core, _ = load_core(inputs["core"])
+            trace = read_packet_file(args["packet"]).execute_dual(replay_core)
             write_execution_once(
                 args["output"],
                 {
@@ -78,10 +122,10 @@ def test_orchestrator_has_no_oracle_surface_and_opens_query_after_execution(tmp_
                     "core_kind": "closure_feature",
                     "packet_sha256": packet_sha,
                     "core_sha256": sha256_file(inputs["core"]),
-                    "state_route": state,
-                    "halted": halted,
-                    "composed_cards": state.clone(),
-                    "composed_states": state.clone(),
+                    "state_route": trace.state_route.states.to(torch.uint8),
+                    "halted": trace.state_route.halted,
+                    "composed_cards": trace.composed_cards.to(torch.uint8),
+                    "composed_states": trace.composed_states.to(torch.uint8),
                 },
             )
         elif script == "run_ctaa_query_compiler.py":
@@ -105,22 +149,33 @@ def test_orchestrator_has_no_oracle_surface_and_opens_query_after_execution(tmp_
                 args["output"],
             )
         elif script == "run_ctaa_late_query.py":
+            execution_value = torch.load(
+                args["execution"], map_location="cpu", weights_only=True
+            )
+            position = read_query_file(args["query"]).position
+            answer = int(
+                execution_value["state_route"][0, -1, int(position[0])]
+            )
             write_json_once(
                 args["output"],
                 {
                     "schema": "ctaa_late_query_answer_v1",
                     "execution_sha256": sha256_file(args["execution"]),
                     "query_sha256": sha256_file(args["query"]),
-                    "answers": [0],
+                    "answers": [answer],
                 },
             )
         elif script == "commit_ctaa_raw_evidence.py":
             commit_raw_evidence(
                 program_predictions_path=args["program_predictions"],
                 packet_index_path=args["packet_index"],
-                execution_path=args["execution"],
-                query_predictions_path=args["query_predictions"],
-                answers_path=args["answers"],
+                execution_path=args.get("execution"),
+                query_predictions_path=args.get("query_predictions"),
+                answers_path=args.get("answers"),
+                query_source_path=args["query_source_commitment"],
+                core_checkpoint_path=args["core_checkpoint_commitment"],
+                packet_path=args.get("packet_commitment"),
+                hard_query_path=args.get("hard_query_commitment"),
                 output_dir=args["output_dir"],
             )
         else:
@@ -135,7 +190,7 @@ def test_orchestrator_has_no_oracle_surface_and_opens_query_after_execution(tmp_
         tokenizer=inputs["tokenizer"],
         compiler=inputs["compiler"],
         core=inputs["core"],
-        program_source=program_source,
+        prepared_program_root=prepared,
         query_source=query_source,
         output_root=output,
         device="cpu",
@@ -145,6 +200,63 @@ def test_orchestrator_has_no_oracle_surface_and_opens_query_after_execution(tmp_
     assert stage_names.index("run_ctaa_packet_executor.py") < stage_names.index(
         "run_ctaa_query_compiler.py"
     )
+    assert "run_ctaa_program_compiler.py" not in stage_names
     assert report["oracle_access"] == 0
     assert (output / "raw_evidence" / "evidence.jsonl").exists()
 
+    def fail_late_query(
+        command: list[str],
+        *,
+        root: Path,
+        hidden_board_root: Path | None = None,
+    ) -> dict[str, object]:
+        if Path(command[1]).name == "run_ctaa_late_query.py":
+            raise RuntimeError("injected late-query failure")
+        return fake_run(
+            command,
+            root=root,
+            hidden_board_root=hidden_board_root,
+        )
+
+    monkeypatch.setattr(orchestration, "_run", fail_late_query)
+    partial_output = tmp_path / "partial_evaluation"
+    partial = orchestration.orchestrate(
+        base=inputs["base"],
+        qualified_compiler=inputs["qualified"],
+        tokenizer=inputs["tokenizer"],
+        compiler=inputs["compiler"],
+        core=inputs["core"],
+        prepared_program_root=prepared,
+        query_source=query_source,
+        output_root=partial_output,
+        device="cpu",
+        batch_size=1,
+        python="python3",
+    )
+    partial_row = json.loads(
+        (partial_output / "raw_evidence" / "evidence.jsonl").read_text()
+    )
+    assert partial_row["packet_valid"] is True
+    assert partial_row["answer"] is None
+    assert any(stage.get("succeeded") is False for stage in partial["stages"])
+
+    receipt_path = prepared / "preparation_receipt.json"
+    receipt_path.chmod(0o644)
+    receipt = json.loads(receipt_path.read_text())
+    receipt["program_predictions_sha256"] = "0" * 64
+    receipt_path.write_text(json.dumps(receipt))
+    receipt_path.chmod(0o444)
+    with pytest.raises(ValueError, match="prepared"):
+        orchestration.orchestrate(
+            base=inputs["base"],
+            qualified_compiler=inputs["qualified"],
+            tokenizer=inputs["tokenizer"],
+            compiler=inputs["compiler"],
+            core=inputs["core"],
+            prepared_program_root=prepared,
+            query_source=query_source,
+            output_root=tmp_path / "tampered_evaluation",
+            device="cpu",
+            batch_size=1,
+            python="python3",
+        )

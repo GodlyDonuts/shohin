@@ -28,11 +28,20 @@ from ctaa_trunk_compiler import TrunkCausalCTAACompiler
 
 SCHEMA = "r12_ctaa_v2_resource_profile_v1"
 DUAL_ROUTE_CALLS_PER_ROW = CTAA_MAX_STEPS * 3
+PROFILE_DEPTHS = (1, 16, 32, 39)
 
 
-def _runtime_profile(core, device: torch.device, batch_size: int, repeats: int) -> dict[str, object]:
+def _runtime_profile(
+    core,
+    device: torch.device,
+    batch_size: int,
+    repeats: int,
+    depth: int,
+) -> dict[str, object]:
     if batch_size < 1 or repeats < 1:
         raise ValueError("CTAA runtime profile configuration differs")
+    if depth not in PROFILE_DEPTHS:
+        raise ValueError("CTAA runtime profile depth differs")
     cards = torch.tensor(
         [[[0, 1, 2], [1, 2, 0], [2, 0, 1], [0, 0, 1]]],
         dtype=torch.long,
@@ -40,8 +49,8 @@ def _runtime_profile(core, device: torch.device, batch_size: int, repeats: int) 
     ).expand(batch_size, -1, -1)
     initial = torch.tensor([[0, 1, 2]], dtype=torch.long, device=device).expand(batch_size, -1)
     schedule = torch.zeros((batch_size, CTAA_MAX_STEPS), dtype=torch.long, device=device)
-    schedule[:, 32] = CTAA_ACTION_COUNT
-    schedule[:, 33:] = 3
+    schedule[:, depth] = CTAA_ACTION_COUNT
+    schedule[:, depth + 1 :] = 3
     core = core.to(device).eval()
     with torch.inference_mode():
         for _ in range(3):
@@ -59,6 +68,7 @@ def _runtime_profile(core, device: torch.device, batch_size: int, repeats: int) 
         "device": str(device),
         "batch_size": batch_size,
         "repeats": repeats,
+        "active_depth": depth,
         "milliseconds_per_batch": 1000.0 * elapsed / repeats,
         "rows_per_second": batch_size * repeats / elapsed,
         "peak_allocated_bytes": (
@@ -97,8 +107,20 @@ def profile(
         if device.type == "cuda" and not torch.cuda.is_available():
             raise RuntimeError("CTAA runtime profile requires available CUDA")
         runtime = {
-            "closure_feature": _runtime_profile(treatment, device, batch_size, repeats),
-            "outer_product_control": _runtime_profile(control, device, batch_size, repeats),
+            core_name: {
+                str(depth): _runtime_profile(
+                    core,
+                    device,
+                    batch_size,
+                    repeats,
+                    depth,
+                )
+                for depth in PROFILE_DEPTHS
+            }
+            for core_name, core in (
+                ("closure_feature", treatment),
+                ("outer_product_control", control),
+            )
         }
     report = {
         "schema": SCHEMA,
@@ -135,6 +157,7 @@ def profile(
             "note": "evaluation-only route agreement executes one state call plus two composition-route calls per fixed event",
         },
         "runtime": runtime,
+        "profile_depths": list(PROFILE_DEPTHS),
         "board_seed_generated": False,
         "oracle_access": 0,
         "all_static_gates_pass": (
@@ -173,4 +196,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

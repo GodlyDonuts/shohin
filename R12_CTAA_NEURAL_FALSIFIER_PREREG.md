@@ -164,7 +164,10 @@ Measured against the real raw-300k checkpoint:
 CTAA and OPRC core parameters are exactly equal. Their analytic one-transition
 costs are 215,530 and 215,584 FLOPs, a 54-FLOP or 0.0251% difference. Final
 admission requires measured profiler receipts for forward, backward, optimizer,
-curriculum selection, compiler training, and inference at depths 1/16/32/64.
+curriculum selection, compiler training, and inference at active depths
+1/16/32/39. The packet has 41 event slots and requires both STOP and a poison
+suffix, so 39 is the maximal executable depth; the former depth-64 profiling
+requirement was geometrically impossible.
 Train FLOPs must match within 5%; active and trainable parameters within 0.1%;
 committed state and packet bytes exactly.
 
@@ -233,20 +236,22 @@ remain one statistical cluster.
 | **Total optimization exposures** | **108,800** |
 | Exact atomic audit per semantic axis | 243 |
 | Exact two-action audit per semantic axis | 2,187 |
-| Long per split: `8 cells x 3 classes x 2 depths x 432` | 20,736 |
-| Triple-shift primary interventions: `3 x 2,592` | 7,776 |
+| Long per split: `8 cells x 3 classes x 2 depths x 576` | 27,648 |
+| Triple-shift primary interventions: `3 x 3,456` | 10,368 |
 | Targeted equivalent/prefix/STOP diagnostics: `3 x 6 x 144` | 2,592 |
-| **Long scored total per split** | **31,104** |
+| **Long scored total per split** | **40,608** |
 
 Compiler cards, initial state, schedule, STOP, and late query may be directly
 supervised. Recurrent execution labels are allowed only for atomic and
 two-action rows. No depth above two receives trajectory state, terminal state,
 answer, repair, query-conditioned state, or verifier supervision.
 
-Every class-depth-factorial cell has 432 unique semantic families. This is
-exactly balanced over 16 renderers and all 18 query-position/initial-permutation
-cells. Initial-state symbols are always distinct, preventing action effects
-from disappearing because equal symbols were sampled.
+Every class-depth-factorial cell has 576 unique semantic families. It contains
+exactly two examples in every one of the 288 renderer by
+query-position/initial-permutation cells, eliminating the former parity
+confound between separate 16- and 18-way marginal cycles. Initial-state symbols
+are always distinct, preventing action effects from disappearing because equal
+symbols were sampled.
 
 The three long classes are:
 
