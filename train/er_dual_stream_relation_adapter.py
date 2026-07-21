@@ -67,6 +67,7 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
             self.er_ds_event_opcode_query,
         ):
             nn.init.normal_(parameter, std=0.02)
+        self.opcode_coupling_scale = 1.0
 
     @staticmethod
     def opaque_symbol_starts(
@@ -188,12 +189,13 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
     ) -> torch.Tensor:
         """Marginalize ordered witness routes instead of selecting slots independently.
 
-        A rule record contains one opcode followed by equally sized before and
-        after witness lists. For each possible cardinality, the lattice scores
-        every order-preserving route through the local opaque candidates. Rule
-        records have one extra candidate, so the only latent decision is which
-        candidate to exclude. Declaration records have no extra candidate and
-        remain a matched structural distractor for semantic role assignment.
+        A rule record contains one opcode and equally sized before and after
+        witness lists, but the opcode may occur at any local candidate rank.
+        For each possible cardinality, the lattice scores every order-preserving
+        route through the retained opaque candidates and also requires the
+        complementary candidate to score as the opcode. Declaration records
+        have no extra candidate and remain a matched structural distractor for
+        semantic role assignment.
         """
         records = records.detach()
         token_memory = token_memory.detach()
@@ -208,8 +210,23 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
             ~candidates[:, :, None], torch.finfo(local_logits.dtype).min
         )
 
+        opcode_query = self.er_ds_router_norm(records)[:, :, None]
+        opcode_query = opcode_query + self.er_ds_rule_opcode_query[None, None]
+        opcode_query = self.er_ds_router_query(opcode_query)
+        opcode_logits = torch.einsum(
+            "bpow,bpkw->bpok", opcode_query, keys
+        ).squeeze(2)
+        opcode_logits = opcode_logits.float() / math.sqrt(self.record_width)
+        opcode_logits = opcode_logits.masked_fill(
+            ~candidates, torch.finfo(opcode_logits.dtype).min
+        )
+
         local_probability = self._ordered_route_probability(
-            local_logits, candidates, cardinality_logits
+            local_logits,
+            candidates,
+            cardinality_logits,
+            opcode_logits,
+            opcode_weight=self.opcode_coupling_scale,
         )
 
         physical = torch.zeros(
@@ -238,8 +255,11 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
         local_logits: torch.Tensor,
         candidates: torch.Tensor,
         cardinality_logits: torch.Tensor,
+        opcode_logits: torch.Tensor,
+        *,
+        opcode_weight: float = 1.0,
     ) -> torch.Tensor:
-        """Return differentiable marginals over monotone local witness paths."""
+        """Return marginals over paths that explain one opcode plus witnesses."""
         if local_logits.ndim != 4 or candidates.shape != local_logits.shape[:2] + (
             local_logits.shape[-1],
         ):
@@ -251,6 +271,10 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
             MAX_CARDINALITY - MIN_CARDINALITY + 1,
         ):
             raise ValueError("ordered witness cardinality shape differs")
+        if opcode_logits.shape != candidates.shape:
+            raise ValueError("ordered witness opcode shape differs")
+        if opcode_weight < 0.0:
+            raise ValueError("ordered witness opcode weight is negative")
 
         candidate_rank = candidates.long().cumsum(-1) - 1
         candidate_count = candidates.long().sum(-1)
@@ -285,6 +309,11 @@ class DualStreamRelationCompiler(EpisodicRelationTensorCompiler):
                         ~at_rank, torch.finfo(local_logits.dtype).min
                     )
                     score = score + selected.amax(-1)
+                excluded_at_rank = candidates & candidate_rank.eq(excluded)
+                excluded_opcode = opcode_logits.masked_fill(
+                    ~excluded_at_rank, torch.finfo(opcode_logits.dtype).min
+                )
+                score = score + float(opcode_weight) * excluded_opcode.amax(-1)
                 path_scores.append(score)
             stacked_scores = torch.stack(path_scores, -1)
             stacked_scores = torch.where(

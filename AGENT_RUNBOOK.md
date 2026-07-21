@@ -10618,3 +10618,36 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   files are sealed, confirmation is `0600`, the access directory is empty, and custody is `0/0`.
   Implement/freeze the matched score trainer and independent assessor before drawing one training
   seed or opening development.
+
+- **2026-07-21 00:02--01:24** -- **Ordinal-route fresh v1 is formally rejected and its exact
+  compiler defect is localized without opening confirmation.** Scientific source `e0d4d57a...`,
+  training seed `5499768532556522119`, and sole job `695002` completed on H100 `evc47` in 47m34s.
+  Treatment packet/relation/joint is 1,558/2,048 = 76.074%, state 85.400%, answer 90.527%, and
+  complete witness pointers 50.000%; family-deranged/equality-ablated joint remain 58.643%/58.545%,
+  so the frozen advantage and negative-control gates fail. Source-free joint is zero and all packet
+  interventions are exact/effective. Opcode-first witness renderers and `N=5..6` semantics are
+  100%; opcode-middle renderers are 52.148% joint and `N=3..4` are 51.953%/52.344%. Immutable raw
+  pointer evidence shows the route lattice excludes an endpoint rather than the middle opcode:
+  after-slot zero selects the opcode on every active `N=4..6` opcode-middle rule. This follows the
+  v1.2 path score, which scores retained witnesses but never scores the excluded candidate as the
+  opcode. Executor/state/halt/query logic is not the measured bottleneck. Alpha/distractor/rule/full
+  reindex invariance is 82.715%/88.184%/99.365%/98.535%. Checkpoint/evidence/report/assessment hashes
+  are `01cbaa8c...`/`ad60a5d0...`/`5e54a559...`/`ddd607f3...`; exact local mirrors match Newton.
+  Custody is `1/0`; never rescore this board or open its confirmation. The only admitted next repair
+  is a train-only complement-coupled opcode/witness lattice that positively scores the excluded
+  candidate with the existing model-owned opcode query before any new fresh board.
+
+- **2026-07-21 01:24--01:58** -- **Opcode-coupled ordinal route v1.3 is locally admitted before
+  source freeze or seed draw.** Each candidate-exclusion path now scores both its retained ordered
+  witnesses and the existing model-owned rule-opcode score on the complementary candidate. This adds
+  zero parameters and leaves the complete/trainable/headroom certificate at
+  185,532,296/11,129,504/14,467,704 with a parameter-free motor/reader. The train-only canary freezes
+  equal-budget coupled and exact legacy-uncoupled arms from byte-identical v1.2 initialization,
+  10,000 fit plus 2,000 family-disjoint probe families, and four deterministic complementary-coset
+  opcode-relocation twins per probe family. Coupled primary and every renderer/cardinality cell must
+  be >=99%, eight-view semantic relocation plus alpha/distractor invariance must be exact, source-free
+  joint <=10%, and coupled must beat legacy by >=20pp while legacy stays <=80%. Fourteen direct
+  mechanism/canary tests and 33 broader source-only tests pass; Ruff, byte compilation, shell syntax,
+  and diff checks pass. The sole broader failure is the inherited actual-parent integration fixture
+  whose large witness checkpoint is absent locally; verify it in a clean Newton capsule before any
+  seed or job. No development/confirmation byte is read and the closed v1 board remains `1/0`.

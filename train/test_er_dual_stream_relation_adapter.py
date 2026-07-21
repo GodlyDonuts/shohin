@@ -183,9 +183,12 @@ def test_ordered_witness_lattice_learns_opcode_exclusion_and_preserves_order() -
     with torch.no_grad():
         for ordinal, slot in enumerate(active_slots):
             logits[0, 0, slot, candidate_positions[ordinal + 1]] = 8.0
+    opcode = torch.zeros(1, 1, 13, requires_grad=True)
+    with torch.no_grad():
+        opcode[0, 0, candidate_positions[0]] = 8.0
     cardinality = torch.tensor([[8.0, -8.0, -8.0, -8.0]])
     probability = DualStreamRelationCompiler._ordered_route_probability(
-        logits, candidates, cardinality
+        logits, candidates, cardinality, opcode
     )
     selected = probability[0, 0, list(active_slots)].argmax(-1)
     assert torch.equal(selected, candidate_positions[1:])
@@ -197,6 +200,37 @@ def test_ordered_witness_lattice_learns_opcode_exclusion_and_preserves_order() -
     loss = -probability[0, 0, list(active_slots), candidate_positions[1:]].log().mean()
     loss.backward()
     assert logits.grad is not None and bool(logits.grad.abs().gt(0).any())
+    assert opcode.grad is not None and bool(opcode.grad.abs().gt(0).any())
+
+
+def test_ordered_witness_lattice_explains_middle_opcode_as_complement() -> None:
+    logits = torch.zeros(1, 1, 2 * MAX_CARDINALITY, 13)
+    candidates = torch.zeros(1, 1, 13, dtype=torch.bool)
+    candidate_positions = torch.arange(0, 13, 2)
+    candidates[0, 0, candidate_positions] = True
+    active_slots = (0, 1, 2, 6, 7, 8)
+    for ordinal, slot in enumerate(active_slots):
+        logits[0, 0, slot, candidate_positions[ordinal + 1]] = 1.0
+    opcode = torch.zeros(1, 1, 13)
+    opcode[0, 0, candidate_positions[3]] = 20.0
+    cardinality = torch.tensor([[20.0, -20.0, -20.0, -20.0]])
+    probability = DualStreamRelationCompiler._ordered_route_probability(
+        logits, candidates, cardinality, opcode
+    )
+    expected = torch.cat((candidate_positions[:3], candidate_positions[4:]))
+    assert torch.equal(
+        probability[0, 0, list(active_slots)].argmax(-1), expected
+    )
+    uncoupled = DualStreamRelationCompiler._ordered_route_probability(
+        logits,
+        candidates,
+        cardinality,
+        opcode,
+        opcode_weight=0.0,
+    )
+    assert not torch.equal(
+        uncoupled[0, 0, list(active_slots)].argmax(-1), expected
+    )
 
 
 def test_ordered_witness_lattice_maps_direct_candidate_sequence_exactly() -> None:
@@ -205,8 +239,9 @@ def test_ordered_witness_lattice_maps_direct_candidate_sequence_exactly() -> Non
     candidate_positions = torch.tensor([0, 2, 4, 6, 8, 10])
     candidates[0, 0, candidate_positions] = True
     cardinality = torch.tensor([[8.0, -8.0, -8.0, -8.0]])
+    opcode = torch.randn(1, 1, 12)
     probability = DualStreamRelationCompiler._ordered_route_probability(
-        logits, candidates, cardinality
+        logits, candidates, cardinality, opcode
     )
     active_slots = (0, 1, 2, 6, 7, 8)
     assert torch.equal(

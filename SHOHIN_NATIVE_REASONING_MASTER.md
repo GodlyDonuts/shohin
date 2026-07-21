@@ -310,11 +310,40 @@ Source `627b6c3d` precedes derivation SHA `d6b8fae4...` and signed-safe board
 seed `6249020340651282430`. Mac and clean-capsule CPU job `694938` build every
 file byte-identically. Train/development/confirmation/report hashes begin
 `ce47a5b8`/`086d5784`/`508e583b`/`6b0a011c`; confirmation is `0600`, the access
-directory is empty, and custody is `0/0`. All 52,096 rows parse, execute, and
+directory was empty before scoring. All 52,096 rows parse, execute, and
 survive distractor rotation exactly; every family is non-bijective and
-deranged/equality state is 8.139%/7.939%. No neural scored read exists.
+deranged/equality state is 8.139%/7.939%.
 
-**Last updated:** 2026-07-20 23:58 EDT. User authority requires every future
+Frozen score source `e0d4d57a` precedes training seed
+`5499768532556522119`; sole H100 job `695002` rejects ordinal-route fresh v1.
+Treatment packet/state/answer/joint is 76.074%/85.400%/90.527%/76.074%, while
+family-deranged/equality-ablated joint remains 58.643%/58.545%. Source-free
+joint is zero and every eligible packet intervention executes exactly, so
+identity is necessary and the source-deleted executor works conditional on the
+compiled packet. The failure is sharply compiler-localized: both opcode-first
+witness renderers and all `N=5..6` semantic packets are 100%, while both
+opcode-middle renderers are 52.148% joint and `N=3..4` are 51.953%/52.344%.
+Hard witness pointers are 50% because the ordinal lattice systematically puts
+after-slot zero on the middle opcode. Its path score never rewards the excluded
+candidate for being the opcode, leaving an endpoint-exclusion degeneracy.
+Checkpoint/evidence/report/assessment hashes begin `01cbaa8c`/`ad60a5d0`/
+`5e54a559`/`ddd607f3`; local mirrors match. Custody is `1/0`; confirmation is
+sealed and this board is closed. The only admitted repair couples the existing
+model-owned opcode score to the excluded candidate in a train-only lattice
+qualification before any new fresh board. Full result:
+`R12_ER_DUAL_STREAM_FRESH_SCORE_RESULT.md`.
+
+The pre-freeze v1.3 repair is now implemented as a complement-coupled
+opcode/witness lattice with zero added parameters. Its train-only contract fits
+coupled and exact legacy-uncoupled arms from byte-identical initialization,
+then probes 2,000 disjoint training families in both the four original and four
+opcode-relocated renderer compositions. Advancement requires >=99% overall and
+per-cell transfer, exact eight-view/alpha/distractor invariance, source-free
+joint <=10%, and a >=20-point win over legacy. This is the direct
+pointer-grounded, phase-separated compiler repair suggested by the external
+frontier-plan review; no new board, seed, or score exists yet.
+
+**Last updated:** 2026-07-21 01:24 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2856,6 +2885,8 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Marginal-route v1.1 job `694909` completed in 9m06s: oracle transport and full alpha invariance are 8,000/8,000; learned packet/relation/joint is 90.938%, state 97.062%, answer 98.537%, and complete witness pointers 89.925%. The witness gate misses by six rows, so v1.1 is formally rejected with custody `1/0/0`. Every before pointer is exact and each of 806 failed rows has one after-pointer error. Ordinal-route v1.2 is locally admitted pre-seed: cardinality-marginalized monotone paths with model-scored opcode exclusion, unchanged 185,532,296 parameters and thresholds. Fifteen focused tests plus actual-parent real-family gradient isolation pass; no v1.2 commit, seed, job, or scored access exists. |
 | 2026-07-20 | Ordinal-route v1.2 source `c0d3d372`, seed `1790361034717866861`, and sole H100 job `694930` pass all 11 train-only gates: every one of 8,000 packets, states, answers, joints, fields, pointers, alpha recodes, and oracle transports is exact across all cardinalities/depths/renderers. Parameters remain 185,532,296 and custody is `1/0/0`; artifact hashes begin `99be7b89`/`c08e3840`/`6cc31e67`. The separately implemented seedless fresh-board path puts all names/distractors in one namespace and holds out renderer compositions. Five fixture tests plus a full 52,096-row barred-seed dry build pass every gate, including exact distractor invariance and low deranged/equality controls. No production board seed or scored read exists. |
 | 2026-07-20 | Fresh-board source `627b6c3d`, signed-safe seed `6249020340651282430`, and CPU-only Newton reproduction job `694938` admit the neutral-distractor board. Mac/Newton train/development/confirmation/report hashes match at `ce47a5b8`/`086d5784`/`508e583b`/`6b0a011c`. All 52,096 rows parse/execute and survive distractor rotation; renderer/name/family/prompt overlap is zero, every family is non-bijective, controls remain low, confirmation is `0600`, and custody is `0/0`. No score-bearing trainer commit, training seed, development read, or confirmation read exists. |
+| 2026-07-21 | Rejected ordinal-route fresh v1 after its sole development read: treatment packet/joint 76.074%, state 85.400%, answer 90.527%, versus 58.643%/58.545% control joint. Source-free joint is zero and all packet interventions are exact. Opcode-first renderers and `N=5..6` semantics are exact; opcode-middle renderers and `N=3..4` collapse near 52%. Immutable pointer evidence identifies an unscored-exclusion degeneracy: after-slot zero selects the middle opcode. Confirmation remains sealed at custody `1/0`; next is a train-only opcode-coupled lattice repair, not more executor capacity. |
+| 2026-07-21 | Implemented pre-freeze opcode-coupled v1.3 with zero added parameters. A frozen train-only gate will compare coupled and exact legacy lattices from identical initialization on 10,000 fit / 2,000 probe families plus complementary-coset opcode-relocation twins. It requires >=99% per renderer/cardinality, exact semantic/alpha/distractor invariance, source-free collapse, and >=20pp causal advantage before any new board. |
 
 ---
 

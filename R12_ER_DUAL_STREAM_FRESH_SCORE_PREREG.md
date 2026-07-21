@@ -1,6 +1,7 @@
 # R12 ER-TT Ordinal-Route Fresh Score Preregistration
 
-**Status:** pre-source-freeze; development and confirmation remain unopened
+**Status:** closed negative after one development read; confirmation remains
+unopened. See `R12_ER_DUAL_STREAM_FRESH_SCORE_RESULT.md`.
 
 **Qualified initialization:** ordinal-route v1.2 train-only checkpoint SHA-256
 `99be7b89e0b7dfe35f745abf1320c6640ad61f2fb62624b288fb8f9502cd97e7`
