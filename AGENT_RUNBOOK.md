@@ -352,10 +352,21 @@
 > 3,240 witness-failed rows, including up to six errors per row, with adjacent ordinal swaps
 > concentrated in cardinality four through six. Endpoint ordinal embedding norm grew to 8.64 and
 > adjacent ordinal rows 6/7 have cosine 0.878, while count embedding norm is 2.02. The repair learned
-> a count-conditioned positional shortcut and is closed. The active read-only diagnostic scales
-> only the frozen endpoint's ordinal/count embeddings on the already consumed train probe; it has
-> no optimizer or scored-split path and cannot authorize promotion. Use its result only to decide
-> whether a distinct factorized residual-bias route is justified.
+> a count-conditioned positional shortcut and is closed. Read-only scale-audit job `694932`
+> completed on `evc36` in 3m31s; report SHA is `d958cc05...`. Zeroing ordinal gives 0% witness rows,
+> zeroing count gives 0.4875%, and increasing frozen ordinal scale from 1.0 to 1.5 improves witness/
+> joint from 59.500%/60.9125% to 70.425%/69.3875%. Both signals are necessary, but embedding them
+> inside structural memory is the confound. The admitted successor leaves all structural logits
+> unchanged and adds only a centered/bounded `14 x 12 x 14` count/semantic-role/ordinal residual
+> with twelve zero-initialized role gates to witness logits. It adds 2,364 scalars for 185,534,660
+> complete / 11,131,868 trainable / 14,465,340 headroom, never initializes from failed canaries,
+> and preserves every v1.1 data,
+> optimizer, threshold, and custody gate. Twenty-four focused tests pass, including exact zero-
+> gate equivalence, non-witness isolation under nonzero bias, real-row alpha invariance, complete
+> real-parent gradient coverage, zero excluded-parent leakage, and proof that all four matched arms
+> finish fitting and are atomically checkpointed before the train-only probe is scored. The frozen
+> score path includes same-seed same-parameter baseline, structural-only, and shuffled-address
+> controls; treatment needs at least +0.5pp witness rows over baseline and shuffled-address.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10582,3 +10593,22 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `/lustre/fs1/home/sa305415/shohin_runs/er_dual_stream_marginal_4412270997190025241`.
   Development/confirmation access remains `0/0`; no score or output artifact exists. Do not submit
   a duplicate while `694909` is pending or running.
+
+- **2026-07-20 21:55--23:59** -- **Marginal routing nearly passes, its entangled address repair is
+  rejected, and a distinct factorized residual route is locally qualified before source freeze.**
+  Marginal job `694909` reaches 90.9375% packet/joint/relation, 97.0625% state, 98.5375% answer,
+  exact alpha/oracle-route controls, and 89.925% complete witness rows, missing only the frozen 90%
+  witness gate. All 806 failed rows have one wrong occurrence. Occurrence-addressed job `694928`
+  falls to 59.500% witness and 60.9125% joint; read-only scale audit `694932` shows both count and
+  ordinal are necessary but increasing ordinal scale does not recover the endpoint, closing the
+  shared-memory embedding repair. The admitted successor leaves parent content/structural logits
+  unchanged and adds only a centered, bounded count/role/ordinal residual to witness logits behind
+  twelve exact-zero gates. Four identical-initialization/equal-budget arms are frozen: treatment,
+  residual-disabled baseline, content-disabled structural-only, and physical-record-rotated address
+  control. Every arm fits the same 40,000 training rows for 2,500 updates and is atomically saved
+  before the disjoint 8,000-row train probe is scored. Attribution requires treatment witness rows
+  to beat baseline and shuffled address by at least 0.5pp in addition to every unchanged absolute,
+  alpha, oracle-route, custody, and strict-sub-200M gate. Complete/trainable/new parameter counts are
+  185,534,660 / 11,131,868 / 2,364. Twenty-four focused tests, Ruff, formatting, byte compilation,
+  shell syntax, and diff checks pass. No source commit, post-commit seed, H100 job, or new probe read
+  exists yet.

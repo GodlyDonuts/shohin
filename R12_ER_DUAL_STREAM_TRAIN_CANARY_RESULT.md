@@ -222,3 +222,46 @@ The architecture/version is closed. A post-hoc scale ablation may read this
 same consumed training probe solely to separate ordinal dominance from count
 interaction. It has no optimizer and cannot authorize a fresh board, promotion,
 or any reasoning claim.
+
+## Closed-checkpoint scale audit
+
+Read-only H100 job `694932` evaluates the immutable addressed endpoint on the
+same consumed probe with no optimizer. Report SHA-256 is
+`d958cc0507fe85a489a3b85368f52ed67cfda6caf9fc5efc8d686216f28f6934`.
+
+| Ordinal scale | Count scale | Witness | Joint | Relation |
+|---:|---:|---:|---:|---:|
+| 0.00 | 1.00 | 0.000% | 0.200% | 0.400% |
+| 0.25 | 1.00 | 1.1875% | 1.7125% | 9.075% |
+| 0.50 | 1.00 | 12.1125% | 21.150% | 21.1625% |
+| 0.75 | 1.00 | 34.225% | 40.7125% | 40.7875% |
+| 1.00 | 1.00 | 59.500% | 60.9125% | 60.9125% |
+| 1.50 | 1.00 | 70.425% | 69.3875% | 73.100% |
+| 1.00 | 0.00 | 0.4875% | 3.275% | 3.275% |
+| 0.00 | 0.00 | 0.000% | 0.275% | 0.3125% |
+
+Ordinal and count information are both necessary, and stronger ordinal signal
+helps rather than hurts. The failure comes from combining those embeddings with
+structural record/token memory before the shared key projection, not simply
+from excessive positional magnitude.
+
+## Factorized witness-route successor
+
+The distinct successor preserves the v1.1 structural dot-product logits and
+adds a centered/bounded `14 x 12 x 14` residual with twelve zero-initialized
+role gates only to witness routes. Its
+indices are record candidate count, semantic witness role, and candidate
+ordinal. The route has 2,364 learned scalars; all non-witness routes are
+unchanged even when the table is nonzero. Complete/trainable/headroom is
+185,534,660 / 11,131,868 / 14,465,340.
+
+It starts from the reconstructed confirmed parent, never either rejected
+canary. The old train-only data, 2,500-update budget, optimizer, thresholds,
+alpha/oracle controls, and `1/0/0` custody remain exact. Twenty-four focused
+tests plus Ruff, byte compilation, shell syntax, real-row alpha invariance,
+real-parent gradient coverage, and zero excluded leakage pass before source
+freeze. All four same-seed arms fit and are atomically checkpointed before the
+probe is scored: treatment, residual-disabled baseline, content-disabled
+structural-only, and physical-record-rotated shuffled-address. Treatment must
+beat baseline and shuffled address by at least +0.5pp witness rows. Failure
+closes the route; passing authorizes only a fresh-board test.
