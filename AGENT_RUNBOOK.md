@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 23:47 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 23:58 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -332,12 +332,16 @@
 > 1--12, every renderer, non-bijective rows, oracle transport, and complete neutral-alpha
 > invariance are all **8,000/8,000 exact**. The confirmed parent is unchanged, the exact system
 > remains 185,532,296 parameters, and custody is `1/0/0`. Checkpoint/evidence/report SHA-256 begin
-> `99be7b89...`/`c08e3840...`/`6cc31e67...`; read-only local mirrors match Newton. This authorizes
-> only a separately frozen fresh neutral-namespace distractor board. Its seedless builder now
-> passes five focused tests and a full 52,096-row barred-seed dry falsifier: maximum source/line is
-> 627/97, distractor rotation is 52,096/52,096 semantically exact, all 13,024 families are
-> non-bijective, and deranged/equality controls are 8.185%/7.878%. No production board source
-> commit, board seed, development read, or confirmation read exists yet.
+> `99be7b89...`/`c08e3840...`/`6cc31e67...`; read-only local mirrors match Newton. The separately
+> frozen fresh-board source `627b6c3d...` precedes derivation SHA `d6b8fae4...`, raw value
+> `15472392377506058238`, and signed-safe seed `6249020340651282430`. Mac and clean-capsule Newton
+> CPU job `694938` independently build all four files byte-identically. Train/development/
+> confirmation/report hashes begin `ce47a5b8...`/`086d5784...`/`508e583b...`/`6b0a011c...`;
+> confirmation is mode `0600`, access is empty, and custody is `0/0`. All 52,096 rows public-parse
+> and execute; source/line maxima are 627/97, distractor rotation is 52,096/52,096 exact, every
+> family is non-bijective, and deranged/equality controls are 8.139%/7.939%. The board is admitted
+> only for separately frozen score-source implementation. No neural development or confirmation
+> read exists.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10601,3 +10605,16 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   distractor invariance, 100% non-bijective families, and 8.185%/7.878% deranged/equality state.
   Freeze/push the board source before deriving one production board seed; development and
   confirmation remain `0/0`.
+
+- **2026-07-20 23:47--23:58** -- **The ordinal-route neutral-distractor production board is
+  independently reproduced and admitted.** Exact source `627b6c3d97a885017041aacb5971874680e1b289`
+  was pushed before derivation label `r12-er-dual-stream-fresh-board-v1`, SHA-256 `d6b8fae4...`, raw
+  value `15472392377506058238`, and signed-safe seed `6249020340651282430`. The Mac build and
+  clean-capsule CPU-only Newton job `694938` produce byte-identical train/development/confirmation/
+  report files with SHA-256 `ce47a5b8...`/`086d5784...`/`508e583b...`/`6b0a011c...`. All gates pass:
+  exact 48,000/2,048/2,048 rows; zero split overlap; disjoint renderer cosets; one neutral namespace;
+  627/97-byte maxima; 52,096/52,096 public parser/executor and distractor-swap invariance; every
+  family non-bijective; and family-deranged/equality-ablated state 8.139%/7.939%. Newton immutable
+  files are sealed, confirmation is `0600`, the access directory is empty, and custody is `0/0`.
+  Implement/freeze the matched score trainer and independent assessor before drawing one training
+  seed or opening development.

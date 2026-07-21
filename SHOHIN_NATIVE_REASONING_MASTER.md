@@ -306,12 +306,15 @@ custody is `1/0/0`; checkpoint/evidence/report hashes begin
 `99be7b89`/`c08e3840`/`6cc31e67`. This authorizes only a separately frozen fresh
 board. Its seedless v2 builder uses one `z.....` namespace, disjoint renderer
 cosets, exact ordinal candidate counts, and inactive/event/query distractors.
-Five fixture tests and a full 52,096-row barred-seed dry build pass every gate:
-627/97-byte maxima, 52,096/52,096 distractor invariance, all families non-
-bijective, and 8.185%/7.878% deranged/equality state. No production board seed
-or scored read exists.
+Source `627b6c3d` precedes derivation SHA `d6b8fae4...` and signed-safe board
+seed `6249020340651282430`. Mac and clean-capsule CPU job `694938` build every
+file byte-identically. Train/development/confirmation/report hashes begin
+`ce47a5b8`/`086d5784`/`508e583b`/`6b0a011c`; confirmation is `0600`, the access
+directory is empty, and custody is `0/0`. All 52,096 rows parse, execute, and
+survive distractor rotation exactly; every family is non-bijective and
+deranged/equality state is 8.139%/7.939%. No neural scored read exists.
 
-**Last updated:** 2026-07-20 23:47 EDT. User authority requires every future
+**Last updated:** 2026-07-20 23:58 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2852,6 +2855,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Froze/pushed marginal-route v1.1 at `8419c74e` before derivation SHA `3d3b8918...` and seed `4412270997190025241`. A clean exact Newton capsule passes source cleanliness and `sbatch --test-only`; sole train-only H100 job `694909` is pending resources because all normal H100 GRES were allocated. Output is isolated, the job accepts no scored split, development/confirmation custody is `0/0`, and no result exists yet. |
 | 2026-07-20 | Marginal-route v1.1 job `694909` completed in 9m06s: oracle transport and full alpha invariance are 8,000/8,000; learned packet/relation/joint is 90.938%, state 97.062%, answer 98.537%, and complete witness pointers 89.925%. The witness gate misses by six rows, so v1.1 is formally rejected with custody `1/0/0`. Every before pointer is exact and each of 806 failed rows has one after-pointer error. Ordinal-route v1.2 is locally admitted pre-seed: cardinality-marginalized monotone paths with model-scored opcode exclusion, unchanged 185,532,296 parameters and thresholds. Fifteen focused tests plus actual-parent real-family gradient isolation pass; no v1.2 commit, seed, job, or scored access exists. |
 | 2026-07-20 | Ordinal-route v1.2 source `c0d3d372`, seed `1790361034717866861`, and sole H100 job `694930` pass all 11 train-only gates: every one of 8,000 packets, states, answers, joints, fields, pointers, alpha recodes, and oracle transports is exact across all cardinalities/depths/renderers. Parameters remain 185,532,296 and custody is `1/0/0`; artifact hashes begin `99be7b89`/`c08e3840`/`6cc31e67`. The separately implemented seedless fresh-board path puts all names/distractors in one namespace and holds out renderer compositions. Five fixture tests plus a full 52,096-row barred-seed dry build pass every gate, including exact distractor invariance and low deranged/equality controls. No production board seed or scored read exists. |
+| 2026-07-20 | Fresh-board source `627b6c3d`, signed-safe seed `6249020340651282430`, and CPU-only Newton reproduction job `694938` admit the neutral-distractor board. Mac/Newton train/development/confirmation/report hashes match at `ce47a5b8`/`086d5784`/`508e583b`/`6b0a011c`. All 52,096 rows parse/execute and survive distractor rotation; renderer/name/family/prompt overlap is zero, every family is non-bijective, controls remain low, confirmation is `0600`, and custody is `0/0`. No score-bearing trainer commit, training seed, development read, or confirmation read exists. |
 
 ---
 

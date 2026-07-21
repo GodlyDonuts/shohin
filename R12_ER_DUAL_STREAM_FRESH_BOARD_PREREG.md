@@ -1,6 +1,6 @@
 # R12 ER-TT Dual-Stream Fresh Board Preregistration
 
-**Status:** seedless builder qualified; no production board seed or scored read
+**Status:** production board admitted and independently reproduced; no scored read
 
 **Qualified mechanism:** ordinal-route v1.2 source
 `c0d3d37218b0c65ba6c1baf7722d7381ee3be92e`
@@ -85,6 +85,10 @@ passes every gate:
   passes.
 
 Fixture seed `104729` is permanently barred from production.
+
+The subsequently frozen source, seed derivation, immutable file hashes, and
+production gate result are recorded in
+`R12_ER_DUAL_STREAM_FRESH_BOARD_RECEIPT.md`.
 
 ## 7. Production admission
 
