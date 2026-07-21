@@ -313,9 +313,13 @@ same train-only split, update budget, gates, and zero scored-split custody and
 starts from the confirmed parent, never a failed canary. Twenty-two focused
 tests plus Ruff, byte compilation, shell syntax, real-row alpha invariance,
 real-parent backward coverage, and excluded-state isolation pass before source
-freeze. No addressed-route source commit, seed, H100 job, or score exists yet.
+freeze. Exact source `7601625f` was pushed before drand round `6305746` and
+randomness `611f201f...`; canonical payload/derivation hashes begin
+`8884bfe6`/`c24770ac`, producing seed `4775909816533321494`. A clean exact
+capsule and training-only data view passed `sbatch --test-only`. Sole H100 job
+`694928` is running on `evc36`; no score exists yet.
 
-**Last updated:** 2026-07-20 23:04 EDT. User authority requires every future
+**Last updated:** 2026-07-20 23:05 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2569,7 +2573,7 @@ used directly, transitively, or newly added in the current frontier run.
 The source records begin after the maintenance protocol and are labeled by
 stable filenames. Local links are converted to portable in-dossier labels.
 
-Embedded research sources: 177 files, 1,534,126 source bytes.
+Embedded research sources: 251 files, 1,930,917 source bytes.
 
 Operational boundary: the full operational runbook remains intentionally
 distilled rather than copied verbatim. Its custody, checkpoint, training,
@@ -2578,11 +2582,39 @@ ledger; credential-handling and live-operational instructions are excluded.
 
 ### New frontier records included in this update
 
-- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_2_RESULT.md` — current result,
-  linked here but not yet embedded in this upload snapshot
 - `FRONTIER_AGENT_PLANS.md` — embedded in Appendix A
 - `FRONTIER_AGENT_PLANS_ANALYSIS.md` — embedded in Appendix A
+- `FRONTIER_NOMINAL_GRAPH_REWRITE_MACHINE_PLAN.md` — embedded in Appendix A
+- `FRONTIER_S9_ARCHITECTURE_PROPOSAL.md` — embedded in Appendix A
+- `FRONTIER_S9_TO_GENERAL_REASONING_ANALYSIS.md` — embedded in Appendix A
+- `R12_CAUSAL_GRAMMAR_FIREWALL_PLAN.md` — embedded in Appendix A
 - `R12_CROSS_DOMAIN_FAULT_CHANNEL_REVIEW_RESULT.md` — embedded in Appendix A
+- `R12_ER_ADDRESSED_MARGINAL_ROUTE_PREREG.md` — embedded in Appendix A
+- `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md` — embedded in Appendix A
+- `R12_ER_CST_FRESH_BOARD_PREREG.md` — embedded in Appendix A
+- `R12_ER_CST_FRESH_BOARD_PREREG_AMENDMENT_V1_1.md` — embedded in Appendix A
+- `R12_ER_CST_FRESH_BOARD_PREREG_AMENDMENT_V1_2.md` — embedded in Appendix A
+- `R12_ER_CST_FRESH_BOARD_RESULT.md` — embedded in Appendix A
+- `R12_ER_CST_FRESH_BOARD_V1_2_RESULT.md` — embedded in Appendix A
+- `R12_ER_CST_NEURAL_ADAPTER_PREREG.md` — embedded in Appendix A
+- `R12_ER_CST_NEURAL_ADAPTER_PREREG_AMENDMENT_V1_1.md` — embedded in Appendix A
+- `R12_ER_CST_NEURAL_ADAPTER_PREREG_AMENDMENT_V1_2.md` — embedded in Appendix A
+- `R12_ER_CST_RULE_CARD_CPU_RESULT.md` — embedded in Appendix A
+- `R12_ER_CST_TRAINING_PREREG.md` — embedded in Appendix A
+- `R12_ER_CST_V1_RESULT.md` — embedded in Appendix A
+- `R12_ER_CST_WITNESS_EQUALITY_BUS_PREREG.md` — embedded in Appendix A
+- `R12_ER_CST_WITNESS_EQUALITY_BUS_RESULT.md` — embedded in Appendix A
+- `R12_ER_CST_WITNESS_EQUALITY_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_ER_CST_WITNESS_EQUALITY_CONFIRMATION_RESULT.md` — embedded in Appendix A
+- `R12_ER_DUAL_STREAM_RELATION_REPAIR_PREREG.md` — embedded in Appendix A
+- `R12_ER_DUAL_STREAM_TRAIN_CANARY_RESULT.md` — embedded in Appendix A
+- `R12_ER_RELATION_TENSOR_ADAPTER_PREREG.md` — embedded in Appendix A
+- `R12_ER_RELATION_TENSOR_BOARD_PREREG.md` — embedded in Appendix A
+- `R12_ER_RELATION_TENSOR_BOARD_RECEIPT.md` — embedded in Appendix A
+- `R12_ER_RELATION_TENSOR_RESULT.md` — embedded in Appendix A
+- `R12_ER_RELATION_TENSOR_SCORE_PREREG.md` — embedded in Appendix A
+- `R12_ER_RELATION_TENSOR_TRANSPORT_CPU_RESULT.md` — embedded in Appendix A
+- `R12_ER_RELATION_TENSOR_TRANSPORT_THEORY.md` — embedded in Appendix A
 - `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_PREREG.md` — embedded in Appendix A
 - `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_RESULT.md` — embedded in Appendix A
 - `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_V1_1_PREREG.md` — embedded in Appendix A
@@ -2626,8 +2658,6 @@ ledger; credential-handling and live-operational instructions are excluded.
 - `R12_S3_POINTER_ANCHOR_CONFIRMATION_RESULT.md` — embedded in Appendix A
 - `R12_S3_POINTER_ANCHOR_PREREG.md` — embedded in Appendix A
 - `R12_S3_POINTER_ANCHOR_RESULT.md` — embedded in Appendix A
-- `R12_S4_SELF_DELIMITING_EVENT_TAPE_PREREG.md` — embedded in Appendix A
-- `R12_VAMT_V3_REVIEW_RESULT.md` — embedded in Appendix A
 - `R12_S4_EVENT_RELATIVE_POINTER_PREREG.md` — embedded in Appendix A
 - `R12_S4_EVENT_RELATIVE_POINTER_RESULT.md` — embedded in Appendix A
 - `R12_S4_HARD_ISLAND_SOFT_INTERFACE_PREREG.md` — embedded in Appendix A
@@ -2635,6 +2665,7 @@ ledger; credential-handling and live-operational instructions are excluded.
 - `R12_S4_MONOTONE_EVENT_REGION_PREREG.md` — embedded in Appendix A
 - `R12_S4_MONOTONE_EVENT_REGION_RESULT.md` — embedded in Appendix A
 - `R12_S4_POINTER_ANCHORED_EVENT_TAPE_REPAIR.md` — embedded in Appendix A
+- `R12_S4_SELF_DELIMITING_EVENT_TAPE_PREREG.md` — embedded in Appendix A
 - `R12_S4_SELF_DELIMITING_EVENT_TAPE_RESULT.md` — embedded in Appendix A
 - `R12_S4_SET_IDENTITY_EVENT_BUS_PREREG.md` — embedded in Appendix A
 - `R12_S4_SET_IDENTITY_EVENT_BUS_RESULT.md` — embedded in Appendix A
@@ -2650,22 +2681,67 @@ ledger; credential-handling and live-operational instructions are excluded.
 - `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG.md` — embedded in Appendix A
 - `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_1.md` — embedded in Appendix A
 - `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_2.md` — embedded in Appendix A
-- `R12_S7_LEARNED_CAYLEY_LAW_COMPILER_PREREG.md` — embedded in Appendix A
-- `R12_S7_LEARNED_CAYLEY_LAW_CPU_RESULT.md` — embedded in Appendix A
-- `R12_S7_LEARNED_CAYLEY_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_S7_LEARNED_CAYLEY_BOARD_RECEIPT.md` — embedded in Appendix A
 - `R12_S7_LEARNED_CAYLEY_CONFIRMATION_PREREG.md` — embedded in Appendix A
 - `R12_S7_LEARNED_CAYLEY_CONFIRMATION_RESULT.md` — embedded in Appendix A
-- `R12_S8_NIL_LINKED_LAW_GRAPH_PREREG.md` — embedded in Appendix A
-- `R12_S8_NIL_LINKED_LAW_GRAPH_CPU_RESULT.md` — embedded in Appendix A
-- `R12_S7_LEARNED_CAYLEY_BOARD_RECEIPT.md` — embedded in Appendix A
+- `R12_S7_LEARNED_CAYLEY_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_S7_LEARNED_CAYLEY_LAW_COMPILER_PREREG.md` — embedded in Appendix A
+- `R12_S7_LEARNED_CAYLEY_LAW_CPU_RESULT.md` — embedded in Appendix A
 - `R12_S8_1_EVALUATOR_REPAIR_PREREG.md` — embedded in Appendix A
 - `R12_S8_1_NIL_LINKED_LAW_GRAPH_BOARD.md` — embedded in Appendix A
 - `R12_S8_1_NIL_LINKED_LAW_GRAPH_DEVELOPMENT_RESULT.md` — embedded in Appendix A
 - `R12_S8_NIL_LINKED_LAW_GRAPH_BOARD.md` — embedded in Appendix A
+- `R12_S8_NIL_LINKED_LAW_GRAPH_CPU_RESULT.md` — embedded in Appendix A
+- `R12_S8_NIL_LINKED_LAW_GRAPH_PREREG.md` — embedded in Appendix A
+- `R12_S9_1_ALPHA_CLOSED_BOARD.md` — embedded in Appendix A
+- `R12_S9_1_ALPHA_CLOSED_CPU_RESULT.md` — embedded in Appendix A
+- `R12_S9_1_ALPHA_CLOSED_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_S9_1_ALPHA_CLOSED_STRUCTURED_COMPILER_PREREG.md` — embedded in Appendix A
+- `R12_S9_2_GLOBAL_ANCHOR_CLOSURE_BOARD_RECEIPT.md` — embedded in Appendix A
+- `R12_S9_2_GLOBAL_ANCHOR_CLOSURE_CPU_RESULT.md` — embedded in Appendix A
+- `R12_S9_2_GLOBAL_ANCHOR_CLOSURE_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_S9_2_GLOBAL_ANCHOR_CLOSURE_PREREG.md` — embedded in Appendix A
 - `R12_S9_OCCURRENCE_QUOTIENT_BOARD.md` — embedded in Appendix A
 - `R12_S9_OCCURRENCE_QUOTIENT_CPU_RESULT.md` — embedded in Appendix A
 - `R12_S9_OCCURRENCE_QUOTIENT_DEVELOPMENT_RESULT.md` — embedded in Appendix A
 - `R12_S9_OCCURRENCE_QUOTIENT_RELATIONAL_COMPILER_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_BINDING_BUS_PILOT_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_BYTE_ADDRESSED_PILOT_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_BOARD_RECEIPT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_BOARD_V1_2_RECEIPT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_2_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_BOARD_RECEIPT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_CONFIRMATION_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_AUDIT_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_AUDIT_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_2_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_2_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_HIERARCHICAL_BINDING_PILOT_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_PHYSICAL_RECORD_BUS_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_PHYSICAL_RECORD_BUS_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_PROJECTED_BINDING_PILOT_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_PROJECTED_FRESH_BOARD_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_PROJECTED_FRESH_V2_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_PROJECTED_FRESH_V2_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_PROJECTED_MECHANICS_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_RENDERER_NATIVE_JOINT_AUDIT.md` — embedded in Appendix A
+- `R12_SD_CST_RENDERER_NATIVE_JOINT_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_RENDERER_NATIVE_JOINT_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_RENDERER_NATIVE_PROGRAM_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_RENDERER_NATIVE_PROGRAM_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_RENDERER_ORBIT_QUERY_BUS_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_RENDERER_ORBIT_QUERY_BUS_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_V1_1_PREREG.md` — embedded in Appendix A
+- `R12_VAMT_V3_REVIEW_RESULT.md` — embedded in Appendix A
 
 ### Prior core and control records
 
@@ -2855,6 +2931,8 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Rejected dual-stream hard-route v1 before fresh data. Source `54476bc`, seed `5113128174248698871`, and sole train-only H100 job `694800` produce exact 8,000/8,000 neutral-alpha invariance but 0 relation rows, witness pointers, packets, or joints; state/answer are 2.050%/20.825%. Granular audit shows chance relation cells and collapsed routes. Checkpoint/evidence/report hashes begin `82913911`/`e3e86467`/`697ce283`; local mirrors match and development/confirmation remain unread. V1.1 is admitted only as a matched oracle-route versus learned-soft-route diagnostic: dense exact marginal equality and repaired role-head gradients, unchanged thresholds, and 7,197,795 dead v1 parameters removed. Complete/trainable/headroom is 185,532,296/11,129,504/14,467,704. Fourteen tests pass; oracle mechanics are 1,152/1,152 across 576 renderer/cardinality/rule-count/depth strata; no new commit/seed/job/score. |
 | 2026-07-20 | Froze/pushed marginal-route v1.1 at `8419c74e` before derivation SHA `3d3b8918...` and seed `4412270997190025241`. A clean exact Newton capsule passes source cleanliness and `sbatch --test-only`; sole train-only H100 job `694909` is pending resources because all normal H100 GRES were allocated. Output is isolated, the job accepts no scored split, development/confirmation custody is `0/0`, and no result exists yet. |
 | 2026-07-20 | Marginal-route v1.1 job `694909` completed cleanly on `evc43` and is rejected by one frozen gate: witness-pointer rows 7,194/8,000 = 89.925% versus 90%. It nevertheless reaches 90.9375% packet/joint/relation, 97.0625% state, 98.5375% answer, 100% alpha invariance, and 100% oracle-route transport. Every one of 806 failed rows has exactly one wrong occurrence, concentrated in late after-witness slots; 99.626% of individual occurrences are exact. This localizes the residual to duplicate occurrence addressing. An ordinal/count-addressed marginal repair adds 10,752 parameters while preserving all budgets/gates/custody; 22 tests and real-parent/real-row qualification pass before source freeze. |
+| 2026-07-20 | Froze/pushed occurrence-addressed marginal source `7601625f` before drand round `6305746`, payload/derivation hashes `8884bfe6...`/`c24770ac...`, and seed `4775909816533321494`. Clean capsule and a training-only two-file data view pass `sbatch --test-only`; sole isolated H100 job `694928` is running on `evc36`. No score exists yet and no duplicate is authorized. |
+| 2026-07-20 | Embedded the post-S9.2 SD-CST, episodic-rule-card, relation-tensor, and current canary closure: 251 source records are now self-contained in Appendix A. |
 
 ---
 
@@ -2865,7 +2943,7 @@ used directly, transitively, or newly added in the current frontier run.
 The source records begin after the maintenance protocol and are labeled by
 stable filenames. Local links are converted to portable in-dossier labels.
 
-Embedded research sources: 177 files, 1,534,126 source bytes.
+Embedded research sources: 251 files, 1,930,917 source bytes.
 
 Operational boundary: the full operational runbook remains intentionally
 distilled rather than copied verbatim. Its custody, checkpoint, training,
@@ -2874,10 +2952,110 @@ ledger; credential-handling and live-operational instructions are excluded.
 
 ### New frontier records included in this update
 
+- `FRONTIER_AGENT_PLANS.md` — embedded in Appendix A
+- `FRONTIER_AGENT_PLANS_ANALYSIS.md` — embedded in Appendix A
+- `FRONTIER_NOMINAL_GRAPH_REWRITE_MACHINE_PLAN.md` — embedded in Appendix A
+- `FRONTIER_S9_ARCHITECTURE_PROPOSAL.md` — embedded in Appendix A
+- `FRONTIER_S9_TO_GENERAL_REASONING_ANALYSIS.md` — embedded in Appendix A
+- `R12_CAUSAL_GRAMMAR_FIREWALL_PLAN.md` — embedded in Appendix A
+- `R12_CROSS_DOMAIN_FAULT_CHANNEL_REVIEW_RESULT.md` — embedded in Appendix A
+- `R12_ER_ADDRESSED_MARGINAL_ROUTE_PREREG.md` — embedded in Appendix A
+- `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md` — embedded in Appendix A
+- `R12_ER_CST_FRESH_BOARD_PREREG.md` — embedded in Appendix A
+- `R12_ER_CST_FRESH_BOARD_PREREG_AMENDMENT_V1_1.md` — embedded in Appendix A
+- `R12_ER_CST_FRESH_BOARD_PREREG_AMENDMENT_V1_2.md` — embedded in Appendix A
+- `R12_ER_CST_FRESH_BOARD_RESULT.md` — embedded in Appendix A
+- `R12_ER_CST_FRESH_BOARD_V1_2_RESULT.md` — embedded in Appendix A
+- `R12_ER_CST_NEURAL_ADAPTER_PREREG.md` — embedded in Appendix A
+- `R12_ER_CST_NEURAL_ADAPTER_PREREG_AMENDMENT_V1_1.md` — embedded in Appendix A
+- `R12_ER_CST_NEURAL_ADAPTER_PREREG_AMENDMENT_V1_2.md` — embedded in Appendix A
+- `R12_ER_CST_RULE_CARD_CPU_RESULT.md` — embedded in Appendix A
+- `R12_ER_CST_TRAINING_PREREG.md` — embedded in Appendix A
+- `R12_ER_CST_V1_RESULT.md` — embedded in Appendix A
+- `R12_ER_CST_WITNESS_EQUALITY_BUS_PREREG.md` — embedded in Appendix A
+- `R12_ER_CST_WITNESS_EQUALITY_BUS_RESULT.md` — embedded in Appendix A
+- `R12_ER_CST_WITNESS_EQUALITY_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_ER_CST_WITNESS_EQUALITY_CONFIRMATION_RESULT.md` — embedded in Appendix A
+- `R12_ER_DUAL_STREAM_RELATION_REPAIR_PREREG.md` — embedded in Appendix A
+- `R12_ER_DUAL_STREAM_TRAIN_CANARY_RESULT.md` — embedded in Appendix A
+- `R12_ER_RELATION_TENSOR_ADAPTER_PREREG.md` — embedded in Appendix A
+- `R12_ER_RELATION_TENSOR_BOARD_PREREG.md` — embedded in Appendix A
+- `R12_ER_RELATION_TENSOR_BOARD_RECEIPT.md` — embedded in Appendix A
+- `R12_ER_RELATION_TENSOR_RESULT.md` — embedded in Appendix A
+- `R12_ER_RELATION_TENSOR_SCORE_PREREG.md` — embedded in Appendix A
+- `R12_ER_RELATION_TENSOR_TRANSPORT_CPU_RESULT.md` — embedded in Appendix A
+- `R12_ER_RELATION_TENSOR_TRANSPORT_THEORY.md` — embedded in Appendix A
+- `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_V1_1_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_GATHER_DELETE_EXECUTOR_V1_1_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_IDENTITY_PACKET_PROBE_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_CPU_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_CORPUS_ADMISSION.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_FACTORIZED_LANGUAGE_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_ISLANDS_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_ISLANDS_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_PILOT_MANIFEST.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_PREREG_AMENDMENT_V1_1.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_QUALIFICATION_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_QUALIFICATION_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_STRUCTURED_DIAGNOSTIC_PREREG.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_COMPILER_STRUCTURED_DIAGNOSTIC_RESULT.md` — embedded in Appendix A
+- `R12_REFERENTIAL_LITERAL_POINTER_CORPUS_RESULT.md` — embedded in Appendix A
+- `R12_RELATION_COMPLETE_TRANSPORT_HYPOTHESIS.md` — embedded in Appendix A
+- `R12_RELATION_COMPLETE_TRANSPORT_REVIEW_RESULT.md` — embedded in Appendix A
+- `R12_RGDE_CONSUMER_TRANSPORT_DIAGNOSTIC_PREREG.md` — embedded in Appendix A
+- `R12_RGDE_CONSUMER_TRANSPORT_DIAGNOSTIC_RESULT.md` — embedded in Appendix A
+- `R12_RGDE_DEPTH_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_RGDE_DEPTH_CONFIRMATION_RESULT.md` — embedded in Appendix A
+- `R12_RGDE_RELATIONAL_IDENTITY_PREREG.md` — embedded in Appendix A
+- `R12_RGDE_RELATIONAL_IDENTITY_RESULT.md` — embedded in Appendix A
+- `R12_RGDE_V1_1_CAUSAL_CONTROL_AMENDMENT.md` — embedded in Appendix A
+- `R12_S3_CATEGORICAL_REGISTER_PREREG.md` — embedded in Appendix A
+- `R12_S3_CATEGORICAL_REGISTER_RESULT.md` — embedded in Appendix A
+- `R12_S3_CLOSED_ACTION_PREREG.md` — embedded in Appendix A
+- `R12_S3_CLOSED_ACTION_RESULT.md` — embedded in Appendix A
+- `R12_S3_EQUIVARIANT_LOCAL_ACTION_PREREG.md` — embedded in Appendix A
+- `R12_S3_EQUIVARIANT_LOCAL_ACTION_RESULT.md` — embedded in Appendix A
+- `R12_S3_LEXICAL_ACTION_PREREG.md` — embedded in Appendix A
+- `R12_S3_LEXICAL_ACTION_RESULT.md` — embedded in Appendix A
+- `R12_S3_LEXICAL_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_S3_LEXICAL_CONFIRMATION_RESULT.md` — embedded in Appendix A
+- `R12_S3_POINTER_ANCHOR_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_S3_POINTER_ANCHOR_CONFIRMATION_RESULT.md` — embedded in Appendix A
+- `R12_S3_POINTER_ANCHOR_PREREG.md` — embedded in Appendix A
+- `R12_S3_POINTER_ANCHOR_RESULT.md` — embedded in Appendix A
+- `R12_S4_EVENT_RELATIVE_POINTER_PREREG.md` — embedded in Appendix A
+- `R12_S4_EVENT_RELATIVE_POINTER_RESULT.md` — embedded in Appendix A
+- `R12_S4_HARD_ISLAND_SOFT_INTERFACE_PREREG.md` — embedded in Appendix A
+- `R12_S4_HARD_ISLAND_SOFT_INTERFACE_RESULT.md` — embedded in Appendix A
+- `R12_S4_MONOTONE_EVENT_REGION_PREREG.md` — embedded in Appendix A
+- `R12_S4_MONOTONE_EVENT_REGION_RESULT.md` — embedded in Appendix A
+- `R12_S4_POINTER_ANCHORED_EVENT_TAPE_REPAIR.md` — embedded in Appendix A
+- `R12_S4_SELF_DELIMITING_EVENT_TAPE_PREREG.md` — embedded in Appendix A
+- `R12_S4_SELF_DELIMITING_EVENT_TAPE_RESULT.md` — embedded in Appendix A
+- `R12_S4_SET_IDENTITY_EVENT_BUS_PREREG.md` — embedded in Appendix A
+- `R12_S4_SET_IDENTITY_EVENT_BUS_RESULT.md` — embedded in Appendix A
+- `R12_S4_V5_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_S5_LEARNED_GENERATOR_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_S5_LEARNED_GENERATOR_PREREG.md` — embedded in Appendix A
+- `R12_S5_LEARNED_GENERATOR_PREREG_V1_1.md` — embedded in Appendix A
+- `R12_S5_LEARNED_GENERATOR_PREREG_V1_2.md` — embedded in Appendix A
+- `R12_S5_LEARNED_GENERATOR_RESULT.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_CPU_RESULT.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_DEVELOPMENT_BOARD_RECEIPT.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_1.md` — embedded in Appendix A
+- `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_2.md` — embedded in Appendix A
 - `R12_S7_LEARNED_CAYLEY_BOARD_RECEIPT.md` — embedded in Appendix A
 - `R12_S7_LEARNED_CAYLEY_CONFIRMATION_PREREG.md` — embedded in Appendix A
 - `R12_S7_LEARNED_CAYLEY_CONFIRMATION_RESULT.md` — embedded in Appendix A
 - `R12_S7_LEARNED_CAYLEY_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_S7_LEARNED_CAYLEY_LAW_COMPILER_PREREG.md` — embedded in Appendix A
 - `R12_S7_LEARNED_CAYLEY_LAW_CPU_RESULT.md` — embedded in Appendix A
 - `R12_S8_1_EVALUATOR_REPAIR_PREREG.md` — embedded in Appendix A
 - `R12_S8_1_NIL_LINKED_LAW_GRAPH_BOARD.md` — embedded in Appendix A
@@ -2885,10 +3063,55 @@ ledger; credential-handling and live-operational instructions are excluded.
 - `R12_S8_NIL_LINKED_LAW_GRAPH_BOARD.md` — embedded in Appendix A
 - `R12_S8_NIL_LINKED_LAW_GRAPH_CPU_RESULT.md` — embedded in Appendix A
 - `R12_S8_NIL_LINKED_LAW_GRAPH_PREREG.md` — embedded in Appendix A
+- `R12_S9_1_ALPHA_CLOSED_BOARD.md` — embedded in Appendix A
+- `R12_S9_1_ALPHA_CLOSED_CPU_RESULT.md` — embedded in Appendix A
+- `R12_S9_1_ALPHA_CLOSED_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_S9_1_ALPHA_CLOSED_STRUCTURED_COMPILER_PREREG.md` — embedded in Appendix A
+- `R12_S9_2_GLOBAL_ANCHOR_CLOSURE_BOARD_RECEIPT.md` — embedded in Appendix A
+- `R12_S9_2_GLOBAL_ANCHOR_CLOSURE_CPU_RESULT.md` — embedded in Appendix A
+- `R12_S9_2_GLOBAL_ANCHOR_CLOSURE_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_S9_2_GLOBAL_ANCHOR_CLOSURE_PREREG.md` — embedded in Appendix A
 - `R12_S9_OCCURRENCE_QUOTIENT_BOARD.md` — embedded in Appendix A
 - `R12_S9_OCCURRENCE_QUOTIENT_CPU_RESULT.md` — embedded in Appendix A
 - `R12_S9_OCCURRENCE_QUOTIENT_DEVELOPMENT_RESULT.md` — embedded in Appendix A
 - `R12_S9_OCCURRENCE_QUOTIENT_RELATIONAL_COMPILER_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_BINDING_BUS_PILOT_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_BYTE_ADDRESSED_PILOT_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_BOARD_RECEIPT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_BOARD_V1_2_RECEIPT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_2_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_BOARD_RECEIPT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_CONFIRMATION_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_CONFIRMATION_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_DEVELOPMENT_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_AUDIT_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_AUDIT_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_2_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_2_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_HIERARCHICAL_BINDING_PILOT_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_PHYSICAL_RECORD_BUS_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_PHYSICAL_RECORD_BUS_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_PROJECTED_BINDING_PILOT_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_PROJECTED_FRESH_BOARD_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_PROJECTED_FRESH_V2_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_PROJECTED_FRESH_V2_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_PROJECTED_MECHANICS_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_RENDERER_NATIVE_JOINT_AUDIT.md` — embedded in Appendix A
+- `R12_SD_CST_RENDERER_NATIVE_JOINT_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_RENDERER_NATIVE_JOINT_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_RENDERER_NATIVE_PROGRAM_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_RENDERER_NATIVE_PROGRAM_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_RENDERER_ORBIT_QUERY_BUS_PREREG.md` — embedded in Appendix A
+- `R12_SD_CST_RENDERER_ORBIT_QUERY_BUS_RESULT.md` — embedded in Appendix A
+- `R12_SD_CST_V1_1_PREREG.md` — embedded in Appendix A
+- `R12_VAMT_V3_REVIEW_RESULT.md` — embedded in Appendix A
 
 ### Retained source records
 
@@ -35769,6 +35992,9210 @@ the current compiler to abstain on 2,048/2,048 cases. S9 must never describe
 this as general coreference. A future alias-capable phase would need a distinct,
 causally tested learned equivalence relation and a negative set containing
 similar-but-nonidentical distractors.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 178: `FRONTIER_NOMINAL_GRAPH_REWRITE_MACHINE_PLAN.md`
+
+Original source path: `FRONTIER_NOMINAL_GRAPH_REWRITE_MACHINE_PLAN.md`
+Original source size: 37,041 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# The central thesis
+
+Shohin should not be pushed toward general reasoning by making the language model “think longer.” It should be turned into a **renaming-invariant compiler for a small, model-owned reasoning computer**.
+
+The evidence already points there. S7 shows that a tiny learned generator can induce and recurrently execute unfamiliar laws when composition is forced through the correct algebraic basis. S8.1 shows that, once a valid graph exists, order, state transition, query consumption, and nil termination work exactly. S9 shows that **identity-before-semantics** nearly solves whole-source grounding: its main failures are proposal/class completeness and operation-name recoding, not downstream computation. In particular, the 1,925 original/recoded cases that remained valid were bit-identical; the 18 failures became invalid before semantics could be compared.
+
+That suggests the following equation:
+
+[
+\text{general reasoning}
+\approx
+\text{invariant compilation}
++
+\text{first-class operation definitions}
++
+\text{forced compositional execution}
++
+\text{model-owned agenda control}
++
+\text{causal language realization}.
+]
+
+The deepest architectural move is to stop treating operation names, entity names, node numbers, memory addresses, and primitive labels as meaningful. They are **gauge choices**—arbitrary coordinate systems. Meaning should live in relations, effects, types, and executable definitions.
+
+---
+
+# 1. Define the attainable target correctly
+
+At this parameter scale, “general-purpose reasoning” should initially mean:
+
+> Given facts, definitions, examples, or rules in context, Shohin can construct an anonymous structured problem representation, induce unfamiliar operations when sufficiently specified, decompose the goal, update persistent state, branch, terminate, and produce an answer across math, code, logic, and finite planning tasks.
+
+That is different from possessing broad encyclopedic knowledge or being an excellent conversational assistant. Those are additional language and knowledge problems. The first target is a **domain-general algorithmic reasoner over supplied context**.
+
+A suitable end-to-end architecture is:
+
+[
+G_0 = C_\alpha(x)
+]
+
+[
+\mathcal R = H(G_0^{\text{definitions}})
+]
+
+[
+a_t = \Pi_\theta(G_t,S_t,\mathcal R)
+]
+
+[
+(G_{t+1},S_{t+1}) =
+U_\theta(G_t,S_t,\mathcal R_{a_t})
+]
+
+[
+y = D_\theta(G_T,S_T,q).
+]
+
+Here:
+
+* (C_\alpha) is an alpha-invariant language compiler.
+* (H) turns definitions and demonstrations into executable **rule cards**.
+* (\Pi_\theta) is a model-owned agenda/controller.
+* (U_\theta) is a tied recurrent executor.
+* (D_\theta) realizes the terminal state in natural language.
+
+The host may store tensors, apply model-emitted graph edits, enforce declared types and memory bounds, and invoke learned cells. It may not choose the plan, supply an operation, execute arithmetic, repair a graph, run candidates against the final answer, or select a winning answer externally.
+
+---
+
+# 2. The immediate S9.1 experiment
+
+S9.1 should be a very targeted repair, not a wider network or another generic training run. S9 already passes 20 of 22 gates. Its exact graph score is 94.775%, versus 46.387% for the equal-parameter no-class arm, and its valid graphs are almost always semantically exact. The failed gates are only class completeness and recoding eligibility.
+
+## 2.1 Fix candidate-space equivariance before adding capacity
+
+The recoding result contains a major clue:
+
+* When both original and recoded sources produce valid graphs, their results are bit-identical.
+* The failures occur because recoding changes tokenization and makes some required span/class candidates disappear or become unselected.
+
+So the relation network is already close to equivariant **conditional on proposal validity**. The first repair should therefore be to make the proposal space closed under renaming.
+
+### Replace token-width-bounded islands with byte-aligned nominal islands
+
+The current compiler scores token spans up to width four. That makes semantic eligibility depend on BPE segmentation. Instead:
+
+1. Enumerate bounded **byte-coordinate spans**, perhaps up to 24 or 32 bytes.
+2. Map each byte span to its overlapping Shohin token residuals.
+3. Pool start, end, mean, and boundary-local byte features.
+4. Score the entire span jointly, as S9 does now.
+5. Keep the candidate enumeration ignorant of whether the span is an entity, operation, event tag, or irrelevant word.
+
+This does not allow the host to identify names. It merely guarantees that a renamed symbol remains representable even when it changes from one BPE token to six.
+
+A small byte convolution or byte embedding path could be added for boundary robustness, but the semantic relation encoder should remain unchanged.
+
+## 2.2 Make operation symbols alpha-equivariant by construction
+
+After the model proposes operation spans, replace their lexical identity with an anonymous per-example atom.
+
+A practical implementation is:
+
+[
+e(o_i)= e_{\text{operation}} + r_i,
+]
+
+where (e_{\text{operation}}) is shared and (r_i) is a per-example distinguishing code that is independently permuted or regenerated. Downstream computation sees the shared operation type and relationally distinguishable atom, but not a stable lexical embedding.
+
+A stronger version uses parallel shared-weight streams: each operation class receives its own stream, while aggregation across streams is permutation invariant. Recent symbol-invariant Transformer work gives an exact alpha-renaming invariance construction using precisely this pattern—shared per-symbol streams plus permutation-invariant aggregation. It also shows that the approach can be retrofitted into pretrained models, though computation grows with the number of interchangeable symbols. ([[arXiv](https://arxiv.org/html/2601.23169v2)][1])
+
+For Shohin, the number of operation classes per source is small, so this is an excellent place to spend compute rather than parameters.
+
+## 2.3 Replace independent relation decisions with model-logit-only structured assignment
+
+S9’s residual misses look like structured recall failures: a missing class, missing witness, duplicate relation, or invalid cardinality can destroy the whole graph. Independent local argmax decisions are unnecessarily brittle.
+
+Let the model produce unary and pairwise scores for candidate graph elements. Decode:
+
+[
+\hat g =
+\arg\max_{g\in\mathcal G}
+\left[
+\sum_i s_i(g_i)
++
+\sum_{i,j}s_{ij}(g_i,g_j)
+\right],
+]
+
+where (\mathcal G) is the set of graphs satisfying only the declared syntax and typing rules.
+
+Permitted constraints would include:
+
+* exactly one entry event;
+* exactly one terminal nil;
+* each event has one operation, entity, and successor/nil assignment;
+* each rule card has the required witness slots;
+* each initial-state position is used once;
+* all active event nodes form one reachable nil-terminated chain;
+* relation endpoints have compatible structural types.
+
+The decoder must not use:
+
+* executor output;
+* final-state or answer agreement;
+* gold depth;
+* source order;
+* a solver-derived semantic label;
+* retries based on answer correctness.
+
+This is the same scientific boundary as grammar-constrained parsing: structural well-formedness is an architectural prior, not semantic repair. Recent work on semantic constrained decoding shows that generation can be constrained in program space rather than only token space, but Shohin’s version must deliberately stop at graph grammar and typing rather than equivalence to a target answer. ([[arXiv](https://arxiv.org/pdf/2509.00360)][2])
+
+Mandatory controls should include uniform logits through the same constraint layer, shuffled logits, source-free logits, unconstrained S9 logits, and oracle logits. The board should also report how many valid assignments exist per source, so the grammar cannot secretly determine the answer.
+
+## 2.4 Train on the full renaming orbit
+
+For a random operation-name permutation (\pi), require:
+
+[
+C_\alpha(\pi x)
+===============
+
+\pi C_\alpha(x)
+]
+
+before anonymous class IDs are discarded, and exact equality after canonical class reindexing.
+
+A useful loss is:
+
+[
+L =
+L_{\text{graph}}
++\lambda L_{\text{orbit}}
++\mu L_{\text{structured-margin}}.
+]
+
+`L_orbit` aligns span participation, class membership, and relation logits across source-level recodings after adjusting the byte-coordinate map. `L_structured-margin` requires the gold graph to score above every loss-augmented valid alternative.
+
+The training board should deliberately contain operation names whose tokenization ranges from one to perhaps eight BPE tokens, including same-length strings with different token counts and different-length strings with the same token count.
+
+## 2.5 Keep the S9.1 scientific claim narrow
+
+S9.1 should pass every existing frozen S9 gate on a fresh board, with two strengthened requirements:
+
+* **100% operation-recoding eligibility** for every originally valid graph.
+* **Bit-identical canonical graphs** after operation renaming and class reindexing.
+
+Do not add alias/coreference, new algebras, dynamic planning, or a larger executor to S9.1. A clean confirmation here would establish a powerful foundation: exact repeated-reference grounding that is invariant to tokenization and symbol names.
+
+---
+
+# 3. The architectural leap: operations must become data
+
+Even a perfect S9.1 still has a finite graph grammar and a specialized cyclic executor. General reasoning requires eliminating the assumption that the compiler already knows the semantic category of every operation.
+
+The key transition is:
+
+[
+\text{operation token}
+\quad\longrightarrow\quad
+\text{first-class rule object}.
+]
+
+Instead of classifying an unfamiliar phrase as `left`, `right`, `add`, or `subtract`, Shohin should construct a **rule card**:
+
+[
+R =
+(\tau_{\text{in}},
+\tau_{\text{out}},
+D,
+F,
+p,
+q).
+]
+
+Where:
+
+* (\tau_{\text{in}},\tau_{\text{out}}) are input/output types.
+* (D) links to definitions, examples, equations, or code.
+* (F) is an effect fingerprint on a determining set.
+* (p) is a discrete microprogram.
+* (q) is uncertainty or a distribution over candidate programs.
+
+This is the most direct generalization of S7. S7’s two witnesses plus learned cyclic generator are already a specialized rule card. The next system should make rule cards generic and composable.
+
+## 3.1 Choose a hypothesis family before predicting its parameters
+
+S6 demonstrated that mathematical identifiability does not make a generic Transformer discover the right algebra. It fit every training law and still learned a lookup surface. S7 succeeded because its representation forced the correct generator composition.
+
+The general lesson is:
+
+> Do not ask a Transformer to emit an opaque operation embedding. Ask it to select a restricted hypothesis family and fill that family’s determining representation.
+
+Examples:
+
+| Hypothesis family       | Determining representation                     |
+| ----------------------- | ---------------------------------------------- |
+| permutation             | images of basis elements or generator word     |
+| affine map              | basis-point images or coefficients             |
+| Boolean operation       | truth table or Boolean circuit                 |
+| finite-state transition | local transition cells                         |
+| stack operation         | typed push/pop/read/write effects              |
+| list transformation     | rewrite program over head/tail primitives      |
+| graph operation         | local edge/node rewrite program                |
+| arithmetic              | digit/limb transition program with carry state |
+
+The family is an architectural and learned prior. The evidence must be sufficient to identify a member. If it is not, the model should preserve multiple candidates rather than hallucinating one.
+
+## 3.2 Use a learned RISC-like reasoning microkernel
+
+Shohin should have a small set of shared, model-owned primitive transitions rather than one neural module per benchmark operation.
+
+A plausible typed instruction basis includes:
+
+* categorical equality and comparison;
+* copy, swap, select, and branch;
+* successor/predecessor on learned domains;
+* read/write of typed registers;
+* push, pop, pair, and unpair;
+* follow, add, and remove graph edges;
+* call, return, commit, and emit;
+* local digit/bit transition cells.
+
+Some of these—addressing, equality, graph storage, type masks—may remain disclosed architectural operations. Semantic transitions should be learned cells, confirmed on exhaustive or determining atomic boards, and reused recurrently.
+
+A high-level operation then compiles to a program over these primitives:
+
+[
+\text{“rotate twice then reverse”}
+\mapsto
+[\texttt{ROTATE},\texttt{ROTATE},\texttt{REVERSE}].
+]
+
+The operation name is irrelevant. Its definition or behavior determines the program.
+
+This is a **reasoning RISC machine**:
+
+* primitive semantics are small enough to learn exactly;
+* complex operations are sequences, not new parameter blocks;
+* held-out composition is forced through shared weights;
+* programs can be inspected, intervened on, and causally tested.
+
+A hard-coded host interpreter would only be an upper bound. The promoted treatment must use learned primitive cells and a model-generated program.
+
+## 3.3 Make the graph homoiconic
+
+The same graph should represent:
+
+* data;
+* program;
+* operation definitions;
+* goals;
+* subgoals;
+* control dependencies;
+* current state;
+* uncertainty.
+
+In other words, **code is data inside the graph**.
+
+A compact universal grammar could use generic node types:
+
+* `OBJECT`
+* `VALUE`
+* `RULE`
+* `APPLICATION`
+* `GOAL`
+* `STATE_SLOT`
+* `RESULT`
+
+And generic relations:
+
+* `BINDS`
+* `DEFINES`
+* `ARGUMENT`
+* `PRODUCES`
+* `DEPENDS_ON`
+* `TRUE_BRANCH`
+* `FALSE_BRANCH`
+* `NEXT`
+* `QUERY`
+* `OUTPUT`
+
+New operations do not require new relation labels. They are new `RULE` nodes containing new microprograms.
+
+This is how Shohin can escape a permanently finite operation ontology without requiring a new architecture for every domain.
+
+## 3.4 Use provided examples as internal unit tests
+
+When a task defines a novel operation with examples, the rule compiler can generate a small number of candidate microprograms and execute them on those examples using Shohin’s own learned executor.
+
+The system would:
+
+1. compile candidate programs;
+2. run each on the supplied demonstrations;
+3. score agreement;
+4. retain or reweight candidates;
+5. execute the query using the surviving program distribution.
+
+The demonstrations are part of the source, so no external verifier adds information. The model is simply performing inference over existing evidence.
+
+This extends S7’s witness mechanism to richer operations.
+
+Crucially, underdetermined examples should produce an underdetermined rule state. Training should include one-witness and observationally equivalent cases whose correct response is ambiguity, abstention, or preservation of multiple candidates.
+
+---
+
+# 4. Planning and halting should be an agenda, not a prose trace
+
+The next missing interface is not another hidden scratch vector. It is a model-owned **work graph**.
+
+## 4.1 Replace a linear event list with an obligation graph
+
+Each reasoning node should have a status such as:
+
+* unresolved;
+* ready;
+* executing;
+* committed;
+* blocked;
+* retired.
+
+A slow planner chooses an unresolved goal and emits one of a small number of graph edits:
+
+* expand into subgoals;
+* bind a rule;
+* apply a rule;
+* branch;
+* commit a result;
+* retire a completed obligation;
+* halt.
+
+A fast executor applies the selected microprogram to the current typed state.
+
+This naturally separates the controller from the executor without letting the host schedule either.
+
+## 4.2 Use two timescales, but over explicit state
+
+Recent HRM and TRM results suggest that small networks can benefit considerably from repeated or hierarchical computation. But independent analysis of TRM found substantial dependence on puzzle identity and aggressive test-time augmentation, and observed that much of the gain appeared early in the recursion. That means recurrence is useful, but it should not be treated as evidence of general reasoning by itself. ([[arXiv](https://arxiv.org/abs/2506.21734)][3])
+
+For Shohin:
+
+* the **fast loop** executes one local state transition or graph rewrite;
+* the **slow loop** revises the goal decomposition, chooses a rule card, or opens a branch;
+* the two loops have separate parameters, losses, and state fields;
+* fast-loop gradients do not rewrite the planner’s ontology;
+* planner gradients do not modify primitive transition semantics.
+
+This directly addresses the typed-controller interference already observed.
+
+## 4.3 Make state updates transactional
+
+Each executor step should produce a proposed delta:
+
+[
+\Delta_t =
+(\text{writes},\text{new nodes},\text{new edges},\text{retirements}).
+]
+
+The model also predicts `COMMIT` or `ABORT`. The runtime applies only committed deltas.
+
+The runtime may check:
+
+* type compatibility;
+* bounds;
+* pointer validity;
+* single-writer rules;
+* graph well-formedness.
+
+It may not check whether the arithmetic or semantic result is correct.
+
+This two-phase structure helps prevent accidental overwrites, stale-state reuse, and replay loops without pretending to correct common-mode semantic mistakes.
+
+## 4.4 Tie halt to graph state
+
+`DONE` should not be a token learned from textual position.
+
+A terminal state should require:
+
+1. an answer node has been committed;
+2. no unresolved required dependency remains;
+3. the model emits a terminal nil/HALT transition;
+4. the committed state remains stable for one subsequent control check.
+
+The important point is that the model creates and retires the obligations. The runtime only evaluates the literal status structure that the model produced.
+
+Terminal/nonterminal twins should use locally identical answer-like states: one must halt because the agenda is empty; the other must continue because an unresolved dependency remains elsewhere in the graph.
+
+## 4.5 Add multi-hypothesis search only after the single path works
+
+A later controller could maintain four candidate rule/program graphs with model-owned weights. Recent Recursive Inference Machine work interprets recursive reasoners as proposal mechanisms that can benefit from a learned reweighting stage; denoising-recursion work provides a curriculum for recovering useful states through recurrent refinement. ([[arXiv](https://arxiv.org/html/2603.05234v1)][4])
+
+For Shohin, this should be treated as a search and optimization improvement, not as a source of new information.
+
+The four hypotheses should be deliberately heterogeneous:
+
+* relation-first parse;
+* effect/fingerprint-first parse;
+* query-backward parse;
+* syntax-first parse.
+
+A reweighting head may use only the source, model-owned graphs, supplied demonstrations, and predicted state consistency. It may not use final-answer correctness or an external solver.
+
+---
+
+# 5. Connect reasoning to language without textual chain-of-thought
+
+The terminal state should causally drive language generation through a structured interface. Training Shohin to imitate long rationales would risk reproducing the exact failure mode you are trying to avoid: fluent reasoning-shaped text disconnected from the recurrent machine.
+
+## 5.1 Use the graph as a prefix memory
+
+After reasoning terminates, expose the terminal graph and state to selected Shohin layers as structured memory:
+
+* one embedding per graph node;
+* edge-type attention biases;
+* categorical state embeddings;
+* a query node;
+* node-order randomization during training.
+
+A recent graph-language architecture showed that graph topology can be injected directly into language-model attention using graph-aware biases while preserving node-order equivariance and retaining fine-grained node text rather than compressing every node to one opaque summary. That is a useful design precedent for Shohin’s graph-to-language bridge. ([[arXiv](https://arxiv.org/html/2605.10247v1)][5])
+
+The bridge should be small—perhaps adapters or cross-attention in the top four to six layers.
+
+## 5.2 Enforce a lexical firewall
+
+Once the source has been compiled:
+
+* operation and entity names become anonymous IDs;
+* the executor sees no original lexical embeddings;
+* the final realizer receives the terminal graph, query wording, and a name-restoration map;
+* name restoration occurs only during serialization.
+
+This cleanly separates semantic computation from surface realization.
+
+It also creates powerful interventions:
+
+* rename every source symbol: computation unchanged, output names appropriately renamed;
+* swap two anonymous state nodes: answer follows the swap;
+* preserve graph but alter original source wording: answer remains;
+* preserve source but zero graph memory: answer collapses;
+* supply a counterfactual valid terminal state: language follows the state rather than memorized source associations.
+
+## 5.3 Train answer realization before explanation realization
+
+The sequence should be:
+
+1. structured answer head;
+2. exact concise natural-language answer;
+3. explanation generated from the executed graph;
+4. conversational presentation.
+
+Do not train explanations until terminal-answer generation is causally dependent on the graph.
+
+Explanations should cite graph nodes or operation steps internally, making it possible to verify that each sentence corresponds to an executed dependency. They need not expose private latent reasoning; they should summarize the model-owned graph.
+
+## 5.4 Rehabilitate language without teaching fake reasoning
+
+Shohin’s raw language checkpoint will probably require targeted language adaptation. Use:
+
+* instruction and output-contract data;
+* paraphrase-to-graph data;
+* definitions paired with typed rule cards;
+* code/docstring/AST correspondences;
+* entity and coreference binding;
+* ordinary conversational replay for preservation.
+
+Larger teacher models can generate surface paraphrases, but the semantic graph should come from the verified task generator—not from teacher reasoning traces. This distills language coverage rather than another model’s apparent thought process.
+
+---
+
+# 6. The training curriculum
+
+The curriculum should progressively remove privileged supervision while preserving independent component gates.
+
+| Stage    | Capability                          | Training object                             | Critical held-out dimensions                                 |
+| -------- | ----------------------------------- | ------------------------------------------- | ------------------------------------------------------------ |
+| **S9.1** | exact repeated-reference grounding  | alpha-normalized occurrence graph           | operation names, BPE widths, renderer, node order            |
+| **S10**  | non-identical reference binding     | learned mention-equivalence quotient        | synonyms, pronouns, aliases, similar distractors             |
+| **S11**  | unfamiliar rule compilation         | typed rule cards and discrete microprograms | names, definitions, coordinate systems, program compositions |
+| **S12**  | dynamic planning and halt           | agenda/work graph with graph edits          | depth, breadth, branch order, storage order, terminal twins  |
+| **S13**  | source-deleted integrated execution | predicted graph, state, agenda              | mixed domains, lengths, values, modalities                   |
+| **S14**  | language realization                | terminal graph to answer/explanation        | paraphrases, output formats, donor states                    |
+| **S15**  | broad transfer                      | math, code, logic, planning mixture         | entire task families and cross-domain compositions           |
+
+## 6.1 Train across multiple description modalities
+
+Every latent operation or program should be rendered as some combination of:
+
+* controlled natural language;
+* free paraphrase;
+* equations;
+* truth tables;
+* input/output examples;
+* pseudocode;
+* executable code;
+* diagrams or graph descriptions.
+
+The same operation must compile to the same anonymous rule card across modalities.
+
+This discourages the model from equating semantics with a single wording family.
+
+## 6.2 Use a contrastive twin matrix
+
+For every program family, generate all four categories:
+
+| Surface relation | Semantic relation |
+| ---------------- | ----------------- |
+| nearly identical | same              |
+| nearly identical | different         |
+| very different   | same              |
+| very different   | different         |
+
+Include:
+
+* token-bag-identical order twins;
+* same operation name assigned different local definitions;
+* different names assigned the same definition;
+* aliases versus near-alias distractors;
+* terminal versus nonterminal local twins;
+* same final answer reached through different state trajectories;
+* different answers sharing the same superficial trace shape.
+
+These are more valuable than another large undifferentiated SFT corpus.
+
+## 6.3 Use progressive interface deletion
+
+Training can begin with exact intermediate supervision, but progressively delete it:
+
+1. gold graph and gold state;
+2. predicted graph, gold state;
+3. predicted graph and predicted state, gold microprogram;
+4. predicted graph, rule card, state, and agenda;
+5. final answer plus structural and causal objectives.
+
+At every transition, freeze a fresh board before removing supervision.
+
+## 6.4 Keep losses physically separated
+
+Use distinct parameter islands for:
+
+* boundary and nominal binding;
+* relation graph assembly;
+* rule-card compilation;
+* primitive execution;
+* agenda control;
+* halt;
+* language realization.
+
+Use stop-gradients at interfaces during component training. Only after every island passes should a small calibration layer be jointly trained.
+
+The executor should never receive language-generation loss. The compiler should not receive final-answer labels during its first gate. The realizer should not be allowed to repair the graph.
+
+## 6.5 Denoise only after semantics are correct
+
+Denoising graph and state corruptions may improve recovery from off-manifold errors. But it cannot determine which valid semantic state was intended. Use denoising for:
+
+* missing edge;
+* duplicated node;
+* stale status bit;
+* perturbed continuous node feature;
+* partially erased state packet.
+
+Do not claim it corrects a coherent wrong operation program. The ledger’s coding and reversibility no-gos remain decisive there.
+
+---
+
+# 7. The three quotients Shohin ultimately needs
+
+A useful unifying theory is that general reasoning requires three distinct quotient operations.
+
+## 7.1 Occurrence quotient
+
+Mentions with exactly repeated surfaces are grouped.
+
+S9 nearly establishes this.
+
+## 7.2 Nominal quotient
+
+Different names and surfaces are recognized as representing the same bound object or rule when their relational role demands it.
+
+Examples:
+
+* `x` versus `temperature`;
+* “the vessel” versus “it”;
+* `combine` versus a later reference to “that operation”;
+* alpha-renamed program variables.
+
+This requires learned equivalence edges plus exact transitive clustering. Exact surface equality becomes one high-confidence feature, not the definition of identity.
+
+## 7.3 Causal quotient
+
+Histories or states are grouped only when every admitted future continuation produces the same behavior.
+
+S3/S7 establish bounded pieces of this: categorical state is causally reused, and learned generator dynamics compose.
+
+The complete route is therefore:
+
+[
+\text{language}
+\rightarrow
+\text{nominal quotient}
+\rightarrow
+\text{typed program}
+\rightarrow
+\text{causal state quotient}.
+]
+
+Many neural reasoning failures arise because these quotients are blended into one continuous residual stream. Shohin’s experiments strongly suggest they should remain explicit.
+
+---
+
+# 8. Exactness requirements become severe with depth
+
+Component-level accuracy must be much higher than ordinary benchmark accuracy.
+
+If a task requires ten dependent steps and you want 80% exact trajectories, independent per-step reliability must be approximately:
+
+[
+0.8^{1/10}\approx 97.8%.
+]
+
+At 32 steps it must be approximately:
+
+[
+0.8^{1/32}\approx 99.3%.
+]
+
+Similarly, a compiler at 95%, executor at 99%, halt at 98%, and serializer at 98% yield only:
+
+[
+0.95\times0.99\times0.98\times0.98
+\approx90.3%
+]
+
+before accounting for multiple recurrent transitions.
+
+That is why general-purpose Shohin should use:
+
+* categorical or typed state;
+* exact addressing and equality;
+* forced primitive reuse;
+* globally structured graph decoding;
+* source deletion;
+* strict causal interventions.
+
+A fuzzy latent workspace with 90% local behavior will never produce reliable long computations.
+
+---
+
+# 9. A plausible parameter envelope
+
+The current S9 system totals 134,580,264 parameters, leaving 15,419,735 parameters below a strict `<150M` ceiling.
+
+A reasonable post-S9.1 envelope is:
+
+| Addition                                           | Target budget |
+| -------------------------------------------------- | ------------: |
+| byte-boundary and structured-assignment additions  |          0.3M |
+| learned alias/nominal quotient                     |          0.8M |
+| agenda planner and transactional controller        |          3.2M |
+| typed rule-card and microprogram compiler          |          3.8M |
+| graph-to-language attention bridge                 |          2.4M |
+| route, uncertainty, and optional reweighting heads |          0.8M |
+| **Total additions**                                |     **11.3M** |
+| **Projected complete system**                      |  **≈145.88M** |
+| **Remaining reserve**                              |    **≈4.12M** |
+
+This is an engineering envelope, not an audited count. But it shows that the project does not need a major new backbone. The main resource should be **shared sequential computation**, not more unique weights.
+
+---
+
+# 10. The experiments I would run, in order
+
+## Experiment 1: S9.1 Alpha-Closed Structured Compiler
+
+Change only:
+
+* byte-aligned candidate spans;
+* anonymous operation atoms;
+* operation-renaming orbit training;
+* model-logit-only structured graph assignment.
+
+Keep:
+
+* S7/S8 runtime;
+* parameter count as close as possible;
+* all S9 controls and thresholds;
+* fresh development and sealed confirmation.
+
+Add controls:
+
+* token-span S9 architecture;
+* byte spans without orbit training;
+* orbit training without structured assignment;
+* structured assignment with uniform logits;
+* structured assignment with shuffled logits;
+* relation encoder with anonymous IDs disabled.
+
+This is the highest-confidence next move.
+
+## Experiment 2: First-Class Rule Cards
+
+Build a CPU falsifier and neural board with three or four typed operation families:
+
+* cyclic/permutation operations;
+* Boolean circuits;
+* finite-state or stack transducers;
+* simple list rewrites.
+
+Each episode gives unfamiliar names and either definitions, demonstrations, or both. The model must emit:
+
+* type signature;
+* family;
+* determining fingerprint;
+* discrete microprogram.
+
+The executor receives no operation name or source text.
+
+Controls:
+
+* generic dense law embedding;
+* law-ID memorizer;
+* shuffled definitions;
+* ambiguous evidence;
+* deranged primitive semantics;
+* program with state reset;
+* host exact interpreter ceiling.
+
+The key gate is held-out **program composition**, not merely held-out names.
+
+## Experiment 3: Agenda-Graph Control
+
+Use tasks with branching and subgoals:
+
+* variable depths from 3 to 32;
+* random graph storage order;
+* shared-prefix terminal/nonterminal twins;
+* independent branch order;
+* distractor obligations;
+* source deletion after initial graph compilation.
+
+The model must build and update the work graph, select the next ready node, commit state changes, and emit HALT.
+
+The runtime may reject malformed graph edits but may not repair them.
+
+## Experiment 4: Causal Graph-to-Language Bridge
+
+Freeze compiler, planner, and executor.
+
+Train only the language bridge on:
+
+* terminal state → concise answer;
+* query + terminal state → requested format;
+* terminal graph → explanation.
+
+Require:
+
+* donor-state following;
+* zero/shuffled graph collapse;
+* node-order invariance;
+* source deletion;
+* counterfactual valid-state verbalization;
+* no answer recovery when the graph is wrong.
+
+Only after this passes should broader conversational SFT touch the integrated stack.
+
+---
+
+# 11. Longer-term, higher-risk ideas
+
+## 11.1 Verified skill crystallization
+
+When a microprogram motif recurs often, distill it into a new learned generator or macro.
+
+The macro must be behaviorally equivalent to its expanded program on a complete determining set or an explicitly bounded domain. The expanded program remains the control.
+
+This would let Shohin develop a hierarchy:
+
+[
+\text{primitive}
+\rightarrow
+\text{microprogram}
+\rightarrow
+\text{macro}
+\rightarrow
+\text{high-level plan}.
+]
+
+It is analogous to compiler optimization and human skill chunking, while retaining exact causal accounting.
+
+## 11.2 Gauge-equivariant reasoning everywhere
+
+Extend invariance beyond operation names:
+
+* entity renaming;
+* variable alpha-renaming;
+* graph node order;
+* memory-slot permutation;
+* primitive code relabeling;
+* hidden coordinate recoding;
+* output format recoding.
+
+Every stage should expose its transformation group and be tested under it.
+
+The model should operate on relational observables; a coordinate system should be chosen only when a pointer must be dereferenced or an answer serialized.
+
+## 11.3 Version-space reasoning
+
+Instead of always committing to one interpretation, maintain a small set of rule cards or plans consistent with the current evidence.
+
+The model can:
+
+* collapse the set when new evidence distinguishes candidates;
+* execute candidates in parallel when inexpensive;
+* return “underdetermined” when no distinction exists;
+* ask a clarifying question in an explicitly interactive setting.
+
+This would be a more profound reasoning capability than merely raising forced-choice accuracy: Shohin would distinguish **uncertainty from computational failure**.
+
+## 11.4 Self-generated counterexample curricula
+
+During training, use the exact task generator to find minimal source mutations that separate the model’s current wrong graph from the true graph:
+
+* one changed argument edge;
+* one order swap;
+* one alias split;
+* one operation-definition mutation;
+* one terminal-status change.
+
+This is training-time data engineering, not an inference-time reasoning mechanism. Oracle calls and generator work must be counted.
+
+---
+
+# 12. What not to do next
+
+Do not:
+
+* widen the S9 encoder before repairing proposal equivariance;
+* reopen the S9 board or relax the 95% gate;
+* add generic token-level recurrence and call it reasoning;
+* train long chain-of-thought traces into the raw decoder;
+* let a solver execute candidate graphs and select the one with the right answer;
+* make carry, arithmetic, or scheduling a hidden host routine;
+* merge compiler, executor, halt, and chat losses from the beginning;
+* treat syntactic validity as semantic correctness;
+* add redundancy after all semantic lanes have already chosen the same wrong program;
+* assume a larger operation vocabulary is the same as learning new operations.
+
+---
+
+# Bottom line
+
+The most promising route is a **Nominal Graph Rewrite Machine**:
+
+1. **Alpha-invariant compiler:** language becomes an anonymous typed graph.
+2. **First-class rule cards:** unfamiliar operations become executable data.
+3. **Learned reasoning RISC:** complex behavior compiles to a small set of tied, verified primitive cells.
+4. **Agenda controller:** the model owns decomposition, next-step choice, state commit, branching, and halt.
+5. **Graph-conditioned realizer:** natural language is generated from the terminal state rather than used as the computational workspace.
+
+This is not merely a collection of modules. It is a coherent theory of why S7 and S9 worked:
+
+* S7 succeeded because it removed arbitrary coordinate dependence and forced generator reuse.
+* S9 succeeded because it quotiented repeated identity before predicting semantics.
+* General reasoning should continue the same pattern: **quotient away arbitrary names, reify definitions, and force every long computation through a small compositional basis.**
+
+The immediate move is S9.1 with a tokenization-independent candidate lattice and structured relation assignment. The decisive move after that is to stop classifying operation names entirely and begin compiling operation **definitions** into discrete programs.
+
+[1]: https://arxiv.org/html/2601.23169v2 "https://arxiv.org/html/2601.23169v2"
+[2]: https://arxiv.org/pdf/2509.00360 "https://arxiv.org/pdf/2509.00360"
+[3]: https://arxiv.org/abs/2506.21734 "https://arxiv.org/abs/2506.21734"
+[4]: https://arxiv.org/html/2603.05234v1 "Recursive Inference Machines for Neural Reasoning"
+[5]: https://arxiv.org/html/2605.10247v1 "Teaching LLMs to See Graphs: Unifying Text and Structural Reasoning"
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 179: `FRONTIER_S9_ARCHITECTURE_PROPOSAL.md`
+
+Original source path: `FRONTIER_S9_ARCHITECTURE_PROPOSAL.md`
+Original source size: 8,838 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+Shohin is in the rare, honest place. The raw 125.08M chat anchor is weak. The isolated 134.58M stack is strong. S7 proved 100% exact recurrent execution of unseen cyclic laws. S9 proved 94.775% exact graph and 94.873% exact state/answer from natural language with a +48.389 point lead over the no-class-message control, and 0% for shuffled relations.
+
+That is not imitation. That is model-owned compilation: source -> occurrence spans -> quotient by exact bytes -> identity classes -> relation/control graph -> predicted event order + nil halt -> frozen cyclic executor -> state.
+
+The failure mode is also honest: it works only under exact repeated references, finite graph grammar, and a specialized executor. It missed the 95% class gate by 5 examples and failed 18 operation-nonce renames. It is not yet a general reasoner because it is still a decompiler for a toy language, not a computer.
+
+To get to general purpose, you do not scale the chat model. You make the reasoning stack the unavoidable bottleneck.
+
+### 1. What S9 Actually Invented
+
+S9 is not chain-of-thought. It is quotient typing.
+
+In type theory and in HoTT, a quotient type says: take a set of occurrences, define an equivalence relation, collapse equivalent ones. S9 does that literally. It enumerates bounded contiguous spans, scores them, groups by exact byte equality, then builds relations over groups, not tokens. That is why shuffling relations kills it and reindexing classes does not. It is variable binding done right, under a tiny equivalence relation.
+
+General reasoning is the same operation with a learned equivalence relation.
+
+Human language is: "Alice... she... the engineer... she" -> one class. Math is: "let x = 5 ... x + x" -> one class. Code is: "for i... i". All are occurrence-quotient problems. S9 solved the trivial case where equivalence = string equality. S10 needs to solve equivalence = model-predicted coreference.
+
+### 2. The S9.1 fix is not a patch, it is a symmetry
+
+Those 18 rename failures are the tell. The model still treats operation names as content.
+
+Solution: **learned renaming equivariance**.
+
+Treat operation and entity nonce IDs as an exchangeable set. Do not embed the string "OP_3". Embed its occurrence cluster. Architecture change:
+
+* Replace absolute span position embeddings in the relation decoder with relative occurrence-position inside the class.
+* Train with full permutation augmentation of operation nonces in every batch, plus a DeepSets-style class aggregator: class representation = sum over occurrence embeddings, not mean of token embeddings. This makes the decoder permutation-equivariant by construction.
+* Add a hard gate: if two valid parses differ only by nonce renaming, force bit-identical graphs via canonical ordering after grouping. You already proved this works on 1,925 cases. Enforce it architecturally.
+
+Second S9.1 fix: **constrained logit relation assignment**. Right now relation kinds are predicted freely. Switch to type-checked decoding: model emits logits over relation kinds, but a tiny validator rejects graphs that violate arity or that split a class. Logits are trained with a straight-through estimator. This keeps it model-owned but removes impossible graphs from the search space. That should clear the 5-example class gap.
+
+### 3. From exact equality to learned alias: the real S10
+
+Exact byte equality was your honest free-word boundary. Your control where every occurrence is a unique word correctly makes S9 abstain 2048/2048. That is good.
+
+Now you need a learned equivalence that can still abstain.
+
+Proposal: **Two-stage quotient**
+
+Stage A: occurrence proposer from S9, unchanged.
+Stage B: alias scorer: for every pair of spans, predict P(same entity). Train this with contrastive loss on synthetic data where you have similar-but-nonidentical distractors: "Alice" vs "Alicia", "x" vs "y", "the cup" vs "a cup". This is the negative set you noted you need.
+
+Then take transitive closure of P > threshold to form classes. Exact equality becomes a strong prior kernel, not a rule. Start training with exact equality weight 1.0, anneal to 0.3. This is how you get "she = Alice" without losing verifiability. The CPU theorem still holds: corrupt relation kind, swap slots, merge classes = rejected. Now add a new CPU arm: similar-but-distinct alias = rejected.
+
+This connects to linguistics, databases, and compilers simultaneously. In compilers this is SSA register allocation. In databases this is entity resolution. In linguistics this is anaphora.
+
+### 4. From cyclic executor to universal executor
+
+S7's cyclic executor is a finite state transducer. It loops over successor cells. To be general, you need three minimal additions that keep verifiability:
+
+1.  **Stack:** push/pop for call/return. Gives you recursion and nested subproblems. Math proofs need it.
+2.  **Conditional branch on state predicate:** not just nil halt, but `if state.field == X goto`. Gives you if/else.
+3.  **Typed value heap:** your current state is cards and entries. Extend to int, string, list, dict with a small frozen ALU.
+
+All three can be implemented with the same pop-insert transition you already have. Keep the executor frozen and tiny, < 5K lines. The model does not learn to execute, it learns to compile to it. This is the WASM / eBPF insight: keep the runtime dumb and auditable, make the compiler smart.
+
+Now you have a Turing-complete IR that is still exactly scorable.
+
+### 5. How to connect to natural language without collapse
+
+This is where every reasoning project dies: post-training makes the model bypass the stack and imitate reasoning-shaped text.
+
+You need a **causal bottleneck**.
+
+After S9 passes all 17 gates on fresh boards, freeze it completely. Then:
+
+* For any natural prompt, force generation to go through: prompt -> S9 graph -> recurrent execution -> terminal state object.
+* The language decoder may ONLY attend to the terminal state object + its execution trace, NOT to the original prompt. Implement this as hard cross-attention masking. Original source deleted after compilation, as in your required evidence.
+* Train the decoder with a causal necessity test: if you shuffle or zero the terminal state, answer accuracy must drop to near 0. If you shuffle the prompt but keep state, accuracy stays. This is your existing state-swap intervention, but applied to NLG.
+
+That prevents collapse. The chat model cannot cheat because it has no other information.
+
+This is analogous to proof-carrying code and to neuroscience: hippocampus indexes, cortex cannot recall without it. The stack is your hippocampal index.
+
+### 6. Curriculum to general purpose
+
+Don't train on MATH yet. MATH is too noisy to prove ownership.
+
+**Phase A: Open-world quotient**
+Same boards, but names, renderers, and laws are sampled from a much larger LLM paraphraser that never sees the board structure. Your split-disjoint guarantee remains. This forces true language grounding.
+
+**Phase B: Compositional closure**
+Take two valid S9 graphs, concatenate their sources with "After that," and require the model to emit the composed graph where the output state of graph1 is input to graph2. This teaches graph composition and breaks fixed depth assumptions. Depth 1-8 -> depth 1-16 via composition only.
+
+**Phase C: Self-play with verification**
+Use the frozen executor as an oracle. Let Shohin generate its own board descriptions, compile them, execute, and check that description and execution match. Keep only the ones that pass CPU gates. This is AlphaProof-style self-distillation but with 100% verification, not reward model.
+
+**Phase D: Tool as memory**
+Give the executor a foreign function interface: `python.exec`, `calc`. The model must compile to a graph that CALLs those tools with correct args from state. Now you have math and code reasoning that is still exactly checkable: the graph contains the call.
+
+### 7. Why this can stay under 150M
+
+You do not need more parameters. You need less leakage.
+
+* Share the Shohin residual extractor between proposer and alias scorer.
+* Make alias scorer a 2-layer MLP over pair differences, not a full transformer.
+* Use LoRA adapters for the relation decoder instead of a separate encoder.
+
+The universal executor adds zero parameters. The bottleneck decoder adds parameters but can be a small 30M cross-attention head.
+
+The scaling law that matters here is not pretrain loss. It is **state bits retained per parameter under source deletion**. Measure that directly.
+
+If you do this, Shohin stops being a small LLM that sometimes reasons. It becomes a small verified compiler with a natural language front end. The chat backbone becomes a paraphraser that feeds the compiler. General purpose reasoning emerges not from longer traces, but from a stronger equivalence relation and a more expressive, but still frozen, target machine.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 180: `FRONTIER_S9_TO_GENERAL_REASONING_ANALYSIS.md`
+
+Original source path: `FRONTIER_S9_TO_GENERAL_REASONING_ANALYSIS.md`
+Original source size: 8,490 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# Frontier S9-to-General-Reasoning Evidence Review
+
+**Decision:** adopt the central compiler-machine thesis and the orbit/structured
+assignment repair; reject unsupported S9 failure diagnoses and defer the larger
+architecture bundle until S9.1 confirmation
+
+**Reviewed sources:**
+
+- `FRONTIER_NOMINAL_GRAPH_REWRITE_MACHINE_PLAN.md`, exact attachment SHA-256
+  `e39f9787d620484a428e8cb4e7717a8537f94782133eeba9246082fdddd60e45`
+- `FRONTIER_S9_ARCHITECTURE_PROPOSAL.md`, exact attachment SHA-256
+  `d4d2d622ce9a2ab10126bc98d8f7be1f40efe9a398fcb735454fe88c924b6378`
+
+The source files are preserved verbatim. Literature citations inside them are
+leads, not locally reproduced evidence and are not required for the decision
+below.
+
+## Executive verdict
+
+The strongest shared thesis is consistent with Shohin's evidence:
+
+> Shohin should become a renaming-invariant compiler for a small model-owned
+> reasoning computer, rather than a language model trained to emit longer
+> reasoning-shaped prose.
+
+S7 and S9 make this more than an analogy. S7 confirms exact learned cyclic-law
+compilation and recurrent reuse. S9 development demonstrates a causal
+occurrence-class binding effect: 94.775% exact graphs versus 46.387% for the
+equal-budget no-class arm and 0% for shuffled relations. The valid S9 graph
+then owns event order, nil halt, recurrent state updates, and query
+consumption. The remaining S9.1 problem is robustness at the compiler boundary,
+not a need for a larger language decoder or a new arithmetic runtime.
+
+The proposals become speculative after that point. First-class rule cards,
+learned primitive programs, an obligation graph, source-deleted realization,
+and learned alias partitions are coherent future stages, but none has passed a
+Shohin theorem or finite falsifier. They must not be bundled into S9.1.
+
+## Corrections required before implementation
+
+### 1. The S9 rename failure is not candidate-width failure
+
+The frontier plan attributes the 18 operation-renaming failures to token-width
+bounded candidates disappearing under BPE recoding. The frozen board evidence
+does not support that diagnosis. Across all 2,048 development sources:
+
+| Span width | Original count | Recoded count |
+|---:|---:|---:|
+| 1 | 4,562 | 4,564 |
+| 2 | 101,355 | 101,341 |
+| 3 | 8,877 | 8,889 |
+| >4 | 0 | 0 |
+
+The maximum original and recoded gold width is three under the frozen
+width-four candidate cap. The evaluator also compiled every recoded row before
+scoring. The 18 failures therefore arise from learned span/role selection or
+relation assembly after tokenization changes, not from absence of a legal
+candidate.
+
+Byte-aligned spans remain a plausible future representation, especially for
+open-vocabulary aliases, but they are not the measured S9.1 repair. Enumerating
+every byte span up to 24 or 32 bytes would also enlarge candidate count by
+orders of magnitude unless preceded by a learned boundary lattice. It needs a
+separate resource and representability theorem.
+
+### 2. The current class aggregator is already permutation invariant
+
+S9 uses a mean over all candidate-span representations sharing the same exact
+surface. Mean and sum are both permutation invariant. Replacing mean with sum
+does not create alpha equivariance; it changes multiplicity scaling. A count
+feature may be tested only if occurrence multiplicity is independently
+randomized so it cannot become a renderer shortcut.
+
+### 3. Anonymous class IDs already exist downstream
+
+After S9 selects source spans, exact surface equality creates anonymous
+per-example class IDs. Lexical residuals still help the compiler locate and
+type mentions, but the S8/S7 runtime receives the quotient graph rather than
+the operation string. An additional anonymous-atom stream is an ablation, not
+a prerequisite. Removing lexical content too early could erase the context
+needed to classify a mention.
+
+### 4. A structured decoder must not solve the task by grammar
+
+Model-logit-only constrained assignment is the highest-confidence repair for
+S9's all-or-nothing graph invalidity. It is admissible only if the report shows
+that syntax leaves many valid assignments and that uniform, source-free, and
+shuffled logits remain near chance. The decoder may enforce arity, type,
+non-overlap, reachability, and one nil-terminated chain. It may not consult the
+executor, final state, answer, gold depth, semantic solver, or retries.
+
+### 5. Turing completeness is not evidence of learned reasoning
+
+A stack, branch, heap, or host ALU can make an interpreter universal without
+making Shohin a general reasoner. Semantic primitive transitions must be
+learned on determining atomic boards, transferred to held-out compositions,
+and causally consumed after source deletion. Host arithmetic remains an upper
+bound, not a promoted treatment.
+
+## Admitted S9.1 contract
+
+S9.1 should change only two scientific interfaces on a fresh board.
+
+### A. Renaming-orbit equivariance
+
+Every training episode receives independently sampled source-level operation
+renamings. The compiler is trained on original and recoded sources with:
+
+1. ordinary span/relation supervision in both views;
+2. aligned participation and role logits after the known source-coordinate
+   map;
+3. class-canonical graph consistency after anonymous class reindexing.
+
+The same number of optimizer updates and source families must be used for the
+no-class control. Orbit examples replace part of the fixed training budget;
+they do not silently increase it.
+
+### B. Globally structured model-logit assignment
+
+The model emits unary span-role scores and, if needed, bounded pairwise link
+scores. A deterministic decoder chooses the maximum-score graph under only the
+frozen S8 grammar and typing constraints. Required controls are:
+
+- unconstrained S9 decoding;
+- structured treatment;
+- structured no-class message;
+- structured shuffled labels;
+- structured uniform logits;
+- structured source-free logits;
+- oracle logits;
+- per-source count or lower bound for grammar-valid assignments.
+
+The output still enters the unchanged S8 graph validator and S7 executor.
+
+### Frozen success requirements
+
+- retain every S9 absolute, causal, attribution, parameter, and access gate;
+- at least 95% all-row exact class membership;
+- at least 90% valid graphs and 85% exact graphs;
+- at least 80% state and 85% answers;
+- at least +5 points exact graph over the equal-budget no-class arm;
+- zero or preregistered near-chance exact graphs for shuffled, uniform, and
+  source-free controls;
+- 100% recoding eligibility for every originally valid graph;
+- bit-identical canonical graph, state, and answer under renaming;
+- sealed confirmation opened once only after every development gate passes.
+
+No S9 threshold may be relaxed and the closed S9 board may not be rescored.
+
+## Ordered route after S9.1
+
+1. **S10 nominal quotient:** predict alias/coreference partitions with exact
+   equality as a prior, explicit abstention, transitivity, and similar-but-
+   distinct negatives. Pairwise threshold plus transitive closure is not enough
+   because one false bridge can merge two classes; use a partition-level score
+   or correlation-clustering objective with bounded exact decoding.
+2. **S11 first-class rule cards:** select a typed hypothesis family, emit its
+   determining fingerprint and discrete microprogram, and preserve multiple
+   candidates when demonstrations are underdetermined.
+3. **S12 agenda graph:** model-owned obligation creation, rule binding,
+   transactional updates, branch choice, retirement, and halt. The host may
+   reject malformed edits but may not schedule or repair semantics.
+4. **S13 source-deleted integration:** compiler source is deleted; only the
+   anonymous graph, rule cards, agenda, and recurrent state remain available.
+5. **S14 causal realization:** the language decoder sees terminal state and
+   query/output bindings, not the original semantic source. Donor-state swaps,
+   graph zeroing, and node-order permutations must control its answer.
+
+The strongest new theoretical direction is therefore not a larger scratchpad.
+It is a sequence of explicit quotients and machines:
+
+```text
+surface occurrences
+  -> nominal identity partition
+  -> typed relation/program graph
+  -> learned primitive state machine
+  -> model-owned agenda
+  -> terminal state-conditioned language
+```
+
+Only the first occurrence quotient has strong development evidence today.
+S9.1 must confirm that foundation before the project spends capacity on the
+later machine.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 181: `R12_CAUSAL_GRAMMAR_FIREWALL_PLAN.md`
+
+Original source path: `R12_CAUSAL_GRAMMAR_FIREWALL_PLAN.md`
+Original source size: 4,225 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Causal Grammar Firewall Plan
+
+**Status:** ordered successor to S9.2; design only, no board or score access
+
+## Why this stage exists
+
+S7 proves exact bounded execution under a strong cyclic substrate. S9.1 proves
+that model-produced graph fields can control that executor on a templated
+language board. Neither result separates semantic grounding from recognition of
+fixed section order, ontology phrases, punctuation, and field position. Closing
+S9.1's final abstentions would improve the parser but would not answer that
+question.
+
+The firewall is the first stage whose positive result could justify a broader
+language-to-machine grounding claim. It is deliberately hostile to layout and
+template shortcuts while preserving the same underlying graph semantics.
+
+## Factorized source interventions
+
+Each latent graph must be rendered into paired sources along independently
+sampled axes:
+
+1. **Clause topology:** roster, cards, entry, events, and query may be
+   interleaved or reordered while explicit references preserve meaning.
+2. **Same-layout counterfactuals:** two sources have identical token counts,
+   punctuation, clause positions, and nonce widths but differ in exactly one
+   operation, entity, entry, successor, nil, or query binding.
+3. **Decoys:** quoted, negated, superseded, or explicitly inactive cards and
+   events are syntactically plausible but absent from the target graph.
+4. **Argument order:** active and passive clauses, fronted objects, and reverse
+   mention order express the same typed relation.
+5. **Ontology removal:** held-out renderers omit words such as `card`, `event`,
+   `entry`, `control`, `registry`, and `query` while retaining ordinary natural
+   descriptions.
+6. **Coreference:** repeated exact surfaces, non-identical aliases, and local
+   pronouns are independently varied so exact-byte equality is useful but not
+   sufficient.
+
+Training, development, and sealed confirmation must use disjoint renderer
+generators, nonce pools, graph instances, and combinations of these axes.
+Counterfactual pairs stay in the same split.
+
+## Matched systems
+
+- treatment compiler and unchanged bounded executor;
+- equal-budget no-occurrence-class compiler;
+- oracle-masked retrained layout-only compiler;
+- a surface/position-only finite classifier with matched label access;
+- paired-consistent shuffled supervision;
+- oracle graph upper bound; and
+- source-free and uniform-logit inference controls.
+
+No system may inspect execution, state, answer, graph validity, or retries while
+choosing source fields. A compile failure is final.
+
+## Required diagnostics
+
+- exact graph/state/answer by intervention axis and depth;
+- exact changed-edge response on each same-layout counterfactual pair;
+- false inclusion rate for quoted, negated, superseded, and inactive decoys;
+- root, child, binding, link, entry, nil, and query error decomposition retained
+  even when graph compilation fails;
+- operation/entity/position/event alpha invariance;
+- layout-only and surface-only train fit as well as held-out scores; and
+- manual source, emitted graph, recurrent trace, and answer transcripts sampled
+  before aggregate interpretation.
+
+## Provisional admission floors
+
+These numbers must be frozen with an exact board design before any score read:
+
+- at least 90% exact graphs on every held-out grammar family;
+- at least 98% exact changed-edge response on counterfactual pairs;
+- at least 95% exact rejection of inactive decoys;
+- 100% graph/state/answer invariance under all-symbol alpha recoding;
+- every valid emitted graph semantically exact;
+- layout-only and surface/position-only controls below 10% exact graph; and
+- treatment at least 20 points above every learned shortcut control.
+
+## Decision boundary
+
+A pass would support robust semantic compilation across a bounded graph
+language. It still would not establish arbitrary program induction, a generic
+executor, self-generated decomposition, or general reasoning. A failure means
+further standard-board anchor optimization is parser engineering and must not be
+reported as a reasoning breakthrough. The next theory would then have to change
+the language representation or training identifiability, not merely add search
+or width.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 182: `R12_ER_ADDRESSED_MARGINAL_ROUTE_PREREG.md`
+
+Original source path: `R12_ER_ADDRESSED_MARGINAL_ROUTE_PREREG.md`
+Original source size: 3,313 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-TT Addressed Marginal Route Preregistration
+
+## Status
+
+Pre-freeze, train-only architectural repair. It may read only the existing
+ER-TT `train.jsonl`. Development and confirmation remain forbidden.
+
+## Frozen predecessor result
+
+Marginal-route v1.1 job `694909` is rejected because complete witness-pointer
+rows reached `7,194/8,000 = 89.925%` against the frozen `90%` gate. No threshold
+is relaxed. The same run reached `90.9375%` packet/joint, `97.0625%` state,
+`98.5375%` answer, `90.9375%` relation rows, 100% alpha invariance, and 100%
+oracle-route identity transport.
+
+Independent reconstruction shows all 806 witness-pointer failures contain
+exactly one wrong occurrence. Most are adjacent-source ambiguities in late
+after-witness positions. The identity bus and recurrent relation executor are
+not the observed failure.
+
+## Hypothesis
+
+The structural router encodes opaque candidate locations through byte-level
+token memory and absolute line positions. That leaves neighboring occurrences
+with weakly separated route keys, especially in longer fourth-rule records.
+
+Add an identity-free address channel with two learned components:
+
+1. ordinal index of each opaque occurrence within its physical record; and
+2. total opaque-occurrence count for that record.
+
+The original six bytes remain available only to the exact equality `what`
+stream after routing. Addresses are computed only from the alpha-invariant
+opaque-start mask, so renaming any opaque symbol cannot change them. The model
+still learns every route; no target span, outcome, executor state, answer, or
+scored split is used at inference.
+
+## Architecture and budget
+
+- Parent: reconstructed confirmed witness-equality lineage, never a rejected
+  canary checkpoint.
+- New parameters: two `14 x 384` embeddings (`10,752` parameters).
+- Zero learned motor parameters.
+- Zero learned reader parameters.
+- Expected complete system: `185,543,048` parameters.
+- Expected trainable parameters: `11,140,256`.
+- Headroom below the absolute 200M ceiling: `14,456,952`.
+
+## Data and optimization
+
+Use the existing 48,000-row ER-TT training split only. A new post-commit seed
+deterministically chooses 10,000 fit families and 2,000 disjoint probe families,
+four renderer views each. Preserve the v1.1 budget exactly:
+
+- two epochs;
+- 2,500 updates;
+- 32 rows/update from eight complete families;
+- AdamW, LR `2e-4`, 100-step warmup, cosine decay;
+- no state, trajectory, answer, development, or confirmation supervision.
+
+## Frozen gates
+
+All must pass on the one train-only probe read:
+
+- packet/state/answer/joint each at least 85%;
+- complete relation rows at least 90%;
+- complete witness-pointer rows at least 90%;
+- events and HALT each at least 95%;
+- minimum cardinality-specific joint at least 75%;
+- all hard outputs exactly invariant on 8,000/8,000 neutral-namespace alpha
+  recodes;
+- source-span oracle-route initial/relation/event/joint exactly 8,000/8,000
+  through the same equality operator;
+- exact parameter certificate below 200M;
+- unchanged confirmed parent; and
+- train-only/development/confirmation custody exactly `1/0/0`.
+
+Failure closes this addressed route before any fresh board. Passing authorizes
+only a fresh-board development experiment. It does not establish broad,
+natural-language, or unrestricted reasoning.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 183: `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md`
+
+Original source path: `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md`
+Original source size: 8,449 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Episodic Rule-Card Categorical State Transport
+
+**Protocol:** `R12-ER-CST-v1-theory`
+
+**Status:** CPU mechanics and the parameter-audited v1.2 neural adapter are locally
+admitted before source freeze. V1 omitted late query; v1.1 had only eight slots for
+depth eight plus pre-apply HALT. Both closed before board generation. V1.2 uses nine
+event slots and thirteen records. No board seed, training seed, H100 job, development
+score, or confirmation access exists.
+
+## 1. Why this is the next experiment
+
+SD-CST Complete Physical Fresh v1.3 confirms that a 192,129,179-parameter system
+can compile split-disjoint names and unseen compositions of known renderer factors
+into a source-deleted categorical program, execute one-to-six recurrent updates,
+halt, and answer exactly. Its remaining claim boundary is sharp: the event ontology
+is fixed. The compiler still learns that a small closed set of source constructions
+means the same three transition kinds.
+
+The next experiment must vary **what an operation means inside each problem**. It
+must not merely add paraphrases, layers, epochs, or another language scratchpad.
+
+## 2. Primary hypothesis
+
+An episode supplies three opaque operation names. Each operation is defined by one
+determining before/after example over three fresh witness symbols. The example
+identifies one position permutation in `S_3`. Program records invoke those opaque
+names in a new order. Entity names, witness symbols, operation names, source
+renderers, program, and query are split-disjoint.
+
+Shohin must emit:
+
+1. three categorical rule cards, each a permutation of three positions;
+2. a categorical program of rule-card references plus HALT;
+3. an initial entity order and late query.
+
+After packet sealing, all source text and residuals are destroyed. A tied learned
+rule-card motor receives only the current categorical state and selected categorical
+card. It applies the same transition at every recurrent step. The reader receives
+only the terminal state and query.
+
+This tests episodic semantic binding and compositional reuse. It does not claim
+unrestricted operation invention: the rule family is the six finite position
+permutations, and the determining-witness contract is structural.
+
+## 3. Identification theorem
+
+Let `x = (x0, x1, x2)` contain three distinct symbols and let `y` contain exactly
+the same symbols. There is one and only one permutation `p in S_3` satisfying
+`y[j] = x[p[j]]` for all output positions `j`. Therefore one complete witness
+identifies the categorical rule card exactly.
+
+If a tied motor applies each identified card exactly, induction on program depth
+gives exact execution for every finite sequence of those cards. This is an
+identification theorem under the named finite hypothesis family, not a separation
+from transformers or a proof of general reasoning.
+
+The executable CPU mechanics in `pipeline/er_cst_rule_cards.py` must pass before
+any neural implementation. Ambiguous witnesses with repeated symbols and malformed
+witnesses with unequal symbol sets are rejected rather than repaired.
+
+## 4. Neural architecture budget
+
+The confirmed v1.3 checkpoint remains the parent. The full deployed system may
+remain below the user-authorized 200M ceiling but may not exceed it:
+
+| Component | Parameters |
+|---|---:|
+| Confirmed v1.3 complete system | 192,129,179 |
+| ER-CST v1.2 complete system | 192,421,936 |
+| Net increase after motor replacement | 292,757 |
+| Remaining headroom below 200M | 7,578,064 |
+| Absolute complete-system maximum | 199,999,999 |
+
+The favorable treatment may reuse and fine-tune the confirmed physical line encoder.
+New parameters are limited to a thirteen-role record path, rule/event norms, a
+permutation-card head, opaque-opcode binding projections, a HALT head, and a tied
+rule-card motor. The exact 98-compiler-tensor plus four-motor-tensor trainability
+contract is frozen in `R12_ER_CST_NEURAL_ADAPTER_PREREG.md` and its amendments;
+its v1.2 name/shape/count hash is `1e637f3d...`. The adapter adds 309,525 compiler
+parameters and replaces the old 19,206-parameter motor with a 2,438-parameter tied
+motor. The inherited frozen query compiler adds no parameter or trainable tensor.
+
+The treatment may receive rule-card, opcode-pointer, program-pointer, initial-state,
+and query targets on training rows. It may not receive final states, answers,
+recurrent trajectories, development/confirmation rule cards, or confirmation bytes.
+
+## 5. Fresh-board split
+
+The production board should preserve the proven 48,000/2,048/2,048 custody pattern.
+Each family has multiple renderer views, but family membership never crosses splits.
+
+- training uses even-parity combinations of declaration, witness, event, and query
+  renderer factors;
+- development and sealed confirmation use odd-parity combinations;
+- entity names, witness symbols, and opcode names are globally split-disjoint;
+- before-state witness order is randomized, so output position alone does not reveal
+  the card without matching symbol identity;
+- all six permutations, depths one through eight, and all query positions are
+  balanced within every split;
+- exact prompt, 13-gram, name, latent family, and program-sequence overlap is zero;
+- confirmation remains mode `0600` and inaccessible until a separate evaluator is
+  committed after development authorization.
+
+## 6. Matched controls
+
+1. **Family-deranged rule cards:** identical source, architecture, initialization,
+   updates, and compute; rotate the three card targets within each family.
+2. **Equality-ablated witnesses:** replace every repeated witness symbol occurrence
+   with an independent nonce while preserving lengths and renderer statistics.
+3. **Opcode-deranged binding:** retain correct cards but rotate event-to-card links.
+4. **Source-free card logits:** zero the witness representation after compilation.
+5. **Uniform and shuffled packets:** unchanged source-blind executor controls.
+6. **Card storage reindex:** reorder rule-card records without changing semantics;
+   treatment output and execution must remain bit-identical after canonicalization.
+7. **Witness alpha rename:** consistently rename all witness symbols; cards, state,
+   and answer must remain bit-identical.
+8. **Opcode alpha rename:** consistently rename definitions and invocations; cards,
+   state, and answer must remain bit-identical.
+9. **Post-HALT suffix:** alter only records after predicted HALT; output must remain
+   bit-identical.
+10. **Witness corruption:** change one witness relation and score against the changed
+    oracle. The system may not repair toward the original answer.
+
+## 7. Development gates
+
+The sole development read authorizes one sealed confirmation only if all gates pass:
+
+- at least 95% exact rule cards overall and at least 90% on every renderer;
+- at least 95% exact opcode-to-card binding;
+- at least 90% exact complete packets and state/answer joints;
+- at least 85% exact joint on every renderer and every depth one through eight;
+- conditional execution is 100% exact given gold packets;
+- family-deranged and opcode-deranged complete packets are at most 20%;
+- equality-ablated exact cards are at most 35%;
+- witness/opcode alpha rename and card-storage reindex are bit-identical on every
+  mutually valid row;
+- post-HALT perturbation is bit-identical;
+- witness corruption follows the changed oracle and does not preserve the original;
+- source deletion, frozen-parent digest, exact parameter certificate, and custody
+  `1/0` all pass;
+- complete deployed parameters are strictly below 200M.
+
+Any failed absolute, causal, attribution, parameter, or custody gate closes that
+source/board without rescore. Passing establishes bounded episodic rule compilation
+and recurrent composition. It does not establish arithmetic, branching, free-form
+language programs, planning, or general reasoning.
+
+## 8. Ordered work
+
+1. Run and preserve the deterministic CPU falsifier.
+2. Implement the smallest rule-card adapter and exact parameter ledger. **Done.**
+3. Add gradient, source-deletion, malformed-card, and matched-arm tests. **Done for
+   the architecture contract; board-level matched-arm tests remain pre-freeze.**
+4. Freeze and push exact scientific source.
+5. Draw a board seed, build/audit/rebuild/seal the board, and commit its receipt.
+6. Draw one training seed and run one development job.
+7. Open confirmation once only after a separately frozen evaluator and a complete
+   development pass.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 184: `R12_ER_CST_FRESH_BOARD_PREREG.md`
+
+Original source path: `R12_ER_CST_FRESH_BOARD_PREREG.md`
+Original source size: 5,287 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-CST Fresh Board Preregistration
+
+**Protocol:** `R12-ER-CST-v1.2`
+
+**Status:** v1 closed before byte write on full-scale opaque-name collisions. V1.1
+changes only name allocation to a seed-keyed bijection. No admitted board, board
+bytes, training seed, H100 job, output, development access, or confirmation access
+exists.
+
+## 1. Purpose
+
+This board tests whether the 192,421,936-parameter ER-CST v1.2 system can infer
+episode-local operation semantics from determining witnesses and recurrently reuse
+those inferred cards. It does not reuse any closed scored row, operation name,
+entity name, witness symbol, or renderer composition.
+
+## 2. Fixed split
+
+| Split | Latent families | Renderer views | Rows | Fit visibility |
+|---|---:|---:|---:|---|
+| train | 12,000 | 4 | 48,000 | compiler fields only |
+| development | 512 | 4 | 2,048 | sealed scorer oracle |
+| confirmation | 512 | 4 | 2,048 | mode `0600`, unopened |
+
+Every family contains three distinct opaque operations, three entities, nine
+determining witness symbols, an initial entity order, a depth from one through
+eight, nine event slots, one query, and exactly one explicit HALT immediately after
+the active prefix. Records after HALT contain valid but inactive opcode invocations.
+
+Each operation card is one of the six `S_3` permutations. One before/after witness
+with three distinct symbols uniquely determines each card. The three cards are
+distinct inside a family and balanced across each split. Depths are exactly balanced;
+queries and card identities differ by at most one latent family.
+
+## 3. Renderer orbit
+
+The source has four binary factors: declaration, witness, event, and query grammar.
+Training uses the four even compositions `0000`, `0011`, `1100`, and `1111`.
+Scored splits use the disjoint odd coset `1000`, `1011`, `0100`, and `0111`.
+Every factor value appears equally in both sets, but no full composition crosses
+from training to scoring.
+
+The thirteen semantic records are independently shuffled into physical storage for
+every renderer view. The compiler must emit one declaration role, three ordered rule
+roles, and nine ordered event roles. Complete physical programs must remain within
+512 bytes and each line within the inherited 144-byte local window. Queries are
+separate single-line sources.
+
+## 4. Training information boundary
+
+Training JSONL may contain only:
+
+- physical role and line ranges;
+- three entity bindings and initial-order occurrence ranges;
+- initial six-state category;
+- three rule-card categories;
+- nine opcode-card references and HALT labels;
+- one categorical query and query pointer; and
+- renderer/family identifiers needed for batching and matched controls.
+
+Training rows contain no `oracle`, final state, answer, trajectory, executor output,
+correctness signal, retry target, development statistic, or confirmation byte.
+Development and confirmation oracles reside only in their respective files.
+
+## 5. Admission audit
+
+Before writing any scientific board, the pure builder and independent grammar parser
+must establish:
+
+1. exact 48,000/2,048/2,048 rows and 12,000/512/512 complete four-view families;
+2. all 52,096 rows round-trip through the production grammar, determining-witness
+   inference, categorical executor, query, and answer oracle;
+3. exactly one HALT, depth one through eight, and nine-state trajectory at depth eight;
+4. zero train oracle fields and complete scored oracle fields;
+5. all programs at most 512 bytes and all physical lines at most 144 bytes;
+6. balanced depth, card, and query distributions;
+7. globally unique opaque names by latent family and zero cross-split name overlap;
+8. zero exact prompt, raw word-13-gram, latent-family, and renderer-composition overlap;
+9. family-deranged card state exactness below 40%;
+10. byte-identical full rebuild from the same source and seed;
+11. confirmation mode exactly `0600`; and
+12. development/confirmation access exactly `0/0`.
+
+Any failed gate exits before output creation. A malformed line, repeated/missing HALT,
+wrong cardinality, invalid witness, unknown operation, or overlength source is rejected,
+not repaired.
+
+## 6. Neural controls and gates
+
+The treatment, family-deranged-card arm, and equality-ablated-witness arm must use
+identical architecture, initialization, optimizer, update count, batch order, and
+compute. Their only differences are the preregistered card labels or witness-identity
+relation. All inherited excluded tensors must remain byte-identical.
+
+The immutable development thresholds and causal controls remain those in
+`R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md`. Passing all gates authorizes one separately
+committed confirmation evaluator. Failure closes the board without rescore or
+threshold repair.
+
+## 7. Ordered custody
+
+1. Commit and push the exact v1.2 architecture, builder, parser, tests, and this
+   preregistration.
+2. Draw one signed-safe board seed after that commit.
+3. Build, audit, write, seal, and independently rebuild the board; hash every file.
+4. Commit the board receipt before drawing a training seed.
+5. Freeze training/evaluation/assessment source and submit one development job.
+
+No board seed may be chosen because it yields favorable model behavior. Rebuilds may
+verify bytes only; they may not alter the admitted board.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 185: `R12_ER_CST_FRESH_BOARD_PREREG_AMENDMENT_V1_1.md`
+
+Original source path: `R12_ER_CST_FRESH_BOARD_PREREG_AMENDMENT_V1_1.md`
+Original source size: 1,315 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-CST Fresh Board Preregistration Amendment v1.1
+
+**Status:** sole pre-write name-allocation repair. No admitted board, training seed,
+H100 job, output, development access, or confirmation access exists.
+
+After source commit `c06eab3e2476d9805bf1079c698143410e25eef5`, raw board
+seed `2459068742837489615` was drawn. The full 52,096-row in-memory audit passed
+every semantic, leakage, distribution, byte, and control gate except global opaque-
+name uniqueness. Independent 32-bit hash truncation produced birthday collisions at
+the full 195,360-name scale. The builder exited before creating its output directory,
+so no train, development, confirmation, report, or access bytes exist. That seed is
+closed permanently.
+
+V1.1 changes only name allocation. It maps each unique `(split, family, role, slot)`
+integer through a seed-keyed 32-bit XOR bijection and retains the same one-prefix plus
+eight-hex-character surface width. This makes uniqueness exact without changing row
+counts, renderer compositions, semantics, distributions, model architecture,
+supervision, controls, gates, or byte limits.
+
+A full-scale unit test enumerates all 195,360 planned names and requires exact
+uniqueness. The repaired source must be committed and pushed before a new board seed
+is drawn. The failed seed may not be reused.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 186: `R12_ER_CST_FRESH_BOARD_PREREG_AMENDMENT_V1_2.md`
+
+Original source path: `R12_ER_CST_FRESH_BOARD_PREREG_AMENDMENT_V1_2.md`
+Original source size: 1,535 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-CST Fresh Board Preregistration Amendment v1.2
+
+**Status:** pre-training identifiability repair. No training seed, H100 job, neural
+output, development access, or confirmation access exists.
+
+The v1.1 board from exact source `fba34cdc9bfab75882dee8093b07ab96042d4a07`
+and seed `1686667709479653771` passed every integrity gate and remains unopened, but
+a post-admission architecture/data audit found that its three rule-card records had
+arbitrary latent slot IDs with no source-visible address. Exact ordered card scoring
+would therefore reward accidental compact-name correlations or an unidentifiable
+permutation choice.
+
+That board is closed before training. V1.2 adds only a one-character rule-slot address
+to each determining witness record: `W1`/`W2`/`W3` or the matched renderer's
+`L1`/`L2`/`L3`. The address identifies where to store a learned card; it reveals no
+permutation, opcode binding, execution result, query, state, or answer. Physical line
+storage remains independently shuffled, so the compiler must still parse the address,
+infer operation meaning from before/after symbol equality, and bind later opaque opcode
+uses.
+
+The independent production parser now requires exactly one of every rule slot and
+checks each slot against the target. Row counts, family construction, name bijection,
+renderer cosets, model architecture, parameter count, supervision, controls, gates,
+and custody remain unchanged. The old board seed may not be reused. Commit and push
+this exact repair before drawing a new board seed.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 187: `R12_ER_CST_FRESH_BOARD_RESULT.md`
+
+Original source path: `R12_ER_CST_FRESH_BOARD_RESULT.md`
+Original source size: 2,724 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-CST Fresh Board Result
+
+**Decision:** `close_pretraining_unidentifiable_rule_slot_order`.
+
+This board passed every integrity gate but is closed before training by
+`R12_ER_CST_FRESH_BOARD_PREREG_AMENDMENT_V1_2.md`. Its three rule records did not
+surface their arbitrary latent storage slot, making ordered card targets
+unidentifiable. No training seed or scored access exists; do not train or score this
+board.
+
+**Scientific source:** `fba34cdc9bfab75882dee8093b07ab96042d4a07`
+
+**Board seed:** `1686667709479653771`
+
+## Closed predecessor
+
+Source `c06eab3e2476d9805bf1079c698143410e25eef5` and seed
+`2459068742837489615` closed before byte write because independent 32-bit name
+hashes collided at full scale. The builder created no output directory. V1.1 changed
+only name allocation to a seed-keyed bijection; the failed seed was not reused.
+
+## Admitted board
+
+| Split | Families | Views | Rows | SHA-256 |
+|---|---:|---:|---:|---|
+| train | 12,000 | 4 | 48,000 | `57abe77eadde0d5bb6573d8f70db73567c4ee85f6621554a20f190fb54556361` |
+| development | 512 | 4 | 2,048 | `8ef7f8249a5d1b1e0383a9211b9e9a36573baf0a56eaf6dd5eae5a1fc624ac22` |
+| sealed confirmation | 512 | 4 | 2,048 | `a6dc26a50784122d993b3151686b5289af97eec877521f32dab295295203a207` |
+
+Board report SHA-256:
+`5c9b5b812e55dd5d19b32262d0c4af5b4b5f1af477959ed3901dc76df98d2f13`.
+
+The confirmation file is mode `0600`. Development and confirmation access are
+exactly `0/0`.
+
+## Audit
+
+All thirteen admission gates pass:
+
+- exact row and complete four-view family counts;
+- 52,096/52,096 independent grammar, witness, executor, query, and oracle agreement;
+- no oracle/final-state/answer/trajectory fields in training;
+- complete scored oracles isolated to development and confirmation files;
+- exactly one explicit HALT and exact depth-one-through-eight balance;
+- exact training card/query balance and scored near-balance;
+- 195,360/195,360 globally unique compact opaque names;
+- zero train/development/confirmation overlap in names, exact prompts, raw word
+  13-grams, and latent families;
+- disjoint training/scored renderer compositions with every factor value balanced;
+- maximum program 402/512 bytes and maximum line 74/144 bytes; and
+- family-deranged cards retain only 2,068/13,024 = **15.878%** exact final state.
+
+A second complete build under `/tmp` from the same exact source and seed is
+byte-identical for train, development, confirmation, and report files.
+
+## Boundary
+
+This result admits only one training-seed draw and the separately frozen neural
+development experiment. It is data integrity evidence, not a model capability or
+reasoning result. No H100 job, neural output, development read, or confirmation read
+exists at this point.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 188: `R12_ER_CST_FRESH_BOARD_V1_2_RESULT.md`
+
+Original source path: `R12_ER_CST_FRESH_BOARD_V1_2_RESULT.md`
+Original source size: 1,957 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-CST Fresh Board v1.2 Result
+
+**Decision:** `admit_addressed_er_cst_board_before_training_seed`
+
+**Scientific source:** `9cf9d043d0e86a30d18c6d5e3b838c80ec054d7c`
+
+**Board seed:** `8277659525319823840`
+
+## Board
+
+| Split | Families | Views | Rows | SHA-256 |
+|---|---:|---:|---:|---|
+| train | 12,000 | 4 | 48,000 | `b5cb2f14949b68e9f005b03d11356a24a3d75df76876aebd2da20a3d9efc2a28` |
+| development | 512 | 4 | 2,048 | `5cd0395f6b171c5b61e741694ffe3f584d3d60d0795bcdfbfbc27966cfc56ef9` |
+| sealed confirmation | 512 | 4 | 2,048 | `7404b2473da5d76835f4d5bf69d852b62572683cd878c6c968740421cae54189` |
+
+Board report SHA-256:
+`589b203fb4fec3c55b1b4d77efaf78d127ce127fc98633279c69b305dad2e704`.
+
+Confirmation is mode `0600`; access is exactly `0/0`.
+
+## Admission evidence
+
+All thirteen immutable gates pass. The production parser requires each addressed
+rule slot exactly once, every witness identifies its card, every event binds to a
+known opaque opcode, and the independent executor/query oracle agrees on all 52,096
+rows. Training contains no final state, answer, trajectory, or oracle field.
+
+Depths one through eight are exactly balanced. Names are 195,360/195,360 unique.
+Train/development/confirmation overlap is zero for names, exact prompts, raw word
+13-grams, and latent families. Renderer compositions are disjoint while every factor
+value remains balanced. Maximum program and line sizes are 405/512 and 75/144 bytes.
+Family-deranged cards retain 2,033/13,024 = **15.610%** exact final states.
+
+A second complete build from the same exact source and seed is byte-identical for all
+four files.
+
+## Boundary
+
+The earlier unaddressed source `fba34cd` board is closed and must never be trained.
+This v1.2 board admits only frozen training/evaluation source and one later training-
+seed draw. It is data-integrity evidence, not neural reasoning evidence. No training
+seed, H100 job, neural output, development read, or confirmation read exists.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 189: `R12_ER_CST_NEURAL_ADAPTER_PREREG.md`
+
+Original source path: `R12_ER_CST_NEURAL_ADAPTER_PREREG.md`
+Original source size: 6,590 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-CST Neural Adapter Preregistration
+
+**Protocol:** `R12-ER-CST-v1-neural-adapter`
+
+**Status:** v1 closed before board generation because its public output omitted
+the late-query category. It has no board seed, training seed, H100 job, output,
+development read, confirmation read, or neural result. V1.1 is defined only by
+`R12_ER_CST_NEURAL_ADAPTER_PREREG_AMENDMENT_V1_1.md`.
+
+## 1. Question
+
+Can Shohin infer three episode-local `S_3` permutation laws from determining
+before/after witnesses, bind fresh opaque operation names to those laws, delete
+the source, and compose the resulting categorical cards with one tied recurrent
+motor?
+
+This is the first post-confirmation test in which operation meaning changes in
+every problem. It is still a bounded finite-law test, not a claim of arbitrary
+program induction or general reasoning.
+
+## 2. Exact inherited parent
+
+The only permitted parent is the independently confirmed SD-CST Complete
+Physical Fresh v1.3 treatment:
+
+| Receipt | SHA-256 |
+|---|---|
+| confirmed checkpoint | `a5888d88541904cfa186a6686012c13c7b555f7d186ba1e3e73f71dbaca462d8` |
+| confirmation assessment | `4629a745f6eed2e388eb6e1f78b29dff346ee6939e21275ae6ff1d66719d3cb9` |
+| reconstructed parent state | `cfb3d8bdf712bd0ed51e35c015b8a106b4b48b6112418585fc1df1139c3b49d9` |
+
+Initialization must reconstruct all four parent stages, load the confirmed
+treatment state, and copy every inherited tensor byte-identically into the
+ER-CST subclass. A missing or changed parent tensor is fatal.
+
+## 3. Frozen architecture
+
+The compiler consumes exactly twelve newline-delimited physical records:
+
+1. one declaration/initial-state record;
+2. three rule-witness records; and
+3. eight event records, including a persistent HALT suffix.
+
+It reuses the confirmed local byte/position embeddings, four-layer line encoder,
+two-layer record-set encoder, and nonlinear six-occurrence pointer head. It adds
+exactly thirteen tensors:
+
+- a twelve-role physical-record head and role embeddings;
+- independent rule and event normalizations;
+- a six-class permutation-card head;
+- a two-class HALT head; and
+- one event-query and one rule-key projection for opcode-to-card binding.
+
+The model emits only categorical initial-state, three card, eight card-reference,
+and eight HALT logits plus source-facing pointer logits. After hard packet sealing,
+the source, token memory, record representations, and compiler residuals are
+destroyed. The executor receives only categorical state/card/reference/HALT
+tensors and the motor weights.
+
+The tied motor is a `12 -> 128 -> 6` GELU MLP reused at every step. Its complete
+domain is all `6 x 6 = 36` state/card pairs, and its certificate target is exact
+permutation composition. It replaces the confirmed parent's 19,206-parameter
+fixed motor rather than coexisting with it.
+
+## 4. Exact parameter certificate
+
+| Component | Parent | ER-CST |
+|---|---:|---:|
+| immutable Shohin trunk | 125,081,664 | 125,081,664 |
+| compiler | 67,027,474 | 67,336,230 |
+| categorical motor | 19,206 | 2,438 |
+| categorical reader | 835 | 835 |
+| **complete deployed system** | **192,129,179** | **192,421,167** |
+| **headroom below 200M** | **7,870,821** | **7,578,833** |
+
+The new compiler contributes 308,756 parameters while the smaller motor removes
+16,768, for a net increase of 291,988. Exactly 11,715,616 parameters are
+trainable: 11,713,178 compiler parameters and 2,438 motor parameters. The
+compiler whitelist contains 98 tensors; the motor contains four. The canonical
+name/shape/count contract SHA-256 is
+`f2c6c1debd1e17c43c287b2dc72db1185765ba9fa7d340ed56007c65c0a1bc2b`.
+
+The excluded compiler state digest after exact reconstruction is
+`1ad33273f7db5073b4cfac0e79031544a74b74914050026642110aee484c94e7`.
+It must remain byte-identical for every arm.
+
+## 5. Permitted supervision
+
+Training rows may supervise only:
+
+- twelve physical-record roles and source pointers;
+- declaration bindings and initial-state identities;
+- the three six-class rule cards;
+- eight opcode-to-card references;
+- one HALT decision per event slot; and
+- the motor's fixed 36-cell categorical composition certificate.
+
+Training may not expose final states, answers, recurrent trajectories, depth as a
+feature, development/confirmation cards, executor output, correctness feedback,
+retry/search, or any scorer field. Development and confirmation rows may contain
+oracles only in files inaccessible to fitting.
+
+## 6. Matched neural arms
+
+The scientific fit must include at least:
+
+1. **treatment:** true episode-local rule cards and opcode bindings;
+2. **family-deranged cards:** same source, initialization, parameters, updates,
+   and data order, with all three card labels rotated inside each family; and
+3. **equality-ablated witness:** same physical surfaces and budget, but repeated
+   witness identities are independently renamed so the relation is unavailable.
+
+Evaluation additionally applies opcode-deranged binding, card-storage reindex,
+witness/opcode alpha rename, post-HALT suffix, witness corruption, source-free,
+uniform-packet, shuffled-packet, and gold-packet controls. No arm may share an
+output directory or read another arm's predictions.
+
+## 7. Pre-board evidence
+
+- 14 focused adapter/mechanics/receipt tests pass.
+- Ruff, byte compilation, and diff checks pass.
+- Every declared trainable tensor receives a nonzero gradient in a real compiler
+  forward/backward; no excluded tensor receives a gradient.
+- The tied motor fits all 36 state/card transitions exactly.
+- The actual confirmed parent reconstructs and copies byte-identically.
+- The exact parameter and excluded-state certificates above reproduce locally.
+- The frozen CPU mechanics report passes all seven gates over 10,000 episodes;
+  card derangement retains only 15.08% exact final state.
+
+## 8. Ordered custody
+
+1. Commit and push this architecture, implementation, tests, and receipt.
+2. Draw one board seed only after that exact commit.
+3. Build 48,000/2,048/2,048 train/development/sealed-confirmation rows, audit all
+   semantics and split exclusions, and reproduce the build byte-identically.
+4. Commit the board receipt, then draw one training seed.
+5. Run one development job with atomic access ledger and independent assessment.
+6. Open confirmation once only if every frozen gate in
+   `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md` passes.
+
+Any architecture, parameter, supervision, optimizer, board, threshold, or
+evaluator change after its corresponding freeze requires a fresh version and
+fresh unopened board. A mechanics or fit pass alone is not neural reasoning
+evidence.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 190: `R12_ER_CST_NEURAL_ADAPTER_PREREG_AMENDMENT_V1_1.md`
+
+Original source path: `R12_ER_CST_NEURAL_ADAPTER_PREREG_AMENDMENT_V1_1.md`
+Original source size: 2,206 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-CST Neural Adapter Preregistration Amendment v1.1
+
+**Protocol:** `R12-ER-CST-v1.1-neural-adapter`
+
+**Status:** closed pre-board after the subsequent audit found eight event slots
+cannot represent depth eight plus explicit pre-apply HALT. No board seed, training
+seed, H100 job, output, development access, or confirmation access exists. V1.2 is
+defined by `R12_ER_CST_NEURAL_ADAPTER_PREREG_AMENDMENT_V1_2.md`.
+
+## Closed v1 defect
+
+Exact source commit `0159bd4` froze a parameter-audited compiler for initial
+state, rule cards, opcode bindings, and HALT. A subsequent board-interface audit
+found that its public compilation result omitted the late-query category and
+query pointer. It could therefore evaluate terminal state but could not invoke
+the preregistered categorical reader to produce an answer.
+
+V1 is closed before any board seed or scored byte existed. This is an interface
+omission, not a neural result.
+
+## Sole v1.1 change
+
+`compile_rule_program` now accepts a separate late-query byte tensor and validity
+mask, invokes the inherited confirmed `compile_query_with_evidence` path exactly
+once, and includes its three-class query logits and source pointer logits in the
+compiler result. The query path is frozen; it receives no new parameter and no
+new trainable tensor.
+
+Every other contract remains unchanged:
+
+- same confirmed parent and byte-identical reconstruction;
+- same twelve physical program records;
+- same thirteen new compiler tensors;
+- same 98 compiler plus four motor trainability tensors and contract hash;
+- same 192,421,167 complete parameters, 11,715,616 trainable parameters, and
+  7,578,833 headroom below 200M;
+- same source-deletion boundary, now explicitly including the categorical query;
+- same permitted supervision, controls, optimizer boundary, and development
+  gates; and
+- no final-state, answer, trajectory, executor, or scorer supervision.
+
+The full adapter tests must prove query/category/pointer shape, source-only query
+compilation, gradient isolation, exact parent reconstruction, and unchanged
+parameter certificates before v1.1 source can freeze. A board seed may be drawn
+only after the repaired source and builder are committed and pushed.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 191: `R12_ER_CST_NEURAL_ADAPTER_PREREG_AMENDMENT_V1_2.md`
+
+Original source path: `R12_ER_CST_NEURAL_ADAPTER_PREREG_AMENDMENT_V1_2.md`
+Original source size: 1,969 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-CST Neural Adapter Preregistration Amendment v1.2
+
+**Protocol:** `R12-ER-CST-v1.2-neural-adapter`
+
+**Status:** locally admitted before source freeze, board seed, training seed, H100
+job, output, or scored access.
+
+## Closed v1.1 defect
+
+V1.1 restored the categorical query interface but retained eight event slots.
+Because the tied executor tests HALT before applying a card, eight slots can encode
+at most seven active updates followed by HALT. The frozen task requires balanced
+depths one through eight. V1.1 is therefore closed before any board seed or data
+bytes existed.
+
+## Sole v1.2 change
+
+V1.2 increases event slots from eight to nine and physical records from twelve to
+thirteen. This permits eight active card applications followed by one explicit
+persistent HALT. No recurrent rule, supervision type, optimizer, control, evaluator,
+or threshold changes.
+
+The thirteen-record role head and embeddings add exactly 769 parameters:
+
+| Quantity | V1.2 |
+|---|---:|
+| immutable Shohin trunk | 125,081,664 |
+| compiler | 67,336,999 |
+| tied categorical motor | 2,438 |
+| categorical reader | 835 |
+| **complete deployed system** | **192,421,936** |
+| **trainable parameters** | **11,716,385** |
+| **headroom below 200M** | **7,578,064** |
+
+The compiler whitelist remains 98 tensors and the motor remains four tensors,
+but the changed role tensor shapes produce trainability contract SHA-256
+`1e637f3ddc09c1f89d5af9d8d258eb212218517991249ca6ff6e62ced9931eec`.
+The exact confirmed-parent state and excluded-state digests remain
+`cfb3d8bdf712bd0ed51e35c015b8a106b4b48b6112418585fc1df1139c3b49d9`
+and `1ad33273f7db5073b4cfac0e79031544a74b74914050026642110aee484c94e7`.
+
+The board builder must enforce exactly one HALT, depths one through eight, thirteen
+nonempty physical program lines, and exact executor agreement before any scored
+split is sealed. A board seed may be drawn only after the v1.2 architecture and
+fresh-board source are committed and pushed.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 192: `R12_ER_CST_RULE_CARD_CPU_RESULT.md`
+
+Original source path: `R12_ER_CST_RULE_CARD_CPU_RESULT.md`
+Original source size: 2,168 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-CST Rule-Card CPU Result
+
+**Decision:** `admit_er_cst_rule_card_neural_implementation`.
+
+**Status:** finite mechanics pass only. No neural architecture, board, seed, H100
+run, development score, or confirmation access exists.
+
+## Frozen contract
+
+| Item | Value |
+|---|---:|
+| Exact source commit | `5a03824d2adcaa11633c6b7fd77cebe73afbd99e` |
+| CPU seed | 1,729 |
+| Registered episodes | 10,000 |
+| Rule family | all six three-position permutations in `S_3` |
+| Opaque cards per episode | 3 |
+| Program depth | 1--12 |
+
+Each card is inferred from one determining before/after witness containing three
+distinct fresh symbols. The inferred card maps output positions to input positions.
+Programs then invoke three fresh opaque opcode names and stop at a sampled HALT.
+
+## Results
+
+| Gate | Exact / total |
+|---|---:|
+| Determining-witness inference | **10,000/10,000** |
+| Program execution and full trajectory | **10,000/10,000** |
+| Witness-symbol alpha rename | **10,000/10,000** |
+| Opcode alpha rename | **10,000/10,000** |
+| Card-storage reindex | **10,000/10,000** |
+| Post-HALT suffix invariance | **10,000/10,000** |
+| Family card derangement final-state exact | 1,508/10,000 = **15.08%** |
+
+All seven frozen CPU gates pass. Malformed witnesses, repeated-symbol ambiguous
+witnesses, invalid cards, unknown opcodes, and invalid HALT positions are rejected
+rather than repaired.
+
+## Hashes
+
+| Artifact | SHA-256 |
+|---|---|
+| Durable report | `90c5e6fe90acb5185b1dd1ff41ca5f6774a283c587244d31a02ebccc5d8d055f` |
+| Episode registration | `a3802185b26b356c9cf6472fd0d2d71cf6674e1299834b396a8e7e0e6bd27a93` |
+
+## Interpretation
+
+The finite rule-card representation is well-defined, uniquely identifiable from the
+named witness family, exactly compositional, alpha-invariant, storage-order invariant,
+and HALT-persistent. Card derangement produces the expected near-chance collapse.
+
+This admits implementation of a parameter-audited neural compiler and tied rule-card
+motor under the remaining 7,870,820-parameter budget. It is not neural evidence and
+does not establish episodic rule induction, natural-language grounding, planning, or
+general reasoning.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 193: `R12_ER_CST_TRAINING_PREREG.md`
+
+Original source path: `R12_ER_CST_TRAINING_PREREG.md`
+Original source size: 6,716 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-CST Fresh Neural Qualification Preregistration
+
+**Protocol:** `R12-ER-CST-v1.2`
+**Status:** pre-source-freeze; no training seed drawn; development and confirmation unopened
+**Absolute complete-system ceiling:** fewer than 200,000,000 parameters
+
+## Question
+
+Can Shohin infer three fresh, problem-local operations from determining
+before/after witnesses, bind later opaque opcode uses to those inferred rule
+cards, delete the source, and recurrently compose the cards through an internal
+HALT before answering a separately rendered late query?
+
+This is a bounded episodic semantic-binding test over the six permutations of
+three symbols (`S_3`). A pass is evidence for fresh rule inference plus
+source-deleted recurrent reuse. It is not evidence for arbitrary algebra,
+unrestricted natural-language reasoning, planning, or general intelligence.
+
+## Frozen Inputs
+
+- Confirmed parent: SD-CST Complete Physical Fresh v1.3, checkpoint SHA-256
+  `a5888d88541904cfa186a6686012c13c7b555f7d186ba1e3e73f71dbaca462d8`.
+- Independent parent assessment SHA-256
+  `4629a745f6eed2e388eb6e1f78b29dff346ee6939e21275ae6ff1d66719d3cb9`.
+- Addressed board source commit
+  `9cf9d043d0e86a30d18c6d5e3b838c80ec054d7c`.
+- Board seed `8277659525319823840`; board report SHA-256
+  `589b203fb4fec3c55b1b4d77efaf78d127ce127fc98633279c69b305dad2e704`.
+- Train/development/sealed-confirmation rows: 48,000 / 2,048 / 2,048.
+- Train/development/confirmation SHA-256 values begin
+  `b5cb2f14` / `5cd0395f` / `7404b247`; current custody is `0/0`.
+
+The training split contains compiler fields only. It contains no final state,
+answer, trajectory, recurrent target, development target, or confirmation
+target. Every family has four renderer views. Train and scored renderer
+compositions, opaque names, prompts, families, and word 13-grams are disjoint.
+
+## Architecture And Budget
+
+The confirmed 125,081,664-parameter Shohin trunk is frozen. The inherited and
+ER-CST compiler has 67,336,999 parameters. A 2,438-parameter tied motor applies
+one selected `S_3` card at every recurrent step. An independent 835-parameter
+reader maps only final categorical state and late-query position to one of
+three answer roles.
+
+| Component | Parameters |
+|---|---:|
+| Frozen Shohin trunk | 125,081,664 |
+| Complete compiler | 67,336,999 |
+| Tied rule-card motor | 2,438 |
+| Independent final-state reader | 835 |
+| **Complete system** | **192,421,936** |
+| Trainable compiler + motor | 11,716,385 |
+| Headroom below 200M | 7,578,064 |
+
+The motor and reader receive only complete finite-domain table supervision:
+36 state/card transitions and 18 state/query answers. They receive no program,
+trajectory, development, or confirmation examples. Both tables must be exact
+before compiler fitting continues. Their learned weights, not a host operation
+table, execute the scored recurrence.
+
+## Three Equal-Budget Arms
+
+All arms start from byte-identical compiler, motor, and reader initialization,
+use the same family minibatch order, and receive exactly 48,000 rows for two
+epochs (3,000 optimizer updates).
+
+1. **Treatment:** true determining witnesses and true rule-card labels.
+2. **Family-deranged:** source is unchanged, but a family-stable random
+   nonidentity rotation assigns witness-card labels to the wrong storage slots.
+   Renderer views retain the same false mapping.
+3. **Equality-ablated:** all six witness symbols in each before/after record are
+   replaced independently while preserving every byte width and target. This
+   retains layout and surface positions but removes the equality relation that
+   determines the permutation.
+
+Neither negative arm receives less optimization, fewer rows, a weaker model,
+or a different renderer-consistency objective.
+
+## Optimization
+
+- Compiler: AdamW, learning rate `2e-4`, betas `(0.9, 0.95)`, weight decay
+  `0.01`, 100-update warmup, cosine decay to zero, global gradient clip `1.0`.
+- Batch: eight complete semantic families = 32 renderer rows per update.
+- Epochs/updates: two / 3,000.
+- Renderer consistency weight: `1.0` over initial state, rule cards, event-card
+  references, HALT, and late-query distributions.
+- Motor: AdamW, 1,000 updates, learning rate `0.003`, zero weight decay.
+- Reader: AdamW, 500 updates, learning rate `0.005`, zero weight decay.
+- Arithmetic: bf16 autocast on one H100-class GPU; losses and categorical
+  decisions are accumulated/evaluated in float32 where implemented.
+
+Supervision covers thirteen semantic-line pointers, declaration binding and
+initial pointers, the late-query pointer, initial state, three inferred rule
+cards, nine event references, nine HALT flags, and late-query position. Event
+card identity is ignored only at the explicit HALT slot. Post-HALT source
+records remain parser targets but cannot alter recurrent state after HALT.
+
+## Custody And Scoring
+
+The source commit is frozen and pushed before the training seed is drawn. The
+job must verify exact source bytes, parent hashes, board hashes, confirmation
+mode `0600`, bf16 CUDA, and the parameter certificate. It loads only
+`train.jsonl` during fitting.
+
+After all three arms finish, one read-only checkpoint containing every fitted
+compiler/motor/reader state is atomically written and hash-bound with
+development/confirmation access `0/0`. Only then may an `O_EXCL`, mode-`0444`
+development ledger be created. The 2,048 development rows are opened once.
+The sealed confirmation is never read by the pilot or assessor.
+
+An independent assessor recomputes exact packet, pointer, state, answer, joint,
+depth, and renderer metrics from raw categorical evidence and verifies all
+artifact hashes, finite motor/reader tables, parameter counts, and custody.
+
+## Frozen Development Gates
+
+- Treatment exact packet, state, answer, and joint: each at least 90% overall.
+- Treatment joint: at least 85% for every unseen renderer composition and at
+  least 80% at every depth one through eight.
+- Every packet field: at least 95% overall.
+- Every pointer family: at least 90% overall.
+- Treatment packet and joint advantage: at least 50 percentage points over
+  each equal-budget negative arm.
+- Each negative arm: packet at most 35% and state at most 40%.
+- All 36 motor and 18 reader cells exact for every arm.
+- Confirmed parent digest unchanged for every arm.
+- Complete system strictly below 200M parameters.
+- Development/confirmation custody exactly `1/0` after scoring.
+- Pilot metrics and gate vector must match independent recomputation exactly.
+
+Only if every scientific and assessor gate passes may a separate committed
+one-read confirmation evaluator be implemented. Thresholds will not be relaxed,
+the board will not be rescored, and a failed development board will remain
+closed.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 194: `R12_ER_CST_V1_RESULT.md`
+
+Original source path: `R12_ER_CST_V1_RESULT.md`
+Original source size: 2,869 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# ER-CST v1 Development Result
+
+**Decision:** reject; do not open confirmation
+
+**Final custody:** development 1, confirmation 0
+
+**Scientific source:** `90fd496de23ee9f12d21fa2c553df0de3fad9b23`
+
+**Board seed:** `8277659525319823840`
+
+**Training seed:** `7148525615058810782`
+
+**Sole job:** `694511` on H100 `evc25`
+
+## Artifact identity
+
+| Artifact | SHA-256 |
+|---|---|
+| Immutable checkpoint | `150febfa00d1129a61876ab4a852708225a3b9ab29bece4737e1dbeb84874136` |
+| Raw development evidence | `05756471521072f5024c0cbfb3ddf3d92053e7d8845b00dec7355792ed318f37` |
+| Development report | `be4b5c5050bf148f5d86614433d3b53a7ed21160b6864a8c0a799f5c1dde2822` |
+| Independent assessment | `39ffd483a0167a09158196b2d22a310ba85279b795ab4e7b7a291b1193858bc9` |
+| Development access ledger | `5efae65cf5f15762643f8a1bac18ce2fb68cdf9fbccfb6df43cb3c84769bd1c2` |
+
+Newton and local read-only mirrors hash-match.
+
+## Exact development scores
+
+| Arm | Initial | Cards | Events | HALT | Query | State | Answer | Packet/joint |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Treatment | 642/2,048 (31.348%) | 0/2,048 | 2,048/2,048 | 2,048/2,048 | 2,048/2,048 | 311/2,048 (15.186%) | 682/2,048 (33.301%) | 0/2,048 |
+| Family-deranged | 2,018/2,048 (98.535%) | 0/2,048 | 2,048/2,048 | 2,048/2,048 | 2,048/2,048 | 431/2,048 (21.045%) | 775/2,048 (37.842%) | 0/2,048 |
+| Equality-ablated | 1,398/2,048 (68.262%) | 0/2,048 | 2,048/2,048 | 2,048/2,048 | 2,048/2,048 | 362/2,048 (17.676%) | 706/2,048 (34.473%) | 0/2,048 |
+
+Every arm is also 2,048/2,048 on line, declaration-binding, initial-occurrence,
+and query-occurrence pointers. Treatment has zero exact complete card tuples in
+every renderer and depth group.
+
+## Post-result localization
+
+Treatment's direct card head predicts only classes 2, 3, and 4 and collapses target
+classes into coarse groups. Interpreting predictions under the inverse-permutation
+convention recovers only 22.27% card cells. Fitting the best global class remapping
+on the first 1,024 development rows and applying it to the held-out 1,024 rows gives:
+
+- 33.46% card-cell exactness;
+- 16.80% complete three-card tuple exactness;
+- 42.77% corrected initial-state exactness;
+- 20.21% corrected recurrent-state exactness;
+- 40.72% corrected answer exactness.
+
+Therefore the negative is not a hidden global code permutation. The matched controls
+and fit losses show two facts:
+
+1. the structural parser, record order, opcode references, HALT, query, categorical
+   motor, and reader are not the bottleneck;
+2. an undifferentiated record vector fails to extract before/after equality, and its
+   card loss interferes with declaration/initial features.
+
+The admitted repair is the fresh-board Witness Equality Bus preregistered in
+`R12_ER_CST_WITNESS_EQUALITY_BUS_PREREG.md`. The old development board must never be
+rescored and its confirmation must remain sealed.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 195: `R12_ER_CST_WITNESS_EQUALITY_BUS_PREREG.md`
+
+Original source path: `R12_ER_CST_WITNESS_EQUALITY_BUS_PREREG.md`
+Original source size: 6,988 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-CST v1.1 Witness Equality Bus Preregistration
+
+**Status:** pre-board, pre-seed scientific contract
+
+**Date:** 2026-07-20
+
+**Hard complete-system ceiling:** fewer than 200,000,000 parameters
+
+## 1. Closed predecessor result
+
+ER-CST v1 (`90fd496`, board seed `8277659525319823840`, training seed
+`7148525615058810782`, job `694511`) is rejected on its sole development read.
+Its confirmation remains sealed at access count zero.
+
+The result is not a generic parser or executor failure. On 2,048 fresh development
+rows, treatment achieves 100% exact line, declaration binding, initial occurrence,
+late-query occurrence, event-reference, HALT, and query fields. It achieves zero
+complete three-card packets, 311/2,048 exact recurrent states, 682/2,048 answers,
+and zero joints. Family-deranged training retains 2,018/2,048 exact initial states;
+equality-ablated training retains 1,398/2,048. A held-out global class-remapping
+diagnostic recovers only 16.80% complete card tuples. Therefore the live failure is
+dynamic equality extraction from determining witnesses, with secondary gradient
+interference between card and declaration features. It is not a simple inverse-card
+or output-code mismatch.
+
+## 2. Hypothesis
+
+The confirmed SD-CST transport/runtime already has sufficient capacity for exact
+bounded compilation and recurrence. ER-CST v1 asked one undifferentiated record
+vector to discover a six-occurrence equality relation and classify a permutation.
+That is the wrong inductive interface.
+
+ER-CST v1.1 predicts that a model-owned relational bottleneck will solve the missing
+operation:
+
+1. select the three `before` and three `after` opaque-name occurrences in each rule;
+2. fingerprint the selected byte strings with the inherited learned bigram bus;
+3. construct a learned 3x3 `after`-to-`before` equality matrix;
+4. score all six legal `S_3` assignments by summing their three selected equality
+   edges;
+5. delete source and use only the resulting categorical cards in the unchanged
+   recurrent motor.
+
+This is structured model-owned equality attention. The host enumerates the declared
+finite `S_3` output domain but never parses names, supplies equality edges, chooses a
+card, reads execution, or repairs a prediction.
+
+## 3. Frozen architecture
+
+Parent: independently confirmed SD-CST Complete Physical Fresh v1.3.
+
+Preserved without semantic change:
+
+- thirteen-record physical parser and semantic role assignment;
+- declaration binding and initial-state compiler;
+- opcode-to-rule event references;
+- explicit pre-apply HALT and post-HALT suffix suppression;
+- late-query compiler;
+- 36-cell tied categorical card motor;
+- 18-cell categorical state reader.
+
+Removed:
+
+- the direct six-way `er_rule_permutation_head` classifier.
+
+Added:
+
+- six learned occurrence queries per semantic rule;
+- dedicated witness query/key projections and normalization;
+- a fingerprint-space equality projection and bounded learned scale;
+- exact finite assignment aggregation over the six `S_3` permutations;
+- public witness-pointer and 3x3 equality evidence.
+
+Card and witness-pointer gradients see detached shared records, token memory, and
+record assignment. They cannot rewrite the declaration/initial path. Other parser
+losses retain their prior trainability contract.
+
+Exact default counts:
+
+| Component | Parameters |
+|---|---:|
+| Raw Shohin base | 125,081,664 |
+| Witness-equality compiler | 67,641,890 |
+| Tied card motor | 2,438 |
+| State reader | 835 |
+| **Complete system** | **192,726,827** |
+| **Headroom below 200M** | **7,273,173** |
+| Trainable complete system | 12,021,276 |
+
+## 4. Fresh board
+
+No predecessor scored row may be reused. After this source is committed and pushed,
+draw one board seed and generate:
+
+- 48,000 train rows from 12,000 four-renderer families;
+- 2,048 one-read development rows from 512 disjoint families;
+- 2,048 sealed confirmation rows from 512 disjoint families.
+
+The board retains fresh opaque names, random physical record order, disjoint
+train/scored renderer-composition cosets, depths one through eight, and explicit
+following HALT. Training exposes compiler fields only. It adds occurrence-span
+targets for `before[0:3]` and `after[0:3]` in each of three rules. These spans are
+parser supervision, not equality, card, trajectory, final-state, or answer oracle.
+
+Required board gates include all predecessor integrity gates plus exact decoding of
+all 18 witness spans per row, independent byte-identical rebuild, mode `0600` on
+confirmation, and development/confirmation access `0/0`.
+
+## 5. Frozen arms and budget
+
+All arms start from byte-identical initialization and receive 48,000 rows, two
+epochs, 3,000 updates, family batch eight/four renderer views, AdamW lr `2e-4`, 100
+warmup updates, cosine decay, clip 1.0, and identical motor/reader certificates.
+
+1. **Treatment:** true source witnesses and true cards.
+2. **Family-deranged:** true source witnesses; card labels are a family-stable
+   non-identity rotation of rule slots.
+3. **Equality-ablated:** true card labels; each of the six witness occurrences is
+   replaced by a distinct, width-preserving, family-stable opaque name. Occurrence
+   spans, byte offsets, renderer identity, grammar, and all non-equality evidence are
+   preserved.
+
+No arm receives final state, answer, trajectory, development labels, confirmation
+labels, executor feedback, retry feedback, or another arm's weights.
+
+## 6. Development gates
+
+All must pass on the sole development read before confirmation can be considered:
+
+- treatment packet, recurrent state, answer, and joint each at least 90%;
+- every packet field, including all three rule cards, at least 95%;
+- line, binding, initial, witness, and query pointer exactness each at least 90%;
+- minimum renderer joint at least 85%;
+- minimum depth joint at least 80%;
+- treatment packet and joint each exceed both controls by at least 50 percentage
+  points;
+- each control packet at most 35% and state at most 40%;
+- 36/36 motor and 18/18 reader certificates exact;
+- confirmed parent/excluded state unchanged;
+- complete system strictly below 200M;
+- immutable checkpoint exists before development access;
+- independent assessor reproduces every metric from raw categorical evidence;
+- custody exactly development/confirmation `1/0`.
+
+No threshold may be changed after the source commit or board/training seed draw.
+
+## 7. Confirmation and claim boundary
+
+Open the fresh confirmation exactly once only if every development and independent-
+assessment gate passes. Otherwise reject, keep confirmation sealed, and use only the
+development decomposition to preregister a new fresh-board hypothesis.
+
+Passing would establish bounded fresh episodic `S_3` rule inference by learned
+witness equality, source-deleted categorical composition, internal HALT, and late-
+query readout. It would not establish unrestricted natural-language grounding,
+arbitrary algorithms, arithmetic, planning, self-directed search, or broad general
+reasoning.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 196: `R12_ER_CST_WITNESS_EQUALITY_BUS_RESULT.md`
+
+Original source path: `R12_ER_CST_WITNESS_EQUALITY_BUS_RESULT.md`
+Original source size: 4,251 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-CST Witness Equality Bus v1.1 Development Result
+
+**Development decision:** `authorize_one_sealed_confirmation`
+
+**Final status:** independently confirmed; see
+`R12_ER_CST_WITNESS_EQUALITY_CONFIRMATION_RESULT.md`.
+
+## Frozen identity
+
+| Item | Value |
+|---|---|
+| Scientific source | `87d53b53462d8d15660663238fd33886c010efb7` |
+| Source manifest | `4f32348020163dcec4eeee970443120ca652be63ac3056d7b4c85cf9c2c1a6ac` |
+| Board source | `5670ad83ae4e5806ec351337997c16990f2b5452` |
+| Board seed | `2244518911844010727` |
+| Training seed | `2262748995832026278` |
+| Training-seed beacon | `dc2b653172beb8138b0d09acf45897365643fefe3d7b1483390fa835742a3488` |
+| Sole job | `694567`, H100 `evc48`, 16m34s |
+| Board | 48,000 train / 2,048 development / 2,048 sealed confirmation |
+| Training | 3 arms, identical initialization, 3,000 updates each |
+| Parameters | 192,726,827 complete / 12,021,276 trainable / 7,273,173 headroom |
+| Custody after result | development/confirmation `1/0` |
+
+## Result
+
+| Metric | Treatment | Family deranged | Equality ablated |
+|---|---:|---:|---:|
+| Initial state | 99.609% | 32.812% | 16.113% |
+| Complete cards | 99.902% | 0.293% | 0.195% |
+| Events | 100% | 100% | 99.902% |
+| HALT | 100% | 100% | 100% |
+| Late query | 100% | 100% | 100% |
+| All 18 witness pointers | 99.902% | 21.484% | 0% |
+| Complete packet | 99.512% | 0.098% | 0% |
+| Recurrent state | 99.609% | 17.822% | 15.479% |
+| Answer | 100% | 33.740% | 31.104% |
+| Packet/state/answer joint | 99.512% | 0.098% | 0% |
+
+Treatment joint accuracy by depth is 100% at depths one through six, 99.219%
+at depth seven, and 96.875% at depth eight. Its four renderer joint rates are
+99.414%, 99.414%, 99.609%, and 99.609%. All 14 frozen scientific gates pass.
+The independent assessor recomputes all metrics from raw hard predictions and
+passes all eight artifact, parameter, source, metric, gate, and custody checks.
+
+## Interpretation
+
+ER-CST v1 failed despite perfect structural parsing because a generic record
+residual could not infer a fresh operation's `S_3` permutation from six opaque
+before/after name occurrences. V1.1 repairs exactly that interface:
+
+1. six dedicated model-owned occurrence queries locate the three before and
+   three after names for each rule;
+2. learned byte-bigram fingerprints represent those occurrences;
+3. a learned 3x3 equality matrix compares after names with before names;
+4. finite assignment scores select one of the six legal permutations; and
+5. the resulting cards are composed only by the pre-existing source-deleted
+   recurrent categorical motor.
+
+The two matched controls make the causal conclusion unusually sharp. Destroying
+cross-occurrence equality or deranging card semantics collapses complete packet
+and joint accuracy to approximately zero while leaving event order, HALT, and
+query interfaces intact. The improvement is therefore not attributable to more
+executor capacity, renderer memorization, direct answer supervision, or a host
+parser. It is a learned episodic equality-and-assignment compiler feeding a
+model-owned recurrent machine.
+
+## Artifacts
+
+| Artifact | SHA-256 |
+|---|---|
+| Checkpoint | `917c1a1fce67c02258d0f90f04398ab433d18ba63c2dca92450cc5856c022ae7` |
+| Raw development evidence | `1a7504eb9b08d7d123e89705360f2eb37a861f5cd75b3ebc73570c8e904327fb` |
+| Development report | `d295f8f67f32916386e04674fc782a0982b9b1b55f7b82aa1eaab6f59bb1ae35` |
+| Independent assessment | `29e4349225ed9523ec3b8096cd2cd16ef1b55c727797421a1ac0b39c042f11b2` |
+| Development access ledger | `5b6e233b3cc9d3cf49a32525ca11f6c6f846005486df67a252e9ca4ec36b4db3` |
+
+All artifacts are mirrored read-only on the Mac with matching hashes. A local
+independent-assessor replay is byte-identical to the Newton assessment.
+
+## Claim boundary
+
+This development result establishes bounded fresh episodic `S_3` rule inference,
+source-deleted categorical composition, internal halt, and late-query readout on
+one split. It is not yet confirmed and does not establish unrestricted language
+grounding, arbitrary operation induction, arithmetic, planning, or broad general
+reasoning. The only authorized next score is the preregistered one-read sealed
+confirmation in `R12_ER_CST_WITNESS_EQUALITY_CONFIRMATION_PREREG.md`.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 197: `R12_ER_CST_WITNESS_EQUALITY_CONFIRMATION_PREREG.md`
+
+Original source path: `R12_ER_CST_WITNESS_EQUALITY_CONFIRMATION_PREREG.md`
+Original source size: 4,019 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-CST Witness Equality Bus v1.1 Confirmation Preregistration
+
+**Status:** evaluator implemented before source freeze or confirmation access.
+
+## Development authorization
+
+Sole qualification job `694567` completed on `evc48` in 16m34s. The pilot and
+independent assessor both return `authorize_one_sealed_confirmation`; all 14
+scientific gates and eight development-assessor gates pass. Treatment reaches
+2,038/2,048 = 99.512% exact packets and joints, 2,040/2,048 = 99.609% exact
+recurrent states, and 2,048/2,048 exact answers. Its minimum depth joint is
+96.875% and minimum renderer joint is 99.414%. Family-deranged/equality-ablated
+packet accuracy is 0.098%/0%, joint accuracy is 0.098%/0%, and state accuracy is
+17.822%/15.479%.
+
+Exact authorization artifacts:
+
+| Artifact | SHA-256 |
+|---|---|
+| Scientific source | `87d53b53462d8d15660663238fd33886c010efb7` |
+| Board report | `22cb355e58e9f3b8125a57c60c7aafb7aadead4406abc426da368e3b3b2cff75` |
+| Trained checkpoint | `917c1a1fce67c02258d0f90f04398ab433d18ba63c2dca92450cc5856c022ae7` |
+| Development evidence | `1a7504eb9b08d7d123e89705360f2eb37a861f5cd75b3ebc73570c8e904327fb` |
+| Development report | `d295f8f67f32916386e04674fc782a0982b9b1b55f7b82aa1eaab6f59bb1ae35` |
+| Development assessment | `29e4349225ed9523ec3b8096cd2cd16ef1b55c727797421a1ac0b39c042f11b2` |
+| Development ledger | `5b6e233b3cc9d3cf49a32525ca11f6c6f846005486df67a252e9ca4ec36b4db3` |
+| Sealed confirmation registration | `6593bb17690fc72e5392b953af75f8686a92e799bcd600307affcb7fc0080c4d` |
+
+Training seed is `2262748995832026278`. Complete/trainable parameter counts are
+192,726,827/12,021,276, leaving 7,273,173 below the absolute 200M ceiling.
+
+## Frozen confirmation procedure
+
+1. Run from a clean exact evaluator commit. Require the scientific commit above
+   to remain an ancestor and every scientific runtime path to remain byte-exact.
+2. Hash-verify the board, checkpoint, development evidence/report/assessment,
+   and sole development ledger. Require the exact authorization decision and
+   custody `1/0`.
+3. Write an immutable authorization artifact before opening confirmation. Then
+   create one `O_EXCL`, mode-`0444` confirmation ledger before hashing or parsing
+   the sealed confirmation bytes.
+4. Perform no fitting, gradients, search, repair, retry, threshold change, or
+   checkpoint selection.
+5. Reconstruct all three frozen arms from the exact checkpoint. Compile all
+   2,048 sealed rows once, delete the source at the existing architecture
+   boundary, execute the hard categorical packets, and emit raw evidence.
+6. Invoke a separate assessor that recomputes every metric, gate, parameter
+   certificate, artifact hash, authorization binding, and custody fact.
+
+## Frozen gates
+
+Confirmation retains all development thresholds: treatment packet/state/answer/
+joint at least 90%; minimum renderer joint at least 85%; minimum depth joint at
+least 80%; all packet fields at least 95%; all pointers, including all 18
+witness pointers, at least 90%; treatment packet and joint advantages over both
+controls at least 50 percentage points; control packets at most 35%; control
+states at most 40%; exact finite motor/reader certificates; unchanged confirmed
+parent; and complete system below 200M. The development-only custody gate is
+replaced by final custody exactly `1/1`. The independent assessor must also pass
+artifact-hash, parameter, authorization, metric-recomputation, gate-vector, and
+custody checks.
+
+All gates passing yields `confirm_er_cst_witness_equality_v1_1`. Any failure
+yields rejection. The sealed board is read once and never rescored.
+
+## Claim boundary
+
+A pass confirms bounded inference of fresh episodic `S_3` operation meanings
+from before/after witness equality, followed by source-deleted categorical
+composition, internal halt, and late-query readout across split-disjoint
+renderers and names. It does not establish unrestricted language grounding,
+arbitrary operation induction, arithmetic, planning, or broad general reasoning.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 198: `R12_ER_CST_WITNESS_EQUALITY_CONFIRMATION_RESULT.md`
+
+Original source path: `R12_ER_CST_WITNESS_EQUALITY_CONFIRMATION_RESULT.md`
+Original source size: 3,435 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-CST Witness Equality Bus v1.1 Confirmation Result
+
+**Decision:** `confirm_er_cst_witness_equality_v1_1`
+
+## Custody
+
+Evaluator source `4a930c032adc04ec580ce7272df473365fe57a4a` was
+committed and pushed before confirmation access. Its isolated Newton capsule
+reproduced scientific manifest `4f32348020163dcec4eeee970443120ca652be63ac3056d7b4c85cf9c2c1a6ac`
+and evaluator manifest `1c710acd0e5a4cec3db240f6f21836867602d6e39a49fcbf3b024732d9c6d26d`.
+Preflight found exactly one development ledger, confirmation mode `0600`, and a
+new output path. Sole no-training job `694641` ran on H100 `evc22` for 2m42s.
+It wrote immutable authorization before the `O_EXCL` confirmation ledger, read
+the sealed split once, and ended at final custody `1/1`.
+
+## Sealed result
+
+| Metric | Treatment | Family deranged | Equality ablated |
+|---|---:|---:|---:|
+| Initial state | 99.219% | 28.906% | 15.967% |
+| Complete cards | 99.805% | 0.195% | 0.146% |
+| Events | 100% | 100% | 50.000% |
+| HALT | 100% | 100% | 100% |
+| Late query | 100% | 100% | 100% |
+| All 18 witness pointers | 99.805% | 42.480% | 0% |
+| Complete packet | 99.023% | 0.098% | 0% |
+| Recurrent state | 99.023% | 17.334% | 16.357% |
+| Answer | 99.023% | 35.010% | 34.424% |
+| Packet/state/answer joint | 99.023% | 0.098% | 0% |
+
+Treatment joint accuracy is 100% at depths one through five, 92.969% at depth
+six, 99.219% at depth seven, and 100% at depth eight. All four unseen renderer
+compositions are 99.023% joint. Every one of the 14 unchanged scientific gates
+passes. The separately invoked assessor recomputes the raw predictions and
+passes all six artifact, parameter, authorization, metric, gate-vector, and
+custody gates.
+
+## Artifacts
+
+| Artifact | SHA-256 |
+|---|---|
+| Authorization | `84e99ce3747196c3457292890102c807bc154ebe21444d3d92eed1c569b2384f` |
+| Confirmation evidence | `2138a4b631d0ed0c28388edaf313726b856a8ce2afecdb1122e1adb516375090` |
+| Confirmation report | `92de586aa10b8ab68651ff6b9eadcc9977a68042546095e86aee0a6c6a290dd6` |
+| Independent assessment | `4a0fb47233d86887bb46aa853560bf81d319840610d62abe4f1dfaa899671310` |
+| Confirmation ledger | `137a88106c2fffb003c6837aab153496538cd8534f9f5fb5bede9d49bc30270e` |
+| Promoted checkpoint | `917c1a1fce67c02258d0f90f04398ab433d18ba63c2dca92450cc5856c022ae7` |
+
+The artifacts are mirrored read-only locally. Re-running the independent
+assessor on the local mirrors produces byte-identical assessment SHA
+`4a0fb472...`. Newton promotion path is
+`/lustre/fs1/home/sa305415/shohin_promoted/er_cst_witness_equality_v1_1`.
+
+## What is confirmed
+
+The model can infer a fresh operation's complete categorical permutation from
+opaque before/after witnesses, bind fresh operation names, delete the source,
+compose up to eight selected operation cards recurrently with internal halt, and
+answer a late categorical query. The causal controls show that the result
+depends on true cross-occurrence equality and true episodic card semantics.
+
+This closes the specific failure that defeated ER-CST v1. The result is not a
+claim of general reasoning: state cardinality is fixed at three, every operation
+is a permutation, the architecture enumerates six `S_3` cards, and the task is a
+formal synthetic language. The next valid frontier is to remove those finite
+ontology constraints through variable-cardinality relation matrices and direct
+model-owned transition composition, not merely widen this solved compiler.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 199: `R12_ER_DUAL_STREAM_RELATION_REPAIR_PREREG.md`
+
+Original source path: `R12_ER_DUAL_STREAM_RELATION_REPAIR_PREREG.md`
+Original source size: 9,592 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-TT Dual-Stream Relation Repair Preregistration
+
+**Status:** hard-route v1 rejected; marginal-route v1.1 locally admitted for a
+train-only diagnostic; v1.1 source not yet frozen
+
+**Parent:** confirmed ER-CST Witness Equality Bus v1.1, checkpoint SHA-256
+`917c1a1fce67c02258d0f90f04398ab433d18ba63c2dca92450cc5856c022ae7`
+
+**Closed predecessor:** ER-TT v1, development custody `1/0`; never rescore it
+and never open its confirmation split.
+
+## 1. Falsified predecessor and repair target
+
+ER-TT v1 learned ordinary program structure but failed the variable relation
+bus. On its sole development read it reached 0.098% exact packets/joints,
+15.381% recurrent state, and 32.666% answers. Before-witness localization was
+95.273%, after-witness localization was 51.965%, complete witness pointers were
+0.586%, and witness/opcode alpha recoding preserved complete output on only
+6/2,048 and 32/2,048 rows. Relation loss remained near chance.
+
+The frozen diagnosis is that one content-sensitive pointer path mixed two
+different problems:
+
+1. **where:** infer the structural record, role, and occurrence position; and
+2. **what:** preserve the complete selected symbol identity for equality.
+
+Hard-route v1 implemented that separation but failed its train-only probe. It
+was exactly alpha-invariant on all 8,000 rows yet produced zero exact relation
+rows, witness pointers, packets, or joints. Its structural role assignment was
+detached from routed pointer supervision, and hard selected-symbol equality
+starved gradients whenever the target record began with negligible assignment
+mass. V1 is closed and will not be rerun.
+
+V1.1 repairs the gradient topology and replaces the hard selection with exact
+equality marginalized over learned routes. More capacity is not the primary
+change.
+
+## 2. Architecture
+
+### Structural stream
+
+Every whitespace-delimited six-byte lowercase/base36 symbol is replaced by the
+same six canonical bytes before record encoding. Byte positions, delimiters,
+line syntax, record labels, record order, and source length are unchanged.
+Learned semantic-record assignment and learned declaration/witness/opcode
+queries route only over this canonical structural memory. The route therefore
+cannot depend on an entity, witness, or opcode's spelling. Semantic assignment
+uses the ordinary record features. The numerically identical routing assignment
+is recomputed from detached record features so pointer/equality loss can train
+the shared role head without modifying the shared structural record encoder.
+
+### Identity stream
+
+The identity stream does not embed or classify symbol spelling. For learned
+route distributions `p` and `q`, it computes
+
+`P(equal) = sum_ij p_i q_j 1[source[i:i+6] = source[j:j+6]]`.
+
+The indicator is exact whole-symbol equality and the output log probability is
+used as the categorical relation/binding logit. This gives dense gradients to
+both routes while remaining exactly alpha-equivariant. Inference uses only
+model-owned route distributions and source bytes; no target range or board
+dictionary is available.
+
+### Relation and event transport
+
+- declaration initial-state rows are exact identity equality between routed
+  initial occurrences and routed declaration bindings;
+- each relation row is exact equality between routed after-witness and
+  before-witness symbols;
+- event-to-rule binding is exact equality between a routed event opcode and
+  routed rule opcodes;
+- the existing parameter-free source-deleted motor composes relation matrices;
+- motor and reader add zero parameters.
+
+The old content-sensitive occurrence head, side/position embeddings, and
+record-similarity event binding are absent.
+
+## 3. Model and host ownership
+
+### Model-owned
+
+- physical-record to semantic-role assignment;
+- declaration binding and initial occurrence routes;
+- all before/after witness routes;
+- all rule-opcode and event-opcode routes;
+- cardinality, active rules, HALT, and late query;
+- the resulting source-deleted relation packet.
+
+### Architectural primitives
+
+- recognition of bounded six-byte symbol-shaped tokens;
+- structure-preserving canonicalization of their payload bytes;
+- marginalization over model-owned categorical routes;
+- exact equality of every routed six-byte symbol pair;
+- fixed categorical masking and the preregistered relation-matrix motor.
+
+### Forbidden
+
+- parsing a selected symbol's semantic role from its prefix or bytes;
+- board candidate dictionaries or target ranges at inference;
+- gold relations, state, answer, trajectory, development, or confirmation
+  fields during fitting;
+- host repair, retry, search, answer selection, or target-aware routing;
+- any trained state from rejected ER-TT v1.
+
+Initialization reconstructs the independently confirmed witness parent, creates
+the old ER-TT adapter only as an untrained shape-compatible bridge, copies every
+shared tensor byte-identically, removes the failed v1-only path, and initializes
+the dual-stream path from a fresh seed.
+
+## 4. Exact parameter certificate
+
+| Component | Parameters |
+|---|---:|
+| Shohin base | 125,081,664 |
+| Dual-stream compiler | 60,450,632 |
+| Motor | 0 |
+| Reader | 0 |
+| **Complete deployed system** | **185,532,296** |
+| Trainable | 11,129,504 |
+| Headroom below 200M | 14,467,704 |
+
+The cap is absolute: the complete deployed system must remain strictly below
+200,000,000 parameters. V1.1 removes 7,197,795 dead v1 parameters rather than
+counting or optimizing unused fingerprint, witness-query, occurrence, and scale
+tensors.
+
+## 5. Train-only matched-route diagnostic before fresh data
+
+The canary may open only the already-public ER-TT `train.jsonl`. A deterministic
+post-source-commit seed partitions all 12,000 families into:
+
+- 10,000 fit families / 40,000 rows;
+- 2,000 family-disjoint probe families / 8,000 rows.
+
+Treatment receives two epochs, family batch eight, 2,500 updates, AdamW at
+`2e-4`, 100-step warmup, cosine decay, and exactly the old source-only compiler
+loss. Final state and answer are mechanically derived only for the held-out
+train-family probe after fitting. They never enter an optimizer loss.
+
+The same 8,000 probe rows contain two explicitly separated route controls:
+
+1. **Oracle-route identity transport.** Source-only compiler target spans set
+   one-hot declaration, witness, rule-opcode, and event-opcode routes. The same
+   exact marginal-equality operator must recover initial rows, arbitrary
+   relation rows, and event binding at 100%. This control receives no final
+   state, answer, trajectory, development, or confirmation field and cannot
+   authorize promotion by itself.
+2. **Learned soft-route treatment.** The trained structural role and local
+   pointer distributions feed the same equality operator. Only this arm is
+   compared with the frozen capability thresholds and may authorize a fresh
+   board.
+
+Rejected hard-route v1 is retained only as immutable prior evidence. It is not
+rerun, rescored, or given another seed.
+
+A pre-freeze CPU production-row audit stratified the old training split by all
+four renderers, cardinalities 3--6, rule counts 2--4, and depths 1--12. The
+same oracle-route equality operator recovers initial rows, relation rows,
+events, and their joint on 1,152/1,152 rows in 576 strata. This is a mechanics
+qualification only, not a neural score.
+
+For the alpha test, every entity, witness, and opcode symbol is bijectively
+renamed into one neutral `z.....` namespace. Prefix-category information is
+therefore removed rather than merely shuffled within `e`/`w`/`o` classes.
+
+No development or confirmation path is accepted as an input argument by the
+job. This canary creates no scored-split ledger and changes no old custody.
+
+## 6. Immutable canary gates
+
+A fresh board is authorized only if all gates pass:
+
+1. oracle-route initial, relation, event, and joint transport are each exactly
+   8,000/8,000 through the same equality operator;
+2. exact 10,000/2,000 family-disjoint split with zero overlap;
+3. learned-soft-route packet, state, answer, and joint each at least 85%;
+4. learned-soft-route complete relation rows at least 90%;
+5. learned-soft-route complete active witness pointers at least 90%;
+6. learned-soft-route events and HALT each at least 95%;
+7. minimum cardinality-specific learned-soft-route joint at least 75%;
+8. every learned hard packet field and every pointer is bit-identical on all 8,000
+   original/neutral-alpha probe pairs;
+9. the confirmed parent remains byte-identical outside the declared trainable
+   set;
+10. the exact parameter certificate remains below 200M; and
+11. outcome supervision, development reads, and confirmation reads remain zero.
+
+Failure closes this repair before new board generation. No threshold may be
+relaxed after seeing the canary.
+
+## 7. Fresh-board requirements after a pass
+
+A passing canary admits only a new source commit and fresh board. The new board
+must put entities, witness symbols, and opcodes in the same neutral six-byte
+namespace, add nonsemantic six-byte distractors, retain variable cardinality and
+non-bijective relations, use disjoint renderer/name families, and preserve
+matched deranged/equality/source-free controls. Development and sealed
+confirmation require new independent seeds and one-read custody.
+
+## 8. Claim boundary
+
+A canary pass establishes only that the repair learns routing and relation
+transport on held-out families from an existing training generator while
+remaining exactly alpha-invariant. It is not fresh development, confirmation,
+natural-language reasoning, arbitrary program induction, planning, arithmetic,
+or general reasoning.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 200: `R12_ER_DUAL_STREAM_TRAIN_CANARY_RESULT.md`
+
+Original source path: `R12_ER_DUAL_STREAM_TRAIN_CANARY_RESULT.md`
+Original source size: 8,054 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-TT Dual-Stream Train-Only Canary Result
+
+**Protocol:** `r12_er_dual_stream_train_only_canary_v1`
+
+**Decision:** reject v1 before fresh-board generation. No development or
+confirmation split was read.
+
+## Custody and provenance
+
+- Source: `54476bcb02cc9d3f7388407fbe3700e92bfdbc28`
+- Deterministic post-commit seed: `5113128174248698871`
+- Seed derivation SHA-256:
+  `46f57afbe522a3f7c36821ed3714dd178e1cc347fc306b13ea65d08f73ed3241`
+- Sole H100 job: `694800` on `evc36`
+- Runtime: 11m21s, exit code zero
+- Fit/probe: 10,000/2,000 disjoint old-training families,
+  40,000/8,000 rows
+- Development/confirmation reads by this experiment: `0/0`
+- Complete/trainable/headroom parameters:
+  `192,730,091 / 18,327,299 / 7,269,909`
+
+The probe-family overlap is zero. The fit/probe family-set hashes are
+`5042c110...` and `16d86284...`.
+
+## Artifact hashes
+
+| Artifact | SHA-256 |
+|---|---|
+| `compiler.pt` | `829139114eeed714eea3b03074ed91b406bc37d999bcd855920e0f15c14dae03` |
+| `train_probe_evidence.pt` | `e3e8646738d721092acf3f88cdf9f33426ddb7237c23cdec08184b8bec794c91` |
+| `train_probe_report.json` | `697ce2830104aff034f3cb8c718f377edc1588560953033a6bc3aa3d828aeef4` |
+
+Newton and local copies hash-match and are read-only.
+
+## Frozen result
+
+| Metric | Exact |
+|---|---:|
+| Packet | 0/8,000 |
+| State | 164/8,000 = 2.050% |
+| Answer | 1,666/8,000 = 20.825% |
+| Joint | 0/8,000 |
+| Complete relation rows | 0/8,000 |
+| Complete witness pointers | 0/8,000 |
+| Complete events | 0/8,000 |
+| HALT | 3,252/8,000 = 40.650% |
+
+Every cardinality-specific joint score is zero. The final relation-row loss is
+`1.526640`, at chance for the mixed-cardinality task; witness-pointer loss is
+`31.415091`.
+
+The architecture did solve the construction target it was designed to solve:
+all hard packet fields and all hard pointers are exactly identical on
+8,000/8,000 original versus neutral-namespace alpha recodes. This includes
+relations, declaration state, event binding, witness pointers, and every other
+field. Alpha equivariance is therefore established by construction, but useful
+routing is not.
+
+## Independent granular recomputation
+
+The local audit reconstructed the exact deterministic probe split and compared
+the immutable prediction evidence with source-only targets.
+
+| Quantity | Exact |
+|---|---:|
+| Active relation cells | 24,040/107,880 = 22.284% |
+| Complete active rules | 224/23,900 = 0.937% |
+| Initial-state cells | 8,000/36,140 = 22.136% |
+| Binding occurrences | 2,116/36,140 = 5.855% |
+| Initial occurrences | 0/36,140 |
+| Before-witness occurrences | 8,000/107,880 = 7.416% |
+| After-witness occurrences | 0/107,880 |
+| Event cells before HALT | 40,297/96,000 = 41.976% |
+| HALT cells | 98,468/104,000 = 94.681% |
+| Line occurrences | 70,513/144,000 = 48.967% |
+| Query occurrences | 8,000/8,000 = 100% |
+
+Relation-cell accuracy by cardinality is 33.747%, 25.051%, 20.568%, and
+16.315% at `N=3,4,5,6`, exactly the chance pattern. Every row emits three active
+rules, and 7,532/8,000 rows emit cardinality five. The occurrence queries have
+collapsed to a small number of structural positions rather than learning their
+distinct slots.
+
+## Failure localization and admitted diagnostic
+
+The identity stream and exact equality are not the observed failure. The
+structural router receives a physical-to-semantic assignment, but v1 detached
+that assignment before the routed pointer loss. If the target semantic record
+initially receives negligible assignment mass, the source-position probability
+is clamped near zero; the pointer loss then cannot teach the role assignment
+that would make the target record reachable. Local occurrence queries collapse
+inside the wrong records.
+
+V1.1 changes gradient topology and equality routing without changing capacity,
+data budget, or the under-200M system:
+
+1. compute semantic assignment normally for packet heads;
+2. recompute the numerically identical assignment from detached record features
+   for the routing path;
+3. allow pointer/equality gradients to train the shared role-assignment head;
+4. continue blocking those gradients from the shared structural record encoder;
+5. replace hard selected-symbol equality with exact equality marginalized over
+   the complete learned route distributions; and
+6. require a matched source-span oracle-route control to reach 100% identity
+   transport through the same marginal equality operator.
+
+The oracle receives only source compiler spans, never outcomes or scored data.
+It separates representational sufficiency of the identity bus from learned
+route acquisition and cannot authorize promotion. The learned soft-route arm
+retains every original capability and alpha-invariance threshold. V1 is closed
+and will not be rerun.
+
+## Marginal-route v1.1 result
+
+**Protocol:** `r12_er_dual_stream_train_only_canary_v1_1`
+
+**Decision:** reject before fresh-board generation. No development or
+confirmation split was read, and the frozen threshold is not relaxed.
+
+- Source: `8419c74e161f41c704d324d2b6ad72ed5587035f`
+- Deterministic post-commit seed: `4412270997190025241`
+- Sole H100 job: `694909` on `evc43`
+- Runtime: 9m06s, exit code zero
+- Fit/probe: 10,000/2,000 disjoint training families, 40,000/8,000 rows
+- Complete/trainable/headroom: `185,532,296 / 11,129,504 / 14,467,704`
+- Development/confirmation reads: `0/0`
+
+| Metric | Exact |
+|---|---:|
+| Packet / joint / relation rows | 7,275/8,000 = 90.9375% |
+| State | 7,765/8,000 = 97.0625% |
+| Answer | 7,883/8,000 = 98.5375% |
+| Witness pointers | 7,194/8,000 = 89.925% |
+| Line pointers | 7,998/8,000 = 99.975% |
+| Binding / initial pointers | 8,000/8,000 |
+| Events / HALT / query | 8,000/8,000 |
+| Alpha-invariant complete hard output | 8,000/8,000 |
+| Oracle-route initial/relation/event/joint | 8,000/8,000 |
+
+Every cardinality-specific joint gate passes; the minimum is `N=6` at
+1,749/2,056 = 85.068%. The witness-pointer gate is the sole failed gate.
+
+Immutable artifact SHA-256 values are:
+
+| Artifact | SHA-256 |
+|---|---|
+| `compiler.pt` | `9e6115d1db01499f6cf5c7dd4763b2a43e82019c28a267131a1f71a2e95edb6f` |
+| `train_probe_evidence.pt` | `52e70d017b49738a775df3c2638a3ee757ae68d0e06b67bfff3f251d18380fad` |
+| `train_probe_report.json` | `a89439c861870b48983ca62e995e9da38ca8dc75d188165af2cde2612820f479` |
+
+### Residual localization
+
+Independent recomputation from immutable evidence finds all 806 failed
+witness-pointer rows contain exactly one wrong occurrence. Individual pointer
+occurrences are 214,722/215,528 = 99.626% exact. The dominant failures are the
+second and third after-witness positions in the fourth rule. On representative
+failures, the correct occurrence is route rank two while an adjacent duplicate
+is rank one. Witness and relation failures overlap strongly but not perfectly:
+7,054 rows have both exact, 585 have both wrong, 221 have only witness wrong,
+and 140 have only relation wrong.
+
+This is no longer evidence that identity equality or the recurrent relation
+executor is missing. It is evidence that the alpha-invariant structural route
+does not reliably distinguish repeated occurrences inside longer physical
+records.
+
+## Admitted train-only repair
+
+The occurrence-addressed marginal repair adds two learned, identity-free
+address components to the route: opaque-occurrence ordinal within the record
+and total opaque candidates in that record. Raw symbol bytes remain confined to
+the exact equality marginal. The repair adds 10,752 parameters, yielding
+185,543,048 complete / 11,140,256 trainable / 14,456,952 headroom. It starts
+from the confirmed parent, never failed canary weights, and keeps the v1.1 data,
+2,500-update budget, optimizer, thresholds, and `1/0/0` custody unchanged.
+
+Before source freeze, 22 focused tests plus Ruff, byte compilation, shell
+syntax, a real-board alpha-recode equality check, a real-parent backward pass,
+full trainable-gradient coverage, and zero excluded-parent leakage pass. A
+single post-commit seed and single isolated H100 canary are authorized; no
+fresh board is authorized unless every unchanged gate passes.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 201: `R12_ER_RELATION_TENSOR_ADAPTER_PREREG.md`
+
+Original source path: `R12_ER_RELATION_TENSOR_ADAPTER_PREREG.md`
+Original source size: 7,753 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Episodic Relation Tensor Transport Neural Adapter
+
+**Protocol:** `R12-ER-TT-v1-neural-adapter`
+
+**Status:** adapter and production board admitted; score-bearing source is
+locally qualified before scientific source freeze. The fixed board remains at
+development/confirmation access `0/0`. No training seed, GPU run, or neural
+score exists. The immutable fit/evaluation contract is in
+`R12_ER_RELATION_TENSOR_SCORE_PREREG.md`.
+
+## Scientific objective
+
+The confirmed ER-CST v1.1 system compiles fresh opaque witnesses into one of six
+enumerated permutations and composes those classes with a learned 36-cell
+motor. ER-TT asks a strictly broader question: can the confirmed compiler emit
+the relation itself for variable cardinality and can a source-deleted in-model
+tensor operation compose it without a class ontology or learned transition
+table?
+
+Episodes will use `N in {3,4,5,6}`, two to four fresh rule records, up to twelve
+active updates, one persistent pre-apply HALT, and arbitrary total copy
+relations. Outputs may repeat. The relation space at cardinality `N` is `N^N`,
+but the compiler emits only `N^2` row logits.
+
+## Confirmed parent and exact parameter contract
+
+| Component | Parameters |
+|---|---:|
+| Frozen Shohin base | 125,081,664 |
+| ER-TT compiler | 67,659,190 |
+| Learned recurrent motor | 0 |
+| Learned answer reader | 0 |
+| **Complete deployed system** | **192,740,854** |
+| **Trainable** | **12,037,293** |
+| **Headroom below 200M** | **7,259,146** |
+
+The parent is the independently confirmed ER-CST v1.1 checkpoint with SHA-256
+`917c1a1fce67c02258d0f90f04398ab433d18ba63c2dca92450cc5856c022ae7`.
+Its confirmation assessment SHA-256 is
+`4a0fb47233d86887bb46aa853560bf81d319840610d62abe4f1dfaa899671310`.
+
+Local reconstruction produces parent state SHA-256
+`775a3fa1b42c0a578492d36e8b8001ba59f672c0a7752033259512de13f0df75`.
+Every retained parent tensor copies byte-identically; the copied-subset digest is
+`ccb1420f9b27846efdd7696d360421210e8afcd818cc62b46f69a909f841d1a8`.
+The excluded frozen-state digest is
+`d45d757f17e1ddb88c98a6005ea7a746df880333805d1966cb3c42c169ca636c`.
+
+## Architecture
+
+The adapter uses eighteen shuffled physical records: one declaration, four rule
+records, and thirteen event records. Coordinate-generated witness queries are
+the sum of one of two side embeddings and one of six position embeddings. They
+select six `before` and six `after` occurrences per rule. The inherited learned
+byte fingerprints produce direct equality logits
+
+`E[r,i,j] = scale * <after[r,i], before[r,j]>`.
+
+These logits are the relation rows. There is no permutation classifier. Six
+declaration binding pointers and six initial-state pointers similarly produce a
+direct `6 x 6` initial-state matrix. A four-way cardinality head selects active
+rows/columns for `N=3..6`. Rule-active, event-card, HALT, and six-way query heads
+emit the remaining structural fields.
+
+After hard sealing, no source bytes, token memory, record residuals, pointer
+logits, or model module are passed to execution. The recurrent motor has zero
+parameters:
+
+`S_next = R_selected @ S`.
+
+HALT is persistent and pre-apply. The answer reader has zero parameters: a hard
+query row selects one row of terminal state. The inherited six-permutation
+buffer, direct permutation head, fixed three-position query head, and learned
+categorical motor/reader are absent from the deployed path.
+
+## Allowed supervision
+
+Training may supervise only source-compiler fields:
+
+- physical record roles and line pointers;
+- cardinality and active rule slots;
+- declaration binding and initial-entity pointers;
+- all active witness occurrence pointers;
+- active initial-state rows and active relation rows;
+- event-to-rule references, HALT, and query position; and
+- renderer-consistency terms over compiler fields.
+
+Training must not expose final state, answer, recurrent trajectory, intermediate
+state, development oracle, or confirmation oracle. The parameter-free motor and
+reader receive no fitted weights.
+
+## Required board design
+
+- 48,000 training, 2,048 development, and 2,048 sealed confirmation rows;
+- exactly balanced cardinality and scored depth, with balanced rule counts;
+- at least 90% of episodes containing a non-bijective rule;
+- split-disjoint family IDs, names, complete semantic-family signatures, exact
+  prompts, and word 13-grams, plus disjoint training-versus-scored renderer
+  cosets. Atomic relation rows
+  may recur because there are only 27 total relations at `N=3`; generalization
+  is measured on unseen combinations, programs, symbols, and renderers rather
+  than an impossible atomic-row exclusion;
+- independent parser, witness-inference implementation, and executor validating
+  every row before training;
+- fixed-width compact names so every program fits the inherited 640-byte source
+  window and every line fits the inherited 144-byte record window;
+- confirmation mode `0600` and access counters `0/0`; and
+- no board bytes before exact source is committed and pushed.
+
+## Equal-budget arms and interventions
+
+1. **Treatment:** correct witness equality and rule/event binding.
+2. **Family derangement:** relation tensors belong to another family while all
+   source structure and budgets remain matched.
+3. **Equality ablation:** witness surface lengths/offsets remain matched but
+   before/after identity is independently destroyed.
+
+Evaluation must also include relation-row derangement, cardinality-mask
+corruption, rule-storage reindex, physical-record reindex, witness alpha rename,
+opcode alpha rename, source poisoning after packet sealing, post-HALT suffix,
+state reset, and query swap.
+
+## Frozen development gates
+
+The sole development read may pass only if all conditions hold:
+
+1. complete treatment packet, state, answer, and joint are each at least 90%;
+2. relation rows, initial rows, record roles, event references, HALT, query, and
+   every active pointer field are each at least 95%;
+3. minimum joint by `N=3,4,5,6` is at least 80%;
+4. minimum joint by scored depth and unseen renderer is at least 80%;
+5. minimum joint on episodes containing a non-bijective rule is at least 85%;
+6. treatment packet and joint exceed both equal-budget controls by at least 50
+   percentage points;
+7. family-deranged and equality-ablated packet/joint are each below 35%;
+8. storage reindex, alpha rename, and post-HALT/source-poison invariances are
+   exact on every otherwise valid packet;
+9. relation-row, cardinality, state-reset, and query interventions cause their
+   preregistered answer/state changes;
+10. complete deployed parameters are exactly 192,740,854 and below 200M;
+11. excluded parent state remains byte-identical; and
+12. custody is exactly one development access and zero confirmation accesses.
+
+Passing authorizes one separately frozen confirmation evaluator with unchanged
+weights and thresholds. Failure closes this architecture/version; thresholds
+will not be relaxed and the same board will not be repaired and rescored.
+
+## Current local verification
+
+Thirteen focused mechanics/adapter tests plus three parent-reconstruction tests
+pass. They cover arbitrary non-bijective equality recovery, variable
+cardinality, hard masking, persistent HALT, zero-parameter readout, source-free
+packet fields, detached witness gradients, excluded-parent gradient isolation,
+exact parameter counts, fail-fast parent hashes, and actual confirmed-parent
+reconstruction. Ruff, byte compilation, and diff checks pass.
+
+## Claim boundary
+
+A future pass would establish bounded variable-cardinality episodic relation
+compilation and recurrent composition under source deletion. It would not by
+itself establish free-form language grounding, unbounded algorithms, arithmetic,
+branching, planning, or general reasoning.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 202: `R12_ER_RELATION_TENSOR_BOARD_PREREG.md`
+
+Original source path: `R12_ER_RELATION_TENSOR_BOARD_PREREG.md`
+Original source size: 3,230 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-TT Fresh Board Preregistration
+
+**Protocol:** `R12-ER-TT-v1-board`
+
+**Status:** seedless builder qualified in memory. No scientific seed, board
+directory, training seed, GPU run, or scored access exists.
+
+## Board contract
+
+| Split | Families | Views | Rows |
+|---|---:|---:|---:|
+| Train | 12,000 | 4 | 48,000 |
+| Development | 512 | 4 | 2,048 |
+| Sealed confirmation | 512 | 4 | 2,048 |
+
+Every family fixes one semantic problem while its four rows independently
+shuffle eighteen physical records and render the four source-field factors.
+Training uses one renderer-parity coset and both scored splits use its disjoint
+complement. Exact prompt, word-13-gram, compact name, semantic-family, and family
+ID overlap must be zero between every split pair.
+
+Cardinality `N=3..6` is exact-balanced. Active rule count 2/3/4 and depth 1–12
+are balanced to within one family per scored split, which is the arithmetic
+minimum because 512 is not divisible by 3 or 12. Every family contains at least
+one non-bijective relation. Atomic relation rows may recur; complete relation
+sets, programs, initial states, queries, symbols, and renderer compositions form
+the split-disjoint semantic signature.
+
+## Public training fields
+
+Training rows contain only:
+
+- the shuffled program bytes and late-query bytes;
+- physical and semantic line roles;
+- cardinality and active rule count;
+- binding, initial-entity, active before/after witness, and query spans;
+- active relation rows inferred from witnesses;
+- event references, HALT, and query position; and
+- renderer/family metadata.
+
+No training row contains terminal state, answer, recurrent trajectory, or any
+development/confirmation oracle. An independent public-byte parser infers
+relations by equality and executes each row without consulting compiler targets.
+It must agree with generation on every row before bytes can be written.
+
+## Seedless full-scale dry result
+
+Fixture seed `104729` is a non-scientific source test and is permanently barred
+from score-bearing use. Its in-memory 48,000/2,048/2,048 build passes all 15
+gates:
+
+- 13,024 rows at each cardinality;
+- rule-count rows 17,368 / 17,368 / 17,360;
+- depth rows differ by at most eight, exactly the two scored-split remainder;
+- 13,024/13,024 semantic families contain a non-bijective rule;
+- maximum program/line lengths are 610/96 bytes, below inherited 640/144 limits;
+- all pairwise name, semantic-family, exact-prompt, and word-13-gram overlap is zero;
+- train/scored renderer sets are disjoint;
+- family-deranged state exactness is 1,064/13,024 = 8.170%; and
+- equality-ablated state exactness is 1,026/13,024 = 7.878%.
+
+## Admission and custody
+
+The exact builder, renderer/parser, tests, this preregistration, and parent
+adapter contract must be committed and pushed before a scientific board seed is
+derived. The first production build must be independently reproduced
+byte-for-byte. `confirmation.jsonl` must be mode `0600`; access must remain
+`0/0`. Any collision, parser mismatch, overlap, size violation, or failed gate
+retires that seed before training.
+
+Passing this board build admits only score-bearing training/evaluator source
+implementation. It is not evidence that the neural compiler succeeds.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 203: `R12_ER_RELATION_TENSOR_BOARD_RECEIPT.md`
+
+Original source path: `R12_ER_RELATION_TENSOR_BOARD_RECEIPT.md`
+Original source size: 2,341 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-TT Fresh Board Receipt
+
+**Protocol:** `R12-ER-TT-v1-board`
+
+**Decision:** admit the board for score-bearing source implementation. No
+training seed, H100 run, development read, or confirmation read exists.
+
+## Provenance
+
+| Field | Value |
+|---|---|
+| Exact board source | `bd77c0fafdbc527688ba57aedd74ccdfbe2ed1cf` |
+| Public beacon round | `6305283` |
+| Beacon payload SHA-256 | `0fda3a9977fbed0805e38b16332036b0e8af6d646646078d367e4b62709c3d99` |
+| Board seed | `1209366536012979338` |
+| Report SHA-256 | `64ea4c0e19ea029102af240d44242c830d7b014e49a59af09a836b2d3efb6010` |
+
+The board lives at
+`artifacts/r12/er_relation_tensor_board_1209366536012979338/` locally. A second
+complete build under `/tmp` was byte-identical for all four files.
+
+## Immutable files
+
+| File | Rows | Bytes | SHA-256 |
+|---|---:|---:|---|
+| `train.jsonl` | 48,000 | 155,836,848 | `1982aeb272ab630472b9326149fc0e9c4f653c2e54a8e70b2b09162d0c95e734` |
+| `development.jsonl` | 2,048 | 6,674,519 | `59be0c40656d5f7cedbbf5cea8e384896ed0eeb5cbed5083df4ac1281ff81090` |
+| `confirmation.jsonl` | 2,048 | 6,678,600 | `cac2515bcdec2f2be2bac30162954592de0a12af4823bc1ec25cbe821030c5e6` |
+| `report.json` | n/a | n/a | `64ea4c0e19ea029102af240d44242c830d7b014e49a59af09a836b2d3efb6010` |
+
+`confirmation.jsonl` is mode `0600`. Development and confirmation access
+counters are `0/0`.
+
+## Gate result
+
+All fifteen preregistered gates pass:
+
+- 13,024 rows at each cardinality `N=3,4,5,6`;
+- rule-count rows 17,368 / 17,368 / 17,360;
+- depth rows are 4,336 or 4,344 for every depth 1–12;
+- every one of 13,024 semantic families contains a non-bijective rule;
+- every generated row passes independent grammar parsing, equality inference,
+  execution, HALT, query, pointer-span, and oracle checks;
+- pairwise names, semantic families, exact prompts, and word 13-grams are all zero;
+- training and scored renderer cosets are disjoint;
+- maximum program and line lengths are 610 and 96 bytes;
+- family-deranged state exactness is 1,036/13,024 = 7.955%; and
+- equality-ablated state exactness is 1,063/13,024 = 8.162%.
+
+## Boundary
+
+This receipt establishes clean, reproducible score-bearing data only. It is not
+a neural result. The confirmation file remains sealed unless a separately
+frozen development evaluator passes every preregistered gate and authorizes one
+read.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 204: `R12_ER_RELATION_TENSOR_RESULT.md`
+
+Original source path: `R12_ER_RELATION_TENSOR_RESULT.md`
+Original source size: 6,076 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-TT v1 Development Result
+
+**Protocol:** `R12-ER-TT-v1`
+
+**Decision:** reject ER-TT v1 and permanently leave its confirmation split
+unopened.
+
+## Custody
+
+- Scientific source: `3bd8a329ab94f3426be61ae87db92a14a285f2f7`
+- Board seed: `1209366536012979338`
+- Training seed: `4773363983426630371`
+- Sole score-bearing job: `694758` on H100 `evc40`
+- Runtime: 22m59s, exit code zero
+- Development/confirmation accesses: `1/0`
+- Complete/trainable/headroom parameters:
+  `192,740,854 / 12,037,293 / 7,259,146`
+
+The immutable checkpoint was written before the exclusive development ledger.
+The independent assessor reproduced the rejection. Confirmation was never
+opened and this board must never be rescored.
+
+## Artifact hashes
+
+| Artifact | SHA-256 |
+|---|---|
+| `compiler.pt` | `0c12b2eb68411f63c97cea136d80c8e44a0c0923cc3afa1cbf38fc88de6ffad3` |
+| `development_evidence.pt` | `5504dc273c1c9abfd4dae333f80473248fc36d83f13aafb5844d1ec8d99a48b0` |
+| `development_report.json` | `2b935215037908e0fa5154e5348fecc23f4bc42e83082a0a1fd33cc5b8cf0113` |
+| `development_assessment.json` | `3628e2d071f980841795f6c9a71cc18986be5eed935e27fb7a7aef50513d977a` |
+| Development ledger | `000aa5012563fb8251542c60b5dcfcb83e6e4445ba091649f0ecc830eb80e8b7` |
+
+Newton and local copies of all four run artifacts hash-match. A local replay of
+the independent assessor is byte-identical to
+`development_assessment.json`.
+
+## Frozen scores
+
+| Arm | Packet | State | Answer | Joint |
+|---|---:|---:|---:|---:|
+| Treatment | 2/2,048 (0.098%) | 315/2,048 (15.381%) | 669/2,048 (32.666%) | 2/2,048 (0.098%) |
+| Family-deranged | 0/2,048 | 252/2,048 (12.305%) | 470/2,048 (22.949%) | 0/2,048 |
+| Equality-ablated | 0/2,048 | 241/2,048 (11.768%) | 579/2,048 (28.271%) | 0/2,048 |
+
+Treatment cardinality, binding pointers, initial pointers, line pointers,
+initial state, active-rule mask, halt, query pointer, and query are all
+2,048/2,048 exact. The failure is concentrated in episodic relation extraction
+and its downstream event use:
+
+| Treatment field | Exact rows |
+|---|---:|
+| Relation tensor | 2/2,048 (0.098%) |
+| Witness pointers, whole packet | 12/2,048 (0.586%) |
+| Events, whole packet | 1,235/2,048 (60.303%) |
+
+All 2,048 scored families contain a non-bijective relation. Non-bijective
+joint is therefore the same 2/2,048 result.
+
+## Granular diagnosis
+
+Independent recomputation from the frozen raw evidence gives:
+
+| Quantity | Treatment | Family-deranged | Equality-ablated |
+|---|---:|---:|---:|
+| Active relation cells | 10,092/27,628 (36.528%) | 7,456/27,628 (26.987%) | 7,975/27,628 (28.866%) |
+| Complete active rules | 193/6,140 (3.143%) | 103/6,140 (1.678%) | 70/6,140 (1.140%) |
+| Active event cells | 21,621/24,576 (87.976%) | 22,983/24,576 (93.518%) | 21,364/24,576 (86.930%) |
+| Active witness occurrences | 40,679/55,256 (73.619%) | 36,305/55,256 (65.703%) | 40,346/55,256 (73.017%) |
+
+Treatment before-witness localization is 26,322/27,628 = 95.273%, while
+after-witness localization is only 14,357/27,628 = 51.965%. Relation-cell
+accuracy falls monotonically with cardinality: 49.652%, 39.659%, 36.198%, and
+28.144% at `N=3,4,5,6`.
+
+The training losses make this an architecture/optimization failure rather than
+an exact-packet artifact. By epoch two, cardinality, rule-active, halt, query,
+and event losses are effectively zero, but treatment relation-row loss remains
+`1.495433`, approximately the chance cross-entropy of the mixed-cardinality
+task. Witness-pointer loss remains `0.768608`. The system learned ordinary
+layout and control fields but did not learn a reliable variable relation bus.
+
+## Causal and invariance evidence
+
+The two exact treatment packets pass the eligible relation, cardinality, reset,
+and query interventions, but two rows are insufficient for the preregistered
+effectiveness gates. Source invariance exposes severe content-dependent
+routing:
+
+| Source transform | Fully exact rows |
+|---|---:|
+| Rule-storage reindex | 1,997/2,048 |
+| Physical-record reindex | 1,840/2,048 |
+| Witness alpha rename | 6/2,048 |
+| Opcode alpha rename | 32/2,048 |
+| Post-HALT suffix | 1,512/2,048 |
+| Post-seal source poison | 2,048/2,048 |
+
+Witness alpha rename preserves exact relation tensors on only 8/2,048 rows;
+opcode alpha rename preserves them on 93/2,048. This rejects the intended
+alpha-equivariant semantic-binding claim.
+
+## Failure localization
+
+ER-TT v1 successfully removes the learned motor and finite `S_3` card table,
+but its soft byte-pointer/equality path entangles two jobs:
+
+1. **where:** locate each occurrence from syntax and record position; and
+2. **what:** preserve the selected symbol identity so equality can define the
+   relation and event binding.
+
+The same content-sensitive token memory performs both. It finds most
+before-side occurrences, loses nearly half of after-side occurrences, mixes
+symbol fingerprints under uncertain soft pointers, and memorizes name/opcode
+surface. More data or a larger relation head would not address that causal
+failure.
+
+## Admitted successor hypothesis
+
+A fresh-board successor may test a **dual-stream symbol transport bus**:
+
+- an alpha-invariant structural stream performs line/slot/span routing from
+  token classes, delimiters, and order, without raw symbol identity;
+- an identity stream pools the entire selected whitespace-delimited symbol,
+  retaining raw bytes only after routing;
+- relation rows are produced only by shared before/after identity equality;
+- event-to-rule binding uses the same identity-equality bus rather than whole-
+  record similarity;
+- straight-through or constrained span selection prevents soft mixtures from
+  corrupting identity fingerprints;
+- treatment, family-deranged, equality-ablated, source-free, and alpha-recoded
+  controls remain matched; and
+- the complete deployed system remains strictly below 200M parameters.
+
+This is a repair hypothesis, not a reasoning result. It requires CPU
+falsification, exact parameter accounting, fresh source/board/training seeds,
+and a new one-read development contract. ER-TT v1 itself is permanently closed.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 205: `R12_ER_RELATION_TENSOR_SCORE_PREREG.md`
+
+Original source path: `R12_ER_RELATION_TENSOR_SCORE_PREREG.md`
+Original source size: 5,547 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-TT v1 Score-Bearing Preregistration
+
+**Protocol:** `R12-ER-TT-v1-score`
+
+**Status:** locally qualified before scientific source freeze and training-seed
+draw. The fixed production board remains at development/confirmation access
+`0/0`. No GPU fit or neural score exists.
+
+## Fixed inputs
+
+- Board source: `bd77c0fafdbc527688ba57aedd74ccdfbe2ed1cf`
+- Board report SHA-256:
+  `64ea4c0e19ea029102af240d44242c830d7b014e49a59af09a836b2d3efb6010`
+- Train/development/confirmation rows: `48,000 / 2,048 / 2,048`
+- Train/development/confirmation SHA-256 prefixes:
+  `1982aeb2 / 59be0c40 / cac2515b`
+- Confirmed ER-CST witness parent checkpoint SHA-256:
+  `917c1a1fce67c02258d0f90f04398ab433d18ba63c2dca92450cc5856c022ae7`
+- Confirmed parent assessment SHA-256:
+  `4a0fb47233d86887bb46aa853560bf81d319840610d62abe4f1dfaa899671310`
+
+The deployed system has 192,740,854 complete parameters, 12,037,293 trainable
+parameters, no learned motor or reader, and 7,259,146 parameters of headroom
+below the absolute 200M ceiling.
+
+## Equal-Budget Arms
+
+All three arms reconstruct the confirmed parent independently, begin from the
+same trainable-state digest, use the same family order, 48,000 rows, two epochs,
+3,000 optimizer updates, batch 32, AdamW settings, and renderer-consistency
+weight.
+
+1. **Treatment:** true witness equality and relation-row labels.
+2. **Family derangement:** unchanged source bytes with relation labels supplied
+   by another family in the same `(cardinality, rule_count)` bucket.
+3. **Equality ablation:** unchanged relation labels and byte offsets, but every
+   after-witness name is replaced by a deterministic fresh fixed-width name.
+   Before witnesses, declarations, opcodes, events, queries, and all non-after
+   bytes are unchanged.
+
+Training supervises only compiler fields: semantic-line pointers, active
+declaration/witness/query pointers, cardinality, active-rule mask, initial and
+relation rows, event references, HALT, query, and cross-renderer consistency.
+Final state, answer, recurrent trajectory, and every scored oracle are absent
+from training.
+
+## Source-Deleted Evaluation
+
+The compiler is converted to a hard finite packet before execution. Program
+bytes, token memory, residuals, pointer logits, and the model module are not
+inputs to the recurrent motor. Invalid live references fail state and answer
+scoring; they are not repaired. The motor applies the selected relation tensor
+with persistent pre-apply HALT. The answer is a parameter-free terminal-state
+row selection.
+
+Raw evidence contains every predicted/target semantic field, active pointer
+range, final state, answer, validity flag, cardinality, depth, renderer, and
+non-bijective grouping. A separate assessor recomputes every metric and all
+four interventions with an independent list executor.
+
+## Frozen Causal Controls
+
+Source-level recompilation tests:
+
+- rule-record storage reindex;
+- complete physical-record reindex;
+- consistent witness alpha rename;
+- consistent opcode alpha rename; and
+- post-HALT suffix replacement.
+
+Packet-level tests:
+
+- source poisoning after packet seal;
+- active relation-row derangement;
+- cardinality-mask corruption with deterministic removed-index repair;
+- initial-state reset; and
+- query swap.
+
+The first four source transformations must preserve the entire semantic packet,
+state, and answer on every row. Post-HALT replacement must preserve state and
+answer on every row. Every packet intervention must be exact on all otherwise
+exact packets and must change every semantically sensitive packet.
+
+## Immutable Development Gates
+
+The sole development read advances only if:
+
+1. treatment packet, state, answer, and joint are each at least 90%;
+2. cardinality, initial rows, relation rows, rule activity, events, HALT, and
+   query are each at least 95%;
+3. every active line/binding/initial/witness/query pointer field is at least
+   95%;
+4. minimum joint by cardinality, depth, and unseen renderer is at least 80%;
+5. non-bijective-family joint is at least 85%;
+6. treatment packet and joint exceed both controls by at least 50 percentage
+   points;
+7. both controls remain at or below 35% packet and joint;
+8. every source invariance is exact on all 2,048 rows;
+9. all packet interventions are exact and effective on their sensitive rows;
+10. the parent remains byte-identical outside the declared trainable set;
+11. parameters are exactly 192,740,854 and below 200M; and
+12. custody is exactly one development access and zero confirmation accesses.
+
+Passing authorizes one separately frozen confirmation evaluator with unchanged
+weights and thresholds. Failure permanently closes ER-TT v1; the board will not
+be repaired or rescored and confirmation will remain sealed.
+
+## Local Qualification
+
+Twenty-five focused tests pass across mechanics, adapter, board, training,
+interventions, and independent assessment. Ruff, byte compilation, shell
+syntax, and diff checks pass. A real confirmed-parent reconstruction and
+production-family backward pass are finite; all 110 declared trainable tensors
+receive gradient, including every new cardinality, rule-activity, query, role,
+and coordinate-witness component. Exact parameter accounting is unchanged.
+
+## Claim Boundary
+
+A pass would establish bounded fresh episodic compilation and recurrent
+composition of arbitrary total finite copy relations over cardinalities three
+through six under source deletion. It would not establish unrestricted
+language grounding, unbounded algorithms, arithmetic, branching, planning, or
+broad general reasoning.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 206: `R12_ER_RELATION_TENSOR_TRANSPORT_CPU_RESULT.md`
+
+Original source path: `R12_ER_RELATION_TENSOR_TRANSPORT_CPU_RESULT.md`
+Original source size: 2,705 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Episodic Relation Tensor Transport: CPU Result
+
+**Protocol:** `R12-ER-TT-v1-cpu`
+
+**Status:** CPU and parameter-free tensor mechanics admitted. Neural compilation,
+fresh-board qualification, and reasoning claims remain unopened.
+
+## Frozen provenance
+
+| Field | Value |
+|---|---|
+| Source commit | `0bf6d91b86c90a8772a8f109803131f729e1602f` |
+| Mechanics seed | `2718` |
+| Trials | `10,000` |
+| Mechanics source SHA-256 | `27c04b35f26ec63da0649e9e973db32e7f740d69b7c164bbf3405752f712e8bd` |
+| Tensor motor SHA-256 | `af9916b355d4a5d1c0aa126420f21383ef879a47e1ea4e5c889358a20c98840f` |
+| Report SHA-256 | `28e5acc29e34c723bf35d58f49634535ac5c5d23cf841a8385e7955a09804cce` |
+| Episode registration SHA-256 | `da8d4c3bf3e17b9f50114f486e9387d6f1afa4662bf810c62182329f87f05d7c` |
+
+The durable report is
+`artifacts/r12/er_relation_tensor_cpu_2718.json`. It was created with exclusive
+file creation after the source commit and was not regenerated in place.
+
+## Results
+
+Cardinality was exactly balanced: 2,500 episodes each at `N=3,4,5,6`.
+
+| Measure | Exact | Rate |
+|---|---:|---:|
+| Witness relation inference | 10,000/10,000 | 100% |
+| Program execution and trajectory | 10,000/10,000 | 100% |
+| Relation composition | 10,000/10,000 | 100% |
+| Witness alpha rename | 10,000/10,000 | 100% |
+| Opcode alpha rename | 10,000/10,000 | 100% |
+| Card-storage reindex | 10,000/10,000 | 100% |
+| Cardinality padding | 10,000/10,000 | 100% |
+| Post-HALT suffix | 10,000/10,000 | 100% |
+| Source-deleted packet | 10,000/10,000 | 100% |
+| Episodes containing a non-bijective rule | 9,936/10,000 | 99.36% |
+| Family-deranged final-state exact | 753/10,000 | 7.53% |
+| Equality-ablated final-state exact | 417/10,000 | 4.17% |
+
+All thirteen preregistered mechanics gates pass. The zero-parameter tensor motor
+also passes focused torch tests for variable cardinality, hard relation
+selection, recurrent composition, and persistent pre-apply HALT.
+
+## Interpretation
+
+This establishes that a variable-cardinality relation representation can be
+inferred exactly from determining witnesses and composed without an enumerated
+`S_3` class table or a learned recurrent transition table. It also shows that
+the intended controls materially change terminal state on this distribution.
+
+It does **not** establish that Shohin can compile the relation rows from source,
+that a neural system generalizes to fresh relation families, or that ER-TT is a
+general reasoning mechanism. The only admitted next action is implementation
+and exact parameter audit of the smallest neural compiler extension below the
+strict 200M complete-system ceiling. No neural board or seed may be drawn before
+that adapter and its tests are committed.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 207: `R12_ER_RELATION_TENSOR_TRANSPORT_THEORY.md`
+
+Original source path: `R12_ER_RELATION_TENSOR_TRANSPORT_THEORY.md`
+Original source size: 5,017 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Episodic Relation Tensor Transport
+
+**Protocol:** `R12-ER-TT-v1-theory`
+
+**Status:** CPU/tensor mechanics and a local neural adapter are implemented.
+The adapter is not source-frozen and no board seed, training seed, GPU run, or
+scored access exists.
+
+## Motivation
+
+ER-CST Witness Equality Bus v1.1 confirms 99.023% sealed joint accuracy when
+fresh operation meanings belong to the six permutations of three positions.
+The remaining limit is now explicit: rule cards are class IDs in a hard-coded
+`S_3` ontology, and the recurrent motor is a learned 36-cell composition table.
+Adding width to that solved interface would not test more general reasoning.
+
+ER-TT removes both finite enumerations. Each episode chooses cardinality
+`N in {3,4,5,6}`, two to four fresh operations, and up to twelve invocations.
+A determining witness lists `N` distinct input symbols and `N` output symbols.
+Outputs may repeat, so an operation is any of the `N^N` total copy relations,
+not only a permutation. The compiler must emit each operation directly as an
+`N x N` one-hot relation matrix, along with initial state, event bindings, HALT,
+and query. No operation class ID exists.
+
+## Architecture hypothesis
+
+For output position `i` and input position `j`, learned occurrence fingerprints
+produce equality logit `E[i,j]`. Masked row-wise categorical selection yields
+relation matrix `R`. If state matrix `S` maps current positions to entity roles,
+the next state is
+
+`S_next = R @ S`.
+
+This matrix multiplication is a parameter-free in-model primitive, like an
+attention value mix. A persistent pre-apply HALT mask selects whether each
+recurrent step commits. Source text, token memory, and residuals are destroyed
+before the tensor motor runs. The final query selects one row of terminal `S`.
+
+This construction has three useful properties:
+
+1. it represents `N^N` operations with `N^2` emitted categorical cells rather
+   than an `N^N` classifier;
+2. the same tied motor executes bijections, copying, erasure, and many-to-one
+   transport without learning a transition table; and
+3. relation composition is associative, so depth adds recurrent work but no new
+   operation-specific parameters.
+
+## Falsifiable neural contract
+
+- Reuse the confirmed 192,726,827-parameter parent where valid.
+- Replace fixed three-position/card-class heads and the learned motor/reader with
+  masked coordinate-generated occurrence queries, direct relation rows, the
+  parameter-free tensor motor, and categorical row readout.
+- Support variable cardinality, two to four rule records, and depth one to twelve.
+- Measure the exact complete-system parameter count before any board seed; it
+  must remain strictly below 200M.
+- Training may supervise active witness pointers, relation rows, record/event
+  bindings, initial rows, HALT, and query. It may not supervise final state,
+  answer, recurrent trajectory, development, or confirmation.
+- The primary controls remain family-deranged semantics and equality-ablated
+  witnesses. Add relation-row derangement, cardinality-mask corruption, source
+  poison after packet sealing, storage reindex, alpha rename, and post-HALT suffix.
+- Development and sealed confirmation must be split-disjoint in names, latent
+  families, renderer compositions, exact prompts, and word 13-grams.
+
+## Admission sequence
+
+1. Prove CPU witness inference, arbitrary relation execution, associativity,
+   alpha invariance, storage invariance, padding invariance, source deletion,
+   HALT persistence, and causal-control sensitivity.
+2. Prove the torch relation motor against exhaustive/sampled CPU references,
+   with zero trainable parameters and no source input.
+3. Implement and parameter-audit the smallest neural compiler extension.
+4. Freeze source before any board seed; build, independently reproduce, and seal
+   a fresh board before a training seed.
+5. Run one equal-budget development qualification and only one separately frozen
+   confirmation if every absolute and causal gate passes.
+
+## Claim boundary
+
+A future pass would establish variable-cardinality episodic finite-relation
+compilation and source-deleted recurrent composition. It would still not prove
+free-form language grounding, unbounded algorithms, arithmetic, branching,
+planning, or general intelligence. Those require later boards whose program
+structure itself is inferred rather than supplied by the finite grammar.
+
+## Adapter implementation receipt
+
+The implemented adapter totals 192,740,854 parameters, of which 12,037,293 are
+trainable, leaving 7,259,146 below the strict 200M ceiling. It removes the
+finite permutation buffer, direct card classifier, learned categorical motor,
+and learned reader from the deployed path. Actual reconstruction from the
+confirmed v1.1 checkpoint copies every retained parent tensor byte-identically.
+Exact architecture, supervision, controls, and gates are preregistered in
+`R12_ER_RELATION_TENSOR_ADAPTER_PREREG.md`. No scientific board may be seeded
+until this source and contract are committed.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 208: `R12_S9_1_ALPHA_CLOSED_BOARD.md`
+
+Original source path: `R12_S9_1_ALPHA_CLOSED_BOARD.md`
+Original source size: 2,172 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S9.1 Alpha-Closed Structured Compiler Board
+
+**Status:** frozen and unevaluated
+
+**Neural source commit:** `863a210`
+
+**Board seed:** `1370124171784245712`
+
+**Training seed:** `8076551815802451212`
+
+## Frozen experiment
+
+S9.1 retains the frozen 300k Shohin trunk, closed S8.1 initializer, S9
+occurrence-quotient encoder, S7 cyclic generator, and S8 graph/runtime. The two
+changes frozen at the source commit are:
+
+1. equal-budget original/operation-recoded training pairs with a 0.25 aligned
+   role-logit orbit loss; and
+2. syntax-only top-eight non-overlapping child assignment around model-selected
+   card/event anchors.
+
+Each treatment/control arm receives 24,000 unique sources, 48,000 charged views,
+batch 64, and 750 optimizer updates. No train state, answer, recurrent trace, or
+score-board relation is provided.
+
+## Board custody
+
+| Payload | Rows | Bytes | SHA-256 |
+|---|---:|---:|---|
+| generator train | 23 | 3,763 | `754906d994121253889c3ebbbbd59e7f41e69fff5ca5f0a882fc1e5568dfff7f` |
+| graph-only train | 48,000 | 406,390,454 | `db7649172ecfee9e62397918fc916678aa7929b5079761ebc27783b66879c20a` |
+| development | 2,048 | 18,766,053 | `4b5d0e397e4df769f15b0ad34497ca2430fda641e8aaf184c92fcaa16a52bafe` |
+| sealed confirmation | 2,048 | 18,738,735 | `ee7e19fc3d589d5e3831385f5f061705e44ccbc61ab444cefd863159c17f076b` |
+
+Board report SHA-256:
+`92cde7e7b1215dad66cd48ea8fc26937959d5b5751ea3c519256853fd8e27122`
+
+Audit results:
+
+- 52,096/52,096 independent executor agreements;
+- 52,096/52,096 noncanonical node-storage rows;
+- no train final state or answer;
+- zero exact-prompt, 13-gram, or split-name overlap;
+- development/confirmation access `0/0`;
+- original and recoded maximum 455/512 tokens; and
+- 8,568 nonce recodes change token width.
+
+## Authorized next action
+
+Commit this receipt plus the report and generator cells. Sync exact source,
+large board payloads, tokenizer, protected base, and closed initializer to
+Newton and hash-verify them. Then run one serial treatment/no-class/shuffled
+training and sole development assessment. The sealed confirmation file must
+remain unread by model/evaluator code unless every development gate passes.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 209: `R12_S9_1_ALPHA_CLOSED_CPU_RESULT.md`
+
+Original source path: `R12_S9_1_ALPHA_CLOSED_CPU_RESULT.md`
+Original source size: 1,784 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S9.1 Alpha-Closed Structured Compiler CPU Result
+
+**Decision:** admit S9.1 mechanics for one fresh neural development board
+
+**Falsifier report:** `artifacts/r12/s9_1_alpha_closed_cpu_falsifier.json`
+
+**Report SHA-256:**
+`a43824595c513226f52f54a629bad5d52f0d7f3c2a67e672103d0a16284dc563`
+
+## Result
+
+The source-frozen CPU falsifier evaluated all 2,048 rows of the already closed
+S9 development board. This was a mechanics test, not a new S9 score read.
+
+| Arm | Exact or valid rows |
+|---|---:|
+| Oracle structured graph | 2,048/2,048 exact |
+| Operation-recoded oracle | 2,048/2,048 exact |
+| Old greedy after one required child is below `none` | 0/2,048 exact |
+| Structured decoder under the same intervention | 2,048/2,048 exact |
+| Uniform logits | 0/2,048 valid |
+| Shuffled relation roles | 0/2,048 exact |
+| Deliberately wrong high-margin child | 0/2,048 exact |
+| Recoded sources within width-four proposal cap | 2,048/2,048 |
+
+Every one of the 17,437 card/event regions left multiple syntax-valid local
+choices. The minimum candidate count was 55, the median 83, and the maximum
+123. Therefore the structured decoder is not obtaining the gold child from a
+unique grammar slot.
+
+## Interpretation
+
+The result proves four bounded facts:
+
+1. the structured assignment is representationally sufficient on every closed
+   source;
+2. it directly repairs the measured all-or-nothing missing-child failure;
+3. it does not invent anchors from uniform scores; and
+4. it does not semantically repair a wrong model preference.
+
+It does not establish learned alpha closure or generalization. Those claims
+require the sole fresh-development evaluation with equal-budget treatment,
+no-class, and shuffled-label arms. Confirmation remains sealed unless every
+development gate passes.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 210: `R12_S9_1_ALPHA_CLOSED_DEVELOPMENT_RESULT.md`
+
+Original source path: `R12_S9_1_ALPHA_CLOSED_DEVELOPMENT_RESULT.md`
+Original source size: 4,606 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S9.1 Alpha-Closed Structured Compiler Development Result
+
+**Decision:** reject S9.1 for confirmation; retain as the strongest bounded
+fresh-development compiler/reasoner baseline
+
+**Sole valid job:** Newton `693793`, `evc47`, completed `0:0` in 41m23s
+
+**Score access:** development `1`, confirmation `0`
+
+## Artifact custody
+
+| Artifact | SHA-256 |
+|---|---|
+| Checkpoint | `0c04039821fdb130da9b6aaf3d303c7652768ed769db3f3671a7792e78d4c8b8` |
+| Evaluation | `e0d77a32cbab9276e0cbc048a08f698594eca1fa4d98ff912c56ef33dbfcfa5c` |
+| Assessment | `727c913db8d8fc5765dc6f39074c4e4d2a09fcec6b5f0df942ad621feda873c6` |
+
+Newton and local copies match all three hashes. Scoreless job `693789` was
+canceled on `evc28` after CUDA initialization hung before model/data access; it
+wrote no artifact and is not a scientific run.
+
+## Primary result
+
+| Arm | Exact graph | Exact state | Exact answer |
+|---|---:|---:|---:|
+| Gold graph | 2,048/2,048 | 2,048/2,048 | 2,048/2,048 |
+| **S9.1 treatment** | **2,025/2,048 = 98.877%** | **98.877%** | **98.877%** |
+| S9.1 unconstrained decode | 2,023/2,048 = 98.779% | not promoted | not promoted |
+| Equal-budget no-class | 1,766/2,048 = 86.230% | 86.230% | 86.230% |
+| Shuffled relations | 0/2,048 | not promoted | not promoted |
+| Lexical-source-free | 0/2,048 | not promoted | not promoted |
+| Uniform logits | 0/2,048 | not promoted | not promoted |
+
+Treatment beats its matched no-class arm by **12.646 percentage points** exact
+graph and closed S9 by **4.102 points**. Every depth from three through eight is
+at least 97.947% exact state. The complete system remains 134,580,264
+parameters.
+
+## Failure decomposition
+
+All 2,025 valid treatment graphs are exact and all execute to exact state and
+answer. Span precision is 100%, recall 98.813%, and F1 99.403%. The same 2,025
+rows are exact span/class rows. The remaining 23 rows do not produce a valid
+graph; there are no valid-but-wrong treatment graphs.
+
+Structured child assignment contributes two exact graphs over the frozen
+unconstrained decoder (2,025 versus 2,023). Therefore the measured missing-child
+repair is real but no longer explains most residual rows. The evaluator discards
+partial spans whenever quotient construction fails, so this artifact cannot
+distinguish missing root anchors, wrong root cardinality, child assignment, or
+binding failure inside the remaining 23 rows. Global anchor/cardinality closure
+is the leading next hypothesis, not a result already established by S9.1.
+
+## Alpha-closure result
+
+Class-ID and relation-storage reindexing are exact on 2,025/2,025 valid graphs.
+Operation recoding gives:
+
+- 2,024/2,025 originally valid rows with a valid recoded graph;
+- 2,024/2,024 identical recurrent states and answers; but
+- 2,022/2,024 bit-identical canonical graphs.
+
+This is a large improvement over S9's 18 invalidated recodes, but it misses the
+preregistered all-valid and exact-canonical-graph requirements by one and two
+rows respectively. State/answer equality cannot substitute for the stronger
+graph gate because accidental semantic equivalence is possible.
+
+## Causal controls
+
+Treatment state accuracy collapses from 98.877% to:
+
+- 8.838% with reversed links;
+- 0.977% with deranged cards;
+- 3.857% with one witness;
+- 2.832% with state reset; and
+- 3.760% with early nil.
+
+The no-class gap, zero shuffled/source-free/uniform exactness, exact conditional
+execution, and causal collapses jointly establish that the bounded computation
+is model-grounded rather than host-solved. They do not establish free-form
+general reasoning.
+
+## Training accounting
+
+Each treatment/control arm used exactly 24,000 unique source episodes, 48,000
+charged original-plus-recoded views, batch 64, 750 updates, and 128 sampled
+negative candidates per view. Treatment finished at 100% sampled candidate and
+positive accuracy with supervised loss `8.585e-06` and orbit loss `4.883e-04`.
+The shuffled arm retained only 15.708% positive accuracy.
+
+## Decision and next theory
+
+Twenty-nine of 31 frozen gates pass. The two failures are operation-recode
+all-valid eligibility and canonical graph identity.
+Confirmation remains sealed and this board must never be rescored.
+
+The admissible S9.2 hypothesis is **global anchor closure**, not more arithmetic
+or a wider transformer: choose roster/state/card/event anchor sets jointly from
+model logits under only the existing finite grammar, and strengthen alpha
+equivariance across both positive anchors and their hard negative competitors.
+It requires a new theorem/falsifier, equal-budget controls, and a fresh board.
+No threshold may be relaxed.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 211: `R12_S9_1_ALPHA_CLOSED_STRUCTURED_COMPILER_PREREG.md`
+
+Original source path: `R12_S9_1_ALPHA_CLOSED_STRUCTURED_COMPILER_PREREG.md`
+Original source size: 4,687 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S9.1 Alpha-Closed Structured Compiler Preregistration
+
+**Status:** CPU mechanics admitted; no fresh board seed drawn
+
+**Parent:** S9 development rejected at 1,941/2,048 exact graphs (94.775%)
+because five additional exact-class rows were required and 18 originally valid
+operation recodes failed to remain valid. Confirmation remains sealed.
+
+## Claim under test
+
+S9 already learned the central occurrence quotient. S9.1 tests whether its
+remaining failures are a narrow alpha-closure and typed-assignment defect:
+
+1. explicitly train structural role logits to agree when operation names are
+   rotated in source text; and
+2. replace independent greedy child selection with one deterministic,
+   model-logit-only assignment under the frozen card/event grammar.
+
+This is not a new arithmetic runtime, search procedure, or answer repair.
+
+## Frozen ownership boundary
+
+The model still owns every roster/state island, every card and event anchor,
+the number of cards and events, all child scores, entry, next/nil, and query.
+The host may enforce only non-overlap and the existing arities: two children per
+selected card anchor, three per selected event anchor, one entry, and one query.
+The decoder receives no graph, depth, executor output, state, answer, gold
+span, retry signal, or semantic consistency score.
+
+For each forced child role, the assignment enumerates the eight highest
+role-versus-none candidates in the anchor's source region and chooses the
+highest-scoring non-overlapping tuple. This beam width is frozen before the
+fresh board.
+
+Uniform logits must create no anchors and therefore no graph. A deliberately
+wrong high-scoring child must remain wrong or be rejected; it may not be
+repaired from semantics.
+
+## Frozen training budget
+
+Each arm uses exactly:
+
+- 24,000 unique training sources sampled before training from the admitted
+  48,000-row pool;
+- one original and one operation-recoded view per source;
+- 48,000 charged views total;
+- batch 64 views (32 alpha pairs), 750 optimizer updates;
+- 128 sampled negative span proposals per view; and
+- ordinary weighted role cross-entropy plus 0.25 mean-squared error between
+  aligned original/recoded gold-occurrence log-softmax vectors.
+
+Treatment, no-class, and shuffled-label arms have identical architecture,
+initialization, charged views, update count, and orbit objective. Shuffled
+labels use the same permutation in both views of a pair.
+
+## Frozen architecture
+
+The frozen 300k Shohin trunk, closed S8.1 initializer, five-layer width-384 S9
+encoder, exact-byte class mean, relation head, width-four token proposals, S7
+generator, and S8 graph/runtime are unchanged. S9.1 adds no trainable
+parameters. The complete system must remain below 150,000,000 parameters.
+
+## Required pre-board mechanics
+
+Before a fresh board seed is drawn, CPU tests must establish:
+
+- oracle logits reconstruct every closed S9 development graph;
+- lowering one required child's role below `none` breaks old greedy decoding
+  but is recovered by structured assignment;
+- uniform logits produce zero valid graphs;
+- a wrong high-scoring child is not semantically repaired;
+- original and recoded positive occurrences align exactly;
+- every recoded gold span remains within the width-four proposal cap; and
+- syntax leaves multiple candidate assignments rather than uniquely revealing
+  the gold graph.
+
+Closed S9 scores are used only for mechanics and are never rescored as S9.1.
+
+The frozen CPU falsifier ran over all 2,048 closed S9 development sources with
+seed `917431867`. All nine gates passed. Its report SHA-256 is
+`a43824595c513226f52f54a629bad5d52f0d7f3c2a67e672103d0a16284dc563`.
+
+## Sole fresh-development read and gates
+
+S9.1 retains every immutable S9 absolute, attribution, causal, resource, and
+access gate. In addition:
+
+- structured exact graph must be at least 95%;
+- structured exact graph must not regress below closed S9's 94.775%;
+- unconstrained decoding is reported as an ablation;
+- shuffled, uniform, and lexical-source-free structured controls are reported;
+- every originally valid graph must have a valid recoded counterpart; and
+- canonical graph, recurrent state, and answer must be identical on every such
+  operation recode.
+
+Only a full development pass authorizes one separately frozen confirmation
+read with unchanged weights. Failure closes S9.1 without opening confirmation.
+
+## Honest boundary
+
+Passing would establish robust exact-surface alpha closure for this bounded
+reasoning language. It would not establish learned aliasing, free-form natural
+language understanding, arbitrary algebra, unbounded planning, or general
+reasoning. Those remain separate stages with separate falsifiers.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 212: `R12_S9_2_GLOBAL_ANCHOR_CLOSURE_BOARD_RECEIPT.md`
+
+Original source path: `R12_S9_2_GLOBAL_ANCHOR_CLOSURE_BOARD_RECEIPT.md`
+Original source size: 2,169 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S9.2 Global Anchor Closure Board Receipt
+
+**Decision:** admit the sole fresh S9.2 development/confirmation board
+
+**Frozen scientific source commit:**
+`38c934cf9f360e1fd13258c23be310e948cafba1`
+
+**Board seed:** `3823077847356570601`
+
+**Training seed:** `1277007704479652588`
+
+**Report SHA-256:**
+`f22401e82690f8240abe89d6083e3a387619243bc68bb9d9e380540d90b1899e`
+
+## Frozen files
+
+| File | Rows | Bytes | SHA-256 |
+|---|---:|---:|---|
+| `generator_train.jsonl` | 23 | 3,763 | `4bea22f931eb1288c42c4f53e0a7ec6aedb2b2650f1b9193e6f475a4bbefb575` |
+| `train.jsonl` | 48,000 | 406,537,768 | `1b7e9029f530d8df9a64613346285ccd94bb35e7b806cbbde4a81c6f428c66a3` |
+| `development.jsonl` | 2,048 | 18,720,807 | `a186df62c9fe030d71f8c3734e6e6d570667c2c2ddc340d81718813258b96550` |
+| `confirmation.sealed.jsonl` | 2,048 | 18,723,696 | `84be3808f1f385740edf6acb8129985075e90506e31a2d087d8f34a79703c054` |
+
+Tokenizer SHA-256 is
+`87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4`.
+
+## Admission audit
+
+- all 52,096 source graphs agree with the independent executor;
+- all 52,096 rows use noncanonical graph storage;
+- training contains no final state or answer;
+- exact-prompt overlap is zero across every split pair;
+- 13-gram overlap is zero across every split pair;
+- split-name overlap is zero;
+- original maximum length is 453/512 tokens;
+- operation-recoded maximum length is 452/512;
+- 9,345 rows change token width under operation recoding;
+- development and confirmation depth/modulus/renderer cells differ by at most
+  one row; and
+- development/confirmation access is `0/0`.
+
+The failed preliminary invocation supplied an incorrect expanded commit hash
+and exited inside the clean-HEAD guard before creating the output directory.
+The board seed was therefore unused until the successful invocation above.
+
+## Custody
+
+Neither `development.jsonl` nor `confirmation.sealed.jsonl` was opened after
+generation. Training may read only `train.jsonl` and `generator_train.jsonl`.
+The evaluator must atomically claim the deterministic board-hash development
+ledger before its sole read. Confirmation remains sealed unless all 43 frozen
+development gates pass.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 213: `R12_S9_2_GLOBAL_ANCHOR_CLOSURE_CPU_RESULT.md`
+
+Original source path: `R12_S9_2_GLOBAL_ANCHOR_CLOSURE_CPU_RESULT.md`
+Original source size: 2,274 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S9.2 Global Anchor Closure CPU Result
+
+**Decision:** admit mechanics for one fresh-board neural development experiment
+
+**Seed:** `7509220561492772015`
+
+**Closed mechanics rows:** 2,048 S9 development rows; no neural checkpoint or
+sealed confirmation row read
+
+**Report SHA-256:**
+`91d653c7e2a131ad7e21319dd72a52dee95c00520fbd59771fe5f7a08fe52e24`
+
+## Result
+
+All 17 frozen mechanics gates pass.
+
+| Mechanic | Result |
+|---|---:|
+| Oracle exact graph | 2,048/2,048 |
+| Operation-recoded oracle exact graph | 2,048/2,048 |
+| One weak required root breaks local selection | 2,048/2,048 |
+| Global assignment recovers that weak root | 2,048/2,048 |
+| One extra positive root breaks local cardinality | 2,048/2,048 |
+| Global assignment ignores that extra root | 2,048/2,048 |
+| Uniform-logit abstention | 2,048/2,048 |
+| Flat-positive syntax control exact | 0/2,048 |
+| Shuffled root-score control exact | 0/2,048 |
+| Wrong high-margin root selected | 2,048/2,048 |
+| Wrong high-margin root exact | 0/2,048 |
+| Wrong high-margin count followed | 2,048/2,048 |
+| Wrong high-margin count exact | 0/2,048 |
+| Metadata/target poisoning leaves selection identical | 2,048/2,048 |
+
+Every row has at least 632 distinct complete syntax-valid assignments under the
+measured one-slot lower bound; median is 986 and maximum is 1,459. Thus finite
+grammar and cardinality do not uniquely reveal the graph. The independent
+reduced exhaustive solver agrees with interval Viterbi on 10,000/10,000 cases
+with zero score error.
+
+Instrumentation records zero compiler and executor calls during root
+optimization. Full decode calls the compiler exactly once and never calls the
+executor. Deliberately wrong higher model scores are followed into rejection or
+wrong output rather than repaired from semantics.
+
+The coordinate-free hard-negative orbit loss is exactly zero under identical
+score multisets, positive when one competitor changes, and has finite nonzero
+gradients on both views.
+
+## Boundary
+
+This admits only the mechanics and anti-leakage boundary. It does not show that
+learned logits choose the right global assignment, improve S9.1, remain alpha
+closed, or generalize beyond the templated graph language. Those are frozen
+fresh-development gates. Confirmation remains sealed.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 214: `R12_S9_2_GLOBAL_ANCHOR_CLOSURE_DEVELOPMENT_RESULT.md`
+
+Original source path: `R12_S9_2_GLOBAL_ANCHOR_CLOSURE_DEVELOPMENT_RESULT.md`
+Original source size: 4,731 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S9.2 Global Anchor Closure Development Result
+
+**Decision:** rejected on the sole fresh development read
+
+**Confirmation:** unopened and permanently ineligible for S9.2 v1
+
+**Slurm job:** `693890`, `evc25`, completed `0:0` in 59m39s
+
+## Frozen identity
+
+| Item | Identity |
+|---|---|
+| Scientific source commit | `38c934cf9f360e1fd13258c23be310e948cafba1` |
+| Board seed | `3823077847356570601` |
+| Training seed | `1277007704479652588` |
+| Board report | `f22401e82690f8240abe89d6083e3a387619243bc68bb9d9e380540d90b1899e` |
+| Base checkpoint | `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6` |
+| S8.1 initializer | `44b3291555047085257cfb1c4ec03dd6e5485ce83e134a5200d8ea0055614585` |
+| Tokenizer | `87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4` |
+| Development split | `a186df62c9fe030d71f8c3734e6e6d570667c2c2ddc340d81718813258b96550` |
+| Sealed confirmation | `84be3808f1f385740edf6acb8129985075e90506e31a2d087d8f34a79703c054` |
+| Checkpoint | `590a3944c7af5bf7b27b4a27bddbe159f7e4f8b3fc7fac06bfa673d33c647918` |
+| Evaluation | `0ef0523cd847bb32e0f5ba9096828e21d0ac22b095880595d1b6ac89e908685f` |
+| Assessment | `58c3ca008764708d3f50301bee82bcd332aec939b3b6457f4abeeae7b5183bf9` |
+| Development access ledger | `35effa66f661ca0ba7e407b0f05599ccaeabd23f3ce901c8e00ea2e71c7bc92a` |
+
+All mirrored result artifacts hash-match Newton. Development/confirmation
+access is exactly `1/0`. The confirmation split was not opened.
+
+## Result
+
+| Arm/decoder | Exact graph | Exact state | Exact answer |
+|---|---:|---:|---:|
+| S9.2 treatment | 340/2,048 = **16.602%** | 340/2,048 = **16.602%** | 340/2,048 = **16.602%** |
+| Positive-orbit-only | 340/2,048 = 16.602% | 340/2,048 = 16.602% | 340/2,048 = 16.602% |
+| No-class-message | 2,019/2,048 = **98.584%** | 2,022/2,048 = **98.730%** | 2,022/2,048 = **98.730%** |
+| Layout-only | 544/2,048 = **26.562%** | 609/2,048 = 29.736% | 619/2,048 = 30.225% |
+| Paired-shuffled | 0/2,048 | 0/2,048 | 0/2,048 |
+| Same-logit local-root decoder | **2,038/2,048 = 99.512%** | n/a | n/a |
+| Unconstrained decoder | **2,035/2,048 = 99.365%** | n/a | n/a |
+| Uniform/source-free | 0/2,048 | n/a | n/a |
+
+The assessment passes 21/43 gates: 14/31 inherited and 7/12 S9.2-specific.
+This is not a threshold miss. It fails every primary exactness, depth, causal,
+root, and treatment-over-control gate.
+
+## Failure localization
+
+Treatment state/answer accuracy by depth is:
+
+| Depth | Correct |
+|---|---:|
+| 3 | 0/342 |
+| 4 | 0/341 |
+| 5 | 0/341 |
+| 6 | 0/342 |
+| 7 | 0/342 |
+| 8 | **340/340** |
+
+The treatment predicts card count almost perfectly (`2,047/2,048`) and modulus
+perfectly, but predicts the complete `(m,c,d)` count tuple and root spans on only
+`340/2,048`. Its success set is exactly the depth-eight stratum. The positive-
+orbit-only arm has the same pattern. In contrast, removing occurrence-class
+messages restores `2,019/2,048` exact graphs and uniformly high state accuracy
+across every depth (`98.24%--99.71%`).
+
+The evidence therefore rejects the S9.2 hypothesis. Global interval Viterbi is
+mechanically correct, but the class-message logits it optimizes encode a
+training-cardinality shortcut. The finite grammar turns that shortcut into an
+irrevocable maximum-depth assignment. It destroys a same-logit local decision
+that was already `99.512%` exact. The layout arm's `26.562%` exact graph score
+also demonstrates substantial positional recoverability in this board.
+
+The failure is not in the frozen S7/S8 executor, graph semantics, or recurrent
+state transition. Every one of the 340 valid treatment graphs is exact, and all
+340 execute to exact state and answer. Operation recoding, class reindexing,
+relation-storage reindexing, state, and answer are bit-identical on all 340
+eligible rows. The failure is selection before graph construction.
+
+## Scientific disposition
+
+1. Close S9.2 v1. Do not rescore, retune, or open confirmation.
+2. Retain the no-class/local decoder only as a bounded compiler diagnostic. It
+   does not become a promoted result because the preregistered treatment failed
+   and the layout control is high.
+3. Retire parser-only anchor optimization as the active reasoning frontier.
+4. Use same-layout semantic counterfactuals and stronger grammar firewalls in
+   any future language compiler claim.
+5. Move the primary effort to a model-owned state experiment that deletes
+   source access after compilation and causally tests recurrent state transport,
+   tied update, query consumption, and halt.
+
+This result narrows the problem: Shohin's frozen features can support nearly
+exact bounded parsing when the harmful class-message path is removed, but S9.2
+does not create reasoning and does not improve the compiler.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 215: `R12_S9_2_GLOBAL_ANCHOR_CLOSURE_PREREG.md`
+
+Original source path: `R12_S9_2_GLOBAL_ANCHOR_CLOSURE_PREREG.md`
+Original source size: 10,162 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 S9.2 Global Anchor Closure Preregistration
+
+**Status:** CPU mechanics and fresh board admitted; no neural score access
+
+**Parent:** S9.1 is closed at 2,025/2,048 = 98.877% exact graph, state,
+and answer. All 2,025 emitted graphs are exact. Its 23 failed rows retain no
+partial-span diagnostics, so root-anchor failure is a hypothesis rather than an
+established diagnosis. Operation recoding also invalidates one graph and changes
+two canonical graphs. Confirmation remains sealed.
+
+## Narrow claim under test
+
+S9.2 asks whether finite global assignment over model role logits can replace
+S9.1's independent positive-argmax root selection, and whether alpha consistency
+over hard negative competitors can remove operation-recode instability. This is
+a bounded language-to-graph compiler test. It does not add arithmetic,
+recurrence, a search-and-repair loop, or a general reasoning claim.
+
+## Frozen ownership boundary
+
+The model owns every candidate role score and therefore the selected roster
+size, card count, event count, root spans, children, entry, successor/nil, and
+query. The host exposes only the already declared finite surface grammar:
+
+- roster size is one of 5, 7, or 11;
+- card count is one of 2, 3, or 4;
+- event count is one through 8;
+- root role blocks occur in the declared source order;
+- selected spans cannot overlap; and
+- one entry and one query are required.
+
+The optimizer must not read candidate targets, row modulus/depth/cards/nodes,
+gold spans, exact-byte classes, graph validity, executor output, state, answer,
+or retry feedback. Candidate targets are stripped from its inference view.
+`compile_quotient` is called at most once after the root and child assignments
+are irrevocable. A failed compile is final; no lower-scoring assignment may be
+tried.
+
+The fresh board builder resolves `source_commit` to the current clean tracked
+Git `HEAD`. Training and evaluation then require that every frozen scientific
+runtime path is byte-identical to that ancestor commit. Evaluation separately
+hash-binds the base and tokenizer to both checkpoint and board. Before reading
+`development.jsonl`, it exclusively creates a deterministic board-hash access
+ledger under `artifacts/r12/access_ledgers`; an existing ledger is a permanent
+failure. A different output directory or copied board path cannot create a
+second development read in the same scientific repository.
+
+## Global assignment theorem
+
+For every grammar hypothesis `(m, c, d)`, form the ordered root template
+
+```text
+entity.roster^m, position.roster^m, state.entity^m,
+card.operation^c, entry.tag, event.tag^d, query.position.
+```
+
+For candidate interval `i` and role `r`, the only neural score is
+
+```text
+delta(i, r) = role_logit(i, r) - role_logit(i, none).
+```
+
+A deterministic interval Viterbi algorithm finds the maximum summed delta
+among ordered, non-overlapping assignments for all admitted templates. Ties are
+resolved by stable candidate order and then ascending `(m, c, d)`. The system
+abstains unless the winning total is strictly positive. Existing S9.1 local
+top-eight child assignment then runs once around the selected card/event roots.
+
+If the gold root assignment is feasible and uniquely outscores every legal
+alternative, each gold child tuple uniquely wins its local assignment, and the
+winning total is positive, then the emitted graph is exact by the already
+admitted S9 quotient theorem. If an alpha recode induces a candidate bijection
+and preserves every compared score difference, deterministic argmax commutes
+with the recode and the canonical graph is identical. This is a finite MAP
+closure theorem, not a theorem of semantic or general reasoning.
+
+## Alpha objective
+
+All arms retain S9.1's aligned positive log-softmax orbit loss. The treatment
+adds a coordinate-free competitor term: for every non-`none` role and each
+paired original/recoded example, sort the top eight sampled negative
+`sigmoid(role-none)` margins and apply mean-squared error between the two sorted
+vectors. The full training loss is
+
+```text
+weighted role CE + 0.25 * (positive orbit MSE + hard-negative orbit MSE).
+```
+
+Sorting makes the negative comparison independent of token-coordinate changes
+under retokenization. No candidate identity or gold negative alignment is used.
+
+## Frozen neural architecture and budget
+
+The protected 300k trunk, closed S8.1 initializer, five-layer width-384 S9
+encoder, exact-byte occurrence-class mean, relation head, width-four proposals,
+S7 generator, and S8 graph/runtime are unchanged. S9.2 adds zero trainable
+parameters; the complete system remains exactly 134,580,264 parameters.
+
+Every trained arm receives exactly 24,000 unique sources, original plus recoded
+views, 48,000 charged views, batch 64, 750 updates, and 128 sampled negatives
+per view. The arms are:
+
+1. treatment: class messages plus positive and hard-negative orbit loss;
+2. positive-orbit-only: the exact S9.1 objective under the new board;
+3. no-class: equal architecture/budget without class messages;
+4. shuffled: one paired-consistent role permutation per source; and
+5. layout-only: lexical span tokens masked, class messages disabled, with the
+   same architecture, budget, and labels.
+
+Layer 19, width 384, eight attention heads, five encoder layers, FF width
+1,408, learning rate `1e-3`, 50 warmup updates, clip 1.0, top-eight hard
+negatives, and orbit weight 0.25 are exact constants. The assessor validates
+these values plus every arm's unique-source/view/update/batch/negative budget,
+class-message mode, orbit mode, and masking mode; an equal parameter count
+alone cannot conceal a changed architecture or optimizer.
+
+At evaluation, treatment is decoded by both global S9.2 and frozen local-root
+S9.1 decoders using identical logits. Unconstrained S9 decoding is also
+reported.
+
+## Required pre-board CPU falsifiers
+
+Before drawing source, board, or training seeds:
+
+1. interval Viterbi equals exhaustive enumeration on at least 10,000 reduced
+   synthetic cases;
+2. oracle and operation-recoded oracle logits reconstruct all 2,048 closed S9
+   mechanics rows exactly;
+3. lowering one required gold root below `none` breaks S9.1 root selection but
+   is recovered globally on all rows;
+4. adding one high-positive spurious root breaks greedy cardinality but not the
+   global assignment;
+5. uniform logits abstain on all rows;
+6. correct counts with flat-positive role logits remain below 10% exact;
+7. shuffled roles with correct score distributions remain below 10% exact;
+8. every row has at least two distinct complete syntax-valid assignments;
+9. a wrong high-margin legal root remains wrong or rejected, never repaired;
+10. a wrong high-margin count is followed or rejected, never repaired;
+11. poisoning row metadata and candidate targets leaves the selected assignment
+    byte-identical;
+12. optimizer instrumentation records zero compile/executor calls and the full
+    decoder calls compile at most once;
+13. hard-negative orbit loss is zero under identical score multisets and
+    positive with finite gradients after a single competitor changes; and
+14. all deterministic, unit, bytecode, style, and finite-gradient tests pass.
+
+Closed rows are mechanics-only and may not be neurally rescored.
+
+The full falsifier ran once with seed `7509220561492772015`; all 17 gates pass.
+Oracle and recoded oracle are 2,048/2,048 exact, flat-positive and shuffled
+controls are 0/2,048, every wrong high-margin root/count intervention is
+followed without repair, and 10,000/10,000 reduced exhaustive cases match the
+Viterbi result. Report SHA-256 is
+`91d653c7e2a131ad7e21319dd72a52dee95c00520fbd59771fe5f7a08fe52e24`.
+
+Scientific source commit
+`38c934cf9f360e1fd13258c23be310e948cafba1` precedes fresh board seed
+`3823077847356570601` and independent training seed `1277007704479652588`.
+The admitted board has 48,000/2,048/2,048 train/development/sealed-confirmation
+rows, 52,096 executor agreements, zero exact/13-gram/name overlap, and access
+`0/0`. Report SHA-256 is
+`f22401e82690f8240abe89d6083e3a387619243bc68bb9d9e380540d90b1899e`.
+The development and confirmation files remain unopened after generation.
+
+## Sole fresh-development gates
+
+The board is drawn only after source, tests, falsifier, assessor, and launcher
+are committed. One development read must satisfy every gate below before any
+sealed confirmation access:
+
+- at least 2,031/2,048 exact graph, state, and answer, which is at least a
+  0.25-point improvement over closed S9.1;
+- every valid emitted graph is exact;
+- global decoding strictly beats the same-logit S9.1 local-root ablation;
+- root spans and `(m, c, d)` counts are at least 99% exact;
+- positive-orbit-only is reported, and the treatment must have zero operation-
+  recode graph failures even if its ordinary exactness ties that arm;
+- every originally valid row has a valid recoded counterpart with bit-identical
+  canonical graph, recurrent state, and answer;
+- layout-only, shuffled, uniform, and source-free exact graph are each below
+  10%;
+- treatment beats no-class exact graph by at least five percentage points;
+- inherited storage/class reindex, causal intervention, depth, budget,
+  parameter, hash, access, and single-read gates all pass; and
+- development/confirmation access is exactly `1/0` after assessment.
+
+The one-read gate additionally requires the immutable access-ledger hash in
+the evaluation artifact and cannot be satisfied by changing the result output
+directory.
+
+Failure closes S9.2 without rescoring or opening confirmation. Passing permits
+one separately frozen confirmation read with unchanged bytes and gates.
+
+## Honest frontier boundary
+
+Even confirmation would establish only robust bounded compilation into the
+existing S7/S8 machine. It would not establish arbitrary language, new program
+topologies, alias resolution, negation/quotation, self-generated decomposition,
+or general reasoning. The next independent stage is a causal grammar firewall:
+reordered clauses, same-layout counterfactual bindings, quoted/negated decoys,
+argument-order changes, and ontology-word removal with a trained layout-only
+control. S9.2 must not be presented as a substitute for that stage.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 216: `R12_SD_CST_BINDING_BUS_PILOT_PREREG.md`
+
+Original source path: `R12_SD_CST_BINDING_BUS_PILOT_PREREG.md`
+Original source size: 6,431 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Content-Addressable Binding Bus Training Pilot
+
+**Status:** frozen training-only mechanism admission; development and sealed
+confirmation access are forbidden
+
+## 1. Measured diagnosis
+
+The byte-addressed SD-CST compiler pilot on job `693969` solved source
+localization and local event extraction but did not solve variable binding. On
+the deterministic 8,000-row held-out partition of the already-consumed training
+split it reached:
+
+- all nine line pointers: 8,000/8,000;
+- raw event kind with exactly one raw STOP: 8,000/8,000;
+- event amount: 8,000/8,000;
+- late query: 8,000/8,000;
+- event identity: 5/8,000 = 0.0625%;
+- initial state: 1,338/8,000 = 16.725%; and
+- raw whole tape: 0/8,000.
+
+Report SHA-256 is
+`0bd0b6bbbc68f904ce9fdc06e35e5484114a66db85a3a20af528a9c05e86766e`.
+The result rejects more generic depth or another grammar decoder. The remaining
+failure is exact cross-occurrence binding: map arbitrary instance-local entity
+names in the declaration, initial ordering, and event mentions onto the same
+three anonymous roles.
+
+## 2. Falsifiable mechanism
+
+The pilot adds a **content-addressable binding bus** to the admitted
+byte-addressed compiler:
+
+1. three model-owned declaration pointers select the three binding-name spans;
+2. three model-owned initial-order pointers select the three name occurrences
+   in initial order;
+3. eight model-owned event pointers select each event's entity occurrence;
+4. selected spans are converted into shared, position-free fingerprints by
+   pooling trainable UTF-8 byte-bigram embeddings over adjacent byte pairs for
+   which both bytes are selected;
+5. cosine similarity between each occurrence fingerprint and each declaration
+   fingerprint emits anonymous role logits; and
+6. the six-way initial-state logit for a permutation is the sum of its three
+   occurrence-to-role match logits.
+
+The last selected byte cannot import its following delimiter: a bigram is
+weighted only when both adjacent positions are selected. The same fingerprint
+function and projection are reused at every declaration, initial, and event
+occurrence. No name dictionary, tokenizer vocabulary identity, row metadata,
+gold role, state, answer, executor output, recurrent trace, repair, retry, or
+search is available at inference.
+
+This is an explicit structural equality prior. It tests exact repeated surface
+binding only; it is not a claim of aliases, pronouns, coreference, or semantic
+entity resolution.
+
+## 3. Frozen architecture and size
+
+The parent byte compiler remains six 384-wide/eight-head source layers, nine
+line-address slots, two slot-mixing layers, and unchanged kind/amount/query
+heads. The binding bus adds:
+
+- 14 learned pointer queries: three declaration, three initial, eight event;
+- a 65,537-entry by 96-wide byte-bigram embedding;
+- one shared 96-by-96 bias-free fingerprint projection; and
+- one learned positive similarity scale.
+
+The compiler has **20,513,138** parameters. Complete accounting is:
+
+| Component | Parameters |
+|---|---:|
+| Frozen Shohin trunk | 125,081,664 |
+| Binding-bus compiler | 20,513,138 |
+| Retained exact motor | 19,206 |
+| Retained reader | 835 |
+| **Complete system** | **145,614,843** |
+| **Headroom below 150M** | **4,385,157** |
+
+The training-only pilot instantiates the compiler but does not load or alter the
+protected Shohin checkpoint. User authority permits future systems strictly
+below 200M; this pilot intentionally keeps the earlier 150M comparison gate so
+its result isolates the binding mechanism rather than a capacity increase.
+
+## 4. Frozen data and optimization
+
+- Input is only `train.jsonl` from the permanently consumed SD-CST v1.1 board.
+- The board receipt and train SHA are verified before parsing.
+- Rows are sorted by `sha256(row_id)`; first 40,000 fit, remaining 8,000
+  training-held-out.
+- Development and confirmation paths are never accepted by the program.
+- Four epochs, batch 64, AdamW, lr `3e-4`, betas `(0.9, 0.95)`, weight decay
+  `0.01`, 100-update warmup, cosine decay, and gradient clip `1.0` are fixed.
+- Losses are initial state, raw kind, active identity, active amount, late
+  query, and four uniform exact-span address losses: line, declaration,
+  initial occurrence, and event occurrence.
+- Kind weights are `[1, 1, 4]`.
+- The seed is drawn only after this source and the exact job script are
+  committed and pushed.
+
+Span targets are allowed only because this is a compiler-mechanism pilot on
+consumed training data. A later score-bearing experiment must use model-owned
+pointers without target spans at inference and a fresh post-commit board.
+
+## 5. Immutable pilot gates
+
+All gates are evaluated on the 8,000-row training-held-out partition. The
+mechanism advances only if every gate passes:
+
+1. all line pointers exact on at least 90%;
+2. all declaration pointers exact on at least 90%;
+3. all initial-occurrence pointers exact on at least 90%;
+4. all active event-occurrence pointers exact on at least 90%;
+5. initial state exact on at least 80%;
+6. raw event kind exact on at least 90%;
+7. active event identity exact on at least 80%;
+8. active amount exact on at least 90%;
+9. late query exact on at least 98%;
+10. raw whole tape exact on at least 60%;
+11. every row emits exactly one raw STOP without constrained repair;
+12. complete system remains strictly below 150,000,000 parameters; and
+13. development/confirmation access remains `0/0`.
+
+No constrained one-STOP score can promote the mechanism. Failure revises or
+rejects this binding bus without opening a scored split.
+
+## 6. Required evidence after a pilot pass
+
+A pass is not a native-reasoning result. Before any scored board, a separate
+post-result source freeze must add:
+
+- shuffled role-label and declaration-swap controls;
+- no-address and address-permutation controls;
+- identical-name positive and same-length/different-name hard negatives;
+- source-position relocation and delimiter-change invariance;
+- binding-fingerprint swaps that predictably swap only the addressed entity;
+- a source-deletion check that prevents the motor/reader from receiving bytes,
+  pointers, or contextual residuals;
+- end-to-end integration with the retained tied motor, STOP gate, and reader;
+  and
+- a fresh board with split-disjoint names and no development/confirmation
+  access before all evaluator, assessor, threshold, and custody bytes freeze.
+
+Only the future integrated experiment may test bounded native reasoning.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 217: `R12_SD_CST_BYTE_ADDRESSED_PILOT_PREREG.md`
+
+Original source path: `R12_SD_CST_BYTE_ADDRESSED_PILOT_PREREG.md`
+Original source size: 3,685 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Byte-Addressed Compiler Training Pilot
+
+**Status:** frozen training-only architecture admission; no development or
+confirmation access is authorized
+
+## Diagnosis
+
+SD-CST v1.1's generic residual-plus-slot compiler did not learn the program
+fields. On the consumed 48,000-row training split it emitted zero STOPs in every
+row, constrained STOP position remained at 16.6625%, initial-state exactness was
+16.9458%, identity and amount cells were at chance, and only the isolated late
+query learned. An exactly-one-STOP decoder would therefore conceal the failure.
+
+The next falsifiable hypothesis is that the compiler needs an explicit learned
+evidence address bus before categorical source deletion. It must first localize
+the binding clause and each semantically numbered event clause, then emit the
+same private categorical packet as SD-CST.
+
+## Frozen pilot
+
+The pilot reads only the already-consumed 48,000-row outcome-free training
+split. Rows are ordered by `sha256(row_id)`; the first 40,000 are fit rows and
+the remaining 8,000 are a held-out training partition. It cannot open the
+development or confirmation filenames.
+
+The compiler consumes UTF-8 bytes, not board metadata. It has:
+
+- byte and absolute-position embeddings;
+- six 384-wide, eight-head source self-attention layers with 1,536-wide MLPs;
+- one binding/eight event learned address queries;
+- model pointer logits over source bytes, supervised only to place probability
+  inside the correct source line;
+- two 384-wide slot-mixing layers with 1,024-wide MLPs;
+- unchanged initial-state, event-kind, entity-role, amount, and late-query
+  categorical heads; and
+- no state, answer, trajectory, executor, repair, reward, development, or
+  confirmation signal.
+
+Pointer supervision is compiler localization, not host inference: at test time
+the model's pointer-weighted source values alone form the slots. No target line,
+span, entity, or operation is supplied to inference, and all source bytes and
+pointer state are deleted when categorical outputs are emitted.
+
+The byte compiler has 14,206,993 parameters. With the frozen 125,081,664 trunk,
+19,206-parameter motor, and 835-parameter reader, the complete system is
+139,308,698 parameters, 10,691,302 below the strict 150M cap.
+
+## Frozen optimization
+
+- seed drawn only after source commit;
+- four epochs, batch 64, AdamW lr `3e-4`, betas `(0.9, 0.95)`, weight decay
+  `0.01`, 100-update warmup, cosine decay to zero, gradient clip `1.0`;
+- field losses are initial + kind + non-STOP identity + non-STOP amount + late
+  query;
+- kind class weights `[1, 1, 4]` counter the public one-STOP/seven-action
+  grammar;
+- line-address loss has weight `2.0`; and
+- evaluation reports both raw independent kinds and exact global MAP under the
+  public exactly-one-STOP grammar. The MAP decoder sees model kind logits only.
+
+## Admission gates
+
+The pilot advances the architecture, but makes no reasoning claim, only if all
+held-out training-partition gates pass:
+
+1. all nine pointer slots inside their correct source lines on at least 90%;
+2. initial-state exactness at least 80%;
+3. constrained event-kind exactness at least 90%;
+4. entity-role exactness at least 80%;
+5. amount exactness at least 90%;
+6. late-query exactness at least 98%;
+7. complete constrained tape exactness at least 60%;
+8. complete system strictly below 150M; and
+9. development/confirmation access exactly `0/0`.
+
+Failure below every semantic-field gate rejects this compiler. A partial result
+may justify one preregistered training-only ablation, but never a scored board.
+Only a full gate pass may advance to independent mechanics/control tests and a
+future post-commit fresh board.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 218: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_BOARD_RECEIPT.md`
+
+Original source path: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_BOARD_RECEIPT.md`
+Original source size: 3,601 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Complete Physical Fresh-Board Receipt
+
+**Status:** rejected prefit without scored access. Board
+receipt commit `296af7e96e06082771b8963c524de6c23a26a445` precedes the sole
+training-seed draw.
+
+## Custody
+
+- Scientific source: `aa1c598594aec985519e300f9207a0fa8da72ea4`
+- Raw 64-bit beacon: `15994587003838256523`
+- Board seed, reduced modulo `2^63`: `6771214966983480715`
+- Development accesses: `0`
+- Confirmation accesses: `0`
+- Confirmation file mode: `0600`
+- Raw training beacon: `16198579975688416761`
+- Training seed, reduced modulo `2^63`: `6975207938833640953`
+- Prior consumed train SHA-256:
+  `b7756dbf8d4401dbc5fb897dee53f68758e27200b1ce0d2387631f2f0205ec25`
+- Prior consumed development SHA-256:
+  `0e0720030f4b5739b7de7320fb45f5817e1e8fadb3f7f12e62b98e2f41593191`
+
+The previous source/seed pair `cd5a02b...` / `8056159684949768997`
+failed the global-name-uniqueness admission gate before writing any board byte.
+It is closed and was not reused.
+
+## Board
+
+| Split | Families | Views/family | Rows | Renderer parity |
+|---|---:|---:|---:|---|
+| training | 12,000 | 4 | 48,000 | even |
+| development | 512 | 4 | 2,048 | odd |
+| sealed confirmation | 512 | 4 | 2,048 | odd |
+
+All depths one through six are balanced to within one latent family in each
+scored split. Training contains compiler fields only and no final state, answer,
+or trajectory. Development and confirmation contain scorer-only outcomes.
+
+## Hashes
+
+| Artifact | Bytes | SHA-256 |
+|---|---:|---|
+| board report | 3,803,182 | `7ecb3dcfea53d82180fc99c7911b9cf9169e0b29c6154f2490019c1f89418cc4` |
+| train | 180,573,152 | `bad7f8db5b8580b4f960ceb1adfa41704c8afd595f8c1b97623c0faaa927b61c` |
+| development | 8,121,104 | `58aef89229821e665bef26b0d97e03d475192d86a85de2ddea9ef3759ebbdaca` |
+| sealed confirmation | 8,129,968 | `afedef7565d3c6e963783f91a26262f389a4925c09ba8de4dd14bdafb46c9b4e` |
+
+Development row registration SHA-256 values are
+`ddf848c008b24bc6f9263d9e639da7c9179c40a20ff650feafc1ac3f4f0fd160`
+for row IDs and
+`265f4212690a75cd0f596d2b2d4789c3b3d1b85cc07e5fe21286c0c59228e9bb`
+for row content. Confirmation registrations are
+`0dc6b430be6036de25f6da21f9bdc6e04c03a1c600de29332687819976baeef3`
+and
+`2c7021db3465a85cc59a27a06a8cf3f3b19f2f6c46ef2e2fba6f641cf139c03c`.
+
+## Admission
+
+All sixteen board gates pass:
+
+- exact row counts, unique IDs, four complete views per family;
+- independent simulator/oracle agreement on all 52,096 rows;
+- training and scored renderer orbits disjoint, with development and
+  confirmation renderer orbits equal;
+- zero cross-split exact prompt, 13-gram, name, and operation-sequence overlap;
+- zero prior prompt/name/sequence overlap and zero prior scored 13-gram overlap;
+- three fixed globally unique opaque names per family;
+- no training outcomes and complete scored outcomes; and
+- zero development and confirmation access.
+
+A second full generation from the same committed source, prior inputs, and seed
+is byte-identical for all four artifacts. H100 job `694333` then passed CUDA
+preflight but failed while parsing training bytes: family re-keying had updated
+declaration bindings and scorer answers without updating redundant active-event
+entity strings. The failure occurred before model initialization, optimizer
+creation, output-directory creation, access-ledger creation, or development
+read. Access remains `0/0`; confirmation remains sealed. Close this board and
+both seeds. The successor must update event strings, require all 52,096 rows to
+pass the exact runtime parser during board admission, freeze a new source, and
+draw new board/training seeds.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 219: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_BOARD_V1_2_RECEIPT.md`
+
+Original source path: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_BOARD_V1_2_RECEIPT.md`
+Original source size: 2,201 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Complete Physical Fresh-Board v1.2 Receipt
+
+**Status:** admitted and sealed before training-seed draw or model fit. Receipt
+commit `b5beee2d04f802771093f16b891e60a830a1144b` precedes the sole
+training-seed draw.
+
+## Custody
+
+- Scientific source: `fab094f6e32f1e928551f1830509b8c83fbd759e`
+- Raw board beacon: `13419454120885953526`
+- Board seed modulo `2^63`: `4196082084031177718`
+- Development/confirmation access: `0/0`
+- Confirmation mode: `0600`
+- Previous v1.1 board/training seeds are closed and not reused.
+- Raw training beacon: `15146785326247343388`
+- Training seed modulo `2^63`: `5923413289392567580`
+
+## Board and hashes
+
+| Artifact | Rows | Bytes | SHA-256 |
+|---|---:|---:|---|
+| report | - | 3,807,172 | `162b6054b74509eba35c1f5b339ba22edc555b7edc7cba36640270869cbec1d0` |
+| train | 48,000 | 180,583,488 | `9bc8d0b6227fdf70b09043294ba075be6d7651c9897fbddffb58139dc2fc0547` |
+| development | 2,048 | 8,122,544 | `6bc327ce34b225a5f46199cafdbfe7692212eccf0753356a6f3aafa11fa2c854` |
+| sealed confirmation | 2,048 | 8,126,928 | `b8ec5d84f087fe2a22893631485387da5ef2c11e1366b7c632b2395b66827d0b` |
+
+The development row-ID/content registrations are
+`ddf848c008b24bc6f9263d9e639da7c9179c40a20ff650feafc1ac3f4f0fd160`
+and
+`11e0b6a9ea9e0c9c107fb56a83845c2f83e7fc3f0d76f6e1ba282e43dc48dcfc`.
+The confirmation registrations are
+`0dc6b430be6036de25f6da21f9bdc6e04c03a1c600de29332687819976baeef3`
+and
+`64ae25bfc95d8f916894311be108ef82302bc7c454c1a6e76563fa715df981fe`.
+
+## Admission result
+
+All seventeen frozen gates pass. In addition to counts, independent oracle
+agreement, renderer parity, split/prior leakage exclusions, unique names,
+outcome custody, and access sealing, every one of the 52,096 rows is accepted by
+the exact production `parse_projected_row` path. This directly closes the v1.1
+redundant-event-name defect before GPU execution.
+
+A second full generation from the same source, seed, and prior inputs is
+byte-identical for all four artifacts. The post-receipt training draw is now
+recorded above; no optimizer, output, or scored read exists. This authorizes
+only the sole preregistered development pilot; it does not authorize
+confirmation or establish reasoning.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 220: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_PREREG.md`
+
+Original source path: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_PREREG.md`
+Original source size: 6,972 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Complete Physical Fresh-Board Preregistration
+
+**Status:** source implementation complete before source freeze, board seed, or
+training seed. No fresh board, GPU output, development access, or confirmation
+access exists yet.
+
+**Claim class:** bounded fresh renderer/name compilation into the retained
+source-deleted categorical executor. A pass is not broad natural-language or
+general reasoning.
+
+## 1. Fixed hypothesis
+
+Complete Physical-Record Front-End v1.2 solved all twelve consumed-training
+mechanics gates at 192,129,179 complete parameters. The remaining uncertainty
+is transfer: can the same physical-record/local-field/nonlinear-occurrence
+architecture learn new lexical atoms and compose renderer factors that were
+never paired during training?
+
+The fresh board uses no consumed renderer sentence. Its declaration atoms use
+`Manifest`/`Directory`, event atoms use `Instruction`/`Command` with
+`slide`/`carry`, new direction and amount words, and two new query forms. Four
+even-parity declaration/event/query combinations are training views. The four
+odd-parity combinations are development and sealed-confirmation views. Every
+individual factor value occurs in training; only the scored compositions are
+withheld.
+
+## 2. Fresh board and custody
+
+After this source is committed, one independent board seed will generate:
+
+- 12,000 latent training programs x four views = 48,000 compiler-only rows;
+- 512 disjoint development programs x four views = 2,048 rows;
+- 512 disjoint sealed-confirmation programs x four views = 2,048 rows.
+
+All opaque names and operation sequences are split-disjoint and disjoint from
+the consumed parent train/development records. The board requires zero exact
+prompt, 13-gram, name, and sequence overlap across fresh splits, zero prior
+prompt/name/sequence overlap, and zero prior scored 13-gram overlap. Every row
+must independently simulate, contain exactly nine bounded physical records and
+one HALT, and remain below the 144-byte record/query windows. Training contains
+no state, answer, or trajectory oracle. Confirmation is mode `0600` and cannot
+be opened without a passing development result and a separately committed
+authorization.
+
+The evaluator writes an immutable board-local `O_EXCL` development ledger
+before opening development bytes. The gate config and trained checkpoint are
+written before that ledger. Development may be read once; confirmation remains
+at zero.
+
+The score-bearing pilot emits a source-free evidence capsule containing hard
+packets, compiler pointer indices, target byte ranges, renderer IDs, and source
+poison certificates. A separately committed assessor recomputes packet,
+pointer, state, answer, executor, control, hash, parameter, and custody gates
+from the immutable checkpoint/config/packet/evidence/executor/ledger artifacts.
+The pilot summary is not sufficient to authorize confirmation.
+
+## 3. Exact architecture and parameter contract
+
+The endpoint reconstructs the exact joint, retained independent physical bus,
+complete-local v1 query state, and v1.2 occurrence state from hash-bound
+checkpoints. The two obsolete bilinear `local_declaration_*` parameter tensors were not
+serialized by v1.2 because its forward path cannot consult them. This contract
+zeros them deterministically and keeps them frozen; focused tests must preserve
+their forward-dead status.
+
+The treatment and matched label control train exactly:
+
+- the physical-record byte/position embeddings, four local record layers, two
+  record-set layers, role/kind/amount/entity motors;
+- the eight local-query tensors; and
+- the six nonlinear occurrence-head tensors.
+
+The old bilinear declaration path, every global source/orbit/native path,
+fingerprint matcher, tape/executor, motor, reader, and Shohin trunk are frozen.
+
+| Quantity | Exact count |
+|---|---:|
+| immutable Shohin trunk | 125,081,664 |
+| complete compiler | 67,027,474 |
+| fresh-trainable compiler parameters | 12,152,855 |
+| categorical motor | 19,206 |
+| categorical reader | 835 |
+| **complete deployed system** | **192,129,179** |
+| **strict-200M headroom** | **7,870,821** |
+
+No parameter may be added after source freeze.
+
+## 4. Matched arms and optimization
+
+Treatment receives the true compiler fields. The equal-parameter control gets
+one of the two deterministic three-cycle entity-role derangements per latent
+family; all four renderer views share that false mapping and no control family
+retains any true entity role. Both arms receive byte-identical
+initialization, the same 48,000 source rows, 3,000 updates, family minibatch
+order, AdamW schedule, and complete parameter count.
+
+The treatment and control each train exactly the same 102 tensor names and
+12,152,855 parameters. The false-label arm changes labels only; source bytes,
+family order, renderer views, initialization, optimizer, and compute are equal.
+
+Each arm trains two epochs, family batch eight (32 rendered rows/update), AdamW
+lr `2e-4`, betas `(0.9, 0.95)`, weight decay `0.01`, warmup 100, cosine decay,
+gradient clipping `1.0`, and renderer-consistency weight `1.0`. Only epoch two
+is score eligible. Neither arm may read development before both endpoints and
+the gate config are immutable.
+
+## 5. Source deletion and controls
+
+The compiler emits exactly 25 categorical program bytes plus one query byte.
+Program and query source tensors are poisoned after packet sealing. A separate
+typed process receives only the hard packets and the hash-bound categorical
+execution core. Gold packets must execute exactly. Exact compiled packets must
+condition execution exactly.
+
+Controls include equal-parameter row-shuffled labels, uniform packets, shuffled
+packets, reset, freeze, post-HALT perturbation, force-alive after HALT, query
+rotation, and initial/kind/identity/amount interventions. Post-HALT perturbation
+must be invariant; negative controls must collapse according to the thresholds.
+
+## 6. Immutable development gates
+
+All gates must pass:
+
+1. treatment minimum fit-renderer packet at least 99%;
+2. development packet at least 90% overall and 85% per renderer;
+3. development state, answer, and joint each at least 90% overall;
+4. development joint at least 85% per renderer;
+5. each packet field at least 95% overall;
+6. each line/binding/initial/event pointer at least 90% overall;
+7. treatment packet at least +50 points over row-shuffled labels;
+8. row-shuffled packet at most 25%;
+9. gold and conditional execution exact;
+10. post-HALT perturbation invariant;
+11. shuffled-packet state at most 35%;
+12. reset and freeze state each at most 75%;
+13. source deletion/poisoning and separate execution pass;
+14. frozen state is byte-identical;
+15. complete deployed system is strictly below 200M; and
+16. development/confirmation access is exactly `1/0`.
+
+Passing yields `authorize_one_sealed_confirmation`. Any failure yields
+`reject_complete_physical_fresh_v1`; no threshold repair, rescore, extra epoch,
+or confirmation read is allowed on that board.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 221: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_2_RESULT.md`
+
+Original source path: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_2_RESULT.md`
+Original source size: 5,388 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Complete Physical Fresh-Board v1.2 Result
+
+**Decision:** closed evaluator non-result. Never rescore this board and never
+open its sealed confirmation.
+
+**Claim boundary:** the preserved artifacts contain a strong source-free
+diagnostic signal for bounded fresh renderer/name compilation. They do not form
+an authorizing development score because the frozen report and independent
+assessment did not complete. They do not establish broad native reasoning.
+
+## Frozen contract
+
+| Item | Value |
+|---|---:|
+| Scientific source | `fab094f6e32f1e928551f1830509b8c83fbd759e` |
+| Board seed | `4196082084031177718` |
+| Training seed | `5923413289392567580` |
+| Slurm job / node | `694355` / `evc50` |
+| Training rows | 48,000 = 12,000 latent families x four renderers |
+| Development rows | 2,048 = 512 latent families x four unseen renderers |
+| Sealed confirmation rows | 2,048, unopened |
+| Updates | 3,000 treatment + 3,000 family-deranged control |
+| Complete deployed parameters | 192,129,179 |
+| Fresh-trainable parameters | 12,152,855 across 102 tensor names |
+| Strict-200M headroom | 7,870,821 |
+
+The source, board, parent checkpoints, execution core, H100, and bf16 gates all
+passed. Both arms completed. The checkpoint and gate config were written before
+the immutable development ledger. Development was opened exactly once and the
+compiler produced source-free hard packets, pointer-range evidence, and outputs
+from the separate categorical executor.
+
+The pilot then raised during report assembly. `fit_arm` stores renderer metrics
+under `fit["train_metrics"]`; `_minimum_fit_packet` incorrectly iterated every
+top-level fit value and attempted to index integer metadata as a renderer
+record. No development report or independent assessment was written. This is
+an evaluator defect after score access, so the board is spent even though the
+saved evidence is complete.
+
+## Training fit
+
+| Arm | Exact packets |
+|---|---:|
+| Treatment | 48,000/48,000 = 100% |
+| Family-deranged labels | 1,223/48,000 = 2.548% |
+
+Treatment is 12,000/12,000 exact on each of the four training renderers. The
+control uses one nonidentity three-cycle of entity roles per latent family and
+shares all source bytes, initialization, renderer views, minibatch order,
+optimizer, updates, trainable names, and parameter count.
+
+## Source-free development diagnostic
+
+The following was recomputed after closure using only the immutable hard-packet,
+pointer-range, and executor artifacts. The development JSONL was not reopened.
+
+| Metric | Treatment | Family-deranged labels |
+|---|---:|---:|
+| Exact complete packet | **2,048/2,048 = 100%** | 0/2,048 = 0% |
+| Initial state field | **100%** | 0% |
+| Event kind field | **100%** | 100% |
+| Event identity field | **100%** | 0% |
+| Event amount field | **100%** | 100% |
+| Late query field | **100%** | 100% |
+| All-nine line pointers | **100%** | 100% |
+| All-three binding pointers | **100%** | 0% |
+| All-three initial-occurrence pointers | **100%** | 100% |
+| All active-event entity pointers | **100%** | 100% |
+| Exact final state | **2,048/2,048 = 100%** | 131/2,048 = 6.396% |
+| Exact answer | **2,048/2,048 = 100%** | 504/2,048 = 24.609% |
+| Exact state and answer | **2,048/2,048 = 100%** | 131/2,048 = 6.396% |
+
+Every unseen renderer composition is independently 512/512 exact treatment
+packets and 512/512 exact treatment state/answer joints.
+
+## Causal controls
+
+| Source-blind executor arm | Exact state | Exact answer |
+|---|---:|---:|
+| Uniform packet | 33.203% | 33.398% |
+| Shuffled packet | 33.203% | 33.203% |
+| Reset | 57.422% | 63.086% |
+| Freeze | 18.164% | 35.156% |
+| Post-HALT perturbation | 100% | 100% |
+| Force alive after HALT | 28.711% | 43.359% |
+| Query rotation | 100% state | 0% answer |
+| Initial-state rotation | 68.164% | 76.172% |
+| Event-kind flip | 55.078% | 60.742% |
+| Event-identity rotation | 56.445% | 61.133% |
+| Event-amount flip | 84.570% | 90.820% |
+
+Post-HALT perturbation is bit-identical across final state, answer, state
+trajectory, and alive trajectory. Program/query source poisoning is bit-
+identical for treatment and control before separate execution.
+
+## Artifact custody
+
+| Artifact | SHA-256 |
+|---|---|
+| Checkpoint | `2c9ce2beb6e0ee320c773cf1c17c1c1d07323c51eee136a3d8e639010b2bf47f` |
+| Development evidence | `672e2b95600d057703243321103051818daaac8c421de8561e4a2de36cce30d7` |
+| Executor outputs | `12327103c1ed40e543bf7eaac932ace52b13a1186a11a433d50de29c449524ab` |
+| Hard packets | `3c73c113060a24dec87ffa8428895aa939dd5e9eb293ee6d9822c0d03ab5a80b` |
+| Gate config | `dc1a9f5850e290888f81ea9e2c9fe37e08742e60dd084af7f21b24debe2a4b6b` |
+| Development ledger | `0f0d2c4d9537b5f6d423b8246e44051c3fc637a971cd1e8f59ef73d465bb5ad4` |
+| Slurm log | `4fe53ef1361154ba655eff3c2cacdf1d6a49debbcbd0e978db9fd795fc805687` |
+
+Local mirrors and Newton originals match. Development/confirmation custody is
+exactly `1/0`.
+
+## Next admissible test
+
+V1.3 changes only report aggregation and schema/protocol identity. It keeps the
+same architecture, parameters, data counts, renderer split, arms, optimizer,
+updates, thresholds, controls, source-deletion boundary, and claim boundary.
+It adds realistic nested-fit regression coverage and a complete synthetic
+source-free assessor acceptance test. It requires a new source commit, board
+seed, sealed board, committed board receipt, and training seed.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 222: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_BOARD_RECEIPT.md`
+
+Original source path: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_BOARD_RECEIPT.md`
+Original source size: 2,929 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Complete Physical Fresh-Board v1.3 Receipt
+
+**Status:** admitted and sealed before training-seed draw, model fitting, or
+scored access.
+
+## Custody ordering
+
+1. Scientific source commit
+   `eed66757c47e126b6566ee269bc73b0c0cef4fab` was pushed before randomness.
+2. Raw 64-bit board beacon `18144246429379773690` was drawn afterward.
+3. The beacon was reduced modulo `2^63` to board seed
+   `8920874392524997882`.
+4. The exact committed source generated and audited the board.
+5. No training seed exists at this receipt point.
+
+## Board certificate
+
+| Split | Rows | Bytes | SHA-256 |
+|---|---:|---:|---|
+| Training | 48,000 | 180,571,520 | `bb870ac36ad4c78376dae08fe6f605e987a2a2883c5deb18bde06a82eb0b4ce2` |
+| Development | 2,048 | 8,121,776 | `5dc5035cd825066be444ce33f6e30eb7aabad16e6ca0b4fe3b47fcc0060e9dfa` |
+| Sealed confirmation | 2,048 | 8,128,688 | `6186fb8c83c9863db2844f5eb537194a713c5ab16d2a41f1f88f6e3742f02165` |
+
+Board report SHA-256:
+`fd487cdf7c30cf945ace152e389aaf5c354b8b6a55555c2acc6f046e8ed00b24`
+
+The report identifies schema
+`r12_sd_cst_complete_physical_fresh_board_report_v1_3`, protocol
+`r12_sd_cst_complete_physical_fresh_v1_3`, exact source commit, and exact board
+seed. All 17 admission gates pass. They include independent semantic/oracle
+agreement, exactly nine bounded records and one HALT, production-parser
+acceptance over all 52,096 rows, renderer parity, globally unique split/prior-
+disjoint names, zero exact/13-gram/name/operation-sequence leakage, expected
+counts, sealed confirmation, and zero scored access.
+
+Confirmation is mode `0600`. Development/confirmation access is `0/0`; no
+board-local access directory exists. A complete second build from the same
+source, seed, and prior inputs is byte-identical for report, training,
+development, and confirmation files.
+
+## Frozen neural contract
+
+Treatment and the matched family-deranged arm each train 102 tensor names /
+12,152,855 parameters for 3,000 updates. Complete deployed size remains
+192,129,179 with 7,870,821 parameters of strict-200M headroom. Every setting,
+gate, threshold, control, and claim boundary is frozen in
+`R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_PREREG.md`.
+
+## Training-seed receipt
+
+Board receipt commit `fc9ee4c4d110c14662705a70f70a70d07a9fe68f` was
+pushed before raw training beacon `8446904969546017898`. The value is below
+`2^63` and becomes the sole training seed unchanged. No architecture, board,
+arm, optimizer, update, gate, threshold, assessor, or claim-boundary setting
+changes. No GPU job, output directory, development access, or confirmation
+access exists at this receipt point.
+
+The next allowed action is to commit/push this seed receipt, transport and hash-
+verify exact source/board/parent bytes, pass Slurm test-only admission, and
+submit one score-bearing job. No development or confirmation bytes may be
+opened before both matched endpoints and the immutable gate config exist.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 223: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_CONFIRMATION_PREREG.md`
+
+Original source path: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_CONFIRMATION_PREREG.md`
+Original source size: 3,488 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Complete Physical Fresh v1.3 Confirmation Preregistration
+
+**Status:** evaluator implemented before source freeze or confirmation access.
+
+**Development authorization:** sole job `694383` completed in 11m48s. The
+pilot and independent assessor both return
+`authorize_one_sealed_confirmation`; all 18 core and four assessor gates pass.
+Treatment is 2,048/2,048 exact packets, every pointer, final states, answers,
+and joints, including 512/512 on each unseen renderer. Family-deranged labels
+are 0/2,048 exact packets and 148/2,048 exact states/joints.
+
+Exact authorization artifacts:
+
+| Artifact | SHA-256 |
+|---|---|
+| Board report | `fd487cdf7c30cf945ace152e389aaf5c354b8b6a55555c2acc6f046e8ed00b24` |
+| Trained checkpoint | `a5888d88541904cfa186a6686012c13c7b555f7d186ba1e3e73f71dbaca462d8` |
+| Gate config | `ab466c339b77d4193cbdbc383a2c9a28bd4ce6afcf9579f3a714b301e8d9a990` |
+| Development report | `7dc048cc9ad16e1e326c7e4180fb06539428a4518c4d79440a92b794754b6bc2` |
+| Development assessment | `1c5fad49a6eba6c2d76420945166e78b807d002f947a616c542c8a85ba35e497` |
+| Development ledger | `15a9edd09f008084c0533672e57af8da96935da3dc1ca86edbaa4200e2f499e0` |
+| Sealed confirmation registration | `6186fb8c83c9863db2844f5eb537194a713c5ab16d2a41f1f88f6e3742f02165` |
+
+## Frozen confirmation procedure
+
+1. Run from a clean exact evaluator commit that leaves every development-
+   scientific source path unchanged from `eed6675...`.
+2. Hash-verify the board, checkpoint, config, report, assessment, and sole
+   development ledger. Require development decision authorization and custody
+   `1/0`.
+3. Write an immutable authorization artifact and an `O_EXCL`, mode-`0444`
+   confirmation ledger before hashing or parsing confirmation semantics.
+4. Perform no fitting, gradient computation, hyperparameter change, search,
+   retry, repair, or threshold change.
+5. Load treatment and family-deranged endpoint tensors from the exact
+   checkpoint, compile the 2,048 sealed rows once, poison/delete source after
+   packet sealing, and execute hard packets in the separate categorical process.
+6. Emit hard packets, pointer-range evidence, executor outputs, and a
+   confirmation report. A separately invoked assessor recomputes all metrics,
+   controls, hashes, parameter counts, and custody from those artifacts.
+
+## Frozen gates
+
+The confirmation uses the unchanged development thresholds and all equivalent
+gates: fit >=99%; treatment packet/state/answer/joint >=90%; minimum renderer
+packet/joint >=85%; every field >=95%; every pointer >=90%; treatment packet
+advantage >=50 points; deranged packet <=25%; gold and conditional executor
+exact; post-HALT invariant; shuffled state <=35%; reset/freeze state <=75%;
+source deletion; frozen parent; complete system below 200M; exact development
+authorization; and final custody `1/1`. The independent assessor must also pass
+artifact-hash, parameter, metric-recomputation, and gate-vector checks.
+
+All gates passing yields `confirm_complete_physical_fresh_v1_3`. Any failure
+yields rejection. The sealed board is read once and never rescored.
+
+## Claim boundary
+
+A pass confirms bounded compilation of split-disjoint names and unseen
+compositions of known renderer factors into a model-owned 25-byte categorical
+program plus query, followed by source-deleted recurrent execution. It does not
+establish unconstrained language understanding, arbitrary programs, learned
+arithmetic, self-directed planning, or general native reasoning.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 224: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_CONFIRMATION_RESULT.md`
+
+Original source path: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_CONFIRMATION_RESULT.md`
+Original source size: 5,202 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Complete Physical Fresh v1.3 Confirmation Result
+
+**Decision:** `confirm_complete_physical_fresh_v1_3`.
+
+**Status:** independently confirmed on the sole sealed-board read. The retained
+checkpoint is a bounded compiler/executor baseline, not evidence of broad general
+reasoning.
+
+## Exact run contract
+
+| Item | Value |
+|---|---:|
+| Scientific source | `eed66757c47e126b6566ee269bc73b0c0cef4fab` |
+| Confirmation evaluator source | `94b26058bfa9d43089ce02277b3cdaeb9a1d6594` |
+| Board seed | `8920874392524997882` |
+| Training seed | `8446904969546017898` |
+| Slurm job / node / elapsed | `694451` / `evc46` / 33s |
+| Training rows | 48,000 = 12,000 families x four even-parity renderers |
+| Development rows | 2,048 = 512 families x four odd-parity renderers |
+| Sealed-confirmation rows | 2,048 = 512 new families x four odd-parity renderers |
+| Fitting | None during confirmation |
+| Complete deployed parameters | 192,129,179 |
+| Fresh-trained parameters | 12,152,855 across 102 tensor names |
+| Strict-200M headroom | 7,870,821 |
+
+The evaluator hash-bound the exact development authorization, checkpoint, gate
+config, board, and sole development ledger before opening the confirmation split.
+It then wrote an immutable `O_EXCL` confirmation ledger, compiled every sealed row
+once, poisoned the source, executed only the 25 categorical program bytes plus one
+query byte in a separate process, and invoked an independent assessor.
+
+## Sealed-confirmation metrics
+
+| Metric | Treatment | Family-deranged labels |
+|---|---:|---:|
+| Exact complete packet | **2,048/2,048 = 100%** | 0/2,048 = 0% |
+| Initial state | **100%** | 0% |
+| Event kind | **100%** | 100% |
+| Event identity | **100%** | 0% |
+| Event amount | **100%** | 100% |
+| Late query | **100%** | 100% |
+| All-nine line pointers | **100%** | 100% |
+| All-three binding pointers | **100%** | 0% |
+| All-three initial-occurrence pointers | **100%** | 100% |
+| All active-event entity pointers | **100%** | 100% |
+| Exact final state | **2,048/2,048 = 100%** | 157/2,048 = 7.666% |
+| Exact answer | **2,048/2,048 = 100%** | 515/2,048 = 25.146% |
+| Exact state and answer | **2,048/2,048 = 100%** | 157/2,048 = 7.666% |
+
+Treatment is 512/512 exact packets and joints on each of the four unseen renderer
+compositions. It is also 100% joint at every frozen depth from one through six.
+All 19 scientific gates pass. The independent assessor recomputes the metrics and
+gate vector and passes all four artifact, parameter, metric, and gate-vector checks.
+
+## Causal controls
+
+| Source-blind executor arm | Exact state | Exact answer |
+|---|---:|---:|
+| Uniform packet | 33.203% | 33.398% |
+| Shuffled packet | 33.203% | 33.203% |
+| Reset | 49.609% | 57.812% |
+| Freeze | 15.625% | 34.375% |
+| Post-HALT perturbation | 100% | 100% |
+| Force alive after HALT | 31.250% | 45.117% |
+| Query rotation | 100% state | 0% answer |
+| Initial-state rotation | 73.242% | 78.516% |
+| Event-kind flip | 50.977% | 55.664% |
+| Event-identity rotation | 54.688% | 58.203% |
+| Event-amount flip | 83.789% | 90.625% |
+
+Post-HALT perturbation remains bit-identical. The source-poison check is also
+bit-identical for treatment and control. These interventions establish that the
+categorical packet fields, recurrent update, HALT, and query readout are causally
+used rather than reconstructed from surviving source text.
+
+## Artifact hashes and custody
+
+| Artifact | SHA-256 |
+|---|---|
+| Trained compiler checkpoint | `a5888d88541904cfa186a6686012c13c7b555f7d186ba1e3e73f71dbaca462d8` |
+| Confirmation authorization | `b6add75e1d6596f0f32054fca212bf12e127c27c9e8239ac13be88b6497adcc7` |
+| Hard packets | `3f9189595ed1500f054f03e673e7d023ac595debe3801d5865c477250d03d994` |
+| Pointer evidence | `99342e9e16cbbc1ec20b62372711407fa63b6cfb098bd0ba6963b55e711e73e9` |
+| Executor outputs | `676b82947bfa04bbf3f9d98240807f091014f6cba9d2f3c5e13b35572d768107` |
+| Confirmation report | `2857f94f0816053ed7ac9610ef8eab5e3749360cb53cb1d0e6e8ef707dc8ded7` |
+| Independent assessment | `4629a745f6eed2e388eb6e1f78b29dff346ee6939e21275ae6ff1d66719d3cb9` |
+| Confirmation ledger | `b9bf805f3e9e821da4479828ca47cd058db3e471badbbdfb43cf2df04ea7842e` |
+| Slurm log | `a1ce866afefa63795e9453fb52cd93cd5fc76f573be26b75a8a55ea07d12eb9b` |
+
+Development/confirmation custody is exactly `1/1`. Local mirrors match Newton,
+and a separate local assessor replay is byte-identical to the Newton assessment.
+The checkpoint, report, and assessment are retained read-only at:
+
+`/lustre/fs1/home/sa305415/shohin_promoted/sd_cst_complete_physical_fresh_v1_3`
+
+## Claim boundary
+
+This confirms fresh finite renderer/name compilation into a model-owned categorical
+program and source-deleted recurrent executor. The model transfers across new opaque
+names and four unseen compositions of known rendering factors, preserves explicit
+state across one-to-six operations, halts internally, and reads the requested entity.
+
+It does **not** establish unconstrained language grounding, arbitrary program
+induction, learned arithmetic, open-domain planning, self-directed search, or general
+native reasoning. Those require distinct fresh-board experiments rather than expanding
+this result's claim.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 225: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_DEVELOPMENT_RESULT.md`
+
+Original source path: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_DEVELOPMENT_RESULT.md`
+Original source size: 4,800 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Complete Physical Fresh-Board v1.3 Development Result
+
+**Decision:** `authorize_one_sealed_confirmation`.
+
+**Status:** complete pilot and independent assessment; confirmation remains
+unopened pending a separately committed evaluator.
+
+## Exact run contract
+
+| Item | Value |
+|---|---:|
+| Scientific source | `eed66757c47e126b6566ee269bc73b0c0cef4fab` |
+| Board seed | `8920874392524997882` |
+| Training seed | `8446904969546017898` |
+| Slurm job / node / elapsed | `694383` / `evc23` / 11m48s |
+| Training rows | 48,000 = 12,000 families x four even-parity renderers |
+| Development rows | 2,048 = 512 families x four odd-parity renderers |
+| Updates | 3,000 treatment + 3,000 family-deranged control |
+| Complete deployed parameters | 192,129,179 |
+| Fresh-trainable parameters | 12,152,855 across 102 tensor names |
+| Strict-200M headroom | 7,870,821 |
+
+Every source, board, parent-checkpoint, execution-core, H100, bf16, output-
+absence, and pre-access gate passed. The checkpoint and immutable gate config
+were written after both endpoints and before the atomic development ledger.
+Program/query sources were poisoned after packet sealing. A separate process
+received only 25 categorical program bytes plus one query byte and the frozen
+execution core.
+
+## Training fit
+
+Treatment is 48,000/48,000 exact packets, including 12,000/12,000 on each
+training renderer. The family-deranged control changes only three entity-role
+labels per latent family while sharing bytes, initialization, updates, and
+compute. It remains far below treatment.
+
+## Independent development metrics
+
+| Metric | Treatment | Family-deranged labels |
+|---|---:|---:|
+| Exact complete packet | **2,048/2,048 = 100%** | 0/2,048 = 0% |
+| Initial state | **100%** | 0% |
+| Event kind | **100%** | 100% |
+| Event identity | **100%** | 0% |
+| Event amount | **100%** | 100% |
+| Late query | **100%** | 100% |
+| All-nine line pointers | **100%** | 100% |
+| All-three binding pointers | **100%** | 0% |
+| All-three initial-occurrence pointers | **100%** | 100% |
+| All active-event entity pointers | **100%** | 100% |
+| Exact final state | **2,048/2,048 = 100%** | 148/2,048 = 7.227% |
+| Exact answer | **2,048/2,048 = 100%** | 467/2,048 = 22.803% |
+| Exact state and answer | **2,048/2,048 = 100%** | 148/2,048 = 7.227% |
+
+Each unseen renderer composition is independently 512/512 exact treatment
+packets and joints. This exactly repeats the perfect diagnostic signal from the
+spent v1.2 board under a new source, board, seed, completed report, and completed
+independent assessment.
+
+## Causal controls
+
+| Source-blind executor arm | Exact state | Exact answer |
+|---|---:|---:|
+| Uniform packet | 33.203% | 33.398% |
+| Shuffled packet | 33.203% | 33.203% |
+| Reset | 50.977% | 59.375% |
+| Freeze | 13.672% | 28.711% |
+| Post-HALT perturbation | 100% | 100% |
+| Force alive after HALT | 33.203% | 46.289% |
+| Query rotation | 100% state | 0% answer |
+| Initial-state rotation | 70.312% | 78.320% |
+| Event-kind flip | 53.125% | 59.375% |
+| Event-identity rotation | 53.516% | 59.180% |
+| Event-amount flip | 81.641% | 88.086% |
+
+Post-HALT perturbation is bit-identical across final state, answer, state
+trajectory, and alive trajectory. All 18 pilot core gates and all 18
+independently recomputed core gates pass. All four assessor gates pass: artifact
+hashes, exact parameter certificate, independent metric recomputation, and gate-
+vector equality.
+
+## Artifact hashes and custody
+
+| Artifact | SHA-256 |
+|---|---|
+| Checkpoint | `a5888d88541904cfa186a6686012c13c7b555f7d186ba1e3e73f71dbaca462d8` |
+| Gate config | `ab466c339b77d4193cbdbc383a2c9a28bd4ce6afcf9579f3a714b301e8d9a990` |
+| Hard packets | `00a45016f81287361e9f0bcdd7869e386bcf792b68d990f230cae98ef44f44bf` |
+| Pointer evidence | `80f477af17d624b66fd3d9f6d5f7a7de7efd62943f63271034505ce32dbc77d6` |
+| Executor outputs | `4bcfc44183c3eb610302c21f472c6f5da11fd5d7abddd4b97dc196b97af8eaae` |
+| Development report | `7dc048cc9ad16e1e326c7e4180fb06539428a4518c4d79440a92b794754b6bc2` |
+| Independent assessment | `1c5fad49a6eba6c2d76420945166e78b807d002f947a616c542c8a85ba35e497` |
+| Development ledger | `15a9edd09f008084c0533672e57af8da96935da3dc1ca86edbaa4200e2f499e0` |
+| Slurm log | `585f3eadf2800775fcab381d159fbcf98286e281ec0946a7dd6d6b8bd78c50a3` |
+
+Local mirrors hash-match Newton. Development/confirmation custody is exactly
+`1/0`; confirmation remains mode `0600`.
+
+## Claim boundary
+
+This establishes a clean development pass for bounded fresh renderer/name
+compilation into a source-deleted categorical executor. It does not establish
+unconstrained language grounding, arbitrary programs, learned arithmetic,
+self-directed planning, or broad general reasoning. Only the separately frozen
+one-read confirmation can promote this bounded mechanism.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 226: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_PREREG.md`
+
+Original source path: `R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_PREREG.md`
+Original source size: 6,159 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Complete Physical Fresh-Board v1.3 Preregistration
+
+**Status:** implementation and evaluator regression coverage complete before
+source freeze, board seed, training seed, or scored access.
+
+**Claim class:** bounded fresh renderer/name compilation into the retained
+source-deleted categorical executor. Passing is not broad natural-language or
+general reasoning.
+
+## 1. Reason for v1.3
+
+Fresh-board v1.2 completed both frozen fits and one development compilation,
+but its pilot failed while assembling the report. `fit_arm` returns renderer
+metrics under `train_metrics`; the frozen helper incorrectly iterated the
+entire fit mapping, including integer metadata. The checkpoint, hard packets,
+pointer evidence, and source-blind executor outputs were preserved, but no
+frozen report or independent assessment was produced. Development access is
+`1/0`, confirmation remains sealed, and that board is permanently ineligible
+for rescore or confirmation.
+
+A read-only post-hoc diagnostic over only those preserved source-free
+artifacts found 2,048/2,048 exact treatment packets, pointers, final states,
+and answers across all four unseen renderer compositions; the matched
+family-deranged arm had 0/2,048 exact packets and 131/2,048 exact states. This
+is motivation, not an authorizing score.
+
+V1.3 changes only the report aggregation path and schema/protocol identities.
+The helper now validates and reads `fit["train_metrics"]`. A realistic nested-
+fit regression test and a complete synthetic checkpoint/config/packet/
+evidence/executor/ledger assessor test must pass before source freeze. All
+architecture, data, arms, optimization, thresholds, controls, and claim
+boundaries remain unchanged. A new source commit, board seed, board, and
+training seed are mandatory.
+
+## 2. Fresh board and custody
+
+After source freeze, one independent board seed generates:
+
+- 12,000 latent training programs x four views = 48,000 rows;
+- 512 disjoint development programs x four views = 2,048 rows; and
+- 512 disjoint sealed-confirmation programs x four views = 2,048 rows.
+
+Training uses four even-parity combinations of two declaration, two event,
+and two query renderers. Development and confirmation use the four odd-parity
+combinations. Opaque names, operation sequences, and latent families are split
+disjoint. All exact prompt, 13-gram, name, and operation-sequence overlap gates
+remain zero. Every row must independently parse and simulate, contain exactly
+nine bounded physical records and one HALT, and satisfy the 144-byte
+record/query limits. Board admission executes the production parser over all
+52,096 rows. Confirmation is mode `0600`.
+
+The checkpoint and immutable gate config are written before an `O_EXCL`
+development ledger. Development may be opened once only after both arms finish.
+Confirmation stays at zero unless a separately committed authorization follows
+a complete development report and independent assessment.
+
+## 3. Frozen system contract
+
+The endpoint reconstructs hash-bound joint, physical-record, complete-local v1,
+and occurrence-head v1.2 parents. Treatment and matched control train the same
+102 tensors and 12,152,855 parameters: the physical record encoder/decoder,
+local query path, and nonlinear occurrence head. Every inherited global path,
+obsolete declaration path, exact packet executor, motor, reader, and Shohin
+trunk remains frozen.
+
+| Quantity | Exact count |
+|---|---:|
+| immutable Shohin trunk | 125,081,664 |
+| complete compiler | 67,027,474 |
+| fresh-trainable compiler | 12,152,855 |
+| categorical motor | 19,206 |
+| categorical reader | 835 |
+| **complete deployed system** | **192,129,179** |
+| **strict-200M headroom** | **7,870,821** |
+
+No parameter may be added after source freeze.
+
+## 4. Arms and optimization
+
+Treatment receives true compiler fields. The equal-parameter control receives
+one deterministic nonidentity three-cycle of entity roles per latent family;
+all four renderer views share that false mapping. Both arms share exact
+initialization, rows, family minibatch order, optimizer, schedule, updates, and
+parameter count.
+
+Each arm trains two epochs / 3,000 updates with family batch eight (32 rendered
+rows/update), AdamW lr `2e-4`, betas `(0.9, 0.95)`, weight decay `0.01`, warmup
+100, cosine decay, gradient clipping `1.0`, and renderer consistency weight
+`1.0`.
+
+## 5. Source deletion and independent assessment
+
+The compiler emits 25 categorical program bytes plus one query byte. Source
+tensors are poisoned after packet sealing. A separate process receives only
+hard packets and the hash-bound categorical execution core. The pilot emits
+checkpoint, immutable config, hard packets, pointer-range evidence, and
+executor outputs. The separate assessor recomputes packet, pointer, state,
+answer, renderer, executor, control, hash, parameter, and custody gates.
+
+The matched controls remain family-deranged labels, uniform packet, shuffled
+packet, reset, freeze, post-HALT perturbation, force-alive after HALT, query
+rotation, and initial/kind/identity/amount interventions.
+
+## 6. Immutable development gates
+
+All gates must pass:
+
+1. treatment minimum fit-renderer packet at least 99%;
+2. development packet at least 90% overall and 85% per renderer;
+3. development state, answer, and joint each at least 90% overall;
+4. development joint at least 85% per renderer;
+5. each packet field at least 95% overall;
+6. each line/binding/initial/event pointer at least 90% overall;
+7. treatment packet at least +50 points over family-deranged labels;
+8. family-deranged packet at most 25%;
+9. gold and conditional execution exact;
+10. post-HALT perturbation invariant;
+11. shuffled-packet state at most 35%;
+12. reset and freeze state each at most 75%;
+13. source deletion and separate execution pass;
+14. frozen state is byte-identical;
+15. complete deployed system is strictly below 200M; and
+16. development/confirmation access is exactly `1/0`.
+
+Passing both pilot and independent assessment yields
+`authorize_one_sealed_confirmation`. Any failure yields
+`reject_complete_physical_fresh_v1_3`; no threshold repair, rescore, extra
+epoch, or confirmation read is allowed on that board.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 227: `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_PREREG.md`
+
+Original source path: `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_PREREG.md`
+Original source size: 5,838 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Complete Physical-Record Front-End Preregistration
+
+**Status:** closed and rejected under the frozen gates; sole job `694199`
+completed cleanly on H100 `evc37`. Full result:
+`R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_RESULT.md`
+
+**Source contract:** exact architecture, pilot, tests, job, preregistration, and
+ledger commit `6294ea90f8b9e308edde9cad4d4b276c729961ae`. No seed or output existed at
+that receipt. After source push, raw 64-bit beacon and sole scientific seed were
+both `4564290739472553435` (already below `2^63`).
+
+The frozen run reaches 100% held-out query, query pointer, and event pointer,
+but only 5.15% binding pointer, 0% initial-occurrence pointer, 15.0% initial
+state, and 13.45% complete packet. The decision is
+`reject_or_revise_complete_local_front_end`; no fresh board is authorized by
+this result.
+
+**Parent compiler:** retained independent-assignment Physical-Record Write Bus,
+checkpoint SHA-256
+`89ab7d7417918e72da60028e6d5936908a3ee29c0981f5fdac9dc385c3099419`
+
+**Claim class:** local-front-end completion gate; no fresh generalization,
+native reasoning, architecture novelty, or Shohin promotion claim
+
+## 1. Why this gate is necessary
+
+Job `694136` establishes perfect physical-record event compilation on 48,000
+fit and 8,000 held-out consumed renderer views. However, that version still
+delegates declaration/initial-state and late-query parsing to the old frozen
+global parent. A fresh renderer board could therefore fail because inherited
+global interfaces do not recognize new declaration or query language, rather
+than because physical-record factorization fails.
+
+The fresh-board candidate must be source-facing through one coherent local
+contract before any scored bytes are generated or read.
+
+## 2. Fixed architecture
+
+The retained independent-assignment record bus remains byte-identical and
+frozen. Ten new `local_*` tensors add:
+
+1. six declaration-local pointer queries: three canonical binding roles and
+   three initial-order occurrences;
+2. one declaration-query projection over the already-trained local token
+   memory;
+3. one local late-query selector with query/key projections;
+4. one position-free raw-byte value projection; and
+5. one normalization and three-class query head.
+
+Declaration pointers are computed inside every physical record and mixed only
+by the model's retained declaration-role probability. Their content
+fingerprints feed the frozen matcher and six-way initial permutation scorer.
+The query is encoded as one bounded local record with the shared retained line
+encoder; contextual state may choose a byte, but the value classifier receives
+only the selected raw-byte value projection.
+
+The complete compiler does not call the inherited global source encoder or
+orbit encoder for either program or query compilation. A test replaces both
+methods with raising sentinels and the complete program/query forward still
+passes.
+
+## 3. Frozen ownership and parameter certificate
+
+Only the ten `local_*` names train in this gate. The 88 retained `record_*`
+tensors, joint parent, fingerprint matcher, categorical tape/executor, motor,
+reader, and Shohin trunk remain frozen under one excluded-state digest.
+
+| Quantity | Exact count |
+|---|---:|
+| immutable Shohin trunk | 125,081,664 |
+| complete compiler | 66,426,124 |
+| new trainable completion parameters | 594,435 |
+| all local-front-end parameters, frozen plus new | 11,701,265 |
+| categorical motor | 19,206 |
+| categorical reader | 835 |
+| **complete deployed system** | **191,527,829** |
+| **strict-200M headroom** | **8,472,171** |
+
+The historical 150M contracts remain immutable. No parameter may be added to
+this gate after source freeze.
+
+## 4. Fixed data and optimization
+
+The gate reads only the already-consumed projected-v2 training JSONL SHA-256
+`b7756dbf8d4401dbc5fb897dee53f68758e27200b1ce0d2387631f2f0205ec25`.
+It reuses the fixed 12,000-semantic even-parity fit and disjoint 2,000-semantic
+odd-parity heldout partitions. Development, confirmation, answer, state,
+trajectory, and executor outputs remain unreachable.
+
+Optimization is fixed to two epochs / 3,000 updates, family batch eight,
+AdamW lr `2e-4`, betas `(0.9, 0.95)`, weight decay `0.01`, 100-update warmup,
+cosine decay, gradient clipping `1.0`, and renderer consistency weight `1.0`.
+Every inherited event loss remains in the objective but cannot update frozen
+record tensors. Initial heldout metrics are recorded before optimization.
+
+## 5. Frozen gates
+
+The gate passes only if:
+
+1. minimum fit-renderer complete packet is at least 99%;
+2. minimum heldout-renderer complete packet is at least 95%;
+3. heldout initial state is at least 95%;
+4. heldout query and query pointer are each at least 99%;
+5. heldout declaration and initial-occurrence pointers are each at least 99%;
+6. heldout event pointer is at least 99%;
+7. heldout kind, identity, and amount are each at least 99%;
+8. every excluded tensor is byte-identical;
+9. complete deployed size is strictly below 200M; and
+10. scored access is `0/0`.
+
+All gates passing yields
+`retain_complete_local_front_end_for_fresh_board`. Any failure yields
+`reject_or_revise_complete_local_front_end`. No threshold, parameter, epoch,
+or same-output retry may change after seed.
+
+## 6. Honest boundary and next phase
+
+A pass means only that every source-facing field can be compiled through
+bounded local evidence on already-consumed renderer factors. It does not test
+new language, names, distributions, recurrent state, answers, or reasoning.
+
+Only a pass authorizes a separately committed board builder with fresh names,
+renderer families, train/development/sealed-confirmation bytes, access ledger,
+model-logit-only compiler outputs, source deletion, and the retained fixed
+executor. Existing development and confirmation remain permanently unavailable
+to this architecture.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 228: `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_RESULT.md`
+
+Original source path: `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_RESULT.md`
+Original source size: 5,270 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Complete Physical-Record Front-End Result
+
+**Decision:** `reject_or_revise_complete_local_front_end`
+
+**Claim boundary:** consumed-training interface mechanics only. Development and
+confirmation were not addressed. This is not a native-reasoning or fresh-language
+result.
+
+## 1. Immutable contract
+
+- scientific source commit:
+  `6294ea90f8b9e308edde9cad4d4b276c729961ae`;
+- execution/seed receipt commit:
+  `205f6b732d9d6dfa2518830d5ea2f470e3089faa`;
+- sole seed: `4564290739472553435`;
+- consumed train SHA-256:
+  `b7756dbf8d4401dbc5fb897dee53f68758e27200b1ce0d2387631f2f0205ec25`;
+- joint-parent checkpoint SHA-256:
+  `4b842e4c2d0d608c32f0fd113b404866be7269676084cdac9b1a00d43cdd298d`;
+- physical-record parent SHA-256:
+  `89ab7d7417918e72da60028e6d5936908a3ee29c0981f5fdac9dc385c3099419`;
+- sole Slurm job: `694199`, H100 `evc37`, completed cleanly in 6m19s;
+- scored accesses: development `0`, confirmation `0`.
+
+Runtime preflight verified the clean exact source, all input hashes, bf16 H100
+allocation, and the parameter certificate before optimization.
+
+## 2. Exact system
+
+| Quantity | Count |
+|---|---:|
+| immutable Shohin trunk | 125,081,664 |
+| complete compiler | 66,426,124 |
+| new trainable completion parameters | 594,435 |
+| all local-front-end parameters, frozen plus new | 11,701,265 |
+| categorical motor | 19,206 |
+| categorical reader | 835 |
+| **complete deployed system** | **191,527,829** |
+| **strict-200M headroom** | **8,472,171** |
+
+Only ten `local_*` tensors trained. All 88 retained `record_*` tensors and every
+joint-parent/executor tensor remained frozen under a byte-identical excluded-state
+digest. The complete forward succeeds when both inherited global encoders are
+replaced by raising sentinels.
+
+## 3. Result
+
+The sole run completed the fixed two epochs / 3,000 updates. The local late-query
+path converged to 100% query and query-pointer accuracy on every fit and held-out
+renderer. The frozen physical record bus also retained 100% line, event-pointer,
+kind, and amount accuracy. The declaration-local path did not converge:
+
+| Minimum across held-out renderers | Initial | Endpoint |
+|---|---:|---:|
+| query | 34.4% | **100%** |
+| query pointer | 0% | **100%** |
+| event pointer | 100% | **100%** |
+| binding pointer | 0% | **5.15%** |
+| initial-occurrence pointer | 0% | **0%** |
+| initial state | 15.6% | **15.0%** |
+| identity | 0.1% | **82.2%** |
+| complete packet | 0% | **13.45%** |
+
+Fit is nearly identical: minimum fit binding pointer is 5.24%, initial pointer
+is 0%, and packet is 13.81%. This is not renderer holdout overfitting. Endpoint
+binding-address and initial-entity-address losses remain 4.545 and 4.600, close
+to a uniform distribution over the declaration record. More epochs are not an
+admissible interpretation or repair.
+
+## 4. Mechanistic audit
+
+All declaration tensors changed materially: the declaration-query table moved
+2.573 in L2 norm and its query projection moved 4.686. On a held-out family at
+the endpoint, their gradients remain large (3.189 and 5.152), while the query
+path gradients are approximately zero after reaching exactness. Optimization is
+therefore active rather than disconnected.
+
+The declaration queries are forced to address six declaration occurrences
+through `record_entity_key`, a frozen key projection learned only for event-line
+entity extraction. That projection is sufficient for the retained event bus but
+does not expose a usable basis for declaration/initial occurrence addressing.
+The result localizes the remaining failure to declaration address geometry. It
+does not justify retraining the successful record encoder, increasing depth, or
+opening a scored split.
+
+## 5. Gate accounting
+
+Six gates pass: held-out query, query pointer, event pointer, frozen-state
+preservation, strict-200M size, and zero scored access. The fit/held-out packet,
+initial-state, declaration-pointer, initial-pointer, and combined
+kind/identity/amount gates fail. The preregistered decision is therefore
+`reject_or_revise_complete_local_front_end`.
+
+The smallest admissible successor is a separate training-only contract that:
+
+1. loads and freezes the v1 endpoint's exact local query path;
+2. retains and freezes the perfect physical event bus;
+3. resets the two failed declaration-query tensors;
+4. adds one declaration-local key projection; and
+5. trains only those three declaration tensors under the same consumed-row
+   partitions, schedule, preservation checks, and absolute gates.
+
+That successor is an optimization/representation repair, not a fresh-board or
+reasoning claim.
+
+## 6. Preserved artifacts
+
+- local checkpoint:
+  `train/sd_cst_complete_physical_record_bus_pilot_4564290739472553435/compiler.pt`;
+- local report:
+  `train/sd_cst_complete_physical_record_bus_pilot_4564290739472553435/report.json`;
+- committed report copy:
+  `artifacts/r12/sd_cst_complete_physical_record_bus_pilot_4564290739472553435.report.json`;
+- Newton output:
+  `/lustre/fs1/home/sa305415/shohin_sd_cst_complete_physical_record_bus_pilot_4564290739472553435/`;
+- checkpoint SHA-256:
+  `30b75305031b1e2f67a24f98b4907d2d65bc847310ea406d25f34c7b9611e1b4`;
+- report SHA-256:
+  `c06348d53d5c9fd3b4fa79e6c9eb9e3720b106834d0326c1d1d979db67c8fff2`.
+
+Local and Newton hashes match exactly.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 229: `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_AUDIT_PREREG.md`
+
+Original source path: `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_AUDIT_PREREG.md`
+Original source size: 1,776 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Complete Physical-Record Front-End v1.1 Audit Preregistration
+
+**Status:** closed. Exact source `a9a8d9a06a4a16c82385ae31ce346edda0d25d2f`
+produced sole job `694209` on H100 `evc23`; full result:
+`R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_AUDIT_RESULT.md`.
+
+This post-hoc audit reads only the same 2,000-semantic consumed-training
+heldout partition already evaluated by v1.1. Development and confirmation remain
+unreachable. It reconstructs exact endpoint SHA-256
+`46697b3942fdfd2edfec06cea6cb119ad507adcdee4a99330fd06bc79e5b3e88`
+and does not optimize or modify any tensor.
+
+For each of four heldout renderers and each of the six declaration queries, it
+records top-one target-span exactness, probability mass on the target span,
+target NLL, and a seven-way confusion: the three binding occurrences, three
+initial-list occurrences, or other bytes. It also reproduces all-three binding
+and all-three initial exactness.
+
+The audit decides only the next representation hypothesis:
+
+- initial queries selecting binding occurrences supports separate
+  binding/initial key banks;
+- selecting the wrong initial occurrence supports stronger occurrence/position
+  conditioning;
+- selecting other bytes supports a declaration-local nonlinear token parser;
+- diffuse low target mass everywhere rejects a readout-only repair and requires
+  adapting declaration-local token memory.
+
+No threshold is promoted, no failed run is rescored, and no reasoning or fresh
+generalization claim can follow from this audit.
+
+Observed result: all 48,000 top-one decisions select one of the six true entity
+spans and none select other bytes, but the middle initial occurrence is only
+0--10.35% exact. This admits an occurrence-role classifier, not more v1.1
+epochs or a broader encoder.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 230: `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_AUDIT_RESULT.md`
+
+Original source path: `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_AUDIT_RESULT.md`
+Original source size: 3,144 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Complete Physical-Record Front-End v1.1 Slot Audit Result
+
+**Decision:** occurrence-role confusion; admit a nonlinear local six-class
+pointer head as the next training-only falsifier
+
+**Claim boundary:** deterministic read-only audit of already-consumed training
+heldout rows. Development and confirmation access remain `0/0`. This is neither
+a rescore nor reasoning evidence.
+
+## 1. Receipt
+
+- exact audit source commit:
+  `a9a8d9a06a4a16c82385ae31ce346edda0d25d2f`;
+- endpoint SHA-256:
+  `46697b3942fdfd2edfec06cea6cb119ad507adcdee4a99330fd06bc79e5b3e88`;
+- sole job: `694209`, H100 `evc23`, completed cleanly in 25s;
+- report SHA-256:
+  `b09122a95808e066583bc38445ac4dae3ce1df863a0fa7050b14bfc7cbe63f63`.
+
+## 2. Six-slot result
+
+Minimum top-one target-span exactness across the four heldout renderers is:
+
+| Query slot | Minimum exact |
+|---|---:|
+| binding role 0 | 80.80% |
+| binding role 1 | 99.40% |
+| binding role 2 | 73.50% |
+| initial occurrence 0 | 47.05% |
+| initial occurrence 1 | **0%** |
+| initial occurrence 2 | 16.70% |
+
+Every one of 48,000 top-one decisions lands inside one of the six true entity
+occurrence spans. The `other` category is exactly zero for every slot and
+renderer. The failure is therefore not inability to localize entity evidence.
+
+The middle initial query exposes the dominant confusion. On declaration
+renderer d0 it never chooses its target; its 2,000 predictions split mainly
+among binding role 2 (1,082--1,106), initial occurrence 0 (591--620), and
+initial occurrence 2 (241). On declaration renderer d1 it reaches only
+10.10--10.35%, with most errors again split across those three alternatives.
+Mean target probability for that slot is only 15.28--15.41%.
+
+The other initial slots are also occurrence-sensitive: occurrence 0 ranges
+47.05--64.60%, and occurrence 2 ranges 16.70--52.25% depending on declaration
+renderer. Binding role 1 is nearly exact, while roles 0 and 2 vary with the
+same declaration factor. The shared bilinear key/query geometry finds entity
+spans but aliases their surface roles and repeated positions.
+
+## 3. Consequence
+
+The audit rejects both an evidence-missing story and a deterministic grammar
+shortcut. It also does not support adding epochs to v1.1. The next distinct
+training-only system may load the exact successful v1 query path and physical
+event bus, then replace declaration dot-product queries with a model-logit-only
+nonlinear token classifier that emits six local occurrence logits per byte.
+
+That head must remain local, train without state/answer/executor feedback, keep
+the same consumed partition/schedule/gates, preserve all successful paths, and
+keep the complete system strictly below 200M. A pass still authorizes only a
+separately committed fresh board.
+
+## 4. Artifact
+
+- local report:
+  `train/sd_cst_complete_physical_record_bus_v1_1_audit_a9a8d9a/report.json`;
+- committed report:
+  `artifacts/r12/sd_cst_complete_physical_record_bus_v1_1_slot_audit_a9a8d9a.report.json`;
+- Newton report:
+  `/lustre/fs1/home/sa305415/shohin_sd_cst_complete_physical_record_bus_v1_1_audit_a9a8d9a/report.json`.
+
+Local and Newton hashes match exactly.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 231: `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_PREREG.md`
+
+Original source path: `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_PREREG.md`
+Original source size: 3,812 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Complete Physical-Record Front-End v1.1 Preregistration
+
+**Status:** closed and rejected under the frozen gates. Sole job `694203`
+completed cleanly on H100 `evc22`; full result:
+`R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_RESULT.md`.
+
+Exact scientific source `b93b17b3ee5c096509cd1ab0d903ef7a9287d3a3`
+preceded raw beacon `14330060956843215829` and signed-safe seed
+`5106688919988440021`. The dedicated key raises minimum binding pointer to
+61.0% and packet to 47.45%, but minimum initial-occurrence pointer remains 0%.
+Decision: `reject_declaration_key_repair`.
+
+**Claim class:** consumed-training declaration-address repair only. This cannot
+establish fresh-language generalization, native reasoning, or Shohin promotion.
+
+## 1. Frozen diagnosis
+
+Complete local-front-end v1 reaches 100% minimum held-out query, query pointer,
+line pointer, event pointer, kind, and amount, but only 5.15% binding pointer,
+0% initial-occurrence pointer, 15.0% initial state, and 13.45% complete packet.
+Fit is nearly identical. Its declaration queries and projection move and retain
+large gradients, while their address losses remain near uniform.
+
+V1 addresses six declaration occurrences through `record_entity_key`, a frozen
+projection learned for event-line entity extraction. V1.1 tests the smallest
+representation repair: a declaration-specific trainable key projection.
+
+## 2. Fixed parent and ownership
+
+V1.1 reconstructs the exact joint parent and retained independent physical bus,
+then loads only the successful eight-tensor `local_query_*` endpoint from v1
+checkpoint SHA-256
+`30b75305031b1e2f67a24f98b4907d2d65bc847310ea406d25f34c7b9611e1b4`.
+The failed declaration query table and query projection are reset from the new
+post-source-commit seed. One new bias-free 384 by 384 declaration-key projection
+is initialized from the same seed.
+
+Only these three tensors train:
+
+1. `local_declaration_queries`;
+2. `local_declaration_query_projection.weight`; and
+3. `local_declaration_key_projection.weight`.
+
+The successful query path, 88-tensor physical record bus, joint parent,
+fingerprint matcher, tape, executor, motor, reader, and Shohin trunk remain
+frozen under one excluded-state digest.
+
+## 3. Exact parameter contract
+
+| Quantity | Exact count |
+|---|---:|
+| immutable Shohin trunk | 125,081,664 |
+| complete compiler | 66,573,580 |
+| trainable declaration repair | 297,216 |
+| categorical motor | 19,206 |
+| categorical reader | 835 |
+| **complete deployed system** | **191,675,285** |
+| **strict-200M headroom** | **8,324,715** |
+
+No parameter may be added after the scientific source commit. Historical 150M
+contracts remain unchanged.
+
+## 4. Fixed data, optimization, and gates
+
+The pilot reads only consumed train SHA-256
+`b7756dbf8d4401dbc5fb897dee53f68758e27200b1ce0d2387631f2f0205ec25`
+with the same fixed 12,000-semantic fit and disjoint 2,000-semantic heldout
+partition, four renderer views each, two epochs / 3,000 updates, family batch
+eight, AdamW lr `2e-4`, betas `(0.9, 0.95)`, weight decay `0.01`, 100-update
+warmup, cosine decay, clipping `1.0`, and renderer-consistency weight `1.0`.
+Development, confirmation, answers, states, trajectories, and executor feedback
+remain unreachable.
+
+The frozen v1 absolute gates are unchanged: minimum fit packet 99%; heldout
+packet and initial state 95%; query, query pointer, binding pointer,
+initial-occurrence pointer, event pointer, kind, identity, and amount 99%;
+excluded state byte-identical; system strictly below 200M; scored access `0/0`.
+
+All gates passing yields `retain_declaration_key_repair_for_fresh_board`. Any
+failure yields `reject_declaration_key_repair`. A pass credits the three-tensor
+repair package only; it remains conventional compiler mechanics and merely
+authorizes a separately committed fresh-board contract.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 232: `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_RESULT.md`
+
+Original source path: `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_1_RESULT.md`
+Original source size: 4,411 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Complete Physical-Record Front-End v1.1 Result
+
+**Decision:** `reject_declaration_key_repair`
+
+**Claim boundary:** consumed-training declaration-address mechanics only. No
+development or confirmation bytes were addressed, and this is not a native
+reasoning result.
+
+## 1. Immutable contract
+
+- scientific source commit:
+  `b93b17b3ee5c096509cd1ab0d903ef7a9287d3a3`;
+- execution/seed receipt commit:
+  `8b1e05d52d94d347350e91780643c501a8ec492e`;
+- raw beacon: `14330060956843215829`;
+- signed-safe seed: `5106688919988440021`;
+- consumed train SHA-256:
+  `b7756dbf8d4401dbc5fb897dee53f68758e27200b1ce0d2387631f2f0205ec25`;
+- complete-local v1 parent SHA-256:
+  `30b75305031b1e2f67a24f98b4907d2d65bc847310ea406d25f34c7b9611e1b4`;
+- sole job: `694203`, H100 `evc22`, completed cleanly in 8m09s;
+- scored access: development `0`, confirmation `0`.
+
+The clean Newton capsule was at the exact execution receipt. All three compiler
+parents and the consumed train file hash-matched before Slurm admission. Runtime
+preflight verified bf16 H100 allocation and the exact parameter certificate.
+
+## 2. Exact system
+
+| Quantity | Count |
+|---|---:|
+| immutable Shohin trunk | 125,081,664 |
+| complete compiler | 66,573,580 |
+| trainable declaration repair | 297,216 |
+| categorical motor | 19,206 |
+| categorical reader | 835 |
+| **complete deployed system** | **191,675,285** |
+| **strict-200M headroom** | **8,324,715** |
+
+Only the six-query declaration table, declaration-query projection, and new
+declaration-key projection trained. The exact eight-tensor v1 query endpoint,
+88-tensor physical record bus, joint parent, matcher, tape, executor, motor,
+reader, and Shohin trunk remained frozen under a byte-identical digest.
+
+## 3. Result
+
+| Minimum held-out renderer | V1 | V1.1 |
+|---|---:|---:|
+| binding pointer | 5.15% | **61.00%** |
+| initial-occurrence pointer | 0% | **0%** |
+| initial state | 15.00% | **48.00%** |
+| identity | 82.20% | **98.90%** |
+| complete packet | 13.45% | **47.45%** |
+| query / query pointer | 100% / 100% | **100% / 100%** |
+| event pointer / kind / amount | 100% | **100%** |
+
+The dedicated declaration key is causally useful as a repair package: it adds
+55.85 points to minimum binding-pointer exactness and 34.0 points to complete
+packets while every successful frozen path remains exact. Fit and heldout are
+again close. Minimum fit packet is 47.975%, and initial-pointer exactness is
+0% on two fit renderers and below 0.41% on the others. This is not a parity
+generalization failure.
+
+The remaining error is sharply asymmetric. Binding-address loss falls to
+4.043, identity is nearly exact, and initial state improves. Initial-occurrence
+address loss remains 4.418 and no held-out renderer exceeds 0.55% all-three
+pointer exactness. A shared declaration key can expose declaration names but
+does not provide reliable occurrence/order selection for the repeated initial
+list.
+
+## 4. Gate accounting
+
+Six of twelve gates pass: query, query pointer, event pointer, excluded-state
+preservation, strict-200M size, and zero scored access. Fit packet, heldout
+packet, initial state, binding pointer, initial-occurrence pointer, and the
+combined kind/identity/amount gate fail; identity misses its 99% minimum by
+0.1 point. The exact decision is `reject_declaration_key_repair`.
+
+Do not add epochs or widen v1.1. The next decision must follow a read-only
+per-slot confusion audit over the same consumed heldout rows. In particular,
+it must distinguish whether initial queries select declaration occurrences,
+the wrong repeated initial occurrence, or non-entity bytes before proposing
+separate key banks, role-conditioned nonlinear keys, or a local occurrence
+parser.
+
+## 5. Preserved artifacts
+
+- local checkpoint:
+  `train/sd_cst_complete_physical_record_bus_v1_1_pilot_5106688919988440021/compiler.pt`;
+- local report:
+  `train/sd_cst_complete_physical_record_bus_v1_1_pilot_5106688919988440021/report.json`;
+- committed report copy:
+  `artifacts/r12/sd_cst_complete_physical_record_bus_v1_1_pilot_5106688919988440021.report.json`;
+- Newton output:
+  `/lustre/fs1/home/sa305415/shohin_sd_cst_complete_physical_record_bus_v1_1_pilot_5106688919988440021/`;
+- checkpoint SHA-256:
+  `46697b3942fdfd2edfec06cea6cb119ad507adcdee4a99330fd06bc79e5b3e88`;
+- report SHA-256:
+  `73d470bb1a6b9331b3d46fcd56d3e6acb500c768717cc829ff0f567092babcaf`.
+
+Local and Newton hashes match exactly.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 233: `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_2_PREREG.md`
+
+Original source path: `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_2_PREREG.md`
+Original source size: 3,675 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Complete Physical-Record Front-End v1.2 Preregistration
+
+**Status:** closed. Exact scientific source was frozen and pushed before seed at
+commit `a32c881326eff4ea29ff7c4ee9482f8798894462`; no output existed at that
+receipt. Raw post-commit beacon `16320682315740454145` yielded sole signed-safe
+seed `7097310278885678337` modulo `2^63`. Sole job `694214` completed cleanly
+and passed all twelve gates. The immutable decision is
+`retain_occurrence_head_for_fresh_board`; see
+`R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_2_RESULT.md`.
+
+**Claim class:** consumed-training occurrence-role repair only. This cannot
+establish fresh-language generalization, native reasoning, or Shohin promotion.
+
+## 1. Frozen diagnosis
+
+V1.1's dedicated key raises minimum held-out binding exactness to 61.0% and
+packets to 47.45%, but initial-occurrence pointers remain effectively zero. The
+read-only six-slot audit then finds that every one of 48,000 top-one decisions
+lands in one of the six true entity spans and none lands on unrelated bytes.
+The residual is role/occurrence aliasing inside the shared bilinear readout.
+
+V1.2 therefore changes only declaration readout form. It emits six role logits
+at every local byte through a shared LayerNorm, 384-to-1536 GELU projection, and
+1536-to-6 head. The model's retained declaration-role assignment alone selects
+which physical record contributes those local probabilities. No deterministic
+span, keyword, delimiter position beyond the inherited nine-line boundary,
+target, state, answer, or executor output enters the forward decision.
+
+## 2. Fixed parent and ownership
+
+V1.2 reconstructs the exact joint parent and retained independent physical bus,
+then loads only the successful eight-tensor local-query endpoint from complete
+v1 checkpoint SHA-256
+`30b75305031b1e2f67a24f98b4907d2d65bc847310ea406d25f34c7b9611e1b4`.
+The old declaration queries/projection remain present for parameter accounting
+but unused and frozen.
+
+Only six `local_occurrence_*` tensors / 601,350 parameters train. Every query,
+record, parent, matcher, tape, executor, motor, reader, and Shohin tensor remains
+frozen under one excluded-state digest.
+
+## 3. Exact parameter contract
+
+| Quantity | Exact count |
+|---|---:|
+| immutable Shohin trunk | 125,081,664 |
+| complete compiler | 67,027,474 |
+| trainable occurrence head | 601,350 |
+| categorical motor | 19,206 |
+| categorical reader | 835 |
+| **complete deployed system** | **192,129,179** |
+| **strict-200M headroom** | **7,870,821** |
+
+No parameter may be added after source freeze. Historical contracts remain
+unchanged.
+
+## 4. Fixed data, optimization, and gates
+
+The pilot reads only consumed train SHA-256
+`b7756dbf8d4401dbc5fb897dee53f68758e27200b1ce0d2387631f2f0205ec25`
+with the same 12,000-semantic fit / disjoint 2,000-semantic heldout partitions,
+four renderer views each, two epochs / 3,000 updates, family batch eight, AdamW
+lr `2e-4`, betas `(0.9, 0.95)`, weight decay `0.01`, 100-update warmup, cosine
+decay, clipping `1.0`, and renderer-consistency weight `1.0`. Development,
+confirmation, answers, states, trajectories, and executor feedback are absent.
+
+The same absolute gates remain fixed: minimum fit packet 99%; heldout packet and
+initial state 95%; query, query pointer, binding pointer, initial-occurrence
+pointer, event pointer, kind, identity, and amount 99%; excluded state
+byte-identical; complete system strictly below 200M; scored access `0/0`.
+
+All gates passing yields `retain_occurrence_head_for_fresh_board`. Any failure
+yields `reject_occurrence_head`. A pass remains conventional compiler mechanics
+and only authorizes a separately committed fresh-board contract.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 234: `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_2_RESULT.md`
+
+Original source path: `R12_SD_CST_COMPLETE_PHYSICAL_RECORD_BUS_V1_2_RESULT.md`
+Original source size: 4,773 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Complete Physical-Record Front-End v1.2 Result
+
+**Decision:** `retain_occurrence_head_for_fresh_board`
+
+**Claim boundary:** consumed-training compiler mechanics only. Development and
+confirmation access remained zero. This result does not establish fresh
+language transfer, self-directed execution, or native reasoning.
+
+## 1. Immutable contract
+
+- scientific source commit:
+  `a32c881326eff4ea29ff7c4ee9482f8798894462`;
+- execution/seed receipt commit:
+  `b6b41906ebfb7f66e674f98ca0fc4aba7b68e04c`;
+- raw beacon: `16320682315740454145`;
+- signed-safe seed: `7097310278885678337`;
+- consumed train SHA-256:
+  `b7756dbf8d4401dbc5fb897dee53f68758e27200b1ce0d2387631f2f0205ec25`;
+- complete-local v1 query endpoint SHA-256:
+  `30b75305031b1e2f67a24f98b4907d2d65bc847310ea406d25f34c7b9611e1b4`;
+- sole job: `694214`, H100 `evc23`, completed cleanly in 4m24s;
+- scored access: development `0`, confirmation `0`.
+
+The clean Newton capsule was detached at the exact execution receipt. Runtime
+preflight verified all parent/data hashes, bf16 H100 allocation, exact parameter
+ownership, and a strict complete-system count below 200M.
+
+## 2. Exact system
+
+| Quantity | Count |
+|---|---:|
+| immutable Shohin trunk | 125,081,664 |
+| complete compiler | 67,027,474 |
+| trainable occurrence head | 601,350 |
+| categorical motor | 19,206 |
+| categorical reader | 835 |
+| **complete deployed system** | **192,129,179** |
+| **strict-200M headroom** | **7,870,821** |
+
+Only six tensors train: LayerNorm over each declaration byte, a shared
+384-to-1536 GELU projection, and a 1536-to-6 occurrence-role classifier. The
+old failed declaration queries remain present but unused and frozen. The exact
+v1 query endpoint, physical event bus, all parent compiler paths, matcher,
+tape, executor, motor, reader, and Shohin trunk remain frozen under digest
+`200cd1bf03888b1353a267dfc3250ca4420de785e06d3df4b393c6a92d3d8842`.
+
+## 3. Result
+
+| Minimum held-out renderer | V1.1 | V1.2 |
+|---|---:|---:|
+| binding pointer | 61.00% | **100%** |
+| initial-occurrence pointer | 0% | **99.20%** |
+| initial state | 48.00% | **100%** |
+| identity | 98.90% | **100%** |
+| complete packet | 47.45% | **100%** |
+| query / query pointer | 100% / 100% | **100% / 100%** |
+| event pointer / kind / amount | 100% | **100%** |
+
+Both easier held-out renderers are exact on all fields. Each difficult
+declaration renderer has 1,984/2,000 strict all-three initial-pointer matches,
+but all 2,000 initial values and all 2,000 complete packets remain exact. Fit
+packet accuracy is at least 11,999/12,000 per renderer and reaches 12,000/12,000
+on both difficult renderers. Epoch one already passes every absolute gate;
+epoch two preserves the result.
+
+The causal interpretation is specific. The read-only audit showed that the
+v1.1 bilinear queries always found a true entity span but confused the six
+occurrence roles. Replacing only that readout with a nonlinear local six-class
+head resolves the ambiguity while every successful frozen interface remains
+exact. This establishes a complete finite compiler interface on the consumed
+renderer family. It does not show transfer to unseen source language.
+
+## 4. Gate accounting
+
+All twelve preregistered gates pass:
+
+1. fit packet at least 99%;
+2. held-out packet at least 95%;
+3. held-out initial state at least 95%;
+4. held-out query at least 99%;
+5. held-out query pointer at least 99%;
+6. held-out binding pointer at least 99%;
+7. held-out initial-occurrence pointer at least 99%;
+8. held-out event pointer at least 99%;
+9. held-out kind, identity, and amount at least 99%;
+10. excluded state byte-identical;
+11. complete system strictly below 200M; and
+12. scored access remains `0/0`.
+
+The exact decision is `retain_occurrence_head_for_fresh_board`. This authorizes
+one separately committed board with new names, renderer/source families,
+train/development/sealed-confirmation splits, matched controls, source deletion,
+and the unchanged categorical executor. It does not authorize reuse or opening
+of any closed development or confirmation split.
+
+## 5. Preserved artifacts
+
+- local checkpoint:
+  `train/sd_cst_complete_physical_record_bus_v1_2_pilot_7097310278885678337/compiler.pt`;
+- local report:
+  `train/sd_cst_complete_physical_record_bus_v1_2_pilot_7097310278885678337/report.json`;
+- committed report copy:
+  `artifacts/r12/sd_cst_complete_physical_record_bus_v1_2_pilot_7097310278885678337.report.json`;
+- Newton output:
+  `/lustre/fs1/home/sa305415/shohin_sd_cst_complete_physical_record_bus_v1_2_pilot_7097310278885678337/`;
+- checkpoint SHA-256:
+  `eaa83df068ca0545ddd578f36d4d3f269334e83553f0730f844e46e107323c18`;
+- report SHA-256:
+  `6148b4ef5a01def5fc7c17584700d30570fb6bbd1ee598629e40c674eaf05928`.
+
+Local and Newton hashes match exactly.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 235: `R12_SD_CST_HIERARCHICAL_BINDING_PILOT_PREREG.md`
+
+Original source path: `R12_SD_CST_HIERARCHICAL_BINDING_PILOT_PREREG.md`
+Original source size: 4,564 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Frozen-Parent Hierarchical Binding Pilot
+
+**Status:** frozen training-only optimization/architecture falsifier; scored
+development and sealed confirmation are forbidden
+
+## Diagnosis
+
+Content-addressable binding-bus pilot `693974` is rejected overall, but it
+contains a sharp positive localization. On 8,000 held-out rows from the consumed
+training split, declaration and initial-occurrence pointers reach 100%, and the
+six-way arbitrary initial binding rises from the byte compiler's 16.725% to
+8,000/8,000 exact after one epoch. Shared position-free byte-bigram equality is
+therefore sufficient for declaration-to-initial binding.
+
+The from-scratch joint fit regresses the parent compiler: final line pointer is
+88.8125%, raw kind 5.7375%, amount 3.3375%, event-occurrence pointer 0%, identity
+0.325%, and whole tape 0%. Four address losses dominate the joint objective,
+while each event-name query redundantly has to relearn which randomized physical
+line contains its semantic ordinal. Report SHA-256 is
+`6a7d0ed94bc13194ceb5bac207f1726d49b75adea865b942c5ba7417e7b85b95`.
+
+This pilot tests the smallest causal repair: preserve the exact parent byte
+compiler and make event binding hierarchical over its model-owned semantic line
+addresses.
+
+## Frozen parent
+
+Parent checkpoint:
+`sd_cst_byte_pilot_4554941412679220339/compiler.pt`
+
+SHA-256:
+`e5f87a1d5b22d24250a6aac6fb7c70b4a77dbdf01bd5f5c509020a3584dfa6f9`
+
+The parent reached 8,000/8,000 line pointer, raw kind with exactly one raw STOP,
+amount, and late query on this deterministic training holdout. Every inherited
+parameter is loaded from that exact checkpoint and frozen. A fail-fast prefit
+gate requires the inherited line/kind/amount/query cells to remain exact before
+optimization begins.
+
+## Hierarchical binding mechanism
+
+For each semantic event slot, the frozen parent line pointer chooses one source
+byte. The architecture expands that model-owned address to its containing
+newline-delimited source line using only public byte syntax. A trainable event-
+name pointer is masked to that selected line. It then selects the entity span
+and compares its shared byte-bigram fingerprint with the three model-selected
+declaration fingerprints.
+
+The line is not supplied by the row, compiler target, storage order, entity
+role, executor, state, or answer. A wrong model line address produces the wrong
+mask and cannot be repaired. The source encoder, semantic line pointers,
+slot-mixing layers, kind/amount/query heads, and their projections remain
+frozen. Trainable parameters are only:
+
+- three declaration queries;
+- three initial-occurrence queries;
+- eight event-occurrence queries;
+- the shared 65,537-by-96 bigram embedding;
+- the shared 96-by-96 projection; and
+- one similarity scale.
+
+Exactly 6,306,145 parameters are trainable.
+
+Complete system size remains 145,614,843 parameters. Global authority is below
+200M, but this matched pilot retains the stricter 150M gate.
+
+## Frozen data and optimization
+
+- consumed v1.1 `train.jsonl` only, receipt/train hashes verified;
+- deterministic `sha256(row_id)` 40,000/8,000 fit/held-out partition;
+- exact parent checkpoint hash verified before load;
+- four epochs, batch 64, AdamW lr `3e-4`, betas `(0.9, 0.95)`, weight decay
+  `0.01`, 100-update warmup, cosine decay, gradient clip `1.0`;
+- losses only for initial state, active event identity, declaration span,
+  initial-occurrence span, and active event-occurrence span; and
+- a fresh seed drawn only after exact source commit and push.
+
+No kind, amount, query, line-pointer, state-transition, answer, trajectory,
+reward, repair, development, or confirmation loss is applied. This isolates the
+new binding parameters from the frozen solved extractor.
+
+## Immutable gates
+
+All held-out gates must pass:
+
+1. prefit inherited line/kind/amount/query are each exactly 8,000/8,000;
+2. declaration pointers at least 90%;
+3. initial-occurrence pointers at least 90%;
+4. active event-occurrence pointers at least 90%;
+5. initial state at least 80%;
+6. raw kind at least 90%;
+7. active identity at least 80%;
+8. amount at least 90%;
+9. query at least 98%;
+10. raw whole tape at least 60%;
+11. exactly one raw STOP on every row;
+12. all inherited parent parameters remain byte-identical to their loaded
+    tensors after training;
+13. complete system below 150M; and
+14. development/confirmation access `0/0`.
+
+A pass advances only to causal controls and fresh-board integration. It is not
+a native-reasoning score. Failure rejects or revises hierarchical binding
+without opening a scored split.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 236: `R12_SD_CST_PHYSICAL_RECORD_BUS_PREREG.md`
+
+Original source path: `R12_SD_CST_PHYSICAL_RECORD_BUS_PREREG.md`
+Original source size: 9,149 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Physical-Record Write-Bus Preregistration
+
+**Status:** sole valid training-only run complete; physical-record baseline
+retained, one-to-one attribution rejected; no scored split was opened
+
+**Result:** exact source `5c9a2855a202692996e6e4100c927e9d8842bf48`,
+seed `8959672499628717158`, and job `694136` completed cleanly on H100 `evc37`.
+Both constrained and independent arms reach 48,000/48,000 fit and 8,000/8,000
+held-out exact packets with every field/pointer at 100%. All absolute gates pass;
+the three frozen +5pp attribution gates fail at a 100%/100% tie. See
+`R12_SD_CST_PHYSICAL_RECORD_BUS_RESULT.md`.
+
+**Source contract:** exact architecture, pilot, test, job, and preregistration
+commit `5c9a2855a202692996e6e4100c927e9d8842bf48`; the following documentation-only
+commits do not change the scientific contract. After source push, raw 64-bit
+beacon `18183044536483492966` was reduced modulo `2^63` to sole scientific seed
+`8959672499628717158`.
+
+**Parent:** rejected joint renderer-memory/native-decoder checkpoint SHA-256
+`4b842e4c2d0d608c32f0fd113b404866be7269676084cdac9b1a00d43cdd298d`
+
+**Claim class:** favorable conventional compiler-mechanics control; no native
+reasoning, primitive novelty, broad generalization, or Shohin promotion claim
+
+## 1. Fixed diagnosis
+
+The joint global-query compiler did learn, but its moderate local errors
+multiplied into zero complete packets. The exact post-hoc audit over all 48,000
+fit and 8,000 held-out consumed rows found the following held-out
+initialization-to-endpoint changes:
+
+| Local quantity | Initialization | Endpoint |
+|---|---:|---:|
+| physical source line, per slot | 10.896% | 42.029% |
+| event address, active slot | 6.555% | 25.466% |
+| event kind, per slot | 40.719% | 55.731% |
+| amount, active slot | 49.836% | 68.000% |
+| identity, active slot | 41.168% | 50.325% |
+
+Fit and held-out rates differ by at most 0.25 percentage points, ruling out a
+renderer-parity overfit diagnosis. Gold source-line pooling raises kind to
+73.641% but leaves amount at 68.134%. Gold event-span pooling raises identity
+to exactly 100% over all 56,000 active slots. Therefore:
+
+1. batching, gradients, and objectives are functioning;
+2. the frozen declaration fingerprint matcher is sufficient after correct
+   event localization;
+3. the dominant unresolved mechanism is physical record/address
+   factorization plus local field extraction; and
+4. widening, adding epochs, or adding layers to the failed global-query
+   contract is forbidden.
+
+## 2. Distinct falsifier
+
+The source has exactly nine newline-delimited physical records: one declaration
+record and eight event records. The falsifier applies the following fixed
+mechanism:
+
+1. segment records only at observed newline bytes;
+2. encode each record independently with shared relative positions and shared
+   weights;
+3. contextualize the resulting unordered nine-record set;
+4. emit model logits assigning physical records to the nine semantic slots;
+5. use local field motors to emit kind and amount from the assigned record;
+6. use a local entity pointer inside each physical record, then reuse the
+   frozen exact declaration fingerprint matcher; and
+7. leave the already-successful declaration binding, initial-state transport,
+   late query, categorical tape, executor, motor, reader, and Shohin trunk
+   frozen.
+
+The treatment normalizes assignment logits with 8 Sinkhorn row/column passes
+during training and uses one deterministic greedy one-to-one assignment during
+evaluation. The optimizer cannot inspect labels, target spans, tape validity,
+executor state, answers, or retry feedback when choosing that assignment.
+Greedy assignment is not represented as Hungarian or globally optimal MAP.
+
+The delimiter and fixed record cardinality are explicit finite-grammar priors.
+This is a conventional structured parser control, not a proposed reasoning
+primitive.
+
+## 3. Matched control
+
+The sole run trains two arms serially:
+
+| Arm | Assignment |
+|---|---|
+| `constrained` | Sinkhorn soft assignment in training; greedy one-to-one at evaluation |
+| `independent` | independent physical-record softmax per semantic slot in training; independent argmax at evaluation |
+
+Both arms:
+
+- reconstruct the same exact parent checkpoint;
+- receive byte-identical initial values for every new parameter;
+- have identical parameter names, count, optimizer, data order, epochs,
+  updates, losses, and random seed;
+- differ only in assignment normalization and hard decoding; and
+- retain a byte digest over every excluded parent tensor.
+
+If the treatment reaches the absolute compiler gates but fails the frozen
+five-point differential gates, the physical-record architecture may be
+retained only as a conventional baseline and one-to-one attribution is
+rejected.
+
+## 4. Frozen architecture and parameter certificate
+
+New trainable modules are exactly the 88 names beginning `record_`:
+
+- byte and relative-position embeddings at width 384;
+- four shared local-record Transformer layers, six heads, FFN 1,536;
+- two record-set Transformer layers, six heads, FFN 1,536;
+- record/set normalizations, a nine-role head and role embeddings;
+- three-way kind and two-way amount motors; and
+- local entity query/key projections.
+
+Maximum local record width is 144 bytes. The audit over fit and held-out
+renderer orbits covers all 56,000 rendered rows and observed zero cardinality
+violations, a maximum 132-byte payload, and a maximum 133-byte compiler record
+after retaining the newline delimiter. Overlength, empty, or non-nine-record
+inputs fail closed.
+
+| Quantity | Exact count |
+|---|---:|
+| immutable Shohin trunk | 125,081,664 |
+| complete compiler, including frozen parent | 65,831,689 |
+| new trainable parameters | 11,106,830 |
+| categorical motor | 19,206 |
+| categorical reader | 835 |
+| **complete deployed system** | **190,933,394** |
+| **strict-200M headroom** | **9,066,606** |
+
+The complete deployed system must remain strictly below 200,000,000. No
+parameter is added after this freeze. Historical sub-150M contracts remain
+unchanged; this is a new user-authorized sub-200M experiment.
+
+## 5. Data and optimization
+
+The experiment reuses only the already-consumed projected-v2 training JSONL,
+SHA-256
+`b7756dbf8d4401dbc5fb897dee53f68758e27200b1ce0d2387631f2f0205ec25`.
+It partitions 12,000 latent programs for fit and 2,000 disjoint latent programs
+for held-out renderer-orbit mechanics using the existing deterministic ID hash.
+Fit uses the even-parity renderer orbit; heldout uses the odd-parity renderer
+orbit. This is adaptive training-only development, not fresh generalization.
+
+Each arm uses exactly:
+
+- two epochs / 3,000 optimizer updates;
+- family batch size 8 and evaluation family batch size 16;
+- AdamW, lr `2e-4`, betas `(0.9, 0.95)`, weight decay `0.01`;
+- 100-update warmup and cosine decay;
+- gradient clipping at `1.0`; and
+- renderer consistency weight `1.0`.
+
+No development, confirmation, answer, state, trajectory, or executor output is
+reachable. The sole output directory must not preexist. No failed arm may be
+restarted, extended, widened, or rescored under this contract.
+
+## 6. Frozen absolute gates
+
+For every held-out renderer, the constrained arm must reach:
+
+1. initial state at least 95%;
+2. query and query pointer at least 99%;
+3. declaration and initial-occurrence pointers at least 99%;
+4. all-nine physical-line pointers at least 95%;
+5. active event-occurrence pointers at least 90%;
+6. complete event kind at least 95%;
+7. complete active identity at least 90%;
+8. complete active amount at least 95%; and
+9. complete packet at least 80%.
+
+Every fit renderer must also reach line pointer at least 99%, event pointer at
+least 99%, and complete packet at least 95%. Both excluded-parent digests must
+remain byte-identical, arm parameter certificates must match, complete system
+size must remain strictly below 200M, and scored access must be `0/0`.
+
+## 7. Frozen attribution gates and decisions
+
+On the minimum held-out-renderer rate, constrained must beat independent by at
+least five percentage points independently for:
+
+1. complete packets;
+2. all-nine physical-line pointers; and
+3. active event-occurrence pointers.
+
+The decision is fixed:
+
+- all absolute and attribution gates pass:
+  `retain_physical_record_bus_and_one_to_one_assignment`;
+- all absolute gates pass but any attribution gate fails:
+  `retain_physical_record_bus_reject_one_to_one_attribution`;
+- any absolute, preservation, parameter, or access gate fails:
+  `reject_or_revise_physical_record_bus`.
+
+No threshold may change after the seed or output exists.
+
+## 8. Honest boundary
+
+A pass establishes only that explicit delimiter-bounded physical
+factorization, local extraction, and model-owned record assignment can compile
+this finite renderer orbit under the sub-200M cap. It does not establish source
+deletion by itself, general language parsing, self-selected programs, learned
+halting, new algorithms, native reasoning, or state reuse. Advancement to a
+fresh scored board would require a separate post-commit preregistration and new
+data; current development and sealed confirmation remain unopened.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 237: `R12_SD_CST_PHYSICAL_RECORD_BUS_RESULT.md`
+
+Original source path: `R12_SD_CST_PHYSICAL_RECORD_BUS_RESULT.md`
+Original source size: 6,895 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Physical-Record Write-Bus Result
+
+**Decision:** `retain_physical_record_bus_reject_one_to_one_attribution`
+
+**Claim boundary:** consumed-training compiler mechanics only. This is a
+conventional structured parser baseline, not native reasoning, a novelty claim,
+or evidence from development/confirmation.
+
+## 1. Immutable contract
+
+- scientific source commit:
+  `5c9a2855a202692996e6e4100c927e9d8842bf48`;
+- execution source commit:
+  `4eeb86f4c4d37e84af78f88d175a2ce7955f3a5c` (documentation-only receipts
+  after the scientific freeze);
+- raw seed beacon: `18183044536483492966`;
+- signed-safe seed: `8959672499628717158`;
+- consumed train SHA-256:
+  `b7756dbf8d4401dbc5fb897dee53f68758e27200b1ce0d2387631f2f0205ec25`;
+- parent checkpoint SHA-256:
+  `4b842e4c2d0d608c32f0fd113b404866be7269676084cdac9b1a00d43cdd298d`;
+- fit-source SHA-256:
+  `d53e4e805037e56183971bcbd835ce836006c7cd1a5c174e63f2fae877ee4610`;
+- heldout-source SHA-256:
+  `0efd0993f4ec3d832e8b1d8b5daa053b966af65ece5cededa1211157c1f18719`;
+- shared new-parameter initialization SHA-256:
+  `c6b6086a57ef52c238756f3aa6b30979732c40d8f10e3786491e855428d5d50e`;
+- sole Slurm job: `694136`, H100 `evc37`, completed cleanly in 14m18s;
+- scored accesses: development `0`, confirmation `0`.
+
+Slurm test-only admitted the job on `evc37`. Runtime preflight verified the
+clean committed source, input hashes, bf16 H100 allocation, and exact parameter
+certificate before constructing the optimizer or output.
+
+## 2. Exact system
+
+| Quantity | Count |
+|---|---:|
+| immutable Shohin trunk | 125,081,664 |
+| complete compiler, including frozen parent | 65,831,689 |
+| new trainable record-bus parameters | 11,106,830 |
+| categorical motor | 19,206 |
+| categorical reader | 835 |
+| **complete deployed system** | **190,933,394** |
+| **strict-200M headroom** | **9,066,606** |
+
+The complete 56,000-view pre-run renderer scan found exactly nine physical
+records in every source. Maximum payload length was 132 bytes and maximum
+compiler record length, retaining newline, was 133 bytes under the frozen
+144-byte window.
+
+Both arms reconstructed the same frozen parent and shared byte-identical values
+for every one of the 88 `record_*` parameter names. Parent state SHA-256 remained
+`9b3b34bd13df31b477d66bba4dfc489cb3cdf717e3fe0d8f76e140e22bacf150`
+before and after both arms.
+
+## 3. Matched result
+
+Each arm trained for two epochs / 3,000 updates on 48,000 rendered fit rows and
+was evaluated on 8,000 rendered held-out rows. The four fit renderers and four
+held-out renderers are disjoint parity combinations over 12,000 and 2,000
+disjoint latent programs.
+
+| Arm | Fit exact packets | Heldout exact packets | Minimum heldout line pointer | Minimum heldout event pointer |
+|---|---:|---:|---:|---:|
+| constrained Sinkhorn/greedy one-to-one | 48,000/48,000 | 8,000/8,000 | 100% | 100% |
+| independent assignment | 48,000/48,000 | 8,000/8,000 | 100% | 100% |
+
+For both arms, minimum held-out-renderer initial, query, declaration pointer,
+initial-occurrence pointer, all-nine line pointer, active event pointer, kind,
+identity, amount, whole tape, and complete packet are all exactly **100%**.
+Both arms already reached every listed metric at 100% after epoch one.
+
+The constrained arm used 384.335 seconds; the independent arm used 361.111
+seconds. Its endpoint losses are also effectively identical. Therefore no speed,
+quality, or sample-efficiency advantage is attributable to Sinkhorn or greedy
+one-to-one assignment under this board.
+
+## 4. Gate accounting
+
+Seventeen of twenty frozen gates pass. Every absolute compilation,
+preservation, parameter, matched-count, and access gate passes. Exactly the
+three frozen differential gates fail:
+
+1. constrained packet does not beat independent by five points: 100% vs 100%;
+2. constrained line pointer does not beat independent by five points: 100% vs
+   100%; and
+3. constrained event pointer does not beat independent by five points: 100% vs
+   100%.
+
+The preregistered decision is therefore
+`retain_physical_record_bus_reject_one_to_one_attribution`. It is not permissible
+to report all gates as passed or to attribute the result to doubly stochastic
+assignment.
+
+## 5. What changed scientifically
+
+The failed joint global-query parent ended with held-out per-slot line/event-
+address/kind/amount/identity of only
+42.029%/25.466%/55.731%/68.000%/50.325% and zero complete packets. Without
+changing the parent, executor, data volume, or optimization schedule, explicit
+delimiter-bounded record encoding plus local field extraction reaches 100%
+complete packets on fit and held-out renderer combinations.
+
+This establishes a strong conventional mechanism result:
+
+- the old failure was not lack of parameter capacity or dead optimization;
+- physical locality removes the multiplicative global-address bottleneck;
+- a shared local entity motor plus the frozen matcher is sufficient;
+- unseen parity combinations of the finite renderer factors transfer exactly;
+  and
+- semantic-slot exclusivity emerges without an explicit one-to-one constraint.
+
+The causal credit belongs to the **physical-record/local-field factorization as
+a package**, not to one-to-one assignment. A stricter component attribution
+would require a separate matched no-locality architecture and is not necessary
+before fresh-board qualification because both current arms are conventional
+baselines.
+
+## 6. What remains unproved
+
+The pilot reuses already-consumed training rows and an explicit finite grammar:
+newline delimiters, exactly nine records, eight event slots, categorical field
+heads, and a frozen known executor. It does not establish:
+
+- transfer to fresh names, renderer families, or source distributions;
+- language parsing without record delimiters/cardinality;
+- self-selected operations, schedules, or programs;
+- learned halt beyond the existing fixed categorical tape;
+- source-deleted recurrent state transport on a fresh board;
+- broad natural-language reasoning; or
+- benchmark improvement in the 125M language model.
+
+No existing development or sealed confirmation may be opened. The retained
+record bus is eligible only for a separately committed fresh-board
+qualification with new source bytes, controls, thresholds, and access ledger.
+
+## 7. Preserved artifacts
+
+- local checkpoint:
+  `train/sd_cst_physical_record_bus_pilot_8959672499628717158/compiler.pt`;
+- local report:
+  `train/sd_cst_physical_record_bus_pilot_8959672499628717158/report.json`;
+- committed report copy:
+  `artifacts/r12/sd_cst_physical_record_bus_pilot_8959672499628717158.report.json`;
+- Newton output:
+  `/lustre/fs1/home/sa305415/shohin_sd_cst_physical_record_bus_pilot_8959672499628717158/`;
+- checkpoint SHA-256:
+  `89ab7d7417918e72da60028e6d5936908a3ee29c0981f5fdac9dc385c3099419`;
+- report SHA-256:
+  `9c768fa8b9fd00ba259d36dcf3cf13a39ff6b455d6f59e8f9ee8d6c59ebcf2a4`.
+
+Local and Newton hashes match exactly.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 238: `R12_SD_CST_PREREG.md`
+
+Original source path: `R12_SD_CST_PREREG.md`
+Original source size: 12,467 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Source-Deleted Categorical State Transport Preregistration
+
+**Status:** mechanics admitted; neural source, fresh board, and development score not yet frozen
+
+**Track:** SD-CST, the first integration test after S9.2 parser-only anchor closure was rejected
+
+## Question and honest boundary
+
+SD-CST asks whether Shohin can compile a linguistic program into a minimal hard
+state machine, delete the source, execute a tied learned update repeatedly, and
+answer a query disclosed only after the program packet is committed. It tests a
+bounded form of autonomous compositional state transport. It does not by itself
+establish open-domain, mathematical, linguistic, or general reasoning.
+
+The test integrates capabilities that were previously established only in
+isolation: source-deleted recurrence, language-to-tape compilation, learned
+transition semantics, explicit halting, and late state readout. A positive result
+must therefore be autonomous and causal. Teacher-forced digit, field, motor, or
+reader accuracy alone is not a reasoning claim.
+
+## Frozen task
+
+Each example contains three opaque entity names, an explicit instance-local
+alpha/beta/gamma binding declaration, an independently arbitrary initial order,
+seven valid state-changing operations, one explicit STOP, and a late query for
+the entity at one of three positions. The seven operations and STOP form an
+eight-slot semantic tape. STOP occurs after active depth one through six, so at
+least one valid operation remains after STOP. All source texts have one roster
+line and eight event lines. The eight event clauses are stored in an independently
+chosen textual order and carry explicit semantic ordinals. STOP is one of those
+randomized clauses, not a privileged final sentence.
+
+An operation moves one bound entity left or right by one or two positions in a
+three-entity permutation. The six possible permutations are the complete state
+space. Every generated operation changes state even if it is after STOP. The
+late query is a separate one-line source and is withheld until after program
+compilation and deletion.
+
+Training rows contain only compiler targets:
+
+- one six-way initial-state category;
+- eight three-way event-kind categories (`LEFT`, `RIGHT`, `STOP`);
+- identity and amount categories for the seven non-STOP slots; and
+- one separately compiled three-way late-query category.
+
+Training rows contain no final state, answer, trajectory, episode reward, graph
+validity, executor result, or retry feedback. Motor supervision is the complete
+finite one-step table, independent of source rows. Reader supervision is the
+complete finite state-query table.
+
+## Score-bearing information boundary
+
+Program text is processed once. The only retained payload is:
+
+```text
+initial_state: uint8[batch]        # 6 categories
+event_kind: uint8[batch, 8]       # 3 categories
+event_identity: uint8[batch, 8]   # 3 categories; ignored at STOP
+amount: uint8[batch, 8]           # 2 categories; ignored at STOP
+```
+
+Exactly one event kind must be STOP in every scored row. Program IDs, masks,
+token residuals, attention maps, logits, probabilities, margins, confidence,
+pointers, and source text are destroyed before execution. The late query is then
+compiled in a separate invocation into one `uint8` category without access to
+program text, the committed packet, or recurrent state.
+
+At score time the motor receives only one-hot views of the current integer state
+and current integer event categories. Its argmax is converted back to an integer
+before the next call. No motor logits or hidden activations cross a step. One tied
+motor is called at every one of the eight public slots; there is no timestep
+embedding, host operation table, variable Python loop, semantic branch, retry,
+beam, repair, or external schedule. STOP closes an `alive` gate; all later slots
+are still presented to the same motor but cannot update state. The reader sees
+only the final integer state and separately committed integer query.
+
+Soft categorical tensors and straight-through gradients may be used in training.
+Only `HardProgramTape`, `HardLateQuery`, and `rollout_hard` may produce a reported
+development or confirmation score.
+
+## Finite integration theorem
+
+Let `C` emit the exact initial state and exact eight-slot tape, `M` implement all
+72 non-STOP state/action cells, the STOP gate preserve all six states, and `R`
+implement all 18 state/query cells. Then hard SD-CST rollout returns the exact
+halted state and answer for every board row.
+
+Proof is induction over the fixed eight slots. The base state is exact by `C`.
+For a live non-STOP slot, exactness is preserved by the corresponding `M` cell.
+At STOP the state is unchanged and `alive` becomes false. Every later proposal is
+masked, so the halted state is invariant to the suffix. `R` then maps the exact
+state and late query to the exact entity. This is a finite composition theorem,
+not evidence that natural-language compilation is exact; that is the empirical
+bottleneck under test.
+
+## Architecture and parameter cap
+
+The base is the frozen 300,000-step Shohin checkpoint:
+
+- 125,081,664 parameters;
+- 30 layers, width 576, FF width 1,536;
+- 9 attention heads, 3 KV heads;
+- vocabulary 32,768, context 2,048, one transformer pass;
+- checkpoint SHA-256 `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`;
+- tokenizer SHA-256 `87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4`.
+
+The compiler reads frozen layer-19 residuals, projects them to width 384, uses
+five trainable transformer-encoder layers with 8 heads and FF width 1,408, and
+cross-attends one initial-state query plus eight event queries. A separate query
+slot processes the late query. The compiler adds 9,205,009 parameters. The tied
+motor has 19,206 parameters and the reader 835. Total added/trainable parameters
+are 9,225,050; the complete system is exactly **134,306,714**, leaving 15,693,286
+parameters below the strict 150,000,000 cap. The base remains frozen and in eval
+mode throughout.
+
+## Board and causal families
+
+After all source, tests, assessor, launcher, and this preregistration are committed,
+one independent board seed and one independent training seed will be drawn. The
+fresh board contains:
+
+- 48,000 compiler-only training rows;
+- 288 development families, eight rows each, for 2,304 rows;
+- 288 sealed-confirmation families, eight rows each, for 2,304 rows.
+
+Each evaluation family contains canonical, query-swap, paraphrase,
+binding-recode, order-counterfactual, STOP-shift, storage-order-shuffle, and
+post-STOP-suffix variants. Query twins have byte-identical program text. The
+generator and independent adjacent-swap auditor must agree. Exact prompts,
+13-grams, names, templates, and operation sequences may not cross splits.
+Query and answer roles are balanced per variant. Program/query length may not
+predict active depth. Confirmation is mode `0600` and remains unopened unless
+every development gate passes.
+
+## Frozen optimization budget
+
+The compiler receives four deterministic passes over the 48,000 unique training
+rows: batch 64, exactly 3,000 updates, AdamW, peak learning rate `1e-3`, weight
+decay `0.01`, 100 linear-warmup updates, cosine decay to zero, and gradient clip
+1.0. The per-row loss is the unweighted sum of initial-state CE, event-kind CE,
+non-STOP identity CE, non-STOP amount CE, and separately invoked late-query CE.
+No outcome loss is permitted.
+
+The motor receives the complete 72-cell non-STOP table and all six STOP states
+for 2,000 full-table AdamW updates at learning rate `0.025`, zero weight decay.
+The reader receives the complete 18-cell state-query table for 1,200 full-table
+AdamW updates at learning rate `0.04`, zero weight decay. These fixed budgets are
+charged even if exact fit occurs early. All seeds, update counts, optimizer state,
+architecture values, source hashes, board hashes, base hash, tokenizer hash, and
+parameter counts must be embedded in the checkpoint and evaluation output.
+
+## Pre-board mechanics decision
+
+The CPU-only falsifier uses only the standard library for generation and audit.
+All registered mechanics gates pass:
+
+- independent simulators agree on 72/72 atomic state/action cells;
+- execute-through-STOP, textual-storage order, unordered event bag, STOP-blind,
+  query-blind, and post-STOP-overrun controls each score 0%;
+- length-only halt prediction is exactly chance at 1/6;
+- resetting state every step reaches only 63.889%;
+- all query leaks, training-answer leaks, nonidentical query twins, and cross-split
+  sequence reuse mutations are rejected; and
+- confirmation access is zero.
+
+This admits only board mechanics. It is not a neural result.
+
+## Sole fresh-development gates
+
+One immutable development read is allowed. The unchanged run must satisfy every
+gate below before confirmation can be opened:
+
+1. Complete-system parameters are exactly 134,306,714 and below 150M; base,
+   tokenizer, board, runtime, checkpoint, and access-ledger hashes all match.
+2. Motor certificates are 72/72 non-STOP transitions, 6/6 STOP preservation,
+   and 78/78 dead-state invariance. Reader certificates are 18/18.
+3. Compiler exact tape is at least 95% overall and at least 90% for every causal
+   variant and active depth. Initial state, event kind, non-STOP identity, amount,
+   and late query are each at least 98% exact.
+4. Autonomous exact final state and answer are each at least 90% overall and at
+   least 85% at depth six.
+5. Conditional on an exact compiled tape and query, execution state and answer
+   are 100% exact. Any failure rejects the motor/reader integration theorem.
+6. Query swaps preserve final state on 100% of pairs and the answer follows the
+   swapped query on 100% of exact-tape eligible pairs, with at least 85% of
+   families eligible.
+7. Separating state swaps follow the swapped-state oracle on 100% of exact-packet
+   eligible rows, with at least 85% of families eligible; freeze and reset
+   controls are reported and must not equal the treatment trajectory on
+   separating rows.
+8. Post-STOP suffix variants preserve state and answer on 100% of exact-packet
+   eligible pairs, with at least 85% of families eligible. With the gate forcibly
+   held alive, 100% follow the full-suffix oracle instead, proving that the suffix
+   is real and the learned halt matters.
+9. Binding recodes and paraphrases preserve canonical abstract state/answer on at
+   least 95% of mutually exact-packet pairs. Semantic order counterfactuals and
+   STOP shifts follow their changed oracle on at least 90% overall.
+10. Program-source poisoning after hard commitment, storage reindexing of event
+    clauses, and discarded-logit poisoning are bit-identical on 100% of rows.
+11. Uniform, source-free, and shuffled hard packets are each at most 25% exact
+    state and at most 45% exact answer. Reset and freeze controls are each at
+    most 75% exact state and at most 75% exact answer. Every control covers all
+    2,304 development rows; the exact ten control names and thresholds are
+    hash-bound in the gate configuration before development bytes are opened.
+12. Development/confirmation access is exactly `1/0`; the exclusive development
+    access ledger matches its preregistered byte hash; and every required row,
+    certificate, control, intervention, budget, and hash record is present.
+
+The assessor fails closed on missing evidence, duplicate IDs, nonfinite values,
+changed config, or an unregistered score path. Failure closes this board without
+rescore or confirmation access. Passing permits one separately frozen confirmation
+read with identical bytes, checkpoint, evaluator, thresholds, and assessor.
+
+## What a pass would and would not mean
+
+A pass would establish that a 134.3M-parameter system can autonomously compile
+held-out language into a source-deleted discrete program, execute a tied learned
+transition across multiple steps, halt on a model-predicted event, and answer a
+later query under strong causal interventions. It would be a real bounded native
+reasoning result because the host supplies neither the schedule nor the arithmetic
+transition.
+
+It would remain a finite three-entity permutation algebra with a closed action
+set. It would not establish transfer to unseen operators, larger state spaces,
+variable tape lengths, free-form decomposition, or open-domain reasoning. Those
+require fresh cardinality/action transfer boards after this integration gate,
+not weakened claims on the present board.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 239: `R12_SD_CST_PROJECTED_BINDING_PILOT_PREREG.md`
+
+Original source path: `R12_SD_CST_PROJECTED_BINDING_PILOT_PREREG.md`
+Original source size: 3,996 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Dedicated-Projection Binding Pilot
+
+**Status:** training-only pass; source-deletion mechanics gate preregistered; no scored access
+
+## Parent results and diagnosis
+
+The content fingerprint itself is viable: joint pilot `693974` reaches 100% on
+declaration pointers, initial-occurrence pointers, and arbitrary initial state.
+The exact frozen byte parent is also viable: hierarchical pilot `693977` keeps
+line/kind/amount/query and one raw STOP at 100%, with every frozen parameter
+byte-identical. Its model-line mask lifts event-occurrence span exactness from
+0% to 32.625%.
+
+`693977` is nevertheless rejected. With only new query vectors through the
+parent's frozen key/query projections, declaration and initial-occurrence
+all-slot exactness stay zero, event identity is 4.1625%, initial state 17.725%,
+and whole tape 0.8125%. Report SHA-256 is
+`2b27cd79ac35cb418c9b4f8f73db7378c9d3f4c0e70785291702d9383213d46a`.
+
+The narrow hypothesis is that the frozen parent residual contains the needed
+bytes/context but its line-task key projection is not a sufficient interface
+for name-span binding. The next pilot changes that interface only.
+
+## Frozen mechanism
+
+The exact parent checkpoint and all inherited parameters remain frozen under the
+same SHA and byte-digest gates as `693977`. The model-selected semantic line plus
+newline mask is unchanged. The binding path adds:
+
+- one independent bias-free 384-by-384 query projection; and
+- one binding-only key adapter: `Linear(384,384) -> GELU -> Linear(384,384)`.
+
+These layers read frozen source memory and are used only by declaration,
+initial-occurrence, and event-occurrence pointers. They cannot change line
+addresses, event kind, amount, query, the source encoder, or slot mixer. The
+shared position-free byte-bigram fingerprint and permutation scorer are
+unchanged.
+
+The compiler has 20,955,890 parameters; 6,748,897 are trainable. Complete Shohin
+is 146,057,595 parameters.
+
+Training, parent hash, consumed 40k/8k partition, four epochs, optimizer, losses,
+raw metrics, zero-access rule, and every gate are identical to the frozen-parent
+hierarchical preregistration. Only the declared binding projection and its
+parameters differ. Runtime accounting must reproduce the counts above and
+remain below the stricter 150M pilot cap, despite global sub-200M authority.
+
+## Decision
+
+All 14 inherited hierarchical gates remain immutable, including 100% prefit
+parent fields, frozen-parent byte identity, at least 90% event/name pointers,
+at least 80% identity/initial, at least 60% raw whole tape, exactly one raw STOP,
+and access `0/0`.
+
+A pass advances only to shuffled/swap/no-address/hard-negative causal controls
+and fresh-board end-to-end source deletion. It is not a reasoning score. A
+failure closes this projected interface before any scored split.
+
+## Result
+
+Source commit `9bd2e04ea93406eb50a6fd112cd844892b72a7c4` preceded
+seed `6715972906370623241`. Job `693979` completed on H100 `evc22` in
+4m04s. Epoch one already reached 7,979/8,000 exact whole tapes; epochs two
+through four reached 8,000/8,000. The final held-out consumed-training result is:
+
+- 8,000/8,000 initial state, kind, identity, amount, query, and whole tape;
+- 8,000/8,000 initial-occurrence pointers;
+- 7,999/8,000 declaration pointers;
+- 7,998/8,000 event-occurrence pointers;
+- exactly one raw STOP on all 8,000 rows; and
+- frozen-parent digest unchanged.
+
+All 14 frozen gates pass. The untrained projected prefit has only 1/8,000 whole
+tapes, so the result is not inherited from the frozen parent. Checkpoint and
+report SHA-256 values are
+`f347d1aea90dd3c60f7500167c7c22884451b365880259698306c6fce8ab10f3`
+and `5d6be14798af3a75781898c6405e956fe9eb040e861ee63e669e7b87e7fa6f32`.
+Development and confirmation access remain `0/0`.
+
+This passes compiler mechanics only. The next authorized experiment is
+`R12_SD_CST_PROJECTED_MECHANICS_PREREG.md`; no fresh scored board is authorized
+until its separate-process source-deletion and causal controls pass.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 240: `R12_SD_CST_PROJECTED_FRESH_BOARD_PREREG.md`
+
+Original source path: `R12_SD_CST_PROJECTED_FRESH_BOARD_PREREG.md`
+Original source size: 11,066 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Projected SD-CST Fresh-Board Preregistration
+
+**Status:** first board closed before training or scored access; one narrow
+derived-buffer contract repair is frozen below before a new source commit and
+fresh board
+
+## Pre-score infrastructure amendment
+
+Source `76a183df6eb0a47c0b06a5db9ba4079e6399f4b6`, board seed
+`3099288459709017829`, training seed `235733286388889829`, and job `693998`
+failed inside `initialize_model` before either arm trained, before a checkpoint
+or gate configuration existed, and before development or confirmation access.
+Both access counts remained zero. The exact byte parent lacks ten newly learned
+projected parameters and one deterministic non-trainable `permutations` lookup
+buffer. The initializer incorrectly required all missing state-dict keys to be
+trainable parameters.
+
+The sole permitted repair separates these categories: the missing-key set must
+equal `PROJECTED_TRAINABLE_NAMES` union exactly
+`PARENT_DERIVED_BUFFER_NAMES = {"permutations"}`; the derived buffer is fixed by
+the architecture, receives no gradients, and remains covered by full-state and
+frozen-state digests. Any additional or absent key fails. No architecture,
+parameter count, optimizer, data schema, evaluator, threshold, control, or
+custody rule changes. The first board is closed and cannot be scored under the
+new source. A new clean source commit must precede fresh independent board and
+training seeds.
+
+## Question
+
+Can a newly initialized projected binding path, trained only on compiler fields,
+compile unseen programs and a separately disclosed late query into a categorical
+packet that an unchanged source-blind recurrent core executes exactly?
+
+The prior projected compiler and job `693986` establish mechanics only on a
+consumed training board. Their fitted projected weights are diagnostic controls
+and are forbidden from the primary treatment.
+
+## Fixed claim boundary
+
+A pass establishes fresh-distribution source-deleted execution for this bounded
+three-entity state-transport language. It does not establish broad natural-
+language reasoning. The 125,081,664-parameter Shohin trunk is included in the
+nominal system count but is inactive in the projected compiler forward path.
+Both nominal and active parameter counts must be reported.
+
+## Primary system
+
+- Load the exact byte-addressed parent checkpoint with SHA-256
+  `e5f87a1d5b22d24250a6aac6fb7c70b4a77dbdf01bd5f5c509020a3584dfa6f9`.
+- Freeze every parent tensor.
+- Freshly initialize only `PROJECTED_TRAINABLE_NAMES` after the source commit.
+- Train exactly 6,748,897 projected binding parameters.
+- Use the exact mechanics execution core with SHA-256
+  `166ca6f81dd962b06a94f7a3661921a410760090ed1b750d78ec1b0f610113f1`.
+- Do not refit the motor or reader from episode data.
+- Nominal complete-system size is 146,057,595, below both the frozen 150M
+  comparison cap and the global strict-below-200M cap.
+
+The consumed projected checkpoint with SHA-256
+`f347d1aea90dd3c60f7500167c7c22884451b365880259698306c6fce8ab10f3`
+is a zero-shot diagnostic only. It cannot become the treatment or select a
+checkpoint, threshold, renderer, or seed.
+
+## Fresh board
+
+After a clean source commit, draw one board seed. Build:
+
+- 48,000 training rows with compiler/query targets only;
+- 288 development families times eight paired variants = 2,304 rows; and
+- 288 sealed-confirmation families times eight paired variants = 2,304 rows.
+
+Every evaluation split has 48 families at each active depth one through six.
+The eight variants are canonical, query swap, paraphrase, binding recode, order
+counterfactual, stop shift, storage-order shuffle, and post-halt suffix.
+Operation sequences, opaque names, exact normalized prompts, and 13-grams are
+disjoint across splits. Opaque names retain the existing fixed-width contract;
+name-length OOD is not introduced in this experiment. The independent audit
+must additionally bind normalized renderer grammar and lexical inventories,
+rather than trusting template identifiers alone.
+
+The new board must also reserve all 48,000 operation sequences from the exact
+training board that produced the frozen byte-addressed parent. Across that
+inherited train split, every new split must have zero sequence, opaque-name, and
+exact-prompt overlap, and both scored splits must have zero 13-gram overlap.
+The new training split intentionally retains the inherited renderer grammar, so
+its inherited grammar-level 13-gram overlap is measured and hash-bound rather
+than falsely claimed to be zero.
+
+Training rows contain no final state, answer, trajectory, execution trace,
+paired-family outcome, or evaluator result.
+
+## Learned arms
+
+Both learned arms use fresh initialization, the same parent, architecture,
+minibatch order, update budget, and optimizer settings.
+
+1. `treatment`: true binding roles.
+2. `row_shuffled_labels`: one deterministic post-commit role permutation is
+   selected independently for every training row from all six permutations.
+   Binding pointer slots, initial-state categories, and event identities are
+   permuted consistently within that row; program bytes are unchanged. The
+   aggregate row-to-permutation digest is frozen. Unlike a single global
+   relabeling, this destroys the cross-row role function and is corrupted
+   supervision rather than an equivalent coordinate system.
+
+The shared-key predecessor and consumed projected checkpoint are diagnostic
+only and need not receive equal training compute. The binding-source-free
+compiler preserves the frozen parent's real line/kind/amount/query path while
+replacing projected binding pointers and fingerprints with uniform evidence.
+Uniform, source-free-packet, shuffled, reset, freeze, state/query/suffix,
+post-STOP, and force-alive controls act on sealed packets or compiler inputs and
+do not receive outcome labels.
+
+## Training contract
+
+For each learned arm:
+
+| Field | Frozen value |
+|---|---:|
+| train rows | 48,000 |
+| epochs | 4 |
+| batch size | 64 |
+| updates | 3,000 |
+| learning rate | 0.0003 |
+| warmup | 100 |
+| schedule | cosine to zero |
+| AdamW betas | 0.9, 0.95 |
+| weight decay | 0.01 |
+| gradient clipping | 1.0 |
+
+Losses are initial state, active-event identity, declaration pointer,
+initial-occurrence pointer, and event-occurrence pointer. The frozen parent
+supplies line, kind, amount, and query fields. No final state, answer, executor,
+variant, depth, or confirmation information is available to optimization.
+
+The parent digest, frozen-tensor digest, trainable names/count, initialization
+seed, minibatch-order digest, and final full-state digest are recorded. No
+checkpoint selection is allowed: epoch four is the sole score-bearing state.
+
+## Source-deleted score path
+
+For each evaluation batch:
+
+1. compile the program;
+2. argmax and seal exactly 25 CPU `uint8` program categories;
+3. poison and destroy every GPU-side program tensor and compiler output;
+4. disclose and compile the late query;
+5. seal one CPU `uint8` query category and destroy query tensors;
+6. serialize only typed packet tensors plus the certified motor/reader tensors;
+7. run a separate source-blind process; and
+8. let the independent assessor compare predictions with the oracle.
+
+The host evaluator retains hash-bound row evidence and the oracle so that it can
+score the sealed result; this is not claimed to be physically erased. The
+separate executor receives no source bytes, name, row/family ID, target, oracle,
+variant, depth, split metadata, or projected compiler. Serialization rejects
+unexpected keys, objects, dtypes, ranks, and shapes.
+
+## Frozen development gates
+
+All gates below are conjunctions. `exact_packet` means exact initial, kind,
+active identity, active amount, and late query.
+
+### Treatment accuracy
+
+- exact packet overall at least 95%;
+- exact packet at least 90% in every variant and every depth;
+- initial, kind, identity, amount, and query at least 98% each overall;
+- declaration, initial-occurrence, and event-occurrence pointer localization at
+  least 90% overall and 80% in every variant;
+- autonomous final state, answer, and joint result at least 90% overall;
+- state, answer, and joint result at least 90% in every variant;
+- state, answer, and joint result at least 85% at every depth;
+- execution conditional on an exact packet exactly 100%; and
+- every observed STOP-position bucket exact conditional on an exact packet.
+
+### Matched attribution
+
+- treatment exceeds row-shuffled-label exact packet by at least 50 percentage
+  points; and
+- treatment exceeds row-shuffled-label autonomous joint result by at least 50
+  percentage points.
+
+### Paired consistency and interventions
+
+- at least 85% of required paired families are eligible;
+- binding-recode and paraphrase state/answer consistency is 100% when both
+  packets are exact;
+- query swap preserves state and follows the changed query on 100% of eligible
+  pairs;
+- storage-order shuffle preserves state/answer on 100% of eligible pairs;
+- post-halt suffix preserves normal state/answer on 100% of eligible pairs;
+- force-alive, state swap, reset, freeze, and suffix-operand interventions match
+  their independently simulated changed oracle on 100% of eligible cases; and
+- each causal intervention has at least 15% separating opportunities, except
+  query swap, which must separate at least 85%.
+
+### Negative controls and custody
+
+- uniform/binding-source-free/source-free-packet/shuffled state at most 35% and
+  answer at most 45%;
+  the higher state ceiling is frozen because the board balances answers exactly
+  but its six terminal-state classes are intentionally not uniform;
+- reset/freeze state and answer at most 75% against the canonical oracle;
+- source poisoning and deletion preserve sealed packets bit-for-bit on 100%;
+- motor certificate 78/78 and reader certificate 18/18;
+- exact frozen parent/core/source/board/checkpoint/evaluator/assessor hashes;
+- nominal complete system strictly below 150M and global system strictly below
+  200M; and
+- development/confirmation access exactly `1/0`.
+
+Confirmation uses the exact same treatment checkpoint, executor, evaluator,
+assessor, thresholds, and absolute gates. It is opened once only if every
+development gate passes. No rescore, alternate decode, threshold change,
+checkpoint choice, renderer edit, or source repair is allowed after a scored
+split is opened.
+
+## Custody order
+
+1. Commit all scientific source, tests, renderer inventories, schemas, and this
+   preregistration from a clean tracked worktree.
+2. Draw board, treatment initialization, label permutation, and training seeds.
+3. Build all splits once; chmod confirmation `0600`.
+4. Run independent board and compiler-target audits before GPU access.
+5. Train all learned arms without reading development.
+6. Freeze a hash-bound gate configuration.
+7. Atomically consume the development ledger with `O_EXCL` before opening its
+   bytes and evaluate all arms in one job.
+8. If development bytes are opened and any infrastructure or scientific gate
+   fails, close the board without retry.
+9. Open confirmation only on assessor authorization.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 241: `R12_SD_CST_PROJECTED_FRESH_V2_PREREG.md`
+
+Original source path: `R12_SD_CST_PROJECTED_FRESH_V2_PREREG.md`
+Original source size: 7,922 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Projected SD-CST Fresh v2 Preregistration
+
+**Status:** closed and rejected after the sole fresh development read; sealed
+confirmation remains unopened and is not authorized
+
+## Parent result and exact failure
+
+Fresh v1 source `4a7fb4880c919735ae35bf1f33f4c7245a8bff73`, board seed
+`3040523197183361035`, training seed `8787815392344128274`, and H100 job
+`694008` produced a valid fixed epoch-four checkpoint. Treatment was exact on
+48,000/48,000 training tapes. The equal-update row-shuffled-label arm was exact
+on 870/48,000 tapes, 1,298/48,000 identities, and 185/48,000 binding pointers.
+The checkpoint and gate configuration SHA-256 values are `91d4860b...` and
+`a725fabe...`.
+
+The sole development read then failed before an evaluation artifact existed:
+independent per-slot kind argmax produced at least one row with other than
+exactly one STOP, and `HardProgramTape` correctly rejected the malformed tape.
+Development/confirmation access is `1/0`; that board is closed. No v1
+development accuracy is claimed and no same-board diagnostic, rescore, or
+alternate decode is permitted.
+
+## v2 hypothesis
+
+Event slots have a disclosed global grammar: exactly one of eight slots is
+STOP. Independent categorical argmax ignores this dependency. v2 replaces only
+kind discretization with the exact maximum-a-posteriori assignment under that
+public grammar:
+
+1. for every slot, choose the higher-logit non-STOP kind and record its score;
+2. compute each slot's STOP gain: STOP logit minus best non-STOP score;
+3. choose the first maximum-gain slot as STOP; and
+4. retain the best non-STOP kind in every other slot.
+
+This is the exact maximizer over all `8 * 2^7` legal kind tapes, not beam search,
+retry, evaluator repair, or an oracle-selected STOP. It consumes only the
+model's raw eight-by-three kind logits and public grammar. It adds zero learned
+parameters and is applied identically to treatment, row-shuffled-label,
+consumed-parent, and binding-source-free compiler arms.
+
+## Cross-generation exclusion amendment
+
+Structured-decoder source `03c10d2dba5ce09a939c0e58617f73492a7df162`
+was frozen before board/training seeds `3069712212437980146` /
+`1406604500382831061`. The built board passed its inherited-parent and internal
+audits and was never synced, submitted, trained, or opened. A new pre-launch
+audit against the already consumed v1 development split found 13 abstract
+operation-sequence overlaps in v2 train and one in v2 development. Exact prompts
+and names were zero; v2 confirmation had zero sequence and 13-gram overlap.
+Because train exposure to a consumed development sequence is avoidable, this
+unlaunched board is rejected.
+
+The successor builder must require the exact consumed v1 development file with
+SHA-256 `b85ea65ed310554192d421c909c6519e4738b01a80647abe7f4ffd1b70079c4e`.
+It reserves every operation sequence in that file in addition to all inherited
+parent-training sequences. Its report binds the consumed hash and measures
+prompt, name, sequence, and 13-gram overlap against every new split. Exact
+prompt/name/sequence overlap must be zero everywhere; 13-gram overlap must be
+zero for successor train and sealed confirmation. Development grammar-level
+13-gram overlap is reported but may be nonzero because development is the
+explicitly iterative split and uses the same task grammar. Old confirmation is
+never opened. This amendment changes no model, decoder, threshold, optimizer,
+parameter, or scored-access contract. Freeze new source and draw entirely new
+seeds after the added tests pass.
+
+## Frozen audit evidence
+
+Every compiled arm must export its full raw float32 kind logits to the scorer.
+The independent assessor must:
+
+- reject non-finite values, numeric type coercion, wrong ranks/shapes, wrong
+  decoder identity, or extra decoder-evidence keys;
+- recompute raw per-slot argmax, raw exactly-one-STOP status, non-STOP choices,
+  STOP gains, selected STOP, and the complete structured kind tape;
+- reject any packet that differs from the recomputed exact MAP; and
+- report raw one-STOP and raw exact-kind rates overall and treatment raw
+  one-STOP rates by variant.
+
+Only the 25+1 categorical packet reaches the separate recurrent executor. Raw
+logits remain scorer evidence and are not executor input. Program tensors are
+still poisoned and destroyed before late-query compilation. The structured
+decoder cannot inspect row IDs, variants, depth, oracle fields, final state,
+answer, trajectory, evaluator output, or confirmation authorization.
+
+## Unchanged contracts
+
+All fresh v1 contracts remain unchanged unless this document says otherwise:
+
+- exact byte parent, execution core, and consumed diagnostic hashes;
+- 48,000 train rows, 2,304 development rows, and 2,304 sealed confirmation rows;
+- inherited-parent overlap audit and split-disjoint names, prompts, sequences,
+  and scored 13-grams;
+- hash-bound exclusion of every sequence from the consumed v1 development set;
+- 6,748,897 trainable parameters, 20,955,890 compiler parameters, and
+  146,057,595 nominal complete-system parameters;
+- strict sub-150M comparison and strict sub-200M global gates;
+- treatment and independent per-row shuffled-label arm with shared
+  initialization, minibatch order, optimizer, and exactly 3,000 updates;
+- epoch four as the sole checkpoint;
+- every packet, pointer, execution, variant, depth, attribution, paired,
+  intervention, negative-control, source-deletion, and custody threshold; and
+- one development read followed by one confirmation read only if every frozen
+  development gate passes.
+
+Schemas and protocol IDs advance from v1 to v2 so no v1 board, checkpoint,
+configuration, evaluation, or assessment can be mixed into v2.
+
+## Required pre-seed tests
+
+Before source freeze and any seed:
+
+1. compare the decoder against exhaustive enumeration of all legal assignments;
+2. prove that it preserves independent argmax whenever independent argmax is
+   already legal;
+3. prove exactly one STOP for arbitrary finite logits and deterministic tie
+   behavior;
+4. make the assessor reject a packet/logit mismatch and malformed float evidence;
+5. pass the synthetic 2,304-row perfect-system evaluator/assessor contract;
+6. pass all prior projected mechanics, board, source-deletion, artifact-binding,
+   and parent-reconstruction tests; and
+7. pass static, format, shell, and source-manifest checks.
+
+## Claim boundary
+
+A v2 pass would establish fresh-distribution source-deleted execution in this
+bounded three-entity transport language with a disclosed structured kind
+decoder. It would not establish unconstrained natural-language reasoning, a
+learned halting grammar, self-generated plans, or active use of Shohin's nominal
+125.08M trunk. Raw versus structured kind rates must be disclosed so the
+decoder's contribution remains visible.
+
+## Frozen result
+
+Successor source `6ca8933c2cfcc2d972733774b26ced9a9b75caef` preceded board/training
+seeds `126281723562431289` / `2943136710636342416`. The final board passes the
+cross-generation exclusion contract and sole job `694028` completes cleanly on
+`evc27`. Treatment fits all 48,000 training tapes; row-shuffled supervision fits
+only 934. On the sole development read, treatment reaches 672/2,304 = 29.167%
+exact packets, 2,055/2,304 = 89.193% exact state, 763/2,304 = 33.116% answers,
+and 684/2,304 = 29.688% joint. All 672 exact packets execute exactly.
+
+The exact-MAP decoder is valid but not causal to the main failure: raw kind
+argmax is already one-STOP on 95.747% and exact on 87.500%, while structured
+kind is 87.543%. The frozen late query is exactly 768/2,304 = 33.333%, and the
+held-out paraphrase variant is 0/288 exact packets and 39/288 exact states.
+The assessor therefore records `reject_projected_fresh_board`; access is `1/0`
+and confirmation remains sealed. Full custody, metrics, hashes, and diagnosis
+are frozen in `R12_SD_CST_PROJECTED_FRESH_V2_RESULT.md`. Never rescore or repair
+this board.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 242: `R12_SD_CST_PROJECTED_FRESH_V2_RESULT.md`
+
+Original source path: `R12_SD_CST_PROJECTED_FRESH_V2_RESULT.md`
+Original source size: 6,843 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Projected SD-CST Fresh v2 Result
+
+**Decision:** rejected on the sole fresh development read; confirmation remains
+sealed and must not be opened
+
+**Scientific source:** `6ca8933c2cfcc2d972733774b26ced9a9b75caef`
+
+**Board/training seeds:** `126281723562431289` / `2943136710636342416`
+
+**Sole score-bearing job:** Slurm `694028` on `evc27`, completed cleanly in
+8m18s
+
+## Contract and custody
+
+V2 preserves the 146,057,595-parameter v1 system and changes only the
+model-logit discretization of the eight event-kind slots. It computes exact
+maximum a posteriori assignment under the public exactly-one-STOP grammar,
+exports the raw float32 `8 x 3` logits, and lets the independent assessor
+recompute and verify the complete assignment. Only the resulting 25+1
+categorical bytes reach the separate source-deleted executor.
+
+The final board was generated only after source commit and after excluding all
+operation sequences from both inherited parent training and the consumed v1
+development split. It contains 48,000 training, 2,304 development, and 2,304
+sealed-confirmation rows. The sealed confirmation file remains mode `0600` and
+unopened. Board hashes are:
+
+| Artifact | SHA-256 |
+|---|---|
+| board report | `050794b34afa949f2d2b2942ef3c0717ac418320a1b2becca7c31ca437d745bb` |
+| training | `b7756dbf8d4401dbc5fb897dee53f68758e27200b1ce0d2387631f2f0205ec25` |
+| development | `0e0720030f4b5739b7de7320fb45f5817e1e8fadb3f7f12e62b98e2f41593191` |
+| sealed confirmation | `c477718c91b22abcfd9dec41f1bb3876294ebc36bfe4c5538a4175ad64d69a07` |
+
+The cross-generation audit finds zero prior consumed-development prompt, name,
+or operation-sequence overlap in every new split; zero prior 13-gram overlap in
+new training and sealed confirmation; and 34 disclosed renderer-grammar
+13-grams in new development. Confirmation access remains zero.
+
+## Training result
+
+The treatment learns the complete consumed training interface:
+
+- exact whole tape, initial state, kind, identity, amount, and query:
+  48,000/48,000;
+- event pointer: 47,985/48,000; and
+- exact STOP grammar on every treatment training row.
+
+The equal-update independently row-shuffled-label arm remains near chance:
+934/48,000 exact whole tapes, 1,361/48,000 identities, and 100/48,000 binding
+pointers. This is strong evidence that the projected treatment learned the
+fresh training binding function rather than inheriting or merely relabeling it.
+
+## Development result
+
+| Metric | Treatment | Row-shuffled labels | Consumed projected |
+|---|---:|---:|---:|
+| Exact structured packet | 672/2,304 = **29.167%** | 13/2,304 = 0.564% | 672/2,304 = 29.167% |
+| Exact recurrent state | 2,055/2,304 = **89.193%** | 416/2,304 = 18.056% | 2,061/2,304 = 89.453% |
+| Exact answer | 763/2,304 = **33.116%** | 744/2,304 = 32.292% | 783/2,304 = 33.984% |
+| Exact joint | 684/2,304 = **29.688%** | 134/2,304 = 5.816% | 689/2,304 = 29.905% |
+
+All 672 exact treatment packets execute to the exact final state and answer:
+**100% conditional execution**. Every frozen packet intervention matches its
+independently changed oracle, every observed STOP bucket is exact, source
+deletion passes, and negative controls remain below their ceilings. The
+recurrent motor, reader, state trajectory, halt semantics, and source-deletion
+boundary are therefore not the observed bottleneck.
+
+Treatment compiler fields localize the failure:
+
+| Field | Exact |
+|---|---:|
+| Initial state | 2,176/2,304 = 94.444% |
+| Event kind after structured decode | 2,017/2,304 = 87.543% |
+| Entity identity | 2,015/2,304 = 87.457% |
+| Amount | 2,020/2,304 = 87.674% |
+| **Late query** | **768/2,304 = 33.333%** |
+
+Raw independent kind argmax already has exactly one STOP on 2,206/2,304 =
+95.747% and exact complete kinds on 2,016/2,304 = 87.500%. Exact MAP adds one
+exact-kind row and guarantees legal construction, but it does not repair
+grounding.
+
+## Renderer and depth decomposition
+
+Seven non-paraphrase variants each reach 288/288 exact recurrent state, while
+the held-out paraphrase renderer reaches only 39/288 = **13.542%** state and
+0/288 exact packets. All non-paraphrase variants are nevertheless stuck at
+96/288 = 33.333% packets and answers because the late query is at chance.
+
+State remains between 88.281% and 90.365% at every depth one through six. Packet
+accuracy instead follows the query-position alias: depths one/four are 62.5%,
+depths three/six are 25%, and depths two/five are 0%. This periodic structure,
+together with exact 33.333% query accuracy, is a direct label-position shortcut,
+not an execution-depth failure.
+
+Pointers confirm the renderer failure. Source-line localization is 100% on all
+seven non-paraphrase variants and 0% on paraphrase; initial-entity localization
+is 100% on those variants and 14.236% on paraphrase; event-entity localization
+is 0% on paraphrase. The treatment's binding path is causally useful relative
+to shuffled supervision, but the common frozen source/query front end caps both
+treatment and consumed-projected arms.
+
+## Decision and next hypothesis
+
+The frozen assessor records `reject_projected_fresh_board`; confirmation is not
+authorized. V2 establishes a bounded causal decomposition:
+
+1. the model can learn the projected exact-surface binding function on fresh
+   training rows;
+2. a correct private categorical packet is sufficient and is consumed exactly;
+3. renderer-invariant source grounding does not transfer to the held-out
+   paraphrase family; and
+4. the frozen late-query compiler is exactly at three-way chance.
+
+Do not add executor width, epochs, a different STOP decoder, or a same-board
+rescore. The admissible successor is a fresh-board trainable source/query front
+end with renderer-orbit supervision and a content-addressed query-to-entity
+binding interface. The existing projected executor remains fixed. User
+authority permits the complete deployed system to grow only while remaining
+strictly below 200,000,000 parameters; parameter increases must be charged to
+this isolated front-end hypothesis and matched by equal-budget controls.
+
+## Preserved artifacts
+
+| Artifact | SHA-256 |
+|---|---|
+| checkpoint | `1d338651e381c6bd36982adca0e0edf36147c54c101ebc63e37ffea431a645fd` |
+| gate configuration | `3bac8380892a2c352234a0144f5247376bfe2ff88c395ba111cbb31695617cb2` |
+| development evaluation | `9bc40bf93591c02decc41bfe4ce5feeb00a4cfd2d94eaf9373407fa1be8b8d92` |
+| packet tensor | `531aab65b101397dab5240a3409eb95afa7c38059a21558d49aa971c259c7e30` |
+| executor tensor | `0a823e462d05b2c51422fcda3680d646fe6ccc7a5f00b16ada6e801be37f58bb` |
+| assessment | `4c45970899ca65a78e833d48a4c8220231117560b8ae6443a0c139174f74ea4e` |
+| development access ledger | `3e0b328b3699edb56b67b628e3d38cc3d6c47d2fa76a576310a654585e719e7a` |
+
+Local mirrors preserve all seven files with these exact hashes. Development and
+confirmation custody is `1/0`.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 243: `R12_SD_CST_PROJECTED_MECHANICS_PREREG.md`
+
+Original source path: `R12_SD_CST_PROJECTED_MECHANICS_PREREG.md`
+Original source size: 6,899 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Projected Source-Deletion Mechanics Gate
+
+**Status:** training-only causal pass; fresh-board integration authorized
+
+## Fixed input
+
+The dedicated projected binding pilot is a training-only pass:
+
+- source commit `9bd2e04ea93406eb50a6fd112cd844892b72a7c4`;
+- pilot seed `6715972906370623241`;
+- compiler checkpoint SHA-256
+  `f347d1aea90dd3c60f7500167c7c22884451b365880259698306c6fce8ab10f3`;
+- report SHA-256
+  `5d6be14798af3a75781898c6405e956fe9eb040e861ee63e669e7b87e7fa6f32`;
+- 8,000/8,000 held-out consumed-training whole tapes, initial states,
+  identities, kinds, amounts, and queries;
+- declaration, initial-occurrence, and event-occurrence all-slot pointers at
+  7,999/8,000, 8,000/8,000, and 7,998/8,000; and
+- all 14 frozen pilot gates passed.
+
+The complete system is 146,057,595 parameters. This mechanics gate preserves
+the pilot's stricter sub-150M comparison contract even though future systems now
+have a hard global ceiling strictly below 200M.
+
+The 8,000 rows come from the already consumed training split and were observed
+during the pilot. They are mechanics data, not an independent score.
+
+## Source-deletion contract
+
+For each batch, the compiler process must:
+
+1. compile the program alone;
+2. convert its output immediately to a CPU `uint8` `HardProgramTape` containing
+   exactly 25 categorical elements per row;
+3. poison and destroy program IDs, masks, logits, pointers, memory, and the full
+   compiler output;
+4. only then disclose and compile the separate late query to one CPU `uint8`;
+5. poison and destroy query IDs, masks, memory, logits, and output; and
+6. serialize only the 26 categorical bytes.
+
+A separate process imports no projected compiler, board, parser, row-ID,
+target, or source module. It may read only the 26-byte packet bundle and the
+independently fitted motor/reader weights. It executes the same production
+`rollout_hard_categorical` function used by `SDCSTSystem.rollout_hard`.
+
+The motor receives only the complete 72 non-STOP state/action cells plus six
+STOP cells and must fit 78/78 at lr `0.003` in at most 1,000 updates. The reader
+receives only the 18 state/query cells and must fit 18/18 at lr `0.005` in at
+most 500 updates. Neither receives an episode, trajectory, final state, or
+answer from the 8,000 programs.
+
+## Compiler controls
+
+The frozen compiler is run without further training on:
+
+- canonical rows;
+- deterministic equal-width global alpha renaming;
+- one valid pre-STOP event-name counterfactual per row;
+- a declaration-role swap with the corresponding abstract-role oracle; and
+- semantics-preserving reversal of all eight physically stored event lines.
+
+Canonical whole tape and every late-query byte must be 100%. Alpha rename and
+line relocation must preserve at least 99% whole tapes. Event-name and
+declaration-role counterfactuals must reach at least 95% of their changed whole
+tapes. The projected pilot's untrained prefit whole-tape rate must remain at
+most 1%, preventing a capacity-only interpretation.
+
+## Source-blind execution controls
+
+Every arm below must match an independently implemented categorical oracle on
+final state, answer, their joint result, all eight intermediate states, and all
+eight alive bits for every row:
+
+- canonical packet;
+- all five compiler controls;
+- initial-state rotation;
+- first-active event-kind flip;
+- first-active identity rotation;
+- first-active amount flip;
+- late-query rotation;
+- categorical state swap after step zero;
+- reset-to-initial before every active transition;
+- frozen state;
+- post-STOP operand perturbation;
+- forced-alive execution of that post-STOP suffix;
+- operand suffix swap from slot four; and
+- whole-program packet shuffle while keeping recipient queries.
+
+The motor must be called exactly eight times. Every observed STOP-position
+bucket must be 100% exact. Normal and post-STOP-perturbation arms must halt;
+post-STOP perturbation must be exactly invariant. Query rotation must change
+every answer while preserving state.
+
+To reject vacuous controls, each initial/kind/identity/amount intervention must
+create at least 1,024 changed state-or-answer oracles, the state swap at least
+512 changed states, reset/freeze/force-alive at least 20% changed states, and
+suffix swap at least 10%. The shuffled packet may retain at most 25% original
+states and 45% original answers.
+
+## Parameter and custody gates
+
+- Exact input hashes above and strict checkpoint loading are mandatory.
+- Complete parameters must remain below both 150M for this comparison and the
+  global 200M ceiling.
+- Development and confirmation access remain `0/0`.
+- The packet and executor-output hashes are recorded.
+- Any failure closes or revises mechanics before a fresh board.
+
+## Claim boundary
+
+A pass establishes a hard, source-deleted, causally intervenable finite-state
+execution path driven by a learned compiler on consumed training mechanics. It
+does not establish fresh-distribution generalization, natural-language breadth,
+or broad native reasoning. Only a new post-commit board with matched controls
+can make the next claim.
+
+## Result
+
+Two scoreless infrastructure attempts are closed without metrics: `693982`
+failed on scalar state-digest serialization, and `693984` failed while
+constructing the event-line relocation for production text without a trailing
+LF. Both exited before a report and their seeds are retired.
+
+Exact repair source `18610acefd40cb33067caba648160981ab041161` preceded
+fresh seed `2391953347805476054`. Job `693986` completed on H100 `evc22` in
+53 seconds. All 29 gates pass:
+
+- canonical program/query packet: 8,000/8,000 exact;
+- motor certificate: 78/78; reader certificate: 18/18;
+- final state, answer, joint result, every intermediate state, and every alive
+  bit: 8,000/8,000 on all 17 canonical/control arms;
+- all six observed STOP-position buckets: 100%;
+- alpha rename: 7,995/8,000 whole tapes;
+- declaration-role swap, event-name counterfactual, and event-line relocation:
+  8,000/8,000 changed/invariant whole tapes as applicable;
+- program source destroyed before late query compilation;
+- separate source-blind executor packet/output hashes recorded;
+- full compiler state dictionary byte-identical before/after; and
+- development/confirmation access `0/0`.
+
+The control opportunities are substantial: initial/kind/identity/amount changes
+alter 2,260/3,712/3,664/1,448 final states; state swap alters 2,997; freeze
+6,722; reset 4,010; forced post-STOP execution 5,887; suffix swap 2,126; and
+query rotation changes all 8,000 answers. Shuffled packets retain only 1,312
+states and 2,669 answers. Post-STOP perturbation is exactly invariant.
+
+Report, execution-core, packet, and executor-output SHA-256 values are
+`e7353f50...`, `166ca6f8...`, `eae55555...`, and `cd43c10c...`.
+
+Decision: `admit_fresh_board_integration`. This remains a consumed-training
+mechanics result and makes no broad reasoning claim.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 244: `R12_SD_CST_RENDERER_NATIVE_JOINT_AUDIT.md`
+
+Original source path: `R12_SD_CST_RENDERER_NATIVE_JOINT_AUDIT.md`
+Original source size: 3,246 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Joint Renderer Compiler Post-Hoc Audit
+
+**Status:** completed; exact report preserved
+
+**Job / node / elapsed:** `694110` / H100 `evc27` / 10m44s
+
+**Report SHA-256:**
+`318b64584b3c1852a9e16025755b0595c0e78dc853411e466218540cd4f66b68`
+
+**Purpose:** distinguish dead optimization from cascading record-address errors
+after the preregistered joint control failed complete-record gates
+
+This is an explicitly post-hoc diagnostic over the already-consumed renderer
+orbit. It is not a score, a model-selection gate, or a reasoning claim. It may
+read only the consumed training rows, exact rejected orbit checkpoint, and exact
+rejected joint checkpoint. Development and confirmation are unreachable.
+
+The audit reports per-slot rather than all-slots-at-once exactness for line
+address, event address, kind, amount, and identity at exact initialization and
+the rejected endpoint. Two model-state interventions are diagnostic only:
+
+1. uniform pooling over the gold source-line span before the unchanged native
+   slot decoder, measuring kind and amount; and
+2. uniform pooling over the gold event-name span before the unchanged frozen
+   fingerprint matcher, measuring identity.
+
+These interventions cannot establish capability. They localize whether errors
+come from line addressing, event addressing, or downstream field readout. The
+complete deployed system remains 179,826,564 parameters, strictly below 200M.
+No training, rescore, threshold, development read, or confirmation read is
+authorized by this audit.
+
+## Exact Result
+
+Aggregate rates across all four held-out renderer combinations are:
+
+| Field | Exact initialization | Rejected endpoint | Delta |
+|---|---:|---:|---:|
+| Physical source-line address per slot | 10.896% | 42.029% | +31.133 pp |
+| Event-name address per active slot | 6.555% | 25.466% | +18.911 pp |
+| Event kind per slot | 40.719% | 55.731% | +15.013 pp |
+| Amount per active slot | 49.836% | 68.000% | +18.164 pp |
+| Identity per active slot | 41.168% | 50.325% | +9.157 pp |
+
+The endpoint's fit rates are 42.030%/25.468%/55.796%/68.242%/50.135% in
+the same order. Fit and held-out behavior are therefore nearly identical; the
+failure is not orbit-combination overfitting.
+
+At the endpoint, uniform pooling over the gold source line raises held-out kind
+from 55.731% to 73.641%, but changes amount only from 68.000% to 68.134%.
+Uniform pooling over the gold event-name span raises identity from 50.325% to
+exactly 100% over all 56,000 held-out active slots. Thus the frozen fingerprint
+matcher and declaration binding are sufficient once the event address is
+correct. Line localization explains part, but not all, of kind error; amount
+requires better local field extraction rather than only a better line pointer.
+
+## Decision
+
+The audit closes dead-gradient and renderer-overfit explanations. It supports a
+distinct factorization: independently encode delimiter-bounded physical
+records, predict their local fields, then perform model-logit-only one-to-one
+record assignment into the categorical tape. Merely widening, deepening, or
+extending the failed independent global-query path remains forbidden.
+
+Exact evidence is committed at
+`artifacts/r12/sd_cst_renderer_native_joint_audit_219fd41/report.json`.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 245: `R12_SD_CST_RENDERER_NATIVE_JOINT_PREREG.md`
+
+Original source path: `R12_SD_CST_RENDERER_NATIVE_JOINT_PREREG.md`
+Original source size: 4,002 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Joint Renderer-Memory Program Decoder Preregistration
+
+**Status:** closed and rejected by the sole valid training-only H100 run; no
+scored split was opened
+
+**Result:** exact source `102ab3f5172e9a6c86d1045d61c0e1ce66f159e2`,
+seed `6795424534800881443`, and job `694099` completed the frozen 3,000-update
+contract on H100 `evc36`. Fit and held-out line pointers, event pointers, tapes,
+and packets are all 0%. See `R12_SD_CST_RENDERER_NATIVE_JOINT_RESULT.md`.
+
+**Parent:** exact rejected Renderer-Orbit v1.2 checkpoint
+
+**Claim class:** favorable joint conventional compiler control on consumed
+training rows; no primitive novelty or reasoning claim
+
+## 1. Fixed diagnosis
+
+The head-only renderer-native decoder in job `694073` preserves v1.2 exactly
+but learns 0% fit line/event pointers and packets. Its line loss stays near
+uniform and kind loss stays near chance. This means the frozen orbit memory does
+not expose program structure in a form the new decoder can use. More decoder
+epochs are forbidden.
+
+The smallest next control co-adapts shared renderer memory and the decoder. It
+does not alter the categorical tape or executor and adds no parameters beyond
+the rejected head-only model.
+
+## 2. Trainability and resources
+
+Initialization is the exact v1.2 checkpoint SHA `2e019b81...`; native decoder
+parameters are freshly initialized under the post-commit seed. Trainable names
+are exactly:
+
+- all 35 `native_*` decoder parameters;
+- orbit byte and position embeddings;
+- all eight orbit encoder layers; and
+- orbit final normalization.
+
+The residual projection and scalar gate, ordinal query/pointer/value motors,
+all binding machinery, exact packet heads, categorical executor, motor, reader,
+and Shohin trunk remain frozen. Query, binding, initial, and packet losses still
+backpropagate through shared memory, providing preservation constraints.
+
+| Quantity | Count |
+|---|---:|
+| complete compiler | 54,724,859 |
+| trainable parameters | 32,782,853 |
+| trainable tensor names | 135 |
+| complete deployed system | 179,826,564 |
+| strict-200M headroom | 20,173,436 |
+
+An exact loaded-parent consumed-row backward pass has finite gradients in the
+shared encoder and native decoder, no gradient in the frozen ordinal motor, and
+a frozen-state digest over every excluded tensor.
+
+## 3. Data and optimization
+
+The pilot reuses the already-consumed 12,000-even / 2,000-odd renderer orbit.
+This is adaptive mechanism development, not a fresh generalization result. No
+development, confirmation, answer, state, or trajectory is reachable.
+
+Optimization remains two epochs / 3,000 updates, family batch eight, AdamW lr
+`2e-4`, betas `(0.9, 0.95)`, weight decay `0.01`, 100-step warmup, cosine decay,
+clip `1.0`, and renderer consistency weight `1.0`. Event address/identity loss
+uses the already-frozen support-safe curriculum; final fit event pointers must
+reach 99%.
+
+## 4. Gates
+
+Every held-out renderer must reach:
+
+1. initial state at least 95%;
+2. complete kind at least 95%;
+3. complete active identity at least 90%;
+4. complete active amount at least 95%;
+5. query and query pointer each at least 99%;
+6. declaration and initial-occurrence pointers each at least 99%;
+7. source-line pointers at least 95%;
+8. event-occurrence pointers at least 90%;
+9. complete packet at least 80%; and
+10. every fit renderer event pointer at least 99%.
+
+The frozen excluded-state digest must match, complete parameters must remain
+strictly below 200M, and scored access must be `0/0`. No threshold or epoch may
+change after output.
+
+## 5. Honest boundary
+
+Joint encoder/decoder training is ordinary representation learning. It is a
+favorable conventional parser control under the R12 invention charter, not a
+new reasoning primitive. A pass only establishes that the finite renderer
+orbit is learnable under the parameter cap and permits this exact architecture
+as a baseline in a separately committed fresh-board experiment. A failure
+closes joint co-adaptation without a larger/longer retry.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 246: `R12_SD_CST_RENDERER_NATIVE_JOINT_RESULT.md`
+
+Original source path: `R12_SD_CST_RENDERER_NATIVE_JOINT_RESULT.md`
+Original source size: 4,353 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Joint Renderer-Memory Program Decoder Result
+
+**Decision:** `reject_or_revise_renderer_native_joint_control`
+
+**Claim boundary:** consumed training rows only; favorable conventional compiler
+control, not a fresh generalization, novelty, or reasoning result
+
+## Frozen Run
+
+| Item | Value |
+|---|---|
+| Source commit | `102ab3f5172e9a6c86d1045d61c0e1ce66f159e2` |
+| Seed | `6795424534800881443` |
+| Newton job / node | `694099` / `evc36` H100 |
+| Updates / elapsed | 3,000 / 358.651 seconds |
+| Complete / trainable parameters | 179,826,564 / 32,782,853 |
+| Strict-200M headroom | 20,173,436 |
+| Development / confirmation accesses | `0 / 0` |
+
+Exact input SHA-256 values:
+
+- consumed training rows: `b7756dbf8d4401dbc5fb897dee53f68758e27200b1ce0d2387631f2f0205ec25`;
+- parent Renderer-Orbit checkpoint: `2e019b81406bb90e539665271c9893a0e568e0177396243ac427f17d8ca51eca`.
+
+The run trained exactly the 35 native decoder tensors plus byte/position
+embeddings, all eight orbit encoder layers, and orbit normalization. Every
+query motor, binding module, packet head, executor, motor, reader, and Shohin
+trunk tensor remained frozen. The excluded-state digest remained identical.
+
+## Outcome
+
+Minimum exact rates across the four held-out renderer combinations are:
+
+| Field | Exact rate | Frozen gate |
+|---|---:|---:|
+| Initial state | 100.00% | 95% |
+| Declaration pointer | 100.00% | 99% |
+| Initial-occurrence pointer | 100.00% | 99% |
+| Query | 100.00% | 99% |
+| Query pointer | 100.00% | 99% |
+| Kind | 0.30% | 95% |
+| Active identity | 0.15% | 90% |
+| Amount | 1.45% | 95% |
+| Source-line pointer | 0.00% | 95% |
+| Event-occurrence pointer | 0.00% | 90% |
+| Complete packet | 0.00% | 80% |
+
+This is not merely renderer holdout failure. All four fit renderers also have
+0% complete-record source-line pointers, event pointers, tapes, and packets.
+Their complete-record kind, identity, and amount exact rates remain very low;
+these aggregate rates do not by themselves imply per-slot chance. Event-support rate rises from
+5.963% after epoch one to 20.819% after epoch two, while line loss remains
+5.304 and kind loss 0.946. The final total loss is 14.634, slightly worse than
+14.480 after epoch one. Seven of fifteen frozen gates fail.
+
+## Interpretation
+
+The experiment rejects the specific hypothesis that ordinary joint
+co-adaptation of a 32.8M-parameter byte transformer and structured program
+heads is sufficient to recover even the finite fit renderer orbit under this
+loss/interface contract. More layers, epochs, or a relaxed threshold are not
+authorized as a continuation of this run.
+
+The preserved 100% query, declaration binding, initial binding, and initial
+state paths remain useful evidence: dedicated content-addressed interfaces can
+survive renderer changes. The failure is concentrated in program segmentation,
+slot typing, and event binding. It does not implicate the exact categorical
+executor and does not establish an impossibility below 200M.
+
+Before proposing a new reasoning mechanism, the next step is an implementation
+audit that distinguishes a clean optimization/credit-assignment failure from a
+hidden gradient, batching, or objective defect. Any successor must be a new
+preregistered contract, not an extension or rescore of this pilot.
+
+That post-hoc audit is now complete. All trainable groups changed and every
+relevant loss has a finite gradient path. On all held-out renderer rows, final
+per-slot line/event-address/kind/amount/identity are 42.029%/25.466%/55.731%/
+68.000%/50.325%, nearly identical to fit. Gold line pooling raises kind to
+73.641% but does not improve amount; gold event-span pooling makes identity
+100%. See `R12_SD_CST_RENDERER_NATIVE_JOINT_AUDIT.md`. The successor must change
+record/address factorization, not add capacity or epochs to this contract.
+
+## Preserved Evidence
+
+- checkpoint SHA-256:
+  `4b842e4c2d0d608c32f0fd113b404866be7269676084cdac9b1a00d43cdd298d`;
+- report SHA-256:
+  `cefb33e81d42b69b8e088e0ea79926c4557ecca79db3731efa83b44241d6f7ff`;
+- local checkpoint/report:
+  `train/sd_cst_renderer_native_joint_pilot_6795424534800881443/`;
+- committed exact report:
+  `artifacts/r12/sd_cst_renderer_native_joint_pilot_6795424534800881443/report.json`;
+- Newton checkpoint/report:
+  `/lustre/fs1/home/sa305415/shohin_sd_cst_renderer_native_joint_pilot_6795424534800881443/`.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 247: `R12_SD_CST_RENDERER_NATIVE_PROGRAM_PREREG.md`
+
+Original source path: `R12_SD_CST_RENDERER_NATIVE_PROGRAM_PREREG.md`
+Original source size: 4,335 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Renderer-Native Program Decoder Preregistration
+
+**Status:** closed and rejected on the sole valid training-only run; see
+`R12_SD_CST_RENDERER_NATIVE_PROGRAM_RESULT.md`
+
+**Parent:** rejected Renderer-Orbit Query Bus v1.2 checkpoint; its successful
+query/declaration/initial interfaces are frozen
+
+**Claim class:** favorable conventional compiler control on consumed training
+rows; no primitive novelty or reasoning claim
+
+## 1. Fixed diagnosis
+
+Renderer-Orbit v1.2 reaches 99.85--100% on held-out declaration address,
+initial-occurrence address, initial state, query address, and query class, but
+0% packet on both fit and held-out renderers. The failed fields are exactly
+those routed through one generic residual into frozen exact-surface line, kind,
+amount, and hard line-conditioned event heads.
+
+The next control asks whether a renderer-native structured decoder can consume
+the already-trained orbit memory. It does not alter or widen the categorical
+tape executor. A pass would establish compiler capacity only; this is a known
+structured-attention parser and cannot be called a new reasoning primitive.
+
+## 2. Architecture and parameter contract
+
+`RendererNativeProgramCompiler` loads the exact v1.2 checkpoint SHA
+`2e019b81...`. Every inherited tensor is frozen and digest-bound. It adds:
+
+- nine trainable line/slot queries over frozen 512-wide orbit memory;
+- shared source keys and separate line/event query projections;
+- a two-layer, eight-head, 512-wide slot transformer with 2,048-wide MLP;
+- trainable kind and amount heads; and
+- eight event-name queries, hard-masked by the model-owned decoded line.
+
+Declaration and initial-occurrence pointers, initial-state matching, the raw-
+byte query bus, categorical tape, recurrent executor, motor, and reader remain
+frozen. Exact live construction gives:
+
+| Component | Parameters |
+|---|---:|
+| nominal Shohin base | 125,081,664 |
+| complete native-program compiler | 54,724,859 |
+| motor + reader | 20,041 |
+| **complete deployed system** | **179,826,564** |
+| trainable native program decoder | 7,103,493 |
+| strict-200M headroom | 20,173,436 |
+
+Only the exact 35 `native_*` parameters may receive gradients. The frozen
+parent state digest must be byte-identical before and after fitting.
+
+## 3. Data and training
+
+This training-only control deliberately reuses the already-consumed renderer
+orbit and therefore cannot make a fresh generalization claim. It uses the same
+SHA-ordered 12,000 fit semantics x four even-parity renderer views and 2,000
+disjoint held-out semantics x four odd-parity views. Development, confirmation,
+answers, final states, and trajectories are unreachable.
+
+The frozen contract is two epochs / 3,000 updates, family batch eight, AdamW lr
+`2e-4`, betas `(0.9, 0.95)`, weight decay `0.01`, 100-step warmup, cosine decay,
+and clip `1.0`. Losses and renderer consistency are unchanged from v1.2. Line,
+kind, and amount are always supervised; event address/identity activate only
+when the current model-selected line supports the true span. Final fit event
+pointers must reach 99%, preventing permanent avoidance.
+
+## 4. Gates
+
+All must pass:
+
+1. each held-out renderer initial state at least 95%;
+2. complete kind at least 95%;
+3. complete active identity at least 90%;
+4. complete active amount at least 95%;
+5. query and query pointer each at least 99%;
+6. complete packet at least 80%;
+7. every fit renderer event pointer at least 99%;
+8. frozen parent digest byte-identical;
+9. complete system strictly below 200M; and
+10. development/confirmation access exactly zero.
+
+No threshold is relaxed after output. A failure closes this control without
+more epochs. A pass retains it only as the favorable conventional compiler for
+a separately committed fresh-board comparison; it does not authorize a native
+reasoning claim or confirmation access.
+
+## 5. Prior-art and equivalence boundary
+
+The decoder is ordinary learned structured attention plus transformer slot
+composition. Its discrete line mask is inherited project machinery. It has no
+novel resource separation and is expected to collapse to a favorable parser
+control under the invention charter. Its purpose is to stop blaming the
+executor for a source-interface failure and to establish a strong compiler
+baseline that any future reasoning mechanism must preserve or beat.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 248: `R12_SD_CST_RENDERER_NATIVE_PROGRAM_RESULT.md`
+
+Original source path: `R12_SD_CST_RENDERER_NATIVE_PROGRAM_RESULT.md`
+Original source size: 2,999 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Renderer-Native Program Decoder Result
+
+**Decision:** reject the frozen-memory conventional decoder control
+
+**Claim boundary:** consumed training rows only; no fresh score, novelty, or
+reasoning claim
+
+## Frozen run
+
+- source: `dd25c388c381ca94141797ce27098aa388e80548`
+- raw post-commit beacon: `18113454053950047972`
+- signed-safe seed: `8890082017095272164`
+- sole job: `694073` on H100 `evc36`
+- elapsed: 4m46s; two epochs / 3,000 updates
+- complete/trainable parameters: 179,826,564 / 7,103,493
+- strict-200M headroom: 20,173,436
+- frozen-parent digest:
+  `2d7176300c1e00ed40d55d61b06b4a6774f8a687495c13784d06684489443748`
+- checkpoint SHA-256:
+  `fe95385d47dc5b737d1921db84e06a206ef4eb97802a6e1a79f258bb2432b518`
+- report SHA-256:
+  `6fffe15d551c66cca026bfbba3eda3576da983b0f393219eb97b7c4eb9305155`
+- development/confirmation access: `0/0`
+
+The exact report is preserved at
+`artifacts/r12/sd_cst_renderer_native_pilot_8890082017095272164/report.json`.
+
+## Result
+
+The decoder fails on its own fit renderers, not only on held-out renderer
+recombinations. Every fit renderer has 0% exact line pointers, event pointers,
+whole tapes, and packets. Minimum fit complete kind/identity/amount are
+0.167%/0.058%/1.467%. Minimum held-out values are:
+
+| Field | Minimum exact rate |
+|---|---:|
+| initial state | 100.000% |
+| complete kind tape | 0.050% |
+| complete active identities | 0.050% |
+| complete active amounts | 1.450% |
+| source-line pointers | 0.000% |
+| declaration binding pointers | 99.850% |
+| initial-occurrence pointers | 100.000% |
+| event-occurrence pointers | 0.000% |
+| late query / query pointer | 100.000% / 100.000% |
+| whole tape / packet | 0.000% / 0.000% |
+
+Six of eleven gates pass: parameter cap, frozen-parent preservation, initial,
+query, query pointer, and zero scored access. Kind, identity, amount, packet,
+and fit event-pointer gates fail. Average event support falls from 8.893% to
+5.660%; line loss remains near uniform at 5.691 -> 5.661 and kind loss remains
+near chance at 1.022 -> 1.004.
+
+## Interpretation
+
+Adding a renderer-native line/slot/event decoder is not sufficient when the
+v1.2 orbit memory is frozen. The retained successful interfaces are exactly
+preserved, which rules out destructive interference as the explanation. The
+new heads receive no readily decodable program structure from the frozen
+memory. This closes “add decoder heads” and localizes the next control to joint
+representation/decoder co-adaptation.
+
+The next admissible training-only control may unfreeze only the shared orbit
+byte/position embeddings, orbit encoder, orbit normalization, and the native
+program decoder. Query motors, residual projection/scale, declaration and
+initial-binding machinery, packet executor, motor, and reader remain frozen.
+All preservation losses and final gates remain active. The complete parameter
+count stays 179,826,564; only the trainable count changes. This remains a
+conventional compiler control, not a reasoning invention.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 249: `R12_SD_CST_RENDERER_ORBIT_QUERY_BUS_PREREG.md`
+
+Original source path: `R12_SD_CST_RENDERER_ORBIT_QUERY_BUS_PREREG.md`
+Original source size: 9,265 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Renderer-Orbit Query Bus Preregistration
+
+**Status:** closed and rejected on the sole valid training-only run; see
+`R12_SD_CST_RENDERER_ORBIT_QUERY_BUS_RESULT.md`
+
+**Parent:** rejected projected fresh v2; retained exact source-deleted executor
+and v2 treatment checkpoint
+
+**Claim class:** renderer/query identifiability on consumed training rows only;
+no reasoning score
+
+## 1. Evidence that fixes the target
+
+Projected fresh v2 is not execution-limited. Every one of its 672 exact fresh
+packets executes exactly. State is 89.193% overall and 100% on seven of eight
+variants, but exact packets are 29.167%, answers are 33.116%, and the late query
+is exactly 33.333%. The held-out paraphrase renderer has 0/288 exact packets and
+39/288 exact states.
+
+The board source exposes the identifiability error. All 48,000 training rows use
+one direct program renderer and one training-only query frame. The only program
+paraphrase appears in development, and development also changes the query marker
+and verb phrase wholesale. V2 trains only the projected exact-surface binding
+parameters; its parent source encoder, line/kind/amount heads, and direct
+three-class query compiler remain frozen. Additional executor capacity cannot
+repair these interfaces.
+
+## 2. Hypothesis
+
+Renderer transfer should be trained as a finite group-action problem rather
+than left to incidental OOD generalization. The treatment receives multiple
+surface views of the same latent program and is penalized when its categorical
+packet logits differ across views. Complete renderer combinations are held out,
+while every declaration, event, and query atom appears in both train and
+holdout. This makes the pilot a test of compositional renderer recombination,
+not unseen-word semantics.
+
+The query path receives a stricter intervention. Contextual memory may select
+the byte span expressing the requested ordinal, but the final three-class motor
+receives only a weighted sum of raw, position-free byte embeddings. It cannot
+read the query template, absolute position, split marker, or contextual memory
+after selection. Pointer and ordinal classification are separately supervised.
+
+## 3. Architecture and exact resource boundary
+
+`RendererOrbitGroundedCompiler` loads the exact 20,955,890-parameter projected
+parent and v2 treatment binding state. Every inherited parameter remains frozen.
+It adds:
+
+- a 257-entry, 512-wide byte embedding;
+- a 640-entry, 512-wide position embedding;
+- eight pre-norm 512-wide, eight-head transformer layers with 2,048-wide MLPs;
+- a 512-to-384 residual projection and scalar tanh gate initialized to zero;
+- a contextual ordinal pointer; and
+- a position-free raw-byte value projection, normalization, and three-class
+  ordinal motor.
+
+Exact accounting from live module construction is:
+
+| Component | Parameters |
+|---|---:|
+| nominal Shohin base | 125,081,664 |
+| complete renderer-orbit compiler | 47,621,366 |
+| motor | 19,206 |
+| reader | 835 |
+| **complete deployed system** | **172,723,071** |
+| strict-200M headroom | 27,276,929 |
+| trainable renderer/query front end | 26,665,476 |
+
+The complete system is strictly below 200,000,000. This pilot does not consume
+the remaining headroom. Historical sub-150M experiment contracts remain closed
+and unchanged.
+
+## 4. Renderer orbit
+
+Renderer surface is the binary product of three factors:
+
+1. direct bindings versus reverse registry declaration;
+2. event/move/by versus action/send/for clauses; and
+3. position-question versus slot-report query.
+
+The four even-parity combinations are fit views. The four odd-parity
+combinations are held-out views. The sets contain no common complete renderer,
+but each set contains both values of every factor. Renderer names exist only in
+metadata and never in model text.
+
+The training-only pilot SHA-orders the already-consumed 48,000 v2 training
+semantics, uses the first 12,000 latent programs for fit and the next 2,000 for
+held-out evaluation, and renders four views per latent program. No development,
+confirmation, oracle answer, final state, or recurrent trajectory can be read.
+
+## 5. Training contract
+
+- initialization: exact byte parent SHA `e5f87a1d...` plus exact v2 treatment
+  checkpoint SHA `1d338651...`;
+- trainable parameters: the exact 110 renderer-orbit/ordinal parameter names;
+- frozen parameters: all inherited source, binding, packet, motor, reader, and
+  Shohin parameters;
+- two epochs over 12,000 semantic families;
+- family batch size eight, four renderer views per family;
+- AdamW, lr `2e-4`, betas `(0.9, 0.95)`, weight decay `0.01`;
+- 100-update warmup, cosine decay, gradient clip `1.0`;
+- supervised losses for initial, kind, identity, amount, query, all program
+  address classes, and query ordinal address; and
+- Jensen-Shannon categorical consistency over initial/kind/identity/amount/query
+  logits across the four views of each semantic family, weight `1.0`.
+
+Only compiler fields and byte spans are labels. No execution-derived target is
+available.
+
+### V1 numerical closure and v1.1 repair
+
+Exact v1 source commit `a16a555cae21dca845689f8ddc119b1d8f9a0f91` and seed
+`7492631734612190994` reached one training-only epoch in job `694059`. The
+inherited uniform span cross-entropy multiplied zero target mass by masked
+`-inf` log probabilities under bf16. Event-address loss and therefore total
+loss were infinite. The run was canceled before epoch two and before creating
+an output directory, checkpoint, or report. It had no route to development or
+confirmation and cannot be interpreted as a mechanism result.
+
+V1.1 changed only the mathematically equivalent loss arithmetic: logits are
+promoted to float32, target entries are selected with `torch.where`, and active
+target spans must be nonempty and finite. A regression containing explicit
+`-inf` masked logits verifies finite value and gradients. Exact source commit
+`ca67217ef991a363dcc311e436a33236e860ba58` and seed
+`1744594462434664693` then fail on update one in job `694061`: some gold
+event-name spans lie outside the frozen parent's current hard selected-line
+support, so their correct log probability is truly negative infinity. The
+guard rejects the batch before any optimizer update or output artifact. No
+scored split is reachable.
+
+V1.2 adds the smallest causal curriculum required by that hard support. Line
+addressing is supervised on every event. Event-name addressing and event
+identity are charged only for active slots whose current selected line contains
+the gold name span. Losses activate automatically as model-owned line selection
+improves; no target changes a forward prediction or final metric. The final fit
+must reach at least 99% exact event pointers, preventing permanent loss
+avoidance. Every held-out gate remains fixed. One exact consumed-row
+forward/backward begins at 25% event support and has finite loss and gradients.
+Architecture, data, partition, all other labels/loss weights, optimizer, update
+count, held-out gates, and claim boundary remain unchanged. V1.2 requires a new
+source commit and post-commit seed.
+
+## 6. Training-only gates
+
+Every gate must pass on every one of the four odd-parity renderer combinations:
+
+1. initial state at least 95%;
+2. complete kind at least 95%;
+3. complete active identity at least 90%;
+4. complete active amount at least 95%;
+5. late query at least 99%;
+6. query ordinal pointer at least 99%;
+7. complete packet at least 80%;
+8. exact complete-system parameter count below 200M; and
+9. final fit event-pointer exactness at least 99%; and
+10. development and confirmation access exactly zero.
+
+Failure rejects or revises the front end without a fresh board. Passing permits
+only full fresh-board preregistration with equal-budget controls; it is not a
+reasoning result.
+
+## 7. Required fresh-board controls after a pilot pass
+
+A future score-bearing board must be generated after a new source commit and
+must include:
+
+- treatment with correct same-semantics renderer families;
+- equal-parameter/equal-view arm with renderer consistency weight zero;
+- equal-parameter wrong-family arm whose consistency pairs different latent
+  programs;
+- direct-only equal-update arm;
+- row-shuffled compiler supervision;
+- query-context-only arm with the selected raw-byte value deleted;
+- query-value-only oracle-pointer diagnostic, quarantined from attribution;
+- the exact retained source-deleted executor and all v2 packet interventions;
+- renderer-orbit holdout, name, prompt, sequence, and 13-gram audits; and
+- one development read, with sealed confirmation opened only after every frozen
+  development gate passes.
+
+The primary fresh claim requires treatment to beat both the no-consistency arm
+and wrong-family arm, not merely to fit a larger synthetic corpus.
+
+## 8. Honest boundary
+
+The mechanism is a project-specific combination of established transformer,
+attention, contrastive-consistency, and discrete packet components. No prior-art
+novelty claim is made. A pilot pass would establish only that a constrained
+sub-200M system can learn recombinable renderer coordinates and a template-
+blocked query bus on this finite language. A confirmed fresh-board pass would
+still not establish unseen-word semantics, arbitrary natural language,
+self-generated plans, or general reasoning.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 250: `R12_SD_CST_RENDERER_ORBIT_QUERY_BUS_RESULT.md`
+
+Original source path: `R12_SD_CST_RENDERER_ORBIT_QUERY_BUS_RESULT.md`
+Original source size: 4,589 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST Renderer-Orbit Query Bus Result
+
+**Decision:** reject the residual renderer-orbit program front end; retain the
+late-query bus and the localization that renderer-native program decoding is
+required
+
+**Claim boundary:** consumed projected-v2 training rows only; no development,
+confirmation, reasoning, or benchmark score
+
+## Frozen run
+
+- exact source: `05fb94a8193640b01a9548b6772996f907bdfbe5`
+- raw post-commit beacon: `9602980233009144166`
+- signed-safe seed, raw modulo `2^63`: `379608196154368358`
+- sole valid job: `694063` on H100 `evc36`
+- elapsed: 6m15s, 3,000 updates, two frozen epochs
+- complete/trainable parameters: 172,723,071 / 26,665,476
+- strict-200M headroom: 27,276,929
+- checkpoint SHA-256:
+  `2e019b81406bb90e539665271c9893a0e568e0177396243ac427f17d8ca51eca`
+- report SHA-256:
+  `5cce5d9c73001e9bb1345936d97b07d3cad9da642a55074891e8cd6c9a5eafe8`
+- access: development `0`, confirmation `0`
+
+The exact report is preserved at
+`artifacts/r12/sd_cst_renderer_orbit_pilot_379608196154368358/report.json`.
+The checkpoint is preserved locally and on Newton but is not committed to Git.
+
+## Result
+
+The run is numerically clean but fails five of ten frozen gates. Minimum rates
+over the four held-out renderer combinations are:
+
+| Field | Minimum exact rate |
+|---|---:|
+| initial state | 100.000% |
+| complete kind tape | 0.300% |
+| complete active identities | 4.450% |
+| complete active amounts | 1.600% |
+| late query | 100.000% |
+| query ordinal pointer | 100.000% |
+| source-line pointers | 0.350% |
+| declaration binding pointers | 99.850% |
+| initial-occurrence pointers | 100.000% |
+| event-occurrence pointers | 0.450% |
+| whole program tape | 0.000% |
+| complete packet | 0.000% |
+
+Fit renderers also fail, so this is not merely odd-parity renderer OOD. Minimum
+fit exact kind/identity/amount/line/event-pointer/packet rates are
+0.292%/4.667%/1.583%/0.200%/0.258%/0.000%. The final fit event-pointer gate is
+therefore far below 99%.
+
+Training is not static. Query and query-pointer losses reach zero. Average
+event support rises from 21.778% in epoch one to 51.460% in epoch two; total
+loss falls from 27.882 to 15.716 and line-address loss from 12.615 to 5.822.
+This is evidence that the staged support path is active, but not that the
+frozen program interface is close to transfer under the registered budget.
+
+## Causal interpretation
+
+The treatment solves exactly the interfaces given their own trainable motors:
+ordinal query address/class, declaration address, initial-occurrence address,
+and initial state. It fails the interfaces that must translate the new renderer
+through one scalar-gated residual into frozen exact-surface line, kind, amount,
+and hard line-conditioned event heads.
+
+The failure therefore rejects the hypothesis that a large generic residual
+encoder plus orbit consistency is sufficient to make a frozen exact-surface
+program compiler renderer invariant. It does not reject the categorical
+executor, which remains exact conditional on a correct packet, and it does not
+reject the raw-byte query bus, which transfers at 100%.
+
+## Pre-artifact closures
+
+- `694057`: `evc26` exposed no CUDA device and failed bf16 preflight before
+  model initialization or data access.
+- `694059`: v1 reached epoch one with infinite event/total loss because zero
+  target mass was multiplied by masked negative infinity under bf16. It was
+  canceled before output creation.
+- `694061`: float32 arithmetic repair source `ca67217` failed safely on update
+  one because some true event spans were outside the frozen hard line support.
+  The finite guard raised before an optimizer update or output creation.
+
+These are implementation diagnostics, not additional score-bearing arms.
+
+## Next admissible hypothesis
+
+Do not add epochs to this rejected contract and do not widen the executor. Use
+the remaining 27,276,929 parameters for a renderer-native program decoder over
+the already-trained orbit memory:
+
+1. trainable program line queries and line keys;
+2. trainable slot composition plus kind and amount motors;
+3. trainable event-name address queries under the model-owned decoded line;
+4. frozen retained declaration/initial binding, query bus, categorical tape,
+   recurrent executor, motor, and reader; and
+5. exact parameter accounting below 200M with the same fit/held-out renderer
+   orbit and no scored-split access.
+
+This tests whether specialization of the program interface, rather than more
+generic encoder capacity, is the missing mechanism. A pass may authorize only
+a new preregistered fresh board with equal-budget controls.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 251: `R12_SD_CST_V1_1_PREREG.md`
+
+Original source path: `R12_SD_CST_V1_1_PREREG.md`
+Original source size: 3,361 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 SD-CST v1.1 Optimization-Correction Preregistration
+
+**Status:** pre-board atomic optimization correction qualified on H100; no v1
+development or confirmation bytes were opened; v1.1 source freeze pending
+
+## Frozen diagnosis
+
+SD-CST v1 job `693954` passed source, board, base, tokenizer, H100, and bf16
+preflight on `evc36`, then stopped before writing a checkpoint because the motor
+finished its fixed 2,000-update fit below 78/78 certificate exactness. It did not
+open development or confirmation.
+
+The failure is an optimization defect in the fully supervised finite atomic
+component, not evidence about language compilation or recurrent reasoning. The
+old implementation also set the recorded motor and reader seeds after their
+modules had already been initialized. A CPU replication over independent
+explicit initializations found:
+
+| Component schedule | Exact final seeds | Worst final cells |
+|---|---:|---:|
+| motor AdamW, lr 0.025, 2,000 updates | 30/32 | 76/78 |
+| motor AdamW, lr 0.003, 1,000 updates | 32/32 | 78/78 |
+| reader AdamW, lr 0.04, 1,200 updates | 63/64 | 12/18 |
+| reader AdamW, lr 0.005, 500 updates | 64/64 | 18/18 |
+
+The high-rate arms frequently reached exact fit early and then left it after the
+loss was already near floating-point zero. The correction therefore reduces
+both learning rates and budgets rather than checkpoint-selecting an early
+iterate.
+
+## Sole authorized changes
+
+1. Reset each parameterized motor/reader child from its recorded component-local
+   seed immediately before constructing its optimizer.
+2. Fit the motor for exactly 1,000 full-table AdamW updates at learning rate
+   `0.003`, betas `(0.9, 0.95)`, and zero weight decay.
+3. Fit the reader for exactly 500 full-table AdamW updates at learning rate
+   `0.005`, betas `(0.9, 0.95)`, and zero weight decay.
+4. Require a pre-board H100 canary over at least 64 fresh component seeds to end
+   at 78/78 motor and 18/18 reader exactness for every seed.
+5. Version checkpoint, board, evaluation, assessment, protocol, and access-ledger
+   schemas as v1.1 and draw a new board seed and training seed only after source
+   commit.
+
+No architecture, parameter count, compiler data, compiler optimizer, board task,
+surface family, split size, evaluator, threshold, causal intervention, control,
+or claim boundary changes. The complete system remains 134,306,714 parameters.
+The complete v1 preregistration remains incorporated by reference except for the
+three replaced optimization settings above.
+
+Failure of the H100 multi-seed canary rejects these settings before board
+generation. Passing it admits one new clean-HEAD board. A v1.1 neural failure
+after development access closes that board without rescore, exactly as in v1.
+
+## Pre-board H100 result
+
+Job `693956` completed on NVIDIA H100 PCIe `evc22` in 1m44s using fresh seeds
+`2073833426` through `2073833489`. All 64/64 seeds ended at exactly 78/78 motor
+cells and 18/18 reader cells. The worst final motor loss was
+`2.5690799247968243e-6`; the worst final reader loss was
+`1.3245475827261544e-7`. The report SHA-256 is
+`472ff05ba4ef4dc4cb3956d8d69574f4b2ada8663224fa94c336a3c9de156433`.
+The canary had no code path or argument for a base checkpoint, tokenizer,
+source board, development split, or confirmation split. These settings are
+therefore admitted for one post-source-commit fresh board.
 <!-- END EMBEDDED SOURCE -->
 
 ---

@@ -337,8 +337,14 @@
 > router, starts from the independently confirmed parent rather than failed canary weights, keeps
 > the exact v1.1 data/optimizer/threshold/custody contract, and remains below 200M. Its local
 > qualification passes 22 focused tests including real-parent reconstruction, real-row alpha
-> invariance, complete trainable-gradient coverage, and zero excluded-parent leakage. Freeze and
-> push exact source before deriving one seed and submitting one H100 canary.
+> invariance, complete trainable-gradient coverage, and zero excluded-parent leakage. Exact source
+> `7601625f2cdc0a476f9383ce9773722f64760d17` was pushed before public drand round `6305746`.
+> Randomness `611f201f...`, canonical payload SHA `8884bfe6...`, label
+> `r12-er-addressed-marginal-route-canary-v1`, and derivation SHA `c24770ac...` produce seed
+> `4775909816533321494`. A clean hash-exact capsule and training-only two-file data view passed
+> `sbatch --test-only`. Sole job `694928` is running on H100 `evc36`; its isolated output is
+> `/lustre/fs1/home/sa305415/shohin_runs/er_addressed_marginal_4775909816533321494`. Do not submit
+> a duplicate or change any threshold while it is pending/running.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
