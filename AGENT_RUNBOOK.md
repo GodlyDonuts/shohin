@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-20 22:58 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-20 20:25 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -294,10 +294,18 @@
 > `016ca28a...`, derivation SHA `c23e6540...`). An earlier malformed ad hoc derivation yielded
 > `9040942210094722103`; it used a fabricated short commit string, was never launched, and is
 > permanently rejected. A hash-verified clean capsule and board now reside on Newton. Sole job
-> `694758` is running on `evc40`; its own preflight confirms NVIDIA H100 PCIe and bf16 before the
-> exact equal-budget treatment/family-deranged/equality-ablated fits. No development bytes have
-> been opened, custody remains `0/0`, and no ER-TT neural score
-> exists. Monitor `694758`; require immutable checkpoint creation before the one development read.
+> `694758` completed cleanly on H100 `evc40` in 22m59s after all three equal-budget fits and the
+> immutable checkpoint-before-development gate. ER-TT v1 is rejected and confirmation must remain
+> sealed forever; final custody is `1/0`. Treatment reaches 2/2,048 = 0.098% exact packets/joints,
+> 315/2,048 = 15.381% states, and 669/2,048 = 32.666% answers. Family-deranged/equality-ablated
+> joint is zero and state is 12.305%/11.768%. Ordinary structure is exact, but treatment relation
+> tensors are only 2/2,048 and whole witness pointers 12/2,048. Granular evidence localizes the
+> failure: relation cells are 36.528% versus 26.987%/28.866% controls; before-witness occurrences
+> are 95.273% but after-witness occurrences only 51.965%; relation training loss remains at chance;
+> witness/opcode alpha rename yields only 6/32 fully invariant rows. Checkpoint/evidence/report/
+> assessment hashes are `0c12b2eb...`/`5504dc27...`/`2b935215...`/`3628e2d0...`; local mirrors
+> and a byte-identical assessor replay match. The admitted fresh-board repair is an alpha-invariant structural routing stream separated
+> from a whole-symbol identity/equality stream, including identity-based event binding.
 >
 > **Active experiment:** Source-Deleted Categorical State Transport (SD-CST) v1 is closed before
 > development. Sole job `693954` passed source/data/base/tokenizer/H100/bf16 preflight on `evc36`
@@ -10446,8 +10454,8 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Exact complete/trainable/headroom counts remain 192,740,854/12,037,293/7,259,146. Board access is
   still `0/0`; no training seed, GPU job, or neural score exists. Freeze and push exact source next.
 
-- **2026-07-20 20:25--22:58** -- **ER-TT score source is frozen and its sole development run is
-  queued without opening scored data.** Exact scientific source
+- **2026-07-20 19:57--20:25** -- **ER-TT score source is frozen and v1 is rejected after its sole
+  development read.** Exact scientific source
   `3bd8a329ab94f3426be61ae87db92a14a285f2f7` was pushed before public drand round `6305343`.
   Randomness `03d64a87...`, canonical beacon payload SHA `016ca28a...`, and the full-commit
   derivation label produce training seed `4773363983426630371` with derivation SHA `c23e6540...`.
@@ -10457,7 +10465,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Board hashes are exact (`1982aeb2...`/`59be0c40...`/`cac2515b...`/`64ea4c0e...`), confirmation
   is `0600`, access is `0/0`, promoted witness checkpoint/assessment hashes are
   `917c1a1f...`/`4a0fb472...`, and every inherited parent exists. `sbatch --test-only` admitted the
-  one-H100 job; sole job `694758` is running on H100 `evc40` with isolated output
-  `shohin_er_relation_tensor_1209366536012979338_4773363983426630371`. Do not submit a duplicate.
-  Its own preflight reports NVIDIA H100 PCIe and bf16. Require all three immutable equal-budget fits, checkpoint creation before
-  development access, and independent assessment. Confirmation remains unopened.
+  one-H100 job. Sole job `694758` completed on H100 `evc40` in 22m59s after writing its immutable
+  checkpoint before the exclusive development ledger. Treatment packet/state/answer/joint is
+  0.098%/15.381%/32.666%/0.098%; family-deranged and equality-ablated joint are zero. All ordinary
+  structural fields are exact, while relation tensors are 2/2,048 and whole witness pointers are
+  12/2,048. Active relation cells are 36.528% versus 26.987%/28.866% controls; before/after witness
+  occurrence localization is 95.273%/51.965%; relation train loss remains at chance. Witness and
+  opcode alpha rename preserve complete output on only 6/2,048 and 32/2,048 rows. Independent
+  assessment rejects v1; custody is `1/0`, confirmation remains unopened, and the board must never
+  be rescored. Checkpoint/evidence/report/assessment hashes are `0c12b2eb...`/`5504dc27...`/
+  `2b935215...`/`3628e2d0...`; local mirrors and a byte-identical assessor replay match. The next fresh-board repair must separate an
+  alpha-invariant structural where-channel from a whole-symbol identity/equality what-channel and
+  use the same equality bus for event-to-rule binding.

@@ -254,14 +254,18 @@ single-H100 job are now locally qualified before source freeze. Twenty-five
 focused tests and a real confirmed-parent production-family backward pass are
 finite; all 110 trainable tensors receive gradient. Exact score source
 `3bd8a329` precedes the valid post-commit training seed `4773363983426630371`.
-Sole one-H100 job `694758` is running on `evc40` from a clean hash-verified
-Newton capsule and has confirmed H100/bf16 preflight;
-custody remains `0/0`, so no development read, confirmation read, or neural
-score exists yet. The exact theory and score contract are
+Sole job `694758` completed on H100 `evc40` and v1 is rejected at 0.098%
+packet/joint, 15.381% state, and 32.666% answer. Relation cells reach 36.528%
+versus 26.987%/28.866% controls, but after-witness localization is only 51.965%
+and alpha recoding collapses. Custody is `1/0`; confirmation remains sealed.
+The admitted successor separates alpha-invariant structural routing from whole-
+symbol identity/equality and uses identity equality for event binding. The exact
+theory, score contract, and result are
 `R12_ER_RELATION_TENSOR_TRANSPORT_THEORY.md` and
-`R12_ER_RELATION_TENSOR_SCORE_PREREG.md`.
+`R12_ER_RELATION_TENSOR_SCORE_PREREG.md`, and
+`R12_ER_RELATION_TENSOR_RESULT.md`.
 
-**Last updated:** 2026-07-20 22:58 EDT. User authority requires every future
+**Last updated:** 2026-07-20 20:25 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -2796,7 +2800,7 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Qualified the seedless ER-TT board builder at full 48,000/2,048/2,048 scale. Independent public-byte parsing/execution agrees on every row; all 15 gates pass; `N=3..6` is exact-balanced; all 13,024 families contain non-bijective transport; source is within 610/640 and 96/144 byte limits; every split overlap is zero; and deranged/equality-ablated state is 8.170%/7.878%. Dry seed 104729 is barred from scoring. No scientific seed or board bytes exist until source is committed. |
 | 2026-07-20 | Admitted and independently reproduced the production ER-TT board from exact source `bd77c0f`, public beacon round 6305283, and seed `1209366536012979338`: 48,000/2,048/2,048 rows, all 15 gates, byte-identical rebuild, zero overlap, confirmation `0600`, custody `0/0`, exact-balanced cardinality, 100% non-bijective families, and 7.955%/8.162% deranged/equality-ablated state. No training seed or neural score exists. |
 | 2026-07-20 | Locally qualified the ER-TT score path before source freeze: three identical 3,000-update arms, strict variable-cardinality masks, source-only supervision, parameter-free source-deleted execution, five source invariances, four causal packet interventions, raw evidence, and an independent list-executor assessor. Twenty-five focused tests, static checks, and a real-parent production-family backward pass succeed; all 110 trainable tensors receive finite gradient. System size remains 192,740,854 with 7,259,146 headroom. Board custody remains `0/0`; no training seed or neural score exists. |
-| 2026-07-20 | Froze/pushed ER-TT score source `3bd8a329` before valid post-commit seed `4773363983426630371`, reconstructed a clean exact Newton capsule from bundle SHA `bf6a3cc3...`, and reverified board, custody, witness, and parent inputs. Sole H100 job `694758` runs on `evc40` with isolated output and confirmed H100/bf16 preflight; custody remains `0/0`. Malformed unused seed `9040942210094722103` is explicitly rejected. |
+| 2026-07-20 | Froze/pushed ER-TT score source `3bd8a329` before valid post-commit seed `4773363983426630371`; malformed unused seed `9040942210094722103` is rejected. Sole job `694758` completed in 22m59s and rejects v1: treatment packet/state/answer/joint 0.098%/15.381%/32.666%/0.098%, control joint zero, relation cells 36.528% vs 26.987%/28.866%, before/after witness localization 95.273%/51.965%, and severe alpha-recode collapse. Custody is `1/0`; confirmation stays sealed. Next test: dual structural-routing and whole-symbol identity streams with equality-based event binding. |
 
 ---
 
