@@ -250,6 +250,11 @@ def test_forward_boundary_and_parameter_budget_are_explicit() -> None:
     assert count.trainable == count.total
     assert count.under_cap
     assert count.total < 16_000_000
+    assert count.protected_base == 125_081_664
+    assert count.complete_system == 126_912_335
+    assert count.system_cap == 200_000_000
+    assert count.headroom == 73_087_665
+    assert count.under_system_cap
 
 
 def test_forward_rejects_the_wrapper_and_accepts_batched_packet_tensors() -> None:

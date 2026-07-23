@@ -16,6 +16,8 @@ from torch import Tensor, nn
 
 
 MASKED_LOGIT = -10_000.0
+PROTECTED_BASE_PARAMETERS = 125_081_664
+SYSTEM_PARAMETER_CAP = 200_000_000
 NODE_KEEP = 0
 NODE_WRITE = 1
 NODE_CLEAR = 2
@@ -61,10 +63,18 @@ class MotorParameterCount:
     total: int
     trainable: int
     cap: int
+    protected_base: int
+    complete_system: int
+    system_cap: int
+    headroom: int
 
     @property
     def under_cap(self) -> bool:
         return self.total < self.cap
+
+    @property
+    def under_system_cap(self) -> bool:
+        return self.complete_system < self.system_cap
 
 
 @dataclass(frozen=True)
@@ -257,10 +267,15 @@ class NeuralTcrrMotor(nn.Module):
             for parameter in self.parameters()
             if parameter.requires_grad
         )
+        complete_system = PROTECTED_BASE_PARAMETERS + total
         return MotorParameterCount(
             total=total,
             trainable=trainable,
             cap=self.config.parameter_cap,
+            protected_base=PROTECTED_BASE_PARAMETERS,
+            complete_system=complete_system,
+            system_cap=SYSTEM_PARAMETER_CAP,
+            headroom=SYSTEM_PARAMETER_CAP - complete_system,
         )
 
     def _validate_packets(
@@ -1135,6 +1150,8 @@ __all__ = [
     "NODE_KEEP",
     "NODE_OPERATION_COUNT",
     "NODE_WRITE",
+    "PROTECTED_BASE_PARAMETERS",
+    "SYSTEM_PARAMETER_CAP",
     "NeuralTcrrGraphDelta",
     "NeuralTcrrMotor",
     "NeuralTcrrMotorConfig",
