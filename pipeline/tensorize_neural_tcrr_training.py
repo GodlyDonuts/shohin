@@ -37,7 +37,10 @@ from tensorize_neural_tcrr_packets import (
 )
 
 
-MAX_ACTIONS = R * N
+# This is a frozen compute-budget cap, not a semantic R-by-storage product.
+# Shared DAG nodes can have multiple root-relative occurrences, so legal action
+# cardinality is not bounded by the number of occupied storage records.
+MAX_ACTIONS = 128
 PATH_STOP = A
 PATH_PAD = A + 1
 PATH_VOCAB_SIZE = A + 2

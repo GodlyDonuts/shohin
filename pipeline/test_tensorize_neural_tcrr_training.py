@@ -126,6 +126,23 @@ def test_all_four_no_redex_packets_emit_empty_action_sets() -> None:
     assert not bool(value.tensors.successor_active.any())
 
 
+def test_action_budget_is_fail_closed_not_truncated() -> None:
+    record = next(item for item in _slice().expected_records if item.transitions)
+    packet = _packet_map()[record.packet_sha256]
+    over_budget = dataclasses.replace(
+        record,
+        transitions=(record.transitions[0],) * (training_tensors.MAX_ACTIONS + 1),
+    )
+    with pytest.raises(
+        training_tensors.NeuralTcrrTrainingTensorError,
+        match="action count exceeds frozen geometry",
+    ):
+        training_tensors.tensorize_neural_tcrr_training(
+            (packet,),
+            (over_budget,),
+        )
+
+
 def test_shared_occurrence_actions_remain_distinguishable() -> None:
     twin = next(item for item in _slice().twins if item.kind == "shared_occurrence")
     packet = _packet_map()[twin.left_packet_sha256]

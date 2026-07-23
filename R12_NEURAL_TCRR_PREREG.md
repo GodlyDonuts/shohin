@@ -44,6 +44,7 @@ audited.
 | Nodes per rule side | at most 12 |
 | Constructor arity | at most 3 |
 | Occurrence path depth | at most 8 |
+| Legal one-step actions per state | at most 128; reject, never truncate |
 | Recurrent safety bound | 64 |
 | Hidden width | 256 |
 | Added parameter ceiling | 16,000,000 |
@@ -110,6 +111,10 @@ optional second successor for FORK
 
 Occurrence paths are semantic. A shared DAG node reached through two paths has
 two rewrite occurrences; changing one path must not silently mutate the other.
+The 128-action tensor width is an explicit local compute budget rather than a
+claim that one storage record has only one occurrence. Any generated state
+with more than 128 legal `(rule, occurrence path)` actions is inadmissible and
+must fail closed before training or scoring; legal sets are never truncated.
 
 ## Rule-Blind Committer
 
@@ -253,4 +258,3 @@ Hard rejection occurs if:
 Passing these gates authorizes a separately frozen language-interface transfer
 experiment. It does not by itself authorize a claim of genuine general
 reasoning.
-
