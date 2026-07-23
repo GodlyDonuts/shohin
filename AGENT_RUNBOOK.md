@@ -10786,3 +10786,71 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   and qualified compiler SHA-256 `747a559b827c6d114943c091b9dea5b4b90cef7af13aa5003b8435c092d24991`.
   Complete parameters remain 137,986,868 with 12,013,131 headroom. There is still no CTAA seed,
   H100 job, scored-board access, neural score, or native-reasoning claim.
+
+- **2026-07-22 21:40--22:55** -- **CTAA custody is materially stronger, but source freeze remains
+  rejected.** No production board seed, training seed, scored access, H100 job, capability score,
+  or native-reasoning claim was created. The protected raw flagship remains SHA-256
+  `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`. Complete CTAA
+  parameters remain 137,986,868 with 12,013,131 headroom below the strict 150M contract.
+
+  The five-seed query-blind execution chain is now explicit and lossless. A signed execution-set
+  artifact binds exactly five ordered treatment plans, receipt envelopes, execution projections,
+  aggregate commitments, artifact directories, and finalized runtime evidence. Both construction
+  and replay authenticate all five receipt envelopes before opening any plan, evidence, projection,
+  aggregate, artifact, or late-query finalizer. Failed runtime attempts retain the same non-null
+  receipt identity as successful attempts. The authority claim, access receipt, sealed assessor,
+  and final gate accept only this execution set and independently replay it before query release.
+  The runtime implementation commitment now covers the complete producer/replay/finalization
+  source chain rather than four hand-selected files.
+
+  The outcome-free decision contract is also frozen correctly. A canonical Ed25519-signed
+  statistical specification commits the manifest, board, run plan/contract, runtime bundle,
+  execution set, assessor source bundle, bootstrap receipt/seed, and exactly five ordered training
+  seeds. It defines prefix-and-terminal-and-answer end-to-end success, absolute/factorial/depth
+  gates, exact finite-core audits, the complete 864-operation intervention panel, paired-arm
+  effects, intersection-union primary claims, and renderer-only descriptive reporting. The
+  bootstrap is now a true crossed resampling of five seeds and shared family roots within frozen
+  strata, using PCG64, float64, and 100,000 draws. Claim v5, access v7, registry event v5,
+  access-spend, assessment-commit, assessor, and final gate bind both the exact specification file
+  hash and its logical payload hash before outcome access.
+
+  Independent adversarial review found and closed three additional bypasses. The full assessor had
+  loaded query-derived committed evidence before the all-five receipt barrier; the barrier now
+  precedes every evidence load and has a public-call mutation test. The final-gate registry-key
+  loader and delegated oracle loader had bypassed held-parent-descriptor custody; both now walk
+  every absolute path component with `O_DIRECTORY|O_NOFOLLOW`, hold the parent descriptor through
+  the final relative open/read, and reject parent symlinks and replacement races. Run-contract and
+  access-registry readers received the same hardening. macOS snapshot paths use the canonical
+  `/private/var` temporary root so strict traversal need not bless the `/var` alias.
+
+  A standalone independent-rescoring foundation now exists. The deterministic score snapshot
+  validates the complete 40-run lattice and all 82 unique receipt/evidence/oracle members before
+  opening any source, reads every source exactly once under held-dirfd custody, and encodes a
+  canonical header plus concatenated bytes. Linux support creates one fully sealed memfd and two
+  independent read-only file descriptions. Portable mechanics pass locally; the Linux memfd and
+  unmocked bubblewrap smoke remain skipped until Newton is reachable. The correct final design is
+  one access spend, one immutable snapshot, two separately frozen scorer implementations in
+  isolated sandboxes, exact score-payload equality, then one assessment commit.
+
+  The statistical review exposed a real representation defect: current `binding_exact` aliases
+  action-card equality because declaration identity is erased before packet commitment. The draft
+  `R12_CTAA_OPCODE_BINDING_AMENDMENT.md` requires a causal declaration-local
+  `opcode_to_card` permutation plus a local-opcode event tape in a 60-byte packet, with the
+  resolved execution schedule derived internally. Card-only, binding-only, compensated relabeling,
+  declaration shuffle, opcode alpha-recode, and card-storage reindex controls must prove that card
+  semantics, binding, and behavior are distinct. Until implemented, the aliased metric cannot
+  satisfy the signed specification.
+
+  Final verification is Ruff clean, bytecode compilation clean for the touched source modules,
+  `git diff --check` clean, 209/209 focused integration tests with three platform skips, and
+  492/492 complete custody regressions with three platform skips in 342.42 seconds. A standard
+  batch SSH probe still fails DNS resolution for `newton.ist.ucf.edu`; no credential was printed
+  and no remote or GPU action was attempted.
+
+  **Remaining freeze blockers are explicit:** (1) implement and independently score causal opcode
+  binding instead of the card-equality alias; (2) integrate the sealed snapshot with a second,
+  separately implemented raw scorer and exact consensus receipt inside the single access; (3)
+  produce a capability-time signed receipt binding the measured six-phase resource matrix and
+  complete intervention panel to the assessed manifest and frozen cores; and (4) pass the unmocked
+  execution-set-to-final-gate, sealed-memfd, and Linux bubblewrap custody smoke. Source may not
+  freeze until all four are closed and independently reviewed.

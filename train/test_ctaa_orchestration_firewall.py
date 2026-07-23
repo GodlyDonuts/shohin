@@ -42,6 +42,9 @@ def test_orchestrator_has_no_oracle_surface_and_opens_query_after_execution(tmp_
         inputs[name] = path
     inputs["core"].unlink()
     core_module = ClosureFeatureTransitionCore().eval()
+    with torch.no_grad():
+        for parameter in core_module.parameters():
+            parameter.zero_()
     write_torch_once(
         inputs["core"],
         {
@@ -172,7 +175,7 @@ def test_orchestrator_has_no_oracle_surface_and_opens_query_after_execution(tmp_
                 execution_path=args.get("execution"),
                 query_predictions_path=args.get("query_predictions"),
                 answers_path=args.get("answers"),
-                query_source_path=args["query_source_commitment"],
+                query_source_path=args.get("query_source_commitment"),
                 core_checkpoint_path=args["core_checkpoint_commitment"],
                 packet_path=args.get("packet_commitment"),
                 hard_query_path=args.get("hard_query_commitment"),
@@ -203,6 +206,69 @@ def test_orchestrator_has_no_oracle_surface_and_opens_query_after_execution(tmp_
     assert "run_ctaa_program_compiler.py" not in stage_names
     assert report["oracle_access"] == 0
     assert (output / "raw_evidence" / "evidence.jsonl").exists()
+
+    malicious_stage_names = []
+
+    def fake_successful_malformed_executor(
+        command: list[str],
+        *,
+        root: Path,
+        hidden_board_root: Path | None = None,
+    ) -> dict[str, object]:
+        del root
+        assert hidden_board_root == query_source.parent
+        script = Path(command[1]).name
+        malicious_stage_names.append(script)
+        args = _arguments(command)
+        if script == "run_ctaa_packet_executor.py":
+            write_torch_once(args["output"], {"schema": EXECUTION_SCHEMA})
+        elif script == "run_ctaa_query_compiler.py":
+            raise AssertionError("query compiler ran after invalid execution")
+        elif script == "commit_ctaa_raw_evidence.py":
+            commit_raw_evidence(
+                program_predictions_path=args["program_predictions"],
+                packet_index_path=args["packet_index"],
+                execution_path=args.get("execution"),
+                query_predictions_path=args.get("query_predictions"),
+                answers_path=args.get("answers"),
+                query_source_path=args.get("query_source_commitment"),
+                core_checkpoint_path=args["core_checkpoint_commitment"],
+                packet_path=args.get("packet_commitment"),
+                hard_query_path=args.get("hard_query_commitment"),
+                output_dir=args["output_dir"],
+            )
+        else:
+            raise AssertionError(script)
+        return {"argv": command, "stdout_tail": "", "stderr_tail": ""}
+
+    monkeypatch.setattr(orchestration, "_run", fake_successful_malformed_executor)
+    malformed_output = tmp_path / "malformed_execution_evaluation"
+    malformed = orchestration.orchestrate(
+        base=inputs["base"],
+        qualified_compiler=inputs["qualified"],
+        tokenizer=inputs["tokenizer"],
+        compiler=inputs["compiler"],
+        core=inputs["core"],
+        prepared_program_root=prepared,
+        query_source=query_source,
+        output_root=malformed_output,
+        device="cpu",
+        batch_size=1,
+        python="python3",
+    )
+    assert "run_ctaa_query_compiler.py" not in malicious_stage_names
+    assert not (malformed_output / "disclosed_query.jsonl").exists()
+    assert any(
+        stage.get("argv") == ["validate_execution_artifact"]
+        and stage.get("succeeded") is False
+        for stage in malformed["stages"]
+    )
+    malformed_row = json.loads(
+        (malformed_output / "raw_evidence" / "evidence.jsonl").read_text()
+    )
+    assert malformed_row["packet_valid"] is True
+    assert malformed_row["state_route"] is None
+    assert malformed_row["answer"] is None
 
     def fail_late_query(
         command: list[str],

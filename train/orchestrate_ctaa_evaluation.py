@@ -19,6 +19,7 @@ from ctaa_evaluation_io import (
 )
 from ctaa_process_sandbox import hidden_board_command
 from prepare_ctaa_program_packets import SCHEMA as PREPARED_SCHEMA
+from run_ctaa_packet_executor import validate_execution_artifact
 
 
 SCHEMA = "r12_ctaa_v2_orchestration_v1"
@@ -181,6 +182,25 @@ def orchestrate(
             ]
         )
         if execution_ok:
+            try:
+                validate_execution_artifact(execution, packet, core)
+                stages.append(
+                    {
+                        "argv": ["validate_execution_artifact"],
+                        "execution_sha256": sha256_file(execution),
+                        "succeeded": True,
+                    }
+                )
+            except (OSError, PermissionError, ValueError) as error:
+                stages.append(
+                    {
+                        "argv": ["validate_execution_artifact"],
+                        "succeeded": False,
+                        "error": str(error),
+                    }
+                )
+                execution_ok = False
+        if execution_ok:
             if query_source.stat().st_mode & 0o077:
                 raise PermissionError("CTAA sealed query source permissions differ")
             temporary_query = disclosed_query.with_name(disclosed_query.name + ".tmp")
@@ -258,7 +278,7 @@ def orchestrate(
         commit_command.extend(("--query-source-commitment", str(disclosed_query)))
     optional_paths = (
         ("--packet-commitment", packet if index["valid_family_ids"] else None),
-        ("--execution", execution),
+        ("--execution", execution if execution_ok else None),
         ("--query-predictions", query_predictions),
         ("--hard-query-commitment", hard_query),
         ("--answers", answers),

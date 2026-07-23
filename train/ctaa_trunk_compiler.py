@@ -25,6 +25,10 @@ from ctaa_neural_core import (
 )
 
 
+CTAA_H19_BLOCK_INDEX = 19
+CTAA_H29_BLOCK_INDEX = 29
+
+
 @dataclass(frozen=True)
 class TrunkResidualBundle:
     early: torch.Tensor
@@ -73,9 +77,7 @@ class HardCTAAPacket:
         if not bool(stop_mask.sum(1).eq(1).all()):
             raise ValueError("CTAA hard schedule requires exactly one STOP")
         stop_index = stop_mask.long().argmax(1)
-        if not bool(
-            ((stop_index > 0) & (stop_index < CTAA_MAX_STEPS - 1)).all()
-        ):
+        if not bool(((stop_index > 0) & (stop_index < CTAA_MAX_STEPS - 1)).all()):
             raise ValueError("CTAA hard STOP boundary differs")
 
     @property
@@ -149,7 +151,8 @@ class TrunkCausalCTAACompiler(nn.Module):
         encoder_feedforward: int = 1408,
         decoder_layers: int = 2,
         decoder_feedforward: int = 1024,
-        early_layer: int = 19,
+        early_layer: int = CTAA_H19_BLOCK_INDEX,
+        late_layer: int = CTAA_H29_BLOCK_INDEX,
         padding_id: int = 1,
     ) -> None:
         super().__init__()
@@ -163,8 +166,8 @@ class TrunkCausalCTAACompiler(nn.Module):
             raise ValueError("CTAA compiler packet geometry differs")
         if compiler_width < 1 or compiler_width % heads:
             raise ValueError("CTAA compiler decoder geometry differs")
-        if not 0 <= early_layer < len(model.blocks) - 1:
-            raise ValueError("CTAA early trunk layer differs")
+        if not 0 <= early_layer < late_layer < len(model.blocks):
+            raise ValueError("CTAA trunk intervention layers differ")
         if padding_id < 0 or padding_id >= model.cfg.vocab_size:
             raise ValueError("CTAA padding id differs")
         self.model = model
@@ -173,6 +176,7 @@ class TrunkCausalCTAACompiler(nn.Module):
         self.max_steps = int(max_steps)
         self.compiler_width = int(compiler_width)
         self.early_layer = int(early_layer)
+        self.late_layer = int(late_layer)
         self.padding_id = int(padding_id)
         self.model.requires_grad_(False)
 
@@ -274,7 +278,11 @@ class TrunkCausalCTAACompiler(nn.Module):
                 name
                 for name in own
                 if name.startswith(
-                    ("early_memory_norm.", "early_memory_projection.", "memory_encoder.")
+                    (
+                        "early_memory_norm.",
+                        "early_memory_projection.",
+                        "memory_encoder.",
+                    )
                 )
             }
             if set(loaded) != expected:
@@ -299,13 +307,17 @@ class TrunkCausalCTAACompiler(nn.Module):
             cos = self.model.cos[: ids.shape[1]].to(hidden.device)
             sin = self.model.sin[: ids.shape[1]].to(hidden.device)
             early = None
+            late = None
             for layer_index, block in enumerate(self.model.blocks):
                 hidden, _ = block(hidden, cos, sin)
                 if layer_index == self.early_layer:
                     early = hidden.detach()
-            if early is None:
-                raise RuntimeError("CTAA early residual was not captured")
-            late = self.model.norm(hidden).detach()
+                if layer_index == self.late_layer:
+                    late = hidden.detach()
+            if early is None or late is None:
+                raise RuntimeError("CTAA intervention residual was not captured")
+            # h29 is the raw residual after zero-based block index 29 and
+            # before the trunk's final normalization, as preregistered.
         return TrunkResidualBundle(early=early, late=late, valid=valid)
 
     def memory_from_residuals(
@@ -314,30 +326,65 @@ class TrunkCausalCTAACompiler(nn.Module):
         *,
         intervention: str = "native",
         donor: TrunkResidualBundle | None = None,
+        batch_rotation: torch.Tensor | None = None,
     ) -> tuple[torch.Tensor, torch.Tensor]:
         early, late, valid = bundle.early, bundle.late, bundle.valid
         if early.shape != late.shape or early.shape[:2] != bundle.valid.shape:
             raise ValueError("CTAA residual bundle geometry differs")
+        aliases = {
+            "h19_zero": "zero_early",
+            "h29_zero": "zero_late",
+            "h19_batch_rotate": "batch_rotate_early",
+            "h19_donor_transplant": "donor_early",
+            "h29_batch_rotate": "batch_rotate_late",
+            "h29_donor_transplant": "donor_late",
+        }
+        intervention = aliases.get(intervention, intervention)
         if intervention == "native":
-            if donor is not None:
-                raise ValueError("CTAA native residual received a donor")
+            if donor is not None or batch_rotation is not None:
+                raise ValueError("CTAA native residual received intervention data")
         elif intervention == "zero_early":
+            if donor is not None or batch_rotation is not None:
+                raise ValueError("CTAA zero residual received intervention data")
             early = torch.zeros_like(early)
         elif intervention == "zero_late":
+            if donor is not None or batch_rotation is not None:
+                raise ValueError("CTAA zero residual received intervention data")
             late = torch.zeros_like(late)
         elif intervention == "zero_both":
+            if donor is not None or batch_rotation is not None:
+                raise ValueError("CTAA zero residual received intervention data")
             early, late = torch.zeros_like(early), torch.zeros_like(late)
-        elif intervention in {"batch_rotate", "batch_rotate_early", "batch_rotate_late"}:
-            rotated_valid = valid.roll(1, 0)
+        elif intervention in {
+            "batch_rotate",
+            "batch_rotate_early",
+            "batch_rotate_late",
+        }:
+            batch = valid.shape[0]
+            if (
+                donor is not None
+                or batch_rotation is None
+                or batch_rotation.dtype != torch.long
+                or batch_rotation.shape != (batch,)
+            ):
+                raise ValueError("CTAA batch residual rotation differs")
+            rotation = batch_rotation.to(valid.device)
+            expected = torch.arange(batch, device=valid.device)
+            if not torch.equal(rotation.sort().values, expected) or bool(
+                rotation.eq(expected).any()
+            ):
+                raise ValueError("CTAA batch residual rotation is not a derangement")
+            rotated_valid = valid.index_select(0, rotation)
             if not torch.equal(rotated_valid, valid):
                 raise ValueError("CTAA rotated residual padding geometry differs")
             if intervention in {"batch_rotate", "batch_rotate_early"}:
-                early = early.roll(1, 0)
+                early = early.index_select(0, rotation)
             if intervention in {"batch_rotate", "batch_rotate_late"}:
-                late = late.roll(1, 0)
+                late = late.index_select(0, rotation)
         elif intervention in {"donor", "donor_early", "donor_late"}:
             if (
                 donor is None
+                or batch_rotation is not None
                 or donor.early.shape != early.shape
                 or donor.late.shape != late.shape
                 or donor.valid.shape != valid.shape
@@ -375,16 +422,16 @@ class TrunkCausalCTAACompiler(nn.Module):
         *,
         intervention: str = "native",
         donor: TrunkResidualBundle | None = None,
+        batch_rotation: torch.Tensor | None = None,
     ) -> CTAAProgramLogits:
         memory, valid = self.memory_from_residuals(
             bundle,
             intervention=intervention,
             donor=donor,
+            batch_rotation=batch_rotation,
         )
         slots = self._decode(memory, valid, self.program_queries)
-        tuple_logits = self.tuple_head(
-            slots[:, : self.schedule_slot_start]
-        ).float()
+        tuple_logits = self.tuple_head(slots[:, : self.schedule_slot_start]).float()
         return CTAAProgramLogits(
             action_cards=tuple_logits[:, : self.action_slot_count].reshape(
                 memory.shape[0],
@@ -396,9 +443,7 @@ class TrunkCausalCTAACompiler(nn.Module):
                 :,
                 self.initial_slot_start : self.schedule_slot_start,
             ],
-            schedule=self.event_head(
-                slots[:, self.schedule_slot_start :]
-            ).float(),
+            schedule=self.event_head(slots[:, self.schedule_slot_start :]).float(),
         )
 
     def compile_program(
@@ -407,11 +452,13 @@ class TrunkCausalCTAACompiler(nn.Module):
         *,
         intervention: str = "native",
         donor: TrunkResidualBundle | None = None,
+        batch_rotation: torch.Tensor | None = None,
     ) -> CTAAProgramLogits:
         return self.compile_program_from_residuals(
             self.encode_source(ids),
             intervention=intervention,
             donor=donor,
+            batch_rotation=batch_rotation,
         )
 
     def compile_query(
@@ -420,12 +467,14 @@ class TrunkCausalCTAACompiler(nn.Module):
         *,
         intervention: str = "native",
         donor: TrunkResidualBundle | None = None,
+        batch_rotation: torch.Tensor | None = None,
     ) -> torch.Tensor:
         bundle = self.encode_source(query_ids)
         memory, valid = self.memory_from_residuals(
             bundle,
             intervention=intervention,
             donor=donor,
+            batch_rotation=batch_rotation,
         )
         decoded = self._decode(memory, valid, self.query_query)
         return self.query_head(decoded[:, 0]).float()

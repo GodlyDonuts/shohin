@@ -39,6 +39,17 @@ def exact_core() -> ClosureTiedPointerCore:
     return core
 
 
+class CountingCopyCore(torch.nn.Module):
+    def __init__(self) -> None:
+        super().__init__()
+        self.batch_sizes: list[int] = []
+
+    def forward(self, left: torch.Tensor, right: torch.Tensor) -> torch.Tensor:
+        del right
+        self.batch_sizes.append(left.shape[0])
+        return torch.nn.functional.one_hot(left, 3).float().mul(40).sub(20)
+
+
 def test_exact_address_core_matches_every_application_and_composition() -> None:
     core = exact_core()
     tuples = tuple(product(range(3), repeat=3))
@@ -103,6 +114,39 @@ def test_hard_packet_uses_only_compiled_cards_and_absorbing_stop() -> None:
         [2, 2, 1],
         [2, 2, 1],
         [2, 2, 1],
+    ]
+
+
+def test_stop_physically_prevents_all_post_halt_core_calls() -> None:
+    cards, schedule, initial = packet_tensors()
+    cards = cards.expand(2, -1, -1).clone()
+    initial = initial.expand(2, -1).clone()
+    schedule = schedule.expand(2, -1).clone()
+    schedule[1, 3] = 1
+    schedule[1, 5] = CTAA_STOP_ID
+
+    state_core = CountingCopyCore()
+    execute_streamed_state_route(state_core, 3, cards, schedule, initial)
+    assert state_core.batch_sizes == [2, 2, 2, 1, 1]
+
+    dual_core = CountingCopyCore()
+    execute_streamed_dual(dual_core, 3, cards, schedule, initial)
+    assert dual_core.batch_sizes == [
+        2,
+        2,
+        2,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        1,
+        1,
+        1,
+        1,
     ]
 
 

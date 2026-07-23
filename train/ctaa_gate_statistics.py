@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Mapping, Sequence
+from typing import Mapping
 
 import numpy as np
 from scipy.stats import beta, binomtest
@@ -23,7 +23,9 @@ def one_sided_family_pvalue(successes: int, total: int, threshold: float) -> flo
     return float(binomtest(successes, total, threshold, alternative="greater").pvalue)
 
 
-def holm_rejections(pvalues: Mapping[str, float], *, alpha: float = 0.05) -> dict[str, bool]:
+def holm_rejections(
+    pvalues: Mapping[str, float], *, alpha: float = 0.05
+) -> dict[str, bool]:
     if not pvalues or not 0 < alpha < 1:
         raise ValueError("CTAA Holm inputs differ")
     ordered = sorted(pvalues.items(), key=lambda item: (item[1], item[0]))
@@ -39,56 +41,113 @@ def holm_rejections(pvalues: Mapping[str, float], *, alpha: float = 0.05) -> dic
 
 
 def paired_hierarchical_lower(
-    differences_by_seed: Mapping[int, Sequence[int]],
+    differences_by_seed: Mapping[int, Mapping[str, int]],
     *,
+    stratum_by_family: Mapping[str, str],
     draws: int = 100_000,
     alpha: float = 0.05,
     seed: int,
-) -> dict[str, float | int]:
-    """Resample seeds and paired family differences without pooling renderings.
+) -> dict[str, float | int | str]:
+    """Bootstrap crossed seeds and shared semantic-family roots within strata.
 
-    Every family difference must be -1, 0, or +1. Conditional on one selected
-    seed, a nonparametric family bootstrap depends only on those three counts,
-    so multinomial sampling is exactly equivalent to materializing sampled
-    family indices and is substantially cheaper.
+    The five training seeds evaluate the same semantic family roots.  A valid
+    resample therefore selects seed IDs and shared root IDs, then applies each
+    sampled root to every selected seed.  Sampling anonymous outcomes within
+    each seed independently would destroy that crossing and understate shared
+    family variance.
+
+    Root sampling is implemented exactly with multinomial counts.  For a fixed
+    five-slot seed multiplicity, every root has an integer sum in ``[-5, 5]``;
+    drawing roots with replacement is therefore equivalent to drawing from
+    those eleven categories and avoids materializing a draws-by-families array.
     """
-    if draws != 100_000 or not 0 < alpha < 1:
+    if (
+        draws != 100_000
+        or alpha != 0.05
+        or type(seed) is not int
+        or not 0 <= seed < 2**63
+    ):
         raise ValueError("CTAA hierarchical-bootstrap contract differs")
     seeds = sorted(differences_by_seed)
     if len(seeds) != 5:
         raise ValueError("CTAA hierarchical bootstrap requires five paired seeds")
-    arrays = []
+    if any(type(master_seed) is not int for master_seed in seeds):
+        raise ValueError("CTAA hierarchical bootstrap seed identity differs")
+    family_ids: list[str] | None = None
+    arrays: list[np.ndarray] = []
     for master_seed in seeds:
-        values = np.asarray(differences_by_seed[master_seed], dtype=np.int8)
-        if values.ndim != 1 or values.size < 1 or not np.isin(values, (-1, 0, 1)).all():
+        family_map = differences_by_seed[master_seed]
+        if not isinstance(family_map, Mapping) or not family_map:
             raise ValueError("CTAA paired family differences differ")
+        current_ids = sorted(family_map)
+        if (
+            any(not isinstance(item, str) or not item for item in current_ids)
+            or family_ids is not None
+            and current_ids != family_ids
+        ):
+            raise ValueError("CTAA shared family-root coverage differs")
+        if family_ids is None:
+            family_ids = current_ids
+        raw_values = [family_map[item] for item in current_ids]
+        if any(
+            type(value) is not int or value not in (-1, 0, 1) for value in raw_values
+        ):
+            raise ValueError("CTAA paired family differences differ")
+        values = np.asarray(raw_values, dtype=np.int8)
         arrays.append(values)
-    generator = np.random.default_rng(seed)
-    # Independent family resamples for each bootstrap seed slot and source seed.
-    boot = np.empty((5, 5, draws), dtype=np.float32)
-    for slot in range(5):
-        for seed_index, values in enumerate(arrays):
-            counts = np.bincount(values + 1, minlength=3)
+    assert family_ids is not None
+    if set(stratum_by_family) != set(family_ids) or any(
+        not isinstance(stratum_by_family[item], str) or not stratum_by_family[item]
+        for item in family_ids
+    ):
+        raise ValueError("CTAA frozen family strata differ")
+    strata: dict[str, np.ndarray] = {}
+    for stratum in sorted(set(stratum_by_family.values())):
+        indices = np.asarray(
+            [
+                index
+                for index, family_id in enumerate(family_ids)
+                if stratum_by_family[family_id] == stratum
+            ],
+            dtype=np.int64,
+        )
+        if indices.size < 1:
+            raise ValueError("CTAA frozen family strata differ")
+        strata[stratum] = indices
+
+    matrix = np.stack(arrays, axis=0)
+    generator = np.random.Generator(np.random.PCG64(seed))
+    selected = generator.integers(0, 5, size=(draws, 5), dtype=np.int8)
+    seed_counts = np.stack(
+        [np.bincount(row, minlength=5) for row in selected], axis=0
+    ).astype(np.int8, copy=False)
+    unique_counts, inverse = np.unique(seed_counts, axis=0, return_inverse=True)
+    distribution = np.empty(draws, dtype=np.float64)
+    category_values = np.arange(-5, 6, dtype=np.int64)
+    total_families = len(family_ids)
+    for group, multiplicities in enumerate(unique_counts):
+        draw_indices = np.flatnonzero(inverse == group)
+        sampled_sum = np.zeros(draw_indices.size, dtype=np.int64)
+        weighted_roots = multiplicities.astype(np.int16) @ matrix.astype(np.int16)
+        for indices in strata.values():
+            values = weighted_roots[indices]
+            category_counts = np.bincount(values + 5, minlength=11)
             sampled = generator.multinomial(
-                values.size,
-                counts / values.size,
-                size=draws,
+                indices.size,
+                category_counts / indices.size,
+                size=draw_indices.size,
             )
-            boot[slot, seed_index] = (
-                sampled[:, 2] - sampled[:, 0]
-            ) / values.size
-    selected = generator.integers(0, 5, size=(draws, 5))
-    draw_index = np.arange(draws)
-    distribution = np.zeros(draws, dtype=np.float32)
-    for slot in range(5):
-        distribution += boot[slot, selected[:, slot], draw_index]
-    distribution /= 5.0
-    observed_seed_means = np.asarray([values.mean() for values in arrays])
+            sampled_sum += sampled @ category_values
+        distribution[draw_indices] = sampled_sum / (5.0 * total_families)
     return {
         "draws": draws,
         "seeds": len(seeds),
-        "families_minimum": min(values.size for values in arrays),
-        "observed_mean": float(observed_seed_means.mean()),
-        "lower_bound": float(np.quantile(distribution, alpha)),
+        "families": total_families,
+        "strata": len(strata),
+        "observed_mean": float(matrix.astype(np.float64).mean()),
+        "lower_bound": float(np.quantile(distribution, alpha, method="linear")),
         "bootstrap_seed": seed,
+        "bit_generator": "PCG64",
+        "dtype": "float64",
+        "resampling_unit": "crossed_seed_x_shared_family_root_within_stratum",
     }

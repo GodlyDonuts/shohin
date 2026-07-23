@@ -412,8 +412,8 @@ def build_board(
 
         intervention_counts: dict[str, dict[str, int]] = {}
         for partition in ("development", "confirmation"):
-            program_mode = 0o444 if partition == "development" else 0o600
-            sealed_mode = 0o600
+            program_mode = 0o444 if partition == "development" else 0o400
+            sealed_mode = 0o400
             families = build_long_families(
                 seed,
                 partition,  # type: ignore[arg-type]
@@ -523,12 +523,6 @@ def build_board(
             raise ValueError(
                 "CTAA v2 source admission failed: " + canonical_json(source_audit)
             )
-        access = {
-            "schema": "r12_ctaa_v2_access_ledger_v1",
-            "development_access": 0,
-            "confirmation_access": 0,
-        }
-        _write_json(temporary / "access_ledger.json", access, 0o600)
         report = {
             "schema": SCHEMA,
             "seed": seed,

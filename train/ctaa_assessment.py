@@ -3,16 +3,17 @@
 from __future__ import annotations
 
 from collections import defaultdict
+import hashlib
 import json
+import os
 from pathlib import Path
+import stat
 from typing import Iterable
 
 from commit_ctaa_raw_evidence import (
     RAW_EVIDENCE_RECEIPT_SCHEMA,
     RAW_EVIDENCE_SCHEMA,
 )
-from ctaa_evaluation_io import sha256_file
-
 
 EVIDENCE_KEYS = {
     "schema",
@@ -73,36 +74,155 @@ BOOLEAN_METRICS = (
 )
 
 
-def _load_jsonl(path: Path) -> list[dict[str, object]]:
+def _reject_duplicate_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    result: dict[str, object] = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"CTAA assessment duplicate JSON key: {key}")
+        result[key] = value
+    return result
+
+
+def _read_immutable_bytes(path: Path, label: str) -> bytes:
+    raw_path = os.path.abspath(os.fspath(path))
+    if "\x00" in raw_path or raw_path == "/":
+        raise ValueError(f"CTAA assessment {label} path differs")
+    components = raw_path.split("/")[1:]
+    if any(component in ("", ".", "..") for component in components):
+        raise ValueError(f"CTAA assessment {label} path differs")
+    directory_flags = (
+        os.O_RDONLY
+        | getattr(os, "O_DIRECTORY", 0)
+        | getattr(os, "O_NOFOLLOW", 0)
+        | getattr(os, "O_CLOEXEC", 0)
+    )
+    try:
+        parent_descriptor = os.open("/", directory_flags)
+        try:
+            for component in components[:-1]:
+                child = os.open(
+                    component, directory_flags, dir_fd=parent_descriptor
+                )
+                os.close(parent_descriptor)
+                parent_descriptor = child
+        except BaseException:
+            os.close(parent_descriptor)
+            raise
+    except OSError as error:
+        raise ValueError(
+            f"CTAA assessment {label} parent is missing or symlinked"
+        ) from error
+    try:
+        metadata = os.stat(
+            components[-1], dir_fd=parent_descriptor, follow_symlinks=False
+        )
+    except OSError as error:
+        os.close(parent_descriptor)
+        raise ValueError(f"CTAA assessment {label} is unavailable") from error
+    if (
+        not stat.S_ISREG(metadata.st_mode)
+        or stat.S_ISLNK(metadata.st_mode)
+        or metadata.st_mode & 0o222
+        or metadata.st_nlink != 1
+    ):
+        os.close(parent_descriptor)
+        raise ValueError(f"CTAA assessment {label} is not a single-link immutable file")
+    flags = (
+        os.O_RDONLY
+        | getattr(os, "O_NOFOLLOW", 0)
+        | getattr(os, "O_CLOEXEC", 0)
+    )
+    try:
+        descriptor = os.open(components[-1], flags, dir_fd=parent_descriptor)
+    except OSError as error:
+        os.close(parent_descriptor)
+        raise ValueError(f"CTAA assessment {label} cannot be opened safely") from error
+    try:
+        before = os.fstat(descriptor)
+        chunks: list[bytes] = []
+        while True:
+            chunk = os.read(descriptor, 1024 * 1024)
+            if not chunk:
+                break
+            chunks.append(chunk)
+        after = os.fstat(descriptor)
+    finally:
+        os.close(descriptor)
+        os.close(parent_descriptor)
+    if (
+        before.st_dev != metadata.st_dev
+        or before.st_ino != metadata.st_ino
+        or before.st_size != metadata.st_size
+        or before.st_mtime_ns != metadata.st_mtime_ns
+        or before.st_ctime_ns != metadata.st_ctime_ns
+        or after.st_size != before.st_size
+        or after.st_mtime_ns != before.st_mtime_ns
+        or after.st_ctime_ns != before.st_ctime_ns
+        or after.st_mode & 0o222
+        or after.st_nlink != 1
+    ):
+        raise ValueError(f"CTAA assessment {label} changed while being read")
+    return b"".join(chunks)
+
+
+def _decode_object(data: bytes, label: str) -> dict[str, object]:
+    try:
+        value = json.loads(
+            data.decode("utf-8"),
+            object_pairs_hook=_reject_duplicate_keys,
+            parse_constant=lambda item: (_ for _ in ()).throw(
+                ValueError(f"non-finite JSON constant: {item}")
+            ),
+        )
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise ValueError(f"CTAA assessment {label} JSON differs") from error
+    if not isinstance(value, dict):
+        raise ValueError(f"CTAA assessment {label} root differs")
+    return value
+
+
+def _load_jsonl_bytes(data: bytes, label: str) -> list[dict[str, object]]:
     rows = []
-    with path.open() as handle:
-        for line_number, line in enumerate(handle, 1):
-            value = json.loads(line)
-            if not isinstance(value, dict):
-                raise ValueError(f"CTAA assessment row {line_number} differs")
-            rows.append(value)
+    try:
+        text = data.decode("utf-8")
+    except UnicodeDecodeError as error:
+        raise ValueError(f"CTAA assessment {label} encoding differs") from error
+    for line_number, line in enumerate(text.splitlines(), 1):
+        try:
+            value = json.loads(
+                line,
+                object_pairs_hook=_reject_duplicate_keys,
+                parse_constant=lambda item: (_ for _ in ()).throw(
+                    ValueError(f"non-finite JSON constant: {item}")
+                ),
+            )
+        except json.JSONDecodeError as error:
+            raise ValueError(
+                f"CTAA assessment {label} row {line_number} JSON differs"
+            ) from error
+        if not isinstance(value, dict):
+            raise ValueError(f"CTAA assessment row {line_number} differs")
+        rows.append(value)
     if not rows:
         raise ValueError("CTAA assessment input is empty")
     return rows
 
 
-def load_committed_evidence_receipt(directory: Path) -> dict[str, object]:
+def load_committed_evidence_bundle(
+    directory: Path,
+) -> tuple[dict[str, object], list[dict[str, object]]]:
     receipt_path = directory / "receipt.json"
     evidence_path = directory / "evidence.jsonl"
-    receipt = json.loads(receipt_path.read_text())
+    receipt = _decode_object(
+        _read_immutable_bytes(receipt_path, "evidence receipt"), "evidence receipt"
+    )
+    evidence_bytes = _read_immutable_bytes(evidence_path, "committed evidence")
     if (
-        not isinstance(receipt, dict)
-        or receipt.get("schema") != RAW_EVIDENCE_RECEIPT_SCHEMA
-        or receipt.get("evidence_sha256") != sha256_file(evidence_path)
+        receipt.get("schema") != RAW_EVIDENCE_RECEIPT_SCHEMA
+        or receipt.get("evidence_sha256") != hashlib.sha256(evidence_bytes).hexdigest()
     ):
         raise ValueError("CTAA committed-evidence receipt differs")
-    return receipt
-
-
-def load_committed_evidence(directory: Path) -> list[dict[str, object]]:
-    receipt = load_committed_evidence_receipt(directory)
-    evidence_path = directory / "evidence.jsonl"
-    rows = _load_jsonl(evidence_path)
+    rows = _load_jsonl_bytes(evidence_bytes, "committed evidence")
     if receipt.get("rows") != len(rows):
         raise ValueError("CTAA committed-evidence row count differs")
     seen = set()
@@ -116,14 +236,34 @@ def load_committed_evidence(directory: Path) -> list[dict[str, object]]:
         ):
             raise ValueError("CTAA committed-evidence row schema differs")
         seen.add(row["family_id"])
+    return receipt, rows
+
+
+def load_committed_evidence_receipt(directory: Path) -> dict[str, object]:
+    receipt, _ = load_committed_evidence_bundle(directory)
+    return receipt
+
+
+def load_committed_evidence(directory: Path) -> list[dict[str, object]]:
+    _, rows = load_committed_evidence_bundle(directory)
     return rows
 
 
-def load_oracle(path: Path, partition: str) -> list[dict[str, object]]:
-    rows = _load_jsonl(path)
+def load_oracle(
+    path: Path, partition: str, *, expected_sha256: str | None = None
+) -> list[dict[str, object]]:
+    oracle_bytes = _read_immutable_bytes(path, "sealed oracle")
+    if (
+        expected_sha256 is not None
+        and hashlib.sha256(oracle_bytes).hexdigest() != expected_sha256
+    ):
+        raise ValueError("CTAA assessed oracle hash differs from sealed board")
+    rows = _load_jsonl_bytes(oracle_bytes, "sealed oracle")
     seen = set()
     for row in rows:
-        allowed = ORACLE_KEYS | (INTERVENTION_KEYS if "parent_family_id" in row else set())
+        allowed = ORACLE_KEYS | (
+            INTERVENTION_KEYS if "parent_family_id" in row else set()
+        )
         if (
             set(row) != allowed
             or row.get("partition") != partition
@@ -138,10 +278,19 @@ def load_oracle(path: Path, partition: str) -> list[dict[str, object]]:
 
 
 def _halt_valid(value: object) -> bool:
-    if not isinstance(value, list) or len(value) != 42 or any(type(item) is not bool for item in value):
+    if (
+        not isinstance(value, list)
+        or len(value) != 42
+        or any(type(item) is not bool for item in value)
+    ):
         return False
     transitions = [int(value[index + 1]) - int(value[index]) for index in range(41)]
-    return not value[0] and value[-1] and transitions.count(1) == 1 and min(transitions) >= 0
+    return (
+        not value[0]
+        and value[-1]
+        and transitions.count(1) == 1
+        and min(transitions) >= 0
+    )
 
 
 def _mean(values: Iterable[bool]) -> float:
@@ -238,7 +387,9 @@ def score_evidence(
         ]
         target_stop = target["schedule"].index(4)
         stop_exact = packet_valid and predicted_stop == [target_stop]
-        program_exact = packet_valid and cards_exact and initial_exact and schedule_exact
+        program_exact = (
+            packet_valid and cards_exact and initial_exact and schedule_exact
+        )
         query_exact = (
             predicted["predicted_query_position"] is not None
             and predicted["predicted_query_position"] == target["query_position"]
@@ -270,6 +421,7 @@ def score_evidence(
         )
         depth = int(target["depth"])
         active_correct = 0
+        active_step_outcomes: list[dict[str, object]] = []
         state_route = predicted["state_route"]
         for step in range(depth):
             correct = (
@@ -280,17 +432,69 @@ def score_evidence(
             )
             action_correct[str(target["schedule"][step])].append(correct)
             action = target["action_cards"][target["schedule"][step]]
-            semantic_action_correct[
-                json.dumps(action, separators=(",", ":"))
-            ].append(correct)
-            action_rank_correct[str(len(set(action)))].append(correct)
+            semantic_key = json.dumps(action, separators=(",", ":"))
+            action_rank = len(set(action))
+            semantic_action_correct[semantic_key].append(correct)
+            action_rank_correct[str(action_rank)].append(correct)
             quartile = min(3, (4 * step) // depth)
             quartile_correct[str(quartile + 1)].append(correct)
             active_correct += int(correct)
+            active_step_outcomes.append(
+                {
+                    "step": step,
+                    "opcode": int(target["schedule"][step]),
+                    "semantic_action": list(action),
+                    "action_rank": action_rank,
+                    "quartile": quartile + 1,
+                    "correct": bool(correct),
+                }
+            )
+        parent_family_id = target.get("parent_family_id")
+        relation = target.get("relation")
+        expected_trace_equal = target.get("invariant_trace")
+        expected_terminal_equal = target.get("invariant_terminal")
+        observed_trace_equal: bool | None = None
+        observed_terminal_equal: bool | None = None
+        relation_correct_value: bool | None = None
+        if parent_family_id is not None:
+            parent = parent_evidence.get(str(parent_family_id))
+            parent_target = parent_oracle.get(str(parent_family_id))
+            if parent is None or parent_target is None:
+                relation_correct_value = False
+            else:
+                observed_trace_equal = (
+                    parent.get("state_route") is not None
+                    and predicted["state_route"] is not None
+                    and parent["state_route"] == predicted["state_route"]
+                )
+                observed_terminal_equal = (
+                    isinstance(parent.get("state_route"), list)
+                    and isinstance(predicted["state_route"], list)
+                    and parent["state_route"][-1] == predicted["state_route"][-1]
+                )
+                parent_correct = (
+                    bool(parent.get("packet_valid"))
+                    and _halt_valid(parent.get("halted"))
+                    and bool(parent.get("route_agreement"))
+                    and parent.get("state_route") == parent_target["prefix_states"]
+                )
+                relation_correct_value = (
+                    parent_correct
+                    and prefix_exact
+                    and observed_trace_equal == bool(expected_trace_equal)
+                    and observed_terminal_equal == bool(expected_terminal_equal)
+                )
+            relation_correct[str(relation)].append(bool(relation_correct_value))
         row_score = {
             "family_id": family_id,
-            "cluster_family_id": target.get("parent_family_id", family_id),
-            "relation": target.get("relation"),
+            "cluster_family_id": parent_family_id or family_id,
+            "parent_family_id": parent_family_id,
+            "relation": relation,
+            "expected_trace_equal": expected_trace_equal,
+            "expected_terminal_equal": expected_terminal_equal,
+            "observed_trace_equal": observed_trace_equal,
+            "observed_terminal_equal": observed_terminal_equal,
+            "relation_correct": relation_correct_value,
             "factorial_cell": target["factorial_cell"],
             "shift_order": str(target["factorial_cell"]).count("h"),
             "program_class": target["program_class"],
@@ -311,38 +515,9 @@ def score_evidence(
             "answer_exact": answer_exact,
             "active_steps_correct": active_correct,
             "active_steps_total": depth,
+            "active_step_outcomes": active_step_outcomes,
         }
         row_scores.append(row_score)
-        if "parent_family_id" in target and parent_evidence:
-            parent = parent_evidence.get(target["parent_family_id"])
-            parent_target = parent_oracle.get(target["parent_family_id"])
-            if parent is None or parent_target is None:
-                relation_correct[str(target["relation"])].append(False)
-            else:
-                expected_trace_equal = bool(target["invariant_trace"])
-                expected_terminal_equal = bool(target["invariant_terminal"])
-                observed_trace_equal = (
-                    parent.get("state_route") is not None
-                    and predicted["state_route"] is not None
-                    and parent["state_route"] == predicted["state_route"]
-                )
-                observed_terminal_equal = (
-                    isinstance(parent.get("state_route"), list)
-                    and isinstance(predicted["state_route"], list)
-                    and parent["state_route"][-1] == predicted["state_route"][-1]
-                )
-                parent_correct = (
-                    bool(parent.get("packet_valid"))
-                    and _halt_valid(parent.get("halted"))
-                    and bool(parent.get("route_agreement"))
-                    and parent.get("state_route") == parent_target["prefix_states"]
-                )
-                relation_correct[str(target["relation"])].append(
-                    parent_correct
-                    and prefix_exact
-                    and observed_trace_equal == expected_trace_equal
-                    and observed_terminal_equal == expected_terminal_equal
-                )
     return {
         "overall": _aggregate(row_scores),
         "by_factorial_cell": _strata(row_scores, "factorial_cell"),

@@ -158,9 +158,15 @@ def _execute_streamed_state_route(
     for event in schedule.unbind(1):
         is_stop = event.eq(action_count)
         active = ~(halted | is_stop)
-        selected = action_cards[batch_index, event.clamp_max(action_count - 1)]
-        candidate = core(selected, state).argmax(-1)
-        state = torch.where(active[:, None], candidate, state)
+        active_index = batch_index[active]
+        if active_index.numel():
+            selected = action_cards[
+                active_index,
+                event[active].clamp_max(action_count - 1),
+            ]
+            candidate = core(selected, state[active]).argmax(-1)
+            state = state.clone()
+            state[active_index] = candidate
         halted = halted | is_stop
         states.append(state)
         halt_history.append(halted)
@@ -191,17 +197,26 @@ def execute_streamed_dual(
     composed = torch.arange(width, device=initial.device)[None].expand(batch, -1)
     halted = torch.zeros(batch, dtype=torch.bool, device=initial.device)
     composed_cards = [composed]
-    composed_states = [initial]
+    composed_state = initial
+    composed_states = [composed_state]
     for event in schedule.unbind(1):
         is_stop = event.eq(stop_id)
         active = ~(halted | is_stop)
-        selected = action_cards[batch_index, event.clamp_max(action_count - 1)]
-        candidate = core(selected, composed).argmax(-1)
-        composed = torch.where(active[:, None], candidate, composed)
+        active_index = batch_index[active]
+        if active_index.numel():
+            selected = action_cards[
+                active_index,
+                event[active].clamp_max(action_count - 1),
+            ]
+            candidate = core(selected, composed[active]).argmax(-1)
+            composed = composed.clone()
+            composed[active_index] = candidate
+            from_composed = core(composed[active], initial[active]).argmax(-1)
+            composed_state = composed_state.clone()
+            composed_state[active_index] = from_composed
         halted = halted | is_stop
         composed_cards.append(composed)
-        from_composed = core(composed, initial).argmax(-1)
-        composed_states.append(from_composed)
+        composed_states.append(composed_state)
     return HardDualExecutionTrace(
         state_route=state_route,
         composed_cards=torch.stack(composed_cards, dim=1),

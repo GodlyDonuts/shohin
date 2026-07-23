@@ -36,13 +36,12 @@ def test_reduced_board_writer_is_single_use_sealed_and_hash_complete(tmp_path: P
     assert report["counts"]["confirmation"] == 13_824
     assert report["counts"]["development_interventions"] == 5_202
     assert report["counts"]["confirmation_interventions"] == 5_202
-    assert (output / "confirmation_program.jsonl").stat().st_mode & 0o777 == 0o600
-    assert (output / "confirmation_query.jsonl").stat().st_mode & 0o777 == 0o600
-    assert (output / "confirmation_oracle.jsonl").stat().st_mode & 0o777 == 0o600
-    assert (output / "confirmation_intervention_program.jsonl").stat().st_mode & 0o777 == 0o600
-    assert (output / "confirmation_intervention_query.jsonl").stat().st_mode & 0o777 == 0o600
-    assert (output / "confirmation_intervention_oracle.jsonl").stat().st_mode & 0o777 == 0o600
-    assert (output / "access_ledger.json").stat().st_mode & 0o777 == 0o600
+    assert (output / "confirmation_program.jsonl").stat().st_mode & 0o777 == 0o400
+    assert (output / "confirmation_query.jsonl").stat().st_mode & 0o777 == 0o400
+    assert (output / "confirmation_oracle.jsonl").stat().st_mode & 0o777 == 0o400
+    assert (output / "confirmation_intervention_program.jsonl").stat().st_mode & 0o777 == 0o400
+    assert (output / "confirmation_intervention_query.jsonl").stat().st_mode & 0o777 == 0o400
+    assert (output / "confirmation_intervention_oracle.jsonl").stat().st_mode & 0o777 == 0o400
     manifest = json.loads((output / "manifest.json").read_text())
     assert all(
         sha256_file(output / name) == digest

@@ -4,42 +4,73 @@
 from __future__ import annotations
 
 import argparse
-import fcntl
+import hashlib
 import json
+import os
 from pathlib import Path
+import stat
+from typing import Mapping
 
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
+
+from ctaa_access_registry import (
+    ACCESS_SPEND,
+    verify_registry_events,
+)
 from ctaa_assessment import (
-    load_committed_evidence,
-    load_committed_evidence_receipt,
+    EVIDENCE_KEYS,
     load_oracle,
     score_evidence,
 )
 from ctaa_core_training import ARMS
-from ctaa_evaluation_io import sha256_file, write_json_once
+from ctaa_evaluation_io import write_json_once
+from ctaa_intervention_protocol import RuntimeInterventionPlan
+from ctaa_run_contract import validate_run_contract
+from ctaa_runtime_bundle import (
+    ATTEMPT_COUNT_PER_SEED,
+    RuntimeBundleError,
+    make_runtime_bundle,
+    read_runtime_plan,
+    validate_runtime_bundle,
+)
+from ctaa_runtime_evidence import read_runtime_evidence
+from ctaa_runtime_execution_set import (
+    RuntimeExecutionSetError,
+    read_runtime_execution_set_with_replay,
+)
+from ctaa_runtime_plan_replay import load_runtime_replay_rows, replay_runtime_plan
+from ctaa_statistical_gate_spec import (
+    StatisticalGateSpecError,
+    read_signed_statistical_gate_spec_with_sha,
+)
+from commit_ctaa_raw_evidence import (
+    RAW_EVIDENCE_RECEIPT_SCHEMA,
+    RAW_EVIDENCE_SCHEMA,
+)
 
 
-ASSESSMENT_SCHEMA = "r12_ctaa_v2_assessment_v1"
+ASSESSMENT_SCHEMA = "r12_ctaa_v2_assessment_v2"
+ASSESSMENT_ACCESS_SCHEMA = "r12_ctaa_v2_assessment_access_v7"
+_HEX = frozenset("0123456789abcdef")
 
 
-def _load_manifest(path: Path) -> dict[str, object]:
-    value = json.loads(path.read_text())
+def _is_sha256(value: object) -> bool:
+    return (
+        isinstance(value, str)
+        and len(value) == 64
+        and all(character in _HEX for character in value)
+    )
+
+
+def _load_manifest(path: Path) -> tuple[dict[str, object], str]:
+    value, digest = _load_read_only_json_with_sha(path, "board manifest")
     if (
         not isinstance(value, dict)
         or value.get("schema") != "r12_ctaa_v2_manifest_v1"
         or not isinstance(value.get("files"), dict)
     ):
         raise ValueError("CTAA assessment board manifest differs")
-    return value
-
-
-def _verify_board_file(path: Path, manifest_path: Path, manifest: dict[str, object]) -> str:
-    if path.resolve().parent != manifest_path.resolve().parent:
-        raise ValueError("CTAA assessed oracle is outside the sealed board")
-    expected = manifest["files"].get(path.name)
-    actual = sha256_file(path)
-    if not isinstance(expected, str) or actual != expected:
-        raise ValueError("CTAA assessed oracle hash differs from sealed board")
-    return actual
+    return value, digest
 
 
 def _verify_board_path_declared(
@@ -47,10 +78,9 @@ def _verify_board_path_declared(
     manifest_path: Path,
     manifest: dict[str, object],
 ) -> None:
-    if (
-        path.resolve().parent != manifest_path.resolve().parent
-        or not isinstance(manifest["files"].get(path.name), str)
-    ):
+    if Path(os.path.abspath(path.parent)) != Path(
+        os.path.abspath(manifest_path.parent)
+    ) or not isinstance(manifest["files"].get(path.name), str):
         raise ValueError("CTAA assessed file is outside the sealed board")
 
 
@@ -82,105 +112,565 @@ def _verify_evidence_source_binding(
         raise ValueError("CTAA evidence is not bound to sealed program/query sources")
 
 
-def spend_partition_access(
-    ledger_path: Path,
-    *,
-    partition: str,
-    manifest_sha256: str,
-    run_names: list[str],
-    expected_ledger_sha256: str,
-) -> dict[str, object]:
-    key = f"{partition}_access"
-    if key not in {"development_access", "confirmation_access"}:
-        raise ValueError("CTAA assessment partition differs")
-    if ledger_path.stat().st_mode & 0o077:
-        raise PermissionError("CTAA access ledger permissions differ")
-    lock_path = ledger_path.with_name(ledger_path.name + ".lock")
-    with lock_path.open("a+") as lock:
-        fcntl.flock(lock, fcntl.LOCK_EX)
-        if sha256_file(ledger_path) != expected_ledger_sha256:
-            raise ValueError("CTAA access ledger changed before atomic spend")
-        value = json.loads(ledger_path.read_text())
-        if (
-            not isinstance(value, dict)
-            or value.get("schema") != "r12_ctaa_v2_access_ledger_v1"
-            or value.get("development_access") not in {0, 1}
-            or value.get("confirmation_access") not in {0, 1}
-            or value.get(key) != 0
-        ):
-            raise ValueError("CTAA sealed partition access is already spent or malformed")
-        previous_sha = sha256_file(ledger_path)
-        history = value.get("history", [])
-        if not isinstance(history, list):
-            raise ValueError("CTAA access-ledger history differs")
-        value[key] = 1
-        value["history"] = [
-            *history,
-            {
-                "partition": partition,
-                "manifest_sha256": manifest_sha256,
-                "previous_ledger_sha256": previous_sha,
-                "run_names": run_names,
-            },
-        ]
-        temporary = ledger_path.with_name(ledger_path.name + ".tmp")
-        if temporary.exists():
-            raise FileExistsError("refusing existing CTAA access-ledger temporary")
+def _reject_duplicate_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    result: dict[str, object] = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"CTAA assessment duplicate JSON key: {key}")
+        result[key] = value
+    return result
+
+
+def _open_parent_directory(path: Path, label: str) -> tuple[int, str]:
+    raw = os.path.abspath(os.fspath(path))
+    if "\x00" in raw or raw == "/":
+        raise ValueError(f"CTAA assessment {label} path differs")
+    components = raw.split("/")[1:]
+    if any(component in ("", ".", "..") for component in components):
+        raise ValueError(f"CTAA assessment {label} path differs")
+    flags = (
+        os.O_RDONLY
+        | getattr(os, "O_DIRECTORY", 0)
+        | getattr(os, "O_NOFOLLOW", 0)
+        | getattr(os, "O_CLOEXEC", 0)
+    )
+    descriptor = os.open("/", flags)
+    try:
+        for component in components[:-1]:
+            try:
+                child = os.open(component, flags, dir_fd=descriptor)
+            except OSError as error:
+                raise ValueError(
+                    f"CTAA assessment {label} parent is missing or symlinked"
+                ) from error
+            metadata = os.fstat(child)
+            if not stat.S_ISDIR(metadata.st_mode):
+                os.close(child)
+                raise ValueError(f"CTAA assessment {label} parent is not a directory")
+            os.close(descriptor)
+            descriptor = child
+        return descriptor, components[-1]
+    except Exception:
+        os.close(descriptor)
+        raise
+
+
+def _read_immutable_bytes(path: Path, label: str) -> bytes:
+    parent_descriptor, name = _open_parent_directory(path, label)
+    descriptor = -1
+    try:
+        metadata = os.stat(name, dir_fd=parent_descriptor, follow_symlinks=False)
+    except OSError as error:
+        os.close(parent_descriptor)
+        raise ValueError(f"CTAA assessment {label} is unavailable") from error
+    if (
+        not stat.S_ISREG(metadata.st_mode)
+        or stat.S_ISLNK(metadata.st_mode)
+        or metadata.st_mode & 0o222
+        or metadata.st_nlink != 1
+    ):
+        os.close(parent_descriptor)
+        raise ValueError(f"CTAA assessment {label} is not a single-link immutable file")
+    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_CLOEXEC", 0)
+    try:
+        descriptor = os.open(name, flags, dir_fd=parent_descriptor)
+    except OSError as error:
+        os.close(parent_descriptor)
+        raise ValueError(f"CTAA assessment {label} cannot be opened safely") from error
+    try:
+        before = os.fstat(descriptor)
+        chunks: list[bytes] = []
+        while True:
+            chunk = os.read(descriptor, 1024 * 1024)
+            if not chunk:
+                break
+            chunks.append(chunk)
+        after = os.fstat(descriptor)
+    finally:
+        os.close(descriptor)
+        os.close(parent_descriptor)
+    if (
+        before.st_dev != metadata.st_dev
+        or before.st_ino != metadata.st_ino
+        or before.st_size != metadata.st_size
+        or before.st_mtime_ns != metadata.st_mtime_ns
+        or before.st_ctime_ns != metadata.st_ctime_ns
+        or after.st_size != before.st_size
+        or after.st_mtime_ns != before.st_mtime_ns
+        or after.st_ctime_ns != before.st_ctime_ns
+        or after.st_mode & 0o222
+        or after.st_nlink != 1
+    ):
+        raise ValueError(f"CTAA assessment {label} changed while being read")
+    return b"".join(chunks)
+
+
+def _load_read_only_json_with_sha(
+    path: Path, label: str
+) -> tuple[dict[str, object], str]:
+    raw = _read_immutable_bytes(path, label)
+    return _decode_read_only_json(raw, label), hashlib.sha256(raw).hexdigest()
+
+
+def _decode_read_only_json(raw: bytes, label: str) -> dict[str, object]:
+    try:
+        value = json.loads(
+            raw.decode("utf-8"),
+            object_pairs_hook=_reject_duplicate_keys,
+            parse_constant=lambda item: (_ for _ in ()).throw(
+                ValueError(f"non-finite JSON constant: {item}")
+            ),
+        )
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise ValueError(f"CTAA assessment {label} JSON differs") from error
+    if not isinstance(value, dict):
+        raise ValueError(f"CTAA assessment {label} root differs")
+    return value
+
+
+def _load_read_only_json(path: Path, label: str) -> dict[str, object]:
+    value, _ = _load_read_only_json_with_sha(path, label)
+    return value
+
+
+def _load_registry_public_key(path: Path) -> bytes:
+    raw = _read_immutable_bytes(path, "registry public key")
+    if len(raw) == 32:
+        return raw
+    try:
+        text = raw.decode("ascii").strip()
+        key = bytes.fromhex(text)
+    except (UnicodeDecodeError, ValueError) as error:
+        raise ValueError("CTAA assessment registry public key differs") from error
+    if len(key) != 32 or text != key.hex():
+        raise ValueError("CTAA assessment registry public key differs")
+    return key
+
+
+def _load_jsonl_bytes(data: bytes, label: str) -> list[dict[str, object]]:
+    try:
+        text = data.decode("utf-8")
+    except UnicodeDecodeError as error:
+        raise ValueError(f"CTAA assessment {label} encoding differs") from error
+    rows: list[dict[str, object]] = []
+    for line_number, line in enumerate(text.splitlines(), 1):
         try:
-            temporary.write_text(json.dumps(value, sort_keys=True, indent=2) + "\n")
-            temporary.chmod(0o600)
-            temporary.replace(ledger_path)
-        finally:
-            if temporary.exists():
-                temporary.chmod(0o600)
-                temporary.unlink()
-        ledger_path.chmod(0o600)
-        return {
-            "partition": partition,
-            "previous_ledger_sha256": previous_sha,
-            "ledger_sha256": sha256_file(ledger_path),
-            "access": 1,
-        }
+            value = json.loads(
+                line,
+                object_pairs_hook=_reject_duplicate_keys,
+                parse_constant=lambda item: (_ for _ in ()).throw(
+                    ValueError(f"non-finite JSON constant: {item}")
+                ),
+            )
+        except json.JSONDecodeError as error:
+            raise ValueError(
+                f"CTAA assessment {label} row {line_number} JSON differs"
+            ) from error
+        if not isinstance(value, dict):
+            raise ValueError(f"CTAA assessment {label} row {line_number} differs")
+        rows.append(value)
+    if not rows:
+        raise ValueError(f"CTAA assessment {label} is empty")
+    return rows
+
+
+def _load_committed_evidence_bundle_with_receipt_sha(
+    directory: Path,
+) -> tuple[dict[str, object], list[dict[str, object]], str]:
+    receipt_path = directory / "receipt.json"
+    evidence_path = directory / "evidence.jsonl"
+    receipt, receipt_sha256 = _load_read_only_json_with_sha(
+        receipt_path, "evidence receipt"
+    )
+    evidence_bytes = _read_immutable_bytes(evidence_path, "committed evidence")
+    if (
+        receipt.get("schema") != RAW_EVIDENCE_RECEIPT_SCHEMA
+        or receipt.get("evidence_sha256") != hashlib.sha256(evidence_bytes).hexdigest()
+    ):
+        raise ValueError("CTAA committed-evidence receipt differs")
+    rows = _load_jsonl_bytes(evidence_bytes, "committed evidence")
+    if receipt.get("rows") != len(rows):
+        raise ValueError("CTAA committed-evidence row count differs")
+    seen: set[str] = set()
+    for index, row in enumerate(rows):
+        family_id = row.get("family_id")
+        if (
+            set(row) != EVIDENCE_KEYS
+            or row.get("schema") != RAW_EVIDENCE_SCHEMA
+            or row.get("source_index") != index
+            or not isinstance(family_id, str)
+            or family_id in seen
+        ):
+            raise ValueError("CTAA committed-evidence row schema differs")
+        seen.add(family_id)
+    return receipt, rows, receipt_sha256
+
+
+def _canonical_json_bytes(value: object) -> bytes:
+    try:
+        return (
+            json.dumps(
+                value,
+                sort_keys=True,
+                separators=(",", ":"),
+                ensure_ascii=True,
+                allow_nan=False,
+            )
+            + "\n"
+        ).encode("ascii")
+    except (TypeError, ValueError, UnicodeEncodeError) as error:
+        raise RuntimeBundleError("CTAA runtime bundle is not canonical JSON") from error
+
+
+def _load_runtime_bundle_with_replay_and_sha(
+    bundle_path: Path,
+    *,
+    run_contract: Mapping[str, object],
+    program_path: Path,
+    query_path: Path,
+    tokenizer_path: Path,
+) -> tuple[dict[str, object], str]:
+    """Validate and hash the runtime bundle from one immutable byte snapshot."""
+
+    raw = _read_immutable_bytes(bundle_path, "runtime bundle")
+    value = _decode_read_only_json(raw, "runtime bundle")
+    if raw != _canonical_json_bytes(value):
+        raise RuntimeBundleError("CTAA runtime bundle is not canonical JSON")
+    bundle_sha256 = hashlib.sha256(raw).hexdigest()
+    bundle = validate_runtime_bundle(value, run_contract=run_contract)
+    root = Path(os.path.abspath(bundle_path)).parent
+    artifacts = []
+    plans: list[RuntimeInterventionPlan] = []
+    for entry in bundle["entries"]:
+        if not isinstance(entry, dict):
+            raise RuntimeBundleError("CTAA runtime bundle entry differs")
+        plan_path = root / str(entry["runtime_plan_filename"])
+        evidence_path = root / str(entry["runtime_evidence_filename"])
+        if plan_path.parent != root or evidence_path.parent != root:
+            raise RuntimeBundleError("CTAA runtime bundle member escapes package root")
+        plan, plan_file_sha = read_runtime_plan(plan_path)
+        if (
+            plan_file_sha != entry["runtime_plan_file_sha256"]
+            or plan.plan_sha256 != entry["runtime_plan_sha256"]
+            or plan.bindings.training_seed != entry["training_seed"]
+        ):
+            raise RuntimeBundleError("CTAA runtime plan member differs")
+        evidence = read_runtime_evidence(
+            evidence_path,
+            plan,
+            expected_file_sha256=str(entry["runtime_evidence_file_sha256"]),
+        )
+        if evidence.get("evidence_sha256") != entry["runtime_evidence_sha256"]:
+            raise RuntimeBundleError("CTAA runtime evidence member differs")
+        artifacts.append(
+            (
+                plan,
+                evidence,
+                str(entry["runtime_plan_filename"]),
+                plan_file_sha,
+                str(entry["runtime_evidence_filename"]),
+                str(entry["runtime_evidence_file_sha256"]),
+            )
+        )
+        plans.append(plan)
+    if make_runtime_bundle(run_contract=run_contract, artifacts=artifacts) != bundle:
+        raise RuntimeBundleError("CTAA runtime bundle member recomputation differs")
+    for plan in plans:
+        try:
+            rows = load_runtime_replay_rows(
+                plan=plan,
+                program_path=program_path,
+                query_path=query_path,
+                tokenizer_path=tokenizer_path,
+            )
+            replay = replay_runtime_plan(plan, rows)
+        except ValueError as error:
+            raise RuntimeBundleError(
+                "CTAA runtime plan semantic replay failed"
+            ) from error
+        if (
+            replay.plan_sha256 != plan.plan_sha256
+            or replay.attempt_count != ATTEMPT_COUNT_PER_SEED
+        ):
+            raise RuntimeBundleError("CTAA runtime plan semantic replay differs")
+    return bundle, bundle_sha256
+
+
+def _validate_preaccess_custody(
+    *,
+    manifest_path: Path,
+    run_plan_path: Path,
+    run_contract_path: Path,
+    bootstrap_seed_receipt_path: Path,
+    runtime_bundle_path: Path,
+    runtime_program_source_path: Path,
+    runtime_query_source_path: Path,
+    runtime_tokenizer_path: Path,
+    runtime_execution_set_path: Path,
+    statistical_gate_spec_path: Path,
+    access_registry_path: Path,
+    access_head_receipt_path: Path,
+    registry_verification_key: bytes | Ed25519PublicKey,
+    partition: str,
+) -> tuple[dict[str, object], dict[str, object]]:
+    contract = validate_run_contract(
+        contract_path=run_contract_path,
+        manifest_path=manifest_path,
+        run_plan_path=run_plan_path,
+        bootstrap_seed_receipt_path=bootstrap_seed_receipt_path,
+    )
+    try:
+        execution_set, execution_set_file_sha256 = (
+            read_runtime_execution_set_with_replay(
+                runtime_execution_set_path,
+                runtime_bundle_path=runtime_bundle_path,
+                run_contract=contract,
+                verification_key=registry_verification_key,
+            )
+        )
+    except (RuntimeExecutionSetError, OSError, ValueError) as error:
+        raise ValueError("CTAA assessment execution set differs") from error
+    execution_set_sha256 = execution_set.get("execution_set_sha256")
+    if (
+        execution_set.get("partition") != partition
+        or execution_set.get("run_contract_sha256")
+        != contract.get("run_contract_sha256")
+        or not _is_sha256(execution_set_file_sha256)
+        or not _is_sha256(execution_set_sha256)
+    ):
+        raise ValueError("CTAA assessment execution set binding differs")
+
+    runtime_bundle, runtime_bundle_sha256 = _load_runtime_bundle_with_replay_and_sha(
+        runtime_bundle_path,
+        run_contract=contract,
+        program_path=runtime_program_source_path,
+        query_path=runtime_query_source_path,
+        tokenizer_path=runtime_tokenizer_path,
+    )
+    if (
+        runtime_bundle.get("partition") != partition
+        or execution_set.get("runtime_bundle_file_sha256") != runtime_bundle_sha256
+    ):
+        raise ValueError("CTAA runtime bundle binding differs")
+    try:
+        statistical_gate_spec, statistical_gate_spec_file_sha256 = (
+            read_signed_statistical_gate_spec_with_sha(
+                statistical_gate_spec_path,
+                verification_key=registry_verification_key,
+            )
+        )
+    except (StatisticalGateSpecError, OSError, ValueError) as error:
+        raise ValueError("CTAA statistical gate specification differs") from error
+    gate_spec_sha256 = statistical_gate_spec.get("gate_spec_sha256")
+    gate_payload = statistical_gate_spec.get("payload")
+    gate_bindings = (
+        gate_payload.get("bindings") if isinstance(gate_payload, dict) else None
+    )
+    expected_gate_bindings = {
+        "manifest_sha256": contract["manifest_sha256"],
+        "board_sha256": contract["board_sha256"],
+        "run_plan_sha256": contract["run_plan_sha256"],
+        "run_contract_sha256": contract["run_contract_sha256"],
+        "runtime_bundle_file_sha256": runtime_bundle_sha256,
+        "runtime_bundle_sha256": runtime_bundle.get("bundle_sha256"),
+        "runtime_execution_set_file_sha256": execution_set_file_sha256,
+        "runtime_execution_set_sha256": execution_set_sha256,
+        "bootstrap_seed_receipt_sha256": contract[
+            "bootstrap_seed_receipt_sha256"
+        ],
+        "bootstrap_seed": contract["bootstrap_seed"],
+        "training_seeds": contract.get("training_seeds"),
+    }
+    if (
+        not _is_sha256(statistical_gate_spec_file_sha256)
+        or not _is_sha256(gate_spec_sha256)
+        or not isinstance(gate_bindings, dict)
+        or any(
+            gate_bindings.get(key) != expected
+            for key, expected in expected_gate_bindings.items()
+        )
+    ):
+        raise ValueError("CTAA statistical gate specification binding differs")
+    head_receipt, head_receipt_sha256 = _load_read_only_json_with_sha(
+        access_head_receipt_path, "access head receipt"
+    )
+    events = verify_registry_events(
+        access_registry_path,
+        registry_verification_key,
+        expected_head_receipt=head_receipt,
+    )
+    if not events:
+        raise ValueError("CTAA assessment access registry is empty")
+    event = events[-1]
+    payload = event.payload
+    if payload.get("event_type") != ACCESS_SPEND:
+        raise ValueError("CTAA assessment signed access binding differs")
+    expected = {
+        "event_type": ACCESS_SPEND,
+        "partition": partition,
+        "manifest_sha256": contract["manifest_sha256"],
+        "board_sha256": contract["board_sha256"],
+        "run_contract_sha256": contract["run_contract_sha256"],
+        "runtime_bundle_sha256": runtime_bundle_sha256,
+        "assessment_claim_sha256": payload["assessment_claim_sha256"],
+        "bootstrap_seed_receipt_sha256": contract["bootstrap_seed_receipt_sha256"],
+        "bootstrap_seed": contract["bootstrap_seed"],
+        "statistical_gate_spec_file_sha256": statistical_gate_spec_file_sha256,
+        "gate_spec_sha256": gate_spec_sha256,
+    }
+    if any(payload.get(key) != item for key, item in expected.items()):
+        raise ValueError("CTAA assessment signed access binding differs")
+    access = {
+        "schema": ASSESSMENT_ACCESS_SCHEMA,
+        "registry_id": payload["registry_id"],
+        "registry_head_receipt_sha256": head_receipt_sha256,
+        "registry_head_entry_hash": event.entry_hash,
+        "access_event_payload_sha256": hashlib.sha256(
+            event.canonical_payload
+        ).hexdigest(),
+        "access_id": payload["access_id"],
+        "partition": partition,
+        "manifest_sha256": contract["manifest_sha256"],
+        "board_sha256": contract["board_sha256"],
+        "run_contract_sha256": contract["run_contract_sha256"],
+        "runtime_bundle_sha256": runtime_bundle_sha256,
+        "assessment_claim_sha256": payload["assessment_claim_sha256"],
+        "execution_set_file_sha256": execution_set_file_sha256,
+        "execution_set_sha256": execution_set_sha256,
+        "bootstrap_seed_receipt_sha256": contract["bootstrap_seed_receipt_sha256"],
+        "bootstrap_seed": contract["bootstrap_seed"],
+        "statistical_gate_spec_file_sha256": statistical_gate_spec_file_sha256,
+        "gate_spec_sha256": gate_spec_sha256,
+        "access": 1,
+    }
+    return contract, access
+
+
+def _validate_runs_against_contract(
+    *,
+    contract: dict[str, object],
+    names: list[str],
+    evidence_commitments: dict[str, dict[str, object]],
+    evidence_receipt_sha256: dict[str, str],
+    evidence_directories: dict[str, Path],
+    parent_commitments: dict[str, dict[str, object]],
+    parent_receipt_sha256: dict[str, str],
+    parent_directories: dict[str, Path],
+    metadata: dict[str, dict[str, object]],
+    oracle_paths: dict[str, Path],
+) -> None:
+    contract_runs = contract.get("runs")
+    if not isinstance(contract_runs, list):
+        raise ValueError("CTAA assessment run contract differs")
+    indexed = {row.get("run_id"): row for row in contract_runs if isinstance(row, dict)}
+    if set(indexed) != set(names) or len(indexed) != len(contract_runs):
+        raise ValueError("CTAA assessment run set differs from contract")
+    oracle_files = contract.get("oracle_files")
+    if not isinstance(oracle_files, dict):
+        raise ValueError("CTAA assessment oracle contract differs")
+    for name in names:
+        row = indexed[name]
+        run_meta = metadata[name]
+        if any(run_meta.get(key) != row.get(key) for key in ("seed", "arm", "dataset")):
+            raise ValueError("CTAA assessment run metadata differs from contract")
+        if evidence_receipt_sha256[name] != row.get("raw_evidence_receipt_sha256"):
+            raise ValueError("CTAA assessment evidence receipt differs from contract")
+        commitment = evidence_commitments[name]
+        if (
+            commitment.get("core_training") != row.get("core_training")
+            or commitment.get("compiler_sha256") != row.get("compiler_sha256")
+            or any(
+                commitment.get(key) != row.get("evidence_artifacts", {}).get(key)
+                for key in row.get("evidence_artifacts", {})
+            )
+        ):
+            raise ValueError("CTAA assessment evidence artifacts differ from contract")
+        dataset = str(row["dataset"])
+        oracle = oracle_files.get(dataset)
+        if (
+            not isinstance(oracle, dict)
+            or oracle_paths[name].name != oracle.get("filename")
+            or row.get("sealed_sources", {}).get("oracle_sha256")
+            != oracle.get("sha256")
+        ):
+            raise ValueError("CTAA assessment oracle identity differs from contract")
+        if dataset == "intervention":
+            if parent_receipt_sha256[name] != row.get(
+                "parent_evidence_receipt_sha256"
+            ) or parent_commitments[name].get("evidence_sha256") != row.get(
+                "parent_evidence_sha256"
+            ):
+                raise ValueError(
+                    "CTAA assessment parent evidence differs from contract"
+                )
 
 
 def assess(
     *,
     manifest_path: Path,
-    ledger_path: Path,
+    run_plan_path: Path,
+    run_contract_path: Path,
+    bootstrap_seed_receipt_path: Path,
+    runtime_bundle_path: Path,
+    runtime_program_source_path: Path,
+    runtime_query_source_path: Path,
+    runtime_tokenizer_path: Path,
+    runtime_execution_set_path: Path,
+    statistical_gate_spec_path: Path,
+    access_registry_path: Path,
+    access_head_receipt_path: Path,
+    registry_verification_key: bytes | Ed25519PublicKey,
     partition: str,
     runs: list[tuple[str, Path, Path]],
     output_path: Path,
     parent_evidence: dict[str, Path] | None = None,
     run_metadata: dict[str, dict[str, object]] | None = None,
-    development_gate_receipt: Path | None = None,
 ) -> dict[str, object]:
     if output_path.exists() or not runs:
         raise FileExistsError("CTAA assessment output exists or run set is empty")
     names = [name for name, _, _ in runs]
     if len(set(names)) != len(names):
         raise ValueError("CTAA assessment run names differ")
-    manifest = _load_manifest(manifest_path)
-    manifest_sha = sha256_file(manifest_path)
-    if ledger_path.resolve().parent != manifest_path.resolve().parent:
-        raise ValueError("CTAA access ledger is outside the sealed board")
-    if ledger_path.name != "access_ledger.json":
-        raise ValueError("CTAA access ledger is not the canonical board ledger")
-    evidence_by_name = {
-        name: load_committed_evidence(evidence_dir)
-        for name, evidence_dir, _ in runs
+    # This barrier belongs to the full assessor. Authenticate every seed's
+    # query-blind execution receipt before opening query-derived evidence.
+    contract, access = _validate_preaccess_custody(
+        manifest_path=manifest_path,
+        run_plan_path=run_plan_path,
+        run_contract_path=run_contract_path,
+        bootstrap_seed_receipt_path=bootstrap_seed_receipt_path,
+        runtime_bundle_path=runtime_bundle_path,
+        runtime_program_source_path=runtime_program_source_path,
+        runtime_query_source_path=runtime_query_source_path,
+        runtime_tokenizer_path=runtime_tokenizer_path,
+        runtime_execution_set_path=runtime_execution_set_path,
+        statistical_gate_spec_path=statistical_gate_spec_path,
+        access_registry_path=access_registry_path,
+        access_head_receipt_path=access_head_receipt_path,
+        registry_verification_key=registry_verification_key,
+        partition=partition,
+    )
+    manifest, manifest_sha = _load_manifest(manifest_path)
+    evidence_directories = {name: evidence_dir for name, evidence_dir, _ in runs}
+    oracle_paths = {name: oracle_path for name, _, oracle_path in runs}
+    evidence_bundles = {
+        name: _load_committed_evidence_bundle_with_receipt_sha(evidence_dir)
+        for name, evidence_dir in evidence_directories.items()
     }
     evidence_commitments = {
-        name: load_committed_evidence_receipt(evidence_dir)
-        for name, evidence_dir, _ in runs
+        name: bundle[0] for name, bundle in evidence_bundles.items()
     }
-    parents = {
-        name: load_committed_evidence(path)
-        for name, path in (parent_evidence or {}).items()
+    evidence_by_name = {name: bundle[1] for name, bundle in evidence_bundles.items()}
+    evidence_receipt_sha256 = {
+        name: bundle[2] for name, bundle in evidence_bundles.items()
     }
-    parent_commitments = {
-        name: load_committed_evidence_receipt(path)
-        for name, path in (parent_evidence or {}).items()
+    parent_directories = dict(parent_evidence or {})
+    parent_bundles = {
+        name: _load_committed_evidence_bundle_with_receipt_sha(path)
+        for name, path in parent_directories.items()
     }
+    parent_commitments = {name: bundle[0] for name, bundle in parent_bundles.items()}
+    parents = {name: bundle[1] for name, bundle in parent_bundles.items()}
+    parent_receipt_sha256 = {name: bundle[2] for name, bundle in parent_bundles.items()}
     for name, _, oracle_path in runs:
         _verify_board_path_declared(oracle_path, manifest_path, manifest)
         _verify_evidence_source_binding(
@@ -222,10 +712,7 @@ def assess(
             raise ValueError("CTAA assessment lacks core-training commitment")
         if run_meta.get("arm") not in ARMS:
             raise ValueError("CTAA assessment arm metadata differs")
-        if (
-            not isinstance(run_meta.get("seed"), int)
-            or int(run_meta["seed"]) < 0
-        ):
+        if not isinstance(run_meta.get("seed"), int) or int(run_meta["seed"]) < 0:
             raise ValueError("CTAA assessment seed metadata differs")
         if run_meta.get("dataset") not in {"base", "intervention"}:
             raise ValueError("CTAA assessment dataset metadata differs")
@@ -234,60 +721,36 @@ def assess(
             or commitment_training.get("training_arm") != run_meta["arm"]
         ):
             raise ValueError("CTAA assessment metadata differs from core checkpoint")
-    initial_ledger_sha = manifest["files"].get("access_ledger.json")
-    if not isinstance(initial_ledger_sha, str):
-        raise ValueError("CTAA manifest lacks the initial access ledger")
-    current_ledger_sha = sha256_file(ledger_path)
-    ledger_value = json.loads(ledger_path.read_text())
-    if not isinstance(ledger_value, dict):
-        raise ValueError("CTAA access ledger differs")
-    if partition == "development":
-        if (
-            current_ledger_sha != initial_ledger_sha
-            or ledger_value.get("development_access") != 0
-            or ledger_value.get("confirmation_access") != 0
-            or ledger_value.get("history", []) != []
-        ):
-            raise ValueError("CTAA development access ledger lineage differs")
-    if partition == "confirmation":
-        if development_gate_receipt is None:
-            raise ValueError("CTAA confirmation requires a frozen development gate receipt")
-        gate = json.loads(development_gate_receipt.read_text())
-        if (
-            not isinstance(gate, dict)
-            or gate.get("schema") != "r12_ctaa_v2_development_gate_v1"
-            or gate.get("manifest_sha256") != manifest_sha
-            or gate.get("all_development_gates_pass") is not True
-            or gate.get("development_access_ledger_sha256") != current_ledger_sha
-            or development_gate_receipt.stat().st_mode & 0o222
-        ):
-            raise ValueError("CTAA development gate receipt differs")
-        history = ledger_value.get("history")
-        if (
-            ledger_value.get("development_access") != 1
-            or ledger_value.get("confirmation_access") != 0
-            or not isinstance(history, list)
-            or len(history) != 1
-            or history[0].get("partition") != "development"
-            or history[0].get("previous_ledger_sha256") != initial_ledger_sha
-        ):
-            raise ValueError("CTAA confirmation access ledger lineage differs")
-    access = spend_partition_access(
-        ledger_path,
-        partition=partition,
-        manifest_sha256=manifest_sha,
-        run_names=names,
-        expected_ledger_sha256=current_ledger_sha,
+    if contract.get("manifest_sha256") != manifest_sha:
+        raise ValueError("CTAA assessment manifest differs from run contract")
+    _validate_runs_against_contract(
+        contract=contract,
+        names=names,
+        evidence_commitments=evidence_commitments,
+        evidence_receipt_sha256=evidence_receipt_sha256,
+        evidence_directories=evidence_directories,
+        parent_commitments=parent_commitments,
+        parent_receipt_sha256=parent_receipt_sha256,
+        parent_directories=parent_directories,
+        metadata=metadata,
+        oracle_paths=oracle_paths,
     )
-    oracle_hashes = {
-        name: _verify_board_file(oracle_path, manifest_path, manifest)
-        for name, _, oracle_path in runs
-    }
-    for parent_oracle_path in parent_oracle_paths.values():
-        _verify_board_file(parent_oracle_path, manifest_path, manifest)
-    scores = {}
+    oracle_hashes: dict[str, str] = {}
+    oracles: dict[str, list[dict[str, object]]] = {}
     for name, _, oracle_path in runs:
-        oracle = load_oracle(oracle_path, partition)
+        expected = manifest["files"][oracle_path.name]
+        assert isinstance(expected, str)
+        oracles[name] = load_oracle(oracle_path, partition, expected_sha256=expected)
+        oracle_hashes[name] = expected
+    parent_oracles: dict[str, list[dict[str, object]]] = {}
+    for name, parent_oracle_path in parent_oracle_paths.items():
+        expected = manifest["files"][parent_oracle_path.name]
+        assert isinstance(expected, str)
+        parent_oracles[name] = load_oracle(
+            parent_oracle_path, partition, expected_sha256=expected
+        )
+    scores = {}
+    for name, _, _oracle_path in runs:
         run_meta = metadata[name]
         scores[name] = {
             "seed": run_meta.get("seed"),
@@ -296,13 +759,9 @@ def assess(
             "evidence_commitment": evidence_commitments[name],
             "scores": score_evidence(
                 evidence_by_name[name],
-                oracle,
+                oracles[name],
                 parent_evidence_rows=parents.get(name),
-                parent_oracle_rows=(
-                    load_oracle(parent_oracle_paths[name], partition)
-                    if name in parent_oracle_paths
-                    else None
-                ),
+                parent_oracle_rows=parent_oracles.get(name),
             ),
         }
     report = {
@@ -321,8 +780,21 @@ def assess(
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--manifest", type=Path, required=True)
-    parser.add_argument("--access-ledger", type=Path, required=True)
-    parser.add_argument("--partition", choices=("development", "confirmation"), required=True)
+    parser.add_argument("--run-plan", type=Path, required=True)
+    parser.add_argument("--run-contract", type=Path, required=True)
+    parser.add_argument("--bootstrap-seed-receipt", type=Path, required=True)
+    parser.add_argument("--runtime-bundle", type=Path, required=True)
+    parser.add_argument("--runtime-program-source", type=Path, required=True)
+    parser.add_argument("--runtime-query-source", type=Path, required=True)
+    parser.add_argument("--runtime-tokenizer", type=Path, required=True)
+    parser.add_argument("--runtime-execution-set", type=Path, required=True)
+    parser.add_argument("--statistical-gate-spec", type=Path, required=True)
+    parser.add_argument("--access-registry", type=Path, required=True)
+    parser.add_argument("--access-head-receipt", type=Path, required=True)
+    parser.add_argument("--registry-public-key", type=Path, required=True)
+    parser.add_argument(
+        "--partition", choices=("development", "confirmation"), required=True
+    )
     parser.add_argument(
         "--run",
         action="append",
@@ -337,7 +809,6 @@ def main() -> None:
         metavar=("NAME", "EVIDENCE_DIR"),
         default=[],
     )
-    parser.add_argument("--development-gate-receipt", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     runs = [
@@ -351,13 +822,23 @@ def main() -> None:
     parents = {name: Path(path) for name, path in args.parent_evidence}
     report = assess(
         manifest_path=args.manifest,
-        ledger_path=args.access_ledger,
+        run_plan_path=args.run_plan,
+        run_contract_path=args.run_contract,
+        bootstrap_seed_receipt_path=args.bootstrap_seed_receipt,
+        runtime_bundle_path=args.runtime_bundle,
+        runtime_program_source_path=args.runtime_program_source,
+        runtime_query_source_path=args.runtime_query_source,
+        runtime_tokenizer_path=args.runtime_tokenizer,
+        runtime_execution_set_path=args.runtime_execution_set,
+        statistical_gate_spec_path=args.statistical_gate_spec,
+        access_registry_path=args.access_registry,
+        access_head_receipt_path=args.access_head_receipt,
+        registry_verification_key=_load_registry_public_key(args.registry_public_key),
         partition=args.partition,
         runs=runs,
         output_path=args.output,
         parent_evidence=parents,
         run_metadata=metadata,
-        development_gate_receipt=args.development_gate_receipt,
     )
     print(json.dumps(report, sort_keys=True))
 

@@ -20,7 +20,7 @@ def tiny_model() -> GPT:
     return GPT(
         GPTConfig(
             vocab_size=64,
-            n_layer=3,
+            n_layer=4,
             n_head=3,
             n_kv_head=1,
             d_model=24,
@@ -41,6 +41,7 @@ def tiny_compiler(model: GPT | None = None) -> TrunkCausalCTAACompiler:
         decoder_layers=1,
         decoder_feedforward=48,
         early_layer=1,
+        late_layer=2,
         padding_id=1,
     )
 
@@ -103,6 +104,95 @@ def test_early_and_late_trunk_interventions_are_independent() -> None:
     )
     assert not torch.allclose(native.action_cards, zero_early.action_cards)
     assert not torch.allclose(late_native.schedule, zero_late.schedule)
+
+
+def test_h19_and_h29_are_zero_based_raw_post_block_residuals() -> None:
+    compiler = tiny_compiler().eval()
+    source = inputs()
+    bundle = compiler.encode_source(source)
+    with torch.no_grad():
+        hidden = compiler.model.tok(source)
+        cos = compiler.model.cos[: source.shape[1]]
+        sin = compiler.model.sin[: source.shape[1]]
+        expected_early = None
+        expected_late = None
+        for block_index, block in enumerate(compiler.model.blocks):
+            hidden, _ = block(hidden, cos, sin)
+            if block_index == compiler.early_layer:
+                expected_early = hidden.detach()
+            if block_index == compiler.late_layer:
+                expected_late = hidden.detach()
+        assert expected_early is not None
+        assert expected_late is not None
+        final_normalized = compiler.model.norm(hidden)
+    assert torch.equal(bundle.early, expected_early)
+    assert torch.equal(bundle.late, expected_late)
+    assert not torch.equal(bundle.late, hidden)
+    assert not torch.equal(bundle.late, final_normalized)
+
+
+@pytest.mark.parametrize(
+    ("operation", "legacy"),
+    [
+        ("h19_zero", "zero_early"),
+        ("h29_zero", "zero_late"),
+        ("h19_donor_transplant", "donor_early"),
+        ("h29_donor_transplant", "donor_late"),
+    ],
+)
+def test_protocol_residual_names_match_runtime_operations(
+    operation: str, legacy: str
+) -> None:
+    compiler = tiny_compiler().eval()
+    source = inputs()
+    bundle = compiler.encode_source(source)
+    donor_ids = source.clone()
+    donor_ids[source.ne(compiler.padding_id)] += 20
+    donor = compiler.encode_source(donor_ids)
+    kwargs = {"donor": donor} if "donor" in operation else {}
+    protocol_memory, protocol_valid = compiler.memory_from_residuals(
+        bundle, intervention=operation, **kwargs
+    )
+    legacy_memory, legacy_valid = compiler.memory_from_residuals(
+        bundle, intervention=legacy, **kwargs
+    )
+    assert torch.equal(protocol_valid, legacy_valid)
+    assert torch.equal(protocol_memory, legacy_memory)
+
+
+@pytest.mark.parametrize(
+    ("operation", "legacy"),
+    [
+        ("h19_batch_rotate", "batch_rotate_early"),
+        ("h29_batch_rotate", "batch_rotate_late"),
+    ],
+)
+def test_protocol_batch_rotate_uses_exact_committed_derangement(
+    operation: str, legacy: str
+) -> None:
+    compiler = tiny_compiler().eval()
+    source = inputs()
+    source[1, 5] = compiler.padding_id
+    bundle = compiler.encode_source(source)
+    rotation = torch.tensor([1, 0], dtype=torch.long)
+    protocol_memory, protocol_valid = compiler.memory_from_residuals(
+        bundle,
+        intervention=operation,
+        batch_rotation=rotation,
+    )
+    legacy_memory, legacy_valid = compiler.memory_from_residuals(
+        bundle,
+        intervention=legacy,
+        batch_rotation=rotation,
+    )
+    assert torch.equal(protocol_valid, legacy_valid)
+    assert torch.equal(protocol_memory, legacy_memory)
+    with pytest.raises(ValueError, match="not a derangement"):
+        compiler.memory_from_residuals(
+            bundle,
+            intervention=operation,
+            batch_rotation=torch.arange(2),
+        )
 
 
 def test_frozen_trunk_has_no_gradient_and_every_adapter_family_does() -> None:

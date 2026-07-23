@@ -59,8 +59,30 @@ def test_packet_reader_rejects_corrupt_header_and_truncation(tmp_path: Path) -> 
     payload = bytearray(path.read_bytes())
     path.chmod(0o644)
     path.write_bytes(payload[:-1])
+    path.chmod(0o444)
     with pytest.raises(ValueError, match="geometry"):
         read_packet_file(path)
+    path.chmod(0o644)
     path.write_bytes(b"WRONG" + bytes(payload[5:]))
+    path.chmod(0o444)
     with pytest.raises(ValueError, match="magic"):
+        read_packet_file(path)
+
+
+def test_packet_reader_rejects_writable_symlink_and_hardlink(tmp_path: Path) -> None:
+    path = tmp_path / "packet.bin"
+    write_packet_file(path, sample_packet())
+    path.chmod(0o644)
+    with pytest.raises(ValueError, match="single-link immutable"):
+        read_packet_file(path)
+    path.chmod(0o444)
+    alias = tmp_path / "packet-alias.bin"
+    alias.hardlink_to(path)
+    with pytest.raises(ValueError, match="single-link immutable"):
+        read_packet_file(path)
+    alias.unlink()
+    backing = tmp_path / "packet-backing.bin"
+    path.rename(backing)
+    path.symlink_to(backing.name)
+    with pytest.raises(ValueError, match="single-link immutable"):
         read_packet_file(path)

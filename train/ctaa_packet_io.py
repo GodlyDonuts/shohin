@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
+import stat
 import struct
 
 import torch
@@ -19,11 +21,7 @@ HEADER_LENGTH = struct.Struct(">I")
 
 
 def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
+    return hashlib.sha256(_read_immutable_bytes(path)).hexdigest()
 
 
 def _write_once(path: Path, payload: bytes) -> str:
@@ -50,8 +48,51 @@ def _framed_payload(magic: bytes, header: dict[str, object], body: bytes) -> byt
     return magic + HEADER_LENGTH.pack(len(encoded)) + encoded + body
 
 
-def _read_frame(path: Path, magic: bytes) -> tuple[dict[str, object], bytes]:
-    payload = path.read_bytes()
+def _read_immutable_bytes(path: Path) -> bytes:
+    try:
+        metadata = path.lstat()
+    except OSError as error:
+        raise ValueError("CTAA custody artifact is unavailable") from error
+    if (
+        not stat.S_ISREG(metadata.st_mode)
+        or stat.S_ISLNK(metadata.st_mode)
+        or metadata.st_mode & 0o222
+        or metadata.st_nlink != 1
+    ):
+        raise ValueError("CTAA custody artifact is not a single-link immutable file")
+    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
+    try:
+        descriptor = os.open(path, flags)
+    except OSError as error:
+        raise ValueError("CTAA custody artifact cannot be opened safely") from error
+    try:
+        before = os.fstat(descriptor)
+        chunks: list[bytes] = []
+        while True:
+            chunk = os.read(descriptor, 1024 * 1024)
+            if not chunk:
+                break
+            chunks.append(chunk)
+        after = os.fstat(descriptor)
+    finally:
+        os.close(descriptor)
+    if (
+        before.st_dev != metadata.st_dev
+        or before.st_ino != metadata.st_ino
+        or before.st_size != metadata.st_size
+        or before.st_mtime_ns != metadata.st_mtime_ns
+        or before.st_ctime_ns != metadata.st_ctime_ns
+        or after.st_size != before.st_size
+        or after.st_mtime_ns != before.st_mtime_ns
+        or after.st_ctime_ns != before.st_ctime_ns
+        or after.st_mode & 0o222
+        or after.st_nlink != 1
+    ):
+        raise ValueError("CTAA custody artifact changed while being read")
+    return b"".join(chunks)
+
+
+def _read_frame_bytes(payload: bytes, magic: bytes) -> tuple[dict[str, object], bytes]:
     prefix = len(magic) + HEADER_LENGTH.size
     if len(payload) < prefix or payload[: len(magic)] != magic:
         raise ValueError("CTAA custody artifact magic differs")
@@ -63,6 +104,10 @@ def _read_frame(path: Path, magic: bytes) -> tuple[dict[str, object], bytes]:
     if not isinstance(header, dict):
         raise ValueError("CTAA custody header differs")
     return header, payload[end:]
+
+
+def _read_frame(path: Path, magic: bytes) -> tuple[dict[str, object], bytes]:
+    return _read_frame_bytes(_read_immutable_bytes(path), magic)
 
 
 def packet_body(packet: HardCTAAPacket) -> bytes:
@@ -92,12 +137,14 @@ def write_packet_file(path: Path, packet: HardCTAAPacket) -> dict[str, object]:
         "max_steps": packet.schedule.shape[1],
         "bytes_per_row": packet.bytes_per_row,
     }
-    digest = _write_once(path, _framed_payload(PACKET_MAGIC, header, packet_body(packet)))
+    digest = _write_once(
+        path, _framed_payload(PACKET_MAGIC, header, packet_body(packet))
+    )
     return {**header, "sha256": digest}
 
 
-def read_packet_file(path: Path) -> HardCTAAPacket:
-    header, body = _read_frame(path, PACKET_MAGIC)
+def read_packet_bytes(payload: bytes) -> HardCTAAPacket:
+    header, body = _read_frame_bytes(payload, PACKET_MAGIC)
     required = {
         "schema": "ctaa_hard_packet_v1",
         "rows": int(header.get("rows", -1)),
@@ -131,6 +178,10 @@ def read_packet_file(path: Path) -> HardCTAAPacket:
         initial_state=tensor[:, card_end : card_end + width].clone(),
         schedule=tensor[:, card_end + width :].clone(),
     )
+
+
+def read_packet_file(path: Path) -> HardCTAAPacket:
+    return read_packet_bytes(_read_immutable_bytes(path))
 
 
 def write_query_file(path: Path, query: HardCTAAQuery) -> dict[str, object]:

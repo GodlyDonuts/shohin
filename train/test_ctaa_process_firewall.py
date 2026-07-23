@@ -26,6 +26,7 @@ def test_fresh_process_execution_and_late_query_receive_no_source(tmp_path: Path
         {"schema": CORE_SCHEMA, "kind": "closure_feature", "state": core.state_dict()},
         core_path,
     )
+    core_path.chmod(0o444)
     packet = HardCTAAPacket(
         action_cards=torch.tensor(
             [[[1, 0, 2], [2, 2, 0], [0, 1, 1], [2, 0, 1]]],
@@ -175,7 +176,7 @@ def test_executor_core_call_has_no_schedule_or_future_event_argument() -> None:
     schedule = torch.tensor([[0, 1, 4, *([3] * 38)]], dtype=torch.long)
     initial = torch.tensor([[0, 1, 2]], dtype=torch.long)
     execute_streamed_state_route(core, 3, cards, schedule, initial)
-    assert len(core.calls) == 41
+    assert len(core.calls) == 2
     assert set(core.calls) == {((1, 3), (1, 3))}
 
 
