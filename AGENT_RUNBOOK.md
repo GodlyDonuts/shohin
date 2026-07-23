@@ -11163,12 +11163,58 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   both normalized change mass and a permutation-invariant maximum-change
   signal. Its default 512-wide, three-layer controller adds 2,829,341
   parameters; protected trunk plus controller is 127,911,005, leaving
-  72,088,995 below 200M. The same-seed scale-free development canary is
-  running locally. Do not open confirmation. First require repeated-seed
-  development stability, operation/state/halt interventions, an independently
-  implemented oracle, and a qualified parameter/state/FLOP-matched generic
-  recurrence. This is systematic bounded fixed-point execution evidence, not
-  a language compiler or general-reasoning result.
+  72,088,995 below 200M. The same-seed scale-free diagnostic reaches
+  768/768 train and **192/192 development joint**, including 63/63 at unseen
+  depth six. Its checkpoint/report hashes are `ec048502...`/`53ceccc2...`.
+  Because source changed while that local process was running, retain it as
+  positive architecture evidence but not a promotion artifact.
+
+  A hostile gradient audit then found that the old hard teacher loss clamped
+  wrong one-hot actions and supplied zero corrective gradient. Commit
+  `eae5d15` retains raw policy logits for cross-entropy supervision and keeps
+  a 0.1 teacher-loss floor. Tests prove wrong hard actions receive finite
+  nonzero gradients. The first two exact hard curricula still fail:
+  `g_hard_logit_scale_free` (hard after 10% soft) and
+  `h_half_hard_logit_scale_free` (hard after 50% soft) both score 0% train and
+  0% development joint. Their checkpoint/report SHA-256 pairs are
+  `0a8d8a9f...` / `ab06f52f...` and `599a40f7...` / `52e8dee7...`.
+
+  Frozen source commit `da00a61` delays hard execution until the final 10%
+  while preserving raw-logit teacher supervision. The exact-source run
+  `i_late_hard_logit_scale_free` reaches 768/768 train and **192/192
+  development joint**, including 129/129 depth five and 63/63 depth six, with
+  exact work registers, answer, and model-owned halt. Checkpoint/report
+  SHA-256 are
+  `531d015ef8786e702a41e9e390026545e2c74ac7f1d83cef69042f4677a82ed2`
+  and
+  `119efe1dec0246fb50aa58647683ca8aba3a3f68aae988ce4b97c0fb3e65e8f3`.
+  Confirmation access remains zero. Freeze this as a bounded fixed-template
+  executor baseline only.
+
+  A matched joint legal-transition controller now exists as an untrained
+  control. One 2,917-way head chooses a complete legal action tuple or HALT,
+  preventing compounded illegal factor combinations. The default complete
+  system is 129,392,549 parameters, below the 200M cap. Its focused and
+  compatibility suites pass 19 tests.
+
+  The first Bekić CPU board passes its two independent oracles and reindexing
+  mechanics, but hostile review rejects it for neural authorization. It has
+  only eight normalized train skeletons, one fixed equation template,
+  role-leaking constant order/density, and no explicit nested fixed-point
+  syntax. Retain it as an oracle/fixed-template negative control. The active
+  replacement is a grammar-sampled matched-counterfactual orbit board where
+  `P` and rewired `P'` share constants, size, depth, topology, and operation
+  histogram but require different fixed points. This forces causal use of the
+  episode-local program.
+
+  Do not forget the strongest retained substrate: confirmed S7 reaches
+  2,048/2,048 states and answers across 18 unseen contextual laws using a
+  218-parameter learned generator, with causal controls collapsed. The next
+  architecture must combine S7-style tied primitive reuse, ER-CST
+  occurrence/equality binding, one source-deleted nil-linked program graph,
+  and QERARM hard relation registers/late query. Do not train another static
+  opcode schedule and call it general reasoning. Newton DNS still fails; no
+  cluster job was submitted. Do not open confirmation.
 
   The combined UROM/QERARM suite passes 36 focused tests, including
   out-of-cardinality rejection, antitone difference, categorical halt,

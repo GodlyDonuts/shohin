@@ -321,6 +321,10 @@ development-only probe is the first successful learned-executor signal:
 | teacher GRU | 38.2813% | 0% | training sequence memorization |
 | Markov affordance | 0% | 0% | no phase separation |
 | categorical phase, mean-change only | 100% | 94.2708% | residual cardinality-7 convergence errors |
+| phase plus scale-free max change | 100% | 100% | positive diagnostic; source changed during run |
+| scale-free, hard after 10% soft | 0% | 0% | hard transition before policy fit collapses to HALT |
+| scale-free, hard after 50% soft | 0% | 0% | later switch still collapses |
+| scale-free, hard after 90% soft | 100% | 100% | exact-source bounded executor baseline |
 
 Their report SHA-256 values are, respectively,
 `4499c3621422e3b51e72a0cb91d544faba0c53da23d9f3d93c713f87a5068b0d`,
@@ -337,17 +341,104 @@ development joint. All 11 failures are cardinality-seven rows, principally
 misclassified fixed-point transitions. This is a bounded development result,
 not a promotion or confirmation result.
 
-## 11. Immediate Work
+The scale-free diagnostic uses a 401,213-parameter controller and reaches
+768/768 train plus 192/192 development joint, including 63/63 at unseen depth
+six. Checkpoint/report SHA-256 are
+`ec04850295b1b143fb5fa353cb73a5cbe2930817f2711d0aca9e320dc90881cb`
+and
+`53ceccc2dd3564af25b1f02659d9ba44676073cdc76942299cda0aee83711528`.
+The trainer source changed while that local process was running, so this is a
+positive architecture diagnostic, not a source-frozen promotion artifact.
 
-1. run the scale-free stability revision against the same development-only
-   contract;
-2. require hard exact work-register, answer, and halt extrapolation rather
-   than a low continuous loss;
-3. localize every residual action/phase/halt error before opening any new
-   split;
-4. if it passes development, add query-blind state/action transplants,
-   operation ablations, and a parameter/FLOP-matched generic recurrent
-   control;
-5. only then connect the learned executor to a source-deleted Shohin compiler;
-6. keep confirmation sealed until source, board, thresholds, matched controls,
-   and independent assessment are frozen.
+Hostile gradient review also found that the old hard teacher loss clamped
+wrong one-hot actions and therefore produced zero corrective gradient. The
+frozen successor retains raw logits for cross-entropy supervision and keeps a
+0.1 teacher-loss floor. A regression test proves every wrong hard action head
+receives finite nonzero gradient.
+
+The curriculum itself was then falsified. Starting hard execution after only
+10% soft fit (`g_hard_logit_scale_free`) or after 50%
+(`h_half_hard_logit_scale_free`) yields 0% train and 0% development joint.
+Their checkpoint/report SHA-256 pairs are
+`0a8d8a9fc3eb2702c81123c0ac4f7b4b890717f2b4b65db284faf3ce6228cfe4` /
+`ab06f52f941be5ec78bd5b8c8e7ac0dc3016a8867f3a8cdf19cc2411533a1672`
+and
+`599a40f74336393cc4f683551053ce99463ec577a269571125953b59f97495e2` /
+`52e8dee793621ae3d1d6ebee74ccbc29e7f6f40edd03f583155d951167f9ef75`.
+
+Frozen source commit `da00a61` delays hard execution until the final 10% while
+preserving the raw-logit teacher gradient. Its exact-source same-seed run
+`i_late_hard_logit_scale_free` reaches 768/768 train and 192/192 development
+joint, including 129/129 depth-five and 63/63 depth-six rows. Work registers,
+answer, and model-owned halt are all exact. Checkpoint/report SHA-256 are
+`531d015ef8786e702a41e9e390026545e2c74ac7f1d83cef69042f4677a82ed2`
+and
+`119efe1dec0246fb50aa58647683ca8aba3a3f68aae988ce4b97c0fb3e65e8f3`.
+Confirmation access is zero. This promotes a source-frozen bounded executor
+baseline only; it does not establish program interpretation.
+
+A matched joint legal-transition controller is now implemented but untrained.
+It replaces six independently decoded action heads with one 2,917-way head:
+2,916 complete legal
+`(operation, left, right, destination, next_phase)` tuples plus HALT. The
+default controller adds 4,310,885 parameters for a 129,392,549-parameter
+complete system. Soft rollout mixes complete successor states, hard rollout
+selects one legal tuple, and raw logits preserve corrective cross-entropy
+gradients. It is a qualified architecture control, not a result.
+
+## 11. Bekić Program-Interpretation Boundary
+
+`pipeline/bekic_relational_fixed_point_board.py` provides two independent CPU
+oracles for simultaneous and nested Bekić evaluation, fresh opaque variable
+and node identifiers, one-representation machine inputs, object/node/variable
+reindexing tests, and exact receipts. Those mechanics pass, but hostile review
+rejects the board for neural authorization:
+
+- every equation is one fixed template;
+- training has only eight normalized skeletons;
+- expression depth only repeats one COMPOSE location;
+- constant order and density reveal semantic roles;
+- the paired "nested" graph is the same equation graph plus a binding tag,
+  not explicit nested fixed-point syntax; and
+- byte-hash disjointness is compatible with identical semantic templates.
+
+Retain this board as an oracle and fixed-template negative control. Do not call
+accuracy on it episode-local program interpretation.
+
+The score-bearing successor must use grammar-sampled monotone program orbits.
+For identical constants and matched structural statistics it must pair a
+program `P` with a rewired `P'` that has a different fixed point, plus an
+equivalent rewrite and an explicit nested Bekić form. Program/constant
+transplants, noncommuting wiring twins, alpha/node/object/constant-order
+reindexing, canonical skeleton and motif disjointness, and five-seed exact hard
+rollout are preregistered before any confirmation board exists.
+
+The architecture target is no longer another static opcode controller. Shohin
+already has the confirmed S7 component: a 218-parameter generator reaches
+2,048/2,048 exact recurrent states and answers across 18 unseen contextual
+laws, while false-generator, one-witness, deranged-card, and reset controls
+collapse. The next integration is therefore:
+
+1. identity-aware occurrence/equality binding from ER-CST;
+2. one private, source-deleted typed program graph with predicted links/nil;
+3. S7-style tied learned primitive generators reused at every AST node and
+   fixed-point iteration;
+4. QERARM's exact hard relation registers and model-owned halt; and
+5. a late query disclosed only after source-deleted execution.
+
+## 12. Immediate Work
+
+1. freeze QERARM late-hard as the bounded fixed-template executor baseline;
+2. finish the grammar-sampled matched-counterfactual Bekić orbit board without
+   generating confirmation;
+3. require exact program and constant transplants before any neural run;
+4. integrate S7-style contextual primitive binding with a private graph
+   executor rather than fixed global opcode semantics;
+5. compare factorized and joint legal-transition controllers under identical
+   hard-from-step-one autonomous gates;
+6. add query-blind state/action transplants, operator ablations, and a
+   parameter/FLOP-matched generic recurrent control;
+7. only then connect the surviving executor to the occurrence/equality source
+   compiler; and
+8. keep confirmation sealed until source, board, thresholds, controls, five
+   model seeds, and independent assessment are frozen.
