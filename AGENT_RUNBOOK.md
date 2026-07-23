@@ -44,6 +44,20 @@
 > test. Do not promote unless the full treatment/active false-triad and other
 > control gates plus cross-family gates in `R12_AHRF_PREREG.md` pass.
 >
+> **Parallel non-score-bearing N-TCRR substrate:** repaired local
+> source-deleted board source `3b1fe07` contains 22 packets, 24 legal
+> transitions, four exact no-redex negatives, ten causal-twin kinds, and exact
+> agreement between production and independent reference mechanics. Audit
+> report `artifacts/r12/neural_tcrr_board_3b1fe07.json` admits only the local
+> board, not a neural claim. Commit `b245f87` adds a packet-only tensor
+> boundary separated from offline set-valued transition targets; the
+> independent mechanics/board/audit/tensor suite passes 91 tests. Commit
+> `d448619` makes the 128-action width an explicit compute-budget cap because
+> shared DAG nodes can have more than one occurrence; over-cap states fail
+> closed and are never truncated. No neural motor has been trained, no scored
+> split has been generated, and no reasoning result follows from these
+> interfaces.
+>
 > **Newest train-only routing result:** factorized witness route job `694945` completed cleanly on
 > `evc36` and is **rejected before fresh-board generation**. Treatment reaches 25.8625% witness,
 > 27.9875% relation, 27.6125% joint, 57.8875% state, and 77.075% answer on 8,000 disjoint
@@ -11294,3 +11308,25 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   generic, zero-triad, and fixed-deadline controls be run. Promotion still
   requires five seeds and frozen transfer to Horn closure, dataflow, and a
   non-relational family. The protected flagship remains byte-identical.
+
+- **2026-07-23** -- **The source-deleted neural TCRR tensor boundary is
+  admitted as infrastructure only.** The repaired local board now crosses a
+  fixed `N16/C16/Y8/R8/P12/A3/D8/V112` packet interface without semantic
+  identifiers, expected transitions, oracle outputs, successors, or hashes in
+  model-visible tensors. Offline training targets remain in a separate module
+  and preserve the full set of legal `(rule, root-relative occurrence path,
+  binding, successor)` transactions. Exact packet/target round trips,
+  constructor/type/rule/variable/storage reindex alignment, all ten causal
+  twin kinds, shared-occurrence separation, four empty no-redex action sets,
+  custody separation, and digest mismatch rejection pass. The combined
+  mechanics, independent audit, and tensor suite passes 91 tests; Ruff and
+  formatting are clean.
+
+  The legal-action dimension is frozen at 128 as an explicit local compute
+  cap, not inferred from storage cardinality. Shared DAG paths invalidate a
+  one-occurrence-per-storage assumption, so any state with more than 128 legal
+  actions is rejected before training/scoring rather than truncated. The
+  preregistration and regression test were corrected in commit `d448619`.
+  This only authorizes construction and falsification of a neural one-step
+  motor. It is not evidence of term-rewrite competence, autonomous
+  composition, language grounding, or general reasoning.
