@@ -1,34 +1,39 @@
 from __future__ import annotations
 
 import dataclasses
+import hashlib
+import inspect
 import json
-from collections import Counter
+from functools import lru_cache
+from pathlib import Path
+import stat
 
 import pytest
 
 import neural_tcrr_board as board
 
 
+@lru_cache(maxsize=1)
 def _built() -> board.LocalTransitionSlice:
     return board.build_local_transition_slice()
 
 
-def _expected_by_digest(
+def _packets(
+    value: board.LocalTransitionSlice,
+) -> dict[str, board.SourceDeletedPacket]:
+    return {board.packet_sha256(item): item for item in value.packets}
+
+
+def _expected(
     value: board.LocalTransitionSlice,
 ) -> dict[str, board.ExpectedTransitionRecord]:
     return {item.packet_sha256: item for item in value.expected_records}
 
 
-def _fingerprints_by_digest(
+def _fingerprints(
     value: board.LocalTransitionSlice,
 ) -> dict[str, board.PacketFingerprints]:
     return {item.packet_sha256: item for item in value.fingerprints}
-
-
-def _packet_by_digest(
-    value: board.LocalTransitionSlice,
-) -> dict[str, board.SourceDeletedPacket]:
-    return {board.packet_sha256(item): item for item in value.packets}
 
 
 def _twin(
@@ -38,36 +43,28 @@ def _twin(
     return next(item for item in value.twins if item.kind == kind)
 
 
-def _successor_semantic_digest(
-    packet: board.SourceDeletedPacket,
-    action: board.ExpectedTransition,
-) -> str:
-    successor_packet = dataclasses.replace(packet, graph=action.successor)
-    return board.packet_fingerprints(successor_packet).isomorphic_sha256
-
-
-def _all_opaque_ids(packet: board.SourceDeletedPacket) -> set[str]:
+def _all_identifiers(packet: board.SourceDeletedPacket) -> set[str]:
     output = set(packet.graph.reservoir)
     for constructor in packet.constructors:
         output.add(constructor.identifier)
         output.add(constructor.result_type)
         output.update(constructor.argument_types)
 
-    def collect_term(term: board.RuleTermRecord | None) -> None:
+    def collect(term: board.RuleTermRecord | None) -> None:
         if term is None:
             return
+        output.add(term.type_id)
         if term.constructor_id is not None:
             output.add(term.constructor_id)
         if term.variable_id is not None:
             output.add(term.variable_id)
-        output.add(term.type_id)
         for child in term.children:
-            collect_term(child)
+            collect(child)
 
     for rule in packet.rules:
         output.add(rule.identifier)
-        collect_term(rule.lhs)
-        collect_term(rule.rhs)
+        collect(rule.lhs)
+        collect(rule.rhs)
     for node in packet.graph.nodes:
         output.add(node.storage_id)
         output.add(node.type_id)
@@ -78,79 +75,104 @@ def _all_opaque_ids(packet: board.SourceDeletedPacket) -> set[str]:
     return output
 
 
-def _rule_marginals(rule: board.RuleRecord) -> Counter[tuple[object, ...]]:
-    output: Counter[tuple[object, ...]] = Counter()
+def _namespace_identifiers(
+    packet: board.SourceDeletedPacket,
+) -> dict[str, set[str]]:
+    variables = set()
 
-    def visit(term: board.RuleTermRecord | None, side: str) -> None:
+    def collect(term: board.RuleTermRecord | None) -> None:
         if term is None:
-            output[(side, "delete")] += 1
             return
-        output[(side, term.kind, len(term.children))] += 1
+        if term.variable_id is not None:
+            variables.add(term.variable_id)
         for child in term.children:
-            visit(child, side)
+            collect(child)
 
-    visit(rule.lhs, "lhs")
-    visit(rule.rhs, "rhs")
-    return output
+    for rule in packet.rules:
+        collect(rule.lhs)
+        collect(rule.rhs)
+    variables.update(
+        node.variable_id for node in packet.graph.nodes if node.variable_id is not None
+    )
+    return {
+        "constructor": {item.identifier for item in packet.constructors},
+        "type": {
+            type_id
+            for item in packet.constructors
+            for type_id in (item.result_type, *item.argument_types)
+        },
+        "rule": {item.identifier for item in packet.rules},
+        "storage": set(packet.graph.reservoir),
+        "variable": variables,
+    }
 
 
-def test_slice_is_deterministic_and_has_bounded_partitions() -> None:
-    first = _built()
-    second = _built()
-    assert first == second
-    assert len(first.packets) == 21
-    counts = Counter(item.partition for item in first.split_assignments)
-    assert counts == {
-        "local_transition_train": 15,
+def _successor_digest(
+    packet: board.SourceDeletedPacket,
+    action: board.ExpectedTransition,
+) -> str:
+    return board.packet_fingerprints(
+        dataclasses.replace(packet, graph=action.successor)
+    ).isomorphic_sha256
+
+
+def test_repaired_slice_has_exact_frozen_receipts() -> None:
+    value = _built()
+    assert len(value.packets) == 22
+    assert len(value.expected_records) == 22
+    assert len(value.oracle_agreements) == 22
+    assert len(value.primitive_coverage) == 22
+    assert len(value.twins) == 10
+    assert sum(len(item.transitions) for item in value.expected_records) == 24
+    assert sum(not item.transitions for item in value.expected_records) == 4
+    assert {
+        partition: sum(item.partition == partition for item in value.split_assignments)
+        for partition in (
+            "local_transition_train",
+            "local_transition_development",
+        )
+    } == {
+        "local_transition_train": 16,
         "local_transition_development": 6,
     }
-    assert {item.kind for item in first.twins} == {
-        "rhs_pointer",
-        "shared_occurrence",
-        "capacity",
-        "storage_reindex",
-        "rule_reindex",
-    }
+    assert sum(len(item.normalized_rule_pairs) for item in value.fingerprints) == 51
+    assert (
+        sum(len(item.reachable_two_rule_compositions) for item in value.fingerprints)
+        == 8
+    )
 
 
-def test_every_identity_namespace_is_fresh_across_packets() -> None:
-    value = _built()
-    seen: set[str] = set()
-    for packet in value.packets:
-        identifiers = _all_opaque_ids(packet)
-        assert all(
-            len(identifier) == board.OPAQUE_ID_LENGTH
-            and set(identifier) <= set("0123456789abcdef")
-            for identifier in identifiers
-        )
-        assert not (seen & identifiers)
-        seen.update(identifiers)
+def test_board_is_deterministic() -> None:
+    assert board.build_local_transition_slice() == _built()
 
 
-def test_model_packet_schema_has_no_label_or_generation_metadata() -> None:
-    value = _built()
+def test_packet_schema_excludes_every_offline_field() -> None:
     forbidden = {
         "answer",
         "class",
         "expected",
         "family",
+        "fingerprint",
         "label",
         "legal",
         "mask",
         "oracle",
+        "partition",
         "schedule",
         "seed",
         "source",
         "split",
+        "successor",
         "target",
         "trace",
+        "twin",
     }
     assert {item.name for item in dataclasses.fields(board.SourceDeletedPacket)} == {
         "constructors",
         "rules",
         "graph",
     }
-    for packet in value.packets:
+    for packet in _built().packets:
         payload = json.loads(board.serialize_model_packet(packet))
 
         def scan(item: object) -> None:
@@ -167,7 +189,7 @@ def test_model_packet_schema_has_no_label_or_generation_metadata() -> None:
 
 
 @pytest.mark.parametrize(
-    "forbidden_key",
+    "key",
     [
         "family",
         "episode_class",
@@ -178,309 +200,550 @@ def test_model_packet_schema_has_no_label_or_generation_metadata() -> None:
         "legal_action_mask",
     ],
 )
-def test_serialization_validator_kills_forbidden_field_mutations(
-    forbidden_key: str,
-) -> None:
-    packet = _built().packets[0]
-    payload = dataclasses.asdict(packet)
-    payload["graph"][forbidden_key] = "leak"
+def test_packet_serializer_kills_forbidden_field_mutants(key: str) -> None:
+    payload = dataclasses.asdict(_built().packets[0])
+    payload["graph"][key] = "leak"
     with pytest.raises(board.NeuralTcrrBoardError, match="forbidden"):
         board.validate_model_packet_payload(payload)
 
 
-def test_expected_records_are_physically_separate_and_join_by_digest() -> None:
-    value = _built()
-    packets = _packet_by_digest(value)
-    expected = _expected_by_digest(value)
-    assignments = {
-        item.packet_sha256: item.partition for item in value.split_assignments
+def test_geometry_maxima_are_explicit_and_enforced() -> None:
+    packet = _built().packets[0]
+    existing_type = packet.constructors[0].result_type
+    extra = tuple(
+        board.ConstructorRecord(
+            hashlib.sha256(f"constructor:{index}".encode()).hexdigest()[:24],
+            existing_type,
+            (),
+        )
+        for index in range(board.MAX_CONSTRUCTORS - len(packet.constructors) + 1)
+    )
+    with pytest.raises(board.NeuralTcrrBoardError, match="constructor count"):
+        board.validate_source_deleted_packet(
+            dataclasses.replace(
+                packet,
+                constructors=(*packet.constructors, *extra),
+            )
+        )
+
+    type_packet = _packets(_built())[
+        _twin(_built(), "type_mismatch").left_packet_sha256
+    ]
+    present_types = {
+        type_id
+        for item in type_packet.constructors
+        for type_id in (item.result_type, *item.argument_types)
     }
-    fingerprints = _fingerprints_by_digest(value)
-    assert set(packets) == set(expected) == set(assignments) == set(fingerprints)
-    for digest, packet in packets.items():
-        serialized = board.serialize_model_packet(packet)
-        assert digest not in serialized
-        assert "occurrence_path" not in serialized
-        assert "successor" not in serialized
-        assert expected[digest].packet_sha256 == digest
+    needed = board.MAX_TYPES - len(present_types) + 1
+    extra_types = tuple(
+        board.ConstructorRecord(
+            hashlib.sha256(f"type-constructor:{index}".encode()).hexdigest()[:24],
+            hashlib.sha256(f"type:{index}".encode()).hexdigest()[:24],
+            (),
+        )
+        for index in range(needed)
+    )
+    with pytest.raises(board.NeuralTcrrBoardError, match="type count"):
+        board.validate_source_deleted_packet(
+            dataclasses.replace(
+                type_packet,
+                constructors=(*type_packet.constructors, *extra_types),
+            )
+        )
 
 
-def test_offline_oracle_mutation_changes_labels_not_packet_bytes(
-    monkeypatch: pytest.MonkeyPatch,
+def test_unknown_graph_and_rule_kinds_fail_closed() -> None:
+    packet = _built().packets[0]
+    graph_mutant = dataclasses.replace(
+        packet,
+        graph=dataclasses.replace(
+            packet.graph,
+            nodes=(
+                dataclasses.replace(packet.graph.nodes[0], kind="mystery"),
+                *packet.graph.nodes[1:],
+            ),
+        ),
+    )
+    with pytest.raises(board.NeuralTcrrBoardError, match="unknown kind"):
+        board.validate_source_deleted_packet(graph_mutant)
+    rule = packet.rules[0]
+    rule_mutant = dataclasses.replace(
+        packet,
+        rules=(
+            dataclasses.replace(
+                rule,
+                lhs=dataclasses.replace(rule.lhs, kind="mystery"),
+            ),
+            *packet.rules[1:],
+        ),
+    )
+    with pytest.raises(board.NeuralTcrrBoardError, match="unknown kind"):
+        board.validate_source_deleted_packet(rule_mutant)
+
+
+def test_duplicate_graph_variable_identifiers_fail_closed() -> None:
+    twin = _twin(_built(), "rhs_pointer")
+    packet = _packets(_built())[twin.left_packet_sha256]
+    root = next(
+        item for item in packet.graph.nodes if item.storage_id == packet.graph.root
+    )
+    duplicate_variable = "f" * 24
+    child_ids = set(root.children)
+    nodes = tuple(
+        (
+            board.GraphNodeRecord(
+                storage_id=item.storage_id,
+                kind="variable",
+                type_id=item.type_id,
+                variable_id=duplicate_variable,
+            )
+            if item.storage_id in child_ids
+            else item
+        )
+        for item in packet.graph.nodes
+    )
+    mutant = dataclasses.replace(
+        packet,
+        graph=dataclasses.replace(packet.graph, nodes=nodes),
+    )
+    with pytest.raises(board.NeuralTcrrBoardError, match="variable identifiers"):
+        board.validate_source_deleted_packet(mutant)
+
+
+@pytest.mark.parametrize(
+    "kind",
+    [
+        "repeated_variable_equality",
+        "partial_nested_match",
+        "type_mismatch",
+        "capacity",
+    ],
+)
+def test_controlled_no_redex_twins_are_positive_negative_contrasts(
+    kind: str,
 ) -> None:
-    generated = board._replace_example(2026072991, depth=2)
-    packet = board._packet_from_mechanics(
-        generated.system,
-        generated.graph,
-        storage_ids=generated.storage_ids,
-        packet_seed=generated.packet_seed,
-    )
-    original_bytes = board.serialize_model_packet(packet)
-    original_expected = board._expected_record(
-        generated.system,
-        generated.graph,
-        packet,
-        generated.storage_ids,
-        packet_seed=generated.packet_seed,
-    )
-    assert len(original_expected.transitions) == 1
-    monkeypatch.setattr(
-        board.mechanics,
-        "legal_reductions",
-        lambda _system, _graph: (),
-    )
-    mutated_expected = board._expected_record(
-        generated.system,
-        generated.graph,
-        packet,
-        generated.storage_ids,
-        packet_seed=generated.packet_seed,
-    )
-    assert mutated_expected.transitions == ()
-    assert board.serialize_model_packet(packet) == original_bytes
+    value = _built()
+    twin = _twin(value, kind)
+    expected = _expected(value)
+    assert expected[twin.left_packet_sha256].transitions
+    assert expected[twin.right_packet_sha256].transitions == ()
 
 
-def test_split_fingerprints_have_no_exact_isomorphic_or_window_leakage() -> None:
+def test_type_mismatch_negative_is_also_an_all_distractor_packet() -> None:
+    value = _built()
+    twin = _twin(value, "type_mismatch")
+    packet = _packets(value)[twin.right_packet_sha256]
+    assert len(packet.rules) == 2
+    assert _expected(value)[twin.right_packet_sha256].transitions == ()
+
+
+def test_multi_rule_base_has_only_a_strict_legal_subset() -> None:
+    value = _built()
+    twin = _twin(value, "constructor_reindex")
+    packet = _packets(value)[twin.left_packet_sha256]
+    actions = _expected(value)[twin.left_packet_sha256].transitions
+    legal_rules = {item.rule_id for item in actions}
+    assert len(packet.rules) == 3
+    assert 0 < len(legal_rules) < len(packet.rules)
+    assert len(legal_rules) == 2
+
+
+def test_every_twin_is_reconstructed_from_its_base_named_axis() -> None:
+    value = _built()
+    packets = _packets(value)
+    for twin in value.twins:
+        assert (
+            board._apply_twin_mutation(
+                packets[twin.left_packet_sha256],
+                twin,
+            )
+            == packets[twin.right_packet_sha256]
+        )
+
+
+def test_non_reindex_twins_reuse_one_identity_namespace() -> None:
+    value = _built()
+    packets = _packets(value)
+    for kind in (
+        "rhs_pointer",
+        "repeated_variable_equality",
+        "partial_nested_match",
+        "type_mismatch",
+    ):
+        twin = _twin(value, kind)
+        assert _all_identifiers(packets[twin.left_packet_sha256]) == (
+            _all_identifiers(packets[twin.right_packet_sha256])
+        )
+    capacity = _twin(value, "capacity")
+    left = _all_identifiers(packets[capacity.left_packet_sha256])
+    right = _all_identifiers(packets[capacity.right_packet_sha256])
+    assert len(left - right) == 1
+    assert not (right - left)
+
+
+@pytest.mark.parametrize(
+    ("kind", "namespace"),
+    [
+        ("constructor_reindex", "constructor"),
+        ("type_reindex", "type"),
+        ("rule_reindex", "rule"),
+        ("storage_reindex", "storage"),
+    ],
+)
+def test_each_reindex_changes_only_its_named_namespace(
+    kind: str,
+    namespace: str,
+) -> None:
+    value = _built()
+    twin = _twin(value, kind)
+    packets = _packets(value)
+    fingerprints = _fingerprints(value)
+    left = packets[twin.left_packet_sha256]
+    right = packets[twin.right_packet_sha256]
+    left_namespaces = _namespace_identifiers(left)
+    right_namespaces = _namespace_identifiers(right)
+    for active_namespace in left_namespaces:
+        assert left_namespaces[active_namespace] == (right_namespaces[active_namespace])
+    assert twin.namespace == namespace
+    assert {item.old for item in twin.remap} == left_namespaces[namespace]
+    assert {item.new for item in twin.remap} == right_namespaces[namespace]
+    assert any(item.old != item.new for item in twin.remap)
+    assert board.packet_sha256(left) != board.packet_sha256(right)
+    assert board._apply_twin_mutation(left, twin) == right
+    assert (
+        fingerprints[twin.left_packet_sha256].isomorphic_sha256
+        == fingerprints[twin.right_packet_sha256].isomorphic_sha256
+    )
+
+
+def test_rhs_pointer_and_shared_occurrence_twins_remain_causal() -> None:
+    value = _built()
+    packets = _packets(value)
+    expected = _expected(value)
+    rhs = _twin(value, "rhs_pointer")
+    left_action = expected[rhs.left_packet_sha256].transitions[0]
+    right_action = expected[rhs.right_packet_sha256].transitions[0]
+    assert _successor_digest(
+        packets[rhs.left_packet_sha256],
+        left_action,
+    ) != _successor_digest(
+        packets[rhs.right_packet_sha256],
+        right_action,
+    )
+
+    shared = _twin(value, "shared_occurrence")
+    actions = expected[shared.left_packet_sha256].transitions
+    left = actions[shared.left_transition_index]
+    right = actions[shared.right_transition_index]
+    assert left.target_storage_id == right.target_storage_id
+    assert {left.occurrence_path, right.occurrence_path} == {(0,), (1,)}
+    assert _successor_digest(
+        packets[shared.left_packet_sha256],
+        left,
+    ) != _successor_digest(
+        packets[shared.left_packet_sha256],
+        right,
+    )
+
+
+def test_rule_pair_fingerprints_cover_every_pair_without_applicability_filter() -> None:
+    value = _built()
+    for packet, fingerprints in zip(
+        value.packets,
+        value.fingerprints,
+        strict=True,
+    ):
+        rule_count = len(packet.rules)
+        assert len(fingerprints.normalized_rule_pairs) == (
+            rule_count * (rule_count + 1) // 2
+        )
+    mismatch = _twin(value, "type_mismatch")
+    assert not _expected(value)[mismatch.right_packet_sha256].transitions
+    assert _fingerprints(value)[mismatch.right_packet_sha256].normalized_rule_pairs
+
+
+def test_composition_fingerprint_count_matches_reachable_two_step_windows() -> None:
+    for packet, fingerprints in zip(
+        _built().packets,
+        _built().fingerprints,
+        strict=True,
+    ):
+        system, graph, _storage = board._packet_to_mechanics(packet)
+        expected_count = 0
+        for first in board.mechanics.legal_reductions(system, graph):
+            intermediate = board.mechanics.apply_reduction(system, graph, first)
+            expected_count += len(
+                board.mechanics.legal_reductions(system, intermediate)
+            )
+        assert len(fingerprints.reachable_two_rule_compositions) == (expected_count)
+
+
+def test_split_isolation_covers_rule_pairs_and_compositions() -> None:
     value = _built()
     board.validate_split_isolation(
         value.split_assignments,
         value.fingerprints,
     )
-    by_partition: dict[str, list[board.PacketFingerprints]] = {
-        "local_transition_train": [],
-        "local_transition_development": [],
-    }
-    fingerprint_map = _fingerprints_by_digest(value)
-    for assignment in value.split_assignments:
-        by_partition[assignment.partition].append(
-            fingerprint_map[assignment.packet_sha256]
-        )
-    train = by_partition["local_transition_train"]
-    development = by_partition["local_transition_development"]
-    assert not (
-        {item.exact_sha256 for item in train}
-        & {item.exact_sha256 for item in development}
-    )
-    assert not (
-        {item.isomorphic_sha256 for item in train}
-        & {item.isomorphic_sha256 for item in development}
-    )
-    assert not (
-        {
-            window
-            for item in train
-            for window in item.normalized_rule_windows
+    fingerprints = _fingerprints(value)
+    split = {item.packet_sha256: item.partition for item in value.split_assignments}
+    for field in (
+        "normalized_rule_windows",
+        "normalized_rule_pairs",
+        "reachable_two_rule_compositions",
+    ):
+        train = {
+            item
+            for digest, partition in split.items()
+            if partition == "local_transition_train"
+            for item in getattr(fingerprints[digest], field)
         }
-        & {
-            window
-            for item in development
-            for window in item.normalized_rule_windows
+        development = {
+            item
+            for digest, partition in split.items()
+            if partition == "local_transition_development"
+            for item in getattr(fingerprints[digest], field)
         }
-    )
+        assert not (train & development)
 
 
 def test_cross_split_reindex_mutant_is_rejected() -> None:
     value = _built()
-    twin = _twin(value, "storage_reindex")
-    assignments = []
-    for item in value.split_assignments:
-        partition = item.partition
-        if item.packet_sha256 == twin.right_packet_sha256:
-            partition = "local_transition_development"
-        assignments.append(
-            board.SplitAssignment(item.packet_sha256, partition)
+    twin = _twin(value, "constructor_reindex")
+    assignments = tuple(
+        board.SplitAssignment(
+            item.packet_sha256,
+            (
+                "local_transition_development"
+                if item.packet_sha256 == twin.right_packet_sha256
+                else item.partition
+            ),
         )
+        for item in value.split_assignments
+    )
     with pytest.raises(board.NeuralTcrrBoardError, match="cross-split"):
-        board.validate_split_isolation(
-            tuple(assignments),
-            value.fingerprints,
-        )
+        board.validate_split_isolation(assignments, value.fingerprints)
 
 
-def test_rhs_pointer_twins_match_marginals_but_change_exact_successor() -> None:
+def test_canonicalizer_uses_refinement_not_factorial_permutations() -> None:
+    source = inspect.getsource(board._canonical_colored_graph)
+    module_source = inspect.getsource(board)
+    assert "_refine_colors" in source
+    assert "maximum_backtrack_states" in source
+    assert "itertools.permutations" not in module_source
+    assert board.MAX_CONSTRUCTORS == 16
+    assert board.MAX_TYPES == 8
+    assert board.MAX_CANONICAL_BACKTRACK_STATES == 50_000
+
+
+def test_every_development_primitive_has_train_coverage() -> None:
     value = _built()
-    twin = _twin(value, "rhs_pointer")
-    packets = _packet_by_digest(value)
-    expected = _expected_by_digest(value)
-    left_packet = packets[twin.left_packet_sha256]
-    right_packet = packets[twin.right_packet_sha256]
-    left_rule = left_packet.rules[0]
-    right_rule = right_packet.rules[0]
-    assert _rule_marginals(left_rule) == _rule_marginals(right_rule)
-    assert (
-        _successor_semantic_digest(
-            left_packet,
-            expected[twin.left_packet_sha256].transitions[0],
-        )
-        != _successor_semantic_digest(
-            right_packet,
-            expected[twin.right_packet_sha256].transitions[0],
-        )
-    )
-    fingerprints = _fingerprints_by_digest(value)
-    assert (
-        fingerprints[twin.left_packet_sha256].isomorphic_sha256
-        != fingerprints[twin.right_packet_sha256].isomorphic_sha256
-    )
-
-
-def test_shared_occurrence_twin_uses_one_slot_two_paths_two_successors() -> None:
-    value = _built()
-    twin = _twin(value, "shared_occurrence")
-    packets = _packet_by_digest(value)
-    expected = _expected_by_digest(value)
-    assert twin.left_packet_sha256 == twin.right_packet_sha256
-    packet = packets[twin.left_packet_sha256]
-    actions = expected[twin.left_packet_sha256].transitions
-    left = actions[twin.left_transition_index]
-    right = actions[twin.right_transition_index]
-    assert left.target_storage_id == right.target_storage_id
-    assert {left.occurrence_path, right.occurrence_path} == {(0,), (1,)}
-    assert _successor_semantic_digest(packet, left) != (
-        _successor_semantic_digest(packet, right)
-    )
-
-
-def test_capacity_twin_preserves_window_but_blocks_growth_at_fifteen() -> None:
-    value = _built()
-    twin = _twin(value, "capacity")
-    packets = _packet_by_digest(value)
-    expected = _expected_by_digest(value)
-    fingerprints = _fingerprints_by_digest(value)
-    left_packet = packets[twin.left_packet_sha256]
-    right_packet = packets[twin.right_packet_sha256]
-    assert {
-        len(left_packet.graph.reservoir),
-        len(right_packet.graph.reservoir),
-    } == {15, 16}
-    action_counts = {
-        len(expected[twin.left_packet_sha256].transitions),
-        len(expected[twin.right_packet_sha256].transitions),
+    split = {item.packet_sha256: item.partition for item in value.split_assignments}
+    train = {
+        primitive
+        for item in value.primitive_coverage
+        if split[item.packet_sha256] == "local_transition_train"
+        for primitive in item.primitives
     }
-    assert action_counts == {0, 1}
-    assert (
-        fingerprints[twin.left_packet_sha256].normalized_rule_windows
-        == fingerprints[twin.right_packet_sha256].normalized_rule_windows
-    )
-    assert (
-        fingerprints[twin.left_packet_sha256].isomorphic_sha256
-        != fingerprints[twin.right_packet_sha256].isomorphic_sha256
-    )
-
-
-@pytest.mark.parametrize("kind", ["storage_reindex", "rule_reindex"])
-def test_reindex_twins_change_bytes_but_preserve_semantics(kind: str) -> None:
-    value = _built()
-    twin = _twin(value, kind)
-    packets = _packet_by_digest(value)
-    expected = _expected_by_digest(value)
-    fingerprints = _fingerprints_by_digest(value)
-    left = fingerprints[twin.left_packet_sha256]
-    right = fingerprints[twin.right_packet_sha256]
-    assert left.exact_sha256 != right.exact_sha256
-    assert left.isomorphic_sha256 == right.isomorphic_sha256
-    assert left.normalized_rule_windows == right.normalized_rule_windows
-    left_successors = {
-        _successor_semantic_digest(
-            packets[twin.left_packet_sha256],
-            action,
-        )
-        for action in expected[twin.left_packet_sha256].transitions
+    development = {
+        primitive
+        for item in value.primitive_coverage
+        if split[item.packet_sha256] == "local_transition_development"
+        for primitive in item.primitives
     }
-    right_successors = {
-        _successor_semantic_digest(
-            packets[twin.right_packet_sha256],
-            action,
-        )
-        for action in expected[twin.right_packet_sha256].transitions
-    }
-    assert left_successors == right_successors
+    assert development - {"no_redex"} <= train
 
 
-def test_inline_storage_and_rule_order_mutants_are_canonicalized() -> None:
-    packet = _built().packets[10]
-    original = board.packet_fingerprints(packet)
-    graph_mutant = dataclasses.replace(
-        packet.graph,
-        reservoir=tuple(reversed(packet.graph.reservoir)),
-        nodes=tuple(reversed(packet.graph.nodes)),
-    )
-    storage_mutant = dataclasses.replace(packet, graph=graph_mutant)
-    storage_fingerprint = board.packet_fingerprints(storage_mutant)
-    assert original.exact_sha256 != storage_fingerprint.exact_sha256
-    assert original.isomorphic_sha256 == storage_fingerprint.isomorphic_sha256
-    rule_mutant = dataclasses.replace(packet, rules=tuple(reversed(packet.rules)))
-    rule_fingerprint = board.packet_fingerprints(rule_mutant)
-    assert original.exact_sha256 != rule_fingerprint.exact_sha256
-    assert original.isomorphic_sha256 == rule_fingerprint.isomorphic_sha256
-
-
-def test_local_slice_contains_deletion_growth_reclamation_and_heterogeneous_types() -> None:
+def test_every_packet_has_exact_independent_oracle_agreement() -> None:
     value = _built()
-    packets = _packet_by_digest(value)
-    expected = _expected_by_digest(value)
-    saw_deletion = False
-    saw_growth = False
-    saw_reclamation = False
-    saw_heterogeneous = False
-    for digest, packet in packets.items():
-        occupied = len(packet.graph.nodes)
-        type_count = {
-            item.result_type for item in packet.constructors
-        } | {
-            type_id
-            for item in packet.constructors
-            for type_id in item.argument_types
-        }
-        saw_heterogeneous |= len(type_count) > 1
-        for action in expected[digest].transitions:
-            successor_occupied = len(action.successor.nodes)
-            saw_deletion |= action.successor.root is None
-            saw_growth |= successor_occupied > occupied
-            saw_reclamation |= successor_occupied < occupied
-            assert len(action.occurrence_path) <= board.MAX_PATH_DEPTH
-    assert saw_deletion
-    assert saw_growth
-    assert saw_reclamation
-    assert saw_heterogeneous
+    assert all(item.exact_agreement for item in value.oracle_agreements)
+    assert all(
+        item.production_sha256 == item.independent_reference_sha256
+        for item in value.oracle_agreements
+    )
+    for packet, receipt in zip(
+        value.packets,
+        value.oracle_agreements,
+        strict=True,
+    ):
+        assert board._oracle_agreement(packet) == receipt
 
 
-def test_packet_validation_kills_dangling_pointer_mutant() -> None:
+def test_independent_oracle_disagreement_fails_closed(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     packet = _built().packets[0]
-    root = next(
-        node for node in packet.graph.nodes if node.storage_id == packet.graph.root
+    original = board.mechanics.IndependentNestedReferenceOracle.enumerate
+
+    def mutant(
+        self: object,
+        system: object,
+        graph: object,
+    ) -> object:
+        result = original(self, system, graph)
+        return dataclasses.replace(
+            result,
+            transitions=(),
+            transitions_explored=0,
+        )
+
+    monkeypatch.setattr(
+        board.mechanics.IndependentNestedReferenceOracle,
+        "enumerate",
+        mutant,
     )
-    mutant_root = dataclasses.replace(root, children=("f" * 24,))
-    mutant_nodes = tuple(
-        mutant_root if node.storage_id == root.storage_id else node
-        for node in packet.graph.nodes
-    )
-    mutant = dataclasses.replace(
-        packet,
-        graph=dataclasses.replace(packet.graph, nodes=mutant_nodes),
-    )
-    with pytest.raises(board.NeuralTcrrBoardError, match="free record"):
-        board.validate_source_deleted_packet(mutant)
+    with pytest.raises(board.NeuralTcrrBoardError, match="oracles disagree"):
+        board._oracle_agreement(packet)
 
 
-def test_packet_validation_kills_rhs_unbound_variable_mutant() -> None:
-    packet = _built().packets[1]
-    rule = packet.rules[0]
-    assert rule.rhs is not None
-    mutant_rhs = dataclasses.replace(rule.rhs, variable_id="f" * 24)
-    mutant = dataclasses.replace(
-        packet,
-        rules=(dataclasses.replace(rule, rhs=mutant_rhs),),
-    )
-    with pytest.raises(board.NeuralTcrrBoardError, match="RHS variable"):
-        board.validate_source_deleted_packet(mutant)
-
-
-def test_board_validation_kills_missing_expected_record() -> None:
+@pytest.mark.parametrize(
+    "ledger_name",
+    [
+        "expected_records",
+        "split_assignments",
+        "fingerprints",
+        "oracle_agreements",
+        "primitive_coverage",
+    ],
+)
+def test_duplicate_ledger_keys_fail_closed(ledger_name: str) -> None:
     value = _built()
-    mutant = dataclasses.replace(
-        value,
-        expected_records=value.expected_records[:-1],
-    )
-    with pytest.raises(board.NeuralTcrrBoardError, match="one-to-one"):
+    records = getattr(value, ledger_name)
+    duplicate = (records[0], records[0], *records[2:])
+    mutant = dataclasses.replace(value, **{ledger_name: duplicate})
+    with pytest.raises(board.NeuralTcrrBoardError, match="keys must be unique"):
         board.validate_local_transition_slice(mutant)
+
+
+def test_stale_expected_and_twin_receipts_fail_closed() -> None:
+    value = _built()
+    first = value.expected_records[0]
+    stale_expected = dataclasses.replace(first, transitions=())
+    with pytest.raises(board.NeuralTcrrBoardError, match="expected transition"):
+        board.validate_local_transition_slice(
+            dataclasses.replace(
+                value,
+                expected_records=(stale_expected, *value.expected_records[1:]),
+            )
+        )
+    twin = _twin(value, "constructor_reindex")
+    stale_twin = dataclasses.replace(twin, remap=twin.remap[:-1])
+    twins = tuple(
+        stale_twin if item.kind == twin.kind else item for item in value.twins
+    )
+    with pytest.raises(board.NeuralTcrrBoardError):
+        board.validate_local_transition_slice(dataclasses.replace(value, twins=twins))
+
+
+def test_packet_only_export_uses_three_physically_separate_roots(
+    tmp_path: Path,
+) -> None:
+    packet_root = tmp_path / "packets"
+    train_label_root = tmp_path / "train-labels"
+    assessor_root = tmp_path / "development-assessor"
+    receipt = board.export_packet_only_corpus(
+        _built(),
+        packet_root=packet_root,
+        train_label_root=train_label_root,
+        development_assessment_root=assessor_root,
+    )
+    assert receipt.train_packet_count == 16
+    assert receipt.development_packet_count == 6
+    assert len(board.load_packet_only_partition(packet_root, "train")) == 16
+    assert len(board.load_packet_only_partition(packet_root, "development")) == 6
+    for path in packet_root.rglob("*.json"):
+        text = path.read_text(encoding="utf-8")
+        assert "occurrence_path" not in text
+        assert "successor" not in text
+        assert "oracle_agreements" not in text
+    assert not list(packet_root.rglob("train_labels.json"))
+    assert not list(packet_root.rglob("sealed_development_assessment.json"))
+
+
+def test_export_never_crosses_train_and_development_label_custody(
+    tmp_path: Path,
+) -> None:
+    value = _built()
+    packet_root = tmp_path / "packets"
+    label_root = tmp_path / "labels"
+    assessor_root = tmp_path / "assessor"
+    receipt = board.export_packet_only_corpus(
+        value,
+        packet_root=packet_root,
+        train_label_root=label_root,
+        development_assessment_root=assessor_root,
+    )
+    split = {item.packet_sha256: item.partition for item in value.split_assignments}
+    train_digests = {
+        digest
+        for digest, partition in split.items()
+        if partition == "local_transition_train"
+    }
+    development_digests = set(split) - train_digests
+    train_payload = json.loads(
+        (label_root / "train_labels.json").read_text(encoding="utf-8")
+    )
+    assert {item["packet_sha256"] for item in train_payload["records"]} == train_digests
+    assert not (
+        development_digests
+        & {item["packet_sha256"] for item in train_payload["records"]}
+    )
+    assessor_artifact = assessor_root / "sealed_development_assessment.json"
+    assert stat.S_IMODE(assessor_artifact.stat().st_mode) == 0o400
+    assessor_payload = board.load_sealed_development_assessment(
+        assessor_artifact,
+        expected_sha256=receipt.sealed_development_artifact_sha256,
+    )
+    assert {
+        item["packet_sha256"] for item in assessor_payload["records"]
+    } == development_digests
+
+
+def test_packet_loader_cannot_receive_the_offline_slice() -> None:
+    source = inspect.getsource(board.load_packet_only_partition)
+    assert "LocalTransitionSlice" not in source
+    with pytest.raises((AttributeError, TypeError)):
+        board.load_packet_only_partition(_built(), "development")
+
+
+def test_export_rejects_nested_or_reused_roots(tmp_path: Path) -> None:
+    with pytest.raises(board.NeuralTcrrBoardError, match="must be disjoint"):
+        board.export_packet_only_corpus(
+            _built(),
+            packet_root=tmp_path / "root",
+            train_label_root=tmp_path / "root" / "labels",
+            development_assessment_root=tmp_path / "assessor",
+        )
+
+
+def test_sealed_assessor_rejects_writeable_or_tampered_artifact(
+    tmp_path: Path,
+) -> None:
+    receipt = board.export_packet_only_corpus(
+        _built(),
+        packet_root=tmp_path / "packets",
+        train_label_root=tmp_path / "labels",
+        development_assessment_root=tmp_path / "assessor",
+    )
+    artifact = tmp_path / "assessor" / "sealed_development_assessment.json"
+    artifact.chmod(0o600)
+    with pytest.raises(board.NeuralTcrrBoardError, match="not sealed"):
+        board.load_sealed_development_assessment(
+            artifact,
+            expected_sha256=receipt.sealed_development_artifact_sha256,
+        )
+    artifact.write_text(
+        artifact.read_text(encoding="utf-8") + " ",
+        encoding="utf-8",
+    )
+    artifact.chmod(0o400)
+    with pytest.raises(board.NeuralTcrrBoardError, match="hash mismatch"):
+        board.load_sealed_development_assessment(
+            artifact,
+            expected_sha256=receipt.sealed_development_artifact_sha256,
+        )
+
+
+def test_packet_round_trip_has_no_offline_dependency() -> None:
+    for packet in _built().packets:
+        serialized = board.serialize_model_packet(packet)
+        assert board.deserialize_model_packet(serialized) == packet
