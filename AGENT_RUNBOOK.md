@@ -44,7 +44,7 @@
 > test. Do not promote unless the full treatment/active false-triad and other
 > control gates plus cross-family gates in `R12_AHRF_PREREG.md` pass.
 >
-> **Parallel non-score-bearing N-TCRR substrate:** repaired local
+> **Parallel rejected N-TCRR one-step motor:** repaired local
 > source-deleted board source `3b1fe07` contains 22 packets, 24 legal
 > transitions, four exact no-redex negatives, ten causal-twin kinds, and exact
 > agreement between production and independent reference mechanics. Audit
@@ -74,7 +74,25 @@
 > pointers, reachability, and acyclicity; it imports no rules, mechanics,
 > labels, receipts, or oracle. Invalid proposals fail closed without retry or
 > repair. The complete mechanics/board/tensor/generator/motor/committer suite
-> passes 134 tests.
+> passes 134 tests. The first source-deleted 96/32 corpus run at commit
+> `866204f` is now complete and **rejects this factorized one-step motor**:
+> train exact is `0/96`, development exact is `0/32`, valid hard graph commits
+> are `2/96` train and `0/32` development, and final calibration loss is
+> `33.5651` versus `57.7376` initially. A regenerated digest-aligned component
+> audit finds that, among 94 train redex packets, status is correct on 93,
+> rule on 90, path on 78, bindings on 90, and the complete symbolic
+> rule/path/binding tuple on 76. On the 32 held-out-family development
+> redexes, status is correct on 32, rule on 28, path on **zero**, bindings on
+> 10, and complete tuple on zero. The independent graph-delta head therefore
+> destroys otherwise frequent train tuple competence, while unseen structural
+> localization fails separately. Checkpoint SHA-256 is
+> `f81a8f48fa6896d789d54bb867da5a481cab46ad35ea20f738627b93f8c258c4`;
+> report SHA-256 is
+> `e44c657e328738bd475534c79ee0b418268cb2aa34c331c58a2f38019501d43e`.
+> Do not scale this architecture or add autonomous recurrence. Any successor
+> must first replace independent graph generation with a legality-coherent
+> transaction representation and clear unseen path localization on a small
+> hard gate.
 >
 > **Newest train-only routing result:** factorized witness route job `694945` completed cleanly on
 > `evc36` and is **rejected before fresh-board generation**. Treatment reaches 25.8625% witness,
@@ -11430,7 +11448,7 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Shohin integration, or general-reasoning claim.
 
 - **2026-07-23** -- **The first scalable N-TCRR corpus and score-bearing
-  one-step harness are admitted; competence is now under test.** Commit
+  one-step harness were admitted; the tested motor is now rejected.** Commit
   `92fb11b` adds one deterministic grammar/orbit generator for both the
   256/64 audit scale and the preregistered 48,000/4,000 scale. The materialized
   audit has 320 packets across 160 atomic orbits, zero rejected candidates,
@@ -11457,12 +11475,12 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   sampling produced duplicate packet digests inside one batch and the training
   tensorizer correctly rejected them. Commit `866204f` now samples unique
   packet indices and rejects batch sizes larger than the train partition. The
-  corrected 400-update, batch-four CPU audit is active at
-  `train/neural_tcrr_motor_866204f_seed2026072301`. It is exploratory and
-  cannot satisfy the 48k/4k promotion board. Do not edit its source-receipt
-  modules while it runs. The motor is still one-step: branching, visited-state
-  memory, cycle handling, terminal-set collection, recurrent composition, and
-  model-owned halt remain future gates.
+  corrected 400-update, batch-four CPU audit completed at
+  `train/neural_tcrr_motor_866204f_seed2026072301` and is rejected by the
+  exact results recorded below. It cannot satisfy the 48k/4k promotion board.
+  The motor is still one-step: branching, visited-state memory, cycle
+  handling, terminal-set collection, recurrent composition, and model-owned
+  halt remain future gates, and none is authorized for this failed decoder.
 
 - **2026-07-23** -- **ECCR now has a source-deleted tensor boundary and an
   untrained label-free quotient inducer.** Commit `f9f5338` maps only complete
@@ -11485,3 +11503,31 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   training substrate only. Observation-value recoding invariance, learned
   quotient competence, autonomous generator/path induction, source
   integration, and language reasoning remain open.
+
+- **2026-07-23** -- **The first neural TCRR score is a clean architectural
+  rejection, not a scale invitation.** The corrected commit-`866204f` CPU run
+  completed 400 unique-batch updates over 96 train packets and 32
+  split-disjoint development packets in 219.9 seconds. Calibration legal-mass
+  NLL decreased from `57.7376` to `33.5651`, but one-shot hard accuracy stayed
+  `0/96` train and `0/32` development. Only two train transactions were
+  structurally valid; no development transaction was valid. Train invalid
+  reasons were 62 inactive roots, 31 constructor-arity mismatches, and one
+  child-type mismatch. Development invalid reasons were 15 constructor-arity
+  mismatches, 14 inactive roots, and three constructor-result-type
+  mismatches.
+
+  A deterministic digest-aligned component audit isolates two failures rather
+  than attributing everything to optimization. On the 94 train redexes, the
+  learned status/rule/path/binding/complete-tuple counts are
+  `93/90/78/90/76`; therefore a substantial fraction of train packets contain
+  a legal symbolic choice before the unconditional factorized graph-delta
+  argmax invalidates it. On the 32 held-out-family development redexes the
+  corresponding counts are `32/28/0/10/0`; path localization does not
+  transfer at all. The motor and report SHA-256 values are
+  `f81a8f48fa6896d789d54bb867da5a481cab46ad35ea20f738627b93f8c258c4`
+  and
+  `e44c657e328738bd475534c79ee0b418268cb2aa34c331c58a2f38019501d43e`.
+  This branch is closed as implemented. Do not spend H100 or larger-corpus
+  budget until a packet-only, single-shot decoder jointly conditions
+  transaction structure on the selected rule/location/bindings and clears a
+  preregistered unseen-localization pilot.

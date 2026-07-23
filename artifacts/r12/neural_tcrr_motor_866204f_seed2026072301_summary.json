@@ -1,0 +1,73 @@
+{
+  "artifact": {
+    "checkpoint_sha256": "f81a8f48fa6896d789d54bb867da5a481cab46ad35ea20f738627b93f8c258c4",
+    "report_sha256": "e44c657e328738bd475534c79ee0b418268cb2aa34c331c58a2f38019501d43e"
+  },
+  "component_audit": {
+    "development_redexes": {
+      "bindings_match_any_legal_action": 10,
+      "complete_tuple_match_any_legal_action": 0,
+      "examples": 32,
+      "path_match_any_legal_action": 0,
+      "rule_match_any_legal_action": 28,
+      "status_correct": 32
+    },
+    "method": "Regenerate the digest-aligned source-deleted corpus from data_seed, join hard predictions by packet SHA-256, and compare each predicted component against the complete offline legal-action set.",
+    "train_redexes": {
+      "bindings_match_any_legal_action": 90,
+      "complete_tuple_match_any_legal_action": 76,
+      "examples": 94,
+      "path_match_any_legal_action": 78,
+      "rule_match_any_legal_action": 90,
+      "status_correct": 93
+    }
+  },
+  "conclusion": {
+    "decision": "reject_factorized_one_step_motor",
+    "next_gate": "A successor must jointly condition transaction structure on the selected rule, location, and bindings, then clear an unseen structural-localization pilot before larger-corpus or recurrent work.",
+    "reason": "The unconditional factorized graph-delta decoder invalidates frequent train-set legal tuples, while path localization separately fails on every held-out-family development packet."
+  },
+  "custody": {
+    "complete_system_parameters": 126912335,
+    "development_labels_in_optimizer": false,
+    "model_forward_input": "NeuralTcrrPacketTensors only",
+    "selection": "one hard decode and one atomic commit; no retry or repair",
+    "source_payload_sha256": "b37d3fcab95b803ea0f5fe5fa3c9d2d4b4f190c8766aa2489cb65674ae10b1ac"
+  },
+  "evaluation": {
+    "development": {
+      "exact": 0,
+      "examples": 32,
+      "invalid_commit_reasons": {
+        "constructor_arity_mismatch": 15,
+        "constructor_result_type_mismatch": 3,
+        "root_not_active": 14
+      },
+      "valid_commits": 0
+    },
+    "train": {
+      "exact": 0,
+      "examples": 96,
+      "invalid_commit_reasons": {
+        "child_type_mismatch": 1,
+        "constructor_arity_mismatch": 31,
+        "root_not_active": 62
+      },
+      "valid_commits": 2
+    }
+  },
+  "run": {
+    "batch_size": 4,
+    "data_seed": 2026072302,
+    "device": "cpu",
+    "elapsed_seconds": 219.86574554198887,
+    "final_calibration_loss": 33.56513977050781,
+    "initial_calibration_loss": 57.737571716308594,
+    "seed": 2026072301,
+    "source_commit": "866204f",
+    "train_examples": 96,
+    "trainable_parameters": 1830671,
+    "updates": 400
+  },
+  "schema": "neural_tcrr_one_step_motor_rejection_summary_v1"
+}
