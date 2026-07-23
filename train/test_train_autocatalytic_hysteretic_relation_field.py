@@ -102,9 +102,9 @@ def test_contextual_binder_warm_start_copies_equivariant_core(
         model.card_encoder.pair_input.weight,
         binder.pair_input.weight,
     )
-    assert torch.equal(
-        model.card_encoder.slot_encoder[0].weight,
-        binder.card_classifier[0].weight,
+    assert all(
+        not name.startswith("card_encoder.slot_encoder")
+        for name in receipt["copied_tensors"]
     )
 
 

@@ -399,7 +399,6 @@ def _transfer_binder(
         ("pair_input.", "card_encoder.pair_input."),
         ("pair_rounds.", "card_encoder.pair_rounds."),
         ("witness_encoder.", "card_encoder.witness_encoder."),
-        ("card_classifier.0.", "card_encoder.slot_encoder.0."),
     ):
         for name, value in state.items():
             if not name.startswith(source_prefix):

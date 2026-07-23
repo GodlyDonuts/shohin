@@ -581,6 +581,22 @@ def test_gradients_are_finite_and_reach_learned_mechanics() -> None:
     assert model.halt_head.weight.grad is not None
 
 
+def test_generic_control_keeps_card_encoder_active() -> None:
+    torch.manual_seed(2026072341)
+    model = AutocatalyticHystereticRelationField(
+        node_feature_dim=NODE_FEATURES,
+        hidden_dim=16,
+        card_rounds=1,
+        max_steps=2,
+        use_card_conditioning=False,
+    )
+    rollout = model(_graph(), hard_events=False)
+    rollout.terminal_membrane.square().mean().backward()
+    gradient = model.card_encoder.pair_input.weight.grad
+    assert gradient is not None
+    assert bool(gradient.ne(0).any())
+
+
 def _identity_delay_graph(
     *,
     delayed: bool,

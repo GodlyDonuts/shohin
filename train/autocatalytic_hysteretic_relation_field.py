@@ -806,8 +806,18 @@ class AutocatalyticHystereticRelationField(nn.Module):
             graph.object_mask,
         )
         if not self.use_card_conditioning:
-            slot_state = slot_state * 0.0
-            slot_pair = slot_pair * 0.0
+            pair_mask = (
+                graph.object_mask[:, :, None]
+                & graph.object_mask[:, None, :]
+            )
+            pair_count = pair_mask.sum((1, 2)).clamp_min(1).to(dtype)
+            marginal_pair = slot_pair.sum((2, 3)) / pair_count[
+                :, None, None
+            ]
+            slot_pair = (
+                marginal_pair[:, :, None, None]
+                * pair_mask[:, None, :, :, None].to(dtype)
+            )
         node_card = graph.node_card_mask.to(dtype)
         card_node_state = torch.einsum(
             "bns,bsh->bnh",
