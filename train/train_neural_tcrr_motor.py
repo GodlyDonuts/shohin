@@ -1310,6 +1310,10 @@ def train_motor(
         raise NeuralTcrrTrainingHarnessError(
             "optimizer accepts only an explicit train partition"
         )
+    if config.batch_size > len(training.packets):
+        raise NeuralTcrrTrainingHarnessError(
+            "batch size exceeds the number of unique training packets"
+        )
     random.seed(config.seed)
     torch.manual_seed(config.seed)
     model.to(device)
@@ -1332,7 +1336,10 @@ def train_motor(
     used_digests: set[str] = set()
     for update in range(1, config.updates + 1):
         indices = tuple(
-            sampler.randrange(len(training.packets)) for _ in range(config.batch_size)
+            sampler.sample(
+                range(len(training.packets)),
+                k=config.batch_size,
+            )
         )
         batch = _prepare_batch(training, indices, device=device)
         used_digests.update(batch.packet_digests)

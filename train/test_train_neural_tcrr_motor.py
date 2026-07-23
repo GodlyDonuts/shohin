@@ -422,6 +422,17 @@ def test_optimizer_rejects_development_and_forward_has_no_label_channel() -> Non
             config=harness.TrainingConfig(updates=1, batch_size=1),
             device=torch.device("cpu"),
         )
+    singleton = harness.subset_partition(partitions.train, (0,))
+    with pytest.raises(
+        harness.NeuralTcrrTrainingHarnessError,
+        match="unique training packets",
+    ):
+        harness.train_motor(
+            _tiny_motor(),
+            singleton,
+            config=harness.TrainingConfig(updates=1, batch_size=2),
+            device=torch.device("cpu"),
+        )
     signature = inspect.signature(harness._forward_packet_only)  # noqa: SLF001
     assert tuple(signature.parameters) == ("model", "packets")
     source = inspect.getsource(harness._forward_packet_only).lower()  # noqa: SLF001
