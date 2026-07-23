@@ -1,14 +1,23 @@
 # R12 Autocatalytic Hysteretic Relation Field Preregistration
 
 **Status:** architecture and matched controls frozen at source commit
-`4fc5a1193f0af9fbd443c79730ea126a6dbb1adc`; no score-bearing AHRF
-result exists.
+`c088261`; no score-bearing AHRF result exists.
 
 Pre-artifact launch `b4dcbf0` exhausted local MPS memory in a dense
 parent-by-child membrane expansion before an optimizer update or output write.
 Source `4fc5a11` replaces it with an exact gather after adding a fail-closed
 one-child-per-typed-role validator. The full-geometry MPS canary completed
 without OOM; this is a systems repair, not a score.
+
+Pre-artifact launch `84eec59` was then stopped before any output or optimizer
+update after a structural audit proved that its recurrent field propagated
+only same-cell child state. It therefore had no path that could combine
+relation cells `(i,k)` and `(k,j)` to update `(i,j)`, making exact relational
+composition unrepresentable regardless of optimization. Source `c088261`
+adds a learned object-equivariant dynamic triadic contraction over the two
+typed argument-role membranes. The corrected full-geometry MPS canary wrote a
+checkpoint and report with 291,666 added parameters and 125,373,330 total
+parameters. Its one-update scores are not evidence and will not be reused.
 
 ## Question
 
@@ -29,10 +38,13 @@ The treatment is the Autocatalytic Hysteretic Relation Field (AHRF):
 2. a node-equivariant recurrent graph field;
 3. two typed operation-argument edge roles and one distinct equation-feedback
    edge role;
-4. exact write-once fact and evidence latches with straight-through gradients;
-5. continuous membrane state;
-6. a learned event-triggered absorbing halt latch; and
-7. a fixed maximum recurrence used only as a safety bound.
+4. a learned object-equivariant dynamic triadic membrane contraction that
+   combines `(i,k)` state from the first argument role with `(k,j)` state from
+   the second argument role to drive `(i,j)`;
+5. exact write-once fact and evidence latches with straight-through gradients;
+6. continuous membrane state;
+7. a learned event-triggered absorbing halt latch; and
+8. a fixed maximum recurrence used only as a safety bound.
 
 The runtime score path receives structural node kinds, graph links, equation
 feedback links, root masks, constants, opaque witness cards, and object masks.
