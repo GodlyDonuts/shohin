@@ -58,6 +58,7 @@ def _packet(kind: int) -> HardCTAAPacket:
         torch.tensor([cards], dtype=torch.uint8),
         torch.tensor([[kind, (kind + 1) % 3, (kind + 2) % 3]], dtype=torch.uint8),
         torch.tensor([schedule], dtype=torch.uint8),
+        torch.arange(4, dtype=torch.uint8)[None],
     )
 
 
@@ -147,7 +148,7 @@ def _result() -> RuntimeExecutionResult:
 @pytest.fixture
 def result(monkeypatch: pytest.MonkeyPatch) -> RuntimeExecutionResult:
     monkeypatch.setattr(artifact, "RUNTIME_PANEL_SIZE", 2)
-    monkeypatch.setattr(artifact, "EXPECTED_PREQUERY_ATTEMPT_COUNT", 50)
+    monkeypatch.setattr(artifact, "EXPECTED_PREQUERY_ATTEMPT_COUNT", 56)
     return _result()
 
 
@@ -190,7 +191,10 @@ def _assert_snapshot_exact(left, right) -> None:
     assert left is not None and right is not None
     _assert_tensor_exact(left.packet.action_cards, right.packet.action_cards)
     _assert_tensor_exact(left.packet.initial_state, right.packet.initial_state)
-    _assert_tensor_exact(left.packet.schedule, right.packet.schedule)
+    _assert_tensor_exact(
+        left.packet.opcode_schedule,
+        right.packet.opcode_schedule,
+    )
     for name in (
         "h19_residual",
         "h29_residual",
@@ -204,11 +208,11 @@ def _assert_snapshot_exact(left, right) -> None:
     assert left.snapshot_sha256 == right.snapshot_sha256
 
 
-def test_production_contract_is_exactly_21600_attempts() -> None:
-    assert artifact.EXPECTED_PREQUERY_ATTEMPT_COUNT == 21_600
+def test_production_contract_is_exactly_24192_attempts() -> None:
+    assert artifact.EXPECTED_PREQUERY_ATTEMPT_COUNT == 24_192
 
 
-def test_full_failure_panel_validates_all_21600_ordered_attempts() -> None:
+def test_full_failure_panel_validates_all_24192_ordered_attempts() -> None:
     parents = []
     for index in range(864):
         anchor_id = f"p-{_digest(f'parent:{index}')[:24]}"
@@ -222,7 +226,7 @@ def test_full_failure_panel_validates_all_21600_ordered_attempts() -> None:
             )
         )
     attempts = []
-    for index in range(21_600):
+    for index in range(24_192):
         parent = parents[index % len(parents)]
         attempts.append(
             engine._make_attempt_record(
@@ -258,7 +262,7 @@ def test_full_failure_panel_validates_all_21600_ordered_attempts() -> None:
         }
     )
     artifact._validate_complete_result(complete)
-    assert len(complete.attempts) == 21_600
+    assert len(complete.attempts) == 24_192
 
 
 def test_round_trip_is_lossless_and_receipt_ready(
@@ -274,8 +278,8 @@ def test_round_trip_is_lossless_and_receipt_ready(
     assert replayed_index == index
     assert replayed.execution_sha256 == result.execution_sha256
     assert len(replayed.parents) == 2
-    assert len(replayed.attempts) == 50
-    assert len(index.attempt_outputs) == 50
+    assert len(replayed.attempts) == 56
+    assert len(index.attempt_outputs) == 56
     assert index.attempt_outputs[0] == {
         "attempt_id": result.attempts[0].attempt_id,
         "status": result.attempts[0].status,
@@ -352,7 +356,7 @@ def test_failures_and_all_attempts_are_preserved(bundle) -> None:
     replayed = artifact.read_runtime_execution_artifact(
         aggregate, store, expected_aggregate_sha256=index.aggregate_sha256
     )
-    assert len(replayed.attempts) == 50
+    assert len(replayed.attempts) == 56
     failures = [row for row in replayed.attempts if row.failure is not None]
     assert [(row.failure.stage, row.failure.code) for row in failures] == [
         ("compile", "synthetic_failure"),
@@ -406,7 +410,7 @@ def test_duplicate_keys_and_nonfinite_json_are_rejected(tmp_path: Path, bundle) 
         artifact.read_runtime_execution_artifact(
             duplicate_path, store, expected_aggregate_sha256=_digest(duplicate)
         )
-    nonfinite = raw.replace(b'"attempt_count":50', b'"attempt_count":NaN', 1)
+    nonfinite = raw.replace(b'"attempt_count":56', b'"attempt_count":NaN', 1)
     nonfinite_path = tmp_path / "nonfinite.json"
     _immutable(nonfinite_path, nonfinite)
     with pytest.raises(artifact.RuntimeExecutionArtifactError, match="non-finite"):

@@ -1,0 +1,84 @@
+{
+  "alternating_group": {
+    "confirmation_local_marginals": [
+      [
+        3,
+        3,
+        3,
+        3
+      ],
+      [
+        3,
+        3,
+        3,
+        3
+      ],
+      [
+        3,
+        3,
+        3,
+        3
+      ],
+      [
+        3,
+        3,
+        3,
+        3
+      ]
+    ],
+    "confirmation_odd_count": 12,
+    "train_even_count": 12,
+    "train_local_marginals": [
+      [
+        3,
+        3,
+        3,
+        3
+      ],
+      [
+        3,
+        3,
+        3,
+        3
+      ],
+      [
+        3,
+        3,
+        3,
+        3
+      ],
+      [
+        3,
+        3,
+        3,
+        3
+      ]
+    ]
+  },
+  "claim_boundary": "finite_mechanics_only_no_neural_capability_claim",
+  "payload_sha256": "876ca9bca46c0acc13455e8873b7a9149f23cfb9edd0b9fcfc9732e3be5effc8",
+  "rebinding_dynamics": {
+    "max_cues": 6,
+    "parity_fixed_point_counts": {
+      "0:0": 3,
+      "0:1": 8,
+      "0:4": 1,
+      "1:0": 6,
+      "1:2": 6
+    },
+    "prefix_causality_checks": 6015,
+    "reachable_binding_count": 24,
+    "sequence_count": 1092
+  },
+  "schema": "r12_ctaa_binding_identification_mechanics_v1",
+  "write_delete_delay_read": {
+    "delays": [
+      0,
+      32,
+      128
+    ],
+    "donor_following": 24,
+    "identity_reset_differences": 23,
+    "receipt_count": 72
+  }
+}

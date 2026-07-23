@@ -63,9 +63,9 @@ from ctaa_statistical_gate_spec import (
 from ctaa_runtime_plan_replay import load_runtime_replay_rows, replay_runtime_plan
 
 
-ASSESSMENT_SCHEMA = "r12_ctaa_v2_assessment_v2"
+ASSESSMENT_SCHEMA = "r12_ctaa_v2_assessment_v3"
 FINITE_AUDIT_SCHEMA = "r12_ctaa_v2_finite_core_evaluation_v1"
-RESOURCE_PROFILE_SCHEMA = "r12_ctaa_v2_resource_profile_v2"
+RESOURCE_PROFILE_SCHEMA = "r12_ctaa_v2_resource_profile_v3"
 CAPACITY_AUDIT_SCHEMA = "ctaa_matched_core_preflight_v1"
 IMMUTABLE_PREFLIGHT_SCHEMA = "r12_ctaa_v2_immutable_artifact_preflight_v1"
 ASSESSMENT_CLAIM_SCHEMA = "r12_ctaa_signed_assessment_claim_v5"
@@ -203,9 +203,10 @@ FAMILY_KEYS = {
     "renderer",
     "packet_valid",
     "cards_exact",
-    "binding_exact",
+    "independent_binding_exact",
     "initial_exact",
     "stop_exact",
+    "opcode_schedule_exact",
     "schedule_exact",
     "program_exact",
     "query_exact",
@@ -221,9 +222,10 @@ FAMILY_KEYS = {
 BOOLEAN_FAMILY_KEYS = {
     "packet_valid",
     "cards_exact",
-    "binding_exact",
+    "independent_binding_exact",
     "initial_exact",
     "stop_exact",
+    "opcode_schedule_exact",
     "schedule_exact",
     "program_exact",
     "query_exact",
@@ -255,16 +257,16 @@ SHARED_COMMITMENT_KEYS = {
 SHARED_FRONTEND_KEYS = {
     "packet_valid",
     "cards_exact",
-    "binding_exact",
+    "independent_binding_exact",
     "initial_exact",
     "stop_exact",
+    "opcode_schedule_exact",
     "schedule_exact",
     "program_exact",
     "query_exact",
 }
 
 UNRESOLVED_CONTRACTS = (
-    "the assessor's binding_exact field aliases action-card equality instead of independently measuring opcode-to-card binding as required by the signed statistical specification",
     "the final gate validates sealed-assessor family rows but does not independently reconstruct all forty raw evidence/oracle scores",
     "no capability-time signed receipt binds the measured six-phase resource matrix and complete intervention panel to the assessed manifest and frozen cores",
     "the unmocked execution-set-to-final-gate integration and Linux bubblewrap custody smoke remain unverified",
@@ -1027,7 +1029,7 @@ def _validate_resource_profile(value: dict[str, object]) -> dict[str, object]:
     )
     state_exact = (
         state.get("matched_across_arms") is True
-        and state.get("hard_packet_bytes_per_row") == 56
+        and state.get("hard_packet_bytes_per_row") == 60
         and state.get("semantic_recurrent_state_bytes") == 3
         and state.get("implementation_recurrent_state_int64_bytes") == 24
         and state.get("halt_state_bytes") == 1

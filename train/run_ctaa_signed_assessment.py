@@ -60,7 +60,7 @@ from ctaa_statistical_gate_spec import (
 
 
 CLAIM_SCHEMA = "r12_ctaa_signed_assessment_claim_v5"
-ASSESSMENT_SCHEMA = "r12_ctaa_v2_assessment_v2"
+ASSESSMENT_SCHEMA = "r12_ctaa_v2_assessment_v3"
 ASSESSMENT_ACCESS_SCHEMA = "r12_ctaa_v2_assessment_access_v7"
 _SAFE_IDENTIFIER = re.compile(r"[A-Za-z0-9][A-Za-z0-9._:-]{0,127}\Z")
 _HASH = re.compile(r"[0-9a-f]{64}\Z")

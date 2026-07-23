@@ -33,7 +33,11 @@ def test_fresh_process_execution_and_late_query_receive_no_source(tmp_path: Path
             dtype=torch.uint8,
         ),
         initial_state=torch.tensor([[0, 0, 0]], dtype=torch.uint8),
-        schedule=torch.tensor([[0, 1, 4, *([0] * 38)]], dtype=torch.uint8),
+        opcode_schedule=torch.tensor(
+            [[0, 1, 4, *([0] * 38)]],
+            dtype=torch.uint8,
+        ),
+        opcode_to_card=torch.arange(4, dtype=torch.uint8)[None],
     )
     query = HardCTAAQuery(position=torch.tensor([1], dtype=torch.uint8))
     packet_path = tmp_path / "packet.bin"

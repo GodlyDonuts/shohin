@@ -13,14 +13,15 @@ from seal_ctaa_program_packets import seal_predictions
 
 
 def _write_predictions(path, *, all_invalid: bool) -> None:
-    schedule = torch.zeros((2, 41), dtype=torch.uint8)
+    opcode_schedule = torch.zeros((2, 41), dtype=torch.uint8)
     if all_invalid:
-        schedule[:, 1] = 4
-        schedule[:, 2] = 4
+        opcode_schedule[:, 1] = 4
+        opcode_schedule[:, 2] = 4
     else:
-        schedule[0, 3] = 4
-        schedule[1, 1] = 4
-        schedule[1, 2] = 4
+        opcode_schedule[0, 3] = 4
+        opcode_schedule[1, 1] = 4
+        opcode_schedule[1, 2] = 4
+    binding = torch.arange(4, dtype=torch.uint8)[None].expand(2, -1).clone()
     write_torch_once(
         path,
         {
@@ -29,9 +30,11 @@ def _write_predictions(path, *, all_invalid: bool) -> None:
             "program_source_sha256": "a" * 64,
             "compiler_sha256": "b" * 64,
             "action_cards": torch.zeros((2, 4, 3), dtype=torch.uint8),
+            "opcode_to_card": binding,
             "initial_state": torch.zeros((2, 3), dtype=torch.uint8),
-            "schedule": schedule,
-            "packet_valid": packet_valid_mask(schedule),
+            "opcode_schedule": opcode_schedule,
+            "schedule": opcode_schedule.clone(),
+            "packet_valid": packet_valid_mask(binding, opcode_schedule),
         },
     )
 
@@ -43,7 +46,7 @@ def test_sealer_keeps_valid_subset_and_preserves_invalid_failure(tmp_path) -> No
     _write_predictions(predictions, all_invalid=False)
     report = seal_predictions(predictions, packet, index)
     assert report["valid_rows"] == 1
-    assert read_packet_file(packet).schedule.shape == (1, 41)
+    assert read_packet_file(packet).opcode_schedule.shape == (1, 41)
     assert read_packet_index(index)["invalid_family_ids"] == ["invalid"]
 
 
@@ -56,4 +59,3 @@ def test_sealer_records_all_invalid_without_creating_packet(tmp_path) -> None:
     assert report["valid_rows"] == 0
     assert not packet.exists()
     assert read_packet_index(index)["packet_sha256"] is None
-

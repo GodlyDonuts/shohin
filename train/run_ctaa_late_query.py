@@ -53,7 +53,7 @@ def main() -> None:
     terminal = state_route[:, -1].long()
     answers = terminal.gather(1, query.position.long()[:, None]).squeeze(1)
     payload = {
-        "schema": "ctaa_late_query_answer_v1",
+        "schema": "ctaa_late_query_answer_v2",
         "execution_sha256": sha256_file(args.execution),
         "query_sha256": sha256_file(args.query),
         "answers": answers.tolist(),

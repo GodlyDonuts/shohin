@@ -17,7 +17,7 @@ from ctaa_neural_core import ClosureFeatureTransitionCore, OuterProductTransitio
 from ctaa_trunk_compiler import TrunkCausalCTAACompiler
 
 
-SCHEMA = "r12_ctaa_v2_immutable_artifact_preflight_v1"
+SCHEMA = "r12_ctaa_v2_immutable_artifact_preflight_v2"
 
 
 def write_once(path: Path, value: dict[str, object]) -> None:

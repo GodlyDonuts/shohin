@@ -31,6 +31,7 @@ from build_ctaa_runtime_intervention_plan import (
     _permutation,
     _render_program,
     _tagged_sha256,
+    _three_cycle,
 )
 from ctaa_intervention_protocol import (
     MANDATORY_OPERATIONS,
@@ -45,7 +46,10 @@ from ctaa_intervention_protocol import (
 from ctaa_neural_core import CTAA_ACTION_COUNT, CTAA_MAX_STEPS, CTAA_WIDTH
 from ctaa_packet_io import packet_body
 from ctaa_runtime_interventions import (
+    binding_only_counterfactual,
+    card_only_counterfactual,
     card_storage_reindex,
+    compensated_opcode_relabel,
     future_schedule_counterfactual,
     packet_transplant,
     post_stop_poison,
@@ -54,7 +58,7 @@ from ctaa_trunk_compiler import HardCTAAPacket, HardCTAAQuery
 from pipeline.generate_ctaa_board import RENDERERS
 
 
-PAYLOAD_SCHEMA = "r12_ctaa_v2_concrete_mutation_v1"
+PAYLOAD_SCHEMA = "r12_ctaa_v2_concrete_mutation_v2"
 
 
 class ReplayValidationError(ValueError):
@@ -163,6 +167,15 @@ _EXTRA_FIELDS: Mapping[str, frozenset[str]] = {
         {"parent_renderer", "target_renderer"}
     ),
     InterventionFamily.RULE_LINE_SHUFFLE.value: frozenset({"rule_order"}),
+    InterventionFamily.CARD_ONLY_COUNTERFACTUAL.value: frozenset(
+        {"card_address", "coordinate", "before", "after"}
+    ),
+    InterventionFamily.BINDING_ONLY_COUNTERFACTUAL.value: frozenset(
+        {"old_to_new_opcode", "new_to_old_opcode"}
+    ),
+    InterventionFamily.COMPENSATED_OPCODE_RELABEL.value: frozenset(
+        {"old_to_new_opcode"}
+    ),
     InterventionFamily.CARD_STORAGE_REINDEX.value: frozenset(
         {"storage_order", "inverse"}
     ),
@@ -231,6 +244,10 @@ _PROGRAM_RESULTS = frozenset(
 _QUERY_RESULTS = frozenset({InterventionFamily.LATE_QUERY_SWAP.value})
 _PACKET_RESULTS = frozenset(
     {
+        InterventionFamily.RULE_LINE_SHUFFLE.value,
+        InterventionFamily.CARD_ONLY_COUNTERFACTUAL.value,
+        InterventionFamily.BINDING_ONLY_COUNTERFACTUAL.value,
+        InterventionFamily.COMPENSATED_OPCODE_RELABEL.value,
         InterventionFamily.CARD_STORAGE_REINDEX.value,
         InterventionFamily.WITNESS_CORRUPTION.value,
         InterventionFamily.PAIRED_SHUFFLED_LAW.value,
@@ -328,7 +345,8 @@ def _hard_packet(row: ParsedSource) -> HardCTAAPacket:
     packet = HardCTAAPacket(
         action_cards=torch.tensor([row.cards], dtype=torch.uint8),
         initial_state=torch.tensor([row.initial_state], dtype=torch.uint8),
-        schedule=torch.tensor([row.schedule], dtype=torch.uint8),
+        opcode_schedule=torch.tensor([row.opcode_schedule], dtype=torch.uint8),
+        opcode_to_card=torch.tensor([row.opcode_to_card], dtype=torch.uint8),
     )
     if packet_body(packet) != row.packet_bytes:
         raise ReplayValidationError("CTAA replay typed parent packet differs")
@@ -339,8 +357,9 @@ def _packet_digest(
     cards: tuple[tuple[int, int, int], ...],
     initial: tuple[int, int, int],
     schedule: tuple[int, ...],
+    opcode_to_card: tuple[int, int, int, int],
 ) -> tuple[str, bytes]:
-    payload = _packet_bytes(cards, initial, schedule)
+    payload = _packet_bytes(cards, initial, schedule, opcode_to_card)
     return _sha256(payload), payload
 
 
@@ -500,6 +519,67 @@ def _replay_one(ctx: _Context, attempt: AnchorOperationCommitment) -> ReplayResu
         if order == row.rule_order:
             raise ReplayValidationError("CTAA replay rule-line shuffle is a no-op")
         program_bytes = _render_program(row, rule_order=order).encode("utf-8")
+        _, packet_bytes = _packet_digest(
+            row.cards,
+            row.initial_state,
+            row.schedule,
+            order,  # type: ignore[arg-type]
+        )
+    elif operation == InterventionFamily.CARD_ONLY_COUNTERFACTUAL.value:
+        card_address = row.schedule[0]
+        coordinate = int.from_bytes(
+            _hash_order(seed, operation, attempt.anchor_id, "coordinate")[:8],
+            "big",
+        ) % CTAA_WIDTH
+        _exact_int(payload["card_address"], card_address, "card-only address")
+        _exact_int(payload["coordinate"], coordinate, "card-only coordinate")
+        parent_packet = _hard_packet(row)
+        before = int(parent_packet.action_cards[0, card_address, coordinate].item())
+        _exact_int(payload["before"], before, "card-only before")
+        _exact_int(payload["after"], (before + 1) % CTAA_WIDTH, "card-only after")
+        mutated = card_only_counterfactual(
+            parent_packet,
+            torch.tensor([card_address], dtype=torch.long),
+            torch.tensor([coordinate], dtype=torch.long),
+        ).packet
+        packet_bytes = packet_body(mutated)
+    elif operation == InterventionFamily.BINDING_ONLY_COUNTERFACTUAL.value:
+        old_to_new = _three_cycle(
+            seed,
+            operation,
+            attempt.anchor_id,
+            row.opcode_schedule[0],
+        )
+        new_to_old = [0] * CTAA_ACTION_COUNT
+        for old_slot, new_slot in enumerate(old_to_new):
+            new_to_old[new_slot] = old_slot
+        _integer_list(
+            payload["old_to_new_opcode"],
+            list(old_to_new),
+            "binding-only old-to-new opcode",
+        )
+        _integer_list(
+            payload["new_to_old_opcode"],
+            new_to_old,
+            "binding-only new-to-old opcode",
+        )
+        mutated = binding_only_counterfactual(
+            _hard_packet(row),
+            torch.tensor([new_to_old], dtype=torch.long),
+        ).packet
+        packet_bytes = packet_body(mutated)
+    elif operation == InterventionFamily.COMPENSATED_OPCODE_RELABEL.value:
+        old_to_new = _three_cycle(seed, operation, attempt.anchor_id)
+        _integer_list(
+            payload["old_to_new_opcode"],
+            list(old_to_new),
+            "compensated old-to-new opcode",
+        )
+        mutated = compensated_opcode_relabel(
+            _hard_packet(row),
+            torch.tensor([old_to_new], dtype=torch.long),
+        ).packet
+        packet_bytes = packet_body(mutated)
     elif operation == InterventionFamily.CARD_STORAGE_REINDEX.value:
         order = _permutation(seed, operation, attempt.anchor_id, CTAA_ACTION_COUNT)
         inverse = [0] * CTAA_ACTION_COUNT
@@ -534,13 +614,23 @@ def _replay_one(ctx: _Context, attempt: AnchorOperationCommitment) -> ReplayResu
         _exact_int(payload["after"], after, "witness-corruption after")
         cards = tuple(tuple(card) for card in cards_list)
         program_bytes = _render_program(row, cards=cards).encode("utf-8")
-        _, packet_bytes = _packet_digest(cards, row.initial_state, row.schedule)
+        _, packet_bytes = _packet_digest(
+            cards,
+            row.initial_state,
+            row.schedule,
+            row.opcode_to_card,
+        )
     elif operation == InterventionFamily.PAIRED_SHUFFLED_LAW.value:
         order = _permutation(seed, operation, attempt.anchor_id, CTAA_ACTION_COUNT)
         _integer_list(payload["law_order"], list(order), "shuffled-law order")
         cards = tuple(row.cards[slot] for slot in order)
         program_bytes = _render_program(row, cards=cards).encode("utf-8")
-        _, packet_bytes = _packet_digest(cards, row.initial_state, row.schedule)
+        _, packet_bytes = _packet_digest(
+            cards,
+            row.initial_state,
+            row.schedule,
+            row.opcode_to_card,
+        )
     elif operation == InterventionFamily.SCHEDULE_ORDER_TWIN.value:
         pairs = [
             (left, right)
@@ -562,7 +652,12 @@ def _replay_one(ctx: _Context, attempt: AnchorOperationCommitment) -> ReplayResu
         )
         schedule = tuple(schedule_list)
         program_bytes = _render_program(row, schedule=schedule).encode("utf-8")
-        _, packet_bytes = _packet_digest(row.cards, row.initial_state, schedule)
+        _, packet_bytes = _packet_digest(
+            row.cards,
+            row.initial_state,
+            schedule,
+            row.opcode_to_card,
+        )
     elif operation == InterventionFamily.SOURCE_POISON.value:
         poison = b"SHOHIN-CTAA-SOURCE-POISON-v1\0" + _hash_order(
             seed, operation, attempt.anchor_id
@@ -605,7 +700,12 @@ def _replay_one(ctx: _Context, attempt: AnchorOperationCommitment) -> ReplayResu
         )
         schedule = tuple(schedule_list)
         program_bytes = _render_program(row, schedule=schedule).encode("utf-8")
-        _, packet_bytes = _packet_digest(row.cards, row.initial_state, schedule)
+        _, packet_bytes = _packet_digest(
+            row.cards,
+            row.initial_state,
+            schedule,
+            row.opcode_to_card,
+        )
     elif operation == InterventionFamily.LATE_QUERY_SWAP.value:
         if donor is None:
             raise ReplayValidationError("CTAA replay late-query donor is missing")

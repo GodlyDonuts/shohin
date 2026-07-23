@@ -35,6 +35,7 @@ def tiny_compiler() -> TrunkCausalCTAACompiler:
         decoder_layers=1,
         decoder_feedforward=48,
         early_layer=1,
+        late_layer=2,
     )
 
 
@@ -51,7 +52,9 @@ def row() -> dict[str, object]:
         "program_source": "A B",
         "query_source": "Q",
         "action_cards": [[0, 1, 2], [1, 0, 2], [2, 1, 0], [0, 2, 1]],
+        "opcode_to_card": [2, 0, 3, 1],
         "initial_state": [2, 0, 1],
+        "opcode_schedule": [1, 3, 4, *([2] * 38)],
         "schedule": [0, 1, 4, *([3] * 38)],
         "query_position": 2,
         "renderer": 0,
@@ -64,6 +67,8 @@ def test_parser_and_collator_reject_outcome_leak_and_right_pad() -> None:
     assert batch.program_ids.shape == (2, 2)
     assert batch.query_ids.shape == (2, 1)
     assert batch.action_cards.shape == (2, 4, 3)
+    assert batch.opcode_to_card.shape == (2, 4)
+    assert batch.opcode_schedule.shape == (2, 41)
     leaked = {**row(), "answer": 1}
     with pytest.raises(ValueError, match="schema"):
         parse_train_row(leaked, tokenizer(), 64)
@@ -91,6 +96,7 @@ def test_compiler_loss_reaches_all_adapter_families() -> None:
         "decoder",
         "decoder_norm",
         "tuple_head",
+        "binding_head",
         "event_head",
         "query_head",
     }

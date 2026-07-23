@@ -45,7 +45,7 @@ from ctaa_trunk_compiler import TrunkCausalCTAACompiler
 from run_ctaa_packet_executor import load_core
 
 
-SCHEMA = "r12_ctaa_v2_resource_profile_v2"
+SCHEMA = "r12_ctaa_v2_resource_profile_v3"
 OBSERVATION_SCHEMA = "r12_ctaa_v2_resource_observation_v1"
 COMPARISON_SCHEMA = "r12_ctaa_v2_matched_resource_comparison_v1"
 DUAL_ROUTE_CALLS_PER_ROW = CTAA_MAX_STEPS * 3
@@ -1082,7 +1082,7 @@ def profile(
             - control.analytic_inference_flops,  # type: ignore[attr-defined]
         },
         "state_contract": {
-            "hard_packet_bytes_per_row": 56,
+            "hard_packet_bytes_per_row": 60,
             "semantic_recurrent_state_bytes": 3,
             "implementation_recurrent_state_int64_bytes": 24,
             "halt_state_bytes": 1,

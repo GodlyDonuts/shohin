@@ -350,7 +350,7 @@ def _validate_raw_tensor(value: object, label: str) -> tuple[str, list[int], byt
 
 def _validate_tensor_contract(name: str, dtype: str, shape: list[int]) -> None:
     fixed = {
-        "packet": ("uint8", [56]),
+        "packet": ("uint8", [60]),
         "state_route": ("uint8", [CTAA_MAX_STEPS + 1, CTAA_WIDTH]),
         "composed_route": ("uint8", [CTAA_MAX_STEPS + 1, CTAA_WIDTH]),
         "halt_mask": ("bool", [CTAA_MAX_STEPS + 1]),

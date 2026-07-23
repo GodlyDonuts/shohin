@@ -41,7 +41,7 @@ def _fixture(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> dict[str, objec
     board.mkdir()
     manifest = board / "manifest.json"
     manifest_value = {
-        "schema": "r12_ctaa_v2_manifest_v1",
+        "schema": "r12_ctaa_v2_manifest_v2",
         "seed": 11,
         "files": {
             "development_program.jsonl": _hash("program"),

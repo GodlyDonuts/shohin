@@ -21,8 +21,8 @@ from typing import Mapping
 from ctaa_bootstrap_seed_receipt import validate_receipt as validate_bootstrap_receipt
 
 
-MANIFEST_SCHEMA = "r12_ctaa_v2_manifest_v1"
-RAW_EVIDENCE_RECEIPT_SCHEMA = "r12_ctaa_v2_raw_evidence_receipt_v1"
+MANIFEST_SCHEMA = "r12_ctaa_v2_manifest_v2"
+RAW_EVIDENCE_RECEIPT_SCHEMA = "r12_ctaa_v2_raw_evidence_receipt_v2"
 CORE_TRAINING_SCHEMA = "r12_ctaa_v2_core_training_v1"
 RUN_PLAN_SCHEMA = "r12_ctaa_v2_run_plan_v1"
 RUN_INPUT_SCHEMA = "r12_ctaa_v2_run_input_v1"

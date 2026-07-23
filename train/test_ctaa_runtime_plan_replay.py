@@ -70,7 +70,7 @@ def replayed(replay_inputs):
 def test_every_mandatory_operation_replays(operation: str, replayed) -> None:
     counts = Counter(result.operation for result in replayed.results)
     assert counts[operation] == 864
-    assert replayed.attempt_count == 22_464
+    assert replayed.attempt_count == 25_056
 
 
 def test_immutable_source_loader_reconstructs_selected_panel(

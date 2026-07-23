@@ -46,6 +46,7 @@ def _packet(kind: int, batch: int = 1) -> HardCTAAPacket:
         torch.tensor([cards] * batch, dtype=torch.uint8),
         torch.tensor([initial] * batch, dtype=torch.uint8),
         torch.tensor([schedule] * batch, dtype=torch.uint8),
+        torch.arange(4, dtype=torch.uint8)[None].expand(batch, -1).clone(),
     )
 
 
@@ -93,7 +94,8 @@ class FakeCompiler(nn.Module):
         return HardCTAAPacket(
             torch.cat([item.action_cards for item in packets]),
             torch.cat([item.initial_state for item in packets]),
-            torch.cat([item.schedule for item in packets]),
+            torch.cat([item.opcode_schedule for item in packets]),
+            torch.cat([item.opcode_to_card for item in packets]),
         )
 
     @staticmethod
@@ -146,6 +148,20 @@ def _extras(operation: str, anchor: str, donor: str | None) -> dict[str, object]
         return {"parent_renderer": 0, "target_renderer": 1}
     if operation == InterventionFamily.RULE_LINE_SHUFFLE.value:
         return {"rule_order": [1, 0, 2, 3]}
+    if operation == InterventionFamily.CARD_ONLY_COUNTERFACTUAL.value:
+        return {
+            "card_address": 0,
+            "coordinate": 0,
+            "before": 0,
+            "after": 1,
+        }
+    if operation == InterventionFamily.BINDING_ONLY_COUNTERFACTUAL.value:
+        return {
+            "old_to_new_opcode": [1, 2, 0, 3],
+            "new_to_old_opcode": [2, 0, 1, 3],
+        }
+    if operation == InterventionFamily.COMPENSATED_OPCODE_RELABEL.value:
+        return {"old_to_new_opcode": [1, 2, 0, 3]}
     if operation == InterventionFamily.CARD_STORAGE_REINDEX.value:
         return {"storage_order": [1, 0, 3, 2], "inverse": [1, 0, 3, 2]}
     if operation == InterventionFamily.WITNESS_CORRUPTION.value:
@@ -272,7 +288,35 @@ def _fixture_contract() -> tuple[dict[str, object], dict[str, ProgramArtifact]]:
                 assert payload is not None
                 program_hash = json.loads(payload)["poison_bytes_sha256"]
             parent_packet = _packet(1 if anchor == "a" else 0)
-            if operation == InterventionFamily.CARD_STORAGE_REINDEX.value:
+            if operation == InterventionFamily.CARD_ONLY_COUNTERFACTUAL.value:
+                packet_hash = _digest(
+                    packet_body(
+                        engine.card_only_counterfactual(
+                            parent_packet,
+                            torch.tensor([0], dtype=torch.long),
+                            torch.tensor([0], dtype=torch.long),
+                        ).packet
+                    )
+                )
+            elif operation == InterventionFamily.BINDING_ONLY_COUNTERFACTUAL.value:
+                packet_hash = _digest(
+                    packet_body(
+                        engine.binding_only_counterfactual(
+                            parent_packet,
+                            torch.tensor([[2, 0, 1, 3]], dtype=torch.long),
+                        ).packet
+                    )
+                )
+            elif operation == InterventionFamily.COMPENSATED_OPCODE_RELABEL.value:
+                packet_hash = _digest(
+                    packet_body(
+                        engine.compensated_opcode_relabel(
+                            parent_packet,
+                            torch.tensor([[1, 2, 0, 3]], dtype=torch.long),
+                        ).packet
+                    )
+                )
+            elif operation == InterventionFamily.CARD_STORAGE_REINDEX.value:
                 packet_hash = _digest(
                     packet_body(
                         engine.card_storage_reindex(
@@ -374,7 +418,7 @@ def test_raw_records_capture_packets_residuals_routes_halt_and_terminal(
     assert all(parent.status == "success" for parent in result.parents)
     snapshot = result.parents[0].snapshot
     assert snapshot is not None
-    assert snapshot.packet.bytes_per_row == 56
+    assert snapshot.packet.bytes_per_row == 60
     assert snapshot.h19_residual is not None
     assert snapshot.h29_residual is not None
     assert snapshot.state_route.shape == (42, 3)
@@ -422,7 +466,7 @@ def test_midpoint_interventions_retain_independent_composed_routes(contract) -> 
 def test_custody_probe_absence_retains_failures_without_omission(contract) -> None:
     result = _run(contract, probe=None)
     failures = [row for row in result.attempts if row.failure is not None]
-    assert len(result.attempts) == 50
+    assert len(result.attempts) == 56
     assert {(row.operation, row.failure.code) for row in failures} >= {
         ("source_deletion", "probe_unavailable"),
         ("query_isolation", "probe_unavailable"),
@@ -451,7 +495,7 @@ def test_compile_fault_is_typed_and_attempt_order_is_retained(contract) -> None:
     record = next(
         row for row in result.attempts if row.attempt_id == target["attempt_id"]
     )
-    assert len(result.attempts) == 50
+    assert len(result.attempts) == 56
     assert record.status == "failure"
     assert record.failure == engine.ExecutionFailure(
         "compile", "program_compile_failed"
@@ -477,7 +521,7 @@ def test_parent_packet_commitment_mismatch_fails_parent_and_all_child_attempts(
         "compile", "parent_packet_replay_mismatch"
     )
     children = [row for row in result.attempts if row.anchor_id == "a"]
-    assert len(children) == 25
+    assert len(children) == 28
     assert all(row.status == "failure" for row in children)
     assert all(row.failure.code == "parent_execution_unavailable" for row in children)
 

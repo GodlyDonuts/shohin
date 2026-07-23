@@ -32,6 +32,7 @@ import torch
 from ctaa_intervention_protocol import (
     InterventionFamily,
     LOCKED_SCORED_ROW_COUNT,
+    MANDATORY_OPERATIONS,
     RUNTIME_PANEL_SIZE,
 )
 from ctaa_packet_io import packet_body
@@ -55,7 +56,9 @@ EXECUTION_AGGREGATE_SCHEMA = "r12_ctaa_runtime_execution_aggregate_v1"
 EXECUTION_ARTIFACT_SUFFIX = ".ctaaexec"
 EXECUTION_ARTIFACT_MAGIC = b"CTAAEXE1"
 EXECUTION_ARTIFACT_HEADER = struct.Struct(">Q")
-EXPECTED_PREQUERY_ATTEMPT_COUNT = 21_600
+EXPECTED_PREQUERY_ATTEMPT_COUNT = RUNTIME_PANEL_SIZE * (
+    len(MANDATORY_OPERATIONS) - 1
+)
 
 _HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 _MAX_AGGREGATE_BYTES = 256 * 1024 * 1024
@@ -154,6 +157,7 @@ _PACKET_BLOB_KEYS = frozenset(
         "kind",
         "dtype",
         "action_cards_shape",
+        "opcode_to_card_shape",
         "initial_state_shape",
         "schedule_shape",
         "offset",
@@ -594,7 +598,12 @@ def _packet_descriptor(
 ) -> tuple[dict[str, object], bytes]:
     if not isinstance(packet, HardCTAAPacket):
         raise RuntimeExecutionArtifactError("execution packet type differs")
-    for value in (packet.action_cards, packet.initial_state, packet.schedule):
+    for value in (
+        packet.action_cards,
+        packet.opcode_to_card,
+        packet.initial_state,
+        packet.opcode_schedule,
+    ):
         _tensor_raw(value)
     raw = packet_body(packet)
     descriptor: dict[str, object] = {
@@ -602,8 +611,9 @@ def _packet_descriptor(
         "kind": "packet",
         "dtype": str(torch.uint8),
         "action_cards_shape": list(packet.action_cards.shape),
+        "opcode_to_card_shape": list(packet.opcode_to_card.shape),
         "initial_state_shape": list(packet.initial_state.shape),
-        "schedule_shape": list(packet.schedule.shape),
+        "schedule_shape": list(packet.opcode_schedule.shape),
         "offset": offset,
         "length": len(raw),
         "raw_sha256": _sha256_bytes(raw),
@@ -828,19 +838,25 @@ def _read_packet(descriptor: Mapping[str, object], raw: bytes) -> HardCTAAPacket
     ):
         raise RuntimeExecutionArtifactError("packet descriptor identity differs")
     cards_shape = _shape(descriptor["action_cards_shape"], "action cards")
+    binding_shape = _shape(descriptor["opcode_to_card_shape"], "opcode binding")
     initial_shape = _shape(descriptor["initial_state_shape"], "initial state")
     schedule_shape = _shape(descriptor["schedule_shape"], "schedule")
     if (
         len(cards_shape) != 3
+        or len(binding_shape) != 2
         or len(initial_shape) != 2
         or len(schedule_shape) != 2
         or initial_shape[0] != cards_shape[0]
+        or binding_shape != (cards_shape[0], cards_shape[1])
         or schedule_shape[0] != cards_shape[0]
         or initial_shape[1] != cards_shape[2]
     ):
         raise RuntimeExecutionArtifactError("packet tensor geometry differs")
     bytes_per_row = (
-        cards_shape[1] * cards_shape[2] + initial_shape[1] + schedule_shape[1]
+        cards_shape[1] * cards_shape[2]
+        + binding_shape[1]
+        + initial_shape[1]
+        + schedule_shape[1]
     )
     expected_length = cards_shape[0] * bytes_per_row
     if len(raw) != expected_length or descriptor["length"] != expected_length:
@@ -851,13 +867,16 @@ def _read_packet(descriptor: Mapping[str, object], raw: bytes) -> HardCTAAPacket
         cards_shape[0], bytes_per_row
     )
     card_end = cards_shape[1] * cards_shape[2]
+    binding_end = card_end + binding_shape[1]
+    initial_end = binding_end + initial_shape[1]
     try:
         packet = HardCTAAPacket(
             rows[:, :card_end].reshape(cards_shape).clone(),
-            rows[:, card_end : card_end + initial_shape[1]]
+            rows[:, binding_end:initial_end]
             .reshape(initial_shape)
             .clone(),
-            rows[:, card_end + initial_shape[1] :].reshape(schedule_shape).clone(),
+            rows[:, initial_end:].reshape(schedule_shape).clone(),
+            rows[:, card_end:binding_end].reshape(binding_shape).clone(),
         )
     except ValueError as error:
         raise RuntimeExecutionArtifactError("packet bytes are invalid") from error
@@ -1047,8 +1066,8 @@ def _decode_frame(
 
 def _validate_snapshot_geometry(snapshot: ExecutionSnapshot) -> None:
     packet = snapshot.packet
-    batch = packet.schedule.shape[0]
-    steps = packet.schedule.shape[1] + 1
+    batch = packet.opcode_schedule.shape[0]
+    steps = packet.opcode_schedule.shape[1] + 1
     width = packet.initial_state.shape[1]
     if batch != 1:
         raise RuntimeExecutionArtifactError("execution snapshot packet batch differs")

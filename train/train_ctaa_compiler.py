@@ -30,7 +30,7 @@ from ctaa_neural_core import ClosureFeatureTransitionCore
 from ctaa_trunk_compiler import TrunkCausalCTAACompiler
 
 
-SCHEMA = "r12_ctaa_v2_compiler_training_v1"
+SCHEMA = "r12_ctaa_v2_compiler_training_v2"
 
 
 def sha256_file(path: Path) -> str:
@@ -137,7 +137,6 @@ def train(
             "total": float(receipt.total.detach()),
             "cards": float(receipt.cards.detach()),
             "initial": float(receipt.initial.detach()),
-            "schedule": float(receipt.schedule.detach()),
             "query": float(receipt.query.detach()),
         }
     compiler.eval()

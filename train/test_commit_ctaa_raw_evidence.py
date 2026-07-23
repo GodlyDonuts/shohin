@@ -22,12 +22,13 @@ from seal_ctaa_program_packets import seal_predictions
 
 
 def _program_predictions(path, *, all_invalid: bool = False) -> None:
-    schedule = torch.zeros((2, 41), dtype=torch.uint8)
-    schedule[0, 2] = 4
-    schedule[1, 1] = 4
-    schedule[1, 3] = 4
+    opcode_schedule = torch.zeros((2, 41), dtype=torch.uint8)
+    opcode_schedule[0, 2] = 4
+    opcode_schedule[1, 1] = 4
+    opcode_schedule[1, 3] = 4
     if all_invalid:
-        schedule[0, 4] = 4
+        opcode_schedule[0, 4] = 4
+    binding = torch.arange(4, dtype=torch.uint8)[None].expand(2, -1).clone()
     write_torch_once(
         path,
         {
@@ -36,9 +37,11 @@ def _program_predictions(path, *, all_invalid: bool = False) -> None:
             "program_source_sha256": "a" * 64,
             "compiler_sha256": "b" * 64,
             "action_cards": torch.zeros((2, 4, 3), dtype=torch.uint8),
+            "opcode_to_card": binding,
             "initial_state": torch.zeros((2, 3), dtype=torch.uint8),
-            "schedule": schedule,
-            "packet_valid": packet_valid_mask(schedule),
+            "opcode_schedule": opcode_schedule,
+            "schedule": opcode_schedule.clone(),
+            "packet_valid": packet_valid_mask(binding, opcode_schedule),
         },
     )
 
@@ -113,7 +116,7 @@ def test_raw_evidence_preserves_invalid_rows_and_binds_all_stages(tmp_path) -> N
     write_json_once(
         answers,
         {
-            "schema": "ctaa_late_query_answer_v1",
+            "schema": "ctaa_late_query_answer_v2",
             "execution_sha256": sha256_file(execution),
             "query_sha256": sha256_file(hard_query),
             "answers": [expected_answer],

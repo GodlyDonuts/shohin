@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from ctaa_intervention_protocol import RUNTIME_PANEL_SIZE
+from ctaa_intervention_protocol import MANDATORY_OPERATIONS, RUNTIME_PANEL_SIZE
 from ctaa_run_contract import canonical_json
 from ctaa_runtime_execution_projection import (
     EXECUTION_ATTEMPT_SCHEMA,
@@ -64,7 +64,9 @@ def _strings(value):
 def test_projection_is_complete_but_query_blind(projection):
     assert projection["schema"] == EXECUTION_PROJECTION_SCHEMA
     assert len(projection["anchors"]) == RUNTIME_PANEL_SIZE
-    assert len(projection["attempts"]) == 25 * RUNTIME_PANEL_SIZE
+    assert len(projection["attempts"]) == (
+        len(MANDATORY_OPERATIONS) - 1
+    ) * RUNTIME_PANEL_SIZE
     assert projection["deferred_operation"] == "late_query_swap"
     serialized = json.dumps(projection, sort_keys=True)
     for forbidden in (

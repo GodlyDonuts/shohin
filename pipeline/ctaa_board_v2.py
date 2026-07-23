@@ -46,6 +46,9 @@ PROGRAM_CLASSES: tuple[ProgramClass, ...] = (
     "explicit_final_collapse",
 )
 INITIAL_STATES: tuple[State, ...] = tuple(permutations(range(WIDTH)))  # type: ignore[assignment]
+OPCODE_BINDINGS: tuple[tuple[int, int, int, int], ...] = tuple(
+    permutations(range(ACTION_COUNT))
+)  # type: ignore[assignment]
 FACTORIAL_BITS = tuple(product((0, 1), repeat=3))
 LONG_PER_CLASS_DEPTH_CELL = 576
 
@@ -175,6 +178,24 @@ class CTAASurfaceRowV2:
     renderer: int
     program_source: str
     query_source: str
+    opcode_to_card: tuple[int, int, int, int]
+    opcode_schedule: tuple[int, ...]
+
+    def __post_init__(self) -> None:
+        if sorted(self.opcode_to_card) != list(range(ACTION_COUNT)):
+            raise ValueError("CTAA v2 surface binding is not a permutation")
+        if (
+            len(self.opcode_schedule) != MAX_STEPS
+            or self.opcode_schedule.count(STOP_ID) != 1
+            or any(event < 0 or event > STOP_ID for event in self.opcode_schedule)
+        ):
+            raise ValueError("CTAA v2 surface opcode schedule differs")
+        resolved = tuple(
+            STOP_ID if event == STOP_ID else self.opcode_to_card[event]
+            for event in self.opcode_schedule
+        )
+        if resolved != self.family.schedule:
+            raise ValueError("CTAA v2 surface binding does not resolve to family schedule")
 
     def compiler_record(self) -> dict[str, object]:
         if self.family.partition != "train":
@@ -184,7 +205,9 @@ class CTAASurfaceRowV2:
             "program_source": self.program_source,
             "query_source": self.query_source,
             "action_cards": self.family.action_cards,
+            "opcode_to_card": self.opcode_to_card,
             "initial_state": self.family.initial_state,
+            "opcode_schedule": self.opcode_schedule,
             "schedule": self.family.schedule,
             "query_position": self.family.query_position,
         }
@@ -202,7 +225,9 @@ class CTAASurfaceRowV2:
             "program_source": self.program_source,
             "query_source": self.query_source,
             "action_cards": self.family.action_cards,
+            "opcode_to_card": self.opcode_to_card,
             "initial_state": self.family.initial_state,
+            "opcode_schedule": self.opcode_schedule,
             "schedule": self.family.schedule,
             "query_position": self.family.query_position,
             "prefix_states": trace,
@@ -631,6 +656,35 @@ def balanced_renderer_index(family_index: int, per_class_depth_cell: int) -> int
     return (within_stratum // 18) % 16
 
 
+def balanced_binding_index(family_index: int, per_class_depth_cell: int) -> int:
+    """Exactly balance S4 bindings over the 18-by-16 surface grid.
+
+    The 18 query/state cells use the complement of the order-six subgroup in
+    Z_24 and the 16 renderers use the complement of the order-eight subgroup.
+    Their modular sum has constant multiplicity 12 over every 288-row block.
+    """
+
+    if (
+        family_index < 0
+        or per_class_depth_cell < 288
+        or per_class_depth_cell % 288
+    ):
+        raise ValueError("CTAA v2 binding cross-balance geometry differs")
+    within_stratum = family_index % per_class_depth_cell
+    block = within_stratum // 288
+    query_state_index = within_stratum % 18
+    renderer_index = (within_stratum // 18) % 16
+    query_state_residues = tuple(value for value in range(24) if value % 4)
+    renderer_residues = tuple(value for value in range(24) if value % 3)
+    if len(query_state_residues) != 18 or len(renderer_residues) != 16:
+        raise AssertionError("CTAA v2 binding coset geometry differs")
+    return (
+        query_state_residues[query_state_index]
+        + renderer_residues[renderer_index]
+        + block
+    ) % len(OPCODE_BINDINGS)
+
+
 def _with_schedule(
     family: CTAAProgramFamilyV2,
     schedule: tuple[int, ...],
@@ -773,6 +827,7 @@ def render_family_v2(
     name_pools: Mapping[str, tuple[str, ...]],
     *,
     renderer_index: int,
+    binding_index: int | None = None,
     reverse_rule_storage: bool = False,
     surface_key: str | None = None,
 ) -> CTAASurfaceRowV2:
@@ -791,10 +846,15 @@ def render_family_v2(
     opcodes = tuple(selected[WIDTH:])
     bits = tuple((renderer >> index) & 1 for index in range(6))
     lines = [_HEADER[bits[0]].format(symbols=_format_tuple(symbols, bits[0]))]
-    order = list(range(ACTION_COUNT))
-    rng.shuffle(order)
+    if binding_index is None:
+        order = list(range(ACTION_COUNT))
+        rng.shuffle(order)
+    else:
+        order = list(OPCODE_BINDINGS[binding_index % len(OPCODE_BINDINGS)])
     if reverse_rule_storage:
         order.reverse()
+    opcode_to_card = tuple(order)
+    card_to_opcode = {card: opcode for opcode, card in enumerate(opcode_to_card)}
     before = _format_tuple(symbols, bits[1])
     for slot in order:
         action = family.action_cards[slot]
@@ -811,6 +871,10 @@ def render_family_v2(
     lines.append(_START[bits[2]].format(state=state))
     stop = "STOP" if bits[4] == 0 else "HALT_NOW"
     events = tuple(stop if event == STOP_ID else opcodes[event] for event in family.schedule)
+    opcode_schedule = tuple(
+        STOP_ID if event == STOP_ID else card_to_opcode[event]
+        for event in family.schedule
+    )
     separator = " ; " if bits[4] == 0 else " / "
     lines.append(_TAPE[bits[3]].format(events=separator.join(events)))
     query = _QUERY[bits[5]].format(position=_POSITION[bits[5]][family.query_position])
@@ -819,6 +883,8 @@ def render_family_v2(
         renderer=renderer,
         program_source="\n".join(lines) + "\n",
         query_source=query + "\n",
+        opcode_to_card=opcode_to_card,  # type: ignore[arg-type]
+        opcode_schedule=opcode_schedule,
     )
 
 

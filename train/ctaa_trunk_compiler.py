@@ -8,6 +8,7 @@ after the terminal state has committed.
 from __future__ import annotations
 
 from dataclasses import dataclass, fields
+from itertools import permutations
 from typing import Mapping
 
 import torch
@@ -39,23 +40,39 @@ class TrunkResidualBundle:
 @dataclass(frozen=True)
 class CTAAProgramLogits:
     action_cards: torch.Tensor
+    opcode_to_card: torch.Tensor
     initial_state: torch.Tensor
-    schedule: torch.Tensor
+    opcode_schedule: torch.Tensor
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, init=False)
 class HardCTAAPacket:
     """Source-deleted categorical executor input."""
 
     action_cards: torch.Tensor
+    opcode_to_card: torch.Tensor
     initial_state: torch.Tensor
-    schedule: torch.Tensor
+    opcode_schedule: torch.Tensor
+
+    def __init__(
+        self,
+        action_cards: torch.Tensor,
+        initial_state: torch.Tensor,
+        opcode_schedule: torch.Tensor,
+        opcode_to_card: torch.Tensor,
+    ) -> None:
+        object.__setattr__(self, "action_cards", action_cards)
+        object.__setattr__(self, "opcode_to_card", opcode_to_card)
+        object.__setattr__(self, "initial_state", initial_state)
+        object.__setattr__(self, "opcode_schedule", opcode_schedule)
+        self.__post_init__()
 
     def __post_init__(self) -> None:
         if {field.name for field in fields(self)} != {
             "action_cards",
+            "opcode_to_card",
             "initial_state",
-            "schedule",
+            "opcode_schedule",
         }:
             raise ValueError("CTAA hard-packet schema differs")
         if any(value.dtype != torch.uint8 for value in self.__dict__.values()):
@@ -65,15 +82,27 @@ class HardCTAAPacket:
             raise ValueError("CTAA hard action-card geometry differs")
         if self.initial_state.shape != (batch, CTAA_WIDTH):
             raise ValueError("CTAA hard initial-state geometry differs")
-        if self.schedule.shape != (batch, CTAA_MAX_STEPS):
-            raise ValueError("CTAA hard schedule geometry differs")
+        if self.opcode_to_card.shape != (batch, CTAA_ACTION_COUNT):
+            raise ValueError("CTAA hard opcode-binding geometry differs")
+        if self.opcode_schedule.shape != (batch, CTAA_MAX_STEPS):
+            raise ValueError("CTAA hard opcode-schedule geometry differs")
         if self.action_cards.numel() and int(self.action_cards.max()) >= CTAA_WIDTH:
             raise ValueError("CTAA hard action card leaves categorical domain")
         if self.initial_state.numel() and int(self.initial_state.max()) >= CTAA_WIDTH:
             raise ValueError("CTAA hard initial state leaves categorical domain")
-        if self.schedule.numel() == 0 or int(self.schedule.max()) > CTAA_ACTION_COUNT:
-            raise ValueError("CTAA hard schedule leaves event domain")
-        stop_mask = self.schedule.eq(CTAA_ACTION_COUNT)
+        expected = torch.arange(
+            CTAA_ACTION_COUNT,
+            dtype=torch.uint8,
+            device=self.opcode_to_card.device,
+        )[None].expand_as(self.opcode_to_card)
+        if not torch.equal(self.opcode_to_card.sort(1).values, expected):
+            raise ValueError("CTAA hard opcode binding is not a permutation")
+        if (
+            self.opcode_schedule.numel() == 0
+            or int(self.opcode_schedule.max()) > CTAA_ACTION_COUNT
+        ):
+            raise ValueError("CTAA hard opcode schedule leaves event domain")
+        stop_mask = self.opcode_schedule.eq(CTAA_ACTION_COUNT)
         if not bool(stop_mask.sum(1).eq(1).all()):
             raise ValueError("CTAA hard schedule requires exactly one STOP")
         stop_index = stop_mask.long().argmax(1)
@@ -84,23 +113,36 @@ class HardCTAAPacket:
     def bytes_per_row(self) -> int:
         if self.action_cards.ndim != 3 or self.initial_state.ndim != 2:
             raise ValueError("CTAA hard-packet geometry differs")
-        if self.schedule.ndim != 2:
+        if self.opcode_schedule.ndim != 2:
             raise ValueError("CTAA hard schedule geometry differs")
         size = (
             self.action_cards.shape[1] * self.action_cards.shape[2]
+            + self.opcode_to_card.shape[1]
             + self.initial_state.shape[1]
-            + self.schedule.shape[1]
+            + self.opcode_schedule.shape[1]
         )
-        if size != 56:
+        if size != 60:
             raise ValueError("CTAA hard-packet byte contract differs")
         return size
+
+    @property
+    def resolved_schedule(self) -> torch.Tensor:
+        local = self.opcode_schedule.long()
+        resolved = self.opcode_to_card.long().gather(
+            1, local.clamp_max(CTAA_ACTION_COUNT - 1)
+        )
+        return torch.where(
+            local.eq(CTAA_ACTION_COUNT),
+            local,
+            resolved,
+        ).to(torch.uint8)
 
     def execute(self, core: ClosureTiedPointerCore) -> HardExecutionTrace:
         return execute_streamed_state_route(
             core,
             CTAA_WIDTH,
             self.action_cards.long(),
-            self.schedule.long(),
+            self.resolved_schedule.long(),
             self.initial_state.long(),
         )
 
@@ -109,7 +151,7 @@ class HardCTAAPacket:
             core,
             CTAA_WIDTH,
             self.action_cards.long(),
-            self.schedule.long(),
+            self.resolved_schedule.long(),
             self.initial_state.long(),
         )
 
@@ -181,7 +223,8 @@ class TrunkCausalCTAACompiler(nn.Module):
         self.model.requires_grad_(False)
 
         self.action_slot_count = self.action_count * self.width
-        self.initial_slot_start = self.action_slot_count
+        self.binding_slot_start = self.action_slot_count
+        self.initial_slot_start = self.binding_slot_start + self.action_count
         self.schedule_slot_start = self.initial_slot_start + self.width
         self.program_slot_count = self.schedule_slot_start + self.max_steps
 
@@ -230,6 +273,7 @@ class TrunkCausalCTAACompiler(nn.Module):
         )
         self.decoder_norm = nn.LayerNorm(self.compiler_width)
         self.tuple_head = nn.Linear(self.compiler_width, self.width)
+        self.binding_head = nn.Linear(self.compiler_width, self.action_count)
         self.event_head = nn.Linear(
             self.compiler_width,
             self.action_count + 1,
@@ -439,11 +483,16 @@ class TrunkCausalCTAACompiler(nn.Module):
                 self.width,
                 self.width,
             ),
+            opcode_to_card=self.binding_head(
+                slots[:, self.binding_slot_start : self.initial_slot_start]
+            ).float(),
             initial_state=tuple_logits[
                 :,
                 self.initial_slot_start : self.schedule_slot_start,
             ],
-            schedule=self.event_head(slots[:, self.schedule_slot_start :]).float(),
+            opcode_schedule=self.event_head(
+                slots[:, self.schedule_slot_start :]
+            ).float(),
         )
 
     def compile_program(
@@ -480,11 +529,30 @@ class TrunkCausalCTAACompiler(nn.Module):
         return self.query_head(decoded[:, 0]).float()
 
     @staticmethod
+    def materialize_binding(logits: torch.Tensor) -> torch.Tensor:
+        if logits.ndim != 3 or logits.shape[1:] != (
+            CTAA_ACTION_COUNT,
+            CTAA_ACTION_COUNT,
+        ):
+            raise ValueError("CTAA binding logits geometry differs")
+        candidates = torch.tensor(
+            tuple(permutations(range(CTAA_ACTION_COUNT))),
+            dtype=torch.long,
+            device=logits.device,
+        )
+        rows = torch.arange(CTAA_ACTION_COUNT, device=logits.device)
+        scores = logits[:, rows, candidates].sum(-1)
+        return candidates[scores.argmax(-1)].to(torch.uint8)
+
+    @staticmethod
     def materialize_program(output: CTAAProgramLogits) -> HardCTAAPacket:
         return HardCTAAPacket(
             action_cards=output.action_cards.argmax(-1).to(torch.uint8),
             initial_state=output.initial_state.argmax(-1).to(torch.uint8),
-            schedule=output.schedule.argmax(-1).to(torch.uint8),
+            opcode_schedule=output.opcode_schedule.argmax(-1).to(torch.uint8),
+            opcode_to_card=TrunkCausalCTAACompiler.materialize_binding(
+                output.opcode_to_card
+            ),
         )
 
     @staticmethod

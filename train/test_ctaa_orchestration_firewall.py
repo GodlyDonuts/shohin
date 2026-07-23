@@ -72,6 +72,7 @@ def test_orchestrator_has_no_oracle_surface_and_opens_query_after_execution(tmp_
     prepared_index = prepared / "packet_index.json"
     schedule = torch.zeros((1, 41), dtype=torch.uint8)
     schedule[:, 1] = 4
+    binding = torch.arange(4, dtype=torch.uint8)[None]
     write_torch_once(
         prepared_predictions,
         {
@@ -80,9 +81,11 @@ def test_orchestrator_has_no_oracle_surface_and_opens_query_after_execution(tmp_
             "program_source_sha256": sha256_file(program_source),
             "compiler_sha256": sha256_file(inputs["compiler"]),
             "action_cards": torch.zeros((1, 4, 3), dtype=torch.uint8),
+            "opcode_to_card": binding,
             "initial_state": torch.zeros((1, 3), dtype=torch.uint8),
+            "opcode_schedule": schedule.clone(),
             "schedule": schedule,
-            "packet_valid": packet_valid_mask(schedule),
+            "packet_valid": packet_valid_mask(binding, schedule),
         },
     )
     sealed = seal_predictions(prepared_predictions, prepared_packet, prepared_index)
@@ -162,7 +165,7 @@ def test_orchestrator_has_no_oracle_surface_and_opens_query_after_execution(tmp_
             write_json_once(
                 args["output"],
                 {
-                    "schema": "ctaa_late_query_answer_v1",
+                    "schema": "ctaa_late_query_answer_v2",
                     "execution_sha256": sha256_file(args["execution"]),
                     "query_sha256": sha256_file(args["query"]),
                     "answers": [answer],

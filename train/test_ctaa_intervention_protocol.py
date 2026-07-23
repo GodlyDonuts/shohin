@@ -228,9 +228,9 @@ def plan_with_anchors(
 def test_balanced_board_level_plan_validates_and_round_trips() -> None:
     plan = valid_plan()
     assert len(plan.anchors) == 864
-    assert len(MANDATORY_INTERVENTIONS) == 23
+    assert len(MANDATORY_INTERVENTIONS) == 26
     assert len(MANDATORY_GATES) == 3
-    assert len(plan.operations) == 26
+    assert len(plan.operations) == 29
     assert validate_runtime_intervention_plan(plan) == plan
     assert validate_runtime_intervention_plan(plan_to_dict(plan)) == plan
 

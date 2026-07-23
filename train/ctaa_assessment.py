@@ -21,7 +21,9 @@ EVIDENCE_KEYS = {
     "source_index",
     "packet_valid",
     "predicted_action_cards",
+    "predicted_opcode_to_card",
     "predicted_initial_state",
+    "predicted_opcode_schedule",
     "predicted_schedule",
     "predicted_query_position",
     "state_route",
@@ -37,7 +39,9 @@ ORACLE_KEYS = {
     "program_class",
     "depth",
     "action_cards",
+    "opcode_to_card",
     "initial_state",
+    "opcode_schedule",
     "schedule",
     "query_position",
     "prefix_states",
@@ -60,9 +64,10 @@ INTERVENTION_KEYS = {
 BOOLEAN_METRICS = (
     "packet_valid",
     "cards_exact",
-    "binding_exact",
+    "independent_binding_exact",
     "initial_exact",
     "stop_exact",
+    "opcode_schedule_exact",
     "schedule_exact",
     "program_exact",
     "query_exact",
@@ -72,6 +77,28 @@ BOOLEAN_METRICS = (
     "terminal_exact",
     "answer_exact",
 )
+
+
+def _resolve_committed_schedule(
+    binding: object,
+    opcode_schedule: object,
+    *,
+    label: str,
+) -> list[int]:
+    if (
+        not isinstance(binding, list)
+        or len(binding) != 4
+        or any(type(value) is not int for value in binding)
+        or sorted(binding) != [0, 1, 2, 3]
+        or not isinstance(opcode_schedule, list)
+        or len(opcode_schedule) != 41
+        or any(
+            type(value) is not int or not 0 <= value <= 4
+            for value in opcode_schedule
+        )
+    ):
+        raise ValueError(f"CTAA {label} opcode program differs")
+    return [4 if opcode == 4 else int(binding[opcode]) for opcode in opcode_schedule]
 
 
 def _reject_duplicate_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
@@ -377,18 +404,42 @@ def score_evidence(
         target = oracle[family_id]
         packet_valid = bool(predicted["packet_valid"])
         cards_exact = predicted["predicted_action_cards"] == target["action_cards"]
-        binding_exact = cards_exact
+        independent_binding_exact = (
+            predicted["predicted_opcode_to_card"] == target["opcode_to_card"]
+        )
         initial_exact = predicted["predicted_initial_state"] == target["initial_state"]
-        schedule_exact = predicted["predicted_schedule"] == target["schedule"]
+        opcode_schedule_exact = (
+            predicted["predicted_opcode_schedule"] == target["opcode_schedule"]
+        )
+        reconstructed_schedule = _resolve_committed_schedule(
+            predicted["predicted_opcode_to_card"],
+            predicted["predicted_opcode_schedule"],
+            label="committed prediction",
+        )
+        if predicted["predicted_schedule"] != reconstructed_schedule:
+            raise ValueError("CTAA committed resolved schedule differs")
+        oracle_schedule = _resolve_committed_schedule(
+            target["opcode_to_card"],
+            target["opcode_schedule"],
+            label="oracle",
+        )
+        if target["schedule"] != oracle_schedule:
+            raise ValueError("CTAA oracle resolved schedule differs")
+        schedule_exact = reconstructed_schedule == oracle_schedule
         predicted_stop = [
             index
-            for index, event in enumerate(predicted["predicted_schedule"])
+            for index, event in enumerate(reconstructed_schedule)
             if event == 4
         ]
-        target_stop = target["schedule"].index(4)
+        target_stop = oracle_schedule.index(4)
         stop_exact = packet_valid and predicted_stop == [target_stop]
         program_exact = (
-            packet_valid and cards_exact and initial_exact and schedule_exact
+            packet_valid
+            and cards_exact
+            and independent_binding_exact
+            and initial_exact
+            and opcode_schedule_exact
+            and schedule_exact
         )
         query_exact = (
             predicted["predicted_query_position"] is not None
@@ -430,8 +481,10 @@ def score_evidence(
                 and len(state_route) == 42
                 and state_route[step + 1] == target["prefix_states"][step + 1]
             )
-            action_correct[str(target["schedule"][step])].append(correct)
-            action = target["action_cards"][target["schedule"][step]]
+            opcode = int(target["opcode_schedule"][step])
+            card_address = int(oracle_schedule[step])
+            action_correct[str(opcode)].append(correct)
+            action = target["action_cards"][card_address]
             semantic_key = json.dumps(action, separators=(",", ":"))
             action_rank = len(set(action))
             semantic_action_correct[semantic_key].append(correct)
@@ -442,7 +495,7 @@ def score_evidence(
             active_step_outcomes.append(
                 {
                     "step": step,
-                    "opcode": int(target["schedule"][step]),
+                    "opcode": opcode,
                     "semantic_action": list(action),
                     "action_rank": action_rank,
                     "quartile": quartile + 1,
@@ -502,9 +555,10 @@ def score_evidence(
             "renderer": target["renderer"],
             "packet_valid": packet_valid,
             "cards_exact": cards_exact,
-            "binding_exact": binding_exact,
+            "independent_binding_exact": independent_binding_exact,
             "initial_exact": initial_exact,
             "stop_exact": stop_exact,
+            "opcode_schedule_exact": opcode_schedule_exact,
             "schedule_exact": schedule_exact,
             "program_exact": program_exact,
             "query_exact": query_exact,

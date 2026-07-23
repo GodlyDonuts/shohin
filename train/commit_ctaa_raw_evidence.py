@@ -23,8 +23,8 @@ from ctaa_packet_io import read_packet_file, read_query_file
 from run_ctaa_packet_executor import CORE_SCHEMA, EXECUTION_SCHEMA, load_core
 
 
-RAW_EVIDENCE_SCHEMA = "r12_ctaa_v2_raw_evidence_v1"
-RAW_EVIDENCE_RECEIPT_SCHEMA = "r12_ctaa_v2_raw_evidence_receipt_v1"
+RAW_EVIDENCE_SCHEMA = "r12_ctaa_v2_raw_evidence_v2"
+RAW_EVIDENCE_RECEIPT_SCHEMA = "r12_ctaa_v2_raw_evidence_receipt_v2"
 
 
 def _query_positions_commitment(query: dict[str, object] | None) -> str | None:
@@ -143,7 +143,7 @@ def _load_answers(
     if (
         not isinstance(value, dict)
         or set(value) != {"schema", "execution_sha256", "query_sha256", "answers"}
-        or value.get("schema") != "ctaa_late_query_answer_v1"
+        or value.get("schema") != "ctaa_late_query_answer_v2"
         or value.get("execution_sha256") != execution_sha
         or value.get("query_sha256") != query_sha
         or not isinstance(value.get("answers"), list)
@@ -297,7 +297,13 @@ def commit_raw_evidence(
                 "source_index": source_index,
                 "packet_valid": packet_valid,
                 "predicted_action_cards": program["action_cards"][source_index].tolist(),
+                "predicted_opcode_to_card": program["opcode_to_card"][
+                    source_index
+                ].tolist(),
                 "predicted_initial_state": program["initial_state"][source_index].tolist(),
+                "predicted_opcode_schedule": program["opcode_schedule"][
+                    source_index
+                ].tolist(),
                 "predicted_schedule": program["schedule"][source_index].tolist(),
                 "predicted_query_position": query_position,
                 "state_route": state_route,

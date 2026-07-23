@@ -336,7 +336,7 @@ def frozen_inputs(tmp_path_factory: pytest.TempPathFactory) -> dict[str, object]
     manifest_path = board / "manifest.json"
     _write_json(
         manifest_path,
-        {"schema": "r12_ctaa_v2_manifest_v1", "seed": 1729, "files": files},
+        {"schema": "r12_ctaa_v2_manifest_v2", "seed": 1729, "files": files},
     )
     manifest_sha = _digest(manifest_path.read_bytes())
     seed_receipt = build_receipt(
@@ -446,6 +446,9 @@ def test_concrete_attempt_payloads_bind_nonidentity_mutations(built_plan) -> Non
         "stop_relocation",
     }
     result_packet = {
+        "card_only_counterfactual",
+        "binding_only_counterfactual",
+        "compensated_opcode_relabel",
         "card_storage_reindex",
         "witness_corruption",
         "paired_shuffled_law",
@@ -457,7 +460,7 @@ def test_concrete_attempt_payloads_bind_nonidentity_mutations(built_plan) -> Non
     }
     for attempt in plan.attempts:
         payload = json.loads(attempt.mutation_payload_json)
-        assert payload["schema"] == "r12_ctaa_v2_concrete_mutation_v1"
+        assert payload["schema"] == "r12_ctaa_v2_concrete_mutation_v2"
         assert payload["operation"] == attempt.operation
         assert payload["anchor_id"] == attempt.anchor_id
         assert payload["timing"]

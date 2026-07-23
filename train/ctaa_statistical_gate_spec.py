@@ -519,6 +519,7 @@ def _compiler_frontend_gates() -> dict[str, object]:
             "independent_binding_exact",
             "initial_exact",
             "stop_exact",
+            "opcode_schedule_exact",
             "schedule_exact",
             "program_exact",
             "query_exact",

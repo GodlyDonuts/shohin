@@ -81,7 +81,12 @@ def _snapshot() -> ExecutionSnapshot:
     )
     initial = torch.tensor([[0, 1, 2]], dtype=torch.uint8)
     schedule = torch.tensor([[0, 1, 2, 4] + [0] * 37], dtype=torch.uint8)
-    packet = HardCTAAPacket(cards, initial, schedule)
+    packet = HardCTAAPacket(
+        cards,
+        initial,
+        schedule,
+        torch.arange(4, dtype=torch.uint8)[None],
+    )
     route = torch.tensor([[0, 1, 2]] * 42, dtype=torch.uint8)
     return ExecutionSnapshot(
         "snapshot",
@@ -491,12 +496,12 @@ def _all_failure_prepared(plan):
     )
 
 
-def test_all_failures_remain_in_exact_22464_denominator() -> None:
+def test_all_failures_remain_in_exact_25056_denominator() -> None:
     plan = valid_plan()
     evidence = finalizer._populate_builder(_all_failure_prepared(plan)).build()
     attempts = evidence["attempts"]
-    assert evidence["attempt_count"] == len(attempts) == 22_464
-    assert [row["attempt_index"] for row in attempts] == list(range(22_464))
+    assert evidence["attempt_count"] == len(attempts) == 25_056
+    assert [row["attempt_index"] for row in attempts] == list(range(25_056))
     assert all(row["status"] == "failure" for row in attempts)
     assert (
         sum(

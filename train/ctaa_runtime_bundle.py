@@ -1,7 +1,7 @@
 """Immutable five-seed custody bundle for CTAA runtime interventions.
 
 Runtime interventions are a causal sidecar, not extra scored examples.  This
-module binds exactly one 864-anchor/26-operation plan and its raw evidence to
+module binds exactly one 864-anchor/29-operation plan and its raw evidence to
 each of the five ``ctaa_closure`` base runs without changing the locked 40,608
 row assessment denominator.
 """

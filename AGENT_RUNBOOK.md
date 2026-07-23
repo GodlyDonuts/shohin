@@ -6,7 +6,7 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
-> **Last updated:** 2026-07-21 04:01 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-23 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -36,13 +36,14 @@
 > 6,561 exhaustive halt/suffix traces, 729 executable-action checks, and 648 changed-donor plus 54
 > same-terminal intervention cases. Identity-executor, reversed-composition, direct-state-signature,
 > and single-action executor mutations are killed by tests. This proves only
-> coherent finite mechanics. The revision-2 implementation now additionally has fixed 56-byte
+> coherent finite mechanics. The revision-2 implementation now additionally has fixed 60-byte
 > packets, exact one-STOP validation, host-owned event streaming whose core API sees only current
 > action/state, post-receipt late-query materialization, route-agreement rejection, monotonic right-
 > padding and mask-correct independent h19/h29 interventions, factorial semantic/renderer/lexical
 > axes, varied rank-two/final-collapse programs, and full prefix-state scoring. The immutable real-
 > artifact preflight passes: raw SHA and strict step-300k load; 63/63 qualified memory tensors;
-> exact complete-system parameters 137,986,868 with 12,013,131 headroom. This remains only
+> the binding-amended complete system is exactly 137,989,944 parameters with 12,010,055
+> headroom. This remains only
 > infrastructure. The future neural falsifier must causally use the exact 125,081,664-
 > parameter raw-300k trunk, add at most 24,918,335 parameters, learn model-owned STOP, and beat
 > parameter/state/FLOP-matched generic recurrence. No neural source freeze, seed, board, or H100 job
@@ -50,9 +51,13 @@
 > derived invalid-packet masks, valid-subset packet sealing, a fresh source-blind executor,
 > execution-gated query compilation, late query bytes, raw-evidence commitment, and an oracle-only
 > one-access assessor. Invalid and all-invalid compiles stay in the score denominator. A static
-> resource receipt and arbitrary-table matched-control capacity receipt pass. Runtime h19/h29,
-> donor-state/action, packet-transplant, source-poison, and other mandatory intervention orchestration
-> plus the final five-seed paired/Holm/bootstrap gate remain incomplete. Two completed independent
+> resource receipt and arbitrary-table matched-control capacity receipt pass. The version-4
+> runtime plan now binds 29 mandatory operations over 864 anchors, including h19/h29,
+> donor-state/action, packet-transplant, source-poison, and explicit card-only, binding-only, and
+> compensated three-cycle controls. Deterministic plan replay and query-blind execution implement
+> all 25,056 attempts per seed. Capability-time resource/intervention receipts, independent
+> dual-scorer consensus, unmocked Linux custody, and the stronger binding-identification boards
+> remain incomplete. Two completed independent
 > adversarial reviews explicitly return `REJECT_SOURCE_FREEZE`; a third systems review was stopped
 > without a final verdict and is not evidence. Post-review hardening adds exact Clopper-Pearson,
 > Holm, and paired hierarchical-bootstrap mechanics; exact finite-core audits; immutable source,
@@ -10700,7 +10705,8 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   with varied stable-rank-two, implicit-final-collapse, and explicit-final-collapse programs; and
   scores every unseen prefix state plus separate map/state/answer deletion depth and shortest-word
   compression. A 6,912-family dry build is unique and passes its typed tests. Hard packet custody is
-  now exactly 56 bytes with four cards, three-state bytes, 41 events, exactly one interior STOP, and
+  now exactly 60 bytes with four cards, four opcode-to-card binding bytes, three-state bytes,
+  41 local-opcode events, exactly one interior STOP, and
   post-STOP suffix; the neural core exposes no schedule-bearing method and sees only one current
   action/state pair per host-streamed call. Query bytes are created only after a read-only execution
   receipt exists, unsafe pickle loading is removed, and late readout rejects malformed STOP or
@@ -10855,3 +10861,61 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   complete intervention panel to the assessed manifest and frozen cores; and (4) pass the unmocked
   execution-set-to-final-gate, sealed-memfd, and Linux bubblewrap custody smoke. Source may not
   freeze until all four are closed and independently reviewed.
+
+- **2026-07-23** -- **Causal opcode binding is implemented through the mandatory runtime lattice;
+  source freeze remains rejected.** No production board seed, training seed, scored access, H100
+  job, development read, confirmation read, or neural capability result was created. The protected
+  raw checkpoint remains SHA-256
+  `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`.
+
+  The compiler and 60-byte hard packet now commit four independent objects: 12 physical card
+  bytes, four `opcode_to_card` binding bytes, three initial-state bytes, and a 41-byte
+  declaration-local opcode tape. The resolved physical schedule is deterministic and derived-only.
+  Missing/invalid bindings fail closed, materialization selects the maximum-weight valid `S4`
+  permutation, the scorer independently reconstructs the resolved schedule, and midpoint execution
+  uses that reconstruction. Card semantics, binding, local tape, and resolved behavior are no
+  longer aliased.
+
+  The board uses an exact `Z_24` coset construction. Every 288-row scored block contains all 24
+  bindings exactly 12 times and every local-opcode/card-address pair exactly 72 times; every fixed
+  renderer sees 18 distinct bindings and every fixed query/state cell sees 16. Card-only,
+  binding-only, compensated non-involutive opcode relabeling, and card-storage reindex mutations
+  have explicit causal truth tables. The first two mandatory mutations are forced to alter the
+  first transition from a distinct initial state; the compensated three-cycle changes binding and
+  local tape while preserving the full resolved trace.
+
+  Runtime plan v4 now contains 29 mandatory operations over 864 anchors: 25,056 attempts per seed,
+  of which 24,192 are query-blind pre-query executions. Plan, operation, attempt, concrete-mutation,
+  compiler-training, packet, execution, assessment, resource, and evidence schemas were advanced
+  where their binding semantics changed. Deterministic plan replay and the query-blind engine
+  reproduce all three new algebraic controls end to end.
+
+  A real immutable-artifact preflight strictly loads the raw 300k checkpoint and qualified compiler,
+  verifies 63/63 memory tensors, and reports 125,081,664 trunk + 12,800,527 compiler + 107,753 core
+  = **137,989,944 total parameters**, leaving **12,010,055** below the strict cap. Report file
+  `artifacts/r12/ctaa_v2_preflight/immutable_artifacts_binding_v2.json` has SHA-256
+  `6e82c1c3a7c8cef7b9aac95919edcd33e420541fb1e65565fb52e6d61e3eb55f`.
+
+  The source-free binding-identification mechanics audit combines `A4` group structure, control
+  persistent excitation, and delayed/activity-silent memory protocols. It proves exact 12-even /
+  12-odd binding partitions with `3/3/3/3` local marginals; 72 write-delete-delay-read cases at
+  delays 0/32/128; 24/24 donor-register following; 23/24 identity-reset differences; all 24
+  bindings reachable through 1,092 adjacent-transposition sequences; and 6,015 committed-prefix
+  no-future-leakage checks. It also corrects the rebinding design: the adjacent-transposition
+  Cayley graph of `S4` has diameter six, so five cues cannot reach reversal. Report file
+  `artifacts/r12/ctaa_v2_preflight/binding_identification_mechanics_v1.json` has SHA-256
+  `21cbcafb4d8adc49cebe978bd2a2b1d482a54f526a52f32553a7efa3e22960b9`.
+
+  Verification is clean: focused mandatory-panel integration is 168/168; the finite mechanics
+  audit is 6/6; the complete CTAA suite is **483 passed, three platform skips** in 397.30 seconds;
+  Ruff, bytecode compilation, stale-schema/field searches, and `git diff --check` pass. These are
+  infrastructure and finite-mechanics results, not learned reasoning.
+
+  **Remaining source-freeze blockers:** (1) build and train the actual `A4`-train/odd-confirmation
+  neural slice against a whole-permutation lookup control; (2) implement the neural
+  write-delete-delay-read barrier and multi-epoch rebinding register with transplantation/reset
+  controls; (3) integrate a second independently implemented raw scorer and exact consensus inside
+  one access spend; (4) bind capability-time six-phase resource and complete-intervention receipts
+  to the assessed manifest and frozen cores; and (5) pass unmocked execution-set-to-final-gate,
+  sealed-memfd, and Linux bubblewrap custody. `REJECT_SOURCE_FREEZE` remains mandatory until all
+  five close and independent review passes.

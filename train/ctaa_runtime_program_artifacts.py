@@ -30,7 +30,11 @@ from build_ctaa_runtime_intervention_plan import (
     _split_once,
     _tuple_values,
 )
-from ctaa_intervention_protocol import AnchorOperationCommitment, InterventionFamily
+from ctaa_intervention_protocol import (
+    ATTEMPT_PLAN_SCHEMA,
+    AnchorOperationCommitment,
+    InterventionFamily,
+)
 from ctaa_neural_core import CTAA_ACTION_COUNT, CTAA_MAX_STEPS, CTAA_WIDTH
 from ctaa_run_contract import canonical_json
 from ctaa_runtime_execution_engine import PROGRAM_ARTIFACT_SCHEMA, ProgramArtifact
@@ -68,6 +72,7 @@ _SOURCE_PACKET_OPERATIONS = frozenset(
         InterventionFamily.PAIRED_SHUFFLED_LAW.value,
         InterventionFamily.SCHEDULE_ORDER_TWIN.value,
         InterventionFamily.STOP_RELOCATION.value,
+        InterventionFamily.RULE_LINE_SHUFFLE.value,
     }
 )
 
@@ -84,7 +89,9 @@ class _ProgramShape:
     symbols: tuple[str, str, str]
     opcodes: tuple[str, str, str, str]
     cards: tuple[tuple[int, int, int], ...]
+    opcode_to_card: tuple[int, int, int, int]
     initial_state: tuple[int, int, int]
+    opcode_schedule: tuple[int, ...]
     schedule: tuple[int, ...]
     rule_order: tuple[int, ...]
     renderer_value: int
@@ -378,19 +385,25 @@ def _parse_program_source(source: bytes) -> _ProgramShape:
             raise ProgramArtifactLoadError("parent event separator differs")
         event_names = raw_tape.split(separator)
         typed_opcodes = tuple(str(item) for item in opcodes)
-        opcode_index = {opcode: index for index, opcode in enumerate(typed_opcodes)}
+        local_opcodes = tuple(typed_opcodes[card] for card in rule_order)
+        opcode_index = {opcode: index for index, opcode in enumerate(local_opcodes)}
         stop_names = [name for name in event_names if name in {"STOP", "HALT_NOW"}]
         if len(event_names) != CTAA_MAX_STEPS or len(stop_names) != 1:
             raise ProgramArtifactLoadError("parent event geometry differs")
         stop_name = stop_names[0]
         if stop_bit != (0 if stop_name == "STOP" else 1):
             raise ProgramArtifactLoadError("parent STOP renderer differs")
-        schedule = tuple(
+        opcode_schedule = tuple(
             CTAA_ACTION_COUNT if name == stop_name else opcode_index.get(name, -1)
             for name in event_names
         )
-        if any(event < 0 for event in schedule):
+        if any(event < 0 for event in opcode_schedule):
             raise ProgramArtifactLoadError("parent event opcode differs")
+        binding = tuple(rule_order)
+        schedule = tuple(
+            CTAA_ACTION_COUNT if event == CTAA_ACTION_COUNT else binding[event]
+            for event in opcode_schedule
+        )
         depth = schedule.index(CTAA_ACTION_COUNT)
         if depth <= 0 or depth >= CTAA_MAX_STEPS:
             raise ProgramArtifactLoadError("parent STOP position differs")
@@ -411,7 +424,9 @@ def _parse_program_source(source: bytes) -> _ProgramShape:
         symbols=tuple(symbols),  # type: ignore[arg-type]
         opcodes=typed_opcodes,  # type: ignore[arg-type]
         cards=tuple(cards),  # type: ignore[arg-type]
+        opcode_to_card=binding,  # type: ignore[arg-type]
         initial_state=initial,  # type: ignore[arg-type]
+        opcode_schedule=opcode_schedule,
         schedule=schedule,
         rule_order=tuple(rule_order),
         renderer_value=renderer,
@@ -422,7 +437,7 @@ def _parse_program_source(source: bytes) -> _ProgramShape:
 def _attempt_payload(row: Mapping[str, object]) -> dict[str, object]:
     try:
         commitment = AnchorOperationCommitment(
-            schema="r12_ctaa_anchor_operation_commitment_v1",
+            schema=ATTEMPT_PLAN_SCHEMA,
             attempt_index=int(row["attempt_index"]),
             attempt_id=str(row["attempt_id"]),
             operation=str(row["operation"]),
@@ -477,9 +492,14 @@ def _renaming(value: object, keys: Sequence[str], label: str) -> tuple[str, ...]
 
 
 def _packet_sha(
-    cards: Sequence[Sequence[int]], initial: Sequence[int], schedule: Sequence[int]
+    cards: Sequence[Sequence[int]],
+    initial: Sequence[int],
+    schedule: Sequence[int],
+    opcode_to_card: Sequence[int],
 ) -> str:
-    return hashlib.sha256(_packet_bytes(cards, initial, schedule)).hexdigest()
+    return hashlib.sha256(
+        _packet_bytes(cards, initial, schedule, opcode_to_card)
+    ).hexdigest()
 
 
 def _source_intervention(
@@ -518,6 +538,12 @@ def _source_intervention(
         if order == parent.rule_order:
             raise ProgramArtifactLoadError("rule-line shuffle is a no-op")
         rendered = _render_program(parent, rule_order=order)
+        packet_sha = _packet_sha(
+            parent.cards,
+            parent.initial_state,
+            parent.schedule,
+            order,
+        )
     elif operation == InterventionFamily.WITNESS_CORRUPTION.value:
         slot = _integer(
             payload["slot"], "witness-corruption slot", minimum=0, maximum=3
@@ -537,14 +563,24 @@ def _source_intervention(
         cards_list[slot][position] = after
         cards = tuple(tuple(card) for card in cards_list)
         rendered = _render_program(parent, cards=cards)
-        packet_sha = _packet_sha(cards, parent.initial_state, parent.schedule)
+        packet_sha = _packet_sha(
+            cards,
+            parent.initial_state,
+            parent.schedule,
+            parent.opcode_to_card,
+        )
     elif operation == InterventionFamily.PAIRED_SHUFFLED_LAW.value:
         order = _permutation_payload(payload["law_order"], "shuffled-law order")
         cards = tuple(parent.cards[slot] for slot in order)
         if cards == parent.cards:
             raise ProgramArtifactLoadError("shuffled-law order is a no-op")
         rendered = _render_program(parent, cards=cards)
-        packet_sha = _packet_sha(cards, parent.initial_state, parent.schedule)
+        packet_sha = _packet_sha(
+            cards,
+            parent.initial_state,
+            parent.schedule,
+            parent.opcode_to_card,
+        )
     elif operation == InterventionFamily.SCHEDULE_ORDER_TWIN.value:
         slots = payload["swapped_active_slots"]
         if (
@@ -566,7 +602,12 @@ def _source_intervention(
         )
         schedule = tuple(schedule_list)
         rendered = _render_program(parent, schedule=schedule)
-        packet_sha = _packet_sha(parent.cards, parent.initial_state, schedule)
+        packet_sha = _packet_sha(
+            parent.cards,
+            parent.initial_state,
+            schedule,
+            parent.opcode_to_card,
+        )
     elif operation == InterventionFamily.STOP_RELOCATION.value:
         old_stop = _integer(
             payload["old_stop_index"],
@@ -599,7 +640,12 @@ def _source_intervention(
         )
         schedule = tuple(schedule_list)
         rendered = _render_program(parent, schedule=schedule)
-        packet_sha = _packet_sha(parent.cards, parent.initial_state, schedule)
+        packet_sha = _packet_sha(
+            parent.cards,
+            parent.initial_state,
+            schedule,
+            parent.opcode_to_card,
+        )
     else:  # pragma: no cover - closed source-operation set above
         raise ProgramArtifactLoadError("source operation differs")
 
@@ -691,7 +737,12 @@ def load_runtime_program_artifacts(
         source = source_by_hash[digest]
         parsed = _parse_program_source(source)
         if (
-            _packet_sha(parsed.cards, parsed.initial_state, parsed.schedule)
+            _packet_sha(
+                parsed.cards,
+                parsed.initial_state,
+                parsed.schedule,
+                parsed.opcode_to_card,
+            )
             != anchor["packet_sha256"]
         ):
             raise ProgramArtifactLoadError("parent packet source hash differs")

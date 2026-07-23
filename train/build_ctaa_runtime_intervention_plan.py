@@ -56,10 +56,10 @@ from pipeline.generate_ctaa_board import (
 )
 
 
-MANIFEST_SCHEMA = "r12_ctaa_v2_manifest_v1"
+MANIFEST_SCHEMA = "r12_ctaa_v2_manifest_v2"
 MASK_SCHEMA = "r12_ctaa_v2_fixed_right_padding_mask_v1"
 MIDPOINT_SUFFIX_SCHEMA = "r12_ctaa_v2_midpoint_suffix_geometry_v1"
-RUNTIME_IMPLEMENTATION_SCHEMA = "r12_ctaa_v2_runtime_implementation_v1"
+RUNTIME_IMPLEMENTATION_SCHEMA = "r12_ctaa_v2_runtime_implementation_v2"
 RUNTIME_IMPLEMENTATION_SOURCES = (
     "build_ctaa_runtime_intervention_plan.py",
     "ctaa_intervention_protocol.py",
@@ -104,7 +104,9 @@ class ParsedSource:
     symbols: tuple[str, str, str]
     opcodes: tuple[str, str, str, str]
     cards: tuple[tuple[int, int, int], ...]
+    opcode_to_card: tuple[int, int, int, int]
     initial_state: tuple[int, int, int]
+    opcode_schedule: tuple[int, ...]
     schedule: tuple[int, ...]
     rule_order: tuple[int, ...]
     packet_bytes: bytes
@@ -153,6 +155,31 @@ def _permutation(
     if ordered == tuple(range(size)):
         ordered = ordered[1:] + ordered[:1]
     return ordered
+
+
+def _three_cycle(
+    seed: int,
+    operation: str,
+    anchor_id: str,
+    required_moved_slot: int | None = None,
+) -> tuple[int, int, int, int]:
+    """Return a deterministic non-involutive old-slot to new-slot map."""
+
+    selected = _permutation(seed, operation, anchor_id, ACTION_COUNT)
+    if required_moved_slot is None:
+        first, second, third = selected[:3]
+    else:
+        if not 0 <= required_moved_slot < ACTION_COUNT:
+            raise RuntimePlanBuildError("CTAA required three-cycle slot differs")
+        first = required_moved_slot
+        second, third = tuple(
+            slot for slot in selected if slot != required_moved_slot
+        )[:2]
+    old_to_new = list(range(ACTION_COUNT))
+    old_to_new[first] = second
+    old_to_new[second] = third
+    old_to_new[third] = first
+    return tuple(old_to_new)  # type: ignore[return-value]
 
 
 def _opaque_names(
@@ -219,10 +246,46 @@ def _render_program(
 
 
 def _packet_bytes(
-    cards: Sequence[Sequence[int]], initial: Sequence[int], schedule: Sequence[int]
+    cards: Sequence[Sequence[int]],
+    initial: Sequence[int],
+    schedule: Sequence[int],
+    opcode_to_card: Sequence[int],
 ) -> bytes:
+    binding = tuple(int(value) for value in opcode_to_card)
+    if sorted(binding) != list(range(ACTION_COUNT)):
+        raise RuntimePlanBuildError("CTAA packet binding is not a permutation")
+    inverse = {card: opcode for opcode, card in enumerate(binding)}
+    opcode_schedule = tuple(
+        STOP_ID if event == STOP_ID else inverse[int(event)]
+        for event in schedule
+    )
     return bytes(
-        [value for card in cards for value in card] + list(initial) + list(schedule)
+        [value for card in cards for value in card]
+        + list(binding)
+        + list(initial)
+        + list(opcode_schedule)
+    )
+
+
+def _packet_bytes_from_local(
+    cards: Sequence[Sequence[int]],
+    opcode_to_card: Sequence[int],
+    initial: Sequence[int],
+    opcode_schedule: Sequence[int],
+) -> bytes:
+    binding = tuple(int(value) for value in opcode_to_card)
+    local_tape = tuple(int(value) for value in opcode_schedule)
+    if sorted(binding) != list(range(ACTION_COUNT)):
+        raise RuntimePlanBuildError("CTAA packet binding is not a permutation")
+    if len(local_tape) != MAX_STEPS or any(
+        value < 0 or value > STOP_ID for value in local_tape
+    ):
+        raise RuntimePlanBuildError("CTAA packet local tape differs")
+    return bytes(
+        [value for card in cards for value in card]
+        + list(binding)
+        + list(initial)
+        + list(local_tape)
     )
 
 
@@ -474,7 +537,8 @@ def _parse_program(
     else:
         raise RuntimePlanBuildError("CTAA source event separator differs")
     event_names = raw_tape.split(separator)
-    opcode_index = {str(opcode): index for index, opcode in enumerate(opcodes)}
+    local_opcodes = tuple(str(opcodes[card]) for card in rule_order)
+    opcode_index = {opcode: index for index, opcode in enumerate(local_opcodes)}
     stop_names = [name for name in event_names if name in {"STOP", "HALT_NOW"}]
     if len(event_names) != MAX_STEPS or len(stop_names) != 1:
         raise RuntimePlanBuildError("CTAA source event geometry differs")
@@ -482,12 +546,17 @@ def _parse_program(
     observed_stop_bit = 0 if stop_name == "STOP" else 1
     if stop_bit != observed_stop_bit:
         raise RuntimePlanBuildError("CTAA source STOP renderer bit differs")
-    schedule = tuple(
+    opcode_schedule = tuple(
         STOP_ID if name == stop_name else opcode_index.get(name, -1)
         for name in event_names
     )
-    if any(event < 0 for event in schedule):
+    if any(event < 0 for event in opcode_schedule):
         raise RuntimePlanBuildError("CTAA source event opcode differs")
+    binding = tuple(rule_order)
+    schedule = tuple(
+        STOP_ID if event == STOP_ID else binding[event]
+        for event in opcode_schedule
+    )
     depth = schedule.index(STOP_ID)
     if depth not in SCORED_DEPTHS:
         raise RuntimePlanBuildError("CTAA source scored depth differs")
@@ -541,11 +610,7 @@ def _parse_program(
     token_ids = tuple(tokenizer.encode(program_source).ids)
     if not token_ids or len(token_ids) > SEQUENCE_LIMIT:
         raise RuntimePlanBuildError("CTAA source tokenizer geometry differs")
-    packet_bytes = bytes(
-        [value for card in typed_cards for value in card]
-        + list(initial)
-        + list(schedule)
-    )
+    packet_bytes = _packet_bytes(typed_cards, initial, schedule, binding)
     midpoint = depth // 2
     state = initial
     for event in active[:midpoint]:
@@ -568,7 +633,9 @@ def _parse_program(
         symbols=symbols,
         opcodes=tuple(opcodes),  # type: ignore[arg-type]
         cards=typed_cards,
+        opcode_to_card=binding,  # type: ignore[arg-type]
         initial_state=initial,  # type: ignore[arg-type]
+        opcode_schedule=opcode_schedule,
         schedule=schedule,
         rule_order=tuple(rule_order),
         packet_bytes=packet_bytes,
@@ -905,7 +972,7 @@ def _build_attempt_commitments(
             donor_id = donor_maps.get(operation, {}).get(anchor_id)
             donor = row_by_anchor[donor_id] if donor_id is not None else None
             payload: dict[str, object] = {
-                "schema": "r12_ctaa_v2_concrete_mutation_v1",
+                "schema": "r12_ctaa_v2_concrete_mutation_v2",
                 "operation": operation,
                 "anchor_id": anchor_id,
                 "timing": spec.timing,
@@ -977,6 +1044,83 @@ def _build_attempt_commitments(
                 source = _render_program(row, rule_order=order)
                 payload["rule_order"] = list(order)
                 program_sha = _sha256_bytes(source.encode("utf-8"))
+                packet_sha = _sha256_bytes(
+                    _packet_bytes(
+                        row.cards,
+                        row.initial_state,
+                        row.schedule,
+                        order,
+                    )
+                )
+            elif operation == InterventionFamily.CARD_ONLY_COUNTERFACTUAL.value:
+                card_address = row.schedule[0]
+                coordinate = int.from_bytes(
+                    _hash_order(selection_seed, operation, anchor_id, "coordinate")[
+                        :8
+                    ],
+                    "big",
+                ) % 3
+                cards_list = [list(card) for card in row.cards]
+                before = cards_list[card_address][coordinate]
+                cards_list[card_address][coordinate] = (before + 1) % 3
+                mutated = _packet_bytes_from_local(
+                    tuple(tuple(card) for card in cards_list),
+                    row.opcode_to_card,
+                    row.initial_state,
+                    row.opcode_schedule,
+                )
+                payload.update(
+                    {
+                        "card_address": card_address,
+                        "coordinate": coordinate,
+                        "before": before,
+                        "after": cards_list[card_address][coordinate],
+                    }
+                )
+                packet_sha = _sha256_bytes(mutated)
+            elif operation == InterventionFamily.BINDING_ONLY_COUNTERFACTUAL.value:
+                old_to_new = _three_cycle(
+                    selection_seed,
+                    operation,
+                    anchor_id,
+                    row.opcode_schedule[0],
+                )
+                new_to_old = [0] * ACTION_COUNT
+                for old_slot, new_slot in enumerate(old_to_new):
+                    new_to_old[new_slot] = old_slot
+                binding = tuple(
+                    row.opcode_to_card[old_slot] for old_slot in new_to_old
+                )
+                mutated = _packet_bytes_from_local(
+                    row.cards,
+                    binding,
+                    row.initial_state,
+                    row.opcode_schedule,
+                )
+                payload.update(
+                    {
+                        "old_to_new_opcode": list(old_to_new),
+                        "new_to_old_opcode": new_to_old,
+                    }
+                )
+                packet_sha = _sha256_bytes(mutated)
+            elif operation == InterventionFamily.COMPENSATED_OPCODE_RELABEL.value:
+                old_to_new = _three_cycle(selection_seed, operation, anchor_id)
+                binding = [0] * ACTION_COUNT
+                for old_opcode, new_opcode in enumerate(old_to_new):
+                    binding[new_opcode] = row.opcode_to_card[old_opcode]
+                opcode_schedule = tuple(
+                    STOP_ID if opcode == STOP_ID else old_to_new[opcode]
+                    for opcode in row.opcode_schedule
+                )
+                mutated = _packet_bytes_from_local(
+                    row.cards,
+                    binding,
+                    row.initial_state,
+                    opcode_schedule,
+                )
+                payload["old_to_new_opcode"] = list(old_to_new)
+                packet_sha = _sha256_bytes(mutated)
             elif operation == InterventionFamily.CARD_STORAGE_REINDEX.value:
                 order = _permutation(selection_seed, operation, anchor_id, ACTION_COUNT)
                 inverse = [0] * ACTION_COUNT
@@ -987,7 +1131,13 @@ def _build_attempt_commitments(
                     event if event == STOP_ID else inverse[event]
                     for event in row.schedule
                 )
-                mutated = _packet_bytes(cards, row.initial_state, schedule)
+                binding = tuple(inverse[card] for card in row.opcode_to_card)
+                mutated = _packet_bytes(
+                    cards,
+                    row.initial_state,
+                    schedule,
+                    binding,
+                )
                 payload.update({"storage_order": list(order), "inverse": inverse})
                 packet_sha = _sha256_bytes(mutated)
             elif operation == InterventionFamily.WITNESS_CORRUPTION.value:
@@ -1012,7 +1162,12 @@ def _build_attempt_commitments(
                 cards_list[slot][position] = (before + 1) % 3
                 cards = tuple(tuple(card) for card in cards_list)
                 source = _render_program(row, cards=cards)
-                mutated = _packet_bytes(cards, row.initial_state, row.schedule)
+                mutated = _packet_bytes(
+                    cards,
+                    row.initial_state,
+                    row.schedule,
+                    row.opcode_to_card,
+                )
                 payload.update(
                     {
                         "slot": slot,
@@ -1027,7 +1182,12 @@ def _build_attempt_commitments(
                 order = _permutation(selection_seed, operation, anchor_id, ACTION_COUNT)
                 cards = tuple(row.cards[slot] for slot in order)
                 source = _render_program(row, cards=cards)
-                mutated = _packet_bytes(cards, row.initial_state, row.schedule)
+                mutated = _packet_bytes(
+                    cards,
+                    row.initial_state,
+                    row.schedule,
+                    row.opcode_to_card,
+                )
                 payload["law_order"] = list(order)
                 program_sha = _sha256_bytes(source.encode("utf-8"))
                 packet_sha = _sha256_bytes(mutated)
@@ -1054,7 +1214,12 @@ def _build_attempt_commitments(
                 payload["swapped_active_slots"] = [left, right]
                 program_sha = _sha256_bytes(source.encode("utf-8"))
                 packet_sha = _sha256_bytes(
-                    _packet_bytes(row.cards, row.initial_state, schedule)
+                    _packet_bytes(
+                        row.cards,
+                        row.initial_state,
+                        schedule,
+                        row.opcode_to_card,
+                    )
                 )
             elif operation == InterventionFamily.SOURCE_POISON.value:
                 poison = b"SHOHIN-CTAA-SOURCE-POISON-v1\0" + _hash_order(
@@ -1073,11 +1238,17 @@ def _build_attempt_commitments(
                 boundary = 1 + int.from_bytes(
                     _hash_order(selection_seed, operation, anchor_id)[:8], "big"
                 ) % (row.depth - 1)
-                schedule = tuple(
-                    ((event + 1) % ACTION_COUNT)
+                opcode_schedule = tuple(
+                    ((opcode + 1) % ACTION_COUNT)
                     if boundary <= index < row.depth
-                    else event
-                    for index, event in enumerate(row.schedule)
+                    else opcode
+                    for index, opcode in enumerate(row.opcode_schedule)
+                )
+                schedule = tuple(
+                    STOP_ID
+                    if opcode == STOP_ID
+                    else row.opcode_to_card[opcode]
+                    for opcode in opcode_schedule
                 )
                 payload.update(
                     {
@@ -1086,7 +1257,12 @@ def _build_attempt_commitments(
                     }
                 )
                 packet_sha = _sha256_bytes(
-                    _packet_bytes(row.cards, row.initial_state, schedule)
+                    _packet_bytes(
+                        row.cards,
+                        row.initial_state,
+                        schedule,
+                        row.opcode_to_card,
+                    )
                 )
             elif operation == InterventionFamily.STOP_RELOCATION.value:
                 target = (
@@ -1111,7 +1287,12 @@ def _build_attempt_commitments(
                 )
                 program_sha = _sha256_bytes(source.encode("utf-8"))
                 packet_sha = _sha256_bytes(
-                    _packet_bytes(row.cards, row.initial_state, schedule)
+                    _packet_bytes(
+                        row.cards,
+                        row.initial_state,
+                        schedule,
+                        row.opcode_to_card,
+                    )
                 )
             elif operation == InterventionFamily.LATE_QUERY_SWAP.value:
                 assert donor is not None
@@ -1124,9 +1305,15 @@ def _build_attempt_commitments(
                 )
                 query_sha = _sha256_bytes(donor.query_source.encode("utf-8"))
             elif operation == InterventionFamily.POST_STOP_POISON.value:
+                opcode_schedule = tuple(
+                    ((opcode + 1) % ACTION_COUNT) if index > row.depth else opcode
+                    for index, opcode in enumerate(row.opcode_schedule)
+                )
                 schedule = tuple(
-                    ((event + 1) % ACTION_COUNT) if index > row.depth else event
-                    for index, event in enumerate(row.schedule)
+                    STOP_ID
+                    if opcode == STOP_ID
+                    else row.opcode_to_card[opcode]
+                    for opcode in opcode_schedule
                 )
                 payload.update(
                     {
@@ -1136,7 +1323,12 @@ def _build_attempt_commitments(
                     }
                 )
                 packet_sha = _sha256_bytes(
-                    _packet_bytes(row.cards, row.initial_state, schedule)
+                    _packet_bytes(
+                        row.cards,
+                        row.initial_state,
+                        schedule,
+                        row.opcode_to_card,
+                    )
                 )
             elif operation == InterventionFamily.MIDPOINT_DONOR_STATE.value:
                 assert donor is not None

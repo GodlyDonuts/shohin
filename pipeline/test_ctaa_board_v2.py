@@ -6,8 +6,10 @@ from pathlib import Path
 from pipeline.ctaa_board_v2 import (
     FACTORIAL_BITS,
     INITIAL_STATES,
+    OPCODE_BINDINGS,
     PROGRAM_CLASSES,
     FactorialCell,
+    balanced_binding_index,
     balanced_renderer_index,
     board_contract_counts,
     build_compiler_families,
@@ -124,6 +126,40 @@ def test_renderer_is_jointly_crossed_with_every_query_initial_cell() -> None:
     )
     assert len(counts) == 16 * 18
     assert set(counts.values()) == {1}
+
+
+def test_s4_binding_schedule_is_exactly_balanced_by_coset_construction() -> None:
+    counts = Counter(balanced_binding_index(index, 288) for index in range(288))
+    assert counts == {index: 12 for index in range(24)}
+
+    by_renderer = {
+        renderer: {
+            balanced_binding_index(query_state + 18 * renderer, 288)
+            for query_state in range(18)
+        }
+        for renderer in range(16)
+    }
+    by_query_state = {
+        query_state: {
+            balanced_binding_index(query_state + 18 * renderer, 288)
+            for renderer in range(16)
+        }
+        for query_state in range(18)
+    }
+    assert all(len(values) == 18 for values in by_renderer.values())
+    assert all(len(values) == 16 for values in by_query_state.values())
+
+    opcode_card_counts = {
+        opcode: Counter(
+            OPCODE_BINDINGS[balanced_binding_index(index, 288)][opcode]
+            for index in range(288)
+        )
+        for opcode in range(4)
+    }
+    assert all(
+        counts == {card: 72 for card in range(4)}
+        for counts in opcode_card_counts.values()
+    )
 
 
 def test_factorial_surface_uses_axis_specific_names_without_changing_packet() -> None:

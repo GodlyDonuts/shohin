@@ -17,9 +17,12 @@ from tokenizers import Tokenizer
 
 from pipeline.ctaa_board_v2 import (
     LONG_PER_CLASS_DEPTH_CELL,
+    OPCODE_BINDINGS,
     PROGRAM_CLASSES,
     SCORED_DEPTHS,
     CTAAProgramFamilyV2,
+    CTAASurfaceRowV2,
+    balanced_binding_index,
     balanced_renderer_index,
     build_compiler_families,
     build_long_families,
@@ -36,7 +39,7 @@ from pipeline.ctaa_board_v2 import (
 from pipeline.ctaa_name_pool import audit_name_pools, build_name_pools, sha256_file
 
 
-SCHEMA = "r12_ctaa_v2_board_v1"
+SCHEMA = "r12_ctaa_v2_board_v2"
 
 
 @dataclass(frozen=True)
@@ -83,12 +86,14 @@ def _intervention_records(
     twin,
     name_pools: Mapping[str, tuple[str, ...]],
     renderer_index: int,
+    binding_index: int,
 ) -> tuple[dict[str, object], dict[str, object], dict[str, object]]:
     child_surface = render_family_v2(
         seed,
         twin.child,
         name_pools,
         renderer_index=renderer_index,
+        binding_index=binding_index,
         surface_key=parent.family_id,
     )
     scored = _surface_record(child_surface, scored=True)
@@ -134,6 +139,7 @@ def _build_interventions(
     diagnostic_seen: dict[tuple[str, int, str], int] = {}
     for index, family in enumerate(triple):
         renderer_index = balanced_renderer_index(index, per_class_depth_cell)
+        binding_index = balanced_binding_index(index, per_class_depth_cell)
         try:
             sensitive = make_order_contrast_twin(family)
         except ValueError:
@@ -148,7 +154,12 @@ def _build_interventions(
         )
         for twin in primary_twins:
             program, query, oracle = _intervention_records(
-                seed, family, twin, name_pools, renderer_index
+                seed,
+                family,
+                twin,
+                name_pools,
+                renderer_index,
+                binding_index,
             )
             programs.append(program)
             queries.append(query)
@@ -171,7 +182,12 @@ def _build_interventions(
             except ValueError:
                 continue
             program, query, oracle = _intervention_records(
-                seed, family, twin, name_pools, renderer_index
+                seed,
+                family,
+                twin,
+                name_pools,
+                renderer_index,
+                binding_index,
             )
             programs.append(program)
             queries.append(query)
@@ -198,6 +214,100 @@ def _build_interventions(
 class CounterLike(dict[str, int]):
     def __missing__(self, key: str) -> int:
         return 0
+
+
+def _binding_balance_audit(
+    surfaces: list[CTAASurfaceRowV2],
+    *,
+    per_class_depth_cell: int,
+) -> dict[str, object]:
+    strata: dict[
+        tuple[str, str, int],
+        list[CTAASurfaceRowV2],
+    ] = defaultdict(list)
+    for surface in surfaces:
+        key = (
+            surface.family.cell.tag,
+            surface.family.program_class,
+            surface.family.depth,
+        )
+        strata[key].append(surface)
+    expected_strata = (
+        len({surface.family.cell.tag for surface in surfaces})
+        * len(PROGRAM_CLASSES)
+        * len(SCORED_DEPTHS)
+    )
+    if (
+        len(strata) != expected_strata
+        or any(len(rows) != per_class_depth_cell for rows in strata.values())
+    ):
+        raise ValueError("CTAA v2 binding-audit stratum geometry differs")
+
+    block_count = 0
+    all_blocks_exact = True
+    card_marginals_exact = True
+    renderer_separation_exact = True
+    query_state_separation_exact = True
+    for rows in strata.values():
+        whole_counts = Counter(surface.opcode_to_card for surface in rows)
+        if (
+            set(whole_counts) != set(OPCODE_BINDINGS)
+            or set(whole_counts.values()) != {per_class_depth_cell // 24}
+        ):
+            all_blocks_exact = False
+        for start in range(0, len(rows), 288):
+            block_count += 1
+            block = rows[start : start + 288]
+            counts = Counter(surface.opcode_to_card for surface in block)
+            all_blocks_exact &= (
+                set(counts) == set(OPCODE_BINDINGS)
+                and set(counts.values()) == {12}
+            )
+            for opcode in range(4):
+                marginal = Counter(
+                    surface.opcode_to_card[opcode] for surface in block
+                )
+                card_marginals_exact &= (
+                    set(marginal) == {0, 1, 2, 3}
+                    and set(marginal.values()) == {72}
+                )
+            by_renderer: dict[int, set[tuple[int, int, int, int]]] = defaultdict(set)
+            by_query_state: dict[
+                tuple[tuple[int, int, int], int],
+                set[tuple[int, int, int, int]],
+            ] = defaultdict(set)
+            for surface in block:
+                by_renderer[surface.renderer].add(surface.opcode_to_card)
+                by_query_state[
+                    (surface.family.initial_state, surface.family.query_position)
+                ].add(surface.opcode_to_card)
+            renderer_separation_exact &= (
+                len(by_renderer) == 16
+                and all(len(values) == 18 for values in by_renderer.values())
+            )
+            query_state_separation_exact &= (
+                len(by_query_state) == 18
+                and all(len(values) == 16 for values in by_query_state.values())
+            )
+    report = {
+        "schema": "r12_ctaa_v2_binding_balance_audit_v1",
+        "strata": len(strata),
+        "blocks_288": block_count,
+        "all_24_bindings_exact_per_stratum": all_blocks_exact,
+        "all_opcode_card_marginals_exact": card_marginals_exact,
+        "renderer_binding_separation_exact": renderer_separation_exact,
+        "query_state_binding_separation_exact": query_state_separation_exact,
+    }
+    report["all_gates_pass"] = all(
+        bool(report[key])
+        for key in (
+            "all_24_bindings_exact_per_stratum",
+            "all_opcode_card_marginals_exact",
+            "renderer_binding_separation_exact",
+            "query_state_binding_separation_exact",
+        )
+    )
+    return report
 
 
 def _source_audit(
@@ -402,7 +512,13 @@ def build_board(
             temporary / "train_compiler.jsonl",
             (
                 _surface_record(
-                    render_family_v2(seed, family, pools, renderer_index=index),
+                    render_family_v2(
+                        seed,
+                        family,
+                        pools,
+                        renderer_index=index,
+                        binding_index=index,
+                    ),
                     scored=False,
                 )
                 for index, family in enumerate(compiler_families)
@@ -411,6 +527,7 @@ def build_board(
         )
 
         intervention_counts: dict[str, dict[str, int]] = {}
+        binding_balance: dict[str, dict[str, object]] = {}
         for partition in ("development", "confirmation"):
             program_mode = 0o444 if partition == "development" else 0o400
             sealed_mode = 0o400
@@ -428,9 +545,19 @@ def build_board(
                         index,
                         sizes.long_per_class_depth_cell,
                     ),
+                    binding_index=balanced_binding_index(
+                        index,
+                        sizes.long_per_class_depth_cell,
+                    ),
                 )
                 for index, family in enumerate(families)
             ]
+            binding_balance[partition] = _binding_balance_audit(
+                surfaces,
+                per_class_depth_cell=sizes.long_per_class_depth_cell,
+            )
+            if not binding_balance[partition]["all_gates_pass"]:
+                raise ValueError("CTAA v2 opcode-binding balance differs")
             program_path = temporary / f"{partition}_program.jsonl"
             query_path = temporary / f"{partition}_query.jsonl"
             oracle_path = temporary / f"{partition}_oracle.jsonl"
@@ -529,6 +656,7 @@ def build_board(
             "sizes": asdict(sizes),
             "counts": counts,
             "intervention_relations": intervention_counts,
+            "binding_balance": binding_balance,
             "name_pool_audit": pool_audit,
             "source_audit": source_audit,
             "development_access": 0,
@@ -542,7 +670,7 @@ def build_board(
             if path.is_file()
         }
         manifest = {
-            "schema": "r12_ctaa_v2_manifest_v1",
+            "schema": "r12_ctaa_v2_manifest_v2",
             "seed": seed,
             "files": hashes,
         }

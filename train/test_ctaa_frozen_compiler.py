@@ -23,12 +23,23 @@ class FakeCompiler:
         rows = ids.shape[0]
         cards = torch.zeros((rows, 4, 3, 3))
         cards[..., 0] = 1
+        binding = torch.full((rows, 4, 4), -1.0)
+        binding[:, torch.arange(4), torch.arange(4)] = 1
         initial = torch.zeros((rows, 3, 3))
         initial[..., 1] = 1
         schedule = torch.zeros((rows, 41, 5))
         schedule[..., 0] = 1
         schedule[:, 2, 4] = 2
-        return SimpleNamespace(action_cards=cards, initial_state=initial, schedule=schedule)
+        return SimpleNamespace(
+            action_cards=cards,
+            opcode_to_card=binding,
+            initial_state=initial,
+            opcode_schedule=schedule,
+        )
+
+    @staticmethod
+    def materialize_binding(logits: torch.Tensor) -> torch.Tensor:
+        return logits.argmax(-1).to(torch.uint8)
 
     def compile_query(self, ids: torch.Tensor):
         logits = torch.zeros((ids.shape[0], 3))
@@ -66,7 +77,7 @@ def test_source_batches_are_monotonic_right_padded() -> None:
 def test_program_and_query_compilers_materialize_raw_predictions() -> None:
     compiler = FakeCompiler()
     tokenizer = FakeTokenizer()
-    cards, initial, schedule = compile_program_sources(
+    cards, binding, initial, schedule = compile_program_sources(
         compiler,
         tokenizer,
         ["abc", "def"],
@@ -81,7 +92,7 @@ def test_program_and_query_compilers_materialize_raw_predictions() -> None:
         device=torch.device("cpu"),
     )
     assert cards.shape == (2, 4, 3)
+    assert binding.tolist() == [[0, 1, 2, 3], [0, 1, 2, 3]]
     assert initial.unique().tolist() == [1]
     assert schedule[:, 2].tolist() == [4, 4]
     assert positions.tolist() == [2, 2]
-

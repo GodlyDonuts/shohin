@@ -29,8 +29,9 @@ def seal_predictions(predictions_path: Path, packet_path: Path, index_path: Path
     if indices:
         packet = HardCTAAPacket(
             action_cards=predictions["action_cards"][indices],
+            opcode_to_card=predictions["opcode_to_card"][indices],
             initial_state=predictions["initial_state"][indices],
-            schedule=predictions["schedule"][indices],
+            opcode_schedule=predictions["opcode_schedule"][indices],
         )
         packet_sha = str(write_packet_file(packet_path, packet)["sha256"])
     index = validate_packet_index(
@@ -74,4 +75,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

@@ -24,8 +24,11 @@ def sample_packet() -> HardCTAAPacket:
             ],
             dtype=torch.uint8,
         ),
+        opcode_to_card=torch.tensor(
+            [[2, 0, 3, 1], [1, 3, 0, 2]], dtype=torch.uint8
+        ),
         initial_state=torch.tensor([[0, 1, 2], [2, 0, 1]], dtype=torch.uint8),
-        schedule=torch.tensor([schedule, schedule], dtype=torch.uint8),
+        opcode_schedule=torch.tensor([schedule, schedule], dtype=torch.uint8),
     )
 
 
@@ -35,11 +38,13 @@ def test_packet_binary_round_trip_is_exact_and_read_only(tmp_path: Path) -> None
     receipt = write_packet_file(path, original)
     restored = read_packet_file(path)
     assert receipt["rows"] == 2
-    assert receipt["bytes_per_row"] == 56
+    assert receipt["bytes_per_row"] == 60
     assert path.stat().st_mode & 0o222 == 0
     assert torch.equal(restored.action_cards, original.action_cards)
+    assert torch.equal(restored.opcode_to_card, original.opcode_to_card)
     assert torch.equal(restored.initial_state, original.initial_state)
-    assert torch.equal(restored.schedule, original.schedule)
+    assert torch.equal(restored.opcode_schedule, original.opcode_schedule)
+    assert torch.equal(restored.resolved_schedule, original.resolved_schedule)
     with pytest.raises(FileExistsError):
         write_packet_file(path, original)
 

@@ -81,7 +81,7 @@ def _raw_receipt(
     core = _core(seed, arm)
     identity = f"{seed}:{arm}:{dataset}"
     return {
-        "schema": "r12_ctaa_v2_raw_evidence_receipt_v1",
+        "schema": "r12_ctaa_v2_raw_evidence_receipt_v2",
         "rows": 100,
         "valid_packets": 97,
         "executed_rows": 97,
@@ -123,7 +123,7 @@ def _fixture(tmp_path: Path) -> dict[str, object]:
     _write_json(
         manifest,
         {
-            "schema": "r12_ctaa_v2_manifest_v1",
+            "schema": "r12_ctaa_v2_manifest_v2",
             "seed": 918273,
             "files": files,
         },

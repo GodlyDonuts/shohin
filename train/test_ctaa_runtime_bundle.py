@@ -146,8 +146,8 @@ def test_bundle_is_exactly_five_treatment_seeds_and_not_scored() -> None:
     ]
     assert value["seed_count"] == 5
     assert value["runtime_panel_size_per_seed"] == 864
-    assert value["operation_count"] == 26
-    assert value["attempt_count_per_seed"] == 22_464
+    assert value["operation_count"] == 29
+    assert value["attempt_count_per_seed"] == 25_056
     assert value["scored_row_count"] == 40_608
     assert value["runtime_attempts_affect_scored_denominator"] is False
     assert value["oracle_access"] == 0

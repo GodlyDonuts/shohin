@@ -60,20 +60,24 @@ def test_compiler_emits_materialized_program_without_query_or_source() -> None:
     compiler = tiny_compiler()
     output = compiler.compile_program(inputs())
     assert output.action_cards.shape == (2, 4, 3, 3)
+    assert output.opcode_to_card.shape == (2, 4, 4)
     assert output.initial_state.shape == (2, 3, 3)
-    assert output.schedule.shape == (2, 41, 5)
+    assert output.opcode_schedule.shape == (2, 41, 5)
 
-    output.schedule.fill_(-20.0)
-    output.schedule[:, :, 0] = 20.0
-    output.schedule[:, 4, 0] = -20.0
-    output.schedule[:, 4, 4] = 20.0
+    output.opcode_schedule.fill_(-20.0)
+    output.opcode_schedule[:, :, 0] = 20.0
+    output.opcode_schedule[:, 4, 0] = -20.0
+    output.opcode_schedule[:, 4, 4] = 20.0
     packet = compiler.materialize_program(output)
     assert {field.name for field in fields(packet)} == {
         "action_cards",
+        "opcode_to_card",
         "initial_state",
-        "schedule",
+        "opcode_schedule",
     }
-    assert packet.bytes_per_row == 56
+    assert packet.bytes_per_row == 60
+    expected = torch.arange(4, dtype=torch.uint8)[None].expand(2, -1)
+    assert torch.equal(packet.opcode_to_card.sort(1).values, expected)
     assert all(value.dtype == torch.uint8 for value in packet.__dict__.values())
 
 
@@ -103,7 +107,10 @@ def test_early_and_late_trunk_interventions_are_independent() -> None:
         intervention="zero_late",
     )
     assert not torch.allclose(native.action_cards, zero_early.action_cards)
-    assert not torch.allclose(late_native.schedule, zero_late.schedule)
+    assert not torch.allclose(
+        late_native.opcode_schedule,
+        zero_late.opcode_schedule,
+    )
 
 
 def test_h19_and_h29_are_zero_based_raw_post_block_residuals() -> None:
@@ -210,8 +217,8 @@ def test_frozen_trunk_has_no_gradient_and_every_adapter_family_does() -> None:
             torch.arange(program.initial_state.numel() // 3) % 3,
         )
         + F.cross_entropy(
-            program.schedule.reshape(-1, 5),
-            torch.arange(program.schedule.numel() // 5) % 5,
+            program.opcode_schedule.reshape(-1, 5),
+            torch.arange(program.opcode_schedule.numel() // 5) % 5,
         )
         + F.cross_entropy(query, torch.tensor([0, 2]))
     )
@@ -277,10 +284,11 @@ def test_hard_program_executes_before_late_query_is_disclosed() -> None:
             dtype=torch.uint8,
         ),
         initial_state=torch.tensor([[0, 1, 2]], dtype=torch.uint8),
-        schedule=torch.tensor(
+        opcode_schedule=torch.tensor(
             [[0, 1, 4, *([0] * 38)]],
             dtype=torch.uint8,
         ),
+        opcode_to_card=torch.arange(4, dtype=torch.uint8)[None],
     )
     trace = packet.execute(core)
     query = HardCTAAQuery(position=torch.tensor([1], dtype=torch.uint8))

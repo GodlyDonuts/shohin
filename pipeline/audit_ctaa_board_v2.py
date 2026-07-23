@@ -13,7 +13,9 @@ from typing import Sequence
 from pipeline.ctaa_board_v2 import (
     FACTORIAL_BITS,
     INITIAL_STATES,
+    OPCODE_BINDINGS,
     CTAAProgramFamilyV2,
+    balanced_binding_index,
     board_contract_counts,
     build_long_families,
     factorial_cells,
@@ -21,7 +23,7 @@ from pipeline.ctaa_board_v2 import (
 )
 
 
-SCHEMA = "r12_ctaa_v2_seedless_independent_audit_v1"
+SCHEMA = "r12_ctaa_v2_seedless_independent_audit_v2"
 EXPECTED_SPLITS = {
     "train": {
         (0, 0, 0), (0, 1, 1), (0, 1, 2), (1, 0, 1), (1, 2, 0),
@@ -157,6 +159,28 @@ def audit_v2(*, dry_seed: int = 611_953, per_class_depth_cell: int = 288) -> dic
                 _require(_apply(card, state) == _apply(action, _apply(before, state)), "v2 algebra differs")
                 closure += 1
     _require(len(train_closed_pairs()) == 35, "v2 train closure count differs")
+    binding_indices = [
+        balanced_binding_index(index, per_class_depth_cell)
+        for index in range(per_class_depth_cell)
+    ]
+    binding_counts = Counter(binding_indices)
+    _require(
+        binding_counts == {
+            index: per_class_depth_cell // 24 for index in range(24)
+        },
+        "v2 binding permutation balance differs",
+    )
+    for opcode in range(4):
+        card_counts = Counter(
+            OPCODE_BINDINGS[binding_index][opcode]
+            for binding_index in binding_indices
+        )
+        _require(
+            card_counts == {
+                card: per_class_depth_cell // 4 for card in range(4)
+            },
+            "v2 opcode/card marginal balance differs",
+        )
     development = build_long_families(dry_seed, "development", per_class_depth_cell=per_class_depth_cell)
     confirmation = build_long_families(dry_seed, "confirmation", per_class_depth_cell=per_class_depth_cell)
     report: dict[str, object] = {
@@ -165,6 +189,11 @@ def audit_v2(*, dry_seed: int = 611_953, per_class_depth_cell: int = 288) -> dic
         "finite_contract": board_contract_counts(),
         "atomic_oracle_checks": atomic,
         "closure_execution_checks": closure,
+        "binding_balance": {
+            "permutations": len(binding_counts),
+            "count_per_permutation": per_class_depth_cell // 24,
+            "opcode_card_count": per_class_depth_cell // 4,
+        },
         "development": audit_long_families(
             development,
             partition="development",

@@ -5,7 +5,10 @@ import torch
 import torch.nn as nn
 
 from ctaa_runtime_interventions import (
+    binding_only_counterfactual,
+    card_only_counterfactual,
     card_storage_reindex,
+    compensated_opcode_relabel,
     execute_with_midpoint_intervention,
     future_schedule_counterfactual,
     late_query_swap,
@@ -38,11 +41,15 @@ def packet() -> HardCTAAPacket:
             dtype=torch.uint8,
         ),
         initial_state=torch.tensor([[0, 1, 2], [1, 0, 2]], dtype=torch.uint8),
-        schedule=torch.tensor(
+        opcode_schedule=torch.tensor(
             [
                 [0, 1, 2, 4, *([0] * 37)],
                 [1, 2, 0, 3, 4, *([1] * 36)],
             ],
+            dtype=torch.uint8,
+        ),
+        opcode_to_card=torch.tensor(
+            [[2, 0, 3, 1], [1, 3, 0, 2]],
             dtype=torch.uint8,
         ),
     )
@@ -57,7 +64,43 @@ def test_card_storage_reindex_preserves_complete_execution() -> None:
     child_trace = child.packet.execute(core)
     assert torch.equal(parent_trace.states, child_trace.states)
     assert torch.equal(parent_trace.halted, child_trace.halted)
+    assert torch.equal(parent.opcode_schedule, child.packet.opcode_schedule)
+    assert not torch.equal(parent.opcode_to_card, child.packet.opcode_to_card)
     assert child.first_exposure_step.tolist() == [0, 0]
+
+
+def test_card_binding_and_compensated_relabel_have_distinct_causal_signatures() -> None:
+    parent = packet()
+    core = ExactCopyCore()
+
+    card_only = card_only_counterfactual(
+        parent,
+        torch.tensor([2, 1]),
+        torch.tensor([0, 2]),
+    ).packet
+    assert not torch.equal(parent.action_cards, card_only.action_cards)
+    assert torch.equal(parent.opcode_to_card, card_only.opcode_to_card)
+    assert torch.equal(parent.opcode_schedule, card_only.opcode_schedule)
+
+    three_cycle = torch.tensor(
+        [[1, 2, 0, 3], [2, 0, 1, 3]],
+        dtype=torch.long,
+    )
+    binding_only = binding_only_counterfactual(parent, three_cycle).packet
+    assert torch.equal(parent.action_cards, binding_only.action_cards)
+    assert not torch.equal(parent.opcode_to_card, binding_only.opcode_to_card)
+    assert torch.equal(parent.opcode_schedule, binding_only.opcode_schedule)
+    assert not torch.equal(parent.resolved_schedule, binding_only.resolved_schedule)
+
+    compensated = compensated_opcode_relabel(parent, three_cycle).packet
+    assert torch.equal(parent.action_cards, compensated.action_cards)
+    assert not torch.equal(parent.opcode_to_card, compensated.opcode_to_card)
+    assert not torch.equal(parent.opcode_schedule, compensated.opcode_schedule)
+    assert torch.equal(parent.resolved_schedule, compensated.resolved_schedule)
+    assert torch.equal(
+        parent.execute(core).states,
+        compensated.execute(core).states,
+    )
 
 
 def test_card_storage_reindex_rejects_identity_and_nonpermutation() -> None:
@@ -76,10 +119,11 @@ def test_post_stop_poison_changes_only_suffix_and_preserves_trace() -> None:
         parent.execute(ExactCopyCore()).states,
         child.packet.execute(ExactCopyCore()).states,
     )
-    stop = parent.schedule.eq(4).long().argmax(1)
+    stop = parent.opcode_schedule.eq(4).long().argmax(1)
     positions = torch.arange(41)[None]
     assert torch.equal(
-        parent.schedule.ne(child.packet.schedule), positions.gt(stop[:, None])
+        parent.opcode_schedule.ne(child.packet.opcode_schedule),
+        positions.gt(stop[:, None]),
     )
 
 
@@ -101,11 +145,12 @@ def test_packet_transplant_is_literal_and_rejects_same_rows() -> None:
     donor = HardCTAAPacket(
         parent.action_cards.flip(0).clone(),
         parent.initial_state.flip(0).clone(),
-        parent.schedule.flip(0).clone(),
+        parent.opcode_schedule.flip(0).clone(),
+        parent.opcode_to_card.flip(0).clone(),
     )
     child = packet_transplant(parent, donor)
     assert torch.equal(child.packet.action_cards, donor.action_cards)
-    assert torch.equal(child.packet.schedule, donor.schedule)
+    assert torch.equal(child.packet.opcode_schedule, donor.opcode_schedule)
     with pytest.raises(ValueError, match="unchanged row"):
         packet_transplant(parent, parent)
 
@@ -146,7 +191,7 @@ def test_midpoint_rejects_unchanged_donor_registers() -> None:
             donor_state=native_state,
         )
     native_action = parent.action_cards.long()[
-        torch.arange(2), parent.schedule.long()[torch.arange(2), midpoint]
+        torch.arange(2), parent.resolved_schedule.long()[torch.arange(2), midpoint]
     ]
     with pytest.raises(ValueError, match="action contains an unchanged row"):
         execute_with_midpoint_intervention(

@@ -134,9 +134,10 @@ def _family_row(
         "renderer": index % 16,
         "packet_valid": True,
         "cards_exact": True,
-        "binding_exact": True,
+        "independent_binding_exact": True,
         "initial_exact": True,
         "stop_exact": True,
+        "opcode_schedule_exact": True,
         "schedule_exact": True,
         "program_exact": True,
         "query_exact": True,
@@ -193,7 +194,7 @@ def _intervention_rows(base: list[dict[str, object]]) -> list[dict[str, object]]
 
 def _commitment(seed: int, arm: str, dataset: str, rows: int) -> dict[str, object]:
     return {
-        "schema": "r12_ctaa_v2_raw_evidence_receipt_v1",
+        "schema": "r12_ctaa_v2_raw_evidence_receipt_v2",
         "rows": rows,
         "valid_packets": rows,
         "executed_rows": rows,
@@ -292,10 +293,10 @@ def _resource_profile() -> dict[str, object]:
         "artifact_bindings": bindings,
         "parameter_ledger": {
             "trunk": 125_081_664,
-            "compiler_adapter": 12_797_451,
+            "compiler_adapter": 12_800_527,
             "core": 107_753,
-            "total": 137_986_868,
-            "headroom": 12_013_131,
+            "total": 137_989_944,
+            "headroom": 12_010_055,
         },
         "core_parameters": {
             "closure_feature": 107_753,
@@ -310,7 +311,7 @@ def _resource_profile() -> dict[str, object]:
             "control_padding_charge": 0,
         },
         "state_contract": {
-            "hard_packet_bytes_per_row": 56,
+            "hard_packet_bytes_per_row": 60,
             "semantic_recurrent_state_bytes": 3,
             "implementation_recurrent_state_int64_bytes": 24,
             "halt_state_bytes": 1,
@@ -367,10 +368,10 @@ def _immutable_preflight() -> dict[str, object]:
         },
         "parameter_ledger": {
             "trunk": 125_081_664,
-            "compiler_adapter": 12_797_451,
+            "compiler_adapter": 12_800_527,
             "core": 107_753,
-            "total": 137_986_868,
-            "headroom": 12_013_131,
+            "total": 137_989_944,
+            "headroom": 12_010_055,
         },
         "core_match": {
             "treatment_parameters": 107_753,

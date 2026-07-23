@@ -12,6 +12,7 @@ import torch
 from ctaa_evaluation_io import (
     PROGRAM_PREDICTION_SCHEMA,
     packet_valid_mask,
+    resolve_opcode_schedule,
     sha256_file,
     validate_program_predictions,
     write_torch_once,
@@ -27,8 +28,9 @@ def compile_program_sources(
     *,
     batch_size: int,
     device: torch.device,
-) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
     cards = []
+    bindings = []
     initial = []
     schedules = []
     for ids in token_batches(
@@ -46,9 +48,17 @@ def compile_program_sources(
         ):
             logits = compiler.compile_program(ids)
         cards.append(logits.action_cards.argmax(-1).to(torch.uint8).cpu())
+        bindings.append(
+            compiler.materialize_binding(logits.opcode_to_card).cpu()
+        )
         initial.append(logits.initial_state.argmax(-1).to(torch.uint8).cpu())
-        schedules.append(logits.schedule.argmax(-1).to(torch.uint8).cpu())
-    return torch.cat(cards), torch.cat(initial), torch.cat(schedules)
+        schedules.append(logits.opcode_schedule.argmax(-1).to(torch.uint8).cpu())
+    return (
+        torch.cat(cards),
+        torch.cat(bindings),
+        torch.cat(initial),
+        torch.cat(schedules),
+    )
 
 
 def main() -> None:
@@ -71,13 +81,14 @@ def main() -> None:
         compiler_path=args.compiler,
         device_name=args.device,
     )
-    cards, initial, schedule = compile_program_sources(
+    cards, binding, initial, opcode_schedule = compile_program_sources(
         bundle.compiler,
         bundle.tokenizer,
         sources,
         batch_size=args.batch_size,
         device=bundle.device,
     )
+    schedule = resolve_opcode_schedule(binding, opcode_schedule)
     payload = validate_program_predictions(
         {
             "schema": PROGRAM_PREDICTION_SCHEMA,
@@ -85,9 +96,11 @@ def main() -> None:
             "program_source_sha256": sha256_file(args.program_source),
             "compiler_sha256": bundle.compiler_sha256,
             "action_cards": cards,
+            "opcode_to_card": binding,
             "initial_state": initial,
+            "opcode_schedule": opcode_schedule,
             "schedule": schedule,
-            "packet_valid": packet_valid_mask(schedule),
+            "packet_valid": packet_valid_mask(binding, opcode_schedule),
         }
     )
     digest = write_torch_once(args.output, payload)
@@ -105,4 +118,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

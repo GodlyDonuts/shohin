@@ -142,7 +142,7 @@ def verify_complete_system_parameters(
     compiler_adapter_parameters: int,
     core_parameters: int,
     *,
-    expected_total: int = 137_986_868,
+    expected_total: int = 137_989_944,
 ) -> dict[str, int]:
     trunk_parameters = sum(parameter.numel() for parameter in trunk.parameters())
     total = trunk_parameters + compiler_adapter_parameters + core_parameters

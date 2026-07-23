@@ -28,6 +28,7 @@ import torch
 from ctaa_intervention_protocol import (
     GateFamily,
     InterventionFamily,
+    MANDATORY_OPERATIONS,
     RUNTIME_PANEL_SIZE,
     RuntimeInterventionPlan,
     validate_runtime_intervention_plan,
@@ -60,8 +61,8 @@ from ctaa_runtime_execution_receipt import (
 )
 
 
-EXPECTED_PREQUERY_ATTEMPT_COUNT = 21_600
-EXPECTED_FINAL_ATTEMPT_COUNT = 22_464
+EXPECTED_FINAL_ATTEMPT_COUNT = RUNTIME_PANEL_SIZE * len(MANDATORY_OPERATIONS)
+EXPECTED_PREQUERY_ATTEMPT_COUNT = EXPECTED_FINAL_ATTEMPT_COUNT - RUNTIME_PANEL_SIZE
 _MAX_PROJECTION_BYTES = 256 * 1024 * 1024
 _MAX_RECEIPT_BYTES = 128 * 1024 * 1024
 _RECEIPT_RECORD_KEYS = frozenset({"payload", "signature", "receipt_sha256"})
@@ -804,7 +805,11 @@ def _snapshot_materials(
         raise RuntimeEvidenceFinalizerError("execution terminal differs")
     answer = int(terminal[query_position].item())
     available: dict[str, dict[str, object]] = {
-        "packet": make_raw_tensor("uint8", [56], packet_body(snapshot.packet)),
+        "packet": make_raw_tensor(
+            "uint8",
+            [snapshot.packet.bytes_per_row],
+            packet_body(snapshot.packet),
+        ),
         "state_route": _raw_tensor(snapshot.state_route),
         "composed_route": _raw_tensor(snapshot.composed_route),
         "halt_mask": _raw_tensor(snapshot.halted),

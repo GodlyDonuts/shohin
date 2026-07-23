@@ -15,7 +15,7 @@ from ctaa_trunk_compiler import HardCTAAPacket, HardCTAAQuery
 from ctaa_neural_core import CTAA_ACTION_COUNT, CTAA_MAX_STEPS, CTAA_WIDTH
 
 
-PACKET_MAGIC = b"CTAAPKT1"
+PACKET_MAGIC = b"CTAAPKT2"
 QUERY_MAGIC = b"CTAAQRY1"
 HEADER_LENGTH = struct.Struct(">I")
 
@@ -114,13 +114,14 @@ def packet_body(packet: HardCTAAPacket) -> bytes:
     batch, action_count, width = packet.action_cards.shape
     if packet.initial_state.shape != (batch, width):
         raise ValueError("CTAA packet initial geometry differs")
-    if packet.schedule.ndim != 2 or packet.schedule.shape[0] != batch:
+    if packet.opcode_schedule.ndim != 2 or packet.opcode_schedule.shape[0] != batch:
         raise ValueError("CTAA packet schedule geometry differs")
     rows = []
     for index in range(batch):
         rows.append(packet.action_cards[index].contiguous().cpu().numpy().tobytes())
+        rows.append(packet.opcode_to_card[index].contiguous().cpu().numpy().tobytes())
         rows.append(packet.initial_state[index].contiguous().cpu().numpy().tobytes())
-        rows.append(packet.schedule[index].contiguous().cpu().numpy().tobytes())
+        rows.append(packet.opcode_schedule[index].contiguous().cpu().numpy().tobytes())
     body = b"".join(rows)
     if len(body) != batch * packet.bytes_per_row:
         raise AssertionError("CTAA packet byte count differs")
@@ -130,11 +131,11 @@ def packet_body(packet: HardCTAAPacket) -> bytes:
 def write_packet_file(path: Path, packet: HardCTAAPacket) -> dict[str, object]:
     batch, action_count, width = packet.action_cards.shape
     header = {
-        "schema": "ctaa_hard_packet_v1",
+        "schema": "ctaa_hard_packet_v2",
         "rows": batch,
         "action_count": action_count,
         "width": width,
-        "max_steps": packet.schedule.shape[1],
+        "max_steps": packet.opcode_schedule.shape[1],
         "bytes_per_row": packet.bytes_per_row,
     }
     digest = _write_once(
@@ -146,7 +147,7 @@ def write_packet_file(path: Path, packet: HardCTAAPacket) -> dict[str, object]:
 def read_packet_bytes(payload: bytes) -> HardCTAAPacket:
     header, body = _read_frame_bytes(payload, PACKET_MAGIC)
     required = {
-        "schema": "ctaa_hard_packet_v1",
+        "schema": "ctaa_hard_packet_v2",
         "rows": int(header.get("rows", -1)),
         "action_count": int(header.get("action_count", -1)),
         "width": int(header.get("width", -1)),
@@ -164,7 +165,7 @@ def read_packet_bytes(payload: bytes) -> HardCTAAPacket:
         or action_count != CTAA_ACTION_COUNT
         or width != CTAA_WIDTH
         or max_steps != CTAA_MAX_STEPS
-        or bytes_per_row != action_count * width + width + max_steps
+        or bytes_per_row != action_count * width + action_count + width + max_steps
         or len(body) != rows * bytes_per_row
     ):
         raise ValueError("CTAA packet custody geometry differs")
@@ -173,10 +174,13 @@ def read_packet_bytes(payload: bytes) -> HardCTAAPacket:
         bytes_per_row,
     )
     card_end = action_count * width
+    binding_end = card_end + action_count
+    initial_end = binding_end + width
     return HardCTAAPacket(
         action_cards=tensor[:, :card_end].reshape(rows, action_count, width).clone(),
-        initial_state=tensor[:, card_end : card_end + width].clone(),
-        schedule=tensor[:, card_end + width :].clone(),
+        opcode_to_card=tensor[:, card_end:binding_end].clone(),
+        initial_state=tensor[:, binding_end:initial_end].clone(),
+        opcode_schedule=tensor[:, initial_end:].clone(),
     )
 
 

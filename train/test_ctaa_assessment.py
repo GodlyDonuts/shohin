@@ -31,7 +31,9 @@ def _oracle(family_id: str = "f0") -> dict[str, object]:
         "program_class": "stable_rank_two",
         "depth": 2,
         "action_cards": [[0, 1, 2]] * 4,
+        "opcode_to_card": [0, 1, 2, 3],
         "initial_state": [0, 1, 2],
+        "opcode_schedule": schedule,
         "schedule": schedule,
         "query_position": 1,
         "prefix_states": prefix,
@@ -57,7 +59,9 @@ def _evidence(family_id: str = "f0", *, valid: bool = True) -> dict[str, object]
         "source_index": 0,
         "packet_valid": valid,
         "predicted_action_cards": [[0, 1, 2]] * 4,
+        "predicted_opcode_to_card": [0, 1, 2, 3],
         "predicted_initial_state": [0, 1, 2],
+        "predicted_opcode_schedule": schedule,
         "predicted_schedule": schedule,
         "predicted_query_position": 1 if valid else None,
         "state_route": prefix if valid else None,
@@ -267,6 +271,48 @@ def test_scorer_counts_invalid_rows_as_failures_and_reports_marginals() -> None:
     assert report["family_scores"][0]["cluster_family_id"] == "f0"
 
 
+def test_scorer_independently_resolves_nonidentity_opcode_binding() -> None:
+    binding = [2, 0, 3, 1]
+    opcode_schedule = [0, 1, 4] + [3] * 38
+    resolved_schedule = [2, 0, 4] + [1] * 38
+    oracle = {
+        **_oracle(),
+        "opcode_to_card": binding,
+        "opcode_schedule": opcode_schedule,
+        "schedule": resolved_schedule,
+    }
+    evidence = {
+        **_evidence(),
+        "predicted_opcode_to_card": binding,
+        "predicted_opcode_schedule": opcode_schedule,
+        "predicted_schedule": resolved_schedule,
+    }
+    report = score_evidence([evidence], [oracle])
+    assert report["overall"]["independent_binding_exact"] == 1.0
+    assert report["overall"]["opcode_schedule_exact"] == 1.0
+    assert report["overall"]["schedule_exact"] == 1.0
+    assert set(report["by_action_active_prefix_accuracy"]) == {"0", "1"}
+
+
+def test_scorer_rejects_forged_resolved_schedule() -> None:
+    evidence = _evidence()
+    evidence["predicted_schedule"] = [1, 0, 4] + [3] * 38
+    with pytest.raises(ValueError, match="committed resolved schedule"):
+        score_evidence([evidence], [_oracle()])
+
+
+def test_binding_error_cannot_hide_behind_matching_cards() -> None:
+    oracle = _oracle()
+    oracle["opcode_to_card"] = [2, 0, 3, 1]
+    oracle["schedule"] = [2, 0, 4] + [1] * 38
+    evidence = _evidence()
+    report = score_evidence([evidence], [oracle])
+    assert report["overall"]["cards_exact"] == 1.0
+    assert report["overall"]["independent_binding_exact"] == 0.0
+    assert report["overall"]["schedule_exact"] == 0.0
+    assert report["overall"]["program_exact"] == 0.0
+
+
 def test_assessor_requires_signed_access_before_oracle_and_refuses_closed_reuse(
     tmp_path,
     monkeypatch,
@@ -290,7 +336,7 @@ def test_assessor_requires_signed_access_before_oracle_and_refuses_closed_reuse(
     write_json_once(
         manifest,
         {
-            "schema": "r12_ctaa_v2_manifest_v1",
+            "schema": "r12_ctaa_v2_manifest_v2",
             "seed": 1,
             "files": {
                 oracle.name: oracle_sha,

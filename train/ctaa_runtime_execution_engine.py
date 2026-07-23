@@ -19,6 +19,7 @@ import torch
 import torch.nn as nn
 
 from ctaa_intervention_protocol import (
+    ATTEMPT_PLAN_SCHEMA,
     GateFamily,
     InterventionFamily,
     LOCKED_SCORED_ROW_COUNT,
@@ -31,7 +32,10 @@ from ctaa_runtime_execution_projection import (
     validate_execution_projection_standalone,
 )
 from ctaa_runtime_interventions import (
+    binding_only_counterfactual,
+    card_only_counterfactual,
     card_storage_reindex,
+    compensated_opcode_relabel,
     execute_with_midpoint_intervention,
     future_schedule_counterfactual,
     packet_transplant,
@@ -88,6 +92,9 @@ _SOURCE_OPERATIONS = frozenset(
 )
 _PACKET_OPERATIONS = frozenset(
     {
+        InterventionFamily.CARD_ONLY_COUNTERFACTUAL.value,
+        InterventionFamily.BINDING_ONLY_COUNTERFACTUAL.value,
+        InterventionFamily.COMPENSATED_OPCODE_RELABEL.value,
         InterventionFamily.CARD_STORAGE_REINDEX.value,
         InterventionFamily.FUTURE_MASK.value,
         InterventionFamily.POST_STOP_POISON.value,
@@ -314,7 +321,8 @@ def _clone_packet(packet: HardCTAAPacket) -> HardCTAAPacket:
     return HardCTAAPacket(
         packet.action_cards.detach().cpu().clone(),
         packet.initial_state.detach().cpu().clone(),
-        packet.schedule.detach().cpu().clone(),
+        packet.opcode_schedule.detach().cpu().clone(),
+        packet.opcode_to_card.detach().cpu().clone(),
     )
 
 
@@ -322,7 +330,8 @@ def _slice_packet(packet: HardCTAAPacket, index: int = 0) -> HardCTAAPacket:
     return HardCTAAPacket(
         packet.action_cards[index : index + 1].clone(),
         packet.initial_state[index : index + 1].clone(),
-        packet.schedule[index : index + 1].clone(),
+        packet.opcode_schedule[index : index + 1].clone(),
+        packet.opcode_to_card[index : index + 1].clone(),
     )
 
 
@@ -384,7 +393,7 @@ def _compile_artifact(
         raise
     except Exception as error:  # noqa: BLE001 - retained as typed failure
         raise _StageFault("compile", "program_compile_failed") from error
-    if packet.schedule.shape[0] != 1:
+    if packet.opcode_schedule.shape[0] != 1:
         raise _StageFault("compile", "packet_batch_geometry")
     return bundle, packet
 
@@ -412,7 +421,7 @@ def _make_snapshot(
         if (
             trace.states.shape[0] != 1
             or trace.halted.shape != trace.states.shape[:2]
-            or trace.states.shape[1] != packet.schedule.shape[1] + 1
+            or trace.states.shape[1] != packet.opcode_schedule.shape[1] + 1
         ):
             raise ValueError("trace geometry")
         state_route = trace.states[0].to(torch.uint8).detach().cpu().clone()
@@ -638,7 +647,7 @@ def _payload(row: Mapping[str, object]) -> dict[str, object]:
     from ctaa_intervention_protocol import AnchorOperationCommitment
 
     commitment = AnchorOperationCommitment(
-        schema="r12_ctaa_anchor_operation_commitment_v1",
+        schema=ATTEMPT_PLAN_SCHEMA,
         attempt_index=int(row["attempt_index"]),
         attempt_id=str(row["attempt_id"]),
         operation=operation,
@@ -806,7 +815,27 @@ def _packet_attempt(
     packet = parent.record.snapshot.packet
     operation = str(row["operation"])
     try:
-        if operation == InterventionFamily.CARD_STORAGE_REINDEX.value:
+        if operation == InterventionFamily.CARD_ONLY_COUNTERFACTUAL.value:
+            card_address = torch.tensor(
+                [int(payload["card_address"])], dtype=torch.long
+            )
+            coordinate = torch.tensor(
+                [int(payload["coordinate"])], dtype=torch.long
+            )
+            child = card_only_counterfactual(
+                packet, card_address, coordinate
+            ).packet
+        elif operation == InterventionFamily.BINDING_ONLY_COUNTERFACTUAL.value:
+            order = torch.tensor(
+                [payload["new_to_old_opcode"]], dtype=torch.long
+            )
+            child = binding_only_counterfactual(packet, order).packet
+        elif operation == InterventionFamily.COMPENSATED_OPCODE_RELABEL.value:
+            old_to_new = torch.tensor(
+                [payload["old_to_new_opcode"]], dtype=torch.long
+            )
+            child = compensated_opcode_relabel(packet, old_to_new).packet
+        elif operation == InterventionFamily.CARD_STORAGE_REINDEX.value:
             order = torch.tensor([payload["storage_order"]], dtype=torch.long)
             child = card_storage_reindex(packet, order).packet
         elif operation == InterventionFamily.FUTURE_MASK.value:
@@ -929,7 +958,7 @@ def _compose_midpoint_route(
     """Independently compose the execution after one midpoint injection."""
 
     cards = packet.action_cards.long()
-    schedule = packet.schedule.long()
+    schedule = packet.resolved_schedule.long()
     initial = packet.initial_state.long()
     batch = schedule.shape[0]
     identity = torch.arange(CTAA_WIDTH, device=schedule.device)[None].expand(batch, -1)

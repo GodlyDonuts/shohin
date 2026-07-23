@@ -21,7 +21,7 @@ from ctaa_packet_io import (
 
 
 CORE_SCHEMA = "ctaa_recurrent_core_v1"
-EXECUTION_SCHEMA = "ctaa_source_blind_execution_v1"
+EXECUTION_SCHEMA = "ctaa_source_blind_execution_v2"
 EXECUTION_KEYS = {
     "schema",
     "core_kind",
@@ -75,7 +75,7 @@ def validate_execution_artifact(
         raise ValueError("CTAA execution artifact schema differs")
     packet = read_packet_bytes(packet_raw)
     core, kind = _load_core_payload(core_raw)
-    batch = packet.schedule.shape[0]
+    batch = packet.opcode_schedule.shape[0]
     tensor_contract = {
         "state_route": (torch.uint8, (batch, CTAA_MAX_STEPS + 1, CTAA_WIDTH)),
         "halted": (torch.bool, (batch, CTAA_MAX_STEPS + 1)),

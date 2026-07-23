@@ -46,7 +46,7 @@ def canonical_sha256(value: object) -> str:
 def tensor_materials(names: set[str], seed: int) -> dict[str, dict[str, object]]:
     categorical = seed % 3
     materials = {
-        "packet": make_raw_tensor("uint8", [56], bytes(range(56))),
+        "packet": make_raw_tensor("uint8", [60], bytes(range(60))),
         "h19_residual": make_raw_tensor(
             "float32", [1, 576], struct.pack("<576f", *([float(seed)] * 576))
         ),
@@ -67,7 +67,7 @@ def tensor_materials(names: set[str], seed: int) -> dict[str, dict[str, object]]
 def plan():
     base = valid_plan()
     first_id = base.bindings.batch_order[0]
-    packet_sha = hashlib.sha256(bytes(range(56))).hexdigest()
+    packet_sha = hashlib.sha256(bytes(range(60))).hexdigest()
     panel = tuple(
         replace(anchor, packet_sha256=packet_sha)
         if anchor.anchor_id == first_id
@@ -182,8 +182,8 @@ def test_exact_content_addressed_sidecar_retains_all_attempts(plan, evidence) ->
     assert validated["schema"] == EVIDENCE_SCHEMA
     assert validated["scored_row_count"] == 40_608
     assert validated["runtime_panel_size"] == 864
-    assert validated["operation_count"] == 26
-    assert validated["attempt_count"] == EXPECTED_ATTEMPT_COUNT == 22_464
+    assert validated["operation_count"] == 29
+    assert validated["attempt_count"] == EXPECTED_ATTEMPT_COUNT == 25_056
     assert validated["runtime_attempts_affect_scored_denominator"] is False
     assert validated["oracle_access"] == 0
     assert validated["blob_count"] < 18

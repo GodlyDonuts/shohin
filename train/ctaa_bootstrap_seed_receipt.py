@@ -19,7 +19,7 @@ from ctaa_evaluation_io import canonical_json, sha256_file, write_json_once
 
 
 SCHEMA = "r12_ctaa_v2_bootstrap_seed_receipt_v3"
-ASSESSMENT_SCHEMA = "r12_ctaa_v2_assessment_v2"
+ASSESSMENT_SCHEMA = "r12_ctaa_v2_assessment_v3"
 BEACON_SCHEMA = "r12_ctaa_v2_public_beacon_receipt_v3"
 BEACON_VERIFICATION_SCHEMA = "r12_ctaa_v2_nist_beacon_verification_v2"
 DERIVATION_SCHEME = "sha256_domain_separated_normalized_nist_beacon_v3"

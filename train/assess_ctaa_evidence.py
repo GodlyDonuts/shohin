@@ -49,7 +49,7 @@ from commit_ctaa_raw_evidence import (
 )
 
 
-ASSESSMENT_SCHEMA = "r12_ctaa_v2_assessment_v2"
+ASSESSMENT_SCHEMA = "r12_ctaa_v2_assessment_v3"
 ASSESSMENT_ACCESS_SCHEMA = "r12_ctaa_v2_assessment_access_v7"
 _HEX = frozenset("0123456789abcdef")
 
@@ -66,7 +66,7 @@ def _load_manifest(path: Path) -> tuple[dict[str, object], str]:
     value, digest = _load_read_only_json_with_sha(path, "board manifest")
     if (
         not isinstance(value, dict)
-        or value.get("schema") != "r12_ctaa_v2_manifest_v1"
+        or value.get("schema") != "r12_ctaa_v2_manifest_v2"
         or not isinstance(value.get("files"), dict)
     ):
         raise ValueError("CTAA assessment board manifest differs")

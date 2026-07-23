@@ -71,14 +71,17 @@ A two-layer, eight-head, width-384, FF-1024 generic slot decoder emits:
 
 ```text
 cards        [B,4,3,3]   categorical logits
+binding      [B,4,4]     local-opcode to physical-card logits
 initial      [B,3,3]     categorical logits
-schedule     [B,41,5]    four card addresses plus STOP
+opcode_tape  [B,41,5]    four declaration-local opcodes plus STOP
 ```
 
 Card slots are source-visible addresses `W1..W4`; physical rule lines are
-randomly reordered. A determining before/after witness uses three distinct
-entities, so each card is identifiable. The schedule contains exactly one
-model-compiled STOP followed by valid adversarial suffix events.
+reordered by the exact `S4` balance design. A determining before/after witness
+uses three distinct entities, so each card is identifiable. The compiler emits
+an independent opcode-to-card permutation. The local opcode tape contains
+exactly one model-compiled STOP followed by valid adversarial suffix events;
+the physical execution schedule is derived from binding plus tape.
 
 ### Hard deletion boundary
 
@@ -86,15 +89,17 @@ Compilation materializes exactly:
 
 ```text
 cards        uint8[4,3]   12 bytes
+binding      uint8[4]      4 bytes
 initial      uint8[3]      3 bytes
-schedule     uint8[41]    41 bytes
-total                       56 bytes per row
+opcode_tape  uint8[41]    41 bytes
+total                       60 bytes per row
 ```
 
 The scored runtime must serialize these bytes, terminate the compiler process,
 destroy source IDs, validity masks, residuals, logits, caches, and lexical
 memories, then start an executor process that receives only the packet and the
-core checkpoint. The core sees one schedule event at a time; it never receives
+core checkpoint. The host resolves one local opcode to one physical card at a
+time; the core sees only that current card and state. It never receives
 future events, source, query, target, or verifier state.
 
 Only after a read-only execution receipt commits is a separate query source
@@ -156,10 +161,10 @@ Measured against the real raw-300k checkpoint:
 | Component | Parameters |
 |---|---:|
 | Shohin trunk | 125,081,664 |
-| Shared compiler addition | 12,797,451 |
+| Shared compiler addition | 12,800,527 |
 | CTAA or OPRC core | 107,753 |
-| **Complete system** | **137,986,868** |
-| **Headroom below 149,999,999** | **12,013,131** |
+| **Complete system** | **137,989,944** |
+| **Headroom below 149,999,999** | **12,010,055** |
 
 CTAA and OPRC core parameters are exactly equal. Their analytic one-transition
 costs are 215,530 and 215,584 FLOPs, a 54-FLOP or 0.0251% difference. Final
@@ -297,8 +302,10 @@ freeze before any scored packet is executed. Scored source is compiled once
 before arm identity is attached, so core results cannot affect compilation.
 
 The evaluator is physically staged and oracle-blind. A program compiler accepts
-only `family_id` plus `program_source` and commits raw card, initial-state, and
-schedule bytes. A separate sealer derives packet validity from exact STOP
+only `family_id` plus `program_source` and commits raw card, binding,
+initial-state, and local-opcode tape bytes. The resolved physical schedule is
+derived deterministically and is never a separately predicted packet field. A
+separate sealer derives packet validity from exact STOP
 geometry; invalid rows remain in every denominator and never reach the
 executor. A fresh process receives only valid fixed packets and one frozen core.
 Only after its read-only execution receipt exists may another process open the
@@ -306,9 +313,13 @@ sealed query source and materialize query bytes. An oracle-blind committer then
 records every source row, including missing downstream stages. The assessor has
 no source input and spends the partition access before opening oracle-only
 labels. Assessment retains family-level outcomes needed for paired clustered
-statistics. This implemented native path does not yet cover all mandatory
-runtime interventions below; therefore this paragraph is not source-freeze or
-seed authorization.
+statistics. The source implementation now places all mandatory interventions
+below in a versioned 29-operation runtime plan over 864 anchors (25,056
+attempts per seed), including independently replayed card-only, binding-only,
+and compensated three-cycle controls. Capability-time resource/intervention
+receipts, independent dual rescoring, unmocked Linux custody, and the stronger
+binding-identification boards remain incomplete; therefore this paragraph is
+not source-freeze or seed authorization.
 
 Five paired master training seeds are required. Each derives initialization,
 batching, compiler, core, and curriculum seeds through tagged SHA-256. Report
@@ -326,7 +337,10 @@ independent.
 - source deletion and post-seal source poison;
 - entity, witness, and opcode alpha recoding;
 - renderer substitution and physical rule-line shuffle;
-- card-storage reindex with schedule rebinding;
+- card-storage reindex with binding reindex and byte-identical local tape;
+- card-only, binding-only, and compensated non-involutive opcode relabeling;
+- `A4`-only binding training with odd-permutation confirmation, plus
+  adjacent-transposition rebinding paths through the exact `S4` diameter six;
 - witness corruption and paired shuffled law;
 - schedule order twin and future masking;
 - STOP relocation and post-STOP poison;
@@ -342,7 +356,8 @@ state, answer, control result, or retry feedback while compiling or executing.
 
 Every one of five seeds must pass:
 
-- fresh cards, initial state, schedule, binding, and STOP each at least 99%;
+- fresh cards, independent binding, local opcode tape, derived schedule,
+  initial state, and STOP each at least 99%;
 - exact finite atomic transition accuracy 100% on all 243 cases in each
   semantic axis and exact two-action route accuracy 100% on all 2,187 cases;
 - long-program prefix-state accuracy is reported for each action, rank,

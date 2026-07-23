@@ -17,10 +17,10 @@ from types import MappingProxyType
 from typing import Mapping, Sequence
 
 
-PLAN_SCHEMA = "r12_ctaa_runtime_intervention_plan_v3"
+PLAN_SCHEMA = "r12_ctaa_runtime_intervention_plan_v4"
 DERANGEMENT_SCHEMA = "r12_ctaa_donor_derangement_v1"
-OPERATION_SCHEMA = "r12_ctaa_runtime_operation_v1"
-ATTEMPT_PLAN_SCHEMA = "r12_ctaa_anchor_operation_commitment_v1"
+OPERATION_SCHEMA = "r12_ctaa_runtime_operation_v2"
+ATTEMPT_PLAN_SCHEMA = "r12_ctaa_anchor_operation_commitment_v2"
 LOCKED_SCORED_ROW_COUNT = 40_608
 RUNTIME_PANEL_SIZE = 864
 ANCHORS_PER_CLASS_DEPTH = 144
@@ -69,6 +69,9 @@ class InterventionFamily(str, Enum):
     OPCODE_RECODE = "opcode_recode"
     RENDERER_SUBSTITUTION = "renderer_substitution"
     RULE_LINE_SHUFFLE = "rule_line_shuffle"
+    CARD_ONLY_COUNTERFACTUAL = "card_only_counterfactual"
+    BINDING_ONLY_COUNTERFACTUAL = "binding_only_counterfactual"
+    COMPENSATED_OPCODE_RELABEL = "compensated_opcode_relabel"
     CARD_STORAGE_REINDEX = "card_storage_reindex"
     WITNESS_CORRUPTION = "witness_corruption"
     PAIRED_SHUFFLED_LAW = "paired_shuffled_law"
@@ -475,6 +478,45 @@ _SPECS = [
             scope="complete_execution",
         ),
         shuffle="seed_frozen_physical_rule_line_permutation",
+    ),
+    _spec(
+        InterventionFamily.CARD_ONLY_COUNTERFACTUAL,
+        _I,
+        InterventionStage.PACKET,
+        "card_binding_separation",
+        "post_seal_pre_execution",
+        _expected(
+            packet=_DIFF,
+            outcome=OutcomeExpectation.CAUSAL_DISRUPTION,
+            scope="first_use_of_mutated_physical_card",
+        ),
+        transform="one_card_coordinate_only",
+    ),
+    _spec(
+        InterventionFamily.BINDING_ONLY_COUNTERFACTUAL,
+        _I,
+        InterventionStage.PACKET,
+        "binding_causal_use",
+        "post_seal_pre_execution",
+        _expected(
+            packet=_DIFF,
+            outcome=OutcomeExpectation.CAUSAL_DISRUPTION,
+            scope="first_use_of_rebound_local_opcode",
+        ),
+        transform="binding_three_cycle_local_tape_fixed",
+    ),
+    _spec(
+        InterventionFamily.COMPENSATED_OPCODE_RELABEL,
+        _I,
+        InterventionStage.PACKET,
+        "opcode_gauge_invariance",
+        "post_seal_pre_execution",
+        _expected(
+            packet=_DIFF,
+            outcome=OutcomeExpectation.TERMINAL_INVARIANCE,
+            scope="complete_execution_and_trace",
+        ),
+        transform="noninvolutive_three_cycle_with_inverse_binding",
     ),
     _spec(
         InterventionFamily.CARD_STORAGE_REINDEX,

@@ -20,19 +20,22 @@ from ctaa_evaluation_io import (
 
 
 def _program_payload() -> dict[str, object]:
-    schedule = torch.zeros((2, 41), dtype=torch.uint8)
-    schedule[0, 3] = 4
-    schedule[1, 2] = 4
-    schedule[1, 7] = 4
+    opcode_schedule = torch.zeros((2, 41), dtype=torch.uint8)
+    opcode_schedule[0, 3] = 4
+    opcode_schedule[1, 2] = 4
+    opcode_schedule[1, 7] = 4
+    binding = torch.arange(4, dtype=torch.uint8)[None].expand(2, -1).clone()
     return {
         "schema": PROGRAM_PREDICTION_SCHEMA,
         "family_ids": ["a", "b"],
         "program_source_sha256": "a" * 64,
         "compiler_sha256": "b" * 64,
         "action_cards": torch.zeros((2, 4, 3), dtype=torch.uint8),
+        "opcode_to_card": binding,
         "initial_state": torch.zeros((2, 3), dtype=torch.uint8),
-        "schedule": schedule,
-        "packet_valid": packet_valid_mask(schedule),
+        "opcode_schedule": opcode_schedule,
+        "schedule": opcode_schedule.clone(),
+        "packet_valid": packet_valid_mask(binding, opcode_schedule),
     }
 
 
@@ -95,4 +98,3 @@ def test_packet_index_supports_mixed_and_zero_valid_rows(tmp_path) -> None:
         },
     )
     assert read_packet_index(zero)["packet_sha256"] is None
-
