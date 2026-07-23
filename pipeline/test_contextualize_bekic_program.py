@@ -136,6 +136,30 @@ def test_disconnected_nodes_fail_structural_validation() -> None:
         validate_contextual_packet_structure(disconnected)
 
 
+def test_unused_card_arguments_are_zero_and_fail_closed_if_mutated() -> None:
+    packet = contextualize_simultaneous_packet(_source(1308), seed=99)
+    for card in packet["operation_cards"]:
+        for witness in card["witnesses"]:
+            if card["arity"] < 1:
+                assert not any(any(row) for row in witness["left"])
+            if card["arity"] < 2:
+                assert not any(any(row) for row in witness["right"])
+    unary = next(
+        card
+        for card in packet["operation_cards"]
+        if card["arity"] < 2
+    )
+    covert = copy.deepcopy(packet)
+    changed = next(
+        card
+        for card in covert["operation_cards"]
+        if card["slot"] == unary["slot"]
+    )
+    changed["witnesses"][0]["right"][0][0] = 1
+    with pytest.raises(ContextualizationError, match="covert"):
+        validate_contextual_packet_structure(covert)
+
+
 def test_contextual_machine_packet_has_no_oracle_mapping_or_targets() -> None:
     packet = contextualize_simultaneous_packet(_source(1306), seed=97)
     keys = set()

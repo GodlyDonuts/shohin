@@ -137,6 +137,10 @@ def _generate_cards(
     cards: list[dict[str, object]] = []
     for primitive in used_primitives:
         arity = PRIMITIVE_ARITY[primitive]
+        empty = tuple(
+            tuple(0 for _ in range(cardinality))
+            for _ in range(cardinality)
+        )
         for _ in range(128):
             witnesses = []
             densities = [0.08, 0.15, 0.25, 0.35, 0.50, 0.65, 0.80, 0.92]
@@ -155,6 +159,10 @@ def _generate_cards(
                     rng,
                     right_densities[witness_index],
                 )
+                if arity < 1:
+                    left = empty
+                if arity < 2:
+                    right = empty
                 output = _apply_primitive(
                     primitive,
                     left,
@@ -471,8 +479,23 @@ def validate_contextual_packet_structure(
                 or set(witness) != {"left", "right", "output"}
             ):
                 raise ContextualizationError("operation-card witness differs")
-            for field in ("left", "right", "output"):
-                _deserialize_relation(witness[field], cardinality)
+            decoded = {
+                field: _deserialize_relation(
+                    witness[field],
+                    cardinality,
+                )
+                for field in ("left", "right", "output")
+            }
+            if (
+                card["arity"] < 1
+                and any(any(row) for row in decoded["left"])
+            ) or (
+                card["arity"] < 2
+                and any(any(row) for row in decoded["right"])
+            ):
+                raise ContextualizationError(
+                    "unused card argument contains covert state"
+                )
 
     node_ids: set[str] = set()
     nodes: dict[str, Mapping[str, object]] = {}

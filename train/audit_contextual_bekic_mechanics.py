@@ -281,7 +281,13 @@ def main() -> None:
         "independent_simultaneous_oracle_agreement": sum(
             independent_simultaneous_agreement
         ),
+        "independent_simultaneous_oracle_packets": len(
+            independent_simultaneous_agreement
+        ),
         "independent_nested_oracle_agreement": sum(
+            independent_nested_agreement
+        ),
+        "independent_nested_oracle_packets": len(
             independent_nested_agreement
         ),
         "metrics": _cell_metrics(labels, exact, rollout.converged),

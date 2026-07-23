@@ -193,6 +193,8 @@ def generate_contextual_card_batch(
     argument_mask = (
         torch.arange(2)[None, None, None] < arity.clamp_min(0)[..., None, None]
     ).expand(-1, -1, CARD_WITNESSES, -1)
+    left = left * argument_mask[..., 0, None, None]
+    right = right * argument_mask[..., 1, None, None]
 
     invalid_count = round(batch_size * invalid_fraction)
     invalid_rows = torch.randperm(
