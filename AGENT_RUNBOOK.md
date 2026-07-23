@@ -11213,8 +11213,11 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   architecture must combine S7-style tied primitive reuse, ER-CST
   occurrence/equality binding, one source-deleted nil-linked program graph,
   and QERARM hard relation registers/late query. Do not train another static
-  opcode schedule and call it general reasoning. Newton DNS still fails; no
-  cluster job was submitted. Do not open confirmation.
+  opcode schedule and call it general reasoning. The pre-neural architecture,
+  matched orbit contract, development cells, causal controls, claim ladder,
+  and strict parameter ledger are frozen in
+  `R12_CONTEXTUAL_RELATION_PROGRAM_ARCHITECTURE.md`. Newton DNS still fails;
+  no cluster job was submitted. Do not open confirmation.
 
   The combined UROM/QERARM suite passes 36 focused tests, including
   out-of-cardinality rejection, antitone difference, categorical halt,
