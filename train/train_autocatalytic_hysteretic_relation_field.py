@@ -64,9 +64,9 @@ class AHRFTrainConfig:
     train_orbits: int = 8
     development_orbits: int = 10
     train_renderers: int = 2
-    steps: int = 1_000
-    halt_steps: int = 200
-    batch_size: int = 4
+    steps: int = 2_000
+    halt_steps: int = 400
+    batch_size: int = 2
     learning_rate: float = 3e-4
     halt_learning_rate: float = 1e-3
     weight_decay: float = 1e-4
@@ -763,9 +763,9 @@ def main() -> None:
     parser.add_argument("--train-orbits", type=int, default=8)
     parser.add_argument("--development-orbits", type=int, default=10)
     parser.add_argument("--train-renderers", type=int, default=2)
-    parser.add_argument("--steps", type=int, default=1_000)
-    parser.add_argument("--halt-steps", type=int, default=200)
-    parser.add_argument("--batch-size", type=int, default=4)
+    parser.add_argument("--steps", type=int, default=2_000)
+    parser.add_argument("--halt-steps", type=int, default=400)
+    parser.add_argument("--batch-size", type=int, default=2)
     parser.add_argument("--learning-rate", type=float, default=3e-4)
     parser.add_argument("--halt-learning-rate", type=float, default=1e-3)
     parser.add_argument("--weight-decay", type=float, default=1e-4)
