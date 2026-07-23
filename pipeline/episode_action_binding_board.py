@@ -402,6 +402,22 @@ def all_actions_union_baseline(packet: ModelPacket) -> int:
     return min(frontier)
 
 
+def query_order_bagging_baseline(packet: ModelPacket) -> int:
+    """Use the visible action table but replace the query by sorted action IDs."""
+
+    parsed = parse_episode(packet)
+    table = {
+        (source, action): target for source, action, target in parsed.demonstrations
+    }
+    state = parsed.query_start
+    for action in sorted(parsed.query_actions):
+        target = table.get((state, action))
+        if target is None:
+            return ABSTAIN
+        state = target
+    return state
+
+
 def make_underidentified(
     packet: ModelPacket,
     removed_action_tokens: Iterable[int],
@@ -691,6 +707,20 @@ def validate_cyclic_order_cluster(cluster: CyclicOrderCluster) -> None:
             raise GenerationError("cluster query pair has different committed worlds")
         if left.target_token == right.target_token:
             raise GenerationError("cluster query order does not change the answer")
+        bagged = (
+            query_order_bagging_baseline(left.packet),
+            query_order_bagging_baseline(right.packet),
+        )
+        if bagged[0] != bagged[1]:
+            raise GenerationError("query-order-bagging control varies within a pair")
+        if (
+            sum(
+                answer == case.target_token
+                for answer, case in zip(bagged, (left, right), strict=True)
+            )
+            > 1
+        ):
+            raise GenerationError("query-order-bagging control exceeds one-half")
 
 
 def validate_order_twin(twin: OrderTwin) -> None:

@@ -29,6 +29,7 @@ from pipeline.episode_action_binding_board import (
     pad_packet,
     parse_episode,
     permute_demonstrations,
+    query_order_bagging_baseline,
     raw_token_histogram,
     rename_assessor_system,
     rename_nonces,
@@ -105,6 +106,18 @@ def test_six_case_cluster_requires_binding_and_order(seed: int) -> None:
     ):
         assert left.target_token != right.target_token
         assert world_commitment(left.packet) == world_commitment(right.packet)
+        answers = (
+            query_order_bagging_baseline(left.packet),
+            query_order_bagging_baseline(right.packet),
+        )
+        assert answers[0] == answers[1]
+        assert (
+            sum(
+                answer == case.target_token
+                for answer, case in zip(answers, (left, right), strict=True)
+            )
+            <= 1
+        )
 
 
 def test_world_is_committed_before_query_materialization() -> None:
