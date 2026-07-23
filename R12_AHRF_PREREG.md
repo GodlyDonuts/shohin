@@ -1,8 +1,14 @@
 # R12 Autocatalytic Hysteretic Relation Field Preregistration
 
 **Status:** architecture and matched controls frozen at source commit
-`57547cc84e5500b263f12f6a8a6a1d81d8d2e822`; no score-bearing AHRF
+`4fc5a1193f0af9fbd443c79730ea126a6dbb1adc`; no score-bearing AHRF
 result exists.
+
+Pre-artifact launch `b4dcbf0` exhausted local MPS memory in a dense
+parent-by-child membrane expansion before an optimizer update or output write.
+Source `4fc5a11` replaces it with an exact gather after adding a fail-closed
+one-child-per-typed-role validator. The full-geometry MPS canary completed
+without OOM; this is a systems repair, not a score.
 
 ## Question
 
