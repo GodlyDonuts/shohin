@@ -1,0 +1,119 @@
+{
+  "schema": "shohin.eccr_neural_pilot_summary.v1",
+  "date": "2026-07-23",
+  "claim_scope": "Sealed synthetic endogenous-congruence induction only. This is not language reasoning, Shohin integration, or general reasoning.",
+  "protected_base": {
+    "path": "train/flagship_out/ckpt_0300000.pt",
+    "parameters": 125081664,
+    "sha256": "211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6"
+  },
+  "runs": [
+    {
+      "name": "pairwise_round4_seed2026072303",
+      "architecture": "pairwise_threshold",
+      "rounds": 4,
+      "seed": 2026072303,
+      "data_seed": 2026072304,
+      "train_examples": 256,
+      "development_examples": 64,
+      "train_exact_rate": 0.9765625,
+      "development_exact_rate": 0.40625,
+      "development_valid_decode_rate": 0.59375,
+      "development_all_orbit_consistency_rate": 0.125,
+      "development_invalid_reasons": {
+        "observation": 12,
+        "generator": 5,
+        "transitivity": 9
+      },
+      "checkpoint_sha256": "70e9d937a2e297f93c88734fef4e0137779437cf2c0a8ba71279715f0a2092bf",
+      "report_sha256": "cf7b32f7ec30f4f2e2019b26773fe2dd00d494d3c9641df8a09df929ded0b66b"
+    },
+    {
+      "name": "pairwise_round8_seed2026072303",
+      "architecture": "pairwise_threshold",
+      "rounds": 8,
+      "seed": 2026072303,
+      "data_seed": 2026072304,
+      "train_examples": 256,
+      "development_examples": 64,
+      "train_exact_rate": 0.9765625,
+      "development_exact_rate": 0.625,
+      "development_valid_decode_rate": 0.71875,
+      "development_all_orbit_consistency_rate": 0.375,
+      "development_invalid_reasons": {
+        "observation": 10,
+        "generator": 4,
+        "transitivity": 4
+      },
+      "checkpoint_sha256": "ed7dac8e992b3f5321c7564115b3b62fdc2ce82e6e1c6240042f75686f9dc17c",
+      "report_sha256": "e5d397cc8cd3d51c8f3187fad0d3d469e89b2fb55a0f6c94c421d4254934fd31"
+    },
+    {
+      "name": "pairwise_round8_seed2026072305",
+      "architecture": "pairwise_threshold",
+      "rounds": 8,
+      "seed": 2026072305,
+      "data_seed": 2026072306,
+      "train_examples": 256,
+      "development_examples": 64,
+      "train_exact_rate": 0.9921875,
+      "development_exact_rate": 0.703125,
+      "development_valid_decode_rate": 0.703125,
+      "development_all_orbit_consistency_rate": 0.5,
+      "development_invalid_reasons": {
+        "observation": 7,
+        "generator": 11,
+        "transitivity": 1
+      },
+      "checkpoint_sha256": "aef0f0c31a07f86a6eebd9ebd5b86d68b0d16e1ab760d4b0e59ba1be37ca9858",
+      "report_sha256": "2affecfb4ab7eb946147c9d274f24d7ba7a7c38699b04339f56a69358c20a8ab"
+    },
+    {
+      "name": "record_fiber_round8_seed2026072305",
+      "architecture": "record_fiber_guaranteed_equivalence",
+      "rounds": 8,
+      "seed": 2026072305,
+      "data_seed": 2026072306,
+      "train_examples": 256,
+      "development_examples": 64,
+      "train_exact_rate": 0.9921875,
+      "development_exact_rate": 0.6875,
+      "development_physical_law_valid_rate": 0.6875,
+      "development_equivalence_valid_rate": 1.0,
+      "development_observation_valid_rate": 0.84375,
+      "development_descent_valid_rate": 0.6875,
+      "development_false_collisions": 59,
+      "development_false_splits": 0,
+      "development_all_orbit_consistency_rate": 0.75,
+      "development_recoding_consistency_rate": 1.0,
+      "development_reindex_consistency_rate": 1.0,
+      "development_split_consistency_rate": 0.875,
+      "development_motif_exact_rates": {
+        "deep_path_interference": 0.9166666666666666,
+        "higher_arity_composition": 0.7916666666666666,
+        "noncommuting_context": 0.1875
+      },
+      "development_variant_exact_rates": {
+        "base": 0.625,
+        "bisimilar_merge": 0.875,
+        "bisimilar_split": 0.75,
+        "minimal_noncongruent": 0.25,
+        "opaque_reindex": 0.625,
+        "path_collision": 0.875,
+        "path_collision_reindex": 0.875,
+        "value_recode": 0.625
+      },
+      "added_parameters": 1692870,
+      "complete_system_parameters": 126774534,
+      "checkpoint_sha256": "c70d39f1940970672dfa59d5e2c5ca4ec96ca312a22ec526d2bfdcce8698e266",
+      "report_sha256": "e81c86076604986581c5d09f0f21c8dfbf578fd5731e41f96ca1fa0a3e9e9bcf"
+    }
+  ],
+  "conclusions": [
+    "Increasing relational message-passing depth from four to eight rounds improved matched-seed held-out exactness by 21.875 percentage points.",
+    "A fresh eight-round pairwise seed confirmed 70.3125% held-out exactness, so the depth effect is directional but not sufficient.",
+    "Record-fiber decoding guarantees equivalence and improves orbit consistency, but does not improve exact held-out quotient induction on the matched split.",
+    "Record-fiber errors are exclusively false collisions on this run; the main remaining bottleneck is discriminating observation and generator fibers, especially noncommuting contexts and minimal noncongruence.",
+    "No run clears a 95% promotion gate, and none supports a general-reasoning claim."
+  ]
+}

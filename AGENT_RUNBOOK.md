@@ -110,9 +110,22 @@
 > structure; arbitrary injective per-query recodings now produce bit-identical
 > outputs, while equality-pattern mutations change active logits. The revised
 > inducer has 1,593,793 parameters; hypothetical Shohin plus inducer totals
-> 126,675,457 with 73,324,543 headroom. A sealed train/evaluate harness is
-> under construction. No learned quotient score or integration claim exists
-> yet.
+> 126,675,457 with 73,324,543 headroom.
+>
+> The first sealed neural pilots are now complete. On one matched seed, raising
+> relational rounds from four to eight improves held-out exact quotient
+> induction from `26/64 = 40.625%` to `40/64 = 62.5%`; a fresh eight-round seed
+> reaches `45/64 = 70.3125%`. A guaranteed-equivalence Record-Fiber decoder
+> with 1,692,870 added parameters reaches `44/64 = 68.75%` on that same fresh
+> split. It makes all `64/64` hard outputs valid equivalence relations and
+> raises full-orbit consistency from `4/8` to `6/8`, with exact recoding and
+> reindex consistency `8/8`, but it does not improve exact quotient transfer.
+> All 20 held-out errors are false collisions; noncommuting contexts score
+> `3/16` and minimal-noncongruent variants `2/8`. The bottleneck is therefore
+> physical observation/generator discrimination, not transitive closure.
+> Compact evidence is in
+> `artifacts/r12/eccr_neural_pilot_summary_20260723.json`. No run clears the
+> 95% promotion gate, and no integration or general-reasoning claim exists.
 >
 > **Newest train-only routing result:** factorized witness route job `694945` completed cleanly on
 > `evc36` and is **rejected before fresh-board generation**. Treatment reaches 25.8625% witness,
@@ -11581,3 +11594,44 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   transitivity; whole-relation exactness and valid-decode rate must be reported
   separately, and a by-construction equivalence decoder is being tested as a
   matched architectural control.
+
+- **2026-07-23** -- **The first sealed ECCR neural pilot localizes the open
+  problem but does not clear it.** The four-round pairwise inducer reaches
+  `250/256 = 97.65625%` train exact and `26/64 = 40.625%` development exact.
+  On the same seed and corpus, eight message-passing rounds preserve train
+  exactness and raise development exactness to `40/64 = 62.5%`, a
+  `+21.875`-point depth effect. A fresh eight-round seed reaches
+  `254/256 = 99.21875%` train exact and `45/64 = 70.3125%` development exact.
+  Its 19 development failures comprise seven observation violations, eleven
+  generator violations, and one transitivity violation.
+
+  Commits `73b61cf` and `b0fe236` add a Record-Fiber decoder and sealed
+  trainer. Five replicated votes per record-anchor are majority-thresholded
+  once, and records are equivalent exactly when their complete hard signature
+  rows match. Every hard output is therefore reflexive, symmetric, and
+  transitive without search, clustering, closure, retry, or repair. The
+  selected ECCR suite passes 76 tests; Ruff and format checks pass.
+
+  The matched fresh-seed Record-Fiber run has 1,692,870 added parameters and a
+  complete-system ledger of 126,774,534. It reaches
+  `254/256 = 99.21875%` train exact and `44/64 = 68.75%` development exact.
+  All `64/64` development outputs are equivalence relations, but only
+  `54/64` preserve observations and `44/64` respect generator descent. All
+  59 pair errors are false collisions and none are false splits. Full-orbit
+  consistency is `6/8`, arbitrary observation-recoding consistency is `8/8`,
+  record-reindex consistency is `8/8`, and split consistency is `7/8`.
+  Deep-path and higher-arity motifs reach `22/24` and `19/24`; noncommuting
+  context reaches only `3/16`, and minimal noncongruence only `2/8`.
+
+  The matched comparison rejects the hypothesis that pairwise transitivity is
+  the primary bottleneck. By-construction validity improves structural
+  naturality but not exact unseen quotient induction. The next gate must
+  improve physical observation/generator discrimination on cardinality-
+  matched semantic and composition holdouts; blind parameter or corpus scale
+  is not authorized. Checkpoint and report SHA-256 values are
+  `c70d39f1940970672dfa59d5e2c5ca4ec96ca312a22ec526d2bfdcce8698e266`
+  and
+  `e81c86076604986581c5d09f0f21c8dfbf578fd5731e41f96ca1fa0a3e9e9bcf`.
+  The compact four-run evidence is
+  `artifacts/r12/eccr_neural_pilot_summary_20260723.json`. No result supports
+  Shohin integration, language reasoning, or a general-reasoning claim.
