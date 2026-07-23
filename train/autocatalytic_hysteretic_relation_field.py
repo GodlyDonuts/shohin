@@ -323,6 +323,8 @@ class AutocatalyticHystereticRelationField(nn.Module):
         hidden_dim: int = 96,
         card_rounds: int = 2,
         max_steps: int = 16,
+        hysteresis: bool = True,
+        use_card_conditioning: bool = True,
     ) -> None:
         super().__init__()
         if (
@@ -336,6 +338,8 @@ class AutocatalyticHystereticRelationField(nn.Module):
         self.hidden_dim = int(hidden_dim)
         self.card_rounds = int(card_rounds)
         self.max_steps = int(max_steps)
+        self.hysteresis = bool(hysteresis)
+        self.use_card_conditioning = bool(use_card_conditioning)
 
         self.card_encoder = _OpaqueCardFieldEncoder(
             self.hidden_dim,
@@ -736,6 +740,9 @@ class AutocatalyticHystereticRelationField(nn.Module):
             graph.argument_mask,
             graph.object_mask,
         )
+        if not self.use_card_conditioning:
+            slot_state = slot_state * 0.0
+            slot_pair = slot_pair * 0.0
         node_card = graph.node_card_mask.to(dtype)
         card_node_state = torch.einsum(
             "bns,bsh->bnh",
@@ -830,9 +837,13 @@ class AutocatalyticHystereticRelationField(nn.Module):
                 if hard_events
                 else evidence_logit.sigmoid()
             )
-            evidence_proposal = (
-                evidence + (1.0 - evidence) * evidence_event
-            ) * node_pair.to(dtype)
+            if self.hysteresis:
+                evidence_proposal = (
+                    evidence + (1.0 - evidence) * evidence_event
+                )
+            else:
+                evidence_proposal = evidence_event
+            evidence_proposal = evidence_proposal * node_pair.to(dtype)
 
             write_input = torch.cat(
                 (
@@ -851,9 +862,14 @@ class AutocatalyticHystereticRelationField(nn.Module):
                 if hard_events
                 else write_probability
             )
-            fact_proposal = (
-                facts + (1.0 - facts) * write_event
-            ) * node_pair.to(dtype)
+            if self.hysteresis:
+                fact_proposal = facts + (1.0 - facts) * write_event
+            else:
+                fact_proposal = torch.maximum(
+                    graph.seed_facts,
+                    write_event,
+                )
+            fact_proposal = fact_proposal * node_pair.to(dtype)
 
             membrane = self._select_batch_state(
                 active_batch,

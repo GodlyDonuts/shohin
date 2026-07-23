@@ -186,6 +186,34 @@ def test_parameter_receipt_is_exact_and_below_system_cap() -> None:
         )
 
 
+def test_same_parameter_controls_preserve_complete_system_size() -> None:
+    treatment = AutocatalyticHystereticRelationField(
+        node_feature_dim=NODE_FEATURES,
+        hidden_dim=16,
+        card_rounds=1,
+        max_steps=2,
+    )
+    no_hysteresis = AutocatalyticHystereticRelationField(
+        node_feature_dim=NODE_FEATURES,
+        hidden_dim=16,
+        card_rounds=1,
+        max_steps=2,
+        hysteresis=False,
+    )
+    generic = AutocatalyticHystereticRelationField(
+        node_feature_dim=NODE_FEATURES,
+        hidden_dim=16,
+        card_rounds=1,
+        max_steps=2,
+        use_card_conditioning=False,
+    )
+    assert {
+        treatment.added_parameters,
+        no_hysteresis.added_parameters,
+        generic.added_parameters,
+    } == {treatment.added_parameters}
+
+
 def test_object_and_node_permutations_are_equivariant() -> None:
     torch.manual_seed(2026072302)
     graph = _graph()

@@ -3,12 +3,15 @@ from __future__ import annotations
 import torch
 
 from autocatalytic_hysteretic_relation_field import (
+    FEEDBACK_ROLE,
     AutocatalyticHystereticRelationField,
+    SourceDeletedRelationGraph,
 )
 from contextual_witness_equivariant_binder import (
     ContextualWitnessEquivariantBinder,
 )
 from train_autocatalytic_hysteretic_relation_field import (
+    _apply_control,
     _root_facts,
     _transfer_binder,
 )
@@ -67,4 +70,36 @@ def test_contextual_binder_warm_start_copies_equivariant_core(
     assert torch.equal(
         model.card_encoder.slot_encoder[0].weight,
         binder.card_classifier[0].weight,
+    )
+
+
+def test_graph_controls_remove_only_preregistered_information() -> None:
+    graph = SourceDeletedRelationGraph(
+        node_features=torch.ones(1, 3, 1),
+        node_mask=torch.ones(1, 3, dtype=torch.bool),
+        argument_edges=torch.ones(1, 3, 3, 3, dtype=torch.bool),
+        node_card_mask=torch.eye(3, dtype=torch.bool)[None],
+        root_mask=torch.tensor([[False, False, True]]),
+        seed_facts=torch.zeros(1, 3, 2, 2),
+        witness_left=torch.zeros(1, 3, 1, 2, 2),
+        witness_right=torch.zeros(1, 3, 1, 2, 2),
+        witness_output=torch.zeros(1, 3, 1, 2, 2),
+        witness_mask=torch.ones(1, 3, 1, dtype=torch.bool),
+        argument_mask=torch.ones(1, 3, 1, 2, dtype=torch.bool),
+        object_mask=torch.ones(1, 2, dtype=torch.bool),
+    )
+    no_feedback = _apply_control(graph, "no_feedback")
+    assert not no_feedback.argument_edges[..., FEEDBACK_ROLE].any()
+    assert torch.equal(
+        no_feedback.argument_edges[..., :2],
+        graph.argument_edges[..., :2],
+    )
+    shuffled = _apply_control(graph, "shuffled_cards")
+    assert torch.equal(
+        shuffled.node_card_mask.any(1),
+        graph.node_card_mask.any(1),
+    )
+    assert not torch.equal(
+        shuffled.node_card_mask,
+        graph.node_card_mask,
     )

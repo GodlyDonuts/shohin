@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 import hashlib
 import json
 from pathlib import Path
@@ -15,6 +15,7 @@ import torch
 import torch.nn.functional as F
 
 from autocatalytic_hysteretic_relation_field import (
+    FEEDBACK_ROLE,
     AHRFRollout,
     AutocatalyticHystereticRelationField,
     SourceDeletedRelationGraph,
@@ -63,6 +64,7 @@ class AHRFTrainConfig:
     write_weight: float = 1e-4
     device: str = "auto"
     binder_checkpoint: str | None = None
+    control: str = "treatment"
 
 
 @dataclass(frozen=True, slots=True)
@@ -191,6 +193,57 @@ def _move_graph(
     )
 
 
+def _apply_control(
+    graph: SourceDeletedRelationGraph,
+    control: str,
+) -> SourceDeletedRelationGraph:
+    if control in {
+        "treatment",
+        "no_hysteresis",
+        "generic_recurrence",
+    }:
+        return graph
+    if control == "no_feedback":
+        edges = graph.argument_edges.clone()
+        edges[..., FEEDBACK_ROLE] = False
+        return replace(graph, argument_edges=edges)
+    if control == "shuffled_cards":
+        attachment = torch.zeros_like(graph.node_card_mask)
+        arity = graph.argument_mask.long().sum(-1)
+        slot_arity = torch.where(
+            graph.witness_mask,
+            arity,
+            torch.full_like(arity, -1),
+        ).amax(2)
+        for batch_index in range(graph.node_card_mask.shape[0]):
+            for value in (0, 1, 2):
+                slots = slot_arity[batch_index].eq(value).nonzero().flatten()
+                if len(slots) < 2:
+                    attachment[
+                        batch_index,
+                        :,
+                        slots,
+                    ] = graph.node_card_mask[
+                        batch_index,
+                        :,
+                        slots,
+                    ]
+                    continue
+                targets = slots.roll(1)
+                for source, target in zip(slots, targets, strict=True):
+                    attachment[
+                        batch_index,
+                        :,
+                        target,
+                    ] = graph.node_card_mask[
+                        batch_index,
+                        :,
+                        source,
+                    ]
+        return replace(graph, node_card_mask=attachment)
+    raise ValueError("AHRF control differs")
+
+
 def _root_facts(
     facts: torch.Tensor,
     roots: torch.Tensor,
@@ -317,6 +370,7 @@ def _exact_receipt(
     board: AHRFBoard,
     indices: torch.Tensor,
     device: torch.device,
+    enable_halt: bool = True,
 ) -> dict[str, Any]:
     graph = _move_graph(_index_graph(board.graph, indices), device)
     targets = board.targets.index_select(0, indices).to(device)
@@ -325,7 +379,7 @@ def _exact_receipt(
         rollout = model(
             graph,
             hard_events=True,
-            enable_halt=True,
+            enable_halt=enable_halt,
             return_history=True,
         )
     prediction = _root_facts(rollout.terminal_facts, roots)
@@ -376,11 +430,19 @@ def train_ahrf(
     torch.manual_seed(config.seed)
     device = _resolve_device(config.device)
     board = build_board(config)
+    board = replace(
+        board,
+        graph=_apply_control(board.graph, config.control),
+    )
     model = AutocatalyticHystereticRelationField(
         node_feature_dim=AHRF_NODE_FEATURE_DIM,
         hidden_dim=config.hidden_dim,
         card_rounds=config.card_rounds,
         max_steps=config.max_steps,
+        hysteresis=config.control != "no_hysteresis",
+        use_card_conditioning=(
+            config.control != "generic_recurrence"
+        ),
     ).to(device)
     warm_start = None
     if config.binder_checkpoint is not None:
@@ -532,6 +594,13 @@ def train_ahrf(
         development_indices,
         device,
     )
+    fixed_deadline_receipt = _exact_receipt(
+        model,
+        board,
+        development_indices,
+        device,
+        enable_halt=False,
+    )
 
     output_dir.mkdir(parents=True, exist_ok=True)
     checkpoint_path = output_dir / "ahrf.pt"
@@ -581,6 +650,7 @@ def train_ahrf(
         "halt_trace": halt_trace,
         "train": train_receipt,
         "development": development_receipt,
+        "development_fixed_deadline": fixed_deadline_receipt,
         "source_sha256": sources,
         "checkpoint": {
             "path": str(checkpoint_path),
@@ -614,6 +684,17 @@ def main() -> None:
     parser.add_argument("--write-weight", type=float, default=1e-4)
     parser.add_argument("--device", default="auto")
     parser.add_argument("--binder-checkpoint")
+    parser.add_argument(
+        "--control",
+        choices=(
+            "treatment",
+            "no_feedback",
+            "no_hysteresis",
+            "shuffled_cards",
+            "generic_recurrence",
+        ),
+        default="treatment",
+    )
     args = parser.parse_args()
     config = AHRFTrainConfig(
         seed=args.seed,
@@ -633,6 +714,7 @@ def main() -> None:
         write_weight=args.write_weight,
         device=args.device,
         binder_checkpoint=args.binder_checkpoint,
+        control=args.control,
     )
     report = train_ahrf(config, output_dir=args.output_dir)
     print(
