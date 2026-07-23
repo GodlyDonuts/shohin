@@ -11116,3 +11116,65 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `R12_CTAA_S4_TIED_PARTICLE_TRANSPORT_DOSSIER.md`. No board seed, training
   seed, scored access, remote/GPU job, or neural result exists.
   `REJECT_SOURCE_FREEZE` remains mandatory.
+
+- **2026-07-23** -- **UROM-3 is rejected before H100 use; its query-blind
+  categorical-phase successor establishes the first strong fixed-point
+  extrapolation signal.** Three independent hostile reviews agree that UROM-3
+  is a bounded monotone Boolean relation-composition VM, not a multi-family
+  general-reasoning mechanism. Its family labels change edge distributions
+  but not the algorithm; its original late query cannot resolve an opaque
+  name without a declaration dictionary. The retained hard baseline now
+  rejects all state outside the declared cardinality square and rejects late
+  query positions outside cardinality. The board now factorizes training
+  family/cardinality cells. These repairs preserve an audited negative control
+  only. Do not launch its compiler on an H100.
+
+  The active falsifier is the **Query-Blind Equivariant Relation-Algebra
+  Register Machine (QERARM)**. Its source-deleted gold packet contains only
+  cardinality, raw relations `A` and `B`, identity, and three empty work
+  registers. A learned object-permutation-invariant controller chooses among
+  nine relation-algebra operations, two operands, a writable destination,
+  one of three categorical phases, and model-owned `HALT`; the late query is
+  unavailable until execution ends. Missing halt stays invalid. The
+  separator is `TC(A) \ TC(B)`, which requires two fixed points and an
+  antitone difference and cannot be solved by UROM-3's monotone accumulator.
+  Training cardinalities/depths are 3--5/2--4; development is 6--7/5--6;
+  cardinality eight/depth seven remains unopened confirmation.
+
+  Four optimizer probes were negative: naive-hard, soft/hard-GRU,
+  teacher-GRU, and Markov-affordance reports have SHA-256
+  `4499c362...`, `c6482362...`, `e1908349...`, and `48dfeab5...`.
+  Adding a categorical phase register repairs the collapse. CPU development
+  probe `e_phase_markov` uses 214,589 learned controller parameters and
+  reaches 768/768 = **100% train joint** plus 181/192 = **94.2708% hard
+  development joint**, including exact work registers, answers, and halt.
+  Depth-five joint is 123/129 = 95.349%; depth-six is 58/63 = 92.063%.
+  Checkpoint/report SHA-256 are
+  `39781187bcf0f7a6baeda01fc27890180fdacd6e38aa34c8f918de79c88dcd90`
+  and
+  `eff8a0fdd36e2c5f81cf0d3027e9db40c618c8331064c18d1954b54baa0d909e`.
+  Confirmation access is zero.
+
+  All eleven failures occur at cardinality seven. Action-level replay
+  localizes them principally to fixed-point transition decisions: mean action
+  change shrinks as `1/n^2`, making the learned convergence threshold
+  accidentally cardinality dependent. The active source revision replaces
+  absolute degree scaling with active-cardinality normalization and supplies
+  both normalized change mass and a permutation-invariant maximum-change
+  signal. Its default 512-wide, three-layer controller adds 2,829,341
+  parameters; protected trunk plus controller is 127,911,005, leaving
+  72,088,995 below 200M. The same-seed scale-free development canary is
+  running locally. Do not open confirmation. First require repeated-seed
+  development stability, operation/state/halt interventions, an independently
+  implemented oracle, and a qualified parameter/state/FLOP-matched generic
+  recurrence. This is systematic bounded fixed-point execution evidence, not
+  a language compiler or general-reasoning result.
+
+  The combined UROM/QERARM suite passes 36 focused tests, including
+  out-of-cardinality rejection, antitone difference, categorical halt,
+  post-halt persistence, object-reindex equivariance, read-only register
+  preservation, relaxed probability-domain preservation, gradients through
+  wrong hard actions, hard/teacher curriculum overlap, board split contracts,
+  and independent closure-depth checks. Ruff is clean.
+  `R12_GENERAL_REASONING_GATE.md` is the active dossier. The protected 300k
+  flagship remains unchanged and hash-bound.
