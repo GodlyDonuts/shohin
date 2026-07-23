@@ -11652,3 +11652,10 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   and
   `1c3e82a6baccc4723df3faedaa59fc610d1b8bb9340696dc2a2555d72af79f8b`.
   This closes "add more recurrent rounds" as the next move.
+
+  A development-informed Record-Fiber threshold sweep from `-4` through `+4`
+  is retained only as a diagnostic. No threshold exceeds the frozen
+  zero-threshold exact score of `44/64`. Threshold `+4` raises physical
+  validity to `54/64` but exactness falls to `34/64`, demonstrating that the
+  extra valid outputs are conservative refinements which split true classes.
+  The current failure is not rescued by scalar calibration.

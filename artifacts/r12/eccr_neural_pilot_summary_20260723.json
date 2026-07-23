@@ -141,5 +141,17 @@
     "Record-fiber decoding guarantees equivalence and improves orbit consistency, but does not improve exact held-out quotient induction on the matched split.",
     "Record-fiber errors are exclusively false collisions on this run; the main remaining bottleneck is discriminating observation and generator fibers, especially noncommuting contexts and minimal noncongruence.",
     "No run clears a 95% promotion gate, and none supports a general-reasoning claim."
-  ]
+  ],
+  "posthoc_record_fiber_threshold_diagnostic": {
+    "claim_status": "diagnostic only; development-informed and excluded from score claims",
+    "threshold_range": [
+      -4.0,
+      4.0
+    ],
+    "best_exact_relations": 44,
+    "development_examples": 64,
+    "zero_threshold_exact_relations": 44,
+    "best_physical_valid_relations": 54,
+    "interpretation": "No scalar vote threshold improves exactness. Higher thresholds can increase physical validity only by producing legal refinements that split true classes; the matched failure is representational rather than a zero-threshold calibration artifact."
+  }
 }
