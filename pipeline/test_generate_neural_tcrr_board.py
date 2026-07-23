@@ -397,6 +397,36 @@ def test_all_complete_labels_agree_with_the_independent_reference() -> None:
         assert oracle.state_count < generated.MAX_ORACLE_STATES
 
 
+def test_exported_successor_bridge_rejects_a_same_count_wrong_label() -> None:
+    value = _pilot()
+    packet, expected = next(
+        (packet, record)
+        for packet, record in zip(
+            value.packets,
+            value.expected_records,
+            strict=True,
+        )
+        if len(record.transitions) >= 2
+        and record.transitions[0].successor != record.transitions[1].successor
+    )
+    wrong_first = dataclasses.replace(
+        expected.transitions[0],
+        successor=expected.transitions[1].successor,
+    )
+    corrupted = dataclasses.replace(
+        expected,
+        transitions=(wrong_first, *expected.transitions[1:]),
+    )
+    with pytest.raises(
+        generated.ProceduralCandidateRejected,
+        match="exported opaque transitions differ",
+    ):
+        generated._oracle_and_label_agreement(  # noqa: SLF001
+            packet,
+            corrupted,
+        )
+
+
 def test_required_twins_have_exact_causal_predicates() -> None:
     value = _pilot()
     packets = _by_digest(value.packets)

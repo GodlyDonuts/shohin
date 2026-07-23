@@ -300,9 +300,45 @@ def _oracle_and_label_agreement(
         raise ProceduralCandidateRejected(
             "production and independent reference one-step labels disagree"
         )
-    if len(production_edges) != len(expected.transitions):
+    storage_index = {
+        storage_id: index for index, storage_id in enumerate(packet.graph.reservoir)
+    }
+    expected_edges = []
+    for transition in expected.transitions:
+        successor_packet = dataclasses.replace(
+            packet,
+            graph=transition.successor,
+        )
+        _successor_system, successor_graph, _successor_storage = (
+            audited._packet_to_mechanics(successor_packet)  # noqa: SLF001
+        )
+        reduction = mechanics.Reduction(
+            rule_id=transition.rule_id,
+            target_slot=storage_index[transition.target_storage_id],
+            target_path=transition.occurrence_path,
+        )
+        expected_edges.append(
+            dataclasses.asdict(
+                mechanics.OracleTransition(
+                    source=initial,
+                    reduction=reduction.trace_token,
+                    target=mechanics.canonical_graph_serialization(successor_graph),
+                )
+            )
+        )
+    expected_edges_tuple = tuple(
+        sorted(
+            expected_edges,
+            key=lambda item: (
+                str(item["source"]),
+                str(item["reduction"]),
+                str(item["target"]),
+            ),
+        )
+    )
+    if expected_edges_tuple != production_edges:
         raise ProceduralCandidateRejected(
-            "expected transition count differs from independent initial edges"
+            "exported opaque transitions differ from independent initial edges"
         )
     label_agreement = OneStepLabelAgreement(
         packet_sha256=digest,
