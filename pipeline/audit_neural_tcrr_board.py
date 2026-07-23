@@ -8,6 +8,7 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+import tempfile
 from typing import Any
 
 import neural_tcrr_board as board
@@ -72,42 +73,7 @@ def _source_receipt(root: Path) -> dict[str, str]:
         raise NeuralTcrrBoardAuditError(
             f"refusing to audit dirty source files:\n{dirty}"
         )
-    return {
-        relative: _sha256_path(root / relative)
-        for relative in SOURCE_PATHS
-    }
-
-
-def _packet_identifiers(packet: board.SourceDeletedPacket) -> set[str]:
-    identifiers = set(packet.graph.reservoir)
-    for constructor in packet.constructors:
-        identifiers.add(constructor.identifier)
-        identifiers.add(constructor.result_type)
-        identifiers.update(constructor.argument_types)
-
-    def collect_rule_term(term: board.RuleTermRecord | None) -> None:
-        if term is None:
-            return
-        identifiers.add(term.type_id)
-        if term.constructor_id is not None:
-            identifiers.add(term.constructor_id)
-        if term.variable_id is not None:
-            identifiers.add(term.variable_id)
-        for child in term.children:
-            collect_rule_term(child)
-
-    for rule in packet.rules:
-        identifiers.add(rule.identifier)
-        collect_rule_term(rule.lhs)
-        collect_rule_term(rule.rhs)
-    for node in packet.graph.nodes:
-        identifiers.add(node.storage_id)
-        identifiers.add(node.type_id)
-        if node.constructor_id is not None:
-            identifiers.add(node.constructor_id)
-        if node.variable_id is not None:
-            identifiers.add(node.variable_id)
-    return identifiers
+    return {relative: _sha256_path(root / relative) for relative in SOURCE_PATHS}
 
 
 def _max_path_depth(
@@ -130,17 +96,9 @@ def _ledger_alignment(value: board.LocalTransitionSlice) -> bool:
         == {item.packet_sha256 for item in value.expected_records}
         == {item.packet_sha256 for item in value.split_assignments}
         == {item.packet_sha256 for item in value.fingerprints}
+        == {item.packet_sha256 for item in value.oracle_agreements}
+        == {item.packet_sha256 for item in value.primitive_coverage}
     )
-
-
-def _identity_namespaces_disjoint(value: board.LocalTransitionSlice) -> bool:
-    seen: set[str] = set()
-    for packet in value.packets:
-        active = _packet_identifiers(packet)
-        if seen & active:
-            return False
-        seen.update(active)
-    return True
 
 
 def _model_packets_exclude_offline_ledger(
@@ -170,6 +128,84 @@ def _split_counts(
     return dict(sorted(result.items()))
 
 
+def _controlled_no_redex_count(value: board.LocalTransitionSlice) -> int:
+    expected = {item.packet_sha256: item for item in value.expected_records}
+    return sum(
+        item.kind
+        in {
+            "repeated_variable_equality",
+            "partial_nested_match",
+            "type_mismatch",
+            "capacity",
+        }
+        and bool(expected[item.left_packet_sha256].transitions)
+        and not expected[item.right_packet_sha256].transitions
+        for item in value.twins
+    )
+
+
+def _oracle_receipt(value: board.LocalTransitionSlice) -> dict[str, object]:
+    return {
+        "packet_agreement": sum(
+            item.exact_agreement for item in value.oracle_agreements
+        ),
+        "packet_count": len(value.oracle_agreements),
+        "state_count": sum(item.state_count for item in value.oracle_agreements),
+        "transition_count": sum(
+            item.transition_count for item in value.oracle_agreements
+        ),
+        "normal_form_count": sum(
+            item.normal_form_count for item in value.oracle_agreements
+        ),
+        "cyclic_component_count": sum(
+            item.cyclic_component_count for item in value.oracle_agreements
+        ),
+    }
+
+
+def _export_custody_receipt(
+    value: board.LocalTransitionSlice,
+) -> dict[str, object]:
+    with tempfile.TemporaryDirectory(prefix="neural-tcrr-audit-") as temporary:
+        root = Path(temporary)
+        packet_root = root / "packets"
+        train_label_root = root / "train-labels"
+        development_assessment_root = root / "development-assessor"
+        receipt = board.export_packet_only_corpus(
+            value,
+            packet_root=packet_root,
+            train_label_root=train_label_root,
+            development_assessment_root=development_assessment_root,
+        )
+        train_packets = board.load_packet_only_partition(packet_root, "train")
+        development_packets = board.load_packet_only_partition(
+            packet_root,
+            "development",
+        )
+        assessor = board.load_sealed_development_assessment(
+            development_assessment_root / "sealed_development_assessment.json",
+            expected_sha256=receipt.sealed_development_artifact_sha256,
+        )
+        records = assessor.get("records")
+        if not isinstance(records, list):
+            raise NeuralTcrrBoardAuditError(
+                "sealed development assessor records are malformed"
+            )
+        return {
+            "packet_manifest_sha256": receipt.packet_manifest_sha256,
+            "train_label_manifest_sha256": (receipt.train_label_manifest_sha256),
+            "development_assessment_manifest_sha256": (
+                receipt.development_assessment_manifest_sha256
+            ),
+            "sealed_development_artifact_sha256": (
+                receipt.sealed_development_artifact_sha256
+            ),
+            "train_packet_count": len(train_packets),
+            "development_packet_count": len(development_packets),
+            "sealed_development_record_count": len(records),
+        }
+
+
 def build_audit_report(
     value: board.LocalTransitionSlice,
     *,
@@ -182,52 +218,64 @@ def build_audit_report(
     board.validate_local_transition_slice(value)
     serialized = dataclasses.asdict(value)
     board_sha256 = _sha256_bytes(_canonical_bytes(serialized))
-    packet_sha256 = tuple(
-        board.packet_sha256(packet) for packet in value.packets
-    )
-    transition_count = sum(
-        len(item.transitions) for item in value.expected_records
-    )
-    identity_disjoint = _identity_namespaces_disjoint(value)
+    packet_sha256 = tuple(board.packet_sha256(packet) for packet in value.packets)
+    transition_count = sum(len(item.transitions) for item in value.expected_records)
     ledger_aligned = _ledger_alignment(value)
     packet_custody = _model_packets_exclude_offline_ledger(value)
     split_counts = _split_counts(value)
     twin_kinds = tuple(sorted(item.kind for item in value.twins))
     required_twins = (
         "capacity",
+        "constructor_reindex",
+        "partial_nested_match",
+        "repeated_variable_equality",
         "rhs_pointer",
         "rule_reindex",
         "shared_occurrence",
         "storage_reindex",
+        "type_mismatch",
+        "type_reindex",
     )
+    no_redex_count = _controlled_no_redex_count(value)
+    rule_pair_count = sum(
+        len(item.normalized_rule_pairs) for item in value.fingerprints
+    )
+    composition_count = sum(
+        len(item.reachable_two_rule_compositions) for item in value.fingerprints
+    )
+    oracle = _oracle_receipt(value)
+    custody = _export_custody_receipt(value)
     admitted = (
-        len(value.packets) == 21
-        and transition_count == 25
+        len(value.packets) == 22
+        and transition_count == 24
         and split_counts
         == {
             "local_transition_development": 6,
-            "local_transition_train": 15,
+            "local_transition_train": 16,
         }
-        and identity_disjoint
         and ledger_aligned
         and packet_custody
         and twin_kinds == required_twins
+        and no_redex_count == 4
+        and rule_pair_count == 51
+        and composition_count == 8
+        and oracle["packet_agreement"] == oracle["packet_count"] == 22
+        and custody["train_packet_count"] == 16
+        and custody["development_packet_count"] == 6
+        and custody["sealed_development_record_count"] == 6
         and _max_path_depth(value.expected_records) <= board.MAX_PATH_DEPTH
         and max(len(packet.graph.reservoir) for packet in value.packets)
         <= board.MAX_CAPACITY
     )
     return {
-        "protocol": "neural_tcrr_local_transition_board_audit_v1",
-        "decision": (
-            "admit_source_deleted_local_board_only"
-            if admitted
-            else "reject"
-        ),
+        "protocol": "neural_tcrr_local_transition_board_audit_v2",
+        "decision": ("admit_source_deleted_local_board_only" if admitted else "reject"),
         "claim_boundary": (
             "This audit admits a deterministic, source-deleted local-transition "
-            "board with separated offline labels and leakage fingerprints. It "
-            "does not admit an independent successor oracle, a neural matcher, "
-            "autonomous graph rewriting, Shohin integration, or general reasoning."
+            "board with exact-axis causal twins, separated offline labels, "
+            "independent state-graph agreement, and split-leakage fingerprints. "
+            "It does not admit a neural matcher, autonomous graph rewriting, "
+            "Shohin integration, or general reasoning."
         ),
         "seed": seed,
         "source_commit": source_commit,
@@ -238,14 +286,17 @@ def build_audit_report(
         "split_counts": split_counts,
         "transition_count": transition_count,
         "twin_kinds": twin_kinds,
-        "identity_namespaces_disjoint": identity_disjoint,
+        "controlled_no_redex_count": no_redex_count,
+        "rule_pair_fingerprint_count": rule_pair_count,
+        "reachable_two_rule_composition_count": composition_count,
         "ledger_alignment": ledger_aligned,
         "model_packets_exclude_offline_ledger": packet_custody,
+        "exact_axis_twins_recomputed": True,
         "max_occurrence_path_depth": _max_path_depth(value.expected_records),
-        "max_capacity": max(
-            len(packet.graph.reservoir) for packet in value.packets
-        ),
-        "independent_successor_oracle": False,
+        "max_capacity": max(len(packet.graph.reservoir) for packet in value.packets),
+        "independent_oracle": oracle,
+        "export_custody": custody,
+        "independent_successor_oracle": True,
         "neural_runtime_present": False,
     }
 
