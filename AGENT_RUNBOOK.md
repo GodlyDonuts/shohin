@@ -10988,3 +10988,131 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   post-freeze challenge are required before authorization. Even a positive binding result would not
   close neural write-delete-delay-read, multi-epoch rebinding, dual-scorer, or full recurrent-
   reasoning gates.
+
+- **2026-07-23** -- **The global ceiling is confirmed at strict sub-200M, and a
+  non-abelian holonomy successor passes its score-free finite falsifier.** The
+  user's new authority permits future complete systems below 200,000,000
+  unique parameters. Closed 150M contracts remain immutable; the existing A4
+  binding-completion comparison stays at its smaller size. Prior-agent
+  worktrees were inventoried rather than merged wholesale. ACW-G2 contains
+  extensive staged custody infrastructure but no scored capability result;
+  carry-recovery v9 is an unrun preregistration; and the ordinal route's
+  strongest fresh result is 76.074% exact packet, 85.400% state, and 90.527%
+  answer with an exact host tensor executor, so it is compiler evidence rather
+  than native reasoning.
+
+  The admitted successor is the **Non-Abelian Holonomy Workspace (NAHW)**.
+  It carries a 24-particle posterior over opcode-to-card bindings and composes
+  rebinding cues by convolution in the group algebra of S4. Its exact matched
+  control replaces only the multiplication table with abelian Z24 circular
+  convolution; particle count, learned cue kernels, parameters, and per-cue
+  MACs are identical. This creates a finite resource-preserving separation
+  from the abelian ablation: Z24 cue convolutions commute for every possible
+  kernel, while S4 can retain the order of noncommuting transpositions.
+
+  Existing `R12_HOLONOMY_STATE_NO_GO.md` correctly blocks treating this as a
+  new reasoning primitive: complete finite holonomy state is an ordinary
+  operator recurrence. The decisive favorable control is therefore an
+  unconstrained learned 24 x 24 operator per cue. It has the same state and
+  576 transport MACs per cue, 3,312 more parameters, and exactly contains all
+  positive S4 convolution kernels. NAHW advances only if its parameter tying
+  beats that stronger control on held-out compositions.
+
+  The deterministic CPU falsifier exhausts 24 inverses, all 13,824 S4
+  associativity cases, all 13,824 opcode/card coordinate changes, and all 36
+  ordered transposition-cue pairs. Exactly 24 treatment pairs are
+  noncommuting/order-distinguishable; the Z24 control collapses all 36 orders.
+  Focused verification is 12/12 with Ruff and bytecode compilation clean.
+  Deterministic report payload SHA-256 is
+  `9926e030ce2068cfb02fe0a774a3fc7866a7793b5fb2748924c2f5ad9d01933f`.
+  The pilot is 599,497 workspace parameters and 138,589,441 complete system
+  parameters, leaving 61,410,558 below 199,999,999. This passes only the
+  finite-mechanics gate and authorizes drafting a source-deleted neural
+  preregistration. No board seed, training seed, scored access, remote job, GPU
+  job, or capability result exists. `REJECT_SOURCE_FREEZE` remains until the
+  neural board, matched arms, external custody, source/KV deletion, independent
+  scorer, and adversarial review are complete.
+
+- **2026-07-23** -- **The NAHW transition-law canary establishes a real but
+  narrow sample-efficiency advantage; it is not yet a Shohin capability
+  result.** The deterministic CPU canary uses five seeds. Every matched-data
+  arm receives only six supervised one-step transitions: identity particle
+  plus one of the six `S4` transposition cues. All arms fit all six labels.
+  The `S4`-tied treatment then reaches 36/36, 216/216, and 1,296/1,296 exact
+  unseen words at depths two, three, and four for every seed. The equal-kernel
+  `Z24` ablation reaches 8/36, 9/216, and 47/1,296. The stronger untied dense
+  `24 x 24` control reaches 0--3/36, 36/216, and 0/1,296 because the six labels
+  leave its other 23 source rows unidentified. When that same dense control is
+  given all 144 one-step transitions, it reaches 100% at every depth for every
+  seed. This proves sufficient dense capacity and optimizer health while
+  localizing the treatment gain to `S4` parameter tying.
+
+  Exact source is `pipeline/ctaa_holonomy_toy_canary.py`; its five tests pass.
+  Local deterministic report
+  `artifacts/r12/ctaa_holonomy_toy_canary_v1.json` has payload SHA-256
+  `fe1b1a218b11afa6a2ecdfcbba50cdea14289fc02a8f81ecaaa5241303493fec`.
+  The preregistration now requires a two-stage neural falsifier: calibrate
+  each matched transport on the same six examples, freeze it byte-identically,
+  then train source compilation and source-deleted CTAA execution without
+  allowing Stage-B gradients to identify missing dense rows. A separate
+  144-transition dense arm remains a data-rich capacity ceiling. Treatment and
+  `Z24` remain parameter-identical; dense retains its preregistered
+  3,312-parameter advantage and equal analytic transport MACs.
+
+  This is a source-free categorical motor result and an architecture-prior
+  signature. It does not show that Shohin can compile cues, delete source/KV,
+  execute late-query programs, or reason natively. Existing
+  `R12_HOLONOMY_STATE_NO_GO.md` still forbids claiming holonomy as a new
+  reasoning primitive; finite group transport is operator recurrence with
+  useful tying. No production board seed, training seed, scored access,
+  remote/GPU job, or neural result exists. `REJECT_SOURCE_FREEZE` remains.
+
+- **2026-07-23** -- **Independent review rejected the initial NAHW package as
+  written; the lane is repaired and demoted to S4-Tied Particle Transport
+  component development.** The earlier advancement wording and payload hashes
+  are superseded and must not authorize a neural board. Review found that
+  coordinate reindexing had been mistaken for transport equivariance, loading
+  a treatment state dict could overwrite the `Z24` multiplication table,
+  zero-cue programs failed, the executor applied all cues before all actions,
+  and the proposed frozen six-label dense control was structurally starved.
+  Most importantly, no unified byte-source-to-private-object-to-deleted-source-
+  to-late-query Shohin path exists.
+
+  The repaired component conjugates right-acting cue kernels under opcode
+  reindexing and exhausts 82,944 binding/opcode/card/generator transport-
+  equivariance cases plus 576 independently implemented composition-oracle
+  checks. Fixed multiplication tables are non-persistent buffers, so matched
+  learned-weight loading cannot change arm identity. Empty cue sequences work.
+  A differentiable interleaved tensor executor now carries the exact joint
+  distribution over 24 binding particles and 27 categorical three-register
+  states: cue events transport binding mass, action events update state under
+  the current binding, STOP latches, and a late query reads one register.
+  All 27 CTAA pointer maps, including rank-one/rank-two copying actions, are
+  admitted. An independent scalar-oracle audit passes all 69,984
+  binding/state/action/opcode cases, 139,968 state-plus-binding checks, 69,984
+  mass checks, post-STOP suffix invariance, mixed-distribution conservation,
+  and nonzero finite particle/cue gradients. This remains a hard-tensor
+  component, not a source-deleted neural model.
+
+  The CPU mechanics report decision is
+  `record_component_mechanics_only_no_neural_authorization`, payload SHA-256
+  `6152538ad3118d254da296ebcb978a5f40b8798885eb22a84392a35f45a6fd93`.
+  The five-seed six-label result is explicitly retrospective hardcoded-prior
+  development evidence, decision
+  `record_retrospective_parameter_tying_signature_only`, payload SHA-256
+  `2f07fbd9e7b5a656b24a397f50e17cd2f80a937b0926036d0cfc337f6741d3c4`.
+  It is no longer an advancement gate. The working name “holonomy” is retired
+  in favor of **S4-Tied Particle Transport (S4-TPT)** because existing
+  `R12_HOLONOMY_STATE_NO_GO.md` correctly classifies complete finite transport
+  as ordinary operator recurrence.
+
+  Before any real preregistration, implement one unified frozen-trunk byte
+  compiler, soft cue grounding without hard group IDs, actual source/residual/
+  KV destruction, interleaved private execution, and model-owned late reader.
+  The favorable dense control must receive the same examples and all end-to-end
+  gradients; particle relabeling, wrong-law, reset/transplant, measured
+  resource, independent scorer, and external custody gates remain mandatory.
+  The development dossier is
+  `R12_CTAA_S4_TIED_PARTICLE_TRANSPORT_DOSSIER.md`. No board seed, training
+  seed, scored access, remote/GPU job, or neural result exists.
+  `REJECT_SOURCE_FREEZE` remains mandatory.
