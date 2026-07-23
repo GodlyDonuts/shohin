@@ -1415,7 +1415,12 @@ def _resolve_device(value: str) -> torch.device:
     return torch.device("cpu")
 
 
-def _source_receipts() -> dict[str, str]:
+def _source_receipts(*, source: Literal["pilot", "corpus"]) -> dict[str, str]:
+    generator_module = (
+        "generate_neural_tcrr_board"
+        if source == "pilot"
+        else "generate_neural_tcrr_corpus"
+    )
     paths = {
         "trainer": Path(__file__).resolve(),
         "motor": Path(importlib.import_module("neural_tcrr_motor").__file__).resolve(),
@@ -1428,6 +1433,15 @@ def _source_receipts() -> dict[str, str]:
         "training_tensorizer": Path(
             importlib.import_module("tensorize_neural_tcrr_training").__file__
         ).resolve(),
+        "packet_mechanics": Path(
+            importlib.import_module("neural_tcrr_board").__file__
+        ).resolve(),
+        "rewrite_mechanics": Path(
+            importlib.import_module("typed_critical_pair_rewrite_board").__file__
+        ).resolve(),
+        "procedural_generator": Path(
+            importlib.import_module(generator_module).__file__
+        ).resolve(),
     }
     return {name: _sha256_file(path) for name, path in paths.items()}
 
@@ -1435,6 +1449,7 @@ def _source_receipts() -> dict[str, str]:
 def run_training(args: argparse.Namespace) -> dict[str, object]:
     """Generate, train, hard-assess, and atomically publish one bounded run."""
 
+    source_sha256 = _source_receipts(source=args.source)
     device = _resolve_device(args.device)
     random.seed(args.seed)
     torch.manual_seed(args.seed)
@@ -1479,6 +1494,10 @@ def run_training(args: argparse.Namespace) -> dict[str, object]:
         partitions.development,
         device=device,
     )
+    if _source_receipts(source=args.source) != source_sha256:
+        raise NeuralTcrrTrainingHarnessError(
+            "score-bearing source changed during generation, training, or evaluation"
+        )
     output_dir = Path(args.output_dir)
     checkpoint_path = output_dir / "motor.pt"
     checkpoint = {
@@ -1510,7 +1529,7 @@ def run_training(args: argparse.Namespace) -> dict[str, object]:
             "path": str(checkpoint_path),
             "sha256": _sha256_file(checkpoint_path),
         },
-        "source_sha256": _source_receipts(),
+        "source_sha256": source_sha256,
         "custody_boundary": {
             "model_forward_input": "NeuralTcrrPacketTensors only",
             "labels_location": "offline trainer/assessor only",

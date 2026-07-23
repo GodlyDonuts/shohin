@@ -432,6 +432,26 @@ def test_optimizer_rejects_development_and_forward_has_no_label_channel() -> Non
     assert "evaluation" not in train_signature.parameters
 
 
+def test_score_bearing_source_receipt_covers_generator_and_mechanics() -> None:
+    pilot = harness._source_receipts(source="pilot")  # noqa: SLF001
+    corpus = harness._source_receipts(source="corpus")  # noqa: SLF001
+    required = {
+        "trainer",
+        "motor",
+        "committer",
+        "packet_tensorizer",
+        "training_tensorizer",
+        "packet_mechanics",
+        "rewrite_mechanics",
+        "procedural_generator",
+    }
+    assert set(pilot) == required
+    assert set(corpus) == required
+    assert all(len(value) == 64 for value in pilot.values())
+    assert all(len(value) == 64 for value in corpus.values())
+    assert pilot["procedural_generator"] != corpus["procedural_generator"]
+
+
 def test_evaluation_report_has_crossed_cells_and_parameter_budget() -> None:
     partition = harness.subset_partition(_partitions().development, (0,))
     model = _tiny_motor()
