@@ -11832,3 +11832,44 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   approximately one-million-parameter residual-workspace reference slice and
   its causal controls. It does not authorize a neural competence claim, the
   proposed 69M full workspace, or trillion-token continuation.
+
+- **2026-07-23** -- **The minimal causal bind-select workspace source is
+  frozen, while continuation pretraining remains explicitly prohibited.**
+  Commit `80dc07a` adds a raw-token-only scored treatment around the protected
+  step-300k trunk. The treatment causally compiles the world after block 19
+  into four 256-wide slots, detach-clones and seals that state, materializes
+  the late query separately, and applies independently controlled four-way
+  binding plus four rank-32 operators before the remaining ten trunk blocks.
+  Treatment scoring returns only logits/loss; state, diagnostics, controls,
+  and the differentiable attached-state fitting path are separate
+  assessment/mechanism APIs.
+
+  Three hostile audit rounds ended in `ACCEPT_SOURCE_FREEZE`. The focused
+  causality, source-deletion, control, gradient-boundary, full-prefix replay,
+  checkpoint, trust-root, content-addressing, atomic-publication, and
+  parameter-custody suite passes `41/41`. The public loader hashes and
+  deserializes from one descriptor with `weights_only=True`, accepts only the
+  immutable step-300k trust root, freezes every base parameter, and binds any
+  future workspace delta to the canonical in-memory base tensor digest and
+  import-time runtime source manifest. Invalid deltas are validated in a
+  temporary RNG-preserving module before any target mutation.
+
+  The strict read-only receipt records checkpoint SHA-256
+  `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`,
+  canonical base-state SHA-256
+  `321356c4940a7a27f7385ea304557dc5575b6d4d188504e8ce204eb24211abab`,
+  333 exact state keys, 125,081,664 frozen base parameters, 907,269
+  workspace parameters, 125,988,933 complete parameters, and 74,011,067
+  parameters of headroom below 200M. Architecture receipt
+  `artifacts/r12/shohin_causal_workspace_architecture_receipt_80dc07a.json`
+  has SHA-256
+  `46409c8c136c96903573e48e0a1b4537b28ddbac1caf79113156c45f70667f75`.
+  It explicitly records `optimizer_state_loaded=false` and
+  `pretraining_started=false`.
+
+  This is architecture compatibility and custody only. No workspace tensor
+  has been fit, no neural score exists, and no reasoning claim follows.
+  Source-deleted process custody for a decisive evaluation remains to be
+  built. Per the user-issued hold, do not start, queue, resume, prepare, or
+  modify continuation pretraining until the user explicitly authorizes it
+  after reasoning is established.
