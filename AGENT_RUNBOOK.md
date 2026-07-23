@@ -35,7 +35,7 @@
 > score. The corrected field has distinct equation feedback, direct and
 > transposed typed child channels, a learned `(i,k),(k,j)->(i,j)` contraction,
 > exact write-once fact/evidence latches, continuous membrane, and model-owned
-> absorbing halt. The proposed fresh board requires a conservative 56-tick
+> absorbing halt. The active seed `2026072345` requires a conservative 63-tick
 > propagation envelope, so the frozen safety bound is 64. Local MPS requires
 > batch two; 2,000 field and 400 halt updates preserve the intended 4,000/800
 > sampled-example budgets. AHRF has 316,824 standalone parameters; adding
@@ -11280,8 +11280,8 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   MSE gradients during the exact hard-event phase, and complete pre/post
   transitive source receipts. The warm start no longer copies any primitive
   classifier-head layer. The corrected focused suite passes 23 tests. The
-  full board has maximum expression depth nine, maximum eight fixed-point
-  updates, and a conservative 56-tick propagation envelope; the frozen
+  active-seed board has maximum expression depth nine, maximum six fixed-point
+  updates, and a conservative 63-tick propagation envelope; the frozen
   recurrence cap is 64. Batch four OOMs local MPS at 9.07 GiB, while batch two
   completes the full geometry. Preregistration `0679af0` therefore fixes
   2,000 field updates and 400 halt updates at batch two.
