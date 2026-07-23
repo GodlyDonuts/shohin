@@ -10845,7 +10845,8 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `git diff --check` clean, 209/209 focused integration tests with three platform skips, and
   492/492 complete custody regressions with three platform skips in 342.42 seconds. A standard
   batch SSH probe still fails DNS resolution for `newton.ist.ucf.edu`; no credential was printed
-  and no remote or GPU action was attempted.
+  and no remote or GPU action was attempted. The safe CTAA code, tests, amendment, and this journal
+  were committed and pushed to `origin/main` as `1e75634cd982feb9aba330a1610906efa955531a`.
 
   **Remaining freeze blockers are explicit:** (1) implement and independently score causal opcode
   binding instead of the card-equality alias; (2) integrate the sealed snapshot with a second,
