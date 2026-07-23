@@ -1,7 +1,8 @@
 # R12 Autocatalytic Hysteretic Relation Field Preregistration
 
-**Status:** architecture mechanics frozen at source commit `6e198c0`; no
-score-bearing AHRF result exists.
+**Status:** architecture and matched controls frozen at source commit
+`57547cc84e5500b263f12f6a8a6a1d81d8d2e822`; no score-bearing AHRF
+result exists.
 
 ## Question
 
