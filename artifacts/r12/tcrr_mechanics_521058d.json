@@ -1,0 +1,262 @@
+{
+  "all_reachable_states_conserve_capacity": true,
+  "claim_boundary": "This report admits deterministic CPU rewrite mechanics only. It contains no neural model, source-deleted tensorizer, learned reasoning result, Shohin integration, or general-reasoning claim.",
+  "cyclic_components": 1,
+  "decision": "admit_cpu_mechanics_only",
+  "episode_classes": [
+    "capacity_unblocking_order",
+    "confluent_diamond",
+    "counterfactual_rhs_pointer",
+    "destructive_cancellation",
+    "heterogeneous_valid_typing",
+    "independent_redexes",
+    "mixed_cyclic_terminating",
+    "nested_redex_creation_removal",
+    "nonconfluent_fork",
+    "repeated_rhs_pointer_sharing",
+    "repeated_variable_binding",
+    "root_deletion",
+    "shared_occurrence_redexes"
+  ],
+  "episode_count": 14,
+  "episodes": [
+    {
+      "capacity": 8,
+      "conservation": {
+        "all_conserved": true,
+        "states": 4,
+        "transitions_with_multiplicity": 4
+      },
+      "cyclic_components": 0,
+      "episode_class": "independent_redexes",
+      "name": "independent",
+      "normal_forms": 1,
+      "production_reference_agreement": true,
+      "states": 4,
+      "storage_reindex_invariant": true,
+      "transitions": 4
+    },
+    {
+      "capacity": 6,
+      "conservation": {
+        "all_conserved": true,
+        "states": 4,
+        "transitions_with_multiplicity": 4
+      },
+      "cyclic_components": 0,
+      "episode_class": "confluent_diamond",
+      "name": "diamond",
+      "normal_forms": 1,
+      "production_reference_agreement": true,
+      "states": 4,
+      "storage_reindex_invariant": true,
+      "transitions": 4
+    },
+    {
+      "capacity": 4,
+      "conservation": {
+        "all_conserved": true,
+        "states": 3,
+        "transitions_with_multiplicity": 2
+      },
+      "cyclic_components": 0,
+      "episode_class": "nonconfluent_fork",
+      "name": "fork",
+      "normal_forms": 2,
+      "production_reference_agreement": true,
+      "states": 3,
+      "storage_reindex_invariant": true,
+      "transitions": 2
+    },
+    {
+      "capacity": 6,
+      "conservation": {
+        "all_conserved": true,
+        "states": 4,
+        "transitions_with_multiplicity": 3
+      },
+      "cyclic_components": 0,
+      "episode_class": "nested_redex_creation_removal",
+      "name": "nested",
+      "normal_forms": 2,
+      "production_reference_agreement": true,
+      "states": 4,
+      "storage_reindex_invariant": true,
+      "transitions": 3
+    },
+    {
+      "capacity": 10,
+      "conservation": {
+        "all_conserved": true,
+        "states": 2,
+        "transitions_with_multiplicity": 1
+      },
+      "cyclic_components": 0,
+      "episode_class": "repeated_variable_binding",
+      "name": "repeated_variable",
+      "normal_forms": 1,
+      "production_reference_agreement": true,
+      "states": 2,
+      "storage_reindex_invariant": true,
+      "transitions": 1
+    },
+    {
+      "capacity": 6,
+      "conservation": {
+        "all_conserved": true,
+        "states": 2,
+        "transitions_with_multiplicity": 1
+      },
+      "cyclic_components": 0,
+      "episode_class": "destructive_cancellation",
+      "name": "destructive",
+      "normal_forms": 1,
+      "production_reference_agreement": true,
+      "states": 2,
+      "storage_reindex_invariant": true,
+      "transitions": 1
+    },
+    {
+      "capacity": 3,
+      "conservation": {
+        "all_conserved": true,
+        "states": 2,
+        "transitions_with_multiplicity": 1
+      },
+      "cyclic_components": 0,
+      "episode_class": "root_deletion",
+      "name": "deletion",
+      "normal_forms": 1,
+      "production_reference_agreement": true,
+      "states": 2,
+      "storage_reindex_invariant": true,
+      "transitions": 1
+    },
+    {
+      "capacity": 6,
+      "conservation": {
+        "all_conserved": true,
+        "states": 4,
+        "transitions_with_multiplicity": 4
+      },
+      "cyclic_components": 0,
+      "episode_class": "shared_occurrence_redexes",
+      "name": "shared_occurrence",
+      "normal_forms": 1,
+      "production_reference_agreement": true,
+      "states": 4,
+      "storage_reindex_invariant": true,
+      "transitions": 4
+    },
+    {
+      "capacity": 4,
+      "conservation": {
+        "all_conserved": true,
+        "states": 2,
+        "transitions_with_multiplicity": 1
+      },
+      "cyclic_components": 0,
+      "episode_class": "repeated_rhs_pointer_sharing",
+      "name": "repeated_rhs_pointer",
+      "normal_forms": 1,
+      "production_reference_agreement": true,
+      "states": 2,
+      "storage_reindex_invariant": true,
+      "transitions": 1
+    },
+    {
+      "capacity": 5,
+      "conservation": {
+        "all_conserved": true,
+        "states": 2,
+        "transitions_with_multiplicity": 1
+      },
+      "cyclic_components": 0,
+      "episode_class": "heterogeneous_valid_typing",
+      "name": "heterogeneous_typing",
+      "normal_forms": 1,
+      "production_reference_agreement": true,
+      "states": 2,
+      "storage_reindex_invariant": true,
+      "transitions": 1
+    },
+    {
+      "capacity": 4,
+      "conservation": {
+        "all_conserved": true,
+        "states": 3,
+        "transitions_with_multiplicity": 2
+      },
+      "cyclic_components": 0,
+      "episode_class": "capacity_unblocking_order",
+      "name": "capacity_unblocking",
+      "normal_forms": 1,
+      "production_reference_agreement": true,
+      "states": 3,
+      "storage_reindex_invariant": true,
+      "transitions": 2
+    },
+    {
+      "capacity": 4,
+      "conservation": {
+        "all_conserved": true,
+        "states": 3,
+        "transitions_with_multiplicity": 3
+      },
+      "cyclic_components": 1,
+      "episode_class": "mixed_cyclic_terminating",
+      "name": "mixed_cyclic",
+      "normal_forms": 1,
+      "production_reference_agreement": true,
+      "states": 3,
+      "storage_reindex_invariant": true,
+      "transitions": 3
+    },
+    {
+      "capacity": 7,
+      "conservation": {
+        "all_conserved": true,
+        "states": 2,
+        "transitions_with_multiplicity": 1
+      },
+      "cyclic_components": 0,
+      "episode_class": "counterfactual_rhs_pointer",
+      "name": "counterfactual_forward",
+      "normal_forms": 1,
+      "production_reference_agreement": true,
+      "states": 2,
+      "storage_reindex_invariant": true,
+      "transitions": 1
+    },
+    {
+      "capacity": 7,
+      "conservation": {
+        "all_conserved": true,
+        "states": 2,
+        "transitions_with_multiplicity": 1
+      },
+      "cyclic_components": 0,
+      "episode_class": "counterfactual_rhs_pointer",
+      "name": "counterfactual_reverse",
+      "normal_forms": 1,
+      "production_reference_agreement": true,
+      "states": 2,
+      "storage_reindex_invariant": true,
+      "transitions": 1
+    }
+  ],
+  "normal_forms": 16,
+  "production_reference_agreement": true,
+  "schema": "typed_critical_pair_rewrite_mechanics_audit_v1",
+  "seed": 20260723,
+  "source_commit": "521058d1e863878e809c4241d1632b112dc7824b",
+  "source_sha256": {
+    "pipeline/audit_typed_critical_pair_rewrite_board.py": "8264c62ee37b9d62fec28857d96fa697863873c9133f9bf05466453fd4f3760e",
+    "pipeline/test_audit_typed_critical_pair_rewrite_board.py": "b6207a19ba06f5e0f71f91d5ea752fc968088f4eda32673ea94a0151e15b7d69",
+    "pipeline/test_typed_critical_pair_rewrite_board.py": "20465ccd94f00899b42e82e3fcf1496dfd7c269abaea545cc6c36d0f3cad3601",
+    "pipeline/typed_critical_pair_rewrite_board.py": "0fb1bb40fc3151bff2a28aab4a69266b358bca9ad9b75929b9db6e6d65a05855"
+  },
+  "states": 39,
+  "storage_reindex_invariant": true,
+  "transitions": 29
+}
