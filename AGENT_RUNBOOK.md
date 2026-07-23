@@ -10911,11 +10911,80 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   Ruff, bytecode compilation, stale-schema/field searches, and `git diff --check` pass. These are
   infrastructure and finite-mechanics results, not learned reasoning.
 
-  **Remaining source-freeze blockers:** (1) build and train the actual `A4`-train/odd-confirmation
-  neural slice against a whole-permutation lookup control; (2) implement the neural
+  **Remaining source-freeze blockers:** (1) train the actual `A4`-train/odd-confirmation neural
+  slice against the matched global structured control, with the 24-way lookup reported only as a
+  support-starved negative; (2) implement the neural
   write-delete-delay-read barrier and multi-epoch rebinding register with transplantation/reset
   controls; (3) integrate a second independently implemented raw scorer and exact consensus inside
   one access spend; (4) bind capability-time six-phase resource and complete-intervention receipts
   to the assessed manifest and frozen cores; and (5) pass unmocked execution-set-to-final-gate,
   sealed-memfd, and Linux bubblewrap custody. `REJECT_SOURCE_FREEZE` remains mandatory until all
   five close and independent review passes.
+
+- **2026-07-23** -- **The A4 neural binding-completion source is implemented with a corrected
+  matched control; no neural run is authorized yet.** The first apparent design was rejected
+  during adversarial review before use: a 24-class whole-permutation classifier has no positive
+  support for any held-out odd class, and four independent local heads are not equivariant. The
+  corrected decisive comparison uses the same four-cell loss and eight independently decoded
+  relation slots: four opcodes and four physical cards. Its treatment applies one shared
+  `3840 -> 156 -> 1` scorer to every `[opcode_i, card_j, zero_context]` pair. Its favorable control
+  uses the identical scorer and 16 calls but fills the context with all eight slots. Both have
+  exactly **599,353 parameters** and exactly **9,587,136 dense analytic MACs**. The treatment is
+  equivariant to all `24 x 24` opcode/card permutations by construction; the globally connected
+  control may exploit parity shortcuts. The 24-way classifier remains only a declared
+  support-starved negative. Adding either decisive readout to the protected
+  137,989,944-parameter system yields **138,589,297 total**, leaving **11,410,702** below the
+  strict cap.
+
+  `pipeline/build_ctaa_binding_completion_board.py` now expands every fixed compiler family into
+  the complete 24-member declaration-order orbit before splitting: 12 even A4 members optimize and
+  12 odd members remain sealed. Cards, names, renderer, initial state, physical schedule, query,
+  depth, and class are invariant within each orbit. Every local cell is exactly `3/3/3/3`, program
+  sources are disjoint, and token-length histograms must match within every orbit and globally.
+
+  `train/train_ctaa_binding_completion.py` trains one stronger globally connected qualifier on A4
+  only, freezes the common compiler, discards the qualifier for comparison, and stores one detached
+  A4 slot cache. Fresh treatment, global control, lookup negative, and four single-slot probes
+  consume that identical cache under one minibatch schedule. Its synthetic odd chimera uses four
+  distinct A4/even donors and no confirmation representation or label. This stage has no
+  confirmation path.
+
+  The post-training custody chain is now fail-closed. An immutable admission binds the exact Git
+  commit, a canonical SHA-256 over every tracked protocol source and direct execution dependency,
+  one absolute custody directory, exact artifact identities, five ordered seeds, all optimization
+  settings, and every decision threshold. Thresholds are canonical in source and cannot be relaxed:
+  all five seeds must pass, A4 fit is 99%, held-out factorized exactness is at least 75%, matched
+  advantage at least 10 points, single-slot leakage at most 10%, A4-derived odd chimera at least
+  75%, and measured resource gap at most 5%. Production entry points reject dirty or untracked
+  protocol files. A source-free freeze process fully validates all five seed artifacts and commits
+  their hashes before prediction. The predictor has no oracle input. The assessor has no source
+  input, revalidates all five seeds before access, claims one global `O_CREAT|O_EXCL` oracle ledger,
+  and reads one committed oracle blob. Unique opaque row IDs bind source to oracle order.
+  Cross-stage tensor artifacts are read once through `O_NOFOLLOW`, hashed and deserialized from the
+  same bytes with restricted `weights_only=True`; outputs and ledgers use exclusive creation and
+  directory `fsync`.
+
+  Assessment now reconstructs the actual 60-byte packet and reports cards, binding, initial state,
+  local opcode tape, resolved schedule, persistent excitation, binding-counterfactual effect, and
+  whole-program exactness. A disposable all-S4 capacity job never reopens the oracle. A
+  counterbalanced CUDA profiler measures treatment/control forward, backward, optimizer, and
+  wall-clock/peak-memory parity against a real frozen A4 cache, state, label set, batch schedule,
+  gradient clip, and optimizer update. A source-free finalizer replays raw prediction metrics,
+  verifies ordered row IDs, seed freeze, oracle ledger, assessment/capacity/resource lineage, and
+  applies preregistered five-seed treatment accuracy,
+  raw-validity, matched-control advantage, single-slot leakage, A4-derived odd chimera, packet,
+  capacity, and measured-resource gates. It can establish binding completion only and explicitly
+  cannot establish recurrent reasoning.
+
+  Focused verification passes **47/47** tests; Ruff and bytecode compilation are clean. The fresh
+  post-hardening complete CTAA regression passes **661 tests with three expected platform skips**
+  in 1,058.70 seconds. A fresh adversarial review still returned `REJECT_SOURCE_FREEZE`. No production board
+  seed, training seed, confirmation access, H100 job, or learned result was created. Remaining P0
+  blockers are now narrower but decisive: confirmation is still owner-readable and reconstructible
+  from a public deterministic generator; protocol execution is not hermetic against import-path or
+  preload injection; and stage outputs/ledger are not independently owned or externally signed.
+  The packet check is still host-side materialization rather than source-deleted execution through
+  the frozen core. Unmocked Linux identity/mount/sandbox custody and an independently chosen secret
+  post-freeze challenge are required before authorization. Even a positive binding result would not
+  close neural write-delete-delay-read, multi-epoch rebinding, dual-scorer, or full recurrent-
+  reasoning gates.

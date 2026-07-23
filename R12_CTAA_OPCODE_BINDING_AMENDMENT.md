@@ -192,6 +192,49 @@ checks. Its file SHA-256 is
 `21cbcafb4d8adc49cebe978bd2a2b1d482a54f526a52f32553a7efa3e22960b9`.
 These are finite mechanics, not learned results.
 
+The neural completion source now instantiates the previously abstract A4 gate.
+`pipeline/build_ctaa_binding_completion_board.py` renders a complete
+24-permutation declaration orbit for every fixed semantic scaffold and seals
+the odd half. `train/ctaa_binding_completion.py` defines a shared slot-local
+treatment and a globally connected same-target control. Four opcode and four
+physical-card slots are decoded independently. The treatment scores every
+opcode/card pair with one shared `3840 -> 156 -> 1` network and zero global
+context; the control uses the identical scorer and calls with all eight slots
+in context. Both have 599,353 parameters and 9,587,136 dense analytic MACs.
+The treatment is exactly bi-equivariant to opcode and card-slot permutations.
+The 24-way classifier is retained only as a support-starved negative, not
+misreported as a matched control.
+`train/train_ctaa_binding_completion.py` independently decodes the four slots,
+qualifies one common compiler on A4 only, freezes and stores one shared feature
+cache, and has no confirmation input. `predict_ctaa_binding_completion.py`
+requires an independently validated five-seed freeze manifest and has no oracle
+input. `assess_ctaa_binding_completion.py` has no source input, revalidates all
+five source-free artifacts, atomically spends the unique oracle-access ledger,
+and opens one committed oracle blob once.
+`capacity_ctaa_binding_completion.py` runs disposable all-S4 fits from
+committed assessment labels without reopening the oracle. The chimera
+diagnostic imports no odd representation: it composes every slot from a
+distinct A4 donor and derives an odd target. The assessor also materializes the
+actual 60-byte packet and separately reports card, binding, state, local tape,
+resolved schedule, excitation, counterfactual effect, and whole-program
+exactness. A measured-resource job and source-free finalizer apply immutable
+five-seed attribution gates.
+
+The immutable admission binds a canonical digest over every tracked protocol
+source and direct runtime dependency, rejects dirty or untracked protocol
+files, fixes one absolute custody directory, and preregisters every decision
+threshold. Cross-stage tensor artifacts are hashed before restricted
+`weights_only=True` loading. Odd source and oracle rows share unique opaque row
+IDs, and the assessor claims a single `O_CREAT|O_EXCL` oracle ledger before its
+one read.
+
+This is implemented source under test, not a neural result. No production board
+seed, training seed, sealed odd access, GPU allocation, or binding advancement
+claim has been created. Source freeze still requires the final complete
+regression, a fresh independent review of this hardened protocol, the measured
+resource receipt, source-level symmetry checks, and the unmocked Linux custody
+smoke.
+
 ## Claim Boundary
 
 Passing these source and mutation gates proves only that the binding capability

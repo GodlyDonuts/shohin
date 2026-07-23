@@ -468,17 +468,16 @@ class TrunkCausalCTAACompiler(nn.Module):
         donor: TrunkResidualBundle | None = None,
         batch_rotation: torch.Tensor | None = None,
     ) -> CTAAProgramLogits:
-        memory, valid = self.memory_from_residuals(
+        slots = self.program_slots_from_residuals(
             bundle,
             intervention=intervention,
             donor=donor,
             batch_rotation=batch_rotation,
         )
-        slots = self._decode(memory, valid, self.program_queries)
         tuple_logits = self.tuple_head(slots[:, : self.schedule_slot_start]).float()
         return CTAAProgramLogits(
             action_cards=tuple_logits[:, : self.action_slot_count].reshape(
-                memory.shape[0],
+                slots.shape[0],
                 self.action_count,
                 self.width,
                 self.width,
@@ -493,6 +492,120 @@ class TrunkCausalCTAACompiler(nn.Module):
             opcode_schedule=self.event_head(
                 slots[:, self.schedule_slot_start :]
             ).float(),
+        )
+
+    def program_slots_from_residuals(
+        self,
+        bundle: TrunkResidualBundle,
+        *,
+        intervention: str = "native",
+        donor: TrunkResidualBundle | None = None,
+        batch_rotation: torch.Tensor | None = None,
+    ) -> torch.Tensor:
+        """Return source-only decoder slots before categorical task heads."""
+
+        memory, valid = self.memory_from_residuals(
+            bundle,
+            intervention=intervention,
+            donor=donor,
+            batch_rotation=batch_rotation,
+        )
+        return self._decode(memory, valid, self.program_queries)
+
+    def binding_slots(
+        self,
+        ids: torch.Tensor,
+        *,
+        intervention: str = "native",
+        donor: TrunkResidualBundle | None = None,
+        batch_rotation: torch.Tensor | None = None,
+    ) -> torch.Tensor:
+        """Decode four binding slots independently from the same source memory."""
+
+        return self.binding_slots_from_residuals(
+            self.encode_source(ids),
+            intervention=intervention,
+            donor=donor,
+            batch_rotation=batch_rotation,
+        )
+
+    def binding_relation_slots(
+        self,
+        ids: torch.Tensor,
+        *,
+        intervention: str = "native",
+        donor: TrunkResidualBundle | None = None,
+        batch_rotation: torch.Tensor | None = None,
+    ) -> torch.Tensor:
+        """Decode four opcode and four physical-card slots independently."""
+
+        return self.binding_relation_slots_from_residuals(
+            self.encode_source(ids),
+            intervention=intervention,
+            donor=donor,
+            batch_rotation=batch_rotation,
+        )
+
+    def binding_relation_slots_from_residuals(
+        self,
+        bundle: TrunkResidualBundle,
+        *,
+        intervention: str = "native",
+        donor: TrunkResidualBundle | None = None,
+        batch_rotation: torch.Tensor | None = None,
+    ) -> torch.Tensor:
+        """Return ``[opcode_0..3, card_0..3]`` without cross-item decoding."""
+
+        memory, valid = self.memory_from_residuals(
+            bundle,
+            intervention=intervention,
+            donor=donor,
+            batch_rotation=batch_rotation,
+        )
+        opcode_queries = self.program_queries[
+            self.binding_slot_start : self.initial_slot_start
+        ]
+        opcode_slots = torch.cat(
+            [
+                self._decode(memory, valid, query[None])
+                for query in opcode_queries
+            ],
+            dim=1,
+        )
+        card_slots = []
+        for card in range(self.action_count):
+            start = card * self.width
+            queries = self.program_queries[start : start + self.width]
+            card_slots.append(
+                self._decode(memory, valid, queries).mean(1, keepdim=True)
+            )
+        return torch.cat((opcode_slots, *card_slots), dim=1)
+
+    def binding_slots_from_residuals(
+        self,
+        bundle: TrunkResidualBundle,
+        *,
+        intervention: str = "native",
+        donor: TrunkResidualBundle | None = None,
+        batch_rotation: torch.Tensor | None = None,
+    ) -> torch.Tensor:
+        """Decode independent binding slots from precomputed trunk residuals."""
+
+        memory, valid = self.memory_from_residuals(
+            bundle,
+            intervention=intervention,
+            donor=donor,
+            batch_rotation=batch_rotation,
+        )
+        queries = self.program_queries[
+            self.binding_slot_start : self.initial_slot_start
+        ]
+        return torch.cat(
+            [
+                self._decode(memory, valid, query[None])
+                for query in queries
+            ],
+            dim=1,
         )
 
     def compile_program(

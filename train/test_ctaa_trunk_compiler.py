@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import fields
+from unittest.mock import patch
 
 import pytest
 import torch
@@ -88,6 +89,26 @@ def test_late_query_is_a_separate_source_and_one_byte_commit() -> None:
     assert query_logits.shape == (2, 3)
     assert query.position.shape == (2,)
     assert query.position.dtype == torch.uint8
+
+
+def test_binding_slots_are_decoded_independently_without_slot_self_attention() -> None:
+    compiler = tiny_compiler().eval()
+    with patch.object(compiler, "_decode", wraps=compiler._decode) as decode:
+        slots = compiler.binding_slots(inputs())
+    assert slots.shape == (2, 4, 24)
+    assert decode.call_count == 4
+    assert all(call.args[2].shape == (1, 24) for call in decode.call_args_list)
+
+
+def test_binding_relation_slots_isolate_each_opcode_and_card() -> None:
+    compiler = tiny_compiler().eval()
+    with patch.object(compiler, "_decode", wraps=compiler._decode) as decode:
+        slots = compiler.binding_relation_slots(inputs())
+    assert slots.shape == (2, 8, 24)
+    assert decode.call_count == 8
+    query_shapes = [call.args[2].shape for call in decode.call_args_list]
+    assert query_shapes.count((1, 24)) == 4
+    assert query_shapes.count((3, 24)) == 4
 
 
 def test_early_and_late_trunk_interventions_are_independent() -> None:

@@ -83,6 +83,92 @@ an independent opcode-to-card permutation. The local opcode tape contains
 exactly one model-compiled STOP followed by valid adversarial suffix events;
 the physical execution schedule is derived from binding plus tape.
 
+### A4 binding-completion neural slice
+
+The binding-identification diagnostic is a separate source-only qualification,
+not a scored recurrent result. Every semantic compiler family is expanded into
+the complete 24-member declaration-order orbit. Cards, opaque names, renderer,
+initial state, physical schedule, query, depth, and program class remain fixed
+inside an orbit. The 12 even permutations form optimization data and the 12 odd
+permutations remain sealed. Every local opcode/card cell therefore appears
+`3/3/3/3` in each half, and train/confirmation token-length histograms must
+match within every orbit.
+
+Four opcode slots and four physical-card slots are decoded independently from
+the same source memory. No opcode may self-attend to another opcode, and no
+card may self-attend to another card. One globally connected structured
+qualifier is trained on A4 only, then the compiler freezes and the qualifier is
+discarded for the comparison. A single detached eight-slot A4 cache is hashed.
+Every fresh readout consumes those byte-identical tensors in the same order:
+
+- **bi-equivariant treatment:** one shared pair scorer receives
+  `[opcode_i, card_j, zero_context]` for each of the 16 opcode/card pairs;
+- **favorable global structured control:** the exact same pair scorer receives
+  `[opcode_i, card_j, all_eight_slots]`, permitting arbitrary parity shortcuts;
+- **atomic lookup negative:** an eight-slot `-> 24` classifier, reported only as a
+  deliberately support-starved lookup baseline because odd classes have no
+  positive A4 examples.
+
+Treatment and favorable control both emit `[B,4,4]`, receive identical
+four-cell cross-entropy, use the same `3840 -> 156 -> 1` network for the same
+16 calls, have exactly `599,353` readout parameters, and require exactly
+`9,587,136` dense analytic MACs. The treatment is equivariant to all 24 opcode
+permutations crossed with all 24 card-slot permutations by construction. The
+complete decisive system is `138,589,297` parameters, leaving `11,410,702`
+below the strict cap. Profiler receipts remain mandatory; analytic equality
+does not establish equal kernel-launch or wall-clock cost.
+
+Both decisive arms must fit all 12 A4 bindings to the preregistered threshold
+in all five seeds before confirmation source is opened. Every seed artifact
+durably freezes the compiler, readouts, probes, exact A4 cache, ordered row
+commitments, and train metrics with zero confirmation access. A separate
+source-free freeze process validates every admitted hyperparameter, immutable
+input hash, fit gate, arm/probe lattice, cache commitment, and access counter,
+then writes one exact five-seed hash manifest. A source-only predictor requires
+that manifest, accepts no oracle path, opens the odd source once, and commits
+raw logits plus odd slot caches. A separate assessor accepts no source path,
+validates all five seed artifacts again, atomically claims the globally unique
+oracle-access ledger, opens one oracle blob once, and scores without tuning.
+Every source/oracle row shares one opaque unique row ID; ordered ID equality is
+mandatory. Report projected and raw binding exactness, raw assignment
+validity, projection rescue, NLL, parity confusion, and every individual
+permutation.
+
+Four disposable single-slot probes test whether any one slot contains the full
+binding. The compositional chimera is now source-free: every one of its four
+slots comes from a distinct A4/even donor in the same family, while a
+transposition derives an odd target. No odd representation or label enters
+this diagnostic. After the assessment freezes, a separate disposable all-S4
+job consumes the committed labels without reopening the oracle and must show
+that each readout can optimize all 24 classes. A source-free finalizer applies
+the admission's immutable five-seed thresholds to treatment accuracy, raw
+assignment validity, matched-control advantage, single-slot leakage, A4-derived
+odd chimeras, complete 60-byte packet exactness, opcode excitation, binding
+counterfactual effect, all-S4 capacity, and a counterbalanced measured
+forward/backward/optimizer resource receipt. Failure of any mandatory gate
+invalidates binding attribution. Passing this slice establishes only
+declaration-binding completion; it does not establish source-deleted memory,
+multi-step execution, or reasoning.
+
+The admission binds the exact Git commit and a canonical SHA-256 over every
+tracked protocol source and direct execution dependency. Production entry
+points reject untracked or dirty protocol files and reject outputs outside the
+single absolute custody directory. Cross-stage tensor artifacts are hashed
+and deserialized from one `O_NOFOLLOW` file-descriptor read under restricted
+`weights_only=True`; executable pickle loading is forbidden. Artifact and
+ledger writes use exclusive creation plus directory `fsync`. Decision
+thresholds are source-canonical: all five seeds pass, A4 fit is 99%, held-out
+factorized exactness is 75%, matched-control advantage is ten points,
+single-slot leakage is at most 10%, A4-derived odd chimera exactness is 75%,
+and measured resource gap is at most 5%.
+
+These local mechanics are not sufficient custody. Source freeze still requires
+an independently owned, secret post-freeze challenge; separate source/oracle
+OS identities or mount namespaces; a hermetic launcher with sanitized imports
+and dependency hashes; externally signed append-only stage lineage; and actual
+source-deleted packet execution through the frozen core. Owner-readable `0400`
+files and a public deterministic challenge seed are explicitly insufficient.
+
 ### Hard deletion boundary
 
 Compilation materializes exactly:
