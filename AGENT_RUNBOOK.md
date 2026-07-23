@@ -67,6 +67,14 @@
 > and dataflow cells. Production, independent reference, and exported opaque
 > successor edges agree exactly; split overlap is zero. This pilot is too small
 > for a neural capability claim and authorizes only scalable-board work.
+> Fixed rule-blind committer source `e4db57f` now decodes one masked argmax
+> graph proposal and atomically validates/installs only structural
+> `KEEP/WRITE/CLEAR` operations. It checks shape, one-hotness, packet-derived
+> masks, capacity, declarations, type/arity, unique variables, child
+> pointers, reachability, and acyclicity; it imports no rules, mechanics,
+> labels, receipts, or oracle. Invalid proposals fail closed without retry or
+> repair. The complete mechanics/board/tensor/generator/motor/committer suite
+> passes 134 tests.
 >
 > **Newest train-only routing result:** factorized witness route job `694945` completed cleanly on
 > `evc36` and is **rejected before fresh-board generation**. Treatment reaches 25.8625% witness,
@@ -11364,9 +11372,20 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `26891b6f6ac2bf7f76533170c418de878adcbf22d58832e61013a84d38c1dffb`.
 
   The pilot is intentionally too small for training evidence. Before any
-  competence claim, finish a rule-blind committer, generate a diverse
-  split-disjoint corpus at preregistered scale, qualify the learned controls,
-  and evaluate unseen compositions/renderers/families with hard transactions.
+  competence claim, generate a diverse split-disjoint corpus at preregistered
+  scale, qualify the learned controls, and evaluate unseen
+  compositions/renderers/families with hard transactions.
+
+  The fixed tensor committer is now complete at source `e4db57f`. It decodes
+  one masked argmax proposal, requires every supplied mask to equal the
+  packet-derived structural domain, and atomically installs exact
+  `KEEP/WRITE/CLEAR` operations. It rejects malformed one-hot choices,
+  out-of-capacity writes, dangling or wrong-type children, constructor arity
+  mismatches, duplicate graph variables, cycles, unreachable records, and
+  malformed roots. It never imports rule patterns, mechanics, labels,
+  receipts, or oracle state and never retries or repairs a proposal. The full
+  TCRR stack now passes 134 tests. This closes the execution-boundary
+  infrastructure gate only; competence remains untested.
 
 - **2026-07-23** -- **ECCR is admitted as a mathematical falsifier candidate,
   not an architecture result.** `R12_GENERAL_REASONING_MECHANISM_THEORY.md`
