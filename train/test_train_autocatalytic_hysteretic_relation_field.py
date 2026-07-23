@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from types import SimpleNamespace
+
 import torch
 
 from autocatalytic_hysteretic_relation_field import (
@@ -11,9 +13,12 @@ from contextual_witness_equivariant_binder import (
     ContextualWitnessEquivariantBinder,
 )
 from train_autocatalytic_hysteretic_relation_field import (
+    AHRFTrainConfig,
     _apply_control,
     _root_facts,
+    _terminal_loss,
     _transfer_binder,
+    build_board,
 )
 
 
@@ -32,6 +37,36 @@ def test_root_fact_gather_handles_terminal_and_history() -> None:
     history_observed = _root_facts(history, roots)
     assert torch.equal(history_observed[:, 0], expected)
     assert torch.equal(history_observed[:, 1], expected + 1)
+
+
+def test_hard_terminal_loss_preserves_straight_through_gradient() -> None:
+    logits = torch.tensor(
+        [[[[2.0, -2.0], [-2.0, 2.0]]] * 2],
+        requires_grad=True,
+    )
+    probability = logits.sigmoid()
+    hard = logits.ge(0).to(logits.dtype)
+    facts = hard + probability - probability.detach()
+    targets = 1.0 - hard.detach()
+    loss = _terminal_loss(
+        SimpleNamespace(terminal_facts=facts),
+        torch.tensor(((0, 1),)),
+        targets,
+        torch.ones(1, 2, dtype=torch.bool),
+        hard_events=True,
+    )
+    loss.backward()
+    assert logits.grad is not None
+    assert bool(logits.grad.ne(0).all())
+    assert bool(torch.isfinite(logits.grad).all())
+
+
+def test_frozen_board_receipts_require_a_longer_safety_horizon() -> None:
+    board = build_board(AHRFTrainConfig(seed=2026072339))
+    assert board.max_expression_depth == 9
+    assert board.max_convergence_updates == 8
+    assert board.minimum_safety_steps == 56
+    assert board.minimum_safety_steps <= 64
 
 
 def test_contextual_binder_warm_start_copies_equivariant_core(
@@ -103,3 +138,5 @@ def test_graph_controls_remove_only_preregistered_information() -> None:
         shuffled.node_card_mask,
         graph.node_card_mask,
     )
+    for control in ("false_triad", "zero_triad"):
+        assert _apply_control(graph, control) is graph

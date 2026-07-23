@@ -23,6 +23,7 @@ SYSTEM_PARAMETER_CAP = 200_000_000
 CARD_ARGUMENT_ROLES = 2
 GRAPH_EDGE_ROLES = 3
 FEEDBACK_ROLE = 2
+TRIAD_MODES = frozenset(("learned", "false", "zero"))
 
 
 class AHRFError(ValueError):
@@ -56,7 +57,7 @@ class SourceDeletedRelationGraph:
 
 @dataclass(frozen=True, slots=True)
 class AHRFParameterReceipt:
-    """Exact parameter accounting against the protected flagship."""
+    """Standalone parameters and hypothetical flagship-integration budget."""
 
     protected_base: int
     ahrf_added: int
@@ -325,6 +326,7 @@ class AutocatalyticHystereticRelationField(nn.Module):
         max_steps: int = 16,
         hysteresis: bool = True,
         use_card_conditioning: bool = True,
+        triad_mode: str = "learned",
     ) -> None:
         super().__init__()
         if (
@@ -332,6 +334,7 @@ class AutocatalyticHystereticRelationField(nn.Module):
             or hidden_dim < 8
             or card_rounds < 1
             or max_steps < 1
+            or triad_mode not in TRIAD_MODES
         ):
             raise AHRFError("AHRF geometry differs")
         self.node_feature_dim = int(node_feature_dim)
@@ -340,6 +343,7 @@ class AutocatalyticHystereticRelationField(nn.Module):
         self.max_steps = int(max_steps)
         self.hysteresis = bool(hysteresis)
         self.use_card_conditioning = bool(use_card_conditioning)
+        self.triad_mode = str(triad_mode)
 
         self.card_encoder = _OpaqueCardFieldEncoder(
             self.hidden_dim,
@@ -366,6 +370,10 @@ class AutocatalyticHystereticRelationField(nn.Module):
             nn.Linear(self.hidden_dim, self.hidden_dim, bias=False)
             for _ in range(GRAPH_EDGE_ROLES)
         )
+        self.transpose_edge_message = nn.ModuleList(
+            nn.Linear(self.hidden_dim, self.hidden_dim, bias=False)
+            for _ in range(GRAPH_EDGE_ROLES)
+        )
         self.dynamic_triad_left = nn.Linear(
             self.hidden_dim,
             self.hidden_dim,
@@ -376,7 +384,9 @@ class AutocatalyticHystereticRelationField(nn.Module):
             self.hidden_dim,
             bias=False,
         )
-        drive_width = 4 * self.hidden_dim + 2 + GRAPH_EDGE_ROLES
+        drive_width = (
+            5 * self.hidden_dim + 2 + 2 * GRAPH_EDGE_ROLES
+        )
         self.membrane_gate = nn.Linear(drive_width, self.hidden_dim)
         self.membrane_candidate = nn.Sequential(
             nn.Linear(drive_width, 2 * self.hidden_dim),
@@ -384,10 +394,10 @@ class AutocatalyticHystereticRelationField(nn.Module):
             nn.Linear(2 * self.hidden_dim, self.hidden_dim),
         )
         self.membrane_norm = nn.LayerNorm(self.hidden_dim)
-        event_width = self.hidden_dim + 2 + GRAPH_EDGE_ROLES
+        event_width = self.hidden_dim + 2 + 2 * GRAPH_EDGE_ROLES
         self.evidence_head = nn.Linear(event_width, 1)
         self.write_head = nn.Linear(
-            self.hidden_dim + 3 + GRAPH_EDGE_ROLES,
+            self.hidden_dim + 3 + 2 * GRAPH_EDGE_ROLES,
             1,
         )
         self.halt_head = nn.Linear(self.hidden_dim + 4, 1)
@@ -399,6 +409,12 @@ class AutocatalyticHystereticRelationField(nn.Module):
         """First incoming-role column in ``write_head`` for audit fixtures."""
 
         return self.hidden_dim + 3
+
+    @property
+    def write_transposed_incoming_offset(self) -> int:
+        """First transposed incoming-role column in ``write_head``."""
+
+        return self.write_incoming_offset + GRAPH_EDGE_ROLES
 
     @property
     def added_parameters(self) -> int:
@@ -687,10 +703,11 @@ class AutocatalyticHystereticRelationField(nn.Module):
     def _combine_incoming_membranes(
         self,
         incoming: tuple[torch.Tensor, ...],
+        projections: nn.ModuleList,
     ) -> torch.Tensor:
         total = torch.zeros_like(incoming[0])
         for projection, state in zip(
-            self.edge_message,
+            projections,
             incoming,
             strict=True,
         ):
@@ -703,11 +720,24 @@ class AutocatalyticHystereticRelationField(nn.Module):
         right: torch.Tensor,
         object_count: torch.Tensor,
     ) -> torch.Tensor:
-        return torch.einsum(
-            "bnikh,bnkjh->bnijh",
-            self.dynamic_triad_left(left),
-            self.dynamic_triad_right(right),
-        ) / object_count[:, None, None, None, None]
+        encoded_left = self.dynamic_triad_left(left)
+        encoded_right = self.dynamic_triad_right(right)
+        if self.triad_mode == "false":
+            triad = torch.einsum(
+                "bnkih,bnkjh->bnijh",
+                encoded_left,
+                encoded_right,
+            )
+        else:
+            triad = torch.einsum(
+                "bnikh,bnkjh->bnijh",
+                encoded_left,
+                encoded_right,
+            )
+        triad = triad / object_count[:, None, None, None, None]
+        if self.triad_mode == "zero":
+            triad = triad * 0.0
+        return triad
 
     @staticmethod
     def _select_batch_state(
@@ -838,21 +868,35 @@ class AutocatalyticHystereticRelationField(nn.Module):
             )
             incoming_membrane = self._combine_incoming_membranes(
                 incoming_membranes,
+                self.edge_message,
+            )
+            transposed_incoming_membranes = tuple(
+                state.transpose(2, 3)
+                for state in incoming_membranes
+            )
+            transposed_incoming_membrane = (
+                self._combine_incoming_membranes(
+                    transposed_incoming_membranes,
+                    self.transpose_edge_message,
+                )
             )
             dynamic_triad = self._dynamic_triad(
                 incoming_membranes[0],
                 incoming_membranes[1],
                 graph.object_mask.sum(-1).clamp_min(1).to(dtype),
             )
+            transposed_incoming_facts = incoming_facts.transpose(2, 3)
             drive = torch.cat(
                 (
                     membrane,
                     static_state,
                     incoming_membrane,
+                    transposed_incoming_membrane,
                     dynamic_triad,
                     facts[..., None],
                     evidence[..., None],
                     incoming_facts,
+                    transposed_incoming_facts,
                 ),
                 dim=-1,
             )
@@ -870,6 +914,7 @@ class AutocatalyticHystereticRelationField(nn.Module):
                     evidence[..., None],
                     facts[..., None],
                     incoming_facts,
+                    transposed_incoming_facts,
                 ),
                 dim=-1,
             )
@@ -896,6 +941,7 @@ class AutocatalyticHystereticRelationField(nn.Module):
                     facts[..., None],
                     graph.seed_facts[..., None],
                     incoming_facts,
+                    transposed_incoming_facts,
                 ),
                 dim=-1,
             )

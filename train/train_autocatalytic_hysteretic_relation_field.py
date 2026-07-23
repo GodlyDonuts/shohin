@@ -27,6 +27,7 @@ from contrastive_bekic_program_orbits import (
     ISOLATED_COUNTERFACTUAL_ARMS,
     assert_split_disjoint,
     evaluate_simultaneous,
+    fixed_point_pressure,
     generate_train_development,
     select_isolated_counterfactual_input,
     select_machine_input,
@@ -43,6 +44,18 @@ from tensorize_contextual_bekic import (
 
 SCORE_ARMS = ("p", "p_prime", "p_eq", *ISOLATED_COUNTERFACTUAL_ARMS)
 DEFAULT_SEED = 2026072336
+SOURCE_PATHS = (
+    "R12_AHRF_PREREG.md",
+    "pipeline/bekic_relational_fixed_point_board.py",
+    "pipeline/contextualize_bekic_program.py",
+    "pipeline/contrastive_bekic_program_orbits.py",
+    "train/autocatalytic_hysteretic_relation_field.py",
+    "train/contextual_bekic_graph_machine.py",
+    "train/equivariant_relation_register_machine.py",
+    "train/tensorize_contextual_ahrf.py",
+    "train/tensorize_contextual_bekic.py",
+    "train/train_autocatalytic_hysteretic_relation_field.py",
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -59,7 +72,7 @@ class AHRFTrainConfig:
     weight_decay: float = 1e-4
     hidden_dim: int = 64
     card_rounds: int = 2
-    max_steps: int = 16
+    max_steps: int = 64
     hard_fraction: float = 0.10
     write_weight: float = 1e-4
     device: str = "auto"
@@ -73,6 +86,9 @@ class AHRFBoard:
     targets: torch.Tensor
     roots: torch.Tensor
     labels: tuple[tuple[str, str, str, int], ...]
+    max_expression_depth: int
+    max_convergence_updates: int
+    minimum_safety_steps: int
 
     def __len__(self) -> int:
         return int(self.targets.shape[0])
@@ -94,6 +110,13 @@ def _resolve_device(requested: str) -> torch.device:
     if torch.backends.mps.is_available():
         return torch.device("mps")
     return torch.device("cpu")
+
+
+def _source_receipt(root: Path) -> dict[str, str]:
+    return {
+        relative: _sha256(root / relative)
+        for relative in SOURCE_PATHS
+    }
 
 
 def _source_packet(
@@ -122,6 +145,20 @@ def _target(source: dict[str, object]) -> torch.Tensor:
     )
 
 
+def _expression_depth(expression: object) -> int:
+    if not isinstance(expression, dict):
+        raise ValueError("expression differs")
+    children: list[object] = []
+    if isinstance(expression.get("child"), dict):
+        children.append(expression["child"])
+    if isinstance(expression.get("children"), list):
+        children.extend(expression["children"])
+    return 1 + max(
+        (_expression_depth(child) for child in children),
+        default=0,
+    )
+
+
 def build_board(config: AHRFTrainConfig) -> AHRFBoard:
     train, development = generate_train_development(
         train_count=config.train_orbits,
@@ -137,6 +174,9 @@ def build_board(config: AHRFTrainConfig) -> AHRFBoard:
     contextual: list[dict[str, object]] = []
     targets: list[torch.Tensor] = []
     labels: list[tuple[str, str, str, int]] = []
+    max_expression_depth = 0
+    max_convergence_updates = 0
+    minimum_safety_steps = 0
     for split, rows, renderers in (
         ("train", train, config.train_renderers),
         ("development", development, 1),
@@ -145,6 +185,28 @@ def build_board(config: AHRFTrainConfig) -> AHRFBoard:
             cell = str(row["axes"]["cell"])
             for arm_index, arm in enumerate(SCORE_ARMS):
                 source = _source_packet(row, arm)
+                program = source.get("program")
+                if not isinstance(program, dict):
+                    raise ValueError("board program differs")
+                equations = program.get("equations")
+                if not isinstance(equations, list):
+                    raise ValueError("board equations differ")
+                depth = max(
+                    _expression_depth(equation["expression"])
+                    for equation in equations
+                )
+                updates = int(
+                    fixed_point_pressure(source)["convergence_updates"]
+                )
+                max_expression_depth = max(max_expression_depth, depth)
+                max_convergence_updates = max(
+                    max_convergence_updates,
+                    updates,
+                )
+                minimum_safety_steps = max(
+                    minimum_safety_steps,
+                    depth * (updates + 1),
+                )
                 for renderer in range(renderers):
                     contextual.append(
                         contextualize_simultaneous_packet(
@@ -166,6 +228,9 @@ def build_board(config: AHRFTrainConfig) -> AHRFBoard:
         targets=torch.stack(targets),
         roots=tensors.packet.equation_root,
         labels=tuple(labels),
+        max_expression_depth=max_expression_depth,
+        max_convergence_updates=max_convergence_updates,
+        minimum_safety_steps=minimum_safety_steps,
     )
 
 
@@ -201,6 +266,8 @@ def _apply_control(
         "treatment",
         "no_hysteresis",
         "generic_recurrence",
+        "false_triad",
+        "zero_triad",
     }:
         return graph
     if control == "no_feedback":
@@ -287,9 +354,16 @@ def _terminal_loss(
     roots: torch.Tensor,
     targets: torch.Tensor,
     object_mask: torch.Tensor,
+    *,
+    hard_events: bool,
 ) -> torch.Tensor:
     prediction = _root_facts(rollout.terminal_facts, roots)
     mask = _target_mask(object_mask)
+    if hard_events:
+        return F.mse_loss(
+            prediction[mask],
+            targets[mask],
+        )
     return F.binary_cross_entropy(
         prediction[mask].clamp(1e-6, 1.0 - 1e-6),
         targets[mask],
@@ -437,8 +511,14 @@ def train_ahrf(
 ) -> dict[str, Any]:
     random.seed(config.seed)
     torch.manual_seed(config.seed)
+    root = Path(__file__).resolve().parents[1]
+    sources = _source_receipt(root)
     device = _resolve_device(config.device)
     board = build_board(config)
+    if config.max_steps < board.minimum_safety_steps:
+        raise ValueError(
+            "AHRF safety horizon is below the board propagation envelope"
+        )
     board = replace(
         board,
         graph=_apply_control(board.graph, config.control),
@@ -452,6 +532,10 @@ def train_ahrf(
         use_card_conditioning=(
             config.control != "generic_recurrence"
         ),
+        triad_mode={
+            "false_triad": "false",
+            "zero_triad": "zero",
+        }.get(config.control, "learned"),
     ).to(device)
     warm_start = None
     if config.binder_checkpoint is not None:
@@ -509,6 +593,7 @@ def train_ahrf(
             roots,
             targets,
             graph.object_mask,
+            hard_events=hard,
         )
         write = rollout.write_probabilities.mean()
         loss = terminal + config.write_weight * write
@@ -617,17 +702,8 @@ def train_ahrf(
     output_dir.mkdir(parents=True, exist_ok=True)
     checkpoint_path = output_dir / "ahrf.pt"
     report_path = output_dir / "report.json"
-    root = Path(__file__).resolve().parents[1]
-    sources = {
-        relative: _sha256(root / relative)
-        for relative in (
-            "train/autocatalytic_hysteretic_relation_field.py",
-            "train/tensorize_contextual_ahrf.py",
-            "train/train_autocatalytic_hysteretic_relation_field.py",
-            "pipeline/contextualize_bekic_program.py",
-            "pipeline/contrastive_bekic_program_orbits.py",
-        )
-    }
+    if _source_receipt(root) != sources:
+        raise RuntimeError("AHRF source receipt drifted during training")
     checkpoint = {
         "protocol": "autocatalytic_hysteretic_relation_field_v1",
         "config": asdict(config),
@@ -643,10 +719,12 @@ def train_ahrf(
     report = {
         "protocol": checkpoint["protocol"],
         "claim_boundary": (
-            "AHRF receives only source-deleted graph/card tensors, owns fact "
-            "updates and halt, and calls no host executor or convergence test. "
-            "This board remains synthetic relational fixed-point reasoning; "
-            "general reasoning requires cross-family and language transfer."
+            "This standalone AHRF receives only host-compiled, source-deleted "
+            "graph/card tensors, owns fact updates and halt, and calls no host "
+            "executor or convergence test. It is not yet integrated with the "
+            "Shohin trunk. This board remains synthetic relational fixed-point "
+            "reasoning; general reasoning requires integration, cross-family, "
+            "and language transfer."
         ),
         "config": asdict(config),
         "device": str(device),
@@ -655,6 +733,9 @@ def train_ahrf(
             "train_examples": len(train_indices),
             "development_examples": len(development_indices),
             "score_arms": list(SCORE_ARMS),
+            "max_expression_depth": board.max_expression_depth,
+            "max_convergence_updates": board.max_convergence_updates,
+            "minimum_safety_steps": board.minimum_safety_steps,
         },
         "parameter_receipt": checkpoint["parameter_receipt"],
         "warm_start": warm_start,
@@ -691,7 +772,7 @@ def main() -> None:
     parser.add_argument("--weight-decay", type=float, default=1e-4)
     parser.add_argument("--hidden-dim", type=int, default=64)
     parser.add_argument("--card-rounds", type=int, default=2)
-    parser.add_argument("--max-steps", type=int, default=16)
+    parser.add_argument("--max-steps", type=int, default=64)
     parser.add_argument("--hard-fraction", type=float, default=0.10)
     parser.add_argument("--write-weight", type=float, default=1e-4)
     parser.add_argument("--device", default="auto")

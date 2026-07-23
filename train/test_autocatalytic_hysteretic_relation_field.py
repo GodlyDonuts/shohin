@@ -207,10 +207,26 @@ def test_same_parameter_controls_preserve_complete_system_size() -> None:
         max_steps=2,
         use_card_conditioning=False,
     )
+    false_triad = AutocatalyticHystereticRelationField(
+        node_feature_dim=NODE_FEATURES,
+        hidden_dim=16,
+        card_rounds=1,
+        max_steps=2,
+        triad_mode="false",
+    )
+    zero_triad = AutocatalyticHystereticRelationField(
+        node_feature_dim=NODE_FEATURES,
+        hidden_dim=16,
+        card_rounds=1,
+        max_steps=2,
+        triad_mode="zero",
+    )
     assert {
         treatment.added_parameters,
         no_hysteresis.added_parameters,
         generic.added_parameters,
+        false_triad.added_parameters,
+        zero_triad.added_parameters,
     } == {treatment.added_parameters}
 
 
@@ -235,6 +251,111 @@ def test_dynamic_triad_exposes_nonlocal_two_hop_path() -> None:
     )
     assert observed[0, 0, 0, 2, 0].item() == pytest.approx(1.0 / 3.0)
     assert observed[0, 0, 0, 1, 0].item() == 0.0
+
+
+def test_false_and_zero_triads_are_causal_controls() -> None:
+    left = torch.zeros(1, 1, 3, 3, 8)
+    right = torch.zeros_like(left)
+    left[0, 0, 0, 1, 0] = 1.0
+    right[0, 0, 1, 2, 0] = 1.0
+    outputs = {}
+    for mode in ("learned", "false", "zero"):
+        model = AutocatalyticHystereticRelationField(
+            node_feature_dim=NODE_FEATURES,
+            hidden_dim=8,
+            card_rounds=1,
+            max_steps=2,
+            triad_mode=mode,
+        )
+        with torch.no_grad():
+            model.dynamic_triad_left.weight.copy_(torch.eye(8))
+            model.dynamic_triad_right.weight.copy_(torch.eye(8))
+        outputs[mode] = model._dynamic_triad(
+            left,
+            right,
+            torch.tensor([3.0]),
+        )
+    assert outputs["learned"][0, 0, 0, 2, 0].item() == pytest.approx(
+        1.0 / 3.0
+    )
+    assert outputs["false"][0, 0, 0, 2, 0].item() == 0.0
+    assert not outputs["zero"].any()
+
+
+def test_transposed_child_channel_exposes_reverse_pair() -> None:
+    model = AutocatalyticHystereticRelationField(
+        node_feature_dim=NODE_FEATURES,
+        hidden_dim=8,
+        card_rounds=1,
+        max_steps=2,
+    )
+    with torch.no_grad():
+        for projection in model.transpose_edge_message:
+            projection.weight.zero_()
+        model.transpose_edge_message[0].weight.copy_(torch.eye(8))
+    state = torch.zeros(1, 2, 3, 3, 8)
+    state[0, 0, 1, 0, 0] = 1.0
+    edges = torch.zeros(1, 2, 2, GRAPH_EDGE_ROLES, dtype=torch.bool)
+    edges[0, 1, 0, 0] = True
+    incoming = model._incoming_membranes(state, edges)
+    observed = model._combine_incoming_membranes(
+        tuple(value.transpose(2, 3) for value in incoming),
+        model.transpose_edge_message,
+    )
+    assert observed[0, 1, 0, 1, 0].item() == 1.0
+    assert observed[0, 1, 1, 0, 0].item() == 0.0
+
+
+def test_hard_write_can_route_a_transposed_child_fact() -> None:
+    model = AutocatalyticHystereticRelationField(
+        node_feature_dim=NODE_FEATURES,
+        hidden_dim=8,
+        card_rounds=1,
+        max_steps=1,
+    )
+    with torch.no_grad():
+        for parameter in model.parameters():
+            parameter.zero_()
+        model.evidence_head.bias.fill_(-6.0)
+        model.write_head.bias.fill_(-6.0)
+        model.write_head.weight[
+            0,
+            model.write_transposed_incoming_offset,
+        ] = 12.0
+        model.halt_head.bias.fill_(-20.0)
+    graph = _graph()
+    seed_facts = graph.seed_facts.clone()
+    seed_facts[0, 0, :3, :3] = 0.0
+    seed_facts[0, 0, 1, 0] = 1.0
+    rollout = model(replace(graph, seed_facts=seed_facts))
+    assert rollout.terminal_facts[0, 1, 0, 1].item() == 1.0
+    assert rollout.terminal_facts[0, 1, 1, 0].item() == 0.0
+
+
+@pytest.mark.parametrize("mode", ("learned", "false"))
+def test_active_triad_controls_receive_gradients(mode: str) -> None:
+    model = AutocatalyticHystereticRelationField(
+        node_feature_dim=NODE_FEATURES,
+        hidden_dim=8,
+        card_rounds=1,
+        max_steps=1,
+        triad_mode=mode,
+    )
+    generator = torch.Generator().manual_seed(2026072339)
+    left = torch.randn(1, 1, 3, 3, 8, generator=generator)
+    right = torch.randn(1, 1, 3, 3, 8, generator=generator)
+    loss = model._dynamic_triad(
+        left,
+        right,
+        torch.tensor([3.0]),
+    ).square().mean()
+    loss.backward()
+    for parameter in (
+        model.dynamic_triad_left.weight,
+        model.dynamic_triad_right.weight,
+    ):
+        assert parameter.grad is not None
+        assert bool(parameter.grad.ne(0).any())
 
 
 def test_object_and_node_permutations_are_equivariant() -> None:
