@@ -125,17 +125,39 @@ def _masked_mean(value: Tensor, mask: Tensor, dimension: int) -> Tensor:
     return total / count
 
 
-def _normalized_observation(value: Tensor) -> Tensor:
-    floating = value.to(torch.float32)
-    signed_log = torch.sign(floating) * torch.log1p(torch.abs(floating))
-    return torch.stack(
+def _observation_relation_features(
+    observation_equal: Tensor,
+    observation_mask: Tensor,
+) -> tuple[Tensor, Tensor]:
+    """Encode per-query equality partitions without observing value labels."""
+
+    within_query_equal = observation_equal.diagonal(dim1=2, dim2=4).permute(
+        0,
+        1,
+        3,
+        2,
+    )
+    within_query_mask = (
+        observation_mask[:, :, :, None]
+        & observation_mask.transpose(1, 2)[:, None, :, :]
+    )
+    within_query_equal = within_query_equal & within_query_mask
+
+    floating_equal = within_query_equal.to(torch.float32)
+    floating_mask = observation_mask.to(torch.float32)
+    record_count = floating_mask.sum(dim=1).clamp_min(1.0)
+    class_size = floating_equal.sum(dim=-1).clamp_min(1.0)
+    class_count = (floating_mask / class_size).sum(dim=1)
+    features = torch.stack(
         (
-            torch.tanh(signed_log / 16.0),
-            (value == 0).to(torch.float32),
-            torch.tanh(torch.abs(signed_log) / 16.0),
+            class_size / record_count[:, None, :],
+            class_size.reciprocal(),
+            class_count[:, None, :].expand_as(class_size) / record_count[:, None, :],
         ),
         dim=-1,
     )
+    features = features * floating_mask.unsqueeze(-1)
+    return features, within_query_equal
 
 
 def _require_tensor_batch(value: EndogenousCongruenceTensors) -> int:
@@ -300,7 +322,7 @@ class NeuralEndogenousCongruence(nn.Module):
         self.query_seed = nn.Parameter(torch.empty(hidden))
         self.observation_encoder = _SharedMlp(3, hidden, hidden)
         self.transition_encoder = _SharedMlp(3 * hidden + 1, hidden, hidden)
-        self.observation_edge = _SharedMlp(3 * hidden, hidden, hidden)
+        self.observation_edge = _SharedMlp(4 * hidden, hidden, hidden)
         self.record_message = _SharedMlp(4 * hidden, hidden, hidden)
         self.generator_message = _SharedMlp(2 * hidden, hidden, hidden)
         self.query_message = _SharedMlp(2 * hidden, hidden, hidden)
@@ -365,8 +387,14 @@ class NeuralEndogenousCongruence(nn.Module):
         record = record * tensors.record_mask.to(dtype).unsqueeze(-1)
         generator = generator * tensors.generator_mask.to(dtype).unsqueeze(-1)
         query = query * tensors.query_mask.to(dtype).unsqueeze(-1)
+        observation_relation_features, within_query_equal = (
+            _observation_relation_features(
+                tensors.observation_equal,
+                tensors.observation_mask,
+            )
+        )
         observation_features = self.observation_encoder(
-            _normalized_observation(tensors.observation_value).to(dtype)
+            observation_relation_features.to(dtype)
         )
         observation_features = observation_features * tensors.observation_mask.to(
             dtype
@@ -402,12 +430,22 @@ class NeuralEndogenousCongruence(nn.Module):
                 dtype
             ).unsqueeze(-1)
 
+            same_observation_count = within_query_equal.sum(dim=-1).clamp_min(1)
+            same_observation_record = torch.einsum(
+                "biqj,bjh->biqh",
+                within_query_equal.to(dtype),
+                record,
+            )
+            same_observation_record = (
+                same_observation_record / same_observation_count.to(dtype).unsqueeze(-1)
+            )
             query_edge = self.observation_edge(
                 torch.cat(
                     (
                         record[:, :, None, :].expand(-1, -1, Q, -1),
                         query[:, None, :, :].expand(-1, N, -1, -1),
                         observation_features,
+                        same_observation_record,
                     ),
                     dim=-1,
                 )

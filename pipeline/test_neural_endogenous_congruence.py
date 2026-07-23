@@ -83,6 +83,80 @@ def _relation_logits(relation: torch.Tensor) -> torch.Tensor:
     ).unsqueeze(0)
 
 
+def _replace_observation_values(
+    tensors: boundary.EndogenousCongruenceTensors,
+    values: torch.Tensor,
+) -> boundary.EndogenousCongruenceTensors:
+    observation_pair_mask = (
+        tensors.observation_mask[:, :, :, None, None]
+        & tensors.observation_mask[:, None, None, :, :]
+    )
+    observation_equal = values[:, :, :, None, None] == values[:, None, None, :, :]
+    return replace(
+        tensors,
+        observation_value=values,
+        observation_equal=observation_equal & observation_pair_mask,
+    )
+
+
+def _arbitrary_per_query_recoding(
+    tensors: boundary.EndogenousCongruenceTensors,
+) -> boundary.EndogenousCongruenceTensors:
+    values = torch.zeros_like(tensors.observation_value)
+    for batch_index in range(values.shape[0]):
+        for query_index in range(boundary.Q):
+            active = tensors.observation_mask[batch_index, :, query_index]
+            if not torch.any(active):
+                continue
+            source = tensors.observation_value[batch_index, active, query_index]
+            unique = torch.unique(source, sorted=True)
+            for rank, original in enumerate(unique.tolist()):
+                sign = -1 if (batch_index + query_index + rank) % 2 else 1
+                replacement_value = sign * (
+                    1_000_003 * (batch_index + 1)
+                    + 10_007 * (query_index + 1)
+                    + 97 * (rank + 1)
+                )
+                selected = active & (
+                    tensors.observation_value[batch_index, :, query_index] == original
+                )
+                values[batch_index, selected, query_index] = replacement_value
+    return _replace_observation_values(tensors, values)
+
+
+def _assert_score_outputs_identical(
+    left: neural.NeuralEndogenousCongruenceOutput,
+    right: neural.NeuralEndogenousCongruenceOutput,
+) -> None:
+    for field in (
+        "same_class_logits",
+        "soft_equivalence",
+        "soft_projector",
+        "record_features",
+        "generator_features",
+        "query_features",
+    ):
+        torch.testing.assert_close(
+            getattr(left, field),
+            getattr(right, field),
+            rtol=0.0,
+            atol=0.0,
+        )
+    assert torch.equal(left.equivalence_mask, right.equivalence_mask)
+    torch.testing.assert_close(
+        left.residuals.descent,
+        right.residuals.descent,
+        rtol=0.0,
+        atol=0.0,
+    )
+    torch.testing.assert_close(
+        left.residuals.observation,
+        right.residuals.observation,
+        rtol=0.0,
+        atol=0.0,
+    )
+
+
 def test_source_boundary_has_no_assessor_or_coordinate_custody() -> None:
     source = inspect.getsource(neural)
     tree = ast.parse(source)
@@ -114,6 +188,79 @@ def test_source_boundary_has_no_assessor_or_coordinate_custody() -> None:
     signature = inspect.signature(neural.NeuralEndogenousCongruence.forward)
     assert tuple(signature.parameters) == ("self", "tensors")
     assert signature.parameters["tensors"].annotation == "EndogenousCongruenceTensors"
+
+
+def test_arbitrary_injective_per_query_recoding_is_exactly_invariant() -> None:
+    orbit = board.build_congruence_collision_orbit()
+    tensors = boundary.tensorize_endogenous_congruence_packets(
+        (orbit.base, orbit.split_bisimilar, orbit.merged)
+    ).tensors
+    recoded = _arbitrary_per_query_recoding(tensors)
+    assert not torch.equal(tensors.observation_value, recoded.observation_value)
+    original_within_query = tensors.observation_equal.diagonal(
+        dim1=2,
+        dim2=4,
+    )
+    recoded_within_query = recoded.observation_equal.diagonal(
+        dim1=2,
+        dim2=4,
+    )
+    assert torch.equal(original_within_query, recoded_within_query)
+
+    model = _small_model()
+    with torch.no_grad():
+        original_output = model(tensors)
+        recoded_output = model(recoded)
+    _assert_score_outputs_identical(original_output, recoded_output)
+    assert "observation_value" not in inspect.getsource(
+        neural.NeuralEndogenousCongruence.forward
+    )
+
+
+def test_observation_equality_pattern_mutation_changes_outputs() -> None:
+    packet = board.build_congruence_collision_orbit().base
+    tensors = boundary.tensorize_endogenous_congruence_packets((packet,)).tensors
+    values = tensors.observation_value.clone()
+    mutation: tuple[int, int] | None = None
+    for query_index in range(boundary.Q):
+        active_indices = torch.nonzero(
+            tensors.observation_mask[0, :, query_index],
+            as_tuple=False,
+        ).flatten()
+        for left_offset, left_index in enumerate(active_indices.tolist()):
+            for right_index in active_indices[left_offset + 1 :].tolist():
+                if (
+                    values[0, left_index, query_index]
+                    == values[
+                        0,
+                        right_index,
+                        query_index,
+                    ]
+                ):
+                    mutation = (right_index, query_index)
+                    break
+            if mutation is not None:
+                break
+        if mutation is not None:
+            break
+    assert mutation is not None
+    record_index, query_index = mutation
+    values[0, record_index, query_index] = values.abs().max() + 1_000_003
+    mutated = _replace_observation_values(tensors, values)
+    assert not torch.equal(
+        tensors.observation_equal.diagonal(dim1=2, dim2=4),
+        mutated.observation_equal.diagonal(dim1=2, dim2=4),
+    )
+
+    model = _small_model()
+    with torch.no_grad():
+        original_output = model(tensors)
+        mutated_output = model(mutated)
+    active_pairs = original_output.equivalence_mask
+    difference = (
+        original_output.same_class_logits - mutated_output.same_class_logits
+    ).abs()
+    assert torch.max(difference[active_pairs]).item() > 1e-7
 
 
 @pytest.mark.parametrize("axis", ("record", "generator", "query"))
