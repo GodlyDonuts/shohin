@@ -11428,3 +11428,60 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   and capped at `N<=8`, `G<=4`, `Q<=4`, path depth six. There is still no
   learned quotient induction, unseen-system transfer, language binding,
   Shohin integration, or general-reasoning claim.
+
+- **2026-07-23** -- **The first scalable N-TCRR corpus and score-bearing
+  one-step harness are admitted; competence is now under test.** Commit
+  `92fb11b` adds one deterministic grammar/orbit generator for both the
+  256/64 audit scale and the preregistered 48,000/4,000 scale. The materialized
+  audit has 320 packets across 160 atomic orbits, zero rejected candidates,
+  143 non-isomorphic packet structures, 116 rule-window fingerprints, 248
+  rule-pair fingerprints, and 637 two-rule compositions. Complete independent
+  state-graph oracles reach 54 states and 135 edges; legal action sets reach
+  seven. Train uses algebraic, Boolean, and list/tree grammars, while
+  development also holds out typed-stack and dataflow grammars. Exact,
+  canonical, rule-window, rule-pair, and two-rule composition fingerprints are
+  split-disjoint. The audit manifest is
+  `4df464e6c120c1766ee5c847d713157d8545710aef38b8ecfb2f78648423aa65`.
+
+  Commit `921ee5f`, hardened by `caf2858`, supplies a complete set-valued
+  negative-log-mass objective over every legal rule/path/binding/graph
+  transaction and a one-shot hard evaluator. `NeuralTcrrMotor.forward`
+  receives packet tensors only; successor graphs and complete labels remain in
+  the offline trainer/assessor. Hard assessment performs one decode and one
+  rule-blind atomic commit with no retry or repair. The optimizer accepts only
+  an explicit train partition, and pre/post source receipts now include the
+  trainer, motor, committer, packet/training tensorizers, rewrite mechanics,
+  packet mechanics, and selected procedural generator.
+
+  The first 96/32 CPU attempt was void before output because replacement
+  sampling produced duplicate packet digests inside one batch and the training
+  tensorizer correctly rejected them. Commit `866204f` now samples unique
+  packet indices and rejects batch sizes larger than the train partition. The
+  corrected 400-update, batch-four CPU audit is active at
+  `train/neural_tcrr_motor_866204f_seed2026072301`. It is exploratory and
+  cannot satisfy the 48k/4k promotion board. Do not edit its source-receipt
+  modules while it runs. The motor is still one-step: branching, visited-state
+  memory, cycle handling, terminal-set collection, recurrent composition, and
+  model-owned halt remain future gates.
+
+- **2026-07-23** -- **ECCR now has a source-deleted tensor boundary and an
+  untrained label-free quotient inducer.** Commit `f9f5338` maps only complete
+  physical transition and observation witnesses into fixed `N8/G4/Q4`
+  tensors. Opaque axis names remain in offline receipts; model tensors contain
+  no partition, class, certificate, path equation, oracle output, family, or
+  assessor product. Round trips, record/generator/query reindexing, opaque
+  renaming, variable split/merge shapes, hidden-computation mutation
+  resistance, padding checks, and capacity checks pass.
+
+  Commit `6fc0b95` adds a 1,556,929-parameter equivariant inducer. It emits a
+  symmetric physical-record equivalence relation and represents the anonymous
+  quotient as the normalized projector `P = D^-1 E`, avoiding arbitrary class
+  numbering. Its hard decoder thresholds once and rejects, rather than repairs,
+  any non-reflexive, non-symmetric, non-transitive, observation-violating, or
+  generator-incompatible relation. It deliberately accepts the structurally
+  valid but non-coarsest identity relation; only an offline assessor may score
+  coarseness. Protected trunk plus inducer is 126,638,593 parameters, leaving
+  73,361,407 below 200M. Forty focused ECCR tests pass. This is a rung-three
+  training substrate only. Observation-value recoding invariance, learned
+  quotient competence, autonomous generator/path induction, source
+  integration, and language reasoning remain open.
