@@ -94,6 +94,26 @@
 > transaction representation and clear unseen path localization on a small
 > hard gate.
 >
+> **Active ECCR quotient-induction gate:** commit `2e79731` adds a deterministic
+> 256/64 source-deleted corpus with 320 unique packets across 40 matched
+> orbits. Independent partition refinement and exhaustive Bell-partition
+> search agree on all 320 packets. The board contains 67 canonical quotient
+> signatures, 48 action signatures, and 48 bounded path signatures, with zero
+> exact, latent, action, or path split overlap. Reindex, split, merge, arbitrary
+> signed observation-recoding, minimal noncongruence, and path-collision gates
+> all pass. Payload SHA-256 is
+> `a0dd196d9d2040df9cb1be67101e6cf179a3eecca04acedda62f8d40f419388a`;
+> packet-manifest SHA-256 is
+> `7515ad15fd897bf821d10ff77328c353ae9d90df5618da36428675ddf6dbda88`.
+> Commit `77b555d` removes all raw observation-value dependence from the neural
+> scoring path. It consumes only equality partitions and physical transition
+> structure; arbitrary injective per-query recodings now produce bit-identical
+> outputs, while equality-pattern mutations change active logits. The revised
+> inducer has 1,593,793 parameters; hypothetical Shohin plus inducer totals
+> 126,675,457 with 73,324,543 headroom. A sealed train/evaluate harness is
+> under construction. No learned quotient score or integration claim exists
+> yet.
+>
 > **Newest train-only routing result:** factorized witness route job `694945` completed cleanly on
 > `evc36` and is **rejected before fresh-board generation**. Treatment reaches 25.8625% witness,
 > 27.9875% relation, 27.6125% joint, 57.8875% state, and 77.075% answer on 8,000 disjoint
@@ -11531,3 +11551,33 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   budget until a packet-only, single-shot decoder jointly conditions
   transaction structure on the selected rule/location/bindings and clears a
   preregistered unseen-localization pilot.
+
+- **2026-07-23** -- **A scalable, recoding-invariant ECCR induction board is
+  now qualified for a neural pilot.** The default deterministic corpus
+  contains 256 train and 64 development packets grouped into 40 matched
+  eight-packet orbits. Every packet is unique, and independent refinement plus
+  exhaustive partition search agree `320/320`. The corpus spans 67 quotient,
+  48 action, and 48 bounded-path signatures with zero train/development exact,
+  latent, action, or path overlap. Every matched orbit passes record/action/
+  query reindexing, bisimilar split and merge naturality, arbitrary signed
+  injective observation recoding, minimal noncongruent collision, and
+  path-collision checks. Payload, packet, offline-ledger, and split-isolation
+  SHA-256 values are respectively
+  `a0dd196d9d2040df9cb1be67101e6cf179a3eecca04acedda62f8d40f419388a`,
+  `7515ad15fd897bf821d10ff77328c353ae9d90df5618da36428675ddf6dbda88`,
+  `c8b66725ad5f6a325f2cc026f34d535a4bed02632d7285514530f6af5dfb9a0d`,
+  and
+  `18a08718c9ad2e19c751f5147fabe028197a9535b6b2161cc79f3f1482d1fad1`.
+
+  Commit `77b555d` closes a pre-score shortcut: the neural inducer no longer
+  reads raw observation integers. Per-query equality partitions and
+  same-observation relational aggregation now carry the observation signal.
+  Arbitrary recodings preserving within-query equality produce bit-identical
+  model outputs, and equality-pattern mutations alter active relation logits.
+  The model has 1,593,793 parameters and a complete hypothetical
+  Shohin-plus-inducer ledger of 126,675,457. The focused ECCR suite passes 57
+  tests; the combined AHRF/ECCR review suite passes 90. This authorizes a
+  sealed modest neural pilot only. Pairwise hard thresholding can still violate
+  transitivity; whole-relation exactness and valid-decode rate must be reported
+  separately, and a by-construction equivalence decoder is being tested as a
+  matched architectural control.
