@@ -3,11 +3,11 @@
 MCTFR maintains a learned state on every ordered record pair for exactly eight
 tied rounds. Each round routes the state at ``(T_g(i), T_g(j))`` through the
 physical one-hot transition tensor and aggregates the resulting generator
-set with max and log-sum-exp channels. The first state coordinate is a
-distinction channel whose update is nonnegative by construction.
+set with duplicate-idempotent max and min channels. The first state coordinate
+is a distinction channel whose update is nonnegative by construction.
 
 The hard decoder concatenates immutable observation-equality fibers with
-thresholded learned dynamical fibers and compares complete signature rows.
+thresholded transported-distinction fibers and compares complete signature rows.
 Consequently every hard output is an equivalence relation and preserves every
 active observation query. Generator descent remains learned and falsifiable.
 """
@@ -37,6 +37,8 @@ from torch import Tensor, nn
 
 MCTFR_ROUNDS = 8
 MCTFR_PARAMETER_CAP = 24_000_000
+DISTINCTION_THRESHOLD = 0.5
+DISTINCTION_LOGIT_SCALE = 8.0
 
 
 class NeuralEndogenousCounterexampleTransportError(ValueError):
@@ -48,7 +50,7 @@ class NeuralEndogenousCounterexampleTransportConfig:
     """Architecture settings independent of episode-local entity counts."""
 
     hidden_dim: int = 192
-    dynamical_bits: int = 4
+    dynamical_bits: int = 1
     parameter_cap: int = MCTFR_PARAMETER_CAP
     soft_distance_scale: float = 1.0
 
@@ -57,9 +59,9 @@ class NeuralEndogenousCounterexampleTransportConfig:
             raise NeuralEndogenousCounterexampleTransportError(
                 "hidden_dim must be at least two"
             )
-        if self.dynamical_bits <= 0:
+        if self.dynamical_bits != 1:
             raise NeuralEndogenousCounterexampleTransportError(
-                "dynamical_bits must be positive"
+                "MCTFR uses exactly one transported-distinction fiber"
             )
         if self.parameter_cap <= 0 or self.parameter_cap > MCTFR_PARAMETER_CAP:
             raise NeuralEndogenousCounterexampleTransportError(
@@ -113,6 +115,7 @@ class NeuralEndogenousCounterexampleTransportOutput:
     pair_state_trace: tuple[Tensor, ...]
     dynamical_logits: Tensor
     dynamical_probabilities: Tensor
+    penultimate_soft_fiber_relation: Tensor
     soft_fiber_relation: Tensor
     soft_residuals: EquivalenceResiduals
     hard_residuals: EquivalenceResiduals
@@ -156,13 +159,13 @@ def _within_query_observation_fibers(
     return tensors.observation_equal.diagonal(dim1=2, dim2=4).permute(0, 1, 3, 2)
 
 
-def _stable_masked_max_logsumexp(
+def _stable_masked_extrema(
     value: Tensor,
     mask: Tensor,
     *,
     dimension: int,
 ) -> tuple[Tensor, Tensor]:
-    """Permutation-invariant universal channels with no count-normalized mean."""
+    """Permutation- and duplicate-invariant universal evidence channels."""
 
     if value.ndim != mask.ndim + 1 or value.shape[:-1] != mask.shape:
         raise NeuralEndogenousCounterexampleTransportError(
@@ -176,12 +179,10 @@ def _stable_masked_max_logsumexp(
         raise NeuralEndogenousCounterexampleTransportError(
             "universal aggregation has an empty active set"
         )
-    masked = value.masked_fill(~mask.unsqueeze(-1), -torch.inf)
-    maximum = masked.amax(dim=dimension)
-    # Sorting makes the floating reduction order independent of entity order.
-    ordered = masked.sort(dim=dimension).values
-    logsumexp = torch.logsumexp(ordered, dim=dimension)
-    return maximum, logsumexp
+    expanded_mask = mask.unsqueeze(-1)
+    maximum = value.masked_fill(~expanded_mask, -torch.inf).amax(dim=dimension)
+    minimum = value.masked_fill(~expanded_mask, torch.inf).amin(dim=dimension)
+    return maximum, minimum
 
 
 def gather_aligned_successor_pairs(
@@ -209,6 +210,11 @@ def gather_aligned_successor_pairs(
     ):
         raise NeuralEndogenousCounterexampleTransportError(
             "transition_target has invalid geometry, dtype, or device"
+        )
+    successor_count = transition_target.sum(dim=-1)
+    if torch.any(successor_count > 1):
+        raise NeuralEndogenousCounterexampleTransportError(
+            "transition_target is not a partial one-hot map"
         )
     transition = transition_target.to(pair_state.dtype)
     return torch.einsum(
@@ -392,7 +398,7 @@ def decode_counterexample_transport_fibers(
 
 def _soft_fiber_relation(
     observation_fibers: Tensor,
-    dynamical_probabilities: Tensor,
+    dynamical_logits: Tensor,
     record_mask: Tensor,
     query_mask: Tensor,
     *,
@@ -413,24 +419,31 @@ def _soft_fiber_relation(
         observation_equal | ~observation_mask[:, None, None, :]
     ).all(dim=-1)
 
-    dynamic = dynamical_probabilities.reshape(
-        dynamical_probabilities.shape[0],
+    dynamic = dynamical_logits.reshape(
+        dynamical_logits.shape[0],
         N,
         -1,
     )
     dynamic_mask = (
         record_mask[:, :, None]
-        .expand(-1, -1, dynamical_probabilities.shape[-1])
+        .expand(-1, -1, dynamical_logits.shape[-1])
         .reshape(record_mask.shape[0], -1)
     )
-    difference = dynamic[:, :, None, :] - dynamic[:, None, :, :]
-    distance = (
-        difference.square() * dynamic_mask[:, None, None, :].to(dynamic.dtype)
-    ).sum(dim=-1)
-    relation = observation_compatible.to(dynamic.dtype) * torch.exp(
-        -distance_scale * distance
+    left = dynamic[:, :, None, :]
+    right = dynamic[:, None, :, :]
+    signed_agreement = (left * right).masked_fill(
+        ~dynamic_mask[:, None, None, :],
+        torch.inf,
     )
-    return relation * _pair_mask(record_mask).to(dynamic.dtype)
+    worst_agreement = signed_agreement.amin(dim=-1)
+    relation = torch.sigmoid(distance_scale * worst_agreement)
+    identity = _active_identity(record_mask)
+    relation = torch.where(identity, torch.ones_like(relation), relation)
+    return (
+        relation
+        * observation_compatible.to(dynamic.dtype)
+        * _pair_mask(record_mask).to(dynamic.dtype)
+    )
 
 
 class NeuralEndogenousCounterexampleTransport(nn.Module):
@@ -451,12 +464,6 @@ class NeuralEndogenousCounterexampleTransport(nn.Module):
         self.distinction_increment = _SharedMlp(3 * hidden, hidden, 1)
         self.auxiliary_update = _SharedMlp(3 * hidden, hidden, auxiliary)
         self.auxiliary_norm = nn.LayerNorm(auxiliary)
-        self.dynamical_head = _SharedMlp(
-            hidden,
-            hidden,
-            self.config.dynamical_bits,
-        )
-
         count = self.parameter_count()
         if not count.under_cap:
             raise NeuralEndogenousCounterexampleTransportError(
@@ -495,8 +502,8 @@ class NeuralEndogenousCounterexampleTransport(nn.Module):
         equality = observation_fibers.permute(0, 1, 3, 2)
         token = torch.stack(
             (
-                equality.to(torch.float32),
-                (~equality).to(torch.float32),
+                equality.to(self.query_encoder.layers[0].weight.dtype),
+                (~equality).to(self.query_encoder.layers[0].weight.dtype),
             ),
             dim=-1,
         )
@@ -507,7 +514,7 @@ class NeuralEndogenousCounterexampleTransport(nn.Module):
             N,
             -1,
         )
-        maximum, logsumexp = _stable_masked_max_logsumexp(
+        maximum, minimum = _stable_masked_extrema(
             encoded,
             query_mask,
             dimension=3,
@@ -516,7 +523,7 @@ class NeuralEndogenousCounterexampleTransport(nn.Module):
             ((~equality) & query_mask).any(dim=3).to(encoded.dtype).unsqueeze(-1)
         )
         auxiliary = self.initial_auxiliary(
-            torch.cat((maximum, logsumexp, distinction), dim=-1)
+            torch.cat((maximum, minimum, distinction), dim=-1)
         )
         state = torch.cat((distinction, auxiliary), dim=-1)
         state *= _pair_mask(tensors.record_mask).to(state.dtype).unsqueeze(-1)
@@ -538,23 +545,60 @@ class NeuralEndogenousCounterexampleTransport(nn.Module):
             N,
             -1,
         )
-        maximum, logsumexp = _stable_masked_max_logsumexp(
+        maximum, minimum = _stable_masked_extrema(
             encoded_successors,
             generator_mask,
             dimension=3,
         )
-        context = torch.cat((pair_state, maximum, logsumexp), dim=-1)
+        context = torch.cat((pair_state, maximum, minimum), dim=-1)
         pair_mask = _pair_mask(tensors.record_mask)
-        off_diagonal = pair_mask & ~_active_identity(tensors.record_mask)
 
-        increment = torch.nn.functional.softplus(self.distinction_increment(context))
-        increment *= off_diagonal.to(increment.dtype).unsqueeze(-1)
-        distinction = pair_state[..., :1] + increment
+        successor_distinction = successors[..., 0]
+        generator_distinction = successor_distinction.masked_fill(
+            ~generator_mask,
+            -torch.inf,
+        ).amax(dim=3, keepdim=True)
+        transport_gate = torch.sigmoid(self.distinction_increment(context))
+        transported = generator_distinction * transport_gate
+        distinction = torch.maximum(pair_state[..., :1], transported)
 
         auxiliary_delta = self.auxiliary_update(context)
         auxiliary = self.auxiliary_norm(pair_state[..., 1:] + auxiliary_delta)
         output = torch.cat((distinction, auxiliary), dim=-1)
         return output * pair_mask.to(output.dtype).unsqueeze(-1)
+
+    def _soft_relation_from_pair_state(
+        self,
+        pair_state: Tensor,
+        observation_fibers: Tensor,
+        tensors: EndogenousCongruenceTensors,
+    ) -> tuple[Tensor, Tensor, Tensor]:
+        pair_mask = _pair_mask(tensors.record_mask)
+        distinction = pair_state[..., :1]
+        dynamical_logits = DISTINCTION_LOGIT_SCALE * (
+            DISTINCTION_THRESHOLD - distinction
+        )
+        dynamical_logits = torch.where(
+            pair_mask.unsqueeze(-1),
+            dynamical_logits,
+            torch.full(
+                (),
+                MASKED_LOGIT,
+                dtype=dynamical_logits.dtype,
+                device=dynamical_logits.device,
+            ),
+        )
+        dynamical_probabilities = torch.sigmoid(dynamical_logits) * pair_mask.to(
+            dynamical_logits.dtype
+        ).unsqueeze(-1)
+        relation = _soft_fiber_relation(
+            observation_fibers,
+            dynamical_logits,
+            tensors.record_mask,
+            tensors.query_mask,
+            distance_scale=self.config.soft_distance_scale,
+        )
+        return dynamical_logits, dynamical_probabilities, relation
 
     def forward(
         self,
@@ -569,17 +613,23 @@ class NeuralEndogenousCounterexampleTransport(nn.Module):
             pair_state = self._reactor_round(pair_state, tensors)
             trace.append(pair_state)
 
-        pair_mask = _pair_mask(tensors.record_mask)
-        dynamical_logits = self.dynamical_head(pair_state)
-        dynamical_logits = torch.where(
-            pair_mask.unsqueeze(-1),
+        (
             dynamical_logits,
-            torch.full(
-                (),
-                MASKED_LOGIT,
-                dtype=dynamical_logits.dtype,
-                device=dynamical_logits.device,
-            ),
+            dynamical_probabilities,
+            soft_fiber_relation,
+        ) = self._soft_relation_from_pair_state(
+            pair_state,
+            observation_fibers,
+            tensors,
+        )
+        (
+            _,
+            _,
+            penultimate_soft_fiber_relation,
+        ) = self._soft_relation_from_pair_state(
+            trace[-2],
+            observation_fibers,
+            tensors,
         )
         hard = decode_counterexample_transport_fibers(
             observation_fibers,
@@ -587,20 +637,11 @@ class NeuralEndogenousCounterexampleTransport(nn.Module):
             tensors.record_mask,
             tensors.query_mask,
         )
-        dynamical_probabilities = torch.sigmoid(dynamical_logits) * pair_mask.to(
-            dynamical_logits.dtype
-        ).unsqueeze(-1)
-        soft_fiber_relation = _soft_fiber_relation(
-            observation_fibers,
-            dynamical_probabilities,
-            tensors.record_mask,
-            tensors.query_mask,
-            distance_scale=self.config.soft_distance_scale,
-        )
         return NeuralEndogenousCounterexampleTransportOutput(
             pair_state_trace=tuple(trace),
             dynamical_logits=dynamical_logits,
             dynamical_probabilities=dynamical_probabilities,
+            penultimate_soft_fiber_relation=penultimate_soft_fiber_relation,
             soft_fiber_relation=soft_fiber_relation,
             soft_residuals=_relation_residuals(tensors, soft_fiber_relation),
             hard_residuals=_relation_residuals(
@@ -612,6 +653,8 @@ class NeuralEndogenousCounterexampleTransport(nn.Module):
 
 
 __all__ = [
+    "DISTINCTION_LOGIT_SCALE",
+    "DISTINCTION_THRESHOLD",
     "MCTFR_PARAMETER_CAP",
     "MCTFR_ROUNDS",
     "CounterexampleTransportHardDecoding",

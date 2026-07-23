@@ -228,3 +228,70 @@ it does not determine generator closure or the coarsest quotient. Therefore a
 random, no-transport, or mean-pool model can still fail the primary descent and
 exactness gates. A pass would establish bounded source-deleted neural quotient
 induction, not language reasoning or genuine general reasoning.
+
+## 7. Pre-score hostile-audit amendment
+
+This amendment was written after implementation review and before any MCTFR
+development score was opened. It does not relax any gate above.
+
+1. **Duplicate-idempotent universal aggregation.** The proposed max/log-sum-exp
+   channels are replaced by max/min channels over encoded query and generator
+   evidence. Log-sum-exp changes when a semantically duplicate query or
+   generator is inserted, so it violates the required duplicate-idempotence.
+   Max/min preserves permutation and exact duplicate invariance while retaining
+   two-sided extremal evidence.
+2. **Counterexamples cannot appear from a clock.** The first implementation
+   added an unconditional positive softplus increment to every off-diagonal
+   distinction. That creates distinctions even for bisimilar records. The
+   corrected channel can only inherit an already present observational or
+   successor counterexample through a learned gate, followed by a monotone max
+   with its previous value.
+3. **Worst-case descent is taken before smoothing.** The original normalized
+   log-sum-exp hinge could hide one positive descent violation among many safe
+   constraints. The corrected objective takes the exact maximum active
+   violation per episode, then applies a smooth hinge. Generator or pair count
+   can no longer dilute a witness.
+4. **The fixed-point term is relation-level.** It compares the penultimate and
+   final anonymous soft relation proposals produced by the same dynamical head,
+   rather than comparing one raw state coordinate.
+5. **Soft and hard fibers share one semantics.** Soft relation probability is
+   the product of sign-aligned Bernoulli bit-match probabilities, masked by
+   immutable observation compatibility. Hard decoding still thresholds each
+   learned bit once and compares complete rows.
+6. **Fail-closed tensor and numeric contracts.** Transition rows must be
+   partial one-hot maps; semantically duplicate query/generator axes must leave
+   states and hard output bit-identical; floating features inherit model
+   parameter dtype; bisimilar pairs must retain exactly zero transported
+   distinction. FP64/BF16, malformed-transition, source-deletion, and pure
+   soft-fiber gradient tests are mandatory.
+7. **The scored fiber is transport-bound.** A hostile audit showed that a
+   strictly positive sigmoid gate made nonzero counterexample support propagate
+   exactly even in a random model, while an unconstrained output MLP could
+   ignore that support. The corrected treatment uses a fixed confidence
+   threshold on the transported distinction itself. The learned gate determines
+   whether a counterexample remains above threshold at each depth, and the hard
+   dynamical fiber is exactly that thresholded state. There is no separate
+   learned answer head.
+8. **The soft surrogate is extremal, not multiplicative.** Multiplying
+   Bernoulli bit-match probabilities made self-relation less than one and
+   decayed exponentially with record count. The corrected relation uses the
+   minimum signed logit agreement over active fibers, is set to one on the
+   active diagonal, and is invariant to duplicate fibers.
+9. **Primary optimization is renderer-blind.** Orbit-paired sampling and mapped
+   renderer-logit supervision are removed from the primary arm. They use
+   assessor-side morphisms and therefore cannot support a strict final-relation-
+   only attribution. The optimizer samples unique train packets using only
+   partition length. Orbit consistency remains assessment-only; a
+   renderer-supervised arm, if ever run, must be labeled as a separate
+   augmentation ablation.
+10. **The frozen 256/64 board is tuning-only for MCTFR.** Its development
+    packets and seed have already been inspected by earlier architectures and
+    tests. The first MCTFR result on this board can kill or refine the
+    architecture but cannot confirm it. Any confirmation claim requires a
+    source/config commit followed by one independently generated, previously
+    unopened manifest and one evaluation receipt.
+
+The amendment narrows the intended mechanism to counterexample transport that
+is extremal, duplicate-idempotent, and witness-conservative. It does not add
+oracle paths, target partitions, host convergence, closure, repair, retry, or
+development-informed selection.

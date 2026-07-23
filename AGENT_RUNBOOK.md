@@ -13,6 +13,34 @@
 > GSM8K pass@1 `2/100`, MATH-500 `2/100`, HumanEval `6/164`, and MBPP `0/100`. This confirms a
 > low-single-digit plateau rather than a broad 120k-to-300k capability gain.
 >
+> **Latest frontier handoff (2026-07-23 EDT):** the standalone AHRF seed
+> `2026072345` process ended without publishing its atomic output directory,
+> checkpoint, or report. It is void and has no score; terminal cause is
+> unknown. Do not infer a result from runtime and do not blindly restart it.
+> The cardinality-matched ECCR semantic-holdout generator is committed at
+> `0272caf`; its default 256/64 board has zero exact packet, latent, or semantic-
+> triple split overlap, exact realization of all 40 composition-depth and 40
+> noncommuting cells, and independent refinement/exhaustive agreement on
+> 320/320 packets. Payload SHA-256 is
+> `0a3b99dc49ecf6eb6f2ef12a4bd85d49b8ce6a98568948414663f93dfb1769c0`.
+>
+> MCTFR remains **pre-score** after two hostile audits invalidated its first
+> implementation. The working revision removes renderer/orbit metadata from
+> optimization, replaces duplicate-sensitive max/log-sum-exp with max/min,
+> prevents spontaneous distinction, uses a worst-constraint descent loss,
+> compares penultimate/final relation proposals, and binds the sole hard
+> dynamical fiber directly to confidence-thresholded transported distinction.
+> The unrelated answer MLP is removed. Forced-low versus forced-high transport
+> confidence now causally suppresses versus preserves a depth-three witness in
+> both FP32 and BF16. The primary trainer samples unique packets using only
+> partition length; orbit consistency is assessment-only; shuffled targets are
+> deterministic; atomic bundles include a verifiable manifest. The selected
+> ECCR/MCTFR suite passes 117 tests. The standalone module has 481,725 trainable
+> parameters; protected-base accounting is hash-verified but hypothetical
+> because no trunk adapter exists. The already inspected 256/64 board is
+> tuning-only for this treatment, not confirmation. Freeze source and run the
+> tuning kill gate before designing one unopened confirmation manifest.
+>
 > **Current architecture-native frontier (2026-07-23):** protected
 > `train/flagship_out/ckpt_0300000.pt` remains untouched. Hardened
 > source-deleted contextual Bekić mechanics at commit `6e198c0` pass 85/85
@@ -26,8 +54,8 @@
 > reaches 97.8125%; the 1.71875-point separation fails the frozen 20-point
 > attribution gate. Retain treatment checkpoint SHA-256
 > `2dbd4b928a3d48addf2d7ae553e96ae8f93f80b5bb8a32fe332296ab79bf54d2`
-> only as a feature warm start, never as a reasoning result. The active
-> score-bearing experiment is standalone AHRF treatment seed `2026072345`,
+> only as a feature warm start, never as a reasoning result. The most recent
+> score-bearing attempt was standalone AHRF treatment seed `2026072345`,
 > architecture source `c67d945`, preregistration `0679af0`, output
 > `artifacts/r12/ahrf_treatment_0679af0_seed2026072345`. Three prior attempts
 > are void: dense membrane OOM, missing live composition path, and missing
@@ -35,10 +63,11 @@
 > score. The corrected field has distinct equation feedback, direct and
 > transposed typed child channels, a learned `(i,k),(k,j)->(i,j)` contraction,
 > exact write-once fact/evidence latches, continuous membrane, and model-owned
-> absorbing halt. The active seed `2026072345` requires a conservative 63-tick
+> absorbing halt. The attempted seed `2026072345` required a conservative 63-tick
 > propagation envelope, so the frozen safety bound is 64. Local MPS requires
 > batch two; 2,000 field and 400 halt updates preserve the intended 4,000/800
-> sampled-example budgets. AHRF has 316,824 standalone parameters; adding
+> sampled-example budgets. It published no atomic artifact and is void. AHRF
+> has 316,824 standalone parameters; adding
 > 125,081,664 is hypothetical integration accounting only because the Shohin
 > trunk is not yet connected. It calls no host executor or host convergence
 > test. Do not promote unless the full treatment/active false-triad and other
@@ -11659,3 +11688,42 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   validity to `54/64` but exactness falls to `34/64`, demonstrating that the
   extra valid outputs are conservative refinements which split true classes.
   The current failure is not rescued by scalar calibration.
+
+- **2026-07-23** -- **The first MCTFR implementation was stopped before score
+  and rebuilt under hostile audit.** The audit found that positive sigmoid
+  gates propagated the support of every counterexample exactly even under
+  random weights, while an unconstrained dynamical MLP emitted the scored
+  fibers. That implementation would have been hard-coded bounded refinement
+  plus a learned readout, not learned counterexample transport. It also used
+  renderer/orbit metadata in optimizer sampling and mapped-logit supervision,
+  a multiplicative soft relation whose diagonal decayed with cardinality, a
+  count-diluted descent surrogate, and a fixed-point term on only one raw state
+  coordinate. No development score was opened.
+
+  The corrected pre-score revision binds one hard dynamical fiber directly to
+  transported distinction at a fixed confidence threshold; removes the
+  independent answer MLP; makes the learned gate determine whether evidence
+  survives each depth; uses duplicate-idempotent max/min aggregation and
+  extremal signed-agreement soft fibers; takes the exact worst active descent
+  violation before smoothing; and compares penultimate/final soft relation
+  proposals. Forced gate confidence `-10` versus `+10` respectively suppresses
+  versus preserves a depth-three counterexample in FP32 and BF16. The primary
+  optimizer is renderer-blind, samples unique packets using only partition
+  length, and uses final-relation plus physical supervision only. Orbit
+  consistency is assessment-only. Shuffled controls are deterministic, and
+  every atomic checkpoint/report bundle has a hash-verifiable manifest.
+
+  The selected integrated ECCR/MCTFR regression suite passes `117/117`; the
+  focused post-format suite passes `35/35`. The standalone module contains
+  481,725 trainable parameters. The protected 300k base was re-hashed at
+  `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`,
+  but the complete 125,563,389 count remains hypothetical because no trunk
+  adapter exists. The already inspected 256/64 corpus is now explicitly
+  tuning-only for MCTFR. Run it once as a kill gate after source commit; any
+  confirmation requires one unopened independently generated manifest.
+
+- **2026-07-23** -- **AHRF seed `2026072345` is void.** Its local process ended
+  after a long runtime but published no atomic output directory, checkpoint,
+  or report. Terminal cause was not recoverable from the expired process
+  session. This is no result and no evidence for or against AHRF competence;
+  do not reconstruct a score or blindly respawn it.

@@ -18,7 +18,7 @@ def _small_model() -> transport.NeuralEndogenousCounterexampleTransport:
     model = transport.NeuralEndogenousCounterexampleTransport(
         transport.NeuralEndogenousCounterexampleTransportConfig(
             hidden_dim=32,
-            dynamical_bits=3,
+            dynamical_bits=1,
         )
     )
     model.eval()
@@ -159,6 +159,97 @@ def _reordered_packet(
             for record in record_order
             for query in query_order
         ),
+    )
+
+
+def _duplicate_generator(
+    packet: board.EndogenousCongruencePacket,
+) -> board.EndogenousCongruencePacket:
+    tables = board.validate_packet(packet)
+    source_generator = packet.generators[0]
+    duplicate_generator = "duplicate_generator"
+    return board.EndogenousCongruencePacket(
+        records=packet.records,
+        generators=(*packet.generators, duplicate_generator),
+        query_ports=packet.query_ports,
+        transition_witnesses=(
+            *packet.transition_witnesses,
+            *(
+                board.TransitionWitness(
+                    record,
+                    duplicate_generator,
+                    tables.transition[(record, source_generator)],
+                )
+                for record in packet.records
+            ),
+        ),
+        observation_witnesses=packet.observation_witnesses,
+    )
+
+
+def _duplicate_query(
+    packet: board.EndogenousCongruencePacket,
+) -> board.EndogenousCongruencePacket:
+    tables = board.validate_packet(packet)
+    source_query = packet.query_ports[0]
+    duplicate_query = "duplicate_query"
+    return board.EndogenousCongruencePacket(
+        records=packet.records,
+        generators=packet.generators,
+        query_ports=(*packet.query_ports, duplicate_query),
+        transition_witnesses=packet.transition_witnesses,
+        observation_witnesses=(
+            *packet.observation_witnesses,
+            *(
+                board.ObservationWitness(
+                    record,
+                    duplicate_query,
+                    tables.observation[(record, source_query)],
+                )
+                for record in packet.records
+            ),
+        ),
+    )
+
+
+def _depth_three_transport_packet() -> board.EndogenousCongruencePacket:
+    records = tuple(
+        name for depth in range(4) for name in (f"left_{depth}", f"right_{depth}")
+    )
+    transitions = []
+    observations = []
+    for depth in range(4):
+        next_depth = min(depth + 1, 3)
+        transitions.extend(
+            (
+                board.TransitionWitness(
+                    f"left_{depth}",
+                    "advance",
+                    f"left_{next_depth}",
+                ),
+                board.TransitionWitness(
+                    f"right_{depth}",
+                    "advance",
+                    f"right_{next_depth}",
+                ),
+            )
+        )
+        observations.extend(
+            (
+                board.ObservationWitness(f"left_{depth}", "color", 0),
+                board.ObservationWitness(
+                    f"right_{depth}",
+                    "color",
+                    int(depth == 3),
+                ),
+            )
+        )
+    return board.EndogenousCongruencePacket(
+        records=records,
+        generators=("advance",),
+        query_ports=("color",),
+        transition_witnesses=tuple(transitions),
+        observation_witnesses=tuple(observations),
     )
 
 
@@ -316,6 +407,20 @@ def test_aligned_successor_gather_matches_direct_indexing_exactly() -> None:
                 assert torch.equal(gathered[0, left, right, generator], expected)
 
 
+def test_successor_gather_rejects_non_one_hot_transition_rows() -> None:
+    packet = board.build_congruence_collision_orbit().base
+    tensors = boundary.tensorize_endogenous_congruence_packets((packet,)).tensors
+    pair_state = torch.randn(1, boundary.N, boundary.N, 3)
+    malformed = tensors.transition_target.clone()
+    malformed[0, 0, 0, 0] = True
+    malformed[0, 0, 0, 1] = True
+    with pytest.raises(
+        transport.NeuralEndogenousCounterexampleTransportError,
+        match="partial one-hot",
+    ):
+        transport.gather_aligned_successor_pairs(pair_state, malformed)
+
+
 def test_distinction_channel_is_monotone_for_every_round_and_pair() -> None:
     orbit = board.build_congruence_collision_orbit()
     tensors = boundary.tensorize_endogenous_congruence_packets(
@@ -336,6 +441,28 @@ def test_distinction_channel_is_monotone_for_every_round_and_pair() -> None:
             current.masked_select(~pair_mask),
             torch.zeros_like(current.masked_select(~pair_mask)),
         )
+
+
+def test_bisimilar_pair_never_accumulates_vacuous_distinction() -> None:
+    packet = board.EndogenousCongruencePacket(
+        records=("left", "right"),
+        generators=("stay",),
+        query_ports=("color",),
+        transition_witnesses=(
+            board.TransitionWitness("left", "stay", "left"),
+            board.TransitionWitness("right", "stay", "right"),
+        ),
+        observation_witnesses=(
+            board.ObservationWitness("left", "color", 7),
+            board.ObservationWitness("right", "color", 7),
+        ),
+    )
+    tensors = boundary.tensorize_endogenous_congruence_packets((packet,)).tensors
+    with torch.no_grad():
+        output = _small_model()(tensors)
+    for distinction in output.distinction_trace:
+        assert distinction[0, 0, 1].item() == 0.0
+        assert distinction[0, 1, 0].item() == 0.0
 
 
 @pytest.mark.parametrize("axis", ("record", "generator", "query"))
@@ -430,6 +557,32 @@ def test_arbitrary_injective_observation_recoding_is_bit_exact() -> None:
     )
 
 
+@pytest.mark.parametrize("duplicate", ("generator", "query"))
+def test_semantically_duplicate_axes_are_bit_exactly_idempotent(
+    duplicate: str,
+) -> None:
+    packet = board.build_congruence_collision_orbit().base
+    expanded = (
+        _duplicate_generator(packet)
+        if duplicate == "generator"
+        else _duplicate_query(packet)
+    )
+    original = boundary.tensorize_endogenous_congruence_packets((packet,)).tensors
+    transformed = boundary.tensorize_endogenous_congruence_packets((expanded,)).tensors
+    model = _small_model()
+    with torch.no_grad():
+        left = model(original)
+        right = model(transformed)
+    for left_state, right_state in zip(
+        left.pair_state_trace,
+        right.pair_state_trace,
+        strict=True,
+    ):
+        assert torch.equal(left_state, right_state)
+    assert torch.equal(left.dynamical_logits, right.dynamical_logits)
+    assert torch.equal(left.hard.equivalence, right.hard.equivalence)
+
+
 def test_transition_transport_detects_noncommuting_physical_change() -> None:
     orbit = board.build_congruence_collision_orbit()
     tensors = boundary.tensorize_endogenous_congruence_packets(
@@ -462,17 +615,19 @@ def test_soft_fibers_have_finite_nonzero_gradient_through_all_reactor_parts() ->
     target = torch.eye(boundary.N, dtype=torch.float32)[None]
     pair_mask = tensors.record_mask[:, :, None] & tensors.record_mask[:, None, :]
     loss = (
-        output.soft_fiber_relation.masked_select(pair_mask)
-        - target.masked_select(pair_mask)
-    ).square().mean() + 1e-4 * output.final_pair_state.square().mean()
+        (
+            output.soft_fiber_relation.masked_select(pair_mask)
+            - target.masked_select(pair_mask)
+        )
+        .square()
+        .mean()
+    )
     loss.backward()
     required_modules = (
         model.query_encoder,
         model.initial_auxiliary,
         model.successor_encoder,
         model.distinction_increment,
-        model.auxiliary_update,
-        model.dynamical_head,
     )
     for module in required_modules:
         gradients = [
@@ -483,6 +638,100 @@ def test_soft_fibers_have_finite_nonzero_gradient_through_all_reactor_parts() ->
         assert gradients
         assert all(torch.all(torch.isfinite(gradient)) for gradient in gradients)
         assert any(torch.any(gradient != 0) for gradient in gradients)
+
+
+@pytest.mark.parametrize("dtype", (torch.float64, torch.bfloat16))
+def test_model_uses_parameter_dtype_for_floating_features(
+    dtype: torch.dtype,
+) -> None:
+    packet = board.build_congruence_collision_orbit().base
+    tensors = boundary.tensorize_endogenous_congruence_packets((packet,)).tensors
+    model = _small_model().to(dtype=dtype)
+    with torch.no_grad():
+        output = model(tensors)
+    assert output.dynamical_logits.dtype == dtype
+    assert output.final_pair_state.dtype == dtype
+    assert torch.all(torch.isfinite(output.dynamical_logits))
+
+
+def test_soft_relation_is_reflexive_and_duplicate_idempotent() -> None:
+    labels = torch.tensor(((0, 0, 1),), dtype=torch.int64)
+    observation_fibers, record_mask, query_mask = _observation_fibers(
+        labels,
+        active_queries=1,
+    )
+    logits = _masked_logits(
+        torch.tensor(
+            (
+                (
+                    ((2.0,), (1.0,), (-1.0,)),
+                    ((1.5,), (3.0,), (-2.0,)),
+                    ((-1.0,), (-2.0,), (2.0,)),
+                ),
+            )
+        ),
+        record_mask,
+    )
+    relation = transport._soft_fiber_relation(
+        observation_fibers,
+        logits,
+        record_mask,
+        query_mask,
+        distance_scale=1.0,
+    )
+    assert torch.equal(
+        relation.diagonal(dim1=1, dim2=2),
+        record_mask.to(relation.dtype),
+    )
+
+    duplicated_relation = transport._soft_fiber_relation(
+        observation_fibers,
+        torch.cat((logits, logits), dim=-1),
+        record_mask,
+        query_mask,
+        distance_scale=1.0,
+    )
+    assert torch.equal(relation, duplicated_relation)
+
+
+def test_scored_fibers_are_directly_bound_to_transported_distinction() -> None:
+    packet = board.build_congruence_collision_orbit().minimal_noncongruent
+    tensors = boundary.tensorize_endogenous_congruence_packets((packet,)).tensors
+    model = _small_model()
+    with torch.no_grad():
+        output = model(tensors)
+    expected = transport.DISTINCTION_LOGIT_SCALE * (
+        transport.DISTINCTION_THRESHOLD - output.final_pair_state[..., :1]
+    )
+    pair_mask = tensors.record_mask[:, :, None] & tensors.record_mask[:, None, :]
+    torch.testing.assert_close(
+        output.dynamical_logits.masked_select(pair_mask.unsqueeze(-1)),
+        expected.masked_select(pair_mask.unsqueeze(-1)),
+    )
+    assert not hasattr(model, "dynamical_head")
+
+
+@pytest.mark.parametrize("dtype", (torch.float32, torch.bfloat16))
+def test_learned_gate_controls_deep_counterexample_transport(
+    dtype: torch.dtype,
+) -> None:
+    tensors = boundary.tensorize_endogenous_congruence_packets(
+        (_depth_three_transport_packet(),)
+    ).tensors
+
+    def final_distinction(gate_bias: float) -> torch.Tensor:
+        model = _small_model().to(dtype=dtype)
+        with torch.no_grad():
+            for parameter in model.distinction_increment.parameters():
+                parameter.zero_()
+            model.distinction_increment.layers[-1].bias.fill_(gate_bias)
+            output = model(tensors)
+        return output.final_pair_state[0, 0, 1, 0].to(torch.float32)
+
+    suppressed = final_distinction(-10.0)
+    transported = final_distinction(10.0)
+    assert suppressed < transport.DISTINCTION_THRESHOLD
+    assert transported > transport.DISTINCTION_THRESHOLD
 
 
 def test_negative_controls_fail_closed_and_physical_descent_is_not_repaired() -> None:
@@ -521,9 +770,25 @@ def test_negative_controls_fail_closed_and_physical_descent_is_not_repaired() ->
 
     packet = board.build_congruence_collision_orbit().minimal_noncongruent
     tensors = boundary.tensorize_endogenous_congruence_packets((packet,)).tensors
-    output = _small_model()(tensors)
-    assert output.hard_residuals.descent.shape == (1,)
-    assert torch.all(torch.isfinite(output.hard_residuals.descent))
+    observation_fibers = transport._within_query_observation_fibers(tensors)
+    pair_mask = tensors.record_mask[:, :, None] & tensors.record_mask[:, None, :]
+    dynamical_logits = torch.where(
+        pair_mask.unsqueeze(-1),
+        torch.ones((1, boundary.N, boundary.N, 1)),
+        torch.full((1, boundary.N, boundary.N, 1), neural.MASKED_LOGIT),
+    )
+    hard = transport.decode_counterexample_transport_fibers(
+        observation_fibers,
+        dynamical_logits,
+        tensors.record_mask,
+        tensors.query_mask,
+    )
+    residuals = neural._relation_residuals(
+        tensors,
+        hard.equivalence.to(torch.float32),
+    )
+    assert residuals.descent.shape == (1,)
+    assert residuals.descent.item() > 0.0
 
 
 def test_parameter_ledger_stays_below_module_and_complete_system_caps() -> None:
