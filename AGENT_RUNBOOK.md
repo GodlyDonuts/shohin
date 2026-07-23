@@ -11401,3 +11401,30 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   source-deleted, intervention-audited combination is a novelty hypothesis.
   Build and kill the finite congruence-collision mechanics before authorizing
   any neural source freeze.
+
+- **2026-07-23** -- **The bounded ECCR mechanics gate passes; neural
+  authorization remains narrow.** `pipeline/endogenous_congruence_board.py`
+  reconstructs the coarsest observation-preserving causal quotient from only
+  opaque records, generators, query ports, complete deterministic transition
+  witnesses, and complete observations. Partition refinement and an
+  independent exhaustive Bell-partition search agree on all seven adversarial
+  presentations and on all 296 complete automata with `(N,G)` in
+  `{(2,1),(3,1),(2,2)}` and binary observations. Executable checks enforce
+  `T_g C = C A_g`, `o_q = C r_q`, exact bounded path-action congruence,
+  generator-closed positive merge certificates, shortest constructive
+  distinction continuations, and quotient/action/reader naturality under
+  record reindexing plus non-bijective bisimilar split and merge maps.
+
+  The seven-presentation collision receipt covers 42 physical records, 126
+  transition witnesses, 84 observations, 11 merge certificates, and 55
+  distinction certificates. Matched two-transition twins preserve all simple
+  marginals while forcing either a quotient split or a different commuting
+  equation. Merge-all, identity, corrupted descent, and identity-path
+  controls fail closed. The focused suite passes 12 tests; Ruff and format
+  checks are clean. Commit `d7a7299` is pushed.
+
+  This admits only a source-deleted tensor boundary and a neural
+  reconstruction attempt. Current mechanics are deterministic, total, unary,
+  and capped at `N<=8`, `G<=4`, `Q<=4`, path depth six. There is still no
+  learned quotient induction, unseen-system transfer, language binding,
+  Shohin integration, or general-reasoning claim.
