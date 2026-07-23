@@ -178,6 +178,12 @@ def test_generation_is_deterministic() -> None:
     assert left.group_digest == right.group_digest
 
 
+def test_generated_token_ids_fit_shohin_vocabulary() -> None:
+    group = generate_cyclic_binding_group(20260723175, query_depth=6)
+    for case in group.variants:
+        assert max(case.packet.tokens) < 32_768
+
+
 def test_bad_depth_fails_closed() -> None:
     with pytest.raises(GenerationError):
         generate_cyclic_binding_group(1, query_depth=0)

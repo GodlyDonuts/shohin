@@ -490,7 +490,7 @@ def generate_cyclic_binding_group(
         raise GenerationError(f"query depth must be in [1, {MAX_QUERY_DEPTH}]")
 
     nonce_pool = rng.sample(
-        range(1_000, 50_000),
+        range(1_000, 32_768),
         STATE_COUNT + ACTION_COUNT,
     )
     state_tokens = tuple(nonce_pool[:STATE_COUNT])
