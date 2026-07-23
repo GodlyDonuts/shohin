@@ -1,7 +1,7 @@
 # R12 Autocatalytic Hysteretic Relation Field Preregistration
 
 **Status:** architecture and matched controls frozen at source commit
-`1dd7a5d`; no score-bearing AHRF result exists.
+`c67d945`; no score-bearing AHRF result exists.
 
 Pre-artifact launch `b4dcbf0` exhausted local MPS memory in a dense
 parent-by-child membrane expansion before an optimizer update or output write.
@@ -38,6 +38,13 @@ the warm start. A full-geometry 64-step MPS canary completed in 56 seconds with
 316,824 standalone parameters and a hypothetical integrated total of
 125,398,488. Its one-update scores are systems evidence only and will not be
 reused.
+
+A real-board batch-four canary then reached the local MPS 9.07 GiB memory cap
+before any output write. Batch two completed the full 80-train/50-development
+geometry without OOM or source drift. Source `c67d945` therefore freezes 2,000
+field updates and 400 halt updates at batch two, preserving the intended 4,000
+and 800 sampled examples respectively. Unsafe MPS watermark overrides are
+forbidden.
 
 ## Question
 
@@ -121,6 +128,10 @@ The clean source commit precedes the board/training seed. Development is
 score-bearing for this pilot; no confirmation claim is authorized.
 
 ## Optimization
+
+The frozen local pilot budget is batch two, 2,000 field updates, and 400 halt
+updates. Every matched learned control receives the same sampled-example,
+update, and recurrence budget.
 
 1. Fit terminal root relations from final-state supervision only.
 2. Use continuous monotone write events for the first 90% of field updates.
