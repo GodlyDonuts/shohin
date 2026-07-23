@@ -11727,3 +11727,37 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   or report. Terminal cause was not recoverable from the expired process
   session. This is no result and no evidence for or against AHRF competence;
   do not reconstruct a score or blindly respawn it.
+
+- **2026-07-23** -- **MCTFR's 100% tuning score fails causal attribution and
+  the learned-mechanism branch is closed.** The true-target arm completed 800
+  CPU updates and scored `256/256` train exact, `64/64` development exact, and
+  `64/64` development physical-law valid, with zero false splits or
+  collisions. Every development motif and all orbit, reindexing, recoding,
+  split, and merge assessments were exact. Its checkpoint and report SHA-256
+  values are
+  `a56b0a320c367cdc26ddd541c635d593efa458a425d68e3574f36604cb502d93`
+  and
+  `46eb592ad7fd018b21af9d7cd1c7fc4590b5cafcc601d5ba5be853da5cb8539b`.
+
+  The deterministic matched shuffled-target arm then used the same commit,
+  seed, 256 unique optimizer packets, update count, and hyperparameters. It
+  changed target supervision on 23,020 batch-example appearances and did not
+  fit that relation objective: calibration total changed only from
+  `2.2779269` to `2.2730541`. Nevertheless it also scored `256/256` train
+  exact, `64/64` development exact, `64/64` development physical-law valid,
+  and zero false splits or collisions against the true assessor relation. Its
+  checkpoint and report SHA-256 values are
+  `768ef9c8f418239a3120cf9301a68ab96c71eebd722e4b21293f1b3207880b38`
+  and
+  `d8de5fdc46ae18974177b08dc81086b7cd2b9183b251cce89a92da65bfc371d6`.
+  Both atomic bundles pass manifest verification.
+
+  This is the decisive control: the hard board answer is supplied by
+  always-preserved counterexample propagation, not by learning the correct
+  target relation. MCTFR may be retained as a fixed bounded
+  partition-refinement primitive, but it is rejected as evidence of learned
+  reasoning and is not authorized for repeated seeds, H100 scale, trunk
+  integration, or confirmation. The next board must make raw-token
+  episode-specific state discovery, action binding, operator choice, and
+  noncommuting order indispensable; an all-actions or constant-high system
+  must be bounded near chance by construction.

@@ -295,3 +295,39 @@ The amendment narrows the intended mechanism to counterexample transport that
 is extremal, duplicate-idempotent, and witness-conservative. It does not add
 oracle paths, target partitions, host convergence, closure, repair, retry, or
 development-informed selection.
+
+## 8. Attribution result and closure
+
+The first tuning-board treatment and its deterministic matched shuffled-target
+arm both completed 800 CPU updates from the same source commit, seed, corpus,
+optimizer configuration, and protected-base receipt.
+
+| Arm | Train exact | Development exact | Development physical | False splits | False collisions |
+|---|---:|---:|---:|---:|---:|
+| True target | 256/256 | 64/64 | 64/64 | 0 | 0 |
+| Shuffled target | 256/256 | 64/64 | 64/64 | 0 | 0 |
+
+The true-target checkpoint and report SHA-256 values are
+`a56b0a320c367cdc26ddd541c635d593efa458a425d68e3574f36604cb502d93`
+and
+`46eb592ad7fd018b21af9d7cd1c7fc4590b5cafcc601d5ba5be853da5cb8539b`.
+The shuffled-target checkpoint and report SHA-256 values are
+`768ef9c8f418239a3120cf9301a68ab96c71eebd722e4b21293f1b3207880b38`
+and
+`d8de5fdc46ae18974177b08dc81086b7cd2b9183b251cce89a92da65bfc371d6`.
+Both atomic bundles pass manifest verification.
+
+This falsifies learned-target attribution. The board is exactly solved whenever
+counterexample evidence is kept above the fixed threshold, including by a
+constant-high gate and by a gate optimized against shuffled relations. The
+learned relation objective in the shuffled arm remains high
+(`2.2779269 -> 2.2730541`) while its true assessment score is still perfect.
+Therefore the architecture, not correct label learning, determines the hard
+answer on this board.
+
+MCTFR is closed as a learned reasoning mechanism. It may remain available as a
+fixed, audited bounded partition-refinement primitive, but it is not eligible
+for fresh-seed confirmation, Shohin integration, H100 scale, or a reasoning
+claim. The next experiment must make episode-specific state discovery, action
+binding, operator selection, and noncommuting order causally necessary, with an
+all-actions/constant-high control bounded near chance by construction.
