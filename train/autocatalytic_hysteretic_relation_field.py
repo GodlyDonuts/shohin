@@ -539,6 +539,8 @@ class AutocatalyticHystereticRelationField(nn.Module):
         )
         if bool((graph.argument_edges & ~valid_links).any()):
             raise AHRFError("argument link touches a masked node")
+        if bool(graph.argument_edges.sum(2).gt(1).any()):
+            raise AHRFError("typed role has multiple children")
         if bool(
             graph.node_card_mask.masked_select(
                 ~graph.node_mask[..., None]
@@ -623,26 +625,41 @@ class AutocatalyticHystereticRelationField(nn.Module):
         return batch, nodes, slots, objects, active_pair, node_pair
 
     @staticmethod
+    def _gather_child_state(
+        state: torch.Tensor,
+        role_edge: torch.Tensor,
+    ) -> torch.Tensor:
+        child = role_edge.long().argmax(-1)
+        trailing = state.shape[2:]
+        indices = child.reshape(
+            child.shape[0],
+            child.shape[1],
+            *(1 for _ in trailing),
+        ).expand(-1, -1, *trailing)
+        gathered = state.gather(1, indices)
+        has_edge = role_edge.any(-1).reshape(
+            role_edge.shape[0],
+            role_edge.shape[1],
+            *(1 for _ in trailing),
+        )
+        return gathered * has_edge.to(state.dtype)
+
+    @classmethod
     def _incoming_fields(
+        cls,
         facts: torch.Tensor,
         edges: torch.Tensor,
     ) -> torch.Tensor:
-        role_fields = []
-        for role in range(GRAPH_EDGE_ROLES):
-            role_edge = edges[..., role]
-            messages = facts[:, None].expand(
-                -1,
-                facts.shape[1],
-                -1,
-                -1,
-                -1,
-            )
-            messages = messages.masked_fill(
-                ~role_edge[..., None, None],
-                0.0,
-            )
-            role_fields.append(messages.amax(2))
-        return torch.stack(role_fields, dim=-1)
+        return torch.stack(
+            tuple(
+                cls._gather_child_state(
+                    facts,
+                    edges[..., role],
+                )
+                for role in range(GRAPH_EDGE_ROLES)
+            ),
+            dim=-1,
+        )
 
     def _incoming_membrane(
         self,
@@ -652,24 +669,9 @@ class AutocatalyticHystereticRelationField(nn.Module):
         total = torch.zeros_like(membrane)
         for role, projection in enumerate(self.edge_message):
             role_edge = edges[..., role]
-            messages = membrane[:, None].expand(
-                -1,
-                membrane.shape[1],
-                -1,
-                -1,
-                -1,
-                -1,
-            )
-            minimum = torch.finfo(membrane.dtype).min
-            pooled = messages.masked_fill(
-                ~role_edge[..., None, None, None],
-                minimum,
-            ).amax(2)
-            has_edge = role_edge.any(-1)[..., None, None, None]
-            pooled = torch.where(
-                has_edge,
-                pooled,
-                torch.zeros_like(pooled),
+            pooled = self._gather_child_state(
+                membrane,
+                role_edge,
             )
             total = total + projection(pooled)
         return total

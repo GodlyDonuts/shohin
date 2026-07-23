@@ -371,45 +371,54 @@ def _exact_receipt(
     indices: torch.Tensor,
     device: torch.device,
     enable_halt: bool = True,
+    batch_size: int = 4,
 ) -> dict[str, Any]:
-    graph = _move_graph(_index_graph(board.graph, indices), device)
-    targets = board.targets.index_select(0, indices).to(device)
-    roots = board.roots.index_select(0, indices).to(device)
-    with torch.no_grad():
-        rollout = model(
-            graph,
-            hard_events=True,
-            enable_halt=enable_halt,
-            return_history=True,
-        )
-    prediction = _root_facts(rollout.terminal_facts, roots)
-    mask = _target_mask(graph.object_mask)
-    exact = (
-        (prediction.eq(targets) | ~mask)
-        .flatten(1)
-        .all(-1)
-    )
-    labels = [board.labels[int(index)] for index in indices]
     counts: Counter[tuple[str, str, str]] = Counter()
     correct: Counter[tuple[str, str, str]] = Counter()
     halted: Counter[tuple[str, str, str]] = Counter()
-    for label, is_exact, is_halted in zip(
-        labels,
-        exact.tolist(),
-        rollout.learned_halted.tolist(),
-        strict=True,
-    ):
-        key = label[:3]
-        counts[key] += 1
-        correct[key] += int(is_exact)
-        halted[key] += int(is_halted)
+    exact_total = 0
+    halted_total = 0
+    safety_total = 0
+    halt_steps: list[int] = []
+    for chunk in indices.split(batch_size):
+        graph = _move_graph(_index_graph(board.graph, chunk), device)
+        targets = board.targets.index_select(0, chunk).to(device)
+        roots = board.roots.index_select(0, chunk).to(device)
+        with torch.no_grad():
+            rollout = model(
+                graph,
+                hard_events=True,
+                enable_halt=enable_halt,
+            )
+        prediction = _root_facts(rollout.terminal_facts, roots)
+        mask = _target_mask(graph.object_mask)
+        exact = (
+            (prediction.eq(targets) | ~mask)
+            .flatten(1)
+            .all(-1)
+        )
+        labels = [board.labels[int(index)] for index in chunk]
+        for label, is_exact, is_halted in zip(
+            labels,
+            exact.tolist(),
+            rollout.learned_halted.tolist(),
+            strict=True,
+        ):
+            key = label[:3]
+            counts[key] += 1
+            correct[key] += int(is_exact)
+            halted[key] += int(is_halted)
+        exact_total += int(exact.sum())
+        halted_total += int(rollout.learned_halted.sum())
+        safety_total += int(rollout.safety_exhausted.sum())
+        halt_steps.extend(rollout.halt_step.cpu().tolist())
     return {
-        "exact": int(exact.sum()),
+        "exact": exact_total,
         "count": len(indices),
-        "exact_rate": float(exact.float().mean()),
-        "learned_halted": int(rollout.learned_halted.sum()),
-        "safety_exhausted": int(rollout.safety_exhausted.sum()),
-        "halt_steps": rollout.halt_step.cpu().tolist(),
+        "exact_rate": exact_total / len(indices),
+        "learned_halted": halted_total,
+        "safety_exhausted": safety_total,
+        "halt_steps": halt_steps,
         "metrics": {
             ":".join(key): {
                 "exact": correct[key],
@@ -587,12 +596,14 @@ def train_ahrf(
         board,
         train_indices,
         device,
+        batch_size=config.batch_size,
     )
     development_receipt = _exact_receipt(
         model,
         board,
         development_indices,
         device,
+        batch_size=config.batch_size,
     )
     fixed_deadline_receipt = _exact_receipt(
         model,
@@ -600,6 +611,7 @@ def train_ahrf(
         development_indices,
         device,
         enable_halt=False,
+        batch_size=config.batch_size,
     )
 
     output_dir.mkdir(parents=True, exist_ok=True)

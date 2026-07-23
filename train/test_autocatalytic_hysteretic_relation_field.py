@@ -387,6 +387,11 @@ def test_masks_fail_closed_and_outputs_keep_padding_zero() -> None:
     with pytest.raises(AHRFError, match="masked node"):
         model(replace(graph, argument_edges=invalid_edge))
 
+    multiple_children = graph.argument_edges.clone()
+    multiple_children[0, 2, 0, 0] = True
+    with pytest.raises(AHRFError, match="multiple children"):
+        model(replace(graph, argument_edges=multiple_children))
+
     disconnected = graph.argument_edges.clone()
     disconnected[0, 2, 0, 1] = False
     disconnected[0, 1, 0, 0] = False
