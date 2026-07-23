@@ -11761,3 +11761,39 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   episode-specific state discovery, action binding, operator choice, and
   noncommuting order indispensable; an all-actions or constant-high system
   must be bounded near chance by construction.
+
+- **2026-07-23** -- **The next reasoning gate is frozen as EPISODE action
+  binding, and its first CPU mechanics slice passes.** The preregistered board
+  compiles no host graph or candidate hypothesis. A model-visible packet
+  contains only ordinary integer token IDs and an attention mask. Each physical
+  system is rendered as a six-case cluster: three cyclic episode-local action
+  bindings for one query and the same three bindings for a reordered query
+  with an identical action-token bag.
+
+  Within each cyclic triple, raw token histograms and action-erased transition
+  streams are identical while all three targets differ. Therefore any
+  deterministic action-agnostic or all-actions-union method is capped at
+  `1/3` exactly. Between query orders, the world prefix has one identical
+  SHA-256 commitment while every matched target changes. The world can
+  therefore be compiled before the query is materialized, preventing a
+  target-conditioned answer cache from counting as reusable state.
+
+  `pipeline/episode_action_binding_board.py` now provides a deterministic
+  eight-state, three-action affine-system generator, complete raw-token parser,
+  visible-table executor, independent physical-binding enumerator, cyclic
+  controls, six-case cluster construction, nonce naturality, source padding,
+  explicit underidentification/`ABSTAIN`, and fail-closed malformed-stream
+  handling. The focused suite passes `28/28` in about 0.11 seconds; Ruff and
+  format checks pass. The integrated ECCR/MCTFR/EPISODE regression surface
+  passes `155/155` in 192.26 seconds. A 256-cluster/1,536-case in-memory
+  generation probe produced 256 unique cluster pairs in about 0.75 seconds.
+
+  This is a mechanics-board pass only. It establishes an exact anti-shortcut
+  symmetry and independent oracle agreement, not a neural score or reasoning.
+  Before any GPU pilot, freeze a split-isolated corpus receipt and surface
+  controls. The smallest authorized neural slice is a roughly one-million-
+  parameter causal residual workspace after block 19 with four slots, four
+  rank-32 operators, late-query compilation, and independently shuffled
+  binding/operator controls. Do not build the full 69M workspace or start a
+  trillion-token continuation before the small slice shows causal selected
+  state, unseen composition transfer, and source-deleted execution.
