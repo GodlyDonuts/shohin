@@ -107,11 +107,37 @@
       "complete_system_parameters": 126774534,
       "checkpoint_sha256": "c70d39f1940970672dfa59d5e2c5ca4ec96ca312a22ec526d2bfdcce8698e266",
       "report_sha256": "e81c86076604986581c5d09f0f21c8dfbf578fd5731e41f96ca1fa0a3e9e9bcf"
+    },
+    {
+      "name": "pairwise_round12_seed2026072305",
+      "architecture": "pairwise_threshold",
+      "rounds": 12,
+      "seed": 2026072305,
+      "data_seed": 2026072306,
+      "train_examples": 256,
+      "development_examples": 64,
+      "train_exact_rate": 0.9921875,
+      "development_exact_rate": 0.609375,
+      "development_valid_decode_rate": 0.703125,
+      "development_all_orbit_consistency_rate": 0.375,
+      "development_invalid_reasons": {
+        "observation": 1,
+        "generator": 8,
+        "transitivity": 10
+      },
+      "development_motif_exact_rates": {
+        "deep_path_interference": 0.6666666666666666,
+        "higher_arity_composition": 0.75,
+        "noncommuting_context": 0.3125
+      },
+      "checkpoint_sha256": "b767c613fb464f629d044406610fdf8df2f076e9e2820cb6220d8c92a14365a0",
+      "report_sha256": "1c3e82a6baccc4723df3faedaa59fc610d1b8bb9340696dc2a2555d72af79f8b"
     }
   ],
   "conclusions": [
     "Increasing relational message-passing depth from four to eight rounds improved matched-seed held-out exactness by 21.875 percentage points.",
     "A fresh eight-round pairwise seed confirmed 70.3125% held-out exactness, so the depth effect is directional but not sufficient.",
+    "Extending the matched fresh-seed pairwise model from eight to twelve rounds reduced held-out exactness from 70.3125% to 60.9375%, rejecting recurrence depth alone as the remedy.",
     "Record-fiber decoding guarantees equivalence and improves orbit consistency, but does not improve exact held-out quotient induction on the matched split.",
     "Record-fiber errors are exclusively false collisions on this run; the main remaining bottleneck is discriminating observation and generator fibers, especially noncommuting contexts and minimal noncongruence.",
     "No run clears a 95% promotion gate, and none supports a general-reasoning claim."

@@ -120,6 +120,11 @@
 > split. It makes all `64/64` hard outputs valid equivalence relations and
 > raises full-orbit consistency from `4/8` to `6/8`, with exact recoding and
 > reindex consistency `8/8`, but it does not improve exact quotient transfer.
+> A same-seed twelve-round pairwise control falls to
+> `39/64 = 60.9375%` development exact versus `45/64 = 70.3125%` at eight
+> rounds, while train exact remains `254/256`. More recurrence alone is
+> therefore rejected; the state representation and aggregation law must
+> change.
 > All 20 held-out errors are false collisions; noncommuting contexts score
 > `3/16` and minimal-noncongruent variants `2/8`. The bottleneck is therefore
 > physical observation/generator discrimination, not transitive closure.
@@ -11635,3 +11640,15 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   The compact four-run evidence is
   `artifacts/r12/eccr_neural_pilot_summary_20260723.json`. No result supports
   Shohin integration, language reasoning, or a general-reasoning claim.
+
+  A same-seed, same-corpus, same-update twelve-round pairwise control provides
+  a second rejection. It preserves `254/256 = 99.21875%` train exactness but
+  falls from the eight-round result of `45/64 = 70.3125%` development exact to
+  `39/64 = 60.9375%`. Valid-decode rate remains `45/64`; first hard failures
+  are one observation, eight generator, and ten transitivity violations.
+  Full-orbit consistency falls from `4/8` to `3/8`. Checkpoint and report
+  SHA-256 values are
+  `b767c613fb464f629d044406610fdf8df2f076e9e2820cb6220d8c92a14365a0`
+  and
+  `1c3e82a6baccc4723df3faedaa59fc610d1b8bb9340696dc2a2555d72af79f8b`.
+  This closes "add more recurrent rounds" as the next move.
