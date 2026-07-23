@@ -6,6 +6,14 @@
 > (`MASTER_PLAN.md`, `DIVERGENCE_DIAGNOSIS.md`, `DATA.md`) are background/history; this file is the
 > operational plan of record.
 >
+> **USER PRETRAINING HOLD — 2026-07-23:** Do not start, queue, resume,
+> prepare, or modify continuation pretraining. Do not alter the protected
+> step-300k checkpoint or its live-data lineage. Only the user may lift this
+> hold explicitly, and the user intends to do so only after reasoning is
+> established. Architecture mechanics, causal controls, read-only checkpoint
+> compatibility, and isolated reasoning evaluation may continue; none of those
+> activities implies permission to pretrain.
+>
 > **Last updated:** 2026-07-23 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
