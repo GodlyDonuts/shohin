@@ -214,6 +214,29 @@ def test_same_parameter_controls_preserve_complete_system_size() -> None:
     } == {treatment.added_parameters}
 
 
+def test_dynamic_triad_exposes_nonlocal_two_hop_path() -> None:
+    model = AutocatalyticHystereticRelationField(
+        node_feature_dim=NODE_FEATURES,
+        hidden_dim=8,
+        card_rounds=1,
+        max_steps=2,
+    )
+    with torch.no_grad():
+        model.dynamic_triad_left.weight.copy_(torch.eye(8))
+        model.dynamic_triad_right.weight.copy_(torch.eye(8))
+    left = torch.zeros(1, 1, 3, 3, 8)
+    right = torch.zeros_like(left)
+    left[0, 0, 0, 1, 0] = 1.0
+    right[0, 0, 1, 2, 0] = 1.0
+    observed = model._dynamic_triad(
+        left,
+        right,
+        torch.tensor([3.0]),
+    )
+    assert observed[0, 0, 0, 2, 0].item() == pytest.approx(1.0 / 3.0)
+    assert observed[0, 0, 0, 1, 0].item() == 0.0
+
+
 def test_object_and_node_permutations_are_equivariant() -> None:
     torch.manual_seed(2026072302)
     graph = _graph()

@@ -366,7 +366,17 @@ class AutocatalyticHystereticRelationField(nn.Module):
             nn.Linear(self.hidden_dim, self.hidden_dim, bias=False)
             for _ in range(GRAPH_EDGE_ROLES)
         )
-        drive_width = 3 * self.hidden_dim + 2 + GRAPH_EDGE_ROLES
+        self.dynamic_triad_left = nn.Linear(
+            self.hidden_dim,
+            self.hidden_dim,
+            bias=False,
+        )
+        self.dynamic_triad_right = nn.Linear(
+            self.hidden_dim,
+            self.hidden_dim,
+            bias=False,
+        )
+        drive_width = 4 * self.hidden_dim + 2 + GRAPH_EDGE_ROLES
         self.membrane_gate = nn.Linear(drive_width, self.hidden_dim)
         self.membrane_candidate = nn.Sequential(
             nn.Linear(drive_width, 2 * self.hidden_dim),
@@ -661,20 +671,43 @@ class AutocatalyticHystereticRelationField(nn.Module):
             dim=-1,
         )
 
-    def _incoming_membrane(
+    def _incoming_membranes(
         self,
         membrane: torch.Tensor,
         edges: torch.Tensor,
-    ) -> torch.Tensor:
-        total = torch.zeros_like(membrane)
-        for role, projection in enumerate(self.edge_message):
-            role_edge = edges[..., role]
-            pooled = self._gather_child_state(
+    ) -> tuple[torch.Tensor, ...]:
+        return tuple(
+            self._gather_child_state(
                 membrane,
-                role_edge,
+                edges[..., role],
             )
-            total = total + projection(pooled)
+            for role in range(GRAPH_EDGE_ROLES)
+        )
+
+    def _combine_incoming_membranes(
+        self,
+        incoming: tuple[torch.Tensor, ...],
+    ) -> torch.Tensor:
+        total = torch.zeros_like(incoming[0])
+        for projection, state in zip(
+            self.edge_message,
+            incoming,
+            strict=True,
+        ):
+            total = total + projection(state)
         return total
+
+    def _dynamic_triad(
+        self,
+        left: torch.Tensor,
+        right: torch.Tensor,
+        object_count: torch.Tensor,
+    ) -> torch.Tensor:
+        return torch.einsum(
+            "bnikh,bnkjh->bnijh",
+            self.dynamic_triad_left(left),
+            self.dynamic_triad_right(right),
+        ) / object_count[:, None, None, None, None]
 
     @staticmethod
     def _select_batch_state(
@@ -799,15 +832,24 @@ class AutocatalyticHystereticRelationField(nn.Module):
                 facts,
                 graph.argument_edges,
             )
-            incoming_membrane = self._incoming_membrane(
+            incoming_membranes = self._incoming_membranes(
                 membrane,
                 graph.argument_edges,
+            )
+            incoming_membrane = self._combine_incoming_membranes(
+                incoming_membranes,
+            )
+            dynamic_triad = self._dynamic_triad(
+                incoming_membranes[0],
+                incoming_membranes[1],
+                graph.object_mask.sum(-1).clamp_min(1).to(dtype),
             )
             drive = torch.cat(
                 (
                     membrane,
                     static_state,
                     incoming_membrane,
+                    dynamic_triad,
                     facts[..., None],
                     evidence[..., None],
                     incoming_facts,
