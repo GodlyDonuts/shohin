@@ -510,22 +510,50 @@ def test_malformed_operation_one_hotness_is_rejected() -> None:
 
 
 def _delta_from_transaction(
+    packets: packet_tensors.NeuralTcrrPacketTensors,
     value: committer.NeuralTcrrGraphTransaction,
 ) -> SimpleNamespace:
-    def logits_and_mask(one_hot: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
-        logits = one_hot.to(torch.float32) * 7.0
-        return logits, torch.ones_like(one_hot)
+    masks = committer._structural_delta_masks(packets)  # noqa: SLF001
 
-    operation_logits, operation_mask = logits_and_mask(value.node_operation)
-    root_logits, root_mask = logits_and_mask(value.root_pointer)
-    kind_logits, kind_mask = logits_and_mask(value.node_kind)
-    type_logits, type_mask = logits_and_mask(value.node_type_pointer)
-    constructor_logits, constructor_mask = logits_and_mask(
-        value.node_constructor_pointer
+    def logits_and_mask(
+        one_hot: torch.Tensor,
+        mask: torch.Tensor,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        logits = one_hot.to(torch.float32) * 7.0
+        return logits, mask
+
+    operation_logits, operation_mask = logits_and_mask(
+        value.node_operation,
+        masks["operation"],
     )
-    variable_logits, variable_mask = logits_and_mask(value.node_variable_pointer)
-    child_logits, child_mask = logits_and_mask(value.child_pointer)
-    presence_logits, presence_mask = logits_and_mask(value.child_presence)
+    root_logits, root_mask = logits_and_mask(
+        value.root_pointer,
+        masks["root"],
+    )
+    kind_logits, kind_mask = logits_and_mask(
+        value.node_kind,
+        masks["kind"],
+    )
+    type_logits, type_mask = logits_and_mask(
+        value.node_type_pointer,
+        masks["type"],
+    )
+    constructor_logits, constructor_mask = logits_and_mask(
+        value.node_constructor_pointer,
+        masks["constructor"],
+    )
+    variable_logits, variable_mask = logits_and_mask(
+        value.node_variable_pointer,
+        masks["variable"],
+    )
+    child_logits, child_mask = logits_and_mask(
+        value.child_pointer,
+        masks["child"],
+    )
+    presence_logits, presence_mask = logits_and_mask(
+        value.child_presence,
+        masks["presence"],
+    )
     return SimpleNamespace(
         node_operation_logits=operation_logits,
         node_operation_mask=operation_mask,
@@ -550,7 +578,7 @@ def test_delta_decode_and_commit_are_deterministic() -> None:
     packet, record = _record_packet(0)
     wrapped, target = _target_for_transition(packet, record.transitions[1])
     transaction = _transaction_for_target(wrapped.tensors, target)
-    delta = _delta_from_transaction(transaction)
+    delta = _delta_from_transaction(wrapped.tensors, transaction)
     first_transaction = committer.decode_neural_tcrr_graph_delta(
         wrapped.tensors,
         delta,
@@ -568,6 +596,21 @@ def test_delta_decode_and_commit_are_deterministic() -> None:
             getattr(second, name),
         ), name
     _assert_graph_equals_target(first, target)
+
+
+def test_delta_cannot_redefine_its_structural_choice_masks() -> None:
+    packet, record = _record_packet(0)
+    wrapped, target = _target_for_transition(packet, record.transitions[0])
+    transaction = _transaction_for_target(wrapped.tensors, target)
+    delta = _delta_from_transaction(wrapped.tensors, transaction)
+    delta.node_operation_mask = delta.node_operation_mask.clone()
+    delta.node_operation_mask[0, 0, committer.NODE_KEEP] = False
+    with pytest.raises(committer.NeuralTcrrCommitError) as caught:
+        committer.decode_neural_tcrr_graph_delta(
+            wrapped.tensors,
+            delta,
+        )
+    assert caught.value.reason_code == "delta_mask_drift"
 
 
 def test_real_motor_delta_crosses_the_duck_typed_boundary() -> None:

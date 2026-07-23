@@ -862,6 +862,54 @@ def _masked_choice(
     return int(torch.argmax(logits.masked_fill(~mask, floor)).item())
 
 
+def _structural_delta_masks(
+    packets: NeuralTcrrPacketTensors,
+) -> dict[str, Tensor]:
+    capacity = packets.graph_capacity
+    batch_size = capacity.shape[0]
+    device = capacity.device
+    null = torch.ones(
+        (batch_size, 1),
+        dtype=torch.bool,
+        device=device,
+    )
+    operation = torch.stack(
+        (
+            torch.ones_like(capacity),
+            capacity,
+            capacity,
+        ),
+        dim=-1,
+    )
+    root = torch.cat((capacity, null), dim=-1)
+    kind = capacity[:, :, None].expand(-1, -1, GRAPH_KIND_COUNT).clone()
+    kind[:, :, KIND_EMPTY] |= ~capacity
+    type_pointer = capacity[:, :, None] & packets.type_active[:, None, :]
+    constructor_pointer = capacity[:, :, None] & packets.constructor_active[:, None, :]
+    variable_pointer = capacity[:, :, None] & packets.variable_active[:, None, :]
+    child_choices = torch.cat((capacity, null), dim=-1)
+    child_pointer = (
+        (capacity[:, :, None, None] & child_choices[:, None, None, :])
+        .expand(-1, -1, A, -1)
+        .clone()
+    )
+    child_pointer[:, :, :, N] |= ~capacity[:, :, None]
+    child_presence = (
+        capacity[:, :, None, None].expand(-1, -1, A, CHILD_PRESENCE_COUNT).clone()
+    )
+    child_presence[:, :, :, CHILD_ABSENT] |= ~capacity[:, :, None]
+    return {
+        "operation": operation,
+        "root": root,
+        "kind": kind,
+        "type": type_pointer,
+        "constructor": constructor_pointer,
+        "variable": variable_pointer,
+        "child": child_pointer,
+        "presence": child_presence,
+    }
+
+
 def decode_neural_tcrr_graph_delta(
     packets: NeuralTcrrPacketTensors,
     delta: NeuralTcrrGraphDeltaLike,
@@ -922,6 +970,10 @@ def decode_neural_tcrr_graph_delta(
         )
         for name, (logits_name, mask_name, shape) in specs.items()
     }
+    expected_masks = _structural_delta_masks(packets)
+    for name, (_logits, supplied_mask) in fields.items():
+        if not torch.equal(supplied_mask, expected_masks[name]):
+            _reject("delta_mask_drift", location=name)
 
     node_operation = torch.zeros(
         (batch_size, N, NODE_OPERATION_COUNT),
