@@ -56,7 +56,17 @@
 > shared DAG nodes can have more than one occurrence; over-cap states fail
 > closed and are never truncated. No neural motor has been trained, no scored
 > split has been generated, and no reasoning result follows from these
-> interfaces.
+> interfaces. The bounded permutation-equivariant motor at commit `8530d36`
+> adds 1,830,671 parameters; commit `64a389e` binds the complete hypothetical
+> Shohin-plus-motor system at 126,912,335 parameters with 73,087,665 headroom.
+> It emits no-redex/halt, rule, root-relative path, binding, and graph-delta
+> proposals from packet tensors only. It remains untrained and has no
+> rule-blind committer. Procedural pilot source `1a6615f` generates 15 packets
+> (11 train, four development), 36 complete actions, five renderer orbits,
+> no-redex/shared-occurrence/capacity twins, and wholly held-out typed-stack
+> and dataflow cells. Production, independent reference, and exported opaque
+> successor edges agree exactly; split overlap is zero. This pilot is too small
+> for a neural capability claim and authorizes only scalable-board work.
 >
 > **Newest train-only routing result:** factorized witness route job `694945` completed cleanly on
 > `evc36` and is **rejected before fresh-board generation**. Treatment reaches 25.8625% witness,
@@ -11330,3 +11340,45 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   This only authorizes construction and falsification of a neural one-step
   motor. It is not evidence of term-rewrite competence, autonomous
   composition, language grounding, or general reasoning.
+
+- **2026-07-23** -- **A bounded neural rewrite motor and procedural pilot now
+  exist, but neither is score-bearing.** `NeuralTcrrMotor` consumes only the
+  packet tensor dataclass and has no access to receipts, identifiers, hashes,
+  expected transitions, oracle outputs, or successor labels. Its 1,830,671
+  trainable parameters produce explicit no-redex/halt, anonymous rule,
+  root-relative path, per-rule binding, and masked graph-transaction heads.
+  Constructor/type/rule/variable/storage reindex outputs align exactly;
+  shared-path channels remain distinct; all four no-redex negatives retain
+  legal terminal heads; every explicit head has a finite gradient path.
+  Shohin plus this standalone motor would total 126,912,335 parameters.
+
+  The first procedural pilot has 15 packets, 36 complete legal actions, five
+  reindexed renderer orbits, and required no-redex, shared-occurrence, and
+  capacity twins. Algebraic, Boolean, and list/tree systems are train-only;
+  typed-stack and dataflow systems are development-only. Exact packet,
+  canonical isomorphism, normalized rule-pair, and reachable-composition
+  overlap are all zero. Two independent mechanics engines agree on every
+  explored state graph, and commit `1a6615f` additionally reconstructs every
+  exported opaque successor edge and requires exact equality to the
+  independent edge set. Pilot payload SHA-256 is
+  `26891b6f6ac2bf7f76533170c418de878adcbf22d58832e61013a84d38c1dffb`.
+
+  The pilot is intentionally too small for training evidence. Before any
+  competence claim, finish a rule-blind committer, generate a diverse
+  split-disjoint corpus at preregistered scale, qualify the learned controls,
+  and evaluate unseen compositions/renderers/families with hard transactions.
+
+- **2026-07-23** -- **ECCR is admitted as a mathematical falsifier candidate,
+  not an architecture result.** `R12_GENERAL_REASONING_MECHANISM_THEORY.md`
+  localizes a common limitation of S7, QERARM, AHRF, and TCRR: all reason
+  inside a packet ontology selected in advance. The proposed Endogenous
+  Congruence Completion Reactor instead makes the model emit the episode-local
+  causal quotient, anonymous generator actions, path congruence, positive
+  bisimulation merge certificates, and constructive distinction paths. Its
+  executable invariant is descent through the quotient, `T_g C = C A_g`,
+  together with observation factorization and non-bijective presentation
+  naturality. The proposed added ceiling is 48,000,000 parameters and the
+  complete ceiling is 173,081,664. Every ingredient has precedent; only the
+  source-deleted, intervention-audited combination is a novelty hypothesis.
+  Build and kill the finite congruence-collision mechanics before authorizing
+  any neural source freeze.
