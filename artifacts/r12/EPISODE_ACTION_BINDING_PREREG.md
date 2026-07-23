@@ -239,3 +239,44 @@ The initial implementation is authorized only for deterministic CPU mechanics,
 two independent oracles, symmetry controls, fail-closed parsing, world/query
 commitment, and complete-cluster audits. Neural training remains unauthorized
 until those receipts are frozen.
+
+## 12. CPU mechanics result
+
+Commit `1532fe2` was the final source state before the frozen default corpus
+was generated. The corpus contains:
+
+- 256 training and 64 development six-case clusters;
+- 1,536 training and 384 development packets;
+- 1,920/1,920 unique packet digests;
+- 1,920/1,920 visible-table/binding-enumerator oracle agreement;
+- zero exact packet overlap;
+- zero exact physical-operator-family overlap;
+- 640/640 cyclic token-histogram invariants;
+- 640/640 cyclic action-erasure invariants;
+- 960/960 paired late-query world commitments.
+
+The deterministic controls score:
+
+| Control | Correct | Rate | Frozen ceiling |
+|---|---:|---:|---:|
+| action-agnostic | 250/1,920 | 13.0208% | 33.3333% |
+| all-actions union | 262/1,920 | 13.6458% | 33.3333% |
+| query-order bagging | 638/1,920 | 33.2292% | 50% |
+
+The model-payload, target-label, and offline-ledger logical SHA-256 values are
+respectively
+`f975291b22560e07cfa5e636133cb62c5688cfb8b39b8786812ea40610807323`,
+`aa0afa01882e24f9c3d708c8cdd2d9f7bb5978a9dae79c2f4c90c5c355972283`,
+and
+`3ae85435030c80ac58a4ed16cab5d50e28250826994377a588aa1690b7e2ecec`.
+The manifest file SHA-256 is
+`9eb3289d9d64b09d4886c71f1a9d8dd7167479f5c3d042a6ebb9bd6de4de53ed`.
+The atomic bundle passes hash verification.
+
+The focused board/generator suite passes `36/36`. The earlier integrated
+ECCR/MCTFR/EPISODE board suite passed `155/155`; the vocabulary-compatibility
+gate was added afterward and the focused board now passes `29/29`.
+
+This qualifies the CPU mechanics and corpus custody only. It authorizes design
+and testing of the smallest causal residual-workspace slice. It does not
+authorize a neural claim, full workspace scale, or trillion-token continuation.

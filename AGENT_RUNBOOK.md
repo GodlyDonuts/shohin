@@ -11797,3 +11797,30 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   binding/operator controls. Do not build the full 69M workspace or start a
   trillion-token continuation before the small slice shows causal selected
   state, unseen composition transfer, and source-deleted execution.
+
+- **2026-07-23** -- **The frozen EPISODE mechanics corpus is complete and
+  clears the CPU/custody gate.** The default corpus has 256 training and 64
+  development six-case clusters, or 1,536/384 packets. All `1,920/1,920`
+  packets are unique and both independent oracles agree on every target.
+  Train/development exact packet overlap and exact physical-operator-family
+  overlap are both zero. All `640/640` cyclic token-histogram and action-erased
+  stream invariants pass, as do all `960/960` paired late-query world
+  commitments.
+
+  The deterministic action-agnostic control scores `250/1920 = 13.0208%`, the
+  all-actions-union control `262/1920 = 13.6458%`, and the query-order-bagging
+  control `638/1920 = 33.2292%`. These remain below their exact symmetry
+  ceilings of one-third, one-third, and one-half. The model-payload,
+  target-label, and offline-ledger logical SHA-256 values are
+  `f975291b22560e07cfa5e636133cb62c5688cfb8b39b8786812ea40610807323`,
+  `aa0afa01882e24f9c3d708c8cdd2d9f7bb5978a9dae79c2f4c90c5c355972283`,
+  and
+  `3ae85435030c80ac58a4ed16cab5d50e28250826994377a588aa1690b7e2ecec`.
+  The manifest file SHA-256 is
+  `9eb3289d9d64b09d4886c71f1a9d8dd7167479f5c3d042a6ebb9bd6de4de53ed`,
+  and the atomic bundle passes verification.
+
+  The focused board/generator suite passes `36/36`. This authorizes only the
+  approximately one-million-parameter residual-workspace reference slice and
+  its causal controls. It does not authorize a neural competence claim, the
+  proposed 69M full workspace, or trillion-token continuation.
