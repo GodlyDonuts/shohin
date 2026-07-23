@@ -13,6 +13,37 @@
 > GSM8K pass@1 `2/100`, MATH-500 `2/100`, HumanEval `6/164`, and MBPP `0/100`. This confirms a
 > low-single-digit plateau rather than a broad 120k-to-300k capability gain.
 >
+> **Current architecture-native frontier (2026-07-23):** protected
+> `train/flagship_out/ckpt_0300000.pt` remains untouched. Hardened
+> source-deleted contextual Bekić mechanics at commit `6e198c0` pass 85/85
+> exact terminal packets, 419/419 opaque slots, 85/85 independent
+> simultaneous-oracle checks, and 75/75 applicable independent nested-oracle
+> checks; report SHA-256 is
+> `c4a2ec8f46c73d48392b615446c89bab6a5ae126b996f4b61023ec13465a5ac4`.
+> This is a host-mechanics ceiling only. Clean CWEB treatment seed
+> `2026072327` reaches 100% in-distribution and 99.53125% shifted
+> cardinality/density active-card accuracy, but the statistics-only control
+> reaches 97.8125%; the 1.71875-point separation fails the frozen 20-point
+> attribution gate. Retain treatment checkpoint SHA-256
+> `2dbd4b928a3d48addf2d7ae553e96ae8f93f80b5bb8a32fe332296ab79bf54d2`
+> only as a feature warm start, never as a reasoning result. The active
+> score-bearing experiment is standalone AHRF treatment seed `2026072345`,
+> architecture source `c67d945`, preregistration `0679af0`, output
+> `artifacts/r12/ahrf_treatment_0679af0_seed2026072345`. Three prior attempts
+> are void: dense membrane OOM, missing live composition path, and missing
+> live converse plus zero hard-event gradient; none produced a promotable
+> score. The corrected field has distinct equation feedback, direct and
+> transposed typed child channels, a learned `(i,k),(k,j)->(i,j)` contraction,
+> exact write-once fact/evidence latches, continuous membrane, and model-owned
+> absorbing halt. The proposed fresh board requires a conservative 56-tick
+> propagation envelope, so the frozen safety bound is 64. Local MPS requires
+> batch two; 2,000 field and 400 halt updates preserve the intended 4,000/800
+> sampled-example budgets. AHRF has 316,824 standalone parameters; adding
+> 125,081,664 is hypothetical integration accounting only because the Shohin
+> trunk is not yet connected. It calls no host executor or host convergence
+> test. Do not promote unless the full treatment/active false-triad and other
+> control gates plus cross-family gates in `R12_AHRF_PREREG.md` pass.
+>
 > **Newest train-only routing result:** factorized witness route job `694945` completed cleanly on
 > `evc36` and is **rejected before fresh-board generation**. Treatment reaches 25.8625% witness,
 > 27.9875% relation, 27.6125% joint, 57.8875% state, and 77.075% answer on 8,000 disjoint
@@ -11227,3 +11258,39 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   and independent closure-depth checks. Ruff is clean.
   `R12_GENERAL_REASONING_GATE.md` is the active dossier. The protected 300k
   flagship remains unchanged and hash-bound.
+
+- **2026-07-23** -- **AHRF is refrozen after three structural pre-score
+  failures; the first admissible treatment is running.** Hardened contextual
+  Bekić mechanics remain a host-only ceiling at 85/85 exact packets. CWEB
+  remains only a warm-start feature extractor because treatment exceeds its
+  statistics control by 1.71875 points, below the frozen 20-point attribution
+  gate.
+
+  AHRF's dense first implementation OOMed before output. The bounded-memory
+  replacement was then stopped before output because it had no nonlocal
+  composition path. A learned dynamic triadic membrane repaired composition,
+  but an adversarial audit found that converse was still weight-independently
+  impossible and that clamped hard bits received zero terminal gradient. That
+  run was also stopped without an output directory. No score was retained from
+  any of the three attempts.
+
+  Frozen source `c67d945` now provides generic direct and transposed channels
+  for all typed child roles, learned/false/zero triad modes with identical
+  parameter counts, an active object-marginal generic control, finite nonzero
+  MSE gradients during the exact hard-event phase, and complete pre/post
+  transitive source receipts. The warm start no longer copies any primitive
+  classifier-head layer. The corrected focused suite passes 23 tests. The
+  full board has maximum expression depth nine, maximum eight fixed-point
+  updates, and a conservative 56-tick propagation envelope; the frozen
+  recurrence cap is 64. Batch four OOMs local MPS at 9.07 GiB, while batch two
+  completes the full geometry. Preregistration `0679af0` therefore fixes
+  2,000 field updates and 400 halt updates at batch two.
+
+  The first admissible treatment is seed `2026072345`, output
+  `artifacts/r12/ahrf_treatment_0679af0_seed2026072345`. It is a standalone
+  316,824-parameter structured reasoner, not yet a Shohin-integrated system.
+  Only if treatment first demonstrates exact train/development competence
+  should the active false-triad, no-feedback, no-hysteresis, shuffled-card,
+  generic, zero-triad, and fixed-deadline controls be run. Promotion still
+  requires five seeds and frozen transfer to Horn closure, dataflow, and a
+  non-relational family. The protected flagship remains byte-identical.
