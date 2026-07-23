@@ -120,8 +120,8 @@ def test_wrong_hard_actions_receive_teacher_gradients() -> None:
 
 def test_hard_curriculum_overlaps_teacher_supervision() -> None:
     updates = 1_000
-    before = training_curriculum(99, updates)
-    start = training_curriculum(100, updates)
+    before = training_curriculum(499, updates)
+    start = training_curriculum(500, updates)
     final = training_curriculum(999, updates)
     assert not before[0]
     assert start[0] and start[1] == 1.0

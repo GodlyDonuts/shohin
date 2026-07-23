@@ -241,7 +241,7 @@ def training_curriculum(
 ) -> tuple[bool, float, float, float]:
     if updates < 1 or not 0 <= update < updates:
         raise ValueError("fixed-point curriculum differs")
-    hard = update >= updates // 10
+    hard = update >= updates // 2
     teacher_decay_start = updates // 2
     teacher_decay_end = 4 * updates // 5
     if update < teacher_decay_start:

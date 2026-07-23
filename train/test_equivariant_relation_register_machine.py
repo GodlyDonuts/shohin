@@ -131,10 +131,14 @@ def test_missing_halt_remains_invalid_instead_of_being_repaired() -> None:
     assert not bool(result.halted_by_deadline.item())
     assert result.alive_trajectory[-1].item() == pytest.approx(1.0)
     assert all(
-        bool(action.phase.eq(0).logical_or(action.phase.eq(1)).all())
-        and torch.equal(
-            action.phase.sum(-1),
-            torch.ones(packet.batch_size),
+        torch.allclose(
+            action.phase,
+            F.one_hot(
+                action.phase.argmax(-1),
+                action.phase.shape[-1],
+            ).float(),
+            atol=1e-7,
+            rtol=0.0,
         )
         for action in result.actions
     )
