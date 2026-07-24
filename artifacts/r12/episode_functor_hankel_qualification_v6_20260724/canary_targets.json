@@ -1,0 +1,15 @@
+{
+  "derived_signature_target_bits": 20480,
+  "independent_machine_target_bits": 2528,
+  "independent_target_bits": 2528,
+  "key_assignment_bits": 260,
+  "observer_bits": 128,
+  "occurrence_role_bits": 1188,
+  "receipt_sha256": "3acece3c78a7f9f07a6e3fa7ff7491bc212dc616c4151fa6ee643ef5d75dbb13",
+  "record_answer_bits": 112,
+  "record_type_bits": 552,
+  "rows": 4,
+  "schema": "efc-hankel-target-accounting/v1",
+  "supplied_target_bits": 23008,
+  "transition_bits": 288
+}

@@ -1,0 +1,14 @@
+{
+  "arm_receipt_sha256": "56720b88f5b8111a685130fcf54bdb9dc93c05448b0bb74efda5900cdb656ff9",
+  "base_branch_state_sha256": "ba00886e266ac2481e66686290546e4d7b76802135a7359ad210a2a60b6ca961",
+  "compiler_buffers": 120,
+  "compiler_state_sha256": "09bf7e915c509d66457add6d14966c7b5af5e23dccdbac95ca4c15945313d5ae",
+  "derivative_branch_state_sha256": "7659b708ef8f1f8d7f60f6f68b86e5a426867de7ba0cdbce732a3c1eb11c618b",
+  "independent_noncollapsed_branches": true,
+  "query_state_sha256": "08ba7c545bf0dd89aacbc5f6ecd74fc634e73a9fe0cf9f02e2e06ed845fd2343",
+  "receipt_sha256": "77745ba174579cecb78ab1123259770464635845c813aa888aecf9d6343f8c88",
+  "schema": "efc-hankel-initialization/v1",
+  "seed": 2026072401,
+  "trainable_parameters": 64407956,
+  "trainable_state_sha256": "1ca8027e1762b37bde340abcd88b3500b1517ec90ab7b9a804ee1876f5866aa4"
+}

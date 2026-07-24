@@ -1,0 +1,15 @@
+{
+  "checkpoint_interval": 2,
+  "drop_last": false,
+  "early_stopping": false,
+  "effective_batch_size": 4,
+  "gradient_accumulation": 1,
+  "metric_interval": 1,
+  "microbatch_size": 4,
+  "order_seed": 2026072411,
+  "order_seed_sha256": "a006f51bd129207848242ebdf701ae6f832f8adaca8835729dfad62ba5014fb2",
+  "receipt_sha256": "6a8954877b87a56349eb74d0618c9574c863a238c4b8f23be4c16890d4d6de22",
+  "scheduler": "constant",
+  "schema": "efc-hankel-update-schedule/v1",
+  "updates": 2
+}

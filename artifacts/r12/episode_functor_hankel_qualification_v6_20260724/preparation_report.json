@@ -1,0 +1,178 @@
+{
+  "arms": [
+    {
+      "arm": "hsc-prefix-treatment",
+      "arm_receipt_sha256": "67bf59d568e64256939ebb74acdca04c6cc16bb7e71016616db315094fabc8b2",
+      "canary_receipt_sha256": "1b14ee63add971f9022377847c8d9a1fe53911938bb65ee2cf693e0dd81a6cf4",
+      "compiler_state_sha256": "fe0390381924efd3a5c4a06c53ecca662c88aa81e2d796df55a01824192c73d4",
+      "initialization_receipt_sha256": "333a53adbdcda7224b070c27fcc76649049b048997d3e6e0883e0d18f891a889",
+      "trainable_state_sha256": "1ca8027e1762b37bde340abcd88b3500b1517ec90ab7b9a804ee1876f5866aa4"
+    },
+    {
+      "arm": "hsc-position-scramble-control",
+      "arm_receipt_sha256": "aa39e521e5e75c8c59dfc77647773e3469802a1d86d6f1374e0d246829589016",
+      "canary_receipt_sha256": "3ca5a9935934bd913537d566e4dd41721b98e71e09b21b2c3ac17905760669db",
+      "compiler_state_sha256": "996cdc3b9c77a6af852f9c05cdeb86eaae50b3fb63e86d8416dab4d8761c5fc0",
+      "initialization_receipt_sha256": "94eaf65d2ceabb7bc679c282548d61a908dafce8e378e3426fffcf600dd09fd8",
+      "trainable_state_sha256": "1ca8027e1762b37bde340abcd88b3500b1517ec90ab7b9a804ee1876f5866aa4"
+    },
+    {
+      "arm": "hsc-stable-bag-control",
+      "arm_receipt_sha256": "56720b88f5b8111a685130fcf54bdb9dc93c05448b0bb74efda5900cdb656ff9",
+      "canary_receipt_sha256": "b8d1eea5a3119778f666037b8d52662a00f4b2817fd16f0114cd1defcb045ec3",
+      "compiler_state_sha256": "09bf7e915c509d66457add6d14966c7b5af5e23dccdbac95ca4c15945313d5ae",
+      "initialization_receipt_sha256": "77745ba174579cecb78ab1123259770464635845c813aa888aecf9d6343f8c88",
+      "trainable_state_sha256": "1ca8027e1762b37bde340abcd88b3500b1517ec90ab7b9a804ee1876f5866aa4"
+    },
+    {
+      "arm": "hsc-dual-direct-decode-control",
+      "arm_receipt_sha256": "f76bd2d277f8da07b038c85d5f139b35710a61da2d1838c36338f5662044a244",
+      "canary_receipt_sha256": "73c6fa431d308e13da4369c29e1ccad10555c0717734883365abc3acfb0e4120",
+      "compiler_state_sha256": "fe0390381924efd3a5c4a06c53ecca662c88aa81e2d796df55a01824192c73d4",
+      "initialization_receipt_sha256": "69cdf66987b06a7f3dd67dddafc11d3512b6ad5d3e72a3a1bd7b3e7657aec54e",
+      "trainable_state_sha256": "1ca8027e1762b37bde340abcd88b3500b1517ec90ab7b9a804ee1876f5866aa4"
+    }
+  ],
+  "board": {
+    "counts": {
+      "confirmation": 24,
+      "development": 32,
+      "mechanics": 48,
+      "train": 96
+    },
+    "seed": "efc-identifiable-pilot-20260724",
+    "total_rows": 888,
+    "train_rows": 384
+  },
+  "canary": {
+    "package_sha256": "ed024dd9c47e766871a7253c1117a4f5b7c3ac551a1f08153618854091164095",
+    "rows": 4,
+    "updates": 2
+  },
+  "decision": "measurement_canary_authorized_qualification_fit_no_go",
+  "files": [
+    {
+      "path": "canary_package/candidate_receipt.json",
+      "sha256": "3ef15dd22907431cc9edf3d2f128e948edbf282de466532c3e87199403678166"
+    },
+    {
+      "path": "canary_package/package_manifest.json",
+      "sha256": "bd5f9629ff8198f09680d1b8bfe998f00c39ec0cbdffa22c45ccb9f4f2b0c765"
+    },
+    {
+      "path": "canary_package/split_custody.json",
+      "sha256": "e9badc63d88a84205f2c079c406a0f1b9ead5ed841e94c3c896f3f0674dafde9"
+    },
+    {
+      "path": "canary_package/supervisor.pt",
+      "sha256": "22b1fcd21bee0871b76b764e164b5f733ed1a4b736133bfe18f62d8f556c2acd"
+    },
+    {
+      "path": "canary_package/train_sources.jsonl",
+      "sha256": "d42c7133f82b0c9124d485699783369265c05cdf88acd027ecada5e5109630ed"
+    },
+    {
+      "path": "canary_schedule.json",
+      "sha256": "22af0d985e4c82dce833801c0f4494d28f4aefb20a1c93757aa7244ef2fffc13"
+    },
+    {
+      "path": "canary_targets.json",
+      "sha256": "b9560d636ba2ab55532f3f413f4155487759705e23b730e3c92fe2a5253a30d8"
+    },
+    {
+      "path": "hsc-dual-direct-decode-control.arm.json",
+      "sha256": "0f472e930a4eb24e5b54a109cf90133d3ac27579ac406b014bf2379f647498da"
+    },
+    {
+      "path": "hsc-dual-direct-decode-control.canary.json",
+      "sha256": "0805575d0ab556761ea17af1e1ee93dafe3f905cf0988b56134272dcd930a5ff"
+    },
+    {
+      "path": "hsc-dual-direct-decode-control.initialization.json",
+      "sha256": "f7cd257317ced72ae47a571395c491f36c57155708e661f11416e46f487b6c5b"
+    },
+    {
+      "path": "hsc-position-scramble-control.arm.json",
+      "sha256": "b0aab2b34e3dc80fc448f98e8e1f4b34c4efb06ddca523362507b45aa75f914e"
+    },
+    {
+      "path": "hsc-position-scramble-control.canary.json",
+      "sha256": "c79adc10eba33838882f7ffe6017242f04c9acb1bfa060e8b07d97c42c44ba9a"
+    },
+    {
+      "path": "hsc-position-scramble-control.initialization.json",
+      "sha256": "b78f14c10841648918e390a21ced9a4c05a5ed491a33a69eeab3782af9c960e6"
+    },
+    {
+      "path": "hsc-prefix-treatment.arm.json",
+      "sha256": "0cba4d48c917c0b65e220b1bdf483fbb61f139c80b8970fbf1466a7ec67c1c06"
+    },
+    {
+      "path": "hsc-prefix-treatment.canary.json",
+      "sha256": "9c3761982ab4330ff36871a2a3c747214fe9c1f505896e1f7a4b3cf055aa298f"
+    },
+    {
+      "path": "hsc-prefix-treatment.initialization.json",
+      "sha256": "cb0965fe01e1e4f3375863e8b41962a5ba37f39609241012b1437b0e13db63cc"
+    },
+    {
+      "path": "hsc-stable-bag-control.arm.json",
+      "sha256": "6c7b57ce89f8f0b4ff6b5276e8d88d282b6d8fa2f232b25e810e66cd48f268ae"
+    },
+    {
+      "path": "hsc-stable-bag-control.canary.json",
+      "sha256": "00a81a4eb934f5bda207ba601efc82e57927716bc3dc7cc35666d65e9ac7f5fc"
+    },
+    {
+      "path": "hsc-stable-bag-control.initialization.json",
+      "sha256": "7f3540e0cf47cfd621cccff5b92ba006c4205f54635a2152d5e23ac42f2e9a63"
+    },
+    {
+      "path": "optimizer.json",
+      "sha256": "a86925b32a6013ccc42f98e5f72f12019d1a7e3bdc9a56dfcced0c295aa0a825"
+    },
+    {
+      "path": "source_manifest.json",
+      "sha256": "1840360f9a03bb7fa9f648a24d78ff6b592339913d12f6a328b5d3c2c45d1538"
+    },
+    {
+      "path": "train_package/candidate_receipt.json",
+      "sha256": "bdab711d0e36dc8b075b93bf0e2a97336c27cb25b5ba705a744240f97342d10c"
+    },
+    {
+      "path": "train_package/package_manifest.json",
+      "sha256": "5832cc3964d0457d0b92d4be073c9343ba46bcfe645ac4a695370dbd4728879a"
+    },
+    {
+      "path": "train_package/split_custody.json",
+      "sha256": "792ae142cb0b94bade468537148d951169ea371605e0b12771b7d696148cfa02"
+    },
+    {
+      "path": "train_package/supervisor.pt",
+      "sha256": "60261c05a953f61e6f1ce309d5afbc391df88f744cf4580765179965f83ae854"
+    },
+    {
+      "path": "train_package/train_sources.jsonl",
+      "sha256": "4548cbfaf3774388e499d91d09c410d68b1dcfb2def59c639e20eb51591d0b9a"
+    },
+    {
+      "path": "train_targets.json",
+      "sha256": "3ffcaecf89723bb64089ff754ddfca7649fdf3973f7b742b44aab5726ea89ccf"
+    }
+  ],
+  "fit_authorized": false,
+  "initialization_seed": 2026072401,
+  "pretraining_authorized": false,
+  "schema": "efc-hankel-qualification-preparation/v4",
+  "shared_trainable_state_sha256": "1ca8027e1762b37bde340abcd88b3500b1517ec90ab7b9a804ee1876f5866aa4",
+  "source_manifest_sha256": "ae4357df26353bbc6d8703f6074f133fc3991d00e751c5a22627aa2c387be64f",
+  "tokenizer_artifact_sha256": "87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4",
+  "tokenizer_runtime_sha256": "1b4f4e6384f0b3824abf13a79054a1f01e7dc83327542c2b33d3bf9ec395e02d",
+  "train": {
+    "independent_target_bits": 242688,
+    "package_sha256": "142b16298a38c30ecd1fc36b2792c47829814e8782e02ef803cef48cfc480064",
+    "rows": 384,
+    "source_bytes": 960174,
+    "supplied_target_bits": 2208768
+  }
+}

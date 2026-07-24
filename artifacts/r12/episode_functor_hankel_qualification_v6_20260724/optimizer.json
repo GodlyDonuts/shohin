@@ -1,0 +1,21 @@
+{
+  "autocast_dtype": "bfloat16",
+  "beta1_hex": "0x1.ccccccccccccdp-1",
+  "beta2_hex": "0x1.ff7ced916872bp-1",
+  "capturable": false,
+  "compile_mode": "eager",
+  "deterministic_algorithms": false,
+  "epsilon_hex": "0x1.5798ee2308c3ap-27",
+  "foreach": false,
+  "fused": true,
+  "gradient_scaler": false,
+  "learning_rate_hex": "0x1.3a92a30553261p-12",
+  "maximum_gradient_norm_hex": "0x1.0000000000000p+0",
+  "optimizer": "torch.optim.AdamW",
+  "optimizer_state_dtype": "float32",
+  "parameter_dtype": "float32",
+  "receipt_sha256": "cc3f5cf45fb1b4ebbcd75cf3114fda7d4690460b249abc9e12c43ff45e36e6fe",
+  "schema": "efc-hankel-optimizer/v1",
+  "tf32": true,
+  "weight_decay_hex": "0x1.47ae147ae147bp-7"
+}

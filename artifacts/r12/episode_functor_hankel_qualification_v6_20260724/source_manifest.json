@@ -1,0 +1,109 @@
+{
+  "manifest_sha256": "ae4357df26353bbc6d8703f6074f133fc3991d00e751c5a22627aa2c387be64f",
+  "sources": [
+    {
+      "path": "pipeline/episode_functor_candidate_source.py",
+      "sha256": "4c59cd50ff2bdbde6d14a6697b0fcf8d60e30abfbb14521d6fffea3eb6cb97a2"
+    },
+    {
+      "path": "pipeline/episode_functor_hankel_experiment.py",
+      "sha256": "e10a615a93f1c7bef9b451ad05a87db97e5b96276eefbb66db0a5eb9c01fb0e8"
+    },
+    {
+      "path": "pipeline/episode_functor_hankel_geometry.py",
+      "sha256": "336025331692941cb2476cf776185e4b94fb0439bf54bcd84f7f25c0febe5664"
+    },
+    {
+      "path": "pipeline/episode_functor_hankel_train_package.py",
+      "sha256": "cee8bcdd3f30babaf22954c715eaeb54193885b733b611e26426849a1418b6a7"
+    },
+    {
+      "path": "pipeline/episode_functor_machine_contract.py",
+      "sha256": "dc57343afae727a58aa3fccde55db74a42b6af4b614cdf89a9317fa2808563f8"
+    },
+    {
+      "path": "pipeline/episode_functor_qualification_batch.py",
+      "sha256": "968a3f0cb624b7cf439960e51d42988bc5231a940fb0f94b7b25b140ca1fce03"
+    },
+    {
+      "path": "pipeline/episode_functor_qualification_boundary.py",
+      "sha256": "dcd726009f8d98e1476b3f147277867780136ad98c8a4cece589f05dc61f723e"
+    },
+    {
+      "path": "pipeline/episode_functor_qualification_custody.py",
+      "sha256": "a59ce22061edf7bfd4bc29a43d46defea2de554c13b9a5febf3e31a455f72087"
+    },
+    {
+      "path": "pipeline/episode_functor_resource_receipt.py",
+      "sha256": "7f6ca8cfe944f949a33f48bbd060a5287f000e996465721db5b05c0d62f9658e"
+    },
+    {
+      "path": "pipeline/episode_functor_runtime_custody.py",
+      "sha256": "134ddca9079d7f0aef83d10e8f558ecb767087afda876f42e6ef028d3a2f1635"
+    },
+    {
+      "path": "train/episode_functor_capacity_lanes.py",
+      "sha256": "5a10c934fc45f2d021fecd8eb4248e53dc9a47c19370e823eda0102fee99f524"
+    },
+    {
+      "path": "train/episode_functor_constrained_transport.py",
+      "sha256": "e9067d8b26c8f2fc2e7fb2c136f63fc3350a993dbf1612c385482fb58925db18"
+    },
+    {
+      "path": "train/episode_functor_hankel_arm.py",
+      "sha256": "bf6914d8efaf9e432953c6c9c9dda15b7ee9ad9c28f682de44b156ae7bb483a4"
+    },
+    {
+      "path": "train/episode_functor_hankel_completion.py",
+      "sha256": "71610d8110ca05666bcfcfd818d55f80b467c85f6f6f279c105ce7df268dac0d"
+    },
+    {
+      "path": "train/episode_functor_learned_completion.py",
+      "sha256": "1da70ed3b5fa4c839a627433e10fd8d8c636d90627f00d1cc2496f42db27e5d5"
+    },
+    {
+      "path": "train/episode_functor_learned_system.py",
+      "sha256": "5606c471527e434ccc2ff9f739851ca6c9ee3cbd7e51530689203e854d3997d9"
+    },
+    {
+      "path": "train/episode_functor_machine.py",
+      "sha256": "c0554bc37b00663ca95259e0466a9de49662e27348a4162d1a3d5c6190122264"
+    },
+    {
+      "path": "train/episode_functor_pointer_compiler.py",
+      "sha256": "d3f14f02683ec70a227914cbf34856670ea6d8054b31f3f70bc72d867a7fdc21"
+    },
+    {
+      "path": "train/episode_functor_qualification_loss.py",
+      "sha256": "af36022a48894fd44b7661fc59d598616983da18545cc98160856dddbaaaa262"
+    },
+    {
+      "path": "train/episode_functor_qualification_trainer.py",
+      "sha256": "b37c6b40cce882b3d8026c6837097dfc154b96d2ecbb7274a2937e3567bd956c"
+    },
+    {
+      "path": "train/episode_functor_query_parser.py",
+      "sha256": "0fb2e55d71991429cc1bbddb419f858a370aa8f854dae769ab8b99c51c609aaf"
+    },
+    {
+      "path": "train/episode_functor_shohin_trunk.py",
+      "sha256": "49d158b03feca83bdc05d904eaee225176102a4f3baa1393a4e8d50b030ad994"
+    },
+    {
+      "path": "train/episode_functor_witness_compiler.py",
+      "sha256": "d758af200acfbf349e483fff8affd08e4dce5a5b62971ed65ceb64f481ba939c"
+    },
+    {
+      "path": "train/landlock_stage_exec.py",
+      "sha256": "38fe40e10f52f7a2dff5eb2706ed96d1e0d87f1ed990e8b80d0298c82fbfa801"
+    },
+    {
+      "path": "train/model.py",
+      "sha256": "45fc0dc46ceb0f91d08e3f671cbe9ef202ea212e72d5bba8b77356c3fb0983d4"
+    },
+    {
+      "path": "train/run_episode_functor_hankel_canary.py",
+      "sha256": "ff4e0d5dc84f811654985fe76f4a9f867b5db17238a601653986a0a89153a059"
+    }
+  ]
+}
