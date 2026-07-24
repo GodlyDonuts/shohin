@@ -2,6 +2,7 @@
 
 **Date:** 2026-07-23
 **Input theory SHA-256:** `e3c7420fd7aef36834cee79af58afe681359e1cbf5ca35a1ad855d14bfcabd36`
+**Frontier handoff text SHA-256:** `a83536547b121d000cd8c28d9ce4beb059a661f49a294eb6492d7db0e61e3531`
 **Disposition:** admit the architecture redesign as a research hypothesis; reject the
 old-board two-answer-cache no-go as proven in its present form.
 
@@ -222,3 +223,42 @@ reference. Its pending neural pilot is not launched.
 The Episodic Functor Compiler is admitted as the next architecture hypothesis,
 subject to CPU falsification. It is not yet a reasoning mechanism, and it does
 not alter the continuation-pretraining hold.
+
+## Process-Custody Implementation Update
+
+The theory's machine and phase boundary have now been translated into a
+standalone deterministic candidate, a later independent assessor, and three
+source languages:
+
+1. canonical shuffled transition/observation events;
+2. strict line records; and
+3. canonical permutation-cycle programs plus answer-labelled observer
+   partitions.
+
+All three compile to one fixed 1,536-byte deployed machine in local mechanics
+tests. This demonstrates that the proposed machine has a precise executable
+contract; it does not demonstrate learned identification.
+
+A hostile audit rejected the first custody draft because a snapshot-supplied
+certificate could self-authorize, Git commit time did not prove publication
+before the pulse, the parent trusted an assessor verdict, the network probe
+accepted unrelated socket errors, role/input paths had replacement windows,
+and Linux had no unmocked replay. The revised candidate now:
+
+- requires a fixed Git-tracked authorization blob;
+- pins the exact NIST certificate DER SHA-512 and exact future pulse index;
+- requires a matching public GitHub PushEvent for the exact published head;
+- copies and hash-binds each role source inside the sandbox;
+- recomputes complete machine equality in the parent;
+- accepts only policy-specific network-denial outcomes;
+- rejects symlinks, nonregular closure entries, oversized inputs, and
+  30-second timeouts; and
+- keeps Linux explicitly unadmitted pending an unmocked Bubblewrap plus
+  Landlock replay.
+
+The remaining scientific barrier is unchanged: deterministic compilation is
+the mechanics ceiling. A neural EFC must infer a correct anonymous machine
+from raw source evidence on unseen worlds and source languages, beat
+capacity-matched cache and generic recurrence controls, and survive
+post-seal challenges and key/transition interventions. No neural freeze or
+pretraining is authorized by the process work.

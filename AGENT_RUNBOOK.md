@@ -65,6 +65,33 @@
 > External temporal unpredictability, candidate blindness, official
 > confirmation, a neural fit, and pretraining remain unauthorized.
 >
+> **Latest EFC process-custody hardening (2026-07-23 EDT):** the external
+> theory draft remains preserved byte-identically at SHA-256
+> `e3c7420fd7aef36834cee79af58afe681359e1cbf5ca35a1ad855d14bfcabd36`;
+> its accompanying frontier handoff text has SHA-256
+> `a83536547b121d000cd8c28d9ce4beb059a661f49a294eb6492d7db0e61e3531`.
+> A third, structurally different permutation-cycle/program source language
+> now compiles to the same 1,536-byte deployed machine as canonical JSON and
+> strict line events. Standalone candidate and later assessor processes pass
+> the local macOS default-deny gate. A hostile audit rejected the first
+> custody draft for self-authorized certificate risk, author-controlled Git
+> time, false-positive network probing, source/input replacement windows,
+> parent trust in the assessor verdict, and absent Linux evidence. Current
+> hardening pins the exact NIST certificate and future pulse in one fixed
+> Git-tracked authorization, verifies consecutive signatures under the
+> certificate independently fetched from NIST's HTTPS endpoint, requires a
+> matching server-stamped public GitHub
+> PushEvent, hash-binds isolated role/launcher copies, recomputes full machine
+> equality in the parent, accepts only policy-specific network errors, and
+> rejects symlinks, nonregular closure entries, oversized inputs, and
+> timeouts. The expanded relevant suite is 195 passed. A second independent
+> hostile audit reports no remaining P0, P1, or P2 findings and authorizes an
+> exact source freeze for the macOS CPU custody-mechanics claim. Linux remains
+> unadmitted because
+> Newton DNS currently fails before SSH; no authorization has been frozen, no
+> future pulse consumed, and no neural fit, reasoning result, or pretraining
+> is authorized.
+>
 > **Latest frontier handoff (2026-07-23 EDT):** the standalone AHRF seed
 > `2026072345` process ended without publishing its atomic output directory,
 > checkpoint, or report. It is void and has no score; terminal cause is
@@ -12000,3 +12027,42 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   custody work is a cryptographically verified public future beacon plus
   externally witnessed candidate publication and process-level assessor
   isolation.
+
+- **2026-07-23** -- **The frontier EFC theory is admitted as an architecture
+  hypothesis and translated into a hostile-audited process contract; no neural
+  claim follows.** The downloaded theory is preserved byte-identically as
+  `R12_EPISODE_FUNCTOR_COMPILER_THEORY_DRAFT.md`, SHA-256
+  `e3c7420fd7aef36834cee79af58afe681359e1cbf5ca35a1ad855d14bfcabd36`;
+  the accompanying frontier-analysis text has SHA-256
+  `a83536547b121d000cd8c28d9ce4beb059a661f49a294eb6492d7db0e61e3531`.
+  Its valid contribution is an anonymous categorical machine with separate
+  keys/transitions, attached training versus detached scoring, and
+  independently generated post-seal challenges. Its finite-query-cache
+  objection remains conditional: the source-only compiler is not lawfully
+  given the two realized hidden query coordinates on the old board.
+
+  Production mechanics now include a strict permutation-cycle/program source
+  language in addition to canonical JSON and line events, a standalone
+  standard-library candidate, a temporally later assessor, and a local
+  default-deny macOS blindness probe. All three sources compile to identical
+  fixed-width machine bytes. A first hostile audit correctly rejected the
+  custody draft. The revised code requires one fixed Git-tracked
+  authorization, an exact future pulse, a pinned and NIST-HTTPS-anchored
+  certificate DER digest, a matching public GitHub PushEvent for the
+  published head, exact Git blob
+  equality for all frozen sources, hash-bound copied role/launcher sources,
+  full parent-side byte comparison, policy-specific network-denial errors,
+  closed regular-file trees, one-MiB input bounds, and 30-second role
+  timeouts. The expanded relevant suite passes `195/195`.
+
+  A second independent hostile audit reports no remaining P0, P1, or P2
+  findings and returns `FREEZE` for the exact macOS CPU custody-mechanics
+  source. Newton remains unreachable at DNS resolution, so Bubblewrap plus Landlock
+  has not been replayed unmocked and Linux remains explicitly unadmitted. No
+  authorization file has been frozen, no target pulse has been consumed, no
+  neural EFC has been fit, and the protected step-300k checkpoint and
+  pretraining hold remain unchanged. The next gate is exact source
+  publication plus a fixed future authorization/pulse rehearsal on macOS,
+  followed by unmocked Linux custody when connectivity returns. Only after
+  cross-host custody may a separate learned source-to-machine compiler be
+  preregistered with cache and generic-recurrence controls.

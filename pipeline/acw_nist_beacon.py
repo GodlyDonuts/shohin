@@ -372,6 +372,13 @@ def write_snapshot(
     pulse = fetch_pulse(chain_index, pulse_index)
     previous = fetch_pulse(chain_index, pulse_index - 1)
     certificate = fetch_certificate(pulse["certificateId"])
+    previous_receipt = verify_pulse(
+        previous,
+        certificate,
+        expected_chain_index=chain_index,
+        expected_pulse_index=pulse_index - 1,
+        expected_timestamp=previous["timeStamp"],
+    )
     receipt = verify_pulse(
         pulse,
         certificate,
@@ -383,6 +390,7 @@ def write_snapshot(
         "protocol": PULSE_PROTOCOL,
         "pulse": pulse,
         "previous_pulse": previous,
+        "previous_verification": previous_receipt,
         "certificate_pem": certificate.decode("ascii"),
         "verification": receipt,
     }

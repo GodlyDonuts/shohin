@@ -46,6 +46,11 @@ from pipeline.episode_functor_independent_world import (
     GENERATOR_SCHEMA as INDEPENDENT_GENERATOR_SCHEMA,
     generate_independent_world,
 )
+from pipeline.episode_functor_cycle_language import (
+    CycleLanguageError,
+    MAGIC as SOURCE_CYCLE_MAGIC,
+    decode_cycle_language,
+)
 from pipeline.episode_functor_source_renderers import (
     LINE_MAGIC as SOURCE_LINE_MAGIC,
     SourceRendererError,
@@ -61,6 +66,9 @@ INDEPENDENT_GENERATOR_SOURCE = (
 )
 SOURCE_RENDERER_SOURCE = (
     ROOT / "pipeline" / "episode_functor_source_renderers.py"
+)
+CYCLE_LANGUAGE_SOURCE = (
+    ROOT / "pipeline" / "episode_functor_cycle_language.py"
 )
 
 FORMAT_VERSION = 1
@@ -191,12 +199,12 @@ class WireProtocolSpec:
             raise ProtocolViolation("identity observer does not fit answer alphabet")
         if (
             self.renderer_count != 1
-            or self.source_renderer_count != 2
+            or self.source_renderer_count not in {2, 3}
             or self.world_count != 1
         ):
             raise ProtocolViolation(
-                "rehearsal requires two source renderers, one query renderer, "
-                "and one world"
+                "rehearsal requires two or three source renderers, one query "
+                "renderer, and one world"
             )
         if self.duplicate_policy != "reject":
             raise ProtocolViolation("only reject-duplicate custody is rehearsed")
@@ -254,7 +262,7 @@ class WireProtocolSpec:
         )
 
     def canonical_dict(self) -> dict[str, object]:
-        return {
+        result = {
             "action_count": self.action_count,
             "answer_count": self.answer_count,
             "c_runtime_source_sha256": _sha256_hex(
@@ -306,6 +314,11 @@ class WireProtocolSpec:
             "world_count": self.world_count,
             "world_generator": self.world_generator,
         }
+        if self.source_renderer_count == 3:
+            result["cycle_language_source_sha256"] = _sha256_hex(
+                CYCLE_LANGUAGE_SOURCE.read_bytes()
+            )
+        return result
 
 
 @dataclass(frozen=True)
@@ -369,9 +382,17 @@ def _parse_world_evidence(
                 raise ProtocolViolation(
                     "line-rendered world evidence is malformed"
                 ) from renderer_exc
+        elif evidence.startswith((SOURCE_CYCLE_MAGIC + "\n").encode("ascii")):
+            try:
+                row = decode_cycle_language(evidence)
+                source_renderer = 2
+            except CycleLanguageError as renderer_exc:
+                raise ProtocolViolation(
+                    "cycle-program world evidence is malformed"
+                ) from renderer_exc
         else:
             raise ProtocolViolation(
-                "world evidence is neither JSON nor line events"
+                "world evidence is neither JSON nor line nor cycle program"
             ) from exc
     else:
         if canonical_json_bytes(row) != evidence:
