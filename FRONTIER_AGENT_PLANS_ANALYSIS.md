@@ -1,405 +1,260 @@
-# Frontier Agent Plans: Shohin Evidence Review
+# Causal Object-File Compiler: Evidence Review
 
-**Status:** external-plan analysis complete; no neural run authorized by this
-review alone.
+**Status:** external COFC proposal reviewed against the live ER-TT grammar, all
+closed canaries, the completed scale audit, and the locally prepared factorized
+witness-route preregistration. No new neural run is authorized by this review.
 
 **Reviewed source:** `FRONTIER_AGENT_PLANS.md`
 
-**Original download SHA-256:**
-`3d82ece081a899750c64a5a63df50e7b0405b2621f7cfd98b3e84c8ab4d942fc`
+**Workspace SHA-256:**
+`8903788809f987372ba23d1cff77e8e86641a174e9cc8b02828c740ab2a63271`
 
-**Workspace copy SHA-256:**
-`2d18b364cbad8999eaac8c30b373d4aebd4d858b8608fb33e6868c433f7124d3`
-
-The workspace copy is content-identical to the download with one normalized
-terminal newline added. The download contains 343 lines, 7,070 words, and
-55,141 bytes. It contains four labeled submissions but only three distinct
-plans: the Meta AI and ChatGPT Deep Research sections are identical except
-that the ChatGPT copy omits Meta's final two sentences.
+The reviewed plan contains 433 lines, 2,550 words, and 18,451 bytes. It is an
+evidence-aligned rewrite of the external proposal, not a verbatim copy.
 
 ## 1. Executive Verdict
 
-The plans are valuable as a design-space survey, but none is ready to launch
-as written.
-
-All three distinct plans correctly identify Shohin's central failure:
-
-> The base has useful local execution and a real late residual signal, but it
-> does not reliably compile language into operations, update and consume state,
-> or halt autonomously.
-
-Their strongest shared recommendation is also sound: stop forcing compilation,
-execution, state transport, correction, and halting to share one undifferentiated
-language-model loss and residual stream. Separate those interfaces physically
-and educationally, then test their integration.
-
-The plans become weaker when they move from diagnosis to mechanism. Several
-components are analogies rather than update laws; several reintroduce a host
-executor or fixed scheduler; and most bundles change too many variables at
-once. Predictive coding, Hopfield attraction, vector quantization, an SSM,
-LoRA, a reservation station, RL, and a checksum do not become a reasoner merely
-by being assembled together.
-
-The best actionable synthesis is therefore not any complete submitted stack.
-It is a staged **compiler-to-state-machine post-training program**:
-
-1. Train and independently gate a pointer-grounded natural-language compiler.
-2. Train a source-deleted recurrent executor with an explicit state interface.
-3. Train state consumption and halting as separate objectives and parameter
-   islands.
-4. Integrate only components that pass their own fresh-transfer and causal
-   gates.
-5. Compare every architectural addition with a favorable equal-resource
-   recurrent control.
-
-This direction is compatible with the immutable 300k base and the less-than
-150M total parameter ceiling. It is a post-training protocol first, not an
-immediate claim of a new computational primitive.
-
-## 2. What The Plans Got Right
-
-### 2.1 They used the correct empirical diagnosis
-
-The plans are grounded in the most important Shohin results:
-
-- DRS first-state accuracy is 497/500 while complete final accuracy is only
-  275/500.
-- Source-scheduled execution reaches 115/256 while autonomous whole generation
-  reaches 9/256.
-- Oracle-compiled frozen DRS transitions are 28/34, while fresh natural-language
-  compilation is 0/6.
-- A late digit residual is causally strong, but the wide digit motor changes
-  autonomous accuracy only from 61/250 to 63/250.
-- Typed controller v1 learns DONE but not reliable arithmetic; mixing formats in
-  v2 destroys DONE.
-- R9c shows that 88.83% of wrong operation decisions are agreed-wrong
-  common-mode errors.
-
-That evidence does support decomposition into compiler, executor, state,
-consumer, and halt interfaces.
-
-### 2.2 They recognized that final pretraining is a substrate, not a reasoner
-
-None of the plans argues that another undifferentiated raw-token extension is
-the main answer. That agrees with the 120k, 168.75k, and 300k plateau. The
-important next educational phase is controlled post-training on the immutable
-300k checkpoint.
-
-### 2.3 They focused on organization rather than parameter count alone
-
-Shohin has 24,918,335 parameters of nominal room below the strict 150M ceiling.
-The proposals use that room for interfaces, state, and control rather than a
-generic width increase. That is directionally appropriate, provided the added
-mechanism earns its cost against a parameter-matched dense or recurrent arm.
-
-## 3. Source-By-Source Review
-
-### 3.1 Gemini Deep Research
-
-**Proposed stack:** a Global Workspace router, 16 memory tokens, a Modern
-Hopfield layer, adaptive recurrence, partial attention-to-SSM conversion, a
-programmatic finite-state controller, and denoising recursion training.
-
-**Useful elements:**
-
-- Deep-start halting initialization is a concrete, testable ACT control.
-- Memory tokens plus tied recurrence define a clear state carrier.
-- Denoising self-generated state is a legitimate robustness objective.
-- The proposal explicitly budgets components under the parameter ceiling.
-
-**Scientific problems:**
-
-1. **It is an architecture bundle, not one hypothesis.** A positive result
-   could not be attributed to workspace routing, recurrence, denoising,
-   memory, the SSM conversion, or deterministic gating.
-2. **The FSA violates the native boundary as written.** It intercepts invalid
-   tokens, prunes them, and programmatically forces transitions and completion.
-   That is an external scheduler/repair controller, so it can be a ceiling or
-   safety wrapper but not evidence that Shohin owns control and halt.
-3. **Hopfield attraction does not define mathematical validity.** The proposed
-   update is attention-like retrieval. Without a learned and independently
-   verified codebook, the nearest attractor may simply be the nearest common
-   mistake. Shohin's dominant errors are semantic and common-mode, not merely
-   small metric perturbations.
-4. **The SSM conversion addresses efficiency more directly than reasoning.**
-   Replacing ten pretrained attention layers is a high-risk representation
-   surgery, and no distinguishing prediction connects constant-size fading
-   memory to correct operation selection.
-5. **The parameter ledger is internally inconsistent.** `256 * 576 * 32` is
-   4,718,592, not 4,608,000. `5 * 576 * 576` is 1,658,880, not 1,536,000. Even
-   using the proposal's own row values gives a modified footprint of
-   120,749,376, not 120,669,376, before accounting for the replacement SSM
-   parameters. The budget must be rebuilt from actual modules.
-6. **Several numerical claims are not supported inside the supplied file.**
-   The stated shallow-halt frequency, 34% compute saving, 2.3x decode speedup,
-   and sub-0.5% priming cost are not tied to reproducible Shohin evidence here.
-
-**Verdict:** `NO-GO_AS_BUNDLED`. Retain deep-start ACT and denoising as ordinary
-matched controls. Do not replace attention layers or install the host FSA as a
-reasoning mechanism.
-
-### 3.2 Grok
-
-**Proposed stack:** a predictive-coding sidecar, a learned dynamical controller,
-modular primitive adapters, bistable or cellular state, and a compact microcode
-interface.
-
-**Useful elements:**
-
-- It correctly treats the post-DRS residual as a possible actuator aperture,
-  not proof of a complete workspace.
-- It emphasizes source-deleted rollout and counterfactual state swaps.
-- It proposes physically separated modules and losses, directly addressing
-  the typed-v1/v2 gradient-conflict result.
-- It keeps the host boundary explicit in its proposed tests.
-
-**Scientific problems:**
-
-1. **Prediction error is not automatically a controller.** A sidecar trained
-   to predict the next state can collapse to an auxiliary recurrent adapter.
-   It must show that its state is both causally necessary and more useful than
-   an equal-resource next-state model without the predictive-coding framing.
-2. **The compiler remains underspecified.** A setpoint or latent goal does not
-   explain how unseen paraphrases become exact ordered operations and operand
-   bindings.
-3. **The modular proposal risks importing the operation ontology.** If the
-   router is handed named add/multiply modules or a gold schedule, the hard
-   part has moved into supervision rather than been solved.
-4. **Bistability protects a selected state but cannot correct a wrong semantic
-   selection.** This is the same distinction exposed by the common-mode error
-   result and the noise-stable-action no-go.
-5. **PCMW still combines several hypotheses.** Predictive coding, modular
-   routing, bistability, recurrence, and learned halt need individual ablations
-   before a combined run has scientific meaning.
-
-**Verdict:** `PROMISING_DECOMPOSITION`, but not a frozen experiment. The most
-valuable extract is phase-separated parameter islands plus a source-deleted
-state interface. Predictive error should enter as one ablation, not as the
-unquestioned foundation.
-
-### 3.3 Meta AI and ChatGPT Deep Research
-
-These are one distinct submission, not two independent votes.
-
-**Proposed stack:** temporal compiler/executor LoRAs, a three-field pointer
-codon, a quantized abacus, read/write buses, a reservation station, an
-RL-trained halt controller, a trajectory checksum, dual compiler views, and a
-negative-program discriminator.
-
-#### Pointer codon and temporal differentiation
-
-This is the strongest component. An explicit
-`[operation, source-A pointer, source-B pointer]` interface directly targets
-the observed binding and compilation failures. Separating compiler and
-executor parameters and stopping gradients at the interface could prevent the
-response-mode interference seen in typed v2.
-
-The biological error-correction argument is not valid as stated. The three
-fields are different semantic fields, not three redundant transmissions of the
-same symbol, and mapping `add`, `plus`, and `sum` to one embedding is canonical
-classification rather than an error-correcting code. The mechanism can still
-be useful without that analogy.
-
-The proposed LoRA count is not auditable until the exact target matrices,
-ranks, biases, and shared parameters are listed. The phase notation also must
-state whether compiler and executor are separate forward calls, depth phases
-inside one call, or training phases.
-
-#### Quantized abacus and reservation station
-
-Explicit categorical state is testable, but categorical representation alone
-has already proved insufficient in packet/tape controls. The required new
-evidence is an autonomous source-deleted transition law that consumes its own
-previous state.
-
-The sentence "carry becomes trivial" hides the central problem. If overflow
-and carry propagation are fixed rules, the architecture contains an arithmetic
-executor. If they are learned, then carry is not trivial and must pass the same
-width/value/order transfer gates as any other updater. Likewise, a reservation
-station that decides readiness and execution order is a scheduler whose state,
-logic, and supervision must be counted.
-
-Read/write parameter separation is a plausible treatment for destructive
-interference. It should be compared against an equally large ordinary recurrent
-adapter with the same state bits and sequential depth.
-
-#### RL halt and checksum
-
-Training a separate halt policy with a different objective is worth testing.
-The typed-controller evidence makes loss separation more plausible than merely
-adding another DONE token.
-
-The checksum does not detect the proposed common-mode semantic error. A rolling
-hash of the chosen operations and intermediate digits can be perfectly
-consistent with a completely wrong operation sequence. It only detects
-corruption relative to that wrong trajectory unless there is an independent,
-source-derived expected invariant. If an external process supplies that
-expected invariant, its information and computation must be counted.
-
-"Distance to closed form" is also undefined. If computing it requires knowing
-the correct terminal state, it is an answer oracle. A valid halt energy must be
-computed only from model-owned state and must be tested against premature and
-late halt twins.
-
-#### Dual views and negative selection
-
-Two tokenizations or reading directions are not guaranteed to be independently
-grounded; they may reproduce the same lexical error. This proposal is closely
-related to the existing pre-emission dual-view commit lane and therefore cannot
-be treated as unexplored merely because it uses immunology or market language.
-
-A wrong-program discriminator is potentially useful for compiler post-training,
-but it must be trained on source-preserving hard minimal pairs. Randomly wrong
-programs are usually easy negatives and may teach formatting artifacts rather
-than semantic rejection. The discriminator may reject or abstain; it may not
-search for and install a corrected program without that repair work being
-counted.
-
-#### Proposed phase gates
-
-The numerical gates are directionally useful, but Phase 0 is ill-defined: an
-untrained pointer-codon/VQ architecture cannot be expected to improve a 0/6
-compiler "with zero GPU training." CPU training would still be training and
-must be specified. Phase 1 changes abacus state, bus separation, scheduling,
-and training together. Phase 2 changes optimizer, controller, halt, checksum,
-and reward together. Both need factorial ablations or a narrower first run.
-
-**Verdict:** `EXTRACT_AND_REWRITE`. Preserve the pointer-grounded compiler,
-parameter/loss separation, and explicit halt policy. Reject the biological
-coding claim, fixed carry shortcut, unchecked reservation station, and checksum
-claim as written.
-
-## 4. Consensus Does Not Equal Evidence
-
-The submissions converge on four themes:
-
-| Theme | Evidence status in Shohin |
-|---|---|
-| Separate compiler from executor | Strongly motivated by compiler 0/6 and typed-v2 interference |
-| Use explicit mutable state | Necessary but already known insufficient by itself |
-| Add recurrent or adaptive compute | Ordinary strong control; prior recurrence alone did not win |
-| Train halt separately | Strongly motivated by halt-first and typed-controller results |
-
-This consensus is useful for prioritization. It is not a mechanism proof. The
-plans were given the same ledger and therefore inherit the same diagnosis. The
-Meta and ChatGPT sections are duplicates, further reducing the apparent number
-of independent endorsements.
-
-## 5. Highest-Value Components
-
-### Tier A: worth formal preregistration
-
-1. **Pointer-grounded compiler.** Train exact operation and source-span
-   binding on frozen natural-language families. Score exact AST/program
-   equality on unseen paraphrases, role names, values, operation orders, and
-   distractors. Compare with a parameter-matched ordinary sequence classifier.
-2. **Phase-separated compiler/executor parameters.** Use separate adapters or
-   modules and an explicit stop-gradient interface. Compare with one jointly
-   trained adapter using the same total parameters, examples, updates, and
-   inference depth.
-3. **Source-deleted recurrent state executor.** After compilation, remove the
-   natural-language source and require the model to update, retain, and consume
-   its own state. Compare categorical, continuous, and favorable recurrent
-   controls under equal state bits.
-4. **Independent halt policy.** Train halt/continue on prefix twins where the
-   same local answer token appears in nonterminal and terminal contexts. Test
-   premature halt, late halt, output recoding, and state swaps.
-
-### Tier B: useful ablations, not foundations
-
-- predictive-error auxiliary loss;
-- denoising of self-generated state;
-- VQ state versus continuous state;
-- deep-start ACT bias;
-- read/write parameter separation;
-- hard-negative program discrimination.
-
-### Tier C: reject or retain only as ceilings
-
-- host FSA token pruning or forced completion;
-- fixed carry propagation or host readiness scheduling;
-- an unchecked rolling checksum as semantic correction;
-- wholesale attention-to-SSM replacement as a reasoning intervention;
-- a full multi-component architecture launch without component gates;
-- claims that Hopfield attraction, quantization, or bistability alone creates
-  valid mathematical state.
-
-## 6. Recommended First Program
-
-The first experiment should test education and interface separation before
-installing a large cognitive architecture.
-
-### Stage A: 300k compiler post-training
-
-Freeze the 300k checkpoint and train only a small compiler island. Its output
-is a typed operation with source-span pointers and an explicit terminal marker.
-No arithmetic target or answer token is included in this stage.
-
-Primary gate:
-
-- exact full program on a frozen, family-balanced board;
-- per-field operation and pointer accuracy;
-- order-twin and renamed-role accuracy;
-- zero source/target leakage;
-- no score based only on parseability.
-
-Controls:
-
-- equal-parameter plain classifier;
-- text-token program SFT without pointers;
-- shuffled-pointer control;
-- source-only lexical-family control.
-
-### Stage B: isolated state transition post-training
-
-Train an executor island from exact compiled programs and explicit previous
-state. Remove the natural-language source after state creation. The model must
-produce the next internal state without host arithmetic.
-
-Primary gate:
-
-- width/value/order transfer;
-- complete multi-step trajectory exactness, not only first state;
-- donor-state following;
-- zero/shuffled/complement state degradation;
-- improvement over a favorable equal-resource tied recurrent control.
-
-### Stage C: state consumption and halt
-
-Freeze the compiler and executor before generating this board. Train a separate
-consumer/halt island on terminal/nonterminal twins and state reuse. The same
-answer-like local configuration must sometimes continue and sometimes halt.
-
-Primary gate:
-
-- exact halt location;
-- no cap-hit or post-answer replay;
-- source-deleted reuse;
-- output-recoding stability;
-- causal dependence on the committed state.
-
-### Stage D: autonomous integration
-
-Only after A-C pass individually, compose the islands and allow limited joint
-calibration. Evaluate full natural-language-to-answer rollout with no oracle
-program, schedule, arithmetic, repair, or result selection. Report both the
-product of component accuracies and observed end-to-end exactness; a large gap
-is itself an integration failure.
-
-## 7. Decision
-
-The external plans materially improve our hypothesis inventory, especially by
-reinforcing staged compiler/executor/halt separation. They do not overturn the
-existing Shohin diagnosis and do not justify an immediate H100 architecture
-run.
-
-The research decision is:
-
-> **ADMIT the pointer-grounded, phase-separated post-training program for
-> formal preregistration. Keep predictive coding, VQ state, denoising, ACT, and
-> read/write buses as individually matched ablations. Reject the submitted
-> integrated stacks as scientifically underidentified.**
-
-No claim in this review establishes native reasoning, novelty, or expected
-benchmark gain. It identifies the smallest experiments that can convert the
-plans from analogies into causal evidence.
+COFC is the strongest long-range architecture proposed so far because it
+separates two variables that the failures show must not be collapsed:
+
+- a unique token for each physical occurrence; and
+- a nominal equivalence class for what that occurrence denotes.
+
+Its second important move is joint decoding of a coherent witness parse rather
+than independent pointer decisions. That directly targets marginal-route
+v1.1's 806 one-occurrence failures.
+
+The supplied plan was not ready to run verbatim. It contained one stale stage,
+one interface mismatch, and two large attribution risks. The revised decision
+is:
+
+> `RETAIN_COFC_AS_LEADING_SUCCESSOR; RUN_CURRENT_FACTORIZED_FALSIFIER_FIRST;
+> REQUIRE_CPU_NONTRIVIALITY_AND_MATCHED_CONTROLS_BEFORE_NEURAL_COFC`.
+
+## 2. What The New Evidence Changes
+
+### 2.1 The addressed experiment is already closed
+
+The proposal's Stage A says to run the ordinal/count addressed canary. Job
+`694928` has already done so and is rejected:
+
+- witness rows: 59.500%;
+- packet/joint/relation: 60.9125%;
+- state: 80.1375%;
+- answer: 90.225%; and
+- minimum-cardinality joint: 43.606%.
+
+It cannot be presented as a pending experiment.
+
+### 2.2 The scale audit rejects a simple magnitude diagnosis
+
+The no-optimizer audit is also complete. Zero ordinal yields 0% witness rows;
+zero count yields 0.4875%; scale 1.5 improves witness rows to 70.425% but remains
+far below the 89.925% marginal parent and degrades events to 94.9625%.
+
+This is stronger than the previous "ordinal norm became too large" story.
+Address variables contain useful information, but the rejected model needs both
+and entangles them with shared query/key geometry. A separately routed scalar
+address bus remains scientifically distinct; post-hoc rescaling does not.
+
+### 2.3 The immediate factorized test is already concrete
+
+`R12_ER_FACTORIZED_WITNESS_ROUTE_PREREG.md` defines a witness-only
+`14 x 12 x 14` residual table plus twelve bounded, zero-initialized role gates,
+for 2,364 parameters. Centering and bounded output prevent an unbounded
+cardinality shift; zero gates preserve the v1.1 logits exactly at
+initialization. The route cannot read identity bytes or outcomes.
+
+This is cheaper and more attributable than jumping immediately to a 2--3M
+parameter COFC. The updated score path includes same-seed, same-parameter
+baseline, structural-only, and shuffled-address arms, with a frozen +0.5-point
+treatment advantage requirement. A pass would show that the current grammar
+needs a source-local count/role/ordinal coordinate. It would not validate object
+files or joint inference; a high structural-only score would instead identify
+finite syntax routing.
+
+Exact source commit `4643d1a51defe53397f9bed481051621d85c0b11` is now frozen
+and pushed before any post-commit seed. No H100 job or new probe score exists.
+
+## 3. Strongest Parts Of COFC
+
+### 3.1 Occurrence and identity are correctly separated
+
+ER-TT deliberately allows the after-witness list to repeat the same nominal
+symbol. The correct representation therefore requires:
+
+```text
+physical occurrence A != physical occurrence B
+nominal identity(A) may equal nominal identity(B)
+```
+
+This cleanly explains why a wrong duplicate occurrence remains a pointer error
+even when the equality-derived relation is semantically close or identical.
+
+The interdisciplinary references support the abstraction, not the result.
+Kahneman, Treisman, and Gibbs describe object files as temporary episodic
+representations linking successive states of one object
+([PubMed](https://pubmed.ncbi.nlm.nih.gov/1582172/)). Green,
+Karvounarakis, and Tannen explicitly tag input tuples so provenance survives
+relational operations
+([PODS paper](https://web.cs.ucdavis.edu/~green/papers/pods07.pdf)). The
+June 2026 Dual-State Slot Attention preprint reports slot swapping when
+appearance and identity share one state and improves its video task by
+separating them ([arXiv](https://arxiv.org/abs/2606.12601)). None of these
+papers demonstrates that COFC will solve ER-TT.
+
+### 3.2 Joint paths match the observed error geometry
+
+Every marginal-route failure has exactly one wrong occurrence, commonly a
+neighbor that locally outranks the correct late after-witness. A complete path
+can recover a locally second-ranked candidate when the aggregate path is best.
+This is the useful computational import from global sequence alignment
+([Needleman-Wunsch](https://pubmed.ncbi.nlm.nih.gov/5420325/)).
+
+### 3.3 The executor remains untouched
+
+COFC correctly leaves the source-deleted relation motor alone. That respects
+the strongest causal fact in the project: valid packets execute exactly, so
+compiler work should not be disguised as more recurrence.
+
+### 3.4 The proposal exposes good interventions
+
+Address swaps, nominal-signature swaps, joint-decoder ablation, object-ID
+permutation, source poison, and directory shuffle manipulate distinct causal
+objects. These are much more diagnostic than another undifferentiated capacity
+increase.
+
+## 4. Corrections Required Before Implementation
+
+### 4.1 Current ER-TT monotonicity is almost deterministic
+
+The renderer emits each active rule as an opcode, exactly `N` before symbols,
+a separator, and exactly `N` after symbols. There are no opaque distractors
+inside a witness segment. Once a system finds the boundary and cardinality,
+the legal monotone path is effectively the ordered list itself.
+
+That makes monotone alignment legal, but weakens its scientific value on the
+current board. A success could be fixed-grammar parsing rather than resolution
+of ambiguous associations. The CPU falsifier must measure the number of legal
+paths and introduce a separately preregistered distractor grammar before COFC
+can test its claimed mechanism.
+
+### 4.2 One-to-one is local to occurrence positions
+
+Candidate non-reuse is valid within one ordered before or after path because
+physical source positions are distinct. It is invalid as a global relation
+constraint. ER-TT relations are intentionally total and non-bijective, and
+self-maps are legal.
+
+Thus:
+
+- separate monotone paths per segment are admissible;
+- repeated nominal classes across selected after occurrences are admissible;
+- global Sinkhorn/Hungarian relation assignment remains forbidden; and
+- factors may never force nominal bijectivity.
+
+### 4.3 The proposed query directory does not match this board
+
+The external text assumes that the late query contains a symbol referent whose
+signature can be matched against an object directory. Current ER-TT queries are
+position numerals: `Q1...Q6` or `ASK 1...6`. Both recent canaries already score
+query routing at 8,000/8,000.
+
+An object directory is a good future test for referential or alias-bearing
+queries, but it is irrelevant to the current witness residual. Adding it now
+would change an interface that is already exact and confound attribution.
+
+### 4.4 Factor messages can become host repair
+
+Monotonicity, segment membership, cardinality agreement, and equality between
+model-selected source objects are legitimate source-local factors. Graph
+validity, executor consistency, final answers, retries, or target relations are
+not. The factor schedule must be fixed; invalid outputs stay wrong.
+
+The factor-graph literature shows how global functions can be decomposed into
+local factors and processed by message passing
+([primary paper](https://www.isiweb.ee.ethz.ch/papers/arch/aloe-2001-1.pdf)).
+It does not determine which Shohin factors are scientifically permissible.
+
+### 4.5 Cardinality extrapolation is a separate experiment
+
+Training on `N=3...6` and immediately scoring `N=7...9` simultaneously changes
+tensor shape, grammar length, candidate count, query vocabulary, state size,
+and evaluator limits. That is a valuable eventual test, but not the first COFC
+board. First establish fresh in-range renderer/occurrence transfer; then freeze
+a separate extrapolation board.
+
+### 4.6 The parameter estimate is provisional
+
+The proposal's 2--3M estimate is plausible under the 14.47M remaining headroom,
+but no implementation or optimizer-state audit exists. Dynamic programming,
+factor rounds, temporary state, object-directory bytes, and sequential compute
+must be reported even when they add no parameters.
+
+## 5. Disposition Of Proposed Components
+
+| Component | Disposition | Reason |
+|---|---|---|
+| Separate occurrence and nominal ledgers | **Retain as core** | Directly represents the observed aliasing distinction |
+| Segment-local joint alignment | **Retain conditionally** | Matches rank-two errors; first prove a nontrivial legal-path problem |
+| Small source-local factor graph | **Retain with firewall** | Can enforce coherent parses without execution only if factors are frozen and local |
+| Tied recurrent role reader | **Defer one stage** | Useful for extrapolation but should not be bundled with first joint test |
+| Intrinsic two-sided address code | **Defer one stage** | Better extrapolation hypothesis than finite lookup, but a separate intervention |
+| Object-directory late query | **Future board only** | Current ER-TT query is positional and already exact |
+| Fixed proofreading rounds | **Optional later ablation** | Must remain internal, fixed-cost, and unable to inspect outcomes |
+| `N=7...9` development | **Separate board** | Otherwise mixes mechanism, shape, and extrapolation failures |
+| Global one-to-one assignment | **Reject** | Contradicts legal non-bijective relations |
+| Strong biological equivalence claims | **Reject** | References motivate abstractions but do not validate Shohin |
+
+## 6. Best Experimental Sequence
+
+1. Freeze and run the existing 2,364-parameter factorized train-only canary.
+2. Build a CPU COFC legality/nontriviality suite before any neural COFC source.
+3. Quantify whether the current grammar has multiple legal paths; if not, add a
+   new distractor grammar rather than claiming joint inference on a deterministic
+   parse.
+4. Compare independent marginals, the factorized table, joint COFC, independent
+   COFC with identical unary logits, fused-ledger COFC, and structural-only/
+   shuffled controls in one matched train-only experiment.
+5. If the matched mechanism gates pass, generate a fresh `N=3...6` board with
+   unseen renderers, distractors, object-ID permutations, and non-bijective
+   rules.
+6. Only then freeze a distinct `N=7...9` extrapolation and referential-query
+   program.
+
+## 7. What Different Outcomes Would Mean
+
+- **Factorized table passes:** current ER-TT needed a local structural
+  coordinate; do not call that general object-file compilation.
+- **Factorized table fails, joint COFC passes:** independent role decisions were
+  the causal bottleneck.
+- **Joint COFC helps only with distractors:** current board was too deterministic
+  to identify the mechanism, but the expanded board supports it.
+- **Joint alignment passes while unseen renderers fail:** unary landmark or
+  segment discovery remains the bottleneck.
+- **Compilation passes while a future referential query fails:** the retained
+  nominal directory or query matcher is inadequate.
+- **Only grammar-heavy factors pass:** the result is bounded parser engineering;
+  the next experiment must weaken or vary the grammar.
+- **Source-retained control wins after source-deleted COFC fails:** the compiled
+  object state omits query-relevant information.
+
+## 8. Final Decision
+
+The smart model found a genuinely better conceptual architecture. “Surrogate
+keys plus coherent joint parsing” is a more faithful response to the evidence
+than adding richer positional vectors to independent bilinear heads.
+
+The evidence-aligned version is narrower than the submitted text:
+
+- the addressed canary and scale audit are finished, not pending;
+- the 2,364-parameter residual route remains the immediate falsifier;
+- monotone alignment must first be shown nontrivial;
+- one-to-one constraints stop at physical positions inside a segment;
+- current positional queries remain unchanged; and
+- cardinality extrapolation and referential object directories receive their
+  own later boards.
+
+With those corrections, COFC is the leading successor architecture if the
+factorized lookup cannot close the witness gate—or the leading harder-board
+test if that lookup succeeds too easily.

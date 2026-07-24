@@ -1,5 +1,229 @@
 # Shohin Native Reasoning Master Ledger
 
+## Current Status — Read First
+
+**Current frontier:** seal-first CPU qualification of the Episodic Functor
+Compiler (EFC), after correcting its theory and custody model. No neural first
+fit is currently authorized.
+
+- **Protected base:** immutable step-300k Shohin checkpoint,
+  125,081,664 parameters, SHA-256
+  `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`.
+- **Strict future ceiling:** fewer than 200,000,000 unique parameters for the
+  complete system.
+- **Disposition of frozen mechanism `80dc07a`:** retain the 907,269-parameter
+  four-slot causal bind-select workspace as a favorable control and custody
+  reference. It is no longer a constraint on the candidate solution.
+- **Previous OCSI preregistration:** `NO-GO AS WRITTEN`. Its proposed binding
+  and operator objects do not exist as query-blind compiler outputs in the
+  frozen architecture; interventions are assessment-only; sealing detaches the
+  compiler; and its diagonal and query-reuse losses duplicate the same
+  predictions.
+- **New candidate family:** Episodic Functor Compiler (EFC). A perceptual
+  transformer would compile raw source into a fixed-shape anonymous categorical
+  machine with opaque state/action keys, shared action-transition maps, observer
+  maps, and a separate late-query parser. Ordered execution would occur only
+  after source deletion.
+- **New corrective CPU result:** the supplied EFC theory draft is also
+  `NO-GO AS WRITTEN`, while the architecture family remains open. Its
+  finite-query theorem is valid, but current custody gives the compiler no
+  access to the identities of the two sampled development queries. The
+  post-seal interface supports 8,736 start/word queries per committed world,
+  not two.
+- **Measured mechanics:** an explicit categorical machine executes all
+  1,920/1,920 frozen EPISODE packets across 960 committed worlds. Every world
+  has eight exact causal-quotient classes. A complete depth-six answer table
+  requires 26,208 answer bits versus 261 minimum semantic bits for transitions,
+  identity observer, and retained opaque state/action keys. A second
+  independent audit reports 276 conservative bits after retaining the draft's
+  initial-state field and active masks. Neither is a serialized-byte receipt.
+- **Cache falsifier:** a lawful world-only canonical two-entry cache covers
+  0/384 hidden development queries. A deliberately leaky cache given executor
+  query identities and assessor answers reaches 384/384, proving that the
+  claimed two-answer construction crosses the existing custody boundary.
+- **Intervention mechanics:** over 960 depth-at-most-four queries, key-only and
+  operator-only cyclic interventions each change 840 outputs; compensated
+  key/operator permutation changes 0. All six compensated action-record
+  permutations are invariant, and local transition-row transplantation is
+  exact.
+- **Additional schema defect found:** current late queries supply an opaque
+  start-state token. The EFC draft retains only one `initial_state` and no
+  `state_key` records, so it cannot bind the current query after source
+  deletion. The revision must either retain fixed-shape state keys or redesign
+  the board around a source-fixed initial state.
+- **Hostile seal audit:** the current corpus is diagnostic-only. World
+  mechanics and hidden queries share one deterministic PRNG trajectory,
+  candidate-world acceptance inspects sampled query outcomes, and custody
+  files are separated only after complete packets exist. This is not temporal
+  challenge independence. The two Python auditors are also not independent
+  deployed runtimes because they share key canonicalization, integer
+  transition layout, and composition convention.
+- **Corrected protocol:** freeze a protocol and candidate model, derive
+  official worlds from a future public beacon, seal fixed-width machine bytes,
+  then derive challenge coordinates from a second future beacon. Depth-six
+  answers occupy only 3,276 packed bytes and do not exclude a 16 KiB cache;
+  the proposed depth-zero-through-twelve universe needs 2,391,483 answer
+  bytes. Require independent sealed C and Rust runtimes plus a third assessor.
+- **CPU implementation and rehearsal:** a standalone C runtime with flat
+  integer transitions and a standalone Rust runtime with one-hot
+  Boolean-relation images implement the same fixed 1,536-byte machine contract.
+  The accompanying seal-first two-beacon rehearsal covers source poison and
+  deletion, temporal challenge order, transcript assessment, malformed inputs,
+  hash binding, gauge and intervention behavior, equivalent words, and
+  noncommuting actions. A nontrivial quotient fixture spans quotient sizes
+  three through eight across twelve machines; three quotient oracles agree and
+  its structural train/development overlap is zero. The expanded relevant CPU
+  suite reports **191 passed, 1 platform-dependent C/Rust cross-check skipped**.
+  These are rehearsal and fixture mechanics, not an official board or neural
+  reasoning result.
+- **Capability boundary:** these are oracle/CPU mechanics, not a Shohin neural
+  result. No EFC compiler has been instantiated or trained; no new board,
+  source freeze, model seed, GPU score, development read, or reasoning claim
+  exists.
+- **Immediate next task:** hostilely audit and freeze the real protocol, wire
+  schema, independent world/challenge generators, and assessors; then create a
+  fresh post-seal official board with a nontrivial quotient requirement. Only a
+  completed source-free CPU gate can authorize a neural source freeze.
+- **Primary bottleneck:** model-owned compilation of raw episodic evidence into
+  a compact renderer-invariant causal machine, including opaque referent
+  binding. Bounded ordered execution is already mechanically easy once the
+  machine is supplied.
+- **Scale boundary:** do not use the proposed approximately one-trillion-token
+  continuation as a repair for an unvalidated mechanism.
+- **User pretraining hold:** do not start, queue, resume, prepare, or modify
+  continuation pretraining until the user explicitly lifts the hold after
+  reasoning is established.
+
+**Bottom line:** the EFC move is directionally strong because it makes state,
+binding, transition semantics, and execution explicit. The supplied draft
+nevertheless misidentifies two sampled rows as the compiler's complete query
+support and omits the current query's opaque start-state binding. The old corpus
+is rejected for advancement because its challenge is not temporally independent.
+The corrected protocol now has CPU-only seal, runtime, and quotient rehearsals;
+it still needs an independently generated and hostilely audited official board
+before a neural compiler can be fitted.
+
+### 2026-07-23 EPISODE Functor Compiler corrective audit
+
+The frontier proposal correctly supersedes the earlier claim that frozen
+`80dc07a` could directly support OCSI donor-binding losses. It introduces an
+anonymous categorical Moore-machine target:
+
+```text
+raw source
+    -> perceptual transformer
+    -> fixed-shape episode-local machine
+         opaque state/action/observer keys
+         shared categorical transitions
+         observer readouts
+    -> source deletion
+
+late query
+    -> parser over retained opaque keys
+    -> ordered action path + STOP + observer
+    -> explicit transition composition
+    -> answer
+```
+
+The intended mathematical object is the causal residual quotient:
+
+```text
+s ~ t
+iff for every admissible continuation w and observer q,
+    O_q(delta_w(s)) = O_q(delta_w(t)).
+```
+
+Actions descend to endomorphisms of the quotient and reasoning is ordered
+composition in their transition monoid. Internal state names retain gauge
+freedom; advancement should therefore test functional equivariance,
+interventions, source-deleted sufficiency, and unseen composition rather than
+raw latent equality.
+
+The theory also correctly separates attached training from detached scoring:
+soft or straight-through hard machines remain differentiable during training;
+scoring serializes a hard fixed-shape machine into a source-free process; fixed
+checkpoints must prove attached-hard versus serialized-detached numerical
+identity. The seal is a custody boundary, not a differentiable optimization
+phase. A future objective should use one multi-challenge behavior loss, possibly
+with frozen smooth worst-case residual pressure, rather than duplicated
+`L_diag + L_query`.
+
+However, the draft's decisive old-board no-go does not survive the implemented
+custody audit. The finite-query cache theorem requires the identities of the
+complete query family. Existing development custody reveals only worlds to the
+compiler, then independently reveals query bytes to the executor and targets to
+the assessor. Although exactly two queries are sampled per world in this
+artifact, the declared current interface supports every opaque start state and
+every action word of depth one through six:
+
+```text
+8 * (3 + 3^2 + 3^3 + 3^4 + 3^5 + 3^6) = 8,736.
+```
+
+A two-entry cache preloaded with the realized hidden rows is therefore leaky,
+not a lawful source-only compiler. This does not prove the old board is
+sufficient for a reusable-world-model claim. It means only that insufficiency
+must be demonstrated with the actual query-support, precision, byte-capacity,
+and generator-correlation controls rather than the proposed two-answer
+construction.
+
+The complete CPU audit is reproducible with:
+
+```text
+python3 -m pipeline.episode_functor_compiler_falsifiers
+```
+
+It reports SHA-256
+`95b1157ca7f017826bf689430c6b00cfe9e56fb36551437d829fd9541b5881fb`.
+The exact theory draft and frontier-commentary input hashes are
+`e3c7420fd7aef36834cee79af58afe681359e1cbf5ca35a1ad855d14bfcabd36`
+and
+`a83536547b121d000cd8c28d9ce4beb059a661f49a294eb6492d7db0e61e3531`.
+
+Required controls remain: frozen `80dc07a`; a state/parameter/compute-matched
+generic recurrent model; direct-machine hypernetwork; fused key/operator
+record; commutative action pool; untied-depth executor; byte-matched answer
+cache; shuffled source witnesses; source-retained upper bound; and oracle
+machine ceiling. No treatment is scientifically interesting unless it beats
+qualified generic recurrence and direct-machine emission on unseen
+compositions while preserving explicit machine interventions.
+
+### 2026-07-23 seal-first EFC CPU qualification update
+
+The old EFC corpus is **diagnostic-only** and cannot advance a candidate. One
+deterministic PRNG trajectory generated world mechanics, opaque keys, demo
+order, and hidden query coordinates; candidate-world acceptance also inspected
+sampled query outcomes. Splitting completed packets into custody files does not
+retroactively create temporal independence.
+
+The corrective protocol is a two-beacon, seal-first procedure. A canonical
+protocol is committed before entropy; a first public beacon derives the world;
+the compiler writes exactly one fixed-width `machine.bin`, publishes its root,
+and exits; a later independent beacon derives abstract challenge coordinates
+without access to world bytes, machine bytes, or answers. An executor receives
+only the sealed machine and challenge panel. Two assessors plus a third direct
+relation-composition assessor verify the transcript. This protocol is specified
+in `R12_EPISODE_FUNCTOR_COMPILER_SEAL_FIRST_PROTOCOL.md`; its current Python
+implementation is a CPU rehearsal, not a deployed official board.
+
+The rehearsal includes a source-poison/delete invariance check, coordinate
+commit before opaque rendering, quotas and duplicate rejection, source-disjoint
+relation assessment, exhaustive relation checks, transcript checks, and kill
+tests for wrong event order, RNG coupling, query taint, recompilation, and
+receipt forgery. The C and Rust fixtures share a 1,536-byte machine interface
+but deliberately use different execution representations. The quotient fixture
+uses eight physical states, noninjective observers, twelve structurally split
+machines, and three independent quotient constructions (partition refinement,
+pair-product reachability, and exhaustive future behavior). It demonstrates a
+nontrivial CPU test object, not a learned quotient.
+
+The current combined relevant test command reports **191 passed, 1 skipped**
+(the only skip is a platform-dependent strict C/Rust cross-check). No Shohin
+model has compiled source into a machine, no fresh official source has been
+frozen, and no GPU/development/reasoning result is implied. The next gate is a
+hostile audit and frozen independent implementation of the real post-seal
+world/challenge/assessor pipeline, not neural fitting.
+
 **Purpose:** This is the durable, theory-facing record of what Shohin is, what
 we mean by native reasoning, what has been tried, what happened, and what a new
 theory must explain. It is written so that a researcher can propose a new
@@ -8,9 +232,13 @@ runbook and result files.
 
 **Status:** Living document. The protected raw-pretraining anchor is complete
 at 300,000 steps. S7 confirms bounded native contextual law compilation and
-recurrent execution. S9.1 remains the strongest fresh-development compiler at
-2,025/2,048 = 98.877% exact graph/state/answer, but is permanently unconfirmed
-after its frozen alpha-closure failures. S9.2 is decisively rejected at
+recurrent execution. S9.1 remains the strongest occurrence-quotient graph
+compiler at 2,025/2,048 = 98.877% exact graph/state/answer, but is permanently
+unconfirmed after its frozen alpha-closure failures. The later SD-CST Complete
+Physical Fresh v1.3 system is the strongest confirmed bounded fresh
+compiler/executor at 2,048/2,048 exact packets, pointers, recurrent states,
+answers, and joints; its fixed ontology and synthetic packet grammar prevent a
+broad-language claim. S9.2 is decisively rejected at
 340/2,048 = 16.602% exact graph/state/answer and 21/43 gates. Parser-only anchor
 repair is retired. Source-Deleted Categorical State Transport (SD-CST) now has
 a complete causal decomposition. Its 146,057,595-parameter projected system
@@ -233,8 +461,9 @@ are in `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md` and
 `R12_ER_CST_WITNESS_EQUALITY_BUS_RESULT.md`, and the sealed result is in
 `R12_ER_CST_WITNESS_EQUALITY_CONFIRMATION_RESULT.md`.
 
-The active post-confirmation hypothesis is Episodic Relation Tensor Transport
-(ER-TT). It removes both remaining finite enumerations: operation cards are no
+The next post-confirmation line was Episodic Relation Tensor Transport
+(ER-TT), now closed through its routing canaries. It removes both remaining
+finite enumerations: operation cards are no
 longer six `S_3` class IDs, and execution is no longer a learned 36-cell table.
 Each episode has cardinality three through six and two to four fresh operations;
 complete opaque witnesses define arbitrary `N^N` copy relations, including
@@ -258,8 +487,8 @@ Sole job `694758` completed on H100 `evc40` and v1 is rejected at 0.098%
 packet/joint, 15.381% state, and 32.666% answer. Relation cells reach 36.528%
 versus 26.987%/28.866% controls, but after-witness localization is only 51.965%
 and alpha recoding collapses. Custody is `1/0`; confirmation remains sealed.
-The admitted successor separates alpha-invariant structural routing from whole-
-symbol identity/equality and uses identity equality for event binding. The exact
+The first successor separated alpha-invariant structural routing from whole-
+symbol identity/equality and used identity equality for event binding. The exact
 theory, score contract, and result are
 `R12_ER_RELATION_TENSOR_TRANSPORT_THEORY.md` and
 `R12_ER_RELATION_TENSOR_SCORE_PREREG.md`, and
@@ -317,9 +546,251 @@ freeze. Exact source `7601625f` was pushed before drand round `6305746` and
 randomness `611f201f...`; canonical payload/derivation hashes begin
 `8884bfe6`/`c24770ac`, producing seed `4775909816533321494`. A clean exact
 capsule and training-only data view passed `sbatch --test-only`. Sole H100 job
-`694928` is running on `evc36`; no score exists yet.
+`694928` completed cleanly on `evc36` in 7m38s and is rejected. Packet/joint/
+relation rows are 60.9125%, state 80.1375%, answer 90.225%, and witness pointers
+59.500%; minimum-cardinality joint is 43.606%. All ordinary declaration/event/
+query/line fields, alpha invariance, oracle transport, parent preservation,
+parameters, and custody remain exact. Checkpoint/evidence/report hashes begin
+`803a850a`/`a2d8349b`/`11d230a2`; local mirrors match. An immutable-evidence
+audit finds 3,240 witness-failed rows and adjacent ordinal swaps concentrated at
+cardinalities four through six. The learned ordinal embeddings expand to norm
+8.64 and neighboring rows 6/7 reach cosine 0.878, versus count norm 2.02. This
+closes the entangled address-channel repair as a positional shortcut. A frozen-
+endpoint scale ablation over the already consumed train probe is admitted only
+as a read-only diagnosis; it has no optimizer/scored-split path and cannot
+authorize promotion. Read-only job `694932` is now complete. Zeroing ordinal
+gives 0% witness rows, zeroing count gives 0.4875%, and raising frozen ordinal
+scale from 1.0 to 1.5 improves witness/joint from 59.500%/60.9125% to
+70.425%/69.3875% while degrading events to 94.9625%. The failure is not a
+simple excessive-position-norm effect: count and ordinal are both useful, but
+their vector-level integration corrupts shared route geometry.
 
-**Last updated:** 2026-07-20 23:05 EDT. User authority requires every future
+The factorized successor is now closed. Exact source commit
+`4643d1a51defe53397f9bed481051621d85c0b11` preceded drand round `6305851`,
+seed `6769631927967421693`, and sole train-only H100 job `694945`. Treatment
+reaches only 25.8625% witness, 27.9875% relation, 27.6125% packet/joint,
+57.8875% state, and 77.075% answer. Its structural-only arm reaches 92.050%
+witness but just 1.250% relation/joint. The learned table selects the
+grammar-correct one-based ordinal on all 36 active cases but does not transport
+the symbol content occupying that address. This is decisive evidence that
+structural location and semantic content are separate causal objects. The route
+is permanently rejected; no fresh board, threshold change, rerun, or optimizer
+tuning is authorized.
+
+Causal Object-File Compilation remains a useful theoretical diagnosis, not the
+current executable frontier. Its separate physical-occurrence, nominal-equality,
+and recurrent-causal ledgers explain the closed routing failures, but the
+current witness grammar makes monotone occurrence paths nearly deterministic
+after boundary detection. A distractor-bearing nontriviality board would be
+required before COFC could support a new claim.
+
+The immediate predecessor is Closure-Tied Action Algebra (CTAA).
+Revision 1 was rejected before source freeze because its confidence gates were
+arithmetically impossible at the declared stratum sizes, its board did not
+instantiate several claimed interventions, novelty axes were confounded, long
+programs admitted shortcuts, causal depth ignored state/query dependence, and
+the query existed before execution. Revision 2 replaces that design with a
+three-position copy-action algebra, a fixed 60-byte source-deleted packet,
+matched 107,753-parameter CTAA and favorable OPRC recurrent cores, finite atomic
+and closure audits, physically staged program/query/oracle artifacts, and
+signed evidence/custody machinery. These are mechanics and infrastructure,
+not a learned result.
+
+The narrowest active neural slice is declaration binding completion. Complete
+24-member declaration-order orbits train on the 12 even `A4` permutations and
+reserve all 12 odd permutations while holding semantics, renderer, names,
+state, schedule, query, depth, and class fixed. The treatment independently
+decodes four opcode and four physical-card slots, then applies one shared
+`3840 -> 156 -> 1` scorer to all 16 pairs. The favorable global control uses
+the identical scorer, calls, loss, 599,353 parameters, and 9,587,136 dense MACs
+but may inspect all eight slots. The treatment is exactly equivariant under all
+`24 x 24` opcode/card permutations. The complete candidate is 138,589,297
+parameters, 11,410,702 below its immutable 150M experiment cap. Exact source
+`defef98` is pushed; focused verification is 47/47 and the clean complete CTAA
+suite is 661 passed with three expected platform skips.
+
+An earlier component candidate is S4-Tied Particle Transport (S4-TPT), the
+corrected name for the historical NAHW proposal. It maintains a 24-particle
+posterior over `S4` opcode-to-card bindings and updates it with learned
+transposition-cue kernels. Independent review found the initial package
+`NO-GO` as written: particle reindexing alone did not prove transport
+equivariance, the six-label canary hardcoded the treatment's multiplication
+prior, cues were not interleaved with actions, and the package lacked the
+required byte-source and deletion path.
+
+The repaired finite component now passes true transport covariance with cue
+conjugation in all 82,944 binding/opcode/card/generator cases, an independent
+composition oracle in all 576 pair products, 13,824 associativity and 13,824
+coordinate round-trip checks, 69,984 interleaved binding/state/action/opcode
+cases, 139,968 state-plus-binding checks, 69,984 probability-mass checks, all
+27 CTAA action maps, four STOP/mixed-mass/gradient gates, and 22/22 focused
+tests. Fixed `S4` and `Z24`
+tables are non-persistent buffers, so matched learned weights cannot overwrite
+the control's law, and empty cue sequences are valid. A differentiable
+interleaved executor carries a joint distribution over 24 bindings and 27
+physical categorical states: cue events transport binding mass, action events
+update state under the current binding, STOP latches the joint state, and a
+late categorical query reads one register. Corrected mechanics report
+SHA-256 is
+`6152538ad3118d254da296ebcb978a5f40b8798885eb22a84392a35f45a6fd93`.
+
+The five-seed six-label result is retained only as retrospective development
+evidence. `S4` reaches 36/36, 216/216, and 1,296/1,296 unseen words at depths
+two through four because its fixed multiplication table determines every
+unobserved source row; the sparse dense control was deliberately left with 23
+rows unidentified. This is a taut but valid hardcoded-prior signature, not an
+advancement gate. Its corrected retrospective report SHA-256 is
+`2f07fbd9e7b5a656b24a397f50e17cd2f80a937b0926036d0cfc337f6741d3c4`.
+
+`R12_HOLONOMY_STATE_NO_GO.md` remains controlling: S4-TPT is structured
+operator recurrence, not a new reasoning primitive. It still begins from hard
+particle, card, event, and query tensors. There is no byte-source compiler,
+actual source-token/residual/KV deletion, or model-owned late-query reader.
+The 138,589,441 treatment and 138,592,753 dense totals are provisional
+arithmetic below the strict future 200M ceiling, not instantiated
+deduplicated-model receipts.
+
+No neural board, preregistration, source freeze, production seed, scored
+access, confirmation read, remote/GPU job, Shohin neural result, or
+native-reasoning claim is authorized.
+
+### Historical transition after S4-TPT: EPISODE action binding
+
+The frontier moved through four additional mechanism families on 2026-07-23.
+Their sequence matters because each attractive score was subjected to a
+control designed to distinguish learned causal computation from a hardcoded
+executor or an underidentified comparison.
+
+**QERARM established a strong bounded fixed-template executor baseline.** The
+Query-Blind Equivariant Relation-Algebra Register Machine receives a
+source-deleted gold packet containing cardinality, raw relations, identity, and
+empty work registers. A learned controller selects relation-algebra operations,
+operands, destinations, a categorical phase, and model-owned HALT before a late
+query appears. After cardinality-normalized convergence features and a
+late-hard curriculum, frozen source `da00a61` reaches 768/768 exact training
+joints and 192/192 exact development joints, including all unseen depth-six
+cases, with exact registers, answer, and halt. Checkpoint/report hashes are
+`531d015ef8786e702a41e9e390026545e2c74ac7f1d83cef69042f4677a82ed2`
+and
+`119efe1dec0246fb50aa58647683ca8aba3a3f68aae988ce4b97c0fb3e65e8f3`.
+Confirmation remains unopened. This is a bounded fixed-template executor, not
+general reasoning: the packet ontology and relation operations are selected in
+advance.
+
+**TCRR failed at joint transaction decoding.** The Typed Critical-Pair Rewrite
+Reactor built a clean source-deleted `N16/C16/Y8/R8/P12/A3/D8/V112` tensor
+boundary, a 1,830,671-parameter rule/path/binding/graph motor, an independent
+rule-blind atomic committer, and split-disjoint procedural rewrite systems.
+The corrected 400-update CPU run reduced legal-mass NLL from 57.7376 to
+33.5651 but remained 0/96 hard-exact on train and 0/32 on development.
+Component audit found 76/94 complete tuples on train redexes but 0/32 on
+held-out-family development; root-relative path localization was 0/32.
+Motor/report hashes are
+`f81a8f48fa6896d789d54bb867da5a481cab46ad35ea20f738627b93f8c258c4`
+and
+`e44c657e328738bd475534c79ee0b418268cb2aa34c331c58a2f38019501d43e`.
+The factorized one-step decoder is closed; larger data or H100 use is not
+authorized.
+
+**ECCR localized endogenous state discovery but did not solve it.** The
+Endogenous Congruence Completion Reactor asks the model to infer the
+episode-local causal quotient and anonymous generator actions rather than
+receiving a preselected packet ontology. Deterministic refinement and an
+independent exhaustive partition oracle agree on all adversarial mechanics
+cases. A recoding-invariant 256/64 board has zero train/development overlap in
+exact, latent, action, and path signatures. The four-round neural inducer
+reaches 250/256 train and 26/64 development exact; eight rounds improve a fresh
+seed to 254/256 and 45/64 = 70.3125%. A by-construction Record-Fiber decoder
+makes all 64/64 development outputs valid equivalence relations but reaches
+44/64 = 68.75% exact, with all 59 pair errors being false collisions.
+Twelve rounds regress to 39/64, and threshold sweeps do not improve the frozen
+44/64 Record-Fiber score. Thus transitivity repair, more recurrence, and scalar
+calibration are not the primary bottleneck. The unresolved issue is physical
+observation/generator discrimination, especially noncommuting context
+(`3/16`) and minimal noncongruence (`2/8`).
+
+**MCTFR's perfect score was causally invalid.** The corrected
+counterexample-transport arm reached 256/256 train and 64/64 development exact.
+Its matched shuffled-target arm changed supervision on 23,020 batch-example
+appearances, did not fit that objective, yet also reached 256/256 and 64/64
+against the true relation. The hard board answer was supplied by
+always-preserved counterexample propagation rather than learned target
+attribution. MCTFR is retained only as a fixed bounded partition-refinement
+primitive and is closed for learned-reasoning claims, repeat seeds, H100 scale,
+trunk integration, and confirmation.
+
+The **next historical gate was EPISODE action binding**. It removes the host graph and
+candidate hypothesis from model input. The visible packet contains only
+ordinary integer token IDs and an attention mask. Every physical world yields
+a six-case cluster: three cyclic episode-local action bindings for one query
+and the same three bindings under a reordered query with an identical
+action-token bag. Within each cyclic triple, token histograms and
+action-erased transition streams are identical while all targets differ, so
+any deterministic action-agnostic or all-actions-union method is capped at
+one-third. Between query orders, the world-prefix commitment is identical and
+every matched target changes, rejecting order-bagging. Later custody-aware CPU
+analysis shows that this does not by itself prove reusable world state, but it
+also cannot lawfully be defeated by the proposed two-entry cache because the
+compiler does not receive the two sampled query identities.
+
+The frozen corpus contains 256 train and 64 development clusters, or
+1,536/384 packets. All 1,920 packets are unique; two independent oracles agree
+on every target; exact packet and physical-operator-family overlap across
+splits are zero. All 640 cyclic histogram/action-erasure invariants and all 960
+late-query world commitments pass. Deterministic controls score:
+
+- action-agnostic: 250/1,920 = 13.0208%;
+- all-actions union: 262/1,920 = 13.6458%; and
+- query-order bagging: 638/1,920 = 33.2292%.
+
+These remain below their exact symmetry ceilings of one-third, one-third, and
+one-half. Model-payload, target-label, offline-ledger, and manifest hashes are
+`f975291b22560e07cfa5e636133cb62c5688cfb8b39b8786812ea40610807323`,
+`aa0afa01882e24f9c3d708c8cdd2d9f7bb5978a9dae79c2f4c90c5c355972283`,
+`3ae85435030c80ac58a4ed16cab5d50e28250826994377a588aa1690b7e2ecec`,
+and
+`9eb3289d9d64b09d4886c71f1a9d8dd7167479f5c3d042a6ebb9bd6de4de53ed`.
+The focused board/generator suite is 36/36.
+
+The minimal causal bind-select workspace is now implemented and frozen at
+source commit `80dc07a`. It compiles the raw-token world after block 19 into
+four 256-wide private slots, detach-clones and seals that state, materializes
+the late query separately, applies independently controlled four-way binding
+and four rank-32 operators, then resumes the remaining ten frozen trunk blocks.
+The scored treatment returns only logits/loss; state, diagnostics, controls,
+and the differentiable attached-state fitting path are separate APIs.
+
+Three hostile audits return `ACCEPT_SOURCE_FREEZE`. The focused causality,
+source-deletion, control, gradient-boundary, full-prefix replay, checkpoint,
+trust-root, content-addressing, atomic-publication, and parameter-custody suite
+passes 41/41. Exact accounting is 125,081,664 frozen base parameters plus
+907,269 workspace parameters = 125,988,933 complete, leaving 74,011,067 below
+200M. The architecture receipt SHA-256 is
+`46409c8c136c96903573e48e0a1b4537b28ddbac1caf79113156c45f70667f75`;
+the canonical base-state SHA-256 is
+`321356c4940a7a27f7385ea304557dc5575b6d4d188504e8ce204eb24211abab`.
+
+This is architecture compatibility and a historical source freeze only. No workspace
+tensor has been fit, no neural score exists, and decisive source-deleted
+process custody remains to be built. It does not authorize the proposed 69M
+workspace or a competence claim. Continuation pretraining is under an explicit
+user hold: do not start, queue, resume, prepare, or modify it until the user
+explicitly lifts the hold after reasoning is established.
+
+The later OCSI review makes this architecture a favorable control rather than
+the active treatment: its binding and operator factors arise during query
+execution rather than as independently transplantable query-blind compiler
+objects, and its detached seal cannot carry compiler gradients.
+
+The active bottleneck is therefore precise: compile an episode-specific causal
+machine and opaque referent bindings directly from raw tokens, preserve
+noncommuting order, execute without source/KV retention or a host-supplied
+ontology, and answer challenges materialized only after commitment. Existing
+work has strong bounded compilers, motors, and executors; it has not yet
+demonstrated this complete endogenous loop. The EFC CPU audit further requires
+the query-support and byte-budget contract to be correct before neural fitting.
+
+**Last updated:** 2026-07-23 EDT. User authority requires every future
 complete deployed system to remain strictly below 200M parameters; historical
 and closed experiment-specific 150M contracts remain immutable.
 
@@ -342,6 +813,258 @@ to support them is embedded in Appendix A. No conclusion in this document
 requires opening another markdown file.
 
 ---
+
+## 2026-07-23 architecture-native recursion update
+
+### Goal
+
+The active goal remains native reasoning under a strict complete-system budget:
+Shohin must infer an episode-local rule, compose it through an unseen program,
+maintain private intermediate state, decide when computation is complete, and
+answer a late query without a host schedule or arithmetic/relation executor.
+Success on one synthetic ontology is not general reasoning; promotion requires
+unseen rules, compositions, renderers, and task families.
+
+### Protected system
+
+- Base: `train/flagship_out/ckpt_0300000.pt`
+- Base parameters: 125,081,664
+- Base SHA-256:
+  `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`
+- Step: 300,000
+- Complete-system cap: strictly below 200,000,000 parameters
+- No flagship writer is active; the base was not modified by these experiments.
+
+### Hardened contextual Bekić board
+
+Commit `6dacab3` introduced a source-deleted recursive relation-program board and
+commit `6e198c0` removed unused-card-argument covert state. The board now has:
+
+- fresh opaque operation cards and physical node IDs;
+- no primitive names, target, answer, schedule, or trajectory in model input;
+- split-disjoint individual depth-two/depth-three motif receipts across P,
+  P-prime, and isolated controls;
+- held-out motif absence from every training arm and required presence in every
+  motif-development score arm;
+- independent constant-only and compose-reversal counterfactuals;
+- canonical programs with both variables changing, at least two fixed-point
+  updates, and at least three total variable-change events;
+- disconnected-node, unused-slot, padding, and unused-argument rejection; and
+- an independent set-based simultaneous/nested oracle that does not import the
+  tensor primitive implementation.
+
+Frozen mechanics report
+`artifacts/r12/contextual_bekic_mechanics_6e198c0.json`:
+
+| Check | Result |
+|---|---:|
+| Exact terminal packets | 85/85 |
+| Converged packets | 85/85 |
+| Opaque slots identified | 419/419 |
+| Independent simultaneous oracle | 85/85 |
+| Independent nested oracle (applicable packets) | 75/75 |
+| Discrete hard assignments | exact |
+
+Report SHA-256:
+`c4a2ec8f46c73d48392b615446c89bab6a5ae126b996f4b61023ec13465a5ac4`.
+This proves only that the source-deleted board and private tensor mechanics are
+coherent. The analytic one-parameter compiler and parameter-free host executor
+are ceilings, not learned reasoning.
+
+### Contextual Witness-Equivariant Binder (CWEB)
+
+CWEB learns opaque card identities from witness relations using
+object-equivariant row/column/transpose/triadic messages. It never calls the
+analytic primitive bank in its score path. The treatment adds 158,598
+parameters, for a 125,240,262-parameter complete system.
+
+Clean seed `2026072327`, frozen source `6e198c0`:
+
+| Arm | In distribution | Shifted cardinality/density |
+|---|---:|---:|
+| Triadic treatment | 100.000% | 99.53125% |
+| Marginal-statistics control | 99.84375% | 97.8125% |
+
+Treatment shifted valid cards are 99.8355%; invalid rejection is 93.75%; object,
+card, and witness permutations are exact. Treatment checkpoint SHA-256:
+`2dbd4b928a3d48addf2d7ae553e96ae8f93f80b5bb8a32fe332296ab79bf54d2`.
+
+**Decision:** do not promote a learned-algebra claim. The treatment exceeds the
+statistics-only control by only 1.71875 points, far below the frozen 20-point
+attribution gate. The primitive ontology is strongly marginal-solvable. CWEB is
+retained only as a warm-start feature extractor for a harder terminal-execution
+test.
+
+An exploratory integration of the CWEB treatment with the analytic private
+executor produced 40/40 exact bindings and 40/40 exact terminals across train
+and all five development cells, P/P-prime/P-equivalent, and both isolated
+counterfactuals. This remains non-promotable because execution and convergence
+were host-owned.
+
+### Autocatalytic Hysteretic Relation Field (AHRF)
+
+AHRF is the first active attempt in this lineage to remove the host executor
+from the scored path. It is currently a standalone structured reasoner and is
+not yet connected to the protected Shohin trunk. Architecture source is
+`c67d945`; preregistration is `0679af0`; 23 focused tests pass.
+
+Mechanism:
+
+1. learned opaque witness-card field;
+2. node/object-equivariant graph recurrence;
+3. two operation-argument roles plus a distinct equation-root-to-variable
+   feedback role, enabling true recursive updates;
+4. direct and transposed channels for every typed child relation;
+5. a learned dynamic `(i,k),(k,j)->(i,j)` membrane contraction;
+6. continuous membrane state;
+7. exact write-once monotone fact and evidence latches;
+8. learned event-triggered absorbing halt;
+9. fixed maximum recurrence only as a safety bound; and
+10. no primitive labels, host executor, host convergence, target relation,
+   schedule, or trajectory in runtime input.
+
+The default AHRF has 316,824 standalone parameters. Adding that count to the
+125,081,664-parameter trunk would total 125,398,488 and leave 74,601,512 below
+the 200M cap, but this is hypothetical integration accounting only. The
+identity-delay mechanics falsifier preserves terminal facts while shifting
+learned halt latency by one relay step.
+
+Three pre-score attempts are void:
+
+1. dense parent-by-child membrane expansion OOMed before output;
+2. the bounded-memory recurrence had no live `(i,k),(k,j)->(i,j)` composition
+   path and was stopped before output; and
+3. after adding composition, an adversarial audit proved that live converse
+   remained weight-independently impossible and that BCE clamping killed the
+   hard-event straight-through gradient. That run was also stopped without an
+   output directory.
+
+The corrected source adds generic live transpose, finite hard-phase MSE
+gradients, same-parameter learned/false/zero triads, an active object-marginal
+generic control, and complete pre/post source receipts. The warm start copies
+only pair input, pair rounds, and witness encoder; no primitive classifier-head
+layer is transferred.
+
+The fresh board has maximum expression depth nine, maximum eight fixed-point
+updates, and a conservative 63-tick propagation envelope. The frozen bound is
+64. Batch four exceeds local MPS memory; batch two is verified. The attempted
+pilot froze 2,000 field updates and 400 halt updates, preserving 4,000 and
+800 sampled examples. Its output path was:
+`artifacts/r12/ahrf_treatment_0679af0_seed2026072345`.
+
+That seed is now void. The local process ended after a long runtime without
+publishing an atomic output directory, checkpoint, or report, and the expired
+session does not preserve a recoverable terminal cause. It is neither positive
+nor negative capability evidence and must not be reconstructed or blindly
+respawned. AHRF therefore has mechanics and a preregistered architecture but no
+admissible neural score.
+
+Frozen controls are no feedback, no hysteresis, shuffled cards,
+object-marginal generic recurrence, active false triad, zero-triad ablation,
+and fixed deadline. Promotion requires five seeds, at least 99% exact per
+development cell/arm, at least 99% model-owned halt, at most 1% safety
+exhaustion, exact equivariance and P/P-equivalent consistency, and at least a
+20-point treatment advantage over each nontrivial learned control.
+
+Even a complete AHRF Bekić pass authorizes only fresh transfer tests on Horn
+closure, dataflow analysis, and a non-relational family. Genuine general
+reasoning has not yet been achieved.
+
+---
+
+## 2026-07-23 S4-TPT adversarial-repair and corrected-status update
+
+The strict future complete-system ceiling is now below 200,000,000 unique
+parameters. Closed experiments retain their original 150M or 200M contracts;
+the larger future ceiling does not reopen them.
+
+S4-TPT transports a categorical posterior over the 24 elements of `S4`.
+Noncommuting rebinding cues compose by group convolution, so cue order can
+change the final opcode-to-card binding even when cue multisets match. The
+parameter-identical `Z24` ablation necessarily loses this distinction because
+circular convolutions commute. The favorable dense control uses untied
+`24 x 24` cue operators, has the same 24-particle state and 576 transport MACs
+per cue, possesses 3,312 more parameters, and contains the treatment
+hypothesis class.
+
+Independent review rejected the initial package as written. The repaired
+finite audit now checks the actual covariance law: opcode reindexing must
+conjugate each right-acting cue. All 82,944 exhaustive transport-equivariance
+cases pass, as do 576/576 independent composition-oracle products, 13,824
+associativity checks, 13,824 coordinate round trips, 69,984 interleaved
+binding/state/action/opcode cases, 139,968 state-plus-binding checks, 69,984
+probability-mass checks, all 27 CTAA action maps, four STOP/mixed-mass/gradient
+gates, and 22/22 focused tests.
+Fixed multiplication tables are non-persistent, matched treatment weights
+cannot overwrite `Z24`, and empty cue streams work. The corrected component
+mechanics report SHA-256 is
+`6152538ad3118d254da296ebcb978a5f40b8798885eb22a84392a35f45a6fd93`.
+
+The component now executes interleaved cue, action, and STOP events over a
+differentiable `24 x 27` binding/state distribution and supports a late
+categorical query. This repairs the earlier all-cues-before-all-actions error,
+but the inputs remain hard tensors.
+
+The five-seed six-label canary is retrospective development evidence, not a
+preregistered gate. Its perfect `S4` compositions are expected from the fixed
+group table, while the sparse dense control was left underidentified. The
+correct interpretation is a taut hardcoded-prior signature; its corrected
+report SHA-256 is
+`2f07fbd9e7b5a656b24a397f50e17cd2f80a937b0926036d0cfc337f6741d3c4`.
+
+The provisional treatment/dense totals remain 138,589,441/138,592,753 with
+61,410,558 arithmetic headroom under 199,999,999, but these are not
+instantiated-model receipts and equal transport MACs do not prove total compute
+parity. This is not a Shohin, language, source-deletion, late-reader, GPU, or
+native-reasoning result. No neural board or source freeze is authorized.
+
+## 2026-07-23 CTAA bi-equivariant binding-completion update
+
+At that stage the CTAA frontier was a source-only precursor to native recurrent reasoning,
+not a reasoning result. Shohin's compiler must recover a declaration-local
+`opcode_to_card` permutation and emit it inside the fixed 60-byte CTAA packet.
+The held-out identification split trains only the 12 even permutations (`A4`)
+and reserves all 12 odd permutations. Every local opcode/card marginal remains
+exactly `3/3/3/3`.
+
+The first local-head design was rejected because fixed four-class output labels
+were not card-permutation equivariant. The corrected treatment independently
+decodes four opcode slots and four physical-card slots. One shared
+`3840 -> 156 -> 1` network scores all 16 opcode/card pairs from
+`[opcode_i, card_j, zero_context]`. The favorable control uses the identical
+network, calls, parameters, and dense MACs but fills context with all eight
+slots, allowing global parity shortcuts. Each has 599,353 parameters and
+9,587,136 dense analytic MACs; the treatment passes an exhaustive `24 x 24`
+opcode/card permutation-equivariance test. The complete system would be
+138,589,297 parameters, 11,410,702 below the strict 150M ceiling.
+
+Custody is substantially hardened but still rejected for production:
+
+- canonical thresholds require all five seeds to pass;
+- each seed, leakage probe, A4 cache, state, and fit gate freezes before source;
+- source and oracle are physically separate inputs with unique ordered row IDs;
+- artifact bytes are read once with `O_NOFOLLOW`, hashed, then restricted-loaded;
+- one atomic oracle ledger is claimed before the sole oracle read;
+- finalization replays raw prediction metrics and full artifact lineage;
+- resource parity replays a real frozen cache/update with clipping, timing, and
+  peak memory; and
+- the actual 60-byte packet fields and derived schedule are scored separately.
+
+The hardened protocol is committed and pushed at `defef98`, after precursor
+commits `1e75634`, `2c52bb6`, and `866439f` established the five-seed custody
+chain, binding-aware packet, and causal opcode-binding lattice. Focused
+verification passes 47/47 tests. A clean process collected the exact final
+source and completed 661 CTAA tests with three expected platform skips in
+1,058.70 seconds; Ruff, bytecode compilation, diff checks, and the committed
+source-bundle integrity gate pass. These checks establish implementation and
+contract consistency only.
+
+`REJECT_SOURCE_FREEZE` remains mandatory. The deterministic owner-readable
+confirmation can still be regenerated, Python execution is not yet hermetic,
+stage outputs lack independent signed ownership, and packet causality has not
+yet been executed source-free through the frozen recurrent core. No production
+board seed, training seed, confirmation access, GPU run, learned score, or
+native-reasoning claim exists for this slice.
 
 ## 2026-07-20 frontier update: query grounding transfers; generic program residual fails
 
@@ -1043,6 +1766,14 @@ The project is therefore not trying to make the model narrate longer. It is
 trying to install or discover a compact control-and-state mechanism that the
 model can compile, update, consume, and terminate by itself.
 
+The immediate version of that question is now the corrected Episodic Functor
+Compiler contract: can a small neural compiler infer an anonymous categorical
+machine and opaque state/action bindings from raw tokens, delete the source,
+then answer genuinely post-seal challenges through shared ordered transitions?
+The old four-slot EPISODE workspace is a matched control. No larger workspace
+or trillion-token continuation is authorized before this mechanism is
+specified, falsified on CPU, and demonstrated neurally.
+
 ---
 
 ## 2. Shohin Technical Profile
@@ -1054,8 +1785,8 @@ The immutable 300k checkpoint instantiates the following decoder-only GPT:
 | Field | Value |
 |---|---:|
 | Unique trained parameters | **125,081,664** |
-| Allowed total for experimental architecture | **less than 150,000,000** |
-| Remaining nominal parameter headroom | **24,918,335** |
+| Current future complete-system ceiling | **strictly less than 200,000,000** |
+| Nominal future headroom over the protected base | **74,918,335** |
 | Vocabulary | 32,768 |
 | Layers | 30 |
 | Model width | 576 |
@@ -1177,6 +1908,17 @@ loop.
 | Source-scheduled continuation (SSC) | **115/256 = 44.92%** | Host supplies source and operation cursor; model executes local steps | External-control ceiling |
 | **S4 v5 + S5 learned generator confirmation** | **96.924% programs / 97.607% exact state / 98.096% answers** | Frozen Shohin parser discovers events; a 4,934-parameter learned generator owns the finite transition law and recurrent categorical state; structural runtime owns bounded invocation | **Confirmed strongest bounded reasoning baseline; not unrestricted native reasoning** |
 | **S7 learned contextual-law compiler confirmation** | **2,048/2,048 = 100% recurrent states and answers over 18 disjoint laws and depths 3-8** | A 218-parameter successor/Cayley generator compiles unseen operation laws from two witnesses; cyclic topology and bounded replay remain structural | **Confirmed strongest bounded contextual-law component; not universal arithmetic or open-language reasoning** |
+| **SD-CST Complete Physical Fresh v1.3 confirmation** | **2,048/2,048 exact packets, pointers, recurrent states, answers, and joints** | A 192,129,179-parameter system compiles unseen renderer compositions into a fixed categorical packet, deletes source, and executes it; family-deranged labels produce 0% exact packets | **Strongest confirmed fresh bounded compiler/executor baseline; fixed task ontology and packet grammar remain** |
+| **ER-CST v1.1 Witness Equality confirmation** | **99.023% packet/state/answer/joint; 99.805% cards and witness pointers** | Learned structured equality compiles fresh episodic `S_3` operation cards from witnesses, then a tied categorical motor composes them after source deletion | **Confirmed bounded episodic semantic binding; finite `S_3` state/action ontology** |
+| **ER-TT marginal-route train-only diagnostic** | **90.9375% packet/joint/relation; 89.925% complete witness rows** | Exact nominal equality is marginalized over learned structural routes; no scored development or confirmation split is read | **Near-pass that localizes the remaining error to duplicate physical occurrences; rejected by one frozen gate** |
+| **QERARM late-hard fixed-template executor** | **768/768 train and 192/192 development joint**, including 63/63 unseen depth six | A learned relation-algebra controller owns operations, registers, categorical phase, and HALT after receiving a source-deleted gold packet | **Strong bounded fixed-template executor baseline; ontology and packet are supplied in advance, confirmation unopened** |
+| **TCRR neural one-step motor** | **0/96 train and 0/32 development hard exact** | A source-deleted tensor motor predicts rule, occurrence path, binding, and graph transaction; a rule-blind committer executes one proposal | **Rejected factorized transaction decoder; held-out path localization is 0/32** |
+| **ECCR eight-round quotient induction** | **254/256 train and 45/64 = 70.3125% development exact** | A recoding-invariant inducer attempts to discover an episode-local causal quotient and anonymous generator actions | **Best endogenous-state-discovery pilot, but unseen physical semantics/noncommuting context remain unsolved** |
+| **MCTFR true and shuffled attribution arms** | **Both 256/256 train and 64/64 development exact against the true relation** | Always-preserved hard counterexamples determine the result even when target supervision is shuffled | **Causally rejected as learned reasoning; fixed partition-refinement primitive only** |
+| **EFC categorical-machine CPU falsifier** | **1,920/1,920 packet mechanics; eight quotient classes; 0/384 lawful canonical two-cache coverage; 384/384 only with forbidden query/target preload** | An oracle compiler emits explicit opaque state/action keys, categorical transitions, and an identity observer; no Shohin weights are fit | **Current mechanics frontier; supplied EFC draft is NO-GO as written, architecture family remains open** |
+| **EPISODE causal bind-select workspace** | **No neural score**; corpus mechanics 36/36 and frozen workspace custody/mechanics 41/41 | A 907,269-parameter block-19 module compiles raw-token world state into four sealed slots, then applies binding/operators during late-query execution | **Historical source-frozen control; 125,988,933 complete parameters, no fit or reasoning result** |
+| **S4-TPT component mechanics** | **No neural score**; 82,944/82,944 cue-conjugated equivariance cases, 576/576 independent products, 69,984/69,984 interleaved cases, and 22/22 tests pass | Hard-tensor `S4` particle transport and an interleaved `24 x 27` binding/state executor; the perfect six-label canary is retrospective hardcoded-prior development evidence | **Repaired component mechanics only; no byte compiler, real deletion, model-owned late reader, or advancement gate** |
+| **CTAA A4 binding-completion source** | **No neural score**; 47/47 focused and 661 complete tests pass | Bi-equivariant local opcode/card matching is compared against an exactly parameter/MAC-matched global-context control under five-seed staged custody | **Hardened source-only predecessor to dynamic rebinding; no seed or H100 authorization** |
 | **S9 occurrence-quotient compiler development** | **1,941/2,048 = 94.775% exact graphs; 1,943/2,048 = 94.873% exact state and answers** | Whole-source span proposal plus exact repeated-surface classes and relational graph decoding; matched no-class control reaches 46.387% exact graphs | **Strongest fresh language-grounding near-pass; rejected for confirmation after missing 2 frozen gates** |
 | S6 generic contextual-law transformer | **24.528% held-out atomic / 8.154% exact recurrent state / 30.908% answers** | A 4.75M transformer receives two identifying examples of an unseen affine law, then the host invokes its predicted destinations | **Rejected algorithmic generalization mechanism; no confirmation** |
 | S3 v1.4 pointer-anchor confirmation | **98.242% answers / 99.658% exact state / 98.975% chains** | Model consumes known-atom packets through a categorical register; host supplies chunks and stop | Confirmed bounded execution component, not autonomous reasoning |
@@ -1192,10 +1934,23 @@ loop.
 | Raw 300k fixed interaction | **1/7 initial** | Model owns full generation | Qualitative native baseline |
 
 The best unrestricted model-owned language-model result is still weak. The
-44.92% SSC score remains an external-control ceiling. S5 is a stronger bounded
-architectural result: it removes the hand-authored action table and confirms a
-learned transition law, but its known operation vocabulary and structural
-runtime prevent treating 98.096% as a general autonomous-reasoning score.
+44.92% SSC score remains an external-control ceiling. The strongest bounded
+line has advanced from S5/S7 through confirmed SD-CST and ER-CST: learned
+compilers can now construct fresh categorical packets and episodic operation
+cards that execute after source deletion. None of those results is unrestricted
+chat reasoning. They retain generated grammars, small categorical worlds,
+structural runtimes, and tightly specified packet interfaces. CTAA asks whether
+the reusable binding/state mechanism can survive a harder symmetry and custody
+test. S4-TPT now asks the narrower next question: whether non-abelian parameter
+tying can carry ordered rebinding after a unified byte-source compiler,
+irreversible source/KV deletion, and model-owned late reader are implemented.
+Its current hard-tensor mechanics do not yet connect the mechanism to ordinary
+language generation. The newer sequence then rejects fixed-template,
+factorized-transaction, transitivity-repair, excess-recurrence, and
+hardcoded-counterexample shortcuts. EPISODE remains the current consumed
+raw-token diagnostic, but frozen `80dc07a` is now a control. The active theory
+requires an explicit episode-local machine and a correctly counted post-seal
+challenge family before any large workspace or trillion-token continuation.
 
 ---
 
@@ -1221,6 +1976,17 @@ The present evidence decomposes the missing capability as follows:
 | Broad transfer | Raw/SFT/code boards remain low; width-8 DRS is zero | Missing |
 | Whole-source graph grounding | S8.1 emits **514/2048 = 25.098%** exact graphs, and every valid graph executes exactly; S9 improves to **1941/2048 = 94.775%** exact graphs and **1943/2048 = 94.873%** state/answers | Conditional graph execution is solved; the remaining bottleneck is robust span, occurrence-class, relation, and operation grounding under recoding |
 | Autonomous schedule/halt | S4 v1 finds **2048/2048** event counts and exact programs on every valid tape, but strict validity/programs are **1932/2048 = 94.336%** | Count is learned; variable-width span binding and per-event argument pairing remain open |
+| Fresh renderer compilation | SD-CST Complete Physical Fresh confirms **2,048/2,048** packets, pointers, states, answers, and joints over four unseen renderer compositions | Renderer-factor transfer is solved in the bounded physical-record grammar; this does not establish unrestricted parsing |
+| Episodic operation induction | ER-CST v1.1 confirms **99.023%** packet/state/answer/joint from fresh witness-defined `S_3` cards | Structured whole-symbol equality is causally sufficient for bounded episodic card induction and source-deleted composition |
+| Arbitrary relation transport | ER-TT v1 collapses to **0.098%** joint; marginal routing recovers **90.9375%** relation/joint but misses complete witness routing at **89.925%** | Relation execution is not the bottleneck; duplicate occurrence addressing and renderer-invariant content binding are |
+| Structural address versus content | Factorized structural-only routing reaches **92.050%** witness but **1.250%** relation/joint; treatment reaches only **27.6125%** joint | Correct location without transported symbol identity is insufficient; address and content must remain separately causal |
+| Declaration-local opcode binding | CTAA source defines a 60-byte packet with independent cards, `opcode_to_card`, initial state, and local opcode tape; bi-equivariant treatment is exactly symmetric under **24 x 24** slot permutations | Mechanically specified but not learned or source-frozen; hermetic custody and frozen-core packet causality remain blockers |
+| Ordered dynamic rebinding | S4-TPT passes **82,944/82,944** cue-conjugated transport-equivariance cases, **576/576** independent products, and interleaved `24 x 27` binding/state mechanics | The perfect six-label canary is retrospective and taut under the hardcoded group prior; no byte compiler, actual deletion, model-owned late reader, or Shohin result exists |
+| Fixed-point execution and halt | QERARM reaches **768/768 train and 192/192 development joint**, including unseen depth six | Learned control over supplied relation registers is strong; episode-local program and ontology discovery remain external |
+| Joint symbolic transaction decoding | TCRR reaches **0/96 train and 0/32 development**, despite 76/94 complete train tuples before unconditional graph-delta argmax | Independent factor heads do not form a coherent transaction; held-out occurrence-path localization is the dominant failure |
+| Endogenous causal-state discovery | ECCR peaks at **45/64 = 70.3125% development exact**; Record-Fiber makes 64/64 outputs valid but only 44/64 exact | Structural equivalence validity is not the bottleneck; physical observation/generator semantics and noncommuting context are |
+| Learned-mechanism attribution | MCTFR true and shuffled-target arms both reach **64/64 development exact** against truth | Always-on hard propagation supplied the answer; high accuracy without target-sensitive causal dependence is rejected |
+| Raw-token episode-local action binding | EPISODE has **1,920/1,920 unique dual-oracle packets**; its 907,269-parameter block-19 workspace passes **41/41** mechanics but has no fit. The explicit CPU machine also executes **1,920/1,920** and exposes **8,736** post-seal queries per world | Historical diagnostic and control; the active EFC theory must compile explicit state/action keys and transitions under a frozen byte budget |
 
 This diagnosis rules out the simplest stories:
 
@@ -1233,9 +1999,13 @@ This diagnosis rules out the simplest stories:
 
 The strongest surviving interpretation is:
 
-> Shohin has fragments of a local executor and a trainable late-layer state
-> signal, but it lacks a robust language-to-program compiler and a closed-loop
-> controller that updates, consumes, and terminates that state.
+> Shohin now has confirmed bounded compilers, episodic semantic binding,
+> source-deleted categorical execution, and strong supplied-ontology
+> fixed-point control. The unsolved frontier is endogenous episode-local state
+> discovery and action binding from raw tokens: the model must commit reusable
+> query-blind world state, preserve noncommuting order, execute after source
+> deletion, and remain causally dependent on learned bindings/operators under
+> genuinely held-out symmetries and independent controls.
 
 ---
 
@@ -1260,6 +2030,22 @@ means only the explicitly named gate passed. It never implies broad reasoning.
 | Raw 80k/120k/168.75k/300k boards | Low-single-digit, non-monotonic changes | Scaling did not yield broad reasoning | the operational runbook summary, `TRAINING_METRICS.md` (full text embedded in Appendix A) |
 | Raw 200k/252.5k/260k/300k direct interviews | Fixed strict scores essentially flat | More raw tokens did not create reliable state reuse or self-correction | `RAW300K_INTERACTION_RESULT.md` (full text embedded in Appendix A) |
 | Raw 300k future-Jacobian repeat | Reproducible geometry, but **0% top-10 and 0% top-100** on 2,304 decisive targets | No usable vocabulary-aligned semantic workspace emerged | `R12_JACOBIAN_WORKSPACE_LONGITUDINAL_RESULT.md` (full text embedded in Appendix A) |
+
+The long-range plan is to validate a causal reasoning mechanism first, then
+continue pretraining toward roughly one trillion additional token
+presentations before posttraining. The current data-admission hypothesis is
+45% educational/general web, 25% math, 20% code, and 10%
+science/procedural, with global cross-source deduplication, benchmark and
+native-evaluation decontamination, provenance retention, and equal-token source
+ablations. The planning target for each next 300,000-step tranche is at least
+100--120B admitted unique tokens; presentations, unique tokens, per-source
+epochs, and duplicate rate must remain separate ledgers. This program is not
+yet authorized: first a corrected EFC machine/query/byte contract must pass its
+CPU falsifiers and a frozen sub-200M neural compiler must beat the historical
+EPISODE workspace, byte-matched answer cache, direct-machine, and generic
+recurrent controls. Only then may 0.5--1B, 10B, and larger
+mechanism-preservation canaries test stable language loss, throughput,
+transfer, and actual machine use before committing the trillion-token budget.
 
 ### 5.2 General SFT and verified data curricula
 
@@ -1566,6 +2352,32 @@ remaining non-native interfaces are robust operation-name equivariance,
 active-step and termination control, arbitrary operation structure, and
 transfer of the confirmed generator into unconstrained language.
 
+### 5.15 Fixed-point, rewrite, congruence, and EPISODE frontier (2026-07-23)
+
+| Stage | Evidence | Decision and boundary |
+|---|---|---|
+| UROM-3 | Host-audited monotone relation VM | Rejected before H100 use: family labels do not change the algorithm, late opaque names are unresolved, and the machine cannot establish multi-family general reasoning |
+| QERARM | Frozen late-hard source reaches 768/768 train and 192/192 development joint with model-owned registers and HALT | Retained as the strongest bounded supplied-packet fixed-point executor; no confirmation or episode-local program induction |
+| Contextual Bekić mechanics | 85/85 exact terminal packets under two independent oracles | Host-only ceiling; the original board leaked one fixed template and insufficient role-balanced counterfactuals |
+| CWEB | 99.53125% shifted treatment versus 97.8125% marginal-statistics control | Only +1.71875 points, far below the 20-point attribution gate; warm-start feature extractor only |
+| AHRF | Three pre-score implementations stopped for OOM, missing composition, or impossible converse/zero hard gradient; corrected seed published no artifact | Void, not a capability result; no blind respawn |
+| TCRR infrastructure | Clean source-deleted packet, 1.83M motor, rule-blind atomic committer, 134-test stack | Execution boundary admitted, but competence depends on one coherent joint transaction |
+| TCRR neural motor | 0/96 train and 0/32 development hard exact; held-out path localization 0/32 | Rejected; no H100 or corpus-scale repair without a joint decoder and unseen-localization pilot |
+| ECCR mechanics | Independent refinement/exhaustive oracles agree on all finite boards; causal quotient invariants pass | Admits a neural reconstruction attempt, not a general-reasoning claim |
+| ECCR pairwise inducer | Four rounds 26/64 development; eight rounds best 45/64; twelve rounds regresses to 39/64 | More recurrent depth is closed as the next repair |
+| ECCR Record-Fiber | 64/64 valid equivalence outputs, 44/64 exact; all 59 pair errors are false collisions | By-construction transitivity is not sufficient; semantic/generator discrimination remains |
+| MCTFR attribution | True-target and shuffled-target arms both reach 64/64 development truth | Decisive rejection: hard counterexample propagation, not learned target supervision, supplied the answer |
+| EPISODE mechanics and source freeze | 256/64 six-case clusters, 1,920 unique packets, dual-oracle exactness, zero split/operator-family overlap, 36/36 board tests; 907,269-parameter workspace passes 41/41 source-freeze/custody tests | Historical anti-shortcut control; source commit `80dc07a` remains frozen, but no tensor is fit and no neural score exists |
+| EFC corrective CPU falsifier | Explicit machine executes 1,920/1,920; eight quotient classes; 8,736 supported queries/world; lawful canonical two-cache covers 0/384; compensated interventions change 0/960 | Draft must be revised: sampled rows are not query support, and current opaque query starts require retained state keys |
+
+This sequence changes the next action. Do not scale the 69M workspace or begin
+the proposed trillion-token continuation merely because a deterministic
+executor is exact. Do not fit frozen `80dc07a` under the superseded OCSI
+objective. First revise EFC's query-support theorem and start-state schema,
+freeze exact machine bytes/precision, and complete the source-free CPU
+falsifiers. Only a subsequently frozen neural compiler may test episode-local
+machine induction.
+
 ---
 
 ## 6. Mathematical And Theoretical Work Completed
@@ -1666,6 +2478,35 @@ means a hypothesis was specified or audited, not that it worked:
 | Categorical workspace mechanisms | `R12_ADDRESSED_CATEGORICAL_WORKSPACE_PREREG.md`, `R12_OPERATOR_BALANCED_COMMIT_BISIMULATION_PREREG.md`; no accepted broad capability result |
 | Carry and serializer mechanisms | `R12_CAUSAL_CARRY_MOTOR_PREREG.md`, carry recovery, OCSC, DWS/EOS; source/qualification or autonomous gates failed |
 | Proof/format mechanisms | `R12_FORMAT_CONJUGACY_AND_SSC.md`, typed-controller internalization, SCERT; useful decomposition and controls, no accepted native reasoner |
+
+### 6.4 Endogenous ontology and causal-attribution boundary
+
+The newest theories sharpen a distinction that the earlier packet experiments
+could not test. QERARM, AHRF, TCRR, S7, CTAA, and S4-TPT all compute inside an
+ontology selected in advance: relation registers, term constructors, operation
+cards, or group elements already define the legal state and action axes. ECCR
+instead proposes discovering the episode-local causal quotient from transition
+and observation witnesses, with descent `T_g C = C A_g`, observation
+factorization, path congruence, and naturality under record reindexing and
+non-bijective split/merge presentations.
+
+Finite mechanics validate those invariants, but the neural evidence does not
+yet identify the quotient robustly. The MCTFR control adds a second necessary
+condition: even an exact output is inadmissible when shuffled target
+supervision leaves the true output unchanged. A claimed learned mechanism must
+be counterfactually sensitive to the episode's target-defining evidence, not
+merely contain a fixed algorithm that already computes the assessor relation.
+
+EPISODE operationalizes action sensitivity and late-query custody without
+exposing a host graph. Its
+cyclic binding clusters make action-independent methods provably
+underidentified, and its paired query orders require one committed state to
+support different late questions. The EFC audit corrects the stronger claim:
+two sampled rows are not the complete query support, while high accuracy alone
+still does not identify a reusable transition law. The next positive result
+must demonstrate endogenous binding, explicit machine causality, unseen
+composition, and target-sensitive attribution under a byte-matched cache
+control.
 
 ---
 
@@ -1940,6 +2781,111 @@ the node-count safety bound, S7's cyclic compiler, and pop-insert state mutation
 S8/S9 are designed to remove source grounding, event order, and halt from the
 host; they do not remove the finite algebraic runtime.
 
+### 7.20 Fresh renderer transfer is possible when physical records are local
+
+SD-CST Complete Physical Fresh v1.3 independently confirms 2,048/2,048 exact
+packets, pointers, recurrent states, answers, and joints over unseen renderer
+compositions. Family-deranged supervision yields zero exact packets. This
+closes the claim that renderer composition alone prevents bounded transfer.
+The successful representation compiles physical records locally and assigns
+semantic roles afterward; a generic global residual and a conventional global
+decoder both fail.
+
+### 7.21 Structured whole-symbol equality supports episodic semantic binding
+
+ER-CST v1 fails with perfect structural pointers but zero complete operation
+cards. The Witness Equality Bus repairs exactly that interface and confirms at
+99.023% packet/state/answer/joint with 99.805% cards and witness pointers.
+Fresh operations can therefore be defined by determining witnesses and
+compiled into reusable cards after source deletion. The boundary remains a
+finite `S_3` action/state ontology.
+
+### 7.22 Correct structural address does not imply transported content
+
+ER-TT marginal routing reaches 90.9375% relation/joint but misses the witness
+gate through duplicate physical occurrences. Entangled ordinal/count memory
+regresses sharply. The final factorized route learns the grammar-correct
+ordinal on 36/36 active cases; structural-only reaches 92.050% witness but
+1.250% relation/joint. A location can be correct while the symbol occupying it
+is absent from the causal state. Future compilers must keep occurrence address,
+nominal identity, and relation content separately testable.
+
+### 7.23 Binding must be independently represented, not inferred from outcome
+
+The first CTAA assessor aliased binding correctness to card correctness. The
+repaired 60-byte packet commits action cards, an independent
+`opcode_to_card` permutation, initial state, and a local opcode/STOP tape.
+Card-only, binding-only, compensated non-involutive relabeling, declaration
+shuffle, opcode recoding, and card-storage reindexing now have distinct frozen
+predictions. This makes declaration binding identifiable before any learned
+score exists.
+
+### 7.24 Symmetry and custody are part of the scientific mechanism
+
+The CTAA binding slice uses complete `S4` declaration orbits and an `A4`-only
+train/odd-confirmation split. A shared pair scorer is bi-equivariant by
+construction; its favorable control receives identical parameters, calls,
+loss, and analytic MACs but global context. This addresses representational
+symmetry. It is still insufficient without secret independent confirmation,
+hermetic execution, externally signed lineage, and source-deleted frozen-core
+execution. A high number produced without those boundaries is not an admissible
+capability result.
+
+### 7.25 S4 tying deterministically extends generator rows, but does not identify the law
+
+With only six identity-row transposition labels, the `S4`-tied motor composes
+every unseen word through depth four exactly because the fixed multiplication
+table already determines all other source rows. The untied dense control was
+deliberately left with 23 rows unidentified. The retrospective canary therefore
+shows the mechanical consequence of the hardcoded prior; it is not a
+prospective identification or advancement result. The durable positive result
+is narrower: after adversarial repair, true cue-conjugated transport
+equivariance passes 82,944 exhaustive cases, an independent oracle passes all
+576 products, and a differentiable interleaved `24 x 27` executor implements
+ordered cue/action/STOP mechanics. The holonomy no-go still classifies this as
+structured operator recurrence.
+
+### 7.26 Supplied-ontology fixed-point control can extrapolate in depth
+
+QERARM reaches 192/192 exact development joints, including all unseen
+depth-six programs, once convergence features are cardinality-normalized and
+hard execution is delayed to the final curriculum phase. This is strong
+evidence that a small learned controller can own register updates, phase, halt,
+and late answer over a supplied relation-algebra packet. It is equally strong
+evidence about the remaining boundary: the model did not discover the packet
+ontology or episode-local program from raw source.
+
+### 7.27 Valid structure is not equivalent to correct endogenous semantics
+
+ECCR's Record-Fiber decoder guarantees reflexive, symmetric, transitive hard
+outputs on 64/64 development cases, yet exact quotient recovery is only 44/64.
+Every pair error is a false collision. Twelve message-passing rounds regress,
+and scalar threshold sweeps do not improve exactness. The bottleneck is
+semantic discrimination and generator descent, not merely enforcing an
+equivalence relation.
+
+### 7.28 Perfect accuracy is inadmissible without target-sensitive causality
+
+MCTFR reaches 100% against the true assessor under both true and shuffled
+target supervision. The shuffled arm does not fit its changed objective, so
+the invariant score exposes an always-on fixed counterexample algorithm. This
+is a decisive project-wide rule: matched target intervention must alter the
+learned mechanism or the score cannot support a learning or reasoning claim.
+
+### 7.29 Cyclic raw-token orbits force action sensitivity, not by themselves a world model
+
+EPISODE six-case clusters hold raw token bags and action-erased worlds fixed
+while rotating action meaning and late query order. Targets change throughout,
+placing exact ceilings on action-agnostic, all-actions, and query-bagging
+shortcuts. The complete 1,920-packet corpus passes dual-oracle and split
+isolation gates. Its 907,269-parameter causal workspace now passes 41/41
+source-freeze/custody tests without fitting. The later CPU audit shows 8,736
+admissible start/word queries per committed world and proves that a two-entry
+cache needs forbidden future-query information. It does not prove that the
+four-slot workspace must encode a reusable transition system. That requires an
+explicit machine interface, fixed precision/bytes, and matched cache/recurrent
+controls.
+
 ---
 
 ## 8. Hypotheses That Are Closed Or Strongly Disfavored
@@ -2006,6 +2952,41 @@ Do not reopen these without a materially different causal prediction:
     S9 reaches 94.775% exact graphs and 94.873% state/answers, but misses the
     95% class gate by five examples and loses 18 otherwise-valid parses under
     operation-name recoding. The mechanism is promising, not confirmed.
+24. **A shared renderer residual can repair every frozen program head.**
+    Renderer-orbit query and initial-binding paths transfer, but generic
+    residual, head-only, and favorable jointly trained global decoders all
+    remain at zero complete packets. Physical-record locality is required.
+25. **Independent address embeddings solve duplicate occurrence binding.**
+    Count/ordinal fusion falls to 59.500% witness and corrupts shared route
+    geometry despite both signals being useful.
+26. **A grammar-correct factorized address carries semantic content.** The
+    factorized structural-only arm reaches 92.050% witness but 1.250%
+    relation/joint; address correctness is not identity transport.
+27. **Packet field presence proves causal execution.** CTAA cards, binding,
+    local tape, state, and query require separating mutations, frozen-core
+    source-deleted execution, and independent custody. Host reconstruction or
+    an aliased metric cannot establish the mechanism.
+28. **Non-abelian holonomy is a fundamentally new reasoning state, or six
+    generator labels constitute an advancement gate.** Complete finite
+    holonomy reduces to ordinary operator recurrence/PSR-OOM machinery, and
+    the retrospective S4-TPT canary follows tautologically from its hardcoded
+    multiplication table. Neither establishes a new primitive or authorizes a
+    neural board.
+29. **A correct supplied packet establishes endogenous reasoning.** QERARM
+    shows near-perfect fixed-point execution over a gold source-deleted packet,
+    but the ontology and program remain external.
+30. **Independent factor heads form a coherent symbolic transaction.** TCRR
+    recovers many train components separately yet produces 0/96 exact train
+    and 0/32 development transactions; joint conditional decoding is required.
+31. **By-construction transitivity solves causal quotient induction.**
+    Record-Fiber guarantees valid equivalence relations but does not improve
+    exact development over the pairwise ECCR inducer.
+32. **More recurrent rounds repair unseen quotient semantics.** Twelve ECCR
+    rounds regress from 45/64 to 39/64 development exact under the same seed,
+    corpus, and updates.
+33. **A perfect score proves the learned target mechanism.** MCTFR's shuffled-
+    target arm remains 64/64 against truth without fitting shuffled
+    supervision; causal attribution, not output accuracy alone, is mandatory.
 
 ---
 
@@ -2059,29 +3040,81 @@ bounded S5 stack still has its original accounting. Parameter count alone is
 not the constraint. A proposal must state why its mechanism should outperform a
 matched recurrent or static control and which current failure it changes.
 
-### 9.7 External frontier-plan synthesis
+### 9.7 Closed occurrence routing, CTAA packets, and the S4-TPT successor
 
-`FRONTIER_AGENT_PLANS.md` preserves four labeled submissions from Gemini Deep
-Research, Grok, Meta AI, and ChatGPT Deep Research; the Meta and ChatGPT plans
-are duplicates except for Meta's final two sentences, so they count as three
-distinct proposals rather than four independent endorsements. The full plan
-and review texts are embedded in Appendix A, but remain design input rather
-than experiment evidence.
+The occurrence-routing sequence is now complete. Marginal-route v1.1 nearly
+passes at 89.925% complete witness rows and 90.9375% relation/joint, with one
+wrong occurrence in every failed row. Entangled count/ordinal embeddings
+regress witness rows to 59.500%. The 2,364-parameter factorized residual then
+learns the deterministic grammar address but fails to carry content:
+structural-only reaches 92.050% witness and 1.250% relation/joint, while the
+treatment reaches 25.8625% witness and 27.6125% joint. The factorized route is
+closed by job `694945`; partial relative improvements cannot override its
+absolute frozen-gate failures.
 
-The review in `FRONTIER_AGENT_PLANS_ANALYSIS.md` accepts their common diagnosis
-but rejects every integrated stack as scientifically underidentified. The
-admitted direction is narrower: formally preregister a pointer-grounded
-natural-language compiler, a separately parameterized source-deleted recurrent
-executor, and an independently trained state-consumer/halt policy. Predictive
-error, denoising, VQ state, ACT initialization, read/write parameter separation,
-and hard-negative program discrimination remain individual matched ablations.
-Host FSA repair, fixed carry propagation, unchecked readiness scheduling,
-rolling-hash claims, and wholesale attention-to-SSM replacement are not
-admitted as native-reasoning mechanisms.
+COFC survives only as a theoretical representation lesson. Physical occurrence
+addresses, nominal equality classes, and recurrent causal state should remain
+separate ledgers. It is not the immediate experiment because the current
+witness segments lack opaque distractors and make monotone paths nearly
+deterministic once boundaries are known.
 
-This is a design review, not an experiment result. It authorizes preparation of
-a preregistration only; no neural fit, H100 run, novelty claim, or reasoning
-claim follows from external-model agreement.
+CTAA revision 2 defines the current packet/executor substrate. Its finite world contains
+27 three-position copy actions. One learned core must use the same parameters
+for action composition and action application; a favorable full-outer-product
+recurrent control receives the same categorical packet, parameter count, state,
+and effectively identical FLOPs. Program source is compiled into a fixed
+60-byte object containing four cards, a four-byte declaration-local
+`opcode_to_card` permutation, a three-byte initial state, and a 41-byte local
+opcode/STOP tape. Source, residuals, and query are deleted or withheld before
+the recurrent executor runs.
+
+The first source-only neural falsifier is the `A4` binding-completion slice.
+Every semantic scaffold is expanded into all 24 declaration permutations;
+training sees the 12 even permutations and sealed evaluation reserves the 12
+odd permutations with exactly matched local marginals. Treatment and favorable
+global control each have 599,353 parameters and 9,587,136 dense analytic MACs.
+Only the treatment is structurally bi-equivariant to independent opcode and
+card-slot permutations. Five seeds, leakage probes, a source-only predictor,
+one-read oracle assessor, disposable all-`S4` capacity fit, real-cache resource
+profile, packet reconstruction, and source-free finalizer are preregistered.
+
+This is still `REJECT_SOURCE_FREEZE`. A positive binding score would establish
+only declaration-binding completion. It would not establish write-delete-
+delay-read memory, multi-epoch rebinding, long recurrent reasoning, broad
+language transfer, or conversational integration. Before any seed or H100 job,
+the protocol still requires an independently selected secret challenge,
+separate source/oracle OS custody, hermetic dependency/import execution,
+externally signed append-only stage lineage, and actual source-deleted execution
+through the frozen core.
+
+S4-TPT is the repaired score-free component candidate on top of that
+substrate. It replaces one static binding with a 24-particle `S4` distribution
+and now implements the correct covariance law: opcode reindexing conjugates
+the right-acting cue. Exhaustive equivariance is 82,944/82,944, the independent
+composition oracle is 576/576, fixed law tables are non-persistent, empty cues
+work, and a differentiable joint executor interleaves cues, physical actions,
+STOP, and late categorical query over all `24 x 27` binding/state pairs.
+
+Independent review invalidated the original six-label advancement story. The
+perfect depth-two-through-four `S4` result is retrospective development
+evidence and follows from the hardcoded group table; the sparse dense control
+was intentionally underidentified. A future favorable control must be equally
+informed, receive every example and end-to-end gradient, and remain strictly
+stronger than the tied treatment.
+
+No neural board can be preregistered until one unified forward path compiles
+bytes through frozen Shohin into private cards, binding belief, state, soft cue
+evidence, an interleaved event tape, and STOP; irreversibly destroys source
+tokens, residuals, and KV; executes the joint state; materializes the query
+only afterward; and answers through a model-owned reader. Hard group IDs,
+resolved schedules, target bindings, host repair, and host execution are
+forbidden. Recoding, particle relabeling, state reset/transplant, source poison,
+post-STOP suffix, independent oracle/scorer, compute receipts, custody, and
+five-seed thresholds must be frozen before any scored bytes.
+
+This successor remains ordinary operator recurrence under the holonomy no-go.
+Its present result is component mechanics only. No source freeze, neural
+board, seed, scored access, or GPU work is authorized.
 
 ### 9.8 Complete referential compiler CPU gate
 
@@ -2489,6 +3522,51 @@ Report/train/development/sealed SHA-256 values begin
 after generation. The sole H100 development run must use exact hash-matched
 bytes and consume the one-use access ledger before evaluation.
 
+That run is now historical and closed: S9.2 reached only 340/2,048 =
+16.602% exact graph/state/answer and 21/43 gates. Parser-only global-anchor
+repair is rejected; the pre-run wording above no longer authorizes execution.
+
+### 9.17 Current EFC correction gate before continued pretraining
+
+The current executable question is no longer whether a supplied symbolic
+machine can run. QERARM and the new categorical CPU runtime answer that
+positively in bounded systems. TCRR, ECCR, MCTFR, and the OCSI review show why
+supplied ontology, structurally valid state, perfect output, or explanatory
+latent names can still fail a reasoning claim.
+
+The EFC candidate makes the contract explicit: a perceptual transformer must
+compile raw evidence into an anonymous fixed-shape machine; a later parser must
+bind opaque start-state, action, and observer keys; and a source-free executor
+must reuse shared transitions for ordered composition. Frozen `80dc07a` remains
+a favorable generic-workspace control, not the required interface.
+
+The first EFC theory draft is not ready for source freeze. Its finite-query
+theorem incorrectly treats two sampled development rows as the compiler's
+complete query support. Existing custody hides those rows until after
+commitment and supports 8,736 start/word queries per world. The draft also
+omits retained state keys even though the current late query supplies its
+opaque start state.
+
+The CPU runtime now executes all 1,920 frozen packets, computes eight exact
+quotient classes, cleanly separates key and transition interventions, preserves
+all compensated permutations, and reports a 26,208-bit exhaustive answer table
+versus a 261-bit minimum discrete machine for the current interface, or 276
+conservative bits including initial-state and active-mask fields. These are
+mechanics and resource counts, not neural evidence.
+
+Before neural fitting, the project must freeze the actual query support,
+challenge timing, state-key versus source-fixed-initial-state choice, field
+precision, complete serialized byte count, STOP/observer semantics, and matched
+answer-cache/generic-recurrent controls. Only after the resulting dual-oracle
+CPU falsifiers pass may a new board and sub-200M neural compiler be frozen.
+
+Only after that compiler demonstrates causal selected state, unseen
+composition, source-deleted execution, and late-query use should a long
+continuation be considered. The planned approximately trillion-token run is
+intended to teach a validated mechanism broad use; it is not a substitute for
+validating the mechanism. Continuation pretraining remains under the explicit
+user hold until the user lifts it after reasoning is established.
+
 ---
 
 ## 10. Template For A New Theory
@@ -2573,15 +3651,23 @@ used directly, transitively, or newly added in the current frontier run.
 The source records begin after the maintenance protocol and are labeled by
 stable filenames. Local links are converted to portable in-dossier labels.
 
-Embedded research sources: 251 files, 1,930,917 source bytes.
+Embedded verbatim research sources: 264 files, 2,088,143 source bytes.
 
 Operational boundary: the full operational runbook remains intentionally
 distilled rather than copied verbatim. Its custody, checkpoint, training,
 and isolation facts required for scientific judgment are stated in the main
 ledger; credential-handling and live-operational instructions are excluded.
 
+Historical-source rule: Appendix A preserves source records verbatim except
+that local Markdown links unavailable to the two-document reader are converted
+to portable in-dossier labels. Present-tense plans later executed, rejected, or
+superseded remain historical evidence. For current authority, experiment
+status, and next action, the synthesis above and dated maintenance ledger
+override older embedded wording.
+
 ### New frontier records included in this update
 
+- `R12_EPISODE_FUNCTOR_COMPILER_CPU_FALSIFIER_RESULT.md` — controlling result reproduced as a self-contained Appendix synopsis before the verbatim source set
 - `FRONTIER_AGENT_PLANS.md` — embedded in Appendix A
 - `FRONTIER_AGENT_PLANS_ANALYSIS.md` — embedded in Appendix A
 - `FRONTIER_NOMINAL_GRAPH_REWRITE_MACHINE_PLAN.md` — embedded in Appendix A
@@ -2589,7 +3675,20 @@ ledger; credential-handling and live-operational instructions are excluded.
 - `FRONTIER_S9_TO_GENERAL_REASONING_ANALYSIS.md` — embedded in Appendix A
 - `R12_CAUSAL_GRAMMAR_FIREWALL_PLAN.md` — embedded in Appendix A
 - `R12_CROSS_DOMAIN_FAULT_CHANNEL_REVIEW_RESULT.md` — embedded in Appendix A
+- `R12_CTAA_NEURAL_FALSIFIER_PREREG.md` — embedded in Appendix A
+- `R12_CTAA_NONABELIAN_HOLONOMY_WORKSPACE_PREREG.md` — embedded as a superseded historical record in Appendix A
+- `R12_CTAA_S4_TIED_PARTICLE_TRANSPORT_DOSSIER.md` — embedded as the controlling corrected record in Appendix A
+- `R12_GENERAL_REASONING_GATE.md` — embedded in Appendix A
+- `R12_CONTEXTUAL_RELATION_PROGRAM_ARCHITECTURE.md` — embedded in Appendix A
+- `R12_AHRF_PREREG.md` — embedded in Appendix A
+- `R12_ABCR_THEORY.md` — embedded in Appendix A
+- `R12_NEURAL_TCRR_PREREG.md` — embedded in Appendix A
+- `R12_GENERAL_REASONING_MECHANISM_THEORY.md` — embedded in Appendix A
+- `PRETRAIN_DATA_SOURCES.md` — embedded in Appendix A
+- `R12_CTAA_OPCODE_BINDING_AMENDMENT.md` — embedded in Appendix A
 - `R12_ER_ADDRESSED_MARGINAL_ROUTE_PREREG.md` — embedded in Appendix A
+- `R12_ER_FACTORIZED_WITNESS_ROUTE_PREREG.md` — embedded in Appendix A
+- `R12_ER_FACTORIZED_WITNESS_ROUTE_RESULT.md` — embedded in Appendix A
 - `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md` — embedded in Appendix A
 - `R12_ER_CST_FRESH_BOARD_PREREG.md` — embedded in Appendix A
 - `R12_ER_CST_FRESH_BOARD_PREREG_AMENDMENT_V1_1.md` — embedded in Appendix A
@@ -2932,7 +4031,25 @@ proposing or launching a reasoning experiment.
 | 2026-07-20 | Froze/pushed marginal-route v1.1 at `8419c74e` before derivation SHA `3d3b8918...` and seed `4412270997190025241`. A clean exact Newton capsule passes source cleanliness and `sbatch --test-only`; sole train-only H100 job `694909` is pending resources because all normal H100 GRES were allocated. Output is isolated, the job accepts no scored split, development/confirmation custody is `0/0`, and no result exists yet. |
 | 2026-07-20 | Marginal-route v1.1 job `694909` completed cleanly on `evc43` and is rejected by one frozen gate: witness-pointer rows 7,194/8,000 = 89.925% versus 90%. It nevertheless reaches 90.9375% packet/joint/relation, 97.0625% state, 98.5375% answer, 100% alpha invariance, and 100% oracle-route transport. Every one of 806 failed rows has exactly one wrong occurrence, concentrated in late after-witness slots; 99.626% of individual occurrences are exact. This localizes the residual to duplicate occurrence addressing. An ordinal/count-addressed marginal repair adds 10,752 parameters while preserving all budgets/gates/custody; 22 tests and real-parent/real-row qualification pass before source freeze. |
 | 2026-07-20 | Froze/pushed occurrence-addressed marginal source `7601625f` before drand round `6305746`, payload/derivation hashes `8884bfe6...`/`c24770ac...`, and seed `4775909816533321494`. Clean capsule and a training-only two-file data view pass `sbatch --test-only`; sole isolated H100 job `694928` is running on `evc36`. No score exists yet and no duplicate is authorized. |
-| 2026-07-20 | Embedded the post-S9.2 SD-CST, episodic-rule-card, relation-tensor, and current canary closure: 251 source records are now self-contained in Appendix A. |
+| 2026-07-20 | Occurrence-addressed job `694928` completed cleanly and is rejected: packet/joint/relation 60.9125%, state 80.1375%, answer 90.225%, witness pointers 59.500%, minimum-cardinality joint 43.606%. Alpha invariance and oracle transport remain 100%. Evidence shows cardinality-dependent adjacent ordinal swaps; ordinal embedding norm grows to 8.64 with rows 6/7 cosine 0.878. The entangled address route is closed. A no-optimizer read-only scale ablation is admitted solely to separate ordinal dominance from count interaction. |
+| 2026-07-20 | Read-only scale-audit job `694932` completed with no optimizer or scored access. Zero ordinal gives 0% witness rows, zero count 0.4875%, and ordinal scale 1.5 reaches 70.425% witness / 69.3875% joint while degrading events. Both signals matter, but no frozen scale recovers v1.1. A distinct centered/bounded factorized witness residual with 2,364 parameters and four same-seed attribution arms is locally qualified before source freeze. |
+| 2026-07-20 | Replaced the frontier plan with an evidence-aligned Causal Object-File Compiler synthesis. Retained separate occurrence/nominal ledgers and segment-local joint decoding; corrected the stale addressed-canary stage; identified that the current numeral query is already exact and the current witness grammar makes monotone paths nearly deterministic; preserved non-bijective relations; and separated fresh in-range transfer from later `N=7..9` extrapolation. |
+| 2026-07-21 | Froze and pushed exact factorized witness-route source `4643d1a` after all four arms, 24 focused tests, static checks, parameter accounting, and train-only custody checks passed. No post-commit seed, H100 job, or probe score exists yet. |
+| 2026-07-21 | Executed and permanently rejected the factorized witness route. Source `4643d1a`, seed `6769631927967421693`, and sole H100 job `694945` produce 25.8625% witness, 27.9875% relation, 27.6125% packet/joint, 57.8875% state, and 77.075% answer. Structural-only reaches 92.050% witness but 1.250% relation/joint: the table learns where without transporting what. Custody is `1/0/0`; no fresh board or rerun is allowed. |
+| 2026-07-21 | Rejected CTAA revision 1 before source freeze after adversarial review found impossible confidence gates, missing board components, confounded novelty axes, shortcut-bearing long programs, invalid causal-depth definitions, and pre-execution query exposure. Revision 2 replaces it with exact finite copy-action mechanics, matched CTAA/OPRC cores, a staged 60-byte packet, split program/query/oracle artifacts, and fail-closed custody. No neural result exists. |
+| 2026-07-21 | Embedded the post-S9.2 SD-CST, episodic-rule-card, relation-tensor, completed scale audit, factorized preregistration/result, COFC review, and current CTAA specification: 255 source records are now self-contained in Appendix A. |
+| 2026-07-22 | CTAA revision 2 remains `REJECT_SOURCE_FREEZE`. The complete system is 137,986,868 parameters with 12,013,131 headroom below its strict 150M contract. A five-seed query-blind execution set now authenticates every signed receipt envelope before opening any plan, evidence, projection, aggregate, artifact, or late-query finalizer. The authority claim, access registry, assessor, and final gate bind that exact execution set; no board seed, training seed, scored access, H100 job, or capability result exists. |
+| 2026-07-22 | Froze the outcome-free statistical decision rule in a signed canonical specification and bound its exact file and logical hashes through claim v5, access v7, access spend, assessment commit, assessor, and final gate. Corrected the paired bootstrap to resample five seeds crossed with shared family roots within frozen strata. A separate deterministic 40-run/82-member score-snapshot codec now validates all inventory before opening any source and supports dual sealed-memfd read descriptions on Linux; macOS mechanics pass while the Linux seal/bubblewrap smoke remains externally blocked by Newton DNS. |
+| 2026-07-22 | Independent review rejected the old `binding_exact = cards_exact` alias. The admitted source amendment preserves a causal declaration-local `opcode_to_card` permutation and local-opcode event tape in a 60-byte packet, then derives the resolved schedule internally. Card-only, binding-only, and compensated-relabeling controls must separate card semantics, opcode binding, and execution behavior. Independent dual raw rescoring, capability-time resource/intervention receipts, this opcode-binding implementation, and the unmocked Linux custody path remain blockers. |
+| 2026-07-23 | Implemented and pushed causal CTAA opcode binding through commits `866439f` and `defef98`. Complete 24-member declaration orbits train on 12 even `A4` permutations and reserve 12 odd permutations. The bi-equivariant treatment and favorable global control each use 599,353 parameters and 9,587,136 dense MACs; the complete candidate is 138,589,297 parameters. Focused verification is 47/47 and the clean full suite is 661 passed with three expected platform skips. A fresh review still returns `REJECT_SOURCE_FREEZE`: secret independent confirmation, hermetic execution, externally controlled signed custody, and frozen-core source-deleted packet execution remain mandatory. No seed, confirmation access, H100 job, or learned score exists. |
+| 2026-07-23 | Superseded the initial NAHW package after independent `NO-GO` review and renamed the lane S4-Tied Particle Transport (S4-TPT). The six-label result is retrospective, taut hardcoded-prior development evidence, not an advancement gate. Repaired mechanics pass 82,944 cue-conjugated equivariance cases, 576 independent products, 69,984 interleaved binding/state/action/opcode cases, 139,968 state-plus-binding checks, 69,984 mass checks, all 27 CTAA maps, four STOP/mixed-mass/gradient gates, and 22/22 tests. Mechanics/report hashes are `6152538a...`/`2f07fbd9...`. No byte-source compiler, actual source/KV deletion, model-owned late reader, neural board, source freeze, seed, scored access, or GPU result exists. |
+| 2026-07-23 | QERARM's frozen late-hard controller reaches 768/768 train and 192/192 development joint with exact registers, answer, and model-owned HALT, including unseen depth six. It is retained as a bounded fixed-template supplied-packet executor. AHRF's admissible seed is void because no atomic artifact was published. TCRR's one-step neural motor is rejected at 0/96 train and 0/32 development hard exact, with held-out path localization 0/32. |
+| 2026-07-23 | ECCR mechanics pass and its best eight-round pilot reaches 254/256 train and 45/64 development exact. Record-Fiber guarantees 64/64 valid equivalence relations but reaches 44/64 exact; twelve rounds regress to 39/64 and threshold sweeps do not improve the frozen score. Structural validity, more recurrence, and scalar calibration are therefore not the missing semantic mechanism. |
+| 2026-07-23 | MCTFR's true-target and shuffled-target arms both reach 256/256 train and 64/64 development truth. Because the shuffled arm does not fit its changed objective, always-preserved hard counterexample propagation—not learned attribution—supplies the answer. The learned-mechanism branch is closed. |
+| 2026-07-23 | Froze the EPISODE action-binding corpus: 256/64 six-case clusters, 1,920 unique packets, dual-oracle exactness, zero split/operator-family overlap, 640 cyclic invariants, 960 late-query world commitments, and 36/36 focused tests. Action-agnostic/all-actions/query-bagging controls score 13.0208%/13.6458%/33.2292%. Only the roughly 1M block-19 causal workspace slice is authorized; the 69M workspace, GPU scale-up, and trillion-token continuation are not. |
+| 2026-07-23 | Frozen source commit `80dc07a` implements the minimal causal bind-select workspace after block 19. Four 256-wide sealed slots and four rank-32 operators add 907,269 parameters for 125,988,933 complete; 41/41 causality, deletion, control, gradient, replay, trust-root, atomic-publication, and custody tests pass after three hostile reviews return `ACCEPT_SOURCE_FREEZE`. Receipt SHA is `46409c8c...`. No workspace tensor is fit, no neural score exists, and source-deleted process custody remains. Continuation pretraining is explicitly held by the user. |
+| 2026-07-23 | Marked the OCSI first-fit draft `NO-GO AS WRITTEN`: frozen `80dc07a` does not expose query-blind transplantable binding/operator objects, assessment interventions forbid gradients, sealing detaches the compiler, and `L_diag + L_query` duplicates one prediction set. The frozen workspace is retained as a favorable control rather than the treatment constraint. |
+| 2026-07-23 | Audited the replacement EFC theory and implemented two independent CPU falsifiers. The explicit categorical machine executes 1,920/1,920 packets across 960 worlds, recovers eight quotient classes, and cleanly separates key/operator interventions with 0/960 compensated changes. Current custody supports 8,736 post-seal nonempty start/word queries per world; a lawful canonical two-entry cache covers 0/384, while 384/384 requires forbidden query/target preload. The draft is `NO-GO AS WRITTEN` because it confuses sampled rows with query support and omits opaque state keys required by the current query start. Report SHA is `95b1157c...`; 49/49 combined audit and inherited tests pass. No neural fit, board, source freeze, score, or pretraining is authorized. |
 
 ---
 
@@ -2943,15 +4060,23 @@ used directly, transitively, or newly added in the current frontier run.
 The source records begin after the maintenance protocol and are labeled by
 stable filenames. Local links are converted to portable in-dossier labels.
 
-Embedded research sources: 251 files, 1,930,917 source bytes.
+Embedded verbatim research sources: 264 files, 2,088,143 source bytes.
 
 Operational boundary: the full operational runbook remains intentionally
 distilled rather than copied verbatim. Its custody, checkpoint, training,
 and isolation facts required for scientific judgment are stated in the main
 ledger; credential-handling and live-operational instructions are excluded.
 
+Historical-source rule: Appendix A preserves source records verbatim except
+that local Markdown links unavailable to the two-document reader are converted
+to portable in-dossier labels. Present-tense plans later executed, rejected, or
+superseded remain historical evidence. For current authority, experiment
+status, and next action, the synthesis above and dated maintenance ledger
+override older embedded wording.
+
 ### New frontier records included in this update
 
+- `R12_EPISODE_FUNCTOR_COMPILER_CPU_FALSIFIER_RESULT.md` — controlling result reproduced as a self-contained Appendix synopsis before the verbatim source set
 - `FRONTIER_AGENT_PLANS.md` — embedded in Appendix A
 - `FRONTIER_AGENT_PLANS_ANALYSIS.md` — embedded in Appendix A
 - `FRONTIER_NOMINAL_GRAPH_REWRITE_MACHINE_PLAN.md` — embedded in Appendix A
@@ -2959,7 +4084,20 @@ ledger; credential-handling and live-operational instructions are excluded.
 - `FRONTIER_S9_TO_GENERAL_REASONING_ANALYSIS.md` — embedded in Appendix A
 - `R12_CAUSAL_GRAMMAR_FIREWALL_PLAN.md` — embedded in Appendix A
 - `R12_CROSS_DOMAIN_FAULT_CHANNEL_REVIEW_RESULT.md` — embedded in Appendix A
+- `R12_CTAA_NEURAL_FALSIFIER_PREREG.md` — embedded in Appendix A
+- `R12_CTAA_NONABELIAN_HOLONOMY_WORKSPACE_PREREG.md` — embedded as a superseded historical record in Appendix A
+- `R12_CTAA_S4_TIED_PARTICLE_TRANSPORT_DOSSIER.md` — embedded as the controlling corrected record in Appendix A
+- `R12_GENERAL_REASONING_GATE.md` — embedded in Appendix A
+- `R12_CONTEXTUAL_RELATION_PROGRAM_ARCHITECTURE.md` — embedded in Appendix A
+- `R12_AHRF_PREREG.md` — embedded in Appendix A
+- `R12_ABCR_THEORY.md` — embedded in Appendix A
+- `R12_NEURAL_TCRR_PREREG.md` — embedded in Appendix A
+- `R12_GENERAL_REASONING_MECHANISM_THEORY.md` — embedded in Appendix A
+- `PRETRAIN_DATA_SOURCES.md` — embedded in Appendix A
+- `R12_CTAA_OPCODE_BINDING_AMENDMENT.md` — embedded in Appendix A
 - `R12_ER_ADDRESSED_MARGINAL_ROUTE_PREREG.md` — embedded in Appendix A
+- `R12_ER_FACTORIZED_WITNESS_ROUTE_PREREG.md` — embedded in Appendix A
+- `R12_ER_FACTORIZED_WITNESS_ROUTE_RESULT.md` — embedded in Appendix A
 - `R12_ER_CST_EPISODIC_RULE_CARD_THEORY.md` — embedded in Appendix A
 - `R12_ER_CST_FRESH_BOARD_PREREG.md` — embedded in Appendix A
 - `R12_ER_CST_FRESH_BOARD_PREREG_AMENDMENT_V1_1.md` — embedded in Appendix A
@@ -3278,871 +4416,966 @@ ledger; credential-handling and live-operational instructions are excluded.
 - `R12_S6_CONTEXTUAL_AFFINE_LAW_INDUCTION_PREREG_V1_2.md` — embedded in Appendix A
 - `R12_S7_LEARNED_CAYLEY_LAW_COMPILER_PREREG.md` — embedded in Appendix A
 
-## Embedded source 1: `FRONTIER_AGENT_PLANS.md`
-
-Original source path: `FRONTIER_AGENT_PLANS.md`
-Original source size: 55,142 bytes
-
-<!-- BEGIN EMBEDDED SOURCE -->
-Gemini Deep Research:
-"Cross-Disciplinary Cognitive Architectures: Directing the Path to Native Reasoning for the Shohin 125M ModelThe development of native reasoning capabilities within language models constrained to sub-150 million parameters represents an architectural frontier where traditional scaling laws no longer offer a viable path. Standard paradigms rely on massive parameter scaling to naturally prompt the emergence of systematic, multi-step problem-solving capabilities. When these same behaviors are sought in small models, such as the Shohin flagship model, the system routinely fails to transition from local, token-level competence to global, composition-level execution control.To bridge this operational deficit while staying strictly within the remaining parameter headroom of 24.9 million parameters, this report proposes an interdisciplinary architectural framework. By drawing structural and mechanistic concepts from completely diverse fields—including civil and environmental systems engineering, evolutionary biology, physical electronics, and classical control theory—we can construct a unified cognitive model. This approach equips the Shohin 125M model with a decentralized, state-controlled, and self-correcting reasoning engine capable of satisfying the complete five-step native reasoning contract.Technical Specifications and Baseline Deficits of the Shohin Flagship ModelTo design a highly expressive reasoning engine within the mandated 150-million-parameter ceiling, we must first establish the exact physical boundary and performance profile of the immutable pre-trained Shohin checkpoint. The model, configured as a decoder-only architecture, is frozen at step 300,000.Base Physical ConfigurationThe structural parameters of the flagship Shohin model are detailed below:Architectural AttributeConfiguration ValueUnique Trained Parameters125,081,664 Target Parameter Limit< 150,000,000 Remaining Nominal Headroom24,918,335 Vocabulary Size32,768 Transformer Layers30 Model Dimension ($d_{model}$)576 Feed-Forward Hidden Dimension1,536 (SwiGLU Activation) Query / Key-Value Heads9 / 3 (Grouped-Query Attention with QK Normalization) Context Window Length2,048 Tokens Positional EmbeddingRotary Position Encodings (RoPE, $\theta=50,000$) Weight TyingInput and Output Embeddings Tied Auxiliary Lossz-loss = 0.0001 Base Recurrent Loops$n_{loop}=1$ This raw model was pre-trained on a curated mathematical, web-math, and Python code corpus designed to foster foundational symbolic reasoning. The specific data allocation is outlined below:Pretraining Corpus SourceDecoded TokensActive ShardsRoleFineMath4+2,000,001,108 10 Curated mathematical text OpenWebMath14,063,689,153 71 Web-scraped mathematical discourse CodeParrot Clean Python16,762,327,600 84 Structured algorithmic logic FineMath3+25,000,004,410 125 Expanded general mathematics Total Active Pretraining Stream57,826,022,271 290 Joint Exposure Capacity (Ratio 2.72x) Baseline Performance and the Compilation GapDespite a final pretraining loss of 1.6554 and clean convergence metrics over 300,000 optimization steps, the raw model exhibits a profound reasoning plateau. Evaluated across standard algorithmic and math benchmarks, Shohin fails to achieve viable autonomous scores:Evaluation CheckpointGSM8K Majority @ 4GSM8K Pass @ 1MATH-500HumanEval (Pass @ 1)MBPPRaw 120k Checkpoint2 / 100 1 / 100 3 / 100 7 / 164 0 / 100 Raw 168.75k Checkpoint5 / 100 2 / 100 2 / 100 7 / 164 0 / 100 Raw 300k Checkpoint4 / 100 2 / 100 2 / 100 6 / 164 0 / 100 This performance ceiling is explained by a deep gap in execution control. During a fixed-protocol interaction test across seven diverse cases, the raw model achieved only 1 out of 7 correct answers, collapsing entirely on requested output contracts and state-reuse trials. When analyzed through mechanistic probing, a distinct dichotomy emerges:The Local Execution Competence: The model possesses high local math accuracy. If provided with an externally generated execution schedule—where a host program manages the intermediate calculations and state registers—the model achieves a Source-Scheduled Continuation (SSC) score of 44.92%. Local additions and multiplications yield accuracy rates exceeding 79%.The Compilation Deficit: When the model must reason autonomously, performance drops to a baseline of 3.52%. The model's internal natural-language compiler is completely inactive, scoring 0 out of 6 parseable programs during autonomous rollout.The Persistent State Attractor: Causal layer-swapping interventions demonstrate that a persistent state representation exists as a late-layer signal (especially at layers 17, 21, 25, and 29) with a delta log-odds of +31. However, the model lacks the control mechanisms needed to access, modify, and pass this state autonomously across sequential steps.To understand how to program this latent capacity, we can look to other engineering disciplines.Interdisciplinary Insights: Mapping External Domains to Latent Reasoning ControlTo construct a robust reasoning controller under a 150M parameter limit, we must move beyond the standard autoregressive paradigm. We can design a state-routing system by drawing on four distinct physical and industrial domains:Source DomainArchitectural Translation in ShohinCivil Systems Engineering (Sustainable Facade Design)Multi-Fidelity Reduced-Order Modeling (ROM) that balances computational energy (ponder steps) with exact accuracy.VLSI / PCB Design (Component Placement/Routing)Spatial attention-routing optimization, treating memory registers as physically routed hardware channels.Ecology & Evolutionary Biology (Neuro-Genesis Dynamics)Dynamic quantized neuro-genesis, allocating transient neural codes to prevent catastrophic forgetting in noisy states.Classical Control Theory (Cruise Control Systems)State Space Models (SSMs) acting as continuous, sliding filters that compress fading contexts into stable vectors.Civil Systems Engineering: Multi-Fidelity Resource AllocationIn sustainable structural engineering, community-scale optimization requires coordinating interdependent building components, material lifecycles, embodied energy, and water indices. Because evaluating high-fidelity, physics-based simulations of complete building systems is computationally expensive, engineers use multi-fidelity approaches. In these systems, fast, low-fidelity reduced-order models (ROMs) guide early exploration, and high-fidelity solvers are reserved for critical design check-points.This principle can be applied directly to a 125M parameter transformer. Instead of routing every token through 30 deep layers of attention, we can treat the model's computational steps as a multi-fidelity building envelope. Standard tokens are processed using cheap, low-fidelity recurrent approximations, while the heavy, multi-head attention layers are reserved for complex, high-uncertainty concepts. This approach frames resource management as a multi-criteria decision-making (MCDM) problem, balancing the model's "computational lifecycle indicators" (such as energy, sequential depth, and token-level confusion) with structural correctness.VLSI and Printed Circuit Board Design: Spatial Memory RoutingElectronic hardware engineering uses automated layout design to place and route thousands of microscopic transistors or components on physical substrates. Algorithms like simulated annealing, Genetic Algorithms, and reinforcement learning are used to optimize spatial layouts, ensuring that signal transmission pathways are as short as possible to avoid cross-talk, heat buildup, and coordinate conflicts.When a small transformer runs recursive steps, its high-dimensional activations can easily conflict, causing the model to lose track of intermediate states. By framing the model's learned memory registers as physical pins on a PCB layout, we can optimize attention-routing using spatial layout heuristics. The model is trained to organize information blocks in memory space, dynamically positioning and rotating activation vectors to avoid signal conflicts. This prevents the model from settling into the false local minima that cause repeating generation loops.Evolutionary Biology: Neuro-Genesis and Sparse QuantizationBiological brains must continuously learn new motor skills and process noisy environments without experiencing catastrophic forgetting. They achieve this through neuro-genesis (the birth and integration of new neurons in the hippocampus), which introduces sparse neural codes to represent novel patterns. The Sparse Quantized Hopfield Network (SQHN) mimics this biological mechanism by mapping continuous inputs to a finite, discrete set of quantized states, using local learning rules to dynamically grow memory capacity as noise levels rise.For the Shohin model, the primary failure mode during mathematical planning is representation degradation: intermediate numbers and carry values drift as they pass through recurrent layers. By introducing a biologically inspired, quantized neuro-genesis layer, we can map noisy, continuous latent states to discrete, error-corrected symbolic keys. This step ensures that a digit remains a stable mathematical entity throughout long-horizon calculations, preventing representation drift.Classical Control Theory: Sliding Filters and Fading MemoryIn industrial mechanical systems, a car's cruise control or a guidance system tracks its position using a state space model (SSM). The system maintains a compact, evolving state vector that acts as a continuous "memory" of past changes. It updates this vector dynamically using a linear transition matrix that acts as a sliding filter, deciding what to remember and what to let fade based on new sensor inputs.Transformers traditionally store their entire history verbatim in a growing key-value (KV) cache, which scales quadratically and demands significant memory. By integrating the sliding-filter principles of selective State Space Models (such as Mamba), we can replace Shohin's attention mechanisms with fading memory layers. These layers compress historical contexts into constant-sized state vectors, maintaining constant memory overhead during long reasoning tasks.The GWT-NSR Interface: Attentional Bottlenecks and Neuro-Symbolic CompilersThe raw Shohin model's primary deficit is its complete lack of a symbolic compiler: it cannot convert natural-language problems into structured operational steps. To resolve this, we can integrate Global Workspace Theory (GWT) with Neuro-Symbolic Reasoning (NSR).In GWT, multiple parallel, specialized modules compete to write to a narrow, shared central workspace. The winning state is then broadcast system-wide to coordinate the active processors. In our architecture, the Middle J-space (Joint-Workspace) is implemented at the layer 29 boundary, where Shohin's natural arithmetic representations are concentrated.                          COMPETE & BROADCAST FLOW
-
-   +--------------------+  +--------------------+  +--------------------+
-   |  Local Arithmetic  |  |  Syntax & Grammar  |  |   Memory Register  |
-   |   Module State     |  |   Module State     |  |     State Vector   |
-   +--------------------+  +--------------------+  +--------------------+
-             |                       |                       |
-             +-----------+           |           +-----------+
-                         |           |           |
-                         v           v           v
-                     +-------------------------------+
-                     |  Central Selection Gating     |  <-- Competition Bottleneck
-                     |  (Attention-Style GWT Router) |      (s_i = u_i^T * c_i)
-                     +-------------------------------+
-                                     |
-                                     v (Broadcast Winner: w_t)
-                     +-------------------------------+
-                     |  Late-Layer J-Space Hub       |  --> Overwrites All Modules
-                     |  (Layer 29 Attractor State)   |      For Next Sequence Step
-                     +-------------------------------+
-The selection process is governed by attention-style gating scores :$$s_i(t)=\mathbf{u}_i^\top\mathbf{c}_i(t)$$Where $\mathbf{u}_i$ is a learnable query vector representing the model's active reasoning state, and $\mathbf{c}_i(t)$ represents the candidate outputs generated by the parallel modules. The winning vector is selected via a softmax distribution, producing the central workspace state:$$\alpha_i(t)=\frac{\exp(s_i(t))}{\sum_j\exp(s_j(t))}$$$$\mathbf{w}(t)=\sum_i\alpha_i(t)\mathbf{c}_i(t)$$This winning state vector $\mathbf{w}(t)$ is then broadcast across all layers, establishing a unified plan.To bridge the compilation gap, we couple this GWT bottleneck with a Neuro-Symbolic Reasoning (NSR) compiler inspired by digital-twin assembly systems. In complex industrial maintenance systems, an NSR framework maps natural-language queries to discrete, 3D structural assembly operations (such as installing or removing physical components).We can map Shohin's abstract reasoning tokens to a discrete set of "information assembly" steps :$$\text{Operation}\in\{\text{Read\_Source},\text{Push\_Carry},\text{Execute\_Arithmetic},\text{Write\_Register},\text{Halt}\}$$This approach transforms abstract, unconstrained language generation into a structured sequence of discrete state operations, allowing the model to satisfy the compilation requirements of the native reasoning contract.Energy-Based Latent Stabilization: Modern Hopfield NetworksRecurrent architectures often get trapped in false attractors—local energy minima where the model loops on incorrect intermediate representations. To prevent this, we introduce continuous Modern Hopfield Networks (MHNs) to act as energy-based stabilizers in the model's latent space.Modern Hopfield Networks store patterns as local minima of a continuous energy function, achieving exponential storage capacity relative to the feature dimension. We represent the model's vocabulary of mathematical templates, carry rules, and operational constraints as a memory matrix $\mathbf{X}=[\mathbf{x}_1,\dots,\mathbf{x}_N]^\top\in\mathbb{R}^{N\times576}$. The continuous energy landscape $E$ over the latent state vector $\boldsymbol{\xi}\in\mathbb{R}^{576}$ is formulated as:$$E=-\beta^{-1}\log\sum_{i=1}^N\exp(\beta\mathbf{x}_i^\top\boldsymbol{\xi})+\frac{1}{2}\Vert{}\boldsymbol{\xi}\Vert{}^2$$Minimizing this energy function yields a fast, single-step update rule that is mathematically equivalent to self-attention, where the active query retrieves and reconstructs a stable pattern :$$\boldsymbol{\xi}^{\text{new}}=\mathbf{X}^\top\text{softmax}(\beta\mathbf{X}\boldsymbol{\xi})$$By embedding continuous Hopfield layers immediately after Shohin's late-stage J-space, we create an error-correcting pipeline. If the model's latent state drifts due to accumulated numerical errors during a multi-step calculation, the Hopfield layer pulls the vector back to its nearest mathematically valid state. This stabilizes the reasoning path and prevents the model from settling into the false local attractors that cause recursive reasoning failures.Universal Looped Memory and the ACT Initialization SolutionSmall, non-recursive models are structurally limited to a fixed number of layers, performing the same amount of computation for simple and complex inputs alike. Universal Transformers address this by applying a single, highly optimized transformer block recursively across time, scaling computational depth dynamically through recurrent weight sharing.However, complexity theory shows that recursive models with compressed latent loops—where only a single, low-dimensional vector is passed between steps—lack the working memory required to solve P-complete sequence tasks. To move into a memory-rich regime, the model must carry a sequence-state loop or incorporate a dedicated, mutable scratchpad.We implement this in the Shohin model by prepending $T=16$ learned Universal Memory Tokens (or registers) to the input sequence :$$\mathbf{H}^{(0)}=[\mathbf{m}_1,\dots,\mathbf{m}_{16},\mathbf{s}_1,\dots,\mathbf{s}_L]+\mathbf{P}^{(t)}$$Where $\mathbf{m}_j\in\mathbb{R}^{576}$ represent the learned memory tokens, $\mathbf{s}_k$ are the sequence tokens, and $\mathbf{P}^{(t)}$ is a dynamic, step-dependent position embedding. As the shared block runs recursively, the sequence tokens remain fixed, while the memory tokens act as a parallel read-write scratchpad. Under this setup, attention heads specialize dynamically: some act as memory readers, while others function as constraint propagators that update the memory states across deep iterations.To control recursion depth, we employ an Adaptive Computation Time (ACT) halting router. At each step $n$, a sigmoidal halting node computes a halting probability $h^n\in(0,1)$ based on the active memory state :$$h^n=\sigma\left(\mathbf{w}_h^\top\mathbf{m}_{\text{avg}}^{(n)}+b_h\right)$$The model accumulates these probabilities until a threshold is met, weight-blending the intermediate states to produce the final output.                     THE ROUTER INITIALIZATION TRAP
-
-   +-------------------------------------------------------------+
-   |   Default / Positive Bias Initialization (b >= 0)           |
-   |   Halting Probability p >= 0.5 to 0.73                      |
-   |   * TRAP: Halts immediately after ~2 steps.  |
-   +-------------------------------------------------------------+
-                                 |
-                                 | (Resolve with Deep-Start)
-                                 v
-   +-------------------------------------------------------------+
-   |   Inverted "Deep-Start" Halting Bias (b = -3)               |
-   |   Initial Halting Probability p ≈ 0.05                      |
-   |   * SOLUTION: Explores deep latent paths (15-18 steps)      |
-   |     before optimizing the halting policy.    |
-   +-------------------------------------------------------------+
-Under standard frameworks, zero-bias ($b_h=0$, $p\approx0.5$) or positive-bias ($b_h=1$, $p\approx0.73$) initializations cause the model to halt after only 1 or 2 steps. Because over 70% of training runs settle into this shallow-halt equilibrium, the model never learns to navigate deep reasoning paths.We resolve this initialization trap by inverting the halting bias:$$b_h=-3$$This forces an initial halting probability of $p\approx0.05$, requiring the model to run for 15 to 18 steps at the start of training. This allows the network to explore deep computational trajectories before the halting policy is optimized. Under a regularized "ponder cost" warmup, the model learns to adapt its computational depth to the task's difficulty, achieving matched accuracy while saving 34% of the required compute steps.Hybrid Sequence-State Mixing: Priming Attention into State-Space ModelsWhile self-attention is highly effective at precise, token-to-token coordinate mapping, its quadratic $O(L^2)$ scaling makes long-context modeling computationally expensive. To optimize Shohin's efficiency, we must decouple local coordinate tracking from global historical context processing.State Space Models (SSMs), such as Mamba, update a constant-sized hidden state linearly $O(L)$, acting as a sliding filter that compresses historical contexts. However, because this compression is lossy, pure SSMs struggle with precise, verbatim retrieval—tasks where attention's quadratic "eidetic" memory excels.Instead of training a hybrid model from scratch, we employ "Priming". This methodology allows us to initialize a hybrid state-space model directly from pre-trained transformer weights, using less than 0.5% of the original pretraining compute budget.Because attention and state-space layers share an algebraic structure as sequence mixers, we can mathematically project attention weights into SSM matrices. We select 10 of Shohin's 30 attention layers—focusing on those with diffuse attention patterns—and replace them with Gated Kalman Filter (GKA) or DeltaNet SSM layers, leaving the remaining 20 layers to function as high-precision attention buffers.This hybrid configuration delivers significant performance and efficiency advantages:                  KV CACHE MEMORY ACCORDING TO CONTEXT LENGTH
-
-  Cache Memory
-     (GB)
-      |
-  2.0 +                                             / (Pure Transformer: O(L)) [36]
-      |                                            /
-  1.5 +                                           /
-      |                                          /
-  1.0 +                                         /-- (Primed Hybrid Model: O(1) SSMs)
-      |                                        /
-  0.5 +                                       /
-      |                                      /
-  0.0 +-----+-----+-----+-----+-----+-----+-----+
-      0    16k   32k   48k   64k   80k   96k   128k   Context Length
-By replacing 10 attention layers with Gated Kalman Filter SSMs, we halve the model's KV cache footprint, enabling up to 2.3x higher decode throughput while preserving precise, multi-hop reasoning capabilities.Finite State Automata Gating and Denoising Recursion TrainingAutoregressive models used as planning agents are prone to Infinite Agentic Loops (IALs), repeatedly triggering model calls or tool handoffs without hitting a termination condition. To ensure safety, we separate semantic generation from deterministic execution control by embedding the model's output projection within a programmatic Finite State Automata (FSA) wrapper.We define five discrete operational states that map directly to the native reasoning contract :                     FSA TRANSITION LOGIC GRAPH
-
-                 +-------------------------------+
-                 |       State 1: COMPILE        |
-                 +-------------------------------+
-                                 |  <Compile_Finished> Event
-                                 v
-                 +-------------------------------+
-                 |     State 2: STATE_CREATE     |
-                 +-------------------------------+
-                                 |  <State_Initialized> Event
-                                 v
-   +---------->  +-------------------------------+
-   |             |     State 3: STATE_TRANSITION |
-   |             +-------------------------------+
-   |                             |  <Step_Executed> Event
-   |                             v
-   |             +-------------------------------+
-   |             |  State 4: STATE_REUSE/CONTROL |
-   +----------   +-------------------------------+
-   |  <Loop>                     |  <Halt_Verified> Event
-   |                             v
-   |             +-------------------------------+
-   |             |      State 5: SERIALIZE       |
-   +----------   +-------------------------------+
-Transitions are triggered by validated token events generated by the model. If the model attempts an invalid transition or runs into an execution loop, the FSA layer intercepts the generation, prunes the invalid tokens, and programmatically guides the state transition to force completion.To train this recurrent, state-controlled architecture, standard Backpropagation Through Time (BPTT) and fixed-point gradient approximations are highly unstable. If the model is only exposed to clean, perfect historical states during training, it quickly degrades at test time when forced to iterate on its own noisy, imperfect predictions.We address this by training the model using a Denoising Recursion Model (DRM) objective. We inject varying levels of Gaussian noise into the target representation during training:$$\mathbf{y}_t=\sqrt{\bar{\alpha}_t}\mathbf{y}_0+\sqrt{1-\bar{\alpha}_t}\boldsymbol{\epsilon}$$Where $\mathbf{y}_0$ is the clean target representation, $\boldsymbol{\epsilon}\sim\mathcal{N}(\mathbf{0},\mathbf{I})$ is the noise vector, and $\bar{\alpha}_t$ controls the noise magnitude. The shared universal transformer block is then trained to reverse this corruption over $K$ recursive steps :$$\mathbf{h}^{(k)}=\text{Step}_{\theta}\left(\mathbf{h}^{(k-1)},\mathbf{x},t\right)$$This training paradigm provides several key benefits:Automatic Training Curriculum: Varying the noise level provides an automatic, progressive curriculum that simplifies the complex optimization landscape of multi-step reasoning.Robust Representation Alignment: Training the model to denoise corrupted states ensures that it can gracefully handle and correct its own generation errors during autonomous rollout, preventing error accumulation.No Deep Supervision Required: DRM stabilizes the model's recurrent training trajectories without needing step-by-step intermediate labels or gradient truncation, outperforming standard recursive models on complex spatial and mathematical reasoning tasks.Actionable Integration Roadmap and Parameters BudgetTo transform the Shohin 125M flagship checkpoint into a state-controlled reasoning model, we must carefully manage our remaining parameter budget. The parameter allocation for the new architectural components is outlined below:Structural ComponentParameter CostMathematical RoleParameter SourceGWT Gating Router1,327,104Coordinates attentional selection and system-wide broadcast.Headroom allocation ($4\times{d_{model}}\times{d_{model}}$) Universal Memory Tokens9,216Serves as a parallel, mutable scratchpad.Newly initialized register embeddings ($16\times576$) Modern Hopfield Layer4,608,000Stabilizes latent states and corrects mathematical representation drift.Headroom allocation ($256\times576\times32$ continuous keys) FSA Controller Gating1,536,000Coordinates deterministic execution transitions and prevents infinite loops.Headroom allocation ($5\times{d_{model}}\times{d_{model}}$) SSM Priming Replacement-11,812,608 (Savings)Halves the KV cache footprint and speeds up context updates.Replaced 10 attention layers with GGK/Mamba-2 layers Total Modified Footprint120,669,376Joint autonomous reasoning execution engine29,330,624 Parameters Remaining This configuration achieves a net parameter reduction, leaving over 29 million parameters of nominal headroom under the 150M parameter limit.Implementation and Deployment ScheduleThe engineering team will execute the deployment across three progressive 15-day phases:        Phase 1: Hybridization and Priming (Days 1 - 15)
-        * Map and replace 10 attention layers with GGK SSM modules.
-        * Initialize the 16 Universal Memory Tokens with dynamic RoPE scaling.
-
-                                |
-                                v
-
-        Phase 2: Cognitive Integration (Days 16 - 30)
-        * Implement the GWT routing hub and initialize the Modern Hopfield memory matrix.[22, 28]
-        * Configure the ACT halting router using the deep-start bias (b = -3).
-
-                                |
-                                v
-
-        Phase 3: Denoising Training and Gating (Days 31 - 45)
-        * Execute DRM training on mathematical and Python code datasets.
-        * Mount and validate the FSA neuro-symbolic runtime controller.
-During each computational step $t$, the unified forward pass of the modified Shohin model is governed by the following mathematical sequence:State Injection: Input sequence tokens are combined with the active Universal Memory Tokens $\mathbf{M}^{(t)}\in\mathbb{R}^{16\times576}$ :
-$$\mathbf{H}^{(t)}_0=[\mathbf{M}^{(t)},\text{Embed}(\mathbf{s})]+\mathbf{P}^{(t)}$$Gated Hybrid Mixing: Activations pass through the alternating State-Space and Attention layers. For each SSM layer, the continuous fading state $\mathbf{h}_k$ updates linearly :
-$$\mathbf{h}_k=\mathbf{A}\mathbf{h}_{k-1}+\mathbf{B}\mathbf{H}^{(t)}_{k-1}$$$$\mathbf{O}^{\text{SSM}}_k=\mathbf{C}\mathbf{h}_k+\mathbf{D}\mathbf{H}^{(t)}_{k-1}$$Global Workspace Selection: At the Layer 29 boundary, candidate states compete within the J-space, and the GWT router selects and broadcasts the winning coordination vector :
-$$\mathbf{w}(t)=\text{GWT-Router}\left(\mathbf{O}^{\text{SSM}}_{29}\right)$$Energy-Based Stabilization: The broadcast vector $\mathbf{w}(t)$ is projected through the Modern Hopfield memory bank, pulling any drifted representations back to the nearest mathematically valid attractor state :
-$$\mathbf{w}^*(t)=\mathbf{X}^\top\text{softmax}(\beta\mathbf{X}\mathbf{w}(t))$$Deterministic FSA Gating: The stabilized representation $\mathbf{w}^*(t)$ is mapped to the output projection, where the FSA runtime validates the transition event, ensuring safe and reliable multi-step execution.Architectural ConclusionsBy integrating structural principles from civil engineering, evolutionary biology, hardware routing, and classical control theory, we can establish a robust pathway to native reasoning for the Shohin model. This interdisciplinary framework addresses the base model's baseline planning and compilation deficits without exceeding the strict 150-million-parameter limit.Replacing quadratic attention buffers with continuous, primed state space filters significantly reduces memory overhead , while continuous Hopfield memory matrices and Universal Memory registers stabilize latent representations across deep recurrent steps. Guided by a deterministic, state-controlled execution layer and trained via a robust denoising recursion objective, the modified Shohin model transitions from a local token-association generator into a reliable, self-governing reasoning system."
+## Controlling Appendix synopsis: EPISODE Functor Compiler CPU falsifier
 
-Grok:
-"**The core diagnosis from the ledger is clear and persistent:** Shohin has strong *local* competence (e.g., DRS first-state 497/500, SSC local steps ~45-75%, late-layer residual digit/carry signals) but collapses on *composition*, autonomous control, state transport across steps, natural-language compilation to programs, reliable actuation/serialization, and termination. SFT gains are template-local and often destructive elsewhere. Raw scaling and most architectural add-ons (within ~25M param headroom) haven't closed the loop.
+This self-contained synopsis reproduces the controlling result and measured
+facts needed by a two-document reader. It is not counted in the verbatim-source
+total below; the durable local result file is
+`R12_EPISODE_FUNCTOR_COMPILER_CPU_FALSIFIER_RESULT.md`.
+# R12 EPISODE Functor Compiler CPU Falsifier Result
 
-This matches a classic gap in small models: fragments of executors and readable state, but no robust, model-owned controller that compiles, updates, consumes, reuses, and halts. The native reasoning contract (model owns all five interfaces) remains unmet.
+**Status:** mechanics-only corrective result. No neural fit, source freeze, new
+board seed, development read, GPU job, capability claim, or continuation
+pretraining is authorized.
 
-### Cross-Field Inspirations for a Compact Breakthrough
-Drawing from neuroscience, control theory, biology, dynamical systems, and modular/compositional learning (without violating the <150M cap or requiring massive external oracles):
+**Date:** 2026-07-23
 
-1. **Neuroscience / Predictive Coding & Active Inference (Brain as Hierarchical Error Minimizer)**: The brain isn't a pure feedforward transformer; it uses **predictive coding** (PC) where higher layers predict lower-layer activity, and only prediction errors propagate upward. This enables efficient state maintenance, surprise-driven attention, and hierarchical planning with modest resources.
+**Theory draft audited:** SHA-256
+`e3c7420fd7aef36834cee79af58afe681359e1cbf5ca35a1ad855d14bfcabd36`
 
-   - **Proposal**: Add a lightweight **PC sidecar** (~5-10M params) that runs in parallel or interleaved. It maintains a compact latent state (building on your DRS residual signals) and generates top-down predictions for the next "microstep" or operation. Training minimizes prediction error + task loss. This naturally supports **state reuse** (predictions conditioned on prior latents) and **error-driven correction** (common-mode semantic errors become high-surprise signals that trigger re-planning).
-   - Why compact? PC can use sparse, asynchronous updates and shared hierarchical latents. It explains why DRS installed a workspace but didn't close the loop: missing top-down prediction/actuation.
-   - Test: Causal interventions swapping predicted vs. actual next-state residuals; source-deleted rollout where only the PC latent is carried forward.
+**Frontier commentary audited:** SHA-256
+`a83536547b121d000cd8c28d9ce4beb059a661f49a294eb6492d7db0e61e3531`
 
-2. **Control Theory / Dynamical Systems (Feedback, Optimal Control, Linear Approximations)**: Transformers show local linearity in activations; model inference as a **linear time-varying dynamical system** with feedback controllers (e.g., LQR-style).
+**Reproducible audit command:**
 
-   - **Proposal**: A tiny **discrete controller head** (or recurrent cell, ~2-5M params) that treats late-layer residuals (your digit/carry workspace) as observable states. Use Jacobian-based or learned linear approximations for next-state prediction and optimal action selection (operation choice + halt). Add a small bistable or liquid-like recurrent cell for long-lasting cellular memory without full network recurrence.
-   - This directly targets your decomposition: compiler (map NL to control setpoint), updater/actuator (feedback to residuals), consumer (state in controller), halt (when error below threshold or goal reached).
-   - Matches VAMT/relation work but makes it *learned and closed-loop* rather than host-symbolic. Resource accounting stays low via sparsity or low-rank approximations.
+```text
+python3 -m pipeline.episode_functor_compiler_falsifiers
+```
 
-3. **Modularity & Compositionality (Reusable Blocks + Routing)**: Brains use modular organization; small RNNs or hypernetworks discover interpretable, compositional solutions.
+**Deterministic report SHA-256:**
+`95b1157ca7f017826bf689430c6b00cfe9e56fb36551437d829fd9541b5881fb`
 
-   - **Proposal**: **Parameter-efficient modules** (e.g., small LoRA-style adapters or hypernetwork-routed MLPs, total <15M new params) for primitives (add, multiply, etc., building on DRS executor). A learned router (tiny transformer or categorical controller) selects/invokes/composes them based on compiled NL intent. This separates *what* (modules) from *when/how* (controller), reducing gradient conflict seen in typed controllers.
-   - Inspired by evolutionary self-organization and Neural Cellular Automata: modules "communicate" via compact state packets.
-   - Generalization via recombination: train on sparse combinations, test on novel order/widths (your held-out regimes).
+## Decision
 
-4. **Biology / Self-Organization & Emergence (Decentralized, Robust Computation)**: Cellular automata, bistability, and replay-like mechanisms for durable state without central orchestration.
+The Episodic Functor Compiler is a promising architecture family, but the
+supplied theory draft is **NO-GO AS WRITTEN** for two independent reasons:
 
-   - **Proposal**: Extend DRS with **bistable recurrent cells** or a small Neural CA-style layer for the workspace. Each "digit position" or register maintains local stability; global state emerges from local rules + controller orchestration. Add "replay" during thinking (internal simulation loops) for planning without full unrolling.
-   - Addresses transport collapse and common-mode errors via redundancy and local correction.
+1. its finite-query theorem is correct, but its application to current EPISODE
+   substitutes the two sampled score rows for the post-seal query support; and
+2. its committed schema has an `initial_state` but no retained opaque
+   `state_key` records, even though the current late query supplies an opaque
+   start-state token that must be bound after source deletion.
 
-5. **Hybrid Neuro-Symbolic with Minimal Overhead**: Leverage your VAMT/S3 work. A compact "microcode" interface where the model emits/uses a very small internal program token stream, executed via a differentiable interpreter (few params). But make compilation *emergent* via PC or controller, not host-supplied.
+The old frozen transformer workspace remains a control architecture. The EFC
+candidate remains open only after these two specification defects are repaired.
 
-### Concrete Path Forward (Theory + Experiment Template)
-Use your **new theory template** rigorously. Target the highest-leverage gaps: **NL compiler + self-updating actuator/consumer + termination**.
+## What Was Implemented
 
-- **Theory Name**: Predictive-Control Modular Workspace (PCMW) or similar.
-- **Target Failure**: State transport/actuation + compilation + common-mode errors.
-- **Capability Object**: Model compiles NL to internal control signals + latent packets; updates/resuses packets autonomously; halts on low error/goal match.
-- **State/Update**: DRS-style residuals + PC latents + modular routing. Updates via local feedback + global controller.
-- **Causal Prediction**: Packet swaps, prediction-error ablations, donor residuals, source-deleted rollouts all move scores predictably.
-- **Native Boundary**: Host only tokenizes/decodes; no schedule, ALU, or verifier repair.
-- **Controls**: Matched recurrence (STRR), typed controller, SSC ceiling, static SFT, parameter-matched dense baseline.
-- **Resources**: Stay <150M total (sidecar <25M); count bits, FLOPs, depth explicitly.
-- **CPU Falsifier**: Small affine/register board + NL paraphrase transfer; test bistability/PC dynamics.
-- **Gates**: Fresh transfer (paraphrases, OOD widths), causal necessity, preservation of code/math, direct transcripts showing no loops/host dependence.
-- **Data**: Extend DRS v3 complete-basis with PC objectives, modular routing labels (sparse), predictive error signals. Use CGBR-style refinement for hard cases.
+`pipeline/episode_functor_compiler_falsifiers.py` now provides:
 
-**Implementation Sketch** (fits headroom):
-- Freeze 300k base.
-- Add: Small PC hierarchy (2-3 layers, low-dim latents), modular adapters (routed by controller), bistable cells in workspace, learned halt signal tied to error/state.
-- Training: Mixed loss (task + prediction error + routing sparsity). Curriculum: start with oracle schedules → autonomous.
-- Eval: Your full suite + new PC-specific interventions (e.g., disrupt top-down predictions).
+- a hard anonymous categorical EPISODE machine;
+- explicit retained state keys, action keys, transition tables, and observer
+  maps;
+- separate source-world and late-query parsers;
+- hard ordered execution;
+- exact Moore-machine causal-quotient refinement;
+- shortest separating-word search;
+- binding/key-only, operator-only, compensated key/operator, and local
+  transition-row interventions;
+- exact machine-versus-answer-table resource accounting;
+- a lawful world-only two-entry cache;
+- a deliberately leaky cache receiving hidden query identities and assessor
+  answers; and
+- an audit over the complete already-consumed 1,920-packet EPISODE corpus and
+  its physically separated development custody artifacts.
 
-**Why This Could Work at Scale**:
-- Exploits existing workspace signal.
-- PC/control theory provides *causal necessity* for state (errors must propagate).
-- Modularity reduces interference, enables composition.
-- Biologically plausible → likely data-efficient and generalizable.
-- Outside-box: Treat reasoning as **error-minimizing control in a modular dynamical system** rather than pure sequence prediction or symbolic engine.
+The implementation is CPU-only and does not modify the frozen neural source.
 
-This isn't guaranteed, but it preserves surviving discoveries (local executor, late residuals) while targeting the diagnosed gaps with mechanisms proven in other domains. It stays strictly neural-native and resource-bounded. Update the master ledger with any run, including NO-GO learnings. The 300k anchor is solid—now install the missing controller elegantly."
+## Test Result
 
-Meta AI:
-"This is a 125,081,664 parameter model that learned to *do* but not to *decide to do*. The ledger tells the story clearly:
+The two independent CPU-audit suites and inherited EPISODE mechanics tests
+pass:
+
+```text
+49 passed in 2.05s
+```
+
+The focused tests cover both hidden query orders, cache custody, exact query
+support, state/action key and semantic-bit accounting, causal-quotient
+refinement, future separators, independent key and operator interventions,
+compensated invariance, all six action-record permutations, one-row transition
+transplants, and failure to bind the current start without state keys.
+
+## Full Frozen-Corpus Mechanics
+
+The categorical machine reconstructed from model-visible demonstrations
+executes:
+
+```text
+1,920 / 1,920 packets exact
+960 unique committed worlds
+8 / 8 causal-quotient classes in every world
+28 / 28 state pairs separated
+```
 
-* **Local executor exists:** 497/500 first DRS states correct, oracle-compiled DRS 28/34 transitions, SSC with external schedule 44.92% vs 3.52% whole-problem autonomous.
-* **Workspace exists:** post-DRS residual swaps give +31 delta log-odds for digit at layers 17/21/25/29, carry at layer 29 is 10/10 positive.
-* **Compilation missing:** 0/6 parseable programs on fresh probes. Operation likelihood 80/176 vs 64/176 controls, but 0/176 multiply/remainder - it's a lexical cue, not a scheduler.
-* **Actuator missing:** wide digit motor fits 100% teacher-forced, but only +0.8 points autonomous.
-* **Controller missing:** 214/256 SSC traces have loop signatures, 71 loop/replay failures, 96 wrong first operation, halt-first decoding alone jumps 23.83% -> 44.92%. Typed v1 learns DONE 86.3% but loses arithmetic, typed v2 destroys DONE.
+The shortest separator has depth zero because the current identity observer
+already assigns a different opaque output to every state. If empty observation
+is excluded, any bijective action followed by the identity observer separates
+every distinct state pair at depth one.
 
-You've closed the obvious: more tokens, longer CoT, hidden digit alone, probe = workspace, host execution, replication for common-mode errors, pure reversibility, VAMT as new primitive.
+This is an oracle mechanics result. It proves that the visible source is
+sufficient to construct the machine; it does not prove that Shohin can learn
+the compilation from bytes.
+
+## The Two-Answer Cache Does Not Cross Current Custody
+
+Current physical custody declares:
 
-The gap is not capacity. A fly navigates with 100k neurons. The gap is organization. Here are four bets from completely different fields that directly map to your five-part native reasoning contract:
+```text
+compiler:  development_worlds.jsonl
+executor:  development_queries.jsonl
+assessor:  development_assessor.jsonl
+```
 
-### Bet 1: Genetics + Embryology — The Codon Compiler with Temporal Differentiation
+There are 192 development worlds and 384 sampled query rows, hence two scored
+queries per committed world. But a compiler does not receive the identities of
+those two queries.
 
-**Inspiration:** DNA doesn't use 1 base = 1 amino acid. It uses redundant 3-base codons with wobble error-correction. Embryos use the *same* genome but differentiate via time-switched gene expression.
+For the current interface, a late query contains one of eight opaque start
+states and an action word over three opaque actions at depth one through six.
+Therefore post-seal query support per world is:
 
-**Mechanism for Shohin:**
-You have 24.9M headroom. Don't add layers in parallel. Add **two temporal LoRAs** on the same 30 layers:
+```text
+8 * sum_(depth=1)^6 3^depth = 8,736 queries.
+```
 
-* **Compiler phase (0-0.5T):** Layers 0-12 with LoRA-C, trained to emit not natural language, but a 3-token codon: `[OP_SLOT | SRC_A_PTR | SRC_B_PTR]`. SRCs are *pointers* to input numbers via copy attention, not generated digits. This directly solves your R4 binding win (29/256 -> 139/256) - pointer binding is what worked.
-* **Executor phase (0.5T-1.0T):** Same base, LoRA-E active, stop-gradient from codon. Takes codon + quantized state.
+The audit obtains:
 
-Why codons? Your operation probe fails on paraphrase. A redundant codon `ADD = {add, plus, sum}` mapped to same embedding via VQ codebook gives you genetic redundancy. If paraphrase changes one token, the other two correct it - like error-correcting code in biology.
+```text
+lawful canonical world-only two-entry cache coverage: 0 / 384
+leaky hidden-query-plus-target cache exactness:       384 / 384
+```
 
-**Cost:** 2x LoRA rank 32 on 30 layers = ~4.5M params. Pointer head = 0.3M. VQ codebook 512 x 576 = 0.3M. Total <6M.
+The leaky construction is exactly the finite-query-cache theorem instantiated
+with the two realized rows. It requires both executor queries and assessor
+answers before sealing, so it violates the existing process boundary.
 
-**Causal test:** Source deletion after codon formation. If you zero the original NL but keep codon, execution should stay 28/34. Shuffled codon should destroy it. Matched control: same params as ordinary recurrence `n_loop=2` which you already showed loses (2.4899 vs 2.4890, 286k tok/s). This should beat it by >15 points on fresh order-twins.
+For a fixed pair of cache keys and a uniformly sampled hidden pair from the
+declared support, the probability of matching both is:
 
-### Bet 2: Computer Architecture — Tomasulo Reservation Stations + Dual-Rail Abacus
+```text
+1 / choose(8,736, 2) = 2.620924200775374e-08.
+```
 
-**Inspiration:** Your 71 loop/replay errors are classic data hazards. Modern CPUs solved this in 1967 with Tomasulo: don't execute in program order, execute when operands are ready. Asynchronous circuits solve interference with dual-rail: separate read and write wires.
-
-**Mechanism:**
-Replace the continuous residual digit with a **Quantized Abacus**:
-
-* 10 slots x 10 values, implemented as VQ-VAE with straight-through estimator. Not "write 7 to residual", but "increment slot 3". Actuator becomes *selection*, not generation.
-* Two residual buses: even layers are READ bus, odd layers are WRITE bus, with a latch (small GRU, 1M params) between them. You tried `n_loop=2` synchronous - this is asynchronous. This breaks the interference that killed typed v2 where DONE and arithmetic fought in same residual.
-
-Reservation station (3M params, 2 layers) holds emitted codons until their source slots are marked ready. Controller doesn't need to schedule perfectly; the station does.
-
-**Why this matters:** Your ledger: "Readable state is not sufficient. Needs actuator, carry logic, recurrent consumer." Abacus makes carry trivial: overflow slot 3 -> increment slot 4, learned as a fixed rule, not as token prediction.
-
-**Cost:** VQ abacus 0.5M, latch GRU 1.2M, reservation station 3M = 4.7M.
-
-**Falsifier:** Width-8 zero in DRS. Abacus width is explicit slots, should get >30/100 on width-8 with 0/100 STRR control.
-
-### Bet 3: Neuroscience + Physics — Basal Ganglia Controller with Conservation Law Halt
-
-**Inspiration:** Cortex doesn't decide to halt. Basal ganglia does via inhibitory gating. Physics doesn't trust computation without conservation laws.
-
-**Mechanism:**
-
-* **Controller:** Tiny 2-layer LSTM (1.5M params) separate from LM, input is abacus state entropy. Trained with REINFORCE, not cross-entropy. Reward = final answer correct -0.1*steps. This is why typed controllers failed: they were trained with SFT, same loss as executor. Biology separates dopamine (RL) from cortical supervised learning.
-* **Halt as attractor:** Define Energy E = uncertainty of abacus + distance to "closed form". Train energy network to be low at terminal states. DONE is emitted only when E < threshold and stays low for 2 steps (like Hopfield attractor).
-* **Checksum invariant:** For every problem, require model to also maintain mod-97 hash of (inputs, ops, intermediate). Sum mod 9 is invariant under add/sub reorder? No, but you can teach it: `hash_next = (hash_prev * p + op_code + digit) % 97`. If common-mode error picks wrong op, hash violates. This is cheap, not answer-leaking, and gives you pre-selection error correction. Your R9c showed 88.83% agreed-wrong operations - replication can't fix it. An invariant can.
-
-**Cost:** Controller LSTM 1.5M + energy head 0.5M + checksum head 0.2M = 2.2M.
-
-**Causal test:** Zero/shuffle checksum should hurt >10 points if it is causally used. Halt-first decoding gain (23% -> 44%) should be internalized: autonomous halt accuracy should approach halt-first.
-
-### Bet 4: Immunology + Economics — Negative Selection Market for Common-Mode Errors
-
-**Inspiration:** Immune system doesn't fix wrong cells by copying them 3 times. It kills self-reactive cells in thymus (negative selection). Markets don't fix bubbles by replication, they fix by short sellers.
-
-**Mechanism for your biggest finding: 7.6 Most current errors are common-mode.**
-
-* Train two independent compiler views: left-to-right and right-to-left (or with different BPE dropout). This is stereoscopic vision - same scene, different retinal projection. Lexical cue errors will disagree.
-* **Market:** Each view bids operation with confidence. Executor only runs if both agree OR if disagreement triggers a third "uncertainty head" that requests re-read with source-dropped packet (your CPR failed because packet wasn't causally read; here disagreement forces re-read).
-* Negative selection data: generate 100k wrong programs for same problems (easy), train discriminator to kill them *before* execution. This discriminator is tiny (2M params) and runs on codon, not on final answer.
-
-This directly attacks your 96 wrong-first-op failures. Wrong first op is semantic selection error, not execution error.
-
-**Cost:** Siamese view = same weights, just 2 forwards. Discriminator 2M.
-
-**Falsifier:** On order-twins (a+b vs b+a) where lexical cue fails, dual-view agreement should be <40% for wrong op vs >80% for correct.
-
-### What I would actually run first under 150M
-
-Total budget used: ~14.9M, leaving you at ~140M.
-
-**Phase 0 (CPU, 1 day):** Freeze the 152 VAMT programs. Convert them to pointer-codon form. Measure compilation 0/6 baseline. If pointer-codon + VQ abacus gets >3/6 on same 6 probes with zero GPU training, you have signal.
-
-**Phase 1 (GPU, 1xH100, 10k steps):** DRS v4 but with abacus + dual-rail + reservation station. Same 439k rows. Gate: final exact 275/500 -> must beat 400/500 AND width-4 value OOD 34/100 -> must beat 60/100. If not, abort.
-
-**Phase 2 (GPU, 5k steps RL):** Freeze executor, train basal ganglia controller with REINFORCE on halt + checksum. Gate: autonomous rollout on 256 SSC problems must beat 16.4% typed v1 with DONE preserved >70%. Your halt-first is 23.8% without new weights - this must beat 30% with weights.
-
-If Phase 1 and 2 pass, you have satisfied: compilation (pointer codon), state creation (abacus VQ), transition (reservation station), reuse (dual-rail), serialization (energy halt) - all model-owned, all causally tested with source deletion and shuffled swaps.
-
-Stop trying to make a single decoder learn to be a compiler, ALU, scheduler, and halting oracle in the same residual stream with the same loss. Biology, CPUs, and economies never did that. They split the bus."
-
-ChatGPT Deep Research:
-"This is a 125,081,664 parameter model that learned to *do* but not to *decide to do*. The ledger tells the story clearly:
-
-* **Local executor exists:** 497/500 first DRS states correct, oracle-compiled DRS 28/34 transitions, SSC with external schedule 44.92% vs 3.52% whole-problem autonomous.
-* **Workspace exists:** post-DRS residual swaps give +31 delta log-odds for digit at layers 17/21/25/29, carry at layer 29 is 10/10 positive.
-* **Compilation missing:** 0/6 parseable programs on fresh probes. Operation likelihood 80/176 vs 64/176 controls, but 0/176 multiply/remainder - it's a lexical cue, not a scheduler.
-* **Actuator missing:** wide digit motor fits 100% teacher-forced, but only +0.8 points autonomous.
-* **Controller missing:** 214/256 SSC traces have loop signatures, 71 loop/replay failures, 96 wrong first operation, halt-first decoding alone jumps 23.83% -> 44.92%. Typed v1 learns DONE 86.3% but loses arithmetic, typed v2 destroys DONE.
-
-You've closed the obvious: more tokens, longer CoT, hidden digit alone, probe = workspace, host execution, replication for common-mode errors, pure reversibility, VAMT as new primitive.
-
-The gap is not capacity. A fly navigates with 100k neurons. The gap is organization. Here are four bets from completely different fields that directly map to your five-part native reasoning contract:
-
-### Bet 1: Genetics + Embryology — The Codon Compiler with Temporal Differentiation
-
-**Inspiration:** DNA doesn't use 1 base = 1 amino acid. It uses redundant 3-base codons with wobble error-correction. Embryos use the *same* genome but differentiate via time-switched gene expression.
-
-**Mechanism for Shohin:**
-You have 24.9M headroom. Don't add layers in parallel. Add **two temporal LoRAs** on the same 30 layers:
-
-* **Compiler phase (0-0.5T):** Layers 0-12 with LoRA-C, trained to emit not natural language, but a 3-token codon: `[OP_SLOT | SRC_A_PTR | SRC_B_PTR]`. SRCs are *pointers* to input numbers via copy attention, not generated digits. This directly solves your R4 binding win (29/256 -> 139/256) - pointer binding is what worked.
-* **Executor phase (0.5T-1.0T):** Same base, LoRA-E active, stop-gradient from codon. Takes codon + quantized state.
-
-Why codons? Your operation probe fails on paraphrase. A redundant codon `ADD = {add, plus, sum}` mapped to same embedding via VQ codebook gives you genetic redundancy. If paraphrase changes one token, the other two correct it - like error-correcting code in biology.
-
-**Cost:** 2x LoRA rank 32 on 30 layers = ~4.5M params. Pointer head = 0.3M. VQ codebook 512 x 576 = 0.3M. Total <6M.
-
-**Causal test:** Source deletion after codon formation. If you zero the original NL but keep codon, execution should stay 28/34. Shuffled codon should destroy it. Matched control: same params as ordinary recurrence `n_loop=2` which you already showed loses (2.4899 vs 2.4890, 286k tok/s). This should beat it by >15 points on fresh order-twins.
-
-### Bet 2: Computer Architecture — Tomasulo Reservation Stations + Dual-Rail Abacus
-
-**Inspiration:** Your 71 loop/replay errors are classic data hazards. Modern CPUs solved this in 1967 with Tomasulo: don't execute in program order, execute when operands are ready. Asynchronous circuits solve interference with dual-rail: separate read and write wires.
-
-**Mechanism:**
-Replace the continuous residual digit with a **Quantized Abacus**:
-
-* 10 slots x 10 values, implemented as VQ-VAE with straight-through estimator. Not "write 7 to residual", but "increment slot 3". Actuator becomes *selection*, not generation.
-* Two residual buses: even layers are READ bus, odd layers are WRITE bus, with a latch (small GRU, 1M params) between them. You tried `n_loop=2` synchronous - this is asynchronous. This breaks the interference that killed typed v2 where DONE and arithmetic fought in same residual.
-
-Reservation station (3M params, 2 layers) holds emitted codons until their source slots are marked ready. Controller doesn't need to schedule perfectly; the station does.
-
-**Why this matters:** Your ledger: "Readable state is not sufficient. Needs actuator, carry logic, recurrent consumer." Abacus makes carry trivial: overflow slot 3 -> increment slot 4, learned as a fixed rule, not as token prediction.
-
-**Cost:** VQ abacus 0.5M, latch GRU 1.2M, reservation station 3M = 4.7M.
-
-**Falsifier:** Width-8 zero in DRS. Abacus width is explicit slots, should get >30/100 on width-8 with 0/100 STRR control.
-
-### Bet 3: Neuroscience + Physics — Basal Ganglia Controller with Conservation Law Halt
-
-**Inspiration:** Cortex doesn't decide to halt. Basal ganglia does via inhibitory gating. Physics doesn't trust computation without conservation laws.
-
-**Mechanism:**
-
-* **Controller:** Tiny 2-layer LSTM (1.5M params) separate from LM, input is abacus state entropy. Trained with REINFORCE, not cross-entropy. Reward = final answer correct -0.1*steps. This is why typed controllers failed: they were trained with SFT, same loss as executor. Biology separates dopamine (RL) from cortical supervised learning.
-* **Halt as attractor:** Define Energy E = uncertainty of abacus + distance to "closed form". Train energy network to be low at terminal states. DONE is emitted only when E < threshold and stays low for 2 steps (like Hopfield attractor).
-* **Checksum invariant:** For every problem, require model to also maintain mod-97 hash of (inputs, ops, intermediate). Sum mod 9 is invariant under add/sub reorder? No, but you can teach it: `hash_next = (hash_prev * p + op_code + digit) % 97`. If common-mode error picks wrong op, hash violates. This is cheap, not answer-leaking, and gives you pre-selection error correction. Your R9c showed 88.83% agreed-wrong operations - replication can't fix it. An invariant can.
-
-**Cost:** Controller LSTM 1.5M + energy head 0.5M + checksum head 0.2M = 2.2M.
-
-**Causal test:** Zero/shuffle checksum should hurt >10 points if it is causally used. Halt-first decoding gain (23% -> 44%) should be internalized: autonomous halt accuracy should approach halt-first.
-
-### Bet 4: Immunology + Economics — Negative Selection Market for Common-Mode Errors
-
-**Inspiration:** Immune system doesn't fix wrong cells by copying them 3 times. It kills self-reactive cells in thymus (negative selection). Markets don't fix bubbles by replication, they fix by short sellers.
-
-**Mechanism for your biggest finding: 7.6 Most current errors are common-mode.**
-
-* Train two independent compiler views: left-to-right and right-to-left (or with different BPE dropout). This is stereoscopic vision - same scene, different retinal projection. Lexical cue errors will disagree.
-* **Market:** Each view bids operation with confidence. Executor only runs if both agree OR if disagreement triggers a third "uncertainty head" that requests re-read with source-dropped packet (your CPR failed because packet wasn't causally read; here disagreement forces re-read).
-* Negative selection data: generate 100k wrong programs for same problems (easy), train discriminator to kill them *before* execution. This discriminator is tiny (2M params) and runs on codon, not on final answer.
-
-This directly attacks your 96 wrong-first-op failures. Wrong first op is semantic selection error, not execution error.
-
-**Cost:** Siamese view = same weights, just 2 forwards. Discriminator 2M.
-
-**Falsifier:** On order-twins (a+b vs b+a) where lexical cue fails, dual-view agreement should be <40% for wrong op vs >80% for correct.
-
-### What I would actually run first under 150M
-
-Total budget used: ~14.9M, leaving you at ~140M.
-
-**Phase 0 (CPU, 1 day):** Freeze the 152 VAMT programs. Convert them to pointer-codon form. Measure compilation 0/6 baseline. If pointer-codon + VQ abacus gets >3/6 on same 6 probes with zero GPU training, you have signal.
-
-**Phase 1 (GPU, 1xH100, 10k steps):** DRS v4 but with abacus + dual-rail + reservation station. Same 439k rows. Gate: final exact 275/500 -> must beat 400/500 AND width-4 value OOD 34/100 -> must beat 60/100. If not, abort.
-
-**Phase 2 (GPU, 5k steps RL):** Freeze executor, train basal ganglia controller with REINFORCE on halt + checksum. Gate: autonomous rollout on 256 SSC problems must beat 16.4% typed v1 with DONE preserved >70%. Your halt-first is 23.8% without new weights - this must beat 30% with weights.
-
-If Phase 1 and 2 pass, you have satisfied: compilation (pointer codon), state creation (abacus VQ), transition (reservation station), reuse (dual-rail), serialization (energy halt) - all model-owned, all causally tested with source deletion and shuffled swaps.
-
-Stop trying to make a single decoder learn to be a compiler, ALU, scheduler, and halting oracle in the same residual stream with the same loss. Biology, CPUs, and economies never did that. They split the bus."
-<!-- END EMBEDDED SOURCE -->
+This probability is descriptive, not a claim that the current generator
+samples uniformly from all unordered query pairs. The decisive point is
+logical: the construction needs the identities of `q_1` and `q_2`, while the
+compiler input does not contain them.
+
+The finite-query theorem applies to the complete query support known at compile
+time, or to realized future queries if their identities leak before the seal.
+It does not reduce the committed state to two answers merely because the
+assessor later samples two rows.
+
+The old board can still be underidentified for other reasons, including a
+finite challenge support, generous continuous state capacity, or exploitable
+generator correlations. Those are legitimate falsifier targets. They are not
+established by the two-answer construction in the supplied draft.
+
+## Exact Resource Receipt
+
+For the current board with eight states, three actions, one identity observer,
+depth at most six, and opaque token IDs below 32,768:
+
+| Object | Semantic bits |
+|---|---:|
+| complete query-indexed answer table | 26,208 |
+| transition destinations | 72 |
+| identity observer table | 24 |
+| eight retained opaque state keys | 120 |
+| three retained opaque action keys | 45 |
+| complete explicit machine fields above | 261 |
+
+The answer-table count includes all 8,736 supported queries at three answer
+bits each. The machine count includes the opaque start-state keys omitted from
+the draft. It excludes schema, masks, fixed framing, precision receipts, and
+cryptographic custody metadata; those must be counted in a later byte-level
+preregistration.
+
+This is a strong resource argument for explicit transitions, but not a proof
+that an unconstrained real-valued workspace cannot encode the table. A future
+comparison must freeze precision and committed bytes, not count tensor
+coordinates alone.
+
+The independent auditor obtains 276 conservative semantic bits after including
+the draft's initial-state field and active masks. The 261-bit figure is the
+current-interface minimum; neither is a serialized-byte receipt.
+
+## Intervention Result
+
+On one deterministic current-EPISODE world, all 960 start/word combinations
+through depth four were audited:
+
+```text
+key-only intervention changed:      840 / 960
+operator-only intervention changed: 840 / 960
+compensated intervention changed:     0 / 960
+```
+
+All six action-record permutations preserve behavior when keys and transitions
+are permuted together. Independent key and transition permutations are
+nontrivial. Local transition-row transplantation changes the selected
+state/action edge while leaving all other one-step edges unchanged.
+
+These mechanics provide the clean causal intervention interface that the
+frozen four-slot workspace lacks.
+
+## Missing Start-State Binding
+
+Current late queries have the form:
+
+```text
+QUERY <opaque-start-state> <opaque-action-word> ANSWER EOS
+```
+
+The draft's hard machine retains one `initial_state`, action keys/transitions,
+and observer keys/outputs. It does not retain opaque state keys. Consequently
+its post-seal parser cannot map `<opaque-start-state>` to an anonymous
+causal-state index.
+
+One of two repairs is mandatory:
+
+1. retain a fixed-shape `state_key[K,d_key]` field and let the late parser
+   select the start state; or
+2. redesign the board so the source fixes the initial state and the late query
+   never supplies a state referent.
+
+The two designs test different capabilities and cannot be interchanged after a
+score.
+
+## Corrected Next Sequence
+
+No neural fitting is authorized. The next lawful sequence is:
+
+1. revise the EFC theory to distinguish sampled rows from query support;
+2. choose and freeze either retained state-key binding or a source-fixed
+   initial state;
+3. define the exact challenge distribution and prove that query bytes and seed
+   are unavailable before sealing;
+4. freeze field precision and compare complete committed bytes against matched
+   answer-cache and generic recurrent controls;
+5. retain the hard categorical runtime and intervention suite implemented here;
+6. add exhaustive dual-oracle STOP, observer, equivalent-word, noncommuting,
+   and transition-row audits for the revised schema;
+7. only then design a fresh mechanics split and expanded board; and
+8. only after every CPU gate passes instantiate a neural compiler below the
+   strict 200M complete-system ceiling.
+
+The frozen `80dc07a` workspace is retained as a favorable control and custody
+reference. The current old board remains a useful action-binding,
+order-sensitivity, and source-deletion diagnostic. Neither is an advancement
+claim.
 
 ---
 
-## 2026-07-20 SD-CST projected-binding update
+## Embedded source 1: `FRONTIER_AGENT_PLANS.md`
 
-### New compiler result
+Original source path: `FRONTIER_AGENT_PLANS.md`
+Original source size: 18,451 bytes
 
-The byte-addressed parent had already solved physical line localization, event
-kind, amount, STOP, and late query, but could not bind repeated arbitrary names.
-The first shared content bus solved declaration-to-initial binding and failed
-event binding. A frozen-parent hierarchical bus improved event localization to
-32.625% but exposed a frozen-key-interface failure.
+<!-- BEGIN EMBEDDED SOURCE -->
+# Evidence-Aligned Frontier Plan: Causal Object-File Compilation
 
-The dedicated projected bus changes only that interface: one independent
-384-by-384 query projection and a binding-only
-`Linear(384,384) -> GELU -> Linear(384,384)` key adapter. The parent source
-encoder, line pointers, event fields, query path, content fingerprint, and
-permutation scorer remain frozen.
+**Status:** revised after marginal-route v1.1, the rejected
+occurrence-addressed canary, its completed read-only scale audit, and external
+review of the Causal Object-File Compiler (COFC) proposal. This is a research
+plan, not authorization for a neural run. The existing factorized witness-route
+preregistration remains the immediate, cheapest train-only falsifier.
 
-Training-only job `693979`, source `9bd2e04`, seed
-`6715972906370623241`, reaches on the 8,000 held-out consumed-training rows:
+Exact factorized-canary source commit
+`4643d1a51defe53397f9bed481051621d85c0b11` is frozen and pushed. No
+post-commit seed, H100 job, or new probe read exists yet.
 
-| Field | Exact |
+## 1. Objective
+
+Shohin does not currently need a stronger recurrent executor. S5 and S7 show
+that learned laws can execute, and the ER-TT motor executes every valid emitted
+relation packet exactly after source deletion. The unresolved problem is the
+compiler:
+
+> Map renderer-varying language into exact physical occurrence and relation
+> packets when names repeat, cardinality varies, and relations may be
+> many-to-one.
+
+The key distinction is between:
+
+- **occurrence identity:** this physical mention at this source location;
+- **nominal identity:** the entity or opcode denoted by the mention; and
+- **causal state:** the anonymous state transformed by the compiled relation
+  program.
+
+The current evidence says these objects must interact, but must not be fused
+into one unconstrained vector.
+
+## 2. Closed Evidence
+
+### 2.1 Marginal-route v1.1 localizes the residual
+
+The closed train-only canary reaches:
+
+| Metric | Result |
 |---|---:|
-| Whole categorical tape | 8,000/8,000 |
-| Initial state | 8,000/8,000 |
-| Event kind / one raw STOP | 8,000/8,000 |
-| Event identity | 8,000/8,000 |
-| Amount | 8,000/8,000 |
-| Late query | 8,000/8,000 |
-| Declaration pointer set | 7,999/8,000 |
-| Initial-occurrence pointer set | 8,000/8,000 |
-| Event-occurrence pointer set | 7,998/8,000 |
-| Untrained projected prefit whole tape | 1/8,000 |
+| Packet / joint / relation rows | 7,275/8,000 = **90.9375%** |
+| Recurrent state | 7,765/8,000 = **97.0625%** |
+| Answer | 7,883/8,000 = **98.5375%** |
+| Complete witness pointers | 7,194/8,000 = **89.925%** |
+| Individual witness occurrences | 214,722/215,528 = **99.626%** |
+| Alpha-invariant hard outputs | 8,000/8,000 |
+| Oracle-route identity transport | 8,000/8,000 |
 
-All 14 frozen gates pass. The compiler has 20,955,890 parameters, of
-which 6,748,897 are trainable. Frozen Shohin plus compiler, motor, and reader is
-146,057,595 parameters. Checkpoint/report SHA-256 values are `f347d1ae...` and
-`5d6be147...`; development/confirmation access is `0/0`.
+All 806 witness-failed rows contain exactly one wrong occurrence, usually an
+adjacent duplicate in a late after-witness role. This is unusually clean
+evidence for a remaining physical-occurrence routing error rather than a
+relation-execution or nominal-equality failure.
 
-This is a compiler-mechanics result, not a native-reasoning score. Its held-out
-partition was observed after every training epoch and comes from an already
-consumed training board.
+### 2.2 Vector-level address/content fusion is rejected
 
-### Source-deletion theorem result
+The addressed canary inserted learned candidate-count and occurrence-ordinal
+embeddings into the query/key memory. It regressed to:
 
-`R12_SD_CST_PROJECTED_MECHANICS_PREREG.md` freezes the next gate before its seed.
-The compiler process must compile the program, reduce it to 25 CPU `uint8`
-categories, destroy all source tensors, and only then compile the one-byte late
-query. A separate process receives only those 26 bytes plus independently fitted
-motor/reader weights. It cannot import the projected compiler, board, parser,
-targets, row IDs, source, residuals, pointers, or confidences.
+| Metric | Result |
+|---|---:|
+| Packet / joint / relation rows | **60.9125%** |
+| Recurrent state | **80.1375%** |
+| Answer | **90.2250%** |
+| Complete witness pointers | **59.5000%** |
+| Minimum-cardinality joint | **43.606%** |
+| Alpha invariance / oracle transport | **100% / 100%** |
 
-The hard executor must match an independent oracle on every final state,
-answer, intermediate state, and alive bit under canonical execution, global
-alpha renaming, valid declaration/event counterfactuals, event-line relocation,
-initial/kind/identity/amount changes, state and query swaps, reset, freeze,
-post-STOP perturbation, force-alive suffix execution, operand-suffix swap, and
-shuffled packets. Exact 78-cell motor and 18-cell reader certificates are
-mandatory. Passing authorizes only a fresh-board integration.
+The learned ordinal norm reached 8.64, count norm 2.02, and adjacent ordinal
+rows 6/7 reached cosine 0.878. Errors expanded from one occurrence to as many
+as six per row and worsened with cardinality. The architecture is closed.
 
-After two scoreless infrastructure failures, source `18610ac`, seed
-`2391953347805476054`, and job `693986` pass all 29 gates. Every final state,
-answer, joint result, intermediate state, and alive bit is exact on all 8,000
-rows for all 17 source-blind canonical and causal arms. Every observed STOP
-bucket is exact. Motor and reader certificates are 78/78 and 18/18. Alpha
-renaming preserves 7,995/8,000 whole tapes; declaration swap, valid event-name
-counterfactual, and event-line relocation each reach 8,000/8,000. Post-STOP
-perturbation is exactly invariant, while force-alive executes the suffix oracle
-exactly. The full frozen compiler state digest is unchanged.
+### 2.3 The read-only scale audit is complete
 
-Report and execution-core SHA values are `e7353f50...` and `166ca6f8...`.
-Access is `0/0`. Decision: admit a fresh post-commit integration board. This is
-the first complete SD-CST mechanism pass, but it remains a consumed-training
-mechanics result rather than evidence of fresh language generalization.
+Job `694932` inspected the immutable rejected checkpoint without optimization
+or scored-split access. Its report SHA-256 is
+`d958cc0507fe85a489a3b85368f52ed67cfda6caf9fc5efc8d686216f28f6934`.
 
-### Parameter-cap policy
+| Audit arm | Witness rows | Packet/joint | State | Answer |
+|---|---:|---:|---:|---:|
+| ordinal 0, count 1 | 0.0000% | 0.2000% | 21.9250% | 40.2750% |
+| ordinal 1, count 0 | 0.4875% | 3.2750% | 33.7875% | 58.5875% |
+| ordinal 0.75, count 1 | 34.2250% | 40.7125% | 71.0875% | 85.7250% |
+| ordinal 1, count 1 | 59.5000% | 60.9125% | 80.1375% | 90.2250% |
+| ordinal 1.5, count 1 | 70.4250% | 69.3875% | 80.5625% | 87.4250% |
 
-The user now authorizes any complete system **strictly below 200,000,000
-parameters**. Current available expansion from the 146,057,595 system is
-53,942,404 parameters. Historical and active sub-150M experiments keep their
-frozen 150M gates; globally changing old constants would invalidate matched
-comparisons.
+Increasing ordinal scale improves witness routing but still remains far below
+the marginal parent and begins to damage events at scale 1.5. Removing either
+address component collapses the route. The failure is therefore not explained
+by a simple excessive-ordinal-norm story. Count and ordinal carry useful joint
+information, but injecting them into shared vectors corrupts other geometry.
 
-Extra parameters are not spent until the now-causally-admitted 146.06M mechanism
-passes fresh-board gates. The first independently falsifiable expansion
-candidates are:
+The audit is diagnostic only. None of its scales is eligible for selection or
+promotion.
 
-1. a roughly 20.46M pretrained-semantic fusion path, compared against an
-   equal-parameter byte-memory arm and line-permuted Shohin residuals;
-2. a net roughly 6.81M ordered span-equality encoder, but only if adversarial
-   same-bigram names expose the current position-free fingerprint; and
-3. a roughly 25.25M entity-factorized recurrent transport system, compared
-   against an equal-parameter absolute-index executor and required to transfer
-   to unseen four/five-entity cardinalities.
+## 3. Immediate Experiment: Factorized Witness Address Residual
 
-These mechanisms must win separately before composition. Scaling the current
-finite six-state motor would merely memorize the same 78 cells and is not an
-admitted use of the new cap.
+A local preregistration now defines the smallest distinct test. It leaves the
+successful v1.1 structural logits numerically unchanged and adds a
+zero-initialized witness-only table:
 
+```text
+bias[candidate_count, semantic_witness_role, candidate_ordinal]
+```
+
+The table has `14 x 12 x 14 = 2,352` learned scalars plus twelve bounded role
+gates, for 2,364 new parameters. Table values are centered over valid
+candidates and bounded by `tanh`; zero-initialized gates make the complete route
+exactly equal to v1.1 at initialization while preserving first-step gate
+gradients. It cannot read symbol bytes, relation targets, state, answer,
+executor output, development, or confirmation. Expected complete system size
+is 185,534,660 parameters, leaving 14,465,340 below 200M.
+
+This is the right immediate falsifier because it tests whether structural
+address is sufficient when isolated at the decision logit. It does **not** by
+itself establish object files, joint inference, renderer-invariant grounding,
+or cardinality extrapolation.
+
+If it passes, the narrow conclusion is:
+
+> A source-local count/role/ordinal coordinate repairs the current bounded
+> witness grammar without disturbing the nominal equality bus.
+
+The updated score path includes same-seed, same-parameter baseline,
+structural-only, and shuffled-address arms. Attribution requires treatment
+witness rows to beat baseline and shuffled address by at least 0.5 percentage
+points. A high structural-only score restricts the claim to finite syntax
+routing.
+
+## 4. Frontier Architecture: Causal Object-File Compiler
+
+The strongest new architectural hypothesis is to make physical occurrences
+first-class objects rather than features attached to identity vectors.
+
+### 4.1 Occurrence ledger: which mention?
+
+For each model-detected opaque candidate, allocate an anonymous token `o_i`
+and a source-local address:
+
+```text
+a_i = (record, segment, left_rank, right_rank, candidate_count,
+       boundary_signature)
+```
+
+No raw symbol bytes enter `a_i`. Two mentions with identical bytes retain
+different tokens and addresses. Candidate detection must remain model-owned or
+a frozen architectural transform over public source bytes; gold spans are not
+available at inference.
+
+The object-file interpretation is well motivated but is not itself evidence of
+success. Cognitive object files are temporary episodic representations linking
+successive states of an object, and database provenance tags input tuples so
+their origins survive later operations. Those are useful design analogies, not
+proofs about Shohin ([object files](https://pubmed.ncbi.nlm.nih.gov/1582172/),
+[provenance semirings](https://web.cs.ucdavis.edu/~green/papers/pods07.pdf)).
+
+### 4.2 Nominal ledger: what identity?
+
+Separately compute the existing exact whole-symbol fingerprint `f_i` and its
+nominal class `e_i`:
+
+```text
+o_i != o_j may coexist with e_i == e_j
+```
+
+This is essential for ER-TT. A non-bijective after-witness may contain several
+distinct physical occurrences of the same nominal entity. Equality must create
+the relation semantics without erasing provenance.
+
+The June 2026 Dual-State Slot Attention preprint reports an analogous objective
+conflict when appearance and persistent identity share one slot, but it is
+recent convergent evidence from video, not validation of COFC
+([arXiv:2606.12601](https://arxiv.org/abs/2606.12601)).
+
+### 4.3 Causal ledger: what state is transformed?
+
+The compiled initial state and relation tensors continue to use anonymous
+entity indices. The zero-parameter ER-TT motor remains unchanged:
+
+```text
+S_next = R_t @ S_t
+```
+
+After the packet is sealed, source-facing occurrence representations are
+deleted. Only the compiled packet and explicitly counted retained state may
+reach execution.
+
+## 5. Joint Decoding, With A Grammar Firewall
+
+Independent softmax pointers can choose mutually inconsistent local maxima.
+For an ordered witness segment with candidates `c_1...c_M` and `N` roles, COFC
+instead scores a complete monotone path:
+
+```text
+pi = (j_1, ..., j_N),  j_1 < ... < j_N
+
+Score(pi) = sum_k unary(k, j_k)
+          + sum_k transition(j_(k-1), j_k)
+          + start(j_1) + end(j_N)
+```
+
+Forward-backward can train over legal paths; Viterbi can emit one hard path.
+This imports the computational idea of globally scoring an alignment rather
+than committing to unrelated local matches
+([Needleman-Wunsch](https://pubmed.ncbi.nlm.nih.gov/5420325/)).
+
+The constraint applies **separately inside the ordered before and after
+segments**. It does not impose a one-to-one relation between nominal entities,
+rules, or records. Distinct after-occurrence tokens may share one nominal class,
+preserving arbitrary many-to-one relations and legal self-maps.
+
+### 5.1 Important current-board limitation
+
+The present ER-TT renderer writes every active rule as:
+
+```text
+opcode  before_1 ... before_N  separator  after_1 ... after_N
+```
+
+There are no opaque distractors inside either witness segment. Once the segment
+boundary and cardinality are known, a monotone path nearly reduces to selecting
+all `N` candidates in order. A COFC pass on this board could therefore be a
+bounded grammar parser, not evidence that joint multi-hypothesis inference
+solves a general occurrence-binding problem.
+
+Before a neural COFC run, a CPU legality audit must prove both:
+
+1. the decoder preserves every valid non-bijective ER-TT packet; and
+2. an expanded source-local grammar with distractors contains cases where
+   independent top-one pointers fail but a uniquely best complete path wins.
+
+### 5.2 Allowed and forbidden factors
+
+A small factor graph may connect declaration, witness, opcode, event,
+cardinality, activity, and HALT decisions. Factor graphs are appropriate when a
+global score decomposes into local functions
+([Kschischang, Frey, and Loeliger](https://www.isiweb.ee.ethz.ch/papers/arch/aloe-2001-1.pdf)).
+
+Allowed factors must be frozen source-local syntax or type constraints, such as:
+
+- within-segment monotonicity and candidate non-reuse;
+- before/after cardinality agreement;
+- equality between a model-selected event opcode and compiled rule opcode; and
+- agreement between declaration and initial nominal classes.
+
+Forbidden factors include:
+
+- executor state, trajectory, answer, or outcome;
+- a gold graph, relation tensor, or target span;
+- retry after execution or answer inspection;
+- global relation bijectivity; and
+- a host validator that repairs an invalid packet.
+
+Use a fixed number of inference rounds. An invalid or noncommitted row remains
+wrong. Internal proofreading is only an analogy to repeated discriminative
+stages; it must not become an uncounted external repair loop
+([Hopfield 1974](https://www.pnas.org/doi/10.1073/pnas.71.10.4135)).
+
+## 6. Tied Reader And Intrinsic Addressing
+
+For a later cardinality-extrapolation board, replace position-specific query
+tables with one tied transition:
+
+```text
+q_(k+1) = G(q_k, a_(j_k), record_state)
+```
+
+The cell emits the next role or STOP, so learned parameter count does not grow
+with `N`. A compositional two-sided position code may replace finite ordinal
+lookup tables, but it must be tested as a separate intervention. Multi-period
+grid-cell coding motivates compositional position representations; it does not
+establish renderer invariance for text
+([Fiete, Burak, and Brookings](https://www.jneurosci.org/content/28/27/6858)).
+
+Do not bundle tied recurrence, intrinsic codes, factor messages, object
+directories, and new renderer supervision into one first canary.
+
+## 7. Late Query: Current Board Versus Future Board
+
+The external proposal assumes a late query containing a nominal referent that
+can be matched against an object directory. Current ER-TT does not have that
+interface. Its late query is a position numeral (`Q1...Q6` or `ASK 1...6`), and
+the marginal and addressed canaries already route it exactly on 8,000/8,000
+rows.
+
+Therefore:
+
+- do not modify the current ER-TT query path;
+- do not credit an object directory for solving the current witness residual;
+- on a future referential-query board, retain a counted read-only directory of
+  `(object_id, nominal_signature)` pairs and test query-by-object-file; and
+- include directory shuffle, late-query swap, source deletion, and post-seal
+  poison interventions.
+
+The directory is explicit retained state. Its bytes, compute, and any learned
+matcher parameters must be counted.
+
+## 8. Experimental Sequence
+
+### Stage 0: finish the factorized residual canary
+
+Use the existing `R12_ER_FACTORIZED_WITNESS_ROUTE_PREREG.md` contract only
+after source freeze and seed custody. A pass authorizes a fresh test of that
+mechanism, not COFC. A failure closes count/role/ordinal residual lookup on the
+current route.
+
+### Stage 1: CPU COFC falsifier
+
+Before training, exhaustively test:
+
+- cardinalities `N=2...16`;
+- duplicate nominal runs of length one through five;
+- zero through eight source-local distractors;
+- left, right, and bidirectional witness renderings;
+- inserted punctuation and variable token widths;
+- physical-record permutations and source alpha renaming;
+- arbitrary total/non-bijective relations and self-maps; and
+- cases where gold is local rank two or three but the complete path is uniquely
+  optimal.
+
+Also quantify how often the current ER-TT grammar admits more than one legal
+path. If it does not, the current board cannot identify a joint-inference gain.
+
+### Stage 2: matched train-only mechanism canary
+
+Only if Stage 1 establishes a nontrivial joint problem, freeze same-run arms:
+
+1. retained marginal route;
+2. 2,364-parameter factorized address treatment;
+3. COFC joint alignment with separate occurrence/nominal ledgers;
+4. COFC with independent decoding but identical unary logits;
+5. COFC with occurrence and nominal state fused;
+6. COFC without cross-record factors; and
+7. structural-only and shuffled-address controls.
+
+Use identical rows, renderer views, updates, optimizer opportunity, source-local
+targets, and decoder budget. No graph, state, answer, or outcome supervision is
+allowed.
+
+### Stage 3: fresh in-range board
+
+First test `N=3...6` on fresh names, renderer compositions, non-bijective rules,
+self-maps, distractors, and anonymous object-ID permutations. This isolates
+renderer and occurrence transfer without changing cardinality range.
+
+### Stage 4: separate cardinality-extrapolation board
+
+Only after Stage 3 passes should a newly preregistered board train on `N=3...6`
+and score `N=7...9`. This requires new shape limits, source grammar, evaluator,
+resource accounting, and gates. Bundling unseen cardinality with the first COFC
+test would make a failure uninterpretable.
+
+## 9. Required Interventions
+
+| Intervention | Must change | Must remain unchanged |
+|---|---|---|
+| Swap two occurrence addresses, preserve bytes | role pointers and affected relation | nominal equality |
+| Swap two nominal signatures, preserve addresses | equality-derived relation/event binding | structural paths |
+| Remove joint decoding, retain unary logits | duplicate/distractor stress | unambiguous rows |
+| Alpha-rename consistently | nothing semantic | occurrence-address structure |
+| Reindex physical records | storage coordinates only | relation/state/answer |
+| Poison source after packet sealing | nothing | all emitted and executed outputs |
+| Derange relation tensors | state and answer | occurrence evidence |
+| Reset recurrent state each step | state and answer collapse | compiled packet |
+| Shuffle future object directory | future referential answer | terminal recurrent state |
+
+## 10. Advancement Gates
+
+Exact thresholds belong in a preregistration, not this review. A COFC fresh
+board should nevertheless require:
+
+- complete witness and relation rows materially above the matched independent
+  decoder, not merely above historical scores;
+- packet, state, answer, and joint gates with per-cardinality and per-renderer
+  minima;
+- exactly 100% alpha invariance, object-ID permutation equivariance, and
+  record-storage reindex invariance;
+- exactly 100% source deletion and post-seal poison invariance;
+- every valid emitted packet executing exactly;
+- structural-only, shuffled-address, independent-decoder, and fused-ledger
+  controls below treatment;
+- invalid/noncommitted packets counted as wrong;
+- immutable checkpoint-before-access custody; and
+- complete deployed system strictly below 200M parameters.
+
+The external proposal's suggested 97% complete-pointer and 95% joint floors are
+reasonable design targets, but they are not frozen gates and may not be selected
+after viewing a result.
+
+## 11. Resource Boundary
+
+The retained marginal parent has 185,532,296 complete parameters. The current
+factorized treatment is expected at 185,534,660. The external COFC estimate of
+2--3M additional parameters, or roughly 188M total, is plausible but unaudited.
+
+Any implementation must count:
+
+- exact learned parameters and optimizer state;
+- dynamic-programming and factor-message FLOPs;
+- temporary path/factor memory;
+- number of sequential inference rounds;
+- paired-renderer target bits, if used; and
+- retained object-directory bytes.
+
+No architecture may rely on an uncounted host parser, solver, retry loop, or
+external memory.
+
+## 12. Decision
+
+The proposal's strongest contribution is ontological, not biological:
+
+> Preserve separate physical-occurrence and nominal-identity objects, then
+> make compiler decisions over coherent complete parses rather than unrelated
+> pointers.
+
+That is the best long-range direction currently available. It directly matches
+the observed adjacent-duplicate failures and explains why vector-level address
+fusion was destructive.
+
+The immediate sequence remains disciplined:
+
+1. run the already prepared 2,364-parameter factorized canary under its frozen
+   train-only contract;
+2. build the CPU legality/nontriviality falsifier for joint alignment;
+3. admit COFC only as a matched distinct mechanism, with segment-local
+   monotonicity and no global bijection;
+4. keep the current numeral query path unchanged; and
+5. defer `N=7...9` and referential object-directory queries to separately
+   identifiable boards.
+
+Success would establish a bounded causal compiler factor. It would not yet
+establish open-domain grounding, alias resolution, natural-language object
+permanence, unbounded planning, or general reasoning.
+<!-- END EMBEDDED SOURCE -->
 ---
 ## Embedded source 2: `FRONTIER_AGENT_PLANS_ANALYSIS.md`
 
 Original source path: `FRONTIER_AGENT_PLANS_ANALYSIS.md`
-Original source size: 18,803 bytes
+Original source size: 12,828 bytes
 
 <!-- BEGIN EMBEDDED SOURCE -->
-# Frontier Agent Plans: Shohin Evidence Review
+# Causal Object-File Compiler: Evidence Review
 
-**Status:** external-plan analysis complete; no neural run authorized by this
-review alone.
+**Status:** external COFC proposal reviewed against the live ER-TT grammar, all
+closed canaries, the completed scale audit, and the locally prepared factorized
+witness-route preregistration. No new neural run is authorized by this review.
 
 **Reviewed source:** `FRONTIER_AGENT_PLANS.md`
 
-**Original download SHA-256:**
-`3d82ece081a899750c64a5a63df50e7b0405b2621f7cfd98b3e84c8ab4d942fc`
+**Workspace SHA-256:**
+`8903788809f987372ba23d1cff77e8e86641a174e9cc8b02828c740ab2a63271`
 
-**Workspace copy SHA-256:**
-`2d18b364cbad8999eaac8c30b373d4aebd4d858b8608fb33e6868c433f7124d3`
-
-The workspace copy is content-identical to the download with one normalized
-terminal newline added. The download contains 343 lines, 7,070 words, and
-55,141 bytes. It contains four labeled submissions but only three distinct
-plans: the Meta AI and ChatGPT Deep Research sections are identical except
-that the ChatGPT copy omits Meta's final two sentences.
+The reviewed plan contains 433 lines, 2,550 words, and 18,451 bytes. It is an
+evidence-aligned rewrite of the external proposal, not a verbatim copy.
 
 ## 1. Executive Verdict
 
-The plans are valuable as a design-space survey, but none is ready to launch
-as written.
-
-All three distinct plans correctly identify Shohin's central failure:
-
-> The base has useful local execution and a real late residual signal, but it
-> does not reliably compile language into operations, update and consume state,
-> or halt autonomously.
-
-Their strongest shared recommendation is also sound: stop forcing compilation,
-execution, state transport, correction, and halting to share one undifferentiated
-language-model loss and residual stream. Separate those interfaces physically
-and educationally, then test their integration.
-
-The plans become weaker when they move from diagnosis to mechanism. Several
-components are analogies rather than update laws; several reintroduce a host
-executor or fixed scheduler; and most bundles change too many variables at
-once. Predictive coding, Hopfield attraction, vector quantization, an SSM,
-LoRA, a reservation station, RL, and a checksum do not become a reasoner merely
-by being assembled together.
-
-The best actionable synthesis is therefore not any complete submitted stack.
-It is a staged **compiler-to-state-machine post-training program**:
-
-1. Train and independently gate a pointer-grounded natural-language compiler.
-2. Train a source-deleted recurrent executor with an explicit state interface.
-3. Train state consumption and halting as separate objectives and parameter
-   islands.
-4. Integrate only components that pass their own fresh-transfer and causal
-   gates.
-5. Compare every architectural addition with a favorable equal-resource
-   recurrent control.
-
-This direction is compatible with the immutable 300k base and the less-than
-150M total parameter ceiling. It is a post-training protocol first, not an
-immediate claim of a new computational primitive.
-
-## 2. What The Plans Got Right
-
-### 2.1 They used the correct empirical diagnosis
-
-The plans are grounded in the most important Shohin results:
-
-- DRS first-state accuracy is 497/500 while complete final accuracy is only
-  275/500.
-- Source-scheduled execution reaches 115/256 while autonomous whole generation
-  reaches 9/256.
-- Oracle-compiled frozen DRS transitions are 28/34, while fresh natural-language
-  compilation is 0/6.
-- A late digit residual is causally strong, but the wide digit motor changes
-  autonomous accuracy only from 61/250 to 63/250.
-- Typed controller v1 learns DONE but not reliable arithmetic; mixing formats in
-  v2 destroys DONE.
-- R9c shows that 88.83% of wrong operation decisions are agreed-wrong
-  common-mode errors.
-
-That evidence does support decomposition into compiler, executor, state,
-consumer, and halt interfaces.
-
-### 2.2 They recognized that final pretraining is a substrate, not a reasoner
-
-None of the plans argues that another undifferentiated raw-token extension is
-the main answer. That agrees with the 120k, 168.75k, and 300k plateau. The
-important next educational phase is controlled post-training on the immutable
-300k checkpoint.
-
-### 2.3 They focused on organization rather than parameter count alone
-
-Shohin has 24,918,335 parameters of nominal room below the strict 150M ceiling.
-The proposals use that room for interfaces, state, and control rather than a
-generic width increase. That is directionally appropriate, provided the added
-mechanism earns its cost against a parameter-matched dense or recurrent arm.
-
-## 3. Source-By-Source Review
-
-### 3.1 Gemini Deep Research
-
-**Proposed stack:** a Global Workspace router, 16 memory tokens, a Modern
-Hopfield layer, adaptive recurrence, partial attention-to-SSM conversion, a
-programmatic finite-state controller, and denoising recursion training.
-
-**Useful elements:**
-
-- Deep-start halting initialization is a concrete, testable ACT control.
-- Memory tokens plus tied recurrence define a clear state carrier.
-- Denoising self-generated state is a legitimate robustness objective.
-- The proposal explicitly budgets components under the parameter ceiling.
-
-**Scientific problems:**
-
-1. **It is an architecture bundle, not one hypothesis.** A positive result
-   could not be attributed to workspace routing, recurrence, denoising,
-   memory, the SSM conversion, or deterministic gating.
-2. **The FSA violates the native boundary as written.** It intercepts invalid
-   tokens, prunes them, and programmatically forces transitions and completion.
-   That is an external scheduler/repair controller, so it can be a ceiling or
-   safety wrapper but not evidence that Shohin owns control and halt.
-3. **Hopfield attraction does not define mathematical validity.** The proposed
-   update is attention-like retrieval. Without a learned and independently
-   verified codebook, the nearest attractor may simply be the nearest common
-   mistake. Shohin's dominant errors are semantic and common-mode, not merely
-   small metric perturbations.
-4. **The SSM conversion addresses efficiency more directly than reasoning.**
-   Replacing ten pretrained attention layers is a high-risk representation
-   surgery, and no distinguishing prediction connects constant-size fading
-   memory to correct operation selection.
-5. **The parameter ledger is internally inconsistent.** `256 * 576 * 32` is
-   4,718,592, not 4,608,000. `5 * 576 * 576` is 1,658,880, not 1,536,000. Even
-   using the proposal's own row values gives a modified footprint of
-   120,749,376, not 120,669,376, before accounting for the replacement SSM
-   parameters. The budget must be rebuilt from actual modules.
-6. **Several numerical claims are not supported inside the supplied file.**
-   The stated shallow-halt frequency, 34% compute saving, 2.3x decode speedup,
-   and sub-0.5% priming cost are not tied to reproducible Shohin evidence here.
-
-**Verdict:** `NO-GO_AS_BUNDLED`. Retain deep-start ACT and denoising as ordinary
-matched controls. Do not replace attention layers or install the host FSA as a
-reasoning mechanism.
-
-### 3.2 Grok
-
-**Proposed stack:** a predictive-coding sidecar, a learned dynamical controller,
-modular primitive adapters, bistable or cellular state, and a compact microcode
-interface.
-
-**Useful elements:**
-
-- It correctly treats the post-DRS residual as a possible actuator aperture,
-  not proof of a complete workspace.
-- It emphasizes source-deleted rollout and counterfactual state swaps.
-- It proposes physically separated modules and losses, directly addressing
-  the typed-v1/v2 gradient-conflict result.
-- It keeps the host boundary explicit in its proposed tests.
-
-**Scientific problems:**
-
-1. **Prediction error is not automatically a controller.** A sidecar trained
-   to predict the next state can collapse to an auxiliary recurrent adapter.
-   It must show that its state is both causally necessary and more useful than
-   an equal-resource next-state model without the predictive-coding framing.
-2. **The compiler remains underspecified.** A setpoint or latent goal does not
-   explain how unseen paraphrases become exact ordered operations and operand
-   bindings.
-3. **The modular proposal risks importing the operation ontology.** If the
-   router is handed named add/multiply modules or a gold schedule, the hard
-   part has moved into supervision rather than been solved.
-4. **Bistability protects a selected state but cannot correct a wrong semantic
-   selection.** This is the same distinction exposed by the common-mode error
-   result and the noise-stable-action no-go.
-5. **PCMW still combines several hypotheses.** Predictive coding, modular
-   routing, bistability, recurrence, and learned halt need individual ablations
-   before a combined run has scientific meaning.
-
-**Verdict:** `PROMISING_DECOMPOSITION`, but not a frozen experiment. The most
-valuable extract is phase-separated parameter islands plus a source-deleted
-state interface. Predictive error should enter as one ablation, not as the
-unquestioned foundation.
-
-### 3.3 Meta AI and ChatGPT Deep Research
-
-These are one distinct submission, not two independent votes.
-
-**Proposed stack:** temporal compiler/executor LoRAs, a three-field pointer
-codon, a quantized abacus, read/write buses, a reservation station, an
-RL-trained halt controller, a trajectory checksum, dual compiler views, and a
-negative-program discriminator.
-
-#### Pointer codon and temporal differentiation
-
-This is the strongest component. An explicit
-`[operation, source-A pointer, source-B pointer]` interface directly targets
-the observed binding and compilation failures. Separating compiler and
-executor parameters and stopping gradients at the interface could prevent the
-response-mode interference seen in typed v2.
-
-The biological error-correction argument is not valid as stated. The three
-fields are different semantic fields, not three redundant transmissions of the
-same symbol, and mapping `add`, `plus`, and `sum` to one embedding is canonical
-classification rather than an error-correcting code. The mechanism can still
-be useful without that analogy.
-
-The proposed LoRA count is not auditable until the exact target matrices,
-ranks, biases, and shared parameters are listed. The phase notation also must
-state whether compiler and executor are separate forward calls, depth phases
-inside one call, or training phases.
-
-#### Quantized abacus and reservation station
-
-Explicit categorical state is testable, but categorical representation alone
-has already proved insufficient in packet/tape controls. The required new
-evidence is an autonomous source-deleted transition law that consumes its own
-previous state.
-
-The sentence "carry becomes trivial" hides the central problem. If overflow
-and carry propagation are fixed rules, the architecture contains an arithmetic
-executor. If they are learned, then carry is not trivial and must pass the same
-width/value/order transfer gates as any other updater. Likewise, a reservation
-station that decides readiness and execution order is a scheduler whose state,
-logic, and supervision must be counted.
-
-Read/write parameter separation is a plausible treatment for destructive
-interference. It should be compared against an equally large ordinary recurrent
-adapter with the same state bits and sequential depth.
-
-#### RL halt and checksum
-
-Training a separate halt policy with a different objective is worth testing.
-The typed-controller evidence makes loss separation more plausible than merely
-adding another DONE token.
-
-The checksum does not detect the proposed common-mode semantic error. A rolling
-hash of the chosen operations and intermediate digits can be perfectly
-consistent with a completely wrong operation sequence. It only detects
-corruption relative to that wrong trajectory unless there is an independent,
-source-derived expected invariant. If an external process supplies that
-expected invariant, its information and computation must be counted.
-
-"Distance to closed form" is also undefined. If computing it requires knowing
-the correct terminal state, it is an answer oracle. A valid halt energy must be
-computed only from model-owned state and must be tested against premature and
-late halt twins.
-
-#### Dual views and negative selection
-
-Two tokenizations or reading directions are not guaranteed to be independently
-grounded; they may reproduce the same lexical error. This proposal is closely
-related to the existing pre-emission dual-view commit lane and therefore cannot
-be treated as unexplored merely because it uses immunology or market language.
-
-A wrong-program discriminator is potentially useful for compiler post-training,
-but it must be trained on source-preserving hard minimal pairs. Randomly wrong
-programs are usually easy negatives and may teach formatting artifacts rather
-than semantic rejection. The discriminator may reject or abstain; it may not
-search for and install a corrected program without that repair work being
-counted.
-
-#### Proposed phase gates
-
-The numerical gates are directionally useful, but Phase 0 is ill-defined: an
-untrained pointer-codon/VQ architecture cannot be expected to improve a 0/6
-compiler "with zero GPU training." CPU training would still be training and
-must be specified. Phase 1 changes abacus state, bus separation, scheduling,
-and training together. Phase 2 changes optimizer, controller, halt, checksum,
-and reward together. Both need factorial ablations or a narrower first run.
-
-**Verdict:** `EXTRACT_AND_REWRITE`. Preserve the pointer-grounded compiler,
-parameter/loss separation, and explicit halt policy. Reject the biological
-coding claim, fixed carry shortcut, unchecked reservation station, and checksum
-claim as written.
-
-## 4. Consensus Does Not Equal Evidence
-
-The submissions converge on four themes:
-
-| Theme | Evidence status in Shohin |
-|---|---|
-| Separate compiler from executor | Strongly motivated by compiler 0/6 and typed-v2 interference |
-| Use explicit mutable state | Necessary but already known insufficient by itself |
-| Add recurrent or adaptive compute | Ordinary strong control; prior recurrence alone did not win |
-| Train halt separately | Strongly motivated by halt-first and typed-controller results |
-
-This consensus is useful for prioritization. It is not a mechanism proof. The
-plans were given the same ledger and therefore inherit the same diagnosis. The
-Meta and ChatGPT sections are duplicates, further reducing the apparent number
-of independent endorsements.
-
-## 5. Highest-Value Components
-
-### Tier A: worth formal preregistration
-
-1. **Pointer-grounded compiler.** Train exact operation and source-span
-   binding on frozen natural-language families. Score exact AST/program
-   equality on unseen paraphrases, role names, values, operation orders, and
-   distractors. Compare with a parameter-matched ordinary sequence classifier.
-2. **Phase-separated compiler/executor parameters.** Use separate adapters or
-   modules and an explicit stop-gradient interface. Compare with one jointly
-   trained adapter using the same total parameters, examples, updates, and
-   inference depth.
-3. **Source-deleted recurrent state executor.** After compilation, remove the
-   natural-language source and require the model to update, retain, and consume
-   its own state. Compare categorical, continuous, and favorable recurrent
-   controls under equal state bits.
-4. **Independent halt policy.** Train halt/continue on prefix twins where the
-   same local answer token appears in nonterminal and terminal contexts. Test
-   premature halt, late halt, output recoding, and state swaps.
-
-### Tier B: useful ablations, not foundations
-
-- predictive-error auxiliary loss;
-- denoising of self-generated state;
-- VQ state versus continuous state;
-- deep-start ACT bias;
-- read/write parameter separation;
-- hard-negative program discrimination.
-
-### Tier C: reject or retain only as ceilings
-
-- host FSA token pruning or forced completion;
-- fixed carry propagation or host readiness scheduling;
-- an unchecked rolling checksum as semantic correction;
-- wholesale attention-to-SSM replacement as a reasoning intervention;
-- a full multi-component architecture launch without component gates;
-- claims that Hopfield attraction, quantization, or bistability alone creates
-  valid mathematical state.
-
-## 6. Recommended First Program
-
-The first experiment should test education and interface separation before
-installing a large cognitive architecture.
-
-### Stage A: 300k compiler post-training
-
-Freeze the 300k checkpoint and train only a small compiler island. Its output
-is a typed operation with source-span pointers and an explicit terminal marker.
-No arithmetic target or answer token is included in this stage.
-
-Primary gate:
-
-- exact full program on a frozen, family-balanced board;
-- per-field operation and pointer accuracy;
-- order-twin and renamed-role accuracy;
-- zero source/target leakage;
-- no score based only on parseability.
-
-Controls:
-
-- equal-parameter plain classifier;
-- text-token program SFT without pointers;
-- shuffled-pointer control;
-- source-only lexical-family control.
-
-### Stage B: isolated state transition post-training
-
-Train an executor island from exact compiled programs and explicit previous
-state. Remove the natural-language source after state creation. The model must
-produce the next internal state without host arithmetic.
-
-Primary gate:
-
-- width/value/order transfer;
-- complete multi-step trajectory exactness, not only first state;
-- donor-state following;
-- zero/shuffled/complement state degradation;
-- improvement over a favorable equal-resource tied recurrent control.
-
-### Stage C: state consumption and halt
-
-Freeze the compiler and executor before generating this board. Train a separate
-consumer/halt island on terminal/nonterminal twins and state reuse. The same
-answer-like local configuration must sometimes continue and sometimes halt.
-
-Primary gate:
-
-- exact halt location;
-- no cap-hit or post-answer replay;
-- source-deleted reuse;
-- output-recoding stability;
-- causal dependence on the committed state.
-
-### Stage D: autonomous integration
-
-Only after A-C pass individually, compose the islands and allow limited joint
-calibration. Evaluate full natural-language-to-answer rollout with no oracle
-program, schedule, arithmetic, repair, or result selection. Report both the
-product of component accuracies and observed end-to-end exactness; a large gap
-is itself an integration failure.
-
-## 7. Decision
-
-The external plans materially improve our hypothesis inventory, especially by
-reinforcing staged compiler/executor/halt separation. They do not overturn the
-existing Shohin diagnosis and do not justify an immediate H100 architecture
-run.
-
-The research decision is:
-
-> **ADMIT the pointer-grounded, phase-separated post-training program for
-> formal preregistration. Keep predictive coding, VQ state, denoising, ACT, and
-> read/write buses as individually matched ablations. Reject the submitted
-> integrated stacks as scientifically underidentified.**
-
-No claim in this review establishes native reasoning, novelty, or expected
-benchmark gain. It identifies the smallest experiments that can convert the
-plans from analogies into causal evidence.
+COFC is the strongest long-range architecture proposed so far because it
+separates two variables that the failures show must not be collapsed:
+
+- a unique token for each physical occurrence; and
+- a nominal equivalence class for what that occurrence denotes.
+
+Its second important move is joint decoding of a coherent witness parse rather
+than independent pointer decisions. That directly targets marginal-route
+v1.1's 806 one-occurrence failures.
+
+The supplied plan was not ready to run verbatim. It contained one stale stage,
+one interface mismatch, and two large attribution risks. The revised decision
+is:
+
+> `RETAIN_COFC_AS_LEADING_SUCCESSOR; RUN_CURRENT_FACTORIZED_FALSIFIER_FIRST;
+> REQUIRE_CPU_NONTRIVIALITY_AND_MATCHED_CONTROLS_BEFORE_NEURAL_COFC`.
+
+## 2. What The New Evidence Changes
+
+### 2.1 The addressed experiment is already closed
+
+The proposal's Stage A says to run the ordinal/count addressed canary. Job
+`694928` has already done so and is rejected:
+
+- witness rows: 59.500%;
+- packet/joint/relation: 60.9125%;
+- state: 80.1375%;
+- answer: 90.225%; and
+- minimum-cardinality joint: 43.606%.
+
+It cannot be presented as a pending experiment.
+
+### 2.2 The scale audit rejects a simple magnitude diagnosis
+
+The no-optimizer audit is also complete. Zero ordinal yields 0% witness rows;
+zero count yields 0.4875%; scale 1.5 improves witness rows to 70.425% but remains
+far below the 89.925% marginal parent and degrades events to 94.9625%.
+
+This is stronger than the previous "ordinal norm became too large" story.
+Address variables contain useful information, but the rejected model needs both
+and entangles them with shared query/key geometry. A separately routed scalar
+address bus remains scientifically distinct; post-hoc rescaling does not.
+
+### 2.3 The immediate factorized test is already concrete
+
+`R12_ER_FACTORIZED_WITNESS_ROUTE_PREREG.md` defines a witness-only
+`14 x 12 x 14` residual table plus twelve bounded, zero-initialized role gates,
+for 2,364 parameters. Centering and bounded output prevent an unbounded
+cardinality shift; zero gates preserve the v1.1 logits exactly at
+initialization. The route cannot read identity bytes or outcomes.
+
+This is cheaper and more attributable than jumping immediately to a 2--3M
+parameter COFC. The updated score path includes same-seed, same-parameter
+baseline, structural-only, and shuffled-address arms, with a frozen +0.5-point
+treatment advantage requirement. A pass would show that the current grammar
+needs a source-local count/role/ordinal coordinate. It would not validate object
+files or joint inference; a high structural-only score would instead identify
+finite syntax routing.
+
+Exact source commit `4643d1a51defe53397f9bed481051621d85c0b11` is now frozen
+and pushed before any post-commit seed. No H100 job or new probe score exists.
+
+## 3. Strongest Parts Of COFC
+
+### 3.1 Occurrence and identity are correctly separated
+
+ER-TT deliberately allows the after-witness list to repeat the same nominal
+symbol. The correct representation therefore requires:
+
+```text
+physical occurrence A != physical occurrence B
+nominal identity(A) may equal nominal identity(B)
+```
+
+This cleanly explains why a wrong duplicate occurrence remains a pointer error
+even when the equality-derived relation is semantically close or identical.
+
+The interdisciplinary references support the abstraction, not the result.
+Kahneman, Treisman, and Gibbs describe object files as temporary episodic
+representations linking successive states of one object
+([PubMed](https://pubmed.ncbi.nlm.nih.gov/1582172/)). Green,
+Karvounarakis, and Tannen explicitly tag input tuples so provenance survives
+relational operations
+([PODS paper](https://web.cs.ucdavis.edu/~green/papers/pods07.pdf)). The
+June 2026 Dual-State Slot Attention preprint reports slot swapping when
+appearance and identity share one state and improves its video task by
+separating them ([arXiv](https://arxiv.org/abs/2606.12601)). None of these
+papers demonstrates that COFC will solve ER-TT.
+
+### 3.2 Joint paths match the observed error geometry
+
+Every marginal-route failure has exactly one wrong occurrence, commonly a
+neighbor that locally outranks the correct late after-witness. A complete path
+can recover a locally second-ranked candidate when the aggregate path is best.
+This is the useful computational import from global sequence alignment
+([Needleman-Wunsch](https://pubmed.ncbi.nlm.nih.gov/5420325/)).
+
+### 3.3 The executor remains untouched
+
+COFC correctly leaves the source-deleted relation motor alone. That respects
+the strongest causal fact in the project: valid packets execute exactly, so
+compiler work should not be disguised as more recurrence.
+
+### 3.4 The proposal exposes good interventions
+
+Address swaps, nominal-signature swaps, joint-decoder ablation, object-ID
+permutation, source poison, and directory shuffle manipulate distinct causal
+objects. These are much more diagnostic than another undifferentiated capacity
+increase.
+
+## 4. Corrections Required Before Implementation
+
+### 4.1 Current ER-TT monotonicity is almost deterministic
+
+The renderer emits each active rule as an opcode, exactly `N` before symbols,
+a separator, and exactly `N` after symbols. There are no opaque distractors
+inside a witness segment. Once a system finds the boundary and cardinality,
+the legal monotone path is effectively the ordered list itself.
+
+That makes monotone alignment legal, but weakens its scientific value on the
+current board. A success could be fixed-grammar parsing rather than resolution
+of ambiguous associations. The CPU falsifier must measure the number of legal
+paths and introduce a separately preregistered distractor grammar before COFC
+can test its claimed mechanism.
+
+### 4.2 One-to-one is local to occurrence positions
+
+Candidate non-reuse is valid within one ordered before or after path because
+physical source positions are distinct. It is invalid as a global relation
+constraint. ER-TT relations are intentionally total and non-bijective, and
+self-maps are legal.
+
+Thus:
+
+- separate monotone paths per segment are admissible;
+- repeated nominal classes across selected after occurrences are admissible;
+- global Sinkhorn/Hungarian relation assignment remains forbidden; and
+- factors may never force nominal bijectivity.
+
+### 4.3 The proposed query directory does not match this board
+
+The external text assumes that the late query contains a symbol referent whose
+signature can be matched against an object directory. Current ER-TT queries are
+position numerals: `Q1...Q6` or `ASK 1...6`. Both recent canaries already score
+query routing at 8,000/8,000.
+
+An object directory is a good future test for referential or alias-bearing
+queries, but it is irrelevant to the current witness residual. Adding it now
+would change an interface that is already exact and confound attribution.
+
+### 4.4 Factor messages can become host repair
+
+Monotonicity, segment membership, cardinality agreement, and equality between
+model-selected source objects are legitimate source-local factors. Graph
+validity, executor consistency, final answers, retries, or target relations are
+not. The factor schedule must be fixed; invalid outputs stay wrong.
+
+The factor-graph literature shows how global functions can be decomposed into
+local factors and processed by message passing
+([primary paper](https://www.isiweb.ee.ethz.ch/papers/arch/aloe-2001-1.pdf)).
+It does not determine which Shohin factors are scientifically permissible.
+
+### 4.5 Cardinality extrapolation is a separate experiment
+
+Training on `N=3...6` and immediately scoring `N=7...9` simultaneously changes
+tensor shape, grammar length, candidate count, query vocabulary, state size,
+and evaluator limits. That is a valuable eventual test, but not the first COFC
+board. First establish fresh in-range renderer/occurrence transfer; then freeze
+a separate extrapolation board.
+
+### 4.6 The parameter estimate is provisional
+
+The proposal's 2--3M estimate is plausible under the 14.47M remaining headroom,
+but no implementation or optimizer-state audit exists. Dynamic programming,
+factor rounds, temporary state, object-directory bytes, and sequential compute
+must be reported even when they add no parameters.
+
+## 5. Disposition Of Proposed Components
+
+| Component | Disposition | Reason |
+|---|---|---|
+| Separate occurrence and nominal ledgers | **Retain as core** | Directly represents the observed aliasing distinction |
+| Segment-local joint alignment | **Retain conditionally** | Matches rank-two errors; first prove a nontrivial legal-path problem |
+| Small source-local factor graph | **Retain with firewall** | Can enforce coherent parses without execution only if factors are frozen and local |
+| Tied recurrent role reader | **Defer one stage** | Useful for extrapolation but should not be bundled with first joint test |
+| Intrinsic two-sided address code | **Defer one stage** | Better extrapolation hypothesis than finite lookup, but a separate intervention |
+| Object-directory late query | **Future board only** | Current ER-TT query is positional and already exact |
+| Fixed proofreading rounds | **Optional later ablation** | Must remain internal, fixed-cost, and unable to inspect outcomes |
+| `N=7...9` development | **Separate board** | Otherwise mixes mechanism, shape, and extrapolation failures |
+| Global one-to-one assignment | **Reject** | Contradicts legal non-bijective relations |
+| Strong biological equivalence claims | **Reject** | References motivate abstractions but do not validate Shohin |
+
+## 6. Best Experimental Sequence
+
+1. Freeze and run the existing 2,364-parameter factorized train-only canary.
+2. Build a CPU COFC legality/nontriviality suite before any neural COFC source.
+3. Quantify whether the current grammar has multiple legal paths; if not, add a
+   new distractor grammar rather than claiming joint inference on a deterministic
+   parse.
+4. Compare independent marginals, the factorized table, joint COFC, independent
+   COFC with identical unary logits, fused-ledger COFC, and structural-only/
+   shuffled controls in one matched train-only experiment.
+5. If the matched mechanism gates pass, generate a fresh `N=3...6` board with
+   unseen renderers, distractors, object-ID permutations, and non-bijective
+   rules.
+6. Only then freeze a distinct `N=7...9` extrapolation and referential-query
+   program.
+
+## 7. What Different Outcomes Would Mean
+
+- **Factorized table passes:** current ER-TT needed a local structural
+  coordinate; do not call that general object-file compilation.
+- **Factorized table fails, joint COFC passes:** independent role decisions were
+  the causal bottleneck.
+- **Joint COFC helps only with distractors:** current board was too deterministic
+  to identify the mechanism, but the expanded board supports it.
+- **Joint alignment passes while unseen renderers fail:** unary landmark or
+  segment discovery remains the bottleneck.
+- **Compilation passes while a future referential query fails:** the retained
+  nominal directory or query matcher is inadequate.
+- **Only grammar-heavy factors pass:** the result is bounded parser engineering;
+  the next experiment must weaken or vary the grammar.
+- **Source-retained control wins after source-deleted COFC fails:** the compiled
+  object state omits query-relevant information.
+
+## 8. Final Decision
+
+The smart model found a genuinely better conceptual architecture. “Surrogate
+keys plus coherent joint parsing” is a more faithful response to the evidence
+than adding richer positional vectors to independent bilinear heads.
+
+The evidence-aligned version is narrower than the submitted text:
+
+- the addressed canary and scale audit are finished, not pending;
+- the 2,364-parameter residual route remains the immediate falsifier;
+- monotone alignment must first be shown nontrivial;
+- one-to-one constraints stop at physical positions inside a segment;
+- current positional queries remain unchanged; and
+- cardinality extrapolation and referential object directories receive their
+  own later boards.
+
+With those corrections, COFC is the leading successor architecture if the
+factorized lookup cannot close the witness gate—or the leading harder-board
+test if that lookup succeeds too easily.
 <!-- END EMBEDDED SOURCE -->
-
 ---
 
 ## Embedded source 3: `R12_ACTIVE_VERIFIER_QUERY_NO_GO.md`
@@ -4241,6 +5474,4301 @@ without a concrete nonlinear hypothesis class with polynomial consistency and
 separator synthesis, polynomial target-coupled queries without latent-axis
 labels, joint action-state identification up to behavioral conjugacy, and an
 exponential separation from matched active-automata and synthesis controls.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 258: `R12_GENERAL_REASONING_GATE.md`
+
+Original source path: `R12_GENERAL_REASONING_GATE.md`
+Original source size: 20,622 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 General Reasoning Gate
+
+**Status:** UROM-3 rejected pre-neural; categorical-phase register machine in
+train-only optimization development; no reasoning claim
+**Active architecture:** Query-blind Equivariant Relation-Algebra Register
+Machine (`QERARM`)
+**Retired negative control:** Uniform Relational Object Machine (`UROM-3`)
+**Protected base:** Shohin raw pretrain step 300,000
+**Base SHA-256:** `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`
+**Strict system limit:** fewer than 200,000,000 unique parameters
+**Last updated:** 2026-07-23
+
+## 1. Objective
+
+The objective is not to make Shohin imitate visible chain-of-thought text. It is
+to give Shohin a model-owned mechanism that can:
+
+1. infer episode-local rules and bindings from a source it has not memorized;
+2. commit those rules to a private object file;
+3. lose access to source tokens, residuals, and KV state;
+4. update private state over multiple dependent steps;
+5. answer a query disclosed only after execution;
+6. transfer the same mechanism across unseen names, renderers, rules,
+   cardinalities, lengths, program topologies, and task families; and
+7. respond causally to rule, state, order, and query interventions.
+
+A finite synthetic board cannot prove unrestricted intelligence. The promotion
+claim is therefore narrower and falsifiable: **one resource-bounded,
+source-deleted mechanism exhibits systematic transfer beyond every finite
+label, renderer, rule, length, topology, and task-family table available in
+training.**
+
+## 2. Why Existing Results Are Insufficient
+
+The project has established useful components, but no previous result meets the
+objective:
+
+- S7 composed unseen laws perfectly inside a fixed cyclic topology.
+- S9.1 compiled bounded occurrence graphs well but missed invariance gates.
+- SD-CST v1.3 achieved fresh-renderer source-deleted execution inside a fixed
+  three-object ontology.
+- ER-CST achieved high witness-equality accuracy but enumerated finite `S3`
+  cards.
+- ER-TT removed the card enumeration and made execution exact, but neural
+  packet compilation failed.
+- S4-TPT supplies noncommutative dynamic binding mechanics but consumes
+  host-materialized semantic tensors.
+
+The unresolved problem is the seam between language and private execution:
+compile a new object system faithfully, delete the source, then operate on the
+compiled objects without a host parser, answer packet, or external scheduler.
+
+## 3. Retired UROM-3 Architecture
+
+`train/general_relational_object_machine.py` implements the first unified
+mechanics slice. Independent hostile review rejects it as a reasoning
+candidate: its executor is a fixed bounded Boolean-relation VM and its
+apparently different task families do not require different algorithms.
+It remains only an audited compiler/executor negative control.
+
+```text
+program source
+  -> frozen Shohin residuals
+  -> occurrence decoder
+  -> source-value identity carriers
+  -> DeletedRelationalProgram
+  -> source/residual/KV deletion boundary
+  -> shared relational recurrence
+  -> terminal relational state
+
+late query source (disclosed after terminal commitment)
+  -> frozen Shohin residuals
+  -> DeletedRelationalQuery
+  -> model-owned relational reader
+  -> answer distribution
+```
+
+### 3.1 Private Object File
+
+The executor accepts only:
+
+- episode cardinality;
+- initial object-state relation;
+- episode-local rule cards;
+- rule-active bits;
+- event-to-rule bindings; and
+- event kinds (`APPLY`, `STOP`, `NOOP`).
+
+It does not accept source IDs, source masks, source memory, pointer logits,
+identity carriers, parser spans, family IDs, targets, final states, answers,
+verifier output, or retry feedback.
+
+The hard score-bearing object file is 649 categorical bytes per row at the
+current maximum geometry.
+
+### 3.2 Dual Occurrence/Identity Compiler
+
+The compiler uses decoder slots to locate occurrences, but episode identity is
+carried only by a weighted read from source values. Slot embeddings therefore
+cannot directly encode an opaque entity or rule name.
+
+Relations are constructed by comparing source-derived carriers:
+
+- initial occurrences against declaration occurrences;
+- up to 24 source/destination edge occurrences per rule against declarations;
+  an edge-active head forms their differentiable union; and
+- each event opcode against episode rule opcodes.
+
+This avoids the ordinal branch's exact raw-byte equality oracle.
+
+### 3.3 Shared Executor
+
+A relation card is a binary many-to-many map over episode-local objects. One
+recurrent operation, Boolean relation composition, supports all proposed
+families:
+
+```text
+next_state[i,k] = OR_j(selected_relation[i,j] AND current_state[j,k])
+```
+
+`STOP` transfers live state into a persistent halted state. Later events cannot
+modify halted mass. The late reader selects a terminal position only after the
+terminal state has committed.
+
+There is no Python branch controlled by a semantic rule value, no
+generated-token feedback, and no retry/repair loop. The recurrent update is
+nevertheless a fixed host-authored PyTorch relation-composition algorithm. It
+is not a learned model-owned state-update law, so it cannot establish the
+target capability.
+
+### 3.4 Exact Production Parameter Ledger
+
+The ledger was instantiated against the real immutable 300k checkpoint:
+
+| Component | Unique parameters |
+|---|---:|
+| Frozen Shohin trunk | 125,081,664 |
+| UROM compiler and object heads | 13,323,046 |
+| **Complete system** | **138,404,710** |
+| **Headroom below 200M** | **61,595,290** |
+
+The compiler is the only trainable component in this first slice. The
+relational executor and reader are tensor architecture, not host-side semantic
+code and not separately learned answer tables.
+
+## 4. UROM-3 Board Rejection
+
+The labels `episodic_transport`, `graph_agenda`, and `constraint_dataflow`
+change relation distributions and surface renderers, but each target is the
+same matrix product. They therefore do not constitute task-family transfer.
+The initial split also coupled family and cardinality, and the late reader
+could not identify an opaque query name from the query alone because no
+declaration dictionary crossed the deletion boundary.
+
+The board generator now factorizes family/cardinality cells and the hard
+runtime rejects out-of-cardinality state and queries. Those repairs preserve a
+valid negative control but do not reopen UROM-3 for neural training.
+
+## 5. Split Contract
+
+Every semantic world receives independent random relations and opaque names.
+Canonical world hashes and graph-isomorphism hashes must be disjoint. Renderer,
+length, and answer distributions must be balanced within semantic orbits.
+
+| Split | Cardinality | Rule depth | Program length | Topology |
+|---|---:|---:|---:|---|
+| Train | 4-6 | 1-3 | 2-8 | chains and shallow forks |
+| Development | 7 | 4-5 | 9-16 | diamonds, nested joins, simple cycles |
+| Confirmation | 8 | 6-8 | 17-32 | strongly connected, repeated, nested, hybrid |
+
+The current architecture has a strict maximum cardinality of eight. Promotion
+beyond G2 requires a successor with shape-polymorphic cardinality, not merely a
+larger fixed maximum.
+
+Each development and confirmation split must contain:
+
+- a fresh-rule-only stratum;
+- a fresh-renderer-only stratum;
+- a fresh-length/topology-only stratum;
+- a fresh-family-composition stratum; and
+- an all-axes-at-once stratum.
+
+## 6. Matched Arms
+
+1. **Structured treatment:** Shohin compiler plus relation-tied object machine.
+2. **Favorable dense control:** identical compiler, source, labels, updates,
+   state width, recurrence slots, and at least as many trainable parameters;
+   relation composition is replaced by unconstrained learned transitions.
+3. **Family-specialized control:** separate executors with the same aggregate
+   parameter budget.
+4. **Finite motor control:** packet/prefix lookup under the same parameter and
+   object-file bit budget.
+5. **Oracle ceilings:** gold object plus shared executor, and predicted object
+   plus gold executor. These localize failure and never count as reasoning.
+
+A structured-versus-dense comparison is invalid unless the dense arm reaches
+at least 99% training and 95% in-distribution joint accuracy.
+
+## 7. Causal Tests
+
+Required interventions:
+
+- entity, relation-storage, register, and event-node reindexing;
+- complete alpha-renaming and renderer paraphrase;
+- wrong-law substitution with a separately calculated counterfactual;
+- relation-card, intermediate-state, and terminal-state transplantation;
+- state reset, relation deletion, binding deletion, and event-order reversal;
+- equivalent commuting programs versus noncommuting order twins;
+- source, residual, and KV poisoning after commitment;
+- late-query rotation with terminal-state invariance;
+- post-`STOP` suffix mutation, forced-alive, and early-stop tests; and
+- type-compatible relation-card transplantation across task families.
+
+## 8. Promotion Gates
+
+### G0: Architectural Custody
+
+- complete system below 200M by unique-parameter identity;
+- executor interface contains no source or pointer evidence;
+- source-deleted hard rollout is bit-invariant to post-seal source mutation;
+- exact relation composition, halt, late-query, gradients, and interventions;
+- independent CPU implementation agrees on every exhaustive small case.
+
+### G1: Single-Family Systematic Transfer
+
+- gold-object executor at least 99.5%;
+- predicted object, trajectory, halt, terminal state, and answer scored
+  separately;
+- at least 90% joint accuracy on unseen rules, renderers, and lengths for each
+  family in isolation;
+- every deletion and post-`STOP` gate passes at 100%.
+
+### G2: Cross-Scale And Cross-Topology Transfer
+
+- at least 85% joint accuracy on all-axis held-out cases;
+- at least 95% noncommuting order-twin separation;
+- at least 99.5% equivalent-program invariance;
+- treatment exceeds a qualified dense control by at least ten points.
+
+### G3: Shared Multi-Family Execution
+
+- at least 85% joint accuracy per family;
+- at least 90% macro average;
+- at least 75% on unseen hybrid programs;
+- one executor and object schema, with no renderer- or family-specific head;
+- five independent seeds pass individually.
+
+### G4: Natural-Language Transfer
+
+- post-training examples teach interface use without teaching confirmation
+  answers or rules;
+- interactive transcripts show internally consistent multi-step state use;
+- public reasoning benchmarks improve over the frozen 300k base and over a
+  parameter-matched post-training control;
+- causal internal-state interventions predictably alter natural-language
+  answers.
+
+Only passing G0-G4 supports a claim of genuine general reasoning for Shohin.
+Passing G0-G3 supports a narrower claim of systematic relational reasoning.
+
+## 9. Current Evidence
+
+As of 2026-07-23:
+
+- the real 300k frozen checkpoint loads with the required immutable hash;
+- the UROM compiler attaches without modifying the trunk;
+- the complete system is 138,404,710 parameters;
+- the combined UROM/QERARM mechanics suite passes 33 focused tests;
+- hard two-rule composition is exact;
+- arbitrary many-to-many Boolean relation composition is exact;
+- post-`STOP` suffixes are inert;
+- changing only the late query changes the answer but not terminal state;
+- state transplantation has the predicted causal effect;
+- gradients reach every soft object-file field and the late query; and
+- sealed execution is invariant to mutation of the original soft compiler
+  outputs.
+
+UROM-3 is **rejected before H100 use**. Its mechanics are retained because a
+clean negative control is useful, not because more compiler optimization is
+expected to turn fixed relation composition into general reasoning.
+
+## 10. Active Successor: QERARM
+
+`train/equivariant_relation_register_machine.py` implements the current
+falsifier. A source-deleted packet contains only cardinality and six relation
+registers: raw relations `A`, `B`, identity, and three empty writable
+registers. The late query is absent during execution. A learned,
+object-permutation-invariant controller selects operation, operands,
+destination, phase transition, and `HALT`.
+
+Every candidate operation is evaluated tensorially:
+
+- composition, union, intersection, difference, converse, copy, clear,
+  identity, and fixed-point expansion;
+- only registers 3-5 are writable;
+- categorical phase is model state, not a host program counter;
+- missing halt is invalid and remains in the denominator; and
+- packet state outside the declared object square is rejected.
+
+The current separator is `TC(A) \ TC(B)`. Difference is antitone in `B`, so a
+monotone union/closure machine cannot solve it. The development board changes
+both graph size and required fixed-point depth: training uses cardinalities
+3-5 and depths 2-4; development uses 6-7 and depths 5-6; confirmation is
+reserved at cardinality 8 and depth 7. No operation schedule, closure,
+trajectory, halt time, or answer-equivalent field enters the machine.
+
+The active controller receives both normalized action-change mass and a
+scale-free maximum-change signal, preventing fixed-point decisions from
+depending on the `1/n^2` magnitude of one new edge. The default 512-wide,
+three-layer categorical-phase controller adds exactly 2,829,341 parameters.
+With the protected trunk, the complete system is 127,911,005 parameters and
+leaves 72,088,995 parameters below 200M.
+
+Four score-free optimizer probes are negative and retained. A fifth
+development-only probe is the first successful learned-executor signal:
+
+| Probe | Train joint | Development joint | Diagnostic |
+|---|---:|---:|---|
+| naive hard | 0% | 0% | immediate halt collapse |
+| soft/hard GRU | 0% | 0% | answer shortcut without work state |
+| teacher GRU | 38.2813% | 0% | training sequence memorization |
+| Markov affordance | 0% | 0% | no phase separation |
+| categorical phase, mean-change only | 100% | 94.2708% | residual cardinality-7 convergence errors |
+| phase plus scale-free max change | 100% | 100% | positive diagnostic; source changed during run |
+| scale-free, hard after 10% soft | 0% | 0% | hard transition before policy fit collapses to HALT |
+| scale-free, hard after 50% soft | 0% | 0% | later switch still collapses |
+| scale-free, hard after 90% soft | 100% | 100% | exact-source bounded executor baseline |
+
+Their report SHA-256 values are, respectively,
+`4499c3621422e3b51e72a0cb91d544faba0c53da23d9f3d93c713f87a5068b0d`,
+`c64823623f6b56c77ecdd7375eb73be2f2716f1f99beff385aaf8003b430c300`,
+`e1908349ce9f22d980650ab4acc3ef881651f48eb4bae26ab41c286987776824`,
+and
+`48dfeab5ce54265ed4ae9a7bbdad8146fca5da0386d99bb2e85b959e994c63cb`.
+The fifth checkpoint/report SHA-256 values are
+`39781187bcf0f7a6baeda01fc27890180fdacd6e38aa34c8f918de79c88dcd90`
+and
+`eff8a0fdd36e2c5f81cf0d3027e9db40c618c8331064c18d1954b54baa0d909e`.
+Its 214,589-parameter controller reaches 768/768 train joint and 181/192
+development joint. All 11 failures are cardinality-seven rows, principally
+misclassified fixed-point transitions. This is a bounded development result,
+not a promotion or confirmation result.
+
+The scale-free diagnostic uses a 401,213-parameter controller and reaches
+768/768 train plus 192/192 development joint, including 63/63 at unseen depth
+six. Checkpoint/report SHA-256 are
+`ec04850295b1b143fb5fa353cb73a5cbe2930817f2711d0aca9e320dc90881cb`
+and
+`53ceccc2dd3564af25b1f02659d9ba44676073cdc76942299cda0aee83711528`.
+The trainer source changed while that local process was running, so this is a
+positive architecture diagnostic, not a source-frozen promotion artifact.
+
+Hostile gradient review also found that the old hard teacher loss clamped
+wrong one-hot actions and therefore produced zero corrective gradient. The
+frozen successor retains raw logits for cross-entropy supervision and keeps a
+0.1 teacher-loss floor. A regression test proves every wrong hard action head
+receives finite nonzero gradient.
+
+The curriculum itself was then falsified. Starting hard execution after only
+10% soft fit (`g_hard_logit_scale_free`) or after 50%
+(`h_half_hard_logit_scale_free`) yields 0% train and 0% development joint.
+Their checkpoint/report SHA-256 pairs are
+`0a8d8a9fc3eb2702c81123c0ac4f7b4b890717f2b4b65db284faf3ce6228cfe4` /
+`ab06f52f941be5ec78bd5b8c8e7ac0dc3016a8867f3a8cdf19cc2411533a1672`
+and
+`599a40f74336393cc4f683551053ce99463ec577a269571125953b59f97495e2` /
+`52e8dee793621ae3d1d6ebee74ccbc29e7f6f40edd03f583155d951167f9ef75`.
+
+Frozen source commit `da00a61` delays hard execution until the final 10% while
+preserving the raw-logit teacher gradient. Its exact-source same-seed run
+`i_late_hard_logit_scale_free` reaches 768/768 train and 192/192 development
+joint, including 129/129 depth-five and 63/63 depth-six rows. Work registers,
+answer, and model-owned halt are all exact. Checkpoint/report SHA-256 are
+`531d015ef8786e702a41e9e390026545e2c74ac7f1d83cef69042f4677a82ed2`
+and
+`119efe1dec0246fb50aa58647683ca8aba3a3f68aae988ce4b97c0fb3e65e8f3`.
+Confirmation access is zero. This promotes a source-frozen bounded executor
+baseline only; it does not establish program interpretation.
+
+A matched joint legal-transition controller is now implemented but untrained.
+It replaces six independently decoded action heads with one 2,917-way head:
+2,916 complete legal
+`(operation, left, right, destination, next_phase)` tuples plus HALT. The
+default controller adds 4,310,885 parameters for a 129,392,549-parameter
+complete system. Soft rollout mixes complete successor states, hard rollout
+selects one legal tuple, and raw logits preserve corrective cross-entropy
+gradients. It is a qualified architecture control, not a result.
+
+## 11. Bekić Program-Interpretation Boundary
+
+`pipeline/bekic_relational_fixed_point_board.py` provides two independent CPU
+oracles for simultaneous and nested Bekić evaluation, fresh opaque variable
+and node identifiers, one-representation machine inputs, object/node/variable
+reindexing tests, and exact receipts. Those mechanics pass, but hostile review
+rejects the board for neural authorization:
+
+- every equation is one fixed template;
+- training has only eight normalized skeletons;
+- expression depth only repeats one COMPOSE location;
+- constant order and density reveal semantic roles;
+- the paired "nested" graph is the same equation graph plus a binding tag,
+  not explicit nested fixed-point syntax; and
+- byte-hash disjointness is compatible with identical semantic templates.
+
+Retain this board as an oracle and fixed-template negative control. Do not call
+accuracy on it episode-local program interpretation.
+
+The score-bearing successor must use grammar-sampled monotone program orbits.
+For identical constants and matched structural statistics it must pair a
+program `P` with a rewired `P'` that has a different fixed point, plus an
+equivalent rewrite and an explicit nested Bekić form. Program/constant
+transplants, noncommuting wiring twins, alpha/node/object/constant-order
+reindexing, canonical skeleton and motif disjointness, and five-seed exact hard
+rollout are preregistered before any confirmation board exists.
+
+The architecture target is no longer another static opcode controller. Shohin
+already has the confirmed S7 component: a 218-parameter generator reaches
+2,048/2,048 exact recurrent states and answers across 18 unseen contextual
+laws, while false-generator, one-witness, deranged-card, and reset controls
+collapse. The next integration is therefore:
+
+1. identity-aware occurrence/equality binding from ER-CST;
+2. one private, source-deleted typed program graph with predicted links/nil;
+3. S7-style tied learned primitive generators reused at every AST node and
+   fixed-point iteration;
+4. QERARM's exact hard relation registers and model-owned halt; and
+5. a late query disclosed only after source-deleted execution.
+
+## 12. Immediate Work
+
+1. freeze QERARM late-hard as the bounded fixed-template executor baseline;
+2. finish the grammar-sampled matched-counterfactual Bekić orbit board without
+   generating confirmation;
+3. require exact program and constant transplants before any neural run;
+4. integrate S7-style contextual primitive binding with a private graph
+   executor rather than fixed global opcode semantics;
+5. compare factorized and joint legal-transition controllers under identical
+   hard-from-step-one autonomous gates;
+6. add query-blind state/action transplants, operator ablations, and a
+   parameter/FLOP-matched generic recurrent control;
+7. only then connect the surviving executor to the occurrence/equality source
+   compiler; and
+8. keep confirmation sealed until source, board, thresholds, controls, five
+   model seeds, and independent assessment are frozen.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 259: `R12_CONTEXTUAL_RELATION_PROGRAM_ARCHITECTURE.md`
+
+Original source path: `R12_CONTEXTUAL_RELATION_PROGRAM_ARCHITECTURE.md`
+Original source size: 9,628 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# Source-Deleted Contextual Relation-Program Architecture
+
+**Status:** pre-neural architecture and falsification charter
+**Date:** 2026-07-23
+**Protected base:** `train/flagship_out/ckpt_0300000.pt`
+**Protected base SHA-256:** `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`
+**Base parameters:** 125,081,664
+**Complete-system ceiling:** strictly below 200,000,000
+
+## 1. Objective
+
+Build one architecture-native mechanism that can:
+
+1. bind fresh symbols by physical occurrence and learned equality;
+2. infer episode-local operation identities from causal witnesses;
+3. execute arbitrary unseen monotone relation-program graphs;
+4. solve mutually recursive least fixed points;
+5. preserve exact state across unseen graph depth and object cardinality;
+6. own graph traversal and halt;
+7. answer a query disclosed only after source deletion; and
+8. connect the same state to Shohin's natural-language interface.
+
+This is not a claim that relation algebra is general intelligence. It is a
+decisive test of four prerequisites for general reasoning: local law
+induction, variable binding, systematic composition, and recurrent state use.
+
+## 2. Evidence That Must Be Reused
+
+The architecture is constrained by prior causal results.
+
+### 2.1 Contextual law induction exists
+
+S7's 218-parameter learned Cayley generator reaches 2,048/2,048 exact
+recurrent states and answers on sealed confirmation across 18 unseen laws and
+depths 3-8. A false `S^2` generator, one-witness cards, deranged cards, and
+state reset collapse. This validates tied generator reuse under a narrow
+cyclic prior.
+
+### 2.2 Physical occurrence and nominal identity must be separate
+
+ER-CST witness equality raises closed confirmation joint accuracy to 99.023%;
+family derangement and equality ablation collapse. Address-only routes can fit
+structure while failing relation content. The new compiler therefore cannot
+represent "where this token occurred" and "which local symbol it denotes" in
+one unconstrained vector.
+
+### 2.3 Private discrete state is necessary but insufficient
+
+S8/S9 show that emitted links, nil, and source-deleted graph execution are
+causal. DRS shows a late residual digit signal but fails repeated autonomous
+consumption. QERARM now reaches exact hard fixed-template execution, but a
+fixed program schedule is not program interpretation.
+
+## 3. Rejected Shortcuts
+
+No score-bearing arm may receive:
+
+- both simultaneous and nested representations;
+- source tokens, source KV state, or compiler residuals after graph sealing;
+- a gold execution schedule, trajectory, convergence time, or target;
+- host-repaired pointers, operation bindings, state, or halt;
+- globally meaningful operation IDs;
+- constant ordering or density tied to semantic role;
+- graph depth, topology, or cardinality features that are unavailable from the
+  private packet; or
+- target-equivalent prospective-action features.
+
+Soft loss, teacher-forced fit, linear readout, and host execution are
+diagnostics only. Score-bearing execution is hard and autonomous.
+
+## 4. Machine
+
+The complete mechanism has four interfaces.
+
+### 4.1 Identity-aware source compiler
+
+The compiler emits physical records, nominal fingerprints, equality links,
+typed node records, argument links, equation-root links, entry, next/nil, and
+late-query bindings. Physical occurrence pointers and nominal equality use
+separate channels. Node and symbol order are arbitrary.
+
+After validation, exactly one graph representation is sealed. The source,
+token memory, compiler activations, and unused paired representation are
+irreversibly unavailable to execution.
+
+### 4.2 Contextual primitive binder
+
+Every episode assigns fresh opaque IDs to relation operations. Each operation
+card contains relation-valued witnesses sufficient to identify one member of a
+tied primitive bank:
+
+- union;
+- intersection;
+- composition;
+- converse; and
+- identity.
+
+The binder evaluates every compatible primitive on each witness and derives a
+hard local assignment. It may use equality and tensor reduction, as S7 does,
+but not global operation names. Ambiguous or contradictory cards fail closed.
+The same compiled primitive is reused at every occurrence and every fixed-point
+iteration.
+
+### 4.3 Private graph executor
+
+The executor stores:
+
+- anonymous relation constants;
+- anonymous recursive variable registers;
+- program-node relation registers;
+- typed argument links;
+- equation-root links;
+- local primitive assignments;
+- a categorical execution phase; and
+- alive/nil state.
+
+All legal primitive candidates are produced tensorially. Hard graph links and
+hard primitive assignments choose complete legal transitions. Read-only
+constants remain immutable. Node, variable, constant, and object permutation
+equivariance are architectural contracts.
+
+The simultaneous arm iterates both recursive variables together. The paired
+evaluation arm receives an explicit nested fixed-point graph with `LFP`
+binders. Equivalent forms are never supplied to one execution.
+
+### 4.4 Halt and late query
+
+The machine must emit nil/HALT from its private state. Missing halt remains
+wrong. The query is disclosed only after the terminal state is committed, and
+changing the query may change the answer but not execution.
+
+## 5. Score-Bearing Program Orbits
+
+Programs are sampled from the monotone grammar:
+
+```text
+E ::= VARIABLE
+    | CONSTANT
+    | IDENTITY
+    | UNION(E, E)
+    | INTERSECTION(E, E)
+    | COMPOSE(E, E)
+    | CONVERSE(E)
+```
+
+Each constant world produces a matched orbit:
+
+- `P`: one random two-variable recursive program;
+- `P'`: matched node count, depth, topology, operator multiset, variable-use
+  counts, and constant-use counts, but rewired to a different fixed point;
+- `Peq`: semantics-preserving alpha, node, object, constant-list, and
+  associative/commutative rewrites; and
+- `Pbekic`: an explicit nested fixed-point representation equivalent to `P`.
+
+`P` and `P'` must differ by at least 10% normalized joint target Hamming
+distance. Constant density is independent of role. Canonical skeleton and
+depth-2/depth-3 motif hashes, not byte hashes, define disjointness.
+
+## 6. Development Partitions
+
+| Cell | Cardinality | AST depth | Required shift |
+|---|---:|---:|---|
+| train | 3-6 | 4-7 | random orbit skeletons |
+| development in-range | 3-6 | 4-7 | unseen skeletons |
+| development motif | 3-6 | 4-7 | held-out operator motifs |
+| development scale | 7 | 4-7 | unseen object scale |
+| development depth | 3-6 | 8-9 | unseen composition depth |
+| development joint | 7 | 8-9 | scale and depth |
+
+All dependency topologies are balanced within every cell. Confirmation does
+not exist until source, data, thresholds, controls, and five model seeds are
+frozen and development has passed.
+
+## 7. Gates
+
+Every score is exact joint terminal state plus valid halt unless stated.
+
+### 7.1 Mechanics
+
+- independent simultaneous and nested oracles agree on every admitted row;
+- alpha, node, object, variable, operation-card, and constant-list reindexing:
+  100%;
+- `P/Peq` equivalence: at least 99.5%;
+- `P/Pbekic` equivalence: at least 99.5%;
+- program transplant with constants fixed: at least 99%;
+- constant transplant with program fixed: at least 99%;
+- `P/P'` matched counterfactual accuracy: at least 99%;
+- noncommuting wiring/order twins: at least 99%; and
+- missing/early/late nil interventions cause the predicted failure.
+
+### 7.2 Contextual binding
+
+- fresh opaque operation-card binding: at least 99.5%;
+- card and witness order invariance: 100%;
+- one-witness ambiguity fails closed;
+- deranged and contradictory cards fail or lose at least 60 points;
+- compiled-operation transplant changes execution to the donor law; and
+- global operation-ID and bag-of-operation controls are at chance on fresh
+  bindings.
+
+### 7.3 Neural development
+
+- every development cell: at least 99% exact joint;
+- all five fixed training seeds pass individually;
+- treatment beats every qualified graph-blind, constants-only,
+  structure-statistics-only, bag-of-operations, and generic recurrent control
+  by at least 20 points;
+- hard autonomous score is within one point of the exact private-machine host
+  ceiling;
+- late-query invariance and state transplantation are exact; and
+- no development choice is selected by averaging away a failed seed or cell.
+
+## 8. Parameter Ledger
+
+The protected trunk leaves 74,918,336 parameters below 200M.
+
+Current bounded controls:
+
+| Component | Added parameters | Complete system |
+|---|---:|---:|
+| QERARM factorized, 512x3 | 2,829,341 | 127,911,005 |
+| QERARM joint legal action, 512x3 | 4,310,885 | 129,392,549 |
+| S7 generator | 218 | 133,695,087 in its promoted stack |
+
+The first contextual graph arm must remain below 150M if possible. Width may
+increase up to the strict 200M ceiling only after a smaller matched arm proves
+that added capacity changes the failed causal mechanism rather than memorizing
+program skeletons.
+
+## 9. Claim Ladder
+
+1. **Mechanics only:** exact host/tensor execution.
+2. **Contextual binding:** fresh opaque operations compile causally.
+3. **Systematic relational reasoning:** unseen programs, depths, scales, and
+   equivalent representations pass hard autonomous gates.
+4. **Language-grounded relational reasoning:** source compiler emits the
+   private graph and retains the same state/execution gates.
+5. **Broader reasoning:** the same mechanism transfers to at least two
+   non-relational task families with fresh renderers and rules.
+
+Only level 5 changes Shohin's general-reasoning claim. Levels 1-4 are necessary
+architecture evidence, not permission to call the system generally
+intelligent.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 260: `R12_AHRF_PREREG.md`
+
+Original source path: `R12_AHRF_PREREG.md`
+Original source size: 10,036 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 Autocatalytic Hysteretic Relation Field Preregistration
+
+**Status:** architecture and matched controls frozen at source commit
+`c67d945`; no score-bearing AHRF result exists.
+
+Pre-artifact launch `b4dcbf0` exhausted local MPS memory in a dense
+parent-by-child membrane expansion before an optimizer update or output write.
+Source `4fc5a11` replaces it with an exact gather after adding a fail-closed
+one-child-per-typed-role validator. The full-geometry MPS canary completed
+without OOM; this is a systems repair, not a score.
+
+Pre-artifact launch `84eec59` was then stopped before any output or optimizer
+update after a structural audit proved that its recurrent field propagated
+only same-cell child state. It therefore had no path that could combine
+relation cells `(i,k)` and `(k,j)` to update `(i,j)`, making exact relational
+composition unrepresentable regardless of optimization. Source `c088261`
+adds a learned object-equivariant dynamic triadic contraction over the two
+typed argument-role membranes. The corrected full-geometry MPS canary wrote a
+checkpoint and report with 291,666 added parameters and 125,373,330 total
+parameters. Its one-update scores are not evidence and will not be reused.
+
+The first launch after preregistration commit `26cb046` was stopped and its
+ephemeral optimizer state destroyed before it wrote an output directory. An
+independent structural audit found two more decisive faults: no runtime path
+could transpose a live child relation for a converse node, and clamping exact
+hard events before binary cross entropy killed the intended straight-through
+terminal gradient. The same audit showed that the 16-step safety cap was below
+the conservative propagation envelope of the proposed board.
+
+Source `0dccab5` adds a generic direct/transposed channel for every typed child
+role, uses an MSE terminal surrogate only during exact hard-event updates,
+adds learned/false/zero triad modes with identical parameter counts, records
+the transitive source set before and after training, and derives a fail-closed
+minimum safety horizon from expression depth and fixed-point updates. Source
+`1dd7a5d` additionally keeps the generic control's card encoder active through
+object-marginal features and removes all primitive-classifier-head layers from
+the warm start. A full-geometry 64-step MPS canary completed in 56 seconds with
+316,824 standalone parameters and a hypothetical integrated total of
+125,398,488. Its one-update scores are systems evidence only and will not be
+reused.
+
+A real-board batch-four canary then reached the local MPS 9.07 GiB memory cap
+before any output write. Batch two completed the full 80-train/50-development
+geometry without OOM or source drift. Source `c67d945` therefore freezes 2,000
+field updates and 400 halt updates at batch two, preserving the intended 4,000
+and 800 sampled examples respectively. Unsafe MPS watermark overrides are
+forbidden.
+
+## Question
+
+Can a standalone architecture that fits within a sub-200M Shohin integration
+budget infer fresh episode-local relation laws, propagate their consequences
+through a host-compiled, source-deleted recursive graph, preserve facts as
+write-once state, and decide when to halt without a host executor, operation
+labels, an execution schedule, or a host convergence test?
+
+This is a test of a bounded synthetic relational reasoning mechanism. A pass is
+not evidence of unrestricted language reasoning, and AHRF is not yet connected
+to the protected Shohin trunk.
+
+## Architecture
+
+The treatment is the Autocatalytic Hysteretic Relation Field (AHRF):
+
+1. an object-equivariant opaque witness-card encoder with row, column,
+   transpose, and triadic pair messages;
+2. a node-equivariant recurrent graph field;
+3. two typed operation-argument edge roles and one distinct equation-feedback
+   edge role;
+4. a learned object-equivariant dynamic triadic membrane contraction that
+   combines `(i,k)` state from the first argument role with `(k,j)` state from
+   the second argument role to drive `(i,j)`;
+5. direct and generically transposed fact/membrane channels for every typed
+   child role, allowing an opaque card to select relation orientation without
+   a named converse primitive;
+6. exact write-once fact and evidence latches with straight-through gradients;
+7. continuous membrane state;
+8. a learned event-triggered absorbing halt latch; and
+9. a fixed maximum recurrence used only as a safety bound.
+
+The runtime score path receives structural node kinds, graph links, equation
+feedback links, root masks, constants, opaque witness cards, and object masks.
+It receives no primitive identity, operation name, target relation, answer,
+trajectory, iteration count, schedule, host-executor output, or convergence
+flag. Every active node must reach a root, every opaque card must be used, and
+padding/unused card arguments must be exactly zero.
+
+Default `hidden_dim=64`, `card_rounds=2`, `max_steps=64` has 316,824 standalone
+parameters and leaves 74,601,512 parameters under a hypothetical 200M
+flagship-integration cap. This is budget accounting, not evidence that the
+trunk and reasoner are integrated. The exact receipt is checkpointed and
+independently testable.
+
+## Initialization
+
+The card encoder may warm-start only from a hash-bound CWEB treatment trained
+after this source freeze with:
+
+- width 64;
+- two learned triadic rounds;
+- no statistics-only architecture;
+- no false- or zero-triad control; and
+- exact source/config/checkpoint receipts.
+
+Only the pair input, pair rounds, and witness encoder are copied. No primitive
+classifier layer or output, target relation, host program, or halt parameter is
+transferred.
+
+## Board
+
+The first pilot uses the hardened source-deleted Bekić board:
+
+- factorial train orbits;
+- held-out in-range, motif, scale, depth, and joint development cells;
+- P, P-prime, equivalent P, constant-only rewire, and compose-only reversal;
+- split-disjoint individual depth-two and depth-three motif receipts;
+- held-out motif absent from every training arm;
+- canonical recursive pressure requiring both variables to change, at least
+  two convergence updates, and at least three total variable-change events;
+- a fail-closed propagation envelope `max(depth * (updates + 1))`, with every
+  admitted board required to fit within the frozen 64-step safety bound;
+- fresh opaque slot IDs, node IDs, card order, witness order, object order, and
+  varied input densities; and
+- exact independent simultaneous and nested set oracles used only outside the
+  model score path.
+
+The clean source commit precedes the board/training seed. Development is
+score-bearing for this pilot; no confirmation claim is authorized.
+
+## Optimization
+
+The frozen local pilot budget is batch two, 2,000 field updates, and 400 halt
+updates. Every matched learned control receives the same sampled-example,
+update, and recurrence budget.
+
+1. Fit terminal root relations from final-state supervision only.
+2. Use continuous monotone write events for the first 90% of field updates.
+3. Use exact straight-through write events for the final 10%.
+   Binary cross entropy is used for the continuous phase and MSE for the exact
+   hard phase so incorrect hard bits retain a finite nonzero gradient.
+4. Keep halt absorption disabled during field fitting.
+5. Freeze the field and fit only the halt head from whether the model's own
+   hard per-step root facts exactly equal the training target.
+6. Evaluate with exact write events and learned halt enabled.
+
+No intermediate node target, primitive label, host execution trace, or fixed
+halt deadline may supervise the field.
+
+## Frozen Controls
+
+Every promoted run requires same-board, same-budget controls:
+
+1. **no feedback:** remove equation-root-to-variable feedback links;
+2. **no hysteresis:** replace write-once fact latches with ordinary overwrites;
+3. **shuffled cards:** permute opaque cards between slots while preserving
+   arity and all graph statistics;
+4. **generic recurrence:** parameter/FLOP-matched recurrent field without
+   aligned card-conditioned pair messages; the same card encoder remains
+   trainable and supplies only object-marginal card features;
+5. **false triad:** same-parameter, same-cost contraction using the wrong
+   object-equivariant `A-transpose times B` alignment;
+6. **zero triad:** evaluation ablation only; it is not a matched learned
+   control because its triad parameters receive zero gradient; and
+7. **fixed deadline:** disable learned halt and read only at the safety bound.
+
+Identity-delay twins are a mechanics falsifier: terminal semantic facts must
+remain equal while learned halt latency increases by the inserted relay depth.
+
+## Gates
+
+All must pass on at least five independent seeds before promotion:
+
+- at least 99% exact terminal packets on train and development;
+- at least 99% exact in every development cell and score-bearing arm;
+- at least 99% learned halt with at most 1% safety exhaustion;
+- 100% object, node-storage, card-order, and witness-order equivariance;
+- 100% P/equivalent-P terminal agreement;
+- treatment exceeds each nontrivial control by at least 20 percentage points
+  in exact development packets;
+- no source/target/covert-state validation failure;
+- exact complete-system parameter receipt below 200M; and
+- independent replay from the frozen source/checkpoint hashes.
+
+Failure rejects the treatment on this board. Passing authorizes only a fresh,
+preregistered transfer board spanning at least Horn closure, dataflow analysis,
+and one non-relational family. No synthetic Bekić result, by itself, may be
+called genuine general reasoning.
+
+## Existing Evidence Boundary
+
+The contextual witness-equivariant binder is a useful warm-start component but
+not a decisive law-learning result: its exploratory shifted score is 99.61%,
+while a statistics-only control reaches roughly 97.8%. The current card
+ontology is therefore strongly marginal-solvable. AHRF must win through
+recursive terminal execution and model-owned halt, not by citing the binder
+classification score.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 261: `R12_ABCR_THEORY.md`
+
+Original source path: `R12_ABCR_THEORY.md`
+Original source size: 10,045 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# Apical-Basal Critical Resonance
+
+**Status:** architectural hypothesis; no capability claim
+
+## Problem
+
+Shohin's current reasoning experiments expose three separable bottlenecks:
+
+1. learned local operations can be strong while autonomous composition fails;
+2. monotone recurrent fields cannot retract a defeated hypothesis; and
+3. rewrite search without a query enumerates possibilities but does not decide
+   which computation answers the problem.
+
+Apical-Basal Critical Resonance (ABCR) is a query-directed, reversible neural
+proof field. It combines bottom-up support, top-down demand, transient
+episode-local bindings, conflict backflow, and exchangeable hypothesis lanes.
+The proposal is inspired by two-compartment cortical models, concurrent belief
+propagation, competitive constraint networks, and focused proof search. Those
+ingredients are not individually novel. The hypothesis under test is their
+specific source-deleted, equivariant, model-owned combination.
+
+ABCR must not use a host matcher, symbolic scheduler, branch enumerator,
+executor, semantic verifier, target state, or convergence oracle.
+
+## Operational Claim
+
+Given:
+
+- an anonymous typed rule hypergraph;
+- anonymous evidence records;
+- one anonymous query record; and
+- fixed recurrent compute,
+
+ABCR should:
+
+1. propagate evidence forward as basal support;
+2. propagate the query backward as apical demand;
+3. form episode-local variable/object bonds;
+4. activate only rules whose support and demand agree through the same bond;
+5. maintain competing hypotheses in exchangeable lanes;
+6. inhibit and revise bonds responsible for contradictions;
+7. commit only stable support-demand closures; and
+8. halt or abstain when its own obligations are resolved or irreducibly
+   conflicted.
+
+A clean cross-family pass would establish a bounded general reasoning
+mechanism. It would not establish unrestricted intelligence or natural-language
+reasoning.
+
+## State
+
+For batch `b`, lane `l`, record `i`, rule `r`, and variable `v`, recurrent state
+contains:
+
+```text
+S[b,l,i,h]     basal support
+D[b,l,i,h]     apical demand
+T[b,l,i,h]     tentative state
+C[b,l,i,h]     conflict/inhibition
+B[b,l,r,v,i]   transient variable-to-record bond
+J[b,l,r,h]     rule resonance
+Q[b,l,h]       lane query state
+H[b,l]         lane halt potential
+```
+
+Rule and graph geometry are source-deleted tensors. Every symbol, rule,
+variable, record, and lane identity is freshly reindexed per episode.
+
+`S`, `D`, `T`, and `C` have no privileged slot order. `B` is an episode-local
+soft partial matching with explicit unbound capacity. Lanes share all weights.
+
+## Recurrent Dynamics
+
+Let `premise(r)` and `conclusion(r)` be typed anonymous incidence tensors, not
+host-executed semantics.
+
+### Basal support
+
+Evidence and tentative conclusions send forward proposals:
+
+```text
+support_match[r] =
+    MatchPremises(S, B, premise(r))
+```
+
+`MatchPremises` is a learned equivariant contraction. It receives incidence,
+types, equality structure, support state, and bonds. It receives no legal mask
+or host binding.
+
+### Apical demand
+
+The query initializes `D`. Active conclusions send obligations backward:
+
+```text
+demand_match[r] =
+    MatchConclusion(D, B, conclusion(r))
+```
+
+Demand is not an answer hint. It specifies which consequences are relevant.
+Query-shuffle twins must redirect the activated proof field.
+
+### Multiplicative resonance
+
+A rule becomes active only when support and demand agree through the same
+binding:
+
+```text
+J[r] = sigmoid(
+    Wj(
+        support_match[r]
+        * demand_match[r]
+        * binding_consistency[r]
+        - conflict_pressure[r]
+    )
+)
+```
+
+The elementwise product is causal, not decorative. An additive dual-stream
+control receives the same tensors, parameter count, and compute but replaces
+the product with a learned sum.
+
+### Transient bonds
+
+Bindings update through evidence, demand, and resonance:
+
+```text
+B_next = PartialSinkhorn(
+    leak_b * B
+    + proposal_b(S, D, J, rule_graph)
+    - conflict_to_bond(C)
+)
+```
+
+The partial normalization enforces only competition and an explicit unbound
+state. It does not match a rule. Equality and repeated-variable constraints are
+learned from anonymous incidence twins.
+
+### Tentative and committed state
+
+Tentative conclusions are reversible:
+
+```text
+T_next =
+    leak_t * T
+    + forward_proposal(J, B, rule_graph)
+    - retract(C)
+```
+
+Committed support uses a differentiable hard event after stability:
+
+```text
+stable = agreement(S, D, T, B) * low_conflict(C)
+write = straight_through(stable > threshold)
+S_next = max(S_evidence, S, write * T)
+```
+
+Only evidence and stable closures are monotone. Tentative hypotheses and bonds
+remain retractable.
+
+### Critical conflict
+
+Incompatible overlapping proposals induce inhibition:
+
+```text
+C_next =
+    leak_c * C
+    + incompatible(T, B, rule_graph)
+    + duplicate_lane_pressure(T)
+```
+
+Conflict flows to the bindings and rules that caused it. A no-conflict-backflow
+control keeps the same conflict computation but prevents it from changing
+`B`, `J`, or `T`.
+
+### Lane exchange and coalescence
+
+Lanes are exchangeable phase states, not host-created branches. A learned
+competition mechanism amplifies distinct low-conflict hypotheses and
+coalesces equivalent lanes:
+
+```text
+lane_affinity = EquivariantStateSimilarity(S, D, T, B)
+lane_gate = compete_and_coalesce(lane_affinity, C, Q)
+```
+
+No canonical graph hash or host equivalence test is available in the model
+process.
+
+### Halt and abstention
+
+Halt is a learned function of:
+
+- unresolved demand;
+- tentative activity;
+- conflict energy;
+- bond motion;
+- rule resonance;
+- lane diversity; and
+- state velocity.
+
+```text
+energy_t =
+    unresolved(D)
+    + activity(T)
+    + conflict(C)
+    + velocity(S,D,T,B)
+
+halt = hard_event(H > threshold)
+```
+
+Terminal/nonterminal delay twins, cyclic twins, and underdetermined twins are
+required. A fixed recurrence cap is only a fail-closed safety bound.
+
+## Energy Interpretation
+
+ABCR is not required to minimize one scalar energy, but a useful diagnostic is:
+
+```text
+E =
+    E_unmet_demand
+    + E_unsupported_claims
+    + E_binding_inconsistency
+    + E_conflict
+    + E_duplicate_lanes
+    + E_state_velocity
+```
+
+Successful reasoning should reduce all terms except during deliberate
+hypothesis splitting. Energy is never used as a host convergence test. It is
+logged for causal diagnosis and may supervise the learned halt head.
+
+## Parameter Budget
+
+The protected Shohin trunk has 125,081,664 parameters. The initial ABCR budget
+is 32,000,000 added parameters:
+
+| Component | Ceiling |
+|---|---:|
+| record/rule encoders | 6M |
+| support and demand dynamics | 8M |
+| bond dynamics | 6M |
+| conflict and lane dynamics | 6M |
+| state reader and halt | 2M |
+| Shohin interface adapters | 4M |
+| complete system | 157,081,664 |
+
+The complete system remains below 200M. Larger size is not evidence; every
+promoted treatment needs a parameter- and compute-matched generic recurrence.
+
+## Training
+
+Training is staged without exposing a privileged full proof trace to the
+autonomous score path:
+
+1. **Bond mechanics:** anonymous repeated-variable, type, and occurrence twins.
+2. **One-rule resonance:** set-valued valid activations under query changes.
+3. **Reversible composition:** two-to-six-rule episodes with hard recurrent
+   state and decaying teacher forcing.
+4. **Critical competition:** forks, delete effects, contradictions, cycles,
+   and underdetermined queries.
+5. **Autonomous closure:** final-answer, abstention, and halt supervision only.
+6. **Cross-family confirmation:** five fresh seeds with two entire held-out
+   families.
+
+Training may use independent-oracle labels in an offline process. Evaluation
+may not contain the oracle, its source, its traces, or any derived legal-action
+mask.
+
+## Families
+
+The first rotation uses:
+
+- Horn closure;
+- forward and backward dataflow;
+- typed occurrence rewriting;
+- delete-effect planning; and
+- algebraic normalization.
+
+For each confirmation, two families are absent from all optimization. Every
+local operator must appear in training, while the held-out family changes its
+composition, state topology, and query semantics.
+
+## Controls
+
+1. forward-only AHRF-style support;
+2. additive support/demand without multiplicative resonance;
+3. no conflict backflow;
+4. no persistent transient bonds;
+5. one hypothesis lane;
+6. shuffled query;
+7. shuffled rule cards preserving statistics;
+8. parameter/FLOP-matched generic recurrent slots;
+9. reset recurrent state each step;
+10. fixed-deadline readout; and
+11. Shohin trunk-zero intervention.
+
+## Gates
+
+All five seeds must achieve:
+
+- at least 95% exact in every held-out family;
+- at least 90% exact at doubled depth and increased graph width;
+- at least 95% halt or abstention on cyclic and underdetermined cases;
+- 100% storage, symbol, rule, lane, and branch-order reindex invariance;
+- at least 99% correct query, donor-state, binding, and RHS intervention
+  responses;
+- treatment at least 20 percentage points above every causal control;
+- paired 95% lower confidence bound above a 10-point advantage;
+- no host repair, family-specific inference head, evaluation fine-tuning,
+  source access, or custody failure; and
+- complete parameter count below 200M.
+
+Reject ABCR if:
+
+- a generic recurrent control matches it;
+- it requires gold schedules or host matching;
+- conflict backflow is causally inert;
+- query interventions do not redirect computation;
+- tentative states never retract on counterfactual twins;
+- family-specific adapters are required; or
+- language integration succeeds only by bypassing the frozen runtime.
+
+## Evidence Ladder
+
+1. deterministic mechanics and tensor-custody tests;
+2. isolated one-rule causal interventions;
+3. autonomous within-family composition;
+4. held-out renderer and depth transfer;
+5. held-out task-family transfer;
+6. frozen Shohin language compilation and reading;
+7. natural-task confirmation with manual transcript review.
+
+No rung may be described using the claim of a later rung.
+
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 262: `R12_NEURAL_TCRR_PREREG.md`
+
+Original source path: `R12_NEURAL_TCRR_PREREG.md`
+Original source size: 9,593 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# Neural Typed Critical-Pair Rewrite Reactor
+
+**Status:** preregistration; CPU mechanics admitted, neural claim untested
+
+## Claim Boundary
+
+N-TCRR-1 asks whether a neural system can receive only episode-local,
+source-deleted typed rewrite declarations and an initial term graph, then
+autonomously enumerate the exact reachable normal-form set and cycle witnesses.
+The system must emit occurrence-specific graph transactions, manage branches,
+and select its own halt.
+
+A pass establishes bounded architecture-native nonmonotone rewrite reasoning.
+It does not establish language understanding or genuine general reasoning.
+Those claims require a separately frozen language compiler and transfer to
+unseen natural task families without changing the reactor.
+
+The committed CPU mechanics and independent audit are only an executable
+semantic specification:
+
+- `pipeline/typed_critical_pair_rewrite_board.py`
+- `pipeline/audit_typed_critical_pair_rewrite_board.py`
+- `artifacts/r12/tcrr_mechanics_521058d.json`
+
+They may generate training labels and assess sealed evaluation transcripts, but
+they may not be present in the neural evaluation process.
+
+## Why A New State Machine Is Required
+
+AHRF is intentionally monotone: facts are written once and retained. Typed
+rewriting requires deletion, replacement, capacity reclamation, alternative
+successors, and mixed cyclic and terminating paths. Extending the AHRF latch
+with exceptions would obscure these causal requirements. N-TCRR therefore uses
+an explicit transaction state whose mutation semantics can be independently
+audited.
+
+## Frozen Geometry
+
+| Quantity | Value |
+|---|---:|
+| Graph slots per branch | 16 |
+| Branch lanes | 8 |
+| Rules per episode | at most 8 |
+| Nodes per rule side | at most 12 |
+| Constructor arity | at most 3 |
+| Occurrence path depth | at most 8 |
+| Legal one-step actions per state | at most 128; reject, never truncate |
+| Recurrent safety bound | 64 |
+| Hidden width | 256 |
+| Added parameter ceiling | 16,000,000 |
+| Complete Shohin ceiling | 200,000,000 |
+
+The first implementation uses shared slot-, rule-, branch-, constructor-, and
+type-equivariant weights. It contains:
+
+1. six graph/rule encoding rounds;
+2. four transaction-decoder rounds;
+3. an agenda and branch controller;
+4. a visited-state comparator;
+5. a terminal normal-form bank;
+6. a cycle-witness bank; and
+7. a learned halt head.
+
+The protected Shohin trunk may provide frozen renderer-record embeddings.
+Reasoning-state mutation remains entirely inside N-TCRR. A trunk-zero
+intervention measures whether those embeddings contribute causally.
+
+## Source-Deleted Tensor Contract
+
+```text
+graph_active       [B,K,N]
+graph_root         [B,K,N+1]
+node_kind          [B,K,N,3]
+node_constructor   [B,K,N,C]
+node_type          [B,K,N,Y]
+node_children      [B,K,N,A,N+1]
+branch_active      [B,K]
+
+lhs_kind           [B,R,P,3]
+lhs_constructor    [B,R,P,C]
+lhs_type           [B,R,P,Y]
+lhs_children       [B,R,P,A,P+1]
+lhs_variable_eq    [B,R,P,V]
+
+rhs_kind           [B,R,P,3]
+rhs_constructor    [B,R,P,C]
+rhs_type           [B,R,P,Y]
+rhs_children       [B,R,P,A,P+1]
+rhs_bound_variable [B,R,P,V]
+rhs_delete         [B,R]
+```
+
+Constructor, type, rule, variable, slot, and branch identities are freshly
+permuted per episode. No global semantic ID, family label, source text,
+episode class, oracle state, expected count, schedule, or legal-action mask is
+available to the evaluated model.
+
+At each tick, the model emits:
+
+```text
+agenda branch
+mode = STEP | FORK | ACCEPT_NORMAL | ACCEPT_CYCLE | HALT
+rule pointer
+root-relative occurrence path
+next occupancy
+next constructor and type references
+next child pointers
+next root
+optional second successor for FORK
+```
+
+Occurrence paths are semantic. A shared DAG node reached through two paths has
+two rewrite occurrences; changing one path must not silently mutate the other.
+The 128-action tensor width is an explicit local compute budget rather than a
+claim that one storage record has only one occurrence. Any generated state
+with more than 128 legal `(rule, occurrence path)` actions is inadmissible and
+must fail closed before training or scoring; legal sets are never truncated.
+
+## Rule-Blind Committer
+
+A fixed non-neural committer installs a predicted transaction. It may enforce
+only:
+
+- tensor shape and pointer range;
+- declared type compatibility;
+- reachability and acyclicity of each graph value;
+- branch and slot capacity;
+- conservation of live graph records; and
+- exact installation of the packet the model emitted.
+
+The committer may not inspect rule cards, pattern-match, bind variables, choose
+a redex, construct an RHS, rank branches, repair a packet, test semantic
+equivalence, detect a normal form, detect a cycle, or decide halt. Invalid
+transactions remain incorrect observations.
+
+## Custody
+
+Evaluation runs in an allowlisted directory containing only:
+
+- the frozen neural checkpoint;
+- the neural runtime and rule-blind committer;
+- source-deleted packet files; and
+- exact source and checkpoint receipts.
+
+The production and independent CPU oracles, board generators, training data,
+targets, schedules, and expected outputs must not exist in that process or
+filesystem.
+
+The model's raw transactions are sealed before a one-access assessor loads the
+independent oracle. Assessment never returns information to the model.
+
+## Board
+
+The current 14 audited CPU episodes remain untouched mechanics tests. A new
+procedural board is required for neural work:
+
+| Partition | Episodes | Purpose |
+|---|---:|---|
+| local-transition train | 48,000 | one-step match, bind, delete, and graph deltas |
+| autonomous train | 24,000 | two-to-six-step hard rollouts |
+| composition development | 4,000 | unseen rule co-occurrences and depths 7-10 |
+| renderer development | 4,000 | unseen slot and rule layouts |
+| family confirmation | 8,000 | typed-stack and dataflow rewriting |
+
+Training families are algebraic normalization, Boolean simplification, and
+list/tree rewriting. Typed-stack reduction and dataflow rewriting are withheld
+in full. Every local primitive appears in training, while confirmation combines
+them in unseen motifs such as capacity release followed by nested redex
+creation, critical forks, and mixed cyclic/terminating paths.
+
+No exact graph, graph-isomorphism class, normalized rule window, or rule-pair
+composition may cross partitions.
+
+Mandatory causal twins include:
+
+- RHS-pointer twins with identical marginal statistics;
+- two root-to-shared-node occurrence twins;
+- capacity 16 versus capacity 15 twins;
+- branch-order twins;
+- constructor/type/rule/storage reindex twins; and
+- cyclic-plus-terminating twins.
+
+## Optimization
+
+The frozen objective is:
+
+```text
+L = 1.00 L_legal_set
+  + 2.00 L_successor_graph
+  + 0.50 L_variable_binding
+  + 0.50 L_occurrence_path
+  + 1.00 L_terminal_set
+  + 0.50 L_branch_coverage
+  + 0.50 L_cycle_witness
+  + 0.25 L_halt
+  + 0.10 L_equivariance
+  + 10.0 L_invalid_soft
+```
+
+`L_legal_set` is set-valued: negative log probability mass over all legal
+actions, not one oracle-chosen schedule. Successor-graph loss minimizes over
+storage-equivalent layouts. Terminal-set loss uses bipartite matching between
+predicted and target normal forms.
+
+Training phases:
+
+1. fit one-step rule, occurrence, binding, and delta prediction;
+2. roll out argmax transactions and decay teacher forcing to zero;
+3. freeze the local motor and fit agenda, branch coverage, cycle witnesses,
+   terminal collection, and halt;
+4. jointly polish at low learning rate using only hard recurrent state; and
+5. run five independent confirmation seeds without changing thresholds or
+   board generation.
+
+No primitive name, intermediate host state, single privileged trajectory, or
+fixed answer schedule may supervise the autonomous score path.
+
+## Matched Controls
+
+Every promoted treatment requires:
+
+1. **generic recurrence:** same state, outputs, parameters, and compute, but
+   rule cards are reduced to object-marginal summaries;
+2. **physical-slot reactor:** selects storage slots rather than root-relative
+   occurrences;
+3. **no writeback:** predicts every tick from the initial graph;
+4. **greedy reactor:** retains at most one successor while preserving branch
+   compute;
+5. **shuffled RHS:** evaluation intervention preserving arity, type, rule
+   count, and graph statistics;
+6. **fixed deadline:** disables learned halt and reads at tick 64; and
+7. **trunk zero:** zeros Shohin-provided record embeddings.
+
+## Gates
+
+All five seeds must pass:
+
+- at least 99.5% exact unseen one-step successors;
+- at least 95% exact complete outcome sets on canonical development;
+- at least 90% exact in every unseen-composition, renderer, and held-out-family
+  cell;
+- at least 99% learned halt with at most 1% safety exhaustion;
+- 100% capacity conservation, typing, reachability, and acyclicity;
+- 100% slot, rule, constructor, type, and branch reindex invariance;
+- at least 99% correct RHS-twin, occurrence-twin, and capacity-twin responses;
+- treatment at least 20 percentage points above every matched learned control;
+  and
+- paired 95% lower confidence bound above a 10-point treatment advantage.
+
+Hard rejection occurs if:
+
+- canonical development is below 80%;
+- either held-out family is below 60%;
+- any conservation or custody violation occurs;
+- rule-card or writeback interventions have weak causal effects; or
+- treatment-control separation is below 10 percentage points.
+
+Passing these gates authorizes a separately frozen language-interface transfer
+experiment. It does not by itself authorize a claim of genuine general
+reasoning.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 263: `R12_GENERAL_REASONING_MECHANISM_THEORY.md`
+
+Original source path: `R12_GENERAL_REASONING_MECHANISM_THEORY.md`
+Original source size: 39,294 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# Endogenous Congruence Completion Reactor
+
+**Status:** mathematical architecture theory; no implementation, training, or
+capability claim
+**Short name:** ECCR
+**Protected base:** `train/flagship_out/ckpt_0300000.pt`
+**Protected-base parameters:** 125,081,664
+**Protected-base SHA-256:**
+`211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`
+**Complete-system ceiling:** strictly below 200,000,000 unique parameters
+**Date:** 2026-07-23
+
+## 1. Conclusion First
+
+The smallest capability missing from the retained Shohin mechanisms is:
+
+> **model-owned induction and refinement of the causal congruence on which an
+> episode's operations, compositions, and late observations are well-defined.**
+
+S7 learns a law after the cyclic quotient has been chosen. QERARM selects and
+composes operations after relation registers and their global algebra have
+been chosen. AHRF propagates facts after binary-relation incidence has been
+chosen. N-TCRR mutates graphs after constructors, types, rewrite sides, and
+occurrence paths have been chosen. ABCR adds query direction, reversible
+hypotheses, and conflict, but still receives an anonymous rule hypergraph whose
+semantic roles have already been separated.
+
+These are not minor defects. Each retained mechanism computes **inside a
+preselected ontology**. Cross-family reasoning requires the model to decide
+which physical distinctions are causal, which are aliases, which operations
+act on the same state, and which composed paths must agree. That decision must
+survive source deletion and must itself be causally consumed by later
+computation.
+
+ECCR makes that missing decision a hard recurrent object. It constructs:
+
+1. an episode-local quotient from physical records to causal state classes;
+2. anonymous generator actions that descend to that quotient;
+3. a congruence over composed generator paths;
+4. distinction certificates that prevent destructive over-merging;
+5. a private state functor that applies the induced generators;
+6. model-owned split, merge, rewrite, branch, commit, and halt transactions;
+   and
+7. a late-query reader whose observations factor through the same quotient.
+
+This is not asserted to be sufficient for unrestricted intelligence. It is the
+smallest common extension that can, in principle, turn the retained
+family-specific reasoners into one source-deleted compositional mechanism.
+
+## 2. Evidence Constraint
+
+This proposal preserves the following hard conclusions from the existing
+history:
+
+| Retained result | What it establishes | What it assumes |
+|---|---|---|
+| S7 | Contextual unseen-law induction and exact recurrent reuse can work | A cyclic Cayley topology, exact equality, and bounded invocation |
+| QERARM | A neural controller can own relation-algebra phase, work registers, and halt | A fixed global operation bank and fixed relation-register ontology |
+| AHRF | A local neural field can, in principle, own closure and halt without a host executor | A monotone binary-relation fact ontology |
+| TCRR mechanics | Deletion, branching, occurrence-specific mutation, cycles, and normal-form sets have an auditable transaction semantics | Typed constructors, rewrite cards, and graph ontology are supplied |
+| ABCR theory | Query demand, reversible tentative state, and conflict backflow are plausible missing control variables | Premise/conclusion incidence and proof-state roles are supplied |
+| Fresh physical compilers | Renderer-factor transfer and source deletion are possible on bounded grammars | The packet schema and task ontology remain fixed |
+
+The common gap is not another state buffer. It is the absence of an endogenous
+criterion for saying when two records or states are "the same for every future
+computation" and when a superficially similar pair must remain distinct.
+
+## 3. Formal Task Object
+
+### 3.1 Episode presentation
+
+A bounded episode is presented as
+
+```text
+E = (X, G, W, P, Omega, Tau)
+```
+
+where:
+
+- `X` is a finite set of physical records, atomic state factors, or reified
+  incidence records;
+- `G` is a finite set of anonymous episode-local generators;
+- `W_g` is a set or relation of witnessed transitions for generator `g`;
+- `P` is a finite set of typed generator paths;
+- `Omega` is a set of anonymous observation or late-query ports; and
+- `Tau` contains only type and incidence structure.
+
+The presentation may originate in language, a graph, a table, or another
+renderer. Physical storage order, surface names, generator names, and query
+names have no global meaning.
+
+`X` is not a table of complete reachable world configurations. Higher-arity
+records are reified into anonymous nodes and typed incidence edges. The live
+task state is a finite relational structure over the resulting causal atoms,
+so a bounded packet can represent exponentially many global configurations
+without allocating one class per configuration.
+
+The neural source compiler may emit candidate physical records, incidence,
+and witness bundles. It may not emit a family label, canonical state ID,
+global opcode, target quotient, execution schedule, normal form, answer, or
+halt time.
+
+### 3.2 Causal congruence
+
+Let `~` be an equivalence relation on `X`. It is a **causal congruence** when
+both conditions hold.
+
+**Observation preservation**
+
+```text
+x ~ y  =>  omega(x) = omega(y) for every admissible omega in Omega.
+```
+
+**Generator compatibility**
+
+```text
+x ~ y  =>  delta_g(x) ~ delta_g(y) for every admissible g in G.
+```
+
+For nondeterministic systems, the second condition uses the powerset lifting:
+successor sets must agree after quotienting. For probabilistic systems it is
+the corresponding lumpability condition.
+
+The desired quotient is the coarsest causal congruence supported by the
+episode. It removes renderer and storage distinctions while preserving every
+distinction that can affect a future operation or late observation.
+
+### 3.3 Matrix descent invariant
+
+In categorical form, let `F_E` be the model-emitted map from the physical
+presentation to the private causal representation. Every learned generator
+must make this square commute:
+
+```text
+F_E after T_g = A_g after F_E.                       (0)
+```
+
+This is a naturality/descent condition, not a request that the two
+representations share coordinates.
+
+Let:
+
+- `C in {0,1}^{N x M}` be a hard row-one-hot assignment of physical records to
+  causal classes;
+- `T_g in {0,1}^{N x N}` be the physical witnessed-transition relation; and
+- `A_g in {0,1}^{M x M}` be the induced private generator relation.
+
+Using row-state convention, generator `g` is well-defined on the quotient
+exactly when:
+
+```text
+T_g C = C A_g.                                      (1)
+```
+
+Equation (1) is the central executable invariant. It says that "act, then
+forget physical detail" equals "forget physical detail, then act." A model
+that merely finds addresses, stores a latent vector, or memorizes answers need
+not satisfy this square.
+
+Equation (1) is the finite unary-relation slice of (0). Higher-arity state is
+represented by reified records and incidence, and the same square is required
+for the complete emitted graph transaction.
+
+For a query port with physical observation vector `o_q`, observational
+sufficiency requires a private reader `r_q` such that:
+
+```text
+o_q = C r_q.                                        (2)
+```
+
+The actual late query may select `q` only after terminal state commitment, but
+the private object must already be sufficient for every admissible query port.
+
+### 3.4 Path congruence
+
+Let `F(G)` be the free typed category generated by the anonymous episode graph.
+A path is a typed word
+
+```text
+p = g_k ... g_2 g_1.
+```
+
+The model maintains an episode-local relation `equiv` over compatible paths.
+It must be:
+
+1. reflexive, symmetric, and transitive;
+2. endpoint typed; and
+3. closed under context:
+
+```text
+p equiv q  =>  a p b equiv a q b                  (3)
+```
+
+whenever both composites are typed.
+
+The induced actions must respect path congruence:
+
+```text
+p equiv q  =>  A_p = A_q on every reachable class. (4)
+```
+
+where `A_p = A_{g_1} ... A_{g_k}` under row-state convention. The episode
+therefore defines a finite presentation
+
+```text
+C_E = F(G) / equiv.
+```
+
+S7 is the one-object cyclic special case. QERARM is a fixed relation-algebra
+special case. Bounded term rewriting is a path category whose arrows are
+rewrite transactions. ECCR's new burden is to infer the quotient and path
+congruence rather than receive either as the task ontology.
+
+### 3.5 Separation invariant
+
+Descent alone admits the useless quotient that merges everything. ECCR must
+therefore certify both merge and split decisions.
+
+A **merge certificate** for two classes is a finite relation `B` containing
+their pair such that every pair in `B`:
+
+1. has identical observations at every admissible query port; and
+2. has generator successors that remain paired in `B`.
+
+This is a bounded coinductive bisimulation witness. A merge may not be
+justified by the model's failure to find a counterexample.
+
+A **distinction certificate** is an admissible continuation path `w` and
+observation port `q` such that:
+
+```text
+(e_i A_w) r_q != (e_j A_w) r_q.                     (5)
+```
+
+No certificate is needed for two physical records assigned to the same class.
+Every two distinct private classes require at least one certificate within the
+bounded continuation horizon.
+
+Equation (5) is a bounded Myhill-Nerode condition. It prevents partition
+collapse and gives every split a causal interpretation.
+
+### 3.6 Reindex naturality
+
+Let `P`, `S`, and `U` independently permute physical records, anonymous
+generators, and query ports. There must exist only a private class relabeling
+`Pi`, not a change in semantics, such that:
+
+```text
+C(P E)              = P C(E) Pi^T
+A_{S(g)}(P E)       = Pi A_g(E) Pi^T
+R_{U(q)}(P E)       = Pi R_q(E)
+Eq_{S(p),S(p')}(P E)= Eq_{p,p'}(E).                 (6)
+```
+
+The exact left/right convention is frozen in implementation, but the
+commuting content of (6) is not negotiable. Renderer recoding may change the
+physical presentation. It may not change the private computation after
+alignment.
+
+### 3.7 Non-bijective presentation naturality
+
+Generalization cannot stop at permutations. Let `H : E -> E'` be a typed
+presentation morphism that may split one physical record into aliases, merge
+bisimilar aliases, or reify a higher-arity relation into extra incidence
+nodes. Let `H_bar` be the induced private map. The model must satisfy:
+
+```text
+H C'              = C H_bar
+A_g H_bar         = H_bar A'_{H(g)}
+R_q               = H_bar R'_{H(q)}.                (7)
+```
+
+Equation (7) is scored on independently generated split, merged, and reified
+presentations. It is the stronger cross-presentation invariant. A model that
+only memorizes storage permutations can pass (6) and still fail (7).
+
+## 4. ECCR State
+
+For batch `b`, hypothesis lane `k`, physical record `i`, private class `c`,
+generator `g`, and path slot `p`, the hard recurrent state is:
+
+```text
+C[b,i,c]       physical-record to causal-class assignment
+A[b,g,c,c']    anonymous generator action on private classes
+R[b,q,c,a]     late-query observation map
+Path[b,p,d]    bounded generator word
+Eq[b,p,p']     path-congruence relation
+Bisim[b,c,c']  positive merge/bisimulation certificate
+Z1[b,k,r,c]    unary private state registers
+Z2[b,k,r,c,c'] binary private relation registers
+ZG[b,k,s,...]  reified private graph records and incidence
+Cert[b,c,c']   distinction-certificate pointer
+Ob[b,p]        unresolved descent/equation/conflict obligation
+Alive[b,k]     absorbing execution state
+```
+
+Continuous record, generator, path, and obligation features support learning
+but are not the scientific state claim. Promotion depends on the hard tensors
+above and their interventions.
+
+All class, record, generator, path, query-port, and lane indices are freshly
+reindexed per episode. The architecture has no family embedding.
+
+## 5. Model-Owned Transactions
+
+One shared equivariant controller emits exactly one complete transaction per
+tick:
+
+```text
+SPLIT(class, discriminator, child assignments)
+MERGE(class_a, class_b, quotient remap)
+INSTALL(generator, source_class, target_class)
+ASSERT_EQ(path_a, path_b)
+RETRACT_EQ(path_a, path_b)
+APPLY(lane, generator)
+FORK(lane, successor_a, successor_b)
+COMMIT(lane)
+HALT
+ABSTAIN
+```
+
+The transaction includes every affected pointer and replacement tensor. A
+fixed rule-blind committer may enforce only:
+
+- tensor shape and pointer range;
+- one-hotness and declared type compatibility;
+- storage and probability conservation;
+- branch and path-bank capacity; and
+- exact installation of the transaction the model emitted.
+
+The committer may not:
+
+- compute a partition refinement;
+- decide whether two records are equivalent;
+- identify or apply a semantic operation;
+- pattern-match a rewrite card;
+- choose or join a critical pair;
+- produce a distinction path;
+- select an agenda item;
+- repair a transaction;
+- test an answer;
+- detect convergence; or
+- decide halt.
+
+Invalid transactions remain in the denominator.
+
+## 6. Recurrent Mechanism
+
+### 6.1 Basal evidence and apical obligation
+
+Physical witnesses propose local descent constraints. Late-query declaration
+ports, path equations, and unresolved counterfactuals create obligations. The
+controller receives both:
+
+```text
+support = witnessed transition/equality incidence
+demand  = unresolved descent, observation, and path-congruence residuals
+```
+
+Their interaction is useful only because it selects a concrete transaction.
+No biological analogy is part of the claim.
+
+### 6.2 Conflict-directed refinement
+
+For two records currently in one class, disagreement in an observation or in
+the quotient destination of a witnessed generator creates a split residual:
+
+```text
+v_split(i,j) =
+    observation_disagreement(i,j)
+  + sum_g quotient_successor_disagreement(g,i,j).
+```
+
+For two separate classes, agreement under every compiled generator and query
+port creates a merge proposal. A merge is not admissible unless the model
+emits a positive `Bisim` certificate closed under those generators and
+observations. Failure to emit a distinction certificate is never sufficient.
+
+This is the only role retained from active-inference or conflict-backflow
+language: prediction error must name the partition edge that caused it.
+Undirected global "surprise" is not an executable mechanism.
+
+### 6.3 Congruence completion
+
+The model compares typed path pairs, predicts local equations, and proposes
+critical overlaps. When two equivalent reductions disagree, the controller
+must do one of three things:
+
+1. refine the causal partition;
+2. revise a generator action; or
+3. install a joining path equation.
+
+The host never chooses among them. A path equation becomes causal only if
+deleting or transplanting it changes the predicted composed state.
+
+### 6.4 Execution
+
+For the unary/set-valued slice, once the active obligations for a lane are
+resolved, state transition is:
+
+```text
+Z_next = Z A_g
+```
+
+over the Boolean, categorical, or probabilistic semiring declared by the
+packet type. Binary relations and reified graph state use the corresponding
+model-emitted typed transaction; the committer only installs it. Branching
+uses exchangeable lanes and set-valued terminal collection. The tensor
+contraction is generic architecture, not a family-specific semantic switch.
+All answer-relevant semantics reside in the model-emitted `C`, `A`, `Eq`,
+`R`, and transaction tensors.
+
+### 6.5 Halt
+
+The halt head reads:
+
+- unresolved descent residual;
+- unresolved observation residual;
+- unjoined critical-pair obligations;
+- unresolved distinction challenges;
+- branch coverage;
+- state velocity; and
+- private terminal evidence.
+
+`HALT` is valid only when emitted by the model. A fixed tick limit is a
+fail-closed safety bound. Fixed-deadline readout is a control.
+
+### 6.6 Late query
+
+Before source deletion, the compiler stores anonymous query-key carriers and
+their private observation ports, not the eventual query selection. After
+terminal commitment, a separately encoded late query binds by nominal
+equality to one query-key carrier and selects `R_q`.
+
+Changing the late query may change the answer but must not change `C`, `A`,
+`Eq`, the execution trajectory, or terminal `Z`.
+
+## 7. Why ECCR Is Not An External Executor
+
+The host does not know or choose:
+
+- the causal classes;
+- generator meanings;
+- path equations;
+- distinction certificates;
+- operation sequence;
+- branch agenda;
+- terminal state;
+- late-query answer; or
+- halt time.
+
+The only fixed operations are index-safe tensor installation, typed tensor
+contraction, and finite-capacity storage. Those are architectural dataflow in
+the same sense that attention, convolution, and matrix multiplication are
+architectural dataflow. A semantic host executor would inspect a rule and
+compute its consequence. ECCR forbids that.
+
+The CPU oracle may create offline labels and assess a sealed transcript after
+evaluation. It may not exist in the model process, return feedback, select a
+candidate, or repair a failed transaction.
+
+## 8. Why ECCR Is Not A Latent Scratchpad
+
+A free latent scratchpad can store arbitrary vectors without committing to
+what they mean. ECCR's score-bearing state has externally falsifiable algebraic
+obligations:
+
+1. hard quotient assignments must induce a valid equivalence relation, their
+   normalized quotient projector must be idempotent, and both must be
+   permutation natural;
+2. every generator must satisfy descent equation (1);
+3. every query map must satisfy observation factorization (2);
+4. every path equation must satisfy contextual closure (3);
+5. equivalent paths must act identically as in (4);
+6. every merge must have a closed bisimulation certificate and distinct
+   classes must have certificates as in (5);
+7. all representation changes must satisfy naturality equation (6); and
+8. non-bijective equivalent presentations must satisfy equation (7); and
+9. interventions on `C`, `A`, `Eq`, and `Z` must produce different, predicted
+   causal effects.
+
+The mechanism is rejected if a norm-matched continuous-state control, a
+decoder probe, or a generic recurrence reproduces the outcome without these
+objects.
+
+## 9. Representable Task Class
+
+Define `FCR(N,G,D,K,B)` as the class of episodes satisfying:
+
+1. at most `N` physical records and at most `K` causal quotient classes;
+2. at most `G` anonymous generators;
+3. generator and equation paths of length at most `D`;
+4. branch width at most `B`;
+5. a finite characteristic witness set that determines the quotient,
+   generators, and query observations up to reindexing;
+6. a finite causal congruence with finite merge certificates;
+7. every required terminal outcome is reachable within the recurrence bound;
+8. every pair of inequivalent classes has a distinction certificate within
+   the continuation bound; and
+9. complete task-state transitions factor through local generator morphisms on
+   a finite relational structure; no reachable-global-state lookup table is
+   supplied.
+
+The class allows deterministic, finitely branching, and finite fixed-point
+tasks. It does not require a common renderer, vocabulary, state cardinality,
+or family label.
+
+### 9.1 Representation theorem
+
+**Proposition.** Given an exact ECCR packet with at least `K` private classes,
+enough path and branch capacity, and exact model transactions, ECCR can
+represent every task in `FCR(N,G,D,K,B)` exactly.
+
+**Proof sketch.**
+
+1. Let `~` be the episode's causal congruence. Assign one private atom slot to
+   each equivalence class and set `C` to the quotient map. Encode each
+   higher-arity physical record by an anonymous private record plus typed
+   incidence to those atoms.
+2. Generator compatibility and the merge certificates guarantee that each
+   physical generator induces a well-defined relation `A_g` on quotient
+   classes, so equation (1) holds.
+3. Observation preservation guarantees a private reader `R_q`, so equation
+   (2) holds for every late query.
+4. Map each typed generator word to the corresponding product of `A_g`
+   tensors. Quotient by the least contextual congruence generated by the
+   episode equations. Equations (3) and (4) make the result independent of the
+   selected path representative.
+5. Extend each local generator to the finite relational state through the
+   packet's typed incidence. By induction on path length, recurrent tensor
+   application reaches the same quotient relational structure as the
+   represented episode after every step. No full global transition table is
+   used.
+6. For nondeterministic rewriting, apply the powerset lifting and allocate one
+   exchangeable lane per live branch. Induction on branch depth gives the exact
+   reachable outcome set within capacity.
+7. Distinction certificates ensure that no two behaviorally different states
+   are forced into one class.
+8. Since every terminal lies within the recurrence bound, the model can
+   represent a valid halt or abstention observation for each terminal class.
+
+This is an expressivity result, not a learnability result. The falsifier below
+tests whether the neural system discovers the representation from finite
+witnesses and transfers it.
+
+### 9.2 Retained mechanisms as special cases
+
+| Mechanism | ECCR embedding |
+|---|---|
+| S7 | One object, one learned cyclic generator, path equations from the cycle |
+| QERARM | Relation-register states with anonymous algebra generators |
+| AHRF | Monotone powerset state with closure generators and absorbing facts |
+| TCRR | Term-graph states with rewrite generators and powerset branch lifting |
+| ABCR | Obligation-driven transaction selection and conflict-directed splits |
+
+ECCR does not replace their useful local motors. It supplies the missing
+model-owned quotient and presentation on which a retained or learned motor can
+be reused without a family-specific ontology.
+
+### 9.3 Explicit limits
+
+The proposition does not cover:
+
+- unbounded tapes or recursion beyond configured storage;
+- exact real arithmetic without a finite representation;
+- episodes whose evidence does not identify a unique causal congruence;
+- tasks whose required distinction word exceeds the bound;
+- branching wider than the lane bank;
+- source language the compiler cannot ground into physical records; or
+- unrestricted theorem discovery.
+
+Failure outside these limits is not evidence against ECCR. Failure inside them
+under the frozen board is.
+
+## 10. Decisive Falsifier: Congruence-Collision Orbits
+
+The first experiment must not begin with broad natural language. It must first
+test the missing capability directly.
+
+### 10.1 Orbit construction
+
+Each abstract episode generates six matched presentations:
+
+1. **base:** one physical presentation;
+2. **alpha:** complete record, generator, path, and query reindexing;
+3. **split refinement:** one causal state is replaced by two bisimilar physical
+   copies;
+4. **merged presentation:** two observationally identical physical aliases are
+   represented once;
+5. **minimal noncongruent twin:** one continuation or late observation is
+   changed so the same apparent aliases must be split; and
+6. **path twin:** one pair is equation-equivalent in one episode and
+   noncommuting or outcome-distinct in its matched twin.
+
+All six presentations match:
+
+- number and type of physical records;
+- generator and query-port marginals;
+- witness count;
+- path-length histogram;
+- in/out degree histogram;
+- renderer length;
+- answer distribution; and
+- local one-step label distribution.
+
+The base, alpha, split, and merged presentations have the same terminal
+behavior. The minimal noncongruent and path twins require a different
+quotient or composed result. A surface lookup, identity quotient, merge-all
+quotient, and bag-of-witnesses model cannot satisfy both sides.
+
+### 10.2 Family rotation
+
+Optimization families:
+
+1. cyclic contextual laws;
+2. finite relation fixed points;
+3. Horn/dataflow closure; and
+4. algebraic/list rewriting.
+
+Completely held-out families:
+
+1. typed stack reduction; and
+2. finite delete-effect planning.
+
+Every local transition motif appears in optimization. Held-out families change
+the state topology, composition pattern, branching, and terminal observation.
+No family ID or family-specific head exists.
+
+### 10.3 Split axes
+
+| Partition | Physical records | Path depth | Composition | Families |
+|---|---:|---:|---|---|
+| Train local | 6-12 | 1-3 | primitive and two-step | four optimization families |
+| Train autonomous | 8-16 | 2-6 | shallow mixed programs | four optimization families |
+| Development composition | 12-24 | 7-12 | unseen equations and critical pairs | optimization families |
+| Development scale | 25-32 | 4-12 | known motifs, unseen width | optimization families |
+| Development family | 8-24 | 3-12 | unseen family topology | two held-out families |
+| Confirmation | 16-32 | 8-16 | all axes jointly | all six families |
+
+Canonical graph, quotient, path-equation, depth-2/depth-3 motif, and
+presentation-orbit hashes are split-disjoint. Confirmation does not exist
+until source, controls, thresholds, seeds, and independent assessment are
+frozen.
+
+### 10.4 Source deletion
+
+The score-bearing evaluator contains only:
+
+- immutable model weights;
+- model runtime and rule-blind committer;
+- source-deleted physical packets;
+- a late-query packet revealed after terminal commitment; and
+- hash-bound receipts.
+
+Source text, compiler residuals, KV state, board generator, oracle,
+partition labels, transitions, schedules, expected outcomes, and family IDs
+are absent. Raw model transactions are sealed before an independent assessor
+opens one oracle artifact.
+
+## 11. Matched Arms And Causal Controls
+
+### 11.1 Learned arms
+
+1. **ECCR treatment:** full quotient, descent, path congruence, distinction,
+   recurrent execution, and halt.
+2. **Identity-quotient control:** every physical record remains distinct; all
+   unused quotient/refinement parameters are reallocated to its recurrent
+   processor.
+3. **Merge-only control:** may merge but cannot split after a conflict;
+   favorable to monotone AHRF-like abstraction.
+4. **No-descent control:** predicts the same quotient and generators, but
+   generator weights are not tied through equation (1).
+5. **No-path-congruence control:** retains `C` and `A` but removes `Eq` and
+   critical-pair obligations.
+6. **Fixed-presentation TCRR control:** receives the same physical packet and
+   compute, but uses one fixed term-graph ontology.
+7. **Generic recurrent control:** identical hard-state capacity, trainable
+   parameters, sequential ticks, and measured FLOPs, with unconstrained
+   exchangeable recurrent slots.
+8. **Family-specialized control:** separate processors per optimization
+   family with the same aggregate parameters; held-out families use the
+   averaged or routed processor without fine-tuning.
+
+The generic recurrent control is qualified only if it reaches at least 99%
+train joint and 95% in-distribution development joint.
+
+### 11.2 Interventions
+
+Required interventions are:
+
+- record, class, generator, path, lane, and query-port reindexing;
+- source/residual/KV poisoning after packet seal;
+- quotient transplant with generators held fixed;
+- generator transplant with quotient held fixed;
+- equation deletion and equation transplant;
+- correct split versus false split;
+- correct merge versus false merge;
+- distinction-certificate shuffle;
+- equivalent-path substitution;
+- noncommuting path reversal;
+- private-state reset and donor-state transplant;
+- fixed deadline, forced alive, early halt, and post-halt suffix mutation;
+- late-query rotation with terminal-state invariance; and
+- family-label probe and family-head ablation.
+
+Each intervention has a preregistered predicted direction. "Score changed" is
+not enough.
+
+### 11.3 Oracle ceilings
+
+The following are diagnostics and never reasoning claims:
+
+1. gold quotient plus learned generators and reactor;
+2. learned quotient plus gold generators;
+3. gold private packet plus model-owned reactor;
+4. gold complete private trajectory; and
+5. independent CPU execution.
+
+## 12. Optimization Contract For A Future Test
+
+No training is authorized by this theory. A future preregistration should use:
+
+```text
+L = 1.00 L_partition
+  + 2.00 L_descent
+  + 1.00 L_observation_factor
+  + 1.00 L_path_congruence
+  + 0.50 L_merge_certificate
+  + 0.50 L_distinction
+  + 1.00 L_transaction
+  + 1.00 L_terminal
+  + 0.50 L_branch_coverage
+  + 0.25 L_halt
+  + 0.10 L_naturality
+  + 10.0 L_invalid_soft
+```
+
+Training phases:
+
+1. physical record and equality mechanics;
+2. one-generator quotient descent;
+3. two-path equation and distinction twins;
+4. autonomous split/merge/install/apply transactions;
+5. hard recurrent composition and branch coverage;
+6. model-owned halt and late query;
+7. cross-family mixed optimization; and
+8. five frozen confirmation seeds.
+
+Teacher forcing decays to zero. The final polish uses only hard recurrent state.
+No single privileged path may supervise a set-valued outcome. Evaluation is
+hard from the first tick.
+
+## 13. Parameter And Resource Ledger
+
+### 13.1 Parameter ceilings
+
+These are component ceilings, not an instantiated count:
+
+| Component | Added parameter ceiling |
+|---|---:|
+| Shohin physical-record and source adapters | 7,500,000 |
+| Congruence signature, split, and merge module | 9,000,000 |
+| Anonymous generator and equation compiler | 7,500,000 |
+| Typed transaction and critical-pair reactor | 10,000,000 |
+| Private state functor and branch bank | 6,000,000 |
+| Obligation controller and halt | 3,000,000 |
+| Late-query reader and serializer | 3,000,000 |
+| Integration contingency | 2,000,000 |
+| **Total added ceiling** | **48,000,000** |
+| Protected Shohin trunk | **125,081,664** |
+| **Complete-system ceiling for ECCR-1** | **173,081,664** |
+| **Headroom below 199,999,999** | **26,918,335** |
+
+All tied modules count once by parameter identity. An exact deduplicated
+instantiated receipt is mandatory before any board seed.
+
+### 13.2 Frozen geometry ceiling
+
+| Resource | ECCR-1 ceiling |
+|---|---:|
+| Physical records `N` | 32 |
+| Private causal classes `M` | 32 |
+| Anonymous generators `G` | 16 |
+| Query ports | 16 |
+| Path slots | 96 |
+| Path depth | 16 |
+| Hypothesis/branch lanes | 8 |
+| Unary private registers | 8 per lane |
+| Binary private registers | 4 per lane |
+| Reified graph slots | 32 per lane |
+| Recurrent safety ticks | 128 |
+| Continuous hidden width | 384 |
+| Hard recurrent-state budget | 256,000 categorical bits per episode |
+| Continuous recurrent-state budget | 16 MiB bf16 per episode |
+
+The categorical and continuous state ceilings include every live lane and
+register but exclude immutable source-packet storage. Exact runtime memory and
+FLOPs must be measured, not inferred from analytic MAC counts.
+
+### 13.3 Full resource vector
+
+The first score-bearing preregistration must report:
+
+- unique parameters and optimizer state;
+- hard categorical bits and continuous bytes retained per tick;
+- source bytes before seal and private-packet bytes after seal;
+- training examples and oracle-generated labels;
+- optimizer updates and training FLOPs;
+- inference FLOPs and wall time per tick;
+- sequential recurrence depth;
+- branch and path-bank capacity;
+- invalid/capped/halted denominator counts; and
+- external semantic work, which must be zero during evaluation.
+
+The treatment and generic recurrent control receive the same examples, update
+count, hard-state capacity, tick count, and measured-compute envelope.
+
+## 14. Promotion And Rejection Criteria
+
+### 14.1 Mechanics gate
+
+Before neural work:
+
+- two independent CPU implementations agree on every exhaustive small case;
+- quotient descent, observation factorization, path contextual closure,
+  bisimulation certificates, and distinction certificates are exact;
+- every orbit and noncongruent twin has the intended result;
+- source deletion and custody tests pass;
+- all tensor reindexings are exact; and
+- no board, oracle, or family label is reachable from the model process.
+
+### 14.2 Neural promotion gate
+
+All five seeds must individually achieve:
+
+- at least 99.5% exact unseen one-generator quotient successors;
+- at least 95% exact quotient, generator packet, terminal state, and halt on
+  canonical development;
+- at least 90% exact joint in every unseen-composition, scale, renderer, and
+  held-out-family cell;
+- at least 95% exact on all-axes-at-once development;
+- at least 99% learned halt or valid abstention, with at most 1% safety
+  exhaustion;
+- 100% hard descent, observation-factor, path-congruence, type, storage, and
+  conservation validity;
+- 100% record/class/generator/path/query/lane reindex invariance;
+- at least 99% equivalent-presentation invariance;
+- at least 99% minimal-noncongruent and noncommuting-twin separation;
+- at least 99% correct quotient, generator, equation, state, and late-query
+  intervention responses;
+- at least 20 percentage points over every qualified matched learned control;
+  and
+- a paired 95% lower confidence bound above a 10-point treatment advantage.
+
+Only after these gates may one sealed confirmation be created and read once.
+
+### 14.3 Precise rejection rule
+
+ECCR-1 is rejected without threshold repair if any of the following occurs:
+
+1. canonical development is below 80% exact joint for any seed;
+2. any held-out family is below 60% exact joint for any seed;
+3. any hard descent, path-congruence, conservation, or custody violation
+   occurs;
+4. equivalent-presentation invariance is below 95%;
+5. noncongruent-twin separation is below 90%;
+6. the treatment is less than 10 points above a qualified generic recurrent,
+   identity-quotient, or fixed-presentation control;
+7. quotient or equation interventions are causally inert;
+8. family identity is required by the executor or a family-specific head is
+   needed;
+9. the late query changes pre-query execution;
+10. source poisoning after seal changes the terminal state;
+11. the mechanism requires host matching, host completion, verifier feedback,
+    answer selection, retry, or repair; or
+12. the complete deduplicated system reaches 200,000,000 parameters.
+
+A failure localizes one of three interfaces:
+
+- quotient induction (`C`);
+- generator/equation induction (`A`, `Eq`); or
+- autonomous control (`Z`, obligations, halt).
+
+It does not authorize wider reruns on the same board.
+
+## 15. Novelty Audit
+
+### 15.1 Known components
+
+The following ingredients are established and are not claimed as new:
+
+- Myhill-Nerode equivalence and automata minimization by partition refinement;
+- bisimulation, behavioral equivalence, and transition-system lumpability;
+- congruence closure and Knuth-Bendix-style critical-pair completion;
+- free categories and quotienting a presentation by path equations;
+- predictive and causal state representations;
+- equivariant graph neural networks and exchangeable object slots;
+- discrete neural algorithmic reasoning;
+- generalist shared neural processors across predefined algorithms;
+- source-deleted private memory and recurrent categorical state; and
+- support/demand, competition, conflict, and active-inference motifs.
+
+Relevant primary or technical sources include:
+
+- Berstel, Boasson, Carton, and Fagnot,
+  [Minimization of Automata](https://arxiv.org/abs/1010.5318);
+- Deifel, Milius, Schroder, and Wissmann,
+  [Generic Partition Refinement and Weighted Tree Automata](https://arxiv.org/abs/1811.08850);
+- Hansen-Estruch et al.,
+  [Bisimulation Makes Analogies in Goal-Conditioned Reinforcement Learning](https://proceedings.mlr.press/v162/hansen-estruch22a.html);
+- Ibarz et al.,
+  [A Generalist Neural Algorithmic Learner](https://proceedings.mlr.press/v198/ibarz22a.html);
+- Rodionov and Prokhorenkova,
+  [Discrete Neural Algorithmic Reasoning](https://proceedings.mlr.press/v267/rodionov25a.html);
+  and
+- Knuth and Bendix, *Simple Word Problems in Universal Algebras* (1970).
+
+### 15.2 Proposed new combination
+
+The possibly new contribution is the conjunction of:
+
+1. a **model-emitted hard causal quotient**, not a latent metric alone;
+2. **episode-local anonymous generators** required to descend through it;
+3. **model-owned path-congruence completion** under typed composition;
+4. **explicit distinction certificates** preventing quotient collapse;
+5. **source deletion before autonomous execution**;
+6. **late-query observational sufficiency** over the same quotient;
+7. **one family-blind transaction machine** spanning closure, fixed points,
+   rewriting, and planning;
+8. **causal transplantation of quotient, generator, equation, and state as
+   separately identifiable objects**; and
+9. **matched controls and one-read custody** that distinguish a useful
+   structural prior from a finite atlas or external executor.
+
+This document makes no literature-priority claim. Each ingredient has close
+precedents. The novelty hypothesis is that their exact combination makes
+endogenous ontology formation the score-bearing recurrent operation rather
+than a preprocessing objective or a host algorithm. A broader literature
+review and independent equivalence audit are mandatory before publication.
+
+### 15.3 Equivalence hazards
+
+ECCR must be demoted if analysis shows it is equivalent, under the measured
+resource vector, to any of:
+
+- a family-routed finite-state atlas;
+- ordinary partition refinement executed by the host;
+- a fixed universal VM whose full program is supplied in the packet;
+- TCRR with only renamed tensor fields;
+- ABCR with an untested partition probe;
+- generic recurrence plus auxiliary consistency losses;
+- retrieval over presentation hashes;
+- a verifier-driven search loop; or
+- latent scratch space decoded only after the answer is known.
+
+The treatment earns a distinct mechanism claim only when its hard quotient
+and path congruence are necessary, intervene correctly, transfer across whole
+held-out families, and beat the favorable controls.
+
+## 16. Claim Ladder
+
+1. **Theory only:** this document.
+2. **Finite mechanics:** independent quotient/path oracles and matched twins.
+3. **Neural quotient induction:** exact unseen causal classes and descent.
+4. **Within-family composition:** autonomous hard recurrence and halt.
+5. **Cross-family systematic reasoning:** held-out families and all-axis
+   transfer with one processor.
+6. **Shohin source integration:** neural physical records, actual source/KV
+   deletion, and late-query binding.
+7. **Natural-language reasoning:** post-training, direct interaction, public
+   benchmark gain, and preservation controls.
+
+Only rung 5 supports a bounded cross-family systematic-reasoning claim. Only
+rung 7 may change Shohin's natural-language general-reasoning claim.
+
+## 17. Final Decision
+
+**Admit ECCR as a theory and CPU-falsifier candidate only.**
+
+The main architectural conclusion is:
+
+> Do not add another executor over a fixed packet ontology. Make the model
+> construct the causal quotient that defines the ontology, force every learned
+> generator and observation to descend through it, and require composed-path
+> congruence plus distinction certificates before halt.
+
+If this mechanism fails the congruence-collision board, the project should
+reject endogenous quotient completion as the missing capability rather than
+hide the failure behind more width, more recurrence, or broader SFT.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 264: `PRETRAIN_DATA_SOURCES.md`
+
+Original source path: `PRETRAIN_DATA_SOURCES.md`
+Original source size: 16,158 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# Shohin pretraining data admission plan
+
+Research snapshot: **2026-07-21**. Planning artifact only: this file does not change the active data build or training mix. The machine-readable companion is [`pipeline/pretrain_sources.json`](pipeline/pretrain_sources.json).
+
+## Executive decision
+
+High-quality pretraining data is necessary, but it is not sufficient by itself to create reasoning. For a 130–140M model, the winning combination is:
+
+1. a clean language and knowledge substrate;
+2. unusually dense math, code, science, and procedural text;
+3. verified reasoning traces during cooldown/SFT;
+4. strict deduplication and evaluation decontamination; and
+5. an architecture and token budget capable of learning the signal.
+
+We should **not** build a giant undifferentiated pile. At this model size, weak or repetitive tokens displace useful tokens. The default admission plan below uses selected subsets, caps synthetic data, preserves source provenance, and globally deduplicates overlapping web/math/code families.
+
+**Research-use policy:** licensing does not affect the quality ranking or block local, non-commercial training. Public and gated sources are both eligible. Redistribution is a separate operation, so gated rows stay in their original repository rather than being copied into `Godlydonuts/shohin`.
+
+## Recommended stable-pretraining mix
+
+This is the quality-first target for the next full pretraining tranche. Percentages are token-presentation shares, not raw download sizes.
+
+| Domain | Share | Sources |
+|---|---:|---|
+| Educational/general web | 45% | FineWeb-Edu score 4–5 (22%), selected Essential-Web (10%), Nemotron-CC-v2.1 High-Quality organic (8%), DCLM residual (5%) |
+| Math | 25% | UltraData-Math L2 English (7%), selected L3 QA/textbook English (7%), Nemotron-CC-Math 4plus (5%), FineMath 4+ residual (3%), MegaMath Web-Pro residual (2%), OpenWebMath residual (1%) |
+| Code | 20% | StackV2-Edu (10%), Nemotron-CC-Code quality 3 (6%), selected Nemotron Code-v2 synthetic (2%), first-party unit-tested code (2%) |
+| Science/procedural | 10% | first-party verified procedural data (4%), selected Nemotron Specialized-v1 (3%), StackExchange (1%), and a capped LibreTexts/arXiv/peS2o blend (2%) |
+
+For another 300,000 steps at the current global batch/sequence contract, aim for at least **100–120B admitted unique tokens** and sample them into the required token-presentation budget. Do not manufacture the pool size by repeating weak sources. Track presentations, unique tokens, epochs per source, and duplicate rate separately.
+
+The 45/25/20/10 split is a starting hypothesis. Freeze the validation suite first, then run small controlled source ablations before committing the full tranche.
+
+## Source decisions
+
+### P0 — acquire and admit first
+
+| Source | Exact slice | Why it belongs | Admission conditions |
+|---|---|---|---|
+| [HuggingFaceFW/fineweb-edu](https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu) | English, `int_score >= 4`; use score 3 only if an ablation earns it | 1.3T-token educational web corpus; model-based educational scoring and strong published ablations | HTML/boilerplate and exact/near dedup; decontam; cap dominant domains |
+| [EssentialAI/essential-web-v1.0](https://huggingface.co/datasets/EssentialAI/essential-web-v1.0) | High technical correctness, conceptual/procedural cognitive type, nontrivial reasoning depth; use taxonomy math/code/STEM views as selectors, not extra independent corpora | 24T-token pool with unusually rich quality, subject, education, reasoning, math, and code metadata; globally deduplicated upstream | Dedup against FineWeb/DCLM because all derive from Common Crawl; manually audit each selection rule |
+| [mlfoundations/dclm-baseline-1.0](https://huggingface.co/datasets/mlfoundations/dclm-baseline-1.0) | Baseline pool, domain-capped | Strong open web baseline produced by model-based filtering; useful linguistic and topic breadth | Lowest retention priority among the three web pools; retain only cross-source residual |
+| [openbmb/UltraData-Math](https://huggingface.co/datasets/openbmb/UltraData-Math) | `UltraData-Math-L2-preview` plus English records from L3 QA and Textbook-Exercise; optionally a small multi-style slice | Current high-density math corpus. Its card reports stronger 1.2B ablations than Nemotron-CC-Math 4plus at comparable scale | English/language filtering; format validation; cap synthetic templates; globally dedup against Nemotron, MegaMath, FineMath, and OpenWebMath because L3 uses some of them as seeds |
+| [common-pile/stackv2_edu_filtered](https://huggingface.co/datasets/common-pile/stackv2_edu_filtered) | Educational files in Python, C/C++, JavaScript/TypeScript, Rust, Java, Go, and shell | Roughly 67.8B tokens in the Comma mix; educational filtering and per-file provenance metadata make it a better default than ingesting all of The Stack | Parseability, secret/PII scan, repository split, near-dedup, generated/vendor code removal, per-record provenance retention |
+| [nvidia/Nemotron-CC-v2.1](https://huggingface.co/datasets/nvidia/Nemotron-CC-v2.1) | `High-Quality` organic records; evaluate `High-Quality-DQA` separately | Adds 26B recent high-quality organic web tokens and 8B STEM DQA tokens; useful freshness and complementary filtering | Use directly from upstream; dedup against Essential-Web because DQA is derived from it; do not flood the mix with the 2.1T medium-high synthetic rephrases |
+| [nvidia/Nemotron-CC-Math-v1](https://huggingface.co/datasets/nvidia/Nemotron-CC-Math-v1) | `4plus` | Strong 133B-token math family and an important complementary ablation against UltraData | Direct upstream access; global math dedup; keep only if the mixed pilot beats UltraData-only |
+| [nvidia/Nemotron-CC-Code-v1](https://huggingface.co/datasets/nvidia/Nemotron-CC-Code-v1) | Quality-3 records | Approximately 428B tokens of processed Common Crawl code pages; broader natural-language/code coverage than repository code alone | Direct upstream access; syntax/quality checks; dedup against code web pages and generated explanations |
+| First-party verified procedural data | Reasoning Gym and Shohin-native tasks whose answers can be programmatically checked | Exact difficulty control, clean provenance, and signal aligned to the tiny model | Keep generators, seeds, verifier version, and pass/fail evidence; remove any eval-equivalent task instances |
+| First-party verified code | Unit-tested programs plus concise problem/explanation pairs | High information density without relying on uncontrolled web code | Execute in a sandbox; retain test evidence; repository/problem split; reject copied benchmark tests and solutions |
+
+### P1 — admit only the named residual or specialized slice
+
+| Source | Decision |
+|---|---|
+| [HuggingFaceTB/finemath](https://huggingface.co/datasets/HuggingFaceTB/finemath) | Keep `finemath-4plus` residual after UltraData dedup. Do not sample 3+ and 4+ as independent streams: 4+ is nested inside the broader family. |
+| [LLM360/MegaMath](https://huggingface.co/datasets/LLM360/MegaMath) | Prefer `megamath-web-pro`; admit only residual high-quality documents. Do not ingest all 371.6B tokens merely for scale. |
+| [open-web-math/open-web-math](https://huggingface.co/datasets/open-web-math/open-web-math) | Preserve a small residual-diversity slice. It remains useful, but its 14.7B tokens substantially overlap newer math mixtures. |
+| [common-pile/stackexchange_filtered](https://huggingface.co/datasets/common-pile/stackexchange_filtered) | Admit answer-rich technical/scientific threads, with attribution and source-specific CC BY-SA obligations preserved. Remove low-signal social/meta pages. |
+| [common-pile/libretexts_filtered](https://huggingface.co/datasets/common-pile/libretexts_filtered) | Admit educational textbook chapters after formatting and attribution checks. |
+| [common-pile/arxiv_papers_filtered](https://huggingface.co/datasets/common-pile/arxiv_papers_filtered) and peS2o from [Common Pile/Comma](https://huggingface.co/datasets/common-pile/comma_v0.1_training_dataset) | Use a capped science-method slice. Do not let equation-dense papers crowd out explanatory science. |
+| [bigcode/starcoderdata](https://huggingface.co/datasets/bigcode/starcoderdata) | Do **not** ingest the full legacy code pool. Consider notebooks, issues, and commits for natural-language/code interaction only; dedup them against StackV2 and remove low-signal repository exhaust. |
+| [nvidia/Nemotron-Pretraining-Code-v2](https://huggingface.co/datasets/nvidia/Nemotron-Pretraining-Code-v2) | Admit selected QA, code-review, student-teacher, rewriting, and transpilation subsets. The raw-GitHub portion is metadata, not usable code text. Cap this synthetic slice at 2% initially. |
+| [nvidia/Nemotron-Pretraining-Specialized-v1](https://huggingface.co/datasets/nvidia/Nemotron-Pretraining-Specialized-v1) | Admit selected InfiniByte reasoning, scientific coding, math-textbook, and sampled RQA records during late pretraining/cooldown. Start at 3%; long-form RQA must earn more weight in an ablation. |
+
+### NVIDIA access and storage boundary
+
+The gated NVIDIA cards explicitly intend the corpora for model training, and the collection card describes the release as ready for commercial use. We will therefore use the best slices in local research instead of letting access terms lower their quality ranking. Their data agreement still distinguishes training from redistributing the corpus: do not copy gated records or reconstructive tokenized shards into `Godlydonuts/shohin`. Store upstream IDs, revisions, selection manifests, non-reconstructive hashes, and audit results there.
+
+| Source | Selected use | Important correction |
+|---|---|---|
+| [nvidia/Nemotron-CC-v2.1](https://huggingface.co/datasets/nvidia/Nemotron-CC-v2.1) | High-Quality organic and a separate DQA pilot | Avoid the enormous medium-high synthetic-rephrase pool until it proves value at 140M |
+| [nvidia/Nemotron-CC-Math-v1](https://huggingface.co/datasets/nvidia/Nemotron-CC-Math-v1) | `4plus`, direct from upstream | Globally dedup because newer math corpora reuse overlapping seeds |
+| [nvidia/Nemotron-CC-Code-v1](https://huggingface.co/datasets/nvidia/Nemotron-CC-Code-v1) | Quality-3 records, direct from upstream | This is the processed text corpus; approximately 428B tokens |
+| [nvidia/Nemotron-Pretraining-Code-v2](https://huggingface.co/datasets/nvidia/Nemotron-Pretraining-Code-v2) | Selected synthetic text configurations | Raw-GitHub records are metadata; QA/review/student-teacher/rewriting/transpilation contain usable text |
+| [nvidia/Nemotron-Pretraining-Specialized-v1](https://huggingface.co/datasets/nvidia/Nemotron-Pretraining-Specialized-v1) | InfiniByte, scientific coding, math textbooks, and sampled RQA | Prefer v1's named reasoning/STEM slices over indiscriminate use of v1.2 |
+
+These are included in the proposed mix, not merely held in reserve. Each still has to pass an equal-token quality ablation; public availability is not evidence that every subset is useful.
+
+### Reject or hold by default
+
+| Source | Decision and reason |
+|---|---|
+| [togethercomputer/RedPajama-Data-1T](https://huggingface.co/datasets/togethercomputer/RedPajama-Data-1T) | **Reject for the new build.** It was an important 2023 LLaMA reproduction corpus, but newer filtered pools are stronger and cleaner. Its mixed source licenses and overlap add work without a clear residual-quality case. |
+| [nvidia/Nemotron-Pretraining-Code-v3](https://huggingface.co/datasets/nvidia/Nemotron-Pretraining-Code-v3) | **Reject as direct training data.** The Hugging Face release contains metadata/index records for GitHub files, not the source-code text. It can be an acquisition index only, subject to repository licenses. |
+| [nvidia/Nemotron-Pretraining-Specialized-v1.2](https://huggingface.co/datasets/nvidia/Nemotron-Pretraining-Specialized-v1.2) | **Hold.** It is primarily factual-recall, moral-scenario, generative, and multiple-choice synthetic data—not the reasoning substrate we need. A small fact-seeking slice may be reconsidered only after an ablation. |
+| Full StarCoderData or The Stack v2 | **Reject as an undifferentiated stream.** Volume, duplicates, generated/vendor files, credentials, and heterogeneous licenses are all costly at 140M. Use selected educational or NL-code subsets instead. |
+
+## Mandatory admission pipeline
+
+No dataset receives a training weight merely because it downloaded successfully.
+
+1. **Pin and inventory:** exact upstream repo, config, split, immutable revision, row count, byte count, and upstream license/terms snapshot.
+2. **Normalize with provenance:** every document keeps source, upstream ID, URL/repository where permitted, license, selection score, and transformation history.
+3. **Structural quality gates:** language ID, decoding/Unicode checks, repetition, boilerplate, document length, equation/code parseability, PII/secrets, and source-specific rules.
+4. **Within-source dedup:** exact hash, paragraph dedup, and MinHash/LSH near-dedup; repository-level splits for code.
+5. **Cross-source priority dedup:** verified first-party > UltraData L3 > UltraData L2 > Nemotron Math 4plus > FineMath 4+ > MegaMath Web-Pro > OpenWebMath; verified code > StackV2-Edu > Nemotron CC Code > Nemotron Code-v2 > StarCoder ancillary; Essential selected > Nemotron-CC-v2.1 HQ > FineWeb-Edu 4–5 > DCLM residual. Dedup the whole admitted pool, not each source in isolation.
+6. **Evaluation decontamination:** match against all benchmark prompts, reference answers, solutions, tests, common paraphrases, and held-out generator families before tokenization. Include GSM8K, MATH/MATH-500, ARC, HellaSwag, PIQA, HumanEval, MBPP, TACO/CodeContests holdouts, and Shohin-native evaluations.
+7. **Shard audit:** random human inspection plus quantitative reports by source and domain. Fail closed on missing provenance, corrupted records, secrets, or failed quality checks; license labels are retained but do not gate non-commercial research admission.
+8. **Tokenize and account:** record unique pre-tokenization documents, unique Shohin tokens, presentation tokens, epochs, packing waste, and rejection reasons.
+9. **Ablate:** compare equal-token pilots using frozen validation sets. Promote a source only if its domain gain is not paid for by unacceptable general-language or contamination regressions.
+
+## Hugging Face storage policy
+
+`Godlydonuts/shohin` should be the control plane, not automatically a mirror of every upstream corpus.
+
+Safe default layout:
+
+```text
+registry/pretrain_sources.json
+manifests/<source>/<upstream_revision>.jsonl
+audits/<source>/<build_id>/{license,quality,dedup,decontam,shards}.json
+generators/<first_party_corpus>/<version>/...
+data/<source>/<build_id>/...          # only when redistribution was explicitly cleared
+```
+
+- Publicly store the source registry, immutable revisions, selection recipes, aggregate statistics, and non-reconstructive audits.
+- Store first-party generated records when every generator/input license permits it and verification evidence accompanies the release.
+- Store third-party data shards only after a source-specific redistribution review and all attribution/share-alike/removal requirements are implemented.
+- Never mirror gated NVIDIA records. Do not assume a private Hugging Face repository overrides the upstream agreement.
+- For code, preserve the per-file license and provenance through tokenization; an aggregate dataset-level label is not enough.
+
+## Immediate build order
+
+1. Freeze the benchmark and native-evaluation contamination sets.
+2. Acquire small audit samples from FineWeb-Edu, Essential-Web, DCLM, Nemotron-CC-v2.1, UltraData L2/L3, Nemotron Math 4plus, StackV2-Edu, Nemotron CC Code, and the selected specialized slices.
+3. Implement one shared normalized document schema and cross-source dedup keys.
+4. Produce 0.5–1B-token pilot mixes and run equal-token ablations from the same checkpoint.
+5. Scale only admitted sources to the 100–120B unique-token target.
+6. Keep the active 300k checkpoint and live relaunch configuration unchanged until these pilots pass.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 257: `R12_CTAA_S4_TIED_PARTICLE_TRANSPORT_DOSSIER.md`
+
+Original source path: `R12_CTAA_S4_TIED_PARTICLE_TRANSPORT_DOSSIER.md`
+Original source size: 17,648 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 CTAA S4-Tied Particle Transport Development Dossier
+
+## Status
+
+**Component mechanics pass after adversarial repair. Neural source is not
+complete, preregistered, frozen, or authorized.**
+
+This document records retrospective development evidence and drafts the
+requirements for a possible successor to static CTAA binding completion. It is
+not itself a preregistration. It does not authorize a production board seed,
+training seed, development read, confirmation read, GPU job, or
+native-reasoning claim.
+
+The project-wide authority is now **strictly below 200,000,000 unique
+parameters**. Closed 150M experiments remain closed under their original
+contracts. This successor may use the larger ceiling only after a smaller
+mechanism-matched pilot establishes a causal advantage.
+
+## 1. Motivation From Existing Evidence
+
+Shohin's strongest repeated pattern is:
+
+1. local fields and operations can be learned;
+2. source-visible pointers and binding can become nearly exact;
+3. fixed or host-side executors can compose an exact packet;
+4. autonomous composition, binding transport, and consumption remain the
+   failure boundary.
+
+The prior ER dual-stream route reached 76.074% exact fresh packets, 85.400%
+state, and 90.527% answer while its fixed tensor executor was exact conditional
+on an exact packet. That is valuable compiler evidence, but not native
+reasoning. ACW accumulated strong deterministic-custody machinery but no
+scored capability result. The causal carry recovery lane is an unrun
+preregistration. None should be merged wholesale into CTAA.
+
+The reusable facts are narrower:
+
+- occurrence coordinates and nominal identity must remain distinct;
+- local opcode coordinates and physical action cards require a causal binding;
+- the source must be destroyed before execution and late query;
+- execution must occur inside the model forward path, not in a verifier;
+- a useful architecture must preserve composition order, not merely the
+  multiset of observed cues.
+
+Static A4-to-odd binding completion tests the second point. It cannot establish
+dynamic rebinding because one binding is frozen for an entire program.
+
+## 2. Hypothesis
+
+A tiny workspace can preserve composition order without a textual scratchpad
+if its hidden state is a probability distribution over a **non-abelian group**
+and rebinding cues update that state by group convolution.
+
+For CTAA the relevant group is `S4`, the 24 permutations mapping four local
+opcodes to four physical action cards. Let
+
+`p_t(g)` be the workspace probability assigned to binding `g in S4`.
+
+The source compiler emits pair logits `L[i,j]` for opcode `i` and card `j`.
+The initial binding state is
+
+`p_0(g) = softmax_g sum_i L[i, g(i)]`.
+
+For cue `c`, a learned kernel `K_c(delta)` updates the state:
+
+`p_(t+1)(g) = sum_h p_t(h) K_c(h^-1 g)`.
+
+This is right convolution in the group algebra of `S4`. Every binding particle
+then executes the same learned CTAA transition core. A late query reads the
+posterior-weighted final categorical state. The source bytes, trunk residuals,
+and source KV are unavailable after `p_0`, action cards, initial state, opcode
+tape, and cue tape are committed.
+
+The historical working name was **Non-Abelian Holonomy Workspace (NAHW)**.
+Because the complete finite state is ordinary operator recurrence, the
+scientifically accurate name is **S4-Tied Particle Transport (S4-TPT)**.
+Two cue sequences with the same cue multiset can end at different binding
+states because their ordered group products differ; this is useful structure,
+not a new reasoning primitive.
+
+## 3. Controls And No-Go Boundary
+
+The decisive control replaces `S4` convolution with circular convolution over
+the abelian group `Z24`:
+
+`q_(t+1)(j) = sum_i q_t(i) K_c((j - i) mod 24)`.
+
+Treatment and this mechanistic ablation have:
+
+- 24 particles;
+- the same initial pairwise binding readout;
+- one learned 24-value kernel per cue;
+- identical trainable parameter count;
+- identical 24 x 24 transport MACs per cue;
+- the same optimizer, examples, update count, and late reader.
+
+The difference is only the multiplication table. This makes `Z24` a precise
+mechanistic ablation, **not** the decisive favorable control: it is
+architecturally forbidden from retaining noncommuting order.
+
+The decisive favorable control assigns one unconstrained learned `24 x 24`
+row-stochastic transition matrix to every cue. It uses the same 24-particle
+state and the same 576 transport MACs per cue, but 3,456 transport parameters
+instead of 144. Every positive `S4` convolution kernel embeds exactly into
+this dense control by tying matrix entries with the `h^-1 g` index. Its
+hypothesis class therefore contains the treatment. NAHW must beat this stronger
+control on held-out compositions; beating `Z24` alone is insufficient.
+
+### Finite separation theorem
+
+For any two `Z24` kernels `A` and `B`,
+
+`(q * A) * B = (q * B) * A`
+
+because circular convolution is commutative. Therefore the control cannot
+distinguish cue orders `AB` and `BA` when the cue multiset is fixed.
+
+For `S4`, choose two noncommuting transpositions `a` and `b`. Delta kernels at
+those elements yield final particles `ab` and `ba`, which differ. Thus NAHW
+can represent an order-dependent binding distinction that the equal-resource
+abelian control cannot represent for any parameter values.
+
+This is a resource-preserving separation from the abelian ablation, not from a
+generic recurrence. `R12_HOLONOMY_STATE_NO_GO.md` already proves that complete
+finite holonomy state reduces to ordinary operator recurrence or PSR/OOM
+machinery. NAHW is therefore rejected as an R12 invention or fundamentally new
+reasoning primitive. The surviving empirical hypothesis is narrower:
+non-abelian parameter tying may improve sample efficiency and systematic
+composition relative to the stronger dense operator control.
+
+## 4. Implemented CPU Mechanics
+
+Implemented source:
+
+- `train/ctaa_s4_particle_transport.py`
+- `train/test_ctaa_s4_particle_transport.py`
+- `pipeline/ctaa_s4_transport_mechanics.py`
+- `pipeline/test_ctaa_s4_transport_mechanics.py`
+- `pipeline/ctaa_s4_transport_development.py`
+- `pipeline/test_ctaa_s4_transport_development.py`
+
+The repaired deterministic component audit passes:
+
+| Audit | Result |
+|---|---:|
+| `S4` elements | 24 |
+| Inverse checks | 24/24 |
+| Independent composition-oracle checks | 576/576 |
+| Associativity checks | 13,824/13,824 |
+| Ordered transposition-cue pairs | 36 |
+| Noncommuting treatment pairs | 24 |
+| `Z24` order collapses | 36/36 |
+| Opcode/card coordinate round trips | 13,824/13,824 |
+| Transport-equivariance checks with conjugated cues | 82,944/82,944 |
+| Interleaved binding/state/action/opcode cases | 69,984/69,984 |
+| One-step state plus binding checks | 139,968/139,968 |
+| One-step probability-mass checks | 69,984/69,984 |
+| CTAA action maps admitted | 27/27 |
+| Post-STOP, mixed-mass, and gradient gates | 4/4 |
+| Focused tests | 22/22 |
+
+Deterministic report payload SHA-256:
+
+`6152538ad3118d254da296ebcb978a5f40b8798885eb22a84392a35f45a6fd93`
+
+The report decision is
+`record_component_mechanics_only_no_neural_authorization`.
+
+Adversarial review invalidated the original “complete coordinate
+equivariance” claim: invertible particle reindexing alone did not prove that
+transport commuted with it. Under opcode reindexing, each right-acting cue must
+be conjugated by the opcode permutation. The repaired audit exhausts all
+`24 x 24 x 24 x 6 = 82,944` binding/opcode/card/generator cases. The fixed
+multiplication tables are now non-persistent buffers, so loading matched
+learned weights cannot silently overwrite `Z24` with `S4`. Empty cue sequences
+are accepted.
+
+The component now also includes a differentiable interleaved event executor.
+It carries a joint distribution over 24 bindings and all 27 categorical
+three-register states. Cue events transport binding mass, action events update
+physical state conditional on the current binding, STOP latches the joint
+state, and a late categorical query reads one register. This fixes the earlier
+all-cues-before-all-actions error. It still receives hard particle, card,
+event, and query tensors; it is not a byte-source compiler or a source-deleted
+Shohin system.
+
+### Retrospective source-free transition-law canary
+
+The second CPU gate gives every matched-data arm exactly six supervised
+transitions: one from the identity particle for each transposition cue. Each
+arm fits all six examples, then composes every unseen cue word at depths two,
+three, and four. The dense data-rich ceiling instead receives all `24 x 6 =
+144` one-step transitions. It is not a matched arm; it proves that the dense
+control has sufficient capacity and can be optimized when its untied rows are
+identified.
+
+Across five fixed seeds:
+
+| Arm | Supervised transitions | Depth 2 | Depth 3 | Depth 4 |
+|---|---:|---:|---:|---:|
+| `S4` tied treatment | 6 | 36/36 | 216/216 | 1,296/1,296 |
+| `Z24` abelian ablation | 6 | 8/36 | 9/216 | 47/1,296 |
+| Dense favorable control | 6 | 0--3/36 | 36/216 | 0/1,296 |
+| Dense data-rich ceiling | 144 | 36/36 | 216/216 | 1,296/1,296 |
+
+Every row is identical across seeds except the dense six-example depth-two
+range shown above. All arms fit their own supervision exactly. The treatment's
+100% result follows from learning six cue kernels while the frozen `S4`
+multiplication table ties all unobserved source rows. The dense control contains
+that solution but the six labels do not identify its other 23 rows. This is a
+taut but valid hardcoded-prior sample-efficiency signature. The canary was
+implemented before this dossier was committed and is retrospective development
+evidence, not a preregistered advancement gate. It is not evidence that Shohin
+representations, language grounding, source deletion, late query, or autonomous
+reasoning work.
+
+The canary decision is
+`record_retrospective_parameter_tying_signature_only`. It uses an independent
+composition oracle for all 576 pair products. Deterministic report payload
+SHA-256:
+
+`2f07fbd9e7b5a656b24a397f50e17cd2f80a937b0926036d0cfc337f6741d3c4`
+
+## 5. Parameter And Compute Ledger
+
+| Component | Parameters |
+|---|---:|
+| Frozen Shohin + qualified CTAA compiler + transition core | 137,989,944 |
+| Shared bi-equivariant pair readout | 599,353 |
+| Six learned 24-value cue kernels | 144 |
+| **Complete NAHW pilot** | **138,589,441** |
+| Dense favorable-control transport | 3,456 |
+| **Complete dense favorable control** | **138,592,753** |
+| Strict ceiling | 199,999,999 |
+| **Headroom** | **61,410,558** |
+
+Each cue uses 576 matrix-vector transport MACs in all arms, and the pair
+readout uses 9,587,136 analytic dense MACs. This is not compute parity: the
+group arms normalize one 24-value kernel while the dense arm normalizes 24
+rows. Measured forward/backward/runtime/memory receipts are mandatory before
+any comparison. The complete-system totals above add the workspace ledger to
+the last verified CTAA base; they are provisional arithmetic, not an
+instantiated deduplicated-model receipt.
+
+The unused parameter budget is deliberate. If NAHW fails against the matched
+control, widening it is not an admitted repair. If the transport mechanism
+passes but source compilation is the localized bottleneck, up to roughly 61M
+parameters may be allocated to a renderer-invariant object-file compiler under
+a separately frozen factorial.
+
+## 6. Neural Board Blockers And Draft Design
+
+**No neural board is authorized.** The implemented component starts from hard
+particle probabilities, card tensors, event kinds/values, and a late query. It
+does not yet implement the required byte-source-to-private-object-file path.
+The earlier proposal to freeze the dense control after six labels is retired:
+it deliberately left 23 transition rows unidentified and made the treatment
+advantage tautological.
+
+Before source freeze, one unified module must implement:
+
+1. byte source through the exact frozen Shohin trunk;
+2. model-owned physical cards, initial binding belief, initial state, cue
+   evidence, interleaved event tape, and STOP;
+3. cue grounding to a soft 24-element kernel without a hard group ID in the
+   committed packet;
+4. irreversible source-token, source-residual, and source-KV destruction;
+5. interleaved cue and action execution over the private 24 x 27 joint state;
+6. query materialization only after execution and source deletion;
+7. a model-owned late-query reader;
+8. no host parser repair, state update, schedule execution, retry, arithmetic,
+   or generated-token feedback.
+
+The source must define cue semantics through opaque, renderer-factorial
+witnesses rather than globally exposing transposition IDs. Random opcode
+reindexing must conjugate cue semantics, and random particle relabeling must
+transform the multiplication table and scorer consistently.
+
+### Draft board
+
+Each program contains four opaque action cards, an initial binding/state,
+source-visible cue witnesses, and one interleaved cue/action/STOP event stream.
+The query is absent until the private execution commits. Matched twins share
+cards, initial state/binding, cue and opcode multisets, renderer, token-length
+histogram, and query; only a noncommuting cue order differs. Commuting twins
+must remain invariant.
+
+- Train: lengths 0--4, all initial particles and cue types, factorial
+  renderer/name/opcode/card coordinates.
+- Development: disjoint family roots and lengths 5--6.
+- Confirmation: independently generated renderers/names, lengths 7--8, and
+  independently chosen particle relabelings.
+
+No exact source, family root, renderer, ordered word, or cue-witness wording
+may cross a split.
+
+## 7. Draft Arms
+
+1. **S4-TPT treatment:** group-tied transport inside the unified source-deleted
+   model.
+2. **Equally informed dense favorable control:** unconstrained `24 x 24`
+   cue operators receiving the same cue features, every training example, and
+   every Stage-B gradient. It contains the treatment and may use more
+   parameters.
+3. **Abelian mechanistic ablation:** `Z24` transport with the same cue compiler
+   and reader; it localizes noncommutative order only.
+4. **Wrong-law control:** a fixed randomly relabeled or incompatible
+   multiplication table, with the relabeling hidden from the target oracle.
+5. **State-reset and state-transplant controls:** remove or swap the private
+   binding/state joint during execution.
+6. **Source-retained upper bound:** never deployable.
+7. **Oracle-object-file ceiling:** tests only interleaved execution and late
+   read; never enters a reasoning claim.
+
+The treatment versus equally informed dense control is decisive. The
+retrospective six-label canary is not a scored arm or threshold.
+
+## 8. Requirements Before A Real Preregistration
+
+The following must be executable and independently reviewed before a board or
+training seed exists:
+
+1. one unified byte-to-object-to-deleted-source-to-interleaved-execution-to-
+   late-query forward path;
+2. no hard group ID, target binding, resolved schedule, or answer in the
+   committed inference packet;
+3. exact transport covariance under opcode/card/particle reindexing and cue
+   conjugation;
+4. empty-cue, interleaved-cue/action, post-STOP suffix, midpoint state
+   transplant, reset, and source-poison tests;
+5. treatment, dense, abelian, and wrong-law arms receive identical examples,
+   updates, optimizer settings, and all end-to-end gradients;
+6. an instantiated unique-parameter ledger below 200M and measured
+   forward/backward/optimizer/runtime/memory receipts;
+7. an independently implemented multiplication/target oracle and raw scorer;
+8. source commit before random board/training seeds, immutable split custody,
+   one-read development/confirmation ledgers, and external adversarial review;
+9. five-seed thresholds frozen before any scored bytes exist, including
+   binding/state/late-answer exactness, treatment advantage over dense,
+   noncommuting twins, commuting invariance, recoding, transplantation, and
+   source deletion;
+10. confirmation on unseen renderer/name/particle coordinates, not merely
+    longer walks over the same visible automaton.
+
+A future passing synthetic result would establish only bounded,
+architecture-native structured computation. It would not establish general
+reasoning.
+
+## 9. Collapse And Kill Conditions
+
+Reject S4-TPT before GPU use if:
+
+- cue order is available to a host scheduler after source deletion;
+- hard group IDs or target bindings enter the inference packet;
+- the late query is visible during source compilation;
+- any arm receives fewer examples, updates, optimizer steps, or usable
+  gradients without that disadvantage being explicitly favorable to the
+  control;
+- noncommuting twins can be solved from a single local cue or token-length
+  artifact;
+- the particle state is not causally necessary under reset/transplantation;
+- only a final answer motor, rather than binding and state trajectories,
+  improves;
+- a generic recurrent control matches the result under equal resources;
+- unmocked source/KV deletion cannot be demonstrated.
+
+## 10. Claim Boundary
+
+The strongest possible future claim, if a separately committed protocol later
+passes, is:
+
+> Under a synthetic source-deleted late-query protocol, a 24-particle
+> non-abelian parameter tying improved held-out order-sensitive rebinding and
+> recurrent categorical execution over a stronger dense 24-state operator
+> recurrence under a source-deleted late-query protocol.
+
+That is architecture-native structured computation and a sample-efficiency
+result. It is not a fundamentally new reasoning primitive, open-domain
+reasoning, mathematical reasoning, language understanding, or evidence of a
+world-first mechanism.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 256: `R12_CTAA_NONABELIAN_HOLONOMY_WORKSPACE_PREREG.md`
+
+Original source path: `R12_CTAA_NONABELIAN_HOLONOMY_WORKSPACE_PREREG.md`
+Original source size: 14,959 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 CTAA Non-Abelian Holonomy Workspace
+
+## Status
+
+**Score-free finite mechanics and the source-free transition-law canary
+passed. Neural source is not frozen.**
+
+This document preregisters a successor to static CTAA binding completion. It
+does not authorize a production board seed, training seed, development read,
+confirmation read, GPU job, or native-reasoning claim.
+
+The project-wide authority is now **strictly below 200,000,000 unique
+parameters**. Closed 150M experiments remain closed under their original
+contracts. This successor may use the larger ceiling only after a smaller
+mechanism-matched pilot establishes a causal advantage.
+
+## 1. Motivation From Existing Evidence
+
+Shohin's strongest repeated pattern is:
+
+1. local fields and operations can be learned;
+2. source-visible pointers and binding can become nearly exact;
+3. fixed or host-side executors can compose an exact packet;
+4. autonomous composition, binding transport, and consumption remain the
+   failure boundary.
+
+The prior ER dual-stream route reached 76.074% exact fresh packets, 85.400%
+state, and 90.527% answer while its fixed tensor executor was exact conditional
+on an exact packet. That is valuable compiler evidence, but not native
+reasoning. ACW accumulated strong deterministic-custody machinery but no
+scored capability result. The causal carry recovery lane is an unrun
+preregistration. None should be merged wholesale into CTAA.
+
+The reusable facts are narrower:
+
+- occurrence coordinates and nominal identity must remain distinct;
+- local opcode coordinates and physical action cards require a causal binding;
+- the source must be destroyed before execution and late query;
+- execution must occur inside the model forward path, not in a verifier;
+- a useful architecture must preserve composition order, not merely the
+  multiset of observed cues.
+
+Static A4-to-odd binding completion tests the second point. It cannot establish
+dynamic rebinding because one binding is frozen for an entire program.
+
+## 2. Hypothesis
+
+A tiny workspace can preserve composition order without a textual scratchpad
+if its hidden state is a probability distribution over a **non-abelian group**
+and rebinding cues update that state by group convolution.
+
+For CTAA the relevant group is `S4`, the 24 permutations mapping four local
+opcodes to four physical action cards. Let
+
+`p_t(g)` be the workspace probability assigned to binding `g in S4`.
+
+The source compiler emits pair logits `L[i,j]` for opcode `i` and card `j`.
+The initial binding state is
+
+`p_0(g) = softmax_g sum_i L[i, g(i)]`.
+
+For cue `c`, a learned kernel `K_c(delta)` updates the state:
+
+`p_(t+1)(g) = sum_h p_t(h) K_c(h^-1 g)`.
+
+This is right convolution in the group algebra of `S4`. Every binding particle
+then executes the same learned CTAA transition core. A late query reads the
+posterior-weighted final categorical state. The source bytes, trunk residuals,
+and source KV are unavailable after `p_0`, action cards, initial state, opcode
+tape, and cue tape are committed.
+
+The mechanism is called a **Non-Abelian Holonomy Workspace (NAHW)**. Holonomy
+here has a precise finite meaning: two cue sequences with the same cue
+multiset can end at different binding states because their ordered group
+products differ.
+
+## 3. Controls And No-Go Boundary
+
+The decisive control replaces `S4` convolution with circular convolution over
+the abelian group `Z24`:
+
+`q_(t+1)(j) = sum_i q_t(i) K_c((j - i) mod 24)`.
+
+Treatment and this mechanistic ablation have:
+
+- 24 particles;
+- the same initial pairwise binding readout;
+- one learned 24-value kernel per cue;
+- identical trainable parameter count;
+- identical 24 x 24 transport MACs per cue;
+- the same optimizer, examples, update count, and late reader.
+
+The difference is only the multiplication table. This makes `Z24` a precise
+mechanistic ablation, **not** the decisive favorable control: it is
+architecturally forbidden from retaining noncommuting order.
+
+The decisive favorable control assigns one unconstrained learned `24 x 24`
+row-stochastic transition matrix to every cue. It uses the same 24-particle
+state and the same 576 transport MACs per cue, but 3,456 transport parameters
+instead of 144. Every positive `S4` convolution kernel embeds exactly into
+this dense control by tying matrix entries with the `h^-1 g` index. Its
+hypothesis class therefore contains the treatment. NAHW must beat this stronger
+control on held-out compositions; beating `Z24` alone is insufficient.
+
+### Finite separation theorem
+
+For any two `Z24` kernels `A` and `B`,
+
+`(q * A) * B = (q * B) * A`
+
+because circular convolution is commutative. Therefore the control cannot
+distinguish cue orders `AB` and `BA` when the cue multiset is fixed.
+
+For `S4`, choose two noncommuting transpositions `a` and `b`. Delta kernels at
+those elements yield final particles `ab` and `ba`, which differ. Thus NAHW
+can represent an order-dependent binding distinction that the equal-resource
+abelian control cannot represent for any parameter values.
+
+This is a resource-preserving separation from the abelian ablation, not from a
+generic recurrence. `R12_HOLONOMY_STATE_NO_GO.md` already proves that complete
+finite holonomy state reduces to ordinary operator recurrence or PSR/OOM
+machinery. NAHW is therefore rejected as an R12 invention or fundamentally new
+reasoning primitive. The surviving empirical hypothesis is narrower:
+non-abelian parameter tying may improve sample efficiency and systematic
+composition relative to the stronger dense operator control.
+
+## 4. Implemented CPU Mechanics
+
+Implemented source:
+
+- `train/ctaa_holonomy_workspace.py`
+- `train/test_ctaa_holonomy_workspace.py`
+- `pipeline/ctaa_holonomy_falsifier.py`
+- `pipeline/test_ctaa_holonomy_falsifier.py`
+- `pipeline/ctaa_holonomy_toy_canary.py`
+- `pipeline/test_ctaa_holonomy_toy_canary.py`
+
+The deterministic falsifier passes:
+
+| Audit | Result |
+|---|---:|
+| `S4` elements | 24 |
+| Inverse checks | 24/24 |
+| Associativity checks | 13,824/13,824 |
+| Ordered transposition-cue pairs | 36 |
+| Noncommuting treatment pairs | 24 |
+| `Z24` order collapses | 36/36 |
+| Opcode/card coordinate checks | 13,824/13,824 |
+| Focused tests | 12/12 |
+
+Deterministic report payload SHA-256:
+
+`9926e030ce2068cfb02fe0a774a3fc7866a7793b5fb2748924c2f5ad9d01933f`
+
+The report decision is
+`advance_to_source_deleted_neural_preregistration`. This means only that the
+finite mechanism is nontrivial and its matched control is valid.
+
+### Source-free transition-law canary
+
+The second CPU gate gives every matched-data arm exactly six supervised
+transitions: one from the identity particle for each transposition cue. Each
+arm fits all six examples, then composes every unseen cue word at depths two,
+three, and four. The dense data-rich ceiling instead receives all `24 x 6 =
+144` one-step transitions. It is not a matched arm; it proves that the dense
+control has sufficient capacity and can be optimized when its untied rows are
+identified.
+
+Across five fixed seeds:
+
+| Arm | Supervised transitions | Depth 2 | Depth 3 | Depth 4 |
+|---|---:|---:|---:|---:|
+| `S4` tied treatment | 6 | 36/36 | 216/216 | 1,296/1,296 |
+| `Z24` abelian ablation | 6 | 8/36 | 9/216 | 47/1,296 |
+| Dense favorable control | 6 | 0--3/36 | 36/216 | 0/1,296 |
+| Dense data-rich ceiling | 144 | 36/36 | 216/216 | 1,296/1,296 |
+
+Every row is identical across seeds except the dense six-example depth-two
+range shown above. All arms fit their own supervision exactly. The treatment's
+100% result follows from learning six cue kernels while the frozen `S4`
+multiplication table ties all unobserved source rows. The dense control contains
+that solution but the six labels do not identify its other 23 rows. This is a
+clean sample-efficiency signature, not evidence that Shohin representations,
+language grounding, source deletion, late query, or autonomous reasoning work.
+
+The canary decision is
+`advance_parameter_tying_to_source_deleted_neural_board`. Deterministic report
+payload SHA-256:
+
+`fe1b1a218b11afa6a2ecdfcbba50cdea14289fc02a8f81ecaaa5241303493fec`
+
+## 5. Parameter And Compute Ledger
+
+| Component | Parameters |
+|---|---:|
+| Frozen Shohin + qualified CTAA compiler + transition core | 137,989,944 |
+| Shared bi-equivariant pair readout | 599,353 |
+| Six learned 24-value cue kernels | 144 |
+| **Complete NAHW pilot** | **138,589,441** |
+| Dense favorable-control transport | 3,456 |
+| **Complete dense favorable control** | **138,592,753** |
+| Strict ceiling | 199,999,999 |
+| **Headroom** | **61,410,558** |
+
+Each cue costs 576 dense particle-transport MACs in both arms. The pair readout
+cost is 9,587,136 dense analytic MACs in both arms.
+
+The unused parameter budget is deliberate. If NAHW fails against the matched
+control, widening it is not an admitted repair. If the transport mechanism
+passes but source compilation is the localized bottleneck, up to roughly 61M
+parameters may be allocated to a renderer-invariant object-file compiler under
+a separately frozen factorial.
+
+## 6. Neural Falsifier Board
+
+The first neural board must remain synthetic, finite, and score-blind.
+
+The neural falsifier has two immutable stages.
+
+### Stage A: transition calibration
+
+Every matched-data arm receives exactly the same six source-free one-step
+examples used by the CPU canary: identity particle, one cue, next particle.
+Only the transport parameters optimize. The transport is then frozen for every
+later compiler and execution update. The dense data-rich ceiling separately
+receives all 144 one-step transitions and is reported only as a capacity
+ceiling.
+
+Stage A is deliberately direct supervision of a small categorical motor. It
+tests whether a finite algebraic prior can turn six learned generators into a
+reusable transition law. It does not test discovery of the `S4` law from
+language.
+
+### Stage B: source-deleted neural compilation and execution
+
+Each program contains:
+
+1. four opaque physical action cards;
+2. an initial opcode-to-card binding;
+3. an initial categorical state;
+4. a local opcode tape;
+5. zero or more opaque rebinding cues corresponding to the six transpositions;
+6. one STOP;
+7. a late query revealed only after source deletion.
+
+Matched twins use the same:
+
+- cards;
+- initial state;
+- initial binding;
+- cue multiset;
+- opcode multiset;
+- renderer;
+- token-length histogram;
+- query coordinate.
+
+They differ only in the order of two noncommuting cues, and their correct final
+bindings/states differ. Commuting-cue twins are negative controls and must not
+change.
+
+### Stage-B split
+
+- Train: cue words of length 0--4, balanced over all generators and initial
+  bindings. Transport parameters remain frozen, so no Stage-B outcome can
+  identify missing dense transition rows.
+- Development: held-out group words of lengths 5--6, including every
+  noncommuting ordered generator pair.
+- Confirmation: separately generated opaque names/renderers and held-out words
+  of lengths 7--8 with the same generator marginals.
+
+No exact source string, family root, renderer template, or ordered group word
+may cross a split. Alpha recoding and physical record reindexing are mandatory
+counterfactuals.
+
+## 7. Arms
+
+1. **NAHW treatment:** `S4` particle transport and learned CTAA transition core;
+   its transport is frozen after the six-example Stage A.
+2. **Dense favorable matched-data control:** unconstrained learned `24 x 24`
+   cue operators; it contains the treatment hypothesis class, has 3,312 extra
+   parameters, and is frozen after the same six-example Stage A.
+3. **Dense data-rich ceiling:** the same dense control frozen after all 144
+   one-step transitions. It is not deployable evidence and does not enter the
+   treatment-advantage gate.
+4. **Abelian mechanistic ablation:** `Z24` transport, identical kernels and
+   reader.
+5. **Cue-shuffled treatment:** same architecture with seed-paired cue-order
+   permutation during training.
+6. **State-reset treatment:** resets the particle state after every cue.
+7. **Source-retained upper bound:** may retain source and is never deployable.
+8. **Oracle-packet ceiling:** receives the correct committed packet and tests
+   only recurrent execution/late read; it is not a reasoning arm.
+
+The treatment and dense control are decisive. `Z24` localizes use of
+noncommutative structure only.
+
+## 8. Advancement Gates
+
+All five preregistered seeds must pass independently:
+
+1. Stage-A exactness is 6/6 for every matched-data arm and 144/144 for the dense
+   data-rich ceiling;
+2. Stage-A transport parameters are byte-identical before and after every
+   Stage-B update;
+3. Stage-B train exactness at least 99%;
+4. confirmation whole-binding exactness at least 85%;
+5. confirmation final-state exactness at least 85%;
+6. confirmation late-answer exactness at least 85%;
+7. at least 10 percentage points final-state advantage over the dense favorable
+   control;
+8. at least 15 percentage points on noncommuting order twins over the dense
+   favorable control;
+9. commuting-twin invariance at least 99%;
+10. alpha-recode and physical-reindex retention at least 95%;
+11. state reset reduces noncommuting-twin exactness by at least 30 points;
+12. source poison after commit changes zero hard outputs;
+13. treatment and `Z24` parameters are exactly equal; the dense control retains
+    its preregistered 3,312-parameter advantage; measured inference MACs are
+    equal and measured runtime gap is reported rather than threshold-massaged;
+14. every output is reproduced by a separately implemented artifact-only
+    scorer.
+
+Failure of any seed rejects the mechanism. A passing synthetic result permits
+only a natural-language compiler successor; it does not establish general
+reasoning.
+
+## 9. Collapse And Kill Conditions
+
+Reject NAHW before GPU use if:
+
+- cue order is available to a host scheduler after source deletion;
+- hard group IDs or target bindings enter the inference packet;
+- the late query is visible during source compilation;
+- the `Z24` arm receives fewer parameters, particles, updates, or MACs;
+- noncommuting twins can be solved from a single local cue or token-length
+  artifact;
+- the particle state is not causally necessary under reset/transplantation;
+- only a final answer motor, rather than binding and state trajectories,
+  improves;
+- a generic recurrent control matches the result under equal resources;
+- unmocked source/KV deletion cannot be demonstrated.
+
+## 10. Claim Boundary
+
+The strongest possible first claim is:
+
+> Under a synthetic source-deleted late-query protocol, a 24-particle
+> non-abelian parameter tying improved held-out order-sensitive rebinding and
+> recurrent categorical execution over a stronger dense 24-state operator
+> recurrence under a source-deleted late-query protocol.
+
+That is architecture-native structured computation and a sample-efficiency
+result. It is not a fundamentally new reasoning primitive, open-domain
+reasoning, mathematical reasoning, language understanding, or evidence of a
+world-first mechanism.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 255: `R12_CTAA_OPCODE_BINDING_AMENDMENT.md`
+
+Original source path: `R12_CTAA_OPCODE_BINDING_AMENDMENT.md`
+Original source size: 12,380 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# CTAA Independent Opcode Binding Amendment
+
+## Status
+
+**Implemented source amendment under test. REJECT_SOURCE_FREEZE.**
+
+The current CTAA assessor reports binding_exact, but the value is an alias for
+action-card content equality. The compiler resolves declaration identity into
+card addresses before the hard packet is committed, so no independent binding
+prediction survives into evidence. Renaming that alias cannot satisfy the
+signed statistical contract.
+
+This amendment defines the smallest causal representation that makes card
+semantics, declaration binding, and event sequencing separately falsifiable.
+It authorizes implementation and source-only testing. It does not authorize a
+board seed, training seed, scored access, H100 job, or reasoning claim.
+
+## Required Representation
+
+The compiler must commit three distinct outputs:
+
+1. action_cards[card_address]: the four predicted semantic state maps.
+2. opcode_to_card[local_opcode]: a permutation mapping the four
+   declaration-local opcode ordinals to card storage addresses.
+3. opcode_schedule[step]: the event tape in declaration-local opcode ordinals
+   plus the interior STOP symbol.
+
+The packet derives the execution schedule instead of accepting a separately
+predicted resolved tape:
+
+    resolved_schedule[t] =
+        STOP                               if opcode_schedule[t] == STOP
+        opcode_to_card[opcode_schedule[t]] otherwise
+
+local_opcode is the rendered declaration-line ordinal, not a semantic
+operation label. Physical card storage is fixed by literal addresses W1..W4;
+there is no privileged "canonical semantic" ordering. A declaration order
+[W3, W1, W4, W2] therefore has binding [2, 0, 3, 1]. This explicit address
+gauge is mandatory: otherwise a simultaneous permutation of card storage and
+binding is observationally equivalent and `binding_exact` is not identified.
+
+The recurrent core remains source-deleted. It receives only the selected card
+and current state after deterministic resolution.
+
+## Packet And Evidence Contract
+
+- Expand the hard packet from 56 to 60 bytes by adding four binding bytes.
+- Require opcode_to_card to be exactly a permutation of 0..3.
+- Reject duplicate, missing, out-of-range, or STOP binding values.
+- Preserve opcode_schedule, opcode_to_card, and the deterministically resolved
+  schedule in committed raw evidence.
+- Recompute the resolved schedule from committed bytes and reject any mismatch.
+- Commit all binding bytes before query disclosure.
+
+The board oracle and train-only labels add opcode_to_card and opcode_schedule.
+Development and confirmation program sources remain source-only; they must not
+disclose those labels.
+
+## Independent Metrics
+
+    cards_exact =
+        predicted_action_cards == oracle.action_cards
+
+    independent_binding_exact =
+        predicted_opcode_to_card == oracle.opcode_to_card
+
+    opcode_schedule_exact =
+        predicted_opcode_schedule == oracle.opcode_schedule
+
+    schedule_exact =
+        resolve(predicted_opcode_to_card, predicted_opcode_schedule)
+        == oracle.schedule
+
+    program_exact =
+        packet_valid
+        AND cards_exact
+        AND independent_binding_exact
+        AND opcode_schedule_exact
+        AND schedule_exact
+        AND initial_exact
+
+The scorer must reject any attempt to recover binding by matching card
+contents, card hashes, resolved schedules, outcome equality, or oracle-assisted
+assignment.
+
+## Decisive Controls
+
+1. **Card-only mutation:** change one card coordinate while preserving binding
+   and opcode schedule. Cards fail; binding/local/resolved schedule remain
+   exact; a separating trace must change.
+2. **Binding-only mutation:** apply a nonidentity permutation to binding entries
+   while preserving card bytes and opcode schedule. Cards/local tape remain
+   exact; binding and resolved schedule fail; a separating trace must change.
+3. **Compensated relabeling:** use a non-involutive three-cycle `pi`, with
+   `T' = pi(T)` and `B' = B o pi^-1`, so `B'[pi(o)] = B[o]`. Binding and local
+   tape identity fail, while resolved execution, state trace, terminal state,
+   and answer remain byte-identical. A transposition alone is insufficient
+   because it cannot expose an inverse-direction bug.
+4. **Declaration-order shuffle:** reorder rule declarations without changing
+   their semantics. Cards and resolved schedule remain unchanged while binding
+   and opcode schedule transform consistently.
+5. **Opcode alpha recode:** rename opaque opcode strings consistently. Every
+   hard output remains invariant.
+6. **Card-storage reindex:** for `cards'[new] = cards[old]`, set
+   `binding'[opcode] = inverse_storage[binding[opcode]]`. The local opcode tape
+   remains byte-identical; physical card and binding identities fail against
+   the original oracle while the trace remains invariant.
+
+## Balance And Coverage
+
+All 24 binding permutations must appear. Every 288-row scored block uses a
+deterministic `Z_24` coset construction: the 18 query/initial cells use residues
+not divisible by four, the 16 renderers use residues not divisible by three,
+and their modular sum selects one element of `S_4`. This yields exactly 12
+occurrences of each binding and exactly 72 occurrences of every
+local-opcode/card-address pair. Within each block every fixed renderer sees 18
+distinct bindings and every fixed query/initial cell sees 16 distinct bindings.
+The writer and an independent seedless audit must prove these equalities.
+
+Exact balance in every smaller crossed subcell is arithmetically impossible
+when its row count is not divisible by 24. Such cells must use the declared
+block design and report the exact attainable marginal/separation bounds rather
+than claiming impossible balance.
+
+## Identification Completion
+
+Packet identifiability is necessary but does not by itself establish transient
+working memory or compositional reuse. Before source freeze the neural board
+must additionally include:
+
+- **Persistent excitation:** every opcode is invoked from separating states,
+  so no binding entry is behaviorally dormant.
+- **Alternating-group completion:** an `A4`-only training slice with held-out
+  odd permutations, preventing a 24-case table from masquerading as an
+  equivariant binding rule.
+- **Write-delete-delay-read:** the source is deleted after compilation, at
+  least one unrelated transition intervenes, and only then may a late query
+  read the bound result.
+- **Multi-epoch rebinding:** adjacent transpositions change declaration
+  bindings across episodes while physical cards remain fixed, testing overwrite
+  rather than static lookup. The adjacent-transposition Cayley graph of `S4`
+  has diameter six, so confirmation must include cue paths through length six;
+  a five-cue design cannot reach the reversal permutation.
+
+These are predeclared falsifiers, not current capability claims.
+
+## Mandatory Tests
+
+- Packet round-trip preserves all 60 bytes.
+- A one-byte binding mutation changes packet and receipt hashes.
+- Binding loss reaches the new decoder slots and shared four-class head.
+- Invalid permutations fail before execution.
+- Resolved-schedule inconsistency fails before scoring.
+- Query disclosure cannot alter binding evidence.
+- Card-only, binding-only, and non-involutive compensated-relabeling controls
+  produce the distinct metric and trace patterns specified above.
+- Runtime card reindexing changes binding only and preserves the local opcode
+  tape.
+- The assessor exposes independent_binding_exact; the obsolete aliased
+  binding_exact field is rejected.
+
+## Implemented Source Evidence
+
+The version-4 runtime plan now treats the three algebraic controls as mandatory
+operations rather than optional unit tests. Every one of 864 source-blind
+anchors receives:
+
+- a card-only mutation of the physical card used at the first transition;
+- a binding-only three-cycle that moves the first local opcode while preserving
+  cards and local tape;
+- a compensated non-involutive three-cycle that changes binding and local tape
+  while preserving every resolved event.
+
+The first two controls begin from a distinct initial state, so their first
+transition must separate the original and mutated packet. The compensated arm
+must preserve the complete state trace byte-for-byte. Plan, operation,
+commitment, concrete-mutation, and runtime-implementation schemas were advanced
+to prevent old 56-byte or pre-binding artifacts from entering the new
+25,056-attempt evidence lattice.
+
+This closes the source-level gauge/separability gate only. It does not close
+the alternating-group completion, write-delete-delay-read, dynamic rebinding,
+independent dual-scorer, capability-time resource, or Linux custody gates.
+
+The source-free mechanics report
+`artifacts/r12/ctaa_v2_preflight/binding_identification_mechanics_v1.json`
+verifies the future experiment geometry: exact `12/12` `A4`/odd splits with
+`3/3/3/3` local marginals, 72 delay cases at `0/32/128`, 24/24 donor-register
+following, 23/24 identity-reset differences, all 24 reachable bindings across
+1,092 adjacent-generator sequences, and 6,015 committed-prefix causality
+checks. Its file SHA-256 is
+`21cbcafb4d8adc49cebe978bd2a2b1d482a54f526a52f32553a7efa3e22960b9`.
+These are finite mechanics, not learned results.
+
+The neural completion source now instantiates the previously abstract A4 gate.
+`pipeline/build_ctaa_binding_completion_board.py` renders a complete
+24-permutation declaration orbit for every fixed semantic scaffold and seals
+the odd half. `train/ctaa_binding_completion.py` defines a shared slot-local
+treatment and a globally connected same-target control. Four opcode and four
+physical-card slots are decoded independently. The treatment scores every
+opcode/card pair with one shared `3840 -> 156 -> 1` network and zero global
+context; the control uses the identical scorer and calls with all eight slots
+in context. Both have 599,353 parameters and 9,587,136 dense analytic MACs.
+The treatment is exactly bi-equivariant to opcode and card-slot permutations.
+The 24-way classifier is retained only as a support-starved negative, not
+misreported as a matched control.
+`train/train_ctaa_binding_completion.py` independently decodes the four slots,
+qualifies one common compiler on A4 only, freezes and stores one shared feature
+cache, and has no confirmation input. `predict_ctaa_binding_completion.py`
+requires an independently validated five-seed freeze manifest and has no oracle
+input. `assess_ctaa_binding_completion.py` has no source input, revalidates all
+five source-free artifacts, atomically spends the unique oracle-access ledger,
+and opens one committed oracle blob once.
+`capacity_ctaa_binding_completion.py` runs disposable all-S4 fits from
+committed assessment labels without reopening the oracle. The chimera
+diagnostic imports no odd representation: it composes every slot from a
+distinct A4 donor and derives an odd target. The assessor also materializes the
+actual 60-byte packet and separately reports card, binding, state, local tape,
+resolved schedule, excitation, counterfactual effect, and whole-program
+exactness. A measured-resource job and source-free finalizer apply immutable
+five-seed attribution gates.
+
+The immutable admission binds a canonical digest over every tracked protocol
+source and direct runtime dependency, rejects dirty or untracked protocol
+files, fixes one absolute custody directory, and preregisters every decision
+threshold. Cross-stage tensor artifacts are hashed before restricted
+`weights_only=True` loading. Odd source and oracle rows share unique opaque row
+IDs, and the assessor claims a single `O_CREAT|O_EXCL` oracle ledger before its
+one read.
+
+This is implemented source under test, not a neural result. No production board
+seed, training seed, sealed odd access, GPU allocation, or binding advancement
+claim has been created. Source freeze still requires the final complete
+regression, a fresh independent review of this hardened protocol, the measured
+resource receipt, source-level symmetry checks, and the unmocked Linux custody
+smoke.
+
+## Claim Boundary
+
+Passing these source and mutation gates proves only that the binding capability
+is independently measurable and causally used. Capability advancement still
+requires the signed five-seed statistical specification, complete runtime
+intervention/resource receipts, independent raw rescoring, and the unmocked
+Linux custody smoke.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 254: `R12_CTAA_NEURAL_FALSIFIER_PREREG.md`
+
+Original source path: `R12_CTAA_NEURAL_FALSIFIER_PREREG.md`
+Original source size: 24,785 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 CTAA Neural Falsifier
+
+## Status
+
+**Revision 2 draft architecture and custody contract. Not source-frozen.** No production
+board seed, training seed, H100 job, development access, confirmation access,
+or reasoning claim is authorized by this document.
+
+An independent adversarial review rejected revision 1 for source freeze. Its
+confidence gate was unattainable at the stated stratum sizes; the generator did
+not instantiate the claimed board; semantic, renderer, and lexical shifts were
+confounded; class and query were coupled; long programs had repeated-opcode
+shortcuts; deletion depth ignored the actual state and answer; and the late
+query existed on disk before execution. Revision 2 changes the experiment
+rather than relaxing those findings.
+
+The preceding CPU audit establishes only coherent finite mechanics. This
+experiment asks whether a closure-aligned recurrent parameterization learns
+fresh episodic copy actions and reuses them over causally long programs more
+reliably than a favorable generic recurrence with identical parameter count,
+state, and effectively identical FLOPs.
+
+The strongest possible positive claim is bounded: episodic compilation and
+source-deleted recurrent execution of three-position copy actions. The causal
+quotient contains only 27 maps, about 4.76 bits. Passing cannot establish broad
+natural-language reasoning, arithmetic, planning, theorem proving, or general
+program induction.
+
+## Immutable Base
+
+| Object | Frozen identity |
+|---|---|
+| Raw Shohin checkpoint | `train/flagship_out/ckpt_0300000.pt` |
+| Raw checkpoint SHA-256 | `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6` |
+| Base unique parameters | 125,081,664 |
+| Tokenizer | `artifacts/tokenizer/tokenizer.json` |
+| Tokenizer SHA-256 | `87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf93606773a233d4` |
+| Vocabulary / PAD | 32,768 / token ID 1 |
+| Qualified memory initialization | ordinary compiler from job `693049` |
+| Qualified compiler SHA-256 | `747a559b827c6d114943c091b9dea5b4b90cef7af13aa5003b8435c092d24991` |
+
+The checkpoint must load strictly into the unmodified `GPT` in
+`train/model.py`, with zero missing or unexpected keys. `model.py`, tokenizer,
+`n_loop`, embeddings, cache semantics, and trunk blocks may not change. The
+base stays frozen throughout the falsifier.
+
+## Architecture
+
+### Source compiler
+
+The compiler accepts only right-padded token IDs and derives validity as
+`ids != 1`. It receives no spans, parser metadata, row metadata, entity IDs,
+targets, executor output, answer, retry result, or verifier signal.
+
+One frozen Shohin pass captures:
+
+- causal residuals after block 19, `h19 [B,L,576]`;
+- normalized final residuals after block 29, `h29 [B,L,576]`.
+
+The layer-19 `LayerNorm(576)`, `Linear(576,384)`, and five-layer 384-wide
+encoder are initialized from the hash-qualified ordinary compiler. A separate
+`LayerNorm(576) -> Linear(576,384)` reads layer 29. Its projection starts at
+zero; scored qualification requires nonzero causal dependence on both paths.
+The fused memory is:
+
+```text
+Encoder(W19(LN19(h19)) + W29(LN29(h29)))
+```
+
+A two-layer, eight-head, width-384, FF-1024 generic slot decoder emits:
+
+```text
+cards        [B,4,3,3]   categorical logits
+binding      [B,4,4]     local-opcode to physical-card logits
+initial      [B,3,3]     categorical logits
+opcode_tape  [B,41,5]    four declaration-local opcodes plus STOP
+```
+
+Card slots are source-visible addresses `W1..W4`; physical rule lines are
+reordered by the exact `S4` balance design. A determining before/after witness
+uses three distinct entities, so each card is identifiable. The compiler emits
+an independent opcode-to-card permutation. The local opcode tape contains
+exactly one model-compiled STOP followed by valid adversarial suffix events;
+the physical execution schedule is derived from binding plus tape.
+
+### A4 binding-completion neural slice
+
+The binding-identification diagnostic is a separate source-only qualification,
+not a scored recurrent result. Every semantic compiler family is expanded into
+the complete 24-member declaration-order orbit. Cards, opaque names, renderer,
+initial state, physical schedule, query, depth, and program class remain fixed
+inside an orbit. The 12 even permutations form optimization data and the 12 odd
+permutations remain sealed. Every local opcode/card cell therefore appears
+`3/3/3/3` in each half, and train/confirmation token-length histograms must
+match within every orbit.
+
+Four opcode slots and four physical-card slots are decoded independently from
+the same source memory. No opcode may self-attend to another opcode, and no
+card may self-attend to another card. One globally connected structured
+qualifier is trained on A4 only, then the compiler freezes and the qualifier is
+discarded for the comparison. A single detached eight-slot A4 cache is hashed.
+Every fresh readout consumes those byte-identical tensors in the same order:
+
+- **bi-equivariant treatment:** one shared pair scorer receives
+  `[opcode_i, card_j, zero_context]` for each of the 16 opcode/card pairs;
+- **favorable global structured control:** the exact same pair scorer receives
+  `[opcode_i, card_j, all_eight_slots]`, permitting arbitrary parity shortcuts;
+- **atomic lookup negative:** an eight-slot `-> 24` classifier, reported only as a
+  deliberately support-starved lookup baseline because odd classes have no
+  positive A4 examples.
+
+Treatment and favorable control both emit `[B,4,4]`, receive identical
+four-cell cross-entropy, use the same `3840 -> 156 -> 1` network for the same
+16 calls, have exactly `599,353` readout parameters, and require exactly
+`9,587,136` dense analytic MACs. The treatment is equivariant to all 24 opcode
+permutations crossed with all 24 card-slot permutations by construction. The
+complete decisive system is `138,589,297` parameters, leaving `11,410,702`
+below the strict cap. Profiler receipts remain mandatory; analytic equality
+does not establish equal kernel-launch or wall-clock cost.
+
+Both decisive arms must fit all 12 A4 bindings to the preregistered threshold
+in all five seeds before confirmation source is opened. Every seed artifact
+durably freezes the compiler, readouts, probes, exact A4 cache, ordered row
+commitments, and train metrics with zero confirmation access. A separate
+source-free freeze process validates every admitted hyperparameter, immutable
+input hash, fit gate, arm/probe lattice, cache commitment, and access counter,
+then writes one exact five-seed hash manifest. A source-only predictor requires
+that manifest, accepts no oracle path, opens the odd source once, and commits
+raw logits plus odd slot caches. A separate assessor accepts no source path,
+validates all five seed artifacts again, atomically claims the globally unique
+oracle-access ledger, opens one oracle blob once, and scores without tuning.
+Every source/oracle row shares one opaque unique row ID; ordered ID equality is
+mandatory. Report projected and raw binding exactness, raw assignment
+validity, projection rescue, NLL, parity confusion, and every individual
+permutation.
+
+Four disposable single-slot probes test whether any one slot contains the full
+binding. The compositional chimera is now source-free: every one of its four
+slots comes from a distinct A4/even donor in the same family, while a
+transposition derives an odd target. No odd representation or label enters
+this diagnostic. After the assessment freezes, a separate disposable all-S4
+job consumes the committed labels without reopening the oracle and must show
+that each readout can optimize all 24 classes. A source-free finalizer applies
+the admission's immutable five-seed thresholds to treatment accuracy, raw
+assignment validity, matched-control advantage, single-slot leakage, A4-derived
+odd chimeras, complete 60-byte packet exactness, opcode excitation, binding
+counterfactual effect, all-S4 capacity, and a counterbalanced measured
+forward/backward/optimizer resource receipt. Failure of any mandatory gate
+invalidates binding attribution. Passing this slice establishes only
+declaration-binding completion; it does not establish source-deleted memory,
+multi-step execution, or reasoning.
+
+The admission binds the exact Git commit and a canonical SHA-256 over every
+tracked protocol source and direct execution dependency. Production entry
+points reject untracked or dirty protocol files and reject outputs outside the
+single absolute custody directory. Cross-stage tensor artifacts are hashed
+and deserialized from one `O_NOFOLLOW` file-descriptor read under restricted
+`weights_only=True`; executable pickle loading is forbidden. Artifact and
+ledger writes use exclusive creation plus directory `fsync`. Decision
+thresholds are source-canonical: all five seeds pass, A4 fit is 99%, held-out
+factorized exactness is 75%, matched-control advantage is ten points,
+single-slot leakage is at most 10%, A4-derived odd chimera exactness is 75%,
+and measured resource gap is at most 5%.
+
+These local mechanics are not sufficient custody. Source freeze still requires
+an independently owned, secret post-freeze challenge; separate source/oracle
+OS identities or mount namespaces; a hermetic launcher with sanitized imports
+and dependency hashes; externally signed append-only stage lineage; and actual
+source-deleted packet execution through the frozen core. Owner-readable `0400`
+files and a public deterministic challenge seed are explicitly insufficient.
+
+### Hard deletion boundary
+
+Compilation materializes exactly:
+
+```text
+cards        uint8[4,3]   12 bytes
+binding      uint8[4]      4 bytes
+initial      uint8[3]      3 bytes
+opcode_tape  uint8[41]    41 bytes
+total                       60 bytes per row
+```
+
+The scored runtime must serialize these bytes, terminate the compiler process,
+destroy source IDs, validity masks, residuals, logits, caches, and lexical
+memories, then start an executor process that receives only the packet and the
+core checkpoint. The host resolves one local opcode to one physical card at a
+time; the core sees only that current card and state. It never receives
+future events, source, query, target, or verifier state.
+
+Only after a read-only execution receipt commits is a separate query source
+materialized and disclosed. A separate
+Shohin pass and the same memory/decoder parameters materialize one canonical
+query-position byte. The query never conditions the recurrent state. Raw
+opaque-name realization is outside this falsifier.
+
+Scored custody uses three keyed files per partition. `*_program.jsonl` contains
+only family ID and program source. `*_query.jsonl` contains only family ID and
+query source and remains sealed until the execution receipt commits.
+`*_oracle.jsonl` contains categorical packet labels, prefix states, terminal
+state, answer, and grouping metadata and is opened only by the independent
+assessor after raw predictions commit. No process receives two stages merely by
+ignoring extra JSON keys.
+
+### Recurrent treatment
+
+Categorical action/state inputs are row-one-hot `L,R in {0,1}^{3x3}`. CTAA
+receives only composition-aligned products:
+
+```text
+Phi_T(L,R)[i,j,k] = L[i,j] * R[j,k]     # 27 features
+h = ReLU(Linear(27,2912)(Phi_T))
+logits = Linear(2912,9)(h)              # reshape [3,3]
+```
+
+The same 107,753 parameters implement action-on-state and action-on-action.
+After every call, exact categorical argmax is materialized before reuse. The
+executor maintains two hard routes:
+
+```text
+state route:      s_t = F(a_t, s_(t-1))
+composition route c_t = F(a_t, c_(t-1)); s'_t = F(c_t, s_0)
+```
+
+STOP latches both routes. Neither route receives continuous persistent state.
+
+### Favorable generic control
+
+The Full Outer-Product Recurrent Control (OPRC) receives every pairwise input
+interaction, including every CTAA interaction:
+
+```text
+Phi_G(L,R)[p,q] = vec(L)[p] * vec(R)[q] # 81 features
+h = ReLU(Linear(81,1184)(Phi_G))
+logits = Linear(1184,9)(h)              # reshape [3,3]
+```
+
+Its 81-feature representation separates all 729 finite `(L,R)` pairs and its
+1,184 hidden units exceed that count. It must fit an independently generated
+arbitrary 729-cell transition table to 100% before it is accepted as a
+control. Failure invalidates the experiment rather than helping CTAA.
+
+## Exact Resource Ledger
+
+Measured against the real raw-300k checkpoint:
+
+| Component | Parameters |
+|---|---:|
+| Shohin trunk | 125,081,664 |
+| Shared compiler addition | 12,800,527 |
+| CTAA or OPRC core | 107,753 |
+| **Complete system** | **137,989,944** |
+| **Headroom below 149,999,999** | **12,010,055** |
+
+CTAA and OPRC core parameters are exactly equal. Their analytic one-transition
+costs are 215,530 and 215,584 FLOPs, a 54-FLOP or 0.0251% difference. Final
+admission requires measured profiler receipts for forward, backward, optimizer,
+curriculum selection, compiler training, and inference at active depths
+1/16/32/39. The packet has 41 event slots and requires both STOP and a poison
+suffix, so 39 is the maximal executable depth; the former depth-64 profiling
+requirement was geometrically impossible.
+Train FLOPs must match within 5%; active and trainable parameters within 0.1%;
+committed state and packet bytes exactly.
+
+## Fixed Semantic Split
+
+An action `abc` maps `(s0,s1,s2)` to `(s[a],s[b],s[c])`. The representation is
+three categorical pointers, never a 27-way class. Every pointer value occurs
+exactly three times at every coordinate in every split. Rank distribution is
+1/6/2 in every split.
+
+| Split | Actions |
+|---|---|
+| Train | `000 011 012 101 120 122 202 211 220` |
+| Development | `002 010 021 100 110 112 201 221 222` |
+| Confirmation | `001 020 022 102 111 121 200 210 212` |
+
+No scored action may enter training atomic labels, closure outputs, excitation
+allocation, continuation bases, query bases, or tuning.
+Only the 35 train-action pairs whose composition also remains in train may
+receive closure supervision.
+
+The OPRC representation-capacity preflight is the sole exception: before any
+board seed exists, disposable weights must fit an arbitrary label assigned to
+each of the complete 729 finite tuple pairs. Those weights, optimizer state,
+labels, and seed are destroyed and cannot initialize or select any training
+arm. This establishes control capacity, not task exposure.
+
+## Renderer And Names
+
+Six binary renderer factors cover declaration, witness, initial state,
+schedule, STOP/suffix, and query grammar. For factor bits `x0..x5`:
+
+```text
+p1 = x0 xor x1 xor x2 xor x3
+p2 = x2 xor x3 xor x4 xor x5
+```
+
+Train uses syndrome `00`, development `01`, confirmation `10`, and `11` is
+reserved. Each coset has 16 compositions and matched low-order factor
+marginals. Name pools are split-neutral in surface form, fixed-width,
+tokenizer-admitted, component-disjoint, cryptographically assigned after
+semantic generation, and independent of actions.
+
+Semantic, renderer, and lexical novelty are independent axes. Development and
+confirmation each contain all eight `2 x 2 x 2` factorial cells: every axis is
+either in-distribution train or the partition's held-out value. Single-shift,
+pair-shift, and triple-shift results are reported separately. Shared fixed
+grammar is an explicit whitelist; admission requires zero non-whitelisted
+token 13-gram overlap and matched token-length distributions, not the
+impossible claim that controlled grammar itself never repeats. Maximum length
+is 2,048 tokens.
+
+## Board Sizes And Supervision
+
+Repeated optimization contexts are not independent samples. Atomic and
+two-action domains are finite and exhaustively enumerated, so their primary
+result is exact finite-set accuracy, not a confidence interval over duplicated
+rows. Views, twins, interventions, and renderings of one long semantic family
+remain one statistical cluster.
+
+| Component | Optimization exposures / unique cases |
+|---|---:|
+| Train atomic: `9 actions x 27 states x 64 contexts` | 15,552 / 243 |
+| Train two-action: `35 closed pairs x 27 states x 64 contexts` | 60,480 / 945 |
+| Compiler schedules: `4,096 x depths 1..8` | 32,768 |
+| **Total optimization exposures** | **108,800** |
+| Exact atomic audit per semantic axis | 243 |
+| Exact two-action audit per semantic axis | 2,187 |
+| Long per split: `8 cells x 3 classes x 2 depths x 576` | 27,648 |
+| Triple-shift primary interventions: `3 x 3,456` | 10,368 |
+| Targeted equivalent/prefix/STOP diagnostics: `3 x 6 x 144` | 2,592 |
+| **Long scored total per split** | **40,608** |
+
+Compiler cards, initial state, schedule, STOP, and late query may be directly
+supervised. Recurrent execution labels are allowed only for atomic and
+two-action rows. No depth above two receives trajectory state, terminal state,
+answer, repair, query-conditioned state, or verifier supervision.
+
+Every class-depth-factorial cell has 576 unique semantic families. It contains
+exactly two examples in every one of the 288 renderer by
+query-position/initial-permutation cells, eliminating the former parity
+confound between separate 16- and 18-way marginal cycles. Initial-state symbols
+are always distinct, preventing action effects from disappearing because equal
+symbols were sampled.
+
+The three long classes are:
+
+1. `stable_rank_two`: varied programs whose composite remains rank two;
+2. `implicit_final_collapse`: no rank-one card, with rank one created only by
+   the final active composition;
+3. `explicit_final_collapse`: a rank-one card is the final active event.
+
+Every program uses at least three card slots, has maximum opcode run three,
+normalized event entropy at least 0.75, and map-deletion depth at least one
+quarter of raw depth. STOP follows the final active event and a valid poison
+suffix follows STOP. The evaluator reports map-, terminal-state-, and
+answer-deletion depth separately, along with shortest equivalent word length.
+Because the monoid has only 27 maps, raw length is never represented as
+intrinsic final-answer complexity. Primary sequential evidence is exactness of
+the complete unseen prefix-state trace under the source-blind event streamer.
+
+Required clustered counterfactuals include order twins,
+equivalent-composite twins, prefix twins, renderer/name recodings, and
+source-poison variants. Canonical packet hashes reject duplicate semantic
+families before rendering.
+
+## Training Arms
+
+Within each paired seed, every arm shares one frozen compiler checkpoint and
+the same compiled hard packets. Core initialization, optimizer family,
+precision, batch policy, tuning-trial count, query reader, and update budget
+are matched. Across five paired seeds the compiler is independently initialized
+and trained from the same qualified memory initialization.
+
+1. CTAA with atomic and closure supervision.
+2. Parameter/state/FLOP-matched OPRC with the identical atomic and closure
+   supervision.
+3. CTAA without closure supervision, padded with charged atomic calls to match
+   the transition-call budget.
+4. CTAA with a seed-paired permutation of closure labels.
+
+Every primary arm receives the same finite cases, exposure counts, update
+count, optimizer family, and four differentiable transition calls per
+two-action example. Any dummy or repeated call used for compute matching is
+recorded and charged. Compiler weights freeze before core fitting; core weights
+freeze before any scored packet is executed. Scored source is compiled once
+before arm identity is attached, so core results cannot affect compilation.
+
+The evaluator is physically staged and oracle-blind. A program compiler accepts
+only `family_id` plus `program_source` and commits raw card, binding,
+initial-state, and local-opcode tape bytes. The resolved physical schedule is
+derived deterministically and is never a separately predicted packet field. A
+separate sealer derives packet validity from exact STOP
+geometry; invalid rows remain in every denominator and never reach the
+executor. A fresh process receives only valid fixed packets and one frozen core.
+Only after its read-only execution receipt exists may another process open the
+sealed query source and materialize query bytes. An oracle-blind committer then
+records every source row, including missing downstream stages. The assessor has
+no source input and spends the partition access before opening oracle-only
+labels. Assessment retains family-level outcomes needed for paired clustered
+statistics. The source implementation now places all mandatory interventions
+below in a versioned 29-operation runtime plan over 864 anchors (25,056
+attempts per seed), including independently replayed card-only, binding-only,
+and compensated three-cycle controls. Capability-time resource/intervention
+receipts, independent dual rescoring, unmocked Linux custody, and the stronger
+binding-identification boards remain incomplete; therefore this paragraph is
+not source-freeze or seed authorization.
+
+Five paired master training seeds are required. Each derives initialization,
+batching, compiler, core, and curriculum seeds through tagged SHA-256. Report
+every seed, equal-seed means, exact family counts, finite-domain exact scores,
+one-sided cluster-bootstrap bounds for long families, simultaneous Holm
+correction across preregistered marginal strata, and a 100,000-draw paired
+hierarchical bootstrap over seeds and semantic families. A confidence bound is
+never computed by treating repeated renderings or steps from one family as
+independent.
+
+## Mandatory Interventions
+
+- zero, batch-rotate, and donor-transplant `h19` and `h29` independently with
+  identical right-padding masks;
+- source deletion and post-seal source poison;
+- entity, witness, and opcode alpha recoding;
+- renderer substitution and physical rule-line shuffle;
+- card-storage reindex with binding reindex and byte-identical local tape;
+- card-only, binding-only, and compensated non-involutive opcode relabeling;
+- `A4`-only binding training with odd-permutation confirmation, plus
+  adjacent-transposition rebinding paths through the exact `S4` diameter six;
+- witness corruption and paired shuffled law;
+- schedule order twin and future masking;
+- STOP relocation and post-STOP poison;
+- midpoint donor-state transplant and action-card transplant;
+- late-query swap and query isolation;
+- packet transplant across source texts;
+- state-route versus composed-route agreement.
+
+The treatment may not inspect candidate validity, executor results, terminal
+state, answer, control result, or retry feedback while compiling or executing.
+
+## Advancement Gates
+
+Every one of five seeds must pass:
+
+- fresh cards, independent binding, local opcode tape, derived schedule,
+  initial state, and STOP each at least 99%;
+- exact finite atomic transition accuracy 100% on all 243 cases in each
+  semantic axis and exact two-action route accuracy 100% on all 2,187 cases;
+- long-program prefix-state accuracy is reported for each action, rank,
+  renderer, and step-quartile marginal separately; no cross-product stratum is
+  implied;
+- depth-16 exact-chain lower bound at least 95%;
+- depth-32 exact-chain lower bound at least 90%;
+- donor-state and donor-action following lower bound at least 95%;
+- state-route/composed-route agreement at least 99.9%;
+- alpha, source-poison, future, query, and post-STOP invariance exactly 100% on
+  the frozen intervention board;
+- CTAA depth-16 accuracy exceeds every favorable neural control by at least ten
+  points in every seed, with paired 95% lower bound also at least ten points;
+- closure CTAA exceeds no-closure CTAA by at least five points;
+- shuffled-closure CTAA remains at least ten points below intact-closure CTAA.
+
+If OPRC comes within three points of CTAA, closure-specific attribution is
+rejected even if both systems are strong. Any parameter, state, FLOP, custody,
+source-deletion, or control-capacity failure invalidates the capability result.
+
+## Custody
+
+Before a board seed exists, all of the following must be complete and committed:
+
+1. complete typed board builder and independent CPU oracle;
+2. fixed-width tokenizer-admitted name allocator;
+3. exact family/twin/intervention generator;
+4. compiler/executor/query orchestrator that materializes query bytes only
+   after an immutable execution receipt exists;
+5. training/evaluation/assessment code;
+6. arbitrary-table OPRC capacity preflight;
+7. profiler and parameter/state receipts;
+8. mutation tests for metadata, outcome, source, query, future, and verifier
+   leakage;
+9. clean source commit and independent adversarial review.
+
+After that commit, draw one public board seed, build once, independently rebuild
+byte-identically, hash and seal confirmation, and commit the admission receipt
+before drawing five training seeds. Each seed freezes one checkpoint before the
+sole development read. Confirmation opens once only if every frozen development
+gate passes. No threshold may be relaxed and no board rescored.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 253: `R12_ER_FACTORIZED_WITNESS_ROUTE_RESULT.md`
+
+Original source path: `R12_ER_FACTORIZED_WITNESS_ROUTE_RESULT.md`
+Original source size: 5,818 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER Factorized Witness-Route Result
+
+**Protocol:** `r12_er_factorized_witness_route_train_only_canary_v1`
+
+**Decision:** `reject_factorized_witness_before_fresh_board`
+
+The route is closed. It must not receive a fresh board, threshold relaxation,
+or post-hoc optimizer tuning.
+
+## Operational provenance and custody receipts
+
+The job/node/runtime, beacon derivation, and Newton mirror statements below are
+operational journal receipts. They are not independently reconstructed by the
+three-file artifact audit.
+
+- Exact source commit: `4643d1a51defe53397f9bed481051621d85c0b11`
+- Public drand round: `6305851`
+- Canonical drand payload SHA-256:
+  `0bffb1f1ba8b9649554be76a712cf50e389aeb38084662e35203f033f065a9ea`
+- Seed derivation SHA-256:
+  `ddf2905f16a414fd90c3db7e2ff1f404fa5e88ecef04d11c966863154678cb93`
+- Deterministic seed: `6769631927967421693`
+- Sole H100 job: `694945` on `evc36`
+- Runtime: 24m25s, exit code zero
+- Fit/probe: 10,000/2,000 disjoint old-training families,
+  40,000/8,000 rows
+- Train-only/development/confirmation reads: `1/0/0`
+- Complete/compiler/trainable/new parameters:
+  `185,534,660 / 60,452,996 / 11,131,868 / 2,364`
+
+All four arms began from trainable-state digest
+`0cd21dcf3b4bf0f7a741ad9369535ff8157074a4c0653e93b12d6cb119e5b8be`,
+used fit-order seed `746651095578902126`, ran exactly 2,500 updates, and
+preserved the same frozen-parent digest.
+
+## Immutable artifacts
+
+| Artifact | SHA-256 |
+|---|---|
+| `compiler.pt` | `e93bb4cff5f316616c7a02bce272112acf454f42f56f8b4ea07ffac6074318a2` |
+| `train_probe_evidence.pt` | `11d931b37ad854de9976015fc1ff38522da0812776ad67ea7d408d43820889c6` |
+| `train_probe_report.json` | `87ea12a28cfaf82c4556f1730da6778cf63df9e5c2ad3df8b09a86613786ccca` |
+
+Newton and local copies hash-match. The local copies are read-only.
+
+## Frozen result
+
+| Arm | Witness | Relation / joint | State | Answer | Events |
+|---|---:|---:|---:|---:|---:|
+| Treatment | 2,069/8,000 = 25.8625% | 2,239/8,000 = 27.9875% / 2,209/8,000 = 27.6125% | 57.8875% | 77.075% | 99.9875% |
+| Same-seed baseline | 11.7125% | 12.9625% / 12.8875% | 37.975% | 59.050% | 93.0125% |
+| Structural-only | 92.050% | 1.250% / 1.250% | 36.000% | 58.400% | 92.400% |
+| Shuffled address | 0.2875% | 5.650% / 5.650% | 40.6625% | 63.1875% | 100.000% |
+
+Treatment joint accuracy collapses with cardinality: 67.276% at `N=3`,
+35.501% at `N=4`, 5.550% at `N=5`, and 1.892% at `N=6`. Treatment has
+99.1375% initial rows/pointers and 99.9875% line pointers, so the failure is
+localized to witness identity transport and the relation assembled from it.
+
+Nine of thirteen frozen gates pass. The failures are the absolute witness,
+relation, packet/state/answer/joint, and minimum-cardinality joint gates. Exact
+alpha invariance, source-only oracle transport, matched initialization,
+parameter accounting, train-only custody, and treatment gains over baseline
+and shuffled controls all pass. Partial relative gains cannot override the
+absolute failure.
+
+## Independent artifact-only audit
+
+`train/audit_er_factorized_witness_route.py` verifies the three exact artifact
+hashes, all 33 committed source files, source/seed receipts, all arm
+initialization/fit/frozen-parent receipts, the exact 400-leaf metric schema and
+its cardinality/depth/renderer aggregates, evidence shapes, and every frozen
+gate without reading any ER-TT board row or scored split. It independently
+recomputes every retained canonical-versus-recoded alpha field and the complete
+mask as 8,000/8,000. The serialized canonical audit JSON including its trailing
+newline has SHA-256
+`272b6b3be28fab3741c6e5c383a1c02b37d7b7e8b394dd6424d41f12de9bbe3d`;
+its explicitly labeled preimage self-hash is
+`3747beac310a790791d02677a050aa2e370d0a4b6153b999cd89d4a013e8a6ca`.
+The read-only report is stored at
+`artifacts/r12/er_factorized_witness_route_artifact_audit.json`.
+
+The effective cardinality-dependent `1 + 2N` address slice with side-major
+roles selects the grammar-correct one-based ordinal on 36/36 active cases in
+treatment and structural-only, 10/36 in shuffled-address, and 0/36 in baseline
+because its gate is exactly zero. Treatment gate/table L2 norms are
+0.7896/3.5995; structural-only norms are 0.8211/4.2015. Thus the table learned
+the deterministic grammar address, but the soft content residual did not carry
+a coherent symbol identity through that address. Structural-only can point to
+the right slot while producing only 1.25% exact relations, demonstrating that
+address correctness is not content transport.
+
+Control row-level predictions were not retained, so paired McNemar statistics
+cannot be reconstructed. No second probe access is permitted to repair that
+omission. Oracle-route targets were also not retained, so its 8,000/8,000
+exactness remains an internally consistent producer receipt rather than an
+independently regenerated result. Family disjointness, custody counters,
+frozen-parent integrity, and total compiler/base parameter counts are likewise
+hash-bound producer receipts. Treatment trainable parameters and all alpha
+comparisons are independently recomputed from retained tensors.
+
+## Consequence
+
+The factorized lookup is a structural answer key for this grammar, not a native
+reasoning mechanism. It is also seed/optimization-sensitive: its same-seed
+baseline witness score is 11.7125%, far below the historical marginal v1.1
+endpoint of 89.925%. Both facts make threshold tuning scientifically invalid.
+
+The next architecture must make the committed content state itself causal and
+reusable. Closure-Tied Action Algebra (CTAA) is the current pre-neural
+falsifier: a trunk-conditioned hard categorical state transducer whose action
+application and action composition share parameters. Its CPU mechanics are
+audited independently; no neural source, seed, board, or H100 job is yet
+authorized.
 <!-- END EMBEDDED SOURCE -->
 
 ---
@@ -31627,7 +37155,8 @@ Original source size: 59,242 bytes
 <!-- BEGIN EMBEDDED SOURCE -->
 # Shohin Training Metrics Ledger
 
-This is the auditable metrics companion to `the operational runbook summary` (full text embedded in this dossier).
+This is the auditable metrics companion to `AGENT_RUNBOOK.md`; its relevant
+operational facts are distilled in the main ledger.
 It records confirmed measurements, their source artifacts, and the distinction between
 training progress, corpus capacity, and capability. It is not a substitute for the
 runbook's operational instructions.
@@ -32395,12 +37924,12 @@ At each 10k checkpoint milestone:
    throughput/loss/gnorm, and local DR status. Do not infer unique-data exposure from step count.
 4. Update each data row only from a saved manifest, hash-bound report, or completed job log.
    Label running work as in progress and never count an unflushed partial as admitted data.
-5. Add a terse append-only milestone to `the operational runbook summary`, sync both documents to Newton,
+5. Add a terse append-only milestone to `AGENT_RUNBOOK.md`, sync both documents to Newton,
    and commit/push docs and safe code only. Never commit checkpoints, `.env`, or live writer output.
 
 ## Primary Evidence Paths
 
-- Local runbook: `the operational runbook summary`
+- Local runbook: `AGENT_RUNBOOK.md`
 - Local checkpoints: `train/flagship_out/`
 - Newton checkpoints/log: `/lustre/fs1/home/sa305415/shohin/train/flagship_out/` and
   `/lustre/fs1/home/sa305415/shohin/logs/flagship_685084.out`
@@ -33898,8 +39427,8 @@ Original source size: 4,704 bytes
 <!-- BEGIN EMBEDDED SOURCE -->
 # R12 S6 Contextual Affine Law Induction: Development Result
 
-**Date:** 2026-07-19
-**Decision:** `reject_s6_contextual_affine_law_development`
+**Date:** 2026-07-19  
+**Decision:** `reject_s6_contextual_affine_law_development`  
 **Confirmation:** forbidden; no confirmation board was generated or read
 
 ## Question
@@ -34411,6 +39940,7 @@ and OOV law-ID arms; every depth; the multi-law stratum; nonce-name invariance;
 all held-out atomic law cells; and modulus-13 diagnostic accuracy. Confirmation
 generation remains forbidden unless the assessor records
 `qualify_s6_for_one_confirmation` with every gate true.
+
 <!-- END EMBEDDED SOURCE -->
 
 ---
@@ -34423,8 +39953,8 @@ Original source size: 7,078 bytes
 <!-- BEGIN EMBEDDED SOURCE -->
 # R12 S7 Learned Cayley Law Compiler Preregistration
 
-**Status:** source/theory freeze before any S7 score-bearing board
-**Predecessor:** S6 generic contextual transformer, formally rejected
+**Status:** source/theory freeze before any S7 score-bearing board  
+**Predecessor:** S6 generic contextual transformer, formally rejected  
 **Claim class:** bounded unseen-law induction under an explicit cyclic-group prior
 
 ## 1. Target failure
@@ -34605,6 +40135,7 @@ of the already sealed confirmation board.
 4. Draw board and training seeds only after that commit.
 5. Build and hash-seal train, development, and confirmation bytes.
 6. Commit the board receipt before one serial H100 run.
+
 <!-- END EMBEDDED SOURCE -->
 
 ---
@@ -34617,10 +40148,10 @@ Original source size: 2,745 bytes
 <!-- BEGIN EMBEDDED SOURCE -->
 # R12 S7 Learned Cayley Law Compiler: Board Receipt
 
-**Date:** 2026-07-19
-**Decision:** `admit_s7_learned_cayley_board`
-**Source commit:** `b9a9414`
-**Board seed:** `4905719171551557987`
+**Date:** 2026-07-19  
+**Decision:** `admit_s7_learned_cayley_board`  
+**Source commit:** `b9a9414`  
+**Board seed:** `4905719171551557987`  
 **Frozen training seed:** `1314309421681697406`
 
 ## Contents
@@ -34937,8 +40468,8 @@ Original source size: 2,703 bytes
 <!-- BEGIN EMBEDDED SOURCE -->
 # R12 S7 Learned Cayley Law Compiler: CPU Result
 
-**Date:** 2026-07-19
-**Decision:** `admit_s7_learned_cayley_preregistration`
+**Date:** 2026-07-19  
+**Decision:** `admit_s7_learned_cayley_preregistration`  
 **Neural score:** none; no score-bearing board seed exists yet
 
 ## Result
@@ -36006,7 +41537,7 @@ Original source size: 37,041 bytes
 
 Shohin should not be pushed toward general reasoning by making the language model “think longer.” It should be turned into a **renaming-invariant compiler for a small, model-owned reasoning computer**.
 
-The evidence already points there. S7 shows that a tiny learned generator can induce and recurrently execute unfamiliar laws when composition is forced through the correct algebraic basis. S8.1 shows that, once a valid graph exists, order, state transition, query consumption, and nil termination work exactly. S9 shows that **identity-before-semantics** nearly solves whole-source grounding: its main failures are proposal/class completeness and operation-name recoding, not downstream computation. In particular, the 1,925 original/recoded cases that remained valid were bit-identical; the 18 failures became invalid before semantics could be compared.
+The evidence already points there. S7 shows that a tiny learned generator can induce and recurrently execute unfamiliar laws when composition is forced through the correct algebraic basis. S8.1 shows that, once a valid graph exists, order, state transition, query consumption, and nil termination work exactly. S9 shows that **identity-before-semantics** nearly solves whole-source grounding: its main failures are proposal/class completeness and operation-name recoding, not downstream computation. In particular, the 1,925 original/recoded cases that remained valid were bit-identical; the 18 failures became invalid before semantics could be compared. 
 
 That suggests the following equation:
 
@@ -36073,7 +41604,7 @@ The host may store tensors, apply model-emitted graph edits, enforce declared ty
 
 # 2. The immediate S9.1 experiment
 
-S9.1 should be a very targeted repair, not a wider network or another generic training run. S9 already passes 20 of 22 gates. Its exact graph score is 94.775%, versus 46.387% for the equal-parameter no-class arm, and its valid graphs are almost always semantically exact. The failed gates are only class completeness and recoding eligibility.
+S9.1 should be a very targeted repair, not a wider network or another generic training run. S9 already passes 20 of 22 gates. Its exact graph score is 94.775%, versus 46.387% for the equal-parameter no-class arm, and its valid graphs are almost always semantically exact. The failed gates are only class completeness and recoding eligibility. 
 
 ## 2.1 Fix candidate-space equivariance before adding capacity
 
@@ -36691,7 +42222,7 @@ A fuzzy latent workspace with 90% local behavior will never produce reliable lon
 
 # 9. A plausible parameter envelope
 
-The current S9 system totals 134,580,264 parameters, leaving 15,419,735 parameters below a strict `<150M` ceiling.
+The current S9 system totals 134,580,264 parameters, leaving 15,419,735 parameters below a strict `<150M` ceiling. 
 
 A reasonable post-S9.1 envelope is:
 
@@ -39082,7 +44613,7 @@ or general reasoning.
 ## Embedded source 200: `R12_ER_DUAL_STREAM_TRAIN_CANARY_RESULT.md`
 
 Original source path: `R12_ER_DUAL_STREAM_TRAIN_CANARY_RESULT.md`
-Original source size: 8,054 bytes
+Original source size: 12,345 bytes
 
 <!-- BEGIN EMBEDDED SOURCE -->
 # R12 ER-TT Dual-Stream Train-Only Canary Result
@@ -39266,8 +44797,93 @@ syntax, a real-board alpha-recode equality check, a real-parent backward pass,
 full trainable-gradient coverage, and zero excluded-parent leakage pass. A
 single post-commit seed and single isolated H100 canary are authorized; no
 fresh board is authorized unless every unchanged gate passes.
-<!-- END EMBEDDED SOURCE -->
 
+## Occurrence-addressed result
+
+**Protocol:** `r12_er_addressed_marginal_train_only_canary_v1`
+
+**Decision:** reject before fresh-board generation. Exact source
+`7601625f2cdc0a476f9383ce9773722f64760d17` precedes drand round `6305746`,
+canonical payload SHA `8884bfe6...`, derivation SHA `c24770ac...`, and seed
+`4775909816533321494`. Sole job `694928` completed on H100 `evc36` in 7m38s.
+Development/confirmation custody remains `0/0`.
+
+| Metric | Exact |
+|---|---:|
+| Packet / joint / relation rows | 4,873/8,000 = 60.9125% |
+| State | 6,411/8,000 = 80.1375% |
+| Answer | 7,218/8,000 = 90.225% |
+| Witness pointers | 4,760/8,000 = 59.500% |
+| Binding / initial / events / HALT / query / line | 8,000/8,000 |
+| Alpha-invariant complete hard output | 8,000/8,000 |
+| Oracle-route initial/relation/event/joint | 8,000/8,000 |
+
+Cardinality-specific joint is 90.041%, 64.008%, 47.194%, and 43.606% for
+`N=3,4,5,6`. Four scientific gates fail. The parameter certificate remains
+185,543,048 complete / 11,140,256 trainable / 14,456,952 headroom.
+
+Artifact SHA-256 values are:
+
+- checkpoint: `803a850af3f18a8138d6f5029f6c1d459b0f15fb6d0c42f3e0c407810108e4e3`
+- evidence: `a2d8349bd6efcfc9eaca522661b24130529ad04fd08ab313ce20dbeeb3c35227`
+- report: `11d230a2d2c83bbf70997bbd2fd11189f6094d43fdd1717f2a7595e04d52b0f6`
+
+Independent reconstruction finds 3,240 witness-failed rows. Wrong-pointer
+counts per failed row range from one through six rather than the predecessor's
+single error. The dominant errors are adjacent ordinal swaps in after-witness
+positions, especially for cardinalities four through six. Endpoint ordinal
+embedding norm is 8.64 and ordinal rows six/seven have cosine 0.878; count
+embedding norm is 2.02. The address representation therefore became an
+entangled positional shortcut rather than a reliable tie-breaker.
+
+The architecture/version is closed. A post-hoc scale ablation may read this
+same consumed training probe solely to separate ordinal dominance from count
+interaction. It has no optimizer and cannot authorize a fresh board, promotion,
+or any reasoning claim.
+
+## Closed-checkpoint scale audit
+
+Read-only H100 job `694932` evaluates the immutable addressed endpoint on the
+same consumed probe with no optimizer. Report SHA-256 is
+`d958cc0507fe85a489a3b85368f52ed67cfda6caf9fc5efc8d686216f28f6934`.
+
+| Ordinal scale | Count scale | Witness | Joint | Relation |
+|---:|---:|---:|---:|---:|
+| 0.00 | 1.00 | 0.000% | 0.200% | 0.400% |
+| 0.25 | 1.00 | 1.1875% | 1.7125% | 9.075% |
+| 0.50 | 1.00 | 12.1125% | 21.150% | 21.1625% |
+| 0.75 | 1.00 | 34.225% | 40.7125% | 40.7875% |
+| 1.00 | 1.00 | 59.500% | 60.9125% | 60.9125% |
+| 1.50 | 1.00 | 70.425% | 69.3875% | 73.100% |
+| 1.00 | 0.00 | 0.4875% | 3.275% | 3.275% |
+| 0.00 | 0.00 | 0.000% | 0.275% | 0.3125% |
+
+Ordinal and count information are both necessary, and stronger ordinal signal
+helps rather than hurts. The failure comes from combining those embeddings with
+structural record/token memory before the shared key projection, not simply
+from excessive positional magnitude.
+
+## Factorized witness-route successor
+
+The distinct successor preserves the v1.1 structural dot-product logits and
+adds a centered/bounded `14 x 12 x 14` residual with twelve zero-initialized
+role gates only to witness routes. Its
+indices are record candidate count, semantic witness role, and candidate
+ordinal. The route has 2,364 learned scalars; all non-witness routes are
+unchanged even when the table is nonzero. Complete/trainable/headroom is
+185,534,660 / 11,131,868 / 14,465,340.
+
+It starts from the reconstructed confirmed parent, never either rejected
+canary. The old train-only data, 2,500-update budget, optimizer, thresholds,
+alpha/oracle controls, and `1/0/0` custody remain exact. Twenty-four focused
+tests plus Ruff, byte compilation, shell syntax, real-row alpha invariance,
+real-parent gradient coverage, and zero excluded leakage pass before source
+freeze. All four same-seed arms fit and are atomically checkpointed before the
+probe is scored: treatment, residual-disabled baseline, content-disabled
+structural-only, and physical-record-rotated shuffled-address. Treatment must
+beat baseline and shuffled address by at least +0.5pp witness rows. Failure
+closes the route; passing authorizes only a fresh-board test.
+<!-- END EMBEDDED SOURCE -->
 ---
 
 ## Embedded source 201: `R12_ER_RELATION_TENSOR_ADAPTER_PREREG.md`
@@ -41547,7 +47163,7 @@ development, and confirmation files.
 
 ## Frozen neural contract
 
-Treatment and the matched family-deranged arm each train 102 tensor names /
+Treatment and the matched family-deranged arm each train 102 tensor names / 
 12,152,855 parameters for 3,000 updates. Complete deployed size remains
 192,129,179 with 7,870,821 parameters of strict-200M headroom. Every setting,
 gate, threshold, control, and claim boundary is frozen in
@@ -45196,6 +50812,113 @@ cells and 18/18 reader cells. The worst final motor loss was
 The canary had no code path or argument for a base checkpoint, tokenizer,
 source board, development split, or confirmation split. These settings are
 therefore admitted for one post-source-commit fresh board.
+<!-- END EMBEDDED SOURCE -->
+
+---
+
+## Embedded source 252: `R12_ER_FACTORIZED_WITNESS_ROUTE_PREREG.md`
+
+Original source path: `R12_ER_FACTORIZED_WITNESS_ROUTE_PREREG.md`
+Original source size: 4,635 bytes
+
+<!-- BEGIN EMBEDDED SOURCE -->
+# R12 ER-TT Factorized Witness Route Preregistration
+
+## Status
+
+Pre-freeze, train-only architectural falsifier. It may read only the existing
+ER-TT `train.jsonl`. Development and confirmation are forbidden.
+
+## Closed predecessors
+
+Marginal-route v1.1 is rejected by one frozen gate at 89.925% complete witness
+pointers, despite 90.9375% packet/joint/relation, 97.0625% state, 98.5375%
+answer, 100% alpha invariance, and 100% oracle-route transport. All 806 failed
+rows contain exactly one adjacent occurrence error.
+
+The occurrence-addressed embedding repair is rejected more strongly at 59.500%
+witness pointers and 60.9125% packet/joint/relation. Its read-only scale audit,
+report SHA `d958cc0507fe85a489a3b85368f52ed67cfda6caf9fc5efc8d686216f28f6934`,
+shows:
+
+- zero ordinal information gives 0% witness rows;
+- zero count information gives 0.4875% witness rows;
+- endpoint scale 1.0 gives 59.500% witness / 60.9125% joint; and
+- ordinal scale 1.5 gives 70.425% witness / 69.3875% joint.
+
+The failure is not excess positional magnitude. Count and ordinal are both
+necessary, but adding their embeddings inside structural query/key memory
+entangles them and changes every route geometry. That architecture is closed.
+
+## Hypothesis
+
+Keep the v1.1 structural query/key dot products numerically unchanged. Add one
+zero-initialized residual bias only to witness-route logits. The bias is indexed
+by three model-visible, alpha-invariant discrete coordinates:
+
+1. opaque candidate count in the physical rule record;
+2. semantic witness role among six before and six after roles; and
+3. opaque candidate ordinal within that physical record.
+
+The table has shape `14 x 12 x 14`; twelve bounded role gates bring the total
+to 2,364 learned scalars. Table values pass through `tanh`, are centered across
+valid candidates, and are multiplied by `4*tanh(gate_role)`. The table starts
+small random while every gate starts at exact zero, making route logits exactly
+equal to v1.1 at initialization without blocking the first gate gradient. It
+receives ordinary source pointer supervision. It cannot read symbol identity, target
+relations, recurrent state, answer, executor output, development, or
+confirmation. Raw symbol bytes remain confined to exact marginal equality after
+routing. Declaration, initial, opcode, event, line, query, motor, and reader
+paths receive no address residual.
+
+This is a distinct factorized residual bus, not a scale patch or reuse of failed
+weights. Zero initialization must make every route logit exactly equal to the
+v1.1 architecture before fitting.
+
+## Architecture and budget
+
+- Parent: reconstructed confirmed witness-equality lineage; failed canary
+  checkpoints are forbidden as initialization.
+- New parameters: `14 x 12 x 14 + 12 = 2,364`.
+- Expected complete system: `185,534,660` parameters.
+- Expected trainable parameters: `11,131,868`.
+- Headroom below 200M: `14,465,340`.
+- Learned motor/reader parameters: zero/zero.
+
+## Data, optimization, and gates
+
+Use a new post-commit seed over the existing 48,000-row ER-TT training split.
+Fit 10,000 families and probe 2,000 disjoint families, four views each. Four
+same-seed arms receive identical confirmed-parent common initialization, rows,
+family order, two epochs, 2,500 updates, 32 rows/update, AdamW LR `2e-4`,
+100-step warmup, cosine decay, and no outcome supervision:
+
+1. factorized treatment;
+2. same-parameter baseline with the residual disabled;
+3. structural-only route with the content dot product removed; and
+4. shuffled-address control that rotates candidate ordinal by physical record
+   position while preserving count, parameter count, and compute.
+
+All unchanged gates must pass:
+
+- packet/state/answer/joint each at least 85%;
+- relation and complete witness-pointer rows each at least 90%;
+- events and HALT each at least 95%;
+- minimum cardinality-specific joint at least 75%;
+- every hard output exactly invariant on 8,000/8,000 alpha recodes;
+- oracle-route initial/relation/event/joint exactly 8,000/8,000;
+- exact parameter certificate below 200M;
+- unchanged confirmed parent; and
+- custody exactly train-only/development/confirmation `1/0/0`.
+
+Attribution also requires treatment witness rows to exceed the same-run
+baseline and shuffled-address control by at least 0.5 percentage points. The
+structural-only score is descriptive: a high score restricts the claim to a
+finite syntax route rather than content-grounded language compilation.
+
+Failure closes the factorized route. Passing authorizes only a separately
+committed fresh-board development test. It is not natural-language, broad, or
+unrestricted reasoning evidence.
 <!-- END EMBEDDED SOURCE -->
 
 ---

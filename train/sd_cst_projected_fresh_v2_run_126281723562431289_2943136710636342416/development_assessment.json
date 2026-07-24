@@ -1,0 +1,1144 @@
+{
+  "all_gates_pass": false,
+  "claim_boundary": "Bounded fresh-board source-deleted state transport. The nominal Shohin trunk is inactive in the projected compiler forward path.",
+  "confirmation_authorized": false,
+  "decision": "reject_projected_fresh_board",
+  "evaluation_sha256": "9bc40bf93591c02decc41bfe4ce5feeb00a4cfd2d94eaf9373407fa1be8b8d92",
+  "gate_config_sha256": "3bac8380892a2c352234a0144f5247376bfe2ff88c395ba111cbb31695617cb2",
+  "gates": {
+    "all_fields_overall": {
+      "direction": "at_least",
+      "pass": false,
+      "threshold": 0.98,
+      "value": 0.3333333333333333
+    },
+    "all_pointers_min_variant": {
+      "direction": "at_least",
+      "pass": false,
+      "threshold": 0.8,
+      "value": 0.0
+    },
+    "all_pointers_overall": {
+      "direction": "at_least",
+      "pass": false,
+      "threshold": 0.9,
+      "value": 0.4774305555555556
+    },
+    "autonomous_min_depth": {
+      "direction": "at_least",
+      "pass": false,
+      "threshold": 0.85,
+      "value": 0.0
+    },
+    "autonomous_min_variant": {
+      "direction": "at_least",
+      "pass": false,
+      "threshold": 0.9,
+      "value": 0.041666666666666664
+    },
+    "autonomous_overall": {
+      "direction": "at_least",
+      "pass": false,
+      "threshold": 0.9,
+      "value": 0.296875
+    },
+    "causal_opportunities": {
+      "direction": "at_least",
+      "pass": true,
+      "threshold": 0.15,
+      "value": 0.17447916666666666
+    },
+    "conditional_execution": {
+      "direction": "at_least",
+      "pass": true,
+      "threshold": 1.0,
+      "value": 1.0
+    },
+    "custody_and_hash_contract": {
+      "direction": "equal",
+      "pass": true,
+      "threshold": true,
+      "value": true
+    },
+    "every_causal_arm_matches_oracle": {
+      "direction": "at_least",
+      "pass": true,
+      "threshold": 1.0,
+      "value": 1.0
+    },
+    "every_observed_stop_bucket_exact": {
+      "direction": "equal",
+      "pass": true,
+      "threshold": true,
+      "value": true
+    },
+    "exact_map_one_stop_decoder_contract": {
+      "direction": "equal",
+      "pass": true,
+      "threshold": true,
+      "value": true
+    },
+    "exact_packet_min_depth": {
+      "direction": "at_least",
+      "pass": false,
+      "threshold": 0.9,
+      "value": 0.0
+    },
+    "exact_packet_min_variant": {
+      "direction": "at_least",
+      "pass": false,
+      "threshold": 0.9,
+      "value": 0.0
+    },
+    "exact_packet_overall": {
+      "direction": "at_least",
+      "pass": false,
+      "threshold": 0.95,
+      "value": 0.2916666666666667
+    },
+    "negative_answer": {
+      "direction": "at_most",
+      "pass": true,
+      "threshold": 0.45,
+      "value": 0.3350694444444444
+    },
+    "negative_state": {
+      "direction": "at_most",
+      "pass": true,
+      "threshold": 0.35,
+      "value": 0.2916666666666667
+    },
+    "pair_eligibility": {
+      "direction": "at_least",
+      "pass": false,
+      "threshold": 0.85,
+      "value": 0.0
+    },
+    "paired_consistency": {
+      "direction": "at_least",
+      "pass": false,
+      "threshold": 1.0,
+      "value": 0.0
+    },
+    "parameter_and_training_contract": {
+      "direction": "equal",
+      "pass": true,
+      "threshold": true,
+      "value": true
+    },
+    "post_stop_invariant": {
+      "direction": "equal",
+      "pass": true,
+      "threshold": 0,
+      "value": 0
+    },
+    "query_opportunities": {
+      "direction": "at_least",
+      "pass": true,
+      "threshold": 0.85,
+      "value": 1.0
+    },
+    "reset_freeze_negative": {
+      "direction": "at_most",
+      "pass": true,
+      "threshold": 0.75,
+      "value": 0.4817708333333333
+    },
+    "source_deletion": {
+      "direction": "equal",
+      "pass": true,
+      "threshold": true,
+      "value": true
+    },
+    "treatment_joint_advantage": {
+      "direction": "at_least",
+      "pass": false,
+      "threshold": 0.5,
+      "value": 0.2387152777777778
+    },
+    "treatment_packet_advantage": {
+      "direction": "at_least",
+      "pass": false,
+      "threshold": 0.5,
+      "value": 0.2860243055555556
+    }
+  },
+  "metrics": {
+    "causal_controls": {
+      "event_amount_flip": {
+        "exact": 2304,
+        "opportunities": 402,
+        "opportunity_rate": 0.17447916666666666,
+        "rate": 1.0,
+        "rows": 2304
+      },
+      "event_identity_rotation": {
+        "exact": 2304,
+        "opportunities": 1026,
+        "opportunity_rate": 0.4453125,
+        "rate": 1.0,
+        "rows": 2304
+      },
+      "event_kind_flip": {
+        "exact": 2304,
+        "opportunities": 1082,
+        "opportunity_rate": 0.4696180555555556,
+        "rate": 1.0,
+        "rows": 2304
+      },
+      "force_alive_post_stop": {
+        "exact": 2304,
+        "opportunities": 1602,
+        "opportunity_rate": 0.6953125,
+        "rate": 1.0,
+        "rows": 2304
+      },
+      "freeze": {
+        "exact": 2304,
+        "opportunities": 1926,
+        "opportunity_rate": 0.8359375,
+        "rate": 1.0,
+        "rows": 2304
+      },
+      "initial_state_rotation": {
+        "exact": 2304,
+        "opportunities": 595,
+        "opportunity_rate": 0.2582465277777778,
+        "rate": 1.0,
+        "rows": 2304
+      },
+      "operand_suffix_swap": {
+        "exact": 2304,
+        "opportunities": 650,
+        "opportunity_rate": 0.2821180555555556,
+        "rate": 1.0,
+        "rows": 2304
+      },
+      "post_stop_perturbation": {
+        "exact": 2304,
+        "opportunities": 0,
+        "opportunity_rate": 0.0,
+        "rate": 1.0,
+        "rows": 2304
+      },
+      "query_rotation": {
+        "exact": 2304,
+        "opportunities": 2304,
+        "opportunity_rate": 1.0,
+        "rate": 1.0,
+        "rows": 2304
+      },
+      "reset": {
+        "exact": 2304,
+        "opportunities": 1081,
+        "opportunity_rate": 0.4691840277777778,
+        "rate": 1.0,
+        "rows": 2304
+      },
+      "state_swap_after_step_0": {
+        "exact": 2304,
+        "opportunities": 873,
+        "opportunity_rate": 0.37890625,
+        "rate": 1.0,
+        "rows": 2304
+      }
+    },
+    "compiler": {
+      "binding_source_free_compiler": {
+        "amount": {
+          "correct": 2020,
+          "rate": 0.8767361111111112,
+          "rows": 2304
+        },
+        "identity": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2304
+        },
+        "initial": {
+          "correct": 320,
+          "rate": 0.1388888888888889,
+          "rows": 2304
+        },
+        "kind": {
+          "correct": 2017,
+          "rate": 0.8754340277777778,
+          "rows": 2304
+        },
+        "packet": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2304
+        },
+        "query": {
+          "correct": 768,
+          "rate": 0.3333333333333333,
+          "rows": 2304
+        }
+      },
+      "consumed_projected": {
+        "amount": {
+          "correct": 2020,
+          "rate": 0.8767361111111112,
+          "rows": 2304
+        },
+        "identity": {
+          "correct": 2016,
+          "rate": 0.875,
+          "rows": 2304
+        },
+        "initial": {
+          "correct": 2157,
+          "rate": 0.9361979166666666,
+          "rows": 2304
+        },
+        "kind": {
+          "correct": 2017,
+          "rate": 0.8754340277777778,
+          "rows": 2304
+        },
+        "packet": {
+          "correct": 672,
+          "rate": 0.2916666666666667,
+          "rows": 2304
+        },
+        "query": {
+          "correct": 768,
+          "rate": 0.3333333333333333,
+          "rows": 2304
+        }
+      },
+      "row_shuffled_labels": {
+        "amount": {
+          "correct": 2020,
+          "rate": 0.8767361111111112,
+          "rows": 2304
+        },
+        "identity": {
+          "correct": 56,
+          "rate": 0.024305555555555556,
+          "rows": 2304
+        },
+        "initial": {
+          "correct": 339,
+          "rate": 0.14713541666666666,
+          "rows": 2304
+        },
+        "kind": {
+          "correct": 2017,
+          "rate": 0.8754340277777778,
+          "rows": 2304
+        },
+        "packet": {
+          "correct": 13,
+          "rate": 0.005642361111111111,
+          "rows": 2304
+        },
+        "query": {
+          "correct": 768,
+          "rate": 0.3333333333333333,
+          "rows": 2304
+        }
+      },
+      "treatment": {
+        "amount": {
+          "correct": 2020,
+          "rate": 0.8767361111111112,
+          "rows": 2304
+        },
+        "identity": {
+          "correct": 2015,
+          "rate": 0.8745659722222222,
+          "rows": 2304
+        },
+        "initial": {
+          "correct": 2176,
+          "rate": 0.9444444444444444,
+          "rows": 2304
+        },
+        "kind": {
+          "correct": 2017,
+          "rate": 0.8754340277777778,
+          "rows": 2304
+        },
+        "packet": {
+          "correct": 672,
+          "rate": 0.2916666666666667,
+          "rows": 2304
+        },
+        "query": {
+          "correct": 768,
+          "rate": 0.3333333333333333,
+          "rows": 2304
+        }
+      }
+    },
+    "conditional_execution": {
+      "correct": 672,
+      "rate": 1.0,
+      "rows": 672,
+      "stop_buckets": {
+        "0": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 0
+        },
+        "1": {
+          "correct": 240,
+          "rate": 1.0,
+          "rows": 240
+        },
+        "2": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 0
+        },
+        "3": {
+          "correct": 96,
+          "rate": 1.0,
+          "rows": 96
+        },
+        "4": {
+          "correct": 240,
+          "rate": 1.0,
+          "rows": 240
+        },
+        "5": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 0
+        },
+        "6": {
+          "correct": 96,
+          "rate": 1.0,
+          "rows": 96
+        },
+        "7": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 0
+        }
+      }
+    },
+    "execution": {
+      "binding_source_free_compiler": {
+        "answer": {
+          "correct": 744,
+          "rate": 0.3229166666666667,
+          "rows": 2304
+        },
+        "joint": {
+          "correct": 207,
+          "rate": 0.08984375,
+          "rows": 2304
+        },
+        "state": {
+          "correct": 603,
+          "rate": 0.26171875,
+          "rows": 2304
+        }
+      },
+      "consumed_projected": {
+        "answer": {
+          "correct": 783,
+          "rate": 0.33984375,
+          "rows": 2304
+        },
+        "joint": {
+          "correct": 689,
+          "rate": 0.2990451388888889,
+          "rows": 2304
+        },
+        "state": {
+          "correct": 2061,
+          "rate": 0.89453125,
+          "rows": 2304
+        }
+      },
+      "row_shuffled_labels": {
+        "answer": {
+          "correct": 744,
+          "rate": 0.3229166666666667,
+          "rows": 2304
+        },
+        "joint": {
+          "correct": 134,
+          "rate": 0.058159722222222224,
+          "rows": 2304
+        },
+        "state": {
+          "correct": 416,
+          "rate": 0.18055555555555555,
+          "rows": 2304
+        }
+      },
+      "treatment": {
+        "answer": {
+          "correct": 763,
+          "rate": 0.3311631944444444,
+          "rows": 2304
+        },
+        "joint": {
+          "correct": 684,
+          "rate": 0.296875,
+          "rows": 2304
+        },
+        "state": {
+          "correct": 2055,
+          "rate": 0.8919270833333334,
+          "rows": 2304
+        }
+      }
+    },
+    "negative_controls": {
+      "binding_source_free_compiler": {
+        "answer_rate": 0.3229166666666667,
+        "state_rate": 0.26171875
+      },
+      "freeze": {
+        "answer_rate": 0.3467881944444444,
+        "state_rate": 0.15538194444444445
+      },
+      "reset": {
+        "answer_rate": 0.3463541666666667,
+        "state_rate": 0.4817708333333333
+      },
+      "shuffled_packet": {
+        "answer_rate": 0.3350694444444444,
+        "state_rate": 0.2534722222222222
+      },
+      "source_free_packet": {
+        "answer_rate": 0.3328993055555556,
+        "state_rate": 0.1644965277777778
+      },
+      "uniform": {
+        "answer_rate": 0.3333333333333333,
+        "state_rate": 0.2916666666666667
+      }
+    },
+    "paired": {
+      "binding_recode": {
+        "correct": 96,
+        "eligibility_rate": 0.3333333333333333,
+        "eligible": 96,
+        "families": 288,
+        "rate": 1.0
+      },
+      "paraphrase": {
+        "correct": 0,
+        "eligibility_rate": 0.0,
+        "eligible": 0,
+        "families": 288,
+        "rate": 0.0
+      },
+      "post_halt_suffix": {
+        "correct": 96,
+        "eligibility_rate": 0.3333333333333333,
+        "eligible": 96,
+        "families": 288,
+        "rate": 1.0
+      },
+      "query_swap": {
+        "correct": 0,
+        "eligibility_rate": 0.0,
+        "eligible": 0,
+        "families": 288,
+        "rate": 0.0
+      },
+      "storage_order_shuffle": {
+        "correct": 96,
+        "eligibility_rate": 0.3333333333333333,
+        "eligible": 96,
+        "families": 288,
+        "rate": 1.0
+      }
+    },
+    "pointer_by_variant": {
+      "binding": {
+        "binding_recode": {
+          "correct": 111,
+          "rate": 0.3854166666666667,
+          "rows": 288
+        },
+        "canonical": {
+          "correct": 111,
+          "rate": 0.3854166666666667,
+          "rows": 288
+        },
+        "order_counterfactual": {
+          "correct": 112,
+          "rate": 0.3888888888888889,
+          "rows": 288
+        },
+        "paraphrase": {
+          "correct": 259,
+          "rate": 0.8993055555555556,
+          "rows": 288
+        },
+        "post_halt_suffix": {
+          "correct": 119,
+          "rate": 0.4131944444444444,
+          "rows": 288
+        },
+        "query_swap": {
+          "correct": 111,
+          "rate": 0.3854166666666667,
+          "rows": 288
+        },
+        "stop_shift": {
+          "correct": 116,
+          "rate": 0.4027777777777778,
+          "rows": 288
+        },
+        "storage_order_shuffle": {
+          "correct": 161,
+          "rate": 0.5590277777777778,
+          "rows": 288
+        }
+      },
+      "event_entity": {
+        "binding_recode": {
+          "correct": 164,
+          "rate": 0.5694444444444444,
+          "rows": 288
+        },
+        "canonical": {
+          "correct": 176,
+          "rate": 0.6111111111111112,
+          "rows": 288
+        },
+        "order_counterfactual": {
+          "correct": 163,
+          "rate": 0.5659722222222222,
+          "rows": 288
+        },
+        "paraphrase": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 288
+        },
+        "post_halt_suffix": {
+          "correct": 162,
+          "rate": 0.5625,
+          "rows": 288
+        },
+        "query_swap": {
+          "correct": 176,
+          "rate": 0.6111111111111112,
+          "rows": 288
+        },
+        "stop_shift": {
+          "correct": 167,
+          "rate": 0.5798611111111112,
+          "rows": 288
+        },
+        "storage_order_shuffle": {
+          "correct": 165,
+          "rate": 0.5729166666666666,
+          "rows": 288
+        }
+      },
+      "initial_entity": {
+        "binding_recode": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "canonical": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "order_counterfactual": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "paraphrase": {
+          "correct": 41,
+          "rate": 0.1423611111111111,
+          "rows": 288
+        },
+        "post_halt_suffix": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "query_swap": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "stop_shift": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "storage_order_shuffle": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        }
+      },
+      "line": {
+        "binding_recode": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "canonical": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "order_counterfactual": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "paraphrase": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 288
+        },
+        "post_halt_suffix": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "query_swap": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "stop_shift": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "storage_order_shuffle": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        }
+      }
+    },
+    "pointers": {
+      "binding": {
+        "correct": 1100,
+        "rate": 0.4774305555555556,
+        "rows": 2304
+      },
+      "event_entity": {
+        "correct": 1173,
+        "rate": 0.5091145833333334,
+        "rows": 2304
+      },
+      "initial_entity": {
+        "correct": 2057,
+        "rate": 0.8927951388888888,
+        "rows": 2304
+      },
+      "line": {
+        "correct": 2016,
+        "rate": 0.875,
+        "rows": 2304
+      }
+    },
+    "raw_kind_diagnostics": {
+      "binding_source_free_compiler": {
+        "exact_kind": {
+          "correct": 2016,
+          "rate": 0.875,
+          "rows": 2304
+        },
+        "one_stop": {
+          "correct": 2206,
+          "rate": 0.9574652777777778,
+          "rows": 2304
+        }
+      },
+      "consumed_projected": {
+        "exact_kind": {
+          "correct": 2016,
+          "rate": 0.875,
+          "rows": 2304
+        },
+        "one_stop": {
+          "correct": 2206,
+          "rate": 0.9574652777777778,
+          "rows": 2304
+        }
+      },
+      "row_shuffled_labels": {
+        "exact_kind": {
+          "correct": 2016,
+          "rate": 0.875,
+          "rows": 2304
+        },
+        "one_stop": {
+          "correct": 2206,
+          "rate": 0.9574652777777778,
+          "rows": 2304
+        }
+      },
+      "treatment": {
+        "exact_kind": {
+          "correct": 2016,
+          "rate": 0.875,
+          "rows": 2304
+        },
+        "one_stop": {
+          "correct": 2206,
+          "rate": 0.9574652777777778,
+          "rows": 2304
+        }
+      }
+    },
+    "treatment_by_depth": {
+      "answer": {
+        "1": {
+          "correct": 254,
+          "rate": 0.6614583333333334,
+          "rows": 384
+        },
+        "2": {
+          "correct": 14,
+          "rate": 0.036458333333333336,
+          "rows": 384
+        },
+        "3": {
+          "correct": 113,
+          "rate": 0.2942708333333333,
+          "rows": 384
+        },
+        "4": {
+          "correct": 253,
+          "rate": 0.6588541666666666,
+          "rows": 384
+        },
+        "5": {
+          "correct": 18,
+          "rate": 0.046875,
+          "rows": 384
+        },
+        "6": {
+          "correct": 111,
+          "rate": 0.2890625,
+          "rows": 384
+        }
+      },
+      "joint": {
+        "1": {
+          "correct": 245,
+          "rate": 0.6380208333333334,
+          "rows": 384
+        },
+        "2": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 384
+        },
+        "3": {
+          "correct": 96,
+          "rate": 0.25,
+          "rows": 384
+        },
+        "4": {
+          "correct": 247,
+          "rate": 0.6432291666666666,
+          "rows": 384
+        },
+        "5": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 384
+        },
+        "6": {
+          "correct": 96,
+          "rate": 0.25,
+          "rows": 384
+        }
+      },
+      "packet": {
+        "1": {
+          "correct": 240,
+          "rate": 0.625,
+          "rows": 384
+        },
+        "2": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 384
+        },
+        "3": {
+          "correct": 96,
+          "rate": 0.25,
+          "rows": 384
+        },
+        "4": {
+          "correct": 240,
+          "rate": 0.625,
+          "rows": 384
+        },
+        "5": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 384
+        },
+        "6": {
+          "correct": 96,
+          "rate": 0.25,
+          "rows": 384
+        }
+      },
+      "state": {
+        "1": {
+          "correct": 341,
+          "rate": 0.8880208333333334,
+          "rows": 384
+        },
+        "2": {
+          "correct": 339,
+          "rate": 0.8828125,
+          "rows": 384
+        },
+        "3": {
+          "correct": 345,
+          "rate": 0.8984375,
+          "rows": 384
+        },
+        "4": {
+          "correct": 343,
+          "rate": 0.8932291666666666,
+          "rows": 384
+        },
+        "5": {
+          "correct": 340,
+          "rate": 0.8854166666666666,
+          "rows": 384
+        },
+        "6": {
+          "correct": 347,
+          "rate": 0.9036458333333334,
+          "rows": 384
+        }
+      }
+    },
+    "treatment_by_variant": {
+      "answer": {
+        "binding_recode": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "canonical": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "order_counterfactual": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "paraphrase": {
+          "correct": 91,
+          "rate": 0.3159722222222222,
+          "rows": 288
+        },
+        "post_halt_suffix": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "query_swap": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "stop_shift": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "storage_order_shuffle": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        }
+      },
+      "joint": {
+        "binding_recode": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "canonical": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "order_counterfactual": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "paraphrase": {
+          "correct": 12,
+          "rate": 0.041666666666666664,
+          "rows": 288
+        },
+        "post_halt_suffix": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "query_swap": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "stop_shift": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "storage_order_shuffle": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        }
+      },
+      "packet": {
+        "binding_recode": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "canonical": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "order_counterfactual": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "paraphrase": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 288
+        },
+        "post_halt_suffix": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "query_swap": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "stop_shift": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        },
+        "storage_order_shuffle": {
+          "correct": 96,
+          "rate": 0.3333333333333333,
+          "rows": 288
+        }
+      },
+      "state": {
+        "binding_recode": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "canonical": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "order_counterfactual": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "paraphrase": {
+          "correct": 39,
+          "rate": 0.13541666666666666,
+          "rows": 288
+        },
+        "post_halt_suffix": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "query_swap": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "stop_shift": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        },
+        "storage_order_shuffle": {
+          "correct": 288,
+          "rate": 1.0,
+          "rows": 288
+        }
+      }
+    },
+    "treatment_raw_one_stop_by_variant": {
+      "binding_recode": {
+        "correct": 288,
+        "rate": 1.0,
+        "rows": 288
+      },
+      "canonical": {
+        "correct": 288,
+        "rate": 1.0,
+        "rows": 288
+      },
+      "order_counterfactual": {
+        "correct": 288,
+        "rate": 1.0,
+        "rows": 288
+      },
+      "paraphrase": {
+        "correct": 190,
+        "rate": 0.6597222222222222,
+        "rows": 288
+      },
+      "post_halt_suffix": {
+        "correct": 288,
+        "rate": 1.0,
+        "rows": 288
+      },
+      "query_swap": {
+        "correct": 288,
+        "rate": 1.0,
+        "rows": 288
+      },
+      "stop_shift": {
+        "correct": 288,
+        "rate": 1.0,
+        "rows": 288
+      },
+      "storage_order_shuffle": {
+        "correct": 288,
+        "rate": 1.0,
+        "rows": 288
+      }
+    }
+  },
+  "protocol": "r12_sd_cst_projected_fresh_v2",
+  "schema": "r12_sd_cst_projected_fresh_assessment_v2",
+  "split": "sd_cst_development"
+}

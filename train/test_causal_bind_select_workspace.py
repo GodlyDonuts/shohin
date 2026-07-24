@@ -142,24 +142,28 @@ def test_binding_and_operator_controls_are_independently_causal() -> None:
     query = torch.randn(2, 5, 24)
     state, _ = workspace.compile_world(world)
     state = workspace.seal_state(state)
-    treatment, _, treatment_diagnostics = workspace.execute_query(
-        query, workspace=state
-    )
-    binding, _, binding_diagnostics = workspace.execute_query(
-        query,
-        workspace=state,
-        controls=WorkspaceControls(binding_permutation=(1, 2, 3, 0)),
-    )
-    operator, _, operator_diagnostics = workspace.execute_query(
-        query,
-        workspace=state,
-        controls=WorkspaceControls(operator_permutation=(3, 0, 1, 2)),
-    )
-    zero, _, _ = workspace.execute_query(
-        query,
-        workspace=state,
-        controls=WorkspaceControls(zero_workspace=True),
-    )
+    with torch.no_grad():
+        treatment, _, treatment_diagnostics = workspace.execute_query(
+            query, workspace=state
+        )
+        binding, _, binding_diagnostics = workspace.execute_query(
+            query,
+            workspace=state,
+            controls=WorkspaceControls(binding_permutation=(1, 2, 3, 0)),
+            assessment_only=True,
+        )
+        operator, _, operator_diagnostics = workspace.execute_query(
+            query,
+            workspace=state,
+            controls=WorkspaceControls(operator_permutation=(3, 0, 1, 2)),
+            assessment_only=True,
+        )
+        zero, _, _ = workspace.execute_query(
+            query,
+            workspace=state,
+            controls=WorkspaceControls(zero_workspace=True),
+            assessment_only=True,
+        )
     assert not torch.equal(treatment, binding)
     assert not torch.equal(treatment, operator)
     assert not torch.equal(treatment, zero)
@@ -176,6 +180,139 @@ def test_binding_and_operator_controls_are_independently_causal() -> None:
             -1,
             operator_index,
         ),
+    )
+
+
+def test_hard_binding_and_operator_forward_keep_straight_through_gradients() -> None:
+    workspace = _active_workspace()
+    torch.manual_seed(20260723471)
+    world = torch.randn(3, 7, 24)
+    query = torch.randn(3, 4, 24)
+    state, _ = workspace.compile_world(world)
+    output, _, diagnostics = workspace.execute_query(
+        query,
+        workspace=state,
+        allow_unsealed_for_mechanism_fit=True,
+    )
+
+    for distribution in (
+        diagnostics.bindings,
+        diagnostics.operator_probabilities,
+    ):
+        assert torch.all((distribution == 0) | (distribution == 1))
+        assert torch.equal(
+            distribution.sum(dim=-1),
+            torch.ones_like(distribution[..., 0]),
+        )
+
+    output.square().mean().backward()
+    assert workspace.key_projection.weight.grad is not None
+    assert workspace.operator_selector.weight.grad is not None
+    assert workspace.key_projection.weight.grad.abs().sum() > 0
+    assert workspace.operator_selector.weight.grad.abs().sum() > 0
+
+
+def test_selected_slot_scramble_changes_crafted_output_but_discarded_does_not() -> None:
+    workspace = CausalBindSelectWorkspace(_small_config())
+    with torch.no_grad():
+        workspace.key_projection.weight.zero_()
+        workspace.value_projection.weight.zero_()
+        workspace.operator_selector.weight.zero_()
+        workspace.operator_selector.bias.fill_(-100.0)
+        workspace.operator_selector.bias[0] = 100.0
+        workspace.operator_down.zero_()
+        workspace.operator_up.zero_()
+        workspace.read_projection.weight.zero_()
+        workspace.read_projection.weight[:16].copy_(torch.eye(16))
+        workspace.read_gate.fill_(5.0)
+
+    slots = torch.stack(
+        (
+            torch.arange(1, 17, dtype=torch.float32),
+            torch.arange(101, 117, dtype=torch.float32),
+            torch.arange(201, 217, dtype=torch.float32),
+            torch.arange(301, 317, dtype=torch.float32),
+        )
+    ).unsqueeze(0)
+    state = WorkspaceState(slots=slots, token_position=145, sealed=True)
+    query = torch.zeros(1, 1, 24)
+
+    with torch.no_grad():
+        treatment, _, diagnostics = workspace.execute_query(query, workspace=state)
+        selected, _, _ = workspace.execute_query(
+            query,
+            workspace=state,
+            controls=WorkspaceControls(scramble_selected_slot=True),
+            assessment_only=True,
+        )
+        discarded, _, _ = workspace.execute_query(
+            query,
+            workspace=state,
+            controls=WorkspaceControls(scramble_discarded_slots=True),
+            assessment_only=True,
+        )
+
+    assert torch.equal(
+        diagnostics.bindings,
+        torch.tensor([[[1.0, 0.0, 0.0, 0.0]]]),
+    )
+    assert not torch.equal(treatment, selected)
+    assert torch.equal(treatment, discarded)
+
+
+def test_interventions_are_assessment_only_and_mutually_exclusive() -> None:
+    workspace = _active_workspace()
+    hidden = torch.randn(2, 3, 24)
+    state, _ = workspace.compile_world(hidden)
+    state = workspace.seal_state(state)
+    control = WorkspaceControls(scramble_selected_slot=True)
+
+    with pytest.raises(WorkspaceContractError, match="assessment-only"):
+        workspace.execute_query(hidden, workspace=state, controls=control)
+    with pytest.raises(WorkspaceContractError, match="gradients to be disabled"):
+        workspace.execute_query(
+            hidden,
+            workspace=state,
+            controls=control,
+            assessment_only=True,
+        )
+    with pytest.raises(WorkspaceContractError, match="mutually exclusive"):
+        with torch.no_grad():
+            workspace.execute_query(
+                hidden,
+                workspace=state,
+                controls=WorkspaceControls(
+                    scramble_selected_slot=True,
+                    scramble_discarded_slots=True,
+                ),
+                assessment_only=True,
+            )
+    with pytest.raises(WorkspaceContractError, match="hard selected binding"):
+        with torch.no_grad():
+            workspace.execute_query(
+                hidden,
+                workspace=state,
+                controls=WorkspaceControls(
+                    uniform_binding=True,
+                    scramble_selected_slot=True,
+                ),
+                assessment_only=True,
+            )
+    with torch.no_grad():
+        output, _, _ = workspace.execute_query(
+            hidden,
+            workspace=state,
+            controls=control,
+            assessment_only=True,
+        )
+    assert output.requires_grad is False
+    assert (
+        "controls"
+        not in inspect.signature(CausalWorkspaceGPT.forward_mechanism_fit).parameters
+    )
+    assert (
+        "controls"
+        in inspect.signature(CausalWorkspaceGPT.forward_staged_controlled).parameters
     )
 
 
@@ -450,6 +587,41 @@ def test_default_staged_path_detaches_compiler_but_fit_path_reaches_it() -> None
     assert wrapper.workspace.recurrent_update.weight.grad is not None
     assert wrapper.workspace.initial_slots.grad.abs().sum() > 0
     assert wrapper.workspace.recurrent_update.weight.grad.abs().sum() > 0
+
+
+def test_public_process_boundary_compiles_without_query_and_executes_without_world() -> (
+    None
+):
+    torch.manual_seed(202607235019)
+    base = GPT(
+        GPTConfig(
+            vocab_size=64,
+            n_layer=4,
+            n_head=4,
+            n_kv_head=2,
+            d_model=24,
+            d_ff=48,
+            seq_len=32,
+            zloss=0.0,
+        )
+    )
+    wrapper = CausalWorkspaceGPT(base, _small_config())
+    world = torch.randint(0, 64, (2, 7))
+    query = torch.randint(0, 64, (2, 5))
+    state = wrapper.compile_world_state(world)
+    assert state.sealed is True
+    assert state.token_position == 7
+    logits, diagnostics = wrapper.execute_workspace_state(state, query)
+    assert logits.shape == (2, 5, 64)
+    assert diagnostics.bindings.shape == (2, 5, 4)
+
+    with torch.no_grad():
+        controlled, _ = wrapper.execute_workspace_state(
+            state,
+            query,
+            controls=WorkspaceControls(scramble_selected_slot=True),
+        )
+    assert controlled.shape == logits.shape
 
 
 def test_wrapper_construction_does_not_mutate_base_tensors() -> None:

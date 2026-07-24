@@ -1,0 +1,10 @@
+{
+  "access_number": 1,
+  "board_report_sha256": "64ea4c0e19ea029102af240d44242c830d7b014e49a59af09a836b2d3efb6010",
+  "board_source_commit": "bd77c0fafdbc527688ba57aedd74ccdfbe2ed1cf",
+  "protocol": "R12-ER-TT-v1",
+  "schema": "r12_er_relation_tensor_development_access_v1",
+  "scientific_source_commit": "3bd8a329ab94f3426be61ae87db92a14a285f2f7",
+  "split": "er_tt_development",
+  "split_sha256": "59be0c40656d5f7cedbbf5cea8e384896ed0eeb5cbed5083df4ac1281ff81090"
+}

@@ -1,0 +1,155 @@
+{
+  "decision": "reject_s9_1_alpha_closed_v1",
+  "evaluation_sha256": "e0d77a32cbab9276e0cbc048a08f698594eca1fa4d98ff912c56ef33dbfcfa5c",
+  "gates": {
+    "all_rows_scored": true,
+    "answer_at_least_85pct": true,
+    "class_membership_exact_at_least_95pct": true,
+    "class_reindex_bit_identical": true,
+    "complete_relation_tuple_at_least_90pct": true,
+    "complete_system_below_150m": true,
+    "early_nil_drop_at_least_30pp": true,
+    "equal_budget_48k_views_750_updates": true,
+    "every_depth_state_at_least_70pct": true,
+    "exact_graph_at_least_85pct": true,
+    "exact_graph_plus_20pp_over_s8_1": true,
+    "exact_graph_plus_5pp_over_no_class": true,
+    "one_development_zero_confirmation_access": true,
+    "one_witness_drop_at_least_30pp": true,
+    "operation_nonce_all_valid_eligible": false,
+    "operation_nonce_answer_bit_identical": true,
+    "operation_nonce_graph_bit_identical": false,
+    "operation_nonce_state_bit_identical": true,
+    "relation_storage_reindex_bit_identical": true,
+    "reversed_links_drop_at_least_40pp": true,
+    "shuffled_exact_below_10pct": true,
+    "source_free_exact_below_10pct": true,
+    "span_f1_at_least_98pct": true,
+    "state_at_least_80pct": true,
+    "state_reset_drop_at_least_20pp": true,
+    "structured_exact_graph_at_least_95pct": true,
+    "structured_exact_graph_no_regression_from_s9": true,
+    "swapped_cards_drop_at_least_50pp": true,
+    "unconstrained_ablation_reported": true,
+    "uniform_exact_zero": true,
+    "valid_graph_at_least_90pct": true
+  },
+  "schema": "r12_s9_1_alpha_closed_development_assessment_v1",
+  "scores": {
+    "graph": {
+      "exact": 2025,
+      "exact_accuracy": 0.98876953125,
+      "no_class_exact": 1766,
+      "no_class_exact_accuracy": 0.8623046875,
+      "shuffled_exact": 0,
+      "shuffled_exact_accuracy": 0.0,
+      "source_free_exact": 0,
+      "source_free_exact_accuracy": 0.0,
+      "unconstrained_exact": 2023,
+      "unconstrained_exact_accuracy": 0.98779296875,
+      "uniform_exact": 0,
+      "uniform_exact_accuracy": 0.0,
+      "valid": 2025,
+      "valid_accuracy": 0.98876953125
+    },
+    "invariance": {
+      "class_reindex": 2025,
+      "eligible": 2025,
+      "nonce_answer_identical": 2024,
+      "nonce_eligible": 2024,
+      "nonce_graph_identical": 2022,
+      "nonce_state_identical": 2024,
+      "relation_storage_reindex": 2025
+    },
+    "no_class": {
+      "answer": 1766,
+      "answer_accuracy": 0.8623046875,
+      "depth": {
+        "3": {
+          "accuracy": 0.7214076246334311,
+          "correct": 246,
+          "total": 341
+        },
+        "4": {
+          "accuracy": 0.8357771260997068,
+          "correct": 285,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.8450292397660819,
+          "correct": 289,
+          "total": 342
+        },
+        "6": {
+          "accuracy": 0.9035087719298246,
+          "correct": 309,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.9239766081871345,
+          "correct": 316,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 0.9441176470588235,
+          "correct": 321,
+          "total": 340
+        }
+      },
+      "state": 1766,
+      "state_accuracy": 0.8623046875,
+      "total": 2048
+    },
+    "span": {
+      "class_exact": 2025,
+      "class_exact_accuracy": 0.98876953125,
+      "f1": 0.9940286205324261,
+      "gold": 114725,
+      "precision": 1.0,
+      "predicted": 113363,
+      "recall": 0.9881281324907387,
+      "row_exact": 2025,
+      "row_exact_accuracy": 0.98876953125,
+      "tp": 113363
+    },
+    "treatment": {
+      "answer": 2025,
+      "answer_accuracy": 0.98876953125,
+      "depth": {
+        "3": {
+          "accuracy": 0.9882697947214076,
+          "correct": 337,
+          "total": 341
+        },
+        "4": {
+          "accuracy": 0.9794721407624634,
+          "correct": 334,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.9912280701754386,
+          "correct": 339,
+          "total": 342
+        },
+        "6": {
+          "accuracy": 0.9912280701754386,
+          "correct": 339,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.9941520467836257,
+          "correct": 340,
+          "total": 342
+        },
+        "8": {
+          "accuracy": 0.9882352941176471,
+          "correct": 336,
+          "total": 340
+        }
+      },
+      "state": 2025,
+      "state_accuracy": 0.98876953125,
+      "total": 2048
+    }
+  }
+}

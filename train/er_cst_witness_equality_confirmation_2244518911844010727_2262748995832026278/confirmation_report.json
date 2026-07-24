@@ -1,0 +1,1175 @@
+{
+  "all_gates_pass": true,
+  "artifacts": {
+    "authorization_sha256": "84e99ce3747196c3457292890102c807bc154ebe21444d3d92eed1c569b2384f",
+    "checkpoint_sha256": "917c1a1fce67c02258d0f90f04398ab433d18ba63c2dca92450cc5856c022ae7",
+    "development_assessment_sha256": "29e4349225ed9523ec3b8096cd2cd16ef1b55c727797421a1ac0b39c042f11b2",
+    "evidence_sha256": "2138a4b631d0ed0c28388edaf313726b856a8ce2afecdb1122e1adb516375090"
+  },
+  "authorization": {
+    "board_report_sha256": "22cb355e58e9f3b8125a57c60c7aafb7aadead4406abc426da368e3b3b2cff75",
+    "checkpoint_sha256": "917c1a1fce67c02258d0f90f04398ab433d18ba63c2dca92450cc5856c022ae7",
+    "confirmation_accesses": 0,
+    "development_accesses": 1,
+    "development_assessment_sha256": "29e4349225ed9523ec3b8096cd2cd16ef1b55c727797421a1ac0b39c042f11b2",
+    "development_decision": "authorize_one_sealed_confirmation",
+    "development_evidence_sha256": "1a7504eb9b08d7d123e89705360f2eb37a861f5cd75b3ebc73570c8e904327fb",
+    "development_ledger_sha256": "5b6e233b3cc9d3cf49a32525ca11f6c6f846005486df67a252e9ca4ec36b4db3",
+    "development_report_sha256": "d295f8f67f32916386e04674fc782a0982b9b1b55f7b82aa1eaab6f59bb1ae35",
+    "evaluator_source": {
+      "commit": "4a930c032adc04ec580ce7272df473365fe57a4a",
+      "files": {
+        "R12_ER_CST_WITNESS_EQUALITY_CONFIRMATION_PREREG.md": "b581ec90ef934e1a8c730833725c011a20e7af43132fb28d10bb87b910754efd",
+        "train/assess_er_cst_witness_equality_confirmation.py": "d5a27f1a5c858d24b720ee8c002747ec34e836f7d71affb561303b42433880ba",
+        "train/confirm_er_cst_witness_equality.py": "2855f9ef5233993d83cf3c600fd4e489129a73aa0979daa64ab6e1a655cb1f46",
+        "train/jobs/er_cst_witness_equality_confirmation.sbatch": "6c96606637e47943cae30c2833e1da86c9b3f13b3f5c067a15a50d7509ddd9d8"
+      },
+      "sha256": "1c710acd0e5a4cec3db240f6f21836867602d6e39a49fcbf3b024732d9c6d26d"
+    },
+    "protocol": "R12-ER-CST-WEB-v1.1",
+    "schema": "r12_er_cst_witness_equality_confirmation_authorization_v1_1",
+    "scientific_source": {
+      "commit": "87d53b53462d8d15660663238fd33886c010efb7",
+      "files": {
+        "R12_ER_CST_WITNESS_EQUALITY_BUS_PREREG.md": "da6acbe73e9474a88e33061c5b119fd2821ba4c31c9f1c3894164b65806fcf07",
+        "pipeline/build_er_cst_fresh_board.py": "946bfc84e87c52bda617e33c8be25e216db62bfa29b48e4c80ede72e8de0925e",
+        "pipeline/build_er_cst_witness_equality_board.py": "c6b23584381503b13786ae000986cc231217aec80bcb0783fa427033a2028f6d",
+        "pipeline/er_cst_fresh_renderers.py": "5f409fbe5bf18605da626e6cf50ff492165c33a1f89ae4842a7c3773dd80d7ed",
+        "train/assess_er_cst_witness_equality.py": "e8b06ed57aceb3ba961e1f5a14c30797cf9cddfc466a844fd41c8ae548e7dfe8",
+        "train/er_cst_fresh.py": "d272483487822ba838195a7761e070bc68acca585bb556dd205c215f59e627f7",
+        "train/er_cst_rule_card_adapter.py": "f306ca5be9cb46d3cee6ba1c5fb1d8b9dc46ed548a9b86041caccae515476de3",
+        "train/er_cst_witness_equality.py": "665d8e2b969876e0f39c5ae9af4beee297eb0c671d3e79e8e97ab13a4beb0518",
+        "train/er_cst_witness_equality_bus.py": "f6be88ffd893db0d62dcf637e2a42eb50ad9e1171ce1f4fc3e1acecb3b995452",
+        "train/jobs/er_cst_witness_equality.sbatch": "113456af322ed7f7a137e413e5b10b87ccab481fe58214eb86ca3c139ce77206",
+        "train/pilot_er_cst_rule_card_adapter.py": "778003f2ea92d0b8f21fe4283c1c998e6c55b42ac8d4ef364e27bcf18cc14a4b",
+        "train/pilot_er_cst_witness_equality.py": "b246b67ad6d396407a9ab98300636f13071e2530340bd287dc947e25c30fd73c",
+        "train/pilot_er_cst_witness_equality_bus.py": "6b4f292ca34f22e551f6b5519b8bde121981d6cab85095b362c9705973793281"
+      },
+      "sha256": "4f32348020163dcec4eeee970443120ca652be63ac3056d7b4c85cf9c2c1a6ac"
+    }
+  },
+  "claim_boundary": "Confirmed bounded fresh episodic S3 rule inference by learned witness equality, source-deleted categorical composition, internal halt, and late-query readout. This is not unrestricted language grounding, arbitrary algorithms, arithmetic, planning, or broad general reasoning.",
+  "custody": {
+    "confirmation_accesses": 1,
+    "confirmation_ledger": {
+      "path": "/lustre/fs1/home/sa305415/shohin/artifacts/r12/er_cst_witness_equality_board_2244518911844010727/access/er_cst_witness_confirmation_6593bb17690fc72e5392b953af75f8686a92e799bcd600307affcb7fc0080c4d.json",
+      "sha256": "137a88106c2fffb003c6837aab153496538cd8534f9f5fb5bede9d49bc30270e"
+    },
+    "development_accesses": 1
+  },
+  "decision": "confirm_er_cst_witness_equality_v1_1",
+  "evaluator_source_commit": "4a930c032adc04ec580ce7272df473365fe57a4a",
+  "gates": {
+    "all_packet_fields_at_least_95pct": true,
+    "all_pointers_at_least_90pct": true,
+    "complete_system_below_200m": true,
+    "confirmed_parent_unchanged": true,
+    "development_one_confirmation_one": true,
+    "finite_motor_and_reader_certificates_exact": true,
+    "negative_packets_at_most_35pct": true,
+    "negative_states_at_most_40pct": true,
+    "treatment_joint_advantage_at_least_50pp": true,
+    "treatment_min_depth_joint_at_least_80pct": true,
+    "treatment_min_renderer_joint_at_least_85pct": true,
+    "treatment_packet_advantage_at_least_50pp": true,
+    "treatment_packet_at_least_90pct": true,
+    "treatment_state_answer_joint_at_least_90pct": true
+  },
+  "metrics": {
+    "equality_ablated": {
+      "by_depth": {
+        "1": {
+          "answer": {
+            "correct": 118,
+            "rate": 0.4609375,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 66,
+            "rate": 0.2578125,
+            "rows": 256
+          }
+        },
+        "2": {
+          "answer": {
+            "correct": 80,
+            "rate": 0.3125,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 38,
+            "rate": 0.1484375,
+            "rows": 256
+          }
+        },
+        "3": {
+          "answer": {
+            "correct": 90,
+            "rate": 0.3515625,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 35,
+            "rate": 0.13671875,
+            "rows": 256
+          }
+        },
+        "4": {
+          "answer": {
+            "correct": 97,
+            "rate": 0.37890625,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 37,
+            "rate": 0.14453125,
+            "rows": 256
+          }
+        },
+        "5": {
+          "answer": {
+            "correct": 94,
+            "rate": 0.3671875,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 37,
+            "rate": 0.14453125,
+            "rows": 256
+          }
+        },
+        "6": {
+          "answer": {
+            "correct": 75,
+            "rate": 0.29296875,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 43,
+            "rate": 0.16796875,
+            "rows": 256
+          }
+        },
+        "7": {
+          "answer": {
+            "correct": 86,
+            "rate": 0.3359375,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 43,
+            "rate": 0.16796875,
+            "rows": 256
+          }
+        },
+        "8": {
+          "answer": {
+            "correct": 65,
+            "rate": 0.25390625,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 36,
+            "rate": 0.140625,
+            "rows": 256
+          }
+        }
+      },
+      "by_renderer": {
+        "er-fresh-d0w1e0q0-v1": {
+          "answer": {
+            "correct": 173,
+            "rate": 0.337890625,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 87,
+            "rate": 0.169921875,
+            "rows": 512
+          }
+        },
+        "er-fresh-d0w1e1q1-v1": {
+          "answer": {
+            "correct": 184,
+            "rate": 0.359375,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 90,
+            "rate": 0.17578125,
+            "rows": 512
+          }
+        },
+        "er-fresh-d1w0e0q0-v1": {
+          "answer": {
+            "correct": 168,
+            "rate": 0.328125,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 77,
+            "rate": 0.150390625,
+            "rows": 512
+          }
+        },
+        "er-fresh-d1w0e1q1-v1": {
+          "answer": {
+            "correct": 180,
+            "rate": 0.3515625,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 81,
+            "rate": 0.158203125,
+            "rows": 512
+          }
+        }
+      },
+      "overall": {
+        "answer": {
+          "correct": 705,
+          "rate": 0.34423828125,
+          "rows": 2048
+        },
+        "binding_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "cards": {
+          "correct": 3,
+          "rate": 0.00146484375,
+          "rows": 2048
+        },
+        "events": {
+          "correct": 1024,
+          "rate": 0.5,
+          "rows": 2048
+        },
+        "halt": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "initial": {
+          "correct": 327,
+          "rate": 0.15966796875,
+          "rows": 2048
+        },
+        "initial_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "joint": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "line_pointer": {
+          "correct": 601,
+          "rate": 0.29345703125,
+          "rows": 2048
+        },
+        "packet": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "query": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "query_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "state": {
+          "correct": 335,
+          "rate": 0.16357421875,
+          "rows": 2048
+        },
+        "witness_pointer": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        }
+      }
+    },
+    "family_deranged": {
+      "by_depth": {
+        "1": {
+          "answer": {
+            "correct": 80,
+            "rate": 0.3125,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 2,
+            "rate": 0.0078125,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 2,
+            "rate": 0.0078125,
+            "rows": 256
+          },
+          "state": {
+            "correct": 36,
+            "rate": 0.140625,
+            "rows": 256
+          }
+        },
+        "2": {
+          "answer": {
+            "correct": 88,
+            "rate": 0.34375,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 38,
+            "rate": 0.1484375,
+            "rows": 256
+          }
+        },
+        "3": {
+          "answer": {
+            "correct": 80,
+            "rate": 0.3125,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 33,
+            "rate": 0.12890625,
+            "rows": 256
+          }
+        },
+        "4": {
+          "answer": {
+            "correct": 86,
+            "rate": 0.3359375,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 49,
+            "rate": 0.19140625,
+            "rows": 256
+          }
+        },
+        "5": {
+          "answer": {
+            "correct": 106,
+            "rate": 0.4140625,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 55,
+            "rate": 0.21484375,
+            "rows": 256
+          }
+        },
+        "6": {
+          "answer": {
+            "correct": 77,
+            "rate": 0.30078125,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 39,
+            "rate": 0.15234375,
+            "rows": 256
+          }
+        },
+        "7": {
+          "answer": {
+            "correct": 90,
+            "rate": 0.3515625,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 46,
+            "rate": 0.1796875,
+            "rows": 256
+          }
+        },
+        "8": {
+          "answer": {
+            "correct": 110,
+            "rate": 0.4296875,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 59,
+            "rate": 0.23046875,
+            "rows": 256
+          }
+        }
+      },
+      "by_renderer": {
+        "er-fresh-d0w1e0q0-v1": {
+          "answer": {
+            "correct": 183,
+            "rate": 0.357421875,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 1,
+            "rate": 0.001953125,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 1,
+            "rate": 0.001953125,
+            "rows": 512
+          },
+          "state": {
+            "correct": 94,
+            "rate": 0.18359375,
+            "rows": 512
+          }
+        },
+        "er-fresh-d0w1e1q1-v1": {
+          "answer": {
+            "correct": 181,
+            "rate": 0.353515625,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 1,
+            "rate": 0.001953125,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 1,
+            "rate": 0.001953125,
+            "rows": 512
+          },
+          "state": {
+            "correct": 94,
+            "rate": 0.18359375,
+            "rows": 512
+          }
+        },
+        "er-fresh-d1w0e0q0-v1": {
+          "answer": {
+            "correct": 177,
+            "rate": 0.345703125,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 84,
+            "rate": 0.1640625,
+            "rows": 512
+          }
+        },
+        "er-fresh-d1w0e1q1-v1": {
+          "answer": {
+            "correct": 176,
+            "rate": 0.34375,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 83,
+            "rate": 0.162109375,
+            "rows": 512
+          }
+        }
+      },
+      "overall": {
+        "answer": {
+          "correct": 717,
+          "rate": 0.35009765625,
+          "rows": 2048
+        },
+        "binding_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "cards": {
+          "correct": 4,
+          "rate": 0.001953125,
+          "rows": 2048
+        },
+        "events": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "halt": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "initial": {
+          "correct": 592,
+          "rate": 0.2890625,
+          "rows": 2048
+        },
+        "initial_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "joint": {
+          "correct": 2,
+          "rate": 0.0009765625,
+          "rows": 2048
+        },
+        "line_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "packet": {
+          "correct": 2,
+          "rate": 0.0009765625,
+          "rows": 2048
+        },
+        "query": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "query_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "state": {
+          "correct": 355,
+          "rate": 0.17333984375,
+          "rows": 2048
+        },
+        "witness_pointer": {
+          "correct": 870,
+          "rate": 0.4248046875,
+          "rows": 2048
+        }
+      }
+    },
+    "treatment": {
+      "by_depth": {
+        "1": {
+          "answer": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          }
+        },
+        "2": {
+          "answer": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          }
+        },
+        "3": {
+          "answer": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          }
+        },
+        "4": {
+          "answer": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          }
+        },
+        "5": {
+          "answer": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          }
+        },
+        "6": {
+          "answer": {
+            "correct": 238,
+            "rate": 0.9296875,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 238,
+            "rate": 0.9296875,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 238,
+            "rate": 0.9296875,
+            "rows": 256
+          },
+          "state": {
+            "correct": 238,
+            "rate": 0.9296875,
+            "rows": 256
+          }
+        },
+        "7": {
+          "answer": {
+            "correct": 254,
+            "rate": 0.9921875,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 254,
+            "rate": 0.9921875,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 254,
+            "rate": 0.9921875,
+            "rows": 256
+          },
+          "state": {
+            "correct": 254,
+            "rate": 0.9921875,
+            "rows": 256
+          }
+        },
+        "8": {
+          "answer": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 256,
+            "rate": 1.0,
+            "rows": 256
+          }
+        }
+      },
+      "by_renderer": {
+        "er-fresh-d0w1e0q0-v1": {
+          "answer": {
+            "correct": 507,
+            "rate": 0.990234375,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 507,
+            "rate": 0.990234375,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 507,
+            "rate": 0.990234375,
+            "rows": 512
+          },
+          "state": {
+            "correct": 507,
+            "rate": 0.990234375,
+            "rows": 512
+          }
+        },
+        "er-fresh-d0w1e1q1-v1": {
+          "answer": {
+            "correct": 507,
+            "rate": 0.990234375,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 507,
+            "rate": 0.990234375,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 507,
+            "rate": 0.990234375,
+            "rows": 512
+          },
+          "state": {
+            "correct": 507,
+            "rate": 0.990234375,
+            "rows": 512
+          }
+        },
+        "er-fresh-d1w0e0q0-v1": {
+          "answer": {
+            "correct": 507,
+            "rate": 0.990234375,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 507,
+            "rate": 0.990234375,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 507,
+            "rate": 0.990234375,
+            "rows": 512
+          },
+          "state": {
+            "correct": 507,
+            "rate": 0.990234375,
+            "rows": 512
+          }
+        },
+        "er-fresh-d1w0e1q1-v1": {
+          "answer": {
+            "correct": 507,
+            "rate": 0.990234375,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 507,
+            "rate": 0.990234375,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 507,
+            "rate": 0.990234375,
+            "rows": 512
+          },
+          "state": {
+            "correct": 507,
+            "rate": 0.990234375,
+            "rows": 512
+          }
+        }
+      },
+      "overall": {
+        "answer": {
+          "correct": 2028,
+          "rate": 0.990234375,
+          "rows": 2048
+        },
+        "binding_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "cards": {
+          "correct": 2044,
+          "rate": 0.998046875,
+          "rows": 2048
+        },
+        "events": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "halt": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "initial": {
+          "correct": 2032,
+          "rate": 0.9921875,
+          "rows": 2048
+        },
+        "initial_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "joint": {
+          "correct": 2028,
+          "rate": 0.990234375,
+          "rows": 2048
+        },
+        "line_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "packet": {
+          "correct": 2028,
+          "rate": 0.990234375,
+          "rows": 2048
+        },
+        "query": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "query_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "state": {
+          "correct": 2028,
+          "rate": 0.990234375,
+          "rows": 2048
+        },
+        "witness_pointer": {
+          "correct": 2044,
+          "rate": 0.998046875,
+          "rows": 2048
+        }
+      }
+    }
+  },
+  "parameters": {
+    "base": 125081664,
+    "compiler": 67641890,
+    "complete_system": 192726827,
+    "headroom_below_200m": 7273173,
+    "motor": 2438,
+    "reader": 835,
+    "trainable": 12021276
+  },
+  "protocol": "R12-ER-CST-WEB-v1.1",
+  "runtime": {
+    "bf16_supported": true,
+    "cuda_available": true,
+    "cuda_capability": [
+      9,
+      0
+    ],
+    "cuda_device": "NVIDIA H100 PCIe",
+    "platform": "Linux-4.18.0-553.123.1.el8_10.0.1.x86_64-x86_64-with-glibc2.28",
+    "python": "3.13.13 | packaged by conda-forge | (main, Apr  8 2026, 02:00:33) [GCC 14.3.0]",
+    "sha256": "aa68e44767672a040684ef0494f7af1917fa275ad84ebf1902a742f1e46511d5",
+    "torch": "2.6.0+cu124",
+    "torch_cuda": "12.4"
+  },
+  "schema": "r12_er_cst_witness_equality_confirmation_report_v1_1",
+  "scientific_source_commit": "87d53b53462d8d15660663238fd33886c010efb7",
+  "thresholds": {
+    "answer_overall": 0.9,
+    "field_overall": 0.95,
+    "joint_min_depth": 0.8,
+    "joint_min_renderer": 0.85,
+    "joint_overall": 0.9,
+    "negative_packet_max": 0.35,
+    "negative_state_max": 0.4,
+    "packet_overall": 0.9,
+    "pointer_overall": 0.9,
+    "state_overall": 0.9,
+    "treatment_joint_advantage": 0.5,
+    "treatment_packet_advantage": 0.5
+  },
+  "training_contract": {
+    "arms": [
+      "treatment",
+      "family_deranged",
+      "equality_ablated"
+    ],
+    "betas": [
+      0.9,
+      0.95
+    ],
+    "epochs": 2,
+    "families": 12000,
+    "family_batch_size": 8,
+    "gradient_clip": 1.0,
+    "lr": 0.0002,
+    "motor_lr": 0.003,
+    "motor_updates": 1000,
+    "reader_lr": 0.005,
+    "reader_updates": 500,
+    "renderer_consistency_weight": 1.0,
+    "rows": 48000,
+    "rows_per_update": 32,
+    "updates": 3000,
+    "views_per_family": 4,
+    "warmup": 100,
+    "weight_decay": 0.01,
+    "witness_pointer_weight": 1.0
+  },
+  "training_seed": 2262748995832026278
+}

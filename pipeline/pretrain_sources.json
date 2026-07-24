@@ -1,0 +1,492 @@
+{
+  "schema_version": 1,
+  "research_date": "2026-07-21",
+  "status": "planning_only",
+  "owner_repo": "Godlydonuts/shohin",
+  "default_mix_pct": {
+    "educational_general_web": 45,
+    "math": 25,
+    "code": 20,
+    "science_procedural": 10
+  },
+  "global_requirements": {
+    "pin_upstream_revision": true,
+    "retain_per_document_provenance": true,
+    "retain_per_document_license_for_code": true,
+    "within_source_exact_and_near_dedup": true,
+    "cross_source_dedup": true,
+    "evaluation_decontamination_before_tokenization": true,
+    "pii_and_secret_scan": true,
+    "human_sample_audit": true,
+    "fail_on_unknown_code_license": false
+  },
+  "storage_policy": {
+    "default": "registry_manifests_and_audits_only",
+    "third_party_shards": "mirror_only_after_source_specific_redistribution_review",
+    "gated_nvidia": "upstream_access_only_never_mirror",
+    "code": "preserve_per_record_license_and_provenance",
+    "first_party": "publish_only_when_generator_inputs_and_outputs_are_redistributable"
+  },
+  "cross_source_retention_priority": {
+    "math": [
+      "first_party_verified_procedural",
+      "ultradata_math_l3_selected",
+      "ultradata_math_l2_en",
+      "nemotron_cc_math_4plus",
+      "finemath_4plus_residual",
+      "megamath_web_pro_residual",
+      "open_web_math_residual"
+    ],
+    "code": [
+      "first_party_verified_code",
+      "stackv2_edu_filtered_selected",
+      "nemotron_cc_code_q3",
+      "nemotron_code_v2_synthetic_selected",
+      "starcoder_ancillary_if_approved"
+    ],
+    "web": [
+      "essential_web_selected",
+      "nemotron_cc_v2_1_hq_organic",
+      "fineweb_edu_score_4_5",
+      "dclm_baseline_residual"
+    ]
+  },
+  "sources": [
+    {
+      "id": "fineweb_edu_score_4_5",
+      "dataset": "HuggingFaceFW/fineweb-edu",
+      "url": "https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu",
+      "domain": "educational_general_web",
+      "priority": "P0",
+      "decision": "admit_core",
+      "target_mix_pct": 22,
+      "known_scale": "approximately 1.3T tokens",
+      "license_summary": "ODC-By-1.0 plus upstream Common Crawl terms",
+      "mirror_policy": "review_before_mirror",
+      "selection": {
+        "language": ["en"],
+        "predicate": "int_score >= 4",
+        "score_3": "ablation_only"
+      },
+      "risks": ["Common Crawl overlap", "classifier bias", "dominant-domain concentration"]
+    },
+    {
+      "id": "essential_web_selected",
+      "dataset": "EssentialAI/essential-web-v1.0",
+      "url": "https://huggingface.co/datasets/EssentialAI/essential-web-v1.0",
+      "domain": "educational_general_web",
+      "priority": "P0",
+      "decision": "admit_core_selected",
+      "target_mix_pct": 10,
+      "known_scale": "approximately 24T tokens in the full pool",
+      "license_summary": "ODC-By-1.0 plus upstream Common Crawl terms",
+      "mirror_policy": "review_before_mirror",
+      "selection": {
+        "language": ["en"],
+        "prefer": [
+          "high technical correctness",
+          "conceptual or procedural cognitive type",
+          "nontrivial reasoning depth",
+          "appropriate educational level"
+        ],
+        "taxonomy_views": [
+          "EssentialAI/eai-taxonomy-math-w-fm",
+          "EssentialAI/eai-taxonomy-code-w-dclm",
+          "EssentialAI/eai-taxonomy-stem-w-dclm"
+        ]
+      },
+      "risks": ["overlap with DCLM and FineWeb", "selection-rule overfitting"]
+    },
+    {
+      "id": "dclm_baseline_residual",
+      "dataset": "mlfoundations/dclm-baseline-1.0",
+      "url": "https://huggingface.co/datasets/mlfoundations/dclm-baseline-1.0",
+      "domain": "educational_general_web",
+      "priority": "P0",
+      "decision": "admit_residual",
+      "target_mix_pct": 5,
+      "known_scale": "approximately 4T tokens",
+      "license_summary": "CC-BY-4.0 dataset card; upstream content terms still apply",
+      "mirror_policy": "review_before_mirror",
+      "selection": {
+        "language": ["en"],
+        "domain_caps": true,
+        "retain_after": ["essential_web_selected", "fineweb_edu_score_4_5"]
+      },
+      "risks": ["Common Crawl overlap", "weaker math/code density"]
+    },
+    {
+      "id": "nemotron_cc_v2_1_hq_organic",
+      "dataset": "nvidia/Nemotron-CC-v2.1",
+      "url": "https://huggingface.co/datasets/nvidia/Nemotron-CC-v2.1",
+      "domain": "educational_general_web",
+      "priority": "P0",
+      "decision": "admit_core_upstream_only",
+      "target_mix_pct": 8,
+      "known_scale": "High-Quality organic 26.0B tokens; High-Quality-DQA 8.0B; full family 2.545T",
+      "license_summary": "NVIDIA Data Agreement for Model Training",
+      "mirror_policy": "train_from_original_upstream_never_mirror_gated_rows",
+      "selection": {
+        "configs": ["High-Quality"],
+        "separate_ablation": ["High-Quality-DQA"],
+        "exclude_by_default": [
+          "Medium-High-Quality-Synthetic",
+          "High-Quality-Synthetic",
+          "translated synthetic variants"
+        ]
+      },
+      "risks": [
+        "Common Crawl overlap",
+        "DQA overlap with Essential-Web",
+        "synthetic rephrase volume can overwhelm organic text"
+      ]
+    },
+    {
+      "id": "ultradata_math_l2_en",
+      "dataset": "openbmb/UltraData-Math",
+      "url": "https://huggingface.co/datasets/openbmb/UltraData-Math",
+      "domain": "math",
+      "priority": "P0",
+      "decision": "admit_core",
+      "target_mix_pct": 7,
+      "known_scale": "L2-preview approximately 33.7B tokens",
+      "license_summary": "Apache-2.0 dataset release; retain upstream provenance review",
+      "mirror_policy": "review_before_mirror",
+      "selection": {
+        "configs": ["UltraData-Math-L2-preview"],
+        "language": ["en"]
+      },
+      "risks": ["overlap with other math corpora", "mixed English and Chinese"]
+    },
+    {
+      "id": "ultradata_math_l3_selected",
+      "dataset": "openbmb/UltraData-Math",
+      "url": "https://huggingface.co/datasets/openbmb/UltraData-Math",
+      "domain": "math",
+      "priority": "P0",
+      "decision": "admit_core_selected",
+      "target_mix_pct": 7,
+      "known_scale": "L3 family approximately 88B tokens",
+      "license_summary": "Apache-2.0 dataset release; retain upstream provenance review",
+      "mirror_policy": "review_before_mirror",
+      "selection": {
+        "configs": [
+          "UltraData-Math-L3-QA-Synthetic",
+          "UltraData-Math-L3-Textbook-Exercise-Synthetic"
+        ],
+        "language": ["en"],
+        "optional_small_slice": "UltraData-Math-L3-Multi-Style-Synthetic"
+      },
+      "risks": [
+        "synthetic template repetition",
+        "seed overlap with Nemotron-CC-Math, MegaMath, and FineMath"
+      ]
+    },
+    {
+      "id": "finemath_4plus_residual",
+      "dataset": "HuggingFaceTB/finemath",
+      "url": "https://huggingface.co/datasets/HuggingFaceTB/finemath",
+      "domain": "math",
+      "priority": "P1",
+      "decision": "admit_residual",
+      "target_mix_pct": 3,
+      "known_scale": "FineMath-3plus approximately 34B tokens; 4plus is a higher-quality subset",
+      "license_summary": "ODC-By-1.0 plus upstream Common Crawl terms",
+      "mirror_policy": "review_before_mirror",
+      "selection": {
+        "configs": ["finemath-4plus"],
+        "exclude_as_independent_stream": ["finemath-3plus"]
+      },
+      "risks": ["nested subset double counting", "overlap with UltraData and MegaMath"]
+    },
+    {
+      "id": "megamath_web_pro_residual",
+      "dataset": "LLM360/MegaMath",
+      "url": "https://huggingface.co/datasets/LLM360/MegaMath",
+      "domain": "math",
+      "priority": "P1",
+      "decision": "admit_residual",
+      "target_mix_pct": 2,
+      "known_scale": "371.6B tokens across the full family; Web-Pro approximately 15.1B",
+      "license_summary": "ODC-By-1.0 dataset release; verify upstream components",
+      "mirror_policy": "review_before_mirror",
+      "selection": {
+        "configs_or_directories": ["megamath-web-pro"],
+        "retain_only_cross_source_residual": true
+      },
+      "risks": ["overlap with UltraData and FineMath", "family includes synthetic components"]
+    },
+    {
+      "id": "open_web_math_residual",
+      "dataset": "open-web-math/open-web-math",
+      "url": "https://huggingface.co/datasets/open-web-math/open-web-math",
+      "domain": "math",
+      "priority": "P1",
+      "decision": "admit_residual",
+      "target_mix_pct": 1,
+      "known_scale": "approximately 14.7B tokens and 6.3M documents",
+      "license_summary": "ODC-By-1.0 plus upstream web terms",
+      "mirror_policy": "review_before_mirror",
+      "selection": {
+        "retain_only_cross_source_residual": true
+      },
+      "risks": ["older corpus", "heavy overlap with newer math mixtures"]
+    },
+    {
+      "id": "stackv2_edu_filtered_selected",
+      "dataset": "common-pile/stackv2_edu_filtered",
+      "url": "https://huggingface.co/datasets/common-pile/stackv2_edu_filtered",
+      "domain": "code",
+      "priority": "P0",
+      "decision": "admit_core_selected",
+      "target_mix_pct": 10,
+      "known_scale": "approximately 67.8B tokens in the Comma training mix",
+      "license_summary": "per-file source licenses retained for provenance; non-blocking for local research",
+      "mirror_policy": "only_allowlisted_records_after_redistribution_review",
+      "selection": {
+        "languages": ["Python", "C", "C++", "JavaScript", "TypeScript", "Rust", "Java", "Go", "Shell"],
+        "accepted_license_allowlist_required": false,
+        "educational_quality_filter": true,
+        "exclude": ["vendor trees", "minified code", "generated code", "secrets", "unparseable files"]
+      },
+      "risks": ["heterogeneous licenses", "repository leakage", "credentials and PII"]
+    },
+    {
+      "id": "first_party_verified_code",
+      "dataset": "Godlydonuts/shohin",
+      "url": "https://huggingface.co/datasets/Godlydonuts/shohin",
+      "domain": "code",
+      "priority": "P0",
+      "decision": "build_and_admit",
+      "target_mix_pct": 2,
+      "known_scale": "to be produced",
+      "license_summary": "publish only after generator and input provenance review",
+      "mirror_policy": "publish_if_all_inputs_and_outputs_are_cleared",
+      "selection": {
+        "unit_tests_required": true,
+        "sandbox_execution_required": true,
+        "concise_explanations_preferred": true,
+        "benchmark_holdout_filter_required": true
+      },
+      "risks": ["benchmark leakage", "generator template repetition", "false-positive tests"]
+    },
+    {
+      "id": "first_party_verified_procedural",
+      "dataset": "Godlydonuts/shohin",
+      "url": "https://huggingface.co/datasets/Godlydonuts/shohin",
+      "domain": "science_procedural",
+      "priority": "P0",
+      "decision": "build_and_admit",
+      "target_mix_pct": 4,
+      "known_scale": "to be produced",
+      "license_summary": "publish only after generator and input provenance review",
+      "mirror_policy": "publish_if_all_inputs_and_outputs_are_cleared",
+      "selection": {
+        "programmatic_verification_required": true,
+        "generator_seed_and_version_required": true,
+        "difficulty_curriculum": true,
+        "eval_family_holdout_required": true
+      },
+      "risks": ["template overfitting", "train-eval family leakage", "unnatural surface forms"]
+    },
+    {
+      "id": "common_pile_stackexchange_selected",
+      "dataset": "common-pile/stackexchange_filtered",
+      "url": "https://huggingface.co/datasets/common-pile/stackexchange_filtered",
+      "domain": "science_procedural",
+      "priority": "P1",
+      "decision": "admit_selected",
+      "target_mix_pct": 1,
+      "known_scale": "approximately 23.9B tokens in the Comma training mix",
+      "license_summary": "source-specific CC BY-SA attribution and share-alike obligations",
+      "mirror_policy": "review_before_mirror_with_attribution",
+      "selection": {
+        "prefer": ["accepted or highly rated answers", "technical and scientific sites"],
+        "exclude": ["meta discussion", "social chatter", "low-score unanswered questions"]
+      },
+      "risks": ["attribution requirements", "stale or incorrect answers", "benchmark overlap"]
+    },
+    {
+      "id": "common_pile_libretexts_selected",
+      "dataset": "common-pile/libretexts_filtered",
+      "url": "https://huggingface.co/datasets/common-pile/libretexts_filtered",
+      "domain": "science_procedural",
+      "priority": "P1",
+      "decision": "admit_selected",
+      "target_mix_pct": 0.5,
+      "known_scale": "approximately 40K rows in the filtered release",
+      "license_summary": "open licenses vary by source page; preserve attribution",
+      "mirror_policy": "only_cleared_records_with_attribution",
+      "selection": {
+        "prefer": ["explanatory STEM chapters", "worked examples"],
+        "format_validation": true
+      },
+      "risks": ["source-specific attribution", "navigation and formula artifacts"]
+    },
+    {
+      "id": "common_pile_arxiv_selected",
+      "dataset": "common-pile/arxiv_papers_filtered",
+      "url": "https://huggingface.co/datasets/common-pile/arxiv_papers_filtered",
+      "domain": "science_procedural",
+      "priority": "P1",
+      "decision": "admit_selected_capped",
+      "target_mix_pct": 0.5,
+      "known_scale": "approximately 309K rows in the filtered release",
+      "license_summary": "per-paper licenses and arXiv terms; preserve metadata",
+      "mirror_policy": "only_cleared_records_with_metadata",
+      "selection": {
+        "prefer": ["expository sections", "methods", "clear derivations"],
+        "domain_and_journal_caps": true
+      },
+      "risks": ["dense low-explanatory text", "LaTeX extraction artifacts", "per-paper licenses"]
+    },
+    {
+      "id": "common_pile_pes2o_selected",
+      "dataset": "common-pile/comma_v0.1_training_dataset",
+      "url": "https://huggingface.co/datasets/common-pile/comma_v0.1_training_dataset",
+      "domain": "science_procedural",
+      "priority": "P1",
+      "decision": "admit_selected_capped",
+      "target_mix_pct": 1,
+      "known_scale": "peS2o contributes approximately 43.3B tokens to the Comma mix",
+      "license_summary": "source-specific open licenses; preserve provenance",
+      "mirror_policy": "review_before_mirror",
+      "selection": {
+        "source_component": "peS2o",
+        "prefer": ["methods", "explanatory science", "derivations"],
+        "cap": true
+      },
+      "risks": ["overlap with arXiv", "citation boilerplate", "formula extraction"]
+    },
+    {
+      "id": "starcoder_ancillary_if_approved",
+      "dataset": "bigcode/starcoderdata",
+      "url": "https://huggingface.co/datasets/bigcode/starcoderdata",
+      "domain": "code",
+      "priority": "P1",
+      "decision": "conditional_ancillary_only",
+      "target_mix_pct": 0,
+      "known_scale": "approximately 250B tokens in the full family",
+      "license_summary": "BigCode access terms plus heterogeneous source licenses and removal obligations",
+      "mirror_policy": "do_not_mirror_without_gating_terms_and_license_implementation",
+      "selection": {
+        "consider_only": ["jupyter-notebooks", "github-issues", "git-commits"],
+        "exclude_full_raw_code_pool": true
+      },
+      "risks": ["gated terms", "heterogeneous licenses", "older snapshot", "overlap with Stack"]
+    },
+    {
+      "id": "nemotron_cc_math_4plus",
+      "dataset": "nvidia/Nemotron-CC-Math-v1",
+      "url": "https://huggingface.co/datasets/nvidia/Nemotron-CC-Math-v1",
+      "domain": "math",
+      "priority": "P0",
+      "decision": "admit_core_upstream_only",
+      "target_mix_pct": 5,
+      "known_scale": "approximately 133B math tokens across the family",
+      "license_summary": "gated NVIDIA Dataset Agreement",
+      "mirror_policy": "never_mirror_use_original_upstream_only",
+      "selection": {
+        "configs": ["4plus"],
+        "required_ablation_against": "ultradata_math_l2_l3"
+      },
+      "risks": ["overlap with other math corpora", "must stream from original gated repository"]
+    },
+    {
+      "id": "nemotron_cc_code_q3",
+      "dataset": "nvidia/Nemotron-CC-Code-v1",
+      "url": "https://huggingface.co/datasets/nvidia/Nemotron-CC-Code-v1",
+      "domain": "code",
+      "priority": "P0",
+      "decision": "admit_core_upstream_only",
+      "target_mix_pct": 6,
+      "known_scale": "approximately 427.9B tokens",
+      "license_summary": "gated NVIDIA Dataset Agreement",
+      "mirror_policy": "never_mirror_use_original_upstream_only",
+      "selection": {
+        "quality": [3],
+        "stream_directly_from_upstream": true
+      },
+      "risks": ["Common Crawl code quality", "synthetic cleanup artifacts", "must stream from original gated repository"]
+    },
+    {
+      "id": "nemotron_code_v2_synthetic_selected",
+      "dataset": "nvidia/Nemotron-Pretraining-Code-v2",
+      "url": "https://huggingface.co/datasets/nvidia/Nemotron-Pretraining-Code-v2",
+      "domain": "code",
+      "priority": "P1",
+      "decision": "admit_selected_upstream_only",
+      "target_mix_pct": 2,
+      "known_scale": "approximately 835.8M rows across the family",
+      "license_summary": "gated NVIDIA Dataset Agreement plus component terms",
+      "mirror_policy": "never_mirror_use_original_upstream_only",
+      "selection": {
+        "consider": ["Question Answering", "Code Review", "Student Teacher", "Rewriting", "Transpilation"],
+        "exclude_raw_github_metadata_as_text": true
+      },
+      "risks": ["synthetic repetition", "component provenance complexity", "must stream from original gated repository"]
+    },
+    {
+      "id": "nemotron_specialized_v1_selected",
+      "dataset": "nvidia/Nemotron-Pretraining-Specialized-v1",
+      "url": "https://huggingface.co/datasets/nvidia/Nemotron-Pretraining-Specialized-v1",
+      "domain": "science_procedural",
+      "priority": "P1",
+      "decision": "admit_selected_for_late_pretraining",
+      "target_mix_pct": 3,
+      "known_scale": "RQA 134.6B, InfiniByte reasoning 19.4B, scientific coding 1.2B, math textbooks 25.1B tokens",
+      "license_summary": "CC-BY-4.0 dataset release plus component provenance",
+      "mirror_policy": "use_original_upstream_review_before_mirror",
+      "selection": {
+        "consider": ["Reasoning QA", "InfiniByte reasoning", "Scientific Coding", "Math Textbooks"],
+        "phase": "late_pretraining_or_cooldown",
+        "max_initial_mix_pct": 3
+      },
+      "risks": ["long synthetic reasoning style", "component provenance", "template repetition"]
+    },
+    {
+      "id": "redpajama_1t",
+      "dataset": "togethercomputer/RedPajama-Data-1T",
+      "url": "https://huggingface.co/datasets/togethercomputer/RedPajama-Data-1T",
+      "domain": "mixed_web",
+      "priority": "reject",
+      "decision": "reject_default",
+      "target_mix_pct": 0,
+      "known_scale": "approximately 1T tokens",
+      "license_summary": "mixed source licenses",
+      "mirror_policy": "do_not_acquire_for_current_build",
+      "selection": {},
+      "risks": ["legacy quality", "large overlap", "mixed licenses", "no demonstrated residual advantage"]
+    },
+    {
+      "id": "nemotron_pretraining_code_v3_metadata",
+      "dataset": "nvidia/Nemotron-Pretraining-Code-v3",
+      "url": "https://huggingface.co/datasets/nvidia/Nemotron-Pretraining-Code-v3",
+      "domain": "code_metadata",
+      "priority": "reject",
+      "decision": "reject_as_training_text",
+      "target_mix_pct": 0,
+      "known_scale": "metadata for approximately 146M GitHub files; Hugging Face release is not source-code text",
+      "license_summary": "metadata release terms; referenced repositories retain their own licenses",
+      "mirror_policy": "metadata_index_only_if_needed",
+      "selection": {},
+      "risks": ["contains metadata rather than code text", "repository license resolution required"]
+    },
+    {
+      "id": "nemotron_specialized_v1_2",
+      "dataset": "nvidia/Nemotron-Pretraining-Specialized-v1.2",
+      "url": "https://huggingface.co/datasets/nvidia/Nemotron-Pretraining-Specialized-v1.2",
+      "domain": "synthetic_specialized",
+      "priority": "hold",
+      "decision": "hold_default",
+      "target_mix_pct": 0,
+      "known_scale": "approximately 599.5M samples",
+      "license_summary": "dataset/component terms require source-specific review",
+      "mirror_policy": "do_not_acquire_for_current_build",
+      "selection": {
+        "possible_future_ablation": "small fact-seeking slice only"
+      },
+      "risks": ["factual-recall and multiple-choice density", "moral-scenario mismatch", "synthetic style", "component terms"]
+    }
+  ]
+}

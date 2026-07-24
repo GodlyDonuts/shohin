@@ -1,0 +1,3304 @@
+{
+  "decision": "reject_s6_contextual_affine_law_development",
+  "gates": {
+    "answer_within_one_point_of_host": false,
+    "atomic_only_training_contract": true,
+    "deranged_card_state_drop_at_least_40pp": false,
+    "every_depth_state_at_least_92pct": false,
+    "heldout_atomic_destination_at_least_95pct": false,
+    "law_id_control_atomic_fit_at_least_99pct": true,
+    "law_id_control_trails_at_least_40pp": false,
+    "multi_law_state_at_least_95pct": false,
+    "nonce_name_invariant": true,
+    "one_development_zero_confirmation_access": true,
+    "one_witness_state_drop_at_least_30pp": false,
+    "state_reset_drop_at_least_20pp": false,
+    "state_within_one_point_of_host": false,
+    "treatment_answer_at_least_95pct": false,
+    "treatment_atomic_fit_at_least_99pct": true,
+    "treatment_module_below_8m": true,
+    "treatment_state_at_least_95pct": false,
+    "whole_system_below_150m": true
+  },
+  "schema": "r12_s6_contextual_affine_law_development_assessment_v1",
+  "scores": {
+    "atomic_development": {
+      "accuracy": 0.24528301886792453,
+      "correct": 78,
+      "total": 318
+    },
+    "deranged_card": {
+      "answer_accuracy": 0.2412109375,
+      "answer_correct": 494,
+      "answer_total": 2048,
+      "depth_state": {
+        "3": {
+          "accuracy": 0.02631578947368421,
+          "correct": 9,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.011730205278592375,
+          "correct": 4,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.011730205278592375,
+          "correct": 4,
+          "total": 341
+        },
+        "6": {
+          "accuracy": 0.011695906432748537,
+          "correct": 4,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.008797653958944282,
+          "correct": 3,
+          "total": 341
+        },
+        "8": {
+          "accuracy": 0.005865102639296188,
+          "correct": 2,
+          "total": 341
+        }
+      },
+      "multi_law_state_accuracy": 0.0126953125,
+      "multi_law_state_correct": 26,
+      "multi_law_total": 2048,
+      "predicted_state_sha256": "bde33337f89573e67d515874aa37da40654c7ea39b89e6711198b20f08b3f7ff",
+      "samples": [
+        {
+          "expected_answer": 9,
+          "expected_state": [
+            8,
+            5,
+            0,
+            10,
+            6,
+            4,
+            2,
+            7,
+            9,
+            1,
+            3
+          ],
+          "predicted_answer": 7,
+          "predicted_state": [
+            8,
+            9,
+            5,
+            10,
+            6,
+            4,
+            0,
+            2,
+            7,
+            1,
+            3
+          ],
+          "row_id": "development_000000",
+          "transitions": [
+            [
+              8,
+              5,
+              0,
+              10,
+              6,
+              4,
+              2,
+              7,
+              9,
+              1,
+              3
+            ],
+            [
+              8,
+              5,
+              10,
+              6,
+              4,
+              0,
+              2,
+              7,
+              9,
+              1,
+              3
+            ],
+            [
+              8,
+              9,
+              5,
+              10,
+              6,
+              4,
+              0,
+              2,
+              7,
+              1,
+              3
+            ]
+          ]
+        },
+        {
+          "expected_answer": 7,
+          "expected_state": [
+            7,
+            5,
+            1,
+            6,
+            4,
+            10,
+            8,
+            3,
+            9,
+            2,
+            0
+          ],
+          "predicted_answer": 7,
+          "predicted_state": [
+            7,
+            5,
+            1,
+            6,
+            10,
+            8,
+            3,
+            4,
+            9,
+            2,
+            0
+          ],
+          "row_id": "development_000001",
+          "transitions": [
+            [
+              7,
+              4,
+              5,
+              2,
+              1,
+              6,
+              10,
+              8,
+              3,
+              9,
+              0
+            ],
+            [
+              7,
+              5,
+              2,
+              1,
+              6,
+              10,
+              8,
+              3,
+              4,
+              9,
+              0
+            ],
+            [
+              7,
+              5,
+              1,
+              2,
+              6,
+              10,
+              8,
+              3,
+              4,
+              9,
+              0
+            ],
+            [
+              7,
+              5,
+              1,
+              6,
+              10,
+              8,
+              3,
+              4,
+              9,
+              2,
+              0
+            ]
+          ]
+        },
+        {
+          "expected_answer": 4,
+          "expected_state": [
+            6,
+            8,
+            7,
+            9,
+            4,
+            1,
+            3,
+            10,
+            2,
+            0,
+            5
+          ],
+          "predicted_answer": 5,
+          "predicted_state": [
+            6,
+            4,
+            0,
+            7,
+            5,
+            9,
+            1,
+            3,
+            10,
+            2,
+            8
+          ],
+          "row_id": "development_000002",
+          "transitions": [
+            [
+              6,
+              0,
+              7,
+              4,
+              5,
+              1,
+              3,
+              10,
+              2,
+              9,
+              8
+            ],
+            [
+              6,
+              0,
+              7,
+              4,
+              5,
+              9,
+              1,
+              3,
+              10,
+              2,
+              8
+            ],
+            [
+              6,
+              0,
+              7,
+              5,
+              4,
+              9,
+              1,
+              3,
+              10,
+              2,
+              8
+            ],
+            [
+              6,
+              4,
+              0,
+              7,
+              5,
+              9,
+              1,
+              3,
+              10,
+              2,
+              8
+            ],
+            [
+              6,
+              4,
+              0,
+              7,
+              5,
+              9,
+              1,
+              3,
+              10,
+              2,
+              8
+            ],
+            [
+              6,
+              4,
+              0,
+              7,
+              5,
+              9,
+              1,
+              3,
+              10,
+              2,
+              8
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            4,
+            0,
+            3,
+            2,
+            1
+          ],
+          "predicted_answer": 4,
+          "predicted_state": [
+            1,
+            4,
+            0,
+            2,
+            3
+          ],
+          "row_id": "development_000003",
+          "transitions": [
+            [
+              4,
+              1,
+              0,
+              2,
+              3
+            ],
+            [
+              4,
+              0,
+              1,
+              2,
+              3
+            ],
+            [
+              4,
+              0,
+              2,
+              1,
+              3
+            ],
+            [
+              1,
+              4,
+              0,
+              2,
+              3
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            0,
+            3,
+            6,
+            5,
+            2,
+            1,
+            4
+          ],
+          "predicted_answer": 3,
+          "predicted_state": [
+            3,
+            5,
+            0,
+            6,
+            2,
+            1,
+            4
+          ],
+          "row_id": "development_000004",
+          "transitions": [
+            [
+              2,
+              6,
+              0,
+              1,
+              4,
+              5,
+              3
+            ],
+            [
+              5,
+              2,
+              6,
+              0,
+              1,
+              4,
+              3
+            ],
+            [
+              5,
+              2,
+              0,
+              6,
+              1,
+              4,
+              3
+            ],
+            [
+              5,
+              2,
+              0,
+              6,
+              3,
+              1,
+              4
+            ],
+            [
+              5,
+              0,
+              6,
+              3,
+              2,
+              1,
+              4
+            ],
+            [
+              3,
+              5,
+              0,
+              6,
+              2,
+              1,
+              4
+            ]
+          ]
+        }
+      ],
+      "state_accuracy": 0.0126953125,
+      "state_correct": 26,
+      "state_total": 2048
+    },
+    "host": {
+      "answer_accuracy": 1.0,
+      "answer_correct": 2048,
+      "answer_total": 2048,
+      "depth_state": {
+        "3": {
+          "accuracy": 1.0,
+          "correct": 342,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 1.0,
+          "correct": 341,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 1.0,
+          "correct": 341,
+          "total": 341
+        },
+        "6": {
+          "accuracy": 1.0,
+          "correct": 342,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 1.0,
+          "correct": 341,
+          "total": 341
+        },
+        "8": {
+          "accuracy": 1.0,
+          "correct": 341,
+          "total": 341
+        }
+      },
+      "multi_law_state_accuracy": 1.0,
+      "multi_law_state_correct": 2048,
+      "multi_law_total": 2048,
+      "predicted_state_sha256": "29f1ee0d15491f7406d7a1f0e40bc4e8ccee8ab88b60a8aac6ea8cb32e1ceda6",
+      "samples": [
+        {
+          "expected_answer": 9,
+          "expected_state": [
+            8,
+            5,
+            0,
+            10,
+            6,
+            4,
+            2,
+            7,
+            9,
+            1,
+            3
+          ],
+          "predicted_answer": 9,
+          "predicted_state": [
+            8,
+            5,
+            0,
+            10,
+            6,
+            4,
+            2,
+            7,
+            9,
+            1,
+            3
+          ],
+          "row_id": "development_000000",
+          "transitions": [
+            [
+              8,
+              5,
+              0,
+              10,
+              6,
+              4,
+              2,
+              7,
+              9,
+              1,
+              3
+            ],
+            [
+              8,
+              5,
+              0,
+              10,
+              6,
+              4,
+              2,
+              7,
+              9,
+              1,
+              3
+            ],
+            [
+              8,
+              5,
+              0,
+              10,
+              6,
+              4,
+              2,
+              7,
+              9,
+              1,
+              3
+            ]
+          ]
+        },
+        {
+          "expected_answer": 7,
+          "expected_state": [
+            7,
+            5,
+            1,
+            6,
+            4,
+            10,
+            8,
+            3,
+            9,
+            2,
+            0
+          ],
+          "predicted_answer": 7,
+          "predicted_state": [
+            7,
+            5,
+            1,
+            6,
+            4,
+            10,
+            8,
+            3,
+            9,
+            2,
+            0
+          ],
+          "row_id": "development_000001",
+          "transitions": [
+            [
+              7,
+              4,
+              5,
+              2,
+              1,
+              6,
+              10,
+              8,
+              3,
+              9,
+              0
+            ],
+            [
+              7,
+              5,
+              2,
+              1,
+              6,
+              4,
+              10,
+              8,
+              3,
+              9,
+              0
+            ],
+            [
+              7,
+              5,
+              1,
+              2,
+              6,
+              4,
+              10,
+              8,
+              3,
+              9,
+              0
+            ],
+            [
+              7,
+              5,
+              1,
+              6,
+              4,
+              10,
+              8,
+              3,
+              9,
+              2,
+              0
+            ]
+          ]
+        },
+        {
+          "expected_answer": 4,
+          "expected_state": [
+            6,
+            8,
+            7,
+            9,
+            4,
+            1,
+            3,
+            10,
+            2,
+            0,
+            5
+          ],
+          "predicted_answer": 4,
+          "predicted_state": [
+            6,
+            8,
+            7,
+            9,
+            4,
+            1,
+            3,
+            10,
+            2,
+            0,
+            5
+          ],
+          "row_id": "development_000002",
+          "transitions": [
+            [
+              6,
+              7,
+              4,
+              5,
+              1,
+              3,
+              10,
+              2,
+              0,
+              9,
+              8
+            ],
+            [
+              6,
+              7,
+              4,
+              5,
+              9,
+              1,
+              3,
+              10,
+              2,
+              0,
+              8
+            ],
+            [
+              6,
+              7,
+              5,
+              9,
+              1,
+              3,
+              10,
+              2,
+              0,
+              8,
+              4
+            ],
+            [
+              6,
+              7,
+              5,
+              9,
+              4,
+              1,
+              3,
+              10,
+              2,
+              0,
+              8
+            ],
+            [
+              6,
+              7,
+              9,
+              4,
+              1,
+              3,
+              10,
+              2,
+              0,
+              8,
+              5
+            ],
+            [
+              6,
+              8,
+              7,
+              9,
+              4,
+              1,
+              3,
+              10,
+              2,
+              0,
+              5
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            4,
+            0,
+            3,
+            2,
+            1
+          ],
+          "predicted_answer": 0,
+          "predicted_state": [
+            4,
+            0,
+            3,
+            2,
+            1
+          ],
+          "row_id": "development_000003",
+          "transitions": [
+            [
+              4,
+              0,
+              2,
+              3,
+              1
+            ],
+            [
+              4,
+              0,
+              2,
+              3,
+              1
+            ],
+            [
+              4,
+              0,
+              3,
+              2,
+              1
+            ],
+            [
+              4,
+              0,
+              3,
+              2,
+              1
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            0,
+            3,
+            6,
+            5,
+            2,
+            1,
+            4
+          ],
+          "predicted_answer": 0,
+          "predicted_state": [
+            0,
+            3,
+            6,
+            5,
+            2,
+            1,
+            4
+          ],
+          "row_id": "development_000004",
+          "transitions": [
+            [
+              2,
+              0,
+              6,
+              1,
+              4,
+              5,
+              3
+            ],
+            [
+              2,
+              0,
+              6,
+              5,
+              1,
+              4,
+              3
+            ],
+            [
+              2,
+              0,
+              6,
+              5,
+              1,
+              4,
+              3
+            ],
+            [
+              2,
+              0,
+              6,
+              5,
+              1,
+              4,
+              3
+            ],
+            [
+              0,
+              6,
+              5,
+              2,
+              1,
+              4,
+              3
+            ],
+            [
+              0,
+              3,
+              6,
+              5,
+              2,
+              1,
+              4
+            ]
+          ]
+        }
+      ],
+      "state_accuracy": 1.0,
+      "state_correct": 2048,
+      "state_total": 2048
+    },
+    "law_id": {
+      "answer_accuracy": 0.24609375,
+      "answer_correct": 504,
+      "answer_total": 2048,
+      "depth_state": {
+        "3": {
+          "accuracy": 0.02631578947368421,
+          "correct": 9,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.002932551319648094,
+          "correct": 1,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.005865102639296188,
+          "correct": 2,
+          "total": 341
+        },
+        "6": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.005865102639296188,
+          "correct": 2,
+          "total": 341
+        },
+        "8": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 341
+        }
+      },
+      "multi_law_state_accuracy": 0.0068359375,
+      "multi_law_state_correct": 14,
+      "multi_law_total": 2048,
+      "predicted_state_sha256": "1dd8d28d07e760531cddd211a5f34dd981584918ea3aa1a3c79b841158ddb8a7",
+      "samples": [
+        {
+          "expected_answer": 9,
+          "expected_state": [
+            8,
+            5,
+            0,
+            10,
+            6,
+            4,
+            2,
+            7,
+            9,
+            1,
+            3
+          ],
+          "predicted_answer": 1,
+          "predicted_state": [
+            8,
+            5,
+            9,
+            10,
+            6,
+            4,
+            0,
+            2,
+            1,
+            3,
+            7
+          ],
+          "row_id": "development_000000",
+          "transitions": [
+            [
+              8,
+              5,
+              0,
+              10,
+              6,
+              4,
+              2,
+              9,
+              1,
+              3,
+              7
+            ],
+            [
+              8,
+              5,
+              10,
+              6,
+              4,
+              0,
+              2,
+              9,
+              1,
+              3,
+              7
+            ],
+            [
+              8,
+              5,
+              9,
+              10,
+              6,
+              4,
+              0,
+              2,
+              1,
+              3,
+              7
+            ]
+          ]
+        },
+        {
+          "expected_answer": 7,
+          "expected_state": [
+            7,
+            5,
+            1,
+            6,
+            4,
+            10,
+            8,
+            3,
+            9,
+            2,
+            0
+          ],
+          "predicted_answer": 7,
+          "predicted_state": [
+            7,
+            5,
+            1,
+            6,
+            4,
+            10,
+            8,
+            3,
+            9,
+            0,
+            2
+          ],
+          "row_id": "development_000001",
+          "transitions": [
+            [
+              7,
+              4,
+              5,
+              1,
+              6,
+              2,
+              10,
+              8,
+              3,
+              9,
+              0
+            ],
+            [
+              7,
+              5,
+              1,
+              6,
+              2,
+              4,
+              10,
+              8,
+              3,
+              9,
+              0
+            ],
+            [
+              7,
+              5,
+              1,
+              2,
+              6,
+              4,
+              10,
+              8,
+              3,
+              9,
+              0
+            ],
+            [
+              7,
+              5,
+              1,
+              6,
+              4,
+              10,
+              8,
+              3,
+              9,
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "expected_answer": 4,
+          "expected_state": [
+            6,
+            8,
+            7,
+            9,
+            4,
+            1,
+            3,
+            10,
+            2,
+            0,
+            5
+          ],
+          "predicted_answer": 9,
+          "predicted_state": [
+            6,
+            7,
+            0,
+            1,
+            9,
+            3,
+            8,
+            10,
+            4,
+            2,
+            5
+          ],
+          "row_id": "development_000002",
+          "transitions": [
+            [
+              6,
+              7,
+              4,
+              0,
+              5,
+              1,
+              3,
+              10,
+              2,
+              9,
+              8
+            ],
+            [
+              6,
+              7,
+              4,
+              0,
+              5,
+              1,
+              9,
+              3,
+              10,
+              2,
+              8
+            ],
+            [
+              6,
+              7,
+              0,
+              5,
+              1,
+              4,
+              9,
+              3,
+              10,
+              2,
+              8
+            ],
+            [
+              6,
+              7,
+              0,
+              5,
+              1,
+              9,
+              3,
+              10,
+              4,
+              2,
+              8
+            ],
+            [
+              6,
+              7,
+              0,
+              1,
+              9,
+              3,
+              10,
+              4,
+              2,
+              8,
+              5
+            ],
+            [
+              6,
+              7,
+              0,
+              1,
+              9,
+              3,
+              8,
+              10,
+              4,
+              2,
+              5
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            4,
+            0,
+            3,
+            2,
+            1
+          ],
+          "predicted_answer": 0,
+          "predicted_state": [
+            1,
+            0,
+            2,
+            4,
+            3
+          ],
+          "row_id": "development_000003",
+          "transitions": [
+            [
+              1,
+              4,
+              0,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              4,
+              2,
+              3
+            ],
+            [
+              0,
+              1,
+              2,
+              4,
+              3
+            ],
+            [
+              1,
+              0,
+              2,
+              4,
+              3
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            0,
+            3,
+            6,
+            5,
+            2,
+            1,
+            4
+          ],
+          "predicted_answer": 2,
+          "predicted_state": [
+            2,
+            6,
+            0,
+            3,
+            1,
+            4,
+            5
+          ],
+          "row_id": "development_000004",
+          "transitions": [
+            [
+              2,
+              6,
+              0,
+              1,
+              4,
+              5,
+              3
+            ],
+            [
+              2,
+              6,
+              0,
+              1,
+              4,
+              3,
+              5
+            ],
+            [
+              6,
+              2,
+              0,
+              1,
+              4,
+              3,
+              5
+            ],
+            [
+              6,
+              2,
+              0,
+              1,
+              4,
+              5,
+              3
+            ],
+            [
+              2,
+              6,
+              0,
+              1,
+              4,
+              5,
+              3
+            ],
+            [
+              2,
+              6,
+              0,
+              3,
+              1,
+              4,
+              5
+            ]
+          ]
+        }
+      ],
+      "state_accuracy": 0.0068359375,
+      "state_correct": 14,
+      "state_total": 2048
+    },
+    "one_witness": {
+      "answer_accuracy": 0.251953125,
+      "answer_correct": 516,
+      "answer_total": 2048,
+      "depth_state": {
+        "3": {
+          "accuracy": 0.029239766081871343,
+          "correct": 10,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.011730205278592375,
+          "correct": 4,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.008797653958944282,
+          "correct": 3,
+          "total": 341
+        },
+        "6": {
+          "accuracy": 0.008771929824561403,
+          "correct": 3,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.002932551319648094,
+          "correct": 1,
+          "total": 341
+        },
+        "8": {
+          "accuracy": 0.005865102639296188,
+          "correct": 2,
+          "total": 341
+        }
+      },
+      "multi_law_state_accuracy": 0.01123046875,
+      "multi_law_state_correct": 23,
+      "multi_law_total": 2048,
+      "predicted_state_sha256": "c7e82944a4f0c5071dfa3639f4b1ceca7cab27990b34fe6afbc48ca47dc2853b",
+      "samples": [
+        {
+          "expected_answer": 9,
+          "expected_state": [
+            8,
+            5,
+            0,
+            10,
+            6,
+            4,
+            2,
+            7,
+            9,
+            1,
+            3
+          ],
+          "predicted_answer": 7,
+          "predicted_state": [
+            8,
+            5,
+            10,
+            9,
+            0,
+            6,
+            4,
+            2,
+            7,
+            1,
+            3
+          ],
+          "row_id": "development_000000",
+          "transitions": [
+            [
+              8,
+              5,
+              0,
+              10,
+              6,
+              4,
+              2,
+              7,
+              9,
+              1,
+              3
+            ],
+            [
+              8,
+              5,
+              10,
+              0,
+              6,
+              4,
+              2,
+              7,
+              9,
+              1,
+              3
+            ],
+            [
+              8,
+              5,
+              10,
+              9,
+              0,
+              6,
+              4,
+              2,
+              7,
+              1,
+              3
+            ]
+          ]
+        },
+        {
+          "expected_answer": 7,
+          "expected_state": [
+            7,
+            5,
+            1,
+            6,
+            4,
+            10,
+            8,
+            3,
+            9,
+            2,
+            0
+          ],
+          "predicted_answer": 7,
+          "predicted_state": [
+            7,
+            5,
+            2,
+            1,
+            6,
+            10,
+            8,
+            3,
+            9,
+            4,
+            0
+          ],
+          "row_id": "development_000001",
+          "transitions": [
+            [
+              7,
+              4,
+              5,
+              1,
+              6,
+              10,
+              8,
+              2,
+              3,
+              9,
+              0
+            ],
+            [
+              7,
+              5,
+              1,
+              6,
+              10,
+              8,
+              2,
+              3,
+              9,
+              4,
+              0
+            ],
+            [
+              7,
+              2,
+              5,
+              1,
+              6,
+              10,
+              8,
+              3,
+              9,
+              4,
+              0
+            ],
+            [
+              7,
+              5,
+              2,
+              1,
+              6,
+              10,
+              8,
+              3,
+              9,
+              4,
+              0
+            ]
+          ]
+        },
+        {
+          "expected_answer": 4,
+          "expected_state": [
+            6,
+            8,
+            7,
+            9,
+            4,
+            1,
+            3,
+            10,
+            2,
+            0,
+            5
+          ],
+          "predicted_answer": 1,
+          "predicted_state": [
+            6,
+            7,
+            8,
+            9,
+            1,
+            3,
+            10,
+            2,
+            0,
+            4,
+            5
+          ],
+          "row_id": "development_000002",
+          "transitions": [
+            [
+              6,
+              7,
+              4,
+              5,
+              1,
+              3,
+              10,
+              2,
+              9,
+              0,
+              8
+            ],
+            [
+              6,
+              7,
+              4,
+              9,
+              5,
+              1,
+              3,
+              10,
+              2,
+              0,
+              8
+            ],
+            [
+              6,
+              7,
+              9,
+              4,
+              5,
+              1,
+              3,
+              10,
+              2,
+              0,
+              8
+            ],
+            [
+              6,
+              7,
+              9,
+              5,
+              1,
+              3,
+              10,
+              2,
+              0,
+              4,
+              8
+            ],
+            [
+              6,
+              7,
+              9,
+              1,
+              3,
+              10,
+              2,
+              0,
+              4,
+              5,
+              8
+            ],
+            [
+              6,
+              7,
+              8,
+              9,
+              1,
+              3,
+              10,
+              2,
+              0,
+              4,
+              5
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            4,
+            0,
+            3,
+            2,
+            1
+          ],
+          "predicted_answer": 4,
+          "predicted_state": [
+            1,
+            4,
+            3,
+            0,
+            2
+          ],
+          "row_id": "development_000003",
+          "transitions": [
+            [
+              1,
+              4,
+              0,
+              2,
+              3
+            ],
+            [
+              1,
+              4,
+              2,
+              3,
+              0
+            ],
+            [
+              1,
+              4,
+              3,
+              0,
+              2
+            ],
+            [
+              1,
+              4,
+              3,
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            0,
+            3,
+            6,
+            5,
+            2,
+            1,
+            4
+          ],
+          "predicted_answer": 1,
+          "predicted_state": [
+            1,
+            4,
+            2,
+            0,
+            5,
+            6,
+            3
+          ],
+          "row_id": "development_000004",
+          "transitions": [
+            [
+              2,
+              6,
+              1,
+              4,
+              0,
+              5,
+              3
+            ],
+            [
+              2,
+              6,
+              1,
+              4,
+              0,
+              3,
+              5
+            ],
+            [
+              2,
+              1,
+              4,
+              0,
+              3,
+              5,
+              6
+            ],
+            [
+              2,
+              3,
+              1,
+              4,
+              0,
+              5,
+              6
+            ],
+            [
+              3,
+              1,
+              4,
+              2,
+              0,
+              5,
+              6
+            ],
+            [
+              1,
+              4,
+              2,
+              0,
+              5,
+              6,
+              3
+            ]
+          ]
+        }
+      ],
+      "state_accuracy": 0.01123046875,
+      "state_correct": 23,
+      "state_total": 2048
+    },
+    "scale_diagnostic": {
+      "answer_accuracy": 0.275390625,
+      "answer_correct": 141,
+      "answer_total": 512,
+      "depth_state": {
+        "3": {
+          "accuracy": 0.047058823529411764,
+          "correct": 4,
+          "total": 85
+        },
+        "4": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 86
+        },
+        "5": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 85
+        },
+        "6": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 85
+        },
+        "7": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 85
+        },
+        "8": {
+          "accuracy": 0.0,
+          "correct": 0,
+          "total": 86
+        }
+      },
+      "multi_law_state_accuracy": 0.0078125,
+      "multi_law_state_correct": 4,
+      "multi_law_total": 512,
+      "predicted_state_sha256": "0d96eec0ffba6c880556d4701e05c470670dae54f57a4ebf5764d81e316e5e18",
+      "samples": [
+        {
+          "expected_answer": 5,
+          "expected_state": [
+            3,
+            1,
+            4,
+            0,
+            8,
+            6,
+            7,
+            2,
+            5,
+            9,
+            12,
+            10,
+            11
+          ],
+          "predicted_answer": 0,
+          "predicted_state": [
+            4,
+            7,
+            11,
+            1,
+            6,
+            3,
+            12,
+            10,
+            0,
+            8,
+            2,
+            5,
+            9
+          ],
+          "row_id": "scale_diagnostic_000000",
+          "transitions": [
+            [
+              11,
+              6,
+              1,
+              7,
+              3,
+              4,
+              0,
+              8,
+              2,
+              5,
+              9,
+              12,
+              10
+            ],
+            [
+              11,
+              6,
+              1,
+              7,
+              4,
+              3,
+              0,
+              8,
+              2,
+              5,
+              9,
+              12,
+              10
+            ],
+            [
+              11,
+              1,
+              6,
+              7,
+              4,
+              3,
+              0,
+              8,
+              2,
+              5,
+              9,
+              12,
+              10
+            ],
+            [
+              11,
+              1,
+              6,
+              10,
+              7,
+              4,
+              3,
+              0,
+              8,
+              2,
+              5,
+              9,
+              12
+            ],
+            [
+              11,
+              1,
+              6,
+              12,
+              10,
+              7,
+              4,
+              3,
+              0,
+              8,
+              2,
+              5,
+              9
+            ],
+            [
+              4,
+              11,
+              1,
+              6,
+              12,
+              10,
+              7,
+              3,
+              0,
+              8,
+              2,
+              5,
+              9
+            ],
+            [
+              4,
+              11,
+              1,
+              6,
+              3,
+              12,
+              10,
+              7,
+              0,
+              8,
+              2,
+              5,
+              9
+            ],
+            [
+              4,
+              7,
+              11,
+              1,
+              6,
+              3,
+              12,
+              10,
+              0,
+              8,
+              2,
+              5,
+              9
+            ]
+          ]
+        },
+        {
+          "expected_answer": 9,
+          "expected_state": [
+            8,
+            4,
+            11,
+            0,
+            7,
+            12,
+            2,
+            1,
+            9,
+            5,
+            6,
+            10,
+            3
+          ],
+          "predicted_answer": 1,
+          "predicted_state": [
+            12,
+            11,
+            8,
+            9,
+            4,
+            0,
+            7,
+            2,
+            1,
+            5,
+            6,
+            10,
+            3
+          ],
+          "row_id": "scale_diagnostic_000001",
+          "transitions": [
+            [
+              11,
+              8,
+              4,
+              0,
+              7,
+              9,
+              2,
+              1,
+              12,
+              5,
+              6,
+              10,
+              3
+            ],
+            [
+              11,
+              8,
+              4,
+              0,
+              7,
+              9,
+              2,
+              1,
+              5,
+              12,
+              6,
+              10,
+              3
+            ],
+            [
+              12,
+              11,
+              8,
+              4,
+              0,
+              7,
+              9,
+              2,
+              1,
+              5,
+              6,
+              10,
+              3
+            ],
+            [
+              12,
+              11,
+              8,
+              9,
+              4,
+              0,
+              7,
+              2,
+              1,
+              5,
+              6,
+              10,
+              3
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            5,
+            7,
+            6,
+            11,
+            12,
+            2,
+            8,
+            0,
+            9,
+            3,
+            10,
+            1,
+            4
+          ],
+          "predicted_answer": 12,
+          "predicted_state": [
+            1,
+            5,
+            7,
+            9,
+            0,
+            6,
+            11,
+            12,
+            2,
+            8,
+            3,
+            10,
+            4
+          ],
+          "row_id": "scale_diagnostic_000002",
+          "transitions": [
+            [
+              5,
+              7,
+              0,
+              1,
+              6,
+              11,
+              9,
+              12,
+              2,
+              8,
+              3,
+              10,
+              4
+            ],
+            [
+              1,
+              5,
+              7,
+              0,
+              6,
+              11,
+              9,
+              12,
+              2,
+              8,
+              3,
+              10,
+              4
+            ],
+            [
+              1,
+              5,
+              7,
+              9,
+              0,
+              6,
+              11,
+              12,
+              2,
+              8,
+              3,
+              10,
+              4
+            ]
+          ]
+        },
+        {
+          "expected_answer": 12,
+          "expected_state": [
+            8,
+            12,
+            5,
+            7,
+            3,
+            2,
+            9,
+            0,
+            1,
+            4,
+            6,
+            10,
+            11
+          ],
+          "predicted_answer": 11,
+          "predicted_state": [
+            8,
+            11,
+            5,
+            12,
+            3,
+            2,
+            9,
+            0,
+            1,
+            4,
+            7,
+            6,
+            10
+          ],
+          "row_id": "scale_diagnostic_000003",
+          "transitions": [
+            [
+              8,
+              12,
+              3,
+              7,
+              2,
+              9,
+              0,
+              5,
+              11,
+              1,
+              4,
+              6,
+              10
+            ],
+            [
+              8,
+              12,
+              5,
+              3,
+              7,
+              2,
+              9,
+              0,
+              11,
+              1,
+              4,
+              6,
+              10
+            ],
+            [
+              8,
+              5,
+              12,
+              3,
+              7,
+              2,
+              9,
+              0,
+              11,
+              1,
+              4,
+              6,
+              10
+            ],
+            [
+              8,
+              11,
+              5,
+              12,
+              3,
+              7,
+              2,
+              9,
+              0,
+              1,
+              4,
+              6,
+              10
+            ],
+            [
+              8,
+              11,
+              5,
+              12,
+              3,
+              2,
+              9,
+              0,
+              1,
+              4,
+              7,
+              6,
+              10
+            ]
+          ]
+        },
+        {
+          "expected_answer": 1,
+          "expected_state": [
+            1,
+            4,
+            9,
+            8,
+            2,
+            0,
+            3,
+            7,
+            10,
+            6,
+            5,
+            12,
+            11
+          ],
+          "predicted_answer": 12,
+          "predicted_state": [
+            12,
+            7,
+            0,
+            11,
+            1,
+            4,
+            9,
+            8,
+            2,
+            3,
+            6,
+            10,
+            5
+          ],
+          "row_id": "scale_diagnostic_000004",
+          "transitions": [
+            [
+              0,
+              7,
+              12,
+              11,
+              1,
+              4,
+              9,
+              6,
+              8,
+              2,
+              3,
+              10,
+              5
+            ],
+            [
+              12,
+              0,
+              7,
+              11,
+              1,
+              4,
+              9,
+              6,
+              8,
+              2,
+              3,
+              10,
+              5
+            ],
+            [
+              12,
+              0,
+              11,
+              7,
+              1,
+              4,
+              9,
+              6,
+              8,
+              2,
+              3,
+              10,
+              5
+            ],
+            [
+              12,
+              0,
+              11,
+              7,
+              6,
+              1,
+              4,
+              9,
+              8,
+              2,
+              3,
+              10,
+              5
+            ],
+            [
+              12,
+              7,
+              0,
+              11,
+              6,
+              1,
+              4,
+              9,
+              8,
+              2,
+              3,
+              10,
+              5
+            ],
+            [
+              12,
+              7,
+              0,
+              11,
+              1,
+              4,
+              9,
+              8,
+              2,
+              3,
+              6,
+              10,
+              5
+            ]
+          ]
+        }
+      ],
+      "state_accuracy": 0.0078125,
+      "state_correct": 4,
+      "state_total": 512
+    },
+    "state_reset": {
+      "answer_accuracy": 0.26953125,
+      "answer_correct": 552,
+      "answer_total": 2048,
+      "depth_state": {
+        "3": {
+          "accuracy": 0.05847953216374269,
+          "correct": 20,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.03812316715542522,
+          "correct": 13,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.03519061583577713,
+          "correct": 12,
+          "total": 341
+        },
+        "6": {
+          "accuracy": 0.029239766081871343,
+          "correct": 10,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.005865102639296188,
+          "correct": 2,
+          "total": 341
+        },
+        "8": {
+          "accuracy": 0.002932551319648094,
+          "correct": 1,
+          "total": 341
+        }
+      },
+      "multi_law_state_accuracy": 0.0283203125,
+      "multi_law_state_correct": 58,
+      "multi_law_total": 2048,
+      "predicted_state_sha256": "db1d9adea8aa47b824db4eef9cc71ce21d524d65583966bf19b40e57e7dfe25a",
+      "samples": [
+        {
+          "expected_answer": 9,
+          "expected_state": [
+            8,
+            5,
+            0,
+            10,
+            6,
+            4,
+            2,
+            7,
+            9,
+            1,
+            3
+          ],
+          "predicted_answer": 1,
+          "predicted_state": [
+            7,
+            8,
+            5,
+            0,
+            10,
+            6,
+            4,
+            2,
+            1,
+            3,
+            9
+          ],
+          "row_id": "development_000000",
+          "transitions": [
+            [
+              8,
+              5,
+              0,
+              10,
+              6,
+              4,
+              2,
+              7,
+              9,
+              1,
+              3
+            ],
+            [
+              7,
+              8,
+              5,
+              10,
+              0,
+              6,
+              4,
+              2,
+              9,
+              1,
+              3
+            ],
+            [
+              7,
+              8,
+              5,
+              0,
+              10,
+              6,
+              4,
+              2,
+              1,
+              3,
+              9
+            ]
+          ]
+        },
+        {
+          "expected_answer": 7,
+          "expected_state": [
+            7,
+            5,
+            1,
+            6,
+            4,
+            10,
+            8,
+            3,
+            9,
+            2,
+            0
+          ],
+          "predicted_answer": 7,
+          "predicted_state": [
+            7,
+            4,
+            5,
+            1,
+            6,
+            10,
+            8,
+            3,
+            9,
+            0,
+            2
+          ],
+          "row_id": "development_000001",
+          "transitions": [
+            [
+              7,
+              4,
+              5,
+              1,
+              6,
+              10,
+              8,
+              3,
+              9,
+              0,
+              2
+            ],
+            [
+              7,
+              2,
+              5,
+              1,
+              6,
+              4,
+              10,
+              8,
+              3,
+              9,
+              0
+            ],
+            [
+              7,
+              4,
+              5,
+              1,
+              6,
+              10,
+              8,
+              3,
+              9,
+              0,
+              2
+            ],
+            [
+              7,
+              4,
+              5,
+              1,
+              6,
+              10,
+              8,
+              3,
+              9,
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "expected_answer": 4,
+          "expected_state": [
+            6,
+            8,
+            7,
+            9,
+            4,
+            1,
+            3,
+            10,
+            2,
+            0,
+            5
+          ],
+          "predicted_answer": 0,
+          "predicted_state": [
+            6,
+            7,
+            4,
+            5,
+            0,
+            8,
+            1,
+            3,
+            10,
+            2,
+            9
+          ],
+          "row_id": "development_000002",
+          "transitions": [
+            [
+              6,
+              7,
+              4,
+              5,
+              0,
+              1,
+              3,
+              10,
+              2,
+              9,
+              8
+            ],
+            [
+              6,
+              7,
+              4,
+              5,
+              0,
+              9,
+              1,
+              3,
+              10,
+              2,
+              8
+            ],
+            [
+              6,
+              7,
+              5,
+              0,
+              1,
+              4,
+              3,
+              10,
+              2,
+              9,
+              8
+            ],
+            [
+              6,
+              4,
+              7,
+              5,
+              0,
+              1,
+              3,
+              10,
+              2,
+              9,
+              8
+            ],
+            [
+              6,
+              7,
+              4,
+              0,
+              5,
+              1,
+              3,
+              10,
+              2,
+              9,
+              8
+            ],
+            [
+              6,
+              7,
+              4,
+              5,
+              0,
+              8,
+              1,
+              3,
+              10,
+              2,
+              9
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            4,
+            0,
+            3,
+            2,
+            1
+          ],
+          "predicted_answer": 1,
+          "predicted_state": [
+            4,
+            1,
+            0,
+            2,
+            3
+          ],
+          "row_id": "development_000003",
+          "transitions": [
+            [
+              4,
+              0,
+              2,
+              3,
+              1
+            ],
+            [
+              4,
+              1,
+              0,
+              2,
+              3
+            ],
+            [
+              2,
+              4,
+              1,
+              0,
+              3
+            ],
+            [
+              4,
+              1,
+              0,
+              2,
+              3
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            0,
+            3,
+            6,
+            5,
+            2,
+            1,
+            4
+          ],
+          "predicted_answer": 3,
+          "predicted_state": [
+            3,
+            2,
+            6,
+            1,
+            4,
+            0,
+            5
+          ],
+          "row_id": "development_000004",
+          "transitions": [
+            [
+              2,
+              6,
+              1,
+              4,
+              5,
+              3,
+              0
+            ],
+            [
+              2,
+              6,
+              1,
+              4,
+              5,
+              0,
+              3
+            ],
+            [
+              2,
+              1,
+              4,
+              0,
+              6,
+              5,
+              3
+            ],
+            [
+              3,
+              2,
+              6,
+              1,
+              4,
+              0,
+              5
+            ],
+            [
+              6,
+              1,
+              4,
+              2,
+              0,
+              5,
+              3
+            ],
+            [
+              3,
+              2,
+              6,
+              1,
+              4,
+              0,
+              5
+            ]
+          ]
+        }
+      ],
+      "state_accuracy": 0.0283203125,
+      "state_correct": 58,
+      "state_total": 2048
+    },
+    "treatment": {
+      "answer_accuracy": 0.30908203125,
+      "answer_correct": 633,
+      "answer_total": 2048,
+      "depth_state": {
+        "3": {
+          "accuracy": 0.15497076023391812,
+          "correct": 53,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.10850439882697947,
+          "correct": 37,
+          "total": 341
+        },
+        "5": {
+          "accuracy": 0.07331378299120235,
+          "correct": 25,
+          "total": 341
+        },
+        "6": {
+          "accuracy": 0.05263157894736842,
+          "correct": 18,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.04985337243401759,
+          "correct": 17,
+          "total": 341
+        },
+        "8": {
+          "accuracy": 0.04985337243401759,
+          "correct": 17,
+          "total": 341
+        }
+      },
+      "multi_law_state_accuracy": 0.08154296875,
+      "multi_law_state_correct": 167,
+      "multi_law_total": 2048,
+      "predicted_state_sha256": "bf149685936dcbbf141f6f5c86d3e7b94b7bcac5b8bac25feaa71663f93e2636",
+      "samples": [
+        {
+          "expected_answer": 9,
+          "expected_state": [
+            8,
+            5,
+            0,
+            10,
+            6,
+            4,
+            2,
+            7,
+            9,
+            1,
+            3
+          ],
+          "predicted_answer": 1,
+          "predicted_state": [
+            8,
+            0,
+            5,
+            10,
+            6,
+            4,
+            2,
+            7,
+            1,
+            3,
+            9
+          ],
+          "row_id": "development_000000",
+          "transitions": [
+            [
+              8,
+              5,
+              0,
+              10,
+              6,
+              4,
+              2,
+              7,
+              9,
+              1,
+              3
+            ],
+            [
+              8,
+              0,
+              5,
+              10,
+              6,
+              4,
+              2,
+              7,
+              9,
+              1,
+              3
+            ],
+            [
+              8,
+              0,
+              5,
+              10,
+              6,
+              4,
+              2,
+              7,
+              1,
+              3,
+              9
+            ]
+          ]
+        },
+        {
+          "expected_answer": 7,
+          "expected_state": [
+            7,
+            5,
+            1,
+            6,
+            4,
+            10,
+            8,
+            3,
+            9,
+            2,
+            0
+          ],
+          "predicted_answer": 7,
+          "predicted_state": [
+            7,
+            5,
+            1,
+            6,
+            10,
+            4,
+            8,
+            3,
+            9,
+            0,
+            2
+          ],
+          "row_id": "development_000001",
+          "transitions": [
+            [
+              7,
+              4,
+              5,
+              1,
+              6,
+              10,
+              8,
+              3,
+              9,
+              0,
+              2
+            ],
+            [
+              7,
+              5,
+              1,
+              6,
+              10,
+              4,
+              8,
+              3,
+              9,
+              0,
+              2
+            ],
+            [
+              7,
+              5,
+              1,
+              6,
+              10,
+              4,
+              8,
+              3,
+              9,
+              0,
+              2
+            ],
+            [
+              7,
+              5,
+              1,
+              6,
+              10,
+              4,
+              8,
+              3,
+              9,
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "expected_answer": 4,
+          "expected_state": [
+            6,
+            8,
+            7,
+            9,
+            4,
+            1,
+            3,
+            10,
+            2,
+            0,
+            5
+          ],
+          "predicted_answer": 9,
+          "predicted_state": [
+            6,
+            7,
+            4,
+            0,
+            9,
+            8,
+            5,
+            1,
+            3,
+            10,
+            2
+          ],
+          "row_id": "development_000002",
+          "transitions": [
+            [
+              6,
+              7,
+              4,
+              5,
+              0,
+              1,
+              3,
+              10,
+              2,
+              9,
+              8
+            ],
+            [
+              6,
+              7,
+              4,
+              5,
+              0,
+              9,
+              1,
+              3,
+              10,
+              2,
+              8
+            ],
+            [
+              6,
+              7,
+              5,
+              0,
+              9,
+              4,
+              1,
+              3,
+              10,
+              2,
+              8
+            ],
+            [
+              6,
+              7,
+              5,
+              4,
+              0,
+              9,
+              1,
+              3,
+              10,
+              2,
+              8
+            ],
+            [
+              6,
+              7,
+              4,
+              0,
+              9,
+              5,
+              1,
+              3,
+              10,
+              2,
+              8
+            ],
+            [
+              6,
+              7,
+              4,
+              0,
+              9,
+              8,
+              5,
+              1,
+              3,
+              10,
+              2
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            4,
+            0,
+            3,
+            2,
+            1
+          ],
+          "predicted_answer": 2,
+          "predicted_state": [
+            4,
+            2,
+            1,
+            0,
+            3
+          ],
+          "row_id": "development_000003",
+          "transitions": [
+            [
+              4,
+              0,
+              2,
+              3,
+              1
+            ],
+            [
+              4,
+              0,
+              2,
+              3,
+              1
+            ],
+            [
+              4,
+              2,
+              0,
+              3,
+              1
+            ],
+            [
+              4,
+              2,
+              1,
+              0,
+              3
+            ]
+          ]
+        },
+        {
+          "expected_answer": 0,
+          "expected_state": [
+            0,
+            3,
+            6,
+            5,
+            2,
+            1,
+            4
+          ],
+          "predicted_answer": 1,
+          "predicted_state": [
+            1,
+            5,
+            3,
+            4,
+            2,
+            6,
+            0
+          ],
+          "row_id": "development_000004",
+          "transitions": [
+            [
+              2,
+              6,
+              1,
+              4,
+              5,
+              3,
+              0
+            ],
+            [
+              2,
+              6,
+              1,
+              5,
+              4,
+              3,
+              0
+            ],
+            [
+              2,
+              1,
+              5,
+              4,
+              6,
+              3,
+              0
+            ],
+            [
+              2,
+              1,
+              5,
+              4,
+              3,
+              6,
+              0
+            ],
+            [
+              1,
+              5,
+              4,
+              2,
+              3,
+              6,
+              0
+            ],
+            [
+              1,
+              5,
+              3,
+              4,
+              2,
+              6,
+              0
+            ]
+          ]
+        }
+      ],
+      "state_accuracy": 0.08154296875,
+      "state_correct": 167,
+      "state_total": 2048
+    }
+  }
+}

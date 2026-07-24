@@ -1,0 +1,448 @@
+{
+  "all_gates_pass": true,
+  "artifact_sha256": {
+    "checkpoint": "a5888d88541904cfa186a6686012c13c7b555f7d186ba1e3e73f71dbaca462d8",
+    "evidence": "80f477af17d624b66fd3d9f6d5f7a7de7efd62943f63271034505ce32dbc77d6",
+    "executor": "4bcfc44183c3eb610302c21f472c6f5da11fd5d7abddd4b97dc196b97af8eaae",
+    "gate_config": "ab466c339b77d4193cbdbc383a2c9a28bd4ce6afcf9579f3a714b301e8d9a990",
+    "ledger": "15a9edd09f008084c0533672e57af8da96935da3dc1ca86edbaa4200e2f499e0",
+    "packets": "00a45016f81287361e9f0bcdd7869e386bcf792b68d990f230cae98ef44f44bf",
+    "report": "7dc048cc9ad16e1e326c7e4180fb06539428a4518c4d79440a92b794754b6bc2"
+  },
+  "assessor_gates": {
+    "artifact_hashes_match": true,
+    "parameter_certificate_exact": true,
+    "pilot_gate_vector_matches_independent_recomputation": true,
+    "pilot_metrics_match_independent_recomputation": true
+  },
+  "claim_boundary": "Fresh finite renderer/name transfer into a source-deleted categorical executor. Passing is not broad natural-language or general reasoning.",
+  "controls": {
+    "event_amount_flip": {
+      "answer_rate": 0.880859375,
+      "state_rate": 0.81640625
+    },
+    "event_identity_rotation": {
+      "answer_rate": 0.591796875,
+      "state_rate": 0.53515625
+    },
+    "event_kind_flip": {
+      "answer_rate": 0.59375,
+      "state_rate": 0.53125
+    },
+    "force_alive_post_stop": {
+      "answer_rate": 0.462890625,
+      "state_rate": 0.33203125
+    },
+    "freeze": {
+      "answer_rate": 0.287109375,
+      "state_rate": 0.13671875
+    },
+    "initial_state_rotation": {
+      "answer_rate": 0.783203125,
+      "state_rate": 0.703125
+    },
+    "post_stop_perturbation": {
+      "answer_rate": 1.0,
+      "state_rate": 1.0
+    },
+    "query_rotation": {
+      "answer_rate": 0.0,
+      "state_rate": 1.0
+    },
+    "reset": {
+      "answer_rate": 0.59375,
+      "state_rate": 0.509765625
+    },
+    "shuffled_packet": {
+      "answer_rate": 0.33203125,
+      "state_rate": 0.33203125
+    },
+    "uniform": {
+      "answer_rate": 0.333984375,
+      "state_rate": 0.33203125
+    }
+  },
+  "core_gates": {
+    "all_packet_fields_at_least_95pct": true,
+    "all_pointers_at_least_90pct": true,
+    "complete_system_below_200m": true,
+    "conditional_execution_exact": true,
+    "development_one_confirmation_zero": true,
+    "fit_packet_min_renderer_at_least_99pct": true,
+    "frozen_state_unchanged": true,
+    "gold_executor_exact": true,
+    "joint_min_renderer_at_least_85pct": true,
+    "packet_min_renderer_at_least_85pct": true,
+    "packet_overall_at_least_90pct": true,
+    "post_stop_perturbation_invariant": true,
+    "reset_and_freeze_state_at_most_75pct": true,
+    "row_shuffled_packet_at_most_25pct": true,
+    "shuffled_packet_state_at_most_35pct": true,
+    "source_deleted_before_separate_execution": true,
+    "state_answer_joint_at_least_90pct": true,
+    "treatment_packet_advantage_at_least_50pp": true
+  },
+  "custody": {
+    "confirmation_accesses": 0,
+    "development_accesses": 1
+  },
+  "decision": "authorize_one_sealed_confirmation",
+  "metrics": {
+    "row_shuffled_labels": {
+      "joint_by_renderer": {
+        "physical-fresh-d0e0q1-v1": {
+          "correct": 38,
+          "rate": 0.07421875,
+          "rows": 512
+        },
+        "physical-fresh-d0e1q0-v1": {
+          "correct": 36,
+          "rate": 0.0703125,
+          "rows": 512
+        },
+        "physical-fresh-d1e0q0-v1": {
+          "correct": 37,
+          "rate": 0.072265625,
+          "rows": 512
+        },
+        "physical-fresh-d1e1q1-v1": {
+          "correct": 37,
+          "rate": 0.072265625,
+          "rows": 512
+        }
+      },
+      "overall": {
+        "amount": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "answer": {
+          "correct": 467,
+          "rate": 0.22802734375,
+          "rows": 2048
+        },
+        "binding": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "event_entity": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "identity": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "initial": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "initial_entity": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "joint": {
+          "correct": 148,
+          "rate": 0.072265625,
+          "rows": 2048
+        },
+        "kind": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "line": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "packet": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "query": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "state": {
+          "correct": 148,
+          "rate": 0.072265625,
+          "rows": 2048
+        }
+      },
+      "packet_by_renderer": {
+        "physical-fresh-d0e0q1-v1": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 512
+        },
+        "physical-fresh-d0e1q0-v1": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 512
+        },
+        "physical-fresh-d1e0q0-v1": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 512
+        },
+        "physical-fresh-d1e1q1-v1": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 512
+        }
+      }
+    },
+    "treatment": {
+      "joint_by_renderer": {
+        "physical-fresh-d0e0q1-v1": {
+          "correct": 512,
+          "rate": 1.0,
+          "rows": 512
+        },
+        "physical-fresh-d0e1q0-v1": {
+          "correct": 512,
+          "rate": 1.0,
+          "rows": 512
+        },
+        "physical-fresh-d1e0q0-v1": {
+          "correct": 512,
+          "rate": 1.0,
+          "rows": 512
+        },
+        "physical-fresh-d1e1q1-v1": {
+          "correct": 512,
+          "rate": 1.0,
+          "rows": 512
+        }
+      },
+      "overall": {
+        "amount": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "answer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "binding": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "event_entity": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "identity": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "initial": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "initial_entity": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "joint": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "kind": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "line": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "packet": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "query": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "state": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        }
+      },
+      "packet_by_renderer": {
+        "physical-fresh-d0e0q1-v1": {
+          "correct": 512,
+          "rate": 1.0,
+          "rows": 512
+        },
+        "physical-fresh-d0e1q0-v1": {
+          "correct": 512,
+          "rate": 1.0,
+          "rows": 512
+        },
+        "physical-fresh-d1e0q0-v1": {
+          "correct": 512,
+          "rate": 1.0,
+          "rows": 512
+        },
+        "physical-fresh-d1e1q1-v1": {
+          "correct": 512,
+          "rate": 1.0,
+          "rows": 512
+        }
+      }
+    }
+  },
+  "parameters": {
+    "base": 125081664,
+    "compiler": 67027474,
+    "complete_system": 192129179,
+    "headroom": 7870821,
+    "motor": 19206,
+    "reader": 835,
+    "trainable": 12152855,
+    "trainable_names": [
+      "local_occurrence_head.bias",
+      "local_occurrence_head.weight",
+      "local_occurrence_hidden.bias",
+      "local_occurrence_hidden.weight",
+      "local_occurrence_norm.bias",
+      "local_occurrence_norm.weight",
+      "local_query_head.bias",
+      "local_query_head.weight",
+      "local_query_key_projection.weight",
+      "local_query_norm.bias",
+      "local_query_norm.weight",
+      "local_query_query_projection.weight",
+      "local_query_selector",
+      "local_query_value_projection.weight",
+      "record_amount_head.bias",
+      "record_amount_head.weight",
+      "record_byte_embedding.weight",
+      "record_entity_key.weight",
+      "record_entity_query.weight",
+      "record_kind_head.bias",
+      "record_kind_head.weight",
+      "record_line_encoder.layers.0.linear1.bias",
+      "record_line_encoder.layers.0.linear1.weight",
+      "record_line_encoder.layers.0.linear2.bias",
+      "record_line_encoder.layers.0.linear2.weight",
+      "record_line_encoder.layers.0.norm1.bias",
+      "record_line_encoder.layers.0.norm1.weight",
+      "record_line_encoder.layers.0.norm2.bias",
+      "record_line_encoder.layers.0.norm2.weight",
+      "record_line_encoder.layers.0.self_attn.in_proj_bias",
+      "record_line_encoder.layers.0.self_attn.in_proj_weight",
+      "record_line_encoder.layers.0.self_attn.out_proj.bias",
+      "record_line_encoder.layers.0.self_attn.out_proj.weight",
+      "record_line_encoder.layers.1.linear1.bias",
+      "record_line_encoder.layers.1.linear1.weight",
+      "record_line_encoder.layers.1.linear2.bias",
+      "record_line_encoder.layers.1.linear2.weight",
+      "record_line_encoder.layers.1.norm1.bias",
+      "record_line_encoder.layers.1.norm1.weight",
+      "record_line_encoder.layers.1.norm2.bias",
+      "record_line_encoder.layers.1.norm2.weight",
+      "record_line_encoder.layers.1.self_attn.in_proj_bias",
+      "record_line_encoder.layers.1.self_attn.in_proj_weight",
+      "record_line_encoder.layers.1.self_attn.out_proj.bias",
+      "record_line_encoder.layers.1.self_attn.out_proj.weight",
+      "record_line_encoder.layers.2.linear1.bias",
+      "record_line_encoder.layers.2.linear1.weight",
+      "record_line_encoder.layers.2.linear2.bias",
+      "record_line_encoder.layers.2.linear2.weight",
+      "record_line_encoder.layers.2.norm1.bias",
+      "record_line_encoder.layers.2.norm1.weight",
+      "record_line_encoder.layers.2.norm2.bias",
+      "record_line_encoder.layers.2.norm2.weight",
+      "record_line_encoder.layers.2.self_attn.in_proj_bias",
+      "record_line_encoder.layers.2.self_attn.in_proj_weight",
+      "record_line_encoder.layers.2.self_attn.out_proj.bias",
+      "record_line_encoder.layers.2.self_attn.out_proj.weight",
+      "record_line_encoder.layers.3.linear1.bias",
+      "record_line_encoder.layers.3.linear1.weight",
+      "record_line_encoder.layers.3.linear2.bias",
+      "record_line_encoder.layers.3.linear2.weight",
+      "record_line_encoder.layers.3.norm1.bias",
+      "record_line_encoder.layers.3.norm1.weight",
+      "record_line_encoder.layers.3.norm2.bias",
+      "record_line_encoder.layers.3.norm2.weight",
+      "record_line_encoder.layers.3.self_attn.in_proj_bias",
+      "record_line_encoder.layers.3.self_attn.in_proj_weight",
+      "record_line_encoder.layers.3.self_attn.out_proj.bias",
+      "record_line_encoder.layers.3.self_attn.out_proj.weight",
+      "record_line_norm.bias",
+      "record_line_norm.weight",
+      "record_position_embedding.weight",
+      "record_query",
+      "record_role_embedding",
+      "record_role_head.bias",
+      "record_role_head.weight",
+      "record_set_encoder.layers.0.linear1.bias",
+      "record_set_encoder.layers.0.linear1.weight",
+      "record_set_encoder.layers.0.linear2.bias",
+      "record_set_encoder.layers.0.linear2.weight",
+      "record_set_encoder.layers.0.norm1.bias",
+      "record_set_encoder.layers.0.norm1.weight",
+      "record_set_encoder.layers.0.norm2.bias",
+      "record_set_encoder.layers.0.norm2.weight",
+      "record_set_encoder.layers.0.self_attn.in_proj_bias",
+      "record_set_encoder.layers.0.self_attn.in_proj_weight",
+      "record_set_encoder.layers.0.self_attn.out_proj.bias",
+      "record_set_encoder.layers.0.self_attn.out_proj.weight",
+      "record_set_encoder.layers.1.linear1.bias",
+      "record_set_encoder.layers.1.linear1.weight",
+      "record_set_encoder.layers.1.linear2.bias",
+      "record_set_encoder.layers.1.linear2.weight",
+      "record_set_encoder.layers.1.norm1.bias",
+      "record_set_encoder.layers.1.norm1.weight",
+      "record_set_encoder.layers.1.norm2.bias",
+      "record_set_encoder.layers.1.norm2.weight",
+      "record_set_encoder.layers.1.self_attn.in_proj_bias",
+      "record_set_encoder.layers.1.self_attn.in_proj_weight",
+      "record_set_encoder.layers.1.self_attn.out_proj.bias",
+      "record_set_encoder.layers.1.self_attn.out_proj.weight",
+      "record_set_norm.bias",
+      "record_set_norm.weight"
+    ]
+  },
+  "protocol": "r12_sd_cst_complete_physical_fresh_v1_3",
+  "schema": "r12_sd_cst_complete_physical_fresh_assessment_v1_3",
+  "thresholds": {
+    "answer_overall": 0.9,
+    "field_overall": 0.95,
+    "fit_packet_min_renderer": 0.99,
+    "joint_min_renderer": 0.85,
+    "joint_overall": 0.9,
+    "negative_state_max": 0.35,
+    "packet_min_renderer": 0.85,
+    "packet_overall": 0.9,
+    "pointer_overall": 0.9,
+    "reset_freeze_state_max": 0.75,
+    "row_shuffled_packet_max": 0.25,
+    "state_overall": 0.9,
+    "treatment_packet_advantage": 0.5
+  }
+}

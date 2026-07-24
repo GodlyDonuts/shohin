@@ -1,0 +1,10 @@
+{
+  "access_number": 1,
+  "board_report_sha256": "22cb355e58e9f3b8125a57c60c7aafb7aadead4406abc426da368e3b3b2cff75",
+  "board_source_commit": "5670ad83ae4e5806ec351337997c16990f2b5452",
+  "protocol": "R12-ER-CST-WEB-v1.1",
+  "schema": "r12_er_cst_witness_equality_development_access_v1_1",
+  "scientific_source_commit": "87d53b53462d8d15660663238fd33886c010efb7",
+  "split": "er_cst_development",
+  "split_sha256": "ad58c84f87848165a1e0f7b064c1e5f26b7e867d35012fc3a9bb3fa923878f6e"
+}

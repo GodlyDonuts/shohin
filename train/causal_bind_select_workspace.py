@@ -31,6 +31,27 @@ class WorkspaceContractError(ValueError):
     """A causal, shape, custody, or control contract failed."""
 
 
+class _StraightThroughOneHot(torch.autograd.Function):
+    """Emit an exact one-hot tensor while differentiating through probabilities."""
+
+    @staticmethod
+    def forward(
+        ctx: object,
+        probabilities: torch.Tensor,
+    ) -> torch.Tensor:
+        del ctx
+        indices = probabilities.argmax(dim=-1, keepdim=True)
+        return torch.zeros_like(probabilities).scatter_(-1, indices, 1.0)
+
+    @staticmethod
+    def backward(
+        ctx: object,
+        gradient: torch.Tensor,
+    ) -> tuple[torch.Tensor]:
+        del ctx
+        return (gradient,)
+
+
 @dataclass(frozen=True)
 class CausalWorkspaceConfig:
     d_model: int = 576
@@ -97,13 +118,15 @@ class WorkspaceParameterReceipt:
 
 @dataclass(frozen=True)
 class WorkspaceControls:
-    """Causal ablations applied without changing parameter geometry."""
+    """Assessment-only causal ablations that preserve parameter geometry."""
 
     zero_workspace: bool = False
     uniform_binding: bool = False
     uniform_operator: bool = False
     binding_permutation: tuple[int, ...] | None = None
     operator_permutation: tuple[int, ...] | None = None
+    scramble_selected_slot: bool = False
+    scramble_discarded_slots: bool = False
 
 
 class CausalBindSelectWorkspace(nn.Module):
@@ -262,6 +285,7 @@ class CausalBindSelectWorkspace(nn.Module):
         controls: WorkspaceControls | None = None,
         attention_mask: torch.Tensor | None = None,
         allow_unsealed_for_mechanism_fit: bool = False,
+        assessment_only: bool = False,
     ) -> tuple[torch.Tensor, WorkspaceExecutionState, WorkspaceDiagnostics]:
         """Execute a late query using only a sealed workspace and query residuals."""
 
@@ -282,6 +306,13 @@ class CausalBindSelectWorkspace(nn.Module):
         self._validate_execution_state(state, batch=batch, hidden=hidden)
         controls = controls or WorkspaceControls()
         self._validate_controls(controls)
+        controls_active = self._controls_active(controls)
+        if controls_active and not assessment_only:
+            raise WorkspaceContractError("workspace interventions are assessment-only")
+        if assessment_only and torch.is_grad_enabled():
+            raise WorkspaceContractError(
+                "assessment-only execution requires gradients to be disabled"
+            )
         mask = self._validated_mask(attention_mask, batch, tokens, hidden.device)
 
         slots = state.workspace.slots
@@ -302,14 +333,22 @@ class CausalBindSelectWorkspace(nn.Module):
                 uniform=controls.uniform_binding,
                 permutation=controls.binding_permutation,
             )
-            selected = torch.einsum("bs,bsw->bw", binding, slots)
+            intervened_slots = self._intervene_slots(
+                slots,
+                binding,
+                scramble_selected=controls.scramble_selected_slot,
+                scramble_discarded=controls.scramble_discarded_slots,
+            )
+            selected = torch.einsum("bs,bsw->bw", binding, intervened_slots)
             value = self.value_projection(token_hidden)
             proposal_cursor = cursor + selected + value
 
             operator_logits = self.operator_selector(
                 torch.cat((token_hidden, selected), dim=-1)
             )
-            operator_probability = operator_logits.softmax(dim=-1)
+            operator_probability = _StraightThroughOneHot.apply(
+                operator_logits.softmax(dim=-1)
+            )
             operator_probability = self._controlled_distribution(
                 operator_probability,
                 uniform=controls.uniform_operator,
@@ -352,7 +391,8 @@ class CausalBindSelectWorkspace(nn.Module):
         key = self.key_projection(hidden)
         addresses = self.slot_addresses.to(device=hidden.device, dtype=hidden.dtype)
         logits = torch.einsum("bw,sw->bs", key, addresses)
-        return (logits / math.sqrt(self.config.slot_width)).softmax(dim=-1)
+        probabilities = (logits / math.sqrt(self.config.slot_width)).softmax(dim=-1)
+        return _StraightThroughOneHot.apply(probabilities)
 
     def _recurrent_step(
         self,
@@ -373,6 +413,21 @@ class CausalBindSelectWorkspace(nn.Module):
         latent = torch.einsum("bw,owr->bor", cursor, down)
         delta = torch.einsum("bor,orw->bow", F.silu(latent), up)
         return cursor.unsqueeze(1) + delta
+
+    @staticmethod
+    def _intervene_slots(
+        slots: torch.Tensor,
+        binding: torch.Tensor,
+        *,
+        scramble_selected: bool,
+        scramble_discarded: bool,
+    ) -> torch.Tensor:
+        if not scramble_selected and not scramble_discarded:
+            return slots
+        scrambled = torch.roll(slots, shifts=1, dims=-1)
+        selected = binding.detach().to(dtype=torch.bool).unsqueeze(-1)
+        intervention_mask = selected if scramble_selected else ~selected
+        return torch.where(intervention_mask, scrambled, slots)
 
     @staticmethod
     def _controlled_distribution(
@@ -441,6 +496,25 @@ class CausalBindSelectWorkspace(nn.Module):
             raise WorkspaceContractError("query token count is negative")
 
     def _validate_controls(self, controls: WorkspaceControls) -> None:
+        boolean_controls = (
+            controls.zero_workspace,
+            controls.uniform_binding,
+            controls.uniform_operator,
+            controls.scramble_selected_slot,
+            controls.scramble_discarded_slots,
+        )
+        if not all(isinstance(control, bool) for control in boolean_controls):
+            raise WorkspaceContractError("workspace Boolean controls must be bool")
+        if controls.scramble_selected_slot and controls.scramble_discarded_slots:
+            raise WorkspaceContractError(
+                "selected and discarded slot scrambles are mutually exclusive"
+            )
+        if controls.uniform_binding and (
+            controls.scramble_selected_slot or controls.scramble_discarded_slots
+        ):
+            raise WorkspaceContractError(
+                "slot scrambles require a hard selected binding"
+            )
         self._validate_permutation(
             controls.binding_permutation,
             self.config.num_slots,
@@ -450,6 +524,20 @@ class CausalBindSelectWorkspace(nn.Module):
             controls.operator_permutation,
             self.config.num_operators,
             "operator",
+        )
+
+    @staticmethod
+    def _controls_active(controls: WorkspaceControls) -> bool:
+        return any(
+            (
+                controls.zero_workspace,
+                controls.uniform_binding,
+                controls.uniform_operator,
+                controls.binding_permutation is not None,
+                controls.operator_permutation is not None,
+                controls.scramble_selected_slot,
+                controls.scramble_discarded_slots,
+            )
         )
 
     @staticmethod
@@ -499,6 +587,52 @@ class CausalWorkspaceGPT(nn.Module):
         self.workspace = CausalBindSelectWorkspace(workspace_config)
         self.workspace_config = workspace_config
 
+    def compile_world_state(
+        self,
+        world_idx: torch.Tensor,
+        *,
+        attention_mask: torch.Tensor | None = None,
+    ) -> WorkspaceState:
+        """Compile and seal a world without accepting any query input."""
+
+        return self._compile_world_state(
+            world_idx,
+            seal=True,
+            attention_mask=attention_mask,
+        )
+
+    def execute_workspace_state(
+        self,
+        workspace: WorkspaceState,
+        query_idx: torch.Tensor,
+        *,
+        controls: WorkspaceControls | None = None,
+        attention_mask: torch.Tensor | None = None,
+    ) -> tuple[torch.Tensor, WorkspaceDiagnostics]:
+        """Execute a sealed source-deleted state without accepting world input."""
+
+        assessment_only = controls is not None and self.workspace._controls_active(
+            controls
+        )
+        if assessment_only and torch.is_grad_enabled():
+            raise WorkspaceContractError(
+                "assessment-only execution requires gradients to be disabled"
+            )
+        logits, loss, _, diagnostics = self._execute_query_from_state(
+            workspace,
+            query_idx,
+            targets=None,
+            controls=controls,
+            attention_mask=attention_mask,
+            allow_unsealed_for_mechanism_fit=False,
+            assessment_only=assessment_only,
+        )
+        if loss is not None:
+            raise WorkspaceContractError(
+                "source-deleted execution unexpectedly produced a loss"
+            )
+        return logits, diagnostics
+
     def _compile_world_state(
         self,
         world_idx: torch.Tensor,
@@ -522,6 +656,7 @@ class CausalWorkspaceGPT(nn.Module):
         controls: WorkspaceControls | None = None,
         attention_mask: torch.Tensor | None = None,
         allow_unsealed_for_mechanism_fit: bool = False,
+        assessment_only: bool = False,
     ) -> tuple[
         torch.Tensor,
         torch.Tensor | None,
@@ -538,6 +673,7 @@ class CausalWorkspaceGPT(nn.Module):
             controls=controls,
             attention_mask=attention_mask,
             allow_unsealed_for_mechanism_fit=allow_unsealed_for_mechanism_fit,
+            assessment_only=assessment_only,
         )
         hidden = self._decode_from_workspace(
             hidden,
@@ -616,16 +752,18 @@ class CausalWorkspaceGPT(nn.Module):
     ]:
         """Run an explicit assessment-only intervention from raw tokens."""
 
-        return self._forward_raw_tokens(
-            world_idx,
-            query_idx,
-            targets=targets,
-            world_attention_mask=world_attention_mask,
-            query_attention_mask=query_attention_mask,
-            controls=controls,
-            seal_world=True,
-            allow_unsealed_for_mechanism_fit=False,
-        )
+        with torch.no_grad():
+            return self._forward_raw_tokens(
+                world_idx,
+                query_idx,
+                targets=targets,
+                world_attention_mask=world_attention_mask,
+                query_attention_mask=query_attention_mask,
+                controls=controls,
+                seal_world=True,
+                allow_unsealed_for_mechanism_fit=False,
+                assessment_only=True,
+            )
 
     def forward_mechanism_fit(
         self,
@@ -670,6 +808,7 @@ class CausalWorkspaceGPT(nn.Module):
         controls: WorkspaceControls | None,
         seal_world: bool,
         allow_unsealed_for_mechanism_fit: bool,
+        assessment_only: bool = False,
     ) -> tuple[
         torch.Tensor,
         torch.Tensor | None,
@@ -688,6 +827,7 @@ class CausalWorkspaceGPT(nn.Module):
             controls=controls,
             attention_mask=query_attention_mask,
             allow_unsealed_for_mechanism_fit=allow_unsealed_for_mechanism_fit,
+            assessment_only=assessment_only,
         )
         return logits, loss, workspace, diagnostics
 

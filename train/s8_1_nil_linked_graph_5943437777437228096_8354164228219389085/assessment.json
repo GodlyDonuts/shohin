@@ -1,0 +1,411 @@
+{
+  "decision": "reject_s8_nil_linked_law_graph_v1",
+  "gates": {
+    "answer_at_least_90pct": false,
+    "card_derangement_drop_at_least_50pp": false,
+    "complete_system_below_150m": true,
+    "count_and_nil_at_least_98pct": false,
+    "early_nil_drop_at_least_30pp": false,
+    "every_depth_state_at_least_75pct": false,
+    "exact_graph_at_least_90pct": false,
+    "gold_graph_answer_exact": true,
+    "gold_graph_state_exact": true,
+    "graph_compiler_below_16m": true,
+    "graph_only_training_contract": true,
+    "graph_reindex_bit_identical": true,
+    "graph_valid_at_least_95pct": false,
+    "one_development_zero_confirmation_access": true,
+    "one_witness_drop_at_least_30pp": false,
+    "operation_nonce_bit_identical": false,
+    "reversed_links_drop_at_least_40pp": false,
+    "shuffled_exact_graph_below_10pct": true,
+    "state_at_least_85pct": false,
+    "state_reset_drop_at_least_20pp": true,
+    "storage_order_below_40pct": true,
+    "treatment_within_10pp_of_gold": false,
+    "treatment_within_3pp_of_ordinary": true
+  },
+  "schema": "r12_s8_nil_linked_law_graph_development_assessment_v1",
+  "scores": {
+    "arms": {
+      "deranged_cards": {
+        "answer_accuracy": 0.0595703125,
+        "answer_correct": 122,
+        "depth_state": {
+          "3": {
+            "accuracy": 0.008797653958944282,
+            "correct": 3,
+            "total": 341
+          },
+          "4": {
+            "accuracy": 0.005847953216374269,
+            "correct": 2,
+            "total": 342
+          },
+          "5": {
+            "accuracy": 0.0,
+            "correct": 0,
+            "total": 341
+          },
+          "6": {
+            "accuracy": 0.0029239766081871343,
+            "correct": 1,
+            "total": 342
+          },
+          "7": {
+            "accuracy": 0.0,
+            "correct": 0,
+            "total": 340
+          },
+          "8": {
+            "accuracy": 0.0,
+            "correct": 0,
+            "total": 342
+          }
+        },
+        "predicted_state_sha256": "df234c86c3e9528bf52d38dfa10cf936ce0400d57f67eec7f22548cf5dd5499f",
+        "state_accuracy": 0.0029296875,
+        "state_correct": 6,
+        "total": 2048
+      },
+      "early_nil": {
+        "answer_accuracy": 0.068359375,
+        "answer_correct": 140,
+        "depth_state": {
+          "3": {
+            "accuracy": 0.020527859237536656,
+            "correct": 7,
+            "total": 341
+          },
+          "4": {
+            "accuracy": 0.005847953216374269,
+            "correct": 2,
+            "total": 342
+          },
+          "5": {
+            "accuracy": 0.011730205278592375,
+            "correct": 4,
+            "total": 341
+          },
+          "6": {
+            "accuracy": 0.008771929824561403,
+            "correct": 3,
+            "total": 342
+          },
+          "7": {
+            "accuracy": 0.008823529411764706,
+            "correct": 3,
+            "total": 340
+          },
+          "8": {
+            "accuracy": 0.008771929824561403,
+            "correct": 3,
+            "total": 342
+          }
+        },
+        "predicted_state_sha256": "407c26089a51b73302aa669518111c3544021226df5d64d26901efc436015eef",
+        "state_accuracy": 0.0107421875,
+        "state_correct": 22,
+        "total": 2048
+      },
+      "gold_graph": {
+        "answer_accuracy": 1.0,
+        "answer_correct": 2048,
+        "depth_state": {
+          "3": {
+            "accuracy": 1.0,
+            "correct": 341,
+            "total": 341
+          },
+          "4": {
+            "accuracy": 1.0,
+            "correct": 342,
+            "total": 342
+          },
+          "5": {
+            "accuracy": 1.0,
+            "correct": 341,
+            "total": 341
+          },
+          "6": {
+            "accuracy": 1.0,
+            "correct": 342,
+            "total": 342
+          },
+          "7": {
+            "accuracy": 1.0,
+            "correct": 340,
+            "total": 340
+          },
+          "8": {
+            "accuracy": 1.0,
+            "correct": 342,
+            "total": 342
+          }
+        },
+        "predicted_state_sha256": "5b4451d867c7e1336bec4bcbbe8a5164bf9899ec925535ccbdf983fb3fa21070",
+        "state_accuracy": 1.0,
+        "state_correct": 2048,
+        "total": 2048
+      },
+      "one_witness": {
+        "answer_accuracy": 0.06494140625,
+        "answer_correct": 133,
+        "depth_state": {
+          "3": {
+            "accuracy": 0.02932551319648094,
+            "correct": 10,
+            "total": 341
+          },
+          "4": {
+            "accuracy": 0.017543859649122806,
+            "correct": 6,
+            "total": 342
+          },
+          "5": {
+            "accuracy": 0.011730205278592375,
+            "correct": 4,
+            "total": 341
+          },
+          "6": {
+            "accuracy": 0.014619883040935672,
+            "correct": 5,
+            "total": 342
+          },
+          "7": {
+            "accuracy": 0.0029411764705882353,
+            "correct": 1,
+            "total": 340
+          },
+          "8": {
+            "accuracy": 0.0,
+            "correct": 0,
+            "total": 342
+          }
+        },
+        "predicted_state_sha256": "c2fd5dc3245491d1974990e64f505a74011c3fb2e222ab0124cf2d095177ab88",
+        "state_accuracy": 0.0126953125,
+        "state_correct": 26,
+        "total": 2048
+      },
+      "ordinary_sequence_parser": {
+        "answer_accuracy": 0.10205078125,
+        "answer_correct": 209,
+        "depth_state": {
+          "3": {
+            "accuracy": 0.2697947214076246,
+            "correct": 92,
+            "total": 341
+          },
+          "4": {
+            "accuracy": 0.25146198830409355,
+            "correct": 86,
+            "total": 342
+          },
+          "5": {
+            "accuracy": 0.07331378299120235,
+            "correct": 25,
+            "total": 341
+          },
+          "6": {
+            "accuracy": 0.005847953216374269,
+            "correct": 2,
+            "total": 342
+          },
+          "7": {
+            "accuracy": 0.0,
+            "correct": 0,
+            "total": 340
+          },
+          "8": {
+            "accuracy": 0.0,
+            "correct": 0,
+            "total": 342
+          }
+        },
+        "predicted_state_sha256": "98de1594c9370feebcc0ca70e6cecea25a8f7f78335f54632f159ed52db385da",
+        "state_accuracy": 0.10009765625,
+        "state_correct": 205,
+        "total": 2048
+      },
+      "reversed_links": {
+        "answer_accuracy": 0.07421875,
+        "answer_correct": 152,
+        "depth_state": {
+          "3": {
+            "accuracy": 0.04398826979472141,
+            "correct": 15,
+            "total": 341
+          },
+          "4": {
+            "accuracy": 0.029239766081871343,
+            "correct": 10,
+            "total": 342
+          },
+          "5": {
+            "accuracy": 0.008797653958944282,
+            "correct": 3,
+            "total": 341
+          },
+          "6": {
+            "accuracy": 0.008771929824561403,
+            "correct": 3,
+            "total": 342
+          },
+          "7": {
+            "accuracy": 0.01764705882352941,
+            "correct": 6,
+            "total": 340
+          },
+          "8": {
+            "accuracy": 0.008771929824561403,
+            "correct": 3,
+            "total": 342
+          }
+        },
+        "predicted_state_sha256": "94ce5773151a141028ac8ec1a1d08888d92b0750827a55f30e288b18823358b6",
+        "state_accuracy": 0.01953125,
+        "state_correct": 40,
+        "total": 2048
+      },
+      "state_reset": {
+        "answer_accuracy": 0.068359375,
+        "answer_correct": 140,
+        "depth_state": {
+          "3": {
+            "accuracy": 0.02346041055718475,
+            "correct": 8,
+            "total": 341
+          },
+          "4": {
+            "accuracy": 0.011695906432748537,
+            "correct": 4,
+            "total": 342
+          },
+          "5": {
+            "accuracy": 0.008797653958944282,
+            "correct": 3,
+            "total": 341
+          },
+          "6": {
+            "accuracy": 0.0,
+            "correct": 0,
+            "total": 342
+          },
+          "7": {
+            "accuracy": 0.008823529411764706,
+            "correct": 3,
+            "total": 340
+          },
+          "8": {
+            "accuracy": 0.0029239766081871343,
+            "correct": 1,
+            "total": 342
+          }
+        },
+        "predicted_state_sha256": "52478702ce073b39e7f2e7fe2c948e37a17e22240fd00e9a0935b7ef985829eb",
+        "state_accuracy": 0.00927734375,
+        "state_correct": 19,
+        "total": 2048
+      },
+      "storage_order_shortcut": {
+        "answer_accuracy": 0.10205078125,
+        "answer_correct": 209,
+        "depth_state": {
+          "3": {
+            "accuracy": 0.07917888563049853,
+            "correct": 27,
+            "total": 341
+          },
+          "4": {
+            "accuracy": 0.06432748538011696,
+            "correct": 22,
+            "total": 342
+          },
+          "5": {
+            "accuracy": 0.02932551319648094,
+            "correct": 10,
+            "total": 341
+          },
+          "6": {
+            "accuracy": 0.029239766081871343,
+            "correct": 10,
+            "total": 342
+          },
+          "7": {
+            "accuracy": 0.026470588235294117,
+            "correct": 9,
+            "total": 340
+          },
+          "8": {
+            "accuracy": 0.011695906432748537,
+            "correct": 4,
+            "total": 342
+          }
+        },
+        "predicted_state_sha256": "b8d864a52e10a69f92cf51185c19f5bff7afb2e7260bdde13a93e0d7a8f5b2eb",
+        "state_accuracy": 0.0400390625,
+        "state_correct": 82,
+        "total": 2048
+      },
+      "treatment": {
+        "answer_accuracy": 0.2509765625,
+        "answer_correct": 514,
+        "depth_state": {
+          "3": {
+            "accuracy": 0.25806451612903225,
+            "correct": 88,
+            "total": 341
+          },
+          "4": {
+            "accuracy": 0.2573099415204678,
+            "correct": 88,
+            "total": 342
+          },
+          "5": {
+            "accuracy": 0.21994134897360704,
+            "correct": 75,
+            "total": 341
+          },
+          "6": {
+            "accuracy": 0.26608187134502925,
+            "correct": 91,
+            "total": 342
+          },
+          "7": {
+            "accuracy": 0.2676470588235294,
+            "correct": 91,
+            "total": 340
+          },
+          "8": {
+            "accuracy": 0.23684210526315788,
+            "correct": 81,
+            "total": 342
+          }
+        },
+        "predicted_state_sha256": "cdd88911c54a776f4d32c5db809e397a812ca9185dca360acbc6092abeca4c5c",
+        "state_accuracy": 0.2509765625,
+        "state_correct": 514,
+        "total": 2048
+      }
+    },
+    "graph": {
+      "count_halt_accuracy": 0.2509765625,
+      "count_halt_exact": 514,
+      "exact": 514,
+      "exact_accuracy": 0.2509765625,
+      "shuffled_exact": 0,
+      "shuffled_exact_accuracy": 0.0,
+      "valid": 514,
+      "valid_accuracy": 0.2509765625
+    },
+    "invariance": {
+      "graph_reindex_accuracy": 1.0,
+      "graph_reindex_eligible": 514,
+      "graph_reindex_identical": 514,
+      "operation_nonce_accuracy": 1.0,
+      "operation_nonce_eligible": 422,
+      "operation_nonce_identical": 422
+    }
+  }
+}

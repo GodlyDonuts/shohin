@@ -1,0 +1,10 @@
+{
+  "access_number": 1,
+  "board_report_sha256": "fd487cdf7c30cf945ace152e389aaf5c354b8b6a55555c2acc6f046e8ed00b24",
+  "evaluator_source_commit": "94b26058bfa9d43089ce02277b3cdaeb9a1d6594",
+  "protocol": "r12_sd_cst_complete_physical_fresh_v1_3",
+  "schema": "r12_sd_cst_complete_physical_fresh_confirmation_access_v1_3",
+  "scientific_source_commit": "eed66757c47e126b6566ee269bc73b0c0cef4fab",
+  "split": "sd_cst_confirmation",
+  "split_sha256": "6186fb8c83c9863db2844f5eb537194a713c5ab16d2a41f1f88f6e3742f02165"
+}

@@ -1,0 +1,7 @@
+{
+  "artifacts": {
+    "mctfr.pt": "768ef9c8f418239a3120cf9301a68ab96c71eebd722e4b21293f1b3207880b38",
+    "report.json": "d8de5fdc46ae18974177b08dc81086b7cd2b9183b251cce89a92da65bfc371d6"
+  },
+  "schema": "neural_endogenous_counterexample_transport_bundle_v1"
+}

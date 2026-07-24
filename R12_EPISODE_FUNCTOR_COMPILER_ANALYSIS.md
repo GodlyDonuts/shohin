@@ -76,6 +76,13 @@ demonstrate reuse across a large independently sampled post-seal challenge
 family. The current board remains a useful binding/order diagnostic, but it is
 not the strongest possible identification test for a reusable causal machine.
 
+A source audit sharpens this concern: candidate worlds are accepted or rejected
+after inspecting sampled hidden-query outcomes. The later custody split
+therefore proves that compiler, executor, and assessor read different files; it
+does not prove that challenge information did not influence world selection.
+The old corpus is rejected for advancement and retained only as a consumed
+diagnostic.
+
 ## What Is Accepted
 
 ### 1. Explicit anonymous machine state
@@ -160,6 +167,13 @@ retained key precision, and maximum challenge depth. It must then show that a
 query-indexed cache under the same committed-byte ceiling cannot cover the
 challenge support.
 
+For the current nonempty depth-one-through-six grammar, the exhaustive
+three-bit answer table is only 3,276 packed bytes. It therefore fits inside a
+hypothetical 16 KiB machine budget. Depth six is adequate for mechanics but not
+for a byte-capacity exclusion. One corrected proposal scores through depth
+twelve, where the depth-zero-through-twelve universe contains 6,377,288
+queries and needs 2,391,483 packed answer bytes.
+
 ### Current start-state binding must be represented
 
 The current late query supplies an opaque start-state nonce. The proposed hard
@@ -183,6 +197,12 @@ Only CPU mechanics and protocol falsifiers are authorized:
 5. freeze exact machine and answer-cache bit accounting; and
 6. test whether raw source evidence identifies every required transition
    without oracle segmentation.
+
+The two current Python auditors do not yet satisfy item 4. They are separately
+written but share sorted-key canonicalization, integer state slots, row-major
+tables, and left-to-right updates. The replacement gate requires sealed-artifact
+C and Rust runtimes with different state/transition representations and a third
+independent assessor.
 
 No neural source freeze or GPU run is justified until those gates pass.
 

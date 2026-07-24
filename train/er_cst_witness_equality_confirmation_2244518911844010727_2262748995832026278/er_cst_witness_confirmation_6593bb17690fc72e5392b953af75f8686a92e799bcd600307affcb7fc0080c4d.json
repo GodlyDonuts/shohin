@@ -1,0 +1,10 @@
+{
+  "access_number": 1,
+  "board_report_sha256": "22cb355e58e9f3b8125a57c60c7aafb7aadead4406abc426da368e3b3b2cff75",
+  "evaluator_source_commit": "4a930c032adc04ec580ce7272df473365fe57a4a",
+  "protocol": "R12-ER-CST-WEB-v1.1",
+  "schema": "r12_er_cst_witness_equality_confirmation_access_v1_1",
+  "scientific_source_commit": "87d53b53462d8d15660663238fd33886c010efb7",
+  "split": "er_cst_confirmation",
+  "split_sha256": "6593bb17690fc72e5392b953af75f8686a92e799bcd600307affcb7fc0080c4d"
+}

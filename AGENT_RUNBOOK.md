@@ -44,17 +44,43 @@
 > multiplicity, order, and depth arrive after the seal. The source-level review
 > is in `R12_EPISODE_FUNCTOR_COMPILER_ANALYSIS.md`. A provisional CPU audit
 > passes all 192 complete 3-by-8 world transition tables, answers the existing
-> 384/384 realized queries exactly, and exhaustively executes 1,678,848
-> all-start/all-word cases through depth six. Its conservative resource receipt
-> is 26,232 answer-cache bits versus 276 categorical-machine semantic bits
-> (95.043x). The current two realized answers require six answer bits only if
+> 384/384 realized queries exactly, and exhaustively executes 1,677,312
+> nonempty all-start/all-word cases through depth six. Its conservative
+> resource receipt is 26,208 answer-cache bits versus 276 categorical-machine
+> semantic bits (94.957x). The current two realized answers require six answer
+> bits only if
 > their hidden routing coordinates are somehow derivable before seal; that is
-> not established. The old 907,269-parameter workspace pilot is now
-> control-only and must not launch. Next legitimate work is CPU-only:
-> independently seeded post-seal challenge generation, two independent hard
-> machine runtimes, quotient/capacity proofs, and exact cache/state accounting.
-> No neural source freeze, H100 run, reasoning promotion, or continuation
+> not established. A hostile audit also rejects the current corpus for
+> advancement: world mechanics and hidden queries share one RNG trajectory,
+> world acceptance inspects sampled query outcomes, and custody files are split
+> only after complete packets exist. The two Python auditors are separately
+> written but are not independent deployed runtimes. The corrected two-beacon
+> protocol, depth-twelve byte-capacity gate, sealed C/Rust runtime requirement,
+> third assessor, and causal kill tests are in
+> `R12_EPISODE_FUNCTOR_COMPILER_SEAL_FIRST_PROTOCOL.md`. CPU-only work now
+> includes the fixed 1,536-byte C/Rust machine contract, a two-beacon
+> seal-first rehearsal with source-delete and causal-order kill tests, and a
+> twelve-machine nontrivial quotient fixture. The relevant expanded suite
+> reports 191 passed and one platform-dependent strict cross-check skipped.
+> These are fixtures/rehearsals, not an official board or neural result. The
+> old 907,269-parameter workspace pilot is control-only and must not launch.
+> Next legitimate work is hostile audit and protocol freeze followed by an
+> independently generated post-seal world/challenge/assessor pipeline. No
+> neural source freeze, H100 run, reasoning promotion, or continuation
 > pretraining is authorized.
+>
+> **EFC CPU gate progress (2026-07-23 EDT):** independent fixed-width C and
+> Rust runtimes now pass 47/47 strict compilation, mutation, intervention,
+> gauge-conjugacy, equivalent-word, noncommuting, and cross-runtime tests. The
+> C runtime uses flat integer transitions; Rust uses one-hot Boolean-relation
+> images. Their 1,536-byte machine and query-bound transcripts share no Shohin
+> runtime imports. A consumed nontrivial-observer fixture adds twelve machines
+> spanning quotient sizes three through eight; partition refinement,
+> pair-product reachability, and depth-seven exhaustive behavior agree, all 13
+> gates pass, train/development structural overlap is zero, and fixture SHA-256
+> is `349b8f4c4a163afd5eab288727c7bd59a1e52fb6782d25071820fac1151c678d`.
+> These remain CPU mechanics only. The two-beacon rehearsal is not the deployed
+> C/Rust wire format and no neural fit is authorized.
 >
 > MCTFR remains **pre-score** after two hostile audits invalidated its first
 > implementation. The working revision removes renderer/orbit metadata from

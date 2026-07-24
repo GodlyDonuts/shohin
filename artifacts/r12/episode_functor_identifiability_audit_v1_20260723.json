@@ -8,9 +8,9 @@
   "continuation_pretraining_authorized": false,
   "custody_path": "/Users/sairamen/projects/shohin/artifacts/r12/episode_workspace_custody_v1_1532fe2_seed2026072309",
   "exhaustive_execution": {
-    "queries_per_world": 8744,
-    "sha256": "c4bb13ab3e10cdb4ed366149ff19d011c66a407134c7411ed8a060c292b1e96f",
-    "total_queries": 1678848
+    "queries_per_world": 8736,
+    "sha256": "c06f8640f83e1d637f4ecc152e7cfbef91f0b12a6d5cbf35b82500bc3f94ebf4",
+    "total_queries": 1677312
   },
   "finite_query_theorem": {
     "old_board_decisive_no_go_as_stated": false,
@@ -41,19 +41,20 @@
   "resource_receipt": {
     "action_index_bits": 2,
     "active_mask_bits": 12,
-    "cache_to_machine_bit_ratio": 95.04347826086956,
+    "cache_to_machine_bit_ratio": 94.95652173913044,
     "conservative_machine_semantic_bits": 276,
-    "full_answer_cache_bits": 26232,
+    "full_answer_cache_bits": 26208,
     "initial_state_bits": 3,
     "max_depth": 6,
+    "min_depth": 1,
     "observer_map_bits": 24,
-    "query_count_all_starts_through_depth": 8744,
+    "query_count_all_starts_through_depth": 8736,
     "realized_two_answer_cache_bits_per_world_ignoring_routing": 6,
     "retained_state_action_key_bits": 165,
     "retained_token_bits": 15,
     "state_index_bits": 3,
     "transition_table_bits": 72,
-    "word_count_through_depth": 1093
+    "word_count_through_depth": 1092
   },
   "schema": "episode_functor_compiler_identifiability_audit_v1",
   "world_transition_coverage": {

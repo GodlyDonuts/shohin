@@ -1,0 +1,14 @@
+{'cuda': True, 'device': 'NVIDIA H100 PCIe', 'bf16': True}
+Traceback (most recent call last):
+  File "/lustre/fs1/home/sa305415/shohin_complete_physical_fresh_source_fab094f/train/pilot_sd_cst_complete_physical_fresh.py", line 723, in <module>
+    main()
+    ~~~~^^
+  File "/lustre/fs1/home/sa305415/shohin_complete_physical_fresh_source_fab094f/train/pilot_sd_cst_complete_physical_fresh.py", line 600, in main
+    "fit_packet_min_renderer_at_least_99pct": _minimum_fit_packet(treatment_fit)
+                                              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/lustre/fs1/home/sa305415/shohin_complete_physical_fresh_source_fab094f/train/pilot_sd_cst_complete_physical_fresh.py", line 189, in _minimum_fit_packet
+    return min(float(value["rates"]["packet"]) for value in fit.values())
+  File "/lustre/fs1/home/sa305415/shohin_complete_physical_fresh_source_fab094f/train/pilot_sd_cst_complete_physical_fresh.py", line 189, in <genexpr>
+    return min(float(value["rates"]["packet"]) for value in fit.values())
+                     ~~~~~^^^^^^^^^
+TypeError: 'int' object is not subscriptable

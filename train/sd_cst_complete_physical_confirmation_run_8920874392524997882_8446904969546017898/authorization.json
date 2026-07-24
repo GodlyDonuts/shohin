@@ -1,0 +1,42 @@
+{
+  "board_report_sha256": "fd487cdf7c30cf945ace152e389aaf5c354b8b6a55555c2acc6f046e8ed00b24",
+  "checkpoint_sha256": "a5888d88541904cfa186a6686012c13c7b555f7d186ba1e3e73f71dbaca462d8",
+  "confirmation_accesses": 0,
+  "development_accesses": 1,
+  "development_assessment_sha256": "1c5fad49a6eba6c2d76420945166e78b807d002f947a616c542c8a85ba35e497",
+  "development_decision": "authorize_one_sealed_confirmation",
+  "development_ledger_sha256": "15a9edd09f008084c0533672e57af8da96935da3dc1ca86edbaa4200e2f499e0",
+  "development_report_sha256": "7dc048cc9ad16e1e326c7e4180fb06539428a4518c4d79440a92b794754b6bc2",
+  "evaluator_source": {
+    "commit": "94b26058bfa9d43089ce02277b3cdaeb9a1d6594",
+    "files": {
+      "R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_CONFIRMATION_PREREG.md": "3e882f9123df6d29f18e1b9170fed89d7aae81b70b71a8a3091985b7f85e2350",
+      "train/assess_sd_cst_complete_physical_confirmation.py": "9c9ebb7f6905d4610cd9e7d5cd6245dcf10a2c1e77737bec621a02831766b880",
+      "train/confirm_sd_cst_complete_physical_fresh.py": "4e82657c8f5adc73e3306527c7f0600360b32d60405f24f4d37e6eb79e5c8784",
+      "train/jobs/sd_cst_complete_physical_confirmation.sbatch": "3795729542403e755525e7df976bc249e4d24c71fba07a57658cf6fbc6863f4c"
+    },
+    "sha256": "a160aafe84a344b695214d816641d5893db89300086a25ea0dbc46f798251df1"
+  },
+  "gate_config_sha256": "ab466c339b77d4193cbdbc383a2c9a28bd4ce6afcf9579f3a714b301e8d9a990",
+  "protocol": "r12_sd_cst_complete_physical_fresh_v1_3",
+  "schema": "r12_sd_cst_complete_physical_fresh_confirmation_authorization_v1_3",
+  "scientific_source": {
+    "commit": "eed66757c47e126b6566ee269bc73b0c0cef4fab",
+    "files": {
+      "R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_PREREG.md": "c5285f2aa10cc8f0ccb9657325a88fb3aa264b90c30e54551a3fde74c5556988",
+      "pipeline/build_sd_cst_complete_physical_fresh_board.py": "41a7a37c74f53ec85d944834265cef744eeeca1f388b1d0fd2dcf6b305717f9b",
+      "pipeline/sd_cst_complete_physical_fresh_renderers.py": "1ed6ef9f7cf3b63ec4d37435b64504170ae032e2d0d78874531f7d9a7f75a10a",
+      "train/assess_sd_cst_complete_physical_fresh.py": "a5b46b2dba9c2e013a620bd4568b2ac8b56c04e0aa022a446d949418acd5aa3d",
+      "train/jobs/sd_cst_complete_physical_fresh.sbatch": "2b8529f1663d83153f5517cf41d0a7b4f683c5eb2d813967fc4e155857d1c686",
+      "train/pilot_sd_cst_complete_physical_fresh.py": "c937b8e27dd32e822b2f15e140ca115a9e2e6e58bee8b3fd4a5404d7518e2e1b",
+      "train/projected_sd_cst_fresh.py": "ab4083c7e9c67a43c7e11b52a5ccff4d47f62ee00e5e918f2779a0b3ce43e7a6",
+      "train/run_sd_cst_hard_packets.py": "0bfd6af379d6f562ffc383f8736da3220467fb883e6bf04553e2cce7ff2fd954",
+      "train/sd_cst.py": "549e41e6c28290d9ea748319cd9d77abb344258e4c7c9ca0d720dfb63888ebba",
+      "train/sd_cst_complete_physical_fresh.py": "f82ab9bf715e05e1d8f8649b9a69d34e1b12ee00a93cc25aa8984703587c1893",
+      "train/sd_cst_complete_physical_record_bus.py": "baccf5ee9745f56de4c3308dd8dee97609d2b30c7c066192fa0b592feaca9e01",
+      "train/sd_cst_complete_physical_record_bus_v1_2.py": "96af19ecbc460b9eb6b388841501dd81157d134349ee9f4c8c1f37b188a0b3f5",
+      "train/sd_cst_physical_record_bus.py": "21d297fd37e7a0aa9d281c12736751c461cfc3b25bc0efd909827b9392e6a109"
+    },
+    "sha256": "7fa0268f864c75881c5dd76cf818c7fd63a94d4f3fb73595c3e27af2016feda7"
+  }
+}

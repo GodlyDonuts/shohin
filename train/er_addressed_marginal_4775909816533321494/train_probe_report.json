@@ -1,0 +1,1162 @@
+{
+  "all_gates_pass": false,
+  "alpha_invariance": {
+    "binding_pointer": {
+      "exact": 8000,
+      "rate": 1.0,
+      "rows": 8000
+    },
+    "cardinality": {
+      "exact": 8000,
+      "rate": 1.0,
+      "rows": 8000
+    },
+    "complete": {
+      "exact": 8000,
+      "rate": 1.0,
+      "rows": 8000
+    },
+    "events": {
+      "exact": 8000,
+      "rate": 1.0,
+      "rows": 8000
+    },
+    "halt": {
+      "exact": 8000,
+      "rate": 1.0,
+      "rows": 8000
+    },
+    "initial": {
+      "exact": 8000,
+      "rate": 1.0,
+      "rows": 8000
+    },
+    "initial_pointer": {
+      "exact": 8000,
+      "rate": 1.0,
+      "rows": 8000
+    },
+    "line_pointer": {
+      "exact": 8000,
+      "rate": 1.0,
+      "rows": 8000
+    },
+    "query": {
+      "exact": 8000,
+      "rate": 1.0,
+      "rows": 8000
+    },
+    "query_pointer": {
+      "exact": 8000,
+      "rate": 1.0,
+      "rows": 8000
+    },
+    "relations": {
+      "exact": 8000,
+      "rate": 1.0,
+      "rows": 8000
+    },
+    "rule_active": {
+      "exact": 8000,
+      "rate": 1.0,
+      "rows": 8000
+    },
+    "witness_pointer": {
+      "exact": 8000,
+      "rate": 1.0,
+      "rows": 8000
+    }
+  },
+  "artifacts": {
+    "checkpoint_sha256": "803a850af3f18a8138d6f5029f6c1d459b0f15fb6d0c42f3e0c407810108e4e3",
+    "evidence_sha256": "a2d8349bd6efcfc9eaca522661b24130529ad04fd08ab313ce20dbeeb3c35227"
+  },
+  "claim_boundary": "Passing admits only a fresh-board test of learned occurrence-address routing and exact identity transport. It is not a scored-split or broad reasoning claim.",
+  "contract": {
+    "betas": [
+      0.9,
+      0.95
+    ],
+    "confirmation_reads": 0,
+    "development_reads": 0,
+    "epochs": 2,
+    "family_batch_size": 8,
+    "fit_families": 10000,
+    "fit_rows": 40000,
+    "gradient_clip": 1.0,
+    "lr": 0.0002,
+    "outcome_supervision": false,
+    "probe_families": 2000,
+    "probe_is_family_disjoint": true,
+    "probe_rows": 8000,
+    "rows_per_update": 32,
+    "updates": 2500,
+    "views_per_family": 4,
+    "warmup": 100,
+    "weight_decay": 0.01
+  },
+  "custody": {
+    "confirmation_accesses": 0,
+    "development_accesses": 0,
+    "train_only_probe_accesses": 1
+  },
+  "decision": "reject_addressed_marginal_before_fresh_board",
+  "fit": {
+    "frozen_digest": "f4911091f0c789f9dc501e99fcc4b9861ba00400771333c4a508699f2ce29700",
+    "frozen_parent_unchanged": true,
+    "history": [
+      {
+        "epoch": 1,
+        "losses": {
+          "binding_pointer": 0.8673458598711994,
+          "cardinality": 0.08595772306088939,
+          "consistency": 0.0035966187719925075,
+          "events": 0.3846994747042656,
+          "halt": 0.043443625230652566,
+          "initial_pointer": 1.1252658040463925,
+          "initial_rows": 0.7062311823822558,
+          "line_pointer": 0.44010402190089226,
+          "query": 0.1061242180235483,
+          "query_pointer": 0.00013592961256050877,
+          "relation_rows": 1.0865415483951568,
+          "rule_active": 0.027849707799353668,
+          "witness_pointer": 1.4539949965953827
+        },
+        "updates": 1250
+      },
+      {
+        "epoch": 2,
+        "losses": {
+          "binding_pointer": 0.00047649006216379347,
+          "cardinality": 0.0,
+          "consistency": 0.0077605681672692295,
+          "events": 0.03585001408830285,
+          "halt": 0.0,
+          "initial_pointer": 0.005768884579557925,
+          "initial_rows": 0.006051733101531863,
+          "line_pointer": 0.11581657339334488,
+          "query": 0.0,
+          "query_pointer": 0.0,
+          "relation_rows": 0.3073855917572975,
+          "rule_active": 0.0,
+          "witness_pointer": 0.209738295429945
+        },
+        "updates": 2500
+      }
+    ],
+    "seed": 2241785245839293227,
+    "updates": 2500
+  },
+  "gates": {
+    "all_hard_fields_and_pointers_alpha_exact": true,
+    "confirmed_parent_unchanged": true,
+    "events_and_halt_at_least_95pct": true,
+    "family_split_exact_and_disjoint": true,
+    "minimum_cardinality_joint_at_least_75pct": false,
+    "oracle_route_identity_transport_is_exact": true,
+    "packet_state_answer_joint_at_least_85pct": false,
+    "parameter_certificate_exact_and_below_200m": true,
+    "relation_rows_at_least_90pct": false,
+    "train_only_and_zero_scored_split_reads": true,
+    "witness_pointers_at_least_90pct": false
+  },
+  "metrics": {
+    "by_cardinality": {
+      "3": {
+        "answer": {
+          "correct": 1915,
+          "rate": 0.9730691313743591,
+          "rows": 1968
+        },
+        "joint": {
+          "correct": 1772,
+          "rate": 0.9004064798355103,
+          "rows": 1968
+        },
+        "packet": {
+          "correct": 1772,
+          "rate": 0.9004064798355103,
+          "rows": 1968
+        },
+        "state": {
+          "correct": 1895,
+          "rate": 0.9629064798355103,
+          "rows": 1968
+        }
+      },
+      "4": {
+        "answer": {
+          "correct": 1790,
+          "rate": 0.9151329398155212,
+          "rows": 1956
+        },
+        "joint": {
+          "correct": 1252,
+          "rate": 0.6400818228721619,
+          "rows": 1956
+        },
+        "packet": {
+          "correct": 1252,
+          "rate": 0.6400818228721619,
+          "rows": 1956
+        },
+        "state": {
+          "correct": 1641,
+          "rate": 0.8389570713043213,
+          "rows": 1956
+        }
+      },
+      "5": {
+        "answer": {
+          "correct": 1672,
+          "rate": 0.8376753330230713,
+          "rows": 1996
+        },
+        "joint": {
+          "correct": 942,
+          "rate": 0.4719438850879669,
+          "rows": 1996
+        },
+        "packet": {
+          "correct": 942,
+          "rate": 0.4719438850879669,
+          "rows": 1996
+        },
+        "state": {
+          "correct": 1356,
+          "rate": 0.679358720779419,
+          "rows": 1996
+        }
+      },
+      "6": {
+        "answer": {
+          "correct": 1841,
+          "rate": 0.8850961327552795,
+          "rows": 2080
+        },
+        "joint": {
+          "correct": 907,
+          "rate": 0.4360576868057251,
+          "rows": 2080
+        },
+        "packet": {
+          "correct": 907,
+          "rate": 0.4360576868057251,
+          "rows": 2080
+        },
+        "state": {
+          "correct": 1519,
+          "rate": 0.7302884459495544,
+          "rows": 2080
+        }
+      }
+    },
+    "by_depth": {
+      "1": {
+        "answer": {
+          "correct": 630,
+          "rate": 0.9662576913833618,
+          "rows": 652
+        },
+        "joint": {
+          "correct": 418,
+          "rate": 0.6411042809486389,
+          "rows": 652
+        },
+        "packet": {
+          "correct": 418,
+          "rate": 0.6411042809486389,
+          "rows": 652
+        },
+        "state": {
+          "correct": 551,
+          "rate": 0.8450919985771179,
+          "rows": 652
+        }
+      },
+      "10": {
+        "answer": {
+          "correct": 585,
+          "rate": 0.8405172228813171,
+          "rows": 696
+        },
+        "joint": {
+          "correct": 391,
+          "rate": 0.5617815852165222,
+          "rows": 696
+        },
+        "packet": {
+          "correct": 391,
+          "rate": 0.5617815852165222,
+          "rows": 696
+        },
+        "state": {
+          "correct": 540,
+          "rate": 0.7758620977401733,
+          "rows": 696
+        }
+      },
+      "11": {
+        "answer": {
+          "correct": 598,
+          "rate": 0.900602400302887,
+          "rows": 664
+        },
+        "joint": {
+          "correct": 421,
+          "rate": 0.634036123752594,
+          "rows": 664
+        },
+        "packet": {
+          "correct": 421,
+          "rate": 0.634036123752594,
+          "rows": 664
+        },
+        "state": {
+          "correct": 582,
+          "rate": 0.8765060305595398,
+          "rows": 664
+        }
+      },
+      "12": {
+        "answer": {
+          "correct": 602,
+          "rate": 0.875,
+          "rows": 688
+        },
+        "joint": {
+          "correct": 398,
+          "rate": 0.5784883499145508,
+          "rows": 688
+        },
+        "packet": {
+          "correct": 398,
+          "rate": 0.5784883499145508,
+          "rows": 688
+        },
+        "state": {
+          "correct": 558,
+          "rate": 0.8110465407371521,
+          "rows": 688
+        }
+      },
+      "2": {
+        "answer": {
+          "correct": 702,
+          "rate": 0.9285714030265808,
+          "rows": 756
+        },
+        "joint": {
+          "correct": 434,
+          "rate": 0.5740740895271301,
+          "rows": 756
+        },
+        "packet": {
+          "correct": 434,
+          "rate": 0.5740740895271301,
+          "rows": 756
+        },
+        "state": {
+          "correct": 587,
+          "rate": 0.7764550447463989,
+          "rows": 756
+        }
+      },
+      "3": {
+        "answer": {
+          "correct": 633,
+          "rate": 0.9308823347091675,
+          "rows": 680
+        },
+        "joint": {
+          "correct": 461,
+          "rate": 0.6779412031173706,
+          "rows": 680
+        },
+        "packet": {
+          "correct": 461,
+          "rate": 0.6779412031173706,
+          "rows": 680
+        },
+        "state": {
+          "correct": 551,
+          "rate": 0.8102940917015076,
+          "rows": 680
+        }
+      },
+      "4": {
+        "answer": {
+          "correct": 562,
+          "rate": 0.9006410241127014,
+          "rows": 624
+        },
+        "joint": {
+          "correct": 411,
+          "rate": 0.6586538553237915,
+          "rows": 624
+        },
+        "packet": {
+          "correct": 411,
+          "rate": 0.6586538553237915,
+          "rows": 624
+        },
+        "state": {
+          "correct": 483,
+          "rate": 0.7740384340286255,
+          "rows": 624
+        }
+      },
+      "5": {
+        "answer": {
+          "correct": 618,
+          "rate": 0.8982558250427246,
+          "rows": 688
+        },
+        "joint": {
+          "correct": 448,
+          "rate": 0.6511628031730652,
+          "rows": 688
+        },
+        "packet": {
+          "correct": 448,
+          "rate": 0.6511628031730652,
+          "rows": 688
+        },
+        "state": {
+          "correct": 535,
+          "rate": 0.7776162624359131,
+          "rows": 688
+        }
+      },
+      "6": {
+        "answer": {
+          "correct": 629,
+          "rate": 0.9037356376647949,
+          "rows": 696
+        },
+        "joint": {
+          "correct": 435,
+          "rate": 0.625,
+          "rows": 696
+        },
+        "packet": {
+          "correct": 435,
+          "rate": 0.625,
+          "rows": 696
+        },
+        "state": {
+          "correct": 561,
+          "rate": 0.806034505367279,
+          "rows": 696
+        }
+      },
+      "7": {
+        "answer": {
+          "correct": 596,
+          "rate": 0.9085366129875183,
+          "rows": 656
+        },
+        "joint": {
+          "correct": 390,
+          "rate": 0.5945122241973877,
+          "rows": 656
+        },
+        "packet": {
+          "correct": 390,
+          "rate": 0.5945122241973877,
+          "rows": 656
+        },
+        "state": {
+          "correct": 526,
+          "rate": 0.8018292784690857,
+          "rows": 656
+        }
+      },
+      "8": {
+        "answer": {
+          "correct": 545,
+          "rate": 0.9144295454025269,
+          "rows": 596
+        },
+        "joint": {
+          "correct": 355,
+          "rate": 0.5956375598907471,
+          "rows": 596
+        },
+        "packet": {
+          "correct": 355,
+          "rate": 0.5956375598907471,
+          "rows": 596
+        },
+        "state": {
+          "correct": 477,
+          "rate": 0.8003355860710144,
+          "rows": 596
+        }
+      },
+      "9": {
+        "answer": {
+          "correct": 518,
+          "rate": 0.8576158881187439,
+          "rows": 604
+        },
+        "joint": {
+          "correct": 311,
+          "rate": 0.5149006843566895,
+          "rows": 604
+        },
+        "packet": {
+          "correct": 311,
+          "rate": 0.5149006843566895,
+          "rows": 604
+        },
+        "state": {
+          "correct": 460,
+          "rate": 0.7615894079208374,
+          "rows": 604
+        }
+      }
+    },
+    "by_renderer": {
+      "er-tt-d0w0e0q0-v1": {
+        "answer": {
+          "correct": 1811,
+          "rate": 0.9054999947547913,
+          "rows": 2000
+        },
+        "joint": {
+          "correct": 1156,
+          "rate": 0.578000009059906,
+          "rows": 2000
+        },
+        "packet": {
+          "correct": 1156,
+          "rate": 0.578000009059906,
+          "rows": 2000
+        },
+        "state": {
+          "correct": 1619,
+          "rate": 0.809499979019165,
+          "rows": 2000
+        }
+      },
+      "er-tt-d0w0e1q1-v1": {
+        "answer": {
+          "correct": 1814,
+          "rate": 0.9070000052452087,
+          "rows": 2000
+        },
+        "joint": {
+          "correct": 1146,
+          "rate": 0.5730000138282776,
+          "rows": 2000
+        },
+        "packet": {
+          "correct": 1146,
+          "rate": 0.5730000138282776,
+          "rows": 2000
+        },
+        "state": {
+          "correct": 1617,
+          "rate": 0.8084999918937683,
+          "rows": 2000
+        }
+      },
+      "er-tt-d1w1e0q0-v1": {
+        "answer": {
+          "correct": 1796,
+          "rate": 0.8980000019073486,
+          "rows": 2000
+        },
+        "joint": {
+          "correct": 1291,
+          "rate": 0.6455000042915344,
+          "rows": 2000
+        },
+        "packet": {
+          "correct": 1291,
+          "rate": 0.6455000042915344,
+          "rows": 2000
+        },
+        "state": {
+          "correct": 1589,
+          "rate": 0.7944999933242798,
+          "rows": 2000
+        }
+      },
+      "er-tt-d1w1e1q1-v1": {
+        "answer": {
+          "correct": 1797,
+          "rate": 0.8985000252723694,
+          "rows": 2000
+        },
+        "joint": {
+          "correct": 1280,
+          "rate": 0.6399999856948853,
+          "rows": 2000
+        },
+        "packet": {
+          "correct": 1280,
+          "rate": 0.6399999856948853,
+          "rows": 2000
+        },
+        "state": {
+          "correct": 1586,
+          "rate": 0.7929999828338623,
+          "rows": 2000
+        }
+      }
+    },
+    "non_bijective": {
+      "answer": {
+        "correct": 7218,
+        "rate": 0.9022499918937683,
+        "rows": 8000
+      },
+      "joint": {
+        "correct": 4873,
+        "rate": 0.609125018119812,
+        "rows": 8000
+      },
+      "packet": {
+        "correct": 4873,
+        "rate": 0.609125018119812,
+        "rows": 8000
+      },
+      "state": {
+        "correct": 6411,
+        "rate": 0.8013749718666077,
+        "rows": 8000
+      }
+    },
+    "overall": {
+      "answer": {
+        "correct": 7218,
+        "rate": 0.9022499918937683,
+        "rows": 8000
+      },
+      "binding_pointer": {
+        "correct": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "cardinality": {
+        "correct": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "events": {
+        "correct": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "halt": {
+        "correct": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "initial_pointer": {
+        "correct": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "initial_rows": {
+        "correct": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "joint": {
+        "correct": 4873,
+        "rate": 0.609125018119812,
+        "rows": 8000
+      },
+      "line_pointer": {
+        "correct": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "packet": {
+        "correct": 4873,
+        "rate": 0.609125018119812,
+        "rows": 8000
+      },
+      "query": {
+        "correct": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "query_pointer": {
+        "correct": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "relation_rows": {
+        "correct": 4873,
+        "rate": 0.609125018119812,
+        "rows": 8000
+      },
+      "rule_active": {
+        "correct": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "state": {
+        "correct": 6411,
+        "rate": 0.8013749718666077,
+        "rows": 8000
+      },
+      "witness_pointer": {
+        "correct": 4760,
+        "rate": 0.5950000286102295,
+        "rows": 8000
+      }
+    }
+  },
+  "parameters": {
+    "base": 125081664,
+    "compiler": 60461384,
+    "complete_system": 185543048,
+    "headroom_below_200m": 14456952,
+    "motor": 0,
+    "reader": 0,
+    "trainable": 11140256
+  },
+  "parent_receipt": {
+    "candidate_count_address_is_identity_free": true,
+    "candidate_ordinal_address_is_identity_free": true,
+    "copied_parent_subset_sha256": "0a7d8ff5075ac6b83342447f196a4e2da10c5d0387e22002fb1bad65e2326135",
+    "event_binding_uses_identity_equality": true,
+    "identity_equality_is_exact_route_marginal": true,
+    "learned_motor_parameters": 0,
+    "learned_reader_parameters": 0,
+    "parameter_certificate": {
+      "base": 125081664,
+      "compiler": 60461384,
+      "complete_system": 185543048,
+      "headroom_below_200m": 14456952,
+      "motor": 0,
+      "reader": 0,
+      "trainable": 11140256
+    },
+    "removed_v1_state": [
+      "bigram_embedding.weight",
+      "er_equality_projection.weight",
+      "er_equality_scale",
+      "er_event_card_query_projection.weight",
+      "er_rule_card_key_projection.weight",
+      "er_tt_occurrence_head.bias",
+      "er_tt_occurrence_head.weight",
+      "er_tt_witness_position_embedding",
+      "er_tt_witness_side_embedding",
+      "er_witness_key_projection.weight",
+      "er_witness_norm.bias",
+      "er_witness_norm.weight",
+      "er_witness_query_projection.weight",
+      "fingerprint_projection.weight",
+      "local_occurrence_hidden.bias",
+      "local_occurrence_hidden.weight",
+      "local_occurrence_norm.bias",
+      "local_occurrence_norm.weight",
+      "logit_scale"
+    ],
+    "routing_assignment_detaches_record_features": true,
+    "routing_assignment_receives_pointer_gradients": true,
+    "starts_from_reconstructed_confirmed_parent": true,
+    "structural_stream_alpha_canonical": true,
+    "trainable_names": [
+      "er_am_candidate_count_embedding.weight",
+      "er_am_candidate_ordinal_embedding.weight",
+      "er_ds_declaration_queries",
+      "er_ds_event_opcode_query",
+      "er_ds_router_key.weight",
+      "er_ds_router_norm.bias",
+      "er_ds_router_norm.weight",
+      "er_ds_router_query.weight",
+      "er_ds_rule_opcode_query",
+      "er_ds_witness_queries",
+      "er_event_halt_head.bias",
+      "er_event_halt_head.weight",
+      "er_event_norm.bias",
+      "er_event_norm.weight",
+      "er_rule_norm.bias",
+      "er_rule_norm.weight",
+      "er_tt_cardinality_head.bias",
+      "er_tt_cardinality_head.weight",
+      "er_tt_query_head.bias",
+      "er_tt_query_head.weight",
+      "er_tt_record_role_embedding",
+      "er_tt_record_role_head.bias",
+      "er_tt_record_role_head.weight",
+      "er_tt_rule_active_head.bias",
+      "er_tt_rule_active_head.weight",
+      "record_byte_embedding.weight",
+      "record_line_encoder.layers.0.linear1.bias",
+      "record_line_encoder.layers.0.linear1.weight",
+      "record_line_encoder.layers.0.linear2.bias",
+      "record_line_encoder.layers.0.linear2.weight",
+      "record_line_encoder.layers.0.norm1.bias",
+      "record_line_encoder.layers.0.norm1.weight",
+      "record_line_encoder.layers.0.norm2.bias",
+      "record_line_encoder.layers.0.norm2.weight",
+      "record_line_encoder.layers.0.self_attn.in_proj_bias",
+      "record_line_encoder.layers.0.self_attn.in_proj_weight",
+      "record_line_encoder.layers.0.self_attn.out_proj.bias",
+      "record_line_encoder.layers.0.self_attn.out_proj.weight",
+      "record_line_encoder.layers.1.linear1.bias",
+      "record_line_encoder.layers.1.linear1.weight",
+      "record_line_encoder.layers.1.linear2.bias",
+      "record_line_encoder.layers.1.linear2.weight",
+      "record_line_encoder.layers.1.norm1.bias",
+      "record_line_encoder.layers.1.norm1.weight",
+      "record_line_encoder.layers.1.norm2.bias",
+      "record_line_encoder.layers.1.norm2.weight",
+      "record_line_encoder.layers.1.self_attn.in_proj_bias",
+      "record_line_encoder.layers.1.self_attn.in_proj_weight",
+      "record_line_encoder.layers.1.self_attn.out_proj.bias",
+      "record_line_encoder.layers.1.self_attn.out_proj.weight",
+      "record_line_encoder.layers.2.linear1.bias",
+      "record_line_encoder.layers.2.linear1.weight",
+      "record_line_encoder.layers.2.linear2.bias",
+      "record_line_encoder.layers.2.linear2.weight",
+      "record_line_encoder.layers.2.norm1.bias",
+      "record_line_encoder.layers.2.norm1.weight",
+      "record_line_encoder.layers.2.norm2.bias",
+      "record_line_encoder.layers.2.norm2.weight",
+      "record_line_encoder.layers.2.self_attn.in_proj_bias",
+      "record_line_encoder.layers.2.self_attn.in_proj_weight",
+      "record_line_encoder.layers.2.self_attn.out_proj.bias",
+      "record_line_encoder.layers.2.self_attn.out_proj.weight",
+      "record_line_encoder.layers.3.linear1.bias",
+      "record_line_encoder.layers.3.linear1.weight",
+      "record_line_encoder.layers.3.linear2.bias",
+      "record_line_encoder.layers.3.linear2.weight",
+      "record_line_encoder.layers.3.norm1.bias",
+      "record_line_encoder.layers.3.norm1.weight",
+      "record_line_encoder.layers.3.norm2.bias",
+      "record_line_encoder.layers.3.norm2.weight",
+      "record_line_encoder.layers.3.self_attn.in_proj_bias",
+      "record_line_encoder.layers.3.self_attn.in_proj_weight",
+      "record_line_encoder.layers.3.self_attn.out_proj.bias",
+      "record_line_encoder.layers.3.self_attn.out_proj.weight",
+      "record_line_norm.bias",
+      "record_line_norm.weight",
+      "record_position_embedding.weight",
+      "record_query",
+      "record_set_encoder.layers.0.linear1.bias",
+      "record_set_encoder.layers.0.linear1.weight",
+      "record_set_encoder.layers.0.linear2.bias",
+      "record_set_encoder.layers.0.linear2.weight",
+      "record_set_encoder.layers.0.norm1.bias",
+      "record_set_encoder.layers.0.norm1.weight",
+      "record_set_encoder.layers.0.norm2.bias",
+      "record_set_encoder.layers.0.norm2.weight",
+      "record_set_encoder.layers.0.self_attn.in_proj_bias",
+      "record_set_encoder.layers.0.self_attn.in_proj_weight",
+      "record_set_encoder.layers.0.self_attn.out_proj.bias",
+      "record_set_encoder.layers.0.self_attn.out_proj.weight",
+      "record_set_encoder.layers.1.linear1.bias",
+      "record_set_encoder.layers.1.linear1.weight",
+      "record_set_encoder.layers.1.linear2.bias",
+      "record_set_encoder.layers.1.linear2.weight",
+      "record_set_encoder.layers.1.norm1.bias",
+      "record_set_encoder.layers.1.norm1.weight",
+      "record_set_encoder.layers.1.norm2.bias",
+      "record_set_encoder.layers.1.norm2.weight",
+      "record_set_encoder.layers.1.self_attn.in_proj_bias",
+      "record_set_encoder.layers.1.self_attn.in_proj_weight",
+      "record_set_encoder.layers.1.self_attn.out_proj.bias",
+      "record_set_encoder.layers.1.self_attn.out_proj.weight",
+      "record_set_norm.bias",
+      "record_set_norm.weight"
+    ],
+    "uses_rejected_canary_weights": false,
+    "v1_untrained_parent_parameters": {
+      "base": 125081664,
+      "compiler": 67659190,
+      "complete_system": 192740854,
+      "headroom_below_200m": 7259146,
+      "motor": 0,
+      "reader": 0,
+      "trainable": 12037293
+    },
+    "v1_untrained_parent_receipt": {
+      "copied_parent_subset_sha256": "ccb1420f9b27846efdd7696d360421210e8afcd818cc62b46f69a909f841d1a8",
+      "finite_permutation_buffer_removed": true,
+      "learned_motor_parameters": 0,
+      "learned_reader_parameters": 0,
+      "parameter_certificate": {
+        "base": 125081664,
+        "compiler": 67659190,
+        "complete_system": 192740854,
+        "headroom_below_200m": 7259146,
+        "motor": 0,
+        "reader": 0,
+        "trainable": 12037293
+      },
+      "removed_parent_state": [
+        "er_record_role_embedding",
+        "er_record_role_head.bias",
+        "er_record_role_head.weight",
+        "er_witness_queries",
+        "local_occurrence_head.bias",
+        "local_occurrence_head.weight",
+        "local_query_head.bias",
+        "local_query_head.weight",
+        "permutations"
+      ],
+      "trainable_names": [
+        "er_equality_projection.weight",
+        "er_equality_scale",
+        "er_event_card_query_projection.weight",
+        "er_event_halt_head.bias",
+        "er_event_halt_head.weight",
+        "er_event_norm.bias",
+        "er_event_norm.weight",
+        "er_rule_card_key_projection.weight",
+        "er_rule_norm.bias",
+        "er_rule_norm.weight",
+        "er_tt_cardinality_head.bias",
+        "er_tt_cardinality_head.weight",
+        "er_tt_occurrence_head.bias",
+        "er_tt_occurrence_head.weight",
+        "er_tt_query_head.bias",
+        "er_tt_query_head.weight",
+        "er_tt_record_role_embedding",
+        "er_tt_record_role_head.bias",
+        "er_tt_record_role_head.weight",
+        "er_tt_rule_active_head.bias",
+        "er_tt_rule_active_head.weight",
+        "er_tt_witness_position_embedding",
+        "er_tt_witness_side_embedding",
+        "er_witness_key_projection.weight",
+        "er_witness_norm.bias",
+        "er_witness_norm.weight",
+        "er_witness_query_projection.weight",
+        "local_occurrence_hidden.bias",
+        "local_occurrence_hidden.weight",
+        "local_occurrence_norm.bias",
+        "local_occurrence_norm.weight",
+        "record_byte_embedding.weight",
+        "record_line_encoder.layers.0.linear1.bias",
+        "record_line_encoder.layers.0.linear1.weight",
+        "record_line_encoder.layers.0.linear2.bias",
+        "record_line_encoder.layers.0.linear2.weight",
+        "record_line_encoder.layers.0.norm1.bias",
+        "record_line_encoder.layers.0.norm1.weight",
+        "record_line_encoder.layers.0.norm2.bias",
+        "record_line_encoder.layers.0.norm2.weight",
+        "record_line_encoder.layers.0.self_attn.in_proj_bias",
+        "record_line_encoder.layers.0.self_attn.in_proj_weight",
+        "record_line_encoder.layers.0.self_attn.out_proj.bias",
+        "record_line_encoder.layers.0.self_attn.out_proj.weight",
+        "record_line_encoder.layers.1.linear1.bias",
+        "record_line_encoder.layers.1.linear1.weight",
+        "record_line_encoder.layers.1.linear2.bias",
+        "record_line_encoder.layers.1.linear2.weight",
+        "record_line_encoder.layers.1.norm1.bias",
+        "record_line_encoder.layers.1.norm1.weight",
+        "record_line_encoder.layers.1.norm2.bias",
+        "record_line_encoder.layers.1.norm2.weight",
+        "record_line_encoder.layers.1.self_attn.in_proj_bias",
+        "record_line_encoder.layers.1.self_attn.in_proj_weight",
+        "record_line_encoder.layers.1.self_attn.out_proj.bias",
+        "record_line_encoder.layers.1.self_attn.out_proj.weight",
+        "record_line_encoder.layers.2.linear1.bias",
+        "record_line_encoder.layers.2.linear1.weight",
+        "record_line_encoder.layers.2.linear2.bias",
+        "record_line_encoder.layers.2.linear2.weight",
+        "record_line_encoder.layers.2.norm1.bias",
+        "record_line_encoder.layers.2.norm1.weight",
+        "record_line_encoder.layers.2.norm2.bias",
+        "record_line_encoder.layers.2.norm2.weight",
+        "record_line_encoder.layers.2.self_attn.in_proj_bias",
+        "record_line_encoder.layers.2.self_attn.in_proj_weight",
+        "record_line_encoder.layers.2.self_attn.out_proj.bias",
+        "record_line_encoder.layers.2.self_attn.out_proj.weight",
+        "record_line_encoder.layers.3.linear1.bias",
+        "record_line_encoder.layers.3.linear1.weight",
+        "record_line_encoder.layers.3.linear2.bias",
+        "record_line_encoder.layers.3.linear2.weight",
+        "record_line_encoder.layers.3.norm1.bias",
+        "record_line_encoder.layers.3.norm1.weight",
+        "record_line_encoder.layers.3.norm2.bias",
+        "record_line_encoder.layers.3.norm2.weight",
+        "record_line_encoder.layers.3.self_attn.in_proj_bias",
+        "record_line_encoder.layers.3.self_attn.in_proj_weight",
+        "record_line_encoder.layers.3.self_attn.out_proj.bias",
+        "record_line_encoder.layers.3.self_attn.out_proj.weight",
+        "record_line_norm.bias",
+        "record_line_norm.weight",
+        "record_position_embedding.weight",
+        "record_query",
+        "record_set_encoder.layers.0.linear1.bias",
+        "record_set_encoder.layers.0.linear1.weight",
+        "record_set_encoder.layers.0.linear2.bias",
+        "record_set_encoder.layers.0.linear2.weight",
+        "record_set_encoder.layers.0.norm1.bias",
+        "record_set_encoder.layers.0.norm1.weight",
+        "record_set_encoder.layers.0.norm2.bias",
+        "record_set_encoder.layers.0.norm2.weight",
+        "record_set_encoder.layers.0.self_attn.in_proj_bias",
+        "record_set_encoder.layers.0.self_attn.in_proj_weight",
+        "record_set_encoder.layers.0.self_attn.out_proj.bias",
+        "record_set_encoder.layers.0.self_attn.out_proj.weight",
+        "record_set_encoder.layers.1.linear1.bias",
+        "record_set_encoder.layers.1.linear1.weight",
+        "record_set_encoder.layers.1.linear2.bias",
+        "record_set_encoder.layers.1.linear2.weight",
+        "record_set_encoder.layers.1.norm1.bias",
+        "record_set_encoder.layers.1.norm1.weight",
+        "record_set_encoder.layers.1.norm2.bias",
+        "record_set_encoder.layers.1.norm2.weight",
+        "record_set_encoder.layers.1.self_attn.in_proj_bias",
+        "record_set_encoder.layers.1.self_attn.in_proj_weight",
+        "record_set_encoder.layers.1.self_attn.out_proj.bias",
+        "record_set_encoder.layers.1.self_attn.out_proj.weight",
+        "record_set_norm.bias",
+        "record_set_norm.weight"
+      ],
+      "witness_checkpoint_sha256": "917c1a1fce67c02258d0f90f04398ab433d18ba63c2dca92450cc5856c022ae7",
+      "witness_confirmation_assessment_sha256": "4a0fb47233d86887bb46aa853560bf81d319840610d62abe4f1dfaa899671310",
+      "witness_confirmation_decision": "confirm_er_cst_witness_equality_v1_1",
+      "witness_parent_state_sha256": "775a3fa1b42c0a578492d36e8b8001ba59f672c0a7752033259512de13f0df75"
+    },
+    "v1_untrained_parent_state_sha256": "3316b64494e5b59b78ff393cbced6a124e1cffb541be0d12ac250229aa3ec057",
+    "whole_symbol_exact_equality": true
+  },
+  "routing_diagnostics": {
+    "oracle_route": {
+      "events": {
+        "exact": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "initial": {
+        "exact": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "joint": {
+        "exact": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "relations": {
+        "exact": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "uses_same_exact_equality_operator_as_soft_route": true,
+      "uses_target_outcomes": false
+    },
+    "soft_route": {
+      "binding_pointer": {
+        "correct": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "events": {
+        "correct": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "initial_pointer": {
+        "correct": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "initial_rows": {
+        "correct": 8000,
+        "rate": 1.0,
+        "rows": 8000
+      },
+      "relation_rows": {
+        "correct": 4873,
+        "rate": 0.609125018119812,
+        "rows": 8000
+      },
+      "witness_pointer": {
+        "correct": 4760,
+        "rate": 0.5950000286102295,
+        "rows": 8000
+      }
+    }
+  },
+  "runtime": {
+    "bf16_supported": true,
+    "cuda_available": true,
+    "cuda_capability": [
+      9,
+      0
+    ],
+    "cuda_device": "NVIDIA H100 PCIe",
+    "platform": "Linux-4.18.0-553.123.1.el8_10.0.1.x86_64-x86_64-with-glibc2.28",
+    "python": "3.13.13 | packaged by conda-forge | (main, Apr  8 2026, 02:00:33) [GCC 14.3.0]",
+    "sha256": "aa68e44767672a040684ef0494f7af1917fa275ad84ebf1902a742f1e46511d5",
+    "torch": "2.6.0+cu124",
+    "torch_cuda": "12.4"
+  },
+  "schema": "r12_er_addressed_marginal_train_only_canary_v1",
+  "seed": 4775909816533321494,
+  "source_commit": "7601625f2cdc0a476f9383ce9773722f64760d17",
+  "source_manifest": {
+    "commit": "7601625f2cdc0a476f9383ce9773722f64760d17",
+    "files": {
+      "R12_ER_ADDRESSED_MARGINAL_ROUTE_PREREG.md": "cbccdafc64e2504378f819f0f2e01eb4647d28cf218bc605dcce75730cc49a53",
+      "R12_ER_DUAL_STREAM_RELATION_REPAIR_PREREG.md": "b098c8bdb93ce120886dda363dc6f48773e30404987baff8370826b20e327c45",
+      "R12_ER_DUAL_STREAM_TRAIN_CANARY_RESULT.md": "46f7684da7b3b7f3285bc089988de9601aa5db6f6d8a2af8bafd2b7b8f16528b",
+      "R12_ER_RELATION_TENSOR_ADAPTER_PREREG.md": "3ed4a37dc918026f20c957e79b140f2d27749baee36d074c88fea23108b2f4ed",
+      "R12_ER_RELATION_TENSOR_BOARD_PREREG.md": "2bc89099ac00b7657fd21a560c3067b1c3e83c5295fe99146fe504d2611ced4b",
+      "R12_ER_RELATION_TENSOR_BOARD_RECEIPT.md": "3cca5bba66d86c4ba0683ef641ca959e61366b4f46589d99d7e15a6eabeee7c8",
+      "R12_ER_RELATION_TENSOR_TRANSPORT_THEORY.md": "761be86498ef95fe9d1492711dec733dffc09cdb97c7cbaee1516ab9d0d2fa8f",
+      "pipeline/build_er_relation_tensor_board.py": "bf3fd5e8c9f5f7523d4988c53fce8fa8eafe37fad5c4b7c9abba726e3dc6c967",
+      "pipeline/er_relation_tensor_renderers.py": "70f235d34d29059408b19986356c0cd87175faa5487ef97c235ec37d030e564f",
+      "train/assess_er_relation_tensor.py": "999958a6b129638e5d098334c4f9490833e8b9e5babb1e09b57d2eeaf1603a39",
+      "train/er_addressed_marginal_relation_adapter.py": "61f9e2b3c035299c48b11c4319f956cde5ae86fd0f779c29e4414f661258f42b",
+      "train/er_cst_fresh.py": "d272483487822ba838195a7761e070bc68acca585bb556dd205c215f59e627f7",
+      "train/er_cst_witness_equality_bus.py": "f6be88ffd893db0d62dcf637e2a42eb50ad9e1171ce1f4fc3e1acecb3b995452",
+      "train/er_dual_stream_relation_adapter.py": "8803e0e9fef27f45e93c422c06bc7bd7f46d2968c6528f1ff556f55b6a55b76a",
+      "train/er_relation_tensor_adapter.py": "9da82ff54af37a1276247906a7bf2aa3d17aefe1aea90c21a3269cc1ff5cf34c",
+      "train/er_relation_tensor_motor.py": "af9916b355d4a5d1c0aa126420f21383ef879a47e1ea4e5c889358a20c98840f",
+      "train/er_relation_tensor_training.py": "bc84cf4015027abdd65a24e688180f44d32f528f4c3fc093fadf7a01b2bff9cc",
+      "train/jobs/er_addressed_marginal_train_canary.sbatch": "6ad258df2fc51a76c0ee8c4000eb2528ce5c6cd44b2fda6f0cebb9c873bbf5e1",
+      "train/jobs/er_dual_stream_train_canary.sbatch": "e2044249753860e9f4c75d8115d7072f8f5827672e0ed49aa7ab17426ceef7f0",
+      "train/jobs/er_relation_tensor.sbatch": "1f65e77708b0cd781b88bfad1f696b179857e53b43b05b1311e8d6f46faf7940",
+      "train/pilot_er_addressed_marginal_relation_adapter.py": "52be0f6ca3869644a748d0aeba8fe48da42fdc3a8fc4add026a67c65de2760a2",
+      "train/pilot_er_addressed_marginal_train_canary.py": "3d8812860f21e8972a29d51873c6d7dc2406a7279c64efa949ccd7142cba10c6",
+      "train/pilot_er_cst_witness_equality_bus.py": "6b4f292ca34f22e551f6b5519b8bde121981d6cab85095b362c9705973793281",
+      "train/pilot_er_dual_stream_relation_adapter.py": "0dad1facc2c3414507d10201145af87792866331437d1cf9ecc1967b3c72bd51",
+      "train/pilot_er_dual_stream_train_canary.py": "e71f6f8b9f3eea33844fffd19a2879200570efb9484cffb7c076137b0c8f4da2",
+      "train/pilot_er_relation_tensor.py": "ecbc3aedd6337bee6044591d10855a951356950e624723210783952d019ed360",
+      "train/pilot_er_relation_tensor_adapter.py": "34e6da21056e0f20edba1fdd115dedbbc84dd64350634809d3d1218568c3db95",
+      "train/test_er_addressed_marginal_relation_adapter.py": "4107a8175df53ee1d009a1328befc9bf67d17ccd918b165d8d004aad1eff6c77",
+      "train/test_er_dual_stream_relation_adapter.py": "c6b54205fbda7ef9267adc012810e326231f58f71d6d9255f37e3dcd1ac9b1fb",
+      "train/test_pilot_er_addressed_marginal_train_canary.py": "fe61ca7081cb3ec07f1c37a4b812afccf927f909e3ec5d7262430db4e5f354a7",
+      "train/test_pilot_er_dual_stream_relation_adapter.py": "eb32dfef3ba6f65342b9b06b9596f0775a9ace321c61583f8ddac88eddc28231",
+      "train/test_pilot_er_dual_stream_train_canary.py": "1c2d4471d0f91818dc65106af7c5c638eec1e94def529d27e66c6a258fc75b7c"
+    },
+    "sha256": "46ea80a296a42d3560bd3292f6202e6d2b056d903bf93ca0fffd2af515c8f76d"
+  },
+  "split": {
+    "family_overlap": 0,
+    "fit_families": 10000,
+    "fit_family_sha256": "8511a9a0b31d994068059da823aa28d6ab020528b7227dbafe8c9472d867bc01",
+    "fit_rows": 40000,
+    "probe_families": 2000,
+    "probe_family_sha256": "235dcbf70d12451c2d0f6fc0cd0bd2979d77329c3e33981833b1d57744ae665e",
+    "probe_rows": 8000
+  },
+  "thresholds": {
+    "alpha_exact": 1.0,
+    "answer": 0.85,
+    "events": 0.95,
+    "halt": 0.95,
+    "joint": 0.85,
+    "minimum_cardinality_joint": 0.75,
+    "oracle_route_transport_exact": 1.0,
+    "packet": 0.85,
+    "relation_rows": 0.9,
+    "state": 0.85,
+    "witness_pointer": 0.9
+  }
+}

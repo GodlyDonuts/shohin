@@ -1,0 +1,544 @@
+{
+  "arms": {
+    "deranged_cards": {
+      "answer": 483,
+      "answer_accuracy": 0.23583984375,
+      "depth": {
+        "3": {
+          "accuracy": 0.029239766081871343,
+          "correct": 10,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.020588235294117647,
+          "correct": 7,
+          "total": 340
+        },
+        "5": {
+          "accuracy": 0.017543859649122806,
+          "correct": 6,
+          "total": 342
+        },
+        "6": {
+          "accuracy": 0.008771929824561403,
+          "correct": 3,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.002932551319648094,
+          "correct": 1,
+          "total": 341
+        },
+        "8": {
+          "accuracy": 0.002932551319648094,
+          "correct": 1,
+          "total": 341
+        }
+      },
+      "state": 28,
+      "state_accuracy": 0.013671875,
+      "total": 2048
+    },
+    "early_nil": {
+      "answer": 588,
+      "answer_accuracy": 0.287109375,
+      "depth": {
+        "3": {
+          "accuracy": 0.0847953216374269,
+          "correct": 29,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.052941176470588235,
+          "correct": 18,
+          "total": 340
+        },
+        "5": {
+          "accuracy": 0.03216374269005848,
+          "correct": 11,
+          "total": 342
+        },
+        "6": {
+          "accuracy": 0.02631578947368421,
+          "correct": 9,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.017595307917888565,
+          "correct": 6,
+          "total": 341
+        },
+        "8": {
+          "accuracy": 0.011730205278592375,
+          "correct": 4,
+          "total": 341
+        }
+      },
+      "state": 77,
+      "state_accuracy": 0.03759765625,
+      "total": 2048
+    },
+    "gold_graph": {
+      "answer": 2048,
+      "answer_accuracy": 1.0,
+      "depth": {
+        "3": {
+          "accuracy": 1.0,
+          "correct": 342,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 1.0,
+          "correct": 340,
+          "total": 340
+        },
+        "5": {
+          "accuracy": 1.0,
+          "correct": 342,
+          "total": 342
+        },
+        "6": {
+          "accuracy": 1.0,
+          "correct": 342,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 1.0,
+          "correct": 341,
+          "total": 341
+        },
+        "8": {
+          "accuracy": 1.0,
+          "correct": 341,
+          "total": 341
+        }
+      },
+      "state": 2048,
+      "state_accuracy": 1.0,
+      "total": 2048
+    },
+    "no_class_message": {
+      "answer": 951,
+      "answer_accuracy": 0.46435546875,
+      "depth": {
+        "3": {
+          "accuracy": 0.45614035087719296,
+          "correct": 156,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.4588235294117647,
+          "correct": 156,
+          "total": 340
+        },
+        "5": {
+          "accuracy": 0.4590643274853801,
+          "correct": 157,
+          "total": 342
+        },
+        "6": {
+          "accuracy": 0.4678362573099415,
+          "correct": 160,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.4838709677419355,
+          "correct": 165,
+          "total": 341
+        },
+        "8": {
+          "accuracy": 0.4604105571847507,
+          "correct": 157,
+          "total": 341
+        }
+      },
+      "state": 951,
+      "state_accuracy": 0.46435546875,
+      "total": 2048
+    },
+    "one_witness": {
+      "answer": 604,
+      "answer_accuracy": 0.294921875,
+      "depth": {
+        "3": {
+          "accuracy": 0.0847953216374269,
+          "correct": 29,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.052941176470588235,
+          "correct": 18,
+          "total": 340
+        },
+        "5": {
+          "accuracy": 0.049707602339181284,
+          "correct": 17,
+          "total": 342
+        },
+        "6": {
+          "accuracy": 0.03508771929824561,
+          "correct": 12,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.02932551319648094,
+          "correct": 10,
+          "total": 341
+        },
+        "8": {
+          "accuracy": 0.026392961876832845,
+          "correct": 9,
+          "total": 341
+        }
+      },
+      "state": 95,
+      "state_accuracy": 0.04638671875,
+      "total": 2048
+    },
+    "reversed_links": {
+      "answer": 685,
+      "answer_accuracy": 0.33447265625,
+      "depth": {
+        "3": {
+          "accuracy": 0.15497076023391812,
+          "correct": 53,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.09411764705882353,
+          "correct": 32,
+          "total": 340
+        },
+        "5": {
+          "accuracy": 0.05263157894736842,
+          "correct": 18,
+          "total": 342
+        },
+        "6": {
+          "accuracy": 0.04678362573099415,
+          "correct": 16,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.0469208211143695,
+          "correct": 16,
+          "total": 341
+        },
+        "8": {
+          "accuracy": 0.01466275659824047,
+          "correct": 5,
+          "total": 341
+        }
+      },
+      "state": 140,
+      "state_accuracy": 0.068359375,
+      "total": 2048
+    },
+    "state_reset": {
+      "answer": 592,
+      "answer_accuracy": 0.2890625,
+      "depth": {
+        "3": {
+          "accuracy": 0.05847953216374269,
+          "correct": 20,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.047058823529411764,
+          "correct": 16,
+          "total": 340
+        },
+        "5": {
+          "accuracy": 0.023391812865497075,
+          "correct": 8,
+          "total": 342
+        },
+        "6": {
+          "accuracy": 0.014619883040935672,
+          "correct": 5,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.008797653958944282,
+          "correct": 3,
+          "total": 341
+        },
+        "8": {
+          "accuracy": 0.005865102639296188,
+          "correct": 2,
+          "total": 341
+        }
+      },
+      "state": 54,
+      "state_accuracy": 0.0263671875,
+      "total": 2048
+    },
+    "treatment": {
+      "answer": 1943,
+      "answer_accuracy": 0.94873046875,
+      "depth": {
+        "3": {
+          "accuracy": 0.8567251461988304,
+          "correct": 293,
+          "total": 342
+        },
+        "4": {
+          "accuracy": 0.9205882352941176,
+          "correct": 313,
+          "total": 340
+        },
+        "5": {
+          "accuracy": 0.97953216374269,
+          "correct": 335,
+          "total": 342
+        },
+        "6": {
+          "accuracy": 0.9707602339181286,
+          "correct": 332,
+          "total": 342
+        },
+        "7": {
+          "accuracy": 0.9794721407624634,
+          "correct": 334,
+          "total": 341
+        },
+        "8": {
+          "accuracy": 0.9853372434017595,
+          "correct": 336,
+          "total": 341
+        }
+      },
+      "state": 1943,
+      "state_accuracy": 0.94873046875,
+      "total": 2048
+    }
+  },
+  "board_report_sha256": "fb81b75f5963ad4bcd513d9e4a14e2fa36ad02dabd1085b9f4387c270755cd93",
+  "checkpoint_sha256": "02a0ae680aa817d5f20c7fab0a75baeae4e4e262231e3051925a980f492ff8fc",
+  "confirmation_accesses": 0,
+  "development_accesses": 1,
+  "development_sha256": "193df4513e9b7186aefbe3890931be85f4a7f0b154ab39c0409614603a686ff0",
+  "fit": {
+    "generator": {
+      "final_loss": 0.0013879206962883472,
+      "initial_loss": 1.9714171886444092,
+      "learning_rate": 0.05,
+      "successor_accuracy": 1.0,
+      "successor_correct": 23,
+      "successor_total": 23,
+      "target_field": "next_symbol",
+      "updates": 1000,
+      "zero_accuracy": 1.0,
+      "zero_correct": 3,
+      "zero_total": 3
+    },
+    "no_class": {
+      "adapter_sha256": "781a6029c0e605bc57bd2a0c554f55c38bf76bca9a1d1660e781f32cef61d4c8",
+      "class_messages": false,
+      "elapsed_seconds": 178.9481430053711,
+      "final": {
+        "candidate_accuracy": 1.0,
+        "grad_norm": 0.004134908318519592,
+        "loss": 4.066474866704084e-05,
+        "positive_accuracy": 1.0
+      },
+      "negative_candidates_per_row": 128,
+      "updates": 750
+    },
+    "shuffled": {
+      "adapter_sha256": "45982d31557dd18dfb1271941bcc2bba3eb2ac23810fe418bb2fac12f581ab54",
+      "class_messages": true,
+      "elapsed_seconds": 178.53880834579468,
+      "final": {
+        "candidate_accuracy": 0.7571887969970703,
+        "grad_norm": 0.01878119632601738,
+        "loss": 1.693670392036438,
+        "positive_accuracy": 0.15787887573242188
+      },
+      "negative_candidates_per_row": 128,
+      "updates": 750
+    },
+    "treatment": {
+      "adapter_sha256": "e442905c645e631f58ca2cc4d76bcd93ea6b6ccf6f42ef46ca95c12f33869bd4",
+      "class_messages": true,
+      "elapsed_seconds": 181.3375277519226,
+      "final": {
+        "candidate_accuracy": 1.0,
+        "grad_norm": 0.001116330036893487,
+        "loss": 5.1656088544405065e-06,
+        "positive_accuracy": 1.0
+      },
+      "negative_candidates_per_row": 128,
+      "updates": 750
+    }
+  },
+  "graph": {
+    "exact": 1941,
+    "exact_accuracy": 0.94775390625,
+    "no_class_exact": 950,
+    "no_class_exact_accuracy": 0.4638671875,
+    "shuffled_exact": 0,
+    "shuffled_exact_accuracy": 0.0,
+    "valid": 1943,
+    "valid_accuracy": 0.94873046875
+  },
+  "invariance": {
+    "class_reindex": 1943,
+    "eligible": 1943,
+    "nonce_eligible": 1925,
+    "nonce_identical": 1925,
+    "relation_storage_reindex": 1943
+  },
+  "parameters": {
+    "base": 125081664,
+    "compiler": 9498382,
+    "complete_system": 134580264,
+    "generator": 218
+  },
+  "predicted_state_sha256": "d2401ebc4c32acc21796392f7b1f9b2c8f9c4ad796df523094f843296322a9f5",
+  "rows": 2048,
+  "samples": [
+    {
+      "depth": 3,
+      "error": "S9 region has 0 event.operation islands",
+      "exact": false,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000000",
+      "renderer": "dossier",
+      "valid": false
+    },
+    {
+      "depth": 5,
+      "error": null,
+      "exact": true,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000001",
+      "renderer": "dossier",
+      "valid": true
+    },
+    {
+      "depth": 8,
+      "error": null,
+      "exact": true,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000002",
+      "renderer": "dossier",
+      "valid": true
+    },
+    {
+      "depth": 8,
+      "error": null,
+      "exact": true,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000003",
+      "renderer": "relay",
+      "valid": true
+    },
+    {
+      "depth": 7,
+      "error": null,
+      "exact": true,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000004",
+      "renderer": "relay",
+      "valid": true
+    },
+    {
+      "depth": 4,
+      "error": null,
+      "exact": true,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000005",
+      "renderer": "dossier",
+      "valid": true
+    },
+    {
+      "depth": 3,
+      "error": null,
+      "exact": true,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000006",
+      "renderer": "dossier",
+      "valid": true
+    },
+    {
+      "depth": 4,
+      "error": null,
+      "exact": true,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000007",
+      "renderer": "relay",
+      "valid": true
+    },
+    {
+      "depth": 5,
+      "error": null,
+      "exact": true,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000008",
+      "renderer": "dossier",
+      "valid": true
+    },
+    {
+      "depth": 3,
+      "error": null,
+      "exact": true,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000009",
+      "renderer": "dossier",
+      "valid": true
+    },
+    {
+      "depth": 4,
+      "error": null,
+      "exact": true,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000010",
+      "renderer": "dossier",
+      "valid": true
+    },
+    {
+      "depth": 8,
+      "error": null,
+      "exact": true,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000011",
+      "renderer": "relay",
+      "valid": true
+    },
+    {
+      "depth": 3,
+      "error": null,
+      "exact": true,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000012",
+      "renderer": "relay",
+      "valid": true
+    },
+    {
+      "depth": 6,
+      "error": null,
+      "exact": true,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000013",
+      "renderer": "relay",
+      "valid": true
+    },
+    {
+      "depth": 4,
+      "error": null,
+      "exact": true,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000014",
+      "renderer": "relay",
+      "valid": true
+    },
+    {
+      "depth": 5,
+      "error": null,
+      "exact": true,
+      "id": "S8-S8_NIL_GRAPH_DEVELOPMENT-000015",
+      "renderer": "relay",
+      "valid": true
+    }
+  ],
+  "schema": "r12_s9_occurrence_quotient_development_evaluation_v1",
+  "span": {
+    "class_exact": 1941,
+    "class_exact_accuracy": 0.94775390625,
+    "f1": 0.9999725932287004,
+    "gold": 109465,
+    "precision": 1.0,
+    "predicted": 109459,
+    "recall": 0.9999451879596218,
+    "row_exact": 1941,
+    "row_exact_accuracy": 0.94775390625,
+    "tp": 109459
+  },
+  "training_contract": "48,000 source-to-span/relation rows; no final-state, answer, recurrent, development-law, or confirmation-law supervision"
+}

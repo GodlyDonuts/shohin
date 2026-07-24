@@ -1,0 +1,631 @@
+{
+  "all_gates_pass": true,
+  "artifacts": {
+    "authorization_sha256": "b6add75e1d6596f0f32054fca212bf12e127c27c9e8239ac13be88b6497adcc7",
+    "checkpoint_sha256": "a5888d88541904cfa186a6686012c13c7b555f7d186ba1e3e73f71dbaca462d8",
+    "evidence_sha256": "99342e9e16cbbc1ec20b62372711407fa63b6cfb098bd0ba6963b55e711e73e9",
+    "executor_sha256": "676b82947bfa04bbf3f9d98240807f091014f6cba9d2f3c5e13b35572d768107",
+    "packet_sha256": "3f9189595ed1500f054f03e673e7d023ac595debe3801d5865c477250d03d994"
+  },
+  "authorization": {
+    "board_report_sha256": "fd487cdf7c30cf945ace152e389aaf5c354b8b6a55555c2acc6f046e8ed00b24",
+    "checkpoint_sha256": "a5888d88541904cfa186a6686012c13c7b555f7d186ba1e3e73f71dbaca462d8",
+    "confirmation_accesses": 0,
+    "development_accesses": 1,
+    "development_assessment_sha256": "1c5fad49a6eba6c2d76420945166e78b807d002f947a616c542c8a85ba35e497",
+    "development_decision": "authorize_one_sealed_confirmation",
+    "development_ledger_sha256": "15a9edd09f008084c0533672e57af8da96935da3dc1ca86edbaa4200e2f499e0",
+    "development_report_sha256": "7dc048cc9ad16e1e326c7e4180fb06539428a4518c4d79440a92b794754b6bc2",
+    "evaluator_source": {
+      "commit": "94b26058bfa9d43089ce02277b3cdaeb9a1d6594",
+      "files": {
+        "R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_CONFIRMATION_PREREG.md": "3e882f9123df6d29f18e1b9170fed89d7aae81b70b71a8a3091985b7f85e2350",
+        "train/assess_sd_cst_complete_physical_confirmation.py": "9c9ebb7f6905d4610cd9e7d5cd6245dcf10a2c1e77737bec621a02831766b880",
+        "train/confirm_sd_cst_complete_physical_fresh.py": "4e82657c8f5adc73e3306527c7f0600360b32d60405f24f4d37e6eb79e5c8784",
+        "train/jobs/sd_cst_complete_physical_confirmation.sbatch": "3795729542403e755525e7df976bc249e4d24c71fba07a57658cf6fbc6863f4c"
+      },
+      "sha256": "a160aafe84a344b695214d816641d5893db89300086a25ea0dbc46f798251df1"
+    },
+    "gate_config_sha256": "ab466c339b77d4193cbdbc383a2c9a28bd4ce6afcf9579f3a714b301e8d9a990",
+    "protocol": "r12_sd_cst_complete_physical_fresh_v1_3",
+    "schema": "r12_sd_cst_complete_physical_fresh_confirmation_authorization_v1_3",
+    "scientific_source": {
+      "commit": "eed66757c47e126b6566ee269bc73b0c0cef4fab",
+      "files": {
+        "R12_SD_CST_COMPLETE_PHYSICAL_FRESH_V1_3_PREREG.md": "c5285f2aa10cc8f0ccb9657325a88fb3aa264b90c30e54551a3fde74c5556988",
+        "pipeline/build_sd_cst_complete_physical_fresh_board.py": "41a7a37c74f53ec85d944834265cef744eeeca1f388b1d0fd2dcf6b305717f9b",
+        "pipeline/sd_cst_complete_physical_fresh_renderers.py": "1ed6ef9f7cf3b63ec4d37435b64504170ae032e2d0d78874531f7d9a7f75a10a",
+        "train/assess_sd_cst_complete_physical_fresh.py": "a5b46b2dba9c2e013a620bd4568b2ac8b56c04e0aa022a446d949418acd5aa3d",
+        "train/jobs/sd_cst_complete_physical_fresh.sbatch": "2b8529f1663d83153f5517cf41d0a7b4f683c5eb2d813967fc4e155857d1c686",
+        "train/pilot_sd_cst_complete_physical_fresh.py": "c937b8e27dd32e822b2f15e140ca115a9e2e6e58bee8b3fd4a5404d7518e2e1b",
+        "train/projected_sd_cst_fresh.py": "ab4083c7e9c67a43c7e11b52a5ccff4d47f62ee00e5e918f2779a0b3ce43e7a6",
+        "train/run_sd_cst_hard_packets.py": "0bfd6af379d6f562ffc383f8736da3220467fb883e6bf04553e2cce7ff2fd954",
+        "train/sd_cst.py": "549e41e6c28290d9ea748319cd9d77abb344258e4c7c9ca0d720dfb63888ebba",
+        "train/sd_cst_complete_physical_fresh.py": "f82ab9bf715e05e1d8f8649b9a69d34e1b12ee00a93cc25aa8984703587c1893",
+        "train/sd_cst_complete_physical_record_bus.py": "baccf5ee9745f56de4c3308dd8dee97609d2b30c7c066192fa0b592feaca9e01",
+        "train/sd_cst_complete_physical_record_bus_v1_2.py": "96af19ecbc460b9eb6b388841501dd81157d134349ee9f4c8c1f37b188a0b3f5",
+        "train/sd_cst_physical_record_bus.py": "21d297fd37e7a0aa9d281c12736751c461cfc3b25bc0efd909827b9392e6a109"
+      },
+      "sha256": "7fa0268f864c75881c5dd76cf818c7fd63a94d4f3fb73595c3e27af2016feda7"
+    }
+  },
+  "claim_boundary": "Confirmed fresh finite renderer/name compilation into a source-deleted categorical executor; not broad natural-language or general reasoning.",
+  "controls": {
+    "event_amount_flip": {
+      "answer_rate": 0.90625,
+      "state_rate": 0.837890625
+    },
+    "event_identity_rotation": {
+      "answer_rate": 0.58203125,
+      "state_rate": 0.546875
+    },
+    "event_kind_flip": {
+      "answer_rate": 0.556640625,
+      "state_rate": 0.509765625
+    },
+    "force_alive_post_stop": {
+      "answer_rate": 0.451171875,
+      "state_rate": 0.3125
+    },
+    "freeze": {
+      "answer_rate": 0.34375,
+      "state_rate": 0.15625
+    },
+    "initial_state_rotation": {
+      "answer_rate": 0.78515625,
+      "state_rate": 0.732421875
+    },
+    "post_stop_perturbation": {
+      "answer_rate": 1.0,
+      "state_rate": 1.0
+    },
+    "query_rotation": {
+      "answer_rate": 0.0,
+      "state_rate": 1.0
+    },
+    "reset": {
+      "answer_rate": 0.578125,
+      "state_rate": 0.49609375
+    },
+    "shuffled_packet": {
+      "answer_rate": 0.33203125,
+      "state_rate": 0.33203125
+    },
+    "uniform": {
+      "answer_rate": 0.333984375,
+      "state_rate": 0.33203125
+    }
+  },
+  "custody": {
+    "confirmation_accesses": 1,
+    "confirmation_ledger": {
+      "path": "/lustre/fs1/home/sa305415/shohin_complete_physical_fresh_board_8920874392524997882/access/complete_physical_fresh_confirmation_6186fb8c83c9863db2844f5eb537194a713c5ab16d2a41f1f88f6e3742f02165.json",
+      "sha256": "b9bf805f3e9e821da4479828ca47cd058db3e471badbbdfb43cf2df04ea7842e"
+    },
+    "development_accesses": 1
+  },
+  "decision": "confirm_complete_physical_fresh_v1_3",
+  "gates": {
+    "all_packet_fields_at_least_95pct": true,
+    "all_pointers_at_least_90pct": true,
+    "complete_system_below_200m": true,
+    "conditional_execution_exact": true,
+    "confirmation_one_after_development_one": true,
+    "development_authorization_exact": true,
+    "fit_packet_min_renderer_at_least_99pct": true,
+    "frozen_state_unchanged": true,
+    "gold_executor_exact": true,
+    "joint_min_renderer_at_least_85pct": true,
+    "packet_min_renderer_at_least_85pct": true,
+    "packet_overall_at_least_90pct": true,
+    "post_stop_perturbation_invariant": true,
+    "reset_and_freeze_state_at_most_75pct": true,
+    "row_shuffled_packet_at_most_25pct": true,
+    "shuffled_packet_state_at_most_35pct": true,
+    "source_deleted_before_separate_execution": true,
+    "state_answer_joint_at_least_90pct": true,
+    "treatment_packet_advantage_at_least_50pp": true
+  },
+  "metrics": {
+    "row_shuffled_labels": {
+      "joint_by_depth": {
+        "1": {
+          "correct": 59,
+          "rate": 0.17151163518428802,
+          "rows": 344
+        },
+        "2": {
+          "correct": 28,
+          "rate": 0.08139535039663315,
+          "rows": 344
+        },
+        "3": {
+          "correct": 24,
+          "rate": 0.07058823853731155,
+          "rows": 340
+        },
+        "4": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 340
+        },
+        "5": {
+          "correct": 18,
+          "rate": 0.052941177040338516,
+          "rows": 340
+        },
+        "6": {
+          "correct": 28,
+          "rate": 0.08235294371843338,
+          "rows": 340
+        }
+      },
+      "joint_by_renderer": {
+        "physical-fresh-d0e0q1-v1": {
+          "correct": 40,
+          "rate": 0.078125,
+          "rows": 512
+        },
+        "physical-fresh-d0e1q0-v1": {
+          "correct": 44,
+          "rate": 0.0859375,
+          "rows": 512
+        },
+        "physical-fresh-d1e0q0-v1": {
+          "correct": 37,
+          "rate": 0.072265625,
+          "rows": 512
+        },
+        "physical-fresh-d1e1q1-v1": {
+          "correct": 36,
+          "rate": 0.0703125,
+          "rows": 512
+        }
+      },
+      "overall": {
+        "amount": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "answer": {
+          "correct": 515,
+          "rate": 0.25146484375,
+          "rows": 2048
+        },
+        "binding": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "event_entity": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "identity": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "initial": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "initial_entity": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "joint": {
+          "correct": 157,
+          "rate": 0.07666015625,
+          "rows": 2048
+        },
+        "kind": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "line": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "packet": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "query": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "state": {
+          "correct": 157,
+          "rate": 0.07666015625,
+          "rows": 2048
+        }
+      },
+      "packet_by_depth": {
+        "1": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 344
+        },
+        "2": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 344
+        },
+        "3": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 340
+        },
+        "4": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 340
+        },
+        "5": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 340
+        },
+        "6": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 340
+        }
+      },
+      "packet_by_renderer": {
+        "physical-fresh-d0e0q1-v1": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 512
+        },
+        "physical-fresh-d0e1q0-v1": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 512
+        },
+        "physical-fresh-d1e0q0-v1": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 512
+        },
+        "physical-fresh-d1e1q1-v1": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 512
+        }
+      },
+      "source_poison_bit_identical": true
+    },
+    "treatment": {
+      "joint_by_depth": {
+        "1": {
+          "correct": 344,
+          "rate": 1.0,
+          "rows": 344
+        },
+        "2": {
+          "correct": 344,
+          "rate": 1.0,
+          "rows": 344
+        },
+        "3": {
+          "correct": 340,
+          "rate": 1.0,
+          "rows": 340
+        },
+        "4": {
+          "correct": 340,
+          "rate": 1.0,
+          "rows": 340
+        },
+        "5": {
+          "correct": 340,
+          "rate": 1.0,
+          "rows": 340
+        },
+        "6": {
+          "correct": 340,
+          "rate": 1.0,
+          "rows": 340
+        }
+      },
+      "joint_by_renderer": {
+        "physical-fresh-d0e0q1-v1": {
+          "correct": 512,
+          "rate": 1.0,
+          "rows": 512
+        },
+        "physical-fresh-d0e1q0-v1": {
+          "correct": 512,
+          "rate": 1.0,
+          "rows": 512
+        },
+        "physical-fresh-d1e0q0-v1": {
+          "correct": 512,
+          "rate": 1.0,
+          "rows": 512
+        },
+        "physical-fresh-d1e1q1-v1": {
+          "correct": 512,
+          "rate": 1.0,
+          "rows": 512
+        }
+      },
+      "overall": {
+        "amount": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "answer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "binding": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "event_entity": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "identity": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "initial": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "initial_entity": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "joint": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "kind": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "line": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "packet": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "query": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "state": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        }
+      },
+      "packet_by_depth": {
+        "1": {
+          "correct": 344,
+          "rate": 1.0,
+          "rows": 344
+        },
+        "2": {
+          "correct": 344,
+          "rate": 1.0,
+          "rows": 344
+        },
+        "3": {
+          "correct": 340,
+          "rate": 1.0,
+          "rows": 340
+        },
+        "4": {
+          "correct": 340,
+          "rate": 1.0,
+          "rows": 340
+        },
+        "5": {
+          "correct": 340,
+          "rate": 1.0,
+          "rows": 340
+        },
+        "6": {
+          "correct": 340,
+          "rate": 1.0,
+          "rows": 340
+        }
+      },
+      "packet_by_renderer": {
+        "physical-fresh-d0e0q1-v1": {
+          "correct": 512,
+          "rate": 1.0,
+          "rows": 512
+        },
+        "physical-fresh-d0e1q0-v1": {
+          "correct": 512,
+          "rate": 1.0,
+          "rows": 512
+        },
+        "physical-fresh-d1e0q0-v1": {
+          "correct": 512,
+          "rate": 1.0,
+          "rows": 512
+        },
+        "physical-fresh-d1e1q1-v1": {
+          "correct": 512,
+          "rate": 1.0,
+          "rows": 512
+        }
+      },
+      "source_poison_bit_identical": true
+    }
+  },
+  "parameters": {
+    "base": 125081664,
+    "compiler": 67027474,
+    "complete_system": 192129179,
+    "headroom": 7870821,
+    "motor": 19206,
+    "reader": 835,
+    "trainable": 12152855,
+    "trainable_names": [
+      "local_occurrence_head.bias",
+      "local_occurrence_head.weight",
+      "local_occurrence_hidden.bias",
+      "local_occurrence_hidden.weight",
+      "local_occurrence_norm.bias",
+      "local_occurrence_norm.weight",
+      "local_query_head.bias",
+      "local_query_head.weight",
+      "local_query_key_projection.weight",
+      "local_query_norm.bias",
+      "local_query_norm.weight",
+      "local_query_query_projection.weight",
+      "local_query_selector",
+      "local_query_value_projection.weight",
+      "record_amount_head.bias",
+      "record_amount_head.weight",
+      "record_byte_embedding.weight",
+      "record_entity_key.weight",
+      "record_entity_query.weight",
+      "record_kind_head.bias",
+      "record_kind_head.weight",
+      "record_line_encoder.layers.0.linear1.bias",
+      "record_line_encoder.layers.0.linear1.weight",
+      "record_line_encoder.layers.0.linear2.bias",
+      "record_line_encoder.layers.0.linear2.weight",
+      "record_line_encoder.layers.0.norm1.bias",
+      "record_line_encoder.layers.0.norm1.weight",
+      "record_line_encoder.layers.0.norm2.bias",
+      "record_line_encoder.layers.0.norm2.weight",
+      "record_line_encoder.layers.0.self_attn.in_proj_bias",
+      "record_line_encoder.layers.0.self_attn.in_proj_weight",
+      "record_line_encoder.layers.0.self_attn.out_proj.bias",
+      "record_line_encoder.layers.0.self_attn.out_proj.weight",
+      "record_line_encoder.layers.1.linear1.bias",
+      "record_line_encoder.layers.1.linear1.weight",
+      "record_line_encoder.layers.1.linear2.bias",
+      "record_line_encoder.layers.1.linear2.weight",
+      "record_line_encoder.layers.1.norm1.bias",
+      "record_line_encoder.layers.1.norm1.weight",
+      "record_line_encoder.layers.1.norm2.bias",
+      "record_line_encoder.layers.1.norm2.weight",
+      "record_line_encoder.layers.1.self_attn.in_proj_bias",
+      "record_line_encoder.layers.1.self_attn.in_proj_weight",
+      "record_line_encoder.layers.1.self_attn.out_proj.bias",
+      "record_line_encoder.layers.1.self_attn.out_proj.weight",
+      "record_line_encoder.layers.2.linear1.bias",
+      "record_line_encoder.layers.2.linear1.weight",
+      "record_line_encoder.layers.2.linear2.bias",
+      "record_line_encoder.layers.2.linear2.weight",
+      "record_line_encoder.layers.2.norm1.bias",
+      "record_line_encoder.layers.2.norm1.weight",
+      "record_line_encoder.layers.2.norm2.bias",
+      "record_line_encoder.layers.2.norm2.weight",
+      "record_line_encoder.layers.2.self_attn.in_proj_bias",
+      "record_line_encoder.layers.2.self_attn.in_proj_weight",
+      "record_line_encoder.layers.2.self_attn.out_proj.bias",
+      "record_line_encoder.layers.2.self_attn.out_proj.weight",
+      "record_line_encoder.layers.3.linear1.bias",
+      "record_line_encoder.layers.3.linear1.weight",
+      "record_line_encoder.layers.3.linear2.bias",
+      "record_line_encoder.layers.3.linear2.weight",
+      "record_line_encoder.layers.3.norm1.bias",
+      "record_line_encoder.layers.3.norm1.weight",
+      "record_line_encoder.layers.3.norm2.bias",
+      "record_line_encoder.layers.3.norm2.weight",
+      "record_line_encoder.layers.3.self_attn.in_proj_bias",
+      "record_line_encoder.layers.3.self_attn.in_proj_weight",
+      "record_line_encoder.layers.3.self_attn.out_proj.bias",
+      "record_line_encoder.layers.3.self_attn.out_proj.weight",
+      "record_line_norm.bias",
+      "record_line_norm.weight",
+      "record_position_embedding.weight",
+      "record_query",
+      "record_role_embedding",
+      "record_role_head.bias",
+      "record_role_head.weight",
+      "record_set_encoder.layers.0.linear1.bias",
+      "record_set_encoder.layers.0.linear1.weight",
+      "record_set_encoder.layers.0.linear2.bias",
+      "record_set_encoder.layers.0.linear2.weight",
+      "record_set_encoder.layers.0.norm1.bias",
+      "record_set_encoder.layers.0.norm1.weight",
+      "record_set_encoder.layers.0.norm2.bias",
+      "record_set_encoder.layers.0.norm2.weight",
+      "record_set_encoder.layers.0.self_attn.in_proj_bias",
+      "record_set_encoder.layers.0.self_attn.in_proj_weight",
+      "record_set_encoder.layers.0.self_attn.out_proj.bias",
+      "record_set_encoder.layers.0.self_attn.out_proj.weight",
+      "record_set_encoder.layers.1.linear1.bias",
+      "record_set_encoder.layers.1.linear1.weight",
+      "record_set_encoder.layers.1.linear2.bias",
+      "record_set_encoder.layers.1.linear2.weight",
+      "record_set_encoder.layers.1.norm1.bias",
+      "record_set_encoder.layers.1.norm1.weight",
+      "record_set_encoder.layers.1.norm2.bias",
+      "record_set_encoder.layers.1.norm2.weight",
+      "record_set_encoder.layers.1.self_attn.in_proj_bias",
+      "record_set_encoder.layers.1.self_attn.in_proj_weight",
+      "record_set_encoder.layers.1.self_attn.out_proj.bias",
+      "record_set_encoder.layers.1.self_attn.out_proj.weight",
+      "record_set_norm.bias",
+      "record_set_norm.weight"
+    ]
+  },
+  "protocol": "r12_sd_cst_complete_physical_fresh_v1_3",
+  "runtime": {
+    "bf16_supported": true,
+    "cuda_available": true,
+    "cuda_capability": [
+      9,
+      0
+    ],
+    "cuda_device": "NVIDIA H100 PCIe",
+    "platform": "Linux-4.18.0-553.123.1.el8_10.0.1.x86_64-x86_64-with-glibc2.28",
+    "python": "3.13.13 | packaged by conda-forge | (main, Apr  8 2026, 02:00:33) [GCC 14.3.0]",
+    "sha256": "aa68e44767672a040684ef0494f7af1917fa275ad84ebf1902a742f1e46511d5",
+    "torch": "2.6.0+cu124",
+    "torch_cuda": "12.4"
+  },
+  "schema": "r12_sd_cst_complete_physical_fresh_confirmation_report_v1_3",
+  "thresholds": {
+    "answer_overall": 0.9,
+    "field_overall": 0.95,
+    "fit_packet_min_renderer": 0.99,
+    "joint_min_renderer": 0.85,
+    "joint_overall": 0.9,
+    "negative_state_max": 0.35,
+    "packet_min_renderer": 0.85,
+    "packet_overall": 0.9,
+    "pointer_overall": 0.9,
+    "reset_freeze_state_max": 0.75,
+    "row_shuffled_packet_max": 0.25,
+    "state_overall": 0.9,
+    "treatment_packet_advantage": 0.5
+  }
+}

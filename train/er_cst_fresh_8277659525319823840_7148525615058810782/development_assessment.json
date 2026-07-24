@@ -1,0 +1,1079 @@
+{
+  "all_gates_pass": false,
+  "artifact_sha256": {
+    "checkpoint": "150febfa00d1129a61876ab4a852708225a3b9ab29bece4737e1dbeb84874136",
+    "evidence": "05756471521072f5024c0cbfb3ddf3d92053e7d8845b00dec7355792ed318f37",
+    "ledger": "5efae65cf5f15762643f8a1bac18ce2fb68cdf9fbccfb6df43cb3c84769bd1c2",
+    "report": "be4b5c5050bf148f5d86614433d3b53a7ed21160b6864a8c0a799f5c1dde2822"
+  },
+  "assessor_gates": {
+    "artifact_hashes_match": true,
+    "checkpoint_trainable_states_exact": true,
+    "development_custody_exact": true,
+    "immutable_checkpoint_precedes_development": true,
+    "parameter_certificate_exact": true,
+    "pilot_gate_vector_matches_independent_recomputation": true,
+    "pilot_metrics_match_independent_recomputation": true,
+    "scientific_source_binding_exact": true
+  },
+  "claim_boundary": "Passing establishes fresh episodic S3 rule inference, source-deleted categorical composition, internal halt, and late-query readout. It does not establish unrestricted language grounding, arbitrary algorithms, planning, or broad general reasoning.",
+  "core_gates": {
+    "all_packet_fields_at_least_95pct": false,
+    "all_pointers_at_least_90pct": true,
+    "complete_system_below_200m": true,
+    "confirmed_parent_unchanged": true,
+    "development_one_confirmation_zero": true,
+    "finite_motor_and_reader_certificates_exact": true,
+    "negative_packets_at_most_35pct": true,
+    "negative_states_at_most_40pct": true,
+    "treatment_joint_advantage_at_least_50pp": false,
+    "treatment_min_depth_joint_at_least_80pct": false,
+    "treatment_min_renderer_joint_at_least_85pct": false,
+    "treatment_packet_advantage_at_least_50pp": false,
+    "treatment_packet_at_least_90pct": false,
+    "treatment_state_answer_joint_at_least_90pct": false
+  },
+  "custody": {
+    "confirmation_accesses": 0,
+    "development_accesses": 1
+  },
+  "decision": "reject_er_cst_v1",
+  "metrics": {
+    "equality_ablated": {
+      "by_depth": {
+        "1": {
+          "answer": {
+            "correct": 54,
+            "rate": 0.2109375,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 30,
+            "rate": 0.1171875,
+            "rows": 256
+          }
+        },
+        "2": {
+          "answer": {
+            "correct": 112,
+            "rate": 0.4375,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 58,
+            "rate": 0.2265625,
+            "rows": 256
+          }
+        },
+        "3": {
+          "answer": {
+            "correct": 123,
+            "rate": 0.48046875,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 75,
+            "rate": 0.29296875,
+            "rows": 256
+          }
+        },
+        "4": {
+          "answer": {
+            "correct": 86,
+            "rate": 0.3359375,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 39,
+            "rate": 0.15234375,
+            "rows": 256
+          }
+        },
+        "5": {
+          "answer": {
+            "correct": 89,
+            "rate": 0.34765625,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 35,
+            "rate": 0.13671875,
+            "rows": 256
+          }
+        },
+        "6": {
+          "answer": {
+            "correct": 72,
+            "rate": 0.28125,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 35,
+            "rate": 0.13671875,
+            "rows": 256
+          }
+        },
+        "7": {
+          "answer": {
+            "correct": 110,
+            "rate": 0.4296875,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 50,
+            "rate": 0.1953125,
+            "rows": 256
+          }
+        },
+        "8": {
+          "answer": {
+            "correct": 60,
+            "rate": 0.234375,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 40,
+            "rate": 0.15625,
+            "rows": 256
+          }
+        }
+      },
+      "by_renderer": {
+        "er-fresh-d0w1e0q0-v1": {
+          "answer": {
+            "correct": 176,
+            "rate": 0.34375,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 90,
+            "rate": 0.17578125,
+            "rows": 512
+          }
+        },
+        "er-fresh-d0w1e1q1-v1": {
+          "answer": {
+            "correct": 177,
+            "rate": 0.345703125,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 90,
+            "rate": 0.17578125,
+            "rows": 512
+          }
+        },
+        "er-fresh-d1w0e0q0-v1": {
+          "answer": {
+            "correct": 178,
+            "rate": 0.34765625,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 92,
+            "rate": 0.1796875,
+            "rows": 512
+          }
+        },
+        "er-fresh-d1w0e1q1-v1": {
+          "answer": {
+            "correct": 175,
+            "rate": 0.341796875,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 90,
+            "rate": 0.17578125,
+            "rows": 512
+          }
+        }
+      },
+      "overall": {
+        "answer": {
+          "correct": 706,
+          "rate": 0.3447265625,
+          "rows": 2048
+        },
+        "binding_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "cards": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "events": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "halt": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "initial": {
+          "correct": 1398,
+          "rate": 0.6826171875,
+          "rows": 2048
+        },
+        "initial_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "joint": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "line_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "packet": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "query": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "query_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "state": {
+          "correct": 362,
+          "rate": 0.1767578125,
+          "rows": 2048
+        }
+      }
+    },
+    "family_deranged": {
+      "by_depth": {
+        "1": {
+          "answer": {
+            "correct": 169,
+            "rate": 0.66015625,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 57,
+            "rate": 0.22265625,
+            "rows": 256
+          }
+        },
+        "2": {
+          "answer": {
+            "correct": 101,
+            "rate": 0.39453125,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 72,
+            "rate": 0.28125,
+            "rows": 256
+          }
+        },
+        "3": {
+          "answer": {
+            "correct": 86,
+            "rate": 0.3359375,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 42,
+            "rate": 0.1640625,
+            "rows": 256
+          }
+        },
+        "4": {
+          "answer": {
+            "correct": 93,
+            "rate": 0.36328125,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 77,
+            "rate": 0.30078125,
+            "rows": 256
+          }
+        },
+        "5": {
+          "answer": {
+            "correct": 79,
+            "rate": 0.30859375,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 44,
+            "rate": 0.171875,
+            "rows": 256
+          }
+        },
+        "6": {
+          "answer": {
+            "correct": 84,
+            "rate": 0.328125,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 52,
+            "rate": 0.203125,
+            "rows": 256
+          }
+        },
+        "7": {
+          "answer": {
+            "correct": 65,
+            "rate": 0.25390625,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 33,
+            "rate": 0.12890625,
+            "rows": 256
+          }
+        },
+        "8": {
+          "answer": {
+            "correct": 98,
+            "rate": 0.3828125,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 54,
+            "rate": 0.2109375,
+            "rows": 256
+          }
+        }
+      },
+      "by_renderer": {
+        "er-fresh-d0w1e0q0-v1": {
+          "answer": {
+            "correct": 197,
+            "rate": 0.384765625,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 113,
+            "rate": 0.220703125,
+            "rows": 512
+          }
+        },
+        "er-fresh-d0w1e1q1-v1": {
+          "answer": {
+            "correct": 200,
+            "rate": 0.390625,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 115,
+            "rate": 0.224609375,
+            "rows": 512
+          }
+        },
+        "er-fresh-d1w0e0q0-v1": {
+          "answer": {
+            "correct": 192,
+            "rate": 0.375,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 104,
+            "rate": 0.203125,
+            "rows": 512
+          }
+        },
+        "er-fresh-d1w0e1q1-v1": {
+          "answer": {
+            "correct": 186,
+            "rate": 0.36328125,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 99,
+            "rate": 0.193359375,
+            "rows": 512
+          }
+        }
+      },
+      "overall": {
+        "answer": {
+          "correct": 775,
+          "rate": 0.37841796875,
+          "rows": 2048
+        },
+        "binding_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "cards": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "events": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "halt": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "initial": {
+          "correct": 2018,
+          "rate": 0.9853515625,
+          "rows": 2048
+        },
+        "initial_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "joint": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "line_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "packet": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "query": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "query_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "state": {
+          "correct": 431,
+          "rate": 0.21044921875,
+          "rows": 2048
+        }
+      }
+    },
+    "treatment": {
+      "by_depth": {
+        "1": {
+          "answer": {
+            "correct": 48,
+            "rate": 0.1875,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 16,
+            "rate": 0.0625,
+            "rows": 256
+          }
+        },
+        "2": {
+          "answer": {
+            "correct": 110,
+            "rate": 0.4296875,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 40,
+            "rate": 0.15625,
+            "rows": 256
+          }
+        },
+        "3": {
+          "answer": {
+            "correct": 69,
+            "rate": 0.26953125,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 40,
+            "rate": 0.15625,
+            "rows": 256
+          }
+        },
+        "4": {
+          "answer": {
+            "correct": 72,
+            "rate": 0.28125,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 34,
+            "rate": 0.1328125,
+            "rows": 256
+          }
+        },
+        "5": {
+          "answer": {
+            "correct": 119,
+            "rate": 0.46484375,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 42,
+            "rate": 0.1640625,
+            "rows": 256
+          }
+        },
+        "6": {
+          "answer": {
+            "correct": 89,
+            "rate": 0.34765625,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 37,
+            "rate": 0.14453125,
+            "rows": 256
+          }
+        },
+        "7": {
+          "answer": {
+            "correct": 73,
+            "rate": 0.28515625,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 47,
+            "rate": 0.18359375,
+            "rows": 256
+          }
+        },
+        "8": {
+          "answer": {
+            "correct": 102,
+            "rate": 0.3984375,
+            "rows": 256
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 256
+          },
+          "state": {
+            "correct": 55,
+            "rate": 0.21484375,
+            "rows": 256
+          }
+        }
+      },
+      "by_renderer": {
+        "er-fresh-d0w1e0q0-v1": {
+          "answer": {
+            "correct": 165,
+            "rate": 0.322265625,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 75,
+            "rate": 0.146484375,
+            "rows": 512
+          }
+        },
+        "er-fresh-d0w1e1q1-v1": {
+          "answer": {
+            "correct": 168,
+            "rate": 0.328125,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 76,
+            "rate": 0.1484375,
+            "rows": 512
+          }
+        },
+        "er-fresh-d1w0e0q0-v1": {
+          "answer": {
+            "correct": 174,
+            "rate": 0.33984375,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 81,
+            "rate": 0.158203125,
+            "rows": 512
+          }
+        },
+        "er-fresh-d1w0e1q1-v1": {
+          "answer": {
+            "correct": 175,
+            "rate": 0.341796875,
+            "rows": 512
+          },
+          "joint": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "packet": {
+            "correct": 0,
+            "rate": 0.0,
+            "rows": 512
+          },
+          "state": {
+            "correct": 79,
+            "rate": 0.154296875,
+            "rows": 512
+          }
+        }
+      },
+      "overall": {
+        "answer": {
+          "correct": 682,
+          "rate": 0.3330078125,
+          "rows": 2048
+        },
+        "binding_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "cards": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "events": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "halt": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "initial": {
+          "correct": 642,
+          "rate": 0.3134765625,
+          "rows": 2048
+        },
+        "initial_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "joint": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "line_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "packet": {
+          "correct": 0,
+          "rate": 0.0,
+          "rows": 2048
+        },
+        "query": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "query_pointer": {
+          "correct": 2048,
+          "rate": 1.0,
+          "rows": 2048
+        },
+        "state": {
+          "correct": 311,
+          "rate": 0.15185546875,
+          "rows": 2048
+        }
+      }
+    }
+  },
+  "parameters": {
+    "base": 125081664,
+    "compiler": 67336999,
+    "complete_system": 192421936,
+    "headroom_below_200m": 7578064,
+    "motor": 2438,
+    "reader": 835,
+    "trainable": 11716385
+  },
+  "protocol": "R12-ER-CST-v1.2",
+  "schema": "r12_er_cst_fresh_development_assessment_v1",
+  "thresholds": {
+    "answer_overall": 0.9,
+    "field_overall": 0.95,
+    "joint_min_depth": 0.8,
+    "joint_min_renderer": 0.85,
+    "joint_overall": 0.9,
+    "negative_packet_max": 0.35,
+    "negative_state_max": 0.4,
+    "packet_overall": 0.9,
+    "pointer_overall": 0.9,
+    "state_overall": 0.9,
+    "treatment_joint_advantage": 0.5,
+    "treatment_packet_advantage": 0.5
+  }
+}

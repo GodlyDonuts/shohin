@@ -1,0 +1,9 @@
+{
+  "access_number": 1,
+  "board_report_sha256": "fd487cdf7c30cf945ace152e389aaf5c354b8b6a55555c2acc6f046e8ed00b24",
+  "protocol": "r12_sd_cst_complete_physical_fresh_v1_3",
+  "schema": "r12_sd_cst_complete_physical_fresh_access_v1_3",
+  "source_commit": "eed66757c47e126b6566ee269bc73b0c0cef4fab",
+  "split": "sd_cst_development",
+  "split_sha256": "5dc5035cd825066be444ce33f6e30eb7aabad16e6ca0b4fe3b47fcc0060e9dfa"
+}

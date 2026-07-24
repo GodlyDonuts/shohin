@@ -1,0 +1,445 @@
+{
+  "claim_boundary": "Read-only consumed-training heldout pointer confusion audit; no scored split or reasoning claim.",
+  "confirmation_accesses": 0,
+  "development_accesses": 0,
+  "endpoint_sha256": "46697b3942fdfd2edfec06cea6cb119ad507adcdee4a99330fd06bc79e5b3e88",
+  "parameters": {
+    "base": 125081664,
+    "compiler": 66573580,
+    "complete_system": 191675285,
+    "headroom": 8324715,
+    "motor": 19206,
+    "reader": 835,
+    "trainable": 297216,
+    "trainable_names": [
+      "local_declaration_key_projection.weight",
+      "local_declaration_queries",
+      "local_declaration_query_projection.weight"
+    ]
+  },
+  "per_renderer": {
+    "orbit-d0e0q1-v1": {
+      "all_three_binding": 1352,
+      "all_three_binding_rate": 0.676,
+      "all_three_initial": 0,
+      "all_three_initial_rate": 0.0,
+      "rows": 2000,
+      "slots": {
+        "binding_role_0": {
+          "confusion": {
+            "binding_role_0": 1869,
+            "binding_role_1": 0,
+            "binding_role_2": 0,
+            "initial_occurrence_0": 105,
+            "initial_occurrence_1": 22,
+            "initial_occurrence_2": 4,
+            "other": 0
+          },
+          "mean_target_nll": 3.478153877258301,
+          "mean_target_probability": 0.42229226922988894,
+          "rows": 2000,
+          "top1_exact": 1869,
+          "top1_rate": 0.9345
+        },
+        "binding_role_1": {
+          "confusion": {
+            "binding_role_0": 0,
+            "binding_role_1": 1988,
+            "binding_role_2": 0,
+            "initial_occurrence_0": 0,
+            "initial_occurrence_1": 0,
+            "initial_occurrence_2": 12,
+            "other": 0
+          },
+          "mean_target_nll": 4.226159324645996,
+          "mean_target_probability": 0.2811971690654755,
+          "rows": 2000,
+          "top1_exact": 1988,
+          "top1_rate": 0.994
+        },
+        "binding_role_2": {
+          "confusion": {
+            "binding_role_0": 0,
+            "binding_role_1": 1,
+            "binding_role_2": 1470,
+            "initial_occurrence_0": 369,
+            "initial_occurrence_1": 20,
+            "initial_occurrence_2": 140,
+            "other": 0
+          },
+          "mean_target_nll": 4.174187881469726,
+          "mean_target_probability": 0.2418322479724884,
+          "rows": 2000,
+          "top1_exact": 1470,
+          "top1_rate": 0.735
+        },
+        "initial_occurrence_0": {
+          "confusion": {
+            "binding_role_0": 7,
+            "binding_role_1": 21,
+            "binding_role_2": 561,
+            "initial_occurrence_0": 1292,
+            "initial_occurrence_1": 20,
+            "initial_occurrence_2": 99,
+            "other": 0
+          },
+          "mean_target_nll": 4.321732997894287,
+          "mean_target_probability": 0.20005838751792906,
+          "rows": 2000,
+          "top1_exact": 1292,
+          "top1_rate": 0.646
+        },
+        "initial_occurrence_1": {
+          "confusion": {
+            "binding_role_0": 7,
+            "binding_role_1": 50,
+            "binding_role_2": 1082,
+            "initial_occurrence_0": 620,
+            "initial_occurrence_1": 0,
+            "initial_occurrence_2": 241,
+            "other": 0
+          },
+          "mean_target_nll": 4.454890869140625,
+          "mean_target_probability": 0.1540238437652588,
+          "rows": 2000,
+          "top1_exact": 0,
+          "top1_rate": 0.0
+        },
+        "initial_occurrence_2": {
+          "confusion": {
+            "binding_role_0": 5,
+            "binding_role_1": 121,
+            "binding_role_2": 981,
+            "initial_occurrence_0": 558,
+            "initial_occurrence_1": 0,
+            "initial_occurrence_2": 335,
+            "other": 0
+          },
+          "mean_target_nll": 4.401162231445313,
+          "mean_target_probability": 0.16536118149757384,
+          "rows": 2000,
+          "top1_exact": 335,
+          "top1_rate": 0.1675
+        }
+      }
+    },
+    "orbit-d0e1q0-v1": {
+      "all_three_binding": 1377,
+      "all_three_binding_rate": 0.6885,
+      "all_three_initial": 0,
+      "all_three_initial_rate": 0.0,
+      "rows": 2000,
+      "slots": {
+        "binding_role_0": {
+          "confusion": {
+            "binding_role_0": 1869,
+            "binding_role_1": 0,
+            "binding_role_2": 0,
+            "initial_occurrence_0": 105,
+            "initial_occurrence_1": 22,
+            "initial_occurrence_2": 4,
+            "other": 0
+          },
+          "mean_target_nll": 3.4760987586975096,
+          "mean_target_probability": 0.42315914249420167,
+          "rows": 2000,
+          "top1_exact": 1869,
+          "top1_rate": 0.9345
+        },
+        "binding_role_1": {
+          "confusion": {
+            "binding_role_0": 0,
+            "binding_role_1": 1989,
+            "binding_role_2": 0,
+            "initial_occurrence_0": 0,
+            "initial_occurrence_1": 0,
+            "initial_occurrence_2": 11,
+            "other": 0
+          },
+          "mean_target_nll": 4.225035438537597,
+          "mean_target_probability": 0.2821818809509277,
+          "rows": 2000,
+          "top1_exact": 1989,
+          "top1_rate": 0.9945
+        },
+        "binding_role_2": {
+          "confusion": {
+            "binding_role_0": 0,
+            "binding_role_1": 1,
+            "binding_role_2": 1495,
+            "initial_occurrence_0": 352,
+            "initial_occurrence_1": 16,
+            "initial_occurrence_2": 136,
+            "other": 0
+          },
+          "mean_target_nll": 4.17366289138794,
+          "mean_target_probability": 0.24057319211959838,
+          "rows": 2000,
+          "top1_exact": 1495,
+          "top1_rate": 0.7475
+        },
+        "initial_occurrence_0": {
+          "confusion": {
+            "binding_role_0": 7,
+            "binding_role_1": 23,
+            "binding_role_2": 567,
+            "initial_occurrence_0": 1286,
+            "initial_occurrence_1": 20,
+            "initial_occurrence_2": 97,
+            "other": 0
+          },
+          "mean_target_nll": 4.3229644470214845,
+          "mean_target_probability": 0.1985012629032135,
+          "rows": 2000,
+          "top1_exact": 1286,
+          "top1_rate": 0.643
+        },
+        "initial_occurrence_1": {
+          "confusion": {
+            "binding_role_0": 6,
+            "binding_role_1": 56,
+            "binding_role_2": 1106,
+            "initial_occurrence_0": 591,
+            "initial_occurrence_1": 0,
+            "initial_occurrence_2": 241,
+            "other": 0
+          },
+          "mean_target_nll": 4.45455867767334,
+          "mean_target_probability": 0.15408706736564637,
+          "rows": 2000,
+          "top1_exact": 0,
+          "top1_rate": 0.0
+        },
+        "initial_occurrence_2": {
+          "confusion": {
+            "binding_role_0": 5,
+            "binding_role_1": 127,
+            "binding_role_2": 1006,
+            "initial_occurrence_0": 528,
+            "initial_occurrence_1": 0,
+            "initial_occurrence_2": 334,
+            "other": 0
+          },
+          "mean_target_nll": 4.40168790435791,
+          "mean_target_probability": 0.16531360983848573,
+          "rows": 2000,
+          "top1_exact": 334,
+          "top1_rate": 0.167
+        }
+      }
+    },
+    "orbit-d1e0q0-v1": {
+      "all_three_binding": 1220,
+      "all_three_binding_rate": 0.61,
+      "all_three_initial": 11,
+      "all_three_initial_rate": 0.0055,
+      "rows": 2000,
+      "slots": {
+        "binding_role_0": {
+          "confusion": {
+            "binding_role_0": 1616,
+            "binding_role_1": 0,
+            "binding_role_2": 0,
+            "initial_occurrence_0": 112,
+            "initial_occurrence_1": 47,
+            "initial_occurrence_2": 225,
+            "other": 0
+          },
+          "mean_target_nll": 3.8307081451416014,
+          "mean_target_probability": 0.3883226432800293,
+          "rows": 2000,
+          "top1_exact": 1616,
+          "top1_rate": 0.808
+        },
+        "binding_role_1": {
+          "confusion": {
+            "binding_role_0": 0,
+            "binding_role_1": 1991,
+            "binding_role_2": 0,
+            "initial_occurrence_0": 0,
+            "initial_occurrence_1": 0,
+            "initial_occurrence_2": 9,
+            "other": 0
+          },
+          "mean_target_nll": 4.1962225570678715,
+          "mean_target_probability": 0.28672617292404173,
+          "rows": 2000,
+          "top1_exact": 1991,
+          "top1_rate": 0.9955
+        },
+        "binding_role_2": {
+          "confusion": {
+            "binding_role_0": 0,
+            "binding_role_1": 2,
+            "binding_role_2": 1553,
+            "initial_occurrence_0": 234,
+            "initial_occurrence_1": 45,
+            "initial_occurrence_2": 166,
+            "other": 0
+          },
+          "mean_target_nll": 4.23222102355957,
+          "mean_target_probability": 0.23170322716236114,
+          "rows": 2000,
+          "top1_exact": 1553,
+          "top1_rate": 0.7765
+        },
+        "initial_occurrence_0": {
+          "confusion": {
+            "binding_role_0": 5,
+            "binding_role_1": 53,
+            "binding_role_2": 543,
+            "initial_occurrence_0": 941,
+            "initial_occurrence_1": 114,
+            "initial_occurrence_2": 344,
+            "other": 0
+          },
+          "mean_target_nll": 4.364584712982178,
+          "mean_target_probability": 0.1832641041278839,
+          "rows": 2000,
+          "top1_exact": 941,
+          "top1_rate": 0.4705
+        },
+        "initial_occurrence_1": {
+          "confusion": {
+            "binding_role_0": 11,
+            "binding_role_1": 88,
+            "binding_role_2": 521,
+            "initial_occurrence_0": 495,
+            "initial_occurrence_1": 207,
+            "initial_occurrence_2": 678,
+            "other": 0
+          },
+          "mean_target_nll": 4.478162204742431,
+          "mean_target_probability": 0.1528827894926071,
+          "rows": 2000,
+          "top1_exact": 207,
+          "top1_rate": 0.1035
+        },
+        "initial_occurrence_2": {
+          "confusion": {
+            "binding_role_0": 6,
+            "binding_role_1": 131,
+            "binding_role_2": 281,
+            "initial_occurrence_0": 334,
+            "initial_occurrence_1": 213,
+            "initial_occurrence_2": 1035,
+            "other": 0
+          },
+          "mean_target_nll": 4.350939445495605,
+          "mean_target_probability": 0.17493960785865784,
+          "rows": 2000,
+          "top1_exact": 1035,
+          "top1_rate": 0.5175
+        }
+      }
+    },
+    "orbit-d1e1q1-v1": {
+      "all_three_binding": 1223,
+      "all_three_binding_rate": 0.6115,
+      "all_three_initial": 9,
+      "all_three_initial_rate": 0.0045,
+      "rows": 2000,
+      "slots": {
+        "binding_role_0": {
+          "confusion": {
+            "binding_role_0": 1621,
+            "binding_role_1": 0,
+            "binding_role_2": 0,
+            "initial_occurrence_0": 110,
+            "initial_occurrence_1": 47,
+            "initial_occurrence_2": 222,
+            "other": 0
+          },
+          "mean_target_nll": 3.8278752727508545,
+          "mean_target_probability": 0.39057833528518676,
+          "rows": 2000,
+          "top1_exact": 1621,
+          "top1_rate": 0.8105
+        },
+        "binding_role_1": {
+          "confusion": {
+            "binding_role_0": 0,
+            "binding_role_1": 1993,
+            "binding_role_2": 0,
+            "initial_occurrence_0": 0,
+            "initial_occurrence_1": 0,
+            "initial_occurrence_2": 7,
+            "other": 0
+          },
+          "mean_target_nll": 4.195318550109863,
+          "mean_target_probability": 0.28855584406852725,
+          "rows": 2000,
+          "top1_exact": 1993,
+          "top1_rate": 0.9965
+        },
+        "binding_role_2": {
+          "confusion": {
+            "binding_role_0": 0,
+            "binding_role_1": 2,
+            "binding_role_2": 1549,
+            "initial_occurrence_0": 236,
+            "initial_occurrence_1": 47,
+            "initial_occurrence_2": 166,
+            "other": 0
+          },
+          "mean_target_nll": 4.233353622436524,
+          "mean_target_probability": 0.2307436945438385,
+          "rows": 2000,
+          "top1_exact": 1549,
+          "top1_rate": 0.7745
+        },
+        "initial_occurrence_0": {
+          "confusion": {
+            "binding_role_0": 6,
+            "binding_role_1": 53,
+            "binding_role_2": 533,
+            "initial_occurrence_0": 950,
+            "initial_occurrence_1": 113,
+            "initial_occurrence_2": 345,
+            "other": 0
+          },
+          "mean_target_nll": 4.365386856079102,
+          "mean_target_probability": 0.18305442214012146,
+          "rows": 2000,
+          "top1_exact": 950,
+          "top1_rate": 0.475
+        },
+        "initial_occurrence_1": {
+          "confusion": {
+            "binding_role_0": 13,
+            "binding_role_1": 88,
+            "binding_role_2": 507,
+            "initial_occurrence_0": 499,
+            "initial_occurrence_1": 202,
+            "initial_occurrence_2": 691,
+            "other": 0
+          },
+          "mean_target_nll": 4.478721912384033,
+          "mean_target_probability": 0.15282428884506224,
+          "rows": 2000,
+          "top1_exact": 202,
+          "top1_rate": 0.101
+        },
+        "initial_occurrence_2": {
+          "confusion": {
+            "binding_role_0": 6,
+            "binding_role_1": 135,
+            "binding_role_2": 277,
+            "initial_occurrence_0": 330,
+            "initial_occurrence_1": 207,
+            "initial_occurrence_2": 1045,
+            "other": 0
+          },
+          "mean_target_nll": 4.351186069488525,
+          "mean_target_probability": 0.17501367926597594,
+          "rows": 2000,
+          "top1_exact": 1045,
+          "top1_rate": 0.5225
+        }
+      }
+    }
+  },
+  "query_state_sha256": "88d1338145890921a68f05148a04aad93b50662fd1e17e7197f24b661d8b13d6",
+  "schema": "r12_sd_cst_complete_physical_record_bus_v1_1_slot_audit_v1",
+  "score_eligible": false
+}

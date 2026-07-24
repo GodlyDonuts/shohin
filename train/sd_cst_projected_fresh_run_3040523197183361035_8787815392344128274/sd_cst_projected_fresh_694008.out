@@ -1,0 +1,29 @@
+{'cuda': True, 'device': 'NVIDIA H100 PCIe', 'bf16': True}
+{"parameters": {"active_projected_plus_core": 20975931, "comparison_cap": 150000000, "compiler": 20955890, "global_cap": 200000000, "motor": 19206, "nominal_base": 125081664, "nominal_complete_system": 146057595, "parent_sha256": "e5f87a1d5b22d24250a6aac6fb7c70b4a77dbdf01bd5f5c509020a3584dfa6f9", "reader": 835, "trainable": 6748897, "trainable_names": ["bigram_embedding.weight", "binding_key_adapter.0.bias", "binding_key_adapter.0.weight", "binding_key_adapter.2.weight", "binding_queries", "binding_query_projection.weight", "event_entity_queries", "fingerprint_projection.weight", "initial_entity_queries", "logit_scale"]}, "row_shuffled_labels_train": {"exact": {"amount": 48000, "binding_pointer": 185, "event_entity_pointer": 47965, "identity": 1298, "initial": 8168, "initial_entity_pointer": 48000, "kind": 48000, "line_pointer": 48000, "query": 48000, "whole_tape": 870}, "rates": {"amount": 1.0, "binding_pointer": 0.0038541666666666668, "event_entity_pointer": 0.9992708333333333, "identity": 0.027041666666666665, "initial": 0.17016666666666666, "initial_entity_pointer": 1.0, "kind": 1.0, "line_pointer": 1.0, "query": 1.0, "whole_tape": 0.018125}, "raw_stop_count_histogram": {"1": 48000}, "rows": 48000}, "saved": "/lustre/fs1/home/sa305415/shohin_sd_cst_projected_fresh_run_3040523197183361035_8787815392344128274/checkpoint.pt", "sha256": "91d4860bc7b9e42692fc1ee95705fecc01885ee5a675019da47dae84d8c25877", "treatment_train": {"exact": {"amount": 48000, "binding_pointer": 48000, "event_entity_pointer": 47952, "identity": 48000, "initial": 48000, "initial_entity_pointer": 48000, "kind": 48000, "line_pointer": 48000, "query": 48000, "whole_tape": 48000}, "rates": {"amount": 1.0, "binding_pointer": 1.0, "event_entity_pointer": 0.999, "identity": 1.0, "initial": 1.0, "initial_entity_pointer": 1.0, "kind": 1.0, "line_pointer": 1.0, "query": 1.0, "whole_tape": 1.0}, "raw_stop_count_histogram": {"1": 48000}, "rows": 48000}}
+{"saved": "/lustre/fs1/home/sa305415/shohin_sd_cst_projected_fresh_run_3040523197183361035_8787815392344128274/gate_config.json", "scored_split_opened": false, "sha256": "a725fabe0b84c61f233803daf681b9b0ebbbea1720267621577a28d17ae4eeec"}
+Traceback (most recent call last):
+  File "/lustre/fs1/home/sa305415/shohin_sd_cst_projected_fresh_4a7fb48_source/train/train_eval_sd_cst_projected_fresh.py", line 1108, in <module>
+    main()
+    ~~~~^^
+  File "/lustre/fs1/home/sa305415/shohin_sd_cst_projected_fresh_4a7fb48_source/train/train_eval_sd_cst_projected_fresh.py", line 1102, in main
+    evaluate_main(args)
+    ~~~~~~~~~~~~~^^^^^^
+  File "/lustre/fs1/home/sa305415/shohin/miniforge3/lib/python3.13/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/lustre/fs1/home/sa305415/shohin_sd_cst_projected_fresh_4a7fb48_source/train/train_eval_sd_cst_projected_fresh.py", line 830, in evaluate_main
+    compiled[arm] = compile_fresh_rows(model, rows, args.batch_size, device)
+                    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/lustre/fs1/home/sa305415/shohin/miniforge3/lib/python3.13/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/lustre/fs1/home/sa305415/shohin_sd_cst_projected_fresh_4a7fb48_source/train/projected_sd_cst_fresh.py", line 524, in compile_fresh_rows
+    hard = output.tape.hard()
+  File "/lustre/fs1/home/sa305415/shohin_sd_cst_projected_fresh_4a7fb48_source/train/sd_cst.py", line 109, in hard
+    return HardProgramTape(
+        self.initial_state.argmax(-1).to(torch.uint8),
+    ...<2 lines>...
+        self.amount.argmax(-1).to(torch.uint8),
+    )
+  File "<string>", line 7, in __init__
+  File "/lustre/fs1/home/sa305415/shohin_sd_cst_projected_fresh_4a7fb48_source/train/sd_cst.py", line 168, in __post_init__
+    raise ValueError("hard program tape requires exactly one STOP per row")
+ValueError: hard program tape requires exactly one STOP per row
