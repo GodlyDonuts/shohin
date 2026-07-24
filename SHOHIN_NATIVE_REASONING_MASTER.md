@@ -129,7 +129,7 @@ are tested, but no neural first fit is currently authorized.
   and fresh post-update metrics. A parameter-
   and target-identical dual-branch direct-decode control separates shift
   decoding from added weights and dense rollout supervision. The complete EFC
-  regression is 428 passed. V6 adds exact AdamW/BF16/TF32 and two-update
+  regression is 446 passed. V6 adds exact AdamW/BF16/TF32 and two-update
   schedule receipts, exact package closure, post-checkpoint RNG rebinding,
   authenticated atomic output, and a 26-file Landlock worker closure that
   excludes the board generator, label oracle, and preparation role.
@@ -167,8 +167,28 @@ are tested, but no neural first fit is currently authorized.
   and
   `4aaf86536899214c2d2bcce3516a65c6021a267989040a2f0b4982dc24c35ef2`.
   This admits exact single-fault localization mechanics only. ACSO
-  (3,995,137 added; 199,488,246 total) and HSRA (4,303,048 added;
-  199,796,157 total) remain separate unimplemented escalation candidates.
+  (3,995,137 added; 199,488,246 total) now has an explicit manual reverse
+  dynamic program and exact learned-preconditioner constructor. Its focused
+  gates pass autograd-reference agreement, oracle fixed points, local
+  innovation descent, all declared recodings, and the depth-preserving cyclic
+  control. Hostile review rejected the first control as a nonconservative
+  rerouted vector field and found retained autograd graphs and a missing seal.
+  The corrected control is the exact gradient of its own scrambled objective,
+  the manual adjoint is graph-free, a hand-calculated noncommutative machine
+  independently anchors word order, totals derive from the live HSC receipt,
+  and sealing emits only `HardFunctorMachine` fields. A second hostile review
+  then found coordinate-dependent ties and incomplete independent derivative
+  coverage. Ties now fail closed, tie-free sealing is exactly recoding
+  equivariant, and the noncommutative oracle covers causal and cyclic
+  derivative prefixes. Eighteen focused tests pass; the complete regression is
+  446 passed with 63 known warnings. Final hostile review reports no remaining
+  P0/P1/P2, 40 exact randomized recoding trials, and less than `4e-9`
+  manual-adjoint disagreement against autograd across depths zero through five
+  in both modes. ACSO is not integrated, fitted, or authorized. HSRA
+  (4,303,048 added;
+  199,796,157 total) remains a
+  separate unimplemented source-attention escalation candidate. Neither is
+  evidence of Shohin reasoning.
 - **Primary bottleneck:** model-owned compilation of raw episodic evidence into
   a compact renderer-invariant causal machine, including opaque referent
   binding. Bounded ordered execution is already mechanically easy once the

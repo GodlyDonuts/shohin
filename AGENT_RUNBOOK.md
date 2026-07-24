@@ -34,7 +34,7 @@
 > requires exact closure plus authenticated `COMPLETE.json`; any publication
 > or parent-directory durability error remains a failed job. Independent
 > hostile review reports no residual P0/P1 and authorizes only the exact
-> two-update H100 measurement canary. The complete EFC regression is 428 passed
+> two-update H100 measurement canary. The complete EFC regression is 446 passed
 > with 63 known PyTorch nested-tensor warnings. Canary package SHA-256 is
 > `ed024dd9c47e766871a7253c1117a4f5b7c3ac551a1f08153618854091164095`;
 > full train package SHA-256 is
@@ -12493,7 +12493,7 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   exact two-update output, authorization hashes, Landlock/network/H100
   receipts, finite positive gradients, changed state, and measured
   memory/timing/optimizer bytes while authorizing no fit, scored access,
-  reasoning claim, or pretraining. The expanded EFC suite is 428 passed with
+  reasoning claim, or pretraining. The expanded EFC suite is 446 passed with
   63 known nested-tensor warnings; Ruff, `py_compile`, and diff checks pass.
 
   Architectural changes are now failure-triggered. Attention, position/RoPE,
@@ -12506,12 +12506,33 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   and
   `4aaf86536899214c2d2bcce3516a65c6021a267989040a2f0b4982dc24c35ef2`.
 
-  A reserved 3,995,137-parameter Adjoint Causal-Syndrome Observer would revise
-  machine logits along an explicit causal adjoint and bring the complete
-  system to 199,488,246 parameters; a scrambled-adjoint arm is its matched
-  control. A separate 4,303,048-parameter Hankel-Syndrome Reentrant Attention
-  treatment would bring the complete system to 199,796,157 and use
-  record-deranged feedback as its control. Both remain unimplemented and
-  unauthorized unless their distinct machine-recurrence or source-attention
-  triggers fire. Newton DNS still fails before SSH, so no GPU job or neural
-  fit has run.
+  The 3,995,137-parameter Adjoint Causal-Syndrome Observer mechanics are now
+  implemented as a hand-derived reverse dynamic program through the finite
+  behavioral closure; the explicit adjoint uses no runtime autograd. Its exact
+  `10 -> 384 -> 384`, `GRUCell(384,768)`, and
+  `LayerNorm(768) -> 1536 -> 1` constructor brings a future complete system to
+  199,488,246 parameters. Hostile review rejected the first control because it
+  rerouted a gradient into a nonconservative vector field, and also found that
+  the manual pass retained autograd graphs and lacked a hard seal. Those
+  defects are corrected. The cyclic control is now the exact gradient of its
+  own depth-preserving scrambled objective and descends that objective; the
+  explicit adjoint is graph-free; a hand-calculated noncommutative machine
+  independently anchors word order; parameter totals derive from the live HSC
+  capacity receipt; and sealing emits only the existing source-free
+  `HardFunctorMachine` fields. A second hostile review found
+  coordinate-dependent `argmax` behavior on tied rows and incomplete
+  independent derivative-prefix coverage. Sealing now fails closed on every
+  tied transition or observer row; tie-free hardening is exactly recoding
+  equivariant; and the hand-calculated noncommutative oracle covers causal and
+  cyclic derivative prefixes. Eighteen focused tests and the complete
+  446-test relevant suite pass with the same 63 known nested-tensor warnings.
+  Final hostile review reports no remaining P0/P1/P2, passes 40 additional
+  randomized recoding trials exactly, and bounds manual-adjoint disagreement
+  against autograd below `4e-9` across depths zero through five in both modes.
+  It authorizes a mechanics-only commit.
+  This admits mechanics only: ACSO is not connected to HSC, fitted, or
+  authorized. The separate
+  4,303,048-parameter Hankel-Syndrome Reentrant Attention treatment remains
+  unimplemented and would bring the complete system to 199,796,157 with
+  record-deranged feedback as its control. Newton DNS still fails before SSH,
+  so no GPU job or neural fit has run.

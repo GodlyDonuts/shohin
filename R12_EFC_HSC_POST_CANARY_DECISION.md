@@ -205,12 +205,39 @@ file SHA-256 is
 This proves exact single-swap identifiability only. It does not show correction
 under noisy learned signatures or neural learnability.
 
-ACSO remains unimplemented and unauthorized. Kill it if oracle machines are
-not fixed points, innovation fails to fall monotonically, or it fails to beat
-both unmodified HSC and scrambled adjoint by the frozen paired margin. A
-runtime-autograd implementation is not automatically admissible: the deployed
-candidate must use an explicit bound adjoint or account autograd as a fixed
-inference resource and avoid uncontrolled higher-order training.
+The ACSO mechanics and exact controller constructor are now implemented in
+`train/episode_functor_causal_syndrome_observer.py`; integration and fitting
+remain unauthorized. The explicit adjoint is a hand-derived reverse dynamic
+program through the finite behavioral closure and does not invoke runtime
+autograd. The control is the exact gradient of its own scrambled objective and
+decreases that objective under a small negative-adjoint step; it is not a
+rerouted nonconservative vector field. The explicit adjoint runs under
+`no_grad` and cannot retain a target or compiler graph. A hand-calculated
+noncommutative machine anchors word-order semantics independently, the total
+is derived from the live HSC capacity receipt, and `seal_primary_machine`
+emits only the existing source-free `HardFunctorMachine` fields.
+
+Two hostile-review rounds rejected earlier drafts for a nonconservative
+control, retained autograd graphs, an absent hard seal, coordinate-dependent
+hardening on tied rows, and incomplete independent derivative-prefix coverage.
+The current implementation closes those findings: sealing fails closed on
+every tied transition or observer row, tie-free hardening is exactly recoding
+equivariant, and the independent oracle covers both causal and cyclic
+derivative prefixes. Eighteen focused tests and the complete 446-test relevant
+suite pass with 63 known nested-tensor warnings. Final hostile review reports
+no remaining P0/P1/P2, passes 40 additional randomized recoding trials
+exactly, and bounds manual-adjoint disagreement against autograd below `4e-9`
+across depths zero through five in both modes. It authorizes a mechanics-only
+commit, not integration or fitting.
+
+These results admit ACSO mechanics only. They do not establish that HSC emits
+usable noisy signatures, that the learned preconditioner improves a machine,
+or that a revised machine transfers. Kill ACSO if oracle machines cease to be
+fixed points after integration, innovation fails to fall monotonically, or it
+fails to beat both unmodified HSC and the cyclic-control adjoint by the frozen
+paired margin. Runtime autograd remains inadmissible in the deployed candidate
+unless separately accounted as a fixed inference resource without
+uncontrolled higher-order training.
 
 ## Reserved source-attention candidate
 
