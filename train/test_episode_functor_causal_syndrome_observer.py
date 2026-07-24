@@ -62,7 +62,10 @@ def _targets(seed: int = 11) -> tuple[torch.Tensor, torch.Tensor]:
     return closure.base.detach(), closure.derivative.detach()
 
 
-@pytest.mark.parametrize("routing_mode", ("causal", "cyclic-control"))
+@pytest.mark.parametrize(
+    "routing_mode",
+    ("causal", "cyclic-control", "one-step-control"),
+)
 def test_explicit_adjoint_matches_autograd(
     routing_mode: str,
 ) -> None:
@@ -180,6 +183,39 @@ def test_small_negative_control_step_reduces_its_own_objective() -> None:
         assert float(after) < float(before)
 
 
+def test_small_negative_one_step_control_reduces_its_own_objective() -> None:
+    target_base, target_derivative = _targets(seed=101)
+    for seed in range(8):
+        transition, observer = _logits(seed)
+        before = sum(
+            causal_syndrome_innovation(
+                transition,
+                observer,
+                target_base,
+                target_derivative,
+                routing_mode="one-step-control",
+            )
+        )
+        adjoint = explicit_causal_adjoint(
+            transition,
+            observer,
+            target_base,
+            target_derivative,
+            routing_mode="one-step-control",
+        )
+        step = 0.05
+        after = sum(
+            causal_syndrome_innovation(
+                transition - step * adjoint.transition_logit_adjoint,
+                observer - step * adjoint.observer_logit_adjoint,
+                target_base,
+                target_derivative,
+                routing_mode="one-step-control",
+            )
+        )
+        assert float(after) < float(before)
+
+
 def test_cyclic_control_is_depth_preserving_bijective_and_equivariant() -> None:
     for depth in range(1, 5):
         words = tuple(
@@ -259,7 +295,10 @@ def _permute_targets(
     return recoded_base, recoded_derivative
 
 
-@pytest.mark.parametrize("routing_mode", ("causal", "cyclic-control"))
+@pytest.mark.parametrize(
+    "routing_mode",
+    ("causal", "cyclic-control", "one-step-control"),
+)
 def test_causal_adjoint_is_exactly_recoding_equivariant(
     routing_mode: str,
 ) -> None:
@@ -372,6 +411,38 @@ def test_control_preserves_the_complete_one_step_adjoint() -> None:
         control.observer_logit_adjoint,
         causal.observer_logit_adjoint,
     )
+    one_step = explicit_causal_adjoint(
+        transition,
+        observer,
+        target.base,
+        target.derivative,
+        max_depth=0,
+        routing_mode="one-step-control",
+    )
+    torch.testing.assert_close(
+        one_step.transition_logit_adjoint,
+        causal.transition_logit_adjoint,
+    )
+    torch.testing.assert_close(
+        one_step.observer_logit_adjoint,
+        causal.observer_logit_adjoint,
+    )
+
+
+def test_oracle_is_also_one_step_control_fixed_point() -> None:
+    transition, observer = _logits()
+    target = behavioral_closure(transition, observer)
+    adjoint = explicit_causal_adjoint(
+        transition,
+        observer,
+        target.base,
+        target.derivative,
+        routing_mode="one-step-control",
+    )
+    assert abs(float(adjoint.base_innovation)) < 1e-7
+    assert abs(float(adjoint.derivative_innovation)) < 1e-7
+    assert float(adjoint.transition_logit_adjoint.abs().max()) < 1e-7
+    assert float(adjoint.observer_logit_adjoint.abs().max()) < 1e-7
 
 
 def test_softmax_logit_adjoints_are_row_centered() -> None:

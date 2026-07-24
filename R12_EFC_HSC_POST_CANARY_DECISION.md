@@ -223,12 +223,23 @@ hardening on tied rows, and incomplete independent derivative-prefix coverage.
 The current implementation closes those findings: sealing fails closed on
 every tied transition or observer row, tie-free hardening is exactly recoding
 equivariant, and the independent oracle covers both causal and cyclic
-derivative prefixes. Eighteen focused tests and the complete 446-test relevant
+derivative prefixes. Twenty-two focused tests and the complete 468-test relevant
 suite pass with 63 known nested-tensor warnings. Final hostile review reports
 no remaining P0/P1/P2, passes 40 additional randomized recoding trials
 exactly, and bounds manual-adjoint disagreement against autograd below `4e-9`
 across depths zero through five in both modes. It authorizes a mechanics-only
 commit, not integration or fitting.
+
+The cyclic objective is retained as a structural falsifier but is not the
+oracle-recovery matched control because a correct causal machine is generally
+not its fixed point. The source-frozen recovery protocol is
+`R12_EFC_ACSO_ORACLE_RECOVERY_PROTOCOL.md`. Its oracle-fixed one-step control
+computes the full closure but masks evidence beyond one action before the
+reverse dynamic program. V2 audits all 672 frozen-board faults that are
+immediately observation-equivalent yet separable within suffix depth three,
+across three margins and deterministic recodings. V1 is void and no v2
+official outcome has been consumed. Passing this CPU audit would admit only
+target-informed deep-fault recovery mechanics, not HSC integration or fitting.
 
 These results admit ACSO mechanics only. They do not establish that HSC emits
 usable noisy signatures, that the learned preconditioner improves a machine,

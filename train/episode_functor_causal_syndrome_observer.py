@@ -93,7 +93,8 @@ class CausalAdjoint:
             or not bool(
                 torch.isfinite(self.observer_logit_adjoint).all()
             )
-            or self.routing_mode not in {"causal", "cyclic-control"}
+            or self.routing_mode
+            not in {"causal", "cyclic-control", "one-step-control"}
         ):
             raise CausalSyndromeObserverError(
                 "causal adjoint receipt geometry differs"
@@ -195,7 +196,11 @@ def behavioral_closure(
 ) -> BehavioralClosure:
     """Return the differentiable model-implied behavioral signatures."""
 
-    if routing_mode not in {"causal", "cyclic-control"}:
+    if routing_mode not in {
+        "causal",
+        "cyclic-control",
+        "one-step-control",
+    }:
         raise CausalSyndromeObserverError(
             "causal-syndrome routing mode differs"
         )
@@ -219,7 +224,8 @@ def behavioral_closure(
                     signatures[
                         (
                             (action, *word)
-                            if routing_mode == "causal"
+                            if routing_mode
+                            in {"causal", "one-step-control"}
                             else cyclic_control_word((action, *word))
                         )
                     ]
@@ -318,7 +324,11 @@ def causal_syndrome_innovation(
 ) -> tuple[torch.Tensor, torch.Tensor]:
     """Return the scalar innovations used to validate the manual adjoint."""
 
-    if routing_mode not in {"causal", "cyclic-control"}:
+    if routing_mode not in {
+        "causal",
+        "cyclic-control",
+        "one-step-control",
+    }:
         raise CausalSyndromeObserverError(
             "causal-syndrome routing mode differs"
         )
@@ -356,9 +366,29 @@ def causal_syndrome_innovation(
         ),
         label="derivative",
     )
+    base_indices = tuple(
+        index
+        for index, word in enumerate(words)
+        if routing_mode != "one-step-control"
+        or len(word) <= 1
+    )
+    derivative_indices = tuple(
+        index
+        for index, word in enumerate(words)
+        if routing_mode != "one-step-control"
+        or len(word) == 0
+    )
     base_model = torch.stack(
-        tuple(signatures[word] for word in words),
+        tuple(signatures[words[index]] for index in base_indices),
         dim=2,
+    )
+    base_target = base_target.index_select(
+        2,
+        torch.tensor(
+            base_indices,
+            dtype=torch.long,
+            device=base_target.device,
+        ),
     )
     derivative_model = torch.stack(
         tuple(
@@ -367,17 +397,27 @@ def causal_syndrome_innovation(
                     signatures[
                         (
                             (action, *word)
-                            if routing_mode == "causal"
+                            if routing_mode
+                            in {"causal", "one-step-control"}
                             else cyclic_control_word((action, *word))
                         )
                     ]
-                    for word in words
+                    for index, word in enumerate(words)
+                    if index in derivative_indices
                 ),
                 dim=2,
             )
             for action in range(PRIMARY_ACTIONS)
         ),
         dim=1,
+    )
+    derivative_target = derivative_target.index_select(
+        3,
+        torch.tensor(
+            derivative_indices,
+            dtype=torch.long,
+            device=derivative_target.device,
+        ),
     )
     base_value, _ = _js_value_and_model_gradient(
         base_model,
@@ -402,7 +442,11 @@ def explicit_causal_adjoint(
 ) -> CausalAdjoint:
     """Manually backpropagate behavioral innovations to machine logits."""
 
-    if routing_mode not in {"causal", "cyclic-control"}:
+    if routing_mode not in {
+        "causal",
+        "cyclic-control",
+        "one-step-control",
+    }:
         raise CausalSyndromeObserverError(
             "causal-syndrome routing mode differs"
         )
@@ -440,18 +484,39 @@ def explicit_causal_adjoint(
         ),
         label="derivative",
     )
+    base_indices = tuple(
+        index
+        for index, word in enumerate(words)
+        if routing_mode != "one-step-control"
+        or len(word) <= 1
+    )
+    derivative_indices = tuple(
+        index
+        for index, word in enumerate(words)
+        if routing_mode != "one-step-control"
+        or len(word) == 0
+    )
     base_model = torch.stack(
-        tuple(signatures[word] for word in words),
+        tuple(signatures[words[index]] for index in base_indices),
         dim=2,
+    )
+    base_target = base_target.index_select(
+        2,
+        torch.tensor(
+            base_indices,
+            dtype=torch.long,
+            device=base_target.device,
+        ),
     )
     derivative_words = tuple(
         tuple(
             (
                 (action, *word)
-                if routing_mode == "causal"
+                if routing_mode in {"causal", "one-step-control"}
                 else cyclic_control_word((action, *word))
             )
-            for word in words
+            for index, word in enumerate(words)
+            if index in derivative_indices
         )
         for action in range(PRIMARY_ACTIONS)
     )
@@ -468,6 +533,14 @@ def explicit_causal_adjoint(
         ),
         dim=1,
     )
+    derivative_target = derivative_target.index_select(
+        3,
+        torch.tensor(
+            derivative_indices,
+            dtype=torch.long,
+            device=derivative_target.device,
+        ),
+    )
     base_value, base_gradient = _js_value_and_model_gradient(
         base_model,
         base_target,
@@ -483,10 +556,12 @@ def explicit_causal_adjoint(
         word: torch.zeros_like(signatures[word])
         for word in extended
     }
-    for index, word in enumerate(words):
+    for gradient_index, word_index in enumerate(base_indices):
+        word = words[word_index]
         signature_adjoint[word] = (
-            signature_adjoint[word] + base_gradient[:, :, index]
-    )
+            signature_adjoint[word]
+            + base_gradient[:, :, gradient_index]
+        )
     for action in range(PRIMARY_ACTIONS):
         for index, routed_word in enumerate(
             derivative_words[action]

@@ -129,7 +129,7 @@ are tested, but no neural first fit is currently authorized.
   and fresh post-update metrics. A parameter-
   and target-identical dual-branch direct-decode control separates shift
   decoding from added weights and dense rollout supervision. The complete EFC
-  regression is 446 passed. V6 adds exact AdamW/BF16/TF32 and two-update
+  regression is 468 passed. V6 adds exact AdamW/BF16/TF32 and two-update
   schedule receipts, exact package closure, post-checkpoint RNG rebinding,
   authenticated atomic output, and a 26-file Landlock worker closure that
   excludes the board generator, label oracle, and preparation role.
@@ -180,8 +180,8 @@ are tested, but no neural first fit is currently authorized.
   then found coordinate-dependent ties and incomplete independent derivative
   coverage. Ties now fail closed, tie-free sealing is exactly recoding
   equivariant, and the noncommutative oracle covers causal and cyclic
-  derivative prefixes. Eighteen focused tests pass; the complete regression is
-  446 passed with 63 known warnings. Final hostile review reports no remaining
+  derivative prefixes. Twenty-two focused ACSO tests pass; the complete
+  regression is 468 passed with 63 known warnings. Final hostile review reports no remaining
   P0/P1/P2, 40 exact randomized recoding trials, and less than `4e-9`
   manual-adjoint disagreement against autograd across depths zero through five
   in both modes. ACSO is not integrated, fitted, or authorized. HSRA
@@ -189,6 +189,18 @@ are tested, but no neural first fit is currently authorized.
   199,796,157 total) remains a
   separate unimplemented source-attention escalation candidate. Neither is
   evidence of Shohin reasoning.
+- **ACSO deep-fault falsifier:** the uncommitted v1 oracle audit is void because
+  it touched one confirmation world and used a cyclic objective that was not
+  oracle-fixed. Reviewed v2 has not consumed an official outcome. It uses an
+  oracle-fixed one-step ablation and all 672 faults on the frozen 200-world
+  board whose destinations are identical under both immediate observers but
+  separable within suffix depth three (derivative total depth four). Three
+  margins yield 2,016 singleton cases plus exact recodings. GO requires 100%
+  causal recovery per world/margin and at least an 80-point one-step-control
+  gap. Bound-source/count failures abort before outcomes; every evidence
+  identity and a durable no-clobber output reservation are required. Four
+  hostile-review rounds end with no P0/P1/P2 for source freeze; 18 additional
+  synthetic protocol tests pass.
 - **Primary bottleneck:** model-owned compilation of raw episodic evidence into
   a compact renderer-invariant causal machine, including opaque referent
   binding. Bounded ordered execution is already mechanically easy once the

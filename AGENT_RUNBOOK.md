@@ -34,7 +34,7 @@
 > requires exact closure plus authenticated `COMPLETE.json`; any publication
 > or parent-directory durability error remains a failed job. Independent
 > hostile review reports no residual P0/P1 and authorizes only the exact
-> two-update H100 measurement canary. The complete EFC regression is 446 passed
+> two-update H100 measurement canary. The complete EFC regression is 468 passed
 > with 63 known PyTorch nested-tensor warnings. Canary package SHA-256 is
 > `ed024dd9c47e766871a7253c1117a4f5b7c3ac551a1f08153618854091164095`;
 > full train package SHA-256 is
@@ -12493,7 +12493,7 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   exact two-update output, authorization hashes, Landlock/network/H100
   receipts, finite positive gradients, changed state, and measured
   memory/timing/optimizer bytes while authorizing no fit, scored access,
-  reasoning claim, or pretraining. The expanded EFC suite is 446 passed with
+  reasoning claim, or pretraining. The expanded EFC suite is 468 passed with
   63 known nested-tensor warnings; Ruff, `py_compile`, and diff checks pass.
 
   Architectural changes are now failure-triggered. Attention, position/RoPE,
@@ -12524,8 +12524,8 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   independent derivative-prefix coverage. Sealing now fails closed on every
   tied transition or observer row; tie-free hardening is exactly recoding
   equivariant; and the hand-calculated noncommutative oracle covers causal and
-  cyclic derivative prefixes. Eighteen focused tests and the complete
-  446-test relevant suite pass with the same 63 known nested-tensor warnings.
+  cyclic derivative prefixes. Twenty-two focused ACSO tests and the complete
+  468-test relevant suite pass with the same 63 known nested-tensor warnings.
   Final hostile review reports no remaining P0/P1/P2, passes 40 additional
   randomized recoding trials exactly, and bounds manual-adjoint disagreement
   against autograd below `4e-9` across depths zero through five in both modes.
@@ -12536,3 +12536,30 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   unimplemented and would bring the complete system to 199,796,157 with
   record-deranged feedback as its control. Newton DNS still fails before SSH,
   so no GPU job or neural fit has run.
+
+- **2026-07-24** -- **The ACSO oracle-recovery falsifier is source-frozen
+  without reading its v2 outcome.** The uncommitted v1 draft is void: its test
+  touched one confirmation world, its cyclic objective was not oracle-fixed,
+  and its receipt/custody gates were incomplete. It produced no official
+  artifact. V2 replaces that arm with an oracle-fixed one-step ablation and
+  targets only transition faults whose correct and wrong destinations are
+  indistinguishable under both immediate observers but separable within suffix
+  depth three (derivative total depth four).
+
+  The frozen 200-world board contains exactly 672 such faults across 88
+  worlds: 112 worlds have zero, 64 have six, and 24 have twelve. Three margins
+  produce 2,016 singleton primary cases and 2,016 deterministic recodings.
+  Every fault/arm/recoding/cycle records base, derivative, total innovation,
+  full-machine recovery, intended-row recovery, and all-row ties. GO requires
+  100% treatment recovery in every represented world and margin, at least an
+  80-point gap over the one-step control, monotonic primary/recoded treatment,
+  exact recoding decisions, and no final tie.
+
+  Official evaluation is unavailable without an exclusive open inode-bound
+  output reservation. Bound source/count/distribution failures abort before
+  the first outcome, every one of the 2,016 evidence identities is checked,
+  and publication uses no-clobber linking plus directory `fsync`; the
+  reservation remains as a permanent receipt. Four hostile-review rounds
+  rejected earlier drafts and the final review reports no P0/P1/P2 for the
+  exact source freeze. Forty focused synthetic tests and the complete
+  468-test relevant regression pass. No v2 official result has been consumed.
