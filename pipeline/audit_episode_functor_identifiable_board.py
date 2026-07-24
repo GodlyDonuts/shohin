@@ -34,6 +34,11 @@ from pipeline.episode_functor_identifiable_reference import (  # noqa: E402
     enumerate_consistent_machines,
     version_space_receipt,
 )
+from pipeline.episode_functor_hankel_shift import (  # noqa: E402
+    build_hankel_codebook,
+    decode_hankel_shifts,
+    exact_codebook_receipt,
+)
 from pipeline.episode_functor_qualification_supervisor import (  # noqa: E402
     collate_qualification_supervision,
 )
@@ -426,9 +431,39 @@ def audit_identifiable_pilot(
     )
     trunk_tokenizer_receipt = _trunk_tokenizer_receipt(rows)
     row_structural_receipt = _row_structural_receipt(rows)
+    unique_machines = tuple(
+        {
+            row.world_id: row.machine
+            for row in rows
+        }.values()
+    )
+    hankel_shift_receipt = {
+        str(depth): exact_codebook_receipt(
+            unique_machines,
+            max_depth=depth,
+        )
+        for depth in range(4)
+    }
+    hankel_exact_machine_count = 0
+    for machine in unique_machines:
+        decoded_hankel = decode_hankel_shifts(
+            build_hankel_codebook(machine, max_depth=3)
+        )
+        hankel_exact_machine_count += int(
+            decoded_hankel.transitions == machine.transitions
+            and decoded_hankel.observations == machine.observations
+        )
+    if (
+        hankel_shift_receipt["3"]["separated_machines"]
+        != len(unique_machines)
+        or hankel_shift_receipt["3"]["minimum_distance"] < 1
+        or hankel_exact_machine_count != len(unique_machines)
+    ):
+        raise ValueError("depth-three Hankel shift mechanics differ")
 
     source_files = (
         ROOT / "pipeline" / "audit_episode_functor_identifiable_board.py",
+        ROOT / "pipeline" / "episode_functor_hankel_shift.py",
         ROOT / "pipeline" / "episode_functor_identifiable_board.py",
         ROOT / "pipeline" / "episode_functor_qualification_boundary.py",
         ROOT
@@ -438,6 +473,7 @@ def audit_identifiable_pilot(
         ROOT / "pipeline" / "episode_functor_identifiable_reference.py",
         ROOT / "train" / "episode_functor_constrained_transport.py",
         ROOT / "train" / "episode_functor_capacity_lanes.py",
+        ROOT / "train" / "episode_functor_hankel_completion.py",
         ROOT / "train" / "episode_functor_learned_completion.py",
         ROOT / "train" / "episode_functor_learned_system.py",
         ROOT / "train" / "episode_functor_machine.py",
@@ -473,6 +509,8 @@ def audit_identifiable_pilot(
             for split, values in sorted(factors_by_split.items())
         },
         "forbidden_candidate_metadata_hits": 0,
+        "hankel_shift_codebook": hankel_shift_receipt,
+        "hankel_shift_exact_machine_count": hankel_exact_machine_count,
         "latent_world_count": sum(frozen_counts.values()),
         "maximum_behavior_classes": maximum_behavior_classes,
         "maximum_version_space": maximum_version_space,

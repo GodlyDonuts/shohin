@@ -377,17 +377,25 @@ wide treatment at 160,706,931 total parameters and a 60,552,883-parameter
 maximum treatment at 185,634,547 total parameters. The maximum profile uses a
 512-wide 8+4-layer compiler, a 640-wide eight-round relational completer, and
 a 320-wide four-layer query parser, leaving 14,365,453 parameters below the
-200M ceiling. Two structural alternatives are now staged rather than treating
-this budget as width alone. The first is a Hankel-shift causal code whose
-state representation is its finite future-behavior signature and whose action
-table is decoded by left-shift agreement. It fits inside the existing maximum
-receipt. The second is a recurrent sealed predictive compiler that allows
-provisional machine contradictions to revise source perception; it may reach
+200M ceiling. The first structural alternative is now implemented as a
+separately receipted Hankel-shift causal code. Anonymous states are represented
+by 80-coordinate depth-three future-behavior signatures; action transitions
+are decoded by matching independently predicted derivative signatures to base
+signatures. On the official frozen 200-world mechanics board, exact codes
+reconstruct all 200 machines, have worst-case minimum distance 24, and admit
+conservative derivative-only/joint corruption radii of 11/5. The neural
+forward, backpropagation, exact recoding equivariance, oracle ceiling, tie
+rejection, random-incidence control, and commutative control are tested.
+
+This arm uses 70,411,445 added parameters and 195,493,109 total, leaving
+4,506,891 headroom. Its prefix, random-incidence, and commutative controls are
+isoparametric. It remains unfitted and unscored, so these are architecture and
+mechanics results rather than reasoning evidence. The second structural
+alternative is a recurrent sealed predictive compiler that allows provisional
+machine contradictions to revise source perception; it may reach
 approximately 197.0M total parameters and therefore requires a distinct
-adapted-base receipt and stronger controls. Both remain unimplemented
-research treatments with explicit open-loop, scrambled-incidence, direct
-hypernetwork, adapter-only, and oracle controls. They are not capability or
-novelty claims.
+adapted-base receipt and stronger controls. SPSC remains unimplemented.
+Neither treatment is a capability or novelty claim.
 These profiles make it possible to diagnose undercapacity without
 changing a treatment after scoring. A learned executor, recurrent memory, or
 changes to normally fixed transformer components remain allowed only as

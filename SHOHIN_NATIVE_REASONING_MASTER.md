@@ -197,12 +197,13 @@ byte-offset alignment and deterministic independent windows no longer than
 disconnected windows, which is recorded as a limitation rather than presented
 as global source integration.
 
-Two learned arms are implemented below the 200M ceiling:
+Three learned architectures are implemented below the 200M ceiling:
 
 | Arm | Added parameters | Total parameters | Attribution boundary |
 |---|---:|---:|---|
 | Explicit solver/executor | 4,324,785 | 129,406,449 | Host hardening is an admitted solver resource |
 | No-host learned completion | 4,550,195 | 129,631,859 | 225,410-parameter shared relational completer predicts missing cells |
+| Hankel-shift causal code | 70,411,445 | 195,493,109 | Independent predictors emit future codes; transition is decoded only by derivative/base agreement |
 
 The small no-host arm is intentionally an attribution probe. Shohin has
 70,368,141 parameters of unused capacity under the 200M ceiling, and the
@@ -216,17 +217,25 @@ counts are not fits or reasoning evidence. Scaling occurs only after matched
 controls distinguish undercapacity from an invalid mechanism, and changes to
 normally fixed transformer components receive their own named treatment arm.
 
-The next structural treatments are now explicit. A Hankel-shift causal-code
-arm uses finite future-behavior signatures as anonymous state codewords and
-decodes actions by left-shift agreement; it fits inside the 185.6M maximum
-lane. A later sealed predictive compiler may use the budget up to roughly
+The first structural escalation arm is now implemented but not fitted. Its
+finite depth-three code uses 40 action words, two observers, and therefore 80
+categorical coordinates per anonymous state. The official frozen-seed CPU
+audit reconstructs 200/200 machines exactly; worst-case minimum code distance
+is 24, with derivative-only and joint-code corruption guarantees of 11 and 5.
+The neural arm predicts base and derivative codes independently and decodes
+actions only by Jensen-Shannon agreement. Prefix, random length-matched
+incidence, and commutative word-bag arms are exactly isoparametric. Oracle
+decoding, gradients, exact recoding equivariance, and hard-tie rejection pass.
+This is not evidence that a fitted model generalizes or reasons.
+
+A later sealed predictive compiler may use the budget up to roughly
 197.0M by adding source-only parent adapters, typed factor memory, and
 recurrent predict/revise cycles whose machine contradictions can alter source
 perception. That later arm changes traditionally frozen computation and must
 use a distinct adapted-base receipt. Both have parameter-matched open-loop,
 random-incidence, direct-hypernetwork, adapter-only, and oracle controls.
-Neither is implemented, fitted, or claimed novel; the exact design and kill
-criteria are in `R12_EFC_LEARNED_COMPILER_PREREG.md`.
+SPSC is not implemented, and neither treatment is claimed novel; the exact
+design and kill criteria are in `R12_EFC_LEARNED_COMPILER_PREREG.md`.
 
 The no-host completer is state-recoding equivariant but is not constrained to
 emit permutations or balanced observers. Zeroing it produces tied soft tables

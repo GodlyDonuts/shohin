@@ -12323,3 +12323,40 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   or claimed novel. No GPU job, neural optimization, development read,
   confirmation read, continuation pretraining, or native-reasoning claim is
   authorized.
+
+- **2026-07-24** -- **The first structural EFC escalation is implemented under
+  the 200M ceiling; neural fitting remains NO-GO.** Exact Hankel-shift
+  mechanics now encode each anonymous state by observations after all 40
+  action words through depth three and decode an action by matching its
+  derivative signature to a base-state signature. On the official frozen
+  200-world audit seed, all 200 worlds are separated and all 200 machines are
+  reconstructed exactly. The 80-coordinate code has worst-case minimum
+  Hamming distance 24, derivative-only guaranteed radius 11, and conservative
+  joint base/derivative per-code radius 5.
+
+  The trainable `HankelShiftCompletionProjector` has two independent
+  recoding-equivariant relational predictors. One supplies base future codes;
+  the other supplies derivative codes. Final transitions come only from
+  Jensen-Shannon code agreement, and empty-word coordinates supply observers.
+  The prefix treatment, length-matched randomized-incidence control, and
+  commutative word-bag control are exactly isoparametric. Oracle exactness,
+  gradients through the shift graph, state/action/observer/answer recoding,
+  corruption arithmetic, malformed incidence, and fail-closed hard ties are
+  tested.
+
+  The named maximum HSC lane has 19,717,124 projector parameters, 64,407,956
+  complete source-compiler parameters, 6,003,489 query-parser parameters, and
+  70,411,445 added parameters. With protected Shohin, the complete system is
+  195,493,109 parameters and leaves 4,506,891 headroom. The complete EFC
+  regression passes 381 tests with 32 known PyTorch nested-tensor warnings.
+  Audit schema `efc-identifiable-cpu-audit-v3` binds 24 dependencies; payload
+  SHA-256 is
+  `6aef35a41af66b6a4c59c88f11d6f835ddfc48174c1f0c3dfc77ebf77f3e5a2b`;
+  file SHA-256 is
+  `672167374ecd5c88be91024d106a8e2805f9e358db403f29e3416e1d8277d345`.
+
+  This is a mechanics, architecture, and capacity milestone only. No HSC
+  optimizer run, source freeze, arm-specific measured resource receipt,
+  development read, confirmation read, GPU job, continuation pretraining, or
+  native-reasoning result is authorized. The user pretraining hold and
+  protected step-300k checkpoint remain unchanged.

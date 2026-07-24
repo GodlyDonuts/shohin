@@ -12,7 +12,12 @@ sys.path.insert(0, str(ROOT / "train"))
 from episode_functor_capacity_lanes import (  # noqa: E402
     CAPACITY_LANES,
     EFCCapacityError,
+    HANKEL_SHIFT_MAXIMUM_EXPECTED,
+    build_hankel_shift_capacity_lane,
     build_no_host_capacity_lane,
+)
+from episode_functor_hankel_completion import (  # noqa: E402
+    HankelShiftCompletionProjector,
 )
 
 
@@ -58,4 +63,40 @@ def test_unknown_capacity_lane_fails_closed() -> None:
         build_no_host_capacity_lane(
             "unregistered",
             external_feature_width=1_728,
+        )
+
+
+@pytest.mark.parametrize(
+    "incidence_mode",
+    ("prefix", "random", "commutative"),
+)
+def test_hankel_shift_maximum_lane_has_exact_isoparametric_receipt(
+    incidence_mode: str,
+) -> None:
+    compiler, query, receipt = build_hankel_shift_capacity_lane(
+        external_feature_width=1_728,
+        incidence_mode=incidence_mode,
+        random_seed="capacity-control-v1",
+    )
+    assert isinstance(
+        compiler.projector,
+        HankelShiftCompletionProjector,
+    )
+    assert compiler.projector.incidence_mode == incidence_mode
+    assert receipt.compiler_parameters == 64_407_956
+    assert receipt.projector_parameters == 19_717_124
+    assert receipt.query_parameters == 6_003_489
+    assert receipt.added_parameters == 70_411_445
+    assert receipt.complete_parameters == 195_493_109
+    assert receipt.headroom == 4_506_891
+    assert HANKEL_SHIFT_MAXIMUM_EXPECTED.incidence_mode == "prefix"
+    del compiler, query
+    gc.collect()
+
+
+def test_unknown_hankel_incidence_fails_closed() -> None:
+    with pytest.raises(EFCCapacityError, match="unknown Hankel incidence"):
+        build_hankel_shift_capacity_lane(
+            external_feature_width=1_728,
+            incidence_mode="unregistered",
         )

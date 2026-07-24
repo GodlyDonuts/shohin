@@ -9,6 +9,9 @@ from typing import Final
 from episode_functor_learned_completion import (
     LearnedRelationalCompletionProjector,
 )
+from episode_functor_hankel_completion import (
+    HankelShiftCompletionProjector,
+)
 from episode_functor_learned_system import (
     GLOBAL_PARAMETER_LIMIT,
     PROTECTED_SHOHIN_PARAMETERS,
@@ -60,6 +63,18 @@ class EFCCapacityReceipt:
     lane: str
     compiler_parameters: int
     completer_parameters: int
+    query_parameters: int
+    added_parameters: int
+    complete_parameters: int
+    headroom: int
+
+
+@dataclass(frozen=True, slots=True)
+class EFCHankelCapacityReceipt:
+    lane: str
+    incidence_mode: str
+    compiler_parameters: int
+    projector_parameters: int
     query_parameters: int
     added_parameters: int
     complete_parameters: int
@@ -131,6 +146,17 @@ CAPACITY_LANES: Final = MappingProxyType(
     }
 )
 
+HANKEL_SHIFT_MAXIMUM_EXPECTED: Final = EFCHankelCapacityReceipt(
+    lane="maximum-hankel-shift",
+    incidence_mode="prefix",
+    compiler_parameters=64_407_956,
+    projector_parameters=19_717_124,
+    query_parameters=6_003_489,
+    added_parameters=70_411_445,
+    complete_parameters=195_493_109,
+    headroom=4_506_891,
+)
+
 
 def build_no_host_capacity_lane(
     name: str,
@@ -200,3 +226,96 @@ def build_no_host_capacity_lane(
             f"EFC capacity receipt differs for lane {lane.name}"
         )
     return compiler, query, receipt
+
+
+def build_hankel_shift_capacity_lane(
+    *,
+    external_feature_width: int,
+    incidence_mode: str = "prefix",
+    random_seed: str = "efc-hankel-random-control-v1",
+) -> tuple[
+    ProofCarryingWitnessCompiler,
+    NeuralOpaqueQueryParser,
+    EFCHankelCapacityReceipt,
+]:
+    """Build the preregistered maximum HSC arm or an isoparametric control."""
+
+    if external_feature_width < 0:
+        raise EFCCapacityError("external feature width is negative")
+    if incidence_mode not in ("prefix", "random", "commutative"):
+        raise EFCCapacityError(
+            f"unknown Hankel incidence mode: {incidence_mode}"
+        )
+    lane = MAXIMUM_PREREG_LANE
+    projector = HankelShiftCompletionProjector(
+        width=lane.completer_width,
+        iterations=lane.completer_iterations,
+        max_depth=3,
+        incidence_mode=incidence_mode,
+        random_seed=random_seed,
+    )
+    compiler = ProofCarryingWitnessCompiler(
+        width=lane.compiler_width,
+        encoder_layers=lane.compiler_encoder_layers,
+        decoder_layers=lane.compiler_decoder_layers,
+        heads=lane.compiler_heads,
+        feedforward=lane.compiler_feedforward,
+        external_feature_width=external_feature_width,
+        projector=projector,
+    )
+    query = NeuralOpaqueQueryParser(
+        width=lane.query_width,
+        layers=lane.query_layers,
+        heads=lane.query_heads,
+        feedforward=lane.query_feedforward,
+        external_feature_width=external_feature_width,
+    )
+    receipt = EFCHankelCapacityReceipt(
+        lane="maximum-hankel-shift",
+        incidence_mode=incidence_mode,
+        compiler_parameters=compiler.parameter_count(),
+        projector_parameters=projector.parameter_count(),
+        query_parameters=query.parameter_count(),
+        added_parameters=compiler.parameter_count() + query.parameter_count(),
+        complete_parameters=(
+            PROTECTED_SHOHIN_PARAMETERS
+            + compiler.parameter_count()
+            + query.parameter_count()
+        ),
+        headroom=(
+            GLOBAL_PARAMETER_LIMIT
+            - PROTECTED_SHOHIN_PARAMETERS
+            - compiler.parameter_count()
+            - query.parameter_count()
+        ),
+    )
+    expected = EFCHankelCapacityReceipt(
+        lane=HANKEL_SHIFT_MAXIMUM_EXPECTED.lane,
+        incidence_mode=incidence_mode,
+        compiler_parameters=HANKEL_SHIFT_MAXIMUM_EXPECTED.compiler_parameters,
+        projector_parameters=HANKEL_SHIFT_MAXIMUM_EXPECTED.projector_parameters,
+        query_parameters=HANKEL_SHIFT_MAXIMUM_EXPECTED.query_parameters,
+        added_parameters=HANKEL_SHIFT_MAXIMUM_EXPECTED.added_parameters,
+        complete_parameters=HANKEL_SHIFT_MAXIMUM_EXPECTED.complete_parameters,
+        headroom=HANKEL_SHIFT_MAXIMUM_EXPECTED.headroom,
+    )
+    if receipt != expected or receipt.headroom <= 0:
+        raise EFCCapacityError(
+            "EFC maximum Hankel-shift capacity receipt differs"
+        )
+    return compiler, query, receipt
+
+
+__all__ = [
+    "CAPACITY_LANES",
+    "EFCCapacityError",
+    "EFCCapacityLane",
+    "EFCCapacityReceipt",
+    "EFCHankelCapacityReceipt",
+    "HANKEL_SHIFT_MAXIMUM_EXPECTED",
+    "MAXIMUM_PREREG_LANE",
+    "MINIMAL_ATTRIBUTION_LANE",
+    "WIDE_LANE",
+    "build_hankel_shift_capacity_lane",
+    "build_no_host_capacity_lane",
+]

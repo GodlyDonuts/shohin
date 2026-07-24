@@ -278,8 +278,9 @@ readout. The shift disagreement is an explicit syndrome that can localize an
 inconsistent proposed transition. State identity is therefore tied to
 distinguishable futures rather than a learned coordinate label.
 
-HSC remains inside the existing maximum receipt: no more than 60,552,883
-added parameters, 185,634,547 total, and 14,365,453 headroom. The transient
+HSC must remain below the 200M global ceiling with an exact constructor
+receipt. The original estimate assumed one relational completer; the
+implemented two-branch receipt below supersedes that estimate. The transient
 signature has 10,240 logits per source, but only the ordinary 1,536-byte hard
 machine persists after sealing. It does not hardcode permutation or observer
 balance. Required controls are the parameter-matched current completer, a
@@ -288,6 +289,29 @@ commutative word bags, depth-zero signatures, shuffled signature labels, and
 an oracle-signature ceiling. Kill HSC if it fails exact recoding equivariance,
 does not improve exact-machine accuracy over the strongest matched control,
 or loses its gain when the true left-shift incidence is randomized.
+
+**Implemented mechanics/architecture update (2026-07-24).** The exact CPU
+mechanics and the trainable HSC arm now exist. On the frozen 200-world official
+audit seed, all worlds are behaviorally separated and exactly reconstructed at
+depth three. The 80-coordinate state code has worst-case minimum Hamming
+distance 24, giving an 11-coordinate derivative-only correction guarantee and
+a conservative five-coordinate per-code guarantee when both derivative and
+base predictions can be corrupted. The neural arm uses two independent
+recode-equivariant relation predictors: one emits base future signatures and
+the other emits action-derivative signatures. Final transition logits are
+negative Jensen-Shannon distances between those codes; the empty-word
+coordinate emits observer logits. State/action/observer/answer recoding,
+attached gradients, exact oracle decoding, fail-closed hard ties, random
+length-matched incidence, and commutative word-bag controls pass unit tests.
+
+The HSC arm is a separately named constructor-verified lane rather than an
+edit to the generic maximum baseline. Its projector has 19,717,124 trainable
+parameters, its complete source compiler has 64,407,956, and its query parser
+has 6,003,489. Added parameters are 70,411,445; the protected Shohin plus HSC
+system is 195,493,109 parameters with 4,506,891 headroom. Prefix, randomized,
+and commutative incidences are exactly isoparametric. These are mechanics,
+architecture, and resource receipts only. No HSC optimizer run, unseen-world
+score, development read, confirmation read, or reasoning result exists.
 
 **Sealed predictive sheaf compiler (SPSC).** This is a later architecture
 treatment for the failure mode where a one-shot local parse cannot revise a

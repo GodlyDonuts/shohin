@@ -54,6 +54,11 @@ def test_atomic_identifiable_pilot_audit_is_deterministic(tmp_path) -> None:
     assert left["query_renderer_exact"] == 8 * left["row_count"]
     assert left["same_bag_changed_order_rows"] == left["row_count"]
     assert left["unique_canonical_worlds"] == 21
+    assert left["hankel_shift_exact_machine_count"] == 21
+    assert left["hankel_shift_codebook"]["3"]["coordinate_count"] == 80
+    assert left["hankel_shift_codebook"]["3"]["separated_machines"] == 21
+    assert left["hankel_shift_codebook"]["3"]["minimum_distance"] > 0
+    assert left["hankel_shift_codebook"]["3"]["joint_codebook_radius"] >= 0
     assert not any(left["split_structural_overlaps"].values())
     assert left["schema"] == "efc-identifiable-cpu-audit-v3"
     assert left["decision"] == "cpu_qualification_candidate_neural_fit_no_go"
