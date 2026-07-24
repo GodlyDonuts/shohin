@@ -262,3 +262,38 @@ from raw source evidence on unseen worlds and source languages, beat
 capacity-matched cache and generic recurrence controls, and survive
 post-seal challenges and key/transition interventions. No neural freeze or
 pretraining is authorized by the process work.
+
+## Externally Timed Process-Custody Result
+
+The first externally timed attempt is retired as void because a relative CLI
+authorization path failed before candidate launch. The repaired source passed
+the complete `195/195` regression and was frozen at source root
+`b6c8ae3ec00fcc4f98dc696491acb5e31de798f26583024ab8292da8dac01042`.
+
+Authorization commit `aff33d48c670be24fb69d2cf89e1010ab27c29eb`
+was publicly witnessed by GitHub PushEvent `15682040576` at
+`2026-07-24T04:48:14Z`. Exact precommitted NIST chain-2 pulse `1,873,055`
+arrived at `04:55:00Z`, 406 seconds later. Both consecutive pulse signatures,
+certificate pin, output hash, chain link, and precommitment reveal verified.
+
+The unmocked macOS run passed. Three fresh candidate processes received,
+respectively, canonical JSON events, strict line events, and a cycle/program
+source. All three produced the same exact 1,536-byte machine, SHA-256
+`2c1503db5ba41ce10d8dfcfebad7e22e858d3f6a5d905c8662f5a89b7b260a13`.
+Each later assessor agreed, and the parent independently recomputed all three
+complete byte comparisons. The default-deny blindness probe blocked secret
+read/list, repository read, outside write, and network while permitting only
+the declared input and local output. Independent post-run verification
+recomputed all 27 pre-report file hashes and the complete receipt chain.
+
+Final report SHA-256 is
+`f2c4cd16a246f5d5da7116512601d4705ba21c14e23c582cdd95d50265450c04`;
+the full boundary is in `R12_EFC_PROCESS_CUSTODY_RESULT.md`.
+
+This closes the macOS process-custody mechanics gate only. Linux remains
+unadmitted because Newton still fails at DNS. More importantly, the candidate
+was deterministic CPU code. No learned compiler, neural generalization,
+architecture-native autonomous execution, or Shohin reasoning result exists.
+The next scientific gate is a separately frozen learned source-to-machine
+compiler with unseen-world/renderer tests and matched cache/recurrence
+controls. Continuation pretraining remains forbidden.

@@ -97,7 +97,17 @@
 > authorization path was not normalized before Git-blob verification. No
 > artifact root or report was published. The attempt is void, its
 > authorization/pulse are retired, and the one-line path normalization plus
-> regression require a fresh source commit, authorization, and later pulse.
+> regression required a fresh source commit, authorization, and later pulse.
+> **Repaired result:** source root
+> `b6c8ae3ec00fcc4f98dc696491acb5e31de798f26583024ab8292da8dac01042`
+> and authorization commit `aff33d4` consumed exact NIST pulse `1,873,055`,
+> 406 seconds after public GitHub PushEvent `15682040576`. The unmocked macOS
+> gate passed 3/3 source languages with exact 1,536-byte machine SHA-256
+> `2c1503db5ba41ce10d8dfcfebad7e22e858d3f6a5d905c8662f5a89b7b260a13`;
+> final report SHA-256 is
+> `f2c4cd16a246f5d5da7116512601d4705ba21c14e23c582cdd95d50265450c04`.
+> This admits macOS CPU custody mechanics only. Linux and every neural or
+> reasoning claim remain unadmitted.
 >
 > **Latest frontier handoff (2026-07-23 EDT):** the standalone AHRF seed
 > `2026072345` process ended without publishing its atomic output directory,
@@ -12093,3 +12103,40 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   retired. Normalize and repository-bound the path before all checks, add a
   relative-path Git regression, rerun the full suite, and repeat the complete
   source-commit/authorization/future-pulse sequence.
+
+- **2026-07-24** -- **The repaired externally timed EFC process-custody
+  rehearsal passes on macOS; this is a mechanics result, not neural
+  reasoning.** The relative-path repair passed the complete `195/195` EFC
+  regression plus Ruff and `py_compile`, then froze source root
+  `b6c8ae3ec00fcc4f98dc696491acb5e31de798f26583024ab8292da8dac01042`.
+  Authorization commit
+  `aff33d48c670be24fb69d2cf89e1010ab27c29eb` was publicly witnessed by
+  GitHub PushEvent `15682040576` at `04:48:14Z`. Exact NIST chain-2 pulse
+  `1,873,055` arrived at `04:55:00Z`, 406 seconds later; both consecutive
+  signatures, the NIST-served pinned certificate, output hash, previous link,
+  and precommitment reveal verified.
+
+  Three fresh default-deny candidate processes received only canonical JSON
+  events, strict line events, or cycle/program evidence. Each produced the
+  same exact 1,536-byte machine, SHA-256
+  `2c1503db5ba41ce10d8dfcfebad7e22e858d3f6a5d905c8662f5a89b7b260a13`.
+  Every later assessor exited cleanly, and the parent independently
+  recomputed 3/3 complete byte matches. The unmocked blindness probe blocked
+  secret read/list, repository read, outside write, and network. A separate
+  post-run verifier recomputed all 27 pre-report file hashes, pulse
+  verification, source/Git bindings, role receipts, assessor order, and
+  machine equalities. A separate hostile audit independently replayed the
+  generator and compilers, verified all twelve machine copies and both NIST
+  signatures, found no P0--P2 loopholes for the narrow claim, and returned
+  `PASS / FREEZE`. It explicitly excludes malicious-host resistance,
+  hardware attestation, and crash-durable publication. Final report SHA-256 is
+  `f2c4cd16a246f5d5da7116512601d4705ba21c14e23c582cdd95d50265450c04`;
+  full dossier `R12_EFC_PROCESS_CUSTODY_RESULT.md`.
+
+  Admit only the macOS CPU custody-mechanics claim. Newton still fails at DNS,
+  so Linux Bubblewrap plus Landlock remains unadmitted. The candidate was
+  deterministic CPU code: no learned compiler, Shohin capability, native
+  reasoning, GPU fit, or continuation pretraining is authorized. Next freeze
+  a learned source-to-machine compiler protocol only after Linux replay and
+  matched cache/recurrence controls are explicit. The step-300k base and user
+  pretraining hold remain unchanged.

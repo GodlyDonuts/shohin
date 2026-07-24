@@ -1,8 +1,12 @@
 # R12 EFC Process-Custody Preregistration
 
-**Status:** CPU custody/mechanics candidate pending public source freeze and a
-strictly later verified NIST Beacon pulse. This document does not authorize a
-neural fit, a GPU job, a reasoning claim, or continuation pretraining.
+**Status:** consumed. The repaired externally timed rehearsal passed the
+macOS CPU custody/mechanics gate under exact NIST pulse `1,873,055`. Linux and
+all neural/reasoning claims remain unadmitted. See
+`R12_EFC_PROCESS_CUSTODY_RESULT.md`.
+
+This document does not authorize a neural fit, a GPU job, a reasoning claim,
+or continuation pretraining.
 
 **Protected base:** Shohin step 300,000 remains immutable at SHA-256
 `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`.
@@ -30,6 +34,16 @@ the old authorization is retired, and its pulse may not be reused. The source
 fix resolves and repository-bounds the path before both fixed-path and Git
 blob checks; a relative-path Git regression is mandatory before the next
 source freeze.
+
+The repaired source was frozen at root
+`b6c8ae3ec00fcc4f98dc696491acb5e31de798f26583024ab8292da8dac01042`
+under authorization commit
+`aff33d48c670be24fb69d2cf89e1010ab27c29eb`. Public GitHub PushEvent
+`15682040576` preceded exact chain-2 pulse `1,873,055` by 406 seconds. The
+macOS run passed all gates: 3/3 candidates compiled byte-identical
+1,536-byte machines, later assessors and the parent agreed exactly, and the
+blindness probe passed. Final report SHA-256 is
+`f2c4cd16a246f5d5da7116512601d4705ba21c14e23c582cdd95d50265450c04`.
 
 ## Frozen Source Languages
 

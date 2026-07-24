@@ -2,9 +2,10 @@
 
 ## Current Status — Read First
 
-**Current frontier:** seal-first CPU qualification of the Episodic Functor
-Compiler (EFC), after correcting its theory and custody model. No neural first
-fit is currently authorized.
+**Current frontier:** the Episodic Functor Compiler (EFC) has passed an
+externally timed, source-frozen, unmocked macOS process-custody rehearsal. The
+next scientific gate is a separately frozen learned source-to-machine compiler;
+no neural first fit is currently authorized.
 
 - **Protected base:** immutable step-300k Shohin checkpoint,
   125,081,664 parameters, SHA-256
@@ -104,23 +105,27 @@ fit is currently authorized.
   empty-observation classes but five future-behavior classes. Final report
   SHA-256 is
   `7a141efbbccdbd8328e2b38708061d9b2a4f3be8a43c3617fe4e8a413e4fd35c`.
-- **Current EFC decision:** CPU contract pass; neural preregistration
-  **NO-GO**. The multiworld result is a deterministic phase rehearsal pass and
-  a filesystem/process custody **NO-GO**. The consumed beacons are fixed
-  synthetic values, assessor latent/machine files are visible under the same
-  artifact root, and no candidate process was run. It establishes phase order
-  and tamper detection, not external unpredictability or candidate blindness.
-  There is still no neural raw-evidence compiler, official unopened multiworld
-  confirmation, process-level assessor isolation, or cross-language learned
-  result.
+- **Current EFC decision:** deterministic CPU contract and macOS process
+  custody **PASS**; Linux and neural preregistration remain **NO-GO**.
+  Authorization commit `aff33d48c670be24fb69d2cf89e1010ab27c29eb`
+  preceded exact NIST pulse `1,873,055` by 406 seconds. Three fresh
+  default-deny candidate processes received canonical JSON, strict line, and
+  cycle/program sources and each produced the same exact 1,536-byte machine,
+  SHA-256
+  `2c1503db5ba41ce10d8dfcfebad7e22e858d3f6a5d905c8662f5a89b7b260a13`.
+  Later assessors and an independent parent comparison agreed 3/3; the
+  blindness probe passed every declared denial. Final report SHA-256 is
+  `f2c4cd16a246f5d5da7116512601d4705ba21c14e23c582cdd95d50265450c04`.
+  This supersedes the earlier process-custody NO-GO but not the neural NO-GO.
 - **Capability boundary:** these are oracle/CPU mechanics, not a Shohin neural
   result. No EFC compiler has been instantiated or trained; no new board,
   source freeze, model seed, GPU score, development read, or reasoning claim
   exists.
-- **Immediate next task:** freeze a cryptographically verified external future
-  beacon and externally witnessed candidate seal, then add process isolation
-  and a genuinely different source-language family. Only those gates can
-  authorize a neural compiler preregistration.
+- **Immediate next task:** replay the role boundary unmocked under Linux
+  Bubblewrap plus Landlock when Newton is reachable, then freeze a learned
+  compiler preregistration with unseen worlds, held-out renderers, post-seal
+  challenges, exact machine scoring, cache/recurrence controls, and
+  key/transition interventions.
 - **Primary bottleneck:** model-owned compilation of raw episodic evidence into
   a compact renderer-invariant causal machine, including opaque referent
   binding. Bounded ordered execution is already mechanically easy once the
@@ -137,11 +142,12 @@ nevertheless misidentifies two sampled rows as the compiler's complete query
 support and omits the current query's opaque start-state binding. The old corpus
 is rejected for advancement because its challenge is not temporally independent.
 The corrected protocol now has an independently generated, hostilely audited,
-exact deployed-wire CPU rehearsal and a consumed structurally disjoint
-multiworld custody rehearsal. It still needs an externally unpredictable
-beacon, externally witnessed candidate seal, process isolation, genuine
-source-language transfer, and a neural preregistration before a compiler can be
-fitted.
+exact deployed-wire CPU rehearsal, a consumed structurally disjoint multiworld
+rehearsal, and an externally timed process-separated macOS custody pass across
+three source languages. It still needs an unmocked Linux replay and, most
+importantly, a frozen learned-compiler protocol before any neural compiler can
+be fitted. Deterministic multi-renderer compilation is a mechanics ceiling,
+not evidence of native reasoning.
 
 ### 2026-07-23 EPISODE Functor Compiler corrective audit
 
