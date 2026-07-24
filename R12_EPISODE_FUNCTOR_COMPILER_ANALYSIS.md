@@ -1,0 +1,204 @@
+# R12 EPISODE Functor Compiler - Codex Analysis
+
+**Date:** 2026-07-23
+**Input theory SHA-256:** `e3c7420fd7aef36834cee79af58afe681359e1cbf5ca35a1ad855d14bfcabd36`
+**Disposition:** admit the architecture redesign as a research hypothesis; reject the
+old-board two-answer-cache no-go as proven in its present form.
+
+This analysis does not authorize neural fitting, a GPU job, development access,
+reasoning promotion, or continuation pretraining.
+
+## Executive Judgment
+
+The draft identifies the right architectural direction:
+
+1. compile raw episodic evidence into an explicit anonymous machine;
+2. keep action keys separate from action transitions;
+3. reveal challenges only after the machine is sealed;
+4. parse query grammar separately from machine execution;
+5. execute ordered composition in a fixed generic tensor runtime; and
+6. test causal interventions on the committed machine fields.
+
+That is materially stronger than asking one residual stream to simultaneously
+discover state, bind opaque actions, execute a program, and emit an answer.
+
+The draft also correctly warns that a finite set of known future queries can be
+cached. However, its direct application to the current EPISODE custody protocol
+is incomplete. The external author explicitly did not inspect the local source.
+The actual compiler receives only `development_worlds.jsonl`. The late query
+contains a start-state nonce, an action word, multiplicities, order, and depth;
+none of those challenge fields is present in the sealed world input.
+
+The theorem
+
+```text
+C(x) = (f(x,q_1), ..., f(x,q_k))
+```
+
+requires the compiler to know the complete query coordinates `q_i`, or to derive
+them from `x`. Merely observing that the frozen dataset realizes two queries per
+world does not prove that a source-only compiler can construct those two cache
+entries.
+
+## Direct Audit Of The Current Board
+
+The frozen development custody bundle contains:
+
+| Quantity | Value |
+|---|---:|
+| Sealed worlds | 192 |
+| Late queries | 384 |
+| Realized late queries per world | 2 |
+| Query depth 5 rows | 192 |
+| Query depth 6 rows | 192 |
+| State nonces per world | 8 |
+| Action nonces per world | 3 |
+| Full nonempty depth-1-through-6 support | 8,736 |
+
+For each world, the two realized queries share one hidden start state and one
+action multiset but use different orders. If all starts and all action words at
+the realized depth were admissible, the query support would be:
+
+```text
+depth 5: 8 * 3^5 = 1,944
+depth 6: 8 * 3^6 = 5,832
+```
+
+Therefore the current source-only compiler is not lawfully handed a two-entry
+query index.
+
+This does not fully rescue the current advancement board. The source world and
+the two challenges are generated from one deterministic PRNG trajectory before
+the state is sealed. Each exact world occurs once. A sufficiently pathological
+model could exploit generator correlation or fixed-manifest identity rather
+than learn reusable dynamics. More importantly, the protocol does not
+demonstrate reuse across a large independently sampled post-seal challenge
+family. The current board remains a useful binding/order diagnostic, but it is
+not the strongest possible identification test for a reusable causal machine.
+
+## What Is Accepted
+
+### 1. Explicit anonymous machine state
+
+The proposed categorical Moore machine is a legitimate architectural object:
+
+```text
+initial_state
+action_key
+action_next
+observer_key
+observer_answer
+active masks
+```
+
+Anonymous state indices respect gauge freedom. Behavioral equivalence,
+interventions, and conjugacy-consistent transformations should be scored
+instead of raw latent equality.
+
+### 2. Key/transition separation
+
+Binding and dynamics become independently manipulable. This makes key-only,
+transition-only, and compensated key-plus-transition interventions exact and
+auditable.
+
+### 3. Attached training and detached scoring
+
+The soft or straight-through hard machine may remain attached during
+optimization. Scoring must serialize a fixed-shape hard machine and execute it
+without source tokens, residuals, KV state, targets, or assessor feedback.
+
+### 4. Independent post-seal challenges
+
+This is the most important protocol correction. The challenge seed and bytes
+must not exist until after the machine artifact is sealed and the compiler
+process has exited. Multiple challenges must reuse identical machine bytes.
+
+### 5. Causal quotient and resource accounting
+
+Small-world mechanics should independently enumerate reachable states, compute
+future-indistinguishability classes, prove that `K` is sufficient, and verify
+that the challenge family separates every quotient class. The committed-machine
+bit budget must be compared with explicit query-indexed cache budgets.
+
+## Required Corrections
+
+### The old-board cache falsifier must be scoped honestly
+
+An oracle cache built using query identities or labels before sealing proves
+only that an intentionally weakened protocol is underidentified. It does not
+show that the current source-deleted compiler can lawfully form the cache.
+
+A valid source-only cache falsifier must do one of the following:
+
+1. derive the two exact future query identities from world bytes alone;
+2. prove that those identities are deterministic functions of the world under
+   the admitted generator; or
+3. store answers for the full admissible query support within the frozen state
+   budget.
+
+If none holds, the claimed two-answer counterexample is rejected.
+
+### The executor must be architecture-native
+
+The runtime may use fixed tensor gather, categorical transition, masking, and
+readout operations. It may not contain task semantics, a host transition
+oracle, verifier repair, answer search, or query-specific branches. A Python
+reference executor is acceptable only as an independent mechanics oracle, not
+as the deployed reasoning mechanism.
+
+### Explicit machines do not automatically imply reasoning
+
+A direct hypernetwork can emit a table that overfits source identity. Promotion
+requires unseen worlds, bindings, renderers, word lengths, multiplicities, and
+composition motifs, plus intervention signatures and qualified matched
+controls.
+
+### Query support must dominate the cache budget
+
+The new board must freeze exact values for `K`, `M`, `P`, answer alphabet,
+retained key precision, and maximum challenge depth. It must then show that a
+query-indexed cache under the same committed-byte ceiling cannot cover the
+challenge support.
+
+### Current start-state binding must be represented
+
+The current late query supplies an opaque start-state nonce. The proposed hard
+schema retains an `initial_state`, action keys, and observer keys, but no
+state-key records. It therefore cannot bind the current query start after
+source deletion. A revision must either retain fixed-shape opaque
+`state_key[K,d_key]` records or change the board so the source fixes the initial
+state and the late query never names one. These are different capability
+contracts and must be chosen before source freeze.
+
+## Authorized Next Work
+
+Only CPU mechanics and protocol falsifiers are authorized:
+
+1. implement a conditional cache audit that distinguishes realized queries
+   from source-derivable admissible queries;
+2. split source generation from challenge generation with an independent
+   post-seal seed;
+3. enumerate exact causal quotients and transition monoids on small worlds;
+4. implement two independent hard-machine runtimes and intervention suites;
+5. freeze exact machine and answer-cache bit accounting; and
+6. test whether raw source evidence identifies every required transition
+   without oracle segmentation.
+
+No neural source freeze or GPU run is justified until those gates pass.
+
+The implemented CPU audits now execute the categorical machine exactly on all
+1,920 frozen packets across 960 committed worlds. They count 8,736 nonempty
+late queries per world, 26,208 answer-table bits, and eight exact quotient
+classes. A lawful canonical world-only two-entry cache covers 0/384 development
+queries, while a deliberately leaky cache given hidden query identities and
+assessor answers reaches 384/384. Those measurements strengthen the custody
+correction without constituting neural evidence.
+
+## Current Decision
+
+The existing 907,269-parameter causal workspace remains a control and custody
+reference. Its pending neural pilot is not launched.
+
+The Episodic Functor Compiler is admitted as the next architecture hypothesis,
+subject to CPU falsification. It is not yet a reasoning mechanism, and it does
+not alter the continuation-pretraining hold.

@@ -32,6 +32,30 @@
 > 320/320 packets. Payload SHA-256 is
 > `0a3b99dc49ecf6eb6f2ef12a4bd85d49b8ce6a98568948414663f93dfb1769c0`.
 >
+> **EPISODE Functor Compiler theory review (2026-07-23 EDT):** the external
+> theory draft is preserved verbatim as
+> `R12_EPISODE_FUNCTOR_COMPILER_THEORY_DRAFT.md`, SHA-256
+> `e3c7420fd7aef36834cee79af58afe681359e1cbf5ca35a1ad855d14bfcabd36`.
+> Admit its explicit anonymous categorical-machine architecture, separate
+> action-key/transition fields, attached-training/detached-scoring boundary,
+> and independent post-seal challenge requirement as the next research
+> hypothesis. Do **not** admit its old-board two-answer-cache no-go as proven:
+> the actual compiler sees only world rows, while start state, action word,
+> multiplicity, order, and depth arrive after the seal. The source-level review
+> is in `R12_EPISODE_FUNCTOR_COMPILER_ANALYSIS.md`. A provisional CPU audit
+> passes all 192 complete 3-by-8 world transition tables, answers the existing
+> 384/384 realized queries exactly, and exhaustively executes 1,678,848
+> all-start/all-word cases through depth six. Its conservative resource receipt
+> is 26,232 answer-cache bits versus 276 categorical-machine semantic bits
+> (95.043x). The current two realized answers require six answer bits only if
+> their hidden routing coordinates are somehow derivable before seal; that is
+> not established. The old 907,269-parameter workspace pilot is now
+> control-only and must not launch. Next legitimate work is CPU-only:
+> independently seeded post-seal challenge generation, two independent hard
+> machine runtimes, quotient/capacity proofs, and exact cache/state accounting.
+> No neural source freeze, H100 run, reasoning promotion, or continuation
+> pretraining is authorized.
+>
 > MCTFR remains **pre-score** after two hostile audits invalidated its first
 > implementation. The working revision removes renderer/orbit metadata from
 > optimization, replaces duplicate-sensitive max/log-sum-exp with max/min,

@@ -1,0 +1,66 @@
+{
+  "causal_quotient": {
+    "classes_per_world": 8,
+    "observer": "identity state-token observer",
+    "separated_at_empty_continuation": true
+  },
+  "claim_scope": "CPU protocol and finite-machine audit only; no neural fit, reasoning result, or continuation-pretraining authorization",
+  "continuation_pretraining_authorized": false,
+  "custody_path": "/Users/sairamen/projects/shohin/artifacts/r12/episode_workspace_custody_v1_1532fe2_seed2026072309",
+  "exhaustive_execution": {
+    "queries_per_world": 8744,
+    "sha256": "c4bb13ab3e10cdb4ed366149ff19d011c66a407134c7411ed8a060c292b1e96f",
+    "total_queries": 1678848
+  },
+  "finite_query_theorem": {
+    "old_board_decisive_no_go_as_stated": false,
+    "post_seal_independent_challenge_required": true,
+    "reason": "start state and action word are late-query fields absent from the compiler-visible world row",
+    "theorem_valid": true,
+    "two_realized_answers_are_source_derivable": "not established"
+  },
+  "input_sha256": {
+    "development_assessor.jsonl": "0bf99717d677b5807c47873cf365fc408230e2eef16218e9f768bb9489294235",
+    "development_queries.jsonl": "456b9bcef3762a9922323a5928078a8998f51c8d6c9d358e5f6adae69aa1bfba",
+    "development_worlds.jsonl": "e448d0585427c7314b3f21c567b231b6e8ebe08dbd4acf4e103151a3af56851e"
+  },
+  "next_action": "build independent post-seal challenge generator and two independent categorical-machine runtimes",
+  "pretraining_started": false,
+  "realized_machine_exact": {
+    "correct": 384,
+    "rate": 1.0,
+    "total": 384
+  },
+  "realized_queries": 384,
+  "realized_queries_per_world": 2,
+  "realized_query_depths": {
+    "5": 192,
+    "6": 192
+  },
+  "reasoning_promotion_authorized": false,
+  "resource_receipt": {
+    "action_index_bits": 2,
+    "active_mask_bits": 12,
+    "cache_to_machine_bit_ratio": 95.04347826086956,
+    "conservative_machine_semantic_bits": 276,
+    "full_answer_cache_bits": 26232,
+    "initial_state_bits": 3,
+    "max_depth": 6,
+    "observer_map_bits": 24,
+    "query_count_all_starts_through_depth": 8744,
+    "realized_two_answer_cache_bits_per_world_ignoring_routing": 6,
+    "retained_state_action_key_bits": 165,
+    "retained_token_bits": 15,
+    "state_index_bits": 3,
+    "transition_table_bits": 72,
+    "word_count_through_depth": 1093
+  },
+  "schema": "episode_functor_compiler_identifiability_audit_v1",
+  "world_transition_coverage": {
+    "action_count": 3,
+    "complete_worlds": 192,
+    "state_count": 8,
+    "transitions_per_world": 24
+  },
+  "worlds": 192
+}
