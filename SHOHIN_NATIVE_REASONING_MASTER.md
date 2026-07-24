@@ -129,7 +129,7 @@ are tested, but no neural first fit is currently authorized.
   and fresh post-update metrics. A parameter-
   and target-identical dual-branch direct-decode control separates shift
   decoding from added weights and dense rollout supervision. The complete EFC
-  regression is 418 passed. V6 adds exact AdamW/BF16/TF32 and two-update
+  regression is 428 passed. V6 adds exact AdamW/BF16/TF32 and two-update
   schedule receipts, exact package closure, post-checkpoint RNG rebinding,
   authenticated atomic output, and a 26-file Landlock worker closure that
   excludes the board generator, label oracle, and preparation role.
@@ -151,6 +151,24 @@ are tested, but no neural first fit is currently authorized.
   train-only falsifier over HSC, direct-decode, position-scramble, and
   stable-bag arms. Development remains sealed until train/mechanics
   qualification passes.
+- **Post-canary falsifier:** because the HSC compiler has approximately 265
+  trainable parameters per independent train target bit, train loss alone is
+  non-identifying. `R12_EFC_HSC_POST_CANARY_DECISION.md` freezes a train-only
+  216/72/96 fitting/renderer/world split and separates optimizer, oracle
+  mechanism, raw-source compilation, transfer, and causal-incidence gates.
+  Architecture changes are admitted only by quantitative attention, RoPE,
+  normalization, or recurrence triggers.
+- **Causal-syndrome prerequisite:** an exact CPU audit covers all 26,400
+  permutation-preserving transition and balance-preserving observer swaps over
+  the frozen 200-world board. Every fault has a nonzero collision-free
+  within-world depth-three syndrome, with 120--704 changed coordinates.
+  Payload/file SHA-256 values are
+  `be260fda48585ff8aacc13369e8b01d80023729c944454388fe65cc37038b254`
+  and
+  `4aaf86536899214c2d2bcce3516a65c6021a267989040a2f0b4982dc24c35ef2`.
+  This admits exact single-fault localization mechanics only. ACSO
+  (3,995,137 added; 199,488,246 total) and HSRA (4,303,048 added;
+  199,796,157 total) remain separate unimplemented escalation candidates.
 - **Primary bottleneck:** model-owned compilation of raw episodic evidence into
   a compact renderer-invariant causal machine, including opaque referent
   binding. Bounded ordered execution is already mechanically easy once the

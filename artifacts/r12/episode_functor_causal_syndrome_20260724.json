@@ -1,0 +1,2019 @@
+{
+  "claim_boundary": "exact finite CPU fault localization only; no noisy-signature, neural-learnability, source-compilation, reasoning, or pretraining claim",
+  "decision": "single_swap_syndromes_identifiable_mechanics_only",
+  "faults_per_world": [
+    132
+  ],
+  "maximum_changed_coordinates": 704,
+  "minimum_changed_coordinates": 120,
+  "report_payload_sha256": "be260fda48585ff8aacc13369e8b01d80023729c944454388fe65cc37038b254",
+  "schema": "efc-adjoint-causal-syndrome-single-swap-audit/v1",
+  "seed": "efc-identifiable-pilot-v1",
+  "total_faults": 26400,
+  "total_unique_within_world_fingerprints": 26400,
+  "within_world_collision_count": 0,
+  "world_count": 200,
+  "world_receipts": [
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "f42a98f6fc55b68e041a19eaac5dcd4e801b3cb9bd951bf28223849904dc68a1",
+      "maximum_changed_coordinates": 655,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000000-046d4096e1dfdba6",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "a4112c92cde2ca92b7d8243e59d60ee6d3049da1b3e6c8b67dce59f097a4b0f0",
+      "maximum_changed_coordinates": 673,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000001-a92b1bbddf577260",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "4dbf31bb5a445d044d95186144cf4a97d82bd1b20cb88b634ebcff5b048f9571",
+      "maximum_changed_coordinates": 669,
+      "minimum_changed_coordinates": 267,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000002-1898d98b27f30d6e",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "36992a17955630ec7eb5caa78cd5e57cb460ddfd2abe53c847640df45989b27d",
+      "maximum_changed_coordinates": 640,
+      "minimum_changed_coordinates": 280,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000003-2bd22e39a1c3ee8b",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "dd5a5ff055c0a41bbd1ae351e4b5903e578dbb16286a546fbd992dde6320abe1",
+      "maximum_changed_coordinates": 620,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000004-9de3dfaadc7e055a",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "d0ea04e80cc8388cd4dc1f470d00e1d45ad9345ef602e5111b5ca100df0d4f65",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 316,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000005-210089c7cdb1766b",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "910d5fd490c6a96b55a054b97edcdf31ab16051eedf44d499dcafa581077e3fa",
+      "maximum_changed_coordinates": 648,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000006-f94b01185438aa0b",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "0ada68c85ef1873eb7c66f3059f1df6488fe8c54d6d38a51cdac57f0eb19f850",
+      "maximum_changed_coordinates": 651,
+      "minimum_changed_coordinates": 294,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000007-06a6e3ed459ed078",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "573b29b8cbe251301265cae7e961c8196951e10c354b8fb376788de4cf1a5e6d",
+      "maximum_changed_coordinates": 666,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000008-d78e59a9d799018c",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "e37a1931f1a4359ec49ccaeab340e378773c366379fa4bb2ace9c5bf97a66b34",
+      "maximum_changed_coordinates": 680,
+      "minimum_changed_coordinates": 288,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000009-d32365c5cf911104",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "d971d150b01b77f464d002dda12f8b4bd2b4c74acb9376e26f69d564a17352de",
+      "maximum_changed_coordinates": 655,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000010-6d94eff96d14c645",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "2e053e030d40a941241d8be6fd29b35a87c8cd077bcd768d0f07062177fd4405",
+      "maximum_changed_coordinates": 655,
+      "minimum_changed_coordinates": 306,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000011-f994912365aaf9dc",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "02015c6339ea488e64a27f485d440e284ebb0b7e26644f223f9a60d7e052f16d",
+      "maximum_changed_coordinates": 680,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000012-3bec654c8fc0a97b",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "5a3f92dc75e0400bd43290efc819e71e262f90c44af1fdb3597ccc8d2b21da5d",
+      "maximum_changed_coordinates": 650,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000013-3d14c2b3249642a7",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "b1f96e73c28654a0e5747dc6768299bca901e1804ea5daec5062c0f8496ae381",
+      "maximum_changed_coordinates": 636,
+      "minimum_changed_coordinates": 120,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000014-bccfbf097e80212a",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "181dbf40b385c9712e9b0d70c14133955361006e5833824c91890ac971cdc91f",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 232,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000015-c59ca2875ea0e17d",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "8db0115410c11f4a7627b7d34412102e0a32b79d8937e42b2c1bafabdd536396",
+      "maximum_changed_coordinates": 644,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000016-fec9a92a91f13fe7",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "0c2a774b31840d8c9fc61629c8df4659ca2e33d04527275fb73da141b93a95ee",
+      "maximum_changed_coordinates": 665,
+      "minimum_changed_coordinates": 296,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000017-c43d7ded03f06ba9",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "2f41a399b11f6316c9b98f39eb7aac83c19eaffb2b51d36106388c6a247fbf75",
+      "maximum_changed_coordinates": 663,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000018-8ff430fc5b3ac78b",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "519f34259f7b551fdeceffef4db1a48efd4ecedb6018544184c2423358b91133",
+      "maximum_changed_coordinates": 659,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000019-2dae249ed2a20d29",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "194a38b718fe9fd86a6b0863feab7eaf6f3b1b62492544ef9aa48f1ceb313c3d",
+      "maximum_changed_coordinates": 659,
+      "minimum_changed_coordinates": 298,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000020-99cb296ae30d5fa2",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "fdf1430fb02b1f9cd976e3bdcd402fd83be39b61c57d76265af444800e5fc4fb",
+      "maximum_changed_coordinates": 640,
+      "minimum_changed_coordinates": 232,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000021-a4766a87a2251f4e",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "2d8e1c1bd344c02f541724615902611b42529da76c66626e83d1db5638c72678",
+      "maximum_changed_coordinates": 655,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000022-e6c731bc78b94f68",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "361713427a2b701d05b6db9c3b460735842e5d2b62c03abe5cf3f832eec46fc0",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 235,
+      "unique_fingerprint_count": 132,
+      "world_id": "confirmation-00000023-e04a911a6009d051",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "4594da0ce9c568031b7743158673ceaec4ba54cbdc6b5eb9a1985af96e36e5c3",
+      "maximum_changed_coordinates": 653,
+      "minimum_changed_coordinates": 282,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000000-c8f9ae3f1b5ac936",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "34539cffe654a679bbb0c65005df7e9cd1c8947ba0c968aed5ca1996def60c21",
+      "maximum_changed_coordinates": 654,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000001-55a7ff314b4ce068",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "3fc9525af52ed78ff11beb3bee8e664a85a7a174be1cd7d4712206654c26e418",
+      "maximum_changed_coordinates": 672,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000002-6a75ae1bb1b06d42",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "145c9b2abbe96cc640efed7fd488ad55c804e69550cd9dd1984c247a21778db5",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 312,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000003-8987f76c29fc7d1d",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "f3f0921d354f29308a71ddbf4cc7b16cd9908708b898fbd702326f3a024cd0c7",
+      "maximum_changed_coordinates": 676,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000004-d260f2de058934fe",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "40c7649d5243a07b211026680d05ba2562d0f2045fc50c2a35f0bda8422c322d",
+      "maximum_changed_coordinates": 680,
+      "minimum_changed_coordinates": 316,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000005-e5660a752f8365e2",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "a25c975b70fe9110ab6e20f58242b7a9b9d4c8b827fed946fd4178b65bf95711",
+      "maximum_changed_coordinates": 675,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000006-2c7ea3952aac80c3",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "6a66c5f5399f0b193e5a7bdac90812a957a425cac2d9549919680fae53dfcf33",
+      "maximum_changed_coordinates": 624,
+      "minimum_changed_coordinates": 232,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000007-a39b8af202e20496",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "df979506d40aee069c5765d55fe3376a7ed6cebb94c001be8739c75a893fb07b",
+      "maximum_changed_coordinates": 641,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000008-b82b8b236933c7b8",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "7f8bb53bd9009066a9ea2ae001f621f1fdf9e848f83288a1fd8488683d0f48a5",
+      "maximum_changed_coordinates": 662,
+      "minimum_changed_coordinates": 296,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000009-dbc1e5e38fdfd700",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "420e2ecf3eb3d7a46877258d06064fe3679ab90bf585de00615c8a3d239fe77c",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 245,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000010-a21d9ad7005e05e7",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "afa127b05c0c5aed82507153cbc6fd958412d2958596fc25aa34786a3bb97f5e",
+      "maximum_changed_coordinates": 680,
+      "minimum_changed_coordinates": 258,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000011-f674175b4944a4e7",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "e8435c188f9e854216223db7188826117d2e59f57d3cbf739d2383e7970dab5d",
+      "maximum_changed_coordinates": 668,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000012-d262fcd40d82a5a9",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "82310f789123eeccda9265ec70fbf3305bfbf6a68aadd53142b4d6fe055c00d0",
+      "maximum_changed_coordinates": 677,
+      "minimum_changed_coordinates": 316,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000013-b6068e60545f8b1f",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "123537f8e77425bf7a85b8c41cbc36ef937c970553e6f1e4fa5ed8783c3b12b0",
+      "maximum_changed_coordinates": 672,
+      "minimum_changed_coordinates": 284,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000014-296b13f82263cbc1",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "7d1ffe598796f8e81eb48edcf802fff7c5f15f55aaba34ee094be9ef6823450b",
+      "maximum_changed_coordinates": 624,
+      "minimum_changed_coordinates": 252,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000015-ba371f3126c9839a",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "78e7699a89c2ff07998a8aa8aca0c42c06bbea1f9b0f7ce8c70b86dea62b8597",
+      "maximum_changed_coordinates": 676,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000016-5ce72f44666280af",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "b51ae6278b62c00715bd6f3438673a4188959dbf4746a61ab156a50fd164128b",
+      "maximum_changed_coordinates": 677,
+      "minimum_changed_coordinates": 304,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000017-19c0611c067bd2ae",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "c8e0c5cce661d2520f4ecce662d2ba7a8ba95ea8be0d72bddfc2ca079f12ca71",
+      "maximum_changed_coordinates": 694,
+      "minimum_changed_coordinates": 312,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000018-c22028d56776d993",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "237979683e88aab0aedfdde2f3489a3d0f3b2b9976c52fde405d06ab59a1705b",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 296,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000019-e07e7cc47a397c37",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "d5c162f5747240b146730a182bf91b3befb3c13479ba8cbef215d5e01d1a0062",
+      "maximum_changed_coordinates": 676,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000020-0dc0c6aca825ca9f",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "a6e53f7155bbdfbb5e6c488597429fb5f3015b1342de9d6ecc08a81fd08d6abd",
+      "maximum_changed_coordinates": 644,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000021-3d79f86566991f95",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "d9dba4d5a1965e431c5eb1bc3cd9d50e43259de9b8889801998df657dbd57ce1",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 226,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000022-7f77703b62be2db6",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "749e4a692c029016fae27df59da988aa2ffd371cb6f52dfbdf64718489f89f94",
+      "maximum_changed_coordinates": 656,
+      "minimum_changed_coordinates": 256,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000023-ed03ecd4132c6e2a",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "665600290068d761f54348a4472629393943d23215f7eee04a8097f9147522bf",
+      "maximum_changed_coordinates": 659,
+      "minimum_changed_coordinates": 303,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000024-a05e2efc32b4ea87",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "93f3c81dab9153ba30f51c56e5ea9c5561af8a3fee20cd6578058f4156ae2a2c",
+      "maximum_changed_coordinates": 669,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000025-ab5850a020f81b9b",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "d4a888d444f1f4710b45f3242ba3207b5b3c8e345ab38fd0740da6a242bc11e7",
+      "maximum_changed_coordinates": 656,
+      "minimum_changed_coordinates": 280,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000026-54ce6b7416feb13e",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "fe59b7bc40d4b293db9d25dfa67201b538ca33ecbc15c501eb48ecd5d6da7f4e",
+      "maximum_changed_coordinates": 672,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000027-4f16c8a272f1dfe4",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "783aab589b2a8271178e9c90fbff17fed338a67476cb8118f6791f7bf9d9af1f",
+      "maximum_changed_coordinates": 660,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000028-07c20f583243da9b",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "24ad2c6098ce93a608ec80cffafb8e328bbb741fb4daa860c2483e037edb52a4",
+      "maximum_changed_coordinates": 663,
+      "minimum_changed_coordinates": 287,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000029-76da412ef58756e9",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "b007310939adc7eb43114b294ab84329bf2f3b335ed1075552beb435730f4fd4",
+      "maximum_changed_coordinates": 628,
+      "minimum_changed_coordinates": 276,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000030-3e75694d9f2ccc8d",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "dc9a3921f605b502d47e29cdfdc93e5b99fb52af8a99decbbb864fabfc6671dd",
+      "maximum_changed_coordinates": 624,
+      "minimum_changed_coordinates": 276,
+      "unique_fingerprint_count": 132,
+      "world_id": "development-00000031-4dc018d5377b8612",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "bb419d8955fe7579ef38e721ec6b228ab6604c0221a0f40bb0d05f2ff20706b4",
+      "maximum_changed_coordinates": 658,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000000-f681d046b5d8e36a",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "f4a98200a0d64f0ccce342172c9a59405047179684103775881190a68165114f",
+      "maximum_changed_coordinates": 659,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000001-60fb18a2ee916216",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "f18703cb5e65a73160b1a79854a939a4181a5a233077c02bc57a447c83b3cca3",
+      "maximum_changed_coordinates": 674,
+      "minimum_changed_coordinates": 296,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000002-071a4f002c8da854",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "2b9589e6f0127853f36ce46322b3d8c2ae674a58ebbfad6993b55cecbe64e8eb",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000003-f650cd0146e6a7b9",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "05fd7c924a971bd49ecfa14b54f7172b41a5e7a7ef2aa6acdab3dec9833160a6",
+      "maximum_changed_coordinates": 668,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000004-aea8c98383ad40f8",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "926e909f4fc60251b5346e29073706abc4cbe8c8daae4f03734f12e21b565e31",
+      "maximum_changed_coordinates": 676,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000005-86dc39b8c3a6107e",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "f76294eb223763af4c30e484895dd45e609cad42fe872c9673ea27473846a789",
+      "maximum_changed_coordinates": 670,
+      "minimum_changed_coordinates": 294,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000006-a311d81c63d95143",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "76b3eeb470d0b790bf60f66a45599a437891a76952c6841f3686b3733cd6ad20",
+      "maximum_changed_coordinates": 669,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000007-1f719c9a474c6907",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "66705ecaa7b9c2bbf1cd282b76f5a33de9ed9c676707fdb9f299c5f50953a102",
+      "maximum_changed_coordinates": 674,
+      "minimum_changed_coordinates": 200,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000008-21c42239744b4a55",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "59f3549eee262f0d80dd06f24200ddd2d5b83ee9f2e7fd8b024bd49f8273e219",
+      "maximum_changed_coordinates": 672,
+      "minimum_changed_coordinates": 276,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000009-adacd2ea3ff625c6",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "934b7cccc4ad803b9daf340801c97734468f359ae8df0ed7149c12c161e508cb",
+      "maximum_changed_coordinates": 673,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000010-9f653ec9b4fe5f24",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "8c12bf3615098cb80e04162d7a1ef3742d5cde1c9b07a4c397016c06b8f54ca0",
+      "maximum_changed_coordinates": 684,
+      "minimum_changed_coordinates": 252,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000011-de593d5421b0a755",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "8f72d1f5dc97599e07843a1f0983fea4b0c2d079a9038af7b2db48b762c34a47",
+      "maximum_changed_coordinates": 642,
+      "minimum_changed_coordinates": 258,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000012-e8b9f85d4c418f17",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "4e34acaadef4ffcfe64ab3b272954951784e0033459dc8395f9c66aaad3a2e93",
+      "maximum_changed_coordinates": 673,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000013-288a037c8a2d8a63",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "900e678885534f51873cdb3094c1c5e0d68bc8274b98d72501ff01c966a774be",
+      "maximum_changed_coordinates": 662,
+      "minimum_changed_coordinates": 276,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000014-badff129b003ddff",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "d7418fc53133d34f63949d6b2d0a7c1f6a27d4ee2a795a48da90437243749ca2",
+      "maximum_changed_coordinates": 656,
+      "minimum_changed_coordinates": 256,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000015-f84127db93d76283",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "40d874aaf6ef3d094d4604a56fcea434dabf5a044dbf5a4c763c0d32f9c6a5ed",
+      "maximum_changed_coordinates": 646,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000016-ab0b00a148dd7b8c",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "c5e6f6f3488d0d4af4420f1c4278b7cacf4504d027a5eb42bd0035763182d77b",
+      "maximum_changed_coordinates": 672,
+      "minimum_changed_coordinates": 236,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000017-98fbd0489f8b73cf",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "840b16af9914f8d50dd374f1a66fa898f281e89b8e1530b39d6995231deb9e2c",
+      "maximum_changed_coordinates": 656,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000018-a437d1749cd04808",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "13bf361c8afa8c4644f6e9c1086871a3b516d6b4d32a32bbd228f0e889a9980a",
+      "maximum_changed_coordinates": 655,
+      "minimum_changed_coordinates": 309,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000019-f43b232d9292c368",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "d9f5044db8eae1b6d036c54a186dd6459aab7c4a0286cf32cb594523dcc0589d",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 236,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000020-30788cedeca4273b",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "bfad71a23bf3aaf7fcdfa860b629ac8d1a308e3158ad6a60997ae4abc39d8f34",
+      "maximum_changed_coordinates": 640,
+      "minimum_changed_coordinates": 232,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000021-24eea6bb13c8c543",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "6d4e415b9352966169284b4dbacc6fe19013342004cece918dd32bb5525a49a1",
+      "maximum_changed_coordinates": 680,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000022-a6f1f54cb09c6cf6",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "8b8f0ce70f9e5916c1e0d8d9917874afe9d56a308c8a29554dc653e816ce0226",
+      "maximum_changed_coordinates": 663,
+      "minimum_changed_coordinates": 184,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000023-08fa33e34881b262",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "0f97158b63381099d315426ad8813b76f1d072edc993a58fd0372e50fd78a617",
+      "maximum_changed_coordinates": 655,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000024-9a7f645428848dcf",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "a3cc18bdd30e883942ccbc644e276a984b8c86860f8929ae999d0878d0d79469",
+      "maximum_changed_coordinates": 674,
+      "minimum_changed_coordinates": 300,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000025-bf354641dab9c09e",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "62c8e1d3a1c04a71ef2fa654607c75ebade10a1ad2d79dc6b4734662009ab2ce",
+      "maximum_changed_coordinates": 616,
+      "minimum_changed_coordinates": 278,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000026-4fe06bd73663f410",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "8ae5786e295c3d17afb7908b06cb974796f65f99a12633de70fc98b074194de9",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 288,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000027-b7ad900e2b4c6d31",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "5196e6c11ebc8b7247c55e4c958a3273ec3dd8e680d4fbc653d87100223d79f1",
+      "maximum_changed_coordinates": 683,
+      "minimum_changed_coordinates": 276,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000028-583f9c43a3e312a1",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "be5b680e22b90468d56e2bfd95d3d6530e0c7fc809eeb28c1d3f8eb77cfd4699",
+      "maximum_changed_coordinates": 638,
+      "minimum_changed_coordinates": 298,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000029-1dd50342a0b5a045",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "d255843e51e41fe405e712e9e9e204735c5b02ee532fcfb727ca35f5d349ec39",
+      "maximum_changed_coordinates": 660,
+      "minimum_changed_coordinates": 231,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000030-9f2a019b6888d13b",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "d7f658eb6b3d4e8e9ec498f67bf6f42158d535bb601d12c768c93bbc60033b3a",
+      "maximum_changed_coordinates": 652,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000031-bb5fe843fd27d44b",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "1cd1067037693ae22c1ff7f14b4a97e9b4f8e555515721f2c4b29fd237f2549f",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000032-213e04d8018a518a",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "cb97659176808e3506e5e4811386ba1eb4c45177f25c69a961c4ce7841d78d24",
+      "maximum_changed_coordinates": 632,
+      "minimum_changed_coordinates": 234,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000033-46537efd961e34fe",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "aba832da963b6cb02e17689af8cbb5e37f6b43c7d7331778b8eee1d13e8989d9",
+      "maximum_changed_coordinates": 664,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000034-050e60d2c012e987",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "5eea395ae40599f3fb4e283cd2702bca6c2c3168eeeb240fdaee139ee4c8f808",
+      "maximum_changed_coordinates": 660,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000035-5836d7b608cb6206",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "467da5b5a98574cf5a6703a52b12c9c73accd5d3d0b358c54021983eefb016c6",
+      "maximum_changed_coordinates": 636,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000036-a281faeec253f244",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "0c4214845fb7967850cbc200f85e2159ce098c8bade2b6d22a843d31125b5a4c",
+      "maximum_changed_coordinates": 645,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000037-279a68bc8e3fcef7",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "490e47f570668f410495a48463cae9be35f44f8dddb76a0dea1e0b1208e56e6b",
+      "maximum_changed_coordinates": 646,
+      "minimum_changed_coordinates": 269,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000038-df10a601380b394d",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "ae4c4b8025ec97c666e1304b9b88a73edfc18edea59c0ba342168ae94f80e96f",
+      "maximum_changed_coordinates": 680,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000039-584ac1a8947132a9",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "ed39949db1e6d90c64b68256d0cb3d81e6dab3f968baf773d7c2555ec837c24c",
+      "maximum_changed_coordinates": 645,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000040-bf3e5fc19ea69b06",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "5ef1a57f103530d5ee8eb297a807ab28ab666aee6480e32f406b3855633e74c2",
+      "maximum_changed_coordinates": 696,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000041-2d3656a40067f098",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "c1415db6132ef7c072a1c3653905488000bf6b5af5402e6311e9ac72b752e388",
+      "maximum_changed_coordinates": 642,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000042-7d66cd41cceead17",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "a0fadcc7ed123ac6ac16f71a1e102d3e03345445f15ca976f88509dac5aecfb7",
+      "maximum_changed_coordinates": 633,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000043-915fdda15303a53b",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "90d8de03a5e9d5031191bca314ac2311d429dfd9ebd603e1741b90aa01019701",
+      "maximum_changed_coordinates": 704,
+      "minimum_changed_coordinates": 308,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000044-8a066633027d4fe4",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "16aa8db1eaacd8796323f6171154741849591162c608c3f150f60c137db88498",
+      "maximum_changed_coordinates": 640,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000045-cee836e47ef632a5",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "5e38b84a095225dfbb1a1844178e1b4747adaa73fc5915edb474fa53d1ec5c44",
+      "maximum_changed_coordinates": 680,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000046-84f3958e490127a5",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "ebb2eaea10fdccd820115b13a34573bebe8f11ededc8cb25282056ff1a2ef0b4",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 312,
+      "unique_fingerprint_count": 132,
+      "world_id": "mechanics-00000047-421fa021f6fb6a1f",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "332c1a04acc389299642f2e746f2ebad03a83297ed0b71c5cea1cc8f57543804",
+      "maximum_changed_coordinates": 669,
+      "minimum_changed_coordinates": 259,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000000-e3d1a43a39730e08",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "bd08bda73809d9d1bccd0246647c7a499462f44d4cfffcf7c28b95f5edbc67ad",
+      "maximum_changed_coordinates": 644,
+      "minimum_changed_coordinates": 310,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000001-b17769ad2221c77b",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "7a7cb5f00085956cae1b300b561a922b5106d3f1002040ea655fc0aae051d133",
+      "maximum_changed_coordinates": 632,
+      "minimum_changed_coordinates": 190,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000002-55b3b6ac03ee8155",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "5a1767a09cb8138612f042ef768c2c3bc608644ff7a9052b010fd4b983ab92f4",
+      "maximum_changed_coordinates": 676,
+      "minimum_changed_coordinates": 309,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000003-9b93098126d28d00",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "39d16ff53ecb5cc6a31557a301f8e721d62eb6c3f3adc6533d3f33beb257a29f",
+      "maximum_changed_coordinates": 671,
+      "minimum_changed_coordinates": 315,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000004-400ea03e4e999318",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "bf2934ba48898d23793ba47935f91c4499dc0723ca3bf679c96ec4e006899b97",
+      "maximum_changed_coordinates": 696,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000005-8cea83114cf02245",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "1bbe452a9d60a84911bdd3963399ed0e2338b4e0931e7227ba9cf8c6c6c14965",
+      "maximum_changed_coordinates": 633,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000006-b5f135a1faa4ad2f",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "3b02c2c91611c57ad2fd428740a56508811382d8f2a52a0ed32d27ef446b457c",
+      "maximum_changed_coordinates": 647,
+      "minimum_changed_coordinates": 292,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000007-3a8be9ec8ef6e6ad",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "0abdc5908f0328c932bb978d06cf18c26bee162146f7be81e4a6e60cafbb67d9",
+      "maximum_changed_coordinates": 694,
+      "minimum_changed_coordinates": 283,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000008-4ee5ee78adbcd5fd",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "2169700f99ec364a610b79cb9b06eff195f1e130c9001d74a8a07e17ff9ed633",
+      "maximum_changed_coordinates": 665,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000009-23cbac0b91a3340b",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "ce84b2c372fa0508c041a34985e085c513e02d2a676a740b15c36b99da05b12c",
+      "maximum_changed_coordinates": 664,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000010-0a001b4221366e05",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "76df43ec8c5081b408a1ed3ffcbd62a39d2f9e0b5118f3eec2c7701174ca5fb9",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 302,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000011-ff4afc1b7a09fa42",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "b5b75bdc0c14f334ce3b5b7588b7c781fcb0220c1642d5c450e6aef2d0dc8ebe",
+      "maximum_changed_coordinates": 657,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000012-55dfbb6351dddd57",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "4731cb76395937baf6ef1806e53cd7474546b6b7fd469df39028f0ef7afa3b73",
+      "maximum_changed_coordinates": 650,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000013-43853a3803b1c2e5",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "e3f4c85a94f571dd9a14c371df4f65d55ccf2d7bfe23119ac03078f1c64b178e",
+      "maximum_changed_coordinates": 672,
+      "minimum_changed_coordinates": 286,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000014-561e95122b150e90",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "65bf2e8c0ea2c89fe43dcc219b4e0a75c5c92836c598c8cb642a0075ed97e91f",
+      "maximum_changed_coordinates": 656,
+      "minimum_changed_coordinates": 298,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000015-5e9e84547e83ebc0",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "0e8faf1004a96545986d1e37d6df2616a352106d5ed8923a7d037db247c55b73",
+      "maximum_changed_coordinates": 678,
+      "minimum_changed_coordinates": 300,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000016-8285a11489b8566d",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "4c2dfae17e68dbb98f1c147de3c8208bbc6598a24967c20971e7d68a7c9b5d81",
+      "maximum_changed_coordinates": 674,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000017-216c0fb211155347",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "80f80c4fdbae39c3942f57f59b4e5e49c498a39b7e1fba6ac86c75389bd1c93b",
+      "maximum_changed_coordinates": 665,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000018-5bd701195ae6b8c1",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "b3028d45dc68d59117aaab1a399736bb81a8d9c99791102c0d9d0110bd4780e7",
+      "maximum_changed_coordinates": 630,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000019-22ff503676335764",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "c97781b1f47c96bda1e506b22b4a1eb4bb61f00e1b1535fa153735c3bcb57429",
+      "maximum_changed_coordinates": 704,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000020-05df148cbc667985",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "55660b521ccb4930d464fdddc25de53311f9c18109f01cc56cf86c3dcd5e21df",
+      "maximum_changed_coordinates": 658,
+      "minimum_changed_coordinates": 306,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000021-03e539ca7d136ea7",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "36fe4dce3e037f0d9662db4e31d5d1c12ef4e6b845e29372d656a4bf1e7fec7f",
+      "maximum_changed_coordinates": 679,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000022-60b8a970f490d443",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "aeb58b37367ccc33079b5399e8fbcef3f970b21b40891c2c09a4552f67614a39",
+      "maximum_changed_coordinates": 704,
+      "minimum_changed_coordinates": 286,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000023-bb4c68522b3d3e06",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "90c1c4715d7e5faf20ed5d930b0eb013f36f9b61b021d9f2031daf80918fcf61",
+      "maximum_changed_coordinates": 664,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000024-baf50eaa424ec43a",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "a0b034ed2aca851754d4142422c0a134b68485c6f1704c0069481a0c0c85bbc5",
+      "maximum_changed_coordinates": 652,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000025-ca501c547b2390ba",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "70a1fe828389e3bbc99a909f889093be2ebcb18c09e644536217906f275582a0",
+      "maximum_changed_coordinates": 624,
+      "minimum_changed_coordinates": 257,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000026-13654ffdcc7346f3",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "0bce1b00953aa6565813722e507cdabf684ceeb72c594277fdb444597c3912ea",
+      "maximum_changed_coordinates": 666,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000027-ac3d9395c7fb5821",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "02fe04a5da7bc330784dc185c4e80ab746e8528a4edb9031378e08ed97a22d5a",
+      "maximum_changed_coordinates": 657,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000028-44817d72e2126ed2",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "e3b4fcc2bb090c1a7aa7288ff971d6ebeab42f7643164d33634543eed88a9ee9",
+      "maximum_changed_coordinates": 674,
+      "minimum_changed_coordinates": 266,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000029-44d51e962f3fef3d",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "91ee500ba438652ccc38313e505c42258368390d94153e9c15df171cd8eea885",
+      "maximum_changed_coordinates": 653,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000030-f79f1982d46caa4c",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "1ade51ccffb7624f494e6e04a939716199e91ffa1ef4da6bf4353a968e90122c",
+      "maximum_changed_coordinates": 650,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000031-5540fd0ae83985a5",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "e3d1dd7fff8eef97c207f2d3af4377387e353414dd6721fd9ed003a057fe80bf",
+      "maximum_changed_coordinates": 692,
+      "minimum_changed_coordinates": 286,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000032-84f88e0aa986cc68",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "e45e86116fc4e59bfc93db8390b42a55179a3c7a34a0997825b95d93f57b8c44",
+      "maximum_changed_coordinates": 665,
+      "minimum_changed_coordinates": 307,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000033-23af69cd06f37423",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "d48633bdb30ad2a36934161419c87e891e3c9edeb89bbdfbdd2a9813fe2b856c",
+      "maximum_changed_coordinates": 664,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000034-cb6544f8da9bb6a6",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "39b8fcc364d44b9370e01a6ed0417f220c3580b6d0bc79a8d373b0d32b837b75",
+      "maximum_changed_coordinates": 614,
+      "minimum_changed_coordinates": 250,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000035-1af4dca25af8dd03",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "a4242d7397e247db8843d980062f29a8b16c30a6351530cabd71d8bf55df55aa",
+      "maximum_changed_coordinates": 684,
+      "minimum_changed_coordinates": 298,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000036-57faf9b41a9147df",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "a12e437d4ec16a62b2366421db1d5ed3affd3577d3b19fc4041ce673e7e7c5ab",
+      "maximum_changed_coordinates": 658,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000037-7b5519a711d2c3c0",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "f1640c1d99a30eb1b6a253a308031d5f09297a1cf682044bc4f3c66aea8c29aa",
+      "maximum_changed_coordinates": 657,
+      "minimum_changed_coordinates": 282,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000038-5c2f27ba7eda541f",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "080b83b0f6f2e349997cd06406c79961102e7cafdd970193a5ee3088e0f1533f",
+      "maximum_changed_coordinates": 650,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000039-bd32639dae1461b6",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "9f856d0e337bac362434765cca2975a2d866d4da635c06050728831380142e95",
+      "maximum_changed_coordinates": 661,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000040-4ca8d99ca4beb6d4",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "c1ff07aa21bf11f13479e008a3536a81b5f3cff8526dc1f627d7c548ae78ed3b",
+      "maximum_changed_coordinates": 680,
+      "minimum_changed_coordinates": 305,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000041-87b43702c79c8119",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "bd933a6a1a1bb9fbbde4c478a5af4e578630861223065e4a7c0d7b9c3720d5d9",
+      "maximum_changed_coordinates": 661,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000042-63866476b4c11151",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "9a4bf2a2ccde3dbd836f2a8355f833c944d7f638766fe8e9d3e58a35a3936584",
+      "maximum_changed_coordinates": 682,
+      "minimum_changed_coordinates": 206,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000043-2ad8658e4f249e64",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "fbd1b9161be3298ae41cdb35264fd4b556ce08302adc54de48ec7f4e03dc29d4",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000044-f220dafe7231e41f",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "e1a96a507410e4663b6d379a1da2a794a8a3de2a0ddbaa588854ec00f36de0fd",
+      "maximum_changed_coordinates": 670,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000045-422440db3c3347d2",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "588017a5007ddfb9b4c38e701b32c48deeae2a4309b9d8093657d69c87714769",
+      "maximum_changed_coordinates": 653,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000046-4962c1ea4fb47380",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "cc70acddd824f8e9d0040350481653d73f1136502b1077262573269ce7c44060",
+      "maximum_changed_coordinates": 636,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000047-3c19ac74cc8ec12b",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "3db1bcb4013a28380f7e024285af2165db3b9d5aa658663924b51e6314917138",
+      "maximum_changed_coordinates": 643,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000048-6eaa4771ad2b0ad1",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "eddd264882ce3b43a15a64dc432eb2f546b86f30cef69f21d3ad65123f618482",
+      "maximum_changed_coordinates": 667,
+      "minimum_changed_coordinates": 312,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000049-19a680c93445851b",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "f26c34a8a4f46e88c01b063ca1aee49f0860b0dcfd93ac26eb5418e8f145a584",
+      "maximum_changed_coordinates": 677,
+      "minimum_changed_coordinates": 259,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000050-9ac3225314c95ae2",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "af3b20d15d861e4584c4234293e5a1c1b6533f680e3aab64738195dc28569404",
+      "maximum_changed_coordinates": 676,
+      "minimum_changed_coordinates": 318,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000051-3b609767d1176b27",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "8eae7b6b99191c1393dd8d673891fbaf376f6f514cff9f69bbb6426707970dc0",
+      "maximum_changed_coordinates": 676,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000052-a6b91eafe658a288",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "a2c0e61919aa06fa866254b9795cad69ba29c397f4f7e99e4d0ce7ffed1c28b6",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 266,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000053-1c988e4065134fe6",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "cabb0e55c48d8e2acbe445365770eddbbf573b6324d7070b026f76caf81716e0",
+      "maximum_changed_coordinates": 659,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000054-87097add4af50f72",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "12ad707847c2b6396002b211c4bec35863452e4c857b1730802ed40ecaca9400",
+      "maximum_changed_coordinates": 661,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000055-427160606967d952",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "6e15d41561444ea686987619fa45fb8d72a4423d152f6aa312c8a38d246135c5",
+      "maximum_changed_coordinates": 694,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000056-ebe2d6beaa3328ee",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "de4de3166d1122379b420b2add59a0b7d400d0af360e9d8291d4ce201578114c",
+      "maximum_changed_coordinates": 665,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000057-a791fcfc20785874",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "b697a43ea820906e7d5f24a6adff085e70e2219c6c56b0cd7390bdd9ebf6cd93",
+      "maximum_changed_coordinates": 684,
+      "minimum_changed_coordinates": 148,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000058-975fb7d2bcf699af",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "6f0ee761b7f5180ffd704aae759ba9b6493d5c392b1b3d88eb3d8fef7af02218",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 271,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000059-ac181d802248e76d",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "ecbec6ec62944b44b93f4a9b52135ba62560019f873b5553787f17d27d1569ca",
+      "maximum_changed_coordinates": 672,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000060-1e56c37c96bd2c6f",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "b63ef27c7dfa0108c66b4d66f42c421f3379acdb488ae7a0c6f1bc59b0bcee46",
+      "maximum_changed_coordinates": 652,
+      "minimum_changed_coordinates": 298,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000061-619a5d2602610979",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "6f24c94138c555834b9173d99f99e9c2e5b6e09c56dc6ef7283d1da1ba9b342a",
+      "maximum_changed_coordinates": 672,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000062-de69ea0f183e43ad",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "490a5f01d9c6fefe6cbf387a1c2ed99a09a9abde701f6c15547722fa0c1d2baa",
+      "maximum_changed_coordinates": 653,
+      "minimum_changed_coordinates": 295,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000063-5cd4bdf58817b1dc",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "ad5898ec36390da9c1bcd15e1acfb1ea74710d3814c31baab1ad6cb15df92082",
+      "maximum_changed_coordinates": 654,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000064-1c2492e39b068da8",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "36e9fc59849ea9c8b7ca78dbe30ba32bc611ed3b62788a74326834abeb9a93b7",
+      "maximum_changed_coordinates": 654,
+      "minimum_changed_coordinates": 224,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000065-17446510f13a9e1b",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "9c56ccaff083f427cf3ca6b09cd79a84c8e26dedde55d0df025785edfb015cef",
+      "maximum_changed_coordinates": 671,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000066-fe7a9735e4c2c8ad",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "1887f35dfedd9b98eef5a93aeba142502ff7f46fef25ddae02d9d71c7f7f06fb",
+      "maximum_changed_coordinates": 677,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000067-6f7f4d1a2c00862d",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "0138e2856ee53026802ba67d56d07bb941cf9978bda0c24c396bf90cab136d75",
+      "maximum_changed_coordinates": 680,
+      "minimum_changed_coordinates": 216,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000068-f3183145ad99998b",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "c2ac3ed8c8dea83d6408ff76b8cdbd7fcc54eebd0f658fa26bd2ddd5eaf77e1e",
+      "maximum_changed_coordinates": 657,
+      "minimum_changed_coordinates": 304,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000069-632cb177f9cbcd6f",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "2ec52b28783bb938dff989453f4a2ac1f6f2f8c2ef8512856cd22ddd64b58538",
+      "maximum_changed_coordinates": 652,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000070-d2d5662013db22f4",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "6e4890ba73e625adc4b7813a97fb0c7098654439d5fc0e8a8d4540dbdb69f6dd",
+      "maximum_changed_coordinates": 664,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000071-bc6fd566f42eb995",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "6f0e2c73d88b3e16077ac1aae9cb4b54169a864daebecd7afa5c510a4f27011e",
+      "maximum_changed_coordinates": 655,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000072-6c581767d7524aee",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "4e6de334d6bdee8820cf49b544a268ff6480a5d3534740ad3b2b0f7801dd1e0e",
+      "maximum_changed_coordinates": 662,
+      "minimum_changed_coordinates": 305,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000073-67988e0076f7792f",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "336ee0d1f1226b1f3cebad4ea34f6f5ade1feb9e0ca8129573e89008af53dc7c",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 240,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000074-6401c1e11574d722",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "007a1b31087743acb4513897dae277465e4f4a768df31e8732d7df51e67d8a8e",
+      "maximum_changed_coordinates": 661,
+      "minimum_changed_coordinates": 276,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000075-e01d3534f6cba5b5",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "ee1750acd8d26e83e6306dc0c15529cc7ec50155d6775831d7290338320e0c24",
+      "maximum_changed_coordinates": 649,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000076-733162572d7c4fb6",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "7a7245a0837c633f58f86686bac48b12bbbd89873256086553043a79c4682498",
+      "maximum_changed_coordinates": 672,
+      "minimum_changed_coordinates": 314,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000077-1f78b14122835247",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "2d5b9405dceb32e9ea6c0869b0bc06f5a78e57786cad97c6d67b4a6c282db7a8",
+      "maximum_changed_coordinates": 659,
+      "minimum_changed_coordinates": 299,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000078-74b03b26cf8df7d1",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "bb82f0624612538fc422d273996950daa3adee23ef8e9fae8ab23f41cb442f79",
+      "maximum_changed_coordinates": 651,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000079-83612d5c0e4a5643",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "5d470edf57dae3cd826f760bb3b058ae3aea27034bea21b9076860dc303e0fcc",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 268,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000080-29565197414a177d",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "83cac68c085971529ad432badfe084adb12dd711893123896a1ad34e1a2215bc",
+      "maximum_changed_coordinates": 667,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000081-87ce52f86c9decfb",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "ccf308067438f1c0cd16259b2b2f475cb679760d9d8afae35ec67639d5cd7b04",
+      "maximum_changed_coordinates": 665,
+      "minimum_changed_coordinates": 208,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000082-330ff69a8a087ad7",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "05e6fba2921411605be34fa6c36c1c7b57b9240b09b4c135976cf5bd4a05e580",
+      "maximum_changed_coordinates": 704,
+      "minimum_changed_coordinates": 274,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000083-20ec5c8228b1f1c3",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "42ba1a68b84039fbbdee15b8e587791c47db1c214e803b40717fc7b0cd437b8c",
+      "maximum_changed_coordinates": 645,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000084-88410ea2ef81533a",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "403d60b0781e7f2de385706143e4d1541dd99e104207bf30cf16d5a8129fc963",
+      "maximum_changed_coordinates": 663,
+      "minimum_changed_coordinates": 246,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000085-77d51e82a024a280",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "f5a47c4d492727eca74ba9364090ec7a3799b6b5f41c2e129b07a96432aa777d",
+      "maximum_changed_coordinates": 691,
+      "minimum_changed_coordinates": 230,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000086-194ccfad9e95b9c1",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "7936185c555aa076c521a644641cd16f3f02518a078682d4a4e142574d181046",
+      "maximum_changed_coordinates": 649,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000087-4a84b57ad6263581",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "444900333f51197385648866bb98a35560f951c21e83ed5c7d40e137d5c56780",
+      "maximum_changed_coordinates": 671,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000088-b2596c5988ff09eb",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "7c1756f01e853e1396fb0d36c157d8f5567e5b95fd5f2c69f6671059e7bf0f68",
+      "maximum_changed_coordinates": 688,
+      "minimum_changed_coordinates": 313,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000089-9fe6aa2c7f7cd0b7",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "10f5780e31c0c027221cca9aa90c80a88ec4bef96d8c223505d989b36bc431a3",
+      "maximum_changed_coordinates": 673,
+      "minimum_changed_coordinates": 300,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000090-cd22490d18c91221",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "2b35894a4942214d976b5245e3da2a3d47cad5ecc86b3250b94b004c79658987",
+      "maximum_changed_coordinates": 622,
+      "minimum_changed_coordinates": 318,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000091-2360386120cb6e1f",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "7510162a160350fd565e02dd92faea61f9355bb68bf9adc5be6be05dee16a40b",
+      "maximum_changed_coordinates": 680,
+      "minimum_changed_coordinates": 299,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000092-c7e3657dc49a1f0a",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "857ae6f549a015ef5ae769adb559930d19fe0c6b385fbfb4a80b95fd13729bf2",
+      "maximum_changed_coordinates": 670,
+      "minimum_changed_coordinates": 314,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000093-ccda61498ec577e6",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "86bed9a4a5ea8847767d57d93eea03a824cc03a80e2a2190ecc23737bfeffbf9",
+      "maximum_changed_coordinates": 681,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000094-45117229aa2c332a",
+      "zero_fingerprint_count": 0
+    },
+    {
+      "collision_count": 0,
+      "fault_count": 132,
+      "fingerprint_set_sha256": "1ed2985352750335863bfb7b163db78abfa2f1775841c9d42a99cad60f1b7f95",
+      "maximum_changed_coordinates": 704,
+      "minimum_changed_coordinates": 320,
+      "unique_fingerprint_count": 132,
+      "world_id": "train-00000095-6e8fd71e41285090",
+      "zero_fingerprint_count": 0
+    }
+  ],
+  "zero_fingerprint_count": 0
+}

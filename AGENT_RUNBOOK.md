@@ -34,7 +34,7 @@
 > requires exact closure plus authenticated `COMPLETE.json`; any publication
 > or parent-directory durability error remains a failed job. Independent
 > hostile review reports no residual P0/P1 and authorizes only the exact
-> two-update H100 measurement canary. The complete EFC regression is 418 passed
+> two-update H100 measurement canary. The complete EFC regression is 428 passed
 > with 63 known PyTorch nested-tensor warnings. Canary package SHA-256 is
 > `ed024dd9c47e766871a7253c1117a4f5b7c3ac551a1f08153618854091164095`;
 > full train package SHA-256 is
@@ -48,6 +48,10 @@
 > The measurement canary is not yet submitted because Newton DNS is currently
 > unavailable. Qualification fit, development, confirmation, native-reasoning,
 > and continuation-pretraining claims remain NO-GO.
+> Post-canary decisions are preregistered in
+> `R12_EFC_HSC_POST_CANARY_DECISION.md`: optimizer, oracle-mechanism,
+> raw-source, renderer, world, and causal-incidence gates are separated before
+> any architecture escalation.
 >
 > **Latest EFC deployed-wire gate (2026-07-23 EDT):** the two-beacon CPU
 > rehearsal now emits the exact 1,536-byte deployed C/Rust machine. A separate
@@ -12471,3 +12475,43 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   access, sync only the exact code closure and v6 authorization, verify hashes,
   then submit the two-update measurement canary. Do not authorize a
   qualification fit from this local milestone.
+
+- **2026-07-24** -- **The post-canary decision tree now prevents parameter
+  scale from masquerading as reasoning evidence.** The maximum HSC compiler
+  has 64,407,956 trainable parameters but only 242,688 independent train target
+  bits, approximately 265 trainable parameters per independent bit. A falling
+  train loss can therefore be source-specific interpolation. The frozen
+  `R12_EFC_HSC_POST_CANARY_DECISION.md` partitions only the 384 train sources
+  into 216 fitting, 72 renderer-holdout, and 96 world-holdout sources before
+  outcomes, and separates free-logit optimizer replay, oracle-evidence direct
+  and Hankel arms, raw direct/Hankel arms, and the existing incidence controls.
+  It preregisters exact optimizer, microfit, mechanism, raw-fit, transfer, and
+  causal-margin gates.
+
+  A new fail-closed closeout,
+  `train/assess_episode_functor_hankel_canary.py`, verifies the authenticated
+  exact two-update output, authorization hashes, Landlock/network/H100
+  receipts, finite positive gradients, changed state, and measured
+  memory/timing/optimizer bytes while authorizing no fit, scored access,
+  reasoning claim, or pretraining. The expanded EFC suite is 428 passed with
+  63 known nested-tensor warnings; Ruff, `py_compile`, and diff checks pass.
+
+  Architectural changes are now failure-triggered. Attention, position/RoPE,
+  normalization/precision, and recurrence each have a quantitative admission
+  test. Exact CPU syndrome mechanics cover all 26,400 permutation-preserving
+  transition and balance-preserving observer swaps across 200 frozen worlds:
+  every fault has a nonzero unique within-world depth-three fingerprint, with
+  120--704 changed coordinates. Report payload/file SHA-256 values are
+  `be260fda48585ff8aacc13369e8b01d80023729c944454388fe65cc37038b254`
+  and
+  `4aaf86536899214c2d2bcce3516a65c6021a267989040a2f0b4982dc24c35ef2`.
+
+  A reserved 3,995,137-parameter Adjoint Causal-Syndrome Observer would revise
+  machine logits along an explicit causal adjoint and bring the complete
+  system to 199,488,246 parameters; a scrambled-adjoint arm is its matched
+  control. A separate 4,303,048-parameter Hankel-Syndrome Reentrant Attention
+  treatment would bring the complete system to 199,796,157 and use
+  record-deranged feedback as its control. Both remain unimplemented and
+  unauthorized unless their distinct machine-recurrence or source-attention
+  triggers fire. Newton DNS still fails before SSH, so no GPU job or neural
+  fit has run.
