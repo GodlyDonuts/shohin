@@ -25,8 +25,8 @@ from episode_functor_learned_system import (
 from episode_functor_qualification_loss import EFCHankelQualificationLoss
 from episode_functor_query_parser import NeuralOpaqueQueryParser
 from episode_functor_witness_compiler import ProofCarryingWitnessCompiler
-from pipeline.episode_functor_hankel_shift import enumerate_action_words
-from pipeline.episode_functor_wire_protocol import MACHINE_SIZE
+from pipeline.episode_functor_hankel_geometry import enumerate_action_words
+from pipeline.episode_functor_machine_contract import MACHINE_SIZE
 
 
 HANKEL_ARM_SCHEMA = "efc-hankel-arm-architecture-objective/v2"

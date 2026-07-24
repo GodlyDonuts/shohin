@@ -34,7 +34,7 @@ from episode_functor_machine import (
     MAX_STATES,
     SoftFunctorMachine,
 )
-from pipeline.episode_functor_hankel_shift import (
+from pipeline.episode_functor_hankel_geometry import (
     commutative_bag_incidence,
     enumerate_action_words,
     prefix_shift_incidence,

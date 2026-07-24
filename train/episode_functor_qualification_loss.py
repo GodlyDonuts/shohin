@@ -20,10 +20,10 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from pipeline.episode_functor_qualification_supervisor import (  # noqa: E402
+from pipeline.episode_functor_qualification_batch import (  # noqa: E402
     QualificationSupervisorBatch,
 )
-from pipeline.episode_functor_hankel_shift import (  # noqa: E402
+from pipeline.episode_functor_hankel_geometry import (  # noqa: E402
     enumerate_action_words,
     prefix_shift_incidence,
 )

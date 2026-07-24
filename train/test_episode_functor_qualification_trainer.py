@@ -14,6 +14,7 @@ from episode_functor_qualification_loss import (
 )
 from episode_functor_qualification_trainer import (
     EFCQualificationTrainer,
+    QualificationTrainerConfig,
     QualificationTrainerError,
 )
 from episode_functor_witness_compiler import (
@@ -25,6 +26,7 @@ from pipeline.episode_functor_identifiable_board import (
 )
 from pipeline.episode_functor_qualification_boundary import (
     collate_candidate_sources,
+    tokenizer_runtime_sha256,
 )
 from pipeline.episode_functor_qualification_custody import (
     QualificationCustodyError,
@@ -45,6 +47,9 @@ class _Encoded:
 
 
 class _ByteTokenizer:
+    def to_str(self) -> str:
+        return '{"kind":"test-byte-tokenizer"}'
+
     def encode(self, payload: str) -> _Encoded:
         return _Encoded(payload)
 
@@ -60,12 +65,21 @@ def _fixture():
         },
     )
     rows = tuple(row for row in rows if row.split == "train")
+    tokenizer = _ByteTokenizer()
     candidate = collate_candidate_sources(
         project_candidate_sources(rows, split="train"),
-        tokenizer=_ByteTokenizer(),
+        tokenizer=tokenizer,
+        tokenizer_artifact_sha256="a" * 64,
+        expected_tokenizer_runtime_sha256=tokenizer_runtime_sha256(
+            tokenizer
+        ),
     )
     supervisor = collate_qualification_supervision(rows)
-    custody = create_qualification_split_custody(rows, split="train")
+    custody = create_qualification_split_custody(
+        rows,
+        split="train",
+        candidate=candidate,
+    )
     system = LearnedEFCSystem(
         source_compiler=ProofCarryingWitnessCompiler(
             width=48,
@@ -324,6 +338,22 @@ def test_optimizer_rejects_nontrain_split_custody() -> None:
     mechanics = create_qualification_split_custody(
         rows,
         split="mechanics",
+        candidate=(
+            lambda selected, tokenizer: collate_candidate_sources(
+                project_candidate_sources(
+                    selected,
+                    split="mechanics",
+                ),
+                tokenizer=tokenizer,
+                tokenizer_artifact_sha256="a" * 64,
+                expected_tokenizer_runtime_sha256=(
+                    tokenizer_runtime_sha256(tokenizer)
+                ),
+            )
+        )(
+            tuple(row for row in rows if row.split == "mechanics"),
+            _ByteTokenizer(),
+        ),
     )
     with pytest.raises(
         QualificationCustodyError,
@@ -333,4 +363,77 @@ def test_optimizer_rejects_nontrain_split_custody() -> None:
             system,
             training_custody=mechanics,
             require_verified_trunk=False,
+        )
+
+
+def test_update_cap_and_train_seal_make_mechanics_terminal() -> None:
+    candidate, supervisor, system, custody = _fixture()
+    trainer = EFCQualificationTrainer(
+        system,
+        config=QualificationTrainerConfig(maximum_updates=1),
+        training_custody=custody,
+        require_verified_trunk=False,
+    )
+    step = trainer.train_step(candidate, supervisor)
+    assert step.update_index == 1
+    with pytest.raises(
+        QualificationTrainerError,
+        match="cap was exceeded",
+    ):
+        trainer.train_step(candidate, supervisor)
+    trainer.seal_training()
+    assert trainer.phase == "train-sealed"
+    with pytest.raises(
+        QualificationTrainerError,
+        match="disabled after training seal",
+    ):
+        trainer.train_step(candidate, supervisor)
+
+    rows = generate_pilot_rows(
+        seed="efc-qualification-terminal-mechanics-v1",
+        counts={
+            "train": 1,
+            "mechanics": 1,
+            "development": 1,
+            "confirmation": 1,
+        },
+    )
+    mechanics_rows = tuple(
+        row for row in rows if row.split == "mechanics"
+    )
+    tokenizer = _ByteTokenizer()
+    mechanics_candidate = collate_candidate_sources(
+        project_candidate_sources(
+            mechanics_rows,
+            split="mechanics",
+        ),
+        tokenizer=tokenizer,
+        tokenizer_artifact_sha256="a" * 64,
+        expected_tokenizer_runtime_sha256=tokenizer_runtime_sha256(
+            tokenizer
+        ),
+    )
+    mechanics_supervisor = collate_qualification_supervision(
+        mechanics_rows
+    )
+    mechanics_custody = create_qualification_split_custody(
+        mechanics_rows,
+        split="mechanics",
+        candidate=mechanics_candidate,
+    )
+    evaluated = trainer.evaluate(
+        mechanics_candidate,
+        mechanics_supervisor,
+        custody=mechanics_custody,
+    )
+    assert evaluated.trainer_phase == "mechanics-opened"
+    assert trainer.phase == "closed"
+    with pytest.raises(
+        QualificationTrainerError,
+        match="trainer is closed",
+    ):
+        trainer.evaluate(
+            mechanics_candidate,
+            mechanics_supervisor,
+            custody=mechanics_custody,
         )

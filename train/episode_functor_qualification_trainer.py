@@ -8,6 +8,7 @@ supervisor batches plus a cryptographically connected Shohin system.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from contextlib import nullcontext
 import math
 from pathlib import Path
 import sys
@@ -24,7 +25,7 @@ from pipeline.episode_functor_qualification_boundary import (  # noqa: E402
 from pipeline.episode_functor_qualification_custody import (  # noqa: E402
     QualificationSplitCustody,
 )
-from pipeline.episode_functor_qualification_supervisor import (  # noqa: E402
+from pipeline.episode_functor_qualification_batch import (  # noqa: E402
     QualificationSupervisorBatch,
 )
 from episode_functor_learned_system import (  # noqa: E402
@@ -50,6 +51,19 @@ class QualificationTrainerConfig:
     learning_rate: float = 3e-4
     weight_decay: float = 0.01
     maximum_gradient_norm: float = 1.0
+    beta1: float = 0.9
+    beta2: float = 0.999
+    epsilon: float = 1e-8
+    amsgrad: bool = False
+    maximize: bool = False
+    foreach: bool = False
+    capturable: bool = False
+    differentiable: bool = False
+    fused: bool = False
+    maximum_updates: int = 1
+    autocast_dtype: str = "none"
+    tf32: bool = False
+    deterministic_algorithms: bool = False
 
     def __post_init__(self) -> None:
         if (
@@ -59,6 +73,29 @@ class QualificationTrainerConfig:
             or self.weight_decay < 0.0
             or not math.isfinite(self.maximum_gradient_norm)
             or self.maximum_gradient_norm <= 0.0
+            or not math.isfinite(self.beta1)
+            or not 0.0 <= self.beta1 < 1.0
+            or not math.isfinite(self.beta2)
+            or not 0.0 <= self.beta2 < 1.0
+            or not math.isfinite(self.epsilon)
+            or self.epsilon <= 0.0
+            or any(
+                type(value) is not bool
+                for value in (
+                    self.amsgrad,
+                    self.maximize,
+                    self.foreach,
+                    self.capturable,
+                    self.differentiable,
+                    self.fused,
+                    self.tf32,
+                    self.deterministic_algorithms,
+                )
+            )
+            or not isinstance(self.maximum_updates, int)
+            or isinstance(self.maximum_updates, bool)
+            or self.maximum_updates < 1
+            or self.autocast_dtype not in {"none", "bfloat16"}
         ):
             raise QualificationTrainerError(
                 "qualification optimizer config differs"
@@ -67,22 +104,26 @@ class QualificationTrainerConfig:
 
 @dataclass(frozen=True, slots=True)
 class QualificationStepReceipt:
+    update_index: int
     loss: float
     gradient_norm: float
     trainable_parameters: int
     optimizer_state_bytes: int
     exact_metrics: QualificationExactMetrics
     training_manifest_sha256: str
+    candidate_input_manifest_sha256: str
 
     def __post_init__(self) -> None:
         if (
-            not math.isfinite(self.loss)
+            self.update_index < 1
+            or not math.isfinite(self.loss)
             or self.loss < 0.0
             or not math.isfinite(self.gradient_norm)
             or self.gradient_norm < 0.0
             or self.trainable_parameters < 1
             or self.optimizer_state_bytes < 1
             or len(self.training_manifest_sha256) != 64
+            or len(self.candidate_input_manifest_sha256) != 64
         ):
             raise QualificationTrainerError(
                 "qualification step receipt differs"
@@ -94,6 +135,7 @@ class QualificationEvaluationReceipt:
     split: str
     manifest_sha256: str
     exact_metrics: QualificationExactMetrics
+    trainer_phase: str
 
 
 class EFCQualificationTrainer:
@@ -168,10 +210,48 @@ class EFCQualificationTrainer:
                 "qualification source compiler parameters differ"
             )
         self._parameters = parameters
+        parameter_devices = {parameter.device for parameter in parameters}
+        if len(parameter_devices) != 1:
+            raise QualificationTrainerError(
+                "qualification parameters span multiple devices"
+            )
+        self._device = next(iter(parameter_devices))
+        if (
+            self.config.fused
+            and self._device.type != "cuda"
+        ):
+            raise QualificationTrainerError(
+                "qualification fused AdamW requires CUDA"
+            )
+        if (
+            self.config.autocast_dtype == "bfloat16"
+            and self._device.type != "cuda"
+        ):
+            raise QualificationTrainerError(
+                "qualification bfloat16 autocast requires CUDA"
+            )
         self.optimizer = torch.optim.AdamW(
             parameters,
             lr=self.config.learning_rate,
+            betas=(self.config.beta1, self.config.beta2),
+            eps=self.config.epsilon,
             weight_decay=self.config.weight_decay,
+            amsgrad=self.config.amsgrad,
+            maximize=self.config.maximize,
+            foreach=self.config.foreach,
+            capturable=self.config.capturable,
+            differentiable=self.config.differentiable,
+            fused=self.config.fused,
+        )
+        self._update_index = 0
+        self._phase = "training"
+
+    def _autocast(self):
+        if self.config.autocast_dtype == "none":
+            return nullcontext()
+        return torch.autocast(
+            device_type="cuda",
+            dtype=torch.bfloat16,
         )
 
     @property
@@ -219,6 +299,14 @@ class EFCQualificationTrainer:
         candidate: CandidateCompilerBatch,
         supervisor: QualificationSupervisorBatch,
     ) -> QualificationStepReceipt:
+        if self._phase != "training":
+            raise QualificationTrainerError(
+                "qualification updates are disabled after training seal"
+            )
+        if self._update_index >= self.config.maximum_updates:
+            raise QualificationTrainerError(
+                "qualification update cap was exceeded"
+            )
         if not isinstance(candidate, CandidateCompilerBatch):
             raise QualificationTrainerError(
                 "qualification candidate batch type differs"
@@ -229,17 +317,18 @@ class EFCQualificationTrainer:
         if self.system.frozen_trunk is not None:
             self.system.frozen_trunk.eval()
         self.optimizer.zero_grad(set_to_none=True)
-        output = self.system.compile_source(
-            candidate.witness,
-            straight_through=True,
-            trunk_batch=self._trunk_batch(candidate),
-        )
-        self._assert_hankel_custody(output)
-        losses = self.objective(
-            output,
-            supervisor,
-            candidate_source_sha256=candidate.source_sha256,
-        )
+        with self._autocast():
+            output = self.system.compile_source(
+                candidate.witness,
+                straight_through=True,
+                trunk_batch=self._trunk_batch(candidate),
+            )
+            self._assert_hankel_custody(output)
+            losses = self.objective(
+                output,
+                supervisor,
+                candidate_source_sha256=candidate.source_sha256,
+            )
         losses.total.backward()
         if any(
             parameter.grad is None
@@ -265,23 +354,26 @@ class EFCQualificationTrainer:
             )
         self.system.source_compiler.eval()
         with torch.no_grad():
-            post_update_output = self.system.compile_source(
-                candidate.witness,
-                straight_through=False,
-                trunk_batch=self._trunk_batch(candidate),
-            )
-            self._assert_hankel_custody(post_update_output)
-            metrics = self.objective.exact_metrics(
-                post_update_output,
-                supervisor,
-                candidate_source_sha256=candidate.source_sha256,
-            )
+            with self._autocast():
+                post_update_output = self.system.compile_source(
+                    candidate.witness,
+                    straight_through=False,
+                    trunk_batch=self._trunk_batch(candidate),
+                )
+                self._assert_hankel_custody(post_update_output)
+                metrics = self.objective.exact_metrics(
+                    post_update_output,
+                    supervisor,
+                    candidate_source_sha256=candidate.source_sha256,
+                )
         state_bytes = self._optimizer_state_bytes()
         if state_bytes < 1:
             raise QualificationTrainerError(
                 "qualification optimizer state was not materialized"
             )
+        self._update_index += 1
         return QualificationStepReceipt(
+            update_index=self._update_index,
             loss=float(losses.total.detach().cpu()),
             gradient_norm=float(gradient_norm.detach().cpu()),
             trainable_parameters=self.trainable_parameters,
@@ -290,7 +382,30 @@ class EFCQualificationTrainer:
             training_manifest_sha256=(
                 self.training_custody.receipt_sha256
             ),
+            candidate_input_manifest_sha256=(
+                candidate.candidate_input_manifest_sha256
+            ),
         )
+
+    @property
+    def phase(self) -> str:
+        return self._phase
+
+    @property
+    def update_index(self) -> int:
+        return self._update_index
+
+    def seal_training(self) -> None:
+        """Irreversibly disable optimization before mechanics is opened."""
+
+        if (
+            self._phase != "training"
+            or self._update_index != self.config.maximum_updates
+        ):
+            raise QualificationTrainerError(
+                "qualification training cannot seal before its fixed budget"
+            )
+        self._phase = "train-sealed"
 
     @torch.no_grad()
     def evaluate(
@@ -308,23 +423,45 @@ class EFCQualificationTrainer:
             raise QualificationTrainerError(
                 "qualification evaluation custody differs"
             )
+        if self._phase == "training":
+            if custody.split != "train":
+                raise QualificationTrainerError(
+                    "nontrain evaluation requires a sealed trainer"
+                )
+            evaluation_phase = "training"
+        elif self._phase == "train-sealed":
+            if custody.split != "mechanics":
+                raise QualificationTrainerError(
+                    "sealed qualification opens mechanics only"
+                )
+            evaluation_phase = "mechanics-opened"
+        else:
+            raise QualificationTrainerError(
+                "qualification trainer is closed"
+            )
         custody.assert_batches(candidate, supervisor)
         self.system.eval()
-        output = self.system.compile_source(
-            candidate.witness,
-            straight_through=False,
-            trunk_batch=self._trunk_batch(candidate),
-        )
-        self._assert_hankel_custody(output)
-        return QualificationEvaluationReceipt(
-            split=custody.split,
-            manifest_sha256=custody.receipt_sha256,
-            exact_metrics=self.objective.exact_metrics(
+        with self._autocast():
+            output = self.system.compile_source(
+                candidate.witness,
+                straight_through=False,
+                trunk_batch=self._trunk_batch(candidate),
+            )
+            self._assert_hankel_custody(output)
+            exact_metrics = self.objective.exact_metrics(
                 output,
                 supervisor,
                 candidate_source_sha256=candidate.source_sha256,
-            ),
+            )
+        receipt = QualificationEvaluationReceipt(
+            split=custody.split,
+            manifest_sha256=custody.receipt_sha256,
+            exact_metrics=exact_metrics,
+            trainer_phase=evaluation_phase,
         )
+        if evaluation_phase == "mechanics-opened":
+            self._phase = "closed"
+        return receipt
 
 
 __all__ = [

@@ -129,18 +129,24 @@ are tested, but no neural first fit is currently authorized.
   and fresh post-update metrics. A parameter-
   and target-identical dual-branch direct-decode control separates shift
   decoding from added weights and dense rollout supervision. The complete EFC
-  regression is 407 passed. This closes mechanics defects, not the neural-fit
-  gate.
+  regression is 418 passed. V6 adds exact AdamW/BF16/TF32 and two-update
+  schedule receipts, exact package closure, post-checkpoint RNG rebinding,
+  authenticated atomic output, and a 26-file Landlock worker closure that
+  excludes the board generator, label oracle, and preparation role.
+  Independent hostile review reports no residual P0/P1 for the exact
+  four-source H100 measurement canary. This closes measurement-launch
+  mechanics, not the neural-fit gate.
 - **Capability boundary:** these are architecture and CPU mechanics, not a
   Shohin reasoning result. The EFC compiler has been instantiated and connected
   read-only to the protected trunk, but it has not been fitted. No GPU score,
   development read, confirmation read, or reasoning claim exists.
-- **Immediate next task:** freeze update count, optimizer precision, measured
-  compiler cost, exact train-source receipt, and a neural process-custody
-  launcher, then run the smallest equal-budget train-only falsifier over HSC,
-  direct-decode, position-scramble, and stable-bag arms. Development remains
-  sealed until train/mechanics qualification passes. Linux Bubblewrap plus
-  Landlock remains an additional deployment gate.
+- **Immediate next task:** when Newton DNS returns, sync and hash-verify the
+  exact v6 authorization and runtime closure, then run the two-update
+  train-only H100 measurement canary. Use its measured memory/runtime/optimizer
+  receipt to define, but not automatically authorize, an equal-budget
+  train-only falsifier over HSC, direct-decode, position-scramble, and
+  stable-bag arms. Development remains sealed until train/mechanics
+  qualification passes.
 - **Primary bottleneck:** model-owned compilation of raw episodic evidence into
   a compact renderer-invariant causal machine, including opaque referent
   binding. Bounded ordered execution is already mechanically easy once the

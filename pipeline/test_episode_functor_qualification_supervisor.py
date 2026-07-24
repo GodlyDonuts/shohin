@@ -18,6 +18,7 @@ from pipeline.episode_functor_identifiable_board import (  # noqa: E402
 )
 from pipeline.episode_functor_qualification_boundary import (  # noqa: E402
     collate_candidate_sources,
+    tokenizer_runtime_sha256,
 )
 from pipeline.episode_functor_qualification_supervisor import (  # noqa: E402
     QualificationSupervisorError,
@@ -39,6 +40,9 @@ class _Encoded:
 
 
 class _ByteTokenizer:
+    def to_str(self) -> str:
+        return '{"kind":"test-byte-tokenizer"}'
+
     def encode(self, payload: str) -> _Encoded:
         return _Encoded(payload)
 
@@ -60,7 +64,11 @@ def test_supervisor_is_separate_and_hash_aligned_to_candidate() -> None:
     candidates = project_candidate_sources(rows, split="train")
     candidate_batch = collate_candidate_sources(
         candidates,
-        tokenizer=_ByteTokenizer(),
+        tokenizer=(tokenizer := _ByteTokenizer()),
+        tokenizer_artifact_sha256="a" * 64,
+        expected_tokenizer_runtime_sha256=tokenizer_runtime_sha256(
+            tokenizer
+        ),
     )
     supervisor = collate_qualification_supervision(rows)
     supervisor.assert_candidate_alignment(candidate_batch.source_sha256)

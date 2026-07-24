@@ -23,23 +23,27 @@
 >
 > **Latest HSC qualification gate (2026-07-24 EDT):** no neural fit has run.
 > The maximum Hankel-shift package remains 70,411,445 added and 195,493,109
-> complete parameters, leaving 4,506,891 below the 200M ceiling. A hostile
-> audit found eight claim-blocking qualification flaws. The repaired path now
-> uses one independently executed prefix target for every arm, compiler-owned
-> source receipts, supervisor-tensor-bound self-hashed split custody,
-> persistent trainer-pinned
-> incidence, action-recoding-equivariant position-scramble and stable-bag
-> controls, an exact-uniform-collapse NO-GO, required bound noncollapsed
-> initialization, one-factor-only arm
-> comparisons, explicit tied-machine and tied-signature accounting, and fresh
-> post-update metrics. A new
-> 195,493,109-parameter dual-branch direct-decode control receives the same
-> 5,120 derived signature bits per source and differs only in bypassing Hankel
-> matching for deployed transitions. The complete EFC regression is 407
-> passed with 61 known PyTorch nested-tensor warnings. Full resource receipt
-> and neural process custody remain unset, so fit/GPU/development/
-> confirmation/native-reasoning claims remain NO-GO. Continuation pretraining
-> remains forbidden.
+> complete parameters, leaving 4,506,891 below the 200M ceiling. The train-only
+> v6 measurement authorization binds exact arm and noncollapsed initialization,
+> AdamW/BF16/TF32 semantics, a two-update schedule, tokenizer artifact/runtime
+> identity, 4 raw canary sources, 384 frozen train sources, every ordered
+> supervisor tensor, exact candidate manifests, and a 26-file runtime source
+> closure. The closure includes the Landlock launcher but excludes the board
+> generator, label oracle, and preparation seed/counts. Packages reject
+> unlisted files; the worker reseeds after protected-checkpoint loading; output
+> requires exact closure plus authenticated `COMPLETE.json`; any publication
+> or parent-directory durability error remains a failed job. Independent
+> hostile review reports no residual P0/P1 and authorizes only the exact
+> two-update H100 measurement canary. The complete EFC regression is 418 passed
+> with 63 known PyTorch nested-tensor warnings. Canary package SHA-256 is
+> `ed024dd9c47e766871a7253c1117a4f5b7c3ac551a1f08153618854091164095`;
+> full train package SHA-256 is
+> `142b16298a38c30ecd1fc36b2792c47829814e8782e02ef803cef48cfc480064`;
+> runtime source manifest SHA-256 is
+> `ae4357df26353bbc6d8703f6074f133fc3991d00e751c5a22627aa2c387be64f`.
+> The measurement canary is not yet submitted because Newton DNS is currently
+> unavailable. Qualification fit, development, confirmation, native-reasoning,
+> and continuation-pretraining claims remain NO-GO.
 >
 > **Latest EFC deployed-wire gate (2026-07-23 EDT):** the two-beacon CPU
 > rehearsal now emits the exact 1,536-byte deployed C/Rust machine. A separate
@@ -12423,3 +12427,38 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   No substantive optimizer run, source freeze, full resource receipt,
   development/confirmation access, GPU job, continuation pretraining, or
   native-reasoning result is authorized.
+
+- **2026-07-24** -- **The exact HSC measurement canary is now locally
+  launchable after two hostile rejections; no neural fit has run.** The v6
+  preparation publishes immutable four-source canary and 384-source train
+  packages. The canary package SHA-256 is
+  `ed024dd9c47e766871a7253c1117a4f5b7c3ac551a1f08153618854091164095`;
+  the train package SHA-256 is
+  `142b16298a38c30ecd1fc36b2792c47829814e8782e02ef803cef48cfc480064`.
+  Exact target accounting separates 242,688 independent train target bits from
+  1,966,080 deterministic signature-expansion bits. The treatment and three
+  matched controls share initial trainable SHA-256
+  `1ca8027e1762b37bde340abcd88b3500b1517ec90ab7b9a804ee1876f5866aa4`.
+
+  A first launch audit found RNG drift after checkpoint loading, acceptance of
+  unlisted package files, unauthenticated final output, and an overbroad source
+  snapshot that exposed the board and oracle. Those defects are closed. The
+  worker now reseeds immediately before compiler construction, package loading
+  requires exact directory closure, publication requires a hash-authenticated
+  `COMPLETE.json`, and every publication/durability exception propagates. Its
+  source manifest binds exactly 26 runtime files, including
+  `landlock_stage_exec.py`, and excludes the board generator, supervisor
+  builder, and preparation role. Runtime Hankel geometry is separately
+  implemented and exact-equality tested against the offline oracle. Final
+  hostile review reports `GO` with no residual P0/P1 for the exact two-update
+  measurement canary. The full EFC suite passes 418 tests; Ruff,
+  `py_compile`, shell syntax, package reconstruction, and diff checks pass.
+
+  Runtime source manifest SHA-256 is
+  `ae4357df26353bbc6d8703f6074f133fc3991d00e751c5a22627aa2c387be64f`;
+  prefix canary authorization SHA-256 is
+  `1b14ee63add971f9022377847c8d9a1fe53911938bb65ee2cf693e0dd81a6cf4`.
+  Newton DNS failed before SSH, so no GPU job was submitted. Retry standard
+  access, sync only the exact code closure and v6 authorization, verify hashes,
+  then submit the two-update measurement canary. Do not authorize a
+  qualification fit from this local milestone.

@@ -7,7 +7,9 @@ import torch
 
 from pipeline.episode_functor_identifiable_board import generate_pilot_rows
 from pipeline.episode_functor_qualification_boundary import (
+    candidate_input_manifest_sha256,
     collate_candidate_sources,
+    tokenizer_runtime_sha256,
 )
 from pipeline.episode_functor_identifiable_board import (
     project_candidate_sources,
@@ -43,15 +45,37 @@ class _Encoded:
 
 
 class _ByteTokenizer:
+    def to_str(self) -> str:
+        return '{"kind":"test-byte-tokenizer"}'
+
     def encode(self, payload: str) -> _Encoded:
         return _Encoded(payload)
 
 
+def _candidate(rows, split):
+    selected = tuple(row for row in rows if row.split == split)
+    tokenizer = _ByteTokenizer()
+    return collate_candidate_sources(
+        project_candidate_sources(selected, split=split),
+        tokenizer=tokenizer,
+        tokenizer_artifact_sha256="a" * 64,
+        expected_tokenizer_runtime_sha256=tokenizer_runtime_sha256(
+            tokenizer
+        ),
+    )
+
+
 def test_split_custody_is_canonical_and_train_access_is_explicit() -> None:
-    train = create_qualification_split_custody(_rows(), split="train")
+    rows = _rows()
+    train = create_qualification_split_custody(
+        rows,
+        split="train",
+        candidate=_candidate(rows, "train"),
+    )
     mechanics = create_qualification_split_custody(
-        _rows(),
+        rows,
         split="mechanics",
+        candidate=_candidate(rows, "mechanics"),
     )
     train.assert_training_split()
     with pytest.raises(
@@ -64,9 +88,11 @@ def test_split_custody_is_canonical_and_train_access_is_explicit() -> None:
 
 
 def test_split_custody_rejects_receipt_mutation() -> None:
+    rows = _rows()
     receipt = create_qualification_split_custody(
-        _rows(),
+        rows,
         split="train",
+        candidate=_candidate(rows, "train"),
     )
     with pytest.raises(
         QualificationCustodyError,
@@ -77,10 +103,11 @@ def test_split_custody_rejects_receipt_mutation() -> None:
 
 def test_split_custody_binds_every_supervisor_target_tensor() -> None:
     rows = tuple(row for row in _rows() if row.split == "train")
-    receipt = create_qualification_split_custody(rows, split="train")
-    candidate = collate_candidate_sources(
-        project_candidate_sources(rows, split="train"),
-        tokenizer=_ByteTokenizer(),
+    candidate = _candidate(rows, "train")
+    receipt = create_qualification_split_custody(
+        rows,
+        split="train",
+        candidate=candidate,
     )
     supervisor = collate_qualification_supervision(rows)
     receipt.assert_batches(candidate, supervisor)
@@ -117,3 +144,24 @@ def test_split_custody_binds_every_supervisor_target_tensor() -> None:
             match="leaves split custody",
         ):
             receipt.assert_batches(candidate, tampered)
+
+
+def test_split_custody_rejects_candidate_tensor_mutation() -> None:
+    rows = tuple(row for row in _rows() if row.split == "train")
+    candidate = _candidate(rows, "train")
+    receipt = create_qualification_split_custody(
+        rows,
+        split="train",
+        candidate=candidate,
+    )
+    supervisor = collate_qualification_supervision(rows)
+    candidate.trunk.token_ids[0, 0] += 1
+    assert (
+        candidate_input_manifest_sha256(candidate)
+        != candidate.candidate_input_manifest_sha256
+    )
+    with pytest.raises(
+        QualificationCustodyError,
+        match="leaves split custody",
+    ):
+        receipt.assert_batches(candidate, supervisor)

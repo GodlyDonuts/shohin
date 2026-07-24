@@ -15,6 +15,7 @@ from pipeline.episode_functor_identifiable_board import (
 from pipeline.episode_functor_qualification_boundary import (
     QualificationBoundaryError,
     collate_candidate_sources,
+    tokenizer_runtime_sha256,
 )
 
 
@@ -25,6 +26,9 @@ class _Encoding:
 
 
 class _ByteTokenizer:
+    def to_str(self) -> str:
+        return '{"kind":"test-byte-tokenizer"}'
+
     def encode(self, text: str) -> _Encoding:
         payload = text.encode("ascii")
         return _Encoding(
@@ -37,6 +41,9 @@ class _ByteTokenizer:
 
 
 class _GapTokenizer:
+    def to_str(self) -> str:
+        return '{"kind":"test-gap-tokenizer"}'
+
     def encode(self, text: str) -> _Encoding:
         payload = text.encode("ascii")
         return _Encoding(
@@ -67,12 +74,19 @@ def test_candidate_batch_contains_only_source_derived_inputs() -> None:
     candidate = _candidate()
     batch = collate_candidate_sources(
         (candidate,),
-        tokenizer=_ByteTokenizer(),
+        tokenizer=(tokenizer := _ByteTokenizer()),
+        tokenizer_artifact_sha256="a" * 64,
+        expected_tokenizer_runtime_sha256=tokenizer_runtime_sha256(
+            tokenizer
+        ),
     )
     assert tuple(field.name for field in fields(batch)) == (
         "witness",
         "trunk",
         "source_sha256",
+        "tokenizer_artifact_sha256",
+        "tokenizer_runtime_sha256",
+        "candidate_input_manifest_sha256",
     )
     assert batch.trunk.payloads == (candidate.source,)
     assert torch.equal(
@@ -97,7 +111,11 @@ def test_poisoned_candidate_type_and_bad_offsets_fail_closed() -> None:
     ):
         collate_candidate_sources(
             (PoisonedCandidate(candidate.source, "leak"),),
-            tokenizer=_ByteTokenizer(),
+            tokenizer=(tokenizer := _ByteTokenizer()),
+            tokenizer_artifact_sha256="a" * 64,
+            expected_tokenizer_runtime_sha256=tokenizer_runtime_sha256(
+                tokenizer
+            ),
         )
     with pytest.raises(
         QualificationBoundaryError,
@@ -105,5 +123,9 @@ def test_poisoned_candidate_type_and_bad_offsets_fail_closed() -> None:
     ):
         collate_candidate_sources(
             (candidate,),
-            tokenizer=_GapTokenizer(),
+            tokenizer=(tokenizer := _GapTokenizer()),
+            tokenizer_artifact_sha256="b" * 64,
+            expected_tokenizer_runtime_sha256=tokenizer_runtime_sha256(
+                tokenizer
+            ),
         )

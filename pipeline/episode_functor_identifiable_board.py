@@ -17,6 +17,8 @@ import random
 import re
 from typing import Iterable, Sequence
 
+from pipeline.episode_functor_candidate_source import CandidateSource
+
 
 STATE_COUNT = 8
 ACTION_COUNT = 3
@@ -193,24 +195,6 @@ class PilotRow:
     source: bytes
     machine: IdentifiableMachine
     canonical_sha256: str
-
-
-@dataclass(frozen=True, slots=True)
-class CandidateSource:
-    """The only source object admissible to a neural forward path."""
-
-    source: bytes
-
-    def __post_init__(self) -> None:
-        if not self.source:
-            raise IdentifiableBoardError("candidate source is empty")
-        if any(
-            marker in self.source.lower()
-            for marker in (b"renderer", b"family", b"split")
-        ):
-            raise IdentifiableBoardError(
-                "candidate source contains forbidden metadata"
-            )
 
 
 def _domain_rng(seed: str, *parts: object) -> random.Random:

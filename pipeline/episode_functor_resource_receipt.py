@@ -12,7 +12,7 @@ import json
 import re
 from typing import Literal
 
-from pipeline.episode_functor_wire_protocol import MACHINE_SIZE
+from pipeline.episode_functor_machine_contract import MACHINE_SIZE
 
 
 RECEIPT_SCHEMA = "efc-qualification-resource-custody/v1"

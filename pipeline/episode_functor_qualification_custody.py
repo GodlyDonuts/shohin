@@ -5,18 +5,20 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, fields
 from hashlib import sha256
 import json
-from typing import Sequence
+from typing import TYPE_CHECKING, Sequence
 
 import torch
 
-from pipeline.episode_functor_identifiable_board import PilotRow
 from pipeline.episode_functor_qualification_boundary import (
     CandidateCompilerBatch,
+    candidate_input_manifest_sha256,
 )
-from pipeline.episode_functor_qualification_supervisor import (
+from pipeline.episode_functor_qualification_batch import (
     QualificationSupervisorBatch,
-    collate_qualification_supervision,
 )
+
+if TYPE_CHECKING:
+    from pipeline.episode_functor_identifiable_board import PilotRow
 
 
 QUALIFICATION_CUSTODY_SCHEMA = "efc-qualification-split-custody/v1"
@@ -83,6 +85,9 @@ class QualificationSplitCustody:
     canonical_manifest_sha256: str
     factor_manifest_sha256: str
     supervisor_manifest_sha256: str
+    candidate_input_manifest_sha256: str
+    tokenizer_artifact_sha256: str
+    tokenizer_runtime_sha256: str
     board_manifest_sha256: str
     receipt_sha256: str
     schema: str = QUALIFICATION_CUSTODY_SCHEMA
@@ -104,6 +109,9 @@ class QualificationSplitCustody:
             self.canonical_manifest_sha256,
             self.factor_manifest_sha256,
             self.supervisor_manifest_sha256,
+            self.candidate_input_manifest_sha256,
+            self.tokenizer_artifact_sha256,
+            self.tokenizer_runtime_sha256,
             self.board_manifest_sha256,
             self.receipt_sha256,
         ):
@@ -125,6 +133,9 @@ class QualificationSplitCustody:
             "board_manifest_sha256": self.board_manifest_sha256,
             "canonical_manifest_sha256": self.canonical_manifest_sha256,
             "factor_manifest_sha256": self.factor_manifest_sha256,
+            "candidate_input_manifest_sha256": (
+                self.candidate_input_manifest_sha256
+            ),
             "row_count": self.row_count,
             "schema": self.schema,
             "source_sha256": list(self.source_sha256),
@@ -132,6 +143,8 @@ class QualificationSplitCustody:
             "supervisor_manifest_sha256": (
                 self.supervisor_manifest_sha256
             ),
+            "tokenizer_artifact_sha256": self.tokenizer_artifact_sha256,
+            "tokenizer_runtime_sha256": self.tokenizer_runtime_sha256,
             "world_manifest_sha256": self.world_manifest_sha256,
         }
 
@@ -142,6 +155,56 @@ class QualificationSplitCustody:
 
     def to_json_bytes(self) -> bytes:
         return _canonical_json_bytes(self.to_mapping()) + b"\n"
+
+    @classmethod
+    def from_mapping(
+        cls,
+        value: object,
+    ) -> "QualificationSplitCustody":
+        expected = {
+            field.name for field in fields(cls)
+        }
+        if not isinstance(value, dict) or set(value) != expected:
+            raise QualificationCustodyError(
+                "qualification custody serialized schema differs"
+            )
+        source_sha256 = value["source_sha256"]
+        if not isinstance(source_sha256, list) or any(
+            not isinstance(item, str) for item in source_sha256
+        ):
+            raise QualificationCustodyError(
+                "qualification custody source list differs"
+            )
+        try:
+            return cls(
+                split=value["split"],
+                row_count=value["row_count"],
+                source_sha256=tuple(source_sha256),
+                world_manifest_sha256=value["world_manifest_sha256"],
+                canonical_manifest_sha256=(
+                    value["canonical_manifest_sha256"]
+                ),
+                factor_manifest_sha256=value["factor_manifest_sha256"],
+                supervisor_manifest_sha256=(
+                    value["supervisor_manifest_sha256"]
+                ),
+                candidate_input_manifest_sha256=(
+                    value["candidate_input_manifest_sha256"]
+                ),
+                tokenizer_artifact_sha256=(
+                    value["tokenizer_artifact_sha256"]
+                ),
+                tokenizer_runtime_sha256=(
+                    value["tokenizer_runtime_sha256"]
+                ),
+                board_manifest_sha256=value["board_manifest_sha256"],
+                receipt_sha256=value["receipt_sha256"],
+                schema=value["schema"],
+            )
+        except (KeyError, TypeError) as exc:
+            raise QualificationCustodyError(
+                "qualification custody serialized values differ"
+            ) from exc
 
     def assert_training_split(self) -> None:
         if self.split != "train":
@@ -160,6 +223,14 @@ class QualificationSplitCustody:
             or candidate.source_sha256 != self.source_sha256
             or candidate.witness.source_sha256 != self.source_sha256
             or supervisor.source_sha256 != self.source_sha256
+            or candidate.tokenizer_artifact_sha256
+            != self.tokenizer_artifact_sha256
+            or candidate.tokenizer_runtime_sha256
+            != self.tokenizer_runtime_sha256
+            or candidate.candidate_input_manifest_sha256
+            != self.candidate_input_manifest_sha256
+            or candidate_input_manifest_sha256(candidate)
+            != self.candidate_input_manifest_sha256
             or _supervisor_digest(supervisor)
             != self.supervisor_manifest_sha256
         ):
@@ -169,11 +240,17 @@ class QualificationSplitCustody:
 
 
 def create_qualification_split_custody(
-    rows: Sequence[PilotRow],
+    rows: Sequence["PilotRow"],
     *,
     split: str,
+    candidate: CandidateCompilerBatch,
 ) -> QualificationSplitCustody:
     """Freeze one exact ordered split without exposing metadata to a model."""
+
+    from pipeline.episode_functor_identifiable_board import PilotRow
+    from pipeline.episode_functor_qualification_supervisor import (
+        collate_qualification_supervision,
+    )
 
     selected = tuple(row for row in rows if row.split == split)
     if split not in _SPLITS or not selected:
@@ -187,6 +264,15 @@ def create_qualification_split_custody(
     source_hashes = tuple(
         sha256(row.source).hexdigest() for row in selected
     )
+    if (
+        not isinstance(candidate, CandidateCompilerBatch)
+        or candidate.source_sha256 != source_hashes
+        or candidate_input_manifest_sha256(candidate)
+        != candidate.candidate_input_manifest_sha256
+    ):
+        raise QualificationCustodyError(
+            "qualification candidate manifest leaves selected rows"
+        )
     supervisor_manifest_sha256 = _supervisor_digest(
         collate_qualification_supervision(selected)
     )
@@ -215,11 +301,20 @@ def create_qualification_split_custody(
                 for row in selected
             )
         ),
+        "candidate_input_manifest_sha256": (
+            candidate.candidate_input_manifest_sha256
+        ),
         "row_count": len(selected),
         "schema": QUALIFICATION_CUSTODY_SCHEMA,
         "source_sha256": list(source_hashes),
         "split": split,
         "supervisor_manifest_sha256": supervisor_manifest_sha256,
+        "tokenizer_artifact_sha256": (
+            candidate.tokenizer_artifact_sha256
+        ),
+        "tokenizer_runtime_sha256": (
+            candidate.tokenizer_runtime_sha256
+        ),
         "world_manifest_sha256": _digest(
             tuple(row.world_id for row in selected)
         ),
@@ -232,6 +327,15 @@ def create_qualification_split_custody(
         canonical_manifest_sha256=unsigned["canonical_manifest_sha256"],
         factor_manifest_sha256=unsigned["factor_manifest_sha256"],
         supervisor_manifest_sha256=supervisor_manifest_sha256,
+        candidate_input_manifest_sha256=(
+            candidate.candidate_input_manifest_sha256
+        ),
+        tokenizer_artifact_sha256=(
+            candidate.tokenizer_artifact_sha256
+        ),
+        tokenizer_runtime_sha256=(
+            candidate.tokenizer_runtime_sha256
+        ),
         board_manifest_sha256=unsigned["board_manifest_sha256"],
         receipt_sha256=_digest(unsigned),
     )
