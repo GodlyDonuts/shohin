@@ -200,7 +200,12 @@ are tested, but no neural first fit is currently authorized.
   gap. Bound-source/count failures abort before outcomes; every evidence
   identity and a durable no-clobber output reservation are required. Four
   hostile-review rounds end with no P0/P1/P2 for source freeze; 18 additional
-  synthetic protocol tests pass.
+  synthetic protocol tests pass. **Consumed result: NO-GO.** Treatment and
+  one-step control each recovered 0/672 faults at every margin. Treatment loss
+  fell monotonically and recoding gates passed, so this was not an execution
+  failure. Post-hoc, the causal gradient favored the wrong destination on all
+  672 faults; even oracle positive per-cell gating failed every margin-0.20
+  case. The four-cycle positive-gradient ACSO preconditioner is retired.
 - **Primary bottleneck:** model-owned compilation of raw episodic evidence into
   a compact renderer-invariant causal machine, including opaque referent
   binding. Bounded ordered execution is already mechanically easy once the

@@ -53,6 +53,16 @@
 > raw-source, renderer, world, and causal-incidence gates are separated before
 > any architecture escalation.
 >
+> **Latest ACSO causal-credit gate (2026-07-24 EDT):** exact source freeze
+> `27d5c4b` returned `deep_fault_oracle_no_go`. Treatment and oracle-fixed
+> one-step control each recovered `0/672` deep faults at margins `0.05`,
+> `0.10`, and `0.20`, despite monotonic treatment innovation, exact recoding,
+> and clean custody. Post-hoc localization found the cycle-zero causal
+> gradient favored the wrong destination on all 672 faults. The four-cycle
+> positive-gradient ACSO preconditioner is retired. HSC remains live as a
+> separate hypothesis; any signed causal retraction, inverse-Jacobian, or
+> second-order replacement requires a new named protocol and source freeze.
+>
 > **Latest EFC deployed-wire gate (2026-07-23 EDT):** the two-beacon CPU
 > rehearsal now emits the exact 1,536-byte deployed C/Rust machine. A separate
 > counter-stream generator admits worlds from mechanics only and publishes raw
@@ -12562,4 +12572,25 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   reservation remains as a permanent receipt. Four hostile-review rounds
   rejected earlier drafts and the final review reports no P0/P1/P2 for the
   exact source freeze. Forty focused synthetic tests and the complete
-  468-test relevant regression pass. No v2 official result has been consumed.
+  468-test relevant regression pass.
+
+  **Consumed result:** exact source freeze `27d5c4b` returned
+  `deep_fault_oracle_no_go`. All source, count, evidence, recoding, and output
+  custody bindings passed. At each margin (`0.05`, `0.10`, `0.20`), treatment
+  exact/full-row recovery was 0/672; one-step control was also 0/672.
+  Treatment innovation was monotonic in primary and recoded runs, no final tie
+  occurred, and recoding decisions matched exactly. Payload/evidence/full-file
+  SHA-256 values are
+  `5b874fdabde074a2d29e142419291a2f24e84093c085f3d7b47870d550a33cb4`,
+  `97b9d2f15daa7d83060db84dabe7c3a3edbfe85750ee38949017416187deef33`,
+  and
+  `99572912b620959c4a635bbedef96eba9172824c7dad95463630ee4112754455`.
+  The compact summary SHA-256 is
+  `43352b268d9ae519b22c4f68ffd750eb3ddb868c1984e957dca3236ec52356ed`.
+
+  Post-hoc diagnosis: cycle-zero causal gradient contrast was adverse on all
+  672 faults. An oracle per-cell positive gate recovered every fault at
+  margins `0.05` and `0.10` but none at `0.20` under the same four-cycle,
+  `0.1` bound. This kills the current positive-gradient ACSO preconditioner,
+  not HSC. A signed causal retraction or second-order replacement needs a new
+  architecture and preregistration.

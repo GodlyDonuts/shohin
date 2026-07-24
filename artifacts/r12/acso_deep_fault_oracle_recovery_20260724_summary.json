@@ -1,0 +1,63 @@
+{
+  "schema": "efc-acso-deep-fault-oracle-recovery-summary/v1",
+  "official_result": {
+    "decision": "deep_fault_oracle_no_go",
+    "git_commit": "27d5c4bd00591fbafa3dffe68a4c209bda0e8099",
+    "source_binding_pass": true,
+    "count_binding_pass": true,
+    "evidence_binding_pass": true,
+    "output_custody_pass": true,
+    "world_count": 200,
+    "eligible_world_count": 88,
+    "fault_count": 672,
+    "primary_cases": 2016,
+    "recoded_cases": 2016,
+    "treatment_exact_recovery_by_margin": {
+      "0.05": 0.0,
+      "0.10": 0.0,
+      "0.20": 0.0
+    },
+    "treatment_row_recovery_by_margin": {
+      "0.05": 0.0,
+      "0.10": 0.0,
+      "0.20": 0.0
+    },
+    "control_exact_recovery_by_margin": {
+      "0.05": 0.0,
+      "0.10": 0.0,
+      "0.20": 0.0
+    },
+    "treatment_monotonic_violations": 0,
+    "recoded_treatment_monotonic_violations": 0,
+    "treatment_final_ties": 0,
+    "recoding_decision_mismatches": 0,
+    "maximum_recoding_innovation_delta": 1.4901161193847656e-07,
+    "payload_sha256": "5b874fdabde074a2d29e142419291a2f24e84093c085f3d7b47870d550a33cb4",
+    "fault_evidence_sha256": "97b9d2f15daa7d83060db84dabe7c3a3edbfe85750ee38949017416187deef33",
+    "full_artifact_file_sha256": "99572912b620959c4a635bbedef96eba9172824c7dad95463630ee4112754455",
+    "reservation_sha256": "385704ef74dc25b7b7742b012898435e7f5f234afabed143078c060350d45838"
+  },
+  "posthoc_diagnosis": {
+    "claim_boundary": "posthoc_localization_not_preregistered_outcome",
+    "cycle_zero_fault_count": 672,
+    "raw_gradient_gap_favorable": 0,
+    "raw_gradient_gap_adverse": 672,
+    "row_normalized_gap_favorable": 0,
+    "row_normalized_gap_adverse": 672,
+    "row_normalized_wrong_minus_correct_direction_quantiles": [
+      -0.15151381492614746,
+      -0.12182500958442688,
+      -0.1146395355463028,
+      -0.09930074214935303,
+      -0.08319719135761261,
+      -0.08184127509593964,
+      -0.0791095495223999
+    ],
+    "oracle_per_cell_positive_gate_recovery_by_margin": {
+      "0.05": 1.0,
+      "0.10": 1.0,
+      "0.20": 0.0
+    }
+  },
+  "decision_boundary": "kills_current_four_cycle_positive_gradient_preconditioner_not_hsc_or_signed_causal_retraction"
+}

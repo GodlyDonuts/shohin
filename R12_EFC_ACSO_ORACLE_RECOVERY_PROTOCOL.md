@@ -1,6 +1,6 @@
 # ACSO Deep-Fault Oracle Recovery Protocol
 
-**Status:** v2 preregistration; no v2 result has been consumed.
+**Status:** v2 consumed; **NO-GO**.
 
 ## Retired v1
 
@@ -141,3 +141,30 @@ one-step ablation. It does not prove that Shohin infers target signatures, that
 HSC generalizes from source bytes, that the 3,995,137-parameter preconditioner
 learns useful scaling, that a sealed machine transfers to unseen task families,
 or that Shohin reasons natively. Pretraining remains prohibited.
+
+## Consumed result
+
+The exact source freeze at Git commit
+`27d5c4bd00591fbafa3dffe68a4c209bda0e8099` produced
+`deep_fault_oracle_no_go`. All source, count, evidence, recoding, and output
+custody bindings passed. Across every margin, causal treatment recovered
+`0/672` exact machines and `0/672` intended rows after four cycles; the
+one-step control also recovered zero. Both primary and recoded treatment
+innovation decreased monotonically, no final tie appeared, no recoding
+decision differed, and maximum recoding innovation delta was
+`1.4901161193847656e-07`.
+
+Full artifact payload SHA-256 is
+`5b874fdabde074a2d29e142419291a2f24e84093c085f3d7b47870d550a33cb4`;
+ordered fault-evidence SHA-256 is
+`97b9d2f15daa7d83060db84dabe7c3a3edbfe85750ee38949017416187deef33`;
+full artifact file SHA-256 is
+`99572912b620959c4a635bbedef96eba9172824c7dad95463630ee4112754455`.
+
+Post-hoc localization found that the cycle-zero causal gradient favored the
+wrong destination over the correct destination on all 672 eligible faults.
+Even an oracle per-cell positive gate recovered 100% at margins `0.05` and
+`0.10` but 0% at margin `0.20` under the same four-cycle/`0.1` bound. These
+post-hoc results are diagnostic, not preregistered evidence. The consumed
+NO-GO kills the current four-cycle positive-gradient preconditioner. It does
+not kill HSC or a separately preregistered signed causal-retraction mechanism.

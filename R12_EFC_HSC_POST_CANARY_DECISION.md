@@ -237,9 +237,18 @@ not its fixed point. The source-frozen recovery protocol is
 computes the full closure but masks evidence beyond one action before the
 reverse dynamic program. V2 audits all 672 frozen-board faults that are
 immediately observation-equivalent yet separable within suffix depth three,
-across three margins and deterministic recodings. V1 is void and no v2
-official outcome has been consumed. Passing this CPU audit would admit only
-target-informed deep-fault recovery mechanics, not HSC integration or fitting.
+across three margins and deterministic recodings. V1 is void. The consumed v2
+audit tests only target-informed deep-fault recovery mechanics, not HSC
+integration or fitting.
+
+**Consumed update:** v2 returned `deep_fault_oracle_no_go` under exact source
+freeze `27d5c4b`. Causal treatment and one-step control each recovered 0/672
+faults at all three margins despite monotonic innovation and exact recoding.
+Post-hoc analysis found adverse correct-vs-wrong gradient contrast on all 672
+faults; an oracle positive per-cell gate still failed all margin-0.20 faults.
+The present four-cycle positive-gradient ACSO preconditioner is killed. Any
+signed causal-retraction or second-order replacement requires a new named
+protocol and cannot inherit ACSO's mechanics authorization.
 
 These results admit ACSO mechanics only. They do not establish that HSC emits
 usable noisy signatures, that the learned preconditioner improves a machine,
