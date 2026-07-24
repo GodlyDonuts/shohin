@@ -21,6 +21,28 @@
 > GSM8K pass@1 `2/100`, MATH-500 `2/100`, HumanEval `6/164`, and MBPP `0/100`. This confirms a
 > low-single-digit plateau rather than a broad 120k-to-300k capability gain.
 >
+> **Latest EFC deployed-wire gate (2026-07-23 EDT):** the two-beacon CPU
+> rehearsal now emits the exact 1,536-byte deployed C/Rust machine. A separate
+> counter-stream generator admits worlds from mechanics only and publishes raw
+> v2 shuffled transition/observation events without explicit key inventories
+> or positional observer tables. The CPU compiler infers all key classes and
+> complete tables. One source-deleted machine, SHA-256
+> `e4eafa3cfd205c377515cf7619f5ae723a591b5a2ed2eeab3888477bcf652000`,
+> was reused across two distinct 100-query panels: one compiler invocation,
+> zero deployed-query duplicates, byte-identical C/Rust transcripts, and zero
+> third-assessor disagreements. The observer board has four empty-observation
+> classes and five future-behavior classes. All 1,536 machine bytes are
+> accounted; 207 are source-dependent direct/derived bytes including the
+> hash. The expanded relevant suite is 208 passed, one platform-dependent
+> skip. Final report SHA-256 is
+> `7a141efbbccdbd8328e2b38708061d9b2a4f3be8a43c3617fe4e8a413e4fd35c`.
+> Decision: CPU contract pass, neural preregistration NO-GO. Fixed synthetic
+> beacons prove phase order, not external unpredictability. No neural fit,
+> official board, GPU job, source freeze, reasoning promotion, or pretraining
+> is authorized. Next legitimate work is external-beacon provenance,
+> multiworld unopened-confirmation custody, process isolation, and multiple
+> source renderers.
+>
 > **Latest frontier handoff (2026-07-23 EDT):** the standalone AHRF seed
 > `2026072345` process ended without publishing its atomic output directory,
 > checkpoint, or report. It is void and has no score; terminal cause is

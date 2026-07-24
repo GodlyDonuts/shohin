@@ -370,18 +370,34 @@ The following CPU mechanics are complete:
 4. exact current-board semantic-bit receipts;
 5. nontrivial-observer quotient mechanics; and
 6. source-poison and causal-intervention falsifiers on consumed fixtures.
+7. unification of the two-beacon rehearsal with the exact deployed 1,536-byte
+   C/Rust wire;
+8. an implementation-independent counter-stream world generator with
+   mechanics-only admission and exact consumed-stream commitments;
+9. raw v2 shuffled transition/observation evidence without explicit key
+   inventories or positional observer tables;
+10. byte accounting for all 1,536 machine bytes, including 207
+    source-dependent direct/derived bytes in the consumed cell;
+11. binary/source/latent/machine attestation, event hash chaining, and atomic
+    transcript publication; and
+12. two 100-query duplicate-free consumed panels over one source-deleted
+    machine, with byte-identical C/Rust transcripts and third-assessor
+    agreement.
 
 Only these remaining actions are authorized:
 
-1. unify the two-beacon rehearsal with the deployed 1,536-byte C/Rust wire
-   format;
-2. implement a genuinely independent held-out world generator;
-3. freeze byte accounting for every source-dependent parser/compiler field;
-4. prove raw evidence alone identifies the required machine without oracle
-   segmentation;
-5. subject the unified protocol to a new hostile audit; and
-6. only after that audit, write a neural compiler preregistration for user
+1. freeze and verify an externally unpredictable future-beacon provider;
+2. freeze a multiworld train/development/unopened-confirmation custody plan;
+3. add process-level candidate/compiler/executor/assessor isolation;
+4. add genuinely different source renderers with gauge-equivalent machines;
+5. reproduce every root with an independent auditor; and
+6. only after those gates, write a neural compiler preregistration for user
    review.
+
+The unified hostile audit is in
+`R12_EPISODE_FUNCTOR_COMPILER_UNIFIED_WIRE_AUDIT.md`. Its decision is CPU
+contract pass and neural-preregistration **NO-GO**. The fixed beacons in the
+consumed runner prove phase order but not external unpredictability.
 
 No neural compiler, GPU job, new official board, source freeze, reasoning
 promotion, or continuation pretraining is authorized by this document.

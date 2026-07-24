@@ -73,9 +73,30 @@ fit is currently authorized.
   noncommuting actions. A nontrivial quotient fixture spans quotient sizes
   three through eight across twelve machines; three quotient oracles agree and
   its structural train/development overlap is zero. The expanded relevant CPU
-  suite reports **191 passed, 1 platform-dependent C/Rust cross-check skipped**.
+  suite reports **208 passed, 1 platform-dependent C/Rust cross-check skipped**.
   These are rehearsal and fixture mechanics, not an official board or neural
   reasoning result.
+- **Unified deployed-wire audit:** the two-beacon rehearsal now emits the exact
+  1,536-byte C/Rust machine wire. A separately implemented counter-stream world
+  generator imports no original generator and admits worlds from mechanics
+  only. Its raw v2 evidence consists of shuffled transition and observation
+  events, with no explicit key inventories or positionally aligned observer
+  truth rows. The CPU compiler infers all key classes and complete tables.
+  Machine accounting covers 1,536/1,536 bytes, including 207 source-dependent
+  direct/derived bytes and zero unaccounted bytes.
+- **Consumed wire result:** one source-deleted machine, SHA-256
+  `e4eafa3cfd205c377515cf7619f5ae723a591b5a2ed2eeab3888477bcf652000`,
+  was reused across two distinct 100-query panels with zero deployed-query
+  duplicates, one compiler invocation, byte-identical C/Rust transcripts, and
+  zero third-assessor disagreements. Five physical states form four
+  empty-observation classes but five future-behavior classes. Final report
+  SHA-256 is
+  `7a141efbbccdbd8328e2b38708061d9b2a4f3be8a43c3617fe4e8a413e4fd35c`.
+- **Current EFC decision:** CPU contract pass; neural preregistration
+  **NO-GO**. The consumed beacons are fixed synthetic values, so they establish
+  phase order but not external unpredictability. There is still no neural
+  raw-evidence compiler, unopened multiworld confirmation, process-level
+  assessor isolation, or cross-renderer learned result.
 - **Capability boundary:** these are oracle/CPU mechanics, not a Shohin neural
   result. No EFC compiler has been instantiated or trained; no new board,
   source freeze, model seed, GPU score, development read, or reasoning claim
@@ -99,9 +120,10 @@ binding, transition semantics, and execution explicit. The supplied draft
 nevertheless misidentifies two sampled rows as the compiler's complete query
 support and omits the current query's opaque start-state binding. The old corpus
 is rejected for advancement because its challenge is not temporally independent.
-The corrected protocol now has CPU-only seal, runtime, and quotient rehearsals;
-it still needs an independently generated and hostilely audited official board
-before a neural compiler can be fitted.
+The corrected protocol now has an independently generated, hostilely audited,
+exact deployed-wire CPU rehearsal. It still needs an externally unpredictable
+beacon, isolated multiworld confirmation custody, and a neural preregistration
+before a compiler can be fitted.
 
 ### 2026-07-23 EPISODE Functor Compiler corrective audit
 
@@ -217,12 +239,45 @@ machines, and three independent quotient constructions (partition refinement,
 pair-product reachability, and exhaustive future behavior). It demonstrates a
 nontrivial CPU test object, not a learned quotient.
 
-The current combined relevant test command reports **191 passed, 1 skipped**
+The current combined relevant test command reports **208 passed, 1 skipped**
 (the only skip is a platform-dependent strict C/Rust cross-check). No Shohin
 model has compiled source into a machine, no fresh official source has been
 frozen, and no GPU/development/reasoning result is implied. The next gate is a
 hostile audit and frozen independent implementation of the real post-seal
 world/challenge/assessor pipeline, not neural fitting.
+
+### 2026-07-23 unified EFC deployed-wire audit
+
+The two-beacon protocol now uses the exact 1,536-byte machine consumed by both
+standalone runtimes. Runtime source and executable hashes are frozen before the
+world beacon; public evidence and assessor latent are jointly bound into the
+world root; source is poisoned and deleted before either challenge; protocol
+and machine hashes are revalidated at every phase; and the event sequence is
+hash chained. Runtime outputs are staged and atomically published only after
+C/Rust byte equality.
+
+The independent generator uses a separate implementation and entropy
+construction. It exposes only shuffled typed transition/observation events.
+The CPU compiler infers the opaque state/action/observer key classes and exact
+tables. Its observers are noninjective at depth zero (four classes over five
+states) while future action behavior separates all five states. The deployed
+query format has one honest renderer and rejects semantic duplicates.
+
+The consumed artifact has two 100-query panels over one machine, compile count
+one, zero duplicate deployed queries, zero runtime disagreements, and zero
+third-assessor disagreements. The final report is
+`artifacts/r12/episode_functor_wire_rehearsal_v1_20260723/final_report.json`,
+SHA-256
+`7a141efbbccdbd8328e2b38708061d9b2a4f3be8a43c3617fe4e8a413e4fd35c`.
+The detailed audit is
+`R12_EPISODE_FUNCTOR_COMPILER_UNIFIED_WIRE_AUDIT.md`.
+
+The decision remains **NO-GO for neural preregistration**. Fixed synthetic
+beacons cannot prove that challenge entropy was unknowable at machine seal.
+An official gate still requires external beacon provenance, multiworld
+train/development/unopened-confirmation custody, process-level assessor
+isolation, and multiple source renderers. No neural fit or pretraining is
+authorized.
 
 **Purpose:** This is the durable, theory-facing record of what Shohin is, what
 we mean by native reasoning, what has been tried, what happened, and what a new
