@@ -88,9 +88,16 @@
 > hostile audit reports no remaining P0, P1, or P2 findings and authorizes an
 > exact source freeze for the macOS CPU custody-mechanics claim. Linux remains
 > unadmitted because
-> Newton DNS currently fails before SSH; no authorization has been frozen, no
-> future pulse consumed, and no neural fit, reasoning result, or pretraining
-> is authorized.
+> Newton DNS currently fails before SSH. No neural fit, reasoning result, or
+> pretraining is authorized.
+> **Update:** authorization commit `c10d28f` later consumed exact NIST pulse
+> `1,873,040` with snapshot SHA-256
+> `776799d658e0469431605463b7ed6f76984a653140af24e56483093aae7636d8`,
+> but the run rejected before candidate launch because a relative CLI
+> authorization path was not normalized before Git-blob verification. No
+> artifact root or report was published. The attempt is void, its
+> authorization/pulse are retired, and the one-line path normalization plus
+> regression require a fresh source commit, authorization, and later pulse.
 >
 > **Latest frontier handoff (2026-07-23 EDT):** the standalone AHRF seed
 > `2026072345` process ended without publishing its atomic output directory,
@@ -12066,3 +12073,23 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   followed by unmocked Linux custody when connectivity returns. Only after
   cross-host custody may a separate learned source-to-machine compiler be
   preregistered with cache and generic-recurrence controls.
+
+- **2026-07-24** -- **The first externally timed EFC process rehearsal is
+  void before candidate launch.** Exact authorization commit `c10d28f` was
+  publicly witnessed by GitHub PushEvent `15681462763` at
+  `2026-07-24T04:35:36Z`, 264 seconds before its frozen NIST chain-2 pulse
+  `1,873,040` at `04:40:00Z`. The fetched snapshot verified both consecutive
+  signatures under the NIST-served, authorization-pinned certificate and has
+  payload SHA-256
+  `776799d658e0469431605463b7ed6f76984a653140af24e56483093aae7636d8`.
+
+  The atomic runner rejected before candidate launch: the relative CLI
+  spelling
+  `artifacts/r12/efc_process_custody_authorization_v1.json` passed the fixed
+  path comparison but was sent unchanged to `Path.relative_to(ROOT)` during
+  Git-blob verification, which requires two paths with the same absolute
+  basis. No output root, candidate machine, assessment, or report was
+  published. Do not rescore or reuse the pulse. The old authorization is
+  retired. Normalize and repository-bound the path before all checks, add a
+  relative-path Git regression, rerun the full suite, and repeat the complete
+  source-commit/authorization/future-pulse sequence.

@@ -207,7 +207,10 @@ def _load_beacon_snapshot(
 
 
 def _git_blob(revision: str, path: Path) -> bytes:
-    relative = str(path.relative_to(ROOT))
+    try:
+        relative = str(path.resolve().relative_to(ROOT))
+    except ValueError as exc:
+        raise RehearsalError("Git blob path is outside the repository") from exc
     completed = subprocess.run(
         ("git", "show", f"{revision}:{relative}"),
         cwd=ROOT,
@@ -452,7 +455,8 @@ def run_rehearsal(
 ) -> dict[str, object]:
     """Consume one future pulse and atomically publish a CPU custody artifact."""
 
-    if authorization_path.resolve() != AUTHORIZATION_PATH.resolve():
+    authorization_path = authorization_path.resolve()
+    if authorization_path != AUTHORIZATION_PATH.resolve():
         raise RehearsalError("authorization must use the fixed repository path")
     source_receipt = frozen_source_receipt()
     authorization = _load_canonical_json(authorization_path)

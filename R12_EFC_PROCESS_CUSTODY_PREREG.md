@@ -18,6 +18,19 @@ candidate?
 This is a custody question. Exact compilation by the deterministic CPU
 candidate is not evidence that a neural model learned to reason.
 
+## Consumed Attempt Ledger
+
+Exact chain-2 pulse `1,873,040` at `2026-07-24T04:40:00.000Z` was consumed
+under authorization commit `c10d28f`. Snapshot payload SHA-256 was
+`776799d658e0469431605463b7ed6f76984a653140af24e56483093aae7636d8`.
+The run rejected before candidate launch because the relative CLI spelling of
+the fixed authorization path reached Git-blob verification without absolute
+normalization. No output root or report was published. This attempt is void,
+the old authorization is retired, and its pulse may not be reused. The source
+fix resolves and repository-bounds the path before both fixed-path and Git
+blob checks; a relative-path Git regression is mandatory before the next
+source freeze.
+
 ## Frozen Source Languages
 
 The same independently generated finite world is rendered three ways:

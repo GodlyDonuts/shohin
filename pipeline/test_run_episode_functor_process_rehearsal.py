@@ -342,8 +342,9 @@ def test_git_receipt_binds_authorization_and_sources_to_origin(
             "github_push_event_id": "test",
         },
     )
+    monkeypatch.chdir(repository)
     receipt = _git_receipt(
-        authorization_path=authorization,
+        authorization_path=authorization.relative_to(repository),
         source_receipt={
             "files": {"pipeline/candidate.py": rehearsal.sha256_bytes(b"source\n")}
         },
@@ -355,7 +356,7 @@ def test_git_receipt_binds_authorization_and_sources_to_origin(
     source.write_bytes(b"mutated\n")
     with pytest.raises(RehearsalError, match="worktree must be clean"):
         _git_receipt(
-            authorization_path=authorization,
+            authorization_path=authorization.relative_to(repository),
             source_receipt={
                 "files": {"pipeline/candidate.py": rehearsal.sha256_bytes(b"source\n")}
             },
