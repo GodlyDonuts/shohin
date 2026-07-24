@@ -22,10 +22,15 @@ official confirmation board, no.
 The new implementation is:
 
 - `pipeline/episode_functor_independent_world.py`
+- `pipeline/episode_functor_source_renderers.py`
 - `pipeline/episode_functor_wire_protocol.py`
 - `pipeline/run_episode_functor_wire_rehearsal.py`
+- `pipeline/episode_functor_multiworld_custody.py`
+- `pipeline/run_episode_functor_multiworld_rehearsal.py`
 - `pipeline/test_episode_functor_independent_world.py`
+- `pipeline/test_episode_functor_source_renderers.py`
 - `pipeline/test_episode_functor_wire_protocol.py`
+- `pipeline/test_episode_functor_multiworld_custody.py`
 
 The independent world generator imports no original EPISODE generator,
 protocol, serializer, or runtime. It uses a separate counter-mode SHA-256
@@ -119,10 +124,55 @@ four empty-observation classes. Future action words separate all five states.
 This kills the old identity-observer shortcut without making the CPU fixture
 ambiguous.
 
+## Source-Renderer And Multiworld Extension
+
+The compiler now accepts two strict byte-distinct source serializations:
+canonical raw-event JSON and `EFC-RAW-LINES-V1` line records. Both normalize to
+the same typed transition/observation events and compile to the exact same
+1,536-byte machine. Six malformed line mutations fail closed. These are two
+source serializations, not two natural-language families; the result proves
+parser/serialization invariance only.
+
+A separate consumed multiworld rehearsal freezes eight train and four
+development worlds, seals a placeholder candidate root, and only then
+materializes four confirmation worlds from a different, strictly later
+synthetic beacon. Every split alternates both source serializations.
+
+World structures are rejected across all splits when their exact 25-byte
+canonical forms collide. Canonicalization exhaustively quotients
+physical-state, action, and observer permutations plus independent binary
+observer-output recodings. SHA-256 is only the receipt for that exact form, not
+the collision decision. All sixteen worlds are structurally distinct, have
+nontrivial empty-observation partitions, and separate all five physical states
+under future behavior.
+
+Every published payload is revalidated before a later phase can proceed.
+Persisted source bytes must recompile byte-for-byte to the persisted machine,
+and the source-renderer receipt must match JSON versus line syntax. This is
+durable in-process tamper detection, not process isolation.
+
+Artifact:
+`artifacts/r12/episode_functor_multiworld_rehearsal_v2_20260723`
+
+Final report SHA-256:
+`d391640620de8f80c5925ac9c0a67879483909c08b60dc3f9d424f51002cbe6b`
+
+| Field | Result |
+|---|---:|
+| Train/development/confirmation worlds | 8 / 4 / 4 |
+| Source serializations in every split | 2 |
+| Cross-split structural collisions | 0 |
+| Protocol root | `8268a36372d6dc68a3e5b2b538a1201cba16b095e8d3f651d832d2475ea67f64` |
+| Open-splits root | `76f5690a606220716b54b8d2e2ae684acfe63545eb2a1feb0e52ea57ca04b9ce` |
+| Confirmation manifest root | `e29bde2a07905e963a810445a3b5a5497f550748e5362d78f92845fdbb49a246` |
+| Event-chain tip | `44c91d61b210c9c10ce60b7ac1ac296361897cb340f88548ecfdd1d713e1db3e` |
+| Assessor secrets inaccessible to candidate | no |
+| Filesystem/process isolation established | no |
+
 The complete relevant regression command reports:
 
 ```text
-208 passed, 1 skipped in 17.31s
+245 passed, 1 skipped in 24.82s
 ```
 
 The skip is the inherited platform-dependent strict runtime check.
@@ -153,6 +203,28 @@ but cannot prove that a future challenge was unknowable before machine seal.
 An official run needs an externally sourced, independently recorded future
 beacon whose provenance and retrieval time are outside the candidate process.
 
+The multiworld phase guards narrow this gap but do not close it: the candidate
+root in the consumed rehearsal is a placeholder and the later beacon remains a
+caller-supplied string. A legitimate confirmation opening needs an externally
+witnessed candidate publication followed by cryptographic verification of a
+preannounced future beacon round.
+
+### Process custody
+
+The consumed artifact intentionally keeps assessor `latent.json` and deployed
+`machine.bin` files beside each world for audit. No candidate process was run,
+and no filesystem namespace or file-descriptor allowlist prevented a
+hypothetical candidate from reading those files. The phase API and hash checks
+therefore prove deterministic ordering and tamper detection only. They do not
+prove candidate blindness or assessor isolation.
+
+### Source-language transfer
+
+Canonical JSON and strict line records exercise independent byte parsers but
+encode the same typed fields directly. They do not test source-language
+identification, paraphrase robustness, declaration binding, or transfer to an
+unseen grammar. Those remain neural evaluation obligations.
+
 ### Neural identification
 
 The CPU compiler now proves that raw typed events uniquely identify the
@@ -179,7 +251,7 @@ This result establishes:
 It does **not** establish:
 
 - external beacon unpredictability;
-- an unopened multiworld confirmation split;
+- an official unopened multiworld confirmation split;
 - natural-language or cross-renderer compilation;
 - a learned neural compiler;
 - superiority to mandatory controls;
@@ -191,15 +263,24 @@ It does **not** establish:
 Before writing a neural preregistration:
 
 1. freeze an external future-beacon provider and provenance verifier;
-2. freeze a multiworld train/development/confirmation plan with confirmation
-   entropy unavailable until after model and machine seals;
+2. replace the consumed placeholder candidate with an externally witnessed
+   candidate root before the frozen future round;
 3. isolate candidate, compiler, executor, and assessor processes with explicit
    file-descriptor and filesystem allowlists;
-4. add at least two source renderers whose raw bytes differ but whose inferred
-   machine is gauge-equivalent;
+4. add genuinely different source-language families beyond the two typed
+   serializations;
 5. freeze mandatory matched controls and complete-system parameter accounting;
 6. have an independent auditor reproduce every root and receipt; and
 7. submit the resulting neural compiler preregistration for user review.
+
+## Historical v1 artifact boundary
+
+The original unified-wire consumed artifact and its published roots are
+historical evidence bound to commit `91934e7` and the v1 wire protocol. The
+current parser uses the v2 protocol root and binds
+`pipeline/episode_functor_source_renderers.py`. Current source must not be
+claimed to reproduce the historical v1 protocol root unless commit `91934e7`
+is checked out. The new v2 multiworld artifact is reported separately above.
 
 Until then, EFC remains an admissible architecture family with a qualified CPU
 contract, not a reasoning result.

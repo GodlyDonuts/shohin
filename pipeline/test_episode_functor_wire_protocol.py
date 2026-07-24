@@ -19,6 +19,7 @@ from pipeline.episode_functor_wire_protocol import (
     MACHINE_HASH_OFFSET,
     MACHINE_SIZE,
     RUST_RUNTIME_SOURCE,
+    SOURCE_RENDERER_SOURCE,
     WireProtocolSpec,
     WireSealFirstRehearsal,
     decode_deployed_machine,
@@ -178,6 +179,19 @@ def test_compiler_fails_closed_on_incomplete_or_tainted_source(
         encode_deployed_machine(canonical_json_bytes(row), rehearsal.spec)
 
 
+def test_wire_parser_rejects_renderer_forgery_and_non_utf8(
+    tmp_path: Path,
+) -> None:
+    rehearsal = WireSealFirstRehearsal(tmp_path / "source-syntax")
+    fixture = rehearsal.supply_world_beacon(WORLD_BEACON)
+    row = json.loads(fixture.evidence)
+    row["renderer_choice"] = 1
+    with pytest.raises(ProtocolViolation, match="does not match"):
+        encode_deployed_machine(canonical_json_bytes(row), rehearsal.spec)
+    with pytest.raises(ProtocolViolation, match="neither JSON nor line"):
+        encode_deployed_machine(b"\xff", rehearsal.spec)
+
+
 def test_challenge_requires_source_delete_and_strict_later_beacon(
     wire_runtimes: dict[str, Path],
     tmp_path: Path,
@@ -322,6 +336,10 @@ def test_protocol_binds_exact_runtime_sources_and_wire_constants(
     assert protocol["world_generator"] == (
         "efc-independent-counter-world-v1"
     )
+    assert protocol["source_renderer_count"] == 2
+    assert protocol["source_renderer_source_sha256"] == sha256(
+        SOURCE_RENDERER_SOURCE.read_bytes()
+    ).hexdigest()
     assert protocol["runtime_binaries_attested"]
     assert protocol["runtime_binary_sha256"] == {
         name: sha256(path.read_bytes()).hexdigest()

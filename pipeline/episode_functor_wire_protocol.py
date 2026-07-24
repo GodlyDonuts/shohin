@@ -46,6 +46,11 @@ from pipeline.episode_functor_independent_world import (
     GENERATOR_SCHEMA as INDEPENDENT_GENERATOR_SCHEMA,
     generate_independent_world,
 )
+from pipeline.episode_functor_source_renderers import (
+    LINE_MAGIC as SOURCE_LINE_MAGIC,
+    SourceRendererError,
+    decode_line_events,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -53,6 +58,9 @@ C_RUNTIME_SOURCE = ROOT / "tools" / "episode_functor_runtime_c.c"
 RUST_RUNTIME_SOURCE = ROOT / "tools" / "episode_functor_runtime_rust.rs"
 INDEPENDENT_GENERATOR_SOURCE = (
     ROOT / "pipeline" / "episode_functor_independent_world.py"
+)
+SOURCE_RENDERER_SOURCE = (
+    ROOT / "pipeline" / "episode_functor_source_renderers.py"
 )
 
 FORMAT_VERSION = 1
@@ -70,7 +78,7 @@ MAX_WORD = 32
 MACHINE_MAGIC = b"EFCMACH\0"
 QUERY_MAGIC = b"EFCQRY\0\0"
 TRANSCRIPT_MAGIC = b"EFCOUT\0\0"
-PROTOCOL_DOMAIN = "EFC/deployed-wire-protocol-root/v1"
+PROTOCOL_DOMAIN = "EFC/deployed-wire-protocol-root/v2"
 MACHINE_DOMAIN = "EFC/deployed-wire-machine-root/v1"
 COORDINATE_DOMAIN = "EFC/deployed-wire-coordinate-root/v1"
 QUERY_DOMAIN = "EFC/deployed-wire-query-root/v1"
@@ -152,12 +160,13 @@ def _integer_vector(
 class WireProtocolSpec:
     """Fields committed before either consumed rehearsal beacon exists."""
 
-    schema: str = "efc-deployed-wire-seal-rehearsal-v1"
+    schema: str = "efc-deployed-wire-seal-rehearsal-v2"
     state_count: int = 5
     action_count: int = 3
     observer_count: int = 2
     answer_count: int = 5
     renderer_count: int = 1
+    source_renderer_count: int = 2
     world_count: int = 1
     depth_quotas: tuple[tuple[int, int], ...] = (
         (0, 10),
@@ -170,7 +179,7 @@ class WireProtocolSpec:
     runtime_binary_sha256: tuple[tuple[str, str], ...] = ()
 
     def __post_init__(self) -> None:
-        if self.schema != "efc-deployed-wire-seal-rehearsal-v1":
+        if self.schema != "efc-deployed-wire-seal-rehearsal-v2":
             raise ProtocolViolation("unknown deployed-wire protocol schema")
         if not 4 <= self.state_count <= MAX_STATES:
             raise ProtocolViolation("state count is outside deployed capacity")
@@ -180,9 +189,14 @@ class WireProtocolSpec:
             raise ProtocolViolation("observer count is outside deployed capacity")
         if self.answer_count < self.state_count:
             raise ProtocolViolation("identity observer does not fit answer alphabet")
-        if self.renderer_count != 1 or self.world_count != 1:
+        if (
+            self.renderer_count != 1
+            or self.source_renderer_count != 2
+            or self.world_count != 1
+        ):
             raise ProtocolViolation(
-                "deployed binary rehearsal has one renderer and one world"
+                "rehearsal requires two source renderers, one query renderer, "
+                "and one world"
             )
         if self.duplicate_policy != "reject":
             raise ProtocolViolation("only reject-duplicate custody is rehearsed")
@@ -278,6 +292,10 @@ class WireProtocolSpec:
             "rust_runtime_source_sha256": _sha256_hex(
                 RUST_RUNTIME_SOURCE.read_bytes()
             ),
+            "source_renderer_count": self.source_renderer_count,
+            "source_renderer_source_sha256": _sha256_hex(
+                SOURCE_RENDERER_SOURCE.read_bytes()
+            ),
             "schema": self.schema,
             "state_count": self.state_count,
             "transcript_header_bytes": TRANSCRIPT_HEADER_SIZE,
@@ -339,23 +357,42 @@ def _parse_world_evidence(
     evidence: bytes,
     spec: WireProtocolSpec,
 ) -> MachineTables:
+    source_renderer = 0
     try:
         row = json.loads(evidence)
-    except json.JSONDecodeError as exc:
-        raise ProtocolViolation("world evidence is not JSON") from exc
-    if canonical_json_bytes(row) != evidence:
-        raise ProtocolViolation("world evidence is not canonical JSON")
+    except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
+        if evidence.startswith((SOURCE_LINE_MAGIC + "\t").encode("ascii")):
+            try:
+                row = decode_line_events(evidence)
+                source_renderer = 1
+            except SourceRendererError as renderer_exc:
+                raise ProtocolViolation(
+                    "line-rendered world evidence is malformed"
+                ) from renderer_exc
+        else:
+            raise ProtocolViolation(
+                "world evidence is neither JSON nor line events"
+            ) from exc
+    else:
+        if canonical_json_bytes(row) != evidence:
+            raise ProtocolViolation("world evidence is not canonical JSON")
     if not isinstance(row, dict):
         raise ProtocolViolation("world evidence root must be an object")
     if row.get("schema") == "efc-raw-world-evidence-v2":
+        if row.get("renderer_choice") != source_renderer:
+            raise ProtocolViolation(
+                "renderer tag does not match source serialization"
+            )
         return _parse_raw_world_evidence(row, spec)
     if set(row) != WORLD_EVIDENCE_FIELDS:
         raise ProtocolViolation("world evidence schema contains drift or query taint")
     if row["schema"] != "efc-consumed-world-evidence-v1":
         raise ProtocolViolation("unknown world evidence schema")
     renderer_choice = _plain_int(row["renderer_choice"], "renderer choice")
-    if renderer_choice not in range(spec.renderer_count):
-        raise ProtocolViolation("renderer choice is outside protocol")
+    if renderer_choice != source_renderer:
+        raise ProtocolViolation(
+            "renderer tag does not match source serialization"
+        )
 
     state_keys = _integer_vector(row, "state_keys", spec.state_count)
     action_keys = _integer_vector(row, "action_keys", spec.action_count)
@@ -453,8 +490,8 @@ def _parse_raw_world_evidence(
     if set(row) != RAW_WORLD_EVIDENCE_FIELDS:
         raise ProtocolViolation("raw evidence schema contains drift or query taint")
     renderer_choice = _plain_int(row["renderer_choice"], "renderer choice")
-    if renderer_choice not in range(spec.renderer_count):
-        raise ProtocolViolation("renderer choice is outside protocol")
+    if renderer_choice not in range(spec.source_renderer_count):
+        raise ProtocolViolation("source renderer choice is outside protocol")
 
     raw_demonstrations = row["demonstrations"]
     if not isinstance(raw_demonstrations, list):
@@ -1441,6 +1478,7 @@ __all__ = [
     "MACHINE_HASH_OFFSET",
     "MACHINE_SIZE",
     "RUST_RUNTIME_SOURCE",
+    "SOURCE_RENDERER_SOURCE",
     "TranscriptRecord",
     "WireChallengeReceipt",
     "WireProtocolSpec",

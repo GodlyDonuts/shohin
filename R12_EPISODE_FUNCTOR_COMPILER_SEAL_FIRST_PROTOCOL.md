@@ -382,14 +382,27 @@ The following CPU mechanics are complete:
     transcript publication; and
 12. two 100-query duplicate-free consumed panels over one source-deleted
     machine, with byte-identical C/Rust transcripts and third-assessor
-    agreement.
+    agreement;
+13. canonical JSON and strict line-oriented source serializations that compile
+    to identical machine bytes and fail closed on noncanonical mutations;
+14. a consumed eight/four/four train/development/confirmation custody
+    rehearsal with candidate-before-confirmation phase guards;
+15. exact 25-byte cross-split structural forms under
+    state/action/observer gauges and independent binary observer-output
+    recodings, with SHA-256 used only as a receipt;
+16. both source serializations represented in every consumed split; and
+17. in-process revalidation of every persisted payload, manifest, root, event
+    link, renderer syntax, source-to-machine recompilation, and structural
+    form before later phases proceed.
 
 Only these remaining actions are authorized:
 
 1. freeze and verify an externally unpredictable future-beacon provider;
-2. freeze a multiworld train/development/unopened-confirmation custody plan;
+2. externally witness a real candidate root before the preannounced future
+   beacon round;
 3. add process-level candidate/compiler/executor/assessor isolation;
-4. add genuinely different source renderers with gauge-equivalent machines;
+4. add genuinely different source-language families beyond the two typed
+   serializations;
 5. reproduce every root with an independent auditor; and
 6. only after those gates, write a neural compiler preregistration for user
    review.
@@ -398,6 +411,14 @@ The unified hostile audit is in
 `R12_EPISODE_FUNCTOR_COMPILER_UNIFIED_WIRE_AUDIT.md`. Its decision is CPU
 contract pass and neural-preregistration **NO-GO**. The fixed beacons in the
 consumed runner prove phase order but not external unpredictability.
+
+The consumed multiworld result is in
+`R12_EPISODE_FUNCTOR_COMPILER_MULTIWORLD_CUSTODY_RESULT.md`. It freezes 8/4/4
+worlds with zero exact structural overlap and both source serializations in
+every split. Its confirmation beacon is synthetic and its candidate root is a
+placeholder. Assessor latent and machine files remain visible under the same
+artifact root, and no candidate process was run or isolated. It is therefore a
+deterministic phase rehearsal rather than official custody or confirmation.
 
 No neural compiler, GPU job, new official board, source freeze, reasoning
 promotion, or continuation pretraining is authorized by this document.

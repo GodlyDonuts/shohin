@@ -72,8 +72,9 @@ fit is currently authorized.
   hash binding, gauge and intervention behavior, equivalent words, and
   noncommuting actions. A nontrivial quotient fixture spans quotient sizes
   three through eight across twelve machines; three quotient oracles agree and
-  its structural train/development overlap is zero. The expanded relevant CPU
-  suite reports **208 passed, 1 platform-dependent C/Rust cross-check skipped**.
+  its structural train/development overlap is zero. With the source-renderer
+  and multiworld extension, the hardened relevant CPU suite reports **245
+  passed, 1 platform-dependent C/Rust cross-check skipped**.
   These are rehearsal and fixture mechanics, not an official board or neural
   reasoning result.
 - **Unified deployed-wire audit:** the two-beacon rehearsal now emits the exact
@@ -84,6 +85,17 @@ fit is currently authorized.
   truth rows. The CPU compiler infers all key classes and complete tables.
   Machine accounting covers 1,536/1,536 bytes, including 207 source-dependent
   direct/derived bytes and zero unaccounted bytes.
+- **Multiworld custody extension:** canonical raw-event JSON and strict line
+  records now compile to identical machine bytes. A consumed 8/4/4
+  train/development/confirmation rehearsal contains both source
+  serializations in every split and has zero exact 25-byte structural-form
+  overlap under all state/action/observer gauges and independent binary-output
+  recodings. SHA-256 is only a portable receipt for the exact form. All
+  sixteen worlds have nontrivial empty-observation partitions and full future
+  separation. Persisted source bytes must recompile byte-for-byte to their
+  machine before later phases proceed. This remains a synthetic deterministic
+  phase rehearsal, not official custody, confirmation, or source-language
+  transfer.
 - **Consumed wire result:** one source-deleted machine, SHA-256
   `e4eafa3cfd205c377515cf7619f5ae723a591b5a2ed2eeab3888477bcf652000`,
   was reused across two distinct 100-query panels with zero deployed-query
@@ -93,18 +105,22 @@ fit is currently authorized.
   SHA-256 is
   `7a141efbbccdbd8328e2b38708061d9b2a4f3be8a43c3617fe4e8a413e4fd35c`.
 - **Current EFC decision:** CPU contract pass; neural preregistration
-  **NO-GO**. The consumed beacons are fixed synthetic values, so they establish
-  phase order but not external unpredictability. There is still no neural
-  raw-evidence compiler, unopened multiworld confirmation, process-level
-  assessor isolation, or cross-renderer learned result.
+  **NO-GO**. The multiworld result is a deterministic phase rehearsal pass and
+  a filesystem/process custody **NO-GO**. The consumed beacons are fixed
+  synthetic values, assessor latent/machine files are visible under the same
+  artifact root, and no candidate process was run. It establishes phase order
+  and tamper detection, not external unpredictability or candidate blindness.
+  There is still no neural raw-evidence compiler, official unopened multiworld
+  confirmation, process-level assessor isolation, or cross-language learned
+  result.
 - **Capability boundary:** these are oracle/CPU mechanics, not a Shohin neural
   result. No EFC compiler has been instantiated or trained; no new board,
   source freeze, model seed, GPU score, development read, or reasoning claim
   exists.
-- **Immediate next task:** hostilely audit and freeze the real protocol, wire
-  schema, independent world/challenge generators, and assessors; then create a
-  fresh post-seal official board with a nontrivial quotient requirement. Only a
-  completed source-free CPU gate can authorize a neural source freeze.
+- **Immediate next task:** freeze a cryptographically verified external future
+  beacon and externally witnessed candidate seal, then add process isolation
+  and a genuinely different source-language family. Only those gates can
+  authorize a neural compiler preregistration.
 - **Primary bottleneck:** model-owned compilation of raw episodic evidence into
   a compact renderer-invariant causal machine, including opaque referent
   binding. Bounded ordered execution is already mechanically easy once the
@@ -121,9 +137,11 @@ nevertheless misidentifies two sampled rows as the compiler's complete query
 support and omits the current query's opaque start-state binding. The old corpus
 is rejected for advancement because its challenge is not temporally independent.
 The corrected protocol now has an independently generated, hostilely audited,
-exact deployed-wire CPU rehearsal. It still needs an externally unpredictable
-beacon, isolated multiworld confirmation custody, and a neural preregistration
-before a compiler can be fitted.
+exact deployed-wire CPU rehearsal and a consumed structurally disjoint
+multiworld custody rehearsal. It still needs an externally unpredictable
+beacon, externally witnessed candidate seal, process isolation, genuine
+source-language transfer, and a neural preregistration before a compiler can be
+fitted.
 
 ### 2026-07-23 EPISODE Functor Compiler corrective audit
 
@@ -239,12 +257,14 @@ machines, and three independent quotient constructions (partition refinement,
 pair-product reachability, and exhaustive future behavior). It demonstrates a
 nontrivial CPU test object, not a learned quotient.
 
-The current combined relevant test command reports **208 passed, 1 skipped**
+The deployed-wire milestone originally reported **208 passed, 1 skipped**.
+The hardened combined renderer/multiworld command reports **245 passed, 1
+skipped**
 (the only skip is a platform-dependent strict C/Rust cross-check). No Shohin
 model has compiled source into a machine, no fresh official source has been
-frozen, and no GPU/development/reasoning result is implied. The next gate is a
-hostile audit and frozen independent implementation of the real post-seal
-world/challenge/assessor pipeline, not neural fitting.
+frozen, and no GPU/development/reasoning result is implied. The next gate is
+external temporal provenance, process isolation, and a genuinely different
+source-language family, not neural fitting.
 
 ### 2026-07-23 unified EFC deployed-wire audit
 
@@ -866,6 +886,70 @@ full job-by-job chronology remains in the operational runbook summary.
 claim boundaries are in Sections 1-12; the complete research source text used
 to support them is embedded in Appendix A. No conclusion in this document
 requires opening another markdown file.
+
+---
+
+# R12 EFC Multiworld Custody And Source-Renderer Gate
+
+**Date:** 2026-07-23
+
+**Decision:** deterministic CPU phase rehearsal pass; filesystem/process
+custody **NO-GO**; neural preregistration **NO-GO**
+
+The EFC deployed-wire compiler now accepts two strict byte-distinct source
+serializations of the same typed raw transition/observation events:
+
+- canonical `efc-raw-world-evidence-v2` JSON; and
+- strict `EFC-RAW-LINES-V1` line records.
+
+Both normalize to the same event object and compile to byte-identical
+1,536-byte categorical machines. Noncanonical headers, event kinds, phase
+order, integer encodings, newlines, and trailing data fail closed. This is a
+source-serialization result, not evidence of natural-language or novel-grammar
+transfer.
+
+A consumed multiworld rehearsal freezes eight train worlds and four
+development worlds, publishes their combined root, seals a placeholder
+candidate SHA-256 root, and only then materializes four confirmation worlds
+from a different, strictly later synthetic beacon. Every split contains both
+source serializations.
+
+The split-disjointness form is exact for the frozen five-state, three-action,
+two-observer binary-output cell. It is a 25-byte value that exhaustively
+canonicalizes over `5!` state gauges, `3!` action permutations, `2!` observer
+permutations, and independent binary recodings of both observer outputs.
+Generation compares exact forms and rejects all prior forms; SHA-256 is only a
+portable receipt. The consumed 8/4/4 artifact has zero overlap for every split
+pair; every world has a nontrivial empty-observation partition and all five
+states become separable by future behavior.
+
+Artifact:
+`artifacts/r12/episode_functor_multiworld_rehearsal_v2_20260723`
+
+Final report SHA-256:
+`d391640620de8f80c5925ac9c0a67879483909c08b60dc3f9d424f51002cbe6b`
+
+The hardened EFC/protected-workspace regression reports 245 passed and one
+inherited platform-dependent skip.
+
+This closes local format invariance, deterministic multiworld phase ordering,
+content addressing, persisted source-to-machine revalidation, and exact
+small-cell structural split isolation. It does not close external time or
+process custody. The candidate root is a placeholder and the beacons are fixed
+caller-supplied strings, so the consumed confirmation split was never
+unpredictable to the process. Assessor latent and machine files intentionally
+remain under the same artifact root; no candidate process was run or isolated.
+It also does not test source-language transfer, learned compilation, matched
+neural controls, or architecture-native Shohin reasoning.
+
+The next legitimate custody gate is an externally witnessed candidate seal
+followed by cryptographic verification of a preannounced future public beacon.
+Only after that, process-level assessor isolation, and a genuinely different
+source-language family should a small neural compiler preregistration be
+written. The standing user pretraining hold remains absolute.
+
+Detailed result:
+`R12_EPISODE_FUNCTOR_COMPILER_MULTIWORLD_CUSTODY_RESULT.md`.
 
 ---
 

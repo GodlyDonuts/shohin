@@ -40,8 +40,30 @@
 > beacons prove phase order, not external unpredictability. No neural fit,
 > official board, GPU job, source freeze, reasoning promotion, or pretraining
 > is authorized. Next legitimate work is external-beacon provenance,
-> multiworld unopened-confirmation custody, process isolation, and multiple
-> source renderers.
+> externally witnessed candidate publication, process isolation, and genuinely
+> different source-language families.
+>
+> **Latest EFC multiworld custody gate (2026-07-23 EDT):** canonical raw-event
+> JSON and strict `EFC-RAW-LINES-V1` records now compile to identical deployed
+> machine bytes and malformed encodings fail closed. A consumed 8/4/4
+> train/development/confirmation rehearsal alternates both source
+> serializations in every split. Its exact 25-byte canonical structural form
+> quotients all 5! state, 3! action, 2! observer, and independent binary-output
+> recodings; SHA-256 is only its receipt and all three cross-split overlaps are
+> zero. Every one of 16 worlds
+> has a nontrivial empty-observation partition and five future-behavior classes.
+> Persisted payloads are semantically regenerated from recorded phase inputs,
+> the first structurally admissible attempt is replayed, the artifact tree is
+> closed-world, and each source must recompile byte-for-byte to its machine
+> before phase transitions. The v2 final report SHA-256 is
+> `d391640620de8f80c5925ac9c0a67879483909c08b60dc3f9d424f51002cbe6b`;
+> the hardened regression is 245 passed, one platform-dependent skip.
+> Decision: deterministic CPU phase rehearsal pass; filesystem/process custody
+> NO-GO; neural preregistration NO-GO. The candidate root is a placeholder,
+> both beacons are fixed caller strings, assessor latent/machine files remain
+> visible under the same artifact root, and no candidate process was run.
+> External temporal unpredictability, candidate blindness, official
+> confirmation, a neural fit, and pretraining remain unauthorized.
 >
 > **Latest frontier handoff (2026-07-23 EDT):** the standalone AHRF seed
 > `2026072345` process ended without publishing its atomic output directory,
@@ -11945,3 +11967,36 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   built. Per the user-issued hold, do not start, queue, resume, prepare, or
   modify continuation pretraining until the user explicitly authorizes it
   after reasoning is established.
+
+- **2026-07-23** -- **EFC source-renderer and deterministic multiworld phase
+  rehearsal passes, but filesystem/process custody and neural preregistration
+  remain NO-GO.** Canonical raw-event JSON and a
+  strict line-oriented source format are byte-distinct and compile to the same
+  exact 1,536-byte machine; malformed line mutations fail closed. The formats
+  expose the same typed fields, so this is serialization invariance rather
+  than natural-language transfer.
+
+  A consumed deterministic rehearsal freezes eight train and four development
+  worlds, then seals a placeholder candidate root before generating four
+  confirmation worlds from a different, strictly later synthetic beacon. Both
+  source formats occur in every split. Exact 25-byte canonicalization over all
+  state, action, observer, and binary-output gauges yields zero structural
+  overlap across all split pairs; SHA-256 is only the receipt. Every world has
+  a nontrivial empty-observation partition and full five-state future
+  separation. Before phase transitions, all persisted files, roots, event
+  links, renderer syntax, source-to-machine compilation, and structural forms
+  are revalidated.
+
+  Artifact
+  `artifacts/r12/episode_functor_multiworld_rehearsal_v2_20260723` has final
+  report SHA-256
+  `d391640620de8f80c5925ac9c0a67879483909c08b60dc3f9d424f51002cbe6b`;
+  the hardened regression is 245 passed with one inherited platform-dependent
+  skip. Caller-supplied beacon strings prove phase order, not external
+  unpredictability. Assessor `latent.json` and `machine.bin` remain under the
+  same consumed artifact root; no candidate process was run or isolated.
+  Therefore no official custody/confirmation, neural source freeze, GPU job,
+  reasoning promotion, or continuation pretraining is authorized. Next
+  custody work is a cryptographically verified public future beacon plus
+  externally witnessed candidate publication and process-level assessor
+  isolation.
