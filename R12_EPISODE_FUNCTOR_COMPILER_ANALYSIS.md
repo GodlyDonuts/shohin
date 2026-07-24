@@ -297,3 +297,123 @@ architecture-native autonomous execution, or Shohin reasoning result exists.
 The next scientific gate is a separately frozen learned source-to-machine
 compiler with unseen-world/renderer tests and matched cache/recurrence
 controls. Continuation pretraining remains forbidden.
+
+## Identifiable Learned-Architecture Update
+
+The theory has now been translated into a train-only neural architecture
+candidate rather than only deterministic compiler mechanics:
+
+- an identifiable `K=8, M=3, P=2, |Y|=4` board with one hidden cell per
+  action/observer relation and singleton version spaces under two independent
+  solvers;
+- six algebraically distinct action families and an eight-cell renderer
+  metagrammar;
+- a proof-carrying witness compiler whose one global key transport controls
+  both copied opaque keys and transition/observer axes;
+- a zero-parameter Birkhoff/balanced-transport projector that emits only
+  lawful action permutations and balanced observers;
+- a matched trainable, permutation-equivariant relational completer that is
+  not law constrained and can therefore attribute missing-cell completion to
+  learned computation rather than host projection;
+- a separately learned raw-byte late-query grammar parser;
+- an exact 1,536-byte source-deleted machine executed by independent C and
+  Rust runtimes; and
+- a candidate collation boundary that accepts only
+  `CandidateSource.source`, rejecting family/split/renderer/target-bearing
+  objects; and
+- a separate train-only supervisor whose sole join key is source SHA-256 and
+  whose labels cannot enter the compiler forward object.
+
+Two hostile P0 findings were accepted and corrected. The production neural API
+no longer accepts source and query together. Compilation and hard sealing occur
+first; only then may raw query bytes be passed, and they resolve directly
+against the sealed `HardFunctorKeys`. The old source-derived soft-assignment
+bridge is absent from the production path. The train-time straight-through key
+transport now uses the same global one-to-one assignment as hard sealing, with
+an adversarial regression proving attached slot argmax and sealed assignment
+cannot diverge.
+
+Shohin is also connected rather than merely counted. The protected 300k
+checkpoint was loaded read-only under SHA-256
+`211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`.
+The first verification design used an importable sentinel and was rejected by
+hostile audit as replayable. It has been removed. Receipt generation now
+re-hashes the checkpoint, compares its configuration and tensors against the
+in-memory parent, compares nonpersistent buffers and the exact module graph
+against a fresh `model.py` construction, rejects runtime hooks/overrides, and
+compares the executing code manifest with a fresh load of the bound source.
+The fixed clean-runtime manifests bind function code, defaults, keyword
+defaults, recursive function-valued closures, annotations, function
+attributes, referenced globals and builtins, selected external inference and
+container dispatch, local transport behavior, class properties, ordered module
+topology, selected residual blocks, and published feature width. The actual
+protected checkpoint passes; parameter, RoPE-buffer, hook, topology,
+class-method, property, method-default, transport, builtin, and
+referenced-callable mutations each invalidate verification. This is a Python
+execution receipt rather than malicious-host, native-kernel, or hardware
+attestation.
+Frozen residuals from blocks 9, 19, and 29 feed both source and query
+perception through exact tokenizer-to-byte offsets. The current 888-source
+pilot has exact nonoverlapping offset coverage; the longest source is 2,420
+tokens and 440/888 sources exceed the parent context. The frozen trunk uses
+disconnected deterministic 2,048-token windows that reset attention and RoPE,
+so it supplies local perceptual features only; the trainable byte encoder
+carries global context.
+
+The exact connected receipts are:
+
+| Component | Solver arm | No-host arm |
+|---|---:|---:|
+| Frozen Shohin | 125,081,664 | 125,081,664 |
+| Source compiler | 3,595,792 | 3,821,202 |
+| Query parser | 728,993 | 728,993 |
+| Added trainable parameters | 4,324,785 | 4,550,195 |
+| Complete instantiated system | 129,406,449 | 129,631,859 |
+| Headroom under 200M | 70,593,551 | 70,368,141 |
+
+The minimal no-host arm is an attribution probe rather than a final capacity
+claim. Named constructor-verified profiles now reserve a 35,625,267-parameter
+wide treatment at 160,706,931 total parameters and a 60,552,883-parameter
+maximum treatment at 185,634,547 total parameters. The maximum profile uses a
+512-wide 8+4-layer compiler, a 640-wide eight-round relational completer, and
+a 320-wide four-layer query parser, leaving 14,365,453 parameters below the
+200M ceiling. Two structural alternatives are now staged rather than treating
+this budget as width alone. The first is a Hankel-shift causal code whose
+state representation is its finite future-behavior signature and whose action
+table is decoded by left-shift agreement. It fits inside the existing maximum
+receipt. The second is a recurrent sealed predictive compiler that allows
+provisional machine contradictions to revise source perception; it may reach
+approximately 197.0M total parameters and therefore requires a distinct
+adapted-base receipt and stronger controls. Both remain unimplemented
+research treatments with explicit open-loop, scrambled-incidence, direct
+hypernetwork, adapter-only, and oracle controls. They are not capability or
+novelty claims.
+These profiles make it possible to diagnose undercapacity without
+changing a treatment after scoring. A learned executor, recurrent memory, or
+changes to normally fixed transformer components remain allowed only as
+separately named causal arms with matched controls.
+
+This is still **not a reasoning result**. The public-law projector performs
+permutation/balance completion as an architectural solver. It may support a
+claim about learned parsing, binding, machine induction, and post-seal
+composition, but not a claim that Shohin learned the missing-cell deduction.
+The no-host learned-completion arm now exists and its forward path is tested,
+including source-to-machine integration, state-recoding equivariance,
+non-forced invalid-table behavior, and attached gradients. It has not been
+fit. A hostile audit found that coordinate-first argmax broke hard equivariance
+on exact ties. Hard ties now fail closed before straight-through or detached
+hardening, while unique-max hard state/action/observer/answer recodings pass
+exactly. Transfer to different law families remains mandatory for a stronger
+claim. Candidate/supervisor process custody, complete resource accounting,
+controls, source freeze, and neural qualification remain unfinished.
+Therefore no neural fit, development read, reasoning promotion, GPU job, or
+continuation pretraining is authorized.
+
+The train-only compiler qualification path is now executable at the loss and
+optimizer-step level. Labels remain in a separately typed supervisor and join
+only after the source-only forward by source SHA-256. Exact metrics isolate the
+five hidden completion cells per rendered source from exposed-cell copying.
+The trainer updates only the source compiler, requires the verified protected
+trunk by default, and rejects nonfinite gradients. A canonical resource-receipt
+schema also exists. There is still no custody launcher, frozen arm-specific
+resource receipt, neural fit, score, or development access.

@@ -3,9 +3,10 @@
 ## Current Status — Read First
 
 **Current frontier:** the Episodic Functor Compiler (EFC) has passed an
-externally timed, source-frozen, unmocked macOS process-custody rehearsal. The
-next scientific gate is a separately frozen learned source-to-machine compiler;
-no neural first fit is currently authorized.
+externally timed, source-frozen, unmocked macOS process-custody rehearsal, and
+a train-only learned source-to-machine architecture is now implemented against
+the hash-verified frozen Shohin trunk. Its mechanics and attribution interfaces
+are tested, but no neural first fit is currently authorized.
 
 - **Protected base:** immutable step-300k Shohin checkpoint,
   125,081,664 parameters, SHA-256
@@ -106,7 +107,9 @@ no neural first fit is currently authorized.
   SHA-256 is
   `7a141efbbccdbd8328e2b38708061d9b2a4f3be8a43c3617fe4e8a413e4fd35c`.
 - **Current EFC decision:** deterministic CPU contract and macOS process
-  custody **PASS**; Linux and neural preregistration remain **NO-GO**.
+  custody **PASS**; the learned architecture/mechanics gate **PASS**; a neural
+  fit remains **NO-GO** until exact arm-specific resource receipts, process
+  custody, and controls are frozen.
   Authorization commit `aff33d48c670be24fb69d2cf89e1010ab27c29eb`
   preceded exact NIST pulse `1,873,055` by 406 seconds. Three fresh
   default-deny candidate processes received canonical JSON, strict line, and
@@ -117,15 +120,14 @@ no neural first fit is currently authorized.
   blindness probe passed every declared denial. Final report SHA-256 is
   `f2c4cd16a246f5d5da7116512601d4705ba21c14e23c582cdd95d50265450c04`.
   This supersedes the earlier process-custody NO-GO but not the neural NO-GO.
-- **Capability boundary:** these are oracle/CPU mechanics, not a Shohin neural
-  result. No EFC compiler has been instantiated or trained; no new board,
-  source freeze, model seed, GPU score, development read, or reasoning claim
-  exists.
-- **Immediate next task:** replay the role boundary unmocked under Linux
-  Bubblewrap plus Landlock when Newton is reachable, then freeze a learned
-  compiler preregistration with unseen worlds, held-out renderers, post-seal
-  challenges, exact machine scoring, cache/recurrence controls, and
-  key/transition interventions.
+- **Capability boundary:** these are architecture and CPU mechanics, not a
+  Shohin reasoning result. The EFC compiler has been instantiated and connected
+  read-only to the protected trunk, but it has not been fitted. No GPU score,
+  development read, confirmation read, or reasoning claim exists.
+- **Immediate next task:** freeze exact arm-specific resource receipts and a
+  process-custody launcher for the learned compiler, close every hostile-audit
+  P0/P1, and qualify the solver and no-host controls before any train-only fit.
+  Linux Bubblewrap plus Landlock remains an additional deployment gate.
 - **Primary bottleneck:** model-owned compilation of raw episodic evidence into
   a compact renderer-invariant causal machine, including opaque referent
   binding. Bounded ordered execution is already mechanically easy once the
@@ -143,11 +145,123 @@ support and omits the current query's opaque start-state binding. The old corpus
 is rejected for advancement because its challenge is not temporally independent.
 The corrected protocol now has an independently generated, hostilely audited,
 exact deployed-wire CPU rehearsal, a consumed structurally disjoint multiworld
-rehearsal, and an externally timed process-separated macOS custody pass across
-three source languages. It still needs an unmocked Linux replay and, most
-importantly, a frozen learned-compiler protocol before any neural compiler can
-be fitted. Deterministic multi-renderer compilation is a mechanics ceiling,
-not evidence of native reasoning.
+rehearsal, an externally timed process-separated macOS custody pass across
+three source languages, and an implemented learned compiler/no-host control
+pair. It still needs arm-specific resource freezes, process custody for the
+neural candidate, hostile-audit closure, and an unmocked Linux replay before
+any fit can be admitted. Deterministic multi-renderer compilation and an
+untrained architecture are mechanics ceilings, not evidence of native
+reasoning.
+
+### 2026-07-24 learned EFC architecture and attribution gate
+
+The supplied frontier analysis was useful, but only after narrowing its claims.
+Its durable contribution is an anonymous episode-local machine with separate
+opaque key and transition fields, a compiler/query-parser separation, attached
+training followed by detached scoring, source deletion before late queries,
+and post-seal challenge generation. Its old-board two-answer-cache objection
+is not established because the lawful compiler does not receive the hidden
+late-query coordinates.
+
+The replacement identifiable board contains 200 latent worlds and 888 rendered
+sources spanning six action families: random permutations, affine maps over
+`F2^3`, dihedral vertex actions, regular `D4`, regular `Q8`, and cube rotations.
+Four even-parity renderers per world are train-visible; three renderers are
+held for development and one for confirmation. Two independently written
+solvers recover a singleton machine version space for every source. The CPU
+audit passes:
+
+- 1,719,168 exhaustive depth-zero-through-four query coordinates;
+- 7,104 query-renderer equivalence checks;
+- 888/888 changed-record-order witnesses;
+- zero overlap across all 15 action-family canonical-orbit pairs;
+- 25,509,152 depth-twelve answer bits versus 12,288 deployed machine bits,
+  a 2,075.94x semantic capacity ratio; and
+- exact agreement between the reference solver and the production 1,536-byte
+  C/Rust machine contract.
+
+The candidate boundary exposes exactly `CandidateSource(source: bytes)`. A
+separate supervisor owns key-slot, record-type, occurrence-role, record-answer,
+transition, observer, and hidden-cell labels; source SHA-256 is the sole
+post-forward join. The production `LearnedEFCSystem.forward` receives only
+source bytes during compilation and only `(sealed, late_query)` during
+execution. The query parser receives sealed hard keys, not source bytes, soft
+assignments, transitions, observer tables, or supervisor labels. Post-seal
+tests poison and delete source before constructing the query.
+
+The frozen Shohin trunk is loaded only through an exact checkpoint-hash
+verifier. A constructor-built same-size GPT cannot claim connection. Source
+features use raw residuals from blocks 9, 19, and 29 with exact tokenizer
+byte-offset alignment and deterministic independent windows no longer than
+2,048 tokens. All 888 sources tokenize exactly; 440 require multiple
+disconnected windows, which is recorded as a limitation rather than presented
+as global source integration.
+
+Two learned arms are implemented below the 200M ceiling:
+
+| Arm | Added parameters | Total parameters | Attribution boundary |
+|---|---:|---:|---|
+| Explicit solver/executor | 4,324,785 | 129,406,449 | Host hardening is an admitted solver resource |
+| No-host learned completion | 4,550,195 | 129,631,859 | 225,410-parameter shared relational completer predicts missing cells |
+
+The small no-host arm is intentionally an attribution probe. Shohin has
+70,368,141 parameters of unused capacity under the 200M ceiling, and the
+architecture plan does not treat that headroom as forbidden. Exact constructor
+receipts admit a 35,625,267-parameter wide lane (160,706,931 total) and a
+60,552,883-parameter maximum preregistered lane (185,634,547 total). The latter
+uses a 512-wide 8+4-layer compiler, a 640-wide eight-round relational
+completer, and a 320-wide four-layer query parser, leaving 14,365,453
+parameters for controls or a separately attributed learned executor. These
+counts are not fits or reasoning evidence. Scaling occurs only after matched
+controls distinguish undercapacity from an invalid mechanism, and changes to
+normally fixed transformer components receive their own named treatment arm.
+
+The next structural treatments are now explicit. A Hankel-shift causal-code
+arm uses finite future-behavior signatures as anonymous state codewords and
+decodes actions by left-shift agreement; it fits inside the 185.6M maximum
+lane. A later sealed predictive compiler may use the budget up to roughly
+197.0M by adding source-only parent adapters, typed factor memory, and
+recurrent predict/revise cycles whose machine contradictions can alter source
+perception. That later arm changes traditionally frozen computation and must
+use a distinct adapted-base receipt. Both have parameter-matched open-loop,
+random-incidence, direct-hypernetwork, adapter-only, and oracle controls.
+Neither is implemented, fitted, or claimed novel; the exact design and kill
+criteria are in `R12_EFC_LEARNED_COMPILER_PREREG.md`.
+
+The no-host completer is state-recoding equivariant but is not constrained to
+emit permutations or balanced observers. Zeroing it produces tied soft tables
+whose coordinate-first hardening would be invalid, proving that host hardening
+does not silently force the answer. Exact categorical ties now fail closed;
+under unique maxima, hard state/action/observer/answer recodings are exact.
+Both arms share exact key, record, occurrence, transition, observer,
+hidden-cell, and whole-machine metrics. Only the source compiler is
+optimizer-visible. Checkpoint receipts re-hash the file and compare every
+configuration/tensor, nonpersistent buffer, module type and runtime attribute
+with a fresh `model.py` construction; hooks and runtime overrides are rejected,
+and the executing code manifest must match a fresh load of the bound source.
+Those fixed clean-runtime manifests bind function code, defaults, keyword
+defaults, recursive function-valued closures, annotations, function
+attributes, referenced globals and builtins, selected external inference and
+container dispatch, model properties, ordered module topology, trunk
+execution/configuration, transport dispatch, and published feature width. The
+protected 300k checkpoint passes; parameter, RoPE-buffer, hook, topology,
+class-method, property, method-default, transport, builtin, and
+referenced-callable mutations fail. The focused learned-EFC regression is 180
+passed; the broader EFC regression is 377 passed. Ruff and bytecode
+compilation are clean. This is not malicious-host, native-kernel, or hardware
+attestation.
+
+The audit payload and report SHA-256 values are
+`97c6f6a56f7481546a5dd04a7d628fbc5a348e6d087807ac46f95df334acac66`
+and
+`e8b9e4aeada6ebf8c0b33fab0cfd95ea42a63e8c1b71002ef6a83e3adc8834ae`.
+Its explicit decision is
+`cpu_qualification_candidate_neural_fit_no_go`. A strict resource schema
+exists, but no arm-specific receipt can yet be frozen because update count,
+optimizer-state precision, measured compiler cost, and custody topology remain
+unset. No neural optimization step has occurred outside unit tests. No
+development or confirmation row has been opened. No GPU job, EFC capability
+score, native-reasoning result, or continuation pretraining is authorized.
 
 ### 2026-07-23 EPISODE Functor Compiler corrective audit
 

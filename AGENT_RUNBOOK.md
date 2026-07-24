@@ -14,7 +14,7 @@
 > compatibility, and isolated reasoning evaluation may continue; none of those
 > activities implies permission to pretrain.
 >
-> **Last updated:** 2026-07-23 EDT. The protected 300k flagship remains immutable and
+> **Last updated:** 2026-07-24 EDT. The protected 300k flagship remains immutable and
 > hash-matched at SHA-256
 > `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`; no flagship writer is
 > active. Final raw benchmark job `692787` completed cleanly on `evc32`: GSM8K maj@4 `4/100`,
@@ -169,6 +169,80 @@
 > is `349b8f4c4a163afd5eab288727c7bd59a1e52fb6782d25071820fac1151c678d`.
 > These remain CPU mechanics only. The two-beacon rehearsal is not the deployed
 > C/Rust wire format and no neural fit is authorized.
+>
+> **Latest learned EFC architecture gate (2026-07-24 EDT):** the frontier
+> theory is now implemented as a source-deleted train-only compiler hypothesis,
+> not merely a deterministic CPU compiler. The identifiable pilot contains 200
+> latent worlds and 888 renderer-specific sources across six action families.
+> Two independent solvers find singleton version spaces; 1,719,168 exhaustive
+> depth-zero-through-four coordinates, 7,104 query renderer checks, all 888
+> changed-order witnesses, and all 15 cross-family action-orbit overlap checks
+> pass. The candidate boundary exposes only `CandidateSource(source: bytes)`.
+> Train-only labels live in a separately typed supervisor and join after the
+> forward only by source SHA-256.
+>
+> The protected checkpoint is connected read-only and cryptographically, not
+> by parameter count alone. Only the hash-verifying loader can report
+> `connected`, under exact checkpoint SHA-256
+> `211d6b2cddf0c2cf8b12cb0b2d73f9c4440d85f6f531018080c8afd35b2f66a6`.
+> Frozen residuals from blocks 9, 19, and 29 feed local source/query perception.
+> Exact tokenizer coverage passes on 888/888 sources; lengths are 1,575--2,420
+> tokens, and 440 exceed the 2,048-token parent context. Those sources use
+> disconnected windows that reset attention/RoPE, so frozen Shohin supplies
+> local features only while the trainable byte encoder carries global context.
+>
+> The solver-assisted arm has 4,324,785 added trainable and 129,406,449 total
+> parameters. Its public-law Birkhoff/balance projector is an explicit host
+> solver and cannot prove learned missing-cell deduction. The matched no-host
+> arm replaces it with a 225,410-parameter permutation-equivariant relational
+> completer that is not forced to emit lawful tables; it has 4,550,195 added
+> trainable and 129,631,859 total parameters. The late-query parser now receives
+> only sealed hard keys, never source assignments or machine dynamics. The
+> source compiler has a frozen post-forward EFC-C loss, exact hidden-cell and
+> complete-machine metrics, and a fail-closed optimizer step that updates only
+> the compiler. Extreme finite transport logits retain finite gradients.
+> The 4.55M no-host addition is only an attribution probe, not a final capacity
+> assumption. Exact constructor receipts reserve a 35,625,267-parameter wide
+> lane (160,706,931 complete) and a 60,552,883-parameter maximum lane
+> (185,634,547 complete, 14,365,453 headroom). Recurrent relational compilation,
+> typed memory, a learned executor, and modifications to normally fixed
+> transformer components are allowed as separately named causal arms; parameter
+> growth alone is never a capability claim.
+>
+> A first hostile re-audit found and closed two P1 mechanics defects. The
+> importable checkpoint-verification sentinel was removed; receipts now
+> re-hash checkpoint configuration/tensors, compare nonpersistent buffers and
+> the exact module graph against a fresh `model.py` construction, reject
+> hooks/runtime overrides, and compare the executing code manifest with a
+> fresh load of the bound source and a fixed clean-runtime manifest. The
+> manifest binds code, defaults, keyword defaults, recursive function-valued
+> closures, annotations, function attributes, referenced globals and
+> builtins, selected external inference/dispatch methods, model properties,
+> ordered module topology, trunk execution/configuration, transport dispatch,
+> and published feature width. The actual protected 300k checkpoint verifies;
+> parameter, RoPE-buffer, hook, topology, class-method, property,
+> method-default, transport, builtin, and referenced-callable mutations each
+> invalidate the receipt. The no-host arm now rejects
+> exact categorical ties before hardening because coordinate-order argmax is
+> not gauge-equivariant; under unique maxima, hard state/action/observer/answer
+> recodings are exact.
+>
+> The focused learned-EFC suite is 180 passed; the broader EFC regression is
+> 377 passed. Ruff and `py_compile` pass. Audit
+> schema `efc-identifiable-cpu-audit-v3` binds 22 integrated dependencies,
+> including `model.py`, tokenizer, protected checkpoint, supervisor, resource
+> schema, solver arm, and no-host arm. Report payload SHA-256 is
+> `97c6f6a56f7481546a5dd04a7d628fbc5a348e6d087807ac46f95df334acac66`;
+> report file SHA-256 is
+> `e8b9e4aeada6ebf8c0b33fab0cfd95ea42a63e8c1b71002ef6a83e3adc8834ae`.
+> Decision remains `cpu_qualification_candidate_neural_fit_no_go`: no
+> arm-specific frozen resource receipt, process-custody launcher, qualified
+> controls, source commit, neural fit, GPU job, score, or reasoning result
+> exists. Successive hostile reviews produced concrete Python-semantic
+> findings now covered by regressions; the final independent sign-off channel
+> was safety-filtered before returning a verdict, so no malicious-host,
+> native-kernel, or hardware attestation is claimed. Continuation pretraining
+> remains absolutely forbidden.
 >
 > MCTFR remains **pre-score** after two hostile audits invalidated its first
 > implementation. The working revision removes renderer/orbit metadata from
@@ -12140,3 +12214,112 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   a learned source-to-machine compiler protocol only after Linux replay and
   matched cache/recurrence controls are explicit. The step-300k base and user
   pretraining hold remain unchanged.
+
+- **2026-07-24** -- **The frontier EFC theory is implemented as a learned,
+  source-deleted architecture candidate; neural fitting remains NO-GO.** The
+  external draft and handoff remain byte-identical at SHA-256
+  `e3c7420fd7aef36834cee79af58afe681359e1cbf5ca35a1ad855d14bfcabd36`
+  and
+  `a83536547b121d000cd8c28d9ce4beb059a661f49a294eb6492d7db0e61e3531`.
+  The new identifiable board has 200 latent worlds, 888 sources, six
+  algebraically distinct action families, eight renderer combinations,
+  singleton version spaces, zero split/action-orbit overlap, and
+  25,509,152 depth-twelve answer bits versus 12,288 deployed machine bits.
+
+  Candidate collation admits only raw source bytes and exact tokenizer
+  alignment. A separate supervisor owns EFC-C role, key, relation, and hidden
+  completion labels; source SHA-256 is the sole join. Production compilation
+  seals a fixed 1,536-byte machine before a query exists. The query parser now
+  accepts only sealed hard keys. Source bytes, soft assignments, machine
+  transitions, and observer tables are unavailable through its production
+  API. The protected 300k trunk is hash-verified read-only; a same-sized
+  constructor-built GPT cannot claim `connected`.
+
+  The solver arm is 129,406,449 total parameters. A matched no-host arm is
+  129,631,859 total parameters and uses a 225,410-parameter shared relational
+  completer that is state-recoding equivariant but does not impose
+  permutation/balance laws. A zeroed no-host arm emits tied soft tables that
+  fail closed at hardening, proving host hardening does not silently solve the
+  task. Both arms have a common
+  post-forward loss, hidden-cell metrics, exact-machine metrics, and
+  source-compiler-only optimizer boundary. No optimizer step has been run
+  outside unit tests.
+
+  The focused learned-EFC regression is 168 passed and the broader EFC
+  regression is 364 passed. Audit payload/file hashes are
+  `32dd562692f0499c32bcf398216e9b2af4fe1142086cde41e64c20fca0d54254`
+  and
+  `b3829cf418f51aca0204394bfec2b864f4e07fe04385e2fdbbea52fa88eeba4c`.
+  A hostile re-audit found an importable checkpoint-verification sentinel and
+  coordinate-dependent no-host hard ties. The sentinel is removed; receipts
+  now verify checkpoint configuration/tensors, nonpersistent buffers, exact
+  module graph, hook/override absence, and the executing code manifest against
+  a fresh load of bound `model.py`. Exact categorical ties now fail closed,
+  while unique-max hard state/action/observer/answer recodings are exact.
+  This admits an architecture/mechanics milestone only. Resource schemas exist
+  but no arm-specific receipt, custody launcher, control qualification, source
+  freeze, neural fit, development read, GPU job, native reasoning result, or
+  continuation pretraining is authorized.
+
+- **2026-07-24** -- **The learned-EFC capacity plan now uses the available
+  reasoning headroom without weakening attribution.** The existing 4,550,195
+  added-parameter no-host arm remains a minimal causal probe. Exact constructor
+  receipts admit a 35,625,267-parameter wide lane at 160,706,931 complete
+  parameters and a 60,552,883-parameter maximum preregistered lane at
+  185,634,547 complete parameters, leaving 14,365,453 below the 200M ceiling.
+  The maximum lane widens the compiler to 512 with eight encoder and four
+  decoder layers, the relational completer to 640 with eight rounds, and the
+  query parser to 320 with four layers. Recurrent relational compilation,
+  typed memory, a learned executor, and normally fixed transformer components
+  may be changed only as separately named causal arms with matched controls.
+
+  The widened preregistration changed a bound dependency, so the CPU dossier
+  was regenerated rather than reused. Its payload/file SHA-256 values are
+  `32dd562692f0499c32bcf398216e9b2af4fe1142086cde41e64c20fca0d54254`
+  and
+  `b3829cf418f51aca0204394bfec2b864f4e07fe04385e2fdbbea52fa88eeba4c`;
+  all 22 dependency hashes and the canonical payload recomputation agree. The
+  focused learned-EFC suite passes 168 tests and the broader EFC suite passes
+  364 tests; Ruff and `py_compile` pass. These are architecture and mechanics
+  receipts only. No fit, GPU job, development read, confirmation read,
+  continuation pretraining, or native-reasoning claim has occurred.
+
+- **2026-07-24** -- **The expanded-capacity EFC candidate now has a hardened
+  Python execution receipt and two structural escalation hypotheses; neural
+  fitting remains NO-GO.** Successive hostile reviews found that checkpoint
+  integrity could previously survive mutations to external forward/dispatch
+  methods, `ModuleList` iteration, ordered child topology, trunk execution
+  methods and residual-layer selection, referenced builtins, function-valued
+  decorator closures, local transport dispatch, class properties, and
+  published feature width. Every concrete finding is now covered by a
+  regression. Model and trunk manifests bind recursive function semantics,
+  selected external inference/container dispatch, ordered module/state/buffer
+  topology, trunk configuration, transport behavior, and feature geometry.
+  The protected checkpoint still verifies as exactly 125,081,664 frozen
+  parameters with zero trainable parent parameters.
+
+  The focused learned-EFC suite passes 180 tests and the broader EFC suite
+  passes 377 tests with 26 known PyTorch nested-tensor warnings. Ruff and
+  `py_compile` pass. Regenerated audit schema
+  `efc-identifiable-cpu-audit-v3` matches all 22 dependencies and its canonical
+  payload recomputation. Payload SHA-256 is
+  `97c6f6a56f7481546a5dd04a7d628fbc5a348e6d087807ac46f95df334acac66`;
+  file SHA-256 is
+  `e8b9e4aeada6ebf8c0b33fab0cfd95ea42a63e8c1b71002ef6a83e3adc8834ae`.
+  The final independent review channel was safety-filtered before issuing a
+  verdict, so this is not malicious-host, native-kernel, hardware, or
+  process-custody attestation.
+
+  The parameter budget is now treated as a mechanism budget. The existing
+  constructor-verified maximum lane remains 185,634,547 total parameters.
+  A staged Hankel-shift causal-code treatment would represent anonymous states
+  by finite future-behavior signatures and decode actions by left-shift
+  agreement within that same ceiling. A later sealed predictive compiler may
+  reach approximately 197.0M by adding source-only parent adapters, typed
+  factor memory, and recurrent predict/revise cycles; because it changes
+  normally frozen computation, it requires a distinct adapted-base receipt.
+  Both have explicit matched controls and kill criteria in
+  `R12_EFC_LEARNED_COMPILER_PREREG.md`. Neither is implemented, fitted, scored,
+  or claimed novel. No GPU job, neural optimization, development read,
+  confirmation read, continuation pretraining, or native-reasoning claim is
+  authorized.
