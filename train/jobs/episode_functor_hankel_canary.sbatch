@@ -32,6 +32,7 @@ EXPECTED_TOKENIZER_SHA256=87532df5c121753de3b29194e1f9e3de47986d3f5359548fdf9360
 EXPECTED_ARM_RECEIPT_SHA256=67bf59d568e64256939ebb74acdca04c6cc16bb7e71016616db315094fabc8b2
 EXPECTED_INITIALIZATION_RECEIPT_SHA256=333a53adbdcda7224b070c27fcc76649049b048997d3e6e0883e0d18f891a889
 EXPECTED_CANARY_RECEIPT_SHA256=1b14ee63add971f9022377847c8d9a1fe53911938bb65ee2cf693e0dd81a6cf4
+SOURCE_COMMIT=db5786cf37390099db62acdbeba51cd9d796cb52
 
 mkdir -p "$RESULT_ROOT" "$SNAPSHOT"
 test ! -e "$OUTPUT"
@@ -43,17 +44,26 @@ test -d "$PACKAGE"
 # Build a closed Python source snapshot from the hash-bound manifest. The
 # confined role later repeats the same closure and hash verification.
 "$PYTHON" - "$BASE" "$SOURCE_MANIFEST" "$SNAPSHOT" \
-  "$EXPECTED_SOURCE_MANIFEST_SHA256" <<'PY'
+  "$EXPECTED_SOURCE_MANIFEST_SHA256" "$SOURCE_COMMIT" <<'PY'
 import hashlib
 import json
 from pathlib import Path
-import shutil
+import subprocess
 import sys
 
 base = Path(sys.argv[1]).resolve()
 manifest_path = Path(sys.argv[2]).resolve()
 snapshot = Path(sys.argv[3]).resolve()
 expected = sys.argv[4]
+source_commit = sys.argv[5]
+observed_commit = subprocess.run(
+    ["git", "-C", str(base), "rev-parse", f"{source_commit}^{{commit}}"],
+    check=True,
+    capture_output=True,
+    text=True,
+).stdout.strip()
+if observed_commit != source_commit:
+    raise SystemExit("source commit differs")
 manifest = json.loads(manifest_path.read_text(encoding="ascii"))
 canonical = json.dumps(
     tuple(manifest["sources"]),
@@ -66,8 +76,11 @@ if manifest["manifest_sha256"] != expected:
 if hashlib.sha256(canonical).hexdigest() != expected:
     raise SystemExit("source manifest payload differs")
 for row in manifest["sources"]:
-    source = (base / row["path"]).resolve(strict=True)
-    payload = source.read_bytes()
+    payload = subprocess.run(
+        ["git", "-C", str(base), "show", f"{source_commit}:{row['path']}"],
+        check=True,
+        capture_output=True,
+    ).stdout
     if hashlib.sha256(payload).hexdigest() != row["sha256"]:
         raise SystemExit(f"source hash differs: {row['path']}")
     destination = snapshot / row["path"]

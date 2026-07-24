@@ -41,6 +41,10 @@
 > `142b16298a38c30ecd1fc36b2792c47829814e8782e02ef803cef48cfc480064`;
 > runtime source manifest SHA-256 is
 > `ae4357df26353bbc6d8703f6074f133fc3991d00e751c5a22627aa2c387be64f`.
+> The Slurm launcher reconstructs every one of those 26 runtime files from
+> immutable Git commit `db5786cf37390099db62acdbeba51cd9d796cb52` and
+> verifies each file hash before confinement, so later working-tree changes
+> cannot contaminate the v6 measurement.
 > The measurement canary is not yet submitted because Newton DNS is currently
 > unavailable. Qualification fit, development, confirmation, native-reasoning,
 > and continuation-pretraining claims remain NO-GO.
@@ -12458,6 +12462,11 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   `ae4357df26353bbc6d8703f6074f133fc3991d00e751c5a22627aa2c387be64f`;
   prefix canary authorization SHA-256 is
   `1b14ee63add971f9022377847c8d9a1fe53911938bb65ee2cf693e0dd81a6cf4`.
+  The launcher now reconstructs all 26 source-manifest files directly from
+  exact audited Git commit `db5786cf37390099db62acdbeba51cd9d796cb52`
+  using `git show`, verifies every source hash, and only then creates the
+  confined snapshot. This closes working-tree drift without changing the
+  audited runtime closure or v6 packages.
   Newton DNS failed before SSH, so no GPU job was submitted. Retry standard
   access, sync only the exact code closure and v6 authorization, verify hashes,
   then submit the two-update measurement canary. Do not authorize a

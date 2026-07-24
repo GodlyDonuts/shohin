@@ -135,7 +135,11 @@ are tested, but no neural first fit is currently authorized.
   excludes the board generator, label oracle, and preparation role.
   Independent hostile review reports no residual P0/P1 for the exact
   four-source H100 measurement canary. This closes measurement-launch
-  mechanics, not the neural-fit gate.
+  mechanics, not the neural-fit gate. The Slurm launcher reconstructs the
+  complete 26-file worker closure from immutable audited Git commit
+  `db5786cf37390099db62acdbeba51cd9d796cb52` and verifies each manifest
+  hash before confinement, preventing later working-tree edits from changing
+  the authorized executable.
 - **Capability boundary:** these are architecture and CPU mechanics, not a
   Shohin reasoning result. The EFC compiler has been instantiated and connected
   read-only to the protected trunk, but it has not been fitted. No GPU score,
@@ -235,6 +239,13 @@ parameters for controls or a separately attributed learned executor. These
 counts are not fits or reasoning evidence. Scaling occurs only after matched
 controls distinguish undercapacity from an invalid mechanism, and changes to
 normally fixed transformer components receive their own named treatment arm.
+The implemented HSC arm already spends 70,411,445 added parameters, bringing
+the complete system to 195,493,109. This is the current large-capacity
+architecture treatment, not a small adapter experiment. Further changes to
+parent attention, positional encoding, normalization, recurrence, or external
+typed memory remain admissible, but only as separately named arms with exact
+parameter receipts and causal controls; bundling them into HSC before its
+measurement would destroy attribution.
 
 The first structural escalation arm is now implemented but not fitted. Its
 finite depth-three code uses 40 action words, two observers, and therefore 80
