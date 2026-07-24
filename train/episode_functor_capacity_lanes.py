@@ -10,6 +10,7 @@ from episode_functor_learned_completion import (
     LearnedRelationalCompletionProjector,
 )
 from episode_functor_hankel_completion import (
+    DirectDualCompletionControlProjector,
     HankelShiftCompletionProjector,
 )
 from episode_functor_learned_system import (
@@ -73,6 +74,7 @@ class EFCCapacityReceipt:
 class EFCHankelCapacityReceipt:
     lane: str
     incidence_mode: str
+    decode_mode: str
     compiler_parameters: int
     projector_parameters: int
     query_parameters: int
@@ -149,6 +151,7 @@ CAPACITY_LANES: Final = MappingProxyType(
 HANKEL_SHIFT_MAXIMUM_EXPECTED: Final = EFCHankelCapacityReceipt(
     lane="maximum-hankel-shift",
     incidence_mode="prefix",
+    decode_mode="hankel-shift",
     compiler_parameters=64_407_956,
     projector_parameters=19_717_124,
     query_parameters=6_003_489,
@@ -233,6 +236,7 @@ def build_hankel_shift_capacity_lane(
     external_feature_width: int,
     incidence_mode: str = "prefix",
     random_seed: str = "efc-hankel-random-control-v1",
+    decode_mode: str = "hankel-shift",
 ) -> tuple[
     ProofCarryingWitnessCompiler,
     NeuralOpaqueQueryParser,
@@ -246,8 +250,17 @@ def build_hankel_shift_capacity_lane(
         raise EFCCapacityError(
             f"unknown Hankel incidence mode: {incidence_mode}"
         )
+    if decode_mode not in ("hankel-shift", "direct-base"):
+        raise EFCCapacityError(
+            f"unknown Hankel decode mode: {decode_mode}"
+        )
     lane = MAXIMUM_PREREG_LANE
-    projector = HankelShiftCompletionProjector(
+    projector_type = (
+        HankelShiftCompletionProjector
+        if decode_mode == "hankel-shift"
+        else DirectDualCompletionControlProjector
+    )
+    projector = projector_type(
         width=lane.completer_width,
         iterations=lane.completer_iterations,
         max_depth=3,
@@ -271,8 +284,13 @@ def build_hankel_shift_capacity_lane(
         external_feature_width=external_feature_width,
     )
     receipt = EFCHankelCapacityReceipt(
-        lane="maximum-hankel-shift",
+        lane=(
+            "maximum-hankel-shift"
+            if decode_mode == "hankel-shift"
+            else "maximum-hankel-direct"
+        ),
         incidence_mode=incidence_mode,
+        decode_mode=decode_mode,
         compiler_parameters=compiler.parameter_count(),
         projector_parameters=projector.parameter_count(),
         query_parameters=query.parameter_count(),
@@ -290,8 +308,9 @@ def build_hankel_shift_capacity_lane(
         ),
     )
     expected = EFCHankelCapacityReceipt(
-        lane=HANKEL_SHIFT_MAXIMUM_EXPECTED.lane,
+        lane=receipt.lane,
         incidence_mode=incidence_mode,
+        decode_mode=decode_mode,
         compiler_parameters=HANKEL_SHIFT_MAXIMUM_EXPECTED.compiler_parameters,
         projector_parameters=HANKEL_SHIFT_MAXIMUM_EXPECTED.projector_parameters,
         query_parameters=HANKEL_SHIFT_MAXIMUM_EXPECTED.query_parameters,

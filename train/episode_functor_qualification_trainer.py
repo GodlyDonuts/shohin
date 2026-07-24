@@ -21,13 +21,21 @@ if str(ROOT) not in sys.path:
 from pipeline.episode_functor_qualification_boundary import (  # noqa: E402
     CandidateCompilerBatch,
 )
+from pipeline.episode_functor_qualification_custody import (  # noqa: E402
+    QualificationSplitCustody,
+)
 from pipeline.episode_functor_qualification_supervisor import (  # noqa: E402
     QualificationSupervisorBatch,
 )
 from episode_functor_learned_system import (  # noqa: E402
     LearnedEFCSystem,
 )
+from episode_functor_hankel_completion import (  # noqa: E402
+    HankelShiftCompletionProjector,
+    NeuralHankelShiftResult,
+)
 from episode_functor_qualification_loss import (  # noqa: E402
+    EFCHankelQualificationLoss,
     EFCQualificationLoss,
     QualificationExactMetrics,
 )
@@ -64,6 +72,7 @@ class QualificationStepReceipt:
     trainable_parameters: int
     optimizer_state_bytes: int
     exact_metrics: QualificationExactMetrics
+    training_manifest_sha256: str
 
     def __post_init__(self) -> None:
         if (
@@ -73,10 +82,18 @@ class QualificationStepReceipt:
             or self.gradient_norm < 0.0
             or self.trainable_parameters < 1
             or self.optimizer_state_bytes < 1
+            or len(self.training_manifest_sha256) != 64
         ):
             raise QualificationTrainerError(
                 "qualification step receipt differs"
             )
+
+
+@dataclass(frozen=True, slots=True)
+class QualificationEvaluationReceipt:
+    split: str
+    manifest_sha256: str
+    exact_metrics: QualificationExactMetrics
 
 
 class EFCQualificationTrainer:
@@ -88,6 +105,7 @@ class EFCQualificationTrainer:
         *,
         objective: EFCQualificationLoss | None = None,
         config: QualificationTrainerConfig | None = None,
+        training_custody: QualificationSplitCustody,
         require_verified_trunk: bool = True,
     ) -> None:
         if not isinstance(system, LearnedEFCSystem):
@@ -95,10 +113,33 @@ class EFCQualificationTrainer:
                 "qualification trainer system type differs"
             )
         self.system = system
+        if not isinstance(training_custody, QualificationSplitCustody):
+            raise QualificationTrainerError(
+                "qualification training custody differs"
+            )
+        training_custody.assert_training_split()
+        self.training_custody = training_custody
         self.objective = (
             EFCQualificationLoss()
             if objective is None
             else objective
+        )
+        uses_hankel_projector = isinstance(
+            self.system.source_compiler.projector,
+            HankelShiftCompletionProjector,
+        )
+        uses_hankel_objective = isinstance(
+            self.objective,
+            EFCHankelQualificationLoss,
+        )
+        if uses_hankel_projector != uses_hankel_objective:
+            raise QualificationTrainerError(
+                "Hankel projector and qualification objective must be paired"
+            )
+        self._hankel_incidence = (
+            self.system.source_compiler.projector.shift_incidence.detach().clone()
+            if uses_hankel_projector
+            else None
         )
         self.config = (
             QualificationTrainerConfig()
@@ -152,6 +193,27 @@ class EFCQualificationTrainer:
             if isinstance(value, torch.Tensor)
         )
 
+    def _assert_hankel_custody(self, output) -> None:
+        if self._hankel_incidence is None:
+            return
+        projector = self.system.source_compiler.projector
+        details = output.projector_auxiliary
+        if (
+            not isinstance(projector, HankelShiftCompletionProjector)
+            or not isinstance(details, NeuralHankelShiftResult)
+            or not torch.equal(
+                projector.shift_incidence,
+                self._hankel_incidence.to(projector.shift_incidence.device),
+            )
+            or not torch.equal(
+                details.shift_incidence,
+                self._hankel_incidence.to(details.shift_incidence.device),
+            )
+        ):
+            raise QualificationTrainerError(
+                "Hankel incidence changed after trainer custody"
+            )
+
     def train_step(
         self,
         candidate: CandidateCompilerBatch,
@@ -161,13 +223,18 @@ class EFCQualificationTrainer:
             raise QualificationTrainerError(
                 "qualification candidate batch type differs"
             )
-        self.system.train()
+        self.training_custody.assert_batches(candidate, supervisor)
+        self.system.source_compiler.train()
+        self.system.query_parser.eval()
+        if self.system.frozen_trunk is not None:
+            self.system.frozen_trunk.eval()
         self.optimizer.zero_grad(set_to_none=True)
         output = self.system.compile_source(
             candidate.witness,
             straight_through=True,
             trunk_batch=self._trunk_batch(candidate),
         )
+        self._assert_hankel_custody(output)
         losses = self.objective(
             output,
             supervisor,
@@ -196,11 +263,19 @@ class EFCQualificationTrainer:
             raise QualificationTrainerError(
                 "qualification parameter became nonfinite"
             )
-        metrics = self.objective.exact_metrics(
-            output,
-            supervisor,
-            candidate_source_sha256=candidate.source_sha256,
-        )
+        self.system.source_compiler.eval()
+        with torch.no_grad():
+            post_update_output = self.system.compile_source(
+                candidate.witness,
+                straight_through=False,
+                trunk_batch=self._trunk_batch(candidate),
+            )
+            self._assert_hankel_custody(post_update_output)
+            metrics = self.objective.exact_metrics(
+                post_update_output,
+                supervisor,
+                candidate_source_sha256=candidate.source_sha256,
+            )
         state_bytes = self._optimizer_state_bytes()
         if state_bytes < 1:
             raise QualificationTrainerError(
@@ -212,6 +287,9 @@ class EFCQualificationTrainer:
             trainable_parameters=self.trainable_parameters,
             optimizer_state_bytes=state_bytes,
             exact_metrics=metrics,
+            training_manifest_sha256=(
+                self.training_custody.receipt_sha256
+            ),
         )
 
     @torch.no_grad()
@@ -219,26 +297,39 @@ class EFCQualificationTrainer:
         self,
         candidate: CandidateCompilerBatch,
         supervisor: QualificationSupervisorBatch,
-    ) -> QualificationExactMetrics:
+        *,
+        custody: QualificationSplitCustody,
+    ) -> QualificationEvaluationReceipt:
         if not isinstance(candidate, CandidateCompilerBatch):
             raise QualificationTrainerError(
                 "qualification candidate batch type differs"
             )
+        if not isinstance(custody, QualificationSplitCustody):
+            raise QualificationTrainerError(
+                "qualification evaluation custody differs"
+            )
+        custody.assert_batches(candidate, supervisor)
         self.system.eval()
         output = self.system.compile_source(
             candidate.witness,
             straight_through=False,
             trunk_batch=self._trunk_batch(candidate),
         )
-        return self.objective.exact_metrics(
-            output,
-            supervisor,
-            candidate_source_sha256=candidate.source_sha256,
+        self._assert_hankel_custody(output)
+        return QualificationEvaluationReceipt(
+            split=custody.split,
+            manifest_sha256=custody.receipt_sha256,
+            exact_metrics=self.objective.exact_metrics(
+                output,
+                supervisor,
+                candidate_source_sha256=candidate.source_sha256,
+            ),
         )
 
 
 __all__ = [
     "EFCQualificationTrainer",
+    "QualificationEvaluationReceipt",
     "QualificationStepReceipt",
     "QualificationTrainerConfig",
     "QualificationTrainerError",

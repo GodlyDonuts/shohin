@@ -83,6 +83,7 @@ def test_hankel_shift_maximum_lane_has_exact_isoparametric_receipt(
         HankelShiftCompletionProjector,
     )
     assert compiler.projector.incidence_mode == incidence_mode
+    assert receipt.decode_mode == "hankel-shift"
     assert receipt.compiler_parameters == 64_407_956
     assert receipt.projector_parameters == 19_717_124
     assert receipt.query_parameters == 6_003_489
@@ -100,3 +101,16 @@ def test_unknown_hankel_incidence_fails_closed() -> None:
             external_feature_width=1_728,
             incidence_mode="unregistered",
         )
+
+
+def test_dual_direct_control_is_exactly_isoparametric() -> None:
+    compiler, query, receipt = build_hankel_shift_capacity_lane(
+        external_feature_width=1_728,
+        decode_mode="direct-base",
+    )
+    assert receipt.lane == "maximum-hankel-direct"
+    assert receipt.decode_mode == "direct-base"
+    assert receipt.added_parameters == 70_411_445
+    assert receipt.complete_parameters == 195_493_109
+    del compiler, query
+    gc.collect()

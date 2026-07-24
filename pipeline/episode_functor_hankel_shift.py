@@ -146,7 +146,7 @@ def random_shift_incidence(
     *,
     seed: str,
 ) -> ShiftIncidence:
-    """Length-matched random control preserving incidence cardinality."""
+    """Seeded position-scramble control preserving action equivariance."""
 
     words = enumerate_action_words(max_depth)
     extended = enumerate_action_words(max_depth + 1)
@@ -157,35 +157,44 @@ def random_shift_incidence(
             "big",
         )
     )
-    rows = [[-1] * len(words) for _ in range(ACTION_COUNT)]
+    position_permutations: dict[int, tuple[int, ...]] = {}
     for length in range(max_depth + 1):
-        domains = [
-            (action, word_index)
-            for action in range(ACTION_COUNT)
-            for word_index, word in enumerate(words)
-            if len(word) == length
-        ]
-        targets = [
-            index[word]
-            for word in extended
-            if len(word) == length + 1
-        ]
-        rng.shuffle(targets)
-        for (action, word_index), target in zip(domains, targets, strict=True):
-            rows[action][word_index] = target
-    incidence = tuple(tuple(row) for row in rows)
+        permutation = list(range(length + 1))
+        rng.shuffle(permutation)
+        position_permutations[length] = tuple(permutation)
+    incidence = tuple(
+        tuple(
+            index[
+                tuple(
+                    (action, *word)[position]
+                    for position in position_permutations[len(word)]
+                )
+            ]
+            for word in words
+        )
+        for action in range(ACTION_COUNT)
+    )
     _validate_incidence(incidence, max_depth)
     return incidence
 
 
 def commutative_bag_incidence(max_depth: int) -> ShiftIncidence:
-    """Control that discards action order by sorting every shifted word."""
+    """Equivariant stable-bag control that removes repeated-symbol order."""
 
     words = enumerate_action_words(max_depth)
     extended = enumerate_action_words(max_depth + 1)
     index = {word: position for position, word in enumerate(extended)}
+    def stable_bag(word: ActionWord) -> ActionWord:
+        order = tuple(dict.fromkeys(word))
+        return tuple(
+            symbol
+            for first in order
+            for symbol in word
+            if symbol == first
+        )
+
     return tuple(
-        tuple(index[tuple(sorted((action, *word)))] for word in words)
+        tuple(index[stable_bag((action, *word))] for word in words)
         for action in range(ACTION_COUNT)
     )
 

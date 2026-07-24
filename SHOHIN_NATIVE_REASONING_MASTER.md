@@ -120,14 +120,27 @@ are tested, but no neural first fit is currently authorized.
   blindness probe passed every declared denial. Final report SHA-256 is
   `f2c4cd16a246f5d5da7116512601d4705ba21c14e23c582cdd95d50265450c04`.
   This supersedes the earlier process-custody NO-GO but not the neural NO-GO.
+- **HSC qualification hardening:** the 70,411,445-parameter Hankel-shift
+  package now has fixed independent prefix targets, compiler-owned source
+  receipts, supervisor-tensor-bound self-hashed split custody, persistent
+  incidence, recoding-equivariant position and stable-bag controls, an explicit
+  exact-uniform-collapse `NO-GO`, bound noncollapsed initialization,
+  tied-machine and tied-signature accounting, one-factor-only arm comparisons,
+  and fresh post-update metrics. A parameter-
+  and target-identical dual-branch direct-decode control separates shift
+  decoding from added weights and dense rollout supervision. The complete EFC
+  regression is 407 passed. This closes mechanics defects, not the neural-fit
+  gate.
 - **Capability boundary:** these are architecture and CPU mechanics, not a
   Shohin reasoning result. The EFC compiler has been instantiated and connected
   read-only to the protected trunk, but it has not been fitted. No GPU score,
   development read, confirmation read, or reasoning claim exists.
-- **Immediate next task:** freeze exact arm-specific resource receipts and a
-  process-custody launcher for the learned compiler, close every hostile-audit
-  P0/P1, and qualify the solver and no-host controls before any train-only fit.
-  Linux Bubblewrap plus Landlock remains an additional deployment gate.
+- **Immediate next task:** freeze update count, optimizer precision, measured
+  compiler cost, exact train-source receipt, and a neural process-custody
+  launcher, then run the smallest equal-budget train-only falsifier over HSC,
+  direct-decode, position-scramble, and stable-bag arms. Development remains
+  sealed until train/mechanics qualification passes. Linux Bubblewrap plus
+  Landlock remains an additional deployment gate.
 - **Primary bottleneck:** model-owned compilation of raw episodic evidence into
   a compact renderer-invariant causal machine, including opaque referent
   binding. Bounded ordered execution is already mechanically easy once the
@@ -223,10 +236,19 @@ categorical coordinates per anonymous state. The official frozen-seed CPU
 audit reconstructs 200/200 machines exactly; worst-case minimum code distance
 is 24, with derivative-only and joint-code corruption guarantees of 11 and 5.
 The neural arm predicts base and derivative codes independently and decodes
-actions only by Jensen-Shannon agreement. Prefix, random length-matched
-incidence, and commutative word-bag arms are exactly isoparametric. Oracle
-decoding, gradients, exact recoding equivariance, and hard-tie rejection pass.
-This is not evidence that a fitted model generalizes or reasons.
+actions only by Jensen-Shannon agreement. Prefix treatment, seeded
+position-scramble, stable-bag, and dual-branch direct-decode arms are exactly
+isoparametric. Every arm receives the same independently executed prefix
+targets: 640 base plus 1,920 derivative categorical cells, or 5,120 derived
+target bits per source. The direct control uses the same two predictors and
+dense supervision but deploys the base completer directly. Pair-specific
+receipt checks permit exactly one causal difference per comparison and reject
+seed-only incidence no-ops. Oracle decoding, gradients through all four
+independently noncollapsed provisional tables, sharp action recoding for every
+control, persistent incidence, and hard-tie rejection pass. Exact uniform
+independent branches do not all escape: this is an explicit initialization
+boundary, not a claimed bootstrap result. This is not evidence that a fitted
+model generalizes or reasons.
 
 A later sealed predictive compiler may use the budget up to roughly
 197.0M by adding source-only parent adapters, typed factor memory, and
@@ -242,9 +264,17 @@ emit permutations or balanced observers. Zeroing it produces tied soft tables
 whose coordinate-first hardening would be invalid, proving that host hardening
 does not silently force the answer. Exact categorical ties now fail closed;
 under unique maxima, hard state/action/observer/answer recodings are exact.
-Both arms share exact key, record, occurrence, transition, observer,
-hidden-cell, and whole-machine metrics. Only the source compiler is
-optimizer-visible. Checkpoint receipts re-hash the file and compare every
+All qualification arms share exact key, record, occurrence, transition,
+observer, hidden-cell, codebook, and whole-machine metrics. Tied rows are
+reported as unhardenable and receive no exact credit. Compiler output owns the
+source digest used for the post-forward supervisor join. A separate self-hashed
+custody object binds split, ordered source hashes, worlds, canonical orbits,
+families, renderer factors, and every ordered supervisor tensor including
+label-validity and exposure masks; optimizer access is train-only and
+evaluation receipts name their split. Tied signature cells, like tied machine
+rows, receive zero exact credit. Only the source compiler is optimizer-visible,
+and step metrics come from a fresh post-update forward. Checkpoint receipts re-hash
+the file and compare every
 configuration/tensor, nonpersistent buffer, module type and runtime attribute
 with a fresh `model.py` construction; hooks and runtime overrides are rejected,
 and the executing code manifest must match a fresh load of the bound source.
@@ -255,15 +285,15 @@ container dispatch, model properties, ordered module topology, trunk
 execution/configuration, transport dispatch, and published feature width. The
 protected 300k checkpoint passes; parameter, RoPE-buffer, hook, topology,
 class-method, property, method-default, transport, builtin, and
-referenced-callable mutations fail. The focused learned-EFC regression is 180
-passed; the broader EFC regression is 377 passed. Ruff and bytecode
+referenced-callable mutations fail. The broader EFC regression is 407 passed.
+Ruff and bytecode
 compilation are clean. This is not malicious-host, native-kernel, or hardware
 attestation.
 
-The audit payload and report SHA-256 values are
-`97c6f6a56f7481546a5dd04a7d628fbc5a348e6d087807ac46f95df334acac66`
+The regenerated 26-dependency audit payload and report SHA-256 values are
+`013ade4a87e8e42ddeeeb95d2009ad3bf63cc95b729d4ca0ce90c839c1d40518`
 and
-`e8b9e4aeada6ebf8c0b33fab0cfd95ea42a63e8c1b71002ef6a83e3adc8834ae`.
+`245fc55a7fa57730c4bc1f77006717b5426334094a83f3b401ba02c7c75aed00`.
 Its explicit decision is
 `cpu_qualification_candidate_neural_fit_no_go`. A strict resource schema
 exists, but no arm-specific receipt can yet be frozen because update count,

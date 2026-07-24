@@ -127,13 +127,13 @@ def test_random_incidence_is_length_matched_bijective_and_noncausal() -> None:
     assert random_decode.transitions != machine.transitions
 
 
-def test_commutative_control_erases_noncommutative_word_order() -> None:
+def test_stable_bag_control_erases_repeated_symbol_interleaving() -> None:
     incidence = commutative_bag_incidence(3)
     words = enumerate_action_words(3)
     extended = enumerate_action_words(4)
-    left = incidence[0][words.index((1,))]
-    right = incidence[1][words.index((0,))]
-    assert extended[left] == extended[right] == (0, 1)
+    left = incidence[0][words.index((1, 0))]
+    right = incidence[0][words.index((0, 1))]
+    assert extended[left] == extended[right] == (0, 0, 1)
 
 
 def test_correction_radii_follow_strict_triangle_inequality() -> None:

@@ -14,6 +14,7 @@ field roles, and observer answer are model-owned.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from hashlib import sha256
 import math
 from typing import Sequence
 
@@ -106,6 +107,7 @@ class WitnessCompilerBatch:
     record_bounds: torch.Tensor
     record_valid: torch.Tensor
     occurrence_to_record: torch.Tensor
+    source_sha256: tuple[str, ...]
 
     def __post_init__(self) -> None:
         batch = self.pointer.batch_size
@@ -117,6 +119,12 @@ class WitnessCompilerBatch:
             or self.occurrence_to_record.shape
             != (batch, MAX_KEY_OCCURRENCES)
             or self.occurrence_to_record.dtype != torch.long
+            or len(self.source_sha256) != batch
+            or any(
+                len(value) != 64
+                or any(character not in "0123456789abcdef" for character in value)
+                for value in self.source_sha256
+            )
         ):
             raise WitnessCompilerError("witness compiler batch differs")
         if len(
@@ -155,6 +163,8 @@ class WitnessCompilerOutput:
     answer_logits: torch.Tensor
     unique_key_bytes: torch.Tensor
     unique_key_valid: torch.Tensor
+    source_sha256: tuple[str, ...]
+    projector_auxiliary: object | None = None
 
 
 def _record_spans(payload: bytes) -> tuple[tuple[int, int], ...]:
@@ -253,6 +263,10 @@ def collate_witness_sources(
         record_bounds=record_bounds,
         record_valid=record_valid,
         occurrence_to_record=occurrence_to_record,
+        source_sha256=tuple(
+            sha256(source.pointer.payload).hexdigest()
+            for source in sources
+        ),
     )
 
 
@@ -710,11 +724,33 @@ class ProofCarryingWitnessCompiler(nn.Module):
             source_unique_key_valid=pointer.unique_key_valid,
             key_assignment_logits=key_assignment_logits,
         )
-        projection = self.projector(
-            relation_evidence.transition_logits,
-            relation_evidence.observer_logits,
-            straight_through=straight_through,
+        detailed_forward = getattr(
+            self.projector,
+            "detailed_forward",
+            None,
         )
+        projector_auxiliary = None
+        if callable(detailed_forward):
+            projector_auxiliary = detailed_forward(
+                relation_evidence.transition_logits,
+                relation_evidence.observer_logits,
+                straight_through=straight_through,
+            )
+            projection = getattr(
+                projector_auxiliary,
+                "projection",
+                None,
+            )
+            if not isinstance(projection, LawfulProjection):
+                raise WitnessCompilerError(
+                    "detailed projector result lacks a lawful projection"
+                )
+        else:
+            projection = self.projector(
+                relation_evidence.transition_logits,
+                relation_evidence.observer_logits,
+                straight_through=straight_through,
+            )
         return WitnessCompilerOutput(
             projection=projection,
             relation_evidence=relation_evidence,
@@ -725,6 +761,8 @@ class ProofCarryingWitnessCompiler(nn.Module):
             answer_logits=answer_logits,
             unique_key_bytes=pointer.unique_key_bytes,
             unique_key_valid=pointer.unique_key_valid,
+            source_sha256=batch.source_sha256,
+            projector_auxiliary=projector_auxiliary,
         )
 
 

@@ -55,6 +55,7 @@ class NeuralHankelShiftResult:
     derivative_signatures: torch.Tensor
     shift_distances: torch.Tensor
     shift_syndrome: torch.Tensor
+    shift_incidence: torch.Tensor
 
     def __post_init__(self) -> None:
         batch = self.projection.machine.batch_size
@@ -88,6 +89,12 @@ class NeuralHankelShiftResult:
                 PRIMARY_ACTIONS,
                 PRIMARY_STATES,
             )
+            or self.shift_incidence.shape
+            != (
+                PRIMARY_ACTIONS,
+                self.base_signatures.shape[2],
+            )
+            or self.shift_incidence.dtype != torch.long
         ):
             raise HankelCompletionError("neural Hankel result geometry differs")
 
@@ -424,6 +431,7 @@ def project_behavioral_shifts(
         derivative_signatures=derivative_signatures,
         shift_distances=distances,
         shift_syndrome=selected,
+        shift_incidence=incidence.detach().clone(),
     )
 
 
@@ -455,7 +463,9 @@ class HankelShiftCompletionProjector(nn.Module):
         )
         self.max_depth = int(max_depth)
         self.incidence_mode = str(incidence_mode)
+        self.random_seed = str(random_seed)
         self.temperature = float(temperature)
+        self.decode_mode = "hankel-shift"
         self.sinkhorn_iterations = 0
         self.register_buffer(
             "shift_incidence",
@@ -464,7 +474,7 @@ class HankelShiftCompletionProjector(nn.Module):
                 mode=incidence_mode,
                 random_seed=random_seed,
             ),
-            persistent=False,
+            persistent=True,
         )
 
     def parameter_count(self) -> int:
@@ -538,7 +548,51 @@ class HankelShiftCompletionProjector(nn.Module):
         return projection.machine.harden()
 
 
+class DirectDualCompletionControlProjector(HankelShiftCompletionProjector):
+    """Isoparametric control with identical signatures but direct decoding."""
+
+    def __init__(self, **kwargs) -> None:
+        super().__init__(**kwargs)
+        self.decode_mode = "direct-base"
+
+    def detailed_forward(
+        self,
+        transition_logits: torch.Tensor,
+        observer_logits: torch.Tensor,
+        *,
+        straight_through: bool = False,
+    ) -> NeuralHankelShiftResult:
+        base = self.base(
+            transition_logits,
+            observer_logits,
+            straight_through=straight_through,
+        )
+        derivative = self.derivative(
+            transition_logits,
+            observer_logits,
+        )
+        diagnostics = project_behavioral_shifts(
+            base_transition=base.transition_transport,
+            base_observer=base.observer_transport,
+            derivative_transition=derivative.transition_transport,
+            derivative_observer=derivative.observer_transport,
+            max_depth=self.max_depth,
+            incidence=self.shift_incidence,
+            temperature=self.temperature,
+            straight_through=False,
+        )
+        return NeuralHankelShiftResult(
+            projection=base,
+            base_signatures=diagnostics.base_signatures,
+            derivative_signatures=diagnostics.derivative_signatures,
+            shift_distances=diagnostics.shift_distances,
+            shift_syndrome=diagnostics.shift_syndrome,
+            shift_incidence=diagnostics.shift_incidence,
+        )
+
+
 __all__ = [
+    "DirectDualCompletionControlProjector",
     "HankelCompletionError",
     "HankelShiftCompletionProjector",
     "NeuralHankelShiftResult",

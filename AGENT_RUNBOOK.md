@@ -21,6 +21,26 @@
 > GSM8K pass@1 `2/100`, MATH-500 `2/100`, HumanEval `6/164`, and MBPP `0/100`. This confirms a
 > low-single-digit plateau rather than a broad 120k-to-300k capability gain.
 >
+> **Latest HSC qualification gate (2026-07-24 EDT):** no neural fit has run.
+> The maximum Hankel-shift package remains 70,411,445 added and 195,493,109
+> complete parameters, leaving 4,506,891 below the 200M ceiling. A hostile
+> audit found eight claim-blocking qualification flaws. The repaired path now
+> uses one independently executed prefix target for every arm, compiler-owned
+> source receipts, supervisor-tensor-bound self-hashed split custody,
+> persistent trainer-pinned
+> incidence, action-recoding-equivariant position-scramble and stable-bag
+> controls, an exact-uniform-collapse NO-GO, required bound noncollapsed
+> initialization, one-factor-only arm
+> comparisons, explicit tied-machine and tied-signature accounting, and fresh
+> post-update metrics. A new
+> 195,493,109-parameter dual-branch direct-decode control receives the same
+> 5,120 derived signature bits per source and differs only in bypassing Hankel
+> matching for deployed transitions. The complete EFC regression is 407
+> passed with 61 known PyTorch nested-tensor warnings. Full resource receipt
+> and neural process custody remain unset, so fit/GPU/development/
+> confirmation/native-reasoning claims remain NO-GO. Continuation pretraining
+> remains forbidden.
+>
 > **Latest EFC deployed-wire gate (2026-07-23 EDT):** the two-beacon CPU
 > rehearsal now emits the exact 1,536-byte deployed C/Rust machine. A separate
 > counter-stream generator admits worlds from mechanics only and publishes raw
@@ -12360,3 +12380,46 @@ STATE) and any step that changed. A future agent — maybe you after a context r
   development read, confirmation read, GPU job, continuation pretraining, or
   native-reasoning result is authorized. The user pretraining hold and
   protected step-300k checkpoint remain unchanged.
+
+- **2026-07-24** -- **The HSC neural qualification interface survived a
+  hostile rejection and is repaired; fitting remains NO-GO.** The first
+  objective/control draft was scientifically invalid: controls generated
+  arm-relative labels that conflicted with the true machine, output hashes
+  were caller assertions rather than compiler-owned receipts, random/numeric-
+  bag controls broke action recoding, exact metrics credited tied rows,
+  structural margins had zero gradient at exact collapse, split identity was
+  unbound, and step receipts used pre-update predictions.
+
+  Every arm now receives the same independently executed prefix labels.
+  Role-free collation owns the source hash carried through compiler output.
+  A self-hashed custody receipt binds split, ordered source hashes, every
+  ordered supervisor tensor and mask, latent worlds, canonical orbits,
+  families, and renderer factors, and the optimizer rejects nontrain custody.
+  Incidence is persistent and trainer-pinned.
+  Seeded position permutation and stable-bag controls commute with sharp
+  action recoding. Pair-specific receipts reject comparisons that alter both
+  incidence and decoding or change only an unused seed. A four-independent-
+  branch probe rejects exact uniform initialization: only the base observer
+  receives material gradient, while both transition tables and the derivative
+  observer remain symmetry-locked. Independently noncollapsed seeded tables
+  all receive gradient, so the future process receipt must bind that
+  initialization state. Tied machine rows and tied signature cells receive
+  zero exact credit, and step metrics use a fresh post-update forward.
+
+  The dense HSC objective is explicitly counted as 640 base plus 1,920
+  derivative categorical cells, or 5,120 derived target bits per source. A
+  favorable dual-branch direct-decode control has the same 19,717,124
+  projector parameters, 64,407,956 trainable compiler parameters, 6,003,489
+  query parameters, targets, loss weights, and 195,493,109 complete
+  parameters. It differs only in bypassing derivative/base matching for the
+  deployed transition. Architecture/objective receipts bind this difference
+  without fabricating optimizer updates or compiler time. The complete EFC
+  regression passes 407 tests with 61 known warnings; Ruff and `py_compile`
+  pass. The regenerated audit binds 26 dependencies, retains 200/200 exact
+  CPU Hankel reconstructions, and has payload/file SHA-256 values
+  `013ade4a87e8e42ddeeeb95d2009ad3bf63cc95b729d4ca0ce90c839c1d40518`
+  and
+  `245fc55a7fa57730c4bc1f77006717b5426334094a83f3b401ba02c7c75aed00`.
+  No substantive optimizer run, source freeze, full resource receipt,
+  development/confirmation access, GPU job, continuation pretraining, or
+  native-reasoning result is authorized.

@@ -466,6 +466,7 @@ def audit_identifiable_pilot(
         ROOT / "pipeline" / "episode_functor_hankel_shift.py",
         ROOT / "pipeline" / "episode_functor_identifiable_board.py",
         ROOT / "pipeline" / "episode_functor_qualification_boundary.py",
+        ROOT / "pipeline" / "episode_functor_qualification_custody.py",
         ROOT
         / "pipeline"
         / "episode_functor_qualification_supervisor.py",
@@ -473,6 +474,7 @@ def audit_identifiable_pilot(
         ROOT / "pipeline" / "episode_functor_identifiable_reference.py",
         ROOT / "train" / "episode_functor_constrained_transport.py",
         ROOT / "train" / "episode_functor_capacity_lanes.py",
+        ROOT / "train" / "episode_functor_hankel_arm.py",
         ROOT / "train" / "episode_functor_hankel_completion.py",
         ROOT / "train" / "episode_functor_learned_completion.py",
         ROOT / "train" / "episode_functor_learned_system.py",

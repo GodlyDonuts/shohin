@@ -301,17 +301,64 @@ recode-equivariant relation predictors: one emits base future signatures and
 the other emits action-derivative signatures. Final transition logits are
 negative Jensen-Shannon distances between those codes; the empty-word
 coordinate emits observer logits. State/action/observer/answer recoding,
-attached gradients, exact oracle decoding, fail-closed hard ties, random
-length-matched incidence, and commutative word-bag controls pass unit tests.
+attached gradients, exact oracle decoding, fail-closed hard ties, seeded
+position-scramble incidence, and stable-bag controls pass unit tests.
 
 The HSC arm is a separately named constructor-verified lane rather than an
 edit to the generic maximum baseline. Its projector has 19,717,124 trainable
 parameters, its complete source compiler has 64,407,956, and its query parser
 has 6,003,489. Added parameters are 70,411,445; the protected Shohin plus HSC
-system is 195,493,109 parameters with 4,506,891 headroom. Prefix, randomized,
-and commutative incidences are exactly isoparametric. These are mechanics,
+system is 195,493,109 parameters with 4,506,891 headroom. Prefix,
+position-scramble, stable-bag, and direct-decode arms are exactly
+isoparametric. Pair-specific receipt checks require incidence controls to
+change incidence only and the direct-decode control to change decoding only.
+These are mechanics,
 architecture, and resource receipts only. No HSC optimizer run, unseen-world
 score, development read, confirmation read, or reasoning result exists.
+
+**Qualification correction (2026-07-24).** A hostile audit rejected the first
+draft objective before any fit. It found candidate-defined control labels,
+action-recoding-breaking controls, a caller-only source hash join,
+coordinate-first tie credit, zero structural gradient at exact collapse,
+unbound train/evaluation splits, and pre-update metrics reported after an
+optimizer step.
+
+The repaired contract gives every arm the same independently executed
+prefix-shift targets. Role-free collation computes a source digest that is
+carried through compiler output and compared with candidate, supervisor, and
+split-custody receipts. A self-hashed split receipt binds ordered sources,
+every ordered supervisor target tensor including masks and geometry, worlds,
+canonical orbits, families, and renderer factors; optimizer access rejects
+every split except `train`. Random incidence is now a seeded word-position
+permutation, while the bag control uses stable first-occurrence grouping; both
+commute with opaque action recoding. A second hostile probe rejected exact-
+collapse recovery for the deployed independent branches: at exact uniformity,
+the base observer receives gradient while both transition tables and the
+derivative observer remain symmetry-locked. Four independently noncollapsed
+seeded provisional tables do all receive gradient. Therefore exact uniform
+initialization is a documented `NO-GO`; the future process receipt must bind a
+noncollapsed independent initialization state, and no structural margin is
+credited with breaking exact symmetry. Tied key, machine, base-signature, or
+derivative-signature cells receive zero exact credit and are reported
+explicitly. Step metrics come from a fresh post-update forward, and incidence
+is a persistent, trainer-pinned checkpoint buffer.
+
+The package uses 640 base and 1,920 derivative categorical signature cells per
+source, exactly 5,120 derived target bits. This dense rollout supervision is
+an optimization resource, so the old generic machine-only baseline is not an
+equal-information architecture control. The favorable replacement is a
+dual-branch direct-decode arm with the same 19,717,124 projector parameters,
+64,407,956 trainable compiler parameters, 6,003,489 query parameters, targets,
+weights, and 195,493,109-parameter complete system. It differs only in
+deploying the base completer directly instead of decoding transitions by
+derivative/base code agreement.
+
+Canonical architecture/objective receipts bind transform, decode mode,
+incidence tensor, exact floating-point objective, supervision contract,
+protected checkpoint, parameter arithmetic, and persistent machine bytes.
+They deliberately do not invent updates, optimizer precision, or compiler
+time. A full resource receipt and neural process-custody launcher remain
+mandatory fit gates.
 
 **Sealed predictive sheaf compiler (SPSC).** This is a later architecture
 treatment for the failure mode where a one-shot local parse cannot revise a
@@ -430,7 +477,7 @@ byte ceiling:
 2. qualified generic recurrent machine;
 3. direct-machine hypernetwork;
 4. fused key/operator records;
-5. commutative action pool;
+5. recoding-equivariant stable-bag action pool;
 6. untied-depth executor;
 7. exact-byte answer cache;
 8. shuffled-witness treatment;
