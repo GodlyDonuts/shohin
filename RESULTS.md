@@ -1,5 +1,11 @@
 # Shohin 300K Results
 
+> This ledger reports the **raw pretrained checkpoint only**, before
+> instruction or reasoning post-training. The separately controlled bounded
+> research extension is summarized in
+> [`RESEARCH_SUMMARY.md`](RESEARCH_SUMMARY.md); its scores are not substituted
+> for raw benchmark pass@1.
+
 ## Completed run
 
 The raw flagship completed exactly 300,000 optimizer updates.
