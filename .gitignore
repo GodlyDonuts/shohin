@@ -1,0 +1,43 @@
+# ── Secrets / local env — NEVER commit ─────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_ed25519
+id_rsa
+secrets/
+credentials*
+
+# ── Python ─────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# ── Data / shards / model artifacts (large — not for git) ──────────
+data/
+datasets/
+shards/
+*.bin
+*.uint16
+*.npy
+*.arrow
+*.parquet
+checkpoints/
+*.pt
+*.safetensors
+wandb/
+hf_cache/
+.cache/
+logs/
+scratchpad/
+
+# ── OS ─────────────────────────────────────────────────────────────
+.DS_Store
+
+# downloaded/derived data (large shards and checkpoints)
+artifacts/shards/
+artifacts/downloads/
