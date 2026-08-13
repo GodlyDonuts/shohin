@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> **Historical baseline:** This repository contains the completed 125M scratch-model phase of Project Shohin. The active model-owned temporal-revision and learned-computation research program now lives in [shohin-ettr](https://github.com/GodlyDonuts/shohin-ettr).
+
 # Shohin
 
 ### A 125M-parameter language model built and trained from scratch
